@@ -497,8 +497,9 @@
 .ghostbtn.is-on svg { fill: currentColor; }
 
 .arabic {
-  font-size: 17px;
-  line-height: 2;
+  font-family: "Noto Naskh Arabic", var(--font);
+  font-size: 19px;
+  line-height: 2.1;
   text-align: right;
   direction: rtl;
   font-weight: 500;

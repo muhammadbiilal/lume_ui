@@ -1,282 +1,733 @@
-# Premium Mobile-First Daily Life Super-App
+# Lume — Global Mobile-First Daily Life Super-App
 
-Design a premium, modern **mobile-first daily life super-app** with a sleek, polished 2026 UI/UX.
+Design and build a premium, modern **mobile-first daily life super-app** with a sleek, polished **2026 UI/UX**.
 
-The app combines everyday utilities, lifestyle tools, productivity features, personal tools, Pakistan-specific services, and Islamic features into one unified experience.
+The app combines:
 
-The overall product should feel like a **modern global consumer application**, NOT a traditional Islamic app, banking dashboard, government portal, or collection of unrelated utilities.
-
-Islamic functionality should be an important part of the product for Muslim users, but it should be **personalized based on the user's selected profile/preferences**.
-
-The product must support three primary personalization states:
-
-1. **Muslim user**
-2. **Non-Muslim user**
-3. **Country-specific personalization**, especially Pakistan
-
-Religion and country must be treated as **separate dimensions**.
-
-For example:
-
-* Muslim + Pakistan → Islamic features + Pakistan-specific features
-* Muslim + non-Pakistan → Islamic features + globally relevant tools
-* Non-Muslim + Pakistan → Pakistan-specific features, but **Islamic features hidden by default**
-* Non-Muslim + non-Pakistan → General/global features
-
-The user should always be able to modify their preferences later from Profile/Settings.
-
----
-
-# Overall Design Direction
-
-Create a **sleek, minimal, premium, highly polished mobile interface** with:
-
-* Mobile-first responsive layout
-* Clean visual hierarchy
-* Generous spacing
-* Modern typography
-* Soft rounded cards
-* Subtle borders
-* Light shadows
-* Smooth micro-interactions
-* Elegant gradients used sparingly
-* Beautiful SVG illustrations
-* Abstract decorative background elements
-* Small floating stickers/illustrations around cards
-* Premium iconography
-* Smooth carousel interactions
-* Excellent light and dark mode support
-* Strong accessibility and readability
-* Avoid clutter and excessive decoration
-
-The interface should feel inspired by the quality of modern apps such as Apple, Notion, Linear, Revolut, Arc, Airbnb, Headspace and modern productivity/lifestyle apps — but **do NOT copy their interfaces**.
-
-The result should feel like one carefully designed product with its own visual identity.
-
----
-
-# Core Product Principle
-
-The application contains many features, but it must **never feel like a giant toolbox or app marketplace**.
-
-The design system must make all functionality feel like it belongs to the same ecosystem.
-
-For example:
-
-* Quran
-* Prayer Times
-* Calculator
-* Weather
-* Calendar
-* Notes
-* Fuel Prices
-* Cricket
-* Parcel Tracking
-* Expenses
-* Recipes
-* Trains
-* Flights
-
-should all use the same underlying:
-
-* Typography
-* Spacing
-* Card language
-* Icon system
-* Navigation patterns
-* Interaction patterns
-* Color system
-* Illustration language
-* Motion system
-
-The application should feel like **one super-app**, not 70 mini-apps.
-
----
-
-# Mobile Layout
-
-Design primarily for a **390 × 844 mobile viewport**.
-
-Use a consistent mobile grid with approximately:
-
-* 16–20px horizontal page padding
-* 12–16px spacing between cards
-* 20–28px section spacing
-* 12–20px card radius
-* Comfortable touch targets
-* Sticky/floating bottom navigation
-
-The UI should feel spacious rather than compressed.
-
-Support larger and smaller mobile screens gracefully.
-
-Avoid designing desktop-first layouts that are simply squeezed into mobile.
-
----
-
-# Personalization & Onboarding
-
-There is already an onboarding step called:
-
-**“What are you here for?”**
-
-Use the existing onboarding flow rather than creating unnecessary duplicate questions.
-
-Before adding new onboarding screens, inspect the existing onboarding options and determine which required personalization choices are already represented.
-
-If a required preference is missing, **extend the existing onboarding flow naturally** instead of creating a separate disconnected onboarding experience.
-
----
-
-## Religion Personalization
-
-The application should determine whether Islamic functionality is relevant based on the user's onboarding/profile selection.
-
-If the existing **“What are you here for?”** onboarding already allows the user to indicate interests or Islamic preferences, reuse that information.
-
-If it does not adequately determine whether Islamic features should be shown, add a lightweight personalization step such as:
-
-**What would you like your app to include?**
-
-Possible choices:
-
-* Everyday life
+* Everyday utilities
+* Lifestyle tools
 * Productivity
-* Money & finance
-* Health & wellness
-* Travel
-* News & entertainment
-* Islamic features
-* Pakistan-specific services
+* Personal tools
+* Money & rates
+* Local/country-specific services
+* News and entertainment
+* Travel and transport
+* Health and personal wellbeing
+* Islamic features for Muslim users
 
-If the product already explicitly asks the user's religion, use that existing value instead of asking again.
+The product must feel like a **real, production-ready global consumer application**, not a Figma concept, generic template, admin dashboard, banking dashboard, traditional Islamic app, or collection of unrelated mini-apps.
 
-Do NOT repeatedly ask users whether they are Muslim throughout the application.
+The overall visual identity must remain **neutral, modern and global**.
+
+Islamic functionality is an important part of the product, but it should be an **optional personalized experience for Muslim users**, not the identity of the entire application.
 
 ---
 
-# Muslim vs Non-Muslim Experience
+# 1. CORE PRODUCT PRINCIPLE
 
-## Muslim Users
+The product should be thought of as:
 
-For Muslim users, Islamic functionality should be fully integrated into:
+**Global Core + Country Localization + Regional Localization + City Context + Language/Locale + User Interests + Optional Islamic Experience**
 
-* Home
-* Today
-* Tools
-* Search/Explore where relevant
-* Personalized recommendations
-* Notifications/reminders
+The application is intended to target **users globally**.
 
-Islamic features should feel like a **natural part of the user's daily life**, not like a separate application.
+Pakistan is currently one of the most deeply localized markets, but the product must NOT be architected as a Pakistan-first application with a few international options.
+
+The architecture must be capable of supporting:
+
+* Pakistan
+* United States
+* United Kingdom
+* UAE
+* Saudi Arabia
+* Canada
+* India
+* Australia
+* Japan
+* Germany
+* France
+* Indonesia
+* Brazil
+* Turkey
+* Nigeria
+* and every other country worldwide.
+
+---
+
+# 2. PERSONALIZATION MODEL
+
+The application has several independent personalization dimensions.
+
+Treat these as separate concepts:
+
+**Religion**
+
+*
+
+**Country**
+
+*
+
+**Region / State / Province**
+
+*
+
+**City**
+
+*
+
+**Language**
+
+*
+
+**Locale**
+
+*
+
+**Currency**
+
+*
+
+**Units**
+
+*
+
+**Timezone**
+
+*
+
+**Interests**
+
+*
+
+**User preferences**
+
+Do NOT incorrectly infer one dimension from another.
+
+---
+
+# 3. RELIGION
+
+There are two primary user states:
+
+* Muslim
+* Non-Muslim
+
+Religion controls the Islamic experience.
+
+### Muslim
+
+Islamic features are available.
+
+### Non-Muslim
+
+Islamic features should be hidden by default.
+
+IMPORTANT:
+
+**Never infer religion from country.**
+
+Do not assume:
+
+* Pakistan = Muslim
+* Saudi Arabia = Muslim
+* UAE = Muslim
+* Arabic = Muslim
+* Urdu = Muslim
+
+Likewise, do not assume that a user in the UK, USA, Japan, Germany, etc. is non-Muslim.
+
+A Muslim user can live anywhere.
+
+A non-Muslim user can live anywhere.
+
+Religion and country are completely independent.
+
+---
+
+# 4. COUNTRY
+
+Country determines country-specific services and localization.
+
+The application must support **all countries globally**.
+
+Do NOT hard-code a small country list such as:
+
+* Pakistan
+* UK
+* UAE
+* Canada
+* Saudi Arabia
+* USA
+
+Those should only be examples/popular countries.
+
+The underlying location architecture must support a complete global country database.
+
+---
+
+# 5. REGION / STATE / PROVINCE
+
+Where applicable, support:
+
+**Country → Region/State/Province → City**
 
 Examples:
 
-* Next Prayer
-* Prayer Countdown
-* Quran Continue Reading
-* Ayah of the Day
-* Hadith
-* Daily Duas
-* Tasbih
+Pakistan → Punjab → Lahore
+
+United States → California → Los Angeles
+
+Canada → Ontario → Toronto
+
+Australia → New South Wales → Sydney
+
+United Kingdom → England → London
+
+Do not force unnecessary hierarchy on countries where it is not needed.
+
+---
+
+# 6. CITY
+
+City is an important personalization layer.
+
+Allow users to select any supported city globally.
+
+Do NOT limit cities to manually entered examples.
+
+City/location can power:
+
+* Weather
+* Prayer times
 * Qibla
-* Ramadan
-* Fasting Tracker
-
-These can appear contextually on Home and Today.
-
----
-
-## Non-Muslim Users
-
-For non-Muslim users:
-
-**Do NOT show Prayer & Islam as a prominent section by default.**
-
-Do not:
-
-* Put Islamic tools in the main Quick Tools grid
-* Show Prayer cards on Home
-* Show Quran/Hadith cards in Today
-* Add Islamic navigation tabs
-* Push Islamic notifications
-* Make the user feel that the app is primarily an Islamic application
-
-Instead, the experience should focus on:
-
-* Daily Life
-* Money
-* Productivity
-* Personal
-* Travel
-* News
-* Entertainment
-* Health
-* Utilities
-* Country-specific services
-
-However, Islamic functionality should not be permanently inaccessible.
-
-Users should be able to change their preferences from:
-
-**Profile → Personalization → Interests / Content Preferences**
-
-If they later choose Islamic features, the relevant experience can become available.
+* Nearby mosques
+* Nearby places
+* Local news
+* Fuel prices
+* Loadshedding
+* Transport
+* Trains
+* Flights
+* Local events
+* Emergency services
+* Local recommendations
+* Other location-aware services
 
 ---
 
-# Country Personalization
+# 7. GLOBAL LOCATION ONBOARDING
 
-Country-specific functionality must be independent of religion.
+The existing onboarding already contains:
 
-If the user's country is Pakistan, expose Pakistan-specific utilities where appropriate.
+**“What are you here for?”**
 
-For example:
+Keep the existing onboarding step.
 
-A Pakistani Muslim:
+Do NOT duplicate it.
 
+Improve/reorganize it only where necessary.
+
+The onboarding should also capture the information needed for personalization.
+
+---
+
+## Where Are You Based?
+
+Use:
+
+**Where are you based?**
+
+Supporting copy:
+
+**This helps us personalize local information and services. It says nothing about who you are.**
+
+The current implementation only provides a handful of countries.
+
+That is NOT acceptable for a global app.
+
+---
+
+## Country Picker
+
+Provide:
+
+**Search countries**
+
+The country selector should support:
+
+* Search
+* Popular countries
+* Recently selected countries
+* Full global country list
+
+The user should be able to search for any country.
+
+Examples:
+
+* Pakistan
+* Japan
+* Germany
+* Australia
+* Nigeria
+* Brazil
+* Turkey
+* Indonesia
+* United Kingdom
+* United States
+* etc.
+
+---
+
+# 8. CITY ONBOARDING
+
+After country selection:
+
+**Which city are you in?**
+
+Allow:
+
+* Search city
+* Popular cities
+* Use current location
+
+Example:
+
+Pakistan:
+
+* Islamabad
+* Lahore
+* Karachi
+* Rawalpindi
+* Peshawar
+* Quetta
+
+But these are examples only.
+
+The system must support a global city database.
+
+---
+
+# 9. CURRENT LOCATION
+
+Provide:
+
+**Use my current location**
+
+This should be optional.
+
+If permission is granted, use location to determine:
+
+* Country
+* Region where available
+* City where available
+* Latitude
+* Longitude
+* Timezone
+
+Use this information for relevant services.
+
+The user must always be able to manually change their location.
+
+Do not make location permission mandatory unless technically required by a specific feature.
+
+---
+
+# 10. LANGUAGE
+
+Localization is a **first-class product requirement**.
+
+Do not treat localization as an afterthought.
+
+The application must be architected to support multiple languages.
+
+Potential languages include:
+
+* English
+* Urdu
+* Arabic
+* Hindi
+* French
+* Spanish
+* German
+* Turkish
+* Indonesian
+* Malay
+* Japanese
+* Chinese
+* Portuguese
+* etc.
+
+The exact initial language list can be decided separately.
+
+The architecture must make adding languages easy.
+
+---
+
+# 11. LOCALIZATION
+
+Localization means more than translating strings.
+
+It should cover:
+
+* Navigation
+* Buttons
+* Forms
+* Empty states
+* Error messages
+* Notifications
+* Onboarding
+* Tool descriptions
+* Settings
+* Help content
+* System messages
+* Content where appropriate
+
+Do NOT hard-code user-facing strings throughout the application.
+
+Use a proper localization system.
+
+---
+
+# 12. LANGUAGE AND COUNTRY ARE INDEPENDENT
+
+A user's language should NOT automatically be determined from country.
+
+Examples:
+
+Pakistan + English
+
+UK + Urdu
+
+Saudi Arabia + English
+
+USA + Spanish
+
+Japan + English
+
+UAE + Arabic
+
+All should work naturally.
+
+---
+
+# 13. LOCALE
+
+Support locale-aware formatting.
+
+Examples:
+
+* en-PK
+* en-GB
+* en-US
+* ar-SA
+* ar-AE
+* fr-CA
+
+Locale should influence:
+
+* Date format
+* Number format
+* Currency formatting
+* Decimal separators
+* Thousands separators
+* Week start
+* Regional terminology
+* Units
+* Language
+* Time formatting
+
+Do not hard-code English/US formatting globally.
+
+---
+
+# 14. CURRENCY
+
+Currency must be localization-aware.
+
+Examples:
+
+Pakistan → PKR
+
+United States → USD
+
+United Kingdom → GBP
+
+UAE → AED
+
+Saudi Arabia → SAR
+
+Japan → JPY
+
+Eurozone → EUR
+
+Do not hard-code PKR, USD, or GBP globally.
+
+Money-related features should understand the user's current country/locale.
+
+Users should still be able to manually select a preferred/base currency where appropriate.
+
+---
+
+# 15. UNITS
+
+Support localized units.
+
+Examples:
+
+* km / miles
+* °C / °F
+* kg / lb
+* liters / gallons
+* km/h / mph
+
+Allow:
+
+**Automatic**
+
+**Metric**
+
+**Imperial**
+
+Users should be able to override the automatic setting.
+
+---
+
+# 16. TIMEZONE
+
+Time-sensitive functionality must respect the user's timezone.
+
+Examples:
+
+* Prayer times
+* Weather
+* Calendar
+* Alarms
+* Flights
+* Trains
+* Loadshedding
+* Events
+* Reminders
+
+Do NOT hard-code timezone offsets.
+
+---
+
+# 17. RTL
+
+Properly support RTL languages including:
+
+* Arabic
+* Urdu
+
+RTL must correctly affect:
+
+* Navigation
+* Cards
+* Lists
+* Forms
+* Bottom sheets
+* Search
+* Carousels
+* Share cards
+* Directional icons
+
+Do not simply mirror everything mechanically.
+
+Back/forward/next/previous icons must remain semantically correct.
+
+---
+
+# 18. THREE PRIMARY USER STATES
+
+The application must be tested against at least these scenarios.
+
+### Muslim + Pakistan
+
+Country:
+
+Pakistan
+
+City:
+
+Islamabad
+
+Islamic:
+
+Enabled
+
+Result:
+
+* Global features → visible
+* Pakistan features → visible
 * Islamic features → visible
-* Pakistan features → visible
-
-A Pakistani non-Muslim:
-
-* Islamic features → hidden by default
-* Pakistan features → visible
-
-Do not assume that being Pakistani means the user is Muslim.
-
-Likewise, do not assume that being Muslim means the user is Pakistani.
-
-Country-specific features should be clearly identified internally as localized features, but avoid cluttering the UI with excessive country flags.
+* Localized currency → PKR
+* Local services → Islamabad/Pakistan context
 
 ---
 
-# Feature Architecture
+### Non-Muslim + Pakistan
 
-Organize the application around four major feature groups:
+Country:
 
-1. **Prayer & Islam**
-2. **Money & Rates**
-3. **Daily Life**
-4. **Personal**
+Pakistan
 
-These categories should not necessarily appear as four huge blocks everywhere.
+City:
 
-Use contextual surfacing:
+Islamabad
 
-* Home → personalized highlights
-* Today → daily information
-* Tools → categorized utilities
-* Explore → discovery
-* Profile → personalization/settings
+Islamic:
+
+Disabled
+
+Result:
+
+* Global features → visible
+* Pakistan features → visible
+* Islamic features → hidden
 
 ---
 
-# Prayer & Islam
+### Muslim + United Kingdom
 
-**17 features**
+Country:
 
-These features are intended for **Muslim users**.
+United Kingdom
+
+City:
+
+London
+
+Islamic:
+
+Enabled
+
+Result:
+
+* Global features → visible
+* UK/local features → visible where supported
+* Islamic features → visible
+* Pakistan-only features → hidden
+
+---
+
+### Non-Muslim + United States
+
+Country:
+
+United States
+
+City:
+
+New York
+
+Islamic:
+
+Disabled
+
+Result:
+
+* Global features → visible
+* US-localized features → visible where supported
+* Islamic features → hidden
+
+---
+
+# 19. FEATURE REGISTRY
+
+Continue using the existing:
+
+**catalogue.js**
+
+as the **single source of truth**.
+
+Every feature should contain metadata describing:
+
+* id
+* category
+* faith
+* countries
+* regions
+* cities
+* languages
+* locale
+* currency
+* units
+* timezone
+* adapts
+* sensitive
+* staple
+* shareable
+* requiresLocation
+* requiresCity
+* requiresCountry
+
+The feature registry determines:
+
+* Whether the feature is visible
+* Whether it is faith-gated
+* Whether it is country-specific
+* Whether it requires location
+* Whether it is localized
+* Whether it is sensitive
+* Whether it supports sharing
+* How it adapts to the user's context
+
+---
+
+# 20. VISIBILITY VS LOCALIZATION
+
+These are different concepts.
+
+A feature can be:
+
+### Global
+
+Visible worldwide.
+
+Example:
+
+Calculator.
+
+### Global + Localized
+
+Visible worldwide but adapts to location.
+
+Example:
+
+Weather.
+
+### Country-specific
+
+Visible only in supported countries.
+
+Example:
+
+Pakistan Fuel Prices.
+
+### Faith-gated
+
+Visible only when Islamic functionality is enabled.
+
+Example:
+
+Quran.
+
+### Faith-gated + Localized
+
+Visible to Muslim users and adapts to location.
+
+Example:
+
+Prayer Times.
+
+Do not mix these concepts.
+
+---
+
+# 21. ORIGINAL FEATURE CATALOGUE
+
+## Prayer & Islam — 17
 
 * Prayer Times
 * Qibla Compass
@@ -296,45 +747,392 @@ These features are intended for **Muslim users**.
 * Zakat Calculator
 * Faraid
 
+These features are **for Muslim users**.
+
+They should not appear in the default experience of non-Muslim users.
+
 ---
 
-## Islamic UX Principles
+# 22. ISLAMIC ONBOARDING FLOW
 
-Islamic features should feel:
+Do not force Islamic onboarding on every user.
 
-* Calm
-* Respectful
-* Modern
-* Elegant
-* Accessible
-* Content-focused
+The existing:
 
-Do NOT make the UI:
+**“What are you here for?”**
 
-* Ornamental
-* Excessively gold/green
-* Mosque-themed everywhere
-* Filled with Arabic decorative patterns
-* Visually old-fashioned
-* Overly religious in the global application shell
+step should remain.
 
-Use subtle Islamic visual references only where appropriate.
+Within it, Islamic interests should be available as an optional area.
 
 For example:
 
-* Minimal geometric patterns
-* Subtle crescent-inspired shapes
-* Elegant Arabic typography where actual Arabic content is displayed
-* Calm gradients
-* Minimal decorative motifs
+**What are you here for?**
 
-The main application should still look like a **global premium consumer product**.
+### Everyday
+
+* Utilities
+* Productivity
+* Planning
+
+### Money
+
+* Finance
+* Expenses
+* Savings
+
+### Lifestyle
+
+* Weather
+* News
+* Recipes
+* etc.
+
+### Islamic
+
+Only show Islamic interests when appropriate based on the user's selected preference.
+
+Allow the user to choose Islamic interests such as:
+
+* Prayer
+* Quran
+* Hadith
+* Duas
+* Ramadan
+* Qibla
+* Tasbih
+* etc.
+
+Do not force users to select every Islamic feature.
 
 ---
 
-# Money & Rates
+# 23. NON-MUSLIM EXPERIENCE
 
-**14 features**
+For non-Muslim users:
+
+Do NOT show Islamic features in:
+
+* Home
+* Quick Tools
+* Tools categories
+* Today
+* Explore
+* Search
+* Notifications
+* Recommendations
+* Hero carousel
+* Recent features
+
+unless the user explicitly enables the Islamic experience.
+
+The application should feel completely natural without Islamic functionality.
+
+Do not leave empty placeholders saying:
+
+“Islamic features are disabled.”
+
+Simply provide a clean experience.
+
+---
+
+# 24. MUSLIM EXPERIENCE
+
+For Muslim users, Islamic functionality becomes available.
+
+However, do NOT turn the Home screen into an Islamic dashboard.
+
+Islamic content should be integrated carefully.
+
+Use:
+
+* Prayer
+* Quran
+* Ayah of the Day
+* Other selected personalized content
+
+when relevant.
+
+Do not display everything at once.
+
+---
+
+# 25. HOME SCREEN
+
+Create a beautiful dashboard/home screen.
+
+---
+
+## Header
+
+Show:
+
+* User greeting
+* Current date
+* Optional city/location
+* Profile/avatar
+* Notification button
+
+Example:
+
+**Good morning 👋**
+
+**Monday, 7 September**
+
+**Islamabad**
+
+Keep the header minimal.
+
+---
+
+# 26. HERO CAROUSEL
+
+Create a large horizontal hero carousel below the header.
+
+Use:
+
+**2–4 horizontally swipeable cards.**
+
+Each card should have:
+
+* Large headline
+* Supporting text
+* CTA
+* Beautiful SVG illustration
+* Abstract decorative shapes
+* Floating illustration/sticker
+* Subtle gradient/textured background
+* Pagination dots
+* Smooth swipe animation
+
+Example slides:
+
+### Slide 1
+
+**Plan your day**
+
+Tasks, reminders and calendar.
+
+### Slide 2
+
+**Your next prayer**
+
+Prayer time + countdown.
+
+Only relevant to Muslim users.
+
+### Slide 3
+
+**Read something meaningful**
+
+Quran / relevant daily content.
+
+Only relevant to Muslim users.
+
+### Slide 4
+
+**Useful tools, all in one place**
+
+Calculator, converter, currency, Qibla, etc.
+
+Hero slides should be selected based on relevance.
+
+Do not show Islamic hero slides to non-Muslim users.
+
+Do not exceed 4 slides.
+
+---
+
+# 27. QUICK TOOLS
+
+Create a:
+
+**Quick Tools**
+
+section.
+
+Use a responsive grid of compact cards.
+
+Examples:
+
+* Calculator
+* Currency
+* Weather
+* Calendar
+* Qibla
+* Tasbeeh
+* Notes
+* Timer
+
+Quick Tools should personalize based on:
+
+* User interests
+* Religion
+* Country
+* Frequently used features
+* Recent activity
+
+Do not let one category dominate the entire grid.
+
+For example, if a Muslim user selects many Islamic interests, do not make all 8 quick tools Islamic.
+
+Use intelligent balancing/round-robin/relevance.
+
+---
+
+# 28. TODAY
+
+Create a personalized:
+
+**Today**
+
+experience.
+
+It can include:
+
+### Prayer
+
+For Muslim users:
+
+* Next prayer
+* Countdown
+* Prayer name
+* Prayer time
+* Progress indicator
+
+### Quran
+
+For Muslim users:
+
+* Continue Reading
+* Surah
+* Ayah progress
+* Progress bar
+* Continue button
+
+### Daily Quote
+
+Where appropriate:
+
+* Quote
+* Author/source
+* Bookmark
+* Share
+
+### Weather
+
+Localized by:
+
+* City
+* Country
+* Units
+* Locale
+
+### Calendar
+
+Localized by:
+
+* Country
+* Locale
+* Timezone
+
+Do not overload Today.
+
+---
+
+# 29. IMPORTANT HOME CORRECTION — HADITH
+
+Do NOT claim that Hadith is currently part of Home simply because Hadith exists as a feature.
+
+Hadith is an Islamic feature.
+
+It does NOT automatically belong on Home.
+
+Unless specifically included in the approved Home content strategy:
+
+**Do NOT add Hadith to Home.**
+
+The same principle applies to:
+
+* Dua
+* Tasbih
+* Zakat
+* Faraid
+* Ramadan
+* etc.
+
+Feature availability does not mean the feature must be promoted on Home.
+
+---
+
+# 30. TOOLS SCREEN
+
+Create a dedicated:
+
+**Tools**
+
+screen.
+
+Organize features into categories.
+
+Do not display all tools as one giant undifferentiated list.
+
+---
+
+## Everyday
+
+* Calculator
+* Unit Converter
+* Currency Converter
+* Stopwatch
+* Timer
+* Age Calculator
+* Date Calculator
+
+---
+
+## Planning
+
+* Calendar
+* Reminders
+* Notes
+* To-do
+* Events
+
+---
+
+## Islamic
+
+Visible only to Muslim users:
+
+* Prayer Times
+* Quran
+* Search Quran
+* Hadith
+* Duas
+* Tasbih
+* Qibla
+* Islamic Calendar
+* 99 Names of Allah
+* Zakat Calculator
+* Faraid
+* Ramadan
+
+---
+
+## Lifestyle
+
+* Weather
+* News
+* Daily Quotes
+* Nearby Places
+* Other useful utilities
+
+---
+
+# 31. MONEY & RATES
+
+Features:
 
 * Currency & Gold 🇵🇰
 * Markets
@@ -351,21 +1149,17 @@ The main application should still look like a **global premium consumer product*
 * Installments
 * Committee
 
-Pakistan-specific financial features should be automatically available when the user's country is Pakistan.
+The 🇵🇰 marker means the feature is currently localized for Pakistan.
 
-Do not show the 🇵🇰 emoji everywhere in the actual production UI.
+It does NOT mean the entire Money category is Pakistan-only.
 
-Use localization metadata internally and subtle UI labels such as:
-
-**Pakistan**
-
-when necessary.
+Future country-specific implementations should be supported through the localization/capability system.
 
 ---
 
-# Daily Life
+# 32. DAILY LIFE
 
-**18 features**
+Features:
 
 * Calendar
 * Weather
@@ -386,15 +1180,45 @@ when necessary.
 * WhatsApp Status 🤖
 * Speed Test
 
-Pakistan-specific services should appear automatically for Pakistani users.
+Country-specific features should only appear where supported.
 
-Global features should remain available regardless of country.
+Global features should remain available globally.
+
+News, Weather, Cricket and similar content can be **global features with localized content**, where appropriate.
+
+Do not hide an otherwise global feature merely because its first implementation is Pakistan-focused.
 
 ---
 
-# Personal
+# 33. TRAINS
 
-**23 features**
+Pakistan currently has:
+
+**Trains**
+
+as a first-class bottom navigation destination.
+
+For Pakistan, the navigation can be:
+
+**Home · Tools · Trains · Today · Profile**
+
+Trains should have a full screen containing:
+
+* Route search
+* Departures
+* Live running status
+* Fares
+* Relevant train information
+
+The underlying architecture should allow other countries to eventually have their own transport systems.
+
+Do not make the architecture Pakistan-specific.
+
+---
+
+# 34. PERSONAL
+
+Features:
 
 * To-dos
 * Notes
@@ -420,286 +1244,24 @@ Global features should remain available regardless of country.
 * Subscriptions
 * Medication Reminders
 
-Personal features should feel highly private, organized and user-controlled.
+Sensitive personal features must be handled carefully.
 
-Sensitive personal features should not be unnecessarily surfaced on the Home screen.
-
-For example:
-
-* Medication
-* Pregnancy
-* Cycle Tracking
-* Vaccinations
-* Health Records
-
-should be accessible through Personal/Health rather than aggressively promoted.
+Do not unnecessarily surface sensitive features on Home.
 
 ---
 
-# Home Screen
-
-Create a beautiful personalized dashboard/home screen.
-
-The Home screen must **change based on the user's profile, country, preferences, and usage**.
-
-Do not create one identical Home screen for every user.
-
----
-
-## Header
-
-Top section:
-
-* User greeting
-* Current date
-* Optional location
-* Profile/avatar button
-* Notification button
-
-Example:
-
-**Good morning 👋**
-
-**Monday, 7 September**
-
-Keep this area minimal and elegant.
-
-For Muslim users, contextual information such as the next prayer can appear below the header.
-
-For non-Muslim users, replace that space with relevant daily information.
-
----
-
-# Hero Carousel
-
-Create a large horizontal **hero carousel** directly below the header.
-
-Use 2–4 horizontally swipeable cards.
-
-Each card should have:
-
-* Large headline
-* Short supporting text
-* CTA
-* Beautiful SVG illustration
-* Abstract decorative background shapes
-* Floating illustration/sticker elements
-* Subtle gradient or textured background
-* Small pagination dots
-* Smooth swipe animation
-
-Possible slides should be **personalized**.
-
-### General slides
-
-1. **Plan your day**
-
-   * Tasks, reminders and calendar
-
-2. **Useful tools, all in one place**
-
-   * Calculator, converter, currency, weather, etc.
-
-3. **Stay on top of your money**
-
-   * Expenses, rates, savings and financial tools
-
-4. **Your day at a glance**
-
-   * Weather, calendar, news and personalized information
-
-### Muslim-specific slides
-
-For Muslim users:
-
-**Your next prayer**
-
-* Prayer name
-* Prayer time
-* Countdown
-* Location
-
-**Read something meaningful**
-
-* Quran
-* Hadith
-* Ayah of the day
-
-Do not show Muslim-specific carousel slides to non-Muslim users unless they explicitly enable Islamic content.
-
----
-
-# Quick Tools
-
-Create a **Quick Tools** section.
-
-Use a responsive grid of compact cards.
-
-Examples:
-
-* Calculator
-* Currency
-* Weather
-* Calendar
-* Qibla
-* Tasbeeh
-* Notes
-* Timer
-
-For non-Muslim users, replace Islamic quick tools such as Qibla/Tasbeeh with frequently used general tools.
-
-For Muslim users, Islamic tools may appear naturally among Quick Tools.
-
-Each tool should have:
-
-* Clean SVG icon
-* Short label
-* Optional small status/value
-* Subtle background treatment
-
-Avoid huge colorful icons.
-
-Keep the iconography sophisticated and consistent.
-
----
-
-# Today Section
-
-Create a personalized **Today** experience.
-
-The content should change based on the user.
-
----
-
-## Muslim Today Experience
-
-Possible cards:
-
-### Prayer
-
-Show:
-
-* Next prayer
-* Countdown
-* Prayer name
-* Prayer time
-* Progress indicator
-
-### Ayah of the Day
-
-Show:
-
-* Ayah
-* Surah
-* Reference
-* Bookmark
-* Share
-
-### Hadith
-
-Show:
-
-* Hadith text
-* Source
-* Bookmark
-* Share
-
-### Quran
-
-**Continue Reading**
-
-Show:
-
-* Surah name
-* Ayah progress
-* Progress bar
-* Continue button
-
-### Daily Dua
-
-Show:
-
-* Dua
-* Arabic
-* Translation
-* Bookmark
-
----
-
-## General Today Experience
-
-For non-Muslim users, replace Islamic content with:
-
-* Daily weather
-* Calendar events
-* Tasks
-* Reminders
-* Daily quote
-* News
-* Cricket
-* Money/rates
-* Personal goals
-* Streaks
-* Relevant Pakistan services
-
-The Today page should feel personalized rather than like a static feed.
-
----
-
-# Tools Screen
-
-Create a dedicated **Tools** screen.
-
-Organize tools into categories instead of showing everything at once.
+# 35. COUNTRY LOCALIZATION
 
 Use:
 
-* Category headers
-* Compact tool cards
-* Search
-* Recently Used
-* Favorites
-* Smart recommendations
+**Global Core + Country Capabilities**
 
-Possible categories:
+Example:
 
-## Everyday
+### Pakistan
 
-* Calculator
-* Unit Converter
-* Currency Converter
-* Stopwatch
-* Timer
-* Age Calculator
-* Date Calculator
+Currently localized:
 
-## Planning
-
-* Calendar
-* Reminders
-* Notes
-* To-do
-* Events
-
-## Islamic
-
-Visible only for users who have Islamic functionality enabled.
-
-* Prayer Times
-* Quran
-* Hadith
-* Duas
-* Tasbeeh
-* Qibla
-* Hijri Calendar
-* Zakat Calculator
-* Ramadan
-* Faraid
-
-## Money
-
-* Currency & Gold
-* Markets
 * Fuel Prices
 * Fuel Cost
 * Tax Calculator
@@ -707,183 +1269,613 @@ Visible only for users who have Islamic functionality enabled.
 * Prize Bonds
 * Bills
 * Mobile Packages
-* Loan / EMI
-* Tip & Split
-* Lending Ledger
-* Installments
-* Committee
-
-## Daily Life
-
-* Weather
 * Loadshedding
 * Trains
-* Flights
-* News
-* Cricket
-* Emergency
-* QR Scanner
-* Document Scanner
-* Passport Photos
 * Vehicle & Fines
-* Media Saver
-* WhatsApp Status
-* Speed Test
-
-## Personal
-
-* To-dos
-* Notes
-* Shopping List
-* Birthdays
-* Recipes
-* Meal Planner
-* Alarms
-* Learning & Growth
-* Documents
-* Health
-* Habits
-* Water
-* Expenses
-* Savings Goals
-* Subscriptions
-* Medication Reminders
+* Local News
+* Parcel Tracking
+* Emergency
 * etc.
 
+But the architecture must support:
+
+### UK
+
+Potential:
+
+* UK Trains
+* UK Tax
+* UK Fuel
+* UK Public Holidays
+* UK Local News
+
+### UAE
+
+Potential:
+
+* UAE Bills
+* UAE Fuel
+* UAE Public Services
+* UAE Local Information
+
+### Saudi Arabia
+
+Potential:
+
+* Saudi Services
+* Saudi Fuel
+* Saudi Local Information
+
+### India
+
+Potential:
+
+* Indian Trains
+* Indian Fuel
+* Indian Tax
+* Indian Bills
+
+etc.
+
+Do not implement country logic throughout individual screens.
+
+Use centralized capability metadata.
+
 ---
 
-# Search & Discovery
+# 36. PERSONALIZATION SETTINGS
 
-Because the application contains many utilities, provide powerful global search.
+Users must be able to change:
 
-Users should be able to search:
+## Location
 
-* Tools
-* Features
-* Content
-* Quran
-* Hadith
+* Country
+* Region/state
+* City
+* Current location
+
+## Language
+
+* App language
+
+## Islamic Content
+
+* Enable/disable
+* Islamic interests
+
+## Content Preferences
+
 * News
-* Places
-* Settings
-* Personal records where appropriate
+* Sports
+* Finance
+* Lifestyle
+* Productivity
+* Islamic
+* etc.
 
-Examples:
+## Units
 
-Search:
+* Automatic
+* Metric
+* Imperial
 
-**“currency”**
+## Currency
 
-→ Currency Converter
+* Automatic
+* Preferred currency
 
-Search:
+## Time
 
-**“petrol”**
+* 12-hour
+* 24-hour
 
-→ Fuel Prices / Fuel Cost
-
-Search:
-
-**“qibla”**
-
-→ Qibla Compass
-
-Search:
-
-**“salary tax”**
-
-→ Pakistan Tax Calculator
-
-Search:
-
-**“surah rahman”**
-
-→ Quran Search
-
-Search should provide intelligent results without making the interface feel technical.
+Changing these settings should dynamically update the application.
 
 ---
 
-# Bottom Navigation
+# 37. LOCATION CHANGE
 
-Create a modern floating/sticky bottom navigation.
+Changing country must NOT delete personal data.
 
-Suggested tabs:
+Do not delete:
 
-* Home
-* Tools
-* Today
-* Explore
-* Profile
+* Notes
+* Tasks
+* Expenses
+* Favorites
+* Documents
+* Personal records
 
-However, **Trains 🇵🇰 is an important feature and should be treated as a first-class navigation experience for Pakistani users**.
+Changing country only changes relevant localized services.
 
-If the product requirements specify Trains as a bottom tab, adapt the navigation for Pakistan users accordingly.
+Likewise:
+
+Changing language must not reset data.
+
+Changing Islamic preference must not delete Islamic data.
+
+It should only change visibility.
+
+---
+
+# 38. EXTERNAL SHARING — IMPORTANT
+
+Whenever content is shared outside the application, use a **visual share card** instead of plain text whenever the feature supports sharing.
+
+This applies to:
+
+* Quran Ayah
+* Hadith
+* Dua
+* Ayah of the Day
+* Daily Quote
+* Islamic reminders
+* Other shareable content
+
+The primary shared artifact should be the generated visual card.
+
+---
+
+# 39. SHARE CARD SYSTEM
+
+Create a reusable share-card generator.
+
+---
+
+## Quran Share Card
+
+Include:
+
+* Surah
+* Ayah
+* Arabic
+* Translation
+* Reference
+* Lume branding
+
+---
+
+## Hadith Share Card
+
+Include:
+
+* Hadith
+* Source
+* Reference
+* Lume branding
+
+---
+
+## Dua Share Card
+
+Include:
+
+* Arabic
+* Translation
+* Reference
+* Lume branding
+
+---
+
+## Quote Share Card
+
+Include:
+
+* Quote
+* Author/source
+* Lume branding
+
+---
+
+## Daily Reminder
+
+Include:
+
+* Short message
+* Optional reference
+* Lume branding
+
+---
+
+# 40. SHARE CARD PREVIEW
+
+Flow:
+
+**Share**
+
+↓
+
+**Generate Share Card**
+
+↓
+
+**Preview**
+
+Actions:
+
+* Share
+* Save Image
+* Close
+
+The system share sheet should receive the generated image/card rather than plain text as the primary artifact.
+
+---
+
+# 41. SHARE CARD LOCALIZATION
+
+Share cards must respect:
+
+* Language
+* Locale
+* RTL/LTR
+* Arabic typography
+* Urdu typography
+* Translation
+* Date formatting
+* Content direction
 
 For example:
 
-### General users
+English:
 
-Home · Tools · Today · Explore · Profile
+LTR
 
-### Pakistan users
+Urdu:
 
-Home · Tools · Trains · Today · Profile
+RTL
 
-Or use a context-aware navigation strategy where Trains can become a prominent primary destination without breaking the overall navigation system.
+Arabic:
 
-Do not overload the bottom navigation with too many tabs.
+RTL
 
-Use:
-
-* Simple SVG icons
-* Active/inactive states
-* Clear labels
-* Smooth animated active indicator
-* Comfortable touch targets
-
-Do not use oversized icons.
+Do not create an English-only share system.
 
 ---
 
-# Illustrations & Decorative Elements
+# 42. SHARE CARD VISUAL DESIGN
 
-Use **SVG illustrations and abstract decorative shapes** throughout the interface.
+Share cards must belong to the same Lume design system.
 
-Visual language should include:
+Use:
+
+* Same typography
+* Same spacing
+* Same brand language
+* Same accent system
+* Same illustration language
+* Same rounded geometry
+* Same premium aesthetic
+
+Islamic cards can contain subtle Islamic visual cues.
+
+Avoid:
+
+* Excessive mosque imagery
+* Generic stock graphics
+* Gold ornamental borders
+* Overly decorative Islamic patterns
+* Old-fashioned Islamic-app aesthetics
+
+The result should feel like **Lume**, not a separate Islamic application.
+
+---
+
+# 43. BRANDING
+
+Use the **Lume** brand.
+
+The global application shell should remain visually neutral.
+
+The user should NOT immediately assume:
+
+**“This is an Islamic app.”**
+
+However, when a Muslim user enters Islamic functionality, that experience should feel:
+
+* Thoughtful
+* Authentic
+* Premium
+* Respectful
+* Deeply integrated
+
+Do not create a separate visual product for Islamic functionality.
+
+---
+
+# 44. HOME — NON-MUSLIM EXAMPLE
+
+Example:
+
+**Good morning 👋**
+
+Monday, 7 September
+
+Islamabad
+
+Hero:
+
+**Plan your day**
+
+Quick Tools:
+
+* Calculator
+* Weather
+* Calendar
+* Notes
+* Currency
+* Timer
+
+Today:
+
+* Weather
+* Tasks
+* Calendar
+* News
+* Money
+* Personal goals
+
+No Islamic cards should appear.
+
+---
+
+# 45. HOME — MUSLIM EXAMPLE
+
+Example:
+
+**Good morning 👋**
+
+Monday, 7 September
+
+Islamabad
+
+Hero:
+
+**Your next prayer**
+
+Asr
+
+4:52 PM
+
+in 01:24:32
+
+Quick Tools:
+
+* Prayer
+* Quran
+* Calculator
+* Weather
+* Notes
+* Currency
+
+Today:
+
+* Prayer progress
+* Continue Quran
+* Ayah of the Day
+* Calendar
+* Weather
+
+Again:
+
+**Do not automatically add Hadith to Home.**
+
+---
+
+# 46. BOTTOM NAVIGATION
+
+Global:
+
+**Home · Tools · Today · Explore · Profile**
+
+Pakistan:
+
+**Home · Tools · Trains · Today · Profile**
+
+Explore can still be reachable through contextual links when it is not a primary tab.
+
+Do not create an Islamic-specific bottom navigation tab.
+
+Islamic features should live inside:
+
+* Home
+* Today
+* Tools
+* Explore
+* Search
+
+based on personalization.
+
+---
+
+# 47. SEARCH
+
+Global search should understand:
+
+* Feature names
+* Localized names
+* User language
+* Common terminology
+* Country-specific terminology
+
+Examples:
+
+**petrol**
+
+→ Fuel Prices
+
+**salary tax**
+
+→ Tax Calculator
+
+**surah rahman**
+
+→ Quran Search
+
+**qibla**
+
+→ Qibla Compass
+
+Search must respect visibility rules.
+
+If Islamic functionality is disabled, Islamic features must not leak into search results.
+
+---
+
+# 48. NOTIFICATIONS
+
+Notifications must respect:
+
+* Religion
+* Country
+* Region
+* City
+* Language
+* Locale
+* Timezone
+* Preferences
+
+Example:
+
+Muslim user:
+
+**Asr is in 20 minutes**
+
+Non-Muslim user:
+
+No prayer notification.
+
+Pakistan user:
+
+**Fuel prices updated**
+
+UK user:
+
+Do not show Pakistan fuel notifications.
+
+Urdu user:
+
+Notification should be localized into Urdu.
+
+---
+
+# 49. HOME PERSONALIZATION
+
+Personalization should improve relevance without making the app unpredictable.
+
+Do NOT constantly move entire sections around.
+
+Keep the primary navigation stable.
+
+Personalize:
+
+* Hero
+* Quick Tools
+* Recommendations
+* Today cards
+* Local information
+* Recently used features
+
+The user should always know where things are.
+
+---
+
+# 50. VISUAL DESIGN DIRECTION
+
+Create a:
+
+**sleek + minimal + premium + highly polished mobile interface**
+
+with:
+
+* Mobile-first responsive layout
+* Clean visual hierarchy
+* Generous spacing
+* Modern typography
+* Soft rounded cards
+* Subtle borders
+* Light shadows
+* Smooth micro-interactions
+* Elegant gradients used sparingly
+* Beautiful SVG illustrations
+* Abstract decorative elements
+* Small floating stickers
+* Premium iconography
+* Smooth carousels
+* Excellent light/dark mode
+* Accessibility
+* Readability
+
+Avoid clutter.
+
+---
+
+# 51. DESIGN INSPIRATION
+
+The quality bar should feel inspired by modern products such as:
+
+* Apple
+* Notion
+* Linear
+* Revolut
+* Arc
+* Airbnb
+* Headspace
+
+But do NOT copy their interfaces.
+
+Create an original visual identity for Lume.
+
+---
+
+# 52. MOBILE LAYOUT
+
+Design primarily for:
+
+**390 × 844**
+
+Use approximately:
+
+* 16–20px horizontal padding
+* 12–16px card spacing
+* 20–28px section spacing
+* 12–20px card radius
+* Comfortable touch targets
+* Sticky/floating bottom navigation
+
+The interface should feel spacious.
+
+---
+
+# 53. ILLUSTRATIONS
+
+Use custom SVG illustrations.
+
+Visual language:
 
 * Abstract blobs
-* Soft geometric shapes
+* Soft geometry
 * Floating stars
 * Sparkles
-* Small stickers
+* Stickers
 * Doodles
-* Gradient mesh shapes
+* Gradient mesh
 * Floating circles
 * Minimal line illustrations
 * Subtle patterns
 
-These should sit **behind or around cards**, not interfere with content.
+Place decorative elements:
 
-Think of them as:
+**behind or around cards**
 
-**background decorative illustrations**
+not over important content.
 
-or
-
-**floating UI stickers**.
-
-Keep them subtle and premium.
-
-Do NOT use generic stock illustrations.
-
-Prefer custom SVG illustrations that match the app's visual language.
+Do not use generic stock illustrations.
 
 ---
 
-# Cards
+# 54. CARD SYSTEM
 
-Create several card styles:
+Create consistent card types:
 
 1. Hero card
 2. Feature card
@@ -893,11 +1885,6 @@ Create several card styles:
 6. Statistic card
 7. Progress card
 8. Horizontal scroll card
-9. Personalized recommendation card
-10. Empty state card
-11. Status/information card
-
-Cards should feel consistent but not repetitive.
 
 Use hierarchy through:
 
@@ -911,7 +1898,7 @@ rather than excessive colors.
 
 ---
 
-# Typography
+# 55. TYPOGRAPHY
 
 Use a modern professional font such as:
 
@@ -924,34 +1911,34 @@ Use a modern professional font such as:
 Use:
 
 * Strong large headings
-* Medium-weight section titles
+* Medium section titles
 * Highly readable body text
-* Small secondary metadata
+* Small metadata
 
 Avoid excessive font weights.
 
-Arabic content should use a suitable Arabic typeface with excellent readability and proper RTL support.
+For Arabic/Urdu, use appropriate fonts where required.
 
 ---
 
-# Icons
+# 56. ICONS
 
-Use a consistent SVG icon library.
+Use one consistent SVG icon library.
 
-Preferred style:
+Preferred:
 
 * Lucide
 * Phosphor
 * Hugeicons
 * Heroicons
 
-Keep stroke width and visual weight consistent throughout the application.
-
 Do NOT mix unrelated icon styles.
+
+Keep stroke width and visual weight consistent.
 
 ---
 
-# Color System
+# 57. COLOR SYSTEM
 
 Use a sophisticated neutral foundation.
 
@@ -963,452 +1950,407 @@ Primary UI:
 * Muted gray secondary text
 * Subtle borders
 
-Use one distinctive accent color throughout the product.
+Use one distinctive accent color.
 
-Accent can be:
+Possible direction:
 
-* Modern teal
-* Sophisticated green
-* Modern blue
-* Another premium accent
+Modern teal/green or another sophisticated accent.
 
-Use gradients only for:
+Gradients should be reserved for:
 
 * Hero cards
 * Featured content
 * Important states
 * Decorative illustrations
 
-Avoid making every card colorful.
-
-Islamic sections should NOT automatically become green/gold.
-
-The Islamic experience should inherit the same global design system.
+Do not make every card colorful.
 
 ---
 
-# Dark Mode
+# 58. DARK MODE
 
-Design the interface so it works beautifully in dark mode.
-
-Dark mode should use:
+Support:
 
 * Near-black background
 * Slightly lighter cards
 * Subtle borders
 * Muted text
-* Carefully adjusted accent colors
+* Carefully adjusted accent
 * Reduced gradient intensity
 
 Do not simply invert colors.
 
+Dark mode should feel intentionally designed.
+
 ---
 
-# Interactions & Motion
+# 59. MOTION
 
-Add subtle animations:
+Use subtle:
 
-* Hero carousel swipe
+* Hero swipe animation
 * Card press feedback
-* Bottom navigation transition
-* Progress animations
+* Navigation transition
+* Progress animation
 * Expand/collapse
-* Modal bottom sheets
+* Bottom sheets
 * Skeleton loading
 * Button micro-interactions
 * Page transitions
-* Pull-to-refresh
-* Search transitions
-* Favorite/bookmark animations
-* Tool opening transitions
+* Share-card generation
 
-Animations should feel:
+Animations should be fast and intentional.
 
-* Fast
-* Smooth
-* Intentional
-* Premium
-
-Avoid excessive bouncing or gimmicky animations.
+Avoid excessive bouncing.
 
 ---
 
-# Personalization Engine
+# 60. ACCESSIBILITY
 
-The Home screen and feature discovery should adapt based on:
-
-* User interests
-* Religion preference
-* Country
-* Frequently used tools
-* Recently used tools
-* Favorite tools
-* Time of day
-* Calendar events
-* Relevant contextual information
-
-For example:
-
-A Pakistani Muslim who frequently checks prayer times and fuel prices might see:
-
-1. Next Prayer
-2. Fuel Price
-3. Weather
-4. Continue Quran
-5. Calendar
-6. Quick Tools
-
-A Pakistani non-Muslim might see:
-
-1. Weather
-2. Fuel Price
-3. Calendar
-4. News
-5. Trains
-6. Quick Tools
-
-A user outside Pakistan might see:
-
-1. Weather
-2. Calendar
-3. Currency
-4. Tasks
-5. News
-6. Quick Tools
-
-Do not hard-code these exact layouts.
-
-The design should establish a system that can dynamically personalize the content.
-
----
-
-# Feature Visibility Rules
-
-Implement a clear feature visibility model.
-
-### Islamic features
-
-Visible when:
-
-* User is Muslim
-* OR user has explicitly enabled Islamic features/content
-
-Hidden by default when:
-
-* User is non-Muslim
-
-### Pakistan-specific features
-
-Visible when:
-
-* Country = Pakistan
-
-Regardless of:
-
-* Muslim
-* Non-Muslim
-
-### Global features
-
-Visible for everyone.
-
-### Personal/sensitive features
-
-Visible only when relevant and/or enabled by the user.
-
-This logic should be consistent across:
-
-* Home
-* Tools
-* Today
-* Search
-* Explore
-* Notifications
-* Recommendations
-* Widgets
-* Shortcuts
-
-A hidden feature should not randomly appear somewhere else in the application.
-
----
-
-# Changing Preferences
-
-Users must be able to change their personalization later.
-
-Provide a clean settings experience such as:
-
-**Profile → Personalization**
-
-Possible controls:
-
-### Interests
-
-* Productivity
-* Money
-* Lifestyle
-* Health
-* Travel
-* News
-* Entertainment
-* Islamic
-
-### Location / Country
-
-* Country
-* City
-* Location permissions
-
-### Content Preferences
-
-* Islamic content
-* News
-* Sports
-* Financial information
-* Recommendations
-
-Do not make personalization feel permanent or restrictive.
-
-Users should be able to change these settings at any time.
-
----
-
-# Empty States
-
-Create premium empty states for features without data.
-
-Examples:
-
-* No tasks
-* No expenses
-* No saved Quran content
-* No subscriptions
-* No upcoming events
-* No parcel
-* No savings goals
-* No favorite tools
-
-Use:
-
-* Simple SVG illustration
-* Short explanation
-* One primary CTA
-
-Avoid generic illustrations and excessive text.
-
----
-
-# Loading States
-
-Use polished skeleton loaders.
-
-Skeletons should match the final component structure.
-
-Avoid showing generic spinners everywhere.
-
-Use:
-
-* Skeleton cards
-* Skeleton lists
-* Shimmer where appropriate
-* Progressive loading
-
----
-
-# Error States
-
-Errors should be human-readable.
-
-Avoid technical messages such as:
-
-“API Error 500”.
-
-Instead:
-
-**Something went wrong**
-
-“We couldn't load the latest fuel prices.”
-
-CTA:
-
-**Try again**
-
-Where appropriate, show cached information with a timestamp.
-
----
-
-# Accessibility
-
-Prioritize:
+Support:
 
 * Strong contrast
 * Readable typography
 * Large touch targets
-* Screen-reader friendly labels
-* Clear focus states
-* Reduced motion support
-* RTL support for Arabic
+* Screen reader labels
+* Focus states
+* Reduced motion
 * Dynamic font scaling
-* Avoid color-only status indicators
+* RTL
+* Color-independent status indicators
+
+Localization must not break accessibility.
+
+Allow for longer translated strings.
+
+Do not assume English text lengths.
 
 ---
 
-# Localization
+# 61. SENSITIVE FEATURES
 
-The architecture should support localization from the beginning.
+Sensitive personal features include areas such as:
 
-Support:
+* Health records
+* Vaccinations
+* Medication reminders
+* Pregnancy
+* Cycle tracking
+* Personal documents
+* Financial records
+
+Do not unnecessarily surface these features prominently on Home.
+
+They should be discoverable without being intrusive.
+
+---
+
+# 62. SECURITY / PRIVACY UX
+
+Location, religion, health, financial and other personal preferences should be handled respectfully.
+
+Do not expose sensitive information in:
+
+* Public cards
+* Notifications without appropriate controls
+* Shared content
+* Unnecessary recommendations
+
+Users should have clear control over personalization.
+
+---
+
+# 63. ARCHITECTURE RULE
+
+Do NOT scatter country/religion logic across screens.
+
+Avoid patterns such as:
+
+```text
+if country == Pakistan
+```
+
+everywhere.
+
+Instead:
+
+Use centralized feature/capability metadata.
+
+Likewise, do not create scattered:
+
+```text
+if Muslim
+```
+
+checks throughout the UI.
+
+The visibility system should be centralized.
+
+---
+
+# 64. DEFENCE-IN-DEPTH VISIBILITY
+
+Feature gating must happen at multiple levels.
+
+Do not only hide the entry point.
+
+Also protect:
+
+* Feature screen
+* Search
+* Deep links
+* Sheets
+* Modals
+* Notifications
+* Recommendations
+* Quick Tools
+* Hero
+* Recent features
+* Inactive screens
+* Navigation
+
+If a feature is hidden, it should not be accessible indirectly.
+
+---
+
+# 65. VERIFICATION
+
+The application should be tested across multiple personalization states.
+
+At minimum test:
+
+1. Muslim + Pakistan + Islamabad
+2. Non-Muslim + Pakistan + Islamabad
+3. Muslim + UK + London
+4. Non-Muslim + USA + New York
+
+Also test:
 
 * English
 * Urdu
-* Arabic where relevant
-* RTL layouts
+* Arabic
+* RTL
+* Different currencies
+* Different units
+* Different timezones
+* Different cities
+* Country switching
+* Language switching
+* Islamic preference switching
 
-Do not hard-code UI text into illustrations.
-
-Dates, numbers, currencies and units should be localized.
-
-Pakistan-specific features should use appropriate:
-
-* PKR
-* Pakistani date/context where required
-* Local fuel terminology
-* Pakistani tax terminology
-* Pakistani financial products
-* Pakistani transport information
+Verify that the UI re-renders correctly.
 
 ---
 
-# Privacy & Sensitive Features
+# 66. IMPORTANT INVARIANTS
 
-Some features contain personal or sensitive information.
+The following must always remain true:
 
-Examples:
+### Religion
 
-* Health Records
-* Vaccinations
-* Medication Reminders
-* Pregnancy
-* Cycle Tracker
-* Expenses
-* Savings
-* Documents
-* Personal Records
+Religion does not depend on country.
 
-These should have:
+### Country
 
-* Clear privacy messaging where appropriate
-* Secure-looking UI
-* Minimal exposure on Home
-* User-controlled visibility
-* Appropriate authentication/locking where required
+Country does not depend on religion.
 
-Do not surface sensitive information in large promotional cards.
+### Language
 
----
+Language does not depend on religion.
 
-# UX Principles
+### Currency
 
-Follow these principles:
+Currency is locale/country-aware but user-overridable where appropriate.
 
-* Content first
-* Minimal cognitive load
-* Progressive disclosure
-* Clear hierarchy
-* One primary action per section
-* Easy thumb navigation
-* Consistent interaction patterns
-* Large enough touch targets
-* Avoid unnecessary screens
-* Avoid information overload
-* Make frequently used tools accessible within 1–2 taps
-* Personalize without making the UI unpredictable
-* Never overwhelm users with all available features
-* Keep the most useful information immediately accessible
+### Units
+
+Units are locale-aware but user-overridable.
+
+### City
+
+City affects location-aware services.
+
+### Islamic
+
+Islamic features are hidden for non-Muslims by default.
+
+### Pakistan
+
+Pakistan-specific features only appear where Pakistan localization applies.
+
+### Global
+
+Global features remain globally discoverable.
+
+### Sharing
+
+Supported external content uses visual share cards.
 
 ---
 
-# Important Design Constraints
+# 67. FINAL PRODUCT MODEL
 
-Do NOT make the app look like:
+Think of Lume as:
+
+**GLOBAL**
+
+The app works worldwide.
+
+↓
+
+**LOCAL**
+
+Country/region/city personalize relevant services.
+
+↓
+
+**PERSONAL**
+
+Interests and usage personalize the experience.
+
+↓
+
+**LOCALIZED**
+
+Language, currency, units, date/time and formatting adapt.
+
+↓
+
+**OPTIONAL ISLAMIC**
+
+Muslim users receive a deeply integrated Islamic experience.
+
+↓
+
+**PRIVATE**
+
+Personal and sensitive information remains controlled by the user.
+
+---
+
+# 68. FINAL PRODUCT GOAL
+
+Do NOT build:
 
 * An old Islamic app
+* A Pakistan-only app
 * A generic admin dashboard
 * A banking dashboard
 * A generic template
 * A collection of unrelated UI kits
 * An overly colorful children's app
-* A government portal
-* A utility directory
-* A feature marketplace
-* A Figma concept with unrealistic interactions
+* A cluttered utility directory
 
-Instead, create a **single cohesive design system** where:
+Build:
 
-* Quran
-* Prayer Times
-* Calculators
-* Weather
-* Calendar
-* Notes
-* News
-* Cricket
-* Money
-* Travel
-* Trains
-* Health
-* Personal tools
+**A global, premium daily-life super-app.**
 
-all feel like they belong to the same premium product.
+The experience should feel:
+
+**Global**
+
+**Personal**
+
+**Localized**
+
+**Contextual**
+
+**Useful**
+
+**Premium**
+
+**Modern**
+
+**Friendly**
+
+**Minimal**
+
+**Highly polished**
+
+The user should feel that Lume understands:
+
+**where they are,**
+
+**what language they speak,**
+
+**what tools they care about,**
+
+**what is relevant around them,**
+
+and, if they are Muslim,
+
+**what Islamic functionality is useful to them.**
+
+But the app must never make incorrect assumptions about the user.
 
 ---
 
-# Production Quality
+# 69. FINAL PRIORITIES
 
-The final result should look like a **real, production-ready 2026 consumer mobile application**, not a Figma concept.
+Prioritize, in this order:
 
-Every screen should feel:
+### 1. Cohesive Product
 
-* Intentional
-* Consistent
-* Functional
-* Polished
-* Responsive
-* Accessible
-* Production-ready
+Everything should feel like one application.
 
-Avoid placeholder-looking UI.
+### 2. Global Architecture
 
-Use realistic content, realistic states, realistic loading behavior and realistic empty/error states.
+Support all countries, cities, languages and locales.
+
+### 3. Correct Personalization
+
+Religion, country, city, language and preferences remain independent.
+
+### 4. Excellent UX
+
+Frequently used tools should be reachable within 1–2 taps.
+
+### 5. Premium UI
+
+Sleek, spacious, minimal and polished.
+
+### 6. Localization
+
+Language, currency, units, date, time, timezone and content must adapt correctly.
+
+### 7. Islamic Experience
+
+Deep and thoughtful for Muslim users without defining the entire app.
+
+### 8. Pakistan Localization
+
+Pakistan currently receives deep local services, but the architecture must scale globally.
+
+### 9. Share Cards
+
+Shareable content should leave the platform as beautiful visual cards rather than plain text.
+
+### 10. Production Readiness
+
+The final result must feel like a real consumer application ready for production.
 
 ---
 
-# Final Product Priorities
+# FINAL STATEMENT
 
-Prioritize:
+The goal is **NOT**:
 
-**Sleek + Premium + Minimal + Useful + Modern + Friendly + Highly Polished**
+> “A Pakistan app with international options.”
 
-The application should feel like:
+The goal is:
 
-**“One beautiful app that quietly takes care of everyday life.”**
+> **“A global daily-life super-app with deep localization and an optional, deeply integrated Islamic experience.”**
 
-The user should never feel that they are navigating dozens of unrelated utilities.
+Pakistan is currently one of the deepest localized markets.
 
-The complexity should exist **behind the scenes**.
+Islamic functionality is an important personalized experience for Muslim users.
 
-The experience presented to the user should remain:
+Localization is a core part of the product.
 
-**Simple → Personal → Contextual → Fast → Beautiful**
+And the entire system must be architected so that new countries, cities, languages, currencies, services and localized experiences can be added without rebuilding the application.
 
-Most importantly:
+The final product should feel like a **real, production-ready 2026 global consumer super-app**, not a concept.
 
-**Do not force Islamic functionality onto non-Muslim users.**
+**Sleek + Premium + Minimal + Global + Localized + Personal + Useful + Modern + Friendly + Highly Polished.**
 
-**Do not hide Pakistan-specific functionality from Pakistani non-Muslim users.**
-
-**Do not assume religion from country.**
-
-**Do not assume country from religion.**
-
-Use onboarding and personalization to determine the appropriate experience, while always allowing users to change their preferences later.
+Every screen should feel intentional, consistent and production-ready.

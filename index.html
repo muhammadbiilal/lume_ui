@@ -5,12 +5,12 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, maximum-scale=1">
 <meta name="theme-color" content="#F6F6F4" media="(prefers-color-scheme: light)">
 <meta name="theme-color" content="#0A0A0B" media="(prefers-color-scheme: dark)">
-<meta name="description" content="Nur — your day, beautifully organised. Utilities, planning, lifestyle and Islamic essentials in one place.">
-<title>Nur — Daily Life</title>
+<meta name="description" content="Lume — one beautiful app that quietly takes care of everyday life. Tools, planning, money, travel and personal essentials, personalised to you.">
+<title>Lume — Daily Life</title>
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Noto+Naskh+Arabic:wght@400;600;700&display=swap" rel="stylesheet">
 
 <link rel="stylesheet" href="assets/css/tokens.css">
 <link rel="stylesheet" href="assets/css/base.css">
@@ -22,7 +22,7 @@
   // Set theme before first paint to avoid a flash.
   (function () {
     var t;
-    try { t = localStorage.getItem('nur-theme'); } catch (e) {}
+    try { t = localStorage.getItem('lume-theme'); } catch (e) {}
     if (!t) t = matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
     document.documentElement.dataset.theme = t;
   })();
@@ -33,7 +33,8 @@
 <!-- ========================================================
      Icon sprite — one consistent 24px stroke set
      ======================================================== -->
-<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false"><defs>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+  <symbol id="i-lume" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.6"/><path d="M12 3.4A8.6 8.6 0 0 1 12 20.6a4.3 4.3 0 0 1 0-8.6 4.3 4.3 0 0 0 0-8.6"/></symbol>
   <symbol id="i-home" viewBox="0 0 24 24"><path d="M3 10.4 12 3.2l9 7.2"/><path d="M5.6 9.4V19a2 2 0 0 0 2 2h2.6v-5.4h3.6V21h2.6a2 2 0 0 0 2-2V9.4"/></symbol>
   <symbol id="i-grid" viewBox="0 0 24 24"><rect x="3.2" y="3.2" width="7.6" height="7.6" rx="2.2"/><rect x="13.2" y="3.2" width="7.6" height="7.6" rx="2.2"/><rect x="3.2" y="13.2" width="7.6" height="7.6" rx="2.2"/><rect x="13.2" y="13.2" width="7.6" height="7.6" rx="2.2"/></symbol>
   <symbol id="i-sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4.2"/><path d="M12 2.6v2M12 19.4v2M4.4 4.4l1.4 1.4M18.2 18.2l1.4 1.4M2.6 12h2M19.4 12h2M4.4 19.6l1.4-1.4M18.2 5.8l1.4-1.4"/></symbol>
@@ -56,13 +57,16 @@
   <symbol id="i-note" viewBox="0 0 24 24"><path d="M19.4 10.4V6a3 3 0 0 0-3-3H7.6a3 3 0 0 0-3 3v12a3 3 0 0 0 3 3h4"/><path d="M8.4 8h7M8.4 12h5"/><path d="m20.6 13.8-5 5-2.6.7.7-2.6 5-5a1.4 1.4 0 0 1 1.9 1.9z"/></symbol>
   <symbol id="i-timer" viewBox="0 0 24 24"><path d="M9.4 2.8h5.2"/><circle cx="12" cy="13.6" r="7.6"/><path d="M12 10v3.6l2.4 1.6"/></symbol>
   <symbol id="i-stopwatch" viewBox="0 0 24 24"><circle cx="12" cy="13.4" r="7.6"/><path d="M12 13.4V9.6"/><path d="M9.6 2.8h4.8M18.8 6.6l1.6-1.6M12 5.8v-3"/></symbol>
+  <symbol id="i-alarm" viewBox="0 0 24 24"><circle cx="12" cy="13.2" r="7.4"/><path d="M12 9.6v3.6l2.4 1.4"/><path d="M2.8 6.4 6.6 3M21.2 6.4 17.4 3M6.4 20.4 4.6 22.2M17.6 20.4l1.8 1.8"/></symbol>
   <symbol id="i-bookmark" viewBox="0 0 24 24"><path d="M18.4 20.8 12 16.9l-6.4 3.9V5.6a2.4 2.4 0 0 1 2.4-2.4h8a2.4 2.4 0 0 1 2.4 2.4z"/></symbol>
   <symbol id="i-share" viewBox="0 0 24 24"><circle cx="17.6" cy="5.6" r="2.6"/><circle cx="6.4" cy="12" r="2.6"/><circle cx="17.6" cy="18.4" r="2.6"/><path d="m8.7 10.7 6.6-3.8M8.7 13.3l6.6 3.8"/></symbol>
   <symbol id="i-play" viewBox="0 0 24 24"><path d="M7.6 4.9a1 1 0 0 1 1.5-.9l9 7.1a1 1 0 0 1 0 1.8l-9 7.1a1 1 0 0 1-1.5-.9z"/></symbol>
   <symbol id="i-book" viewBox="0 0 24 24"><path d="M12 6.6C10.6 5 8.6 4.2 5.6 4.2a1 1 0 0 0-1 1v12.2a1 1 0 0 0 1 1c3 0 5 .8 6.4 2.4"/><path d="M12 6.6c1.4-1.6 3.4-2.4 6.4-2.4a1 1 0 0 1 1 1v12.2a1 1 0 0 1-1 1c-3 0-5 .8-6.4 2.4"/><path d="M12 6.6v14.2"/></symbol>
   <symbol id="i-moon" viewBox="0 0 24 24"><path d="M20.8 13.4A8.8 8.8 0 1 1 10.6 3.2a6.9 6.9 0 0 0 10.2 10.2"/></symbol>
   <symbol id="i-moon-star" viewBox="0 0 24 24"><path d="M20 14.2A8.2 8.2 0 1 1 10.4 4a6.4 6.4 0 0 0 9.6 10.2"/><path d="m18.4 3 .8 1.9 1.9.8-1.9.8-.8 1.9-.8-1.9-1.9-.8 1.9-.8z"/></symbol>
+  <symbol id="i-mosque" viewBox="0 0 24 24"><path d="M12 2.6c2.2 1.8 3.6 3.6 3.6 5.6 0 1.5-1.6 2.6-3.6 2.6S8.4 9.7 8.4 8.2c0-2 1.4-3.8 3.6-5.6"/><path d="M6.6 21V13.4a5.4 5.4 0 0 1 10.8 0V21"/><path d="M3.4 21v-6.2M20.6 21v-6.2M2.4 21h19.2"/><path d="M12 21v-3.6a1.6 1.6 0 0 1 3.2 0V21"/></symbol>
   <symbol id="i-settings" viewBox="0 0 24 24"><path d="M4 6.4h4M12.6 6.4h7.4M4 12h9.6M18.2 12h1.8M4 17.6h3.2M11.8 17.6h8.2"/><circle cx="10.2" cy="6.4" r="2.2"/><circle cx="16" cy="12" r="2.2"/><circle cx="9.4" cy="17.6" r="2.2"/></symbol>
+  <symbol id="i-sliders" viewBox="0 0 24 24"><path d="M6.4 20.4V14M6.4 10V3.6M12 20.4v-9M12 7.4V3.6M17.6 20.4v-4.6M17.6 11.8V3.6"/><path d="M3.6 14h5.6M9.2 7.4h5.6M14.8 15.8h5.6"/></symbol>
   <symbol id="i-shield" viewBox="0 0 24 24"><path d="M12 21.2s7.2-3.2 7.2-9V5.8L12 2.8 4.8 5.8v6.4c0 5.8 7.2 9 7.2 9"/><path d="m9.2 11.8 2 2 3.6-3.6"/></symbol>
   <symbol id="i-heart" viewBox="0 0 24 24"><path d="M12 20.4S3.6 15.6 3.6 9.6a4.6 4.6 0 0 1 8.4-2.6 4.6 4.6 0 0 1 8.4 2.6c0 6-8.4 10.8-8.4 10.8"/></symbol>
   <symbol id="i-star" viewBox="0 0 24 24"><path d="m12 3.4 2.7 5.5 6 .9-4.3 4.2 1 6-5.4-2.8-5.4 2.8 1-6L3.3 9.8l6-.9z"/></symbol>
@@ -82,7 +86,34 @@
   <symbol id="i-flame" viewBox="0 0 24 24"><path d="M12 21.2a5.6 5.6 0 0 0 5.6-5.6c0-4.4-4-5.6-3.2-9.8-3 .6-4 3-4 5 0 1.6-1.2 2-1.8 1.2-.6-.8-.6-2-.6-2a7.4 7.4 0 0 0-2 5.6 5.6 5.6 0 0 0 6 5.6"/></symbol>
   <symbol id="i-trending" viewBox="0 0 24 24"><path d="m3.4 16.6 5.4-5.4 3.6 3.6 7-7"/><path d="M15.4 7.8h4.6v4.6"/></symbol>
   <symbol id="i-wallet" viewBox="0 0 24 24"><path d="M20.4 8.6V7.2a2 2 0 0 0-2-2H5.6a2 2 0 0 0-2 2v9.6a2 2 0 0 0 2 2h12.8a2 2 0 0 0 2-2v-1.4"/><path d="M21.2 8.6h-4.4a2.6 2.6 0 0 0 0 5.2h4.4a.8.8 0 0 0 .8-.8V9.4a.8.8 0 0 0-.8-.8"/></symbol>
-  <symbol id="i-prayer" viewBox="0 0 24 24"><path d="M12 2.6c2.8 2 4.6 4.4 4.6 7.6v9.4H7.4v-9.4c0-3.2 1.8-5.6 4.6-7.6"/><path d="M4.4 21h15.2"/><path d="M4.8 21v-6.4a3 3 0 0 1 2.6-2.6M19.2 21v-6.4a3 3 0 0 0-2.6-2.6"/></symbol>
+  <symbol id="i-coins" viewBox="0 0 24 24"><ellipse cx="9" cy="6.6" rx="5.6" ry="2.8"/><path d="M3.4 6.6v4.2c0 1.6 2.5 2.8 5.6 2.8s5.6-1.2 5.6-2.8V6.6"/><path d="M3.4 10.8V15c0 1.6 2.5 2.8 5.6 2.8"/><ellipse cx="16.4" cy="14.4" rx="4.2" ry="2.2"/><path d="M12.2 14.4v4c0 1.2 1.9 2.2 4.2 2.2s4.2-1 4.2-2.2v-4"/></symbol>
+  <symbol id="i-fuel" viewBox="0 0 24 24"><path d="M4 20.8V5.6a2.4 2.4 0 0 1 2.4-2.4h4.8a2.4 2.4 0 0 1 2.4 2.4v15.2"/><path d="M2.8 20.8h12"/><path d="M6.4 7.2h5.2v3.6H6.4z"/><path d="M13.6 9.2h3a1.8 1.8 0 0 1 1.8 1.8v5.6a1.8 1.8 0 0 0 3.6 0V8.4l-2.4-2.6"/></symbol>
+  <symbol id="i-route" viewBox="0 0 24 24"><circle cx="6" cy="18.4" r="2.6"/><circle cx="18" cy="5.6" r="2.6"/><path d="M15.4 5.6H9.6a3.4 3.4 0 0 0 0 6.8h4.8a3.4 3.4 0 0 1 0 6.8H8.6"/></symbol>
+  <symbol id="i-ticket" viewBox="0 0 24 24"><path d="M3.2 9.4V7a1.8 1.8 0 0 1 1.8-1.8h14a1.8 1.8 0 0 1 1.8 1.8v2.4a2.6 2.6 0 0 0 0 5.2V17a1.8 1.8 0 0 1-1.8 1.8H5A1.8 1.8 0 0 1 3.2 17v-2.4a2.6 2.6 0 0 0 0-5.2"/><path d="M13.4 5.6v2M13.4 11v2M13.4 16.4v2"/></symbol>
+  <symbol id="i-receipt" viewBox="0 0 24 24"><path d="M5.2 21V4.4a1.2 1.2 0 0 1 1.8-1l1.6.9 1.8-1 1.8 1 1.8-1 1.8 1 1.6-.9a1.2 1.2 0 0 1 1.8 1V21l-2.2-1.2-1.8 1-1.8-1-1.8 1-1.8-1-1.8 1z"/><path d="M8.8 9h6.4M8.8 13.4h4.4"/></symbol>
+  <symbol id="i-bank" viewBox="0 0 24 24"><path d="m12 3 9 4.4H3z"/><path d="M5.6 11v6.4M10 11v6.4M14 11v6.4M18.4 11v6.4"/><path d="M3.4 20.6h17.2"/></symbol>
+  <symbol id="i-users" viewBox="0 0 24 24"><circle cx="9.4" cy="8" r="3.4"/><path d="M3.6 19.4a6 6 0 0 1 11.6 0"/><path d="M16.4 5a3.4 3.4 0 0 1 0 6.4M17.6 14.4a6 6 0 0 1 3 4.6"/></symbol>
+  <symbol id="i-bolt" viewBox="0 0 24 24"><path d="M13.4 2.6 4.6 13.4h6.2l-.6 8 8.8-10.8h-6.2z"/></symbol>
+  <symbol id="i-train" viewBox="0 0 24 24"><rect x="5" y="2.8" width="14" height="14.4" rx="4"/><path d="M5.4 10.6h13.2"/><path d="M9 6.4h6"/><circle cx="8.8" cy="14" r="1"/><circle cx="15.2" cy="14" r="1"/><path d="m7.4 17.4-2.6 3.8M16.6 17.4l2.6 3.8M8.6 21.2h6.8"/></symbol>
+  <symbol id="i-plane" viewBox="0 0 24 24"><path d="M10.2 3.4a1.8 1.8 0 0 1 3.6 0v5.2l7.4 4.2v2.6l-7.4-2.2v4l2.4 1.8v1.8L12 19.6l-4.2 1.2v-1.8l2.4-1.8v-4L2.8 15.4v-2.6l7.4-4.2z"/></symbol>
+  <symbol id="i-cricket" viewBox="0 0 24 24"><circle cx="6.6" cy="17.4" r="3.4"/><path d="m11.6 14.4 6.6-9.6a2.2 2.2 0 0 1 3.4 2.8l-7.6 8.6"/><path d="m9.4 12.2 3.2 3.2"/></symbol>
+  <symbol id="i-qr" viewBox="0 0 24 24"><rect x="3.4" y="3.4" width="6.6" height="6.6" rx="1.8"/><rect x="14" y="3.4" width="6.6" height="6.6" rx="1.8"/><rect x="3.4" y="14" width="6.6" height="6.6" rx="1.8"/><path d="M14 14h3v3h-3zM20.6 14v2M17.6 20.6h3M14 20.4h.01"/></symbol>
+  <symbol id="i-scan" viewBox="0 0 24 24"><path d="M3.4 8.4V6a2.6 2.6 0 0 1 2.6-2.6h2.4M15.6 3.4H18A2.6 2.6 0 0 1 20.6 6v2.4M20.6 15.6V18a2.6 2.6 0 0 1-2.6 2.6h-2.4M8.4 20.6H6A2.6 2.6 0 0 1 3.4 18v-2.4"/><path d="M3.4 12h17.2"/></symbol>
+  <symbol id="i-image" viewBox="0 0 24 24"><rect x="3.2" y="4.4" width="17.6" height="15.2" rx="3"/><circle cx="8.8" cy="9.6" r="1.8"/><path d="m3.6 17.2 4.8-4.4a2 2 0 0 1 2.7 0l4 3.8M14.6 15l1.8-1.6a2 2 0 0 1 2.7 0l1.5 1.4"/></symbol>
+  <symbol id="i-car" viewBox="0 0 24 24"><path d="M4.4 16.4v2.2a1 1 0 0 1-1 1H2.8M19.6 16.4v2.2a1 1 0 0 0 1 1h.6"/><path d="M3.4 16.4v-4l1.9-4.8a2 2 0 0 1 1.9-1.2h9.6a2 2 0 0 1 1.9 1.2l1.9 4.8v4z"/><path d="M3.4 12.4h17.2"/><circle cx="7.4" cy="14.4" r="1"/><circle cx="16.6" cy="14.4" r="1"/></symbol>
+  <symbol id="i-download" viewBox="0 0 24 24"><path d="M12 3.6v11.2"/><path d="m7.6 10.6 4.4 4.4 4.4-4.4"/><path d="M4.4 18.4v.8a1.6 1.6 0 0 0 1.6 1.6h12a1.6 1.6 0 0 0 1.6-1.6v-.8"/></symbol>
+  <symbol id="i-message" viewBox="0 0 24 24"><path d="M20.6 11.6a7.8 7.8 0 0 1-11.2 7L3.6 20.4l1.8-5.8A7.8 7.8 0 1 1 20.6 11.6"/><path d="M8.8 11.6h.01M12 11.6h.01M15.2 11.6h.01"/></symbol>
+  <symbol id="i-package" viewBox="0 0 24 24"><path d="m12 2.8 8.2 4.2v9.8L12 21.2 3.8 16.8V7z"/><path d="m3.8 7 8.2 4.4L20.2 7M12 11.4v9.8"/><path d="m7.9 4.9 8.2 4.4"/></symbol>
+  <symbol id="i-cart" viewBox="0 0 24 24"><path d="M2.8 3.6h2.4l2.4 11.2h9.8l2.2-7.8H6.2"/><circle cx="9.4" cy="19" r="1.6"/><circle cx="16.6" cy="19" r="1.6"/></symbol>
+  <symbol id="i-utensils" viewBox="0 0 24 24"><path d="M6.4 2.8v7.6a2.4 2.4 0 0 0 4.8 0V2.8"/><path d="M8.8 10.4V21.2"/><path d="M17.4 2.8c-1.6 1.4-2.4 3.4-2.4 5.6v3.4h4V8.4c0-2.2-.8-4.2-2.4-5.6z"/><path d="M17.4 11.8v9.4"/></symbol>
+  <symbol id="i-graduation" viewBox="0 0 24 24"><path d="m12 3.4 9.4 4.2L12 11.8 2.6 7.6z"/><path d="M6.4 9.6v5.2c0 1.7 2.5 3 5.6 3s5.6-1.3 5.6-3V9.6"/><path d="M20.6 8.2v5.4"/></symbol>
+  <symbol id="i-folder" viewBox="0 0 24 24"><path d="M3.4 7.4a2.4 2.4 0 0 1 2.4-2.4h3.2l2 2.6h7.6a2.4 2.4 0 0 1 2.4 2.4v7.6a2.4 2.4 0 0 1-2.4 2.4H5.8a2.4 2.4 0 0 1-2.4-2.4z"/></symbol>
+  <symbol id="i-syringe" viewBox="0 0 24 24"><path d="m14.6 3.4 6 6"/><path d="m17.6 6.4-9.4 9.4-3.6 1 1-3.6 9.4-9.4"/><path d="m11.6 8.4 1.8 1.8M9 11l1.8 1.8"/><path d="m3.4 20.6 2.4-2.4"/></symbol>
+  <symbol id="i-pulse" viewBox="0 0 24 24"><path d="M2.8 12h4l2.2-6 4 12 2.4-6h5.8"/></symbol>
+  <symbol id="i-baby" viewBox="0 0 24 24"><circle cx="12" cy="9.4" r="6.4"/><path d="M9.6 8.4h.01M14.4 8.4h.01"/><path d="M10 12.2a3 3 0 0 0 4 0"/><path d="M6.6 14.6 4.8 20.6M17.4 14.6l1.8 6M8.6 20.6h6.8"/></symbol>
+  <symbol id="i-cycle" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.6"/><path d="M12 3.4a8.6 8.6 0 0 1 0 17.2"/><path d="M12 7.6v4.4l3 2"/></symbol>
+  <symbol id="i-pill" viewBox="0 0 24 24"><rect x="2.6" y="8.4" width="18.8" height="7.2" rx="3.6" transform="rotate(-45 12 12)"/><path d="m8.4 8.4 7.2 7.2"/></symbol>
+  <symbol id="i-scales" viewBox="0 0 24 24"><path d="M12 3.4v17.2M7.6 20.6h8.8"/><path d="M4.4 6.6h15.2"/><path d="M4.4 6.6 1.8 13a3 3 0 0 0 5.2 0z"/><path d="M19.6 6.6 17 13a3 3 0 0 0 5.2 0z"/></symbol>
   <symbol id="i-lock" viewBox="0 0 24 24"><rect x="4.4" y="10.2" width="15.2" height="10.6" rx="2.6"/><path d="M8 10.2V7.6a4 4 0 0 1 8 0v2.6"/></symbol>
   <symbol id="i-logout" viewBox="0 0 24 24"><path d="M14.4 3.6h2.8a2.4 2.4 0 0 1 2.4 2.4v12a2.4 2.4 0 0 1-2.4 2.4h-2.8"/><path d="M9.6 16.4 5.2 12l4.4-4.4M5.6 12H15"/></symbol>
   <symbol id="i-help" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M9.6 9.6a2.5 2.5 0 1 1 3.3 2.4c-.6.2-.9.8-.9 1.4v.4"/><path d="M12 17h.01"/></symbol>
@@ -94,11 +125,13 @@
   <symbol id="i-backspace" viewBox="0 0 24 24"><path d="M20 5.4H9.8a2 2 0 0 0-1.5.7L3.2 12l5.1 5.9a2 2 0 0 0 1.5.7H20a1.4 1.4 0 0 0 1.4-1.4V6.8A1.4 1.4 0 0 0 20 5.4"/><path d="m17 9.4-5.4 5.2M11.6 9.4l5.4 5.2"/></symbol>
   <symbol id="i-percent" viewBox="0 0 24 24"><path d="M19 5 5 19"/><circle cx="7.2" cy="7.2" r="2.4"/><circle cx="16.8" cy="16.8" r="2.4"/></symbol>
   <symbol id="i-divide" viewBox="0 0 24 24"><path d="M4.6 12h14.8"/><circle cx="12" cy="6.4" r="1.3"/><circle cx="12" cy="17.6" r="1.3"/></symbol>
+  <symbol id="i-swap" viewBox="0 0 24 24"><path d="M4.4 8.4h13.2l-3.4-3.6M19.6 15.6H6.4l3.4 3.6"/></symbol>
   <symbol id="i-refresh" viewBox="0 0 24 24"><path d="M20.4 12a8.4 8.4 0 1 1-2.5-6"/><path d="M20.6 4.2v4.6H16"/></symbol>
   <symbol id="i-signal" viewBox="0 0 24 24"><path d="M3 18h1.6M8 14v4M13 10v8M18 5.4V18" stroke-width="2.6"/></symbol>
   <symbol id="i-wifi" viewBox="0 0 24 24"><path d="M2.6 9.4a14 14 0 0 1 18.8 0M6.2 13.2a9 9 0 0 1 11.6 0M9.8 17a4 4 0 0 1 4.4 0"/><path d="M12 20.4h.01"/></symbol>
   <symbol id="i-battery" viewBox="0 0 24 24"><rect x="2.4" y="8" width="16.4" height="8" rx="2.4"/><path d="M21.4 11v2"/><rect x="4.6" y="10.2" width="11" height="3.6" rx="1.2" fill="currentColor" stroke="none"/></symbol>
-</defs></svg>
+  <symbol id="i-prayer" viewBox="0 0 24 24"><path d="M12 2.6c2.8 2 4.6 4.4 4.6 7.6v9.4H7.4v-9.4c0-3.2 1.8-5.6 4.6-7.6"/><path d="M4.4 21h15.2"/><path d="M4.8 21v-6.4a3 3 0 0 1 2.6-2.6M19.2 21v-6.4a3 3 0 0 0-2.6-2.6"/></symbol>
+</svg>
 
 <div class="stage">
 <div class="app" id="app">
@@ -106,7 +139,7 @@
   <div class="app__mesh" aria-hidden="true"></div>
 
   <!-- ===== Status bar ===== -->
-  <div class="statusbar" aria-hidden="true">
+  <div class="statusbar">
     <span class="num" id="statusClock">9:41</span>
     <span class="statusbar__icons">
       <svg class="ico" viewBox="0 0 24 24"><use href="#i-signal"/></svg>
@@ -115,7 +148,7 @@
     </span>
   </div>
 
-  <main class="screens">
+  <main class="screens" id="screens">
 
   <!-- ==========================================================
        HOME
@@ -126,171 +159,250 @@
       <div class="appbar__text">
         <h1 class="appbar__greet"><span id="greetText">Good morning</span> <span class="wave">👋</span></h1>
         <p class="appbar__sub">
-          <span id="todayDate">Monday, 7 September</span>
+          <span id="todayDate">Tuesday, 8 September</span>
           <span class="dot"></span>
           <svg class="ico" viewBox="0 0 24 24"><use href="#i-pin"/></svg>
-          <span>London</span>
+          <span id="appbarCity">Karachi</span>
         </p>
       </div>
+      <button class="iconbtn pressable" data-sheet="search" aria-label="Search everything">
+        <svg class="ico" viewBox="0 0 24 24"><use href="#i-search"/></svg>
+      </button>
       <button class="iconbtn pressable" data-sheet="notifications" aria-label="Notifications">
         <svg class="ico" viewBox="0 0 24 24"><use href="#i-bell"/></svg>
         <span class="iconbtn__badge"></span>
       </button>
-      <button class="avatar pressable" data-tab="profile" aria-label="Your profile">ZK</button>
+      <button class="avatar pressable" data-tab="profile" aria-label="Your profile" id="appbarAvatar">ZK</button>
     </header>
+
+    <!-- ===== Contextual strip — swaps with the faith dimension ===== -->
+    <div class="section" style="margin-top:14px">
+      <div class="row-gap">
+
+        <!-- Muslim: next prayer -->
+        <button class="ctx pressable" data-faith="islamic" data-sheet="prayer">
+          <span class="ctx__art" aria-hidden="true">
+            <svg viewBox="0 0 350 72" preserveAspectRatio="xMidYMid slice">
+              <circle cx="316" cy="10" r="42" fill="var(--accent)" opacity=".07"/>
+              <circle cx="292" cy="62" r="26" fill="var(--violet)" opacity=".06"/>
+            </svg>
+          </span>
+          <span class="ctx__icon"><svg class="ico" viewBox="0 0 24 24"><use href="#i-prayer"/></svg></span>
+          <span class="ctx__body">
+            <span class="ctx__label">Next prayer</span>
+            <span class="ctx__title"><b id="ctxPrayerName">Asr</b> · <span class="num" id="ctxPrayerTime">15:53</span></span>
+          </span>
+          <span class="ctx__end">
+            <span class="ctx__count num" id="ctxCountdown">2:41</span>
+            <span class="ctx__unit">to go</span>
+          </span>
+        </button>
+
+        <!-- Everyone else: weather + what's next -->
+        <button class="ctx pressable" data-faith="none" data-tab="today">
+          <span class="ctx__art" aria-hidden="true">
+            <svg viewBox="0 0 350 72" preserveAspectRatio="xMidYMid slice">
+              <circle cx="316" cy="10" r="42" fill="var(--sky)" opacity=".08"/>
+              <circle cx="292" cy="62" r="26" fill="var(--accent)" opacity=".06"/>
+            </svg>
+          </span>
+          <span class="ctx__icon"><svg class="ico" viewBox="0 0 24 24"><use href="#i-cloud-sun"/></svg></span>
+          <span class="ctx__body">
+            <span class="ctx__label">Right now</span>
+            <span class="ctx__title"><b class="num" id="ctxTemp">34°</b> · <span id="ctxWeather">Hazy sun</span></span>
+          </span>
+          <span class="ctx__end">
+            <span class="ctx__count num">14:00</span>
+            <span class="ctx__unit">next up</span>
+          </span>
+        </button>
+
+      </div>
+    </div>
 
     <!-- ===== Hero carousel ===== -->
     <div class="hero">
       <div class="hero__track" id="heroTrack" role="region" aria-label="Highlights" tabindex="0">
 
-        <!-- Slide 1 — Plan your day -->
-        <article class="slide pressable" data-tab="today">
+        <!-- Next prayer -->
+        <article class="slide slide--night" data-slide="prayer" data-faith="islamic">
           <div class="slide__art" aria-hidden="true">
-            <svg viewBox="0 0 358 194" preserveAspectRatio="xMidYMid slice">
+            <svg viewBox="0 0 320 190" preserveAspectRatio="xMidYMid slice">
               <defs>
-                <linearGradient id="g1" x1="0" y1="0" x2="1" y2="1">
-                  <stop offset="0" stop-color="#0B6F62"/><stop offset=".55" stop-color="#10998A"/><stop offset="1" stop-color="#3EBFA6"/>
+                <linearGradient id="g-night" x1="0" y1="0" x2="1" y2="1">
+                  <stop offset="0" stop-color="#1B2A5E"/><stop offset="1" stop-color="#3E4E9E"/>
                 </linearGradient>
-                <linearGradient id="g1b" x1="0" y1="0" x2="0" y2="1">
-                  <stop offset="0" stop-color="#fff" stop-opacity=".95"/><stop offset="1" stop-color="#fff" stop-opacity=".7"/>
+                <radialGradient id="g-glow" cx=".5" cy=".5" r=".5">
+                  <stop offset="0" stop-color="#FFE9B8" stop-opacity=".8"/><stop offset="1" stop-color="#FFE9B8" stop-opacity="0"/>
+                </radialGradient>
+              </defs>
+              <rect width="320" height="190" fill="url(#g-night)"/>
+              <circle cx="252" cy="44" r="58" fill="url(#g-glow)"/>
+              <path d="M262 24a22 22 0 1 0 0 40 17 17 0 0 1 0-40" fill="#FFE9B8"/>
+              <path d="m196 34 1.8 4.4 4.4 1.8-4.4 1.8-1.8 4.4-1.8-4.4-4.4-1.8 4.4-1.8z" fill="#fff" opacity=".75"/>
+              <circle cx="222" cy="86" r="2.4" fill="#fff" opacity=".5"/>
+              <circle cx="176" cy="66" r="1.8" fill="#fff" opacity=".4"/>
+              <path d="M0 156c30-6 44 8 76 4s52-22 84-16 46 20 78 14 52-16 82-8v40H0z" fill="#0D1739" opacity=".45"/>
+              <path d="M236 150v-22h10v22M246 128a5 5 0 0 1 10 0v22h-10M266 150v-16h8v16" fill="#0D1739" opacity=".55"/>
+            </svg>
+          </div>
+          <span class="slide__pill"><span class="live"></span><span class="num" id="heroCountdown">2:41:08</span></span>
+          <p class="slide__kicker">Your next prayer</p>
+          <h2 class="slide__title" id="heroPrayerName">Asr</h2>
+          <p class="slide__text">Adhan at <span class="num" id="heroPrayerTime">15:53</span> · <span id="heroPrayerCity">Karachi</span></p>
+          <span class="slide__cta">Prayer times <svg class="ico" viewBox="0 0 24 24"><use href="#i-arrow-r"/></svg></span>
+        </article>
+
+        <!-- Plan your day -->
+        <article class="slide" data-slide="plan" data-tab="today">
+          <div class="slide__art" aria-hidden="true">
+            <svg viewBox="0 0 320 190" preserveAspectRatio="xMidYMid slice">
+              <defs>
+                <linearGradient id="g-plan" x1="0" y1="0" x2="1" y2="1">
+                  <stop offset="0" stop-color="#0E8C7E"/><stop offset="1" stop-color="#25B7A2"/>
                 </linearGradient>
               </defs>
-              <rect width="358" height="194" fill="url(#g1)"/>
-              <circle cx="318" cy="24" r="86" fill="#fff" opacity=".07"/>
-              <circle cx="330" cy="150" r="58" fill="#04322C" opacity=".14"/>
-              <path d="M-10 150c50-26 92 14 140-10s86-64 140-42" stroke="#fff" stroke-opacity=".13" stroke-width="1.5" fill="none"/>
-              <!-- floating checklist sticker -->
-              <g transform="translate(246 44) rotate(-7)">
-                <rect x="0" y="0" width="86" height="98" rx="14" fill="url(#g1b)"/>
-                <rect x="12" y="16" width="12" height="12" rx="4" fill="#10998A"/>
-                <path d="m15 22 2.4 2.4L21 20.6" stroke="#fff" stroke-width="1.8" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
-                <rect x="30" y="19" width="42" height="6" rx="3" fill="#0B6F62" opacity=".35"/>
-                <rect x="12" y="42" width="12" height="12" rx="4" fill="#0B6F62" opacity=".16"/>
-                <rect x="30" y="45" width="34" height="6" rx="3" fill="#0B6F62" opacity=".22"/>
-                <rect x="12" y="68" width="12" height="12" rx="4" fill="#0B6F62" opacity=".16"/>
-                <rect x="30" y="71" width="40" height="6" rx="3" fill="#0B6F62" opacity=".22"/>
+              <rect width="320" height="190" fill="url(#g-plan)"/>
+              <circle cx="278" cy="26" r="66" fill="#fff" opacity=".08"/>
+              <circle cx="300" cy="168" r="44" fill="#04322C" opacity=".16"/>
+              <g transform="translate(206 42)">
+                <rect x="0" y="0" width="82" height="98" rx="18" fill="#fff" opacity=".95"/>
+                <rect x="14" y="18" width="54" height="7" rx="3.5" fill="#0E8C7E" opacity=".22"/>
+                <rect x="14" y="34" width="40" height="7" rx="3.5" fill="#0E8C7E" opacity=".16"/>
+                <rect x="14" y="50" width="48" height="7" rx="3.5" fill="#0E8C7E" opacity=".16"/>
+                <circle cx="24" cy="76" r="9" fill="#0E8C7E" opacity=".18"/>
+                <path d="m20 76 3 3 6-6.4" stroke="#0E8C7E" stroke-width="2.4" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+                <rect x="40" y="72" width="28" height="7" rx="3.5" fill="#0E8C7E" opacity=".2"/>
               </g>
-              <path d="m228 30 3.4 8.2 8.2 3.4-8.2 3.4-3.4 8.2-3.4-8.2-8.2-3.4 8.2-3.4z" fill="#fff" opacity=".75"/>
-              <circle cx="206" cy="70" r="4" fill="#fff" opacity=".4"/>
-              <circle cx="336" cy="118" r="6" fill="#fff" opacity=".28"/>
+              <g opacity=".9">
+                <path d="m180 30 2.4 6 6 2.4-6 2.4-2.4 6-2.4-6-6-2.4 6-2.4z" fill="#fff" opacity=".65"/>
+                <circle cx="196" cy="150" r="5" fill="#fff" opacity=".3"/>
+              </g>
             </svg>
           </div>
           <p class="slide__kicker">Today</p>
-          <h2 class="slide__title">Plan your day</h2>
-          <p class="slide__text">Tasks, reminders and calendar — all in one calm place.</p>
-          <span class="slide__cta">Open planner <svg class="ico" viewBox="0 0 24 24"><use href="#i-arrow-r"/></svg></span>
+          <h2 class="slide__title">Plan your day<br>before it starts</h2>
+          <p class="slide__text">Tasks, reminders and events on one timeline.</p>
+          <span class="slide__cta">Open today <svg class="ico" viewBox="0 0 24 24"><use href="#i-arrow-r"/></svg></span>
         </article>
 
-        <!-- Slide 2 — Next prayer -->
-        <article class="slide pressable" data-sheet="prayer">
+        <!-- Read something meaningful -->
+        <article class="slide slide--read" data-slide="read" data-faith="islamic" data-sheet="reading">
           <div class="slide__art" aria-hidden="true">
-            <svg viewBox="0 0 358 194" preserveAspectRatio="xMidYMid slice">
+            <svg viewBox="0 0 320 190" preserveAspectRatio="xMidYMid slice">
               <defs>
-                <linearGradient id="g2" x1="0" y1="0" x2="1" y2="1">
-                  <stop offset="0" stop-color="#151C3C"/><stop offset=".5" stop-color="#2A3670"/><stop offset="1" stop-color="#4A54A8"/>
+                <linearGradient id="g-read" x1="0" y1="0" x2="1" y2="1">
+                  <stop offset="0" stop-color="#4A3F9E"/><stop offset="1" stop-color="#6E62E5"/>
                 </linearGradient>
-                <radialGradient id="g2m" cx=".5" cy=".5" r=".5">
-                  <stop offset="0" stop-color="#FFE9B8"/><stop offset="1" stop-color="#F5C973"/>
-                </radialGradient>
+                <linearGradient id="g-page" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="0" stop-color="#fff" stop-opacity=".98"/><stop offset="1" stop-color="#fff" stop-opacity=".84"/>
+                </linearGradient>
               </defs>
-              <rect width="358" height="194" fill="url(#g2)"/>
-              <circle cx="300" cy="48" r="78" fill="#8891E8" opacity=".13"/>
-              <!-- crescent -->
-              <g transform="translate(268 34)">
-                <circle cx="30" cy="30" r="30" fill="url(#g2m)" opacity=".95"/>
-                <circle cx="17" cy="23" r="26" fill="#222B58"/>
+              <rect width="320" height="190" fill="url(#g-read)"/>
+              <circle cx="286" cy="30" r="60" fill="#fff" opacity=".08"/>
+              <g transform="translate(198 52)">
+                <path d="M2 12C14 4 32 4 44 12v70c-12-8-30-8-42 0z" fill="url(#g-page)"/>
+                <path d="M86 12C74 4 56 4 44 12v70c12-8 30-8 42 0z" fill="url(#g-page)" opacity=".9"/>
+                <path d="M12 26h22M12 38h20M12 50h24M54 26h22M54 38h20M54 50h24" stroke="#4A3F9E" stroke-opacity=".28" stroke-width="2.6" stroke-linecap="round"/>
               </g>
-              <!-- stars -->
-              <path d="m214 42 2.6 6.2 6.2 2.6-6.2 2.6-2.6 6.2-2.6-6.2-6.2-2.6 6.2-2.6z" fill="#FFF3D6" opacity=".85"/>
-              <circle cx="240" cy="104" r="3" fill="#fff" opacity=".7"/>
-              <circle cx="196" cy="86" r="2" fill="#fff" opacity=".5"/>
-              <circle cx="330" cy="120" r="2.5" fill="#fff" opacity=".55"/>
-              <!-- skyline -->
-              <path d="M0 194v-38c14 0 14-10 24-10s10 10 24 10v38z" fill="#0D1330" opacity=".35"/>
-              <path d="M300 194v-30c22 0 18-14 32-14s10 14 26 14v30z" fill="#0D1330" opacity=".3"/>
-              <path d="M-10 168c60-16 96 8 150-6s96-40 150-20" stroke="#fff" stroke-opacity=".1" stroke-width="1.5" fill="none"/>
+              <path d="m186 40 2 5 5 2-5 2-2 5-2-5-5-2 5-2z" fill="#fff" opacity=".6"/>
+              <circle cx="176" cy="140" r="4" fill="#fff" opacity=".3"/>
             </svg>
           </div>
-          <span class="slide__pill"><span class="live"></span><span class="num" id="heroCountdown">—</span></span>
-          <p class="slide__kicker">Next prayer</p>
-          <h2 class="slide__title" id="heroPrayerName">Asr</h2>
-          <p class="slide__text">Adhan at <span class="num" id="heroPrayerTime">16:12</span> · Central London</p>
-          <span class="slide__cta">All prayer times <svg class="ico" viewBox="0 0 24 24"><use href="#i-arrow-r"/></svg></span>
+          <p class="slide__kicker">Read</p>
+          <h2 class="slide__title">Read something<br>meaningful</h2>
+          <p class="slide__text">You're 42 ayahs into Al-Kahf. Two minutes is enough.</p>
+          <span class="slide__cta">Continue <svg class="ico" viewBox="0 0 24 24"><use href="#i-arrow-r"/></svg></span>
         </article>
 
-        <!-- Slide 3 — Read something meaningful -->
-        <article class="slide pressable" data-sheet="reading">
+        <!-- Money -->
+        <article class="slide slide--money" data-slide="money" data-sheet="rates">
           <div class="slide__art" aria-hidden="true">
-            <svg viewBox="0 0 358 194" preserveAspectRatio="xMidYMid slice">
+            <svg viewBox="0 0 320 190" preserveAspectRatio="xMidYMid slice">
               <defs>
-                <linearGradient id="g3" x1="0" y1="0" x2="1" y2="1">
-                  <stop offset="0" stop-color="#8A4B32"/><stop offset=".5" stop-color="#C9793F"/><stop offset="1" stop-color="#E0A55C"/>
-                </linearGradient>
-                <linearGradient id="g3p" x1="0" y1="0" x2="0" y2="1">
-                  <stop offset="0" stop-color="#FFF8EC"/><stop offset="1" stop-color="#F6E7CE"/>
+                <linearGradient id="g-money" x1="0" y1="0" x2="1" y2="1">
+                  <stop offset="0" stop-color="#1D4E4A"/><stop offset="1" stop-color="#2F7F6E"/>
                 </linearGradient>
               </defs>
-              <rect width="358" height="194" fill="url(#g3)"/>
-              <circle cx="40" cy="180" r="80" fill="#5E2F1C" opacity=".16"/>
-              <circle cx="320" cy="30" r="66" fill="#fff" opacity=".08"/>
-              <!-- open book -->
-              <g transform="translate(232 52) rotate(-5)">
-                <path d="M0 14C14 4 38 4 52 12v76C38 80 14 80 0 90z" fill="url(#g3p)"/>
-                <path d="M104 14C90 4 66 4 52 12v76c14-8 38-8 52 2z" fill="url(#g3p)" opacity=".92"/>
-                <path d="M52 12v78" stroke="#C9793F" stroke-opacity=".4" stroke-width="1.4"/>
-                <path d="M12 30h28M12 42h24M64 30h28M64 42h24M12 56h30M64 56h26" stroke="#8A4B32" stroke-opacity=".3" stroke-width="2.4" stroke-linecap="round"/>
+              <rect width="320" height="190" fill="url(#g-money)"/>
+              <circle cx="290" cy="22" r="56" fill="#fff" opacity=".07"/>
+              <path d="M176 130 210 96l22 20 30-38 26 22" fill="none" stroke="#8FE6D2" stroke-opacity=".8" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round"/>
+              <circle cx="262" cy="78" r="6" fill="#8FE6D2"/>
+              <g transform="translate(196 32)">
+                <circle cx="18" cy="18" r="17" fill="#E9C170" opacity=".9"/>
+                <circle cx="18" cy="18" r="11" fill="none" stroke="#8A6A22" stroke-opacity=".45" stroke-width="2"/>
               </g>
-              <path d="m206 36 2.8 6.8 6.8 2.8-6.8 2.8-2.8 6.8-2.8-6.8-6.8-2.8 6.8-2.8z" fill="#FFF3DC" opacity=".8"/>
-              <circle cx="196" cy="120" r="4.5" fill="#fff" opacity=".3"/>
-              <path d="M-10 158c56-20 96 12 148-4s94-46 148-24" stroke="#fff" stroke-opacity=".12" stroke-width="1.5" fill="none"/>
+              <path d="m178 146 2.2 5.4 5.4 2.2-5.4 2.2-2.2 5.4-2.2-5.4-5.4-2.2 5.4-2.2z" fill="#fff" opacity=".45"/>
             </svg>
           </div>
-          <p class="slide__kicker">Daily reading</p>
-          <h2 class="slide__title">Read something meaningful</h2>
-          <p class="slide__text">Qur'an, hadith and a thought for the day.</p>
-          <span class="slide__cta">Start reading <svg class="ico" viewBox="0 0 24 24"><use href="#i-arrow-r"/></svg></span>
+          <p class="slide__kicker">Money</p>
+          <h2 class="slide__title">Stay on top<br>of your money</h2>
+          <p class="slide__text">Rates, bills and expenses in one place.</p>
+          <span class="slide__cta">See money <svg class="ico" viewBox="0 0 24 24"><use href="#i-arrow-r"/></svg></span>
         </article>
 
-        <!-- Slide 4 — Tools -->
-        <article class="slide pressable" data-tab="tools">
+        <!-- Trains (Pakistan) -->
+        <article class="slide slide--rail" data-slide="trains" data-loc="PK" data-tab="trains">
           <div class="slide__art" aria-hidden="true">
-            <svg viewBox="0 0 358 194" preserveAspectRatio="xMidYMid slice">
+            <svg viewBox="0 0 320 190" preserveAspectRatio="xMidYMid slice">
               <defs>
-                <linearGradient id="g4" x1="0" y1="0" x2="1" y2="1">
-                  <stop offset="0" stop-color="#3B3193"/><stop offset=".55" stop-color="#6E62E5"/><stop offset="1" stop-color="#9A90FF"/>
+                <linearGradient id="g-rail" x1="0" y1="0" x2="1" y2="1">
+                  <stop offset="0" stop-color="#2B3E7A"/><stop offset="1" stop-color="#4C68C4"/>
                 </linearGradient>
               </defs>
-              <rect width="358" height="194" fill="url(#g4)"/>
-              <circle cx="330" cy="164" r="76" fill="#2A2270" opacity=".3"/>
-              <circle cx="290" cy="20" r="54" fill="#fff" opacity=".08"/>
-              <!-- floating shape grid -->
-              <g opacity=".95">
-                <rect x="240" y="42" width="42" height="42" rx="13" fill="#fff" opacity=".9"/>
-                <circle cx="261" cy="63" r="9" fill="#6E62E5"/>
-                <rect x="292" y="52" width="42" height="42" rx="13" fill="#fff" opacity=".55" transform="rotate(8 313 73)"/>
-                <path d="M303 78h20M313 68v20" stroke="#3B3193" stroke-width="3" stroke-linecap="round" opacity=".6"/>
-                <rect x="248" y="98" width="42" height="42" rx="13" fill="#fff" opacity=".4" transform="rotate(-6 269 119)"/>
-                <path d="M259 120h20" stroke="#3B3193" stroke-width="3" stroke-linecap="round" opacity=".55"/>
-                <rect x="300" y="108" width="42" height="42" rx="13" fill="#fff" opacity=".28" transform="rotate(12 321 129)"/>
+              <rect width="320" height="190" fill="url(#g-rail)"/>
+              <circle cx="284" cy="24" r="58" fill="#fff" opacity=".07"/>
+              <path d="M150 168h180M150 176h180" stroke="#fff" stroke-opacity=".2" stroke-width="3" stroke-linecap="round"/>
+              <path d="M168 160v-8M196 160v-8M224 160v-8M252 160v-8M280 160v-8M308 160v-8" stroke="#fff" stroke-opacity=".14" stroke-width="3" stroke-linecap="round"/>
+              <g transform="translate(190 56)">
+                <rect x="0" y="0" width="104" height="90" rx="26" fill="#fff" opacity=".96"/>
+                <rect x="14" y="18" width="76" height="30" rx="10" fill="#2B3E7A" opacity=".18"/>
+                <circle cx="28" cy="66" r="7" fill="#2B3E7A" opacity=".3"/>
+                <circle cx="76" cy="66" r="7" fill="#2B3E7A" opacity=".3"/>
+                <path d="M40 66h24" stroke="#2B3E7A" stroke-opacity=".22" stroke-width="3" stroke-linecap="round"/>
               </g>
-              <path d="m214 62 2.6 6.4 6.4 2.6-6.4 2.6-2.6 6.4-2.6-6.4-6.4-2.6 6.4-2.6z" fill="#fff" opacity=".7"/>
-              <circle cx="200" cy="118" r="3.5" fill="#fff" opacity=".4"/>
-              <path d="M-10 146c52-22 88 16 138-6s92-56 146-30" stroke="#fff" stroke-opacity=".12" stroke-width="1.5" fill="none"/>
+              <path d="m174 40 2 5 5 2-5 2-2 5-2-5-5-2 5-2z" fill="#fff" opacity=".55"/>
+              <circle cx="166" cy="112" r="4" fill="#fff" opacity=".3"/>
             </svg>
           </div>
-          <p class="slide__kicker">Toolbox</p>
-          <h2 class="slide__title">Useful tools, all in one place</h2>
-          <p class="slide__text">Calculator, converters, Qibla, weather and more.</p>
+          <p class="slide__kicker">Travel</p>
+          <h2 class="slide__title">Trains, without<br>the guesswork</h2>
+          <p class="slide__text">Live running status, fares and seats.</p>
+          <span class="slide__cta">Find a train <svg class="ico" viewBox="0 0 24 24"><use href="#i-arrow-r"/></svg></span>
+        </article>
+
+        <!-- Tools -->
+        <article class="slide slide--tools" data-slide="tools" data-tab="tools">
+          <div class="slide__art" aria-hidden="true">
+            <svg viewBox="0 0 320 190" preserveAspectRatio="xMidYMid slice">
+              <defs>
+                <linearGradient id="g-tools" x1="0" y1="0" x2="1" y2="1">
+                  <stop offset="0" stop-color="#3A3A44"/><stop offset="1" stop-color="#5C5C6B"/>
+                </linearGradient>
+              </defs>
+              <rect width="320" height="190" fill="url(#g-tools)"/>
+              <circle cx="292" cy="20" r="54" fill="#fff" opacity=".07"/>
+              <g opacity=".96">
+                <rect x="188" y="34" width="46" height="46" rx="15" fill="#fff" opacity=".92"/>
+                <rect x="244" y="52" width="46" height="46" rx="15" fill="#fff" opacity=".72"/>
+                <rect x="188" y="92" width="46" height="46" rx="15" fill="#fff" opacity=".78"/>
+                <rect x="244" y="110" width="46" height="46" rx="15" fill="#fff" opacity=".58"/>
+                <path d="M203 57h16M211 49v16" stroke="#3A3A44" stroke-opacity=".55" stroke-width="3" stroke-linecap="round"/>
+                <circle cx="267" cy="75" r="10" fill="none" stroke="#3A3A44" stroke-opacity=".4" stroke-width="3"/>
+                <path d="M203 115h16M203 122h10" stroke="#3A3A44" stroke-opacity=".42" stroke-width="3" stroke-linecap="round"/>
+              </g>
+              <path d="m172 44 2.2 5.4 5.4 2.2-5.4 2.2-2.2 5.4-2.2-5.4-5.4-2.2 5.4-2.2z" fill="#fff" opacity=".5"/>
+              <circle cx="164" cy="132" r="4.5" fill="#fff" opacity=".28"/>
+            </svg>
+          </div>
+          <p class="slide__kicker">Tools</p>
+          <h2 class="slide__title">Useful tools,<br>all in one place</h2>
+          <p class="slide__text">Calculator, converters, scanner and more.</p>
           <span class="slide__cta">Browse tools <svg class="ico" viewBox="0 0 24 24"><use href="#i-arrow-r"/></svg></span>
         </article>
 
       </div>
-      <div class="hero__dots" id="heroDots" role="tablist" aria-label="Slide">
-        <button class="hero__dot is-active" aria-label="Slide 1"></button>
-        <button class="hero__dot" aria-label="Slide 2"></button>
-        <button class="hero__dot" aria-label="Slide 3"></button>
-        <button class="hero__dot" aria-label="Slide 4"></button>
-      </div>
+      <div class="hero__dots" id="heroDots" role="tablist" aria-label="Slide"></div>
     </div>
 
     <!-- ===== Quick tools ===== -->
@@ -298,169 +410,114 @@
       <div class="section__head">
         <div>
           <h2 class="section__title">Quick tools</h2>
-          <p class="section__sub" id="quickToolsSub">Your eight most-used, one tap away</p>
+          <p class="section__sub" id="quickToolsSub">Picked from your interests</p>
         </div>
         <button class="section__link" data-tab="tools">All <svg class="ico" viewBox="0 0 24 24"><use href="#i-chev-r"/></svg></button>
       </div>
-      <div class="tools-grid" id="quickTools">
-        <button class="tool pressable" data-sheet="calculator">
-          <span class="tool__icon"><svg class="ico" viewBox="0 0 24 24"><use href="#i-calculator"/></svg></span>
-          <span class="tool__label">Calculator</span>
-        </button>
-        <button class="tool pressable" data-toast="GBP → EUR · 1.1842">
-          <span class="tool__icon"><svg class="ico" viewBox="0 0 24 24"><use href="#i-currency"/></svg></span>
-          <span class="tool__label">Currency</span>
-          <span class="tool__value num">1.1842</span>
-        </button>
-        <button class="tool pressable" data-tab="explore">
-          <span class="tool__icon"><svg class="ico" viewBox="0 0 24 24"><use href="#i-cloud-sun"/></svg></span>
-          <span class="tool__label">Weather</span>
-          <span class="tool__value num">21°</span>
-        </button>
-        <button class="tool pressable" data-tab="today">
-          <span class="tool__icon"><svg class="ico" viewBox="0 0 24 24"><use href="#i-calendar"/></svg></span>
-          <span class="tool__label">Calendar</span>
-          <span class="tool__value num">7 Sep</span>
-        </button>
-        <button class="tool pressable" data-sheet="qibla">
-          <span class="tool__icon tool__icon--accent"><svg class="ico" viewBox="0 0 24 24"><use href="#i-navigation"/></svg></span>
-          <span class="tool__label">Qibla</span>
-          <span class="tool__value num">119°</span>
-        </button>
-        <button class="tool pressable" data-sheet="tasbeeh">
-          <span class="tool__icon tool__icon--accent"><svg class="ico" viewBox="0 0 24 24"><use href="#i-beads"/></svg></span>
-          <span class="tool__label">Tasbeeh</span>
-          <span class="tool__value num" id="tasbeehQuick">0</span>
-        </button>
-        <button class="tool pressable" data-toast="Notes — 12 saved">
-          <span class="tool__icon"><svg class="ico" viewBox="0 0 24 24"><use href="#i-note"/></svg></span>
-          <span class="tool__label">Notes</span>
-          <span class="tool__value">12</span>
-        </button>
-        <button class="tool pressable" data-toast="Timer ready — 00:00">
-          <span class="tool__icon"><svg class="ico" viewBox="0 0 24 24"><use href="#i-timer"/></svg></span>
-          <span class="tool__label">Timer</span>
-        </button>
-      </div>
+      <div class="tools-grid" id="quickTools"></div>
     </div>
 
-    <!-- ===== Today ===== -->
-    <div class="section" data-psection>
+    <!-- ===== Today at a glance ===== -->
+    <div class="section">
       <div class="section__head">
         <div>
-          <h2 class="section__title">Today</h2>
-          <p class="section__sub">Picked up where you left off</p>
+          <h2 class="section__title">At a glance</h2>
+          <p class="section__sub" id="glanceSub">What matters in the next few hours</p>
         </div>
-        <button class="section__link" data-tab="today">View day <svg class="ico" viewBox="0 0 24 24"><use href="#i-chev-r"/></svg></button>
+        <button class="section__link" data-tab="today">Today <svg class="ico" viewBox="0 0 24 24"><use href="#i-chev-r"/></svg></button>
       </div>
 
       <div class="row-gap">
 
-        <!-- Prayer feature card -->
-        <article class="prayer pressable" data-sheet="prayer" data-int="prayer qibla hijri">
-          <div class="prayer__art" aria-hidden="true">
-            <svg viewBox="0 0 350 200" preserveAspectRatio="xMidYMid slice">
-              <circle cx="316" cy="16" r="70" fill="#fff" opacity=".07"/>
-              <circle cx="330" cy="176" r="52" fill="#0B1130" opacity=".2"/>
-              <path d="m292 30 2.4 5.8 5.8 2.4-5.8 2.4-2.4 5.8-2.4-5.8-5.8-2.4 5.8-2.4z" fill="#fff" opacity=".5"/>
-              <circle cx="258" cy="24" r="2.5" fill="#fff" opacity=".4"/>
-              <circle cx="312" cy="66" r="2" fill="#fff" opacity=".3"/>
-              <path d="M-10 92c48-18 78 10 122-2s78-32 122-16" stroke="#fff" stroke-opacity=".08" stroke-width="1.4" fill="none"/>
-            </svg>
-          </div>
-          <div class="prayer__top">
-            <div>
-              <p class="prayer__label">Next prayer</p>
-              <h3 class="prayer__name"><span id="prayerName">Asr</span><span class="prayer__time num" id="prayerTime">16:12</span></h3>
-            </div>
-            <div class="prayer__count num" id="prayerCountdown">2:41:08<small>remaining</small></div>
-          </div>
-          <div class="prayer__track"><span class="prayer__fill" id="prayerFill" style="width:0%"></span></div>
-          <div class="prayer__steps" id="prayerSteps"></div>
-        </article>
-
-        <!-- Qur'an continue reading -->
-        <article class="card progress-card pressable" data-sheet="reading" data-int="quran reading">
+        <!-- Qur'an — continue reading -->
+        <article class="card card--pad progress-card" data-faith="islamic" data-sheet="reading">
           <span class="progress-card__art"><svg class="ico" viewBox="0 0 24 24"><use href="#i-book"/></svg></span>
           <div class="progress-card__body">
-            <h3 class="progress-card__title">Al-Kahf</h3>
-            <p class="progress-card__meta">Ayah 42 of 110 · 6 min left today</p>
-            <div class="bar"><span class="bar__fill" data-fill="38"></span></div>
+            <p class="progress-card__title">Continue Al-Kahf</p>
+            <p class="progress-card__meta">Ayah 42 of 110 · about 6 min left</p>
+            <span class="bar"><span class="bar__fill" data-fill="38"></span></span>
           </div>
-          <span class="roundbtn"><svg class="ico" viewBox="0 0 24 24"><use href="#i-play"/></svg></span>
+          <span class="roundbtn" aria-hidden="true"><svg class="ico" viewBox="0 0 24 24"><use href="#i-play"/></svg></span>
         </article>
 
-        <!-- Daily quote -->
-        <article class="card quote" data-int="quotes mindful">
-          <span class="sticker" style="top:-10px;left:-8px" aria-hidden="true">
-            <svg width="54" height="54" viewBox="0 0 54 54"><circle cx="27" cy="27" r="20" fill="none" stroke="var(--accent)" stroke-opacity=".18" stroke-width="1.5" stroke-dasharray="4 6"/></svg>
-          </span>
-          <span class="quote__mark" aria-hidden="true"><svg class="ico ico--fill" viewBox="0 0 24 24"><use href="#i-quote"/></svg></span>
-          <blockquote class="quote__text">Be like a flower that gives its fragrance even to the hand that crushes it.</blockquote>
-          <p class="quote__by">Ali ibn Abi Talib</p>
-          <div class="card__foot">
-            <span class="tag"><svg class="ico" viewBox="0 0 24 24" style="width:11px;height:11px"><use href="#i-sparkles"/></svg> Quote of the day</span>
-            <div class="card__actions">
-              <button class="ghostbtn pressable" data-toggle="save" data-toast="Saved to your collection"><svg class="ico" viewBox="0 0 24 24"><use href="#i-bookmark"/></svg></button>
-              <button class="ghostbtn pressable" data-toast="Share sheet opened"><svg class="ico" viewBox="0 0 24 24"><use href="#i-share"/></svg></button>
-            </div>
+        <!-- Fuel — Pakistan -->
+        <article class="card card--pad stat-row" data-loc="PK" data-sheet="fuel">
+          <span class="stat-row__icon"><svg class="ico" viewBox="0 0 24 24"><use href="#i-fuel"/></svg></span>
+          <div class="stat-row__body">
+            <p class="stat-row__title">Petrol <span class="tag tag--neutral">Pakistan</span></p>
+            <p class="stat-row__meta">Effective 1 September · OGRA</p>
+          </div>
+          <div class="stat-row__end">
+            <p class="stat-row__value num">₨ 264.61</p>
+            <p class="stat-row__delta is-up">+2.14</p>
           </div>
         </article>
 
-        <!-- Hadith -->
-        <article class="card card--pad" data-int="hadith duas">
-          <p class="arabic">مَنْ سَلَكَ طَرِيقًا يَلْتَمِسُ فِيهِ عِلْمًا سَهَّلَ اللَّهُ لَهُ بِهِ طَرِيقًا إِلَى الْجَنَّةِ</p>
-          <p class="body">“Whoever travels a path in search of knowledge, Allah will make easy for him a path to Paradise.”</p>
-          <div class="card__foot">
-            <span class="meta">Sahih Muslim · 2699</span>
-            <div class="card__actions">
-              <button class="ghostbtn pressable" data-toggle="save" data-toast="Hadith bookmarked"><svg class="ico" viewBox="0 0 24 24"><use href="#i-bookmark"/></svg></button>
-              <button class="ghostbtn pressable" data-toast="Share sheet opened"><svg class="ico" viewBox="0 0 24 24"><use href="#i-share"/></svg></button>
-            </div>
+        <!-- Tasks -->
+        <article class="card card--pad progress-card" data-tab="today">
+          <span class="progress-card__art"><svg class="ico" viewBox="0 0 24 24"><use href="#i-check-square"/></svg></span>
+          <div class="progress-card__body">
+            <p class="progress-card__title">3 tasks left today</p>
+            <p class="progress-card__meta">Next: finish the Q3 summary · 15:00</p>
+            <span class="bar"><span class="bar__fill" data-fill="40"></span></span>
           </div>
+          <span class="roundbtn" aria-hidden="true"><svg class="ico" viewBox="0 0 24 24"><use href="#i-arrow-r"/></svg></span>
         </article>
 
       </div>
     </div>
 
-    <!-- ===== Discover strip ===== -->
-    <div class="section" data-psection>
+    <!-- ===== Discover ===== -->
+    <div class="section">
       <div class="section__head">
         <div>
           <h2 class="section__title">Discover</h2>
-          <p class="section__sub">Short reads and tools worth a look</p>
+          <p class="section__sub">Because you check these often</p>
         </div>
-        <button class="section__link" data-tab="explore">More <svg class="ico" viewBox="0 0 24 24"><use href="#i-chev-r"/></svg></button>
+        <button class="section__link" data-tab="explore">Explore <svg class="ico" viewBox="0 0 24 24"><use href="#i-chev-r"/></svg></button>
       </div>
-      <div class="hscroll">
-        <button class="minicard pressable" data-int="mindful habits health" data-toast="Opening “A calmer morning”">
-          <span class="minicard__art"><svg viewBox="0 0 148 84" preserveAspectRatio="none"><defs><linearGradient id="m1" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#E7F4F1"/><stop offset="1" stop-color="#A5DED4"/></linearGradient></defs><rect width="148" height="84" fill="url(#m1)"/><circle cx="118" cy="20" r="26" fill="#10998A" opacity=".18"/><path d="M0 66c26-14 44 8 74-6s48-28 74-14v38H0z" fill="#10998A" opacity=".22"/><circle cx="40" cy="30" r="10" fill="#fff" opacity=".8"/></svg></span>
+      <div class="hscroll" id="homeDiscover">
+
+        <button class="minicard pressable" data-loc="PK" data-sheet="cricket">
+          <span class="minicard__art"><svg viewBox="0 0 148 84" preserveAspectRatio="none"><defs><linearGradient id="d1" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#E7F4F1"/><stop offset="1" stop-color="#8FD6C6"/></linearGradient></defs><rect width="148" height="84" fill="url(#d1)"/><ellipse cx="74" cy="52" rx="52" ry="30" fill="none" stroke="#0B7F73" stroke-opacity=".3" stroke-width="2"/><circle cx="108" cy="22" r="9" fill="#DE6B7A" opacity=".7"/><path d="M46 62 66 38" stroke="#0B7F73" stroke-opacity=".5" stroke-width="4" stroke-linecap="round"/></svg></span>
           <span class="minicard__body">
-            <span class="minicard__title">A calmer morning routine</span>
-            <span class="minicard__meta">4 min read</span>
+            <span class="minicard__title">PAK 214/4</span>
+            <span class="minicard__meta">2nd Test · Day 2</span>
           </span>
         </button>
-        <button class="minicard pressable" data-int="dhikr duas" data-sheet="tasbeeh">
-          <span class="minicard__art"><svg viewBox="0 0 148 84" preserveAspectRatio="none"><defs><linearGradient id="m2" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#EDEAFB"/><stop offset="1" stop-color="#B7AEF6"/></linearGradient></defs><rect width="148" height="84" fill="url(#m2)"/><circle cx="74" cy="42" r="24" fill="none" stroke="#6E62E5" stroke-opacity=".35" stroke-width="2"/><circle cx="74" cy="18" r="6" fill="#6E62E5" opacity=".6"/><circle cx="30" cy="64" r="12" fill="#fff" opacity=".6"/></svg></span>
+
+        <button class="minicard pressable" data-tab="explore">
+          <span class="minicard__art"><svg viewBox="0 0 148 84" preserveAspectRatio="none"><defs><linearGradient id="d2" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#E4EEF8"/><stop offset="1" stop-color="#A9C9E8"/></linearGradient></defs><rect width="148" height="84" fill="url(#d2)"/><circle cx="112" cy="24" r="18" fill="#F2C14E" opacity=".85"/><path d="M0 70c26-12 44 6 74-4s48-22 74-10v28H0z" fill="#3E9BD4" opacity=".28"/></svg></span>
           <span class="minicard__body">
-            <span class="minicard__title">Evening dhikr, 33 counts</span>
-            <span class="minicard__meta">2 min · Tasbeeh</span>
+            <span class="minicard__title">34° and hazy</span>
+            <span class="minicard__meta">Feels like 38°</span>
           </span>
         </button>
-        <button class="minicard pressable" data-int="money convert" data-toast="Opening currency converter">
-          <span class="minicard__art"><svg viewBox="0 0 148 84" preserveAspectRatio="none"><defs><linearGradient id="m3" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#FBEEDD"/><stop offset="1" stop-color="#EFC894"/></linearGradient></defs><rect width="148" height="84" fill="url(#m3)"/><path d="M12 62 44 38l24 16 30-30 26 18" fill="none" stroke="#C9793F" stroke-opacity=".55" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/><circle cx="96" cy="24" r="5" fill="#C9793F" opacity=".7"/></svg></span>
+
+        <button class="minicard pressable" data-loc="PK" data-sheet="loadshed">
+          <span class="minicard__art"><svg viewBox="0 0 148 84" preserveAspectRatio="none"><defs><linearGradient id="d3" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#FBEEDD"/><stop offset="1" stop-color="#EFC894"/></linearGradient></defs><rect width="148" height="84" fill="url(#d3)"/><path d="M78 16 58 48h14l-4 22 22-30H76z" fill="#C9793F" opacity=".65"/><circle cx="28" cy="24" r="7" fill="#fff" opacity=".65"/></svg></span>
           <span class="minicard__body">
-            <span class="minicard__title">Rates moved 0.4% today</span>
-            <span class="minicard__meta">Currency</span>
+            <span class="minicard__title">Next outage 14:00</span>
+            <span class="minicard__meta">Gulshan · 2 hours</span>
           </span>
         </button>
-        <button class="minicard pressable" data-int="nearby travel prayer" data-toast="Opening nearby places">
-          <span class="minicard__art"><svg viewBox="0 0 148 84" preserveAspectRatio="none"><defs><linearGradient id="m4" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#E4EEF8"/><stop offset="1" stop-color="#A9C9E8"/></linearGradient></defs><rect width="148" height="84" fill="url(#m4)"/><path d="M0 54h148M40 0v84M104 0v84" stroke="#3E9BD4" stroke-opacity=".3" stroke-width="2"/><circle cx="72" cy="38" r="8" fill="#3E9BD4" opacity=".65"/><circle cx="72" cy="38" r="16" fill="none" stroke="#3E9BD4" stroke-opacity=".35" stroke-width="2"/></svg></span>
+
+        <button class="minicard pressable" data-faith="islamic" data-toast="Forty duas for ordinary days">
+          <span class="minicard__art"><svg viewBox="0 0 148 84" preserveAspectRatio="none"><defs><linearGradient id="d4" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#1E2C6B"/><stop offset="1" stop-color="#4A54A8"/></linearGradient></defs><rect width="148" height="84" fill="url(#d4)"/><circle cx="112" cy="24" r="18" fill="#FFE9B8" opacity=".9"/><circle cx="104" cy="20" r="15" fill="#2A3670"/><circle cx="40" cy="56" r="3" fill="#fff" opacity=".7"/><circle cx="66" cy="30" r="2" fill="#fff" opacity=".5"/></svg></span>
           <span class="minicard__body">
-            <span class="minicard__title">3 mosques near you</span>
-            <span class="minicard__meta">Within 1.2 km</span>
+            <span class="minicard__title">Forty duas</span>
+            <span class="minicard__meta">For ordinary days</span>
           </span>
         </button>
+
+        <button class="minicard pressable" data-loc="PK" data-sheet="parcel">
+          <span class="minicard__art"><svg viewBox="0 0 148 84" preserveAspectRatio="none"><defs><linearGradient id="d5" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#EDEAFB"/><stop offset="1" stop-color="#B7AEF6"/></linearGradient></defs><rect width="148" height="84" fill="url(#d5)"/><path d="m74 24 26 13v26L74 76 48 63V37z" fill="#6E62E5" opacity=".35"/><path d="m48 37 26 13 26-13M74 50v26" stroke="#4A3F9E" stroke-opacity=".4" stroke-width="2"/></svg></span>
+          <span class="minicard__body">
+            <span class="minicard__title">Out for delivery</span>
+            <span class="minicard__meta">TCS · arrives today</span>
+          </span>
+        </button>
+
       </div>
     </div>
 
@@ -475,10 +532,10 @@
       <div class="page-head__bar">
         <div>
           <h1 class="page-head__title">Tools</h1>
-          <p class="page-head__sub">27 utilities, neatly sorted</p>
+          <p class="page-head__sub"><span id="toolCount">0</span> utilities, neatly sorted</p>
         </div>
-        <button class="iconbtn pressable" data-toast="Reorder your tools" aria-label="Customise">
-          <svg class="ico" viewBox="0 0 24 24"><use href="#i-settings"/></svg>
+        <button class="iconbtn pressable" data-sheet="personalise" aria-label="Personalise">
+          <svg class="ico" viewBox="0 0 24 24"><use href="#i-sliders"/></svg>
         </button>
       </div>
     </div>
@@ -486,211 +543,168 @@
     <div class="section" style="margin-top:16px">
       <label class="search">
         <svg class="ico" viewBox="0 0 24 24"><use href="#i-search"/></svg>
-        <input type="search" id="toolSearch" placeholder="Search tools, e.g. zakat" aria-label="Search tools">
+        <input type="search" id="toolSearch" placeholder="Search tools — try “petrol”" aria-label="Search tools">
       </label>
     </div>
 
     <div class="section" style="margin-top:14px">
-      <div class="chips" id="toolChips">
-        <button class="chip is-active" data-filter="foryou"><svg class="ico" viewBox="0 0 24 24"><use href="#i-sparkles"/></svg> For you</button>
-        <button class="chip" data-filter="all">All</button>
-        <button class="chip" data-filter="everyday">Everyday</button>
-        <button class="chip" data-filter="planning">Planning</button>
-        <button class="chip" data-filter="islamic">Islamic</button>
-        <button class="chip" data-filter="lifestyle">Lifestyle</button>
+      <div class="chips" id="toolChips"></div>
+    </div>
+
+    <!-- Recently used — can only ever show what this user is allowed to see -->
+    <div class="section" id="toolRecent" hidden>
+      <div class="section__head">
+        <div>
+          <h2 class="section__title">Recently used</h2>
+          <p class="section__sub">Straight back to where you were</p>
+        </div>
+      </div>
+      <div class="hscroll" id="toolRecentList"></div>
+    </div>
+
+    <div id="toolCats"></div>
+
+    <div class="empty" id="toolEmpty">
+      <svg width="88" height="66" viewBox="0 0 88 66" fill="none" aria-hidden="true">
+        <circle cx="44" cy="30" r="22" stroke="var(--border-2)" stroke-width="2" stroke-dasharray="5 7"/>
+        <path d="m58 44 12 12" stroke="var(--border-2)" stroke-width="2.4" stroke-linecap="round"/>
+        <circle cx="20" cy="14" r="3" fill="var(--accent)" opacity=".4"/>
+        <circle cx="72" cy="18" r="4" fill="var(--accent)" opacity=".25"/>
+      </svg>
+      <p class="empty__title">No tools match</p>
+      <p class="empty__text">Try a different word — or browse a category above.</p>
+    </div>
+
+  </section>
+
+  <!-- ==========================================================
+       TRAINS  (Pakistan)
+       ========================================================== -->
+  <section class="screen" id="screen-trains" data-loc="PK" role="tabpanel" aria-label="Trains">
+
+    <div class="page-head">
+      <div class="page-head__bar">
+        <div>
+          <h1 class="page-head__title">Trains</h1>
+          <p class="page-head__sub">Pakistan Railways · live running status</p>
+        </div>
+        <button class="iconbtn pressable" data-toast="Saved journeys" aria-label="Saved journeys">
+          <svg class="ico" viewBox="0 0 24 24"><use href="#i-bookmark"/></svg>
+        </button>
       </div>
     </div>
 
-    <div id="toolCats">
+    <!-- Route search -->
+    <div class="section" style="margin-top:18px">
+      <div class="row-gap">
+        <div class="card railsearch">
+          <div class="railsearch__art" aria-hidden="true">
+            <svg viewBox="0 0 350 150" preserveAspectRatio="xMidYMid slice">
+              <circle cx="322" cy="10" r="54" fill="var(--accent)" opacity=".07"/>
+              <circle cx="300" cy="140" r="32" fill="var(--indigo)" opacity=".06"/>
+              <path d="m286 44 2.4 5.8 5.8 2.4-5.8 2.4-2.4 5.8-2.4-5.8-5.8-2.4 5.8-2.4z" fill="var(--accent)" opacity=".22"/>
+            </svg>
+          </div>
+          <div class="railsearch__row">
+            <span class="railsearch__dots" aria-hidden="true">
+              <i class="railsearch__dot"></i><i class="railsearch__line"></i><i class="railsearch__dot railsearch__dot--end"></i>
+            </span>
+            <div class="railsearch__fields">
+              <button class="railfield pressable" data-toast="Choose a departure station">
+                <span class="railfield__label">From</span>
+                <span class="railfield__value">Karachi Cantt</span>
+              </button>
+              <button class="railfield pressable" data-toast="Choose a destination">
+                <span class="railfield__label">To</span>
+                <span class="railfield__value">Lahore Junction</span>
+              </button>
+            </div>
+            <button class="railswap pressable" data-toast="Stations swapped" aria-label="Swap stations">
+              <svg class="ico" viewBox="0 0 24 24"><use href="#i-swap"/></svg>
+            </button>
+          </div>
+          <div class="railsearch__foot">
+            <button class="railchip pressable is-active">Today</button>
+            <button class="railchip pressable">Tomorrow</button>
+            <button class="railchip pressable" aria-label="Pick a date"><svg class="ico" viewBox="0 0 24 24"><use href="#i-calendar"/></svg></button>
+            <button class="btn btn--accent pressable railsearch__go" data-toast="5 trains on this route today">
+              <svg class="ico" viewBox="0 0 24 24"><use href="#i-search"/></svg> Search
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
 
-      <!-- Everyday -->
-      <section class="cat" data-cat="everyday">
-        <div class="cat__head">
-          <span class="cat__dot"><svg class="ico" viewBox="0 0 24 24"><use href="#i-grid"/></svg></span>
-          <h2 class="cat__title">Everyday</h2>
-          <span class="cat__count">7</span>
+    <!-- Tracked train -->
+    <div class="section">
+      <div class="section__head">
+        <div>
+          <h2 class="section__title">You are tracking</h2>
+          <p class="section__sub">Updated 2 minutes ago</p>
         </div>
-        <div class="cat-grid">
-          <button class="cat-tool pressable" data-sheet="calculator" data-name="calculator maths" data-int="maths convert">
-            <span class="cat-tool__icon"><svg class="ico" viewBox="0 0 24 24"><use href="#i-calculator"/></svg></span>
-            <span class="cat-tool__label">Calculator</span>
-            <span class="cat-tool__meta">Standard</span>
-          </button>
-          <button class="cat-tool pressable" data-toast="Unit converter" data-name="unit converter length weight" data-int="convert maths">
-            <span class="cat-tool__icon"><svg class="ico" viewBox="0 0 24 24"><use href="#i-ruler"/></svg></span>
-            <span class="cat-tool__label">Unit Converter</span>
-            <span class="cat-tool__meta">32 units</span>
-          </button>
-          <button class="cat-tool pressable" data-toast="GBP → EUR · 1.1842" data-name="currency converter money exchange" data-int="money convert">
-            <span class="cat-tool__icon"><svg class="ico" viewBox="0 0 24 24"><use href="#i-currency"/></svg></span>
-            <span class="cat-tool__label">Currency</span>
-            <span class="cat-tool__meta">Live rates</span>
-          </button>
-          <button class="cat-tool pressable" data-toast="Stopwatch ready" data-name="stopwatch" data-int="focus">
-            <span class="cat-tool__icon"><svg class="ico" viewBox="0 0 24 24"><use href="#i-stopwatch"/></svg></span>
-            <span class="cat-tool__label">Stopwatch</span>
-            <span class="cat-tool__meta">Laps</span>
-          </button>
-          <button class="cat-tool pressable" data-toast="Timer ready" data-name="timer countdown" data-int="focus">
-            <span class="cat-tool__icon"><svg class="ico" viewBox="0 0 24 24"><use href="#i-timer"/></svg></span>
-            <span class="cat-tool__label">Timer</span>
-            <span class="cat-tool__meta">Presets</span>
-          </button>
-          <button class="cat-tool pressable" data-toast="Age calculator" data-name="age calculator birthday" data-int="maths calendar">
-            <span class="cat-tool__icon"><svg class="ico" viewBox="0 0 24 24"><use href="#i-cake"/></svg></span>
-            <span class="cat-tool__label">Age Calculator</span>
-            <span class="cat-tool__meta">Exact days</span>
-          </button>
-          <button class="cat-tool pressable" data-toast="Date calculator" data-name="date calculator difference" data-int="calendar maths">
-            <span class="cat-tool__icon"><svg class="ico" viewBox="0 0 24 24"><use href="#i-calendar"/></svg></span>
-            <span class="cat-tool__label">Date Calculator</span>
-            <span class="cat-tool__meta">Add · diff</span>
-          </button>
-        </div>
-      </section>
+        <button class="section__link" data-toast="Live status refreshed"><svg class="ico" viewBox="0 0 24 24"><use href="#i-refresh"/></svg> Refresh</button>
+      </div>
+      <div class="row-gap">
+        <article class="card card--pad live-train">
+          <div class="live-train__head">
+            <span class="live-train__no num">5UP</span>
+            <div class="live-train__title">
+              <p class="live-train__name">Green Line Express</p>
+              <p class="live-train__route">Karachi Cantt → Islamabad</p>
+            </div>
+            <span class="status status--ok"><span class="live"></span>On time</span>
+          </div>
+          <div class="live-train__track">
+            <span class="live-train__fill" data-fill="62"></span>
+            <span class="live-train__pin"><svg class="ico" viewBox="0 0 24 24"><use href="#i-train"/></svg></span>
+          </div>
+          <div class="live-train__stops">
+            <span><b class="num">22:00</b>Karachi</span>
+            <span class="is-now"><b>Now</b>Near Rohri</span>
+            <span><b class="num">17:30</b>Islamabad</span>
+          </div>
+        </article>
+      </div>
+    </div>
 
-      <!-- Planning -->
-      <section class="cat" data-cat="planning">
-        <div class="cat__head">
-          <span class="cat__dot"><svg class="ico" viewBox="0 0 24 24"><use href="#i-check-square"/></svg></span>
-          <h2 class="cat__title">Planning</h2>
-          <span class="cat__count">5</span>
+    <!-- Departures -->
+    <div class="section">
+      <div class="section__head">
+        <div>
+          <h2 class="section__title">Today’s departures</h2>
+          <p class="section__sub">From Karachi Cantt</p>
         </div>
-        <div class="cat-grid">
-          <button class="cat-tool pressable" data-tab="today" data-name="calendar schedule" data-int="calendar tasks">
-            <span class="cat-tool__icon"><svg class="ico" viewBox="0 0 24 24"><use href="#i-calendar"/></svg></span>
-            <span class="cat-tool__label">Calendar</span>
-            <span class="cat-tool__meta">3 events</span>
-          </button>
-          <button class="cat-tool pressable" data-toast="4 reminders today" data-name="reminders alarm" data-int="tasks calendar">
-            <span class="cat-tool__icon"><svg class="ico" viewBox="0 0 24 24"><use href="#i-bell-ring"/></svg></span>
-            <span class="cat-tool__label">Reminders</span>
-            <span class="cat-tool__meta">4 today</span>
-          </button>
-          <button class="cat-tool pressable" data-toast="12 notes saved" data-name="notes writing" data-int="notes">
-            <span class="cat-tool__icon"><svg class="ico" viewBox="0 0 24 24"><use href="#i-note"/></svg></span>
-            <span class="cat-tool__label">Notes</span>
-            <span class="cat-tool__meta">12 saved</span>
-          </button>
-          <button class="cat-tool pressable" data-tab="today" data-name="todo tasks checklist" data-int="tasks habits">
-            <span class="cat-tool__icon"><svg class="ico" viewBox="0 0 24 24"><use href="#i-check-square"/></svg></span>
-            <span class="cat-tool__label">To-do</span>
-            <span class="cat-tool__meta">2 of 5 done</span>
-          </button>
-          <button class="cat-tool pressable" data-toast="Next: Design review, 14:00" data-name="events meetings" data-int="calendar tasks">
-            <span class="cat-tool__icon"><svg class="ico" viewBox="0 0 24 24"><use href="#i-list"/></svg></span>
-            <span class="cat-tool__label">Events</span>
-            <span class="cat-tool__meta">Next 14:00</span>
-          </button>
-        </div>
-      </section>
+        <button class="section__link" data-toast="All departures">All <svg class="ico" viewBox="0 0 24 24"><use href="#i-chev-r"/></svg></button>
+      </div>
+      <div class="row-gap">
+        <div class="list" id="trainList"></div>
+      </div>
+    </div>
 
-      <!-- Islamic -->
-      <section class="cat cat--islamic" data-cat="islamic">
-        <div class="cat__head">
-          <span class="cat__dot"><svg class="ico" viewBox="0 0 24 24"><use href="#i-moon-star"/></svg></span>
-          <h2 class="cat__title">Islamic</h2>
-          <span class="cat__count">9</span>
+    <!-- Popular routes -->
+    <div class="section">
+      <div class="section__head">
+        <div>
+          <h2 class="section__title">Popular routes</h2>
+          <p class="section__sub">Tap to check fares and seats</p>
         </div>
-        <div class="cat-grid">
-          <button class="cat-tool pressable" data-sheet="prayer" data-name="prayer times salah namaz" data-int="prayer">
-            <span class="cat-tool__icon"><svg class="ico" viewBox="0 0 24 24"><use href="#i-prayer"/></svg></span>
-            <span class="cat-tool__label">Prayer Times</span>
-            <span class="cat-tool__meta">Asr 16:12</span>
-          </button>
-          <button class="cat-tool pressable" data-sheet="reading" data-name="quran surah ayah" data-int="quran reading">
-            <span class="cat-tool__icon"><svg class="ico" viewBox="0 0 24 24"><use href="#i-book"/></svg></span>
-            <span class="cat-tool__label">Qur'an</span>
-            <span class="cat-tool__meta">Al-Kahf 42</span>
-          </button>
-          <button class="cat-tool pressable" data-toast="Hadith of the day" data-name="hadith sunnah" data-int="hadith reading">
-            <span class="cat-tool__icon"><svg class="ico" viewBox="0 0 24 24"><use href="#i-quote"/></svg></span>
-            <span class="cat-tool__label">Hadith</span>
-            <span class="cat-tool__meta">Daily</span>
-          </button>
-          <button class="cat-tool pressable" data-toast="42 duas in your library" data-name="duas supplication" data-int="duas">
-            <span class="cat-tool__icon"><svg class="ico" viewBox="0 0 24 24"><use href="#i-heart"/></svg></span>
-            <span class="cat-tool__label">Duas</span>
-            <span class="cat-tool__meta">42 saved</span>
-          </button>
-          <button class="cat-tool pressable" data-sheet="tasbeeh" data-name="tasbeeh dhikr counter" data-int="dhikr">
-            <span class="cat-tool__icon"><svg class="ico" viewBox="0 0 24 24"><use href="#i-beads"/></svg></span>
-            <span class="cat-tool__label">Tasbeeh</span>
-            <span class="cat-tool__meta">Counter</span>
-          </button>
-          <button class="cat-tool pressable" data-sheet="qibla" data-name="qibla compass direction" data-int="qibla prayer">
-            <span class="cat-tool__icon"><svg class="ico" viewBox="0 0 24 24"><use href="#i-navigation"/></svg></span>
-            <span class="cat-tool__label">Qibla</span>
-            <span class="cat-tool__meta">119° SE</span>
-          </button>
-          <button class="cat-tool pressable" data-toast="15 Rabi' al-Awwal 1448" data-name="hijri calendar islamic date" data-int="hijri calendar">
-            <span class="cat-tool__icon"><svg class="ico" viewBox="0 0 24 24"><use href="#i-moon"/></svg></span>
-            <span class="cat-tool__label">Hijri Calendar</span>
-            <span class="cat-tool__meta">15 Rabi' I</span>
-          </button>
-          <button class="cat-tool pressable" data-toast="Zakat calculator" data-name="zakat calculator charity nisab" data-int="zakat money">
-            <span class="cat-tool__icon"><svg class="ico" viewBox="0 0 24 24"><use href="#i-wallet"/></svg></span>
-            <span class="cat-tool__label">Zakat</span>
-            <span class="cat-tool__meta">Nisab check</span>
-          </button>
-          <button class="cat-tool pressable" data-toast="Ramadan in 172 days" data-name="ramadan fasting" data-int="hijri prayer">
-            <span class="cat-tool__icon"><svg class="ico" viewBox="0 0 24 24"><use href="#i-moon-star"/></svg></span>
-            <span class="cat-tool__label">Ramadan</span>
-            <span class="cat-tool__meta">In 172 days</span>
-          </button>
-        </div>
-      </section>
-
-      <!-- Lifestyle -->
-      <section class="cat" data-cat="lifestyle">
-        <div class="cat__head">
-          <span class="cat__dot"><svg class="ico" viewBox="0 0 24 24"><use href="#i-sparkles"/></svg></span>
-          <h2 class="cat__title">Lifestyle</h2>
-          <span class="cat__count">6</span>
-        </div>
-        <div class="cat-grid">
-          <button class="cat-tool pressable" data-tab="explore" data-name="weather forecast rain" data-int="weather">
-            <span class="cat-tool__icon"><svg class="ico" viewBox="0 0 24 24"><use href="#i-cloud-sun"/></svg></span>
-            <span class="cat-tool__label">Weather</span>
-            <span class="cat-tool__meta">21° Clear</span>
-          </button>
-          <button class="cat-tool pressable" data-tab="explore" data-name="news headlines" data-int="news">
-            <span class="cat-tool__icon"><svg class="ico" viewBox="0 0 24 24"><use href="#i-news"/></svg></span>
-            <span class="cat-tool__label">News</span>
-            <span class="cat-tool__meta">12 new</span>
-          </button>
-          <button class="cat-tool pressable" data-toast="Quote of the day saved" data-name="quotes daily inspiration" data-int="quotes mindful">
-            <span class="cat-tool__icon"><svg class="ico" viewBox="0 0 24 24"><use href="#i-quote"/></svg></span>
-            <span class="cat-tool__label">Daily Quotes</span>
-            <span class="cat-tool__meta">Fresh</span>
-          </button>
-          <button class="cat-tool pressable" data-toast="3 mosques within 1.2 km" data-name="nearby places map mosque" data-int="nearby travel">
-            <span class="cat-tool__icon"><svg class="ico" viewBox="0 0 24 24"><use href="#i-pin"/></svg></span>
-            <span class="cat-tool__label">Nearby</span>
-            <span class="cat-tool__meta">1.2 km</span>
-          </button>
-          <button class="cat-tool pressable" data-toast="Water: 5 of 8 glasses" data-name="water tracker hydration health" data-int="health">
-            <span class="cat-tool__icon"><svg class="ico" viewBox="0 0 24 24"><use href="#i-droplet"/></svg></span>
-            <span class="cat-tool__label">Water</span>
-            <span class="cat-tool__meta">5 / 8</span>
-          </button>
-          <button class="cat-tool pressable" data-toast="Habit streak: 12 days" data-name="habits streak tracker" data-int="habits health">
-            <span class="cat-tool__icon"><svg class="ico" viewBox="0 0 24 24"><use href="#i-flame"/></svg></span>
-            <span class="cat-tool__label">Habits</span>
-            <span class="cat-tool__meta">12-day streak</span>
-          </button>
-        </div>
-      </section>
-
-      <div class="empty" id="toolEmpty">
-        <svg width="88" height="66" viewBox="0 0 88 66" fill="none" aria-hidden="true">
-          <circle cx="44" cy="30" r="22" stroke="var(--border-2)" stroke-width="2" stroke-dasharray="5 7"/>
-          <path d="m58 44 12 12" stroke="var(--border-2)" stroke-width="2.4" stroke-linecap="round"/>
-          <circle cx="20" cy="14" r="3" fill="var(--accent)" opacity=".4"/>
-          <circle cx="72" cy="18" r="4" fill="var(--accent)" opacity=".25"/>
-        </svg>
-        <p class="empty__title">No tools match</p>
-        <p class="empty__text">Try a different word — or browse a category above.</p>
+      </div>
+      <div class="hscroll">
+        <button class="routecard pressable" data-toast="Karachi → Lahore · 4 trains · from ₨ 2,400">
+          <span class="routecard__pair"><b>KHI</b><svg class="ico" viewBox="0 0 24 24"><use href="#i-arrow-r"/></svg><b>LHR</b></span>
+          <span class="routecard__meta">17h 45m · 4 trains</span>
+          <span class="routecard__fare num">from ₨ 2,400</span>
+        </button>
+        <button class="routecard pressable" data-toast="Karachi → Islamabad · 2 trains · from ₨ 3,100">
+          <span class="routecard__pair"><b>KHI</b><svg class="ico" viewBox="0 0 24 24"><use href="#i-arrow-r"/></svg><b>ISB</b></span>
+          <span class="routecard__meta">19h 30m · 2 trains</span>
+          <span class="routecard__fare num">from ₨ 3,100</span>
+        </button>
+        <button class="routecard pressable" data-toast="Lahore → Rawalpindi · 6 trains · from ₨ 1,150">
+          <span class="routecard__pair"><b>LHR</b><svg class="ico" viewBox="0 0 24 24"><use href="#i-arrow-r"/></svg><b>RWP</b></span>
+          <span class="routecard__meta">4h 20m · 6 trains</span>
+          <span class="routecard__fare num">from ₨ 1,150</span>
+        </button>
       </div>
     </div>
 
@@ -705,7 +719,7 @@
       <div class="page-head__bar">
         <div>
           <h1 class="page-head__title">Today</h1>
-          <p class="page-head__sub" id="todayHijri">Monday, 7 September · 15 Rabi' al-Awwal</p>
+          <p class="page-head__sub" id="todaySub">Tuesday, 8 September</p>
         </div>
         <button class="iconbtn pressable" data-toast="New task added" aria-label="Add">
           <svg class="ico" viewBox="0 0 24 24"><use href="#i-plus"/></svg>
@@ -732,8 +746,8 @@
             </div>
           </div>
           <div class="ring-card__body">
-            <h2 class="ring-card__title">You're on track</h2>
-            <p class="ring-card__text">2 of 5 tasks done, 3 prayers prayed. One meeting left before Maghrib.</p>
+            <h2 class="ring-card__title">You’re on track</h2>
+            <p class="ring-card__text" id="dayRingText">2 of 5 tasks done. One meeting left this afternoon.</p>
           </div>
         </article>
       </div>
@@ -741,21 +755,74 @@
 
     <!-- Stats -->
     <div class="section">
-      <div class="stats">
-        <article class="stat">
-          <span class="stat__icon"><svg class="ico" viewBox="0 0 24 24"><use href="#i-flame"/></svg></span>
-          <p class="stat__value num">12 <span>days</span></p>
-          <p class="stat__label">Prayer streak</p>
+      <div class="stats" id="todayStats"></div>
+    </div>
+
+    <!-- Ayah of the day -->
+    <div class="section" data-faith="islamic">
+      <div class="section__head">
+        <div>
+          <h2 class="section__title">Ayah of the day</h2>
+          <p class="section__sub">Ar-Ra’d · 13:28</p>
+        </div>
+      </div>
+      <div class="row-gap">
+        <article class="card card--pad quote">
+          <span class="quote__mark" aria-hidden="true"><svg class="ico" viewBox="0 0 24 24"><use href="#i-quote"/></svg></span>
+          <p class="arabic" dir="rtl" lang="ar">أَلَا بِذِكْرِ ٱللَّهِ تَطْمَئِنُّ ٱلْقُلُوبُ</p>
+          <p class="quote__text">Truly, it is in the remembrance of God that hearts find rest.</p>
+          <div class="card__foot">
+            <p class="quote__by">Ar-Ra’d 13:28</p>
+            <div class="card__actions">
+              <button class="ghostbtn pressable" data-bookmark aria-label="Bookmark this ayah"><svg class="ico" viewBox="0 0 24 24"><use href="#i-bookmark"/></svg></button>
+              <button class="ghostbtn pressable" data-toast="Ayah shared" aria-label="Share"><svg class="ico" viewBox="0 0 24 24"><use href="#i-share"/></svg></button>
+            </div>
+          </div>
         </article>
-        <article class="stat">
-          <span class="stat__icon"><svg class="ico" viewBox="0 0 24 24"><use href="#i-book"/></svg></span>
-          <p class="stat__value num">18 <span>min</span></p>
-          <p class="stat__label">Read today</p>
+      </div>
+    </div>
+
+    <!-- Hadith -->
+    <div class="section" data-faith="islamic">
+      <div class="section__head">
+        <div>
+          <h2 class="section__title">Hadith</h2>
+          <p class="section__sub">Sahih al-Bukhari</p>
+        </div>
+      </div>
+      <div class="row-gap">
+        <article class="card card--pad">
+          <p class="body">“The most beloved deeds to God are those done consistently, even if they are few.”</p>
+          <div class="card__foot">
+            <p class="quote__by">Bukhari 6464 · Narrated by Aisha</p>
+            <div class="card__actions">
+              <button class="ghostbtn pressable" data-bookmark aria-label="Bookmark this hadith"><svg class="ico" viewBox="0 0 24 24"><use href="#i-bookmark"/></svg></button>
+              <button class="ghostbtn pressable" data-toast="Hadith shared" aria-label="Share"><svg class="ico" viewBox="0 0 24 24"><use href="#i-share"/></svg></button>
+            </div>
+          </div>
         </article>
-        <article class="stat">
-          <span class="stat__icon"><svg class="ico" viewBox="0 0 24 24"><use href="#i-check-circle"/></svg></span>
-          <p class="stat__value num">2<span>/5</span></p>
-          <p class="stat__label">Tasks done</p>
+      </div>
+    </div>
+
+    <!-- Today's thought — the counterpart for everyone else -->
+    <div class="section" data-faith="none">
+      <div class="section__head">
+        <div>
+          <h2 class="section__title">Today’s thought</h2>
+          <p class="section__sub">A minute of perspective</p>
+        </div>
+      </div>
+      <div class="row-gap">
+        <article class="card card--pad quote">
+          <span class="quote__mark" aria-hidden="true"><svg class="ico" viewBox="0 0 24 24"><use href="#i-quote"/></svg></span>
+          <p class="quote__text">Small things done consistently beat big things done occasionally.</p>
+          <div class="card__foot">
+            <p class="quote__by">On building habits</p>
+            <div class="card__actions">
+              <button class="ghostbtn pressable" data-bookmark aria-label="Bookmark"><svg class="ico" viewBox="0 0 24 24"><use href="#i-bookmark"/></svg></button>
+              <button class="ghostbtn pressable" data-toast="Shared" aria-label="Share"><svg class="ico" viewBox="0 0 24 24"><use href="#i-share"/></svg></button>
+            </div>
+          </div>
         </article>
       </div>
     </div>
@@ -765,90 +832,11 @@
       <div class="section__head">
         <div>
           <h2 class="section__title">Your day</h2>
-          <p class="section__sub">Prayers and events, in order</p>
+          <p class="section__sub" id="agendaSub">Everything in order</p>
         </div>
         <button class="section__link" data-toast="Switched to week view">Week <svg class="ico" viewBox="0 0 24 24"><use href="#i-chev-r"/></svg></button>
       </div>
-
-      <div class="timeline">
-        <div class="tl-item is-done">
-          <span class="tl-time num">04:52</span>
-          <span class="tl-line"><span class="tl-node"></span></span>
-          <button class="tl-card pressable" data-sheet="prayer">
-            <span class="tl-card__body">
-              <span class="tl-card__title">Fajr</span>
-              <span class="tl-card__meta">Prayed at home</span>
-            </span>
-            <span class="tl-card__icon"><svg class="ico" viewBox="0 0 24 24"><use href="#i-check-circle"/></svg></span>
-          </button>
-        </div>
-        <div class="tl-item is-done">
-          <span class="tl-time num">09:30</span>
-          <span class="tl-line"><span class="tl-node"></span></span>
-          <button class="tl-card pressable" data-toast="Standup — 9:30, Meet">
-            <span class="tl-card__body">
-              <span class="tl-card__title">Team standup</span>
-              <span class="tl-card__meta">15 min · Video call</span>
-            </span>
-            <span class="tl-card__icon"><svg class="ico" viewBox="0 0 24 24"><use href="#i-check-circle"/></svg></span>
-          </button>
-        </div>
-        <div class="tl-item is-done">
-          <span class="tl-time num">12:38</span>
-          <span class="tl-line"><span class="tl-node"></span></span>
-          <button class="tl-card pressable" data-sheet="prayer">
-            <span class="tl-card__body">
-              <span class="tl-card__title">Dhuhr</span>
-              <span class="tl-card__meta">Prayed in congregation</span>
-            </span>
-            <span class="tl-card__icon"><svg class="ico" viewBox="0 0 24 24"><use href="#i-check-circle"/></svg></span>
-          </button>
-        </div>
-        <div class="tl-item is-now">
-          <span class="tl-time num">14:00</span>
-          <span class="tl-line"><span class="tl-node"></span></span>
-          <button class="tl-card pressable" data-toast="Design review starts in 20 min">
-            <span class="tl-card__body">
-              <span class="tl-card__title">Design review</span>
-              <span class="tl-card__meta">45 min · Studio 2 · In 20 min</span>
-            </span>
-            <span class="tl-card__icon"><svg class="ico" viewBox="0 0 24 24"><use href="#i-clock"/></svg></span>
-          </button>
-        </div>
-        <div class="tl-item">
-          <span class="tl-time num">16:12</span>
-          <span class="tl-line"><span class="tl-node"></span></span>
-          <button class="tl-card pressable" data-sheet="prayer">
-            <span class="tl-card__body">
-              <span class="tl-card__title">Asr</span>
-              <span class="tl-card__meta">Adhan · Reminder on</span>
-            </span>
-            <span class="tl-card__icon"><svg class="ico" viewBox="0 0 24 24"><use href="#i-bell"/></svg></span>
-          </button>
-        </div>
-        <div class="tl-item">
-          <span class="tl-time num">18:30</span>
-          <span class="tl-line"><span class="tl-node"></span></span>
-          <button class="tl-card pressable" data-toast="Groceries · Reminder set">
-            <span class="tl-card__body">
-              <span class="tl-card__title">Pick up groceries</span>
-              <span class="tl-card__meta">Reminder · High Street</span>
-            </span>
-            <span class="tl-card__icon"><svg class="ico" viewBox="0 0 24 24"><use href="#i-pin"/></svg></span>
-          </button>
-        </div>
-        <div class="tl-item">
-          <span class="tl-time num">19:24</span>
-          <span class="tl-line"><span class="tl-node"></span></span>
-          <button class="tl-card pressable" data-sheet="prayer">
-            <span class="tl-card__body">
-              <span class="tl-card__title">Maghrib</span>
-              <span class="tl-card__meta">Sunset 19:21</span>
-            </span>
-            <span class="tl-card__icon"><svg class="ico" viewBox="0 0 24 24"><use href="#i-bell"/></svg></span>
-          </button>
-        </div>
-      </div>
+      <div class="timeline" id="agenda"></div>
     </div>
 
     <!-- Tasks -->
@@ -864,12 +852,13 @@
         <div class="list" id="taskList">
           <button class="task is-done">
             <span class="task__box"><svg class="ico" viewBox="0 0 24 24"><use href="#i-check"/></svg></span>
-            <span class="task__label">Morning adhkar</span>
+            <span class="task__label" data-loc="PK">Pay the K-Electric bill</span>
+            <span class="task__label" data-loc="global">Pay the electricity bill</span>
             <span class="task__time num">07:00</span>
           </button>
           <button class="task is-done">
             <span class="task__box"><svg class="ico" viewBox="0 0 24 24"><use href="#i-check"/></svg></span>
-            <span class="task__label">Reply to Sara's email</span>
+            <span class="task__label">Reply to Sara’s email</span>
             <span class="task__time num">10:15</span>
           </button>
           <button class="task">
@@ -877,14 +866,14 @@
             <span class="task__label">Finish the Q3 summary</span>
             <span class="task__time num">15:00</span>
           </button>
-          <button class="task">
+          <button class="task" data-faith="islamic">
             <span class="task__box"><svg class="ico" viewBox="0 0 24 24"><use href="#i-check"/></svg></span>
-            <span class="task__label">Read 2 pages of Al-Kahf</span>
+            <span class="task__label">Read two pages of Al-Kahf</span>
             <span class="task__time num">Evening</span>
           </button>
           <button class="task">
             <span class="task__box"><svg class="ico" viewBox="0 0 24 24"><use href="#i-check"/></svg></span>
-            <span class="task__label">Call Dad</span>
+            <span class="task__label">Call home</span>
             <span class="task__time num">21:00</span>
           </button>
         </div>
@@ -901,7 +890,7 @@
       </div>
       <div class="row-gap">
         <div class="card habits">
-          <div class="habit">
+          <div class="habit" data-faith="islamic">
             <span class="habit__name">Fajr on time</span>
             <span class="habit__days">
               <i class="habit__day is-on"></i><i class="habit__day is-on"></i><i class="habit__day is-on"></i>
@@ -910,14 +899,23 @@
             </span>
             <span class="habit__streak"><svg class="ico" viewBox="0 0 24 24"><use href="#i-flame"/></svg>6</span>
           </div>
-          <div class="habit">
-            <span class="habit__name">Qur'an daily</span>
+          <div class="habit" data-faith="islamic">
+            <span class="habit__name">Qur’an daily</span>
             <span class="habit__days">
               <i class="habit__day is-on"></i><i class="habit__day is-on"></i><i class="habit__day"></i>
               <i class="habit__day is-on"></i><i class="habit__day is-on"></i><i class="habit__day is-on"></i>
               <i class="habit__day is-on is-today"></i>
             </span>
             <span class="habit__streak"><svg class="ico" viewBox="0 0 24 24"><use href="#i-flame"/></svg>4</span>
+          </div>
+          <div class="habit">
+            <span class="habit__name">Walk 6k steps</span>
+            <span class="habit__days">
+              <i class="habit__day is-on"></i><i class="habit__day is-on"></i><i class="habit__day"></i>
+              <i class="habit__day is-on"></i><i class="habit__day is-on"></i><i class="habit__day"></i>
+              <i class="habit__day is-on is-today"></i>
+            </span>
+            <span class="habit__streak"><svg class="ico" viewBox="0 0 24 24"><use href="#i-flame"/></svg>2</span>
           </div>
           <div class="habit">
             <span class="habit__name">8 glasses</span>
@@ -932,6 +930,26 @@
       </div>
     </div>
 
+    <!-- Private — sensitive features stay one deliberate tap away -->
+    <div class="section">
+      <div class="section__head">
+        <div>
+          <h2 class="section__title">Private</h2>
+          <p class="section__sub">Only on this device, only for you</p>
+        </div>
+      </div>
+      <div class="row-gap">
+        <button class="card card--pad private-card pressable" data-toast="Unlock to see private records">
+          <span class="private-card__icon"><svg class="ico" viewBox="0 0 24 24"><use href="#i-lock"/></svg></span>
+          <span class="private-card__body">
+            <span class="private-card__title">Health, documents & money</span>
+            <span class="private-card__text">Records, medication and expenses stay locked until you open them.</span>
+          </span>
+          <svg class="ico private-card__chev" viewBox="0 0 24 24"><use href="#i-chev-r"/></svg>
+        </button>
+      </div>
+    </div>
+
   </section>
 
   <!-- ==========================================================
@@ -943,17 +961,17 @@
       <div class="page-head__bar">
         <div>
           <h1 class="page-head__title">Explore</h1>
-          <p class="page-head__sub">Reading, weather and what's around you</p>
+          <p class="page-head__sub" id="exploreSub">What’s happening around you</p>
         </div>
-        <button class="iconbtn pressable" data-toast="Search across everything" aria-label="Search">
+        <button class="iconbtn pressable" data-sheet="search" aria-label="Search everything">
           <svg class="ico" viewBox="0 0 24 24"><use href="#i-search"/></svg>
         </button>
       </div>
     </div>
 
-    <!-- Featured -->
-    <div class="section" style="margin-top:18px">
-      <article class="feature pressable" data-toast="Opening “The forty rabbaneh duas”">
+    <!-- Featured — Islamic edition -->
+    <div class="section" style="margin-top:18px" data-faith="islamic">
+      <article class="feature pressable" data-toast="Opening “Forty duas for ordinary days”">
         <div class="feature__art" aria-hidden="true">
           <svg viewBox="0 0 350 216" preserveAspectRatio="xMidYMid slice">
             <circle cx="300" cy="26" r="80" fill="#fff" opacity=".09"/>
@@ -976,33 +994,144 @@
       </article>
     </div>
 
+    <!-- Featured — everyone else -->
+    <div class="section" style="margin-top:18px" data-faith="none">
+      <article class="feature pressable" data-toast="Opening “A calmer week”">
+        <div class="feature__art" aria-hidden="true">
+          <svg viewBox="0 0 350 216" preserveAspectRatio="xMidYMid slice">
+            <circle cx="300" cy="26" r="80" fill="#fff" opacity=".09"/>
+            <circle cx="320" cy="200" r="64" fill="#04322C" opacity=".18"/>
+            <g transform="translate(232 46)">
+              <rect x="0" y="0" width="86" height="86" rx="26" fill="#fff" opacity=".2"/>
+              <path d="M18 30h50M18 46h34M18 62h42" stroke="#fff" stroke-opacity=".55" stroke-width="4" stroke-linecap="round"/>
+            </g>
+            <path d="m206 40 2.6 6.4 6.4 2.6-6.4 2.6-2.6 6.4-2.6-6.4-6.4-2.6 6.4-2.6z" fill="#fff" opacity=".6"/>
+            <circle cx="196" cy="110" r="4" fill="#fff" opacity=".3"/>
+            <path d="M-10 176c56-20 92 14 144-2s94-48 148-26" stroke="#fff" stroke-opacity=".12" stroke-width="1.5" fill="none"/>
+          </svg>
+        </div>
+        <span class="feature__tag"><svg class="ico" viewBox="0 0 24 24"><use href="#i-sparkles"/></svg> Featured collection</span>
+        <h2 class="feature__title">A calmer week, in seven steps</h2>
+        <p class="feature__text">Small routines for planning, spending and winding down — one for each day.</p>
+        <p class="feature__meta"><span>7 days</span><span class="dot"></span><span>3 min each</span><span class="dot"></span><span>Free</span></p>
+      </article>
+    </div>
+
     <!-- Weather -->
     <div class="section">
       <div class="section__head">
         <div>
           <h2 class="section__title">Weather</h2>
-          <p class="section__sub">London · updated 4 min ago</p>
+          <p class="section__sub"><span id="weatherCity">Karachi</span> · updated 4 min ago</p>
         </div>
         <button class="section__link" data-toast="Weather refreshed"><svg class="ico" viewBox="0 0 24 24"><use href="#i-refresh"/></svg> Refresh</button>
       </div>
       <div class="row-gap">
         <article class="card weather">
-          <span class="weather__icon"><svg class="ico" viewBox="0 0 24 24" style="width:40px;height:40px"><use href="#i-cloud-sun"/></svg></span>
+          <span class="weather__icon"><svg class="ico" viewBox="0 0 24 24" id="weatherIcon" style="width:40px;height:40px"><use href="#i-sun"/></svg></span>
           <div>
-            <p class="weather__temp num">21<sup>°</sup></p>
-            <p class="weather__desc">Mostly clear · feels like 19°</p>
+            <p class="weather__temp num" id="weatherTemp">34<sup>°</sup></p>
+            <p class="weather__desc" id="weatherDesc">Hazy sun · feels like 38°</p>
           </div>
           <div class="weather__grid">
-            <span class="weather__stat"><svg class="ico" viewBox="0 0 24 24"><use href="#i-droplet"/></svg> <b>12%</b></span>
-            <span class="weather__stat"><svg class="ico" viewBox="0 0 24 24"><use href="#i-wind"/></svg> <b>8 km/h</b></span>
-            <span class="weather__stat"><svg class="ico" viewBox="0 0 24 24"><use href="#i-moon"/></svg> <b>19:21</b></span>
+            <span class="weather__stat"><svg class="ico" viewBox="0 0 24 24"><use href="#i-droplet"/></svg> <b id="weatherRain">8%</b></span>
+            <span class="weather__stat"><svg class="ico" viewBox="0 0 24 24"><use href="#i-wind"/></svg> <b id="weatherWind">14 km/h</b></span>
+            <span class="weather__stat"><svg class="ico" viewBox="0 0 24 24"><use href="#i-moon"/></svg> <b class="num" id="weatherSunset">18:36</b></span>
           </div>
         </article>
       </div>
     </div>
 
+    <!-- Around Pakistan -->
+    <div class="section" data-loc="PK">
+      <div class="section__head">
+        <div>
+          <h2 class="section__title">Around you</h2>
+          <p class="section__sub">Local services, kept current</p>
+        </div>
+        <span class="tag tag--neutral">Pakistan</span>
+      </div>
+      <div class="row-gap">
+        <div class="list">
+          <button class="list-row pressable" data-sheet="fuel">
+            <span class="list-row__icon"><svg class="ico" viewBox="0 0 24 24"><use href="#i-fuel"/></svg></span>
+            <span class="list-row__body">
+              <span class="list-row__title">Fuel prices</span>
+              <span class="list-row__sub">Petrol · Hi-Octane · Diesel</span>
+            </span>
+            <span class="list-row__end"><span class="list-row__value num">₨ 264.61</span><svg class="ico" viewBox="0 0 24 24"><use href="#i-chev-r"/></svg></span>
+          </button>
+          <button class="list-row pressable" data-sheet="loadshed">
+            <span class="list-row__icon"><svg class="ico" viewBox="0 0 24 24"><use href="#i-bolt"/></svg></span>
+            <span class="list-row__body">
+              <span class="list-row__title">Loadshedding</span>
+              <span class="list-row__sub">Gulshan-e-Iqbal · next 14:00</span>
+            </span>
+            <span class="list-row__end"><span class="list-row__value">2 hrs</span><svg class="ico" viewBox="0 0 24 24"><use href="#i-chev-r"/></svg></span>
+          </button>
+          <button class="list-row pressable" data-sheet="rates">
+            <span class="list-row__icon"><svg class="ico" viewBox="0 0 24 24"><use href="#i-coins"/></svg></span>
+            <span class="list-row__body">
+              <span class="list-row__title">Gold & currency</span>
+              <span class="list-row__sub">Open market · 24k per tola</span>
+            </span>
+            <span class="list-row__end"><span class="list-row__value num">₨ 258,400</span><svg class="ico" viewBox="0 0 24 24"><use href="#i-chev-r"/></svg></span>
+          </button>
+          <button class="list-row pressable" data-tab="trains">
+            <span class="list-row__icon"><svg class="ico" viewBox="0 0 24 24"><use href="#i-train"/></svg></span>
+            <span class="list-row__body">
+              <span class="list-row__title">Trains</span>
+              <span class="list-row__sub">Green Line · on time</span>
+            </span>
+            <span class="list-row__end"><svg class="ico" viewBox="0 0 24 24"><use href="#i-chev-r"/></svg></span>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Cricket -->
+    <div class="section" data-int="cricket">
+      <div class="section__head">
+        <div>
+          <h2 class="section__title">Cricket</h2>
+          <p class="section__sub">Live · 2nd Test, day 2</p>
+        </div>
+        <button class="section__link" data-sheet="cricket">Scorecard <svg class="ico" viewBox="0 0 24 24"><use href="#i-chev-r"/></svg></button>
+      </div>
+      <div class="row-gap">
+        <article class="card card--pad score" data-sheet="cricket">
+          <div class="score__side">
+            <span class="score__flag">PAK</span>
+            <span class="score__runs num">214<span>/4</span></span>
+            <span class="score__overs num">58.2 ov</span>
+          </div>
+          <span class="score__vs">vs</span>
+          <div class="score__side score__side--away">
+            <span class="score__flag">SA</span>
+            <span class="score__runs num">301</span>
+            <span class="score__overs num">all out</span>
+          </div>
+          <p class="score__note">Pakistan trail by 87 runs · Babar 78*</p>
+        </article>
+      </div>
+    </div>
+
+    <!-- News -->
+    <div class="section" data-int="news">
+      <div class="section__head">
+        <div>
+          <h2 class="section__title">Today’s reads</h2>
+          <p class="section__sub">Balanced, no doomscroll</p>
+        </div>
+        <button class="section__link" data-toast="All stories">All <svg class="ico" viewBox="0 0 24 24"><use href="#i-chev-r"/></svg></button>
+      </div>
+      <div class="row-gap">
+        <div class="list" id="newsList"></div>
+      </div>
+    </div>
+
     <!-- Collections -->
-    <div class="section" data-psection>
+    <div class="section">
       <div class="section__head">
         <div>
           <h2 class="section__title">Collections</h2>
@@ -1011,66 +1140,34 @@
         <button class="section__link" data-toast="All collections">All <svg class="ico" viewBox="0 0 24 24"><use href="#i-chev-r"/></svg></button>
       </div>
       <div class="hscroll">
-        <button class="minicard pressable" data-int="quran reading sleep" data-sheet="reading">
+        <button class="minicard pressable" data-faith="islamic" data-sheet="reading">
           <span class="minicard__art"><svg viewBox="0 0 148 84" preserveAspectRatio="none"><defs><linearGradient id="c1" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#1E2C6B"/><stop offset="1" stop-color="#4A54A8"/></linearGradient></defs><rect width="148" height="84" fill="url(#c1)"/><circle cx="112" cy="24" r="18" fill="#FFE9B8" opacity=".9"/><circle cx="104" cy="20" r="15" fill="#2A3670"/><circle cx="40" cy="56" r="3" fill="#fff" opacity=".7"/><circle cx="66" cy="30" r="2" fill="#fff" opacity=".5"/></svg></span>
           <span class="minicard__body">
             <span class="minicard__title">Night surahs</span>
             <span class="minicard__meta">6 surahs · 9 min</span>
           </span>
         </button>
-        <button class="minicard pressable" data-int="focus mindful" data-toast="Opening “Focus sounds”">
+        <button class="minicard pressable" data-toast="Opening “Focus sounds”">
           <span class="minicard__art"><svg viewBox="0 0 148 84" preserveAspectRatio="none"><defs><linearGradient id="c2" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#E7F4F1"/><stop offset="1" stop-color="#34B39D"/></linearGradient></defs><rect width="148" height="84" fill="url(#c2)"/><path d="M18 42h8M32 30v24M46 20v44M60 34v16M74 26v32M88 38v8M102 28v28M116 36v12M130 42h4" stroke="#0B6F62" stroke-opacity=".55" stroke-width="4" stroke-linecap="round"/></svg></span>
           <span class="minicard__body">
             <span class="minicard__title">Focus sounds</span>
             <span class="minicard__meta">8 tracks</span>
           </span>
         </button>
-        <button class="minicard pressable" data-int="mindful quotes habits" data-toast="Opening “Gratitude prompts”">
+        <button class="minicard pressable" data-toast="Opening “Gratitude prompts”">
           <span class="minicard__art"><svg viewBox="0 0 148 84" preserveAspectRatio="none"><defs><linearGradient id="c3" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#FDEEF0"/><stop offset="1" stop-color="#EFA6B0"/></linearGradient></defs><rect width="148" height="84" fill="url(#c3)"/><path d="M74 62s-24-13-24-30a11 11 0 0 1 24-7 11 11 0 0 1 24 7c0 17-24 30-24 30" fill="#DE6B7A" opacity=".55"/><circle cx="26" cy="22" r="5" fill="#fff" opacity=".7"/></svg></span>
           <span class="minicard__body">
             <span class="minicard__title">Gratitude prompts</span>
             <span class="minicard__meta">30 days</span>
           </span>
         </button>
-      </div>
-    </div>
-
-    <!-- News -->
-    <div class="section" data-psection>
-      <div class="section__head">
-        <div>
-          <h2 class="section__title">Today's reads</h2>
-          <p class="section__sub">Balanced, no doomscroll</p>
-        </div>
-        <button class="section__link" data-toast="All stories">All <svg class="ico" viewBox="0 0 24 24"><use href="#i-chev-r"/></svg></button>
-      </div>
-      <div class="row-gap">
-        <div class="list">
-          <button class="article pressable" data-int="mindful health news" data-toast="Opening story">
-            <span class="article__art"><svg viewBox="0 0 62 62"><defs><linearGradient id="a1" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#E7F4F1"/><stop offset="1" stop-color="#A5DED4"/></linearGradient></defs><rect width="62" height="62" fill="url(#a1)"/><circle cx="44" cy="18" r="12" fill="#10998A" opacity=".3"/><path d="M0 48c12-8 20 4 32-3s18-14 30-8v25H0z" fill="#10998A" opacity=".3"/></svg></span>
-            <span class="article__body">
-              <span class="article__cat">Wellbeing</span>
-              <span class="article__title">The two-minute reset that beats a coffee break</span>
-              <span class="article__meta">4 min read<span class="dot"></span>Editor's pick</span>
-            </span>
-          </button>
-          <button class="article pressable" data-int="tasks focus news" data-toast="Opening story">
-            <span class="article__art"><svg viewBox="0 0 62 62"><defs><linearGradient id="a2" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#EDEAFB"/><stop offset="1" stop-color="#B7AEF6"/></linearGradient></defs><rect width="62" height="62" fill="url(#a2)"/><rect x="14" y="14" width="34" height="34" rx="11" fill="#6E62E5" opacity=".3"/><circle cx="31" cy="31" r="7" fill="#fff" opacity=".8"/></svg></span>
-            <span class="article__body">
-              <span class="article__cat">Productivity</span>
-              <span class="article__title">Why your to-do list works better after Fajr</span>
-              <span class="article__meta">6 min read<span class="dot"></span>Popular</span>
-            </span>
-          </button>
-          <button class="article pressable" data-int="zakat money news" data-toast="Opening story">
-            <span class="article__art"><svg viewBox="0 0 62 62"><defs><linearGradient id="a3" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#FBEEDD"/><stop offset="1" stop-color="#EFC894"/></linearGradient></defs><rect width="62" height="62" fill="url(#a3)"/><path d="M8 44 22 28l12 10 20-20" fill="none" stroke="#C9793F" stroke-opacity=".6" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
-            <span class="article__body">
-              <span class="article__cat">Money</span>
-              <span class="article__title">A plain-English guide to calculating zakat</span>
-              <span class="article__meta">8 min read<span class="dot"></span>Updated</span>
-            </span>
-          </button>
-        </div>
+        <button class="minicard pressable" data-toast="Opening “Budget basics”">
+          <span class="minicard__art"><svg viewBox="0 0 148 84" preserveAspectRatio="none"><defs><linearGradient id="c4" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#FBEEDD"/><stop offset="1" stop-color="#EFC894"/></linearGradient></defs><rect width="148" height="84" fill="url(#c4)"/><path d="M12 62 44 38l24 16 30-30 26 18" fill="none" stroke="#C9793F" stroke-opacity=".55" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/><circle cx="96" cy="24" r="5" fill="#C9793F" opacity=".7"/></svg></span>
+          <span class="minicard__body">
+            <span class="minicard__title">Budget basics</span>
+            <span class="minicard__meta">5 lessons</span>
+          </span>
+        </button>
       </div>
     </div>
 
@@ -1084,26 +1181,26 @@
       </div>
       <div class="row-gap">
         <div class="list">
-          <button class="list-row pressable" data-toast="East London Mosque · 650 m">
-            <span class="list-row__icon"><svg class="ico" viewBox="0 0 24 24"><use href="#i-prayer"/></svg></span>
+          <button class="list-row pressable" data-faith="islamic" data-toast="Masjid-e-Tooba · jamaat for Asr at 16:15">
+            <span class="list-row__icon"><svg class="ico" viewBox="0 0 24 24"><use href="#i-mosque"/></svg></span>
             <span class="list-row__body">
-              <span class="list-row__title">East London Mosque</span>
-              <span class="list-row__sub">Jamaat for Asr at 16:30</span>
+              <span class="list-row__title">Masjid-e-Tooba</span>
+              <span class="list-row__sub">Jamaat for Asr at 16:15</span>
             </span>
             <span class="list-row__end"><span class="list-row__value num">650 m</span><svg class="ico" viewBox="0 0 24 24"><use href="#i-chev-r"/></svg></span>
           </button>
-          <button class="list-row pressable" data-toast="Kahve Room · open until 18:00">
+          <button class="list-row pressable" data-toast="Chai Shai · open until 01:00">
             <span class="list-row__icon"><svg class="ico" viewBox="0 0 24 24"><use href="#i-pin"/></svg></span>
             <span class="list-row__body">
-              <span class="list-row__title">Kahve Room</span>
-              <span class="list-row__sub">Quiet café · open till 18:00</span>
+              <span class="list-row__title">Chai Shai</span>
+              <span class="list-row__sub">Quiet café · open till 01:00</span>
             </span>
             <span class="list-row__end"><span class="list-row__value num">1.1 km</span><svg class="ico" viewBox="0 0 24 24"><use href="#i-chev-r"/></svg></span>
           </button>
-          <button class="list-row pressable" data-toast="Victoria Park · 1.4 km">
+          <button class="list-row pressable" data-toast="Hill Park · good for a sunset walk">
             <span class="list-row__icon"><svg class="ico" viewBox="0 0 24 24"><use href="#i-globe"/></svg></span>
             <span class="list-row__body">
-              <span class="list-row__title">Victoria Park</span>
+              <span class="list-row__title">Hill Park</span>
               <span class="list-row__sub">Good for a sunset walk</span>
             </span>
             <span class="list-row__end"><span class="list-row__value num">1.4 km</span><svg class="ico" viewBox="0 0 24 24"><use href="#i-chev-r"/></svg></span>
@@ -1139,7 +1236,7 @@
           <path d="m268 22 2.4 5.8 5.8 2.4-5.8 2.4-2.4 5.8-2.4-5.8-5.8-2.4 5.8-2.4z" fill="var(--accent)" opacity=".22"/>
         </svg>
       </div>
-      <span class="avatar avatar--lg">ZK</span>
+      <span class="avatar avatar--lg" id="profileAvatar">ZK</span>
       <div class="profile-head__body">
         <h2 class="profile-head__name">Zeeshan K.</h2>
         <p class="profile-head__mail">zeeshan@trillo.io</p>
@@ -1167,6 +1264,39 @@
       </div>
     </div>
 
+    <!-- Personalisation: the one place that shapes the whole app -->
+    <div class="section">
+      <p class="group-label">Personalisation</p>
+      <div class="row-gap">
+        <div class="list">
+          <button class="list-row pressable" data-sheet="personalise">
+            <span class="list-row__icon" style="background:var(--tint-accent);color:var(--accent)"><svg class="ico" viewBox="0 0 24 24"><use href="#i-sparkles"/></svg></span>
+            <span class="list-row__body">
+              <span class="list-row__title">Your interests</span>
+              <span class="list-row__sub" id="profileInterests">Shapes your home, tools and reading</span>
+            </span>
+            <span class="list-row__end"><span class="list-row__value num" id="profileInterestCount">0</span><svg class="ico" viewBox="0 0 24 24"><use href="#i-chev-r"/></svg></span>
+          </button>
+          <button class="list-row pressable" data-sheet="personalise">
+            <span class="list-row__icon"><svg class="ico" viewBox="0 0 24 24"><use href="#i-globe"/></svg></span>
+            <span class="list-row__body">
+              <span class="list-row__title">Country & city</span>
+              <span class="list-row__sub" id="profileCountry">Pakistan · Karachi</span>
+            </span>
+            <span class="list-row__end"><svg class="ico" viewBox="0 0 24 24"><use href="#i-chev-r"/></svg></span>
+          </button>
+          <button class="list-row pressable" data-sheet="personalise">
+            <span class="list-row__icon"><svg class="ico" viewBox="0 0 24 24"><use href="#i-sliders"/></svg></span>
+            <span class="list-row__body">
+              <span class="list-row__title">Content preferences</span>
+              <span class="list-row__sub" id="profileContent">Islamic content on · news · sport</span>
+            </span>
+            <span class="list-row__end"><svg class="ico" viewBox="0 0 24 24"><use href="#i-chev-r"/></svg></span>
+          </button>
+        </div>
+      </div>
+    </div>
+
     <div class="section">
       <p class="group-label">Preferences</p>
       <div class="row-gap">
@@ -1179,43 +1309,35 @@
             </span>
             <span class="switch" id="themeSwitch"><span class="switch__knob"></span></span>
           </button>
-          <button class="list-row pressable" data-sheet="interests">
-            <span class="list-row__icon" style="background:var(--tint-accent);color:var(--accent)"><svg class="ico" viewBox="0 0 24 24"><use href="#i-sparkles"/></svg></span>
-            <span class="list-row__body">
-              <span class="list-row__title">Your interests</span>
-              <span class="list-row__sub" id="profileInterests">Shapes your home, tools and reading</span>
-            </span>
-            <span class="list-row__end"><span class="list-row__value num" id="profileInterestCount">0</span><svg class="ico" viewBox="0 0 24 24"><use href="#i-chev-r"/></svg></span>
-          </button>
-          <button class="list-row pressable" data-toast="Prayer reminders are on">
+          <button class="list-row pressable" data-faith="islamic" data-toast="Prayer reminders are on">
             <span class="list-row__icon"><svg class="ico" viewBox="0 0 24 24"><use href="#i-bell-ring"/></svg></span>
             <span class="list-row__body">
               <span class="list-row__title">Prayer reminders</span>
-              <span class="list-row__sub">Adhan 5 min before each prayer</span>
+              <span class="list-row__sub">Adhan 5 minutes before each prayer</span>
             </span>
             <span class="switch is-on" data-switch><span class="switch__knob"></span></span>
           </button>
-          <button class="list-row pressable" data-toast="Calculation method: MWL">
+          <button class="list-row pressable" data-faith="islamic" data-toast="Calculation method: University of Karachi">
             <span class="list-row__icon"><svg class="ico" viewBox="0 0 24 24"><use href="#i-prayer"/></svg></span>
             <span class="list-row__body">
               <span class="list-row__title">Calculation method</span>
-              <span class="list-row__sub">Muslim World League</span>
+              <span class="list-row__sub">University of Karachi</span>
             </span>
             <span class="list-row__end"><svg class="ico" viewBox="0 0 24 24"><use href="#i-chev-r"/></svg></span>
           </button>
-          <button class="list-row pressable" data-toast="Location: London, UK">
-            <span class="list-row__icon"><svg class="ico" viewBox="0 0 24 24"><use href="#i-pin"/></svg></span>
+          <button class="list-row pressable" data-faith="none" data-toast="Daily digest arrives at 08:00">
+            <span class="list-row__icon"><svg class="ico" viewBox="0 0 24 24"><use href="#i-bell-ring"/></svg></span>
             <span class="list-row__body">
-              <span class="list-row__title">Location</span>
-              <span class="list-row__sub">London, United Kingdom</span>
+              <span class="list-row__title">Daily digest</span>
+              <span class="list-row__sub">Your day, summarised at 08:00</span>
             </span>
-            <span class="list-row__end"><span class="list-row__value">Auto</span><svg class="ico" viewBox="0 0 24 24"><use href="#i-chev-r"/></svg></span>
+            <span class="switch is-on" data-switch><span class="switch__knob"></span></span>
           </button>
-          <button class="list-row pressable" data-toast="Language: English (UK)">
+          <button class="list-row pressable" data-toast="Language: English">
             <span class="list-row__icon"><svg class="ico" viewBox="0 0 24 24"><use href="#i-globe"/></svg></span>
             <span class="list-row__body">
               <span class="list-row__title">Language</span>
-              <span class="list-row__sub">English (UK)</span>
+              <span class="list-row__sub" id="profileLang">English · اردو and العربية available</span>
             </span>
             <span class="list-row__end"><svg class="ico" viewBox="0 0 24 24"><use href="#i-chev-r"/></svg></span>
           </button>
@@ -1229,7 +1351,7 @@
         <div class="list">
           <button class="list-row pressable" data-toast="64 bookmarks">
             <span class="list-row__icon"><svg class="ico" viewBox="0 0 24 24"><use href="#i-bookmark"/></svg></span>
-            <span class="list-row__body"><span class="list-row__title">Bookmarks</span><span class="list-row__sub">Ayahs, hadith and quotes</span></span>
+            <span class="list-row__body"><span class="list-row__title">Bookmarks</span><span class="list-row__sub" id="profileBookmarks">Saved reads and quotes</span></span>
             <span class="list-row__end"><span class="list-row__value num">64</span><svg class="ico" viewBox="0 0 24 24"><use href="#i-chev-r"/></svg></span>
           </button>
           <button class="list-row pressable" data-toast="12 notes">
@@ -1237,10 +1359,10 @@
             <span class="list-row__body"><span class="list-row__title">Notes</span><span class="list-row__sub">Last edited yesterday</span></span>
             <span class="list-row__end"><span class="list-row__value num">12</span><svg class="ico" viewBox="0 0 24 24"><use href="#i-chev-r"/></svg></span>
           </button>
-          <button class="list-row pressable" data-toast="Reading history">
-            <span class="list-row__icon"><svg class="ico" viewBox="0 0 24 24"><use href="#i-clock"/></svg></span>
-            <span class="list-row__body"><span class="list-row__title">Reading history</span><span class="list-row__sub">18 minutes today</span></span>
-            <span class="list-row__end"><svg class="ico" viewBox="0 0 24 24"><use href="#i-chev-r"/></svg></span>
+          <button class="list-row pressable" data-toast="Locked — unlock with Face ID">
+            <span class="list-row__icon"><svg class="ico" viewBox="0 0 24 24"><use href="#i-lock"/></svg></span>
+            <span class="list-row__body"><span class="list-row__title">Private records</span><span class="list-row__sub">Health, documents and money</span></span>
+            <span class="list-row__end"><span class="list-row__value">Locked</span><svg class="ico" viewBox="0 0 24 24"><use href="#i-chev-r"/></svg></span>
           </button>
         </div>
       </div>
@@ -1250,14 +1372,14 @@
       <p class="group-label">Support</p>
       <div class="row-gap">
         <div class="list">
-          <button class="list-row pressable" data-toast="Privacy & data">
+          <button class="list-row pressable" data-toast="Everything stays on your device">
             <span class="list-row__icon"><svg class="ico" viewBox="0 0 24 24"><use href="#i-shield"/></svg></span>
             <span class="list-row__body"><span class="list-row__title">Privacy & data</span><span class="list-row__sub">Everything stays on device</span></span>
             <span class="list-row__end"><svg class="ico" viewBox="0 0 24 24"><use href="#i-chev-r"/></svg></span>
           </button>
           <button class="list-row pressable" id="replayTour">
             <span class="list-row__icon"><svg class="ico" viewBox="0 0 24 24"><use href="#i-sparkles"/></svg></span>
-            <span class="list-row__body"><span class="list-row__title">Replay the welcome tour</span><span class="list-row__sub">A quick reminder of what's here</span></span>
+            <span class="list-row__body"><span class="list-row__title">Replay the welcome tour</span><span class="list-row__sub">A quick reminder of what’s here</span></span>
             <span class="list-row__end"><svg class="ico" viewBox="0 0 24 24"><use href="#i-chev-r"/></svg></span>
           </button>
           <button class="list-row pressable" data-toast="Help centre">
@@ -1274,35 +1396,15 @@
       </div>
     </div>
 
-    <p class="meta" style="text-align:center;margin-top:22px">Nur · version 2.4.0</p>
+    <p class="meta" style="text-align:center;margin-top:22px">Lume · version 3.0.0</p>
 
   </section>
 
   </main>
 
-  <!-- ===== Bottom navigation ===== -->
+  <!-- ===== Bottom navigation — built from the profile ===== -->
   <nav class="tabbar" id="tabbar" role="tablist" aria-label="Main">
     <span class="tabbar__pill" id="tabPill"></span>
-    <button class="tab is-active" data-tab="home" role="tab" aria-selected="true">
-      <svg class="ico" viewBox="0 0 24 24"><use href="#i-home"/></svg>
-      <span class="tab__label">Home</span>
-    </button>
-    <button class="tab" data-tab="tools" role="tab" aria-selected="false">
-      <svg class="ico" viewBox="0 0 24 24"><use href="#i-grid"/></svg>
-      <span class="tab__label">Tools</span>
-    </button>
-    <button class="tab" data-tab="today" role="tab" aria-selected="false">
-      <svg class="ico" viewBox="0 0 24 24"><use href="#i-sun"/></svg>
-      <span class="tab__label">Today</span>
-    </button>
-    <button class="tab" data-tab="explore" role="tab" aria-selected="false">
-      <svg class="ico" viewBox="0 0 24 24"><use href="#i-compass"/></svg>
-      <span class="tab__label">Explore</span>
-    </button>
-    <button class="tab" data-tab="profile" role="tab" aria-selected="false">
-      <svg class="ico" viewBox="0 0 24 24"><use href="#i-user"/></svg>
-      <span class="tab__label">Profile</span>
-    </button>
   </nav>
 
   <!-- ===== Toast ===== -->
@@ -1311,8 +1413,182 @@
     <span id="toastText"></span>
   </div>
 
-  <!-- ===== Sheets ===== -->
   <div class="scrim" id="scrim"></div>
+
+  <!-- ==========================================================
+       SHEETS
+       ========================================================== -->
+
+  <!-- Global search -->
+  <aside class="sheet sheet--tall" id="sheet-search" role="dialog" aria-modal="true" aria-label="Search">
+    <span class="sheet__grab"></span>
+    <div class="sheet__head">
+      <div style="flex:1;min-width:0">
+        <label class="search">
+          <svg class="ico" viewBox="0 0 24 24"><use href="#i-search"/></svg>
+          <input type="search" id="globalSearch" placeholder="Search anything — tools, rates, places" aria-label="Search everything">
+        </label>
+      </div>
+      <button class="closebtn pressable" data-close aria-label="Close"><svg class="ico" viewBox="0 0 24 24"><use href="#i-x"/></svg></button>
+    </div>
+    <div class="sheet__body">
+      <div id="searchIdle">
+        <p class="group-label" style="padding:0;margin:4px 0 9px">Try searching for</p>
+        <div class="chips chips--wrap" id="searchSuggest"></div>
+        <p class="group-label" style="padding:0;margin:20px 0 9px">Jump back in</p>
+        <div class="list list--flat" id="searchRecent"></div>
+      </div>
+      <div id="searchResults" hidden></div>
+      <div class="empty" id="searchEmpty">
+        <svg width="88" height="66" viewBox="0 0 88 66" fill="none" aria-hidden="true">
+          <circle cx="44" cy="30" r="22" stroke="var(--border-2)" stroke-width="2" stroke-dasharray="5 7"/>
+          <path d="m58 44 12 12" stroke="var(--border-2)" stroke-width="2.4" stroke-linecap="round"/>
+          <circle cx="20" cy="14" r="3" fill="var(--accent)" opacity=".4"/>
+        </svg>
+        <p class="empty__title">Nothing found</p>
+        <p class="empty__text">Try another word, or turn on more interests in Personalisation.</p>
+      </div>
+    </div>
+  </aside>
+
+  <!-- Personalisation -->
+  <aside class="sheet sheet--tall" id="sheet-personalise" role="dialog" aria-modal="true" aria-label="Personalisation">
+    <span class="sheet__grab"></span>
+    <div class="sheet__head">
+      <div>
+        <h2 class="sheet__title">Personalisation</h2>
+        <p class="sheet__sub">Change any of this whenever you like</p>
+      </div>
+      <button class="closebtn pressable" data-close aria-label="Close"><svg class="ico" viewBox="0 0 24 24"><use href="#i-x"/></svg></button>
+    </div>
+    <div class="sheet__body">
+
+      <p class="group-label" style="padding:0;margin:2px 0 9px">Where you are</p>
+      <div class="list list--flat" style="margin-bottom:6px">
+        <div class="list-row" style="cursor:default">
+          <span class="list-row__icon"><svg class="ico" viewBox="0 0 24 24"><use href="#i-globe"/></svg></span>
+          <span class="list-row__body">
+            <span class="list-row__title">Country</span>
+            <span class="list-row__sub">Unlocks local services — nothing else</span>
+          </span>
+        </div>
+      </div>
+      <div class="onb-choice" id="setCountry"></div>
+
+      <div class="list list--flat" style="margin-top:12px">
+        <button class="list-row pressable" id="setCityRow">
+          <span class="list-row__icon"><svg class="ico" viewBox="0 0 24 24"><use href="#i-pin"/></svg></span>
+          <span class="list-row__body">
+            <span class="list-row__title">City</span>
+            <span class="list-row__sub" id="setCitySub">Used for weather, prayer times and local info</span>
+          </span>
+          <span class="list-row__end"><span class="list-row__value" id="setCityValue">Karachi</span><svg class="ico" viewBox="0 0 24 24"><use href="#i-chev-r"/></svg></span>
+        </button>
+      </div>
+
+      <p class="group-label" style="padding:0;margin:22px 0 9px">Content</p>
+      <div class="list list--flat">
+        <button class="list-row pressable" id="setIslamicRow">
+          <span class="list-row__icon" id="setIslamicIcon"><svg class="ico" viewBox="0 0 24 24"><use href="#i-moon-star"/></svg></span>
+          <span class="list-row__body">
+            <span class="list-row__title">Islamic features</span>
+            <span class="list-row__sub">Prayer times, Qur’an, duas, zakat and Ramadan</span>
+          </span>
+          <span class="switch" id="setIslamicSwitch"><span class="switch__knob"></span></span>
+        </button>
+        <button class="list-row pressable" data-pref="news">
+          <span class="list-row__icon"><svg class="ico" viewBox="0 0 24 24"><use href="#i-news"/></svg></span>
+          <span class="list-row__body"><span class="list-row__title">News</span><span class="list-row__sub">Headlines on Explore and Today</span></span>
+          <span class="switch is-on"><span class="switch__knob"></span></span>
+        </button>
+        <button class="list-row pressable" data-pref="cricket">
+          <span class="list-row__icon"><svg class="ico" viewBox="0 0 24 24"><use href="#i-cricket"/></svg></span>
+          <span class="list-row__body"><span class="list-row__title">Sport</span><span class="list-row__sub">Live cricket scores</span></span>
+          <span class="switch is-on"><span class="switch__knob"></span></span>
+        </button>
+        <button class="list-row pressable" data-pref="finance">
+          <span class="list-row__icon"><svg class="ico" viewBox="0 0 24 24"><use href="#i-trending"/></svg></span>
+          <span class="list-row__body"><span class="list-row__title">Financial information</span><span class="list-row__sub">Rates, gold and markets</span></span>
+          <span class="switch is-on"><span class="switch__knob"></span></span>
+        </button>
+        <button class="list-row pressable" data-pref="recos">
+          <span class="list-row__icon"><svg class="ico" viewBox="0 0 24 24"><use href="#i-sparkles"/></svg></span>
+          <span class="list-row__body"><span class="list-row__title">Recommendations</span><span class="list-row__sub">Suggest tools based on how you use Lume</span></span>
+          <span class="switch is-on"><span class="switch__knob"></span></span>
+        </button>
+      </div>
+
+      <p class="group-label" style="padding:0;margin:22px 0 4px">Your interests</p>
+      <p class="meta" style="margin-bottom:12px">Pick at least 5. They decide what fills your home screen.</p>
+      <div class="picker__bar">
+        <span class="picker__count" id="setPickCount">0 selected</span>
+        <button class="picker__clear pressable" id="setPickClear">Clear</button>
+      </div>
+      <div id="setPicker"></div>
+
+      <div class="sheet-actions">
+        <button class="btn btn--accent btn--block pressable" id="setPickSave">Save preferences</button>
+      </div>
+    </div>
+  </aside>
+
+  <!-- Notifications -->
+  <aside class="sheet" id="sheet-notifications" role="dialog" aria-modal="true" aria-label="Notifications">
+    <span class="sheet__grab"></span>
+    <div class="sheet__head">
+      <div>
+        <h2 class="sheet__title">Notifications</h2>
+        <p class="sheet__sub">Quiet by default</p>
+      </div>
+      <button class="closebtn pressable" data-close aria-label="Close"><svg class="ico" viewBox="0 0 24 24"><use href="#i-x"/></svg></button>
+    </div>
+    <div class="sheet__body">
+      <div class="list list--flat" id="notifList"></div>
+      <button class="btn btn--ghost btn--block pressable" style="margin:14px 0 6px" data-toast="All caught up">Mark all as read</button>
+    </div>
+  </aside>
+
+  <!-- Prayer times -->
+  <aside class="sheet" id="sheet-prayer" data-faith="islamic" role="dialog" aria-modal="true" aria-label="Prayer times">
+    <span class="sheet__grab"></span>
+    <div class="sheet__head">
+      <div>
+        <h2 class="sheet__title">Prayer times</h2>
+        <p class="sheet__sub"><span id="prayerSheetCity">Karachi</span> · University of Karachi</p>
+      </div>
+      <button class="closebtn pressable" data-close aria-label="Close"><svg class="ico" viewBox="0 0 24 24"><use href="#i-x"/></svg></button>
+    </div>
+    <div class="sheet__body">
+      <div class="list list--flat" id="prayerList"></div>
+      <button class="btn btn--ghost btn--block pressable" style="margin:14px 0 6px" data-toast="Reminders updated">
+        <svg class="ico" viewBox="0 0 24 24"><use href="#i-bell-ring"/></svg> Reminder settings
+      </button>
+    </div>
+  </aside>
+
+  <!-- Continue reading -->
+  <aside class="sheet" id="sheet-reading" data-faith="islamic" role="dialog" aria-modal="true" aria-label="Continue reading">
+    <span class="sheet__grab"></span>
+    <div class="sheet__head">
+      <div>
+        <h2 class="sheet__title">Al-Kahf</h2>
+        <p class="sheet__sub">The Cave · ayah 42 of 110</p>
+      </div>
+      <button class="closebtn pressable" data-close aria-label="Close"><svg class="ico" viewBox="0 0 24 24"><use href="#i-x"/></svg></button>
+    </div>
+    <div class="sheet__body">
+      <article class="card card--pad" style="margin-bottom:12px">
+        <p class="arabic" dir="rtl" lang="ar">وَأُحِيطَ بِثَمَرِهِ فَأَصْبَحَ يُقَلِّبُ كَفَّيْهِ عَلَىٰ مَآ أَنفَقَ فِيهَا</p>
+        <p class="body" style="margin-top:12px">And his fruits were encompassed by ruin, so he began turning his hands over what he had spent on it.</p>
+        <p class="quote__by" style="margin-top:10px">Al-Kahf 18:42</p>
+      </article>
+      <span class="bar" style="margin-bottom:14px"><span class="bar__fill" data-fill="38"></span></span>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px">
+        <button class="btn btn--ghost pressable" data-toast="Bookmark saved"><svg class="ico" viewBox="0 0 24 24"><use href="#i-bookmark"/></svg> Bookmark</button>
+        <button class="btn btn--accent pressable" data-toast="Reading Al-Kahf 43"><svg class="ico" viewBox="0 0 24 24"><use href="#i-play"/></svg> Continue</button>
+      </div>
+    </div>
+  </aside>
 
   <!-- Calculator -->
   <aside class="sheet" id="sheet-calculator" role="dialog" aria-modal="true" aria-label="Calculator">
@@ -1354,19 +1630,19 @@
     </div>
   </aside>
 
-  <!-- Tasbeeh -->
-  <aside class="sheet" id="sheet-tasbeeh" role="dialog" aria-modal="true" aria-label="Tasbeeh counter">
+  <!-- Tasbih -->
+  <aside class="sheet" id="sheet-tasbeeh" data-faith="islamic" role="dialog" aria-modal="true" aria-label="Tasbih counter">
     <span class="sheet__grab"></span>
     <div class="sheet__head">
       <div>
-        <h2 class="sheet__title">Tasbeeh</h2>
+        <h2 class="sheet__title">Tasbih</h2>
         <p class="sheet__sub">Tap the circle to count</p>
       </div>
       <button class="closebtn pressable" data-close aria-label="Close"><svg class="ico" viewBox="0 0 24 24"><use href="#i-x"/></svg></button>
     </div>
     <div class="sheet__body">
       <div class="tasbeeh">
-        <p class="tasbeeh__phrase">سُبْحَانَ ٱللَّٰهِ</p>
+        <p class="tasbeeh__phrase" dir="rtl" lang="ar">سُبْحَانَ ٱللَّٰهِ</p>
         <p class="tasbeeh__trans">Subhan Allah · Glory be to God</p>
         <div class="tasbeeh__ring">
           <svg viewBox="0 0 100 100" aria-hidden="true">
@@ -1390,12 +1666,12 @@
   </aside>
 
   <!-- Qibla -->
-  <aside class="sheet" id="sheet-qibla" role="dialog" aria-modal="true" aria-label="Qibla direction">
+  <aside class="sheet" id="sheet-qibla" data-faith="islamic" role="dialog" aria-modal="true" aria-label="Qibla direction">
     <span class="sheet__grab"></span>
     <div class="sheet__head">
       <div>
         <h2 class="sheet__title">Qibla</h2>
-        <p class="sheet__sub">London · 119° from north</p>
+        <p class="sheet__sub"><span id="qiblaCity">Karachi</span> · <span class="num" id="qiblaSub">267</span>° from north</p>
       </div>
       <button class="closebtn pressable" data-close aria-label="Close"><svg class="ico" viewBox="0 0 24 24"><use href="#i-x"/></svg></button>
     </div>
@@ -1419,7 +1695,7 @@
             <circle cx="100" cy="100" r="6" fill="var(--card)" stroke="var(--border-2)" stroke-width="1.5"/>
           </svg>
         </div>
-        <p class="qibla__deg num">119° SE</p>
+        <p class="qibla__deg num" id="qiblaDeg">267° W</p>
         <p class="qibla__hint">Hold your phone flat and turn until the marker<br>points straight up.</p>
         <button class="btn btn--ghost btn--block pressable" style="margin-top:16px" data-toast="Compass recalibrated">
           <svg class="ico" viewBox="0 0 24 24"><use href="#i-refresh"/></svg> Recalibrate
@@ -1428,118 +1704,303 @@
     </div>
   </aside>
 
-  <!-- Prayer times -->
-  <aside class="sheet" id="sheet-prayer" role="dialog" aria-modal="true" aria-label="Prayer times">
+  <!-- Currency converter -->
+  <aside class="sheet" id="sheet-currency" role="dialog" aria-modal="true" aria-label="Currency converter">
     <span class="sheet__grab"></span>
     <div class="sheet__head">
       <div>
-        <h2 class="sheet__title">Prayer times</h2>
-        <p class="sheet__sub">London · Muslim World League</p>
+        <h2 class="sheet__title">Currency</h2>
+        <p class="sheet__sub">Interbank · updated 12 min ago</p>
       </div>
       <button class="closebtn pressable" data-close aria-label="Close"><svg class="ico" viewBox="0 0 24 24"><use href="#i-x"/></svg></button>
     </div>
     <div class="sheet__body">
-      <div class="list list--flat" id="prayerList" style="margin-bottom:14px"></div>
-      <button class="btn btn--accent btn--block pressable" data-toast="Reminders updated">
-        <svg class="ico" viewBox="0 0 24 24"><use href="#i-bell-ring"/></svg> Manage reminders
+      <div class="fx">
+        <div class="fx__row">
+          <span class="fx__code">USD</span>
+          <span class="fx__val num">1.00</span>
+        </div>
+        <button class="fx__swap pressable" data-toast="Swapped" aria-label="Swap currencies"><svg class="ico" viewBox="0 0 24 24"><use href="#i-swap"/></svg></button>
+        <div class="fx__row fx__row--to">
+          <span class="fx__code" data-money="to"></span>
+          <span class="fx__val num" data-money="rate"></span>
+        </div>
+      </div>
+      <p class="meta" style="text-align:center;margin-top:12px" id="fxNote"></p>
+      <div class="list list--flat" style="margin-top:16px">
+        <div class="list-row" style="cursor:default"><span class="list-row__icon"><svg class="ico" viewBox="0 0 24 24"><use href="#i-currency"/></svg></span><span class="list-row__body"><span class="list-row__title">GBP</span><span class="list-row__sub">Pound sterling</span></span><span class="list-row__end"><span class="list-row__value num">380.15</span></span></div>
+        <div class="list-row" style="cursor:default"><span class="list-row__icon"><svg class="ico" viewBox="0 0 24 24"><use href="#i-currency"/></svg></span><span class="list-row__body"><span class="list-row__title">SAR</span><span class="list-row__sub">Saudi riyal</span></span><span class="list-row__end"><span class="list-row__value num">75.56</span></span></div>
+        <div class="list-row" style="cursor:default"><span class="list-row__icon"><svg class="ico" viewBox="0 0 24 24"><use href="#i-currency"/></svg></span><span class="list-row__body"><span class="list-row__title">AED</span><span class="list-row__sub">UAE dirham</span></span><span class="list-row__end"><span class="list-row__value num">77.16</span></span></div>
+      </div>
+    </div>
+  </aside>
+
+  <!-- Gold & currency rates (Pakistan) -->
+  <aside class="sheet" id="sheet-rates" data-loc="PK" role="dialog" aria-modal="true" aria-label="Gold and currency rates">
+    <span class="sheet__grab"></span>
+    <div class="sheet__head">
+      <div>
+        <h2 class="sheet__title">Gold & currency</h2>
+        <p class="sheet__sub">Open market · 8 September, 11:20</p>
+      </div>
+      <button class="closebtn pressable" data-close aria-label="Close"><svg class="ico" viewBox="0 0 24 24"><use href="#i-x"/></svg></button>
+    </div>
+    <div class="sheet__body">
+      <div class="ratecards">
+        <article class="ratecard">
+          <span class="ratecard__label">Gold 24k · tola</span>
+          <span class="ratecard__value num">₨ 258,400</span>
+          <span class="ratecard__delta is-up">+1,900</span>
+        </article>
+        <article class="ratecard">
+          <span class="ratecard__label">Gold 22k · 10g</span>
+          <span class="ratecard__value num">₨ 203,120</span>
+          <span class="ratecard__delta is-up">+1,630</span>
+        </article>
+      </div>
+      <div class="list list--flat" style="margin-top:14px">
+        <div class="list-row" style="cursor:default"><span class="list-row__icon"><svg class="ico" viewBox="0 0 24 24"><use href="#i-currency"/></svg></span><span class="list-row__body"><span class="list-row__title">US Dollar</span><span class="list-row__sub">Buying 284.20 · selling 285.10</span></span><span class="list-row__end"><span class="list-row__value num">285.10</span></span></div>
+        <div class="list-row" style="cursor:default"><span class="list-row__icon"><svg class="ico" viewBox="0 0 24 24"><use href="#i-currency"/></svg></span><span class="list-row__body"><span class="list-row__title">Saudi Riyal</span><span class="list-row__sub">Buying 75.20 · selling 76.00</span></span><span class="list-row__end"><span class="list-row__value num">76.00</span></span></div>
+        <div class="list-row" style="cursor:default"><span class="list-row__icon"><svg class="ico" viewBox="0 0 24 24"><use href="#i-currency"/></svg></span><span class="list-row__body"><span class="list-row__title">UK Pound</span><span class="list-row__sub">Buying 379.00 · selling 381.50</span></span><span class="list-row__end"><span class="list-row__value num">381.50</span></span></div>
+        <div class="list-row" style="cursor:default"><span class="list-row__icon"><svg class="ico" viewBox="0 0 24 24"><use href="#i-trending"/></svg></span><span class="list-row__body"><span class="list-row__title">Silver · tola</span><span class="list-row__sub">Unchanged today</span></span><span class="list-row__end"><span class="list-row__value num">₨ 3,140</span></span></div>
+      </div>
+      <p class="meta" style="text-align:center;margin:14px 0 6px">Indicative rates from local bullion associations.</p>
+    </div>
+  </aside>
+
+  <!-- Fuel prices -->
+  <aside class="sheet" id="sheet-fuel" data-loc="PK" role="dialog" aria-modal="true" aria-label="Fuel prices">
+    <span class="sheet__grab"></span>
+    <div class="sheet__head">
+      <div>
+        <h2 class="sheet__title">Fuel prices</h2>
+        <p class="sheet__sub">OGRA notification · effective 1 September</p>
+      </div>
+      <button class="closebtn pressable" data-close aria-label="Close"><svg class="ico" viewBox="0 0 24 24"><use href="#i-x"/></svg></button>
+    </div>
+    <div class="sheet__body">
+      <div class="list list--flat" id="fuelList"></div>
+      <button class="btn btn--ghost btn--block pressable" style="margin:14px 0 6px" data-toast="Karachi → Hyderabad · about ₨ 2,380">
+        <svg class="ico" viewBox="0 0 24 24"><use href="#i-route"/></svg> Work out a trip cost
+      </button>
+      <p class="meta" style="text-align:center;margin-bottom:6px">Next review expected 15 September.</p>
+    </div>
+  </aside>
+
+  <!-- Bills -->
+  <aside class="sheet" id="sheet-bills" data-loc="PK" role="dialog" aria-modal="true" aria-label="Bills">
+    <span class="sheet__grab"></span>
+    <div class="sheet__head">
+      <div>
+        <h2 class="sheet__title">Bills</h2>
+        <p class="sheet__sub">2 due in the next week</p>
+      </div>
+      <button class="closebtn pressable" data-close aria-label="Close"><svg class="ico" viewBox="0 0 24 24"><use href="#i-x"/></svg></button>
+    </div>
+    <div class="sheet__body">
+      <div class="list list--flat">
+        <button class="list-row pressable" data-toast="K-Electric · due 12 September">
+          <span class="list-row__icon" style="background:var(--tint-accent);color:var(--accent)"><svg class="ico" viewBox="0 0 24 24"><use href="#i-bolt"/></svg></span>
+          <span class="list-row__body"><span class="list-row__title">K-Electric</span><span class="list-row__sub">Due 12 September · 4 days</span></span>
+          <span class="list-row__end"><span class="list-row__value num">₨ 18,420</span><svg class="ico" viewBox="0 0 24 24"><use href="#i-chev-r"/></svg></span>
+        </button>
+        <button class="list-row pressable" data-toast="SSGC · due 14 September">
+          <span class="list-row__icon"><svg class="ico" viewBox="0 0 24 24"><use href="#i-flame"/></svg></span>
+          <span class="list-row__body"><span class="list-row__title">Sui Southern Gas</span><span class="list-row__sub">Due 14 September</span></span>
+          <span class="list-row__end"><span class="list-row__value num">₨ 3,860</span><svg class="ico" viewBox="0 0 24 24"><use href="#i-chev-r"/></svg></span>
+        </button>
+        <button class="list-row pressable" data-toast="PTCL · paid 2 September">
+          <span class="list-row__icon"><svg class="ico" viewBox="0 0 24 24"><use href="#i-wifi"/></svg></span>
+          <span class="list-row__body"><span class="list-row__title">PTCL broadband</span><span class="list-row__sub">Paid 2 September</span></span>
+          <span class="list-row__end"><span class="tag tag--neutral">Paid</span></span>
+        </button>
+      </div>
+      <button class="btn btn--accent btn--block pressable" style="margin:14px 0 6px" data-toast="Add a bill by consumer number">
+        <svg class="ico" viewBox="0 0 24 24"><use href="#i-plus"/></svg> Add a bill
       </button>
     </div>
   </aside>
 
-  <!-- Reading -->
-  <aside class="sheet" id="sheet-reading" role="dialog" aria-modal="true" aria-label="Continue reading">
+  <!-- Tax calculator -->
+  <aside class="sheet" id="sheet-tax" data-loc="PK" role="dialog" aria-modal="true" aria-label="Tax calculator">
     <span class="sheet__grab"></span>
     <div class="sheet__head">
       <div>
-        <h2 class="sheet__title">Al-Kahf</h2>
-        <p class="sheet__sub">The Cave · Meccan · 110 ayahs</p>
+        <h2 class="sheet__title">Salary tax</h2>
+        <p class="sheet__sub">FBR slabs · tax year 2025-26</p>
       </div>
       <button class="closebtn pressable" data-close aria-label="Close"><svg class="ico" viewBox="0 0 24 24"><use href="#i-x"/></svg></button>
     </div>
     <div class="sheet__body">
-      <article class="card card--pad card--flat" style="margin-bottom:12px">
-        <p class="arabic">إِنَّا جَعَلْنَا مَا عَلَى ٱلْأَرْضِ زِينَةً لَّهَا لِنَبْلُوَهُمْ أَيُّهُمْ أَحْسَنُ عَمَلًا</p>
-        <p class="body">“Indeed, We have made whatever is on the earth an adornment for it, that We may test which of them is best in deed.”</p>
-        <div class="card__foot">
-          <span class="meta">Ayah 7</span>
-          <div class="card__actions">
-            <button class="ghostbtn pressable" data-toggle="save" data-toast="Ayah bookmarked"><svg class="ico" viewBox="0 0 24 24"><use href="#i-bookmark"/></svg></button>
-            <button class="ghostbtn pressable" data-toast="Playing recitation"><svg class="ico" viewBox="0 0 24 24"><use href="#i-play"/></svg> Listen</button>
-          </div>
+      <div class="taxout">
+        <p class="taxout__label">Monthly salary</p>
+        <p class="taxout__value num">₨ 350,000</p>
+        <div class="taxout__split">
+          <span><b class="num">₨ 41,667</b>Tax a month</span>
+          <span><b class="num">₨ 308,333</b>Take home</span>
+        </div>
+      </div>
+      <div class="list list--flat" style="margin-top:14px">
+        <div class="list-row" style="cursor:default"><span class="list-row__body"><span class="list-row__title">Annual income</span></span><span class="list-row__end"><span class="list-row__value num">₨ 4,200,000</span></span></div>
+        <div class="list-row" style="cursor:default"><span class="list-row__body"><span class="list-row__title">Annual tax</span></span><span class="list-row__end"><span class="list-row__value num">₨ 500,000</span></span></div>
+        <div class="list-row" style="cursor:default"><span class="list-row__body"><span class="list-row__title">Effective rate</span></span><span class="list-row__end"><span class="list-row__value num">11.9%</span></span></div>
+      </div>
+      <p class="meta" style="text-align:center;margin:14px 0 6px">An estimate for salaried individuals. Confirm with your employer or FBR.</p>
+    </div>
+  </aside>
+
+  <!-- Expenses -->
+  <aside class="sheet" id="sheet-expenses" role="dialog" aria-modal="true" aria-label="Expenses">
+    <span class="sheet__grab"></span>
+    <div class="sheet__head">
+      <div>
+        <h2 class="sheet__title">Expenses</h2>
+        <p class="sheet__sub">September · private to this device</p>
+      </div>
+      <button class="closebtn pressable" data-close aria-label="Close"><svg class="ico" viewBox="0 0 24 24"><use href="#i-x"/></svg></button>
+    </div>
+    <div class="sheet__body">
+      <div class="taxout">
+        <p class="taxout__label">Spent this month</p>
+        <p class="taxout__value num" data-money="spent"></p>
+        <div class="taxout__split">
+          <span><b class="num" data-money="budget"></b>Budget</span>
+          <span><b class="num" data-money="pct">%</b>Used</span>
+        </div>
+      </div>
+      <span class="bar" style="margin:14px 0"><span class="bar__fill" id="expensesBar" data-fill="53"></span></span>
+      <div class="list list--flat">
+        <div class="list-row" style="cursor:default"><span class="list-row__icon"><svg class="ico" viewBox="0 0 24 24"><use href="#i-cart"/></svg></span><span class="list-row__body"><span class="list-row__title">Groceries</span><span class="list-row__sub">14 transactions</span></span><span class="list-row__end"><span class="list-row__value num" data-money="groceries"></span></span></div>
+        <div class="list-row" style="cursor:default"><span class="list-row__icon"><svg class="ico" viewBox="0 0 24 24"><use href="#i-fuel"/></svg></span><span class="list-row__body"><span class="list-row__title">Fuel</span><span class="list-row__sub">4 fill-ups</span></span><span class="list-row__end"><span class="list-row__value num" data-money="fuel"></span></span></div>
+        <div class="list-row" style="cursor:default"><span class="list-row__icon"><svg class="ico" viewBox="0 0 24 24"><use href="#i-receipt"/></svg></span><span class="list-row__body"><span class="list-row__title">Bills</span><span class="list-row__sub">2 paid</span></span><span class="list-row__end"><span class="list-row__value num" data-money="bills"></span></span></div>
+      </div>
+    </div>
+  </aside>
+
+  <!-- Loadshedding -->
+  <aside class="sheet" id="sheet-loadshed" data-loc="PK" role="dialog" aria-modal="true" aria-label="Loadshedding schedule">
+    <span class="sheet__grab"></span>
+    <div class="sheet__head">
+      <div>
+        <h2 class="sheet__title">Loadshedding</h2>
+        <p class="sheet__sub">Gulshan-e-Iqbal · K-Electric</p>
+      </div>
+      <button class="closebtn pressable" data-close aria-label="Close"><svg class="ico" viewBox="0 0 24 24"><use href="#i-x"/></svg></button>
+    </div>
+    <div class="sheet__body">
+      <article class="card card--pad" style="display:flex;align-items:center;gap:14px;margin-bottom:14px">
+        <span class="stat-row__icon" style="background:var(--tint-accent);color:var(--accent)"><svg class="ico" viewBox="0 0 24 24"><use href="#i-bolt"/></svg></span>
+        <div style="flex:1">
+          <p class="progress-card__title">Power is on</p>
+          <p class="progress-card__meta">Next outage in 2 hours 12 minutes</p>
         </div>
       </article>
-      <div class="list list--flat" style="margin-bottom:14px">
-        <button class="list-row pressable" data-toast="Resuming at ayah 42">
-          <span class="list-row__icon"><svg class="ico" viewBox="0 0 24 24"><use href="#i-book"/></svg></span>
-          <span class="list-row__body"><span class="list-row__title">Continue at ayah 42</span><span class="list-row__sub">38% complete · 6 min left</span></span>
-          <span class="list-row__end"><svg class="ico" viewBox="0 0 24 24"><use href="#i-chev-r"/></svg></span>
-        </button>
-        <button class="list-row pressable" data-toast="Tafsir opened">
-          <span class="list-row__icon"><svg class="ico" viewBox="0 0 24 24"><use href="#i-eye"/></svg></span>
-          <span class="list-row__body"><span class="list-row__title">Read tafsir</span><span class="list-row__sub">Ibn Kathir · abridged</span></span>
-          <span class="list-row__end"><svg class="ico" viewBox="0 0 24 24"><use href="#i-chev-r"/></svg></span>
-        </button>
+      <p class="group-label" style="padding:0;margin:0 0 9px">Today</p>
+      <div class="list list--flat">
+        <div class="list-row" style="cursor:default"><span class="list-row__icon"><svg class="ico" viewBox="0 0 24 24"><use href="#i-clock"/></svg></span><span class="list-row__body"><span class="list-row__title num">06:00 – 08:00</span><span class="list-row__sub">Completed</span></span><span class="list-row__end"><span class="tag tag--neutral">Done</span></span></div>
+        <div class="list-row" style="cursor:default"><span class="list-row__icon" style="background:var(--tint-accent);color:var(--accent)"><svg class="ico" viewBox="0 0 24 24"><use href="#i-clock"/></svg></span><span class="list-row__body"><span class="list-row__title num">14:00 – 16:00</span><span class="list-row__sub">Next · 2 hours</span></span><span class="list-row__end"><span class="tag">Next</span></span></div>
+        <div class="list-row" style="cursor:default"><span class="list-row__icon"><svg class="ico" viewBox="0 0 24 24"><use href="#i-clock"/></svg></span><span class="list-row__body"><span class="list-row__title num">22:00 – 23:00</span><span class="list-row__sub">Scheduled</span></span><span class="list-row__end"><svg class="ico" viewBox="0 0 24 24"><use href="#i-bell"/></svg></span></div>
       </div>
-      <button class="btn btn--accent btn--block pressable" data-toast="Opening Al-Kahf, ayah 42">
-        <svg class="ico" viewBox="0 0 24 24"><use href="#i-play"/></svg> Continue reading
+      <p class="meta" style="text-align:center;margin:14px 0 6px">Schedules can change at short notice.</p>
+    </div>
+  </aside>
+
+  <!-- Cricket -->
+  <aside class="sheet" id="sheet-cricket" role="dialog" aria-modal="true" aria-label="Cricket score">
+    <span class="sheet__grab"></span>
+    <div class="sheet__head">
+      <div>
+        <h2 class="sheet__title">Pakistan v South Africa</h2>
+        <p class="sheet__sub">2nd Test · day 2 · Rawalpindi</p>
+      </div>
+      <button class="closebtn pressable" data-close aria-label="Close"><svg class="ico" viewBox="0 0 24 24"><use href="#i-x"/></svg></button>
+    </div>
+    <div class="sheet__body">
+      <article class="card card--pad score" style="margin-bottom:14px">
+        <div class="score__side">
+          <span class="score__flag">PAK</span>
+          <span class="score__runs num">214<span>/4</span></span>
+          <span class="score__overs num">58.2 ov</span>
+        </div>
+        <span class="score__vs">vs</span>
+        <div class="score__side score__side--away">
+          <span class="score__flag">SA</span>
+          <span class="score__runs num">301</span>
+          <span class="score__overs num">all out</span>
+        </div>
+        <p class="score__note">Pakistan trail by 87 runs</p>
+      </article>
+      <p class="group-label" style="padding:0;margin:0 0 9px">At the crease</p>
+      <div class="list list--flat">
+        <div class="list-row" style="cursor:default"><span class="list-row__body"><span class="list-row__title">Babar Azam</span><span class="list-row__sub">112 balls · 9 fours</span></span><span class="list-row__end"><span class="list-row__value num">78*</span></span></div>
+        <div class="list-row" style="cursor:default"><span class="list-row__body"><span class="list-row__title">Saud Shakeel</span><span class="list-row__sub">64 balls · 3 fours</span></span><span class="list-row__end"><span class="list-row__value num">41*</span></span></div>
+        <div class="list-row" style="cursor:default"><span class="list-row__body"><span class="list-row__title">Current run rate</span></span><span class="list-row__end"><span class="list-row__value num">3.67</span></span></div>
+      </div>
+    </div>
+  </aside>
+
+  <!-- Parcel -->
+  <aside class="sheet" id="sheet-parcel" data-loc="PK" role="dialog" aria-modal="true" aria-label="Parcel tracking">
+    <span class="sheet__grab"></span>
+    <div class="sheet__head">
+      <div>
+        <h2 class="sheet__title">Your parcel</h2>
+        <p class="sheet__sub">TCS · CN 4820 9931 22</p>
+      </div>
+      <button class="closebtn pressable" data-close aria-label="Close"><svg class="ico" viewBox="0 0 24 24"><use href="#i-x"/></svg></button>
+    </div>
+    <div class="sheet__body">
+      <div class="timeline" style="padding:0">
+        <div class="tl-item is-done">
+          <span class="tl-time num">6 Sep</span>
+          <span class="tl-line"><span class="tl-node"></span></span>
+          <span class="tl-card" style="cursor:default"><span class="tl-card__body"><span class="tl-card__title">Picked up</span><span class="tl-card__meta">Lahore · 18:40</span></span></span>
+        </div>
+        <div class="tl-item is-done">
+          <span class="tl-time num">7 Sep</span>
+          <span class="tl-line"><span class="tl-node"></span></span>
+          <span class="tl-card" style="cursor:default"><span class="tl-card__body"><span class="tl-card__title">In transit</span><span class="tl-card__meta">Sukkur hub · 04:15</span></span></span>
+        </div>
+        <div class="tl-item is-now">
+          <span class="tl-time num">8 Sep</span>
+          <span class="tl-line"><span class="tl-node"></span></span>
+          <span class="tl-card" style="cursor:default"><span class="tl-card__body"><span class="tl-card__title">Out for delivery</span><span class="tl-card__meta">Karachi · rider assigned 09:20</span></span><span class="tl-card__icon"><svg class="ico" viewBox="0 0 24 24"><use href="#i-clock"/></svg></span></span>
+        </div>
+        <div class="tl-item">
+          <span class="tl-time num">Today</span>
+          <span class="tl-line"><span class="tl-node"></span></span>
+          <span class="tl-card" style="cursor:default"><span class="tl-card__body"><span class="tl-card__title">Delivery expected</span><span class="tl-card__meta">Between 14:00 and 18:00</span></span></span>
+        </div>
+      </div>
+      <button class="btn btn--ghost btn--block pressable" style="margin:6px 0" data-toast="Tracking another parcel">
+        <svg class="ico" viewBox="0 0 24 24"><use href="#i-plus"/></svg> Track another parcel
       </button>
     </div>
   </aside>
 
-  <!-- Notifications -->
-  <aside class="sheet" id="sheet-notifications" role="dialog" aria-modal="true" aria-label="Notifications">
+  <!-- Emergency -->
+  <aside class="sheet" id="sheet-emergency" data-loc="PK" role="dialog" aria-modal="true" aria-label="Emergency numbers">
     <span class="sheet__grab"></span>
     <div class="sheet__head">
       <div>
-        <h2 class="sheet__title">Notifications</h2>
-        <p class="sheet__sub">3 new since this morning</p>
+        <h2 class="sheet__title">Emergency</h2>
+        <p class="sheet__sub">Karachi · tap to call</p>
       </div>
       <button class="closebtn pressable" data-close aria-label="Close"><svg class="ico" viewBox="0 0 24 24"><use href="#i-x"/></svg></button>
     </div>
     <div class="sheet__body">
-      <div class="list list--flat" style="margin-bottom:14px">
-        <button class="list-row pressable" data-toast="Opening prayer times">
-          <span class="list-row__icon" style="background:var(--tint-accent);color:var(--accent)"><svg class="ico" viewBox="0 0 24 24"><use href="#i-prayer"/></svg></span>
-          <span class="list-row__body"><span class="list-row__title">Asr is in 2 hours</span><span class="list-row__sub">Adhan at 16:12 · reminder set</span></span>
-          <span class="list-row__end"><span class="meta">now</span></span>
-        </button>
-        <button class="list-row pressable" data-toast="Opening reading streak">
-          <span class="list-row__icon"><svg class="ico" viewBox="0 0 24 24"><use href="#i-flame"/></svg></span>
-          <span class="list-row__body"><span class="list-row__title">12-day streak — keep going</span><span class="list-row__sub">Read 2 pages to extend it</span></span>
-          <span class="list-row__end"><span class="meta">2h</span></span>
-        </button>
-        <button class="list-row pressable" data-toast="Opening calendar">
-          <span class="list-row__icon"><svg class="ico" viewBox="0 0 24 24"><use href="#i-calendar"/></svg></span>
-          <span class="list-row__body"><span class="list-row__title">Design review at 14:00</span><span class="list-row__sub">Studio 2 · 45 minutes</span></span>
-          <span class="list-row__end"><span class="meta">4h</span></span>
-        </button>
+      <div class="list list--flat">
+        <button class="list-row pressable" data-toast="Calling Rescue 1122"><span class="list-row__icon" style="background:var(--tint-accent);color:var(--accent)"><svg class="ico" viewBox="0 0 24 24"><use href="#i-pulse"/></svg></span><span class="list-row__body"><span class="list-row__title">Rescue</span><span class="list-row__sub">Ambulance and fire</span></span><span class="list-row__end"><span class="list-row__value num">1122</span></span></button>
+        <button class="list-row pressable" data-toast="Calling Police 15"><span class="list-row__icon"><svg class="ico" viewBox="0 0 24 24"><use href="#i-shield"/></svg></span><span class="list-row__body"><span class="list-row__title">Police</span><span class="list-row__sub">Madadgar helpline</span></span><span class="list-row__end"><span class="list-row__value num">15</span></span></button>
+        <button class="list-row pressable" data-toast="Calling Edhi 115"><span class="list-row__icon"><svg class="ico" viewBox="0 0 24 24"><use href="#i-heart"/></svg></span><span class="list-row__body"><span class="list-row__title">Edhi ambulance</span><span class="list-row__sub">Round the clock</span></span><span class="list-row__end"><span class="list-row__value num">115</span></span></button>
+        <button class="list-row pressable" data-toast="Calling K-Electric 118"><span class="list-row__icon"><svg class="ico" viewBox="0 0 24 24"><use href="#i-bolt"/></svg></span><span class="list-row__body"><span class="list-row__title">K-Electric</span><span class="list-row__sub">Power complaints</span></span><span class="list-row__end"><span class="list-row__value num">118</span></span></button>
       </div>
-      <button class="btn btn--ghost btn--block pressable" data-toast="All caught up">Mark all as read</button>
-    </div>
-  </aside>
-
-  <!-- Interests -->
-  <aside class="sheet" id="sheet-interests" role="dialog" aria-modal="true" aria-label="Your interests">
-    <span class="sheet__grab"></span>
-    <div class="sheet__head">
-      <div>
-        <h2 class="sheet__title">Your interests</h2>
-        <p class="sheet__sub">Pick 5 to 10 — this shapes what you see</p>
-      </div>
-      <button class="closebtn pressable" data-close aria-label="Close"><svg class="ico" viewBox="0 0 24 24"><use href="#i-x"/></svg></button>
-    </div>
-    <div class="sheet__body">
-      <div class="picker__bar">
-        <span class="picker__count" id="setPickCount">0 selected</span>
-        <button class="picker__clear pressable" id="setPickClear">Clear</button>
-      </div>
-      <div class="picker" id="setPicker" style="margin-bottom:16px"></div>
-      <button class="btn btn--accent btn--block pressable" id="setPickSave">Save interests</button>
+      <p class="meta" style="text-align:center;margin:14px 0 6px">These numbers work without credit on most networks.</p>
     </div>
   </aside>
 
   <!-- ==========================================================
-       ONBOARDING — first run
+       ONBOARDING
        ========================================================== -->
   <div class="onb" id="onb" hidden>
     <div class="onb__bg" aria-hidden="true"></div>
@@ -1562,59 +2023,40 @@
       <section class="onb-step is-active" data-step="0">
         <div class="onb__art">
           <svg viewBox="0 0 292 244" fill="none" aria-hidden="true">
-            <defs>
-              <linearGradient id="ob1" x1="0" y1="0" x2="1" y2="1">
-                <stop offset="0" stop-color="var(--accent-400)"/><stop offset="1" stop-color="var(--accent-600)"/>
-              </linearGradient>
-              <linearGradient id="ob1s" x1="0" y1="0" x2="0" y2="1">
-                <stop offset="0" stop-color="var(--card)"/><stop offset="1" stop-color="var(--card-2)"/>
-              </linearGradient>
-            </defs>
-            <circle cx="146" cy="120" r="98" fill="var(--accent)" opacity=".07"/>
-            <circle cx="146" cy="120" r="72" fill="var(--accent)" opacity=".07"/>
-            <path d="M40 148a106 106 0 0 1 212 0" stroke="var(--accent)" stroke-opacity=".28" stroke-width="2" stroke-dasharray="3 9" stroke-linecap="round"/>
-            <!-- centre orb -->
-            <mask id="ob1c">
-              <circle cx="150" cy="112" r="23" fill="#fff"/>
-              <circle cx="140" cy="105" r="19" fill="#000"/>
-            </mask>
-            <circle cx="146" cy="112" r="44" fill="url(#ob1)"/>
-            <rect x="126" y="88" width="48" height="48" fill="#fff" opacity=".95" mask="url(#ob1c)"/>
-            <path d="m166 88 1.8 4.4 4.4 1.8-4.4 1.8-1.8 4.4-1.8-4.4-4.4-1.8 4.4-1.8z" fill="#fff" opacity=".9"/>
-            <!-- floating cards -->
+            <circle cx="146" cy="118" r="98" fill="var(--accent)" opacity=".07"/>
+            <circle cx="146" cy="118" r="66" fill="var(--accent)" opacity=".06"/>
             <g class="onb__float">
-              <rect x="14" y="60" width="94" height="44" rx="14" fill="url(#ob1s)" stroke="var(--border)"/>
-              <rect x="26" y="74" width="16" height="16" rx="5" fill="var(--accent)" opacity=".18"/>
-              <path d="m30 82 3 3 5-6" stroke="var(--accent)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-              <rect x="50" y="76" width="44" height="5" rx="2.5" fill="var(--text)" opacity=".22"/>
-              <rect x="50" y="86" width="30" height="5" rx="2.5" fill="var(--text)" opacity=".12"/>
+              <rect x="44" y="46" width="72" height="72" rx="24" fill="var(--card)" stroke="var(--border)"/>
+              <path d="M64 82h32M80 66v32" stroke="var(--accent)" stroke-width="3" stroke-linecap="round"/>
             </g>
             <g class="onb__float onb__float--b">
-              <rect x="184" y="150" width="98" height="46" rx="14" fill="url(#ob1s)" stroke="var(--border)"/>
-              <circle cx="206" cy="173" r="11" fill="var(--accent)" opacity=".16"/>
-              <path d="M206 167v6l4 3" stroke="var(--accent)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-              <rect x="224" y="164" width="46" height="5" rx="2.5" fill="var(--text)" opacity=".22"/>
-              <rect x="224" y="176" width="32" height="5" rx="2.5" fill="var(--text)" opacity=".12"/>
+              <rect x="140" y="30" width="72" height="72" rx="24" fill="var(--card)" stroke="var(--border)"/>
+              <circle cx="176" cy="66" r="18" fill="none" stroke="var(--violet)" stroke-width="3"/>
+              <path d="M176 54v12l8 6" stroke="var(--violet)" stroke-width="3" stroke-linecap="round"/>
             </g>
             <g class="onb__float onb__float--c">
-              <rect x="196" y="40" width="58" height="34" rx="12" fill="url(#ob1s)" stroke="var(--border)"/>
-              <path d="M212 57h10M217 52v10" stroke="var(--accent)" stroke-width="2.4" stroke-linecap="round"/>
-              <rect x="230" y="54" width="14" height="5" rx="2.5" fill="var(--text)" opacity=".18"/>
+              <rect x="96" y="128" width="90" height="90" rx="28" fill="var(--accent)"/>
+              <circle cx="141" cy="173" r="28" fill="none" stroke="#fff" stroke-opacity=".45" stroke-width="3"/>
+              <path d="M141 145a28 28 0 0 1 0 56 14 14 0 0 1 0-28 14 14 0 0 0 0-28" fill="#fff" opacity=".9"/>
             </g>
-            <path d="m66 176 3.6 8.8 8.8 3.6-8.8 3.6L66 201l-3.6-8.8-8.8-3.6 8.8-3.6z" fill="var(--accent)" opacity=".55"/>
-            <path d="m246 108 2.6 6.4 6.4 2.6-6.4 2.6-2.6 6.4-2.6-6.4-6.4-2.6 6.4-2.6z" fill="var(--violet)" opacity=".45"/>
-            <circle cx="36" cy="128" r="5" fill="var(--sky)" opacity=".4"/>
-            <circle cx="262" cy="76" r="3.5" fill="var(--accent)" opacity=".35"/>
+            <g class="onb__float">
+              <rect x="196" y="122" width="66" height="66" rx="22" fill="var(--card)" stroke="var(--border)"/>
+              <path d="M212 162c5-4 10-4 15 0M212 148c10-8 21-8 31 0" stroke="var(--sky)" stroke-width="3" stroke-linecap="round"/>
+              <circle cx="228" cy="172" r="3" fill="var(--sky)"/>
+            </g>
+            <path d="m20 108 3 7.4 7.4 3-7.4 3-3 7.4-3-7.4-7.4-3 7.4-3z" fill="var(--accent)" opacity=".5"/>
+            <circle cx="268" cy="72" r="5" fill="var(--violet)" opacity=".4"/>
+            <circle cx="70" cy="212" r="4" fill="var(--sky)" opacity=".45"/>
           </svg>
         </div>
 
         <div class="onb__brand">
-          <span class="onb__mark"><svg class="ico" viewBox="0 0 24 24"><use href="#i-moon-star"/></svg></span>
-          <span class="onb__wordmark">Nur<span>Your day, in one place</span></span>
+          <span class="onb__mark"><svg class="ico" viewBox="0 0 24 24"><use href="#i-lume"/></svg></span>
+          <span class="onb__wordmark">Lume<span>Your day, in one place</span></span>
         </div>
 
         <h1 class="onb__title">Everything your day needs, quietly organised.</h1>
-        <p class="onb__text">Prayers, plans, reading and the small tools you reach for — without the clutter.</p>
+        <p class="onb__text">Plans, money, travel, reading and the small tools you reach for — without the clutter.</p>
 
         <div class="onb__foot">
           <button class="btn btn--accent btn--block pressable" data-onb-next>Get started <svg class="ico" viewBox="0 0 24 24"><use href="#i-arrow-r"/></svg></button>
@@ -1626,133 +2068,41 @@
       <section class="onb-step" data-step="1">
         <div class="onb__art">
           <svg viewBox="0 0 292 244" fill="none" aria-hidden="true">
-            <defs>
-              <linearGradient id="ob2" x1="0" y1="0" x2="1" y2="1">
-                <stop offset="0" stop-color="var(--card)"/><stop offset="1" stop-color="var(--card-2)"/>
-              </linearGradient>
-            </defs>
-            <circle cx="152" cy="112" r="94" fill="var(--accent)" opacity=".07"/>
-            <circle cx="60" cy="196" r="46" fill="var(--violet)" opacity=".07"/>
-            <!-- main card -->
-            <rect x="52" y="34" width="184" height="164" rx="24" fill="url(#ob2)" stroke="var(--border)"/>
-            <rect x="72" y="56" width="66" height="7" rx="3.5" fill="var(--text)" opacity=".28"/>
-            <rect x="72" y="70" width="40" height="6" rx="3" fill="var(--text)" opacity=".12"/>
-            <circle cx="210" cy="66" r="14" fill="var(--accent)" opacity=".14"/>
-            <path d="M210 58v8l5 3" stroke="var(--accent)" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
-            <!-- rows -->
-            <g>
-              <rect x="72" y="96" width="18" height="18" rx="6" fill="var(--accent)"/>
-              <path d="m77 105 3.4 3.4L86 102" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
-              <rect x="100" y="101" width="86" height="7" rx="3.5" fill="var(--text)" opacity=".2"/>
-            </g>
-            <g>
-              <rect x="72" y="126" width="18" height="18" rx="6" fill="var(--accent)"/>
-              <path d="m77 135 3.4 3.4L86 132" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
-              <rect x="100" y="131" width="62" height="7" rx="3.5" fill="var(--text)" opacity=".2"/>
-            </g>
-            <g>
-              <rect x="72" y="156" width="18" height="18" rx="6" fill="none" stroke="var(--border-2)" stroke-width="2"/>
-              <rect x="100" y="161" width="74" height="7" rx="3.5" fill="var(--text)" opacity=".12"/>
-            </g>
-            <!-- floating progress chip -->
+            <circle cx="146" cy="120" r="98" fill="var(--accent)" opacity=".06"/>
+            <rect x="54" y="34" width="184" height="176" rx="30" fill="var(--card)" stroke="var(--border)"/>
+            <rect x="76" y="60" width="80" height="10" rx="5" fill="var(--text)" opacity=".14"/>
+            <rect x="76" y="82" width="46" height="8" rx="4" fill="var(--text)" opacity=".08"/>
             <g class="onb__float">
-              <rect x="180" y="164" width="92" height="42" rx="14" fill="var(--card)" stroke="var(--border)"/>
-              <circle cx="202" cy="185" r="12" fill="none" stroke="var(--tint-neutral)" stroke-width="4"/>
-              <path d="M202 173a12 12 0 0 1 9 20" stroke="var(--accent)" stroke-width="4" stroke-linecap="round" fill="none"/>
-              <rect x="222" y="177" width="38" height="5" rx="2.5" fill="var(--text)" opacity=".22"/>
-              <rect x="222" y="188" width="24" height="5" rx="2.5" fill="var(--text)" opacity=".12"/>
+              <rect x="76" y="106" width="140" height="34" rx="12" fill="var(--tint-accent)"/>
+              <circle cx="96" cy="123" r="8" fill="var(--accent)" opacity=".28"/>
+              <path d="m92 123 3 3 6-6.4" stroke="var(--accent)" stroke-width="2.4" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+              <rect x="112" y="119" width="70" height="8" rx="4" fill="var(--accent)" opacity=".26"/>
             </g>
-            <!-- floating time chip -->
             <g class="onb__float onb__float--b">
-              <rect x="12" y="88" width="72" height="34" rx="12" fill="var(--card)" stroke="var(--border)"/>
-              <circle cx="32" cy="105" r="8" fill="var(--violet)" opacity=".16"/>
-              <path d="M32 100v5l3 2" stroke="var(--violet)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-              <rect x="46" y="102" width="26" height="5" rx="2.5" fill="var(--text)" opacity=".18"/>
+              <rect x="76" y="148" width="140" height="34" rx="12" fill="var(--tint-neutral)"/>
+              <circle cx="96" cy="165" r="8" fill="none" stroke="var(--text-3)" stroke-width="2"/>
+              <rect x="112" y="161" width="54" height="8" rx="4" fill="var(--text)" opacity=".12"/>
             </g>
-            <path d="m254 34 3 7.4 7.4 3-7.4 3-3 7.4-3-7.4-7.4-3 7.4-3z" fill="var(--accent)" opacity=".5"/>
-            <circle cx="30" cy="52" r="4.5" fill="var(--accent)" opacity=".35"/>
-            <circle cx="266" cy="132" r="3.5" fill="var(--violet)" opacity=".4"/>
+            <path d="m30 84 2.8 6.8 6.8 2.8-6.8 2.8-2.8 6.8-2.8-6.8-6.8-2.8 6.8-2.8z" fill="var(--accent)" opacity=".45"/>
+            <circle cx="262" cy="152" r="5" fill="var(--violet)" opacity=".4"/>
           </svg>
         </div>
 
         <p class="onb__kicker">Plan</p>
         <h1 class="onb__title">Your day, laid out before it starts</h1>
-        <p class="onb__text">Tasks, reminders and events on one timeline — with prayer times already in the right places.</p>
+        <p class="onb__text">Tasks, reminders and events on one timeline — with everything that matters already in the right place.</p>
 
         <div class="onb__foot">
           <button class="btn btn--accent btn--block pressable" data-onb-next>Continue <svg class="ico" viewBox="0 0 24 24"><use href="#i-arrow-r"/></svg></button>
         </div>
       </section>
 
-      <!-- 3 · Prayer -->
+      <!-- 3 · Tools -->
       <section class="onb-step" data-step="2">
-        <div class="onb__art">
-          <svg viewBox="0 0 292 244" fill="none" aria-hidden="true">
-            <defs>
-              <linearGradient id="ob3" x1="0" y1="0" x2="1" y2="1">
-                <stop offset="0" stop-color="#1E2C6B"/><stop offset=".55" stop-color="#2E3E8F"/><stop offset="1" stop-color="#4A54A8"/>
-              </linearGradient>
-              <radialGradient id="ob3m" cx=".5" cy=".5" r=".5">
-                <stop offset="0" stop-color="#FFF0CE"/><stop offset="1" stop-color="#F3C871"/>
-              </radialGradient>
-            </defs>
-            <circle cx="146" cy="112" r="96" fill="var(--indigo)" opacity=".08"/>
-            <!-- night disc -->
-            <circle cx="146" cy="106" r="74" fill="url(#ob3)"/>
-            <circle cx="146" cy="106" r="74" fill="none" stroke="#fff" stroke-opacity=".14" stroke-width="1.5"/>
-            <!-- countdown arc -->
-            <circle cx="146" cy="106" r="86" fill="none" stroke="var(--border-2)" stroke-width="4"/>
-            <path d="M146 20a86 86 0 0 1 66 141" stroke="var(--accent)" stroke-width="4" stroke-linecap="round" fill="none"/>
-            <!-- crescent -->
-            <g transform="translate(146 96)">
-              <circle cx="0" cy="0" r="30" fill="url(#ob3m)"/>
-              <circle cx="-12" cy="-7" r="26" fill="#25306B"/>
-            </g>
-            <!-- horizon -->
-            <path d="M76 148c22-11 40 6 70-3s52-22 74-9" stroke="#fff" stroke-opacity=".22" stroke-width="1.6" fill="none"/>
-            <path d="M84 166c20-9 38 5 62-2s48-18 66-8" stroke="#fff" stroke-opacity=".12" stroke-width="1.6" fill="none"/>
-            <!-- stars -->
-            <circle cx="118" cy="66" r="2" fill="#fff" opacity=".55"/>
-            <circle cx="172" cy="52" r="2.5" fill="#fff" opacity=".45"/>
-            <circle cx="106" cy="132" r="2" fill="#fff" opacity=".35"/>
-            <path d="m92 56 2.6 6.4 6.4 2.6-6.4 2.6L92 74l-2.6-6.4-6.4-2.6 6.4-2.6z" fill="#FFF3D6" opacity=".85"/>
-            <circle cx="200" cy="60" r="3" fill="#fff" opacity=".7"/>
-            <circle cx="184" cy="140" r="2.5" fill="#fff" opacity=".5"/>
-            <!-- floating time pill -->
-            <g class="onb__float">
-              <rect x="182" y="178" width="98" height="42" rx="14" fill="var(--card)" stroke="var(--border)"/>
-              <circle cx="204" cy="199" r="11" fill="var(--accent)" opacity=".16"/>
-              <path d="M204 193v6l4 3" stroke="var(--accent)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-              <rect x="222" y="191" width="44" height="5" rx="2.5" fill="var(--text)" opacity=".22"/>
-              <rect x="222" y="202" width="28" height="5" rx="2.5" fill="var(--text)" opacity=".12"/>
-            </g>
-            <g class="onb__float onb__float--c">
-              <rect x="8" y="150" width="76" height="36" rx="13" fill="var(--card)" stroke="var(--border)"/>
-              <circle cx="28" cy="168" r="9" fill="var(--accent)" opacity=".16"/>
-              <path d="M24 168h8M28 164v8" stroke="var(--accent)" stroke-width="2" stroke-linecap="round"/>
-              <rect x="44" y="165" width="30" height="5" rx="2.5" fill="var(--text)" opacity=".18"/>
-            </g>
-            <circle cx="30" cy="88" r="4.5" fill="var(--accent)" opacity=".4"/>
-            <path d="m262 118 2.4 5.8 5.8 2.4-5.8 2.4-2.4 5.8-2.4-5.8-5.8-2.4 5.8-2.4z" fill="var(--accent)" opacity=".45"/>
-          </svg>
-        </div>
-
-        <p class="onb__kicker">Prayer</p>
-        <h1 class="onb__title">Never miss a prayer again</h1>
-        <p class="onb__text">Accurate times for where you are, a gentle countdown to the next one, and reminders you can shape.</p>
-
-        <div class="onb__foot">
-          <button class="btn btn--accent btn--block pressable" data-onb-next>Continue <svg class="ico" viewBox="0 0 24 24"><use href="#i-arrow-r"/></svg></button>
-        </div>
-      </section>
-
-      <!-- 4 · Tools -->
-      <section class="onb-step" data-step="3">
         <div class="onb__art">
           <svg viewBox="0 0 292 244" fill="none" aria-hidden="true">
             <circle cx="146" cy="116" r="96" fill="var(--violet)" opacity=".07"/>
             <circle cx="146" cy="116" r="62" fill="var(--accent)" opacity=".06"/>
-            <!-- tool tiles -->
             <g class="onb__float">
               <rect x="46" y="42" width="62" height="62" rx="20" fill="var(--card)" stroke="var(--border)"/>
               <rect x="63" y="57" width="28" height="32" rx="7" fill="none" stroke="var(--accent)" stroke-width="2.2"/>
@@ -1760,8 +2110,7 @@
             </g>
             <g class="onb__float onb__float--b">
               <rect x="122" y="26" width="62" height="62" rx="20" fill="var(--card)" stroke="var(--border)"/>
-              <circle cx="153" cy="57" r="16" fill="none" stroke="var(--violet)" stroke-width="2.2"/>
-              <path d="m160 50-4.4 10.6L145 65l4.4-10.6z" fill="var(--violet)" opacity=".7"/>
+              <path d="M140 68v-8M148 68V50M156 68v-12M164 68V44" stroke="var(--violet)" stroke-width="3" stroke-linecap="round"/>
             </g>
             <g class="onb__float onb__float--c">
               <rect x="198" y="52" width="62" height="62" rx="20" fill="var(--card)" stroke="var(--border)"/>
@@ -1790,15 +2139,34 @@
         </div>
 
         <p class="onb__kicker">Tools</p>
-        <h1 class="onb__title">Twenty-seven tools, one or two taps away</h1>
-        <p class="onb__text">Calculator, converters, Qibla, tasbeeh, weather, notes — sorted so you never hunt for them.</p>
+        <h1 class="onb__title"><span id="onbToolCount">70</span>-odd tools, one or two taps away</h1>
+        <p class="onb__text">Calculator, converters, weather, scanner, rates, trackers — sorted, so you never hunt for them.</p>
 
         <div class="onb__foot">
           <button class="btn btn--accent btn--block pressable" data-onb-next>Continue <svg class="ico" viewBox="0 0 24 24"><use href="#i-arrow-r"/></svg></button>
         </div>
       </section>
 
-      <!-- 5 · Interests -->
+      <!-- 4 · Where are you? -->
+      <section class="onb-step" data-step="3">
+        <div style="padding-top:14px">
+          <p class="onb__kicker">Make it local</p>
+          <h1 class="onb__title">Where are you based?</h1>
+          <p class="onb__text">This only unlocks local services — trains, bills, fuel and the like. It says nothing about who you are.</p>
+        </div>
+
+        <div style="margin-top:20px">
+          <div class="onb-country" id="onbCountry"></div>
+          <p class="group-label" style="padding:0;margin:20px 0 9px">Nearest city</p>
+          <div class="onb-choice" id="onbCity"></div>
+        </div>
+
+        <div class="onb__foot onb__foot--sticky">
+          <button class="btn btn--accent btn--block pressable" data-onb-next>Continue <svg class="ico" viewBox="0 0 24 24"><use href="#i-arrow-r"/></svg></button>
+        </div>
+      </section>
+
+      <!-- 5 · What are you here for? -->
       <section class="onb-step" data-step="4">
         <div style="padding-top:14px">
           <p class="onb__kicker">Make it yours</p>
@@ -1806,12 +2174,12 @@
           <p class="onb__text">Pick 5 to 10. Your home screen, tools and reading are built around them — change them whenever you like.</p>
         </div>
 
-        <div style="margin-top:20px">
+        <div style="margin-top:18px">
           <div class="picker__bar">
             <span class="picker__count" id="onbPickCount">0 selected</span>
             <button class="picker__clear pressable" id="onbPickClear">Clear</button>
           </div>
-          <div class="picker" id="onbPicker"></div>
+          <div id="onbPicker"></div>
         </div>
 
         <div class="onb__foot onb__foot--sticky">
@@ -1821,7 +2189,7 @@
         </div>
       </section>
 
-      <!-- 6 · Setup -->
+      <!-- 6 · Set up -->
       <section class="onb-step" data-step="5">
         <div class="onb__art" style="flex:0 0 auto;min-height:0;padding:2px 0 10px">
           <svg viewBox="0 0 292 128" fill="none" aria-hidden="true" style="max-width:242px">
@@ -1837,39 +2205,42 @@
         </div>
 
         <h1 class="onb__title">Set it up once</h1>
-        <p class="onb__text">Two permissions and a calculation method — you can change any of it later.</p>
+        <p class="onb__text">Two permissions, and you can change either of them later.</p>
 
         <div class="onb-rows">
           <button class="onb-row pressable is-on" data-onb-toggle>
             <span class="onb-row__icon"><svg class="ico" viewBox="0 0 24 24"><use href="#i-pin"/></svg></span>
             <span class="onb-row__body">
               <span class="onb-row__title">Use your location</span>
-              <span class="onb-row__sub">For accurate prayer times, Qibla and weather</span>
+              <span class="onb-row__sub" id="onbLocSub">For weather, local services and nearby places</span>
             </span>
             <span class="switch is-on"><span class="switch__knob"></span></span>
           </button>
           <button class="onb-row pressable is-on" data-onb-toggle>
             <span class="onb-row__icon"><svg class="ico" viewBox="0 0 24 24"><use href="#i-bell-ring"/></svg></span>
             <span class="onb-row__body">
-              <span class="onb-row__title">Prayer reminders</span>
-              <span class="onb-row__sub">A quiet nudge 5 minutes before each adhan</span>
+              <span class="onb-row__title">Gentle reminders</span>
+              <span class="onb-row__sub" id="onbNotifSub">A quiet nudge for the things you asked us to watch</span>
             </span>
             <span class="switch is-on"><span class="switch__knob"></span></span>
           </button>
         </div>
 
-        <p class="group-label" style="padding:0;margin:18px 0 9px">Calculation method</p>
-        <div class="onb-choice" id="onbMethod">
-          <button class="is-active">Muslim World League</button>
-          <button>ISNA</button>
-          <button>Umm al-Qura</button>
-          <button>Egyptian</button>
-          <button>Karachi</button>
+        <!-- Only shown when Islamic features are on -->
+        <div data-faith="islamic">
+          <p class="group-label" style="padding:0;margin:18px 0 9px">Prayer calculation method</p>
+          <div class="onb-choice" id="onbMethod">
+            <button class="is-active">University of Karachi</button>
+            <button>Muslim World League</button>
+            <button>ISNA</button>
+            <button>Umm al-Qura</button>
+            <button>Egyptian</button>
+          </div>
         </div>
 
         <div class="onb__foot">
           <button class="btn btn--accent btn--block pressable" data-onb-next>Looks good <svg class="ico" viewBox="0 0 24 24"><use href="#i-arrow-r"/></svg></button>
-          <p class="onb__note">Nur keeps this on your device. Nothing is uploaded.</p>
+          <p class="onb__note">Lume keeps this on your device. Nothing is uploaded.</p>
         </div>
       </section>
 
@@ -1894,11 +2265,11 @@
         </div>
 
         <p class="onb__kicker">All set</p>
-        <h1 class="onb__title">You're ready, Zeeshan</h1>
-        <p class="onb__text">Your next prayer is <b id="onbNextPrayer">Fajr</b> and today's plan is waiting on the home screen.</p>
+        <h1 class="onb__title">You’re ready, Zeeshan</h1>
+        <p class="onb__text" id="onbDoneText">Your home screen is waiting.</p>
 
         <div class="onb__foot">
-          <button class="btn btn--accent btn--block pressable" id="onbFinish">Enter Nur <svg class="ico" viewBox="0 0 24 24"><use href="#i-arrow-r"/></svg></button>
+          <button class="btn btn--accent btn--block pressable" id="onbFinish">Enter Lume <svg class="ico" viewBox="0 0 24 24"><use href="#i-arrow-r"/></svg></button>
           <p class="onb__note">You can revisit this tour any time from Profile.</p>
         </div>
       </section>
@@ -1909,6 +2280,7 @@
 </div>
 </div>
 
+<script src="assets/js/catalogue.js"></script>
 <script src="assets/js/app.js"></script>
 </body>
 </html>

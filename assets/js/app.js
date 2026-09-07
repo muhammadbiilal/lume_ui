@@ -1,13 +1,25 @@
 /* ============================================================
-   Nur — app behaviour
+   Lume — app behaviour
    Vanilla JS, no dependencies. Runs from file:// too.
+
+   The whole app hangs off one profile object. Religion and
+   country are separate fields, and every surface — home, tools,
+   today, search, explore, nav, notifications — asks the same
+   visible() function. Nothing gets its own rule.
    ============================================================ */
 (function () {
   'use strict';
 
+  var C = window.LUME;
+
   var $  = function (s, r) { return (r || document).querySelector(s); };
   var $$ = function (s, r) { return Array.prototype.slice.call((r || document).querySelectorAll(s)); };
   var pad2 = function (n) { return n < 10 ? '0' + n : '' + n; };
+  var esc = function (s) {
+    return String(s).replace(/[&<>"']/g, function (c) {
+      return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c];
+    });
+  };
 
   /* Storage can throw on a file:// origin or with site data blocked. */
   var store = {
@@ -16,13 +28,104 @@
   };
 
   /* ---------------------------------------------------------
+     Profile — the single source of personalisation
+     --------------------------------------------------------- */
+  var profile = {
+    name: 'Zeeshan',
+    initials: 'ZK',
+    country: 'PK',
+    city: 'Karachi',
+    /* The faith dimension, entirely separate from country. Off until the user
+       asks for it in onboarding or Personalisation — never assumed, and never
+       inferred from the country above. */
+    islamic: false,
+    interests: [],
+    prefs: { news: true, cricket: true, finance: true, recos: true },
+    recents: []
+  };
+
+  function loadProfile() {
+    var raw = store.get('lume-profile');
+    if (raw) {
+      try {
+        var saved = JSON.parse(raw);
+        for (var k in saved) if (Object.prototype.hasOwnProperty.call(saved, k)) profile[k] = saved[k];
+      } catch (e) {}
+    }
+    if (!profile.interests || !profile.interests.length) {
+      /* Onboarded but nothing stored (skipped, or an older build): fall back to
+         the general defaults. Islamic content is never switched on for someone
+         who did not ask for it. */
+      profile.interests = store.get('lume-onboarded') ? C.DEFAULT_INTERESTS.slice() : [];
+    }
+    syncFaithFromInterests();
+  }
+
+  function saveProfile() {
+    store.set('lume-profile', JSON.stringify(profile));
+  }
+
+  /* Picking anything in the faith group is what turns Islamic content on.
+     We never ask "are you Muslim?" anywhere in the product. */
+  function syncFaithFromInterests() {
+    var any = profile.interests.some(function (id) { return C.FAITH_INTERESTS.indexOf(id) !== -1; });
+    if (any) profile.islamic = true;
+  }
+
+  function hasInterest(id) { return profile.interests.indexOf(id) !== -1; }
+
+  loadProfile();
+
+  /* ---------------------------------------------------------
+     Visibility — the one rule everything obeys
+     --------------------------------------------------------- */
+  function visibleIn(f, ctx) {
+    if (f.faith && !ctx.islamic) return false;
+    if (f.loc && f.loc !== ctx.country) return false;
+    if (f.id === 'cricket' && !profile.prefs.cricket) return false;
+    if (f.id === 'news' && !profile.prefs.news) return false;
+    if ((f.id === 'markets' || f.id === 'goldrates') && !profile.prefs.finance) return false;
+    return true;
+  }
+
+  function visible(f) { return visibleIn(f, profile); }
+
+  function visibleFeatures() { return C.FEATURES.filter(visible); }
+
+  function feature(id) {
+    for (var i = 0; i < C.FEATURES.length; i++) if (C.FEATURES[i].id === id) return C.FEATURES[i];
+    return null;
+  }
+
+  /* Static markup opts in with data-faith / data-loc / data-int. */
+  function applyVisibility() {
+    $$('[data-faith]').forEach(function (el) {
+      var want = el.dataset.faith;
+      var ok = want === 'islamic' ? profile.islamic : !profile.islamic;
+      el.classList.toggle('is-off', !ok);
+    });
+
+    $$('[data-loc]').forEach(function (el) {
+      var want = el.dataset.loc;
+      var ok = want === 'global' ? profile.country !== 'PK' : want === profile.country;
+      el.classList.toggle('is-off', !ok);
+    });
+
+    $$('[data-int]').forEach(function (el) {
+      if (!profile.interests.length) { el.classList.remove('is-off'); return; }
+      var ok = el.dataset.int.split(/\s+/).some(hasInterest);
+      el.classList.toggle('is-off', !ok);
+    });
+  }
+
+  /* ---------------------------------------------------------
      Theme
      --------------------------------------------------------- */
   var root = document.documentElement;
 
   function setTheme(theme, remember) {
     root.dataset.theme = theme;
-    if (remember) store.set('nur-theme', theme);
+    if (remember) store.set('lume-theme', theme);
     var dark = theme === 'dark';
     var sw = $('#themeSwitch');
     if (sw) sw.classList.toggle('is-on', dark);
@@ -45,41 +148,41 @@
   /* ---------------------------------------------------------
      Clock, greeting, date
      --------------------------------------------------------- */
-  var MONTHS = ['January','February','March','April','May','June','July','August','September','October','November','December'];
-  var DAYS = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
-
   function tickClock() {
-    var d = new Date();
     var el = $('#statusClock');
-    if (el) el.textContent = d.getHours() + ':' + pad2(d.getMinutes());
+    if (!el) return;
+    var d = new Date();
+    el.textContent = d.getHours() + ':' + pad2(d.getMinutes());
   }
 
   function greetFor(h) {
-    if (h < 5)  return 'Good night';
+    if (h < 5)  return 'Still up';
     if (h < 12) return 'Good morning';
     if (h < 17) return 'Good afternoon';
     if (h < 21) return 'Good evening';
-    return 'Good night';
+    return 'Winding down';
   }
 
-  (function initHeader() {
-    var now = new Date();
+  function initHeader() {
+    var d = new Date();
     var g = $('#greetText');
-    if (g) g.textContent = greetFor(now.getHours());
-    var label = DAYS[now.getDay()] + ', ' + now.getDate() + ' ' + MONTHS[now.getMonth()];
-    var d = $('#todayDate');
-    if (d) d.textContent = label;
-    var h = $('#todayHijri');
-    if (h) h.textContent = label + " · 15 Rabi' al-Awwal";
-  })();
+    if (g) g.textContent = greetFor(d.getHours());
+    var long = d.toLocaleDateString('en-GB', { weekday: 'long', day: 'numeric', month: 'long' });
+    /* The header also carries the city, so it gets the short form — the long
+       one would wrap onto a second line on a 390px screen. */
+    var short = d.toLocaleDateString('en-GB', { weekday: 'short', day: 'numeric', month: 'short' });
+    var date = $('#todayDate');
+    if (date) date.textContent = short;
+    var sub = $('#todaySub');
+    if (sub) sub.textContent = profile.islamic ? long + ' · 15 Rabi’ al-Awwal' : long;
+  }
 
   /* ---------------------------------------------------------
      Toast
      --------------------------------------------------------- */
   var toastEl = $('#toast'), toastText = $('#toastText'), toastTimer;
-
   function toast(msg) {
-    if (!toastEl || !msg) return;
+    if (!toastEl) return;
     toastText.textContent = msg;
     toastEl.classList.add('is-open');
     clearTimeout(toastTimer);
@@ -87,48 +190,81 @@
   }
 
   /* ---------------------------------------------------------
-     Tab navigation
+     Navigation — the tab set itself is personalised
      --------------------------------------------------------- */
-  var tabbar = $('#tabbar');
-  var pill = $('#tabPill');
-  var tabs = $$('.tab');
-  var current = 'home';
+  var TAB_META = {
+    home:    { label: 'Home',    icon: 'i-home' },
+    tools:   { label: 'Tools',   icon: 'i-grid' },
+    trains:  { label: 'Trains',  icon: 'i-train' },
+    today:   { label: 'Today',   icon: 'i-sun' },
+    explore: { label: 'Explore', icon: 'i-compass' },
+    profile: { label: 'Profile', icon: 'i-user' }
+  };
 
-  function movePill(tab) {
-    if (!pill || !tab) return;
-    pill.style.width = (tab.offsetWidth - 8) + 'px';
-    pill.style.transform = 'translateX(' + (tab.offsetLeft + 4) + 'px)';
+  function tabOrder() {
+    /* Trains is a first-class destination in Pakistan; everywhere else
+       Explore takes that slot and Trains lives in Tools. */
+    return profile.country === 'PK'
+      ? ['home', 'tools', 'trains', 'today', 'profile']
+      : ['home', 'tools', 'today', 'explore', 'profile'];
   }
 
-  function goTo(name) {
+  var current = 'home';
+
+  function renderTabs() {
+    var bar = $('#tabbar');
+    if (!bar) return;
+    var pill = '<span class="tabbar__pill" id="tabPill"></span>';
+    bar.innerHTML = pill + tabOrder().map(function (id) {
+      var m = TAB_META[id];
+      return '<button class="tab" data-tab="' + id + '" role="tab" aria-selected="false">' +
+        '<svg class="ico" viewBox="0 0 24 24"><use href="#' + m.icon + '"/></svg>' +
+        '<span class="tab__label">' + m.label + '</span></button>';
+    }).join('');
+
+    /* A screen that is no longer a tab must not stay open. */
+    if (tabOrder().indexOf(current) === -1 && current !== 'explore') current = 'home';
+    goTo(current, true);
+  }
+
+  function movePill(tab) {
+    var pill = $('#tabPill');
+    if (!pill) return;
+    if (!tab) { pill.style.opacity = '0'; return; }
+    pill.style.opacity = '';
+    pill.style.width = tab.offsetWidth + 'px';
+    pill.style.transform = 'translateX(' + tab.offsetLeft + 'px)';
+  }
+
+  function goTo(name, quiet) {
     var screen = $('#screen-' + name);
     if (!screen) return;
+    current = name;
 
     $$('.screen').forEach(function (s) { s.classList.remove('is-active'); });
     screen.classList.add('is-active');
     screen.scrollTop = 0;
 
-    tabs.forEach(function (t) {
+    var active = null;
+    $$('.tab').forEach(function (t) {
       var on = t.dataset.tab === name;
       t.classList.toggle('is-active', on);
       t.setAttribute('aria-selected', on ? 'true' : 'false');
-      if (on) movePill(t);
+      if (on) active = t;
     });
+    movePill(active);
 
-    current = name;
-    animateBars(screen);
+    /* Explore is reachable for Pakistan users even though it is not a tab. */
+    var back = $('#exploreBack');
+    if (back) back.hidden = !!active || name !== 'explore';
+
+    if (!quiet) animateBars(screen);
   }
 
-  tabs.forEach(function (t) {
-    t.addEventListener('click', function () { goTo(t.dataset.tab); });
-  });
-
   window.addEventListener('resize', function () {
-    var active = tabs.filter(function (t) { return t.classList.contains('is-active'); })[0];
-    movePill(active);
+    movePill($('.tab.is-active'));
   });
 
-  /* Animate any progress bars inside a freshly shown screen */
   function animateBars(scope) {
     $$('[data-fill]', scope).forEach(function (bar) {
       bar.style.width = '0%';
@@ -136,24 +272,36 @@
         requestAnimationFrame(function () { bar.style.width = bar.dataset.fill + '%'; });
       });
     });
+    var pin = $('.live-train__pin', scope);
+    if (pin) {
+      pin.style.left = '0%';
+      requestAnimationFrame(function () {
+        requestAnimationFrame(function () { pin.style.left = '62%'; });
+      });
+    }
   }
 
   /* ---------------------------------------------------------
-     Bottom sheets
+     Sheets
      --------------------------------------------------------- */
   var scrim = $('#scrim');
   var openSheet = null;
 
   function sheetOpen(name) {
-    var el = $('#sheet-' + name);
-    if (!el) return;
-    if (openSheet) openSheet.classList.remove('is-open');
-    openSheet = el;
-    el.classList.add('is-open');
+    var sheet = $('#sheet-' + name);
+    if (!sheet) return;
+    if (openSheet && openSheet !== sheet) openSheet.classList.remove('is-open');
+    sheet.classList.add('is-open');
     scrim.classList.add('is-open');
+    openSheet = sheet;
+
     if (name === 'qibla') spinQibla();
-    if (name === 'prayer') renderPrayerList();
-    if (name === 'interests' && setPicker) setPicker.set(Array.from(interests));
+    if (name === 'personalise' && setPicker) hydratePersonalise();
+    if (name === 'search') {
+      resetSearch();
+      setTimeout(function () { var i = $('#globalSearch'); if (i) i.focus(); }, 320);
+    }
+    animateBars(sheet);
   }
 
   function sheetClose() {
@@ -164,14 +312,14 @@
 
   scrim.addEventListener('click', sheetClose);
   document.addEventListener('keydown', function (e) {
-    if (e.key === 'Escape') sheetClose();
+    if (e.key === 'Escape' && openSheet) sheetClose();
   });
   $$('[data-close]').forEach(function (b) { b.addEventListener('click', sheetClose); });
 
   /* Swipe a sheet down to dismiss */
   $$('.sheet').forEach(function (sheet) {
     var startY = 0, dy = 0, dragging = false;
-    var handles = [sheet.querySelector('.sheet__grab'), sheet.querySelector('.sheet__head')];
+    var handles = [$('.sheet__grab', sheet), $('.sheet__head', sheet)].filter(Boolean);
 
     function down(y) { startY = y; dy = 0; dragging = true; sheet.style.transition = 'none'; }
     function move(y) {
@@ -188,14 +336,13 @@
     }
 
     handles.forEach(function (h) {
-      if (!h) return;
+      h.style.touchAction = 'none';
       h.addEventListener('touchstart', function (e) { down(e.touches[0].clientY); }, { passive: true });
       h.addEventListener('touchmove',  function (e) { move(e.touches[0].clientY); }, { passive: true });
       h.addEventListener('touchend', up);
       h.addEventListener('mousedown', function (e) {
-        if (e.target.closest('button')) return;   // let the close button work
+        if (e.target.closest('button, input')) return;
         down(e.clientY);
-        e.preventDefault();
       });
     });
     document.addEventListener('mousemove', function (e) { move(e.clientY); });
@@ -203,263 +350,470 @@
   });
 
   /* ---------------------------------------------------------
-     Global click routing: data-tab / data-sheet / data-toast
+     One action vocabulary for every tappable thing
      --------------------------------------------------------- */
+  function runAct(act, label) {
+    if (!act) return;
+    var bits = act.split(':');
+    var kind = bits.shift();
+    var arg = bits.join(':');
+    if (kind === 'sheet') sheetOpen(arg);
+    else if (kind === 'tab') goTo(arg);
+    else if (kind === 'toast') toast(arg);
+    else if (kind === 'theme') { setTheme(root.dataset.theme === 'dark' ? 'light' : 'dark', true); toast('Theme switched'); }
+    else if (label) toast(label);
+  }
+
   document.addEventListener('click', function (e) {
-    var el = e.target.closest('[data-sheet], [data-tab], [data-toast], [data-toggle], [data-switch]');
+    var el = e.target.closest('[data-tab], [data-act], [data-sheet], [data-toast], [data-bookmark], [data-switch], [data-pref]');
     if (!el) return;
 
-    if (el.hasAttribute('data-toggle')) {
-      el.classList.toggle('is-on');
-      if (el.classList.contains('is-on')) toast(el.dataset.toast || 'Saved');
-      else toast('Removed');
+    /* data-tab covers both the tab bar and every in-page "Explore →" style
+       link, so those navigate the same way wherever they appear. */
+    if (el.dataset.tab) { goTo(el.dataset.tab); return; }
+
+    if (el.dataset.fid) noteRecent(el.dataset.fid);
+
+    if (el.hasAttribute('data-bookmark')) {
+      var on = el.classList.toggle('is-on');
+      toast(on ? 'Saved to your bookmarks' : 'Removed from bookmarks');
       return;
     }
-    if (el.hasAttribute('data-switch')) {
-      el.classList.toggle('is-on');
-      toast(el.classList.contains('is-on') ? 'Turned on' : 'Turned off');
+    if (el.hasAttribute('data-switch') || el.hasAttribute('data-pref')) {
+      var sw = el.matches('.switch') ? el : $('.switch', el);
+      if (sw) {
+        var isOn = sw.classList.toggle('is-on');
+        if (el.dataset.pref) {
+          profile.prefs[el.dataset.pref] = isOn;
+          saveProfile();
+          renderAll();
+        }
+      }
       return;
     }
+    if (el.dataset.act) { runAct(el.dataset.act); return; }
     if (el.dataset.sheet) { sheetOpen(el.dataset.sheet); return; }
-    if (el.dataset.tab && !el.classList.contains('tab')) { sheetClose(); goTo(el.dataset.tab); return; }
     if (el.dataset.toast) { toast(el.dataset.toast); }
   });
 
   /* ---------------------------------------------------------
      Hero carousel
      --------------------------------------------------------- */
-  var track = $('#heroTrack');
-  var dots = $$('#heroDots .hero__dot');
+  var track = $('#heroTrack'), dotsHost = $('#heroDots');
+
+  /* The brief asks for 2–4 slides, so eligibility is not enough — they
+     compete, and the most relevant four win. */
+  function slideScore(s) {
+    var id = s.dataset.slide;
+    if (s.dataset.faith === 'islamic' && !profile.islamic) return -1;
+    if (s.dataset.loc && s.dataset.loc !== profile.country) return -1;
+    if (id === 'prayer') return 100;
+    if (id === 'plan') return 80;
+    if (id === 'trains') return hasInterest('trains') ? 78 : 74;
+    if (id === 'read') return 70;
+    if (id === 'money') {
+      if (!profile.prefs.finance) return -1;
+      return ['rates', 'expenses', 'bills', 'savings'].some(hasInterest) ? 62 : 45;
+    }
+    return 40;
+  }
+
+  function renderHero() {
+    if (!track) return;
+    var slides = $$('.slide', track);
+
+    var ranked = slides.map(function (s) { return { el: s, score: slideScore(s) }; })
+      .filter(function (x) { return x.score > 0; })
+      .sort(function (a, b) { return b.score - a.score; })
+      .slice(0, 4);
+
+    var keep = ranked.map(function (x) { return x.el; });
+    slides.forEach(function (s) { s.classList.toggle('is-off', keep.indexOf(s) === -1); });
+    keep.forEach(function (s, i) { s.style.order = i; });
+
+    dotsHost.innerHTML = keep.map(function (s, i) {
+      return '<button class="hero__dot' + (i === 0 ? ' is-active' : '') + '" role="tab" ' +
+             'aria-label="Slide ' + (i + 1) + ' of ' + keep.length + '"></button>';
+    }).join('');
+    track.scrollLeft = 0;
+    bindDots(keep);
+  }
+
+  function bindDots(shown) {
+    var dots = $$('.hero__dot', dotsHost);
+    dots.forEach(function (d, i) {
+      d.addEventListener('click', function () {
+        if (shown[i]) track.scrollTo({ left: shown[i].offsetLeft - track.offsetLeft, behavior: 'smooth' });
+      });
+    });
+  }
 
   if (track) {
-    var syncing = false;
-
-    function activeIndex() {
-      var slideW = track.firstElementChild.offsetWidth + 12;
-      return Math.round(track.scrollLeft / slideW);
-    }
-
+    var raf = null;
     track.addEventListener('scroll', function () {
-      if (syncing) return;
-      syncing = true;
-      requestAnimationFrame(function () {
-        var i = activeIndex();
-        dots.forEach(function (d, n) { d.classList.toggle('is-active', n === i); });
-        syncing = false;
+      if (raf) return;
+      raf = requestAnimationFrame(function () {
+        raf = null;
+        /* Slides are reordered with flex `order`, so rank by position, not DOM. */
+        var shown = $$('.slide', track)
+          .filter(function (s) { return !s.classList.contains('is-off'); })
+          .sort(function (a, b) { return a.offsetLeft - b.offsetLeft; });
+        var mid = track.scrollLeft + track.clientWidth / 2;
+        var best = 0, bestD = Infinity;
+        shown.forEach(function (s, i) {
+          var c = s.offsetLeft - track.offsetLeft + s.offsetWidth / 2;
+          var d = Math.abs(c - mid);
+          if (d < bestD) { bestD = d; best = i; }
+        });
+        $$('.hero__dot', dotsHost).forEach(function (d, n) { d.classList.toggle('is-active', n === best); });
       });
     }, { passive: true });
 
-    dots.forEach(function (d, i) {
-      d.addEventListener('click', function () {
-        var slideW = track.firstElementChild.offsetWidth + 12;
-        track.scrollTo({ left: i * slideW, behavior: 'smooth' });
-      });
-    });
-
-    /* Pointer drag, so the carousel also feels right on a desktop preview */
-    var down = false, startX = 0, startScroll = 0, moved = 0;
-
+    /* Drag with a mouse, for anyone reviewing this on a desktop. */
+    var down = false, sx = 0, sl = 0, moved = 0;
     track.addEventListener('mousedown', function (e) {
-      down = true; moved = 0;
-      startX = e.clientX;
-      startScroll = track.scrollLeft;
+      down = true; moved = 0; sx = e.clientX; sl = track.scrollLeft;
       track.classList.add('is-dragging');
     });
     document.addEventListener('mousemove', function (e) {
       if (!down) return;
-      var dx = e.clientX - startX;
-      moved = Math.abs(dx);
-      track.scrollLeft = startScroll - dx;
+      var dx = e.clientX - sx;
+      moved = Math.max(moved, Math.abs(dx));
+      track.scrollLeft = sl - dx;
     });
     document.addEventListener('mouseup', function () {
       if (!down) return;
       down = false;
       track.classList.remove('is-dragging');
-      var slideW = track.firstElementChild.offsetWidth + 12;
-      track.scrollTo({ left: Math.round(track.scrollLeft / slideW) * slideW, behavior: 'smooth' });
     });
-    /* Suppress the click that follows a real drag */
+    /* Swallow the click that ends a drag; otherwise let the slide's own
+       data-tab / data-sheet flow through the delegated handler. */
     track.addEventListener('click', function (e) {
-      if (moved > 8) { e.stopPropagation(); e.preventDefault(); }
+      if (moved > 8) { e.preventDefault(); e.stopPropagation(); }
     }, true);
   }
 
   /* ---------------------------------------------------------
-     Prayer engine
+     Prayer times — location aware, only ever used when Islamic
+     content is on
      --------------------------------------------------------- */
-  var PRAYERS = [
-    { name: 'Fajr',    short: 'Fajr', h: 4,  m: 52 },
-    { name: 'Sunrise', short: 'Sun',  h: 6,  m: 23, minor: true },
-    { name: 'Dhuhr',   short: 'Dhuhr', h: 12, m: 38 },
-    { name: 'Asr',     short: 'Asr',  h: 16, m: 12 },
-    { name: 'Maghrib', short: 'Mgrb', h: 19, m: 24 },
-    { name: 'Isha',    short: 'Isha', h: 20, m: 47 }
-  ];
-  var DAY = 24 * 60;
-  var MAIN = PRAYERS.filter(function (p) { return !p.minor; });
+  function prayerSet() {
+    return C.PRAYERS_BY_COUNTRY[profile.country] || C.PRAYERS_BY_COUNTRY.GB;
+  }
 
   function mins(p) { return p.h * 60 + p.m; }
   function hhmm(p) { return pad2(p.h) + ':' + pad2(p.m); }
 
   function prayerState() {
+    var list = prayerSet();
+    var main = list.filter(function (p) { return !p.minor; });
     var now = new Date();
-    var t = now.getHours() * 60 + now.getMinutes() + now.getSeconds() / 60;
+    var nowM = now.getHours() * 60 + now.getMinutes() + now.getSeconds() / 60;
 
-    var nextIdx = -1;
-    for (var i = 0; i < MAIN.length; i++) {
-      if (mins(MAIN[i]) > t) { nextIdx = i; break; }
+    var next = null, prev = null;
+    for (var i = 0; i < main.length; i++) {
+      if (mins(main[i]) > nowM) { next = main[i]; prev = main[i - 1] || null; break; }
     }
-    var wrapped = nextIdx === -1;
-    if (wrapped) nextIdx = 0;
+    if (!next) { next = main[0]; prev = main[main.length - 1]; }
 
-    var next = MAIN[nextIdx];
-    var prev = MAIN[(nextIdx - 1 + MAIN.length) % MAIN.length];
+    var toNext = mins(next) - nowM;
+    if (toNext < 0) toNext += 1440;
+    var span = prev ? mins(next) - mins(prev) : 1440;
+    if (span <= 0) span += 1440;
 
-    var nextAt = mins(next) + (wrapped ? DAY : 0);
-    var prevAt = mins(prev);
-    if (prevAt > t) prevAt -= DAY;
-
-    var remaining = nextAt - t;                         // minutes
-    var progress = (t - prevAt) / (nextAt - prevAt);    // 0..1
-
-    return {
-      next: next,
-      nextIdx: nextIdx,
-      remaining: remaining,
-      progress: Math.max(0, Math.min(1, progress)),
-      nowMins: t
-    };
+    return { list: list, main: main, next: next, prev: prev, toNext: toNext, progress: Math.max(0, Math.min(1, 1 - toNext / span)) };
   }
 
   function fmtCountdown(m) {
-    var total = Math.max(0, Math.floor(m * 60));
+    var total = Math.max(0, Math.round(m * 60));
     var h = Math.floor(total / 3600);
-    var mm = Math.floor((total % 3600) / 60);
-    var ss = total % 60;
-    return (h > 0 ? h + ':' + pad2(mm) : mm) + ':' + pad2(ss);
+    return h + ':' + pad2(Math.floor(total % 3600 / 60)) + ':' + pad2(total % 60);
   }
 
   function fmtShort(m) {
-    var h = Math.floor(m / 60), mm = Math.floor(m % 60);
-    return h > 0 ? h + 'h ' + mm + 'm' : mm + 'm';
-  }
-
-  var stepsFor = null;
-
-  function renderSteps(state) {
-    var host = $('#prayerSteps');
-    if (!host || stepsFor === state.next.name) return;
-    stepsFor = state.next.name;
-    host.innerHTML = '';
-    MAIN.forEach(function (p) {
-      var el = document.createElement('span');
-      el.className = 'prayer__step';
-      if (mins(p) < state.nowMins) el.classList.add('is-done');
-      if (p.name === state.next.name) el.classList.add('is-next');
-      el.innerHTML = '<b>' + p.short + '</b>';
-      host.appendChild(el);
-    });
+    var total = Math.max(0, Math.round(m));
+    return Math.floor(total / 60) + ':' + pad2(total % 60);
   }
 
   function renderPrayerList() {
     var host = $('#prayerList');
     if (!host) return;
-    var state = prayerState();
-    host.innerHTML = PRAYERS.map(function (p) {
-      var isNext = p.name === state.next.name;
-      var done = mins(p) < state.nowMins;
-      return '<div class="list-row">' +
+    var st = prayerState();
+    host.innerHTML = st.list.map(function (p) {
+      var isNext = p.name === st.next.name;
+      return '<div class="list-row' + (isNext ? ' is-next' : '') + '" style="cursor:default">' +
         '<span class="list-row__icon"' + (isNext ? ' style="background:var(--tint-accent);color:var(--accent)"' : '') + '>' +
           '<svg class="ico" viewBox="0 0 24 24"><use href="#' + (p.minor ? 'i-sun' : 'i-prayer') + '"/></svg></span>' +
-        '<span class="list-row__body">' +
-          '<span class="list-row__title">' + p.name + (isNext ? ' <span class="tag">Next</span>' : '') + '</span>' +
-          '<span class="list-row__sub">' + (p.minor ? 'Not a prayer time' : done ? 'Passed' : 'Reminder on') + '</span>' +
-        '</span>' +
-        '<span class="list-row__end"><span class="list-row__value num">' + hhmm(p) + '</span></span>' +
-      '</div>';
+        '<span class="list-row__body"><span class="list-row__title">' + esc(p.name) + '</span>' +
+        '<span class="list-row__sub">' + (isNext ? 'Next · reminder on' : p.minor ? 'Not a prayer' : 'Reminder on') + '</span></span>' +
+        '<span class="list-row__end"><span class="list-row__value num">' + hhmm(p) + '</span></span></div>';
     }).join('');
   }
 
   function updatePrayer() {
-    var s = prayerState();
+    if (!profile.islamic) return;
+    var st = prayerState();
 
-    var name = $('#prayerName'), time = $('#prayerTime'), cd = $('#prayerCountdown'), fill = $('#prayerFill');
-    if (name) name.textContent = s.next.name;
-    if (time) time.textContent = hhmm(s.next);
-    if (cd) cd.innerHTML = fmtCountdown(s.remaining) + '<small>remaining</small>';
-    if (fill) fill.style.width = (s.progress * 100).toFixed(1) + '%';
-
-    var hName = $('#heroPrayerName'), hTime = $('#heroPrayerTime'), hCd = $('#heroCountdown');
-    if (hName) hName.textContent = s.next.name;
-    if (hTime) hTime.textContent = hhmm(s.next);
-    if (hCd) hCd.textContent = 'in ' + fmtShort(s.remaining);
-
-    renderSteps(s);
+    var set = function (id, v) { var el = $(id); if (el) el.textContent = v; };
+    set('#heroPrayerName', st.next.name);
+    set('#heroPrayerTime', hhmm(st.next));
+    set('#heroPrayerCity', profile.city);
+    set('#heroCountdown', fmtCountdown(st.toNext));
+    set('#ctxPrayerName', st.next.name);
+    set('#ctxPrayerTime', hhmm(st.next));
+    set('#ctxCountdown', fmtShort(st.toNext));
+    set('#prayerSheetCity', profile.city);
   }
 
   /* ---------------------------------------------------------
-     Day progress ring
+     Today — stats and agenda are assembled, not hard-coded
      --------------------------------------------------------- */
+  function renderTodayStats() {
+    var host = $('#todayStats');
+    if (!host) return;
+    var stats = [];
+
+    if (profile.islamic) {
+      stats.push({ icon: 'i-flame', value: '12 <span>days</span>', label: 'Prayer streak' });
+      stats.push({ icon: 'i-book', value: '18 <span>min</span>', label: 'Read today' });
+    } else {
+      stats.push({ icon: 'i-flame', value: '12 <span>days</span>', label: 'Daily streak' });
+      stats.push({ icon: 'i-pulse', value: '4.2 <span>k</span>', label: 'Steps today' });
+    }
+    stats.push({ icon: 'i-check-circle', value: '2<span>/5</span>', label: 'Tasks done' });
+
+    host.innerHTML = stats.map(function (s) {
+      return '<article class="stat"><span class="stat__icon">' +
+        '<svg class="ico" viewBox="0 0 24 24"><use href="#' + s.icon + '"/></svg></span>' +
+        '<p class="stat__value num">' + s.value + '</p>' +
+        '<p class="stat__label">' + s.label + '</p></article>';
+    }).join('');
+  }
+
+  function renderAgenda() {
+    var host = $('#agenda');
+    if (!host) return;
+
+    var events = [
+      { t: '09:30', title: 'Team standup', meta: '15 min · Video call', icon: 'i-check-circle', done: true },
+      { t: '14:00', title: 'Design review', meta: '45 min · Studio 2', icon: 'i-clock', now: true },
+      { t: '18:30', title: 'Pick up groceries', meta: 'Reminder · Tariq Road', icon: 'i-pin', act: 'toast:Groceries · reminder set' }
+    ];
+
+    if (profile.country === 'PK') {
+      events.push({ t: '14:00', title: 'Loadshedding', meta: 'Gulshan · 2 hours', icon: 'i-bolt', act: 'sheet:loadshed' });
+    }
+
+    if (profile.islamic) {
+      var st = prayerState();
+      st.main.forEach(function (p) {
+        var past = mins(p) < (new Date().getHours() * 60 + new Date().getMinutes());
+        events.push({
+          t: hhmm(p), title: p.name,
+          meta: past ? 'Prayed' : 'Adhan · reminder on',
+          icon: past ? 'i-check-circle' : 'i-bell',
+          done: past, act: 'sheet:prayer'
+        });
+      });
+    }
+
+    events.sort(function (a, b) { return a.t.localeCompare(b.t); });
+
+    var nowM = new Date().getHours() * 60 + new Date().getMinutes();
+    host.innerHTML = events.map(function (e) {
+      var em = parseInt(e.t.slice(0, 2), 10) * 60 + parseInt(e.t.slice(3), 10);
+      var done = e.done || (em < nowM && !e.now);
+      var cls = e.now ? ' is-now' : done ? ' is-done' : '';
+      return '<div class="tl-item' + cls + '">' +
+        '<span class="tl-time num">' + e.t + '</span>' +
+        '<span class="tl-line"><span class="tl-node"></span></span>' +
+        '<button class="tl-card pressable" data-act="' + (e.act || ('toast:' + e.title)) + '">' +
+          '<span class="tl-card__body"><span class="tl-card__title">' + esc(e.title) + '</span>' +
+          '<span class="tl-card__meta">' + esc(e.meta) + '</span></span>' +
+          '<span class="tl-card__icon"><svg class="ico" viewBox="0 0 24 24"><use href="#' + e.icon + '"/></svg></span>' +
+        '</button></div>';
+    }).join('');
+
+    var sub = $('#agendaSub');
+    if (sub) sub.textContent = profile.islamic ? 'Prayers and events, in order' : 'Events and reminders, in order';
+  }
+
   function updateDayRing() {
-    var ring = $('#dayRing'), label = $('#dayRingValue');
+    var ring = $('#dayRing'), value = $('#dayRingValue');
     if (!ring) return;
-    var now = new Date();
-    var pct = (now.getHours() * 60 + now.getMinutes()) / DAY;
-    var circumference = 2 * Math.PI * 42;
-    ring.style.strokeDashoffset = (circumference * (1 - pct)).toFixed(1);
-    if (label) label.textContent = Math.round(pct * 100) + '%';
+    var d = new Date();
+    var pct = (d.getHours() * 60 + d.getMinutes()) / 1440;
+    var circ = 2 * Math.PI * 42;
+    ring.style.strokeDashoffset = (circ * (1 - pct)).toFixed(1);
+    if (value) value.textContent = Math.round(pct * 100) + '%';
   }
 
   /* ---------------------------------------------------------
      Tasks
      --------------------------------------------------------- */
-  $$('#taskList .task').forEach(function (task) {
-    task.addEventListener('click', function () {
-      task.classList.toggle('is-done');
-      toast(task.classList.contains('is-done') ? 'Nice — one less thing' : 'Marked as not done');
-    });
+  document.addEventListener('click', function (e) {
+    var task = e.target.closest('#taskList .task');
+    if (!task) return;
+    var done = task.classList.toggle('is-done');
+    toast(done ? 'Nice — one less thing' : 'Back on the list');
   });
 
   /* ---------------------------------------------------------
-     Tool search + category chips
+     Quick tools
      --------------------------------------------------------- */
-  var search = $('#toolSearch');
-  var chips = $$('#toolChips .chip');
-  var cats = $$('#toolCats .cat');
-  var emptyState = $('#toolEmpty');
+  var QUICK_FALLBACK = ['calculator', 'weather', 'calendar', 'todos', 'currency', 'notes', 'timer', 'converter'];
+
+  function renderQuickTools() {
+    var host = $('#quickTools');
+    if (!host) return;
+
+    var picked = [], seen = {};
+    function add(f) {
+      if (!f || seen[f.id] || picked.length >= 8) return;
+      if (!visible(f) || f.sens) return;   /* sensitive tools are never promoted here */
+      seen[f.id] = 1;
+      picked.push(f);
+    }
+
+    /* Recently used first, then round-robin across the chosen interests —
+       one tool per interest per pass. Without the round-robin, a single
+       interest like "prayer" would fill the whole grid on its own. */
+    profile.recents.slice(0, 2).forEach(function (id) { add(feature(id)); });
+
+    if (profile.interests.length) {
+      var pools = profile.interests.map(function (int) {
+        return visibleFeatures().filter(function (f) {
+          return f.ints && f.ints.indexOf(int) !== -1 && !f.sens;
+        });
+      });
+      for (var round = 0; round < 4 && picked.length < 8; round++) {
+        for (var p = 0; p < pools.length && picked.length < 8; p++) {
+          var taken = 0;
+          for (var k = 0; k < pools[p].length && !taken; k++) {
+            if (!seen[pools[p][k].id]) { add(pools[p][k]); taken = 1; }
+          }
+        }
+      }
+    }
+    QUICK_FALLBACK.forEach(function (id) { add(feature(id)); });
+    visibleFeatures().forEach(add);
+
+    host.innerHTML = picked.map(function (f) {
+      var accent = !!f.faith;
+      return '<button class="tool pressable" data-act="' + f.act + '" data-fid="' + f.id + '">' +
+        '<span class="tool__icon' + (accent ? ' tool__icon--accent' : '') + '">' +
+          '<svg class="ico" viewBox="0 0 24 24"><use href="#' + f.i + '"/></svg></span>' +
+        '<span class="tool__label">' + esc(f.n) + '</span>' +
+        (f.m ? '<span class="tool__value num"' + (f.id === 'tasbih' ? ' id="tasbeehQuick"' : '') + '>' +
+               esc(f.id === 'tasbih' ? String(beads) : f.m) + '</span>' : '') +
+      '</button>';
+    }).join('');
+
+    var sub = $('#quickToolsSub');
+    if (sub) sub.textContent = profile.interests.length ? 'Picked from your interests' : 'The eight you reach for most';
+    renderBeads();
+  }
+
+  /* ---------------------------------------------------------
+     Tools screen
+     --------------------------------------------------------- */
   var filter = 'foryou';
 
+  function renderToolChips() {
+    var host = $('#toolChips');
+    if (!host) return;
+    var chips = [{ id: 'foryou', label: 'For you', icon: 'i-sparkles' }, { id: 'all', label: 'All' }];
+    C.CATEGORIES.forEach(function (cat) {
+      if (cat.faith && !profile.islamic) return;
+      chips.push({ id: cat.id, label: cat.label });
+    });
+    if (!chips.some(function (c) { return c.id === filter; })) filter = 'foryou';
+
+    host.innerHTML = chips.map(function (c) {
+      return '<button class="chip' + (c.id === filter ? ' is-active' : '') + '" data-filter="' + c.id + '">' +
+        (c.icon ? '<svg class="ico" viewBox="0 0 24 24"><use href="#' + c.icon + '"/></svg> ' : '') +
+        esc(c.label) + '</button>';
+    }).join('');
+  }
+
+  function toolCard(f) {
+    var badge = '';
+    if (f.sens) badge = '<span class="cat-tool__flag" aria-label="Private"><svg class="ico" viewBox="0 0 24 24"><use href="#i-lock"/></svg></span>';
+    else if (f.loc) badge = '<span class="cat-tool__pin" aria-label="Local service"></span>';
+    return '<button class="cat-tool pressable" data-act="' + f.act + '" data-fid="' + f.id + '" ' +
+      'data-hay="' + esc((f.n + ' ' + (f.kw || '')).toLowerCase()) + '" ' +
+      (f.staple ? 'data-staple="1" ' : '') +
+      'data-ints="' + esc((f.ints || []).join(' ')) + '">' +
+      badge +
+      '<span class="cat-tool__icon"><svg class="ico" viewBox="0 0 24 24"><use href="#' + f.i + '"/></svg></span>' +
+      '<span class="cat-tool__label">' + esc(f.n) + '</span>' +
+      '<span class="cat-tool__meta">' + esc(f.m || '') + '</span></button>';
+  }
+
+  function renderTools() {
+    var host = $('#toolCats');
+    if (!host) return;
+    var list = visibleFeatures();
+
+    host.innerHTML = C.CATEGORIES.map(function (cat) {
+      if (cat.faith && !profile.islamic) return '';
+      var items = list.filter(function (f) { return f.c === cat.id; });
+      if (!items.length) return '';
+      return '<section class="cat" data-cat="' + cat.id + '">' +
+        '<div class="cat__head">' +
+          '<span class="cat__dot"><svg class="ico" viewBox="0 0 24 24"><use href="#' + cat.icon + '"/></svg></span>' +
+          '<div><h2 class="cat__title">' + esc(cat.label) + '</h2>' +
+          '<p class="cat__sub">' + esc(cat.sub) + '</p></div>' +
+          '<span class="cat__count">' + items.length + '</span>' +
+        '</div>' +
+        '<div class="cat-grid">' + items.map(toolCard).join('') + '</div>' +
+      '</section>';
+    }).join('');
+
+    var count = $('#toolCount');
+    if (count) count.textContent = list.length;
+    var onbCount = $('#onbToolCount');
+    if (onbCount) onbCount.textContent = C.FEATURES.length;
+
+    applyFilter();
+  }
+
   function applyFilter() {
-    var q = (search && search.value || '').trim().toLowerCase();
+    var input = $('#toolSearch');
+    var q = (input && input.value || '').trim().toLowerCase();
     var anyVisible = false;
 
-    cats.forEach(function (cat) {
-      /* A search looks across the whole catalogue — being in "For you" should
-         never stop someone finding a tool they typed the name of. */
+    $$('#toolCats .cat').forEach(function (cat) {
+      /* A search always looks across the whole visible catalogue — being on
+         "For you" should never stop someone finding a tool by name. */
       var searching = !!q;
-      var forYou = !searching && filter === 'foryou' && interests.size > 0;
+      var forYou = !searching && filter === 'foryou' && profile.interests.length > 0;
       var catMatch = searching || filter === 'all' || forYou || cat.dataset.cat === filter;
       var shown = 0;
 
       $$('.cat-tool', cat).forEach(function (tool) {
-        var hay = (tool.dataset.name || '') + ' ' + tool.textContent.toLowerCase();
-        var match = catMatch && (!q || hay.toLowerCase().indexOf(q) !== -1);
+        var match = catMatch && (!q || tool.dataset.hay.indexOf(q) !== -1);
         if (match && forYou) {
-          match = (tool.dataset.int || '').split(/\s+/).some(function (t) { return interests.has(t); });
+          /* "For you" is a shortlist, not a straitjacket: an interest match,
+             something reached for recently, or a tool nearly everyone wants. */
+          match = (tool.dataset.ints || '').split(/\s+/).some(function (t) { return t && hasInterest(t); }) ||
+                  tool.dataset.staple === '1' ||
+                  profile.recents.indexOf(tool.dataset.fid) !== -1;
         }
         tool.classList.toggle('is-hidden', !match);
         if (match) shown++;
       });
 
       cat.style.display = shown ? '' : 'none';
-      var count = $('.cat__count', cat);
-      if (count) count.textContent = shown;
+      var c = $('.cat__count', cat);
+      if (c) c.textContent = shown;
       if (shown) anyVisible = true;
     });
 
-    if (emptyState) {
-      emptyState.classList.toggle('is-shown', !anyVisible);
-      var t = $('.empty__title', emptyState), x = $('.empty__text', emptyState);
+    var empty = $('#toolEmpty');
+    if (empty) {
+      empty.classList.toggle('is-shown', !anyVisible);
+      var t = $('.empty__title', empty), x = $('.empty__text', empty);
       if (t && x) {
         if (!q && filter === 'foryou') {
           t.textContent = 'Nothing here yet';
@@ -472,16 +826,312 @@
     }
   }
 
-  if (search) search.addEventListener('input', applyFilter);
+  var toolSearchInput = $('#toolSearch');
+  if (toolSearchInput) toolSearchInput.addEventListener('input', applyFilter);
 
-  chips.forEach(function (chip) {
-    chip.addEventListener('click', function () {
-      chips.forEach(function (c) { c.classList.remove('is-active'); });
-      chip.classList.add('is-active');
-      filter = chip.dataset.filter;
-      applyFilter();
-    });
+  document.addEventListener('click', function (e) {
+    var chip = e.target.closest('#toolChips .chip');
+    if (!chip) return;
+    $$('#toolChips .chip').forEach(function (c) { c.classList.remove('is-active'); });
+    chip.classList.add('is-active');
+    filter = chip.dataset.filter;
+    applyFilter();
   });
+
+  /* ---- Recently used ---- */
+  function noteRecent(id) {
+    var f = feature(id);
+    if (!f || !visible(f)) return;
+    profile.recents = [id].concat(profile.recents.filter(function (x) { return x !== id; })).slice(0, 6);
+    saveProfile();
+    renderRecents();
+  }
+
+  function renderRecents() {
+    var wrap = $('#toolRecent'), host = $('#toolRecentList');
+    if (!wrap || !host) return;
+    /* A hidden feature must not resurface through history. */
+    var items = profile.recents.map(feature).filter(function (f) { return f && visible(f); });
+    wrap.hidden = items.length < 2;
+    host.innerHTML = items.map(function (f) {
+      return '<button class="recent pressable" data-act="' + f.act + '" data-fid="' + f.id + '">' +
+        '<span class="recent__icon"><svg class="ico" viewBox="0 0 24 24"><use href="#' + f.i + '"/></svg></span>' +
+        '<span class="recent__label">' + esc(f.n) + '</span></button>';
+    }).join('');
+  }
+
+  /* ---------------------------------------------------------
+     Global search
+     --------------------------------------------------------- */
+  var EXTRA_INDEX = [
+    { n: 'Dark mode', sub: 'Settings', i: 'i-moon', act: 'theme', kw: 'theme night light appearance' },
+    { n: 'Personalisation', sub: 'Settings', i: 'i-sliders', act: 'sheet:personalise', kw: 'interests country islamic content preferences religion' },
+    { n: 'Surah Ar-Rahman', sub: 'Qur’an · chapter 55', i: 'i-book', act: 'sheet:reading', faith: 1, kw: 'surah rahman 55 recite' },
+    { n: 'Surah Al-Kahf', sub: 'Qur’an · chapter 18', i: 'i-book', act: 'sheet:reading', faith: 1, kw: 'surah kahf 18 friday cave' },
+    { n: 'Surah Yaseen', sub: 'Qur’an · chapter 36', i: 'i-book', act: 'sheet:reading', faith: 1, kw: 'surah yaseen yasin 36' },
+    { n: 'Karachi Cantt', sub: 'Station · Pakistan Railways', i: 'i-train', act: 'tab:trains', loc: 'PK', kw: 'station karachi cantt platform' },
+    { n: 'Masjid-e-Tooba', sub: 'Nearby · 650 m', i: 'i-mosque', act: 'toast:Masjid-e-Tooba · 650 m', faith: 1, kw: 'mosque masjid nearby' }
+  ];
+
+  function searchIndex() {
+    var out = visibleFeatures().map(function (f) {
+      var cat = C.CATEGORIES.filter(function (c) { return c.id === f.c; })[0];
+      return { n: f.n, sub: cat ? cat.label : 'Tool', i: f.i, act: f.act, fid: f.id,
+               hay: (f.n + ' ' + (f.kw || '') + ' ' + (cat ? cat.label : '')).toLowerCase() };
+    });
+    EXTRA_INDEX.forEach(function (x) {
+      if (x.faith && !profile.islamic) return;
+      if (x.loc && x.loc !== profile.country) return;
+      out.push({ n: x.n, sub: x.sub, i: x.i, act: x.act, hay: (x.n + ' ' + (x.kw || '')).toLowerCase() });
+    });
+    return out;
+  }
+
+  function runSearch(q) {
+    q = q.trim().toLowerCase();
+    var idle = $('#searchIdle'), results = $('#searchResults'), empty = $('#searchEmpty');
+    if (!results) return;
+
+    if (!q) {
+      idle.hidden = false; results.hidden = true;
+      empty.classList.remove('is-shown');
+      return;
+    }
+    idle.hidden = true; results.hidden = false;
+
+    var words = q.split(/\s+/).filter(Boolean);
+    var hits = searchIndex().map(function (item) {
+      var score = 0;
+      words.forEach(function (w) {
+        var at = item.hay.indexOf(w);
+        if (at === -1) { score = -99; return; }
+        score += at === 0 ? 6 : item.hay.indexOf(' ' + w) !== -1 ? 4 : 2;
+      });
+      return { item: item, score: score };
+    }).filter(function (h) { return h.score > 0; })
+      .sort(function (a, b) { return b.score - a.score; })
+      .slice(0, 14);
+
+    empty.classList.toggle('is-shown', !hits.length);
+    results.innerHTML = hits.length ? '<div class="list list--flat">' + hits.map(function (h) {
+      var it = h.item;
+      return '<button class="list-row pressable" data-act="' + it.act + '"' +
+        (it.fid ? ' data-fid="' + it.fid + '"' : '') + ' data-searchhit>' +
+        '<span class="list-row__icon"><svg class="ico" viewBox="0 0 24 24"><use href="#' + it.i + '"/></svg></span>' +
+        '<span class="list-row__body"><span class="list-row__title">' + esc(it.n) + '</span>' +
+        '<span class="list-row__sub">' + esc(it.sub) + '</span></span>' +
+        '<span class="list-row__end"><svg class="ico" viewBox="0 0 24 24"><use href="#i-arrow-ur"/></svg></span>' +
+      '</button>';
+    }).join('') + '</div>' : '';
+  }
+
+  function resetSearch() {
+    var i = $('#globalSearch');
+    if (i) i.value = '';
+    runSearch('');
+    renderSearchIdle();
+  }
+
+  function renderSearchIdle() {
+    var host = $('#searchSuggest');
+    if (host) {
+      var picks = [];
+      if (profile.country === 'PK') picks.push('petrol', 'trains', 'bills');
+      if (profile.islamic) picks.push('qibla', 'surah rahman');
+      picks.push('currency', 'calculator', 'weather');
+      host.innerHTML = picks.slice(0, 6).map(function (p) {
+        return '<button class="chip" data-suggest="' + esc(p) + '">' + esc(p) + '</button>';
+      }).join('');
+    }
+    var rec = $('#searchRecent');
+    if (rec) {
+      var items = profile.recents.map(feature).filter(function (f) { return f && visible(f); }).slice(0, 4);
+      if (!items.length) items = ['calculator', 'weather', 'calendar'].map(feature).filter(function (f) { return f && visible(f); });
+      rec.innerHTML = items.map(function (f) {
+        return '<button class="list-row pressable" data-act="' + f.act + '" data-fid="' + f.id + '">' +
+          '<span class="list-row__icon"><svg class="ico" viewBox="0 0 24 24"><use href="#' + f.i + '"/></svg></span>' +
+          '<span class="list-row__body"><span class="list-row__title">' + esc(f.n) + '</span>' +
+          '<span class="list-row__sub">' + esc(f.m || '') + '</span></span>' +
+          '<span class="list-row__end"><svg class="ico" viewBox="0 0 24 24"><use href="#i-chev-r"/></svg></span></button>';
+      }).join('');
+    }
+  }
+
+  var globalSearch = $('#globalSearch');
+  if (globalSearch) globalSearch.addEventListener('input', function () { runSearch(this.value); });
+
+  document.addEventListener('click', function (e) {
+    var s = e.target.closest('[data-suggest]');
+    if (s) {
+      var i = $('#globalSearch');
+      if (i) { i.value = s.dataset.suggest; runSearch(i.value); }
+      return;
+    }
+    if (e.target.closest('[data-searchhit]')) setTimeout(sheetClose, 60);
+  });
+
+  /* ---------------------------------------------------------
+     Content renderers
+     --------------------------------------------------------- */
+  function renderWeather() {
+    var w = C.WEATHER[profile.country] || C.WEATHER.GB;
+    var set = function (id, v) { var el = $(id); if (el) el.textContent = v; };
+    set('#weatherCity', profile.city);
+    set('#appbarCity', profile.city);
+    set('#qiblaCity', profile.city);
+    set('#weatherDesc', w.desc + ' · feels like ' + w.feels + '°');
+    set('#weatherRain', w.rain + '%');
+    set('#weatherWind', w.wind);
+    set('#ctxWeather', w.desc.split(' · ')[0]);
+    var t = $('#weatherTemp');
+    if (t) t.innerHTML = w.temp + '<sup>°</sup>';
+    var ct = $('#ctxTemp');
+    if (ct) ct.textContent = w.temp + '°';
+    var icon = $('#weatherIcon use');
+    if (icon) icon.setAttribute('href', '#' + w.icon);
+    var sunset = $('#weatherSunset');
+    if (sunset) {
+      var list = prayerSet();
+      sunset.textContent = hhmm(list.filter(function (p) { return p.name === 'Maghrib'; })[0] || list[4]);
+    }
+    /* Keep the catalogue in step, or the tool card would still claim 34°
+       in New York. */
+    var wf = feature('weather');
+    if (wf) wf.m = w.temp + '° ' + w.desc.split(' · ')[0];
+  }
+
+  /* Currency is a country concern, so the global money surfaces localise with
+     it — a Karachi grocery total must not read as £18,900 in London. */
+  function renderMoney() {
+    var m = C.MONEY[profile.country] || C.MONEY.US;
+
+    $$('[data-money]').forEach(function (el) {
+      var k = el.dataset.money;
+      if (k === 'pct') el.textContent = m.pct + '%';
+      else if (k === 'to') el.textContent = m.to;
+      else if (k === 'rate') el.textContent = m.rate;
+      else el.textContent = m.cur + m[k];
+    });
+
+    var note = $('#fxNote');
+    if (note) note.textContent = '1 USD = ' + m.rate + ' ' + m.to + ' · open market ' + m.open;
+
+    var bar = $('#expensesBar');
+    if (bar) bar.dataset.fill = m.pct;
+
+    var ledger = feature('ledger');
+    if (ledger) ledger.m = m.cur + m.ledger + ' out';
+    var subs = feature('subs');
+    if (subs) subs.m = m.cur + m.subs + '/mo';
+  }
+
+  function syncFeatureMeta() {
+    var pf = feature('prayer');
+    if (pf && profile.islamic) {
+      var st = prayerState();
+      pf.m = st.next.name + ' ' + hhmm(st.next);
+    }
+  }
+
+  function renderQibla() {
+    var deg = C.QIBLA_BY_COUNTRY[profile.country] || 119;
+    var compass = deg > 337 || deg <= 22 ? 'N' : deg <= 67 ? 'NE' : deg <= 112 ? 'E' : deg <= 157 ? 'SE'
+                : deg <= 202 ? 'S' : deg <= 247 ? 'SW' : deg <= 292 ? 'W' : 'NW';
+    var d = $('#qiblaDeg'); if (d) d.textContent = deg + '° ' + compass;
+    var s = $('#qiblaSub'); if (s) s.textContent = deg;
+    var f = feature('qibla'); if (f) f.m = deg + '° ' + compass;
+  }
+
+  function spinQibla() {
+    var needle = $('#qiblaNeedle');
+    if (!needle) return;
+    var deg = C.QIBLA_BY_COUNTRY[profile.country] || 119;
+    needle.style.transition = 'none';
+    needle.style.transform = 'rotate(-40deg)';
+    requestAnimationFrame(function () {
+      requestAnimationFrame(function () {
+        needle.style.transition = '';
+        needle.style.transform = 'rotate(' + deg + 'deg)';
+      });
+    });
+  }
+
+  function renderFuel() {
+    var host = $('#fuelList');
+    if (!host) return;
+    host.innerHTML = C.FUEL.map(function (f) {
+      var dir = f.d.charAt(0) === '+' ? 'is-up' : f.d.charAt(0) === '−' ? 'is-down' : '';
+      return '<div class="list-row" style="cursor:default">' +
+        '<span class="list-row__icon"><svg class="ico" viewBox="0 0 24 24"><use href="#i-fuel"/></svg></span>' +
+        '<span class="list-row__body"><span class="list-row__title">' + esc(f.n) + '</span>' +
+        '<span class="list-row__sub">per litre</span></span>' +
+        '<span class="list-row__end"><span class="list-row__value num">₨ ' + f.v + '</span>' +
+        '<span class="delta ' + dir + '">' + f.d + '</span></span></div>';
+    }).join('');
+  }
+
+  function renderTrains() {
+    var host = $('#trainList');
+    if (!host) return;
+    host.innerHTML = C.TRAINS.map(function (t) {
+      return '<button class="list-row pressable" data-toast="' + esc(t.name + ' · ' + t.status) + '">' +
+        '<span class="list-row__icon"><svg class="ico" viewBox="0 0 24 24"><use href="#i-train"/></svg></span>' +
+        '<span class="list-row__body">' +
+          '<span class="list-row__title">' + esc(t.name) + ' <span class="trainno num">' + esc(t.no) + '</span></span>' +
+          '<span class="list-row__sub"><span class="num">' + t.dep + '</span> → <span class="num">' + t.arr + '</span> · ' + t.dur + ' · ₨ ' + t.fare + '</span>' +
+        '</span>' +
+        '<span class="list-row__end"><span class="status status--' + t.cls + '">' + esc(t.status) + '</span></span></button>';
+    }).join('');
+  }
+
+  function renderNews() {
+    var host = $('#newsList');
+    if (!host) return;
+    var items = profile.country === 'PK' ? C.NEWS.PK : C.NEWS.GLOBAL;
+    var tones = { accent: ['#E7F4F1', '#A5DED4', '#10998A'], violet: ['#EDEAFB', '#B7AEF6', '#6E62E5'], amber: ['#FBEEDD', '#EFC894', '#C9793F'] };
+    host.innerHTML = items.map(function (a, i) {
+      var t = tones[a.tone] || tones.accent;
+      return '<button class="article pressable" data-toast="Opening the story">' +
+        '<span class="article__art"><svg viewBox="0 0 62 62"><defs>' +
+          '<linearGradient id="nw' + i + '" x1="0" y1="0" x2="1" y2="1">' +
+          '<stop offset="0" stop-color="' + t[0] + '"/><stop offset="1" stop-color="' + t[1] + '"/></linearGradient></defs>' +
+          '<rect width="62" height="62" fill="url(#nw' + i + ')"/>' +
+          '<circle cx="44" cy="18" r="12" fill="' + t[2] + '" opacity=".3"/>' +
+          '<path d="M0 48c12-8 20 4 32-3s18-14 30-8v25H0z" fill="' + t[2] + '" opacity=".3"/></svg></span>' +
+        '<span class="article__body">' +
+          '<span class="article__cat">' + esc(a.cat) + '</span>' +
+          '<span class="article__title">' + esc(a.title) + '</span>' +
+          '<span class="article__meta">' + esc(a.meta) + '</span>' +
+        '</span></button>';
+    }).join('');
+  }
+
+  function renderNotifications() {
+    var host = $('#notifList');
+    if (!host) return;
+    var items = [];
+
+    if (profile.islamic) {
+      var st = prayerState();
+      items.push({ icon: 'i-prayer', title: st.next.name + ' in ' + fmtShort(st.toNext), sub: 'Adhan at ' + hhmm(st.next), fresh: true });
+    }
+    if (profile.country === 'PK') {
+      items.push({ icon: 'i-bolt', title: 'Loadshedding at 14:00', sub: 'Gulshan-e-Iqbal · about 2 hours', fresh: true });
+      items.push({ icon: 'i-package', title: 'Your parcel is out for delivery', sub: 'TCS · arriving between 14:00 and 18:00' });
+    }
+    items.push({ icon: 'i-check-square', title: '3 tasks left today', sub: 'Next: finish the Q3 summary at 15:00' });
+    items.push({ icon: 'i-cloud-sun', title: 'Warm again tomorrow', sub: 'High of 35° · little chance of rain' });
+
+    host.innerHTML = items.map(function (n) {
+      return '<div class="list-row" style="cursor:default">' +
+        '<span class="list-row__icon"' + (n.fresh ? ' style="background:var(--tint-accent);color:var(--accent)"' : '') + '>' +
+          '<svg class="ico" viewBox="0 0 24 24"><use href="#' + n.icon + '"/></svg></span>' +
+        '<span class="list-row__body"><span class="list-row__title">' + esc(n.title) + '</span>' +
+        '<span class="list-row__sub">' + esc(n.sub) + '</span></span>' +
+        (n.fresh ? '<span class="list-row__end"><span class="notif-dot"></span></span>' : '') +
+      '</div>';
+    }).join('');
+  }
 
   /* ---------------------------------------------------------
      Calculator
@@ -489,18 +1139,17 @@
   var calc = { acc: null, op: null, entry: '0', fresh: true };
   var calcValue = $('#calcValue'), calcHistory = $('#calcHistory');
 
+  function trimNum(n) {
+    if (!isFinite(n)) return 'Error';
+    return String(Math.round(n * 1e10) / 1e10);
+  }
+
   function calcRender() {
     if (!calcValue) return;
     var v = calc.entry;
     if (v.length > 12 && v.indexOf('.') !== -1) v = String(parseFloat(v).toPrecision(10));
     calcValue.textContent = v;
     calcHistory.textContent = calc.acc !== null ? trimNum(calc.acc) + ' ' + (calc.op || '') : '';
-  }
-
-  function trimNum(n) {
-    if (!isFinite(n)) return 'Error';
-    var s = Math.round(n * 1e10) / 1e10;
-    return String(s);
   }
 
   function calcCompute(a, op, b) {
@@ -536,8 +1185,7 @@
       calc.fresh = true;
     } else if (k === '=') {
       if (calc.op !== null) {
-        var result = calcCompute(calc.acc, calc.op, parseFloat(calc.entry));
-        calc.entry = trimNum(result);
+        calc.entry = trimNum(calcCompute(calc.acc, calc.op, parseFloat(calc.entry)));
         calc.acc = null;
         calc.op = null;
         calc.fresh = true;
@@ -562,7 +1210,7 @@
   });
 
   /* ---------------------------------------------------------
-     Tasbeeh
+     Tasbih
      --------------------------------------------------------- */
   var TARGET = 33;
   var beads = 0;
@@ -571,7 +1219,7 @@
 
   function renderBeads() {
     if (tCount) tCount.textContent = beads;
-    var tQuick = $('#tasbeehQuick');          // re-queried: the grid is rebuilt
+    var tQuick = $('#tasbeehQuick');          /* re-queried: the grid is rebuilt */
     if (tQuick) tQuick.textContent = beads;
     if (tRing) tRing.style.strokeDashoffset = (tCirc * (1 - Math.min(1, beads / TARGET))).toFixed(1);
   }
@@ -586,7 +1234,7 @@
       tCount.classList.add('bump');
       if (navigator.vibrate) navigator.vibrate(8);
       if (beads === TARGET) toast('33 complete — well done');
-      if (beads > 0 && beads % TARGET === 0 && beads !== TARGET) toast(beads + ' counted');
+      else if (beads > 0 && beads % TARGET === 0) toast(beads + ' counted');
     });
   }
   var tReset = $('#tasbeehReset');
@@ -595,113 +1243,63 @@
   if (tSave) tSave.addEventListener('click', function () { toast('Saved ' + beads + ' to today'); });
 
   /* ---------------------------------------------------------
-     Qibla
-     --------------------------------------------------------- */
-  function spinQibla() {
-    var needle = $('#qiblaNeedle');
-    if (!needle) return;
-    needle.style.transition = 'none';
-    needle.style.transform = 'rotate(-40deg)';
-    requestAnimationFrame(function () {
-      requestAnimationFrame(function () {
-        needle.style.transition = '';
-        needle.style.transform = 'rotate(119deg)';
-      });
-    });
-  }
-
-  /* ---------------------------------------------------------
-     Skeleton loading on first paint
-     --------------------------------------------------------- */
-  (function skeletons() {
-    var targets = $$('#screen-home .quote__text, #screen-home .quote__by, #screen-home .arabic, #screen-home .card--pad > .body');
-    targets.forEach(function (el) { el.classList.add('skeleton'); });
-    setTimeout(function () {
-      targets.forEach(function (el) { el.classList.remove('skeleton'); });
-    }, 850);
-  })();
-
-  /* ---------------------------------------------------------
-     Interests & personalisation
+     Interest picker — grouped, with the faith group behind a switch
      --------------------------------------------------------- */
   var PICK_MIN = 5, PICK_MAX = 10;
 
-  var INTERESTS = [
-    { id: 'prayer',   label: 'Prayer times',   icon: 'i-prayer' },
-    { id: 'quran',    label: 'Qur’an',    icon: 'i-book' },
-    { id: 'hadith',   label: 'Hadith',         icon: 'i-quote' },
-    { id: 'duas',     label: 'Duas',           icon: 'i-heart' },
-    { id: 'dhikr',    label: 'Tasbeeh & dhikr',icon: 'i-beads' },
-    { id: 'qibla',    label: 'Qibla',          icon: 'i-navigation' },
-    { id: 'hijri',    label: 'Hijri & Ramadan',icon: 'i-moon-star' },
-    { id: 'zakat',    label: 'Zakat & giving', icon: 'i-wallet' },
-    { id: 'tasks',    label: 'Tasks & to-dos', icon: 'i-check-square' },
-    { id: 'calendar', label: 'Calendar',       icon: 'i-calendar' },
-    { id: 'notes',    label: 'Notes',          icon: 'i-note' },
-    { id: 'habits',   label: 'Habits',         icon: 'i-flame' },
-    { id: 'focus',    label: 'Focus & timers', icon: 'i-timer' },
-    { id: 'money',    label: 'Money',          icon: 'i-currency' },
-    { id: 'convert',  label: 'Converters',     icon: 'i-ruler' },
-    { id: 'maths',    label: 'Calculators',    icon: 'i-calculator' },
-    { id: 'weather',  label: 'Weather',        icon: 'i-cloud-sun' },
-    { id: 'news',     label: 'News',           icon: 'i-news' },
-    { id: 'nearby',   label: 'Nearby places',  icon: 'i-pin' },
-    { id: 'travel',   label: 'Travel',         icon: 'i-globe' },
-    { id: 'health',   label: 'Health & water', icon: 'i-droplet' },
-    { id: 'sleep',    label: 'Sleep',          icon: 'i-moon' },
-    { id: 'mindful',  label: 'Mindfulness',    icon: 'i-sparkles' },
-    { id: 'quotes',   label: 'Daily quotes',   icon: 'i-star' },
-    { id: 'reading',  label: 'Reading',        icon: 'i-eye' }
-  ];
-
-  /* Used when someone skips the picker, so the app is never unpersonalised. */
-  var DEFAULT_INTERESTS = ['prayer', 'quran', 'tasks', 'calendar', 'weather', 'maths', 'dhikr', 'quotes'];
-
-  var interests = new Set();
-
-  function loadInterests() {
-    var raw = store.get('nur-interests');
-    if (raw) {
-      try {
-        var list = JSON.parse(raw);
-        if (Array.isArray(list) && list.length) { interests = new Set(list); return; }
-      } catch (e) {}
-    }
-    /* Onboarded already but nothing stored (skipped in an older build):
-       fall back to the defaults rather than leaving the app unpersonalised. */
-    interests = new Set(store.get('nur-onboarded') ? DEFAULT_INTERESTS : []);
-  }
-
-  function saveInterests(list) {
-    interests = new Set(list);
-    store.set('nur-interests', JSON.stringify(list));
-    personalise();
-  }
-
-  function interestLabel(id) {
-    for (var i = 0; i < INTERESTS.length; i++) if (INTERESTS[i].id === id) return INTERESTS[i].label;
-    return id;
-  }
-
-  loadInterests();
-
-  /* ---- Picker factory (shared by onboarding and the Profile sheet) ---- */
-
-  function makePicker(host, countEl, clearEl, onChange) {
+  function makePicker(host, countEl, clearEl, onChange, ctxFn) {
     if (!host) return null;
+    ctxFn = ctxFn || function () { return profile; };
     var sel = new Set();
+    var faithOpen = false;
 
-    host.innerHTML = INTERESTS.map(function (it) {
+    /* Do not offer an interest that cannot lead anywhere — "Trains" is a dead
+       choice outside Pakistan. The faith group is the exception: it is the
+       switch that makes its own features exist. */
+    function liveItems(g) {
+      if (g.faith) return g.items;
+      var ctx = ctxFn();
+      return g.items.filter(function (it) {
+        return C.FEATURES.some(function (f) {
+          return f.ints && f.ints.indexOf(it.id) !== -1 && visibleIn(f, ctx);
+        });
+      });
+    }
+
+    function build() {
+      host.innerHTML = C.INTEREST_GROUPS.map(function (g) {
+        if (g.faith) {
+          return '<div class="pickgroup pickgroup--faith" data-group="faith">' +
+            '<button type="button" class="faithtoggle' + (faithOpen ? ' is-on' : '') + '" data-faithtoggle aria-pressed="' + faithOpen + '">' +
+              '<span class="faithtoggle__icon"><svg class="ico" viewBox="0 0 24 24"><use href="#i-moon-star"/></svg></span>' +
+              '<span class="faithtoggle__body">' +
+                '<span class="faithtoggle__title">Islamic features</span>' +
+                '<span class="faithtoggle__sub">Prayer times, Qur’an, duas, zakat and Ramadan</span>' +
+              '</span>' +
+              '<span class="switch' + (faithOpen ? ' is-on' : '') + '"><span class="switch__knob"></span></span>' +
+            '</button>' +
+            '<div class="picker picker--nested"' + (faithOpen ? '' : ' hidden') + '>' +
+              g.items.map(pickBtn).join('') +
+            '</div>' +
+          '</div>';
+        }
+        var items = liveItems(g);
+        if (!items.length) return '';
+        return '<div class="pickgroup"><p class="pickgroup__label">' + esc(g.label) + '</p>' +
+          '<div class="picker">' + items.map(pickBtn).join('') + '</div></div>';
+      }).join('');
+      sync();
+    }
+
+    function pickBtn(it) {
       return '<button type="button" class="pick" data-id="' + it.id + '" aria-pressed="false">' +
-             '<svg class="ico" viewBox="0 0 24 24"><use href="#' + it.icon + '"/></svg>' +
-             '<span>' + it.label + '</span></button>';
-    }).join('');
-
-    var btns = $$('.pick', host);
+        '<svg class="ico" viewBox="0 0 24 24"><use href="#' + it.icon + '"/></svg>' +
+        '<span>' + esc(it.label) + '</span></button>';
+    }
 
     function sync() {
       var full = sel.size >= PICK_MAX;
-      btns.forEach(function (b) {
+      $$('.pick', host).forEach(function (b) {
         var on = sel.has(b.dataset.id);
         b.classList.toggle('is-on', on);
         b.classList.toggle('is-muted', !on && full);
@@ -712,10 +1310,18 @@
           ? '<b>' + sel.size + '</b> of ' + PICK_MIN + ' minimum'
           : '<b>' + sel.size + '</b> of ' + PICK_MAX + ' selected';
       }
-      if (onChange) onChange(sel.size >= PICK_MIN, Array.from(sel));
+      if (onChange) onChange(sel.size >= PICK_MIN, Array.from(sel), faithOpen);
     }
 
     host.addEventListener('click', function (e) {
+      var ft = e.target.closest('[data-faithtoggle]');
+      if (ft) {
+        faithOpen = !faithOpen;
+        if (!faithOpen) C.FAITH_INTERESTS.forEach(function (id) { sel.delete(id); });
+        else ['prayer', 'quran', 'duas'].forEach(function (id) { if (sel.size < PICK_MAX) sel.add(id); });
+        build();
+        return;
+      }
       var b = e.target.closest('.pick');
       if (!b) return;
       var id = b.dataset.id;
@@ -735,107 +1341,210 @@
 
     if (clearEl) clearEl.addEventListener('click', function () { sel.clear(); sync(); });
 
-    sync();
+    build();
     return {
       get: function () { return Array.from(sel); },
-      set: function (list) { sel = new Set(list || []); sync(); }
+      faith: function () { return faithOpen; },
+      refresh: build,
+      set: function (list, faith) {
+        sel = new Set(list || []);
+        faithOpen = faith !== undefined ? faith
+          : (list || []).some(function (id) { return C.FAITH_INTERESTS.indexOf(id) !== -1; });
+        build();
+      }
     };
   }
 
-  /* ---- Quick tools, chosen from the selected interests ---- */
+  /* ---------------------------------------------------------
+     Personalisation sheet
+     --------------------------------------------------------- */
+  var draft = { country: profile.country, city: profile.city, islamic: profile.islamic };
 
-  var TOOL_POOL = [
-    { id: 'prayer',   label: 'Prayer',    icon: 'i-prayer',     act: 'data-sheet="prayer"',  ints: ['prayer'], accent: true, value: '' },
-    { id: 'quran',    label: 'Qur’an', icon: 'i-book',     act: 'data-sheet="reading"', ints: ['quran', 'reading'], accent: true, value: '38%' },
-    { id: 'qibla',    label: 'Qibla',     icon: 'i-navigation', act: 'data-sheet="qibla"',   ints: ['qibla', 'prayer'], accent: true, value: '119°' },
-    { id: 'tasbeeh',  label: 'Tasbeeh',   icon: 'i-beads',      act: 'data-sheet="tasbeeh"', ints: ['dhikr', 'duas'], accent: true, value: '0', valueId: 'tasbeehQuick' },
-    { id: 'duas',     label: 'Duas',      icon: 'i-heart',      act: 'data-toast="42 duas in your library"', ints: ['duas'], accent: true, value: '42' },
-    { id: 'hijri',    label: 'Hijri',     icon: 'i-moon',       act: 'data-toast="15 Rabi’ al-Awwal 1448"', ints: ['hijri'], accent: true, value: '15' },
-    { id: 'zakat',    label: 'Zakat',     icon: 'i-wallet',     act: 'data-toast="Zakat calculator"', ints: ['zakat'], accent: true, value: '' },
-    { id: 'hadith',   label: 'Hadith',    icon: 'i-quote',      act: 'data-toast="Hadith of the day"', ints: ['hadith'], accent: true, value: '' },
-    { id: 'calc',     label: 'Calculator',icon: 'i-calculator', act: 'data-sheet="calculator"', ints: ['maths'], value: '' },
-    { id: 'currency', label: 'Currency',  icon: 'i-currency',   act: 'data-toast="GBP → EUR · 1.1842"', ints: ['money'], value: '1.1842' },
-    { id: 'convert',  label: 'Convert',   icon: 'i-ruler',      act: 'data-toast="Unit converter"', ints: ['convert'], value: '32' },
-    { id: 'weather',  label: 'Weather',   icon: 'i-cloud-sun',  act: 'data-tab="explore"', ints: ['weather'], value: '21°' },
-    { id: 'calendar', label: 'Calendar',  icon: 'i-calendar',   act: 'data-tab="today"', ints: ['calendar'], value: '7 Sep' },
-    { id: 'todo',     label: 'To-do',     icon: 'i-check-square', act: 'data-tab="today"', ints: ['tasks'], value: '2/5' },
-    { id: 'notes',    label: 'Notes',     icon: 'i-note',       act: 'data-toast="Notes — 12 saved"', ints: ['notes'], value: '12' },
-    { id: 'habits',   label: 'Habits',    icon: 'i-flame',      act: 'data-toast="Habit streak: 12 days"', ints: ['habits'], value: '12d' },
-    { id: 'timer',    label: 'Timer',     icon: 'i-timer',      act: 'data-toast="Timer ready — 00:00"', ints: ['focus'], value: '' },
-    { id: 'water',    label: 'Water',     icon: 'i-droplet',    act: 'data-toast="Water: 5 of 8 glasses"', ints: ['health'], value: '5/8' },
-    { id: 'news',     label: 'News',      icon: 'i-news',       act: 'data-tab="explore"', ints: ['news'], value: '12' },
-    { id: 'nearby',   label: 'Nearby',    icon: 'i-pin',        act: 'data-toast="3 mosques within 1.2 km"', ints: ['nearby', 'travel'], value: '1.2km' },
-    { id: 'quotes',   label: 'Quotes',    icon: 'i-star',       act: 'data-toast="Quote of the day"', ints: ['quotes', 'mindful'], value: '' },
-    { id: 'sleep',    label: 'Wind down', icon: 'i-moon',       act: 'data-toast="Wind-down routine"', ints: ['sleep'], value: '' }
-  ];
+  var setPicker = makePicker($('#setPicker'), $('#setPickCount'), $('#setPickClear'), function (enough, list, faith) {
+    var b = $('#setPickSave');
+    if (b) b.disabled = !enough;
+    if (faith !== draft.islamic) { draft.islamic = faith; syncIslamicRow(); }
+  }, function () { return draft; });
 
-  var QUICK_FALLBACK = ['calc', 'currency', 'weather', 'calendar', 'qibla', 'tasbeeh', 'notes', 'timer'];
-
-  function renderQuickTools() {
-    var host = $('#quickTools');
-    if (!host) return;
-
-    var picked = [], seen = {};
-    function add(t) { if (t && !seen[t.id] && picked.length < 8) { seen[t.id] = 1; picked.push(t); } }
-    function byId(id) {
-      for (var i = 0; i < TOOL_POOL.length; i++) if (TOOL_POOL[i].id === id) return TOOL_POOL[i];
-      return null;
+  function syncIslamicRow() {
+    var sw = $('#setIslamicSwitch');
+    if (sw) sw.classList.toggle('is-on', draft.islamic);
+    var icon = $('#setIslamicIcon');
+    if (icon) {
+      icon.style.background = draft.islamic ? 'var(--tint-accent)' : '';
+      icon.style.color = draft.islamic ? 'var(--accent)' : '';
     }
-
-    /* One pass per chosen interest, in catalogue order, so the mix stays balanced */
-    if (interests.size) {
-      INTERESTS.forEach(function (it) {
-        if (!interests.has(it.id)) return;
-        TOOL_POOL.forEach(function (t) {
-          if (t.ints.indexOf(it.id) !== -1) add(t);
-        });
-      });
-    }
-    QUICK_FALLBACK.forEach(function (id) { add(byId(id)); });
-
-    host.innerHTML = picked.map(function (t) {
-      return '<button class="tool pressable" ' + t.act + '>' +
-        '<span class="tool__icon' + (t.accent ? ' tool__icon--accent' : '') + '">' +
-          '<svg class="ico" viewBox="0 0 24 24"><use href="#' + t.icon + '"/></svg></span>' +
-        '<span class="tool__label">' + t.label + '</span>' +
-        (t.value ? '<span class="tool__value num"' + (t.valueId ? ' id="' + t.valueId + '"' : '') + '>' + t.value + '</span>' : '') +
-      '</button>';
-    }).join('');
-
-    var sub = $('#quickToolsSub');
-    if (sub) sub.textContent = interests.size ? 'Picked from your interests' : 'Your eight most-used, one tap away';
-
-    renderBeads();
   }
 
-  /* ---- Show only what matches, and drop sections left empty ---- */
+  function renderCountryChoice() {
+    var host = $('#setCountry');
+    if (!host) return;
+    host.innerHTML = C.COUNTRIES.map(function (c) {
+      return '<button data-country="' + c.code + '"' + (c.code === draft.country ? ' class="is-active"' : '') + '>' +
+        esc(c.name) + '</button>';
+    }).join('');
+    var v = $('#setCityValue');
+    if (v) v.textContent = draft.city;
+  }
 
-  function personalise() {
-    var on = interests.size > 0;
+  function hydratePersonalise() {
+    draft = { country: profile.country, city: profile.city, islamic: profile.islamic };
+    setPicker.set(profile.interests.slice(), profile.islamic);
+    renderCountryChoice();
+    syncIslamicRow();
+    for (var k in profile.prefs) {
+      var row = $('[data-pref="' + k + '"]');
+      if (row) { var s = $('.switch', row); if (s) s.classList.toggle('is-on', !!profile.prefs[k]); }
+    }
+  }
 
-    $$('[data-int]').forEach(function (el) {
-      var match = !on || el.dataset.int.split(/\s+/).some(function (t) { return interests.has(t); });
-      el.classList.toggle('is-off', !match);
+  document.addEventListener('click', function (e) {
+    var cb = e.target.closest('#setCountry [data-country]');
+    if (cb) {
+      draft.country = cb.dataset.country;
+      var c = C.COUNTRIES.filter(function (x) { return x.code === draft.country; })[0];
+      draft.city = c ? c.cities[0] : draft.city;
+      renderCountryChoice();
+      setPicker.refresh();
+      return;
+    }
+    if (e.target.closest('#setCityRow')) {
+      var cc = C.COUNTRIES.filter(function (x) { return x.code === draft.country; })[0];
+      if (cc) {
+        var at = cc.cities.indexOf(draft.city);
+        draft.city = cc.cities[(at + 1) % cc.cities.length];
+        var v = $('#setCityValue');
+        if (v) v.textContent = draft.city;
+      }
+      return;
+    }
+    if (e.target.closest('#setIslamicRow')) {
+      draft.islamic = !draft.islamic;
+      syncIslamicRow();
+      var list = setPicker.get().filter(function (id) { return C.FAITH_INTERESTS.indexOf(id) === -1; });
+      if (draft.islamic) list = list.concat(['prayer', 'quran', 'duas']).slice(0, PICK_MAX);
+      setPicker.set(list, draft.islamic);
+    }
+  });
+
+  var setSave = $('#setPickSave');
+  if (setSave) {
+    setSave.addEventListener('click', function () {
+      profile.interests = setPicker.get();
+      profile.country = draft.country;
+      profile.city = draft.city;
+      profile.islamic = draft.islamic;
+      syncFaithFromInterests();
+      /* Anything now hidden must not linger in history. */
+      profile.recents = profile.recents.filter(function (id) {
+        var f = feature(id); return f && visible(f);
+      });
+      saveProfile();
+      renderAll();
+      sheetClose();
+      toast('Your app has been updated');
     });
+  }
 
-    $$('[data-psection]').forEach(function (sec) {
-      var items = $$('[data-int]', sec);
-      var visible = items.filter(function (i) { return !i.classList.contains('is-off'); }).length;
-      sec.classList.toggle('is-off', items.length > 0 && visible === 0);
-    });
+  /* ---------------------------------------------------------
+     Profile summaries
+     --------------------------------------------------------- */
+  function interestLabel(id) {
+    for (var g = 0; g < C.INTEREST_GROUPS.length; g++) {
+      var items = C.INTEREST_GROUPS[g].items;
+      for (var i = 0; i < items.length; i++) if (items[i].id === id) return items[i].label;
+    }
+    return id;
+  }
 
+  function renderProfileSummary() {
     var count = $('#profileInterestCount');
-    if (count) count.textContent = interests.size;
+    if (count) count.textContent = profile.interests.length;
+
     var label = $('#profileInterests');
     if (label) {
-      label.textContent = interests.size
-        ? Array.from(interests).slice(0, 3).map(interestLabel).join(', ') +
-          (interests.size > 3 ? ' +' + (interests.size - 3) + ' more' : '')
+      label.textContent = profile.interests.length
+        ? profile.interests.slice(0, 3).map(interestLabel).join(', ') +
+          (profile.interests.length > 3 ? ' +' + (profile.interests.length - 3) + ' more' : '')
         : 'Shapes your home, tools and reading';
     }
 
+    var country = C.COUNTRIES.filter(function (c) { return c.code === profile.country; })[0];
+    var ctry = $('#profileCountry');
+    if (ctry) ctry.textContent = (country ? country.name : profile.country) + ' · ' + profile.city;
+
+    var content = $('#profileContent');
+    if (content) {
+      var bits = [profile.islamic ? 'Islamic content on' : 'Islamic content off'];
+      if (profile.prefs.news) bits.push('news');
+      if (profile.prefs.cricket) bits.push('sport');
+      if (profile.prefs.finance) bits.push('rates');
+      content.textContent = bits.join(' · ');
+    }
+
+    var avatars = [$('#appbarAvatar'), $('#profileAvatar')];
+    avatars.forEach(function (a) { if (a) a.textContent = profile.initials; });
+
+    var bm = $('#profileBookmarks');
+    if (bm) bm.textContent = profile.islamic ? 'Ayahs, hadith and quotes' : 'Saved reads and quotes';
+
+    var lang = $('#profileLang');
+    if (lang) lang.textContent = profile.country === 'PK'
+      ? 'English · اردو available'
+      : 'English · اردو and العربية available';
+
+    var exploreSub = $('#exploreSub');
+    if (exploreSub) exploreSub.textContent = profile.country === 'PK'
+      ? 'Local services, scores and reading'
+      : 'Weather, reading and what’s around you';
+
+    var glance = $('#glanceSub');
+    if (glance) glance.textContent = profile.islamic
+      ? 'Prayer, reading and what’s next'
+      : 'What matters in the next few hours';
+  }
+
+  /* Explore stops being a tab in Pakistan, so it needs a way back. */
+  function ensureExploreBack() {
+    if ($('#exploreBack')) return;
+    var bar = $('#screen-explore .page-head__bar');
+    if (!bar) return;
+    var b = document.createElement('button');
+    b.className = 'iconbtn pressable';
+    b.id = 'exploreBack';
+    b.setAttribute('aria-label', 'Back to home');
+    b.innerHTML = '<svg class="ico" viewBox="0 0 24 24"><use href="#i-chev-l"/></svg>';
+    b.addEventListener('click', function () { goTo('home'); });
+    b.hidden = true;
+    bar.insertBefore(b, bar.firstChild);
+  }
+
+  /* ---------------------------------------------------------
+     Render everything from the profile
+     --------------------------------------------------------- */
+  function renderAll() {
+    applyVisibility();
+    /* Metadata first — the tool cards below read it. */
+    renderWeather();
+    renderQibla();
+    renderMoney();
+    syncFeatureMeta();
+    renderTabs();
+    renderHero();
     renderQuickTools();
-    applyFilter();
+    renderToolChips();
+    renderTools();
+    renderRecents();
+    renderTodayStats();
+    renderAgenda();
+    renderFuel();
+    renderTrains();
+    renderNews();
+    renderNotifications();
+    renderPrayerList();
+    renderProfileSummary();
+    initHeader();
+    updatePrayer();
   }
 
   /* ---------------------------------------------------------
@@ -847,6 +1556,38 @@
   var onbBack = $('#onbBack');
   var onbSkip = $('#onbSkip');
   var onbStep = 0;
+  var onbDraft = { country: 'PK', city: 'Karachi' };
+
+  function renderOnbCountry() {
+    var host = $('#onbCountry');
+    if (!host) return;
+    host.innerHTML = C.COUNTRIES.map(function (c) {
+      return '<button type="button" class="countrycard' + (c.code === onbDraft.country ? ' is-on' : '') + '" data-onbcountry="' + c.code + '">' +
+        '<span class="countrycard__code">' + esc(c.code) + '</span>' +
+        '<span class="countrycard__name">' + esc(c.name) + '</span></button>';
+    }).join('');
+
+    var cities = (C.COUNTRIES.filter(function (c) { return c.code === onbDraft.country; })[0] || {}).cities || [];
+    var cityHost = $('#onbCity');
+    if (cityHost) {
+      cityHost.innerHTML = cities.map(function (city) {
+        return '<button type="button"' + (city === onbDraft.city ? ' class="is-active"' : '') + ' data-onbcity="' + esc(city) + '">' + esc(city) + '</button>';
+      }).join('');
+    }
+  }
+
+  document.addEventListener('click', function (e) {
+    var cb = e.target.closest('[data-onbcountry]');
+    if (cb) {
+      onbDraft.country = cb.dataset.onbcountry;
+      var c = C.COUNTRIES.filter(function (x) { return x.code === onbDraft.country; })[0];
+      onbDraft.city = c ? c.cities[0] : onbDraft.city;
+      renderOnbCountry();
+      return;
+    }
+    var cy = e.target.closest('[data-onbcity]');
+    if (cy) { onbDraft.city = cy.dataset.onbcity; renderOnbCountry(); }
+  });
 
   function onbShow(i, back) {
     i = Math.max(0, Math.min(onbSteps.length - 1, i));
@@ -862,16 +1603,33 @@
     onbBack.disabled = i === 0;
     onbSkip.disabled = i === onbSteps.length - 1;
 
+    if (i === 3) renderOnbCountry();
+    if (i === 4 && onbPicker) onbPicker.refresh();
+    if (i === 5) {
+      var loc = $('#onbLocSub');
+      if (loc) loc.textContent = profile.islamic
+        ? 'For prayer times, Qibla, weather and nearby places'
+        : 'For weather, local services and nearby places';
+      var nt = $('#onbNotifSub');
+      if (nt) nt.textContent = profile.islamic
+        ? 'A quiet nudge 5 minutes before each adhan'
+        : 'A quiet nudge for the things you asked us to watch';
+      applyVisibility();
+    }
     if (i === onbSteps.length - 1) {
-      var el = $('#onbNextPrayer');
-      if (el) el.textContent = prayerState().next.name;
+      var el = $('#onbDoneText');
+      if (el) {
+        el.innerHTML = profile.islamic
+          ? 'Your next prayer is <b>' + esc(prayerState().next.name) + '</b>, and today’s plan is waiting on the home screen.'
+          : 'Today’s plan is waiting on the home screen.';
+      }
     }
   }
 
   function onbFinish(msg) {
     if (!onb) return;
     onb.classList.add('is-leaving');
-    store.set('nur-onboarded', '1');
+    store.set('lume-onboarded', '1');
     setTimeout(function () {
       onb.hidden = true;
       onb.classList.remove('is-leaving');
@@ -879,36 +1637,50 @@
     }, 380);
   }
 
-  function onbStart() {
-    if (!onb) return;
-    if (onbPicker) onbPicker.set(Array.from(interests));
-    onb.hidden = false;
-    onb.classList.remove('is-leaving');
-    onbShow(0);
+  function onbCommit(list, faith) {
+    profile.interests = list;
+    profile.islamic = !!faith;
+    profile.country = onbDraft.country;
+    profile.city = onbDraft.city;
+    syncFaithFromInterests();
+    saveProfile();
+    renderAll();
   }
 
   var onbPicker = makePicker($('#onbPicker'), $('#onbPickCount'), $('#onbPickClear'), function (enough) {
     var b = $('#onbPickNext');
     if (b) b.disabled = !enough;
-  });
+  }, function () { return { country: onbDraft.country, islamic: true }; });
+
+  function onbStart() {
+    if (!onb) return;
+    onbDraft = { country: profile.country, city: profile.city };
+    if (onbPicker) onbPicker.set(profile.interests.slice(), profile.islamic);
+    onb.hidden = false;
+    onb.classList.remove('is-leaving');
+    onbShow(0);
+  }
 
   if (onb) {
     var pickNext = $('#onbPickNext');
     if (pickNext) {
       pickNext.addEventListener('click', function () {
-        saveInterests(onbPicker.get());
+        onbCommit(onbPicker.get(), onbPicker.faith());
         onbShow(onbStep + 1);
       });
     }
 
     $$('[data-onb-next]').forEach(function (b) {
-      b.addEventListener('click', function () { onbShow(onbStep + 1); });
+      b.addEventListener('click', function () {
+        /* The country step commits early so the picker can be local. */
+        if (onbStep === 3) { profile.country = onbDraft.country; profile.city = onbDraft.city; }
+        onbShow(onbStep + 1);
+      });
     });
     onbBack.addEventListener('click', function () { onbShow(onbStep - 1, true); });
     onbSkip.addEventListener('click', function () {
-      /* Skipping still needs a personalised app, so fall back to the defaults. */
-      if (!interests.size) {
-        saveInterests(DEFAULT_INTERESTS.slice());
+      if (!profile.interests.length) {
+        onbCommit(C.DEFAULT_INTERESTS.slice(), false);
         onbFinish('Set up with our defaults — edit them in Profile');
       } else {
         onbFinish('Tour skipped — find it again in Profile');
@@ -916,15 +1688,14 @@
     });
 
     var finish = $('#onbFinish');
-    if (finish) finish.addEventListener('click', function () { onbFinish('Welcome to Nur'); });
+    if (finish) finish.addEventListener('click', function () { onbFinish('Welcome to Lume'); });
 
     var signIn = $('#onbSignIn');
     if (signIn) signIn.addEventListener('click', function () {
-      if (!interests.size) saveInterests(DEFAULT_INTERESTS.slice());
+      if (!profile.interests.length) onbCommit(C.DEFAULT_INTERESTS.slice(), false);
       onbFinish('Welcome back');
     });
 
-    /* Permission rows */
     $$('[data-onb-toggle]').forEach(function (row) {
       row.addEventListener('click', function () {
         var on = !row.classList.contains('is-on');
@@ -934,7 +1705,6 @@
       });
     });
 
-    /* Calculation method */
     var method = $('#onbMethod');
     if (method) {
       method.addEventListener('click', function (e) {
@@ -945,41 +1715,35 @@
       });
     }
 
-    /* Swipe between steps */
-    var sx = 0, sy = 0;
+    var sx2 = 0, sy2 = 0;
     onb.addEventListener('touchstart', function (e) {
-      sx = e.touches[0].clientX; sy = e.touches[0].clientY;
+      sx2 = e.touches[0].clientX; sy2 = e.touches[0].clientY;
     }, { passive: true });
     onb.addEventListener('touchend', function (e) {
-      var dx = e.changedTouches[0].clientX - sx;
-      var dy = e.changedTouches[0].clientY - sy;
+      var dx = e.changedTouches[0].clientX - sx2;
+      var dy = e.changedTouches[0].clientY - sy2;
       if (Math.abs(dx) < 56 || Math.abs(dy) > Math.abs(dx)) return;
-      if (dx < 0 && onbStep < onbSteps.length - 1) onbShow(onbStep + 1);
+      if (dx < 0 && onbStep < onbSteps.length - 1 && onbStep !== 4) onbShow(onbStep + 1);
       if (dx > 0 && onbStep > 0) onbShow(onbStep - 1, true);
     }, { passive: true });
 
-    /* Show on first run, or on demand via ?tour=1 */
     var forced = /[?&]tour=1/.test(location.search);
-    if (forced || !store.get('nur-onboarded')) onbStart();
+    if (forced || !store.get('lume-onboarded')) onbStart();
 
     var replay = $('#replayTour');
     if (replay) replay.addEventListener('click', function () { sheetClose(); onbStart(); });
   }
 
-  /* ---- Editing interests later, from Profile ---- */
-  var setPicker = makePicker($('#setPicker'), $('#setPickCount'), $('#setPickClear'), function (enough) {
-    var b = $('#setPickSave');
-    if (b) b.disabled = !enough;
-  });
-
-  var setSave = $('#setPickSave');
-  if (setSave) {
-    setSave.addEventListener('click', function () {
-      saveInterests(setPicker.get());
-      sheetClose();
-      toast('Interests updated');
-    });
-  }
+  /* ---------------------------------------------------------
+     Skeletons on first paint
+     --------------------------------------------------------- */
+  (function skeletons() {
+    var targets = $$('#screen-home .progress-card__body > p, #screen-home .stat-row__body > p');
+    targets.forEach(function (el) { el.classList.add('skeleton'); });
+    setTimeout(function () {
+      targets.forEach(function (el) { el.classList.remove('skeleton'); });
+    }, 850);
+  })();
 
   /* A clipped shell can still be scrolled programmatically — by focus moving to
      an off-screen node, or scrollIntoView. Pin it so the layout never drifts. */
@@ -993,13 +1757,15 @@
   /* ---------------------------------------------------------
      Boot
      --------------------------------------------------------- */
+  ensureExploreBack();
   tickClock();
-  personalise();
-  updatePrayer();
+  renderAll();
   updateDayRing();
   renderBeads();
+  calcRender();
+
   setInterval(tickClock, 15000);
-  setInterval(updatePrayer, 1000);
+  setInterval(function () { updatePrayer(); }, 1000);
   setInterval(updateDayRing, 60000);
 
   requestAnimationFrame(function () {

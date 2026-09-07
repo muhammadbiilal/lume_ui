@@ -36,6 +36,10 @@ svg { display: block; }
   clip: rect(0 0 0 0); white-space: nowrap; border: 0;
 }
 
+/* Any author rule that sets `display` beats the UA's [hidden] rule, so make
+   the attribute win outright — several toggles here sit on flex/grid nodes. */
+[hidden] { display: none !important; }
+
 /* ---------- Device shell ---------------------------------- */
 
 .stage {

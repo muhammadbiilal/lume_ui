@@ -94,40 +94,41 @@ window.LUME = (function () {
        loc    country code — hidden unless the user is there
        adapts global feature whose content localises
        sens   sensitive — never promoted on Home
+       staple a tool almost everyone wants, so it survives the For-you filter
      --------------------------------------------------------- */
   var F = [
     /* ---- Everyday ---- */
-    { id: 'calculator', n: 'Calculator',       i: 'i-calculator', c: 'everyday', g: 'daily',    ints: ['maths'],              m: 'Standard',      act: 'sheet:calculator', kw: 'maths sum arithmetic percent' },
-    { id: 'converter',  n: 'Unit Converter',   i: 'i-ruler',      c: 'everyday', g: 'daily',    ints: ['convert'],            m: '32 units',      act: 'toast:Unit converter · 32 units', kw: 'length weight metric imperial litres kg' },
-    { id: 'currency',   n: 'Currency',         i: 'i-currency',   c: 'everyday', g: 'money',    ints: ['convert', 'rates'],   m: 'Live rates',    act: 'sheet:currency', kw: 'exchange forex dollar usd pkr riyal pound convert money' },
+    { id: 'calculator', staple: 1, n: 'Calculator',       i: 'i-calculator', c: 'everyday', g: 'daily',    ints: ['maths'],              m: 'Standard',      act: 'sheet:calculator', kw: 'maths sum arithmetic percent' },
+    { id: 'converter', staple: 1,  n: 'Unit Converter',   i: 'i-ruler',      c: 'everyday', g: 'daily',    ints: ['convert'],            m: '32 units',      act: 'toast:Unit converter · 32 units', kw: 'length weight metric imperial litres kg' },
+    { id: 'currency', staple: 1,   n: 'Currency',         i: 'i-currency',   c: 'everyday', g: 'money',    ints: ['convert', 'rates'],   m: 'Live rates',    act: 'sheet:currency', kw: 'exchange forex dollar usd pkr riyal pound convert money' },
     { id: 'stopwatch',  n: 'Stopwatch',        i: 'i-stopwatch',  c: 'everyday', g: 'daily',    ints: ['alarms'],             m: 'Laps',          act: 'toast:Stopwatch ready' },
-    { id: 'timer',      n: 'Timer',            i: 'i-timer',      c: 'everyday', g: 'daily',    ints: ['alarms'],             m: 'Presets',       act: 'toast:Timer ready — 00:00' },
+    { id: 'timer', staple: 1,      n: 'Timer',            i: 'i-timer',      c: 'everyday', g: 'daily',    ints: ['alarms'],             m: 'Presets',       act: 'toast:Timer ready — 00:00' },
     { id: 'age',        n: 'Age Calculator',   i: 'i-cake',       c: 'everyday', g: 'daily',    ints: ['maths'],              m: 'Exact days',    act: 'toast:Age calculator', kw: 'birthday how old years' },
     { id: 'datecalc',   n: 'Date Calculator',  i: 'i-calendar',   c: 'everyday', g: 'daily',    ints: ['maths', 'calendar'],  m: 'Add · diff',    act: 'toast:Date calculator', kw: 'days between duration' },
 
     /* ---- Planning ---- */
-    { id: 'calendar',   n: 'Calendar',         i: 'i-calendar',   c: 'planning', g: 'daily',    ints: ['calendar'],           m: '3 events',      act: 'tab:today', kw: 'schedule agenda month' },
-    { id: 'reminders',  n: 'Reminders',        i: 'i-bell-ring',  c: 'planning', g: 'personal', ints: ['tasks'],              m: '4 today',       act: 'toast:4 reminders today' },
-    { id: 'notes',      n: 'Notes',            i: 'i-note',       c: 'planning', g: 'personal', ints: ['notes'],              m: '12 saved',      act: 'toast:Notes — 12 saved', kw: 'write memo journal' },
-    { id: 'todos',      n: 'To-dos',           i: 'i-check-square',c: 'planning',g: 'personal', ints: ['tasks'],              m: '2 of 5 done',   act: 'tab:today', kw: 'task checklist' },
+    { id: 'calendar', staple: 1,   n: 'Calendar',         i: 'i-calendar',   c: 'planning', g: 'daily',    ints: ['calendar'],           m: '3 events',      act: 'tab:today', kw: 'schedule agenda month' },
+    { id: 'reminders', staple: 1,  n: 'Reminders',        i: 'i-bell-ring',  c: 'planning', g: 'personal', ints: ['tasks'],              m: '4 today',       act: 'toast:4 reminders today' },
+    { id: 'notes', staple: 1,      n: 'Notes',            i: 'i-note',       c: 'planning', g: 'personal', ints: ['notes'],              m: '12 saved',      act: 'toast:Notes — 12 saved', kw: 'write memo journal' },
+    { id: 'todos', staple: 1,      n: 'To-dos',           i: 'i-check-square',c: 'planning',g: 'personal', ints: ['tasks'],              m: '2 of 5 done',   act: 'tab:today', kw: 'task checklist' },
     { id: 'events',     n: 'Events',           i: 'i-list',       c: 'planning', g: 'daily',    ints: ['calendar'],           m: 'Next 14:00',    act: 'toast:Next: Design review, 14:00' },
 
     /* ---- Prayer & Islam (17) ---- */
-    { id: 'prayer',     n: 'Prayer Times',     i: 'i-prayer',     c: 'islamic', g: 'islam', faith: 1, ints: ['prayer'],       m: 'Asr 15:53',     act: 'sheet:prayer', kw: 'salah namaz adhan azan jamaat' },
-    { id: 'qibla',      n: 'Qibla Compass',    i: 'i-navigation', c: 'islamic', g: 'islam', faith: 1, ints: ['prayer'],       m: '267° W',        act: 'sheet:qibla', kw: 'direction kaaba mecca makkah compass' },
+    { id: 'prayer', staple: 1,     n: 'Prayer Times',     i: 'i-prayer',     c: 'islamic', g: 'islam', faith: 1, ints: ['prayer'],       m: 'Asr 15:53',     act: 'sheet:prayer', kw: 'salah namaz adhan azan jamaat' },
+    { id: 'qibla', staple: 1,      n: 'Qibla Compass',    i: 'i-navigation', c: 'islamic', g: 'islam', faith: 1, ints: ['prayer'],       m: '267° W',        act: 'sheet:qibla', kw: 'direction kaaba mecca makkah compass' },
     { id: 'mosques',    n: 'Nearby Mosques',   i: 'i-mosque',     c: 'islamic', g: 'islam', faith: 1, ints: ['prayer', 'nearby'], m: '3 within 1 km', act: 'toast:3 mosques within 1 km' },
     { id: 'praytrack',  n: 'Prayer Tracker',   i: 'i-check-circle',c: 'islamic',g: 'islam', faith: 1, ints: ['prayer', 'habits'], m: '12-day streak', act: 'sheet:prayer' },
     { id: 'ramadan',    n: 'Ramadan',          i: 'i-moon-star',  c: 'islamic', g: 'islam', faith: 1, ints: ['ramadan'],      m: 'In 172 days',   act: 'toast:Ramadan begins in 172 days', kw: 'sehri iftar' },
     { id: 'fasting',    n: 'Fasting Tracker',  i: 'i-moon',       c: 'islamic', g: 'islam', faith: 1, ints: ['ramadan'],      m: '3 kept',        act: 'toast:Fasting tracker — 3 kept this month', kw: 'roza sawm' },
     { id: 'taraweeh',   n: 'Taraweeh',         i: 'i-prayer',     c: 'islamic', g: 'islam', faith: 1, ints: ['ramadan', 'prayer'], m: 'Ramadan',  act: 'toast:Taraweeh tracker' },
     { id: 'ayah',       n: 'Ayah of the Day',  i: 'i-sparkles',   c: 'islamic', g: 'islam', faith: 1, ints: ['quran'],        m: 'Ar-Ra’d 28',    act: 'tab:today', kw: 'verse daily' },
-    { id: 'quran',      n: 'Al-Qur’an',        i: 'i-book',       c: 'islamic', g: 'islam', faith: 1, ints: ['quran', 'reading'], m: 'Al-Kahf 42', act: 'sheet:reading', kw: 'surah para juz recite mushaf' },
+    { id: 'quran', staple: 1,      n: 'Al-Qur’an',        i: 'i-book',       c: 'islamic', g: 'islam', faith: 1, ints: ['quran', 'reading'], m: 'Al-Kahf 42', act: 'sheet:reading', kw: 'surah para juz recite mushaf' },
     { id: 'quransearch',n: 'Search the Qur’an',i: 'i-search',     c: 'islamic', g: 'islam', faith: 1, ints: ['quran'],        m: 'By word',       act: 'sheet:search', kw: 'surah rahman yaseen ayah verse find' },
     { id: 'hadith',     n: 'Hadith',           i: 'i-quote',      c: 'islamic', g: 'islam', faith: 1, ints: ['hadith', 'reading'], m: 'Daily',    act: 'tab:today', kw: 'bukhari muslim sunnah' },
     { id: 'duas',       n: 'Daily Duas',       i: 'i-heart',      c: 'islamic', g: 'islam', faith: 1, ints: ['duas'],         m: '42 saved',      act: 'toast:42 duas in your library', kw: 'supplication dua azkar' },
     { id: 'names99',    n: '99 Names',         i: 'i-star',       c: 'islamic', g: 'islam', faith: 1, ints: ['duas', 'quran'], m: 'Asma ul Husna', act: 'toast:99 Names of Allah' },
     { id: 'hijri',      n: 'Islamic Calendar', i: 'i-moon',       c: 'islamic', g: 'islam', faith: 1, ints: ['ramadan', 'calendar'], m: '15 Rabi’ I', act: 'toast:15 Rabi’ al-Awwal 1448', kw: 'hijri date lunar' },
-    { id: 'tasbih',     n: 'Tasbih',           i: 'i-beads',      c: 'islamic', g: 'islam', faith: 1, ints: ['duas'],         m: 'Counter',       act: 'sheet:tasbeeh', kw: 'dhikr zikr counter beads tasbeeh' },
+    { id: 'tasbih', staple: 1,     n: 'Tasbih',           i: 'i-beads',      c: 'islamic', g: 'islam', faith: 1, ints: ['duas'],         m: 'Counter',       act: 'sheet:tasbeeh', kw: 'dhikr zikr counter beads tasbeeh' },
     { id: 'zakat',      n: 'Zakat Calculator', i: 'i-wallet',     c: 'islamic', g: 'islam', faith: 1, ints: ['zakat'],        m: 'Nisab check',   act: 'toast:Zakat calculator — nisab ₨ 258,400', kw: 'charity sadaqah nisab giving' },
     { id: 'faraid',     n: 'Faraid',           i: 'i-scales',     c: 'islamic', g: 'islam', faith: 1, ints: ['zakat'],        m: 'Inheritance',   act: 'toast:Faraid — inheritance shares', kw: 'inheritance mirath wirasat will' },
 
@@ -148,11 +149,11 @@ window.LUME = (function () {
     { id: 'committee',  n: 'Committee',        i: 'i-users',      c: 'money', g: 'money',            ints: ['savings'],       m: 'Month 4 of 10', act: 'toast:Committee — your turn in month 7', kw: 'bisi rosca kameti pool circle' },
 
     /* ---- Daily Life (18) ---- */
-    { id: 'weather',    n: 'Weather',          i: 'i-cloud-sun',  c: 'daily', g: 'daily', adapts: 1, ints: ['weather'],       m: '34° Clear',     act: 'tab:explore', kw: 'forecast rain temperature humid' },
+    { id: 'weather', staple: 1,    n: 'Weather',          i: 'i-cloud-sun',  c: 'daily', g: 'daily', adapts: 1, ints: ['weather'],       m: '34° Clear',     act: 'tab:explore', kw: 'forecast rain temperature humid' },
     { id: 'loadshed',   n: 'Loadshedding',     i: 'i-bolt',       c: 'daily', g: 'daily', loc: 'PK', ints: ['bills'],         m: '14:00–16:00',   act: 'sheet:loadshed', kw: 'bijli power outage schedule ke lesco' },
     { id: 'trains',     n: 'Trains',           i: 'i-train',      c: 'daily', g: 'daily', loc: 'PK', ints: ['trains'],        m: 'Green Line',    act: 'tab:trains', kw: 'railway pr green line tezgam bogie seat pnr' },
     { id: 'flights',    n: 'Flights',          i: 'i-plane',      c: 'daily', g: 'daily',            ints: ['flights'],       m: 'Track live',    act: 'toast:Track a flight by number or route', kw: 'plane airport arrival departure pia' },
-    { id: 'news',       n: 'News',             i: 'i-news',       c: 'daily', g: 'daily', adapts: 1, ints: ['news'],          m: '12 new',        act: 'tab:explore', kw: 'headlines stories today' },
+    { id: 'news', staple: 1,       n: 'News',             i: 'i-news',       c: 'daily', g: 'daily', adapts: 1, ints: ['news'],          m: '12 new',        act: 'tab:explore', kw: 'headlines stories today' },
     { id: 'cricket',    n: 'Cricket',          i: 'i-cricket',    c: 'daily', g: 'daily', adapts: 1, ints: ['cricket'],       m: 'PAK 214/4',     act: 'sheet:cricket', kw: 'score match psl live wickets' },
     { id: 'emergency',  n: 'Emergency',        i: 'i-shield',     c: 'daily', g: 'daily', loc: 'PK',                          m: '15 · 1122',     act: 'sheet:emergency', kw: 'police ambulance rescue fire helpline' },
     { id: 'qr',         n: 'QR Scanner',       i: 'i-qr',         c: 'daily', g: 'daily',                                     m: 'Scan & pay',    act: 'toast:Point the camera at a QR code', kw: 'scan barcode raast pay' },
@@ -254,6 +255,18 @@ window.LUME = (function () {
     { no: '101UP',name: 'Pakistan Express',   from: 'Karachi Cantt', to: 'Rawalpindi',  dep: '11:30', arr: '13:00', dur: '25h 30m', status: '1h 10m late',cls: 'late', fare: '4,850' }
   ];
 
+  /* Money figures are given per country rather than converted: a Karachi
+     grocery bill converted to sterling reads as nonsense, so each locale gets
+     its own realistic set. */
+  var MONEY = {
+    PK: { cur: '₨ ', spent: '42,300', budget: '80,000', pct: '53', groceries: '18,900', fuel: '11,400', bills: '12,000', ledger: '8,500', subs: '4,200', to: 'PKR', rate: '283.40', open: '285.10' },
+    GB: { cur: '£',  spent: '640',    budget: '1,200',  pct: '53', groceries: '285',    fuel: '95',     bills: '260',    ledger: '120',   subs: '38',    to: 'GBP', rate: '0.745',  open: '0.748' },
+    AE: { cur: 'AED ', spent: '3,150', budget: '6,000', pct: '53', groceries: '1,420',  fuel: '480',    bills: '1,250',  ledger: '600',   subs: '190',   to: 'AED', rate: '3.673',  open: '3.680' },
+    US: { cur: '$',  spent: '780',    budget: '1,500',  pct: '52', groceries: '340',    fuel: '120',    bills: '320',    ledger: '150',   subs: '46',    to: 'EUR', rate: '0.921',  open: '0.925' },
+    CA: { cur: 'C$', spent: '1,020',  budget: '1,950',  pct: '52', groceries: '445',    fuel: '160',    bills: '415',    ledger: '195',   subs: '58',    to: 'CAD', rate: '1.352',  open: '1.360' },
+    SA: { cur: 'SAR ', spent: '2,890', budget: '5,500', pct: '53', groceries: '1,290',  fuel: '410',    bills: '1,190',  ledger: '550',   subs: '175',   to: 'SAR', rate: '3.750',  open: '3.755' }
+  };
+
   var NEWS = {
     PK: [
       { cat: 'Business', title: 'Rupee holds steady as remittances climb for a third month', meta: '4 min read', tone: 'accent' },
@@ -279,6 +292,7 @@ window.LUME = (function () {
     QIBLA_BY_COUNTRY: QIBLA_BY_COUNTRY,
     WEATHER: WEATHER,
     FUEL: FUEL,
+    MONEY: MONEY,
     TRAINS: TRAINS,
     NEWS: NEWS
   };

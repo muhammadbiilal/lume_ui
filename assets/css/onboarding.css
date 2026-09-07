@@ -293,7 +293,10 @@
 .onb__foot--sticky {
   position: sticky;
   bottom: 0;
-  margin-top: 18px;
+  /* auto keeps the button at the bottom when the step is short (the country
+     step), while sticky keeps it in reach when the content scrolls. */
+  margin-top: auto;
+  padding-top: 18px;
   padding-bottom: 4px;
   background: linear-gradient(to bottom, transparent, var(--bg) 34%);
 }
