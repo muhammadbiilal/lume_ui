@@ -1,0 +1,121 @@
+/* ============================================================
+   Nur — Design Tokens
+   A single source of truth for color, type, space, motion.
+   ============================================================ */
+
+:root {
+  /* ---- Brand accent (jade) ---- */
+  --accent-50:  #E9F7F4;
+  --accent-100: #CFEDE7;
+  --accent-200: #A5DED4;
+  --accent-400: #34B39D;
+  --accent:     #10998A;
+  --accent-600: #0B7F73;
+  --accent-700: #086357;
+  --accent-ink: #07564C;
+
+  /* ---- Secondary hues (used sparingly, for illustration only) ---- */
+  --violet:  #6E62E5;
+  --indigo:  #3D4BC7;
+  --amber:   #E0913A;
+  --rose:    #DE6B7A;
+  --sky:     #3E9BD4;
+
+  /* ---- Neutral foundation ---- */
+  --bg:            #F6F6F4;
+  --bg-sunk:       #EFEFEC;
+  --card:          #FFFFFF;
+  --card-2:        #FAFAF9;
+  --card-hover:    #F4F4F2;
+  --text:          #101113;
+  --text-2:        #56585F;
+  --text-3:        #8B8D95;
+  --border:        rgba(16, 17, 19, .07);
+  --border-2:      rgba(16, 17, 19, .12);
+  --overlay:       rgba(16, 17, 19, .38);
+
+  /* ---- Tinted surfaces ---- */
+  --tint-accent: #E7F4F1;
+  --tint-neutral: #F1F1EE;
+
+  /* ---- Elevation ---- */
+  --shadow-xs: 0 1px 2px rgba(16, 24, 40, .05);
+  --shadow-sm: 0 1px 2px rgba(16, 24, 40, .04), 0 2px 6px -2px rgba(16, 24, 40, .06);
+  --shadow-md: 0 2px 4px -2px rgba(16, 24, 40, .05), 0 8px 20px -6px rgba(16, 24, 40, .10);
+  --shadow-lg: 0 8px 16px -8px rgba(16, 24, 40, .10), 0 24px 48px -16px rgba(16, 24, 40, .20);
+  --shadow-nav: 0 -1px 0 var(--border), 0 -8px 32px -12px rgba(16, 24, 40, .16);
+
+  /* ---- Radii ---- */
+  --r-xs: 8px;
+  --r-sm: 12px;
+  --r-md: 16px;
+  --r-lg: 20px;
+  --r-xl: 26px;
+  --r-full: 999px;
+
+  /* ---- Spacing scale ---- */
+  --pad: 20px;          /* page horizontal padding */
+  --gap-card: 14px;     /* between cards */
+  --gap-section: 26px;  /* between sections */
+
+  /* ---- Type ---- */
+  --font: "Plus Jakarta Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  --font-num: "Plus Jakarta Sans", ui-rounded, -apple-system, sans-serif;
+
+  /* ---- Motion ---- */
+  --ease: cubic-bezier(.22, .61, .36, 1);
+  --ease-out: cubic-bezier(.16, 1, .3, 1);
+  --ease-spring: cubic-bezier(.34, 1.4, .64, 1);
+  --dur-fast: .16s;
+  --dur: .26s;
+  --dur-slow: .42s;
+
+  /* ---- Decorative ---- */
+  --sticker-opacity: 1;
+  --mesh-opacity: .55;
+
+  color-scheme: light;
+}
+
+[data-theme="dark"] {
+  --accent-50:  #0C2B27;
+  --accent-100: #103B35;
+  --accent-200: #17564D;
+  --accent-400: #2FC0A9;
+  --accent:     #35CBB2;
+  --accent-600: #58D8C2;
+  --accent-700: #8AE7D7;
+  --accent-ink: #B6F2E7;
+
+  --violet:  #9A90FF;
+  --indigo:  #7E8AF0;
+  --amber:   #EDB268;
+  --rose:    #F0919C;
+  --sky:     #6EBAE8;
+
+  --bg:            #0A0A0B;
+  --bg-sunk:       #060607;
+  --card:          #141416;
+  --card-2:        #191A1C;
+  --card-hover:    #1E1F22;
+  --text:          #F3F3F4;
+  --text-2:        #A2A4AB;
+  --text-3:        #74767D;
+  --border:        rgba(255, 255, 255, .075);
+  --border-2:      rgba(255, 255, 255, .14);
+  --overlay:       rgba(0, 0, 0, .6);
+
+  --tint-accent: #10312C;
+  --tint-neutral: #1C1D20;
+
+  --shadow-xs: 0 1px 2px rgba(0, 0, 0, .5);
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, .4), 0 2px 6px -2px rgba(0, 0, 0, .5);
+  --shadow-md: 0 2px 4px -2px rgba(0, 0, 0, .4), 0 8px 20px -6px rgba(0, 0, 0, .55);
+  --shadow-lg: 0 8px 16px -8px rgba(0, 0, 0, .5), 0 24px 48px -16px rgba(0, 0, 0, .7);
+  --shadow-nav: 0 -1px 0 var(--border), 0 -8px 32px -12px rgba(0, 0, 0, .8);
+
+  --sticker-opacity: .72;
+  --mesh-opacity: .35;
+
+  color-scheme: dark;
+}
