@@ -11,6 +11,9 @@
   'use strict';
 
   var C = window.LUME;
+  var GEO = window.LUME_GEO;
+  var SOLAR = window.LUME_SOLAR;
+  var I18N = window.LUME_I18N;
 
   var $  = function (s, r) { return (r || document).querySelector(s); };
   var $$ = function (s, r) { return Array.prototype.slice.call((r || document).querySelectorAll(s)); };
@@ -33,15 +36,30 @@
   var profile = {
     name: 'Zeeshan',
     initials: 'ZK',
+
+    /* Location: country → region (where a country uses one) → city. */
     country: 'PK',
-    city: 'Karachi',
+    region: 'Islamabad Capital Territory',
+    city: 'Islamabad',
+
     /* The faith dimension, entirely separate from country. Off until the user
        asks for it in onboarding or Personalisation — never assumed, and never
        inferred from the country above. */
     islamic: false,
+
+    /* Formatting. 'auto' follows the country; anything else is the user
+       overriding it, which they are always allowed to do. Language is
+       deliberately NOT derived from country. */
+    lang: 'en',
+    units: 'auto',
+    currency: 'auto',
+    clock: 'auto',
+    method: 'MWL',
+
     interests: [],
     prefs: { news: true, cricket: true, finance: true, recos: true },
-    recents: []
+    recents: [],
+    recentCountries: []
   };
 
   function loadProfile() {
@@ -76,12 +94,26 @@
 
   loadProfile();
 
+  /* Language, formatting and names all come from here. */
+  var L = window.LUME_LOCALE(function () { return profile; });
+  var t = L.t;
+
+  /* Language drives text direction; country never does. */
+  function applyLanguage() {
+    root.lang = L.lang();
+    root.dir = L.dir();
+    document.body.classList.toggle('is-rtl', L.dir() === 'rtl');
+  }
+
   /* ---------------------------------------------------------
      Visibility — the one rule everything obeys
      --------------------------------------------------------- */
   function visibleIn(f, ctx) {
     if (f.faith && !ctx.islamic) return false;
-    if (f.loc && f.loc !== ctx.country) return false;
+    /* countries: the markets a feature has launched in. No entry = global.
+       This is availability, not localisation — a global feature whose content
+       adapts (weather, news) stays visible everywhere. */
+    if (f.countries && f.countries.indexOf(ctx.country) === -1) return false;
     if (f.id === 'cricket' && !profile.prefs.cricket) return false;
     if (f.id === 'news' && !profile.prefs.news) return false;
     if ((f.id === 'markets' || f.id === 'goldrates') && !profile.prefs.finance) return false;
@@ -92,9 +124,45 @@
 
   function visibleFeatures() { return C.FEATURES.filter(visible); }
 
+  /* Feature names come from the catalogue in English; a dictionary entry
+     overrides it where a translation exists. */
+  function fname(f) {
+    var key = 'f.' + f.id;
+    var s2 = t(key);
+    return s2 === key ? f.n : s2;
+  }
+
   function feature(id) {
     for (var i = 0; i < C.FEATURES.length; i++) if (C.FEATURES[i].id === id) return C.FEATURES[i];
     return null;
+  }
+
+  /* Markets that have any localised feature of their own. */
+  var LOCAL_MARKETS = null;
+  function localMarkets() {
+    if (!LOCAL_MARKETS) {
+      LOCAL_MARKETS = [];
+      C.FEATURES.forEach(function (f) {
+        (f.countries || []).forEach(function (c) {
+          if (LOCAL_MARKETS.indexOf(c) === -1) LOCAL_MARKETS.push(c);
+        });
+      });
+    }
+    return LOCAL_MARKETS;
+  }
+
+  /* Every user-facing string in the markup carries a key, so switching
+     language re-renders the whole shell without touching any screen. */
+  function applyStrings(scope) {
+    $$('[data-i18n]', scope).forEach(function (el) {
+      el.textContent = t(el.dataset.i18n);
+    });
+    $$('[data-i18n-ph]', scope).forEach(function (el) {
+      el.setAttribute('placeholder', t(el.dataset.i18nPh));
+    });
+    $$('[data-i18n-aria]', scope).forEach(function (el) {
+      el.setAttribute('aria-label', t(el.dataset.i18nAria));
+    });
   }
 
   /* Static markup opts in with data-faith / data-loc / data-int. */
@@ -105,9 +173,13 @@
       el.classList.toggle('is-off', !ok);
     });
 
+    /* data-loc takes a comma-separated country list, or "global" for markup
+       that should show everywhere the listed markets do not. */
     $$('[data-loc]').forEach(function (el) {
       var want = el.dataset.loc;
-      var ok = want === 'global' ? profile.country !== 'PK' : want === profile.country;
+      var ok = want === 'global'
+        ? !localMarkets().length || localMarkets().indexOf(profile.country) === -1
+        : want.split(',').indexOf(profile.country) !== -1;
       el.classList.toggle('is-off', !ok);
     });
 
@@ -156,25 +228,23 @@
   }
 
   function greetFor(h) {
-    if (h < 5)  return 'Still up';
-    if (h < 12) return 'Good morning';
-    if (h < 17) return 'Good afternoon';
-    if (h < 21) return 'Good evening';
-    return 'Winding down';
+    if (h < 5)  return 'greet.late';
+    if (h < 12) return 'greet.morning';
+    if (h < 17) return 'greet.afternoon';
+    if (h < 21) return 'greet.evening';
+    return 'greet.winddown';
   }
 
   function initHeader() {
     var d = new Date();
     var g = $('#greetText');
-    if (g) g.textContent = greetFor(d.getHours());
-    var long = d.toLocaleDateString('en-GB', { weekday: 'long', day: 'numeric', month: 'long' });
+    if (g) g.textContent = t(greetFor(d.getHours()));
     /* The header also carries the city, so it gets the short form — the long
        one would wrap onto a second line on a 390px screen. */
-    var short = d.toLocaleDateString('en-GB', { weekday: 'short', day: 'numeric', month: 'short' });
     var date = $('#todayDate');
-    if (date) date.textContent = short;
+    if (date) date.textContent = L.dateShort(d);
     var sub = $('#todaySub');
-    if (sub) sub.textContent = profile.islamic ? long + ' · 15 Rabi’ al-Awwal' : long;
+    if (sub) sub.textContent = profile.islamic ? L.dateLong(d) + ' · 15 Rabi’ al-Awwal' : L.dateLong(d);
   }
 
   /* ---------------------------------------------------------
@@ -193,12 +263,12 @@
      Navigation — the tab set itself is personalised
      --------------------------------------------------------- */
   var TAB_META = {
-    home:    { label: 'Home',    icon: 'i-home' },
-    tools:   { label: 'Tools',   icon: 'i-grid' },
-    trains:  { label: 'Trains',  icon: 'i-train' },
-    today:   { label: 'Today',   icon: 'i-sun' },
-    explore: { label: 'Explore', icon: 'i-compass' },
-    profile: { label: 'Profile', icon: 'i-user' }
+    home:    { key: 'nav.home',    icon: 'i-home' },
+    tools:   { key: 'nav.tools',   icon: 'i-grid' },
+    trains:  { key: 'nav.trains',  icon: 'i-train' },
+    today:   { key: 'nav.today',   icon: 'i-sun' },
+    explore: { key: 'nav.explore', icon: 'i-compass' },
+    profile: { key: 'nav.profile', icon: 'i-user' }
   };
 
   function tabOrder() {
@@ -219,7 +289,7 @@
       var m = TAB_META[id];
       return '<button class="tab" data-tab="' + id + '" role="tab" aria-selected="false">' +
         '<svg class="ico" viewBox="0 0 24 24"><use href="#' + m.icon + '"/></svg>' +
-        '<span class="tab__label">' + m.label + '</span></button>';
+        '<span class="tab__label">' + esc(t(m.key)) + '</span></button>';
     }).join('');
 
     /* A screen that is no longer a tab must not stay open. */
@@ -435,7 +505,11 @@
       return '<button class="hero__dot' + (i === 0 ? ' is-active' : '') + '" role="tab" ' +
              'aria-label="Slide ' + (i + 1) + ' of ' + keep.length + '"></button>';
     }).join('');
-    track.scrollLeft = 0;
+    /* scrollLeft 0 is the right-hand end in RTL, which would open the
+       carousel on the last slide. */
+    if (keep.length) {
+      track.scrollLeft = L.dir() === 'rtl' ? track.scrollWidth : 0;
+    }
     bindDots(keep);
   }
 
@@ -497,12 +571,30 @@
      Prayer times — location aware, only ever used when Islamic
      content is on
      --------------------------------------------------------- */
+  /* Where the user actually is: city coordinates when we have them, the
+     country's own point otherwise. */
+  function here() {
+    return SOLAR.coordsFor(L.country(), profile.city);
+  }
+
+  var prayerCache = null;
   function prayerSet() {
-    return C.PRAYERS_BY_COUNTRY[profile.country] || C.PRAYERS_BY_COUNTRY.GB;
+    var pos = here();
+    var key = profile.country + '|' + profile.city + '|' + profile.method + '|' +
+              new Date().toDateString();
+    if (prayerCache && prayerCache.key === key) return prayerCache.list;
+    prayerCache = {
+      key: key,
+      list: SOLAR.prayerTimes({
+        lat: pos.lat, lon: pos.lon, tz: L.country().tz,
+        method: profile.method, date: new Date()
+      })
+    };
+    return prayerCache.list;
   }
 
   function mins(p) { return p.h * 60 + p.m; }
-  function hhmm(p) { return pad2(p.h) + ':' + pad2(p.m); }
+  function hhmm(p) { return L.time(p.h, p.m); }
 
   function prayerState() {
     var list = prayerSet();
@@ -556,8 +648,8 @@
 
     var set = function (id, v) { var el = $(id); if (el) el.textContent = v; };
     set('#heroPrayerName', st.next.name);
-    set('#heroPrayerTime', hhmm(st.next));
-    set('#heroPrayerCity', profile.city);
+    var line = $('#heroPrayerLine');
+    if (line) line.textContent = t('slide.prayer.x', { time: hhmm(st.next), city: profile.city });
     set('#heroCountdown', fmtCountdown(st.toNext));
     set('#ctxPrayerName', st.next.name);
     set('#ctxPrayerTime', hhmm(st.next));
@@ -573,14 +665,15 @@
     if (!host) return;
     var stats = [];
 
+    function unit(u) { return ' <span>' + esc(t('unit.' + u)) + '</span>'; }
     if (profile.islamic) {
-      stats.push({ icon: 'i-flame', value: '12 <span>days</span>', label: 'Prayer streak' });
-      stats.push({ icon: 'i-book', value: '18 <span>min</span>', label: 'Read today' });
+      stats.push({ icon: 'i-flame', value: L.num(12) + unit('days'), label: t('today.prayerStreak') });
+      stats.push({ icon: 'i-book', value: L.num(18) + unit('min'), label: t('today.readToday') });
     } else {
-      stats.push({ icon: 'i-flame', value: '12 <span>days</span>', label: 'Daily streak' });
-      stats.push({ icon: 'i-pulse', value: '4.2 <span>k</span>', label: 'Steps today' });
+      stats.push({ icon: 'i-flame', value: L.num(12) + unit('days'), label: t('today.dailyStreak') });
+      stats.push({ icon: 'i-pulse', value: L.num(4.2) + unit('k'), label: t('today.steps') });
     }
-    stats.push({ icon: 'i-check-circle', value: '2<span>/5</span>', label: 'Tasks done' });
+    stats.push({ icon: 'i-check-circle', value: L.num(2) + '<span>/' + L.num(5) + '</span>', label: t('today.tasksDone') });
 
     host.innerHTML = stats.map(function (s) {
       return '<article class="stat"><span class="stat__icon">' +
@@ -635,7 +728,7 @@
     }).join('');
 
     var sub = $('#agendaSub');
-    if (sub) sub.textContent = profile.islamic ? 'Prayers and events, in order' : 'Events and reminders, in order';
+    if (sub) sub.textContent = t(profile.islamic ? 'today.agendaMuslim' : 'today.agendaGeneral');
   }
 
   function updateDayRing() {
@@ -703,14 +796,14 @@
       return '<button class="tool pressable" data-act="' + f.act + '" data-fid="' + f.id + '">' +
         '<span class="tool__icon' + (accent ? ' tool__icon--accent' : '') + '">' +
           '<svg class="ico" viewBox="0 0 24 24"><use href="#' + f.i + '"/></svg></span>' +
-        '<span class="tool__label">' + esc(f.n) + '</span>' +
+        '<span class="tool__label">' + esc(fname(f)) + '</span>' +
         (f.m ? '<span class="tool__value num"' + (f.id === 'tasbih' ? ' id="tasbeehQuick"' : '') + '>' +
                esc(f.id === 'tasbih' ? String(beads) : f.m) + '</span>' : '') +
       '</button>';
     }).join('');
 
     var sub = $('#quickToolsSub');
-    if (sub) sub.textContent = profile.interests.length ? 'Picked from your interests' : 'The eight you reach for most';
+    if (sub) sub.textContent = t(profile.interests.length ? 'home.quickFromInterests' : 'home.quickDefault');
     renderBeads();
   }
 
@@ -722,10 +815,11 @@
   function renderToolChips() {
     var host = $('#toolChips');
     if (!host) return;
-    var chips = [{ id: 'foryou', label: 'For you', icon: 'i-sparkles' }, { id: 'all', label: 'All' }];
+    var chips = [{ id: 'foryou', label: t('tools.forYou'), icon: 'i-sparkles' },
+                 { id: 'all', label: t('a.all') }];
     C.CATEGORIES.forEach(function (cat) {
       if (cat.faith && !profile.islamic) return;
-      chips.push({ id: cat.id, label: cat.label });
+      chips.push({ id: cat.id, label: t('cat.' + cat.id) });
     });
     if (!chips.some(function (c) { return c.id === filter; })) filter = 'foryou';
 
@@ -746,7 +840,7 @@
       'data-ints="' + esc((f.ints || []).join(' ')) + '">' +
       badge +
       '<span class="cat-tool__icon"><svg class="ico" viewBox="0 0 24 24"><use href="#' + f.i + '"/></svg></span>' +
-      '<span class="cat-tool__label">' + esc(f.n) + '</span>' +
+      '<span class="cat-tool__label">' + esc(fname(f)) + '</span>' +
       '<span class="cat-tool__meta">' + esc(f.m || '') + '</span></button>';
   }
 
@@ -762,16 +856,22 @@
       return '<section class="cat" data-cat="' + cat.id + '">' +
         '<div class="cat__head">' +
           '<span class="cat__dot"><svg class="ico" viewBox="0 0 24 24"><use href="#' + cat.icon + '"/></svg></span>' +
-          '<div><h2 class="cat__title">' + esc(cat.label) + '</h2>' +
-          '<p class="cat__sub">' + esc(cat.sub) + '</p></div>' +
+          '<div><h2 class="cat__title">' + esc(t('cat.' + cat.id)) + '</h2>' +
+          '<p class="cat__sub">' + esc(t('cat.' + cat.id + 'Sub')) + '</p></div>' +
           '<span class="cat__count">' + items.length + '</span>' +
         '</div>' +
         '<div class="cat-grid">' + items.map(toolCard).join('') + '</div>' +
       '</section>';
     }).join('');
 
-    var count = $('#toolCount');
-    if (count) count.textContent = list.length;
+    var sub = $('#toolSub');
+    if (sub) sub.textContent = t('tools.sub', { n: L.num(list.length) });
+    var ph = $('#toolSearch');
+    if (ph) {
+      ph.setAttribute('placeholder', t('tools.searchPlaceholder', {
+        example: profile.country === 'PK' ? 'petrol' : 'currency'
+      }));
+    }
     var onbCount = $('#onbToolCount');
     if (onbCount) onbCount.textContent = C.FEATURES.length;
 
@@ -813,14 +913,14 @@
     var empty = $('#toolEmpty');
     if (empty) {
       empty.classList.toggle('is-shown', !anyVisible);
-      var t = $('.empty__title', empty), x = $('.empty__text', empty);
-      if (t && x) {
+      var ttl = $('.empty__title', empty), x = $('.empty__text', empty);
+      if (ttl && x) {
         if (!q && filter === 'foryou') {
-          t.textContent = 'Nothing here yet';
-          x.textContent = 'Add a few more interests, or browse the full list under All.';
+          ttl.textContent = t('tools.nothingYet');
+          x.textContent = t('tools.nothingYetSub');
         } else {
-          t.textContent = 'No tools match';
-          x.textContent = 'Try a different word — or browse a category above.';
+          ttl.textContent = t('tools.noMatch');
+          x.textContent = t('tools.noMatchSub');
         }
       }
     }
@@ -856,7 +956,7 @@
     host.innerHTML = items.map(function (f) {
       return '<button class="recent pressable" data-act="' + f.act + '" data-fid="' + f.id + '">' +
         '<span class="recent__icon"><svg class="ico" viewBox="0 0 24 24"><use href="#' + f.i + '"/></svg></span>' +
-        '<span class="recent__label">' + esc(f.n) + '</span></button>';
+        '<span class="recent__label">' + esc(fname(f)) + '</span></button>';
     }).join('');
   }
 
@@ -876,8 +976,8 @@
   function searchIndex() {
     var out = visibleFeatures().map(function (f) {
       var cat = C.CATEGORIES.filter(function (c) { return c.id === f.c; })[0];
-      return { n: f.n, sub: cat ? cat.label : 'Tool', i: f.i, act: f.act, fid: f.id,
-               hay: (f.n + ' ' + (f.kw || '') + ' ' + (cat ? cat.label : '')).toLowerCase() };
+      return { n: fname(f), sub: cat ? t('cat.' + cat.id) : '', i: f.i, act: f.act, fid: f.id,
+               hay: (f.n + ' ' + fname(f) + ' ' + (f.kw || '')).toLowerCase() };
     });
     EXTRA_INDEX.forEach(function (x) {
       if (x.faith && !profile.islamic) return;
@@ -950,7 +1050,7 @@
       rec.innerHTML = items.map(function (f) {
         return '<button class="list-row pressable" data-act="' + f.act + '" data-fid="' + f.id + '">' +
           '<span class="list-row__icon"><svg class="ico" viewBox="0 0 24 24"><use href="#' + f.i + '"/></svg></span>' +
-          '<span class="list-row__body"><span class="list-row__title">' + esc(f.n) + '</span>' +
+          '<span class="list-row__body"><span class="list-row__title">' + esc(fname(f)) + '</span>' +
           '<span class="list-row__sub">' + esc(f.m || '') + '</span></span>' +
           '<span class="list-row__end"><svg class="ico" viewBox="0 0 24 24"><use href="#i-chev-r"/></svg></span></button>';
       }).join('');
@@ -974,55 +1074,74 @@
      Content renderers
      --------------------------------------------------------- */
   function renderWeather() {
-    var w = C.WEATHER[profile.country] || C.WEATHER.GB;
+    var w = C.weatherFor(profile.country, L.country().tz);
     var set = function (id, v) { var el = $(id); if (el) el.textContent = v; };
     set('#weatherCity', profile.city);
     set('#appbarCity', profile.city);
     set('#qiblaCity', profile.city);
-    set('#weatherDesc', w.desc + ' · feels like ' + w.feels + '°');
-    set('#weatherRain', w.rain + '%');
-    set('#weatherWind', w.wind);
+    set('#prayerSheetCity', profile.city);
+    set('#weatherDesc', w.desc + ' · ' + L.temp(w.feels));
+    set('#weatherRain', L.num(w.rain / 100, { style: 'percent' }));
+    set('#weatherWind', L.speed(w.wind));
     set('#ctxWeather', w.desc.split(' · ')[0]);
-    var t = $('#weatherTemp');
-    if (t) t.innerHTML = w.temp + '<sup>°</sup>';
+    var el = $('#weatherTemp');
+    if (el) el.innerHTML = esc(L.temp(w.temp)).replace('°', '<sup>°</sup>');
     var ct = $('#ctxTemp');
-    if (ct) ct.textContent = w.temp + '°';
+    if (ct) ct.textContent = L.temp(w.temp);
     var icon = $('#weatherIcon use');
     if (icon) icon.setAttribute('href', '#' + w.icon);
     var sunset = $('#weatherSunset');
     if (sunset) {
       var list = prayerSet();
-      sunset.textContent = hhmm(list.filter(function (p) { return p.name === 'Maghrib'; })[0] || list[4]);
+      var mag = list.filter(function (x) { return x.name === 'Maghrib'; })[0] || list[4];
+      sunset.textContent = hhmm(mag);
     }
     /* Keep the catalogue in step, or the tool card would still claim 34°
        in New York. */
     var wf = feature('weather');
-    if (wf) wf.m = w.temp + '° ' + w.desc.split(' · ')[0];
+    if (wf) wf.m = L.temp(w.temp) + ' ' + w.desc.split(' · ')[0];
   }
 
-  /* Currency is a country concern, so the global money surfaces localise with
-     it — a Karachi grocery total must not read as £18,900 in London. */
+  /* Every money figure is a share of a monthly budget, so the numbers stay
+     believable in Karachi, Tokyo and New York alike. Converting one country's
+     figures at the exchange rate would not. */
+  var SPEND = { spent: 0.53, groceries: 0.235, fuel: 0.14, bills: 0.15, ledger: 0.106, subs: 0.052 };
+
+  function budget() {
+    var b = C.BUDGET[profile.country];
+    if (b !== undefined) return b;
+    /* No local figure: fall back to a typical 300 USD, converted. */
+    return 300 * (L.RATES[L.currencyCode()] || 1);
+  }
+
   function renderMoney() {
-    var m = C.MONEY[profile.country] || C.MONEY.US;
+    var b = budget();
+    var pct = Math.round(SPEND.spent * 100);
 
     $$('[data-money]').forEach(function (el) {
       var k = el.dataset.money;
-      if (k === 'pct') el.textContent = m.pct + '%';
-      else if (k === 'to') el.textContent = m.to;
-      else if (k === 'rate') el.textContent = m.rate;
-      else el.textContent = m.cur + m[k];
+      if (k === 'pct') el.textContent = L.num(SPEND.spent, { style: 'percent' });
+      else if (k === 'budget') el.textContent = L.moneyRaw(b, null, 0);
+      else if (k === 'to') el.textContent = L.currencyCode();
+      else if (k === 'rate') el.textContent = L.num(L.RATES[L.currencyCode()] || 1, { maximumFractionDigits: 2 });
+      else if (SPEND[k] !== undefined) el.textContent = L.moneyRaw(Math.round(b * SPEND[k]), null, 0);
     });
 
     var note = $('#fxNote');
-    if (note) note.textContent = '1 USD = ' + m.rate + ' ' + m.to + ' · open market ' + m.open;
+    if (note) {
+      var code = L.currencyCode();
+      var base = code === 'USD' ? 'EUR' : code;
+      note.textContent = '1 USD = ' +
+        L.num(L.RATES[base] || 1, { maximumFractionDigits: 2 }) + ' ' + base;
+    }
 
     var bar = $('#expensesBar');
-    if (bar) bar.dataset.fill = m.pct;
+    if (bar) bar.dataset.fill = pct;
 
     var ledger = feature('ledger');
-    if (ledger) ledger.m = m.cur + m.ledger + ' out';
+    if (ledger) ledger.m = L.moneyRaw(Math.round(b * SPEND.ledger), null, 0);
     var subs = feature('subs');
-    if (subs) subs.m = m.cur + m.subs + '/mo';
+    if (subs) subs.m = L.moneyRaw(Math.round(b * SPEND.subs), null, 0);
   }
 
   function syncFeatureMeta() {
@@ -1033,19 +1152,23 @@
     }
   }
 
+  function qiblaDeg() {
+    var pos = here();
+    return Math.round(SOLAR.qibla(pos.lat, pos.lon));
+  }
+
   function renderQibla() {
-    var deg = C.QIBLA_BY_COUNTRY[profile.country] || 119;
-    var compass = deg > 337 || deg <= 22 ? 'N' : deg <= 67 ? 'NE' : deg <= 112 ? 'E' : deg <= 157 ? 'SE'
-                : deg <= 202 ? 'S' : deg <= 247 ? 'SW' : deg <= 292 ? 'W' : 'NW';
-    var d = $('#qiblaDeg'); if (d) d.textContent = deg + '° ' + compass;
-    var s = $('#qiblaSub'); if (s) s.textContent = deg;
-    var f = feature('qibla'); if (f) f.m = deg + '° ' + compass;
+    var deg = qiblaDeg();
+    var label = L.num(deg) + '° ' + SOLAR.compassPoint(deg);
+    var d = $('#qiblaDeg'); if (d) d.textContent = label;
+    var s = $('#qiblaSub'); if (s) s.textContent = L.num(deg);
+    var f = feature('qibla'); if (f) f.m = label;
   }
 
   function spinQibla() {
     var needle = $('#qiblaNeedle');
     if (!needle) return;
-    var deg = C.QIBLA_BY_COUNTRY[profile.country] || 119;
+    var deg = qiblaDeg();
     needle.style.transition = 'none';
     needle.style.transform = 'rotate(-40deg)';
     requestAnimationFrame(function () {
@@ -1273,8 +1396,8 @@
             '<button type="button" class="faithtoggle' + (faithOpen ? ' is-on' : '') + '" data-faithtoggle aria-pressed="' + faithOpen + '">' +
               '<span class="faithtoggle__icon"><svg class="ico" viewBox="0 0 24 24"><use href="#i-moon-star"/></svg></span>' +
               '<span class="faithtoggle__body">' +
-                '<span class="faithtoggle__title">Islamic features</span>' +
-                '<span class="faithtoggle__sub">Prayer times, Qur’an, duas, zakat and Ramadan</span>' +
+                '<span class="faithtoggle__title">' + esc(t('pers.islamic')) + '</span>' +
+                '<span class="faithtoggle__sub">' + esc(t('pers.islamicSub')) + '</span>' +
               '</span>' +
               '<span class="switch' + (faithOpen ? ' is-on' : '') + '"><span class="switch__knob"></span></span>' +
             '</button>' +
@@ -1285,7 +1408,7 @@
         }
         var items = liveItems(g);
         if (!items.length) return '';
-        return '<div class="pickgroup"><p class="pickgroup__label">' + esc(g.label) + '</p>' +
+        return '<div class="pickgroup"><p class="pickgroup__label">' + esc(t('ig.' + g.id)) + '</p>' +
           '<div class="picker">' + items.map(pickBtn).join('') + '</div></div>';
       }).join('');
       sync();
@@ -1307,8 +1430,8 @@
       });
       if (countEl) {
         countEl.innerHTML = sel.size < PICK_MIN
-          ? '<b>' + sel.size + '</b> of ' + PICK_MIN + ' minimum'
-          : '<b>' + sel.size + '</b> of ' + PICK_MAX + ' selected';
+          ? t('onb.minimum', { n: '<b>' + L.num(sel.size) + '</b>', min: L.num(PICK_MIN) })
+          : t('onb.selected', { n: '<b>' + L.num(sel.size) + '</b>', max: L.num(PICK_MAX) });
       }
       if (onChange) onChange(sel.size >= PICK_MIN, Array.from(sel), faithOpen);
     }
@@ -1376,47 +1499,271 @@
     }
   }
 
-  function renderCountryChoice() {
-    var host = $('#setCountry');
-    if (!host) return;
-    host.innerHTML = C.COUNTRIES.map(function (c) {
-      return '<button data-country="' + c.code + '"' + (c.code === draft.country ? ' class="is-active"' : '') + '>' +
-        esc(c.name) + '</button>';
-    }).join('');
-    var v = $('#setCityValue');
-    if (v) v.textContent = draft.city;
+  /* ---------------------------------------------------------
+     Location picker — country → region → city, searchable across
+     the whole world. One component, mounted in onboarding and in
+     Personalisation, so both stay identical.
+     --------------------------------------------------------- */
+  function makeLocationPicker(host, draftRef, opts) {
+    if (!host) return null;
+    opts = opts || {};
+    var stage = opts.stage || 'country';
+    var query = '';
+
+    function countryRow(code, active) {
+      var c = GEO.get(code);
+      return '<button class="locrow pressable' + (active ? ' is-on' : '') + '" data-pick-country="' + code + '">' +
+        '<span class="locrow__code">' + esc(code) + '</span>' +
+        '<span class="locrow__name">' + esc(L.countryName(code)) + '</span>' +
+        '<span class="locrow__meta">' + esc(c.currency) + '</span>' +
+      '</button>';
+    }
+
+    function section(labelKey, codes, activeCode) {
+      if (!codes.length) return '';
+      return '<p class="locgroup">' + esc(t(labelKey)) + '</p>' +
+             '<div class="loclist">' + codes.map(function (c) {
+               return countryRow(c, c === activeCode);
+             }).join('') + '</div>';
+    }
+
+    function renderCountry() {
+      var d = draftRef();
+      var q = query.trim().toLowerCase();
+      var body = '';
+
+      if (q) {
+        var hits = GEO.COUNTRIES.filter(function (c) {
+          return L.countryName(c.code).toLowerCase().indexOf(q) !== -1 ||
+                 c.code.toLowerCase() === q ||
+                 c.currency.toLowerCase() === q;
+        }).slice(0, 60);
+        body = hits.length
+          ? '<div class="loclist">' + hits.map(function (c) { return countryRow(c.code, c.code === d.country); }).join('') + '</div>'
+          : '<p class="locempty">' + esc(t('search.nothing')) + '</p>';
+      } else {
+        var recent = (profile.recentCountries || []).filter(function (c) { return GEO.get(c); }).slice(0, 4);
+        body += section('pers.recent', recent, d.country);
+        body += section('pers.popular', GEO.POPULAR, d.country);
+        body += section('pers.allCountries',
+          GEO.COUNTRIES.map(function (c) { return c.code; })
+            .sort(function (a, b) { return L.countryName(a).localeCompare(L.countryName(b), L.lang()); }),
+          d.country);
+      }
+
+      host.innerHTML =
+        '<label class="search search--sm">' +
+          '<svg class="ico" viewBox="0 0 24 24"><use href="#i-search"/></svg>' +
+          '<input type="search" class="locsearch" value="' + esc(query) + '" ' +
+          'placeholder="' + esc(t('pers.searchCountries')) + '" aria-label="' + esc(t('pers.searchCountries')) + '">' +
+        '</label>' +
+        '<div class="locscroll">' + body + '</div>';
+    }
+
+    function renderCity() {
+      var d = draftRef();
+      var c = GEO.get(d.country);
+      var q = query.trim().toLowerCase();
+      var body = '';
+
+      function cityRow(city, region) {
+        return '<button class="locrow pressable' + (city === d.city ? ' is-on' : '') + '" ' +
+          'data-pick-city="' + esc(city) + '"' + (region ? ' data-pick-region="' + esc(region) + '"' : '') + '>' +
+          '<span class="locrow__name">' + esc(city) + '</span>' +
+          (region ? '<span class="locrow__meta">' + esc(region) + '</span>' : '') +
+        '</button>';
+      }
+
+      if (c.regions && !q) {
+        Object.keys(c.regions).forEach(function (r) {
+          body += '<p class="locgroup">' + esc(r) + '</p><div class="loclist">' +
+            c.regions[r].map(function (city) { return cityRow(city, r); }).join('') + '</div>';
+        });
+      } else {
+        var all = GEO.citiesOf(d.country);
+        var hits = q ? all.filter(function (x) { return x.toLowerCase().indexOf(q) !== -1; }) : all;
+        body = hits.length
+          ? '<div class="loclist">' + hits.map(function (city) {
+              return cityRow(city, GEO.regionOf(d.country, city));
+            }).join('') + '</div>'
+          : '<p class="locempty">' + esc(t('search.nothing')) + '</p>';
+      }
+
+      host.innerHTML =
+        (opts.stage ? '' :
+          '<button class="locback pressable" data-pick-back>' +
+            '<svg class="ico" viewBox="0 0 24 24"><use href="#i-chev-l"/></svg>' +
+            esc(L.countryName(d.country)) +
+          '</button>') +
+        '<label class="search search--sm">' +
+          '<svg class="ico" viewBox="0 0 24 24"><use href="#i-search"/></svg>' +
+          '<input type="search" class="locsearch" value="' + esc(query) + '" ' +
+          'placeholder="' + esc(t('pers.searchCities')) + '" aria-label="' + esc(t('pers.searchCities')) + '">' +
+        '</label>' +
+        '<button class="locrow locrow--action pressable" data-pick-locate>' +
+          '<span class="locrow__icon"><svg class="ico" viewBox="0 0 24 24"><use href="#i-navigation"/></svg></span>' +
+          '<span class="locrow__name">' + esc(t('pers.useLocation')) + '</span>' +
+        '</button>' +
+        '<div class="locscroll">' + body + '</div>';
+    }
+
+    function render() {
+      if (stage === 'city') renderCity(); else renderCountry();
+    }
+
+    host.addEventListener('input', function (e) {
+      if (!e.target.classList.contains('locsearch')) return;
+      query = e.target.value;
+      var pos = e.target.selectionStart;
+      render();
+      var input = $('.locsearch', host);
+      if (input) { input.focus(); try { input.setSelectionRange(pos, pos); } catch (err) {} }
+    });
+
+    host.addEventListener('click', function (e) {
+      var cb = e.target.closest('[data-pick-country]');
+      if (cb) {
+        var d = draftRef();
+        d.country = cb.dataset.pickCountry;
+        var cities = GEO.citiesOf(d.country);
+        d.city = cities[0] || '';
+        d.region = GEO.regionOf(d.country, d.city);
+        query = '';
+        if (opts.stage) { render(); }
+        else { stage = 'city'; render(); }
+        if (opts.onChange) opts.onChange(d);
+        return;
+      }
+      var cy = e.target.closest('[data-pick-city]');
+      if (cy) {
+        var d2 = draftRef();
+        d2.city = cy.dataset.pickCity;
+        d2.region = cy.dataset.pickRegion || GEO.regionOf(d2.country, d2.city);
+        render();
+        if (opts.onChange) opts.onChange(d2);
+        return;
+      }
+      if (e.target.closest('[data-pick-back]')) { stage = 'country'; query = ''; render(); return; }
+      if (e.target.closest('[data-pick-locate]')) { useCurrentLocation(draftRef, function () { render(); if (opts.onChange) opts.onChange(draftRef()); }); }
+    });
+
+    render();
+    return {
+      render: render,
+      reset: function (st) { stage = st || opts.stage || 'country'; query = ''; render(); }
+    };
   }
 
+  /* Optional, never required: the user can always set location by hand. */
+  function useCurrentLocation(draftRef, done) {
+    if (!navigator.geolocation) { toast(t('pers.useLocation') + ' — unavailable'); return; }
+    toast(t('pers.useLocation') + '…');
+    navigator.geolocation.getCurrentPosition(function (pos) {
+      var best = null, bestD = Infinity;
+      GEO.COUNTRIES.forEach(function (c) {
+        var dLat = c.lat - pos.coords.latitude, dLon = c.lon - pos.coords.longitude;
+        var dist = dLat * dLat + dLon * dLon;
+        if (dist < bestD) { bestD = dist; best = c; }
+      });
+      if (best) {
+        var d = draftRef();
+        d.country = best.code;
+        d.city = GEO.citiesOf(best.code)[0] || '';
+        d.region = GEO.regionOf(best.code, d.city);
+        done();
+      }
+    }, function () {
+      toast('Location unavailable — choose it by hand');
+    }, { timeout: 8000 });
+  }
+
+  /* ---- Personalisation sheet ---- */
+
+  function syncLocationRows() {
+    var cn = $('#setCountryValue');
+    if (cn) cn.textContent = L.countryName(draft.country);
+    var rg = $('#setRegionRow');
+    if (rg) rg.hidden = !draft.region;
+    var rv = $('#setRegionValue');
+    if (rv) rv.textContent = draft.region || '';
+    var cv = $('#setCityValue');
+    if (cv) cv.textContent = draft.city;
+  }
+
+  function syncFormatRows() {
+    var set = function (id, v) { var el = $(id); if (el) el.textContent = v; };
+    set('#setLangValue', L.languageName(draft.lang) || draft.lang);
+    set('#setUnitsValue', draft.units === 'auto' ? t('pers.unitsAuto')
+      : draft.units === 'imperial' ? t('pers.unitsImperial') : t('pers.unitsMetric'));
+    set('#setCurrencyValue', draft.currency === 'auto'
+      ? t('pers.currencyAuto', { code: (GEO.get(draft.country) || {}).currency || '' })
+      : draft.currency);
+    set('#setClockValue', draft.clock === 'auto' ? t('pers.unitsAuto')
+      : draft.clock === '12' ? t('pers.time12') : t('pers.time24'));
+  }
+
+  var locPicker = null;
+
   function hydratePersonalise() {
-    draft = { country: profile.country, city: profile.city, islamic: profile.islamic };
+    draft = {
+      country: profile.country, region: profile.region, city: profile.city,
+      islamic: profile.islamic, lang: profile.lang, units: profile.units,
+      currency: profile.currency, clock: profile.clock
+    };
     setPicker.set(profile.interests.slice(), profile.islamic);
-    renderCountryChoice();
+    if (!locPicker) {
+      locPicker = makeLocationPicker($('#setLocation'), function () { return draft; }, {
+        onChange: function () { syncLocationRows(); setPicker.refresh(); }
+      });
+    } else {
+      locPicker.reset('country');
+    }
+    syncLocationRows();
+    syncFormatRows();
     syncIslamicRow();
     for (var k in profile.prefs) {
       var row = $('[data-pref="' + k + '"]');
-      if (row) { var s = $('.switch', row); if (s) s.classList.toggle('is-on', !!profile.prefs[k]); }
+      if (row) { var sw = $('.switch', row); if (sw) sw.classList.toggle('is-on', !!profile.prefs[k]); }
     }
   }
 
+  /* Cycle-through rows: small option sets do not deserve a whole sheet. */
+  function cycle(list, current) {
+    var at = list.indexOf(current);
+    return list[(at + 1) % list.length];
+  }
+
   document.addEventListener('click', function (e) {
-    var cb = e.target.closest('#setCountry [data-country]');
-    if (cb) {
-      draft.country = cb.dataset.country;
-      var c = C.COUNTRIES.filter(function (x) { return x.code === draft.country; })[0];
-      draft.city = c ? c.cities[0] : draft.city;
-      renderCountryChoice();
-      setPicker.refresh();
+    if (e.target.closest('#setLangRow')) {
+      var codes = I18N.LANGS.map(function (x) { return x.code; });
+      draft.lang = cycle(codes, draft.lang);
+      /* Preview the language immediately — it is the one setting you cannot
+         judge without seeing it. */
+      var keep = profile.lang;
+      profile.lang = draft.lang;
+      applyLanguage();
+      applyStrings();
+      syncFormatRows();
+      syncLocationRows();
+      if (locPicker) locPicker.render();
+      profile.lang = keep;
+      profile.lang = draft.lang;
       return;
     }
-    if (e.target.closest('#setCityRow')) {
-      var cc = C.COUNTRIES.filter(function (x) { return x.code === draft.country; })[0];
-      if (cc) {
-        var at = cc.cities.indexOf(draft.city);
-        draft.city = cc.cities[(at + 1) % cc.cities.length];
-        var v = $('#setCityValue');
-        if (v) v.textContent = draft.city;
-      }
-      return;
+    if (e.target.closest('#setUnitsRow')) {
+      draft.units = cycle(['auto', 'metric', 'imperial'], draft.units);
+      syncFormatRows(); return;
+    }
+    if (e.target.closest('#setCurrencyRow')) {
+      var cur = (GEO.get(draft.country) || {}).currency;
+      draft.currency = cycle(['auto', 'USD', 'EUR', 'GBP', cur].filter(function (v, i, a) {
+        return v && a.indexOf(v) === i;
+      }), draft.currency);
+      syncFormatRows(); return;
+    }
+    if (e.target.closest('#setClockRow')) {
+      draft.clock = cycle(['auto', '12', '24'], draft.clock);
+      syncFormatRows(); return;
     }
     if (e.target.closest('#setIslamicRow')) {
       draft.islamic = !draft.islamic;
@@ -1431,9 +1778,22 @@
   if (setSave) {
     setSave.addEventListener('click', function () {
       profile.interests = setPicker.get();
+      if (profile.country !== draft.country) {
+        profile.recentCountries = [profile.country].concat(
+          (profile.recentCountries || []).filter(function (c) { return c !== profile.country; })
+        ).slice(0, 4);
+      }
+      /* Only visibility and formatting change here. Notes, tasks, expenses and
+         every other record are untouched by design. */
       profile.country = draft.country;
+      profile.region = draft.region;
       profile.city = draft.city;
       profile.islamic = draft.islamic;
+      profile.lang = draft.lang;
+      profile.units = draft.units;
+      profile.currency = draft.currency;
+      profile.clock = draft.clock;
+      prayerCache = null;
       syncFaithFromInterests();
       /* Anything now hidden must not linger in history. */
       profile.recents = profile.recents.filter(function (id) {
@@ -1442,7 +1802,7 @@
       saveProfile();
       renderAll();
       sheetClose();
-      toast('Your app has been updated');
+      toast(t('pers.saved'));
     });
   }
 
@@ -1466,19 +1826,26 @@
       label.textContent = profile.interests.length
         ? profile.interests.slice(0, 3).map(interestLabel).join(', ') +
           (profile.interests.length > 3 ? ' +' + (profile.interests.length - 3) + ' more' : '')
-        : 'Shapes your home, tools and reading';
+        : t('profile.interestsSub');
     }
 
-    var country = C.COUNTRIES.filter(function (c) { return c.code === profile.country; })[0];
     var ctry = $('#profileCountry');
-    if (ctry) ctry.textContent = (country ? country.name : profile.country) + ' · ' + profile.city;
+    if (ctry) {
+      ctry.textContent = [L.countryName(profile.country), profile.region, profile.city]
+        .filter(Boolean).join(' · ');
+    }
+    var langRow = $('#profileLangValue');
+    if (langRow) {
+      langRow.textContent = (L.languageName(L.lang()) || L.lang()) + ' · ' +
+        L.currencyCode() + ' · ' + (L.unitSystem() === 'imperial' ? t('pers.unitsImperial') : t('pers.unitsMetric'));
+    }
 
     var content = $('#profileContent');
     if (content) {
-      var bits = [profile.islamic ? 'Islamic content on' : 'Islamic content off'];
-      if (profile.prefs.news) bits.push('news');
-      if (profile.prefs.cricket) bits.push('sport');
-      if (profile.prefs.finance) bits.push('rates');
+      var bits = [t('pers.islamic') + (profile.islamic ? ' ✓' : ' ✕')];
+      if (profile.prefs.news) bits.push(t('pers.news'));
+      if (profile.prefs.cricket) bits.push(t('pers.sport'));
+      if (profile.prefs.finance) bits.push(t('pers.finance'));
       content.textContent = bits.join(' · ');
     }
 
@@ -1494,14 +1861,16 @@
       : 'English · اردو and العربية available';
 
     var exploreSub = $('#exploreSub');
-    if (exploreSub) exploreSub.textContent = profile.country === 'PK'
-      ? 'Local services, scores and reading'
-      : 'Weather, reading and what’s around you';
+    if (exploreSub) {
+      exploreSub.textContent = t(localMarkets().indexOf(profile.country) !== -1
+        ? 'explore.subLocal' : 'explore.subGlobal');
+    }
 
     var glance = $('#glanceSub');
-    if (glance) glance.textContent = profile.islamic
-      ? 'Prayer, reading and what’s next'
-      : 'What matters in the next few hours';
+    if (glance) glance.textContent = t(profile.islamic ? 'home.glanceMuslim' : 'home.glanceGeneral');
+
+    var wsub = $('#weatherSub');
+    if (wsub) wsub.textContent = t('explore.weatherSub', { city: profile.city, n: L.num(4) });
   }
 
   /* Explore stops being a tab in Pakistan, so it needs a way back. */
@@ -1523,6 +1892,9 @@
      Render everything from the profile
      --------------------------------------------------------- */
   function renderAll() {
+    /* Language first: everything below renders through t(). */
+    applyLanguage();
+    applyStrings();
     applyVisibility();
     /* Metadata first — the tool cards below read it. */
     renderWeather();
@@ -1556,38 +1928,28 @@
   var onbBack = $('#onbBack');
   var onbSkip = $('#onbSkip');
   var onbStep = 0;
-  var onbDraft = { country: 'PK', city: 'Karachi' };
+  var onbDraft = { country: 'PK', region: 'Islamabad Capital Territory', city: 'Islamabad' };
 
-  function renderOnbCountry() {
-    var host = $('#onbCountry');
-    if (!host) return;
-    host.innerHTML = C.COUNTRIES.map(function (c) {
-      return '<button type="button" class="countrycard' + (c.code === onbDraft.country ? ' is-on' : '') + '" data-onbcountry="' + c.code + '">' +
-        '<span class="countrycard__code">' + esc(c.code) + '</span>' +
-        '<span class="countrycard__name">' + esc(c.name) + '</span></button>';
-    }).join('');
+  var onbCountryPicker = null, onbCityPicker = null;
 
-    var cities = (C.COUNTRIES.filter(function (c) { return c.code === onbDraft.country; })[0] || {}).cities || [];
-    var cityHost = $('#onbCity');
-    if (cityHost) {
-      cityHost.innerHTML = cities.map(function (city) {
-        return '<button type="button"' + (city === onbDraft.city ? ' class="is-active"' : '') + ' data-onbcity="' + esc(city) + '">' + esc(city) + '</button>';
-      }).join('');
-    }
+  function mountOnbCountry() {
+    if (!onbCountryPicker) {
+      onbCountryPicker = makeLocationPicker($('#onbCountry'), function () { return onbDraft; }, {
+        stage: 'country',
+        onChange: function () { mountOnbCity(); }
+      });
+    } else { onbCountryPicker.render(); }
   }
 
-  document.addEventListener('click', function (e) {
-    var cb = e.target.closest('[data-onbcountry]');
-    if (cb) {
-      onbDraft.country = cb.dataset.onbcountry;
-      var c = C.COUNTRIES.filter(function (x) { return x.code === onbDraft.country; })[0];
-      onbDraft.city = c ? c.cities[0] : onbDraft.city;
-      renderOnbCountry();
-      return;
-    }
-    var cy = e.target.closest('[data-onbcity]');
-    if (cy) { onbDraft.city = cy.dataset.onbcity; renderOnbCountry(); }
-  });
+  function mountOnbCity() {
+    var host = $('#onbCity');
+    if (!host) return;
+    if (!onbCityPicker) {
+      onbCityPicker = makeLocationPicker(host, function () { return onbDraft; }, { stage: 'city' });
+    } else { onbCityPicker.reset('city'); }
+    var label = $('#onbCityCountry');
+    if (label) label.textContent = L.countryName(onbDraft.country);
+  }
 
   function onbShow(i, back) {
     i = Math.max(0, Math.min(onbSteps.length - 1, i));
@@ -1603,9 +1965,10 @@
     onbBack.disabled = i === 0;
     onbSkip.disabled = i === onbSteps.length - 1;
 
-    if (i === 3) renderOnbCountry();
-    if (i === 4 && onbPicker) onbPicker.refresh();
-    if (i === 5) {
+    if (i === 3) mountOnbCountry();
+    if (i === 4) mountOnbCity();
+    if (i === 5 && onbPicker) onbPicker.refresh();
+    if (i === 6) {
       var loc = $('#onbLocSub');
       if (loc) loc.textContent = profile.islamic
         ? 'For prayer times, Qibla, weather and nearby places'
@@ -1641,7 +2004,9 @@
     profile.interests = list;
     profile.islamic = !!faith;
     profile.country = onbDraft.country;
+    profile.region = onbDraft.region;
     profile.city = onbDraft.city;
+    prayerCache = null;
     syncFaithFromInterests();
     saveProfile();
     renderAll();
@@ -1654,7 +2019,7 @@
 
   function onbStart() {
     if (!onb) return;
-    onbDraft = { country: profile.country, city: profile.city };
+    onbDraft = { country: profile.country, region: profile.region, city: profile.city };
     if (onbPicker) onbPicker.set(profile.interests.slice(), profile.islamic);
     onb.hidden = false;
     onb.classList.remove('is-leaving');
@@ -1672,8 +2037,14 @@
 
     $$('[data-onb-next]').forEach(function (b) {
       b.addEventListener('click', function () {
-        /* The country step commits early so the picker can be local. */
-        if (onbStep === 3) { profile.country = onbDraft.country; profile.city = onbDraft.city; }
+        /* Location commits before the interest step so the picker can drop
+           interests that lead nowhere in this country. */
+        if (onbStep === 4) {
+          profile.country = onbDraft.country;
+          profile.region = onbDraft.region;
+          profile.city = onbDraft.city;
+          prayerCache = null;
+        }
         onbShow(onbStep + 1);
       });
     });
@@ -1723,7 +2094,7 @@
       var dx = e.changedTouches[0].clientX - sx2;
       var dy = e.changedTouches[0].clientY - sy2;
       if (Math.abs(dx) < 56 || Math.abs(dy) > Math.abs(dx)) return;
-      if (dx < 0 && onbStep < onbSteps.length - 1 && onbStep !== 4) onbShow(onbStep + 1);
+      if (dx < 0 && onbStep < onbSteps.length - 1 && onbStep !== 5) onbShow(onbStep + 1);
       if (dx > 0 && onbStep > 0) onbShow(onbStep - 1, true);
     }, { passive: true });
 
@@ -1733,6 +2104,245 @@
     var replay = $('#replayTour');
     if (replay) replay.addEventListener('click', function () { sheetClose(); onbStart(); });
   }
+
+  /* ---------------------------------------------------------
+     Share cards
+     Shareable content leaves the app as a picture, not as plain
+     text. Drawn on a canvas so the export is a real PNG and so
+     Arabic and Urdu shape and align correctly.
+     --------------------------------------------------------- */
+  var SHARE_CONTENT = {
+    ayah: {
+      kind: 'quran',
+      arabic: 'أَلَا بِذِكْرِ ٱللَّهِ تَطْمَئِنُّ ٱلْقُلُوبُ',
+      text: 'Truly, it is in the remembrance of God that hearts find rest.',
+      source: 'Ar-Ra’d 13:28'
+    },
+    hadith: {
+      kind: 'hadith',
+      text: 'The most beloved deeds to God are those done consistently, even if they are few.',
+      source: 'Sahih al-Bukhari 6464'
+    },
+    dua: {
+      kind: 'dua',
+      arabic: 'رَبَّنَا آتِنَا فِي الدُّنْيَا حَسَنَةً',
+      text: 'Our Lord, give us good in this world.',
+      source: 'Al-Baqarah 2:201'
+    },
+    quote: {
+      kind: 'quote',
+      text: 'Small things done consistently beat big things done occasionally.',
+      source: 'On building habits'
+    },
+    reminder: {
+      kind: 'reminder',
+      text: 'A quiet minute now is worth an hour later.',
+      source: 'Lume'
+    }
+  };
+
+  var THEMES = {
+    quran:    ['#1B2A5E', '#3E4E9E', '#FFE9B8'],
+    hadith:   ['#1D4E4A', '#2F7F6E', '#8FE6D2'],
+    dua:      ['#4A3F9E', '#6E62E5', '#D9D3FF'],
+    quote:    ['#0E8C7E', '#25B7A2', '#DFF5EF'],
+    reminder: ['#3A3A44', '#5C5C6B', '#E6E6EA']
+  };
+
+  var shareData = null;
+
+  function wrapText(ctx, text, maxWidth) {
+    var words = String(text).split(/\s+/);
+    var lines = [], line = '';
+    for (var i = 0; i < words.length; i++) {
+      var test = line ? line + ' ' + words[i] : words[i];
+      if (ctx.measureText(test).width > maxWidth && line) {
+        lines.push(line);
+        line = words[i];
+      } else { line = test; }
+    }
+    if (line) lines.push(line);
+    return lines;
+  }
+
+  function drawShareCard(data) {
+    var canvas = $('#shareCanvas');
+    if (!canvas) return;
+    var ctx = canvas.getContext('2d');
+    var W = canvas.width, H = canvas.height;
+    var theme = THEMES[data.kind] || THEMES.quote;
+    var rtl = L.dir() === 'rtl';
+
+    ctx.clearRect(0, 0, W, H);
+
+    var grad = ctx.createLinearGradient(0, 0, W, H);
+    grad.addColorStop(0, theme[0]);
+    grad.addColorStop(1, theme[1]);
+    ctx.fillStyle = grad;
+    ctx.fillRect(0, 0, W, H);
+
+    /* Decorative shapes, same language as the rest of the app. */
+    ctx.save();
+    ctx.globalAlpha = 0.10;
+    ctx.fillStyle = '#fff';
+    ctx.beginPath(); ctx.arc(W - 90, 150, 300, 0, Math.PI * 2); ctx.fill();
+    ctx.globalAlpha = 0.08;
+    ctx.beginPath(); ctx.arc(120, H - 120, 220, 0, Math.PI * 2); ctx.fill();
+    ctx.restore();
+
+    function sparkle(x, y, r, alpha) {
+      ctx.save();
+      ctx.globalAlpha = alpha;
+      ctx.fillStyle = theme[2];
+      ctx.beginPath();
+      ctx.moveTo(x, y - r);
+      ctx.quadraticCurveTo(x, y, x + r, y);
+      ctx.quadraticCurveTo(x, y, x, y + r);
+      ctx.quadraticCurveTo(x, y, x - r, y);
+      ctx.quadraticCurveTo(x, y, x, y - r);
+      ctx.fill();
+      ctx.restore();
+    }
+    sparkle(150, 190, 34, 0.75);
+    sparkle(W - 190, H - 300, 22, 0.5);
+    sparkle(W - 130, 470, 14, 0.35);
+
+    var pad = 110;
+    var maxW = W - pad * 2;
+
+    /* Measure first so the block sits optically centred rather than
+       hugging the top of the card. */
+    var aLines = [];
+    if (data.arabic) {
+      ctx.font = '600 62px "Noto Naskh Arabic", serif';
+      aLines = wrapText(ctx, data.arabic, maxW);
+    }
+    ctx.font = '700 54px "Plus Jakarta Sans", system-ui, sans-serif';
+    var tLines = wrapText(ctx, data.text, maxW);
+    var blockH = aLines.length * 96 + (aLines.length ? 40 : 0) + tLines.length * 74 + 58;
+    var y = Math.max(300, Math.round((H - 190 - blockH) / 2) + 60);
+
+    /* Arabic first, when the content has it. */
+    if (data.arabic) {
+      ctx.direction = 'rtl';
+      ctx.textAlign = 'right';
+      ctx.fillStyle = theme[2];
+      ctx.font = '600 62px "Noto Naskh Arabic", serif';
+      aLines.forEach(function (ln) {
+        ctx.fillText(ln, W - pad, y);
+        y += 96;
+      });
+      y += 40;
+    }
+
+    ctx.direction = rtl ? 'rtl' : 'ltr';
+    ctx.textAlign = rtl ? 'right' : 'left';
+    var anchorX = rtl ? W - pad : pad;
+
+    ctx.fillStyle = '#ffffff';
+    ctx.font = '700 54px "Plus Jakarta Sans", system-ui, sans-serif';
+    tLines.forEach(function (ln) {
+      ctx.fillText(ln, anchorX, y);
+      y += 74;
+    });
+
+    y += 24;
+    ctx.globalAlpha = 0.75;
+    ctx.font = '500 34px "Plus Jakarta Sans", system-ui, sans-serif';
+    ctx.fillText(data.source, anchorX, y);
+    ctx.globalAlpha = 1;
+
+    /* Footer: the same wordmark the app uses. */
+    var fy = H - 110;
+    ctx.globalAlpha = 0.28;
+    ctx.strokeStyle = '#fff';
+    ctx.lineWidth = 2;
+    ctx.beginPath();
+    ctx.moveTo(pad, fy - 70); ctx.lineTo(W - pad, fy - 70); ctx.stroke();
+    ctx.globalAlpha = 1;
+
+    var markX = rtl ? W - pad - 26 : pad + 26;
+    ctx.save();
+    ctx.strokeStyle = '#fff';
+    ctx.lineWidth = 4;
+    ctx.beginPath(); ctx.arc(markX, fy - 8, 26, 0, Math.PI * 2); ctx.stroke();
+    ctx.beginPath(); ctx.arc(markX, fy - 8, 26, -Math.PI / 2, Math.PI / 2); ctx.fillStyle = '#fff'; ctx.fill();
+    ctx.restore();
+
+    ctx.textAlign = rtl ? 'right' : 'left';
+    ctx.fillStyle = '#fff';
+    ctx.font = '800 40px "Plus Jakarta Sans", system-ui, sans-serif';
+    ctx.fillText('Lume', rtl ? markX - 46 : markX + 46, fy);
+    ctx.globalAlpha = 0.7;
+    ctx.font = '500 26px "Plus Jakarta Sans", system-ui, sans-serif';
+    ctx.fillText(t('app.tagline'), rtl ? markX - 46 : markX + 46, fy + 38);
+    ctx.globalAlpha = 1;
+  }
+
+  function openShare(id) {
+    shareData = SHARE_CONTENT[id] || SHARE_CONTENT.quote;
+    sheetOpen('share');
+    /* Wait for the webfonts, or the first draw falls back to a system face. */
+    var draw = function () { drawShareCard(shareData); };
+    if (document.fonts && document.fonts.ready) document.fonts.ready.then(draw);
+    else draw();
+    draw();
+  }
+
+  function canvasBlob(cb) {
+    var canvas = $('#shareCanvas');
+    if (!canvas) return;
+    if (canvas.toBlob) canvas.toBlob(cb, 'image/png');
+    else cb(null);
+  }
+
+  var saveBtn = $('#shareSave');
+  if (saveBtn) {
+    saveBtn.addEventListener('click', function () {
+      canvasBlob(function (blob) {
+        if (!blob) { toast(t('share.saved')); return; }
+        var url = URL.createObjectURL(blob);
+        var a = document.createElement('a');
+        a.href = url;
+        a.download = 'lume-' + (shareData ? shareData.kind : 'card') + '.png';
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        setTimeout(function () { URL.revokeObjectURL(url); }, 1000);
+        toast(t('share.saved'));
+      });
+    });
+  }
+
+  var sendBtn = $('#shareSend');
+  if (sendBtn) {
+    sendBtn.addEventListener('click', function () {
+      canvasBlob(function (blob) {
+        /* The image is the primary artifact, with text only as a caption. */
+        if (blob && navigator.canShare && window.File) {
+          var file = new File([blob], 'lume.png', { type: 'image/png' });
+          if (navigator.canShare({ files: [file] })) {
+            navigator.share({ files: [file], text: shareData.text + ' — ' + shareData.source })
+              .then(function () { toast(t('share.shared')); })
+              .catch(function () {});
+            return;
+          }
+        }
+        if (navigator.share) {
+          navigator.share({ text: shareData.text + ' — ' + shareData.source })
+            .then(function () { toast(t('share.shared')); })
+            .catch(function () {});
+          return;
+        }
+        toast(t('share.shared'));
+      });
+    });
+  }
+
+  document.addEventListener('click', function (e) {
+    var el = e.target.closest('[data-share]');
+    if (el) openShare(el.dataset.share);
+  });
 
   /* ---------------------------------------------------------
      Skeletons on first paint

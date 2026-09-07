@@ -845,3 +845,165 @@
   background: linear-gradient(to top, var(--card), transparent);
   pointer-events: none;
 }
+
+/* ============================================================
+   Global location picker, formatting rows, share cards and RTL
+   ============================================================ */
+
+.locpicker { display: flex; flex-direction: column; min-height: 0; }
+.locpicker--inset {
+  margin-top: 10px;
+  border: 1px solid var(--border);
+  border-radius: var(--r-lg);
+  background: var(--card-2);
+  padding: 10px;
+  max-height: 340px;
+}
+
+.search--sm { padding: 9px 12px; border-radius: var(--r-sm); }
+.search--sm input { font-size: 13.5px; }
+
+.locscroll {
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+  margin-top: 10px;
+  scrollbar-width: none;
+  -webkit-overflow-scrolling: touch;
+}
+.locscroll::-webkit-scrollbar { display: none; }
+
+.locgroup {
+  font-size: 10.5px; font-weight: 720;
+  letter-spacing: .07em; text-transform: uppercase;
+  color: var(--text-3);
+  margin: 14px 2px 7px;
+}
+.locgroup:first-child { margin-top: 2px; }
+
+.loclist {
+  border-radius: var(--r-md);
+  background: var(--card);
+  border: 1px solid var(--border);
+  overflow: hidden;
+}
+
+.locrow {
+  display: flex; align-items: center; gap: 11px;
+  width: 100%;
+  padding: 11px 13px;
+  text-align: start;
+  border-bottom: 1px solid var(--border);
+}
+.locrow:last-child { border-bottom: 0; }
+.locrow:active { background: var(--card-hover); }
+.locrow__code {
+  flex: none;
+  min-width: 30px;
+  font-size: 10.5px; font-weight: 750;
+  letter-spacing: .04em;
+  color: var(--text-3);
+}
+.locrow__name { flex: 1; min-width: 0; font-size: 14px; font-weight: 620; letter-spacing: -.022em; }
+.locrow__meta { flex: none; font-size: 11px; font-weight: 600; color: var(--text-3); }
+.locrow__icon {
+  flex: none; width: 26px; height: 26px;
+  border-radius: 9px; display: grid; place-items: center;
+  background: var(--tint-accent); color: var(--accent);
+}
+.locrow__icon svg { width: 14px; height: 14px; }
+.locrow.is-on { background: var(--tint-accent); }
+.locrow.is-on .locrow__name { color: var(--accent); font-weight: 700; }
+.locrow.is-on .locrow__code { color: var(--accent); }
+.locrow--action {
+  margin-top: 10px;
+  border: 1px solid var(--border);
+  border-radius: var(--r-md);
+  background: var(--card);
+}
+
+.locback {
+  display: flex; align-items: center; gap: 6px;
+  font-size: 12.5px; font-weight: 650;
+  color: var(--text-3);
+  padding: 2px 2px 10px;
+}
+.locback svg { width: 15px; height: 15px; }
+.locback:active { opacity: .6; }
+
+.locempty {
+  padding: 26px 10px; text-align: center;
+  font-size: 13px; color: var(--text-3); font-weight: 550;
+}
+
+/* Onboarding steps that are mostly a scrolling list */
+.onb-step--list { padding-bottom: 0; }
+.onb__lead { flex: none; padding-top: 10px; }
+.onb-step--list .locpicker { flex: 1; min-height: 0; margin-top: 16px; }
+
+/* ---------- Share card ------------------------------------- */
+
+.sharecard {
+  display: grid;
+  place-items: center;
+  padding: 4px 0 2px;
+}
+.sharecard canvas {
+  width: 100%;
+  max-width: 260px;
+  height: auto;
+  border-radius: var(--r-lg);
+  box-shadow: var(--shadow-md);
+  background: var(--tint-neutral);
+}
+.sharecard__actions {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+  margin: 16px 0 6px;
+}
+
+/* ---------- RTL -------------------------------------------- */
+
+/* Only what is genuinely directional flips. Chevrons that mean
+   "forward" must keep pointing the way the language reads, while a
+   clock or a play button must not mirror at all. */
+.is-rtl .appbar__sub,
+.is-rtl .ctx__end,
+.is-rtl .stat-row__end,
+.is-rtl .live-train__stops span:first-child { text-align: start; }
+
+.is-rtl .section__link svg,
+.is-rtl .list-row__end svg,
+.is-rtl .private-card__chev,
+.is-rtl .routecard__pair svg,
+.is-rtl .slide__cta svg,
+.is-rtl .onb__foot .btn svg,
+.is-rtl .locback svg { transform: scaleX(-1); }
+
+.is-rtl .tl-time { text-align: start; }
+.is-rtl .habit__name { text-align: start; }
+
+/* Numerals, times and codes stay left-to-right inside RTL text. */
+.is-rtl .num,
+.is-rtl .locrow__code,
+.is-rtl .trainno { direction: ltr; unicode-bidi: isolate; }
+
+/* Status values are data, not chrome, so some are still English inside an
+   RTL page. plaintext takes the direction from the first strong character,
+   which keeps "32 units" in that order instead of reversing it. */
+.is-rtl .cat-tool__meta,
+.is-rtl .tool__value,
+.is-rtl .list-row__sub,
+.is-rtl .minicard__meta,
+.is-rtl .stat-row__meta { unicode-bidi: plaintext; }
+
+.is-rtl .quote__mark { left: auto; right: 14px; }
+.is-rtl .arabic { text-align: right; }
+
+/* Urdu and Arabic need a little more line height to breathe. */
+[lang="ur"] body, [lang="ar"] body { line-height: 1.6; }
+[lang="ur"] .appbar__greet, [lang="ar"] .appbar__greet { letter-spacing: 0; }
+[lang="ur"] .page-head__title, [lang="ar"] .page-head__title { letter-spacing: 0; }
+[lang="ur"] .onb__title, [lang="ar"] .onb__title { letter-spacing: 0; line-height: 1.45; }
+[lang="ur"] .tab__label, [lang="ar"] .tab__label { font-size: 10px; }

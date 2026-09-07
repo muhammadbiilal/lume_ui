@@ -68,18 +68,6 @@ window.LUME = (function () {
   var DEFAULT_INTERESTS = ['weather', 'calendar', 'tasks', 'notes', 'maths', 'expenses', 'news'];
 
   /* ---------------------------------------------------------
-     Countries
-     --------------------------------------------------------- */
-  var COUNTRIES = [
-    { code: 'PK', name: 'Pakistan',       cities: ['Karachi', 'Lahore', 'Islamabad', 'Rawalpindi', 'Faisalabad', 'Peshawar', 'Multan', 'Quetta'], cur: '₨', curCode: 'PKR' },
-    { code: 'GB', name: 'United Kingdom', cities: ['London', 'Manchester', 'Birmingham', 'Glasgow'], cur: '£', curCode: 'GBP' },
-    { code: 'AE', name: 'UAE',            cities: ['Dubai', 'Abu Dhabi', 'Sharjah'], cur: 'AED ', curCode: 'AED' },
-    { code: 'US', name: 'United States',  cities: ['New York', 'Chicago', 'Houston', 'Los Angeles'], cur: '$', curCode: 'USD' },
-    { code: 'CA', name: 'Canada',         cities: ['Toronto', 'Vancouver', 'Calgary'], cur: 'C$', curCode: 'CAD' },
-    { code: 'SA', name: 'Saudi Arabia',   cities: ['Riyadh', 'Jeddah', 'Makkah', 'Madinah'], cur: 'SAR ', curCode: 'SAR' }
-  ];
-
-  /* ---------------------------------------------------------
      Feature catalogue
        id     unique key
        n      display name
@@ -91,8 +79,12 @@ window.LUME = (function () {
        act    what tapping it does
        kw     extra search keywords (what people actually type)
        faith  Islamic — hidden unless Islamic content is on
-       loc    country code — hidden unless the user is there
-       adapts global feature whose content localises
+       countries  markets this feature has actually launched in; absent means
+                  global. A PK entry says "localised for Pakistan so far",
+                  not "this category is Pakistan-only"
+       adapts global feature whose *content* localises (visibility is global)
+       shareable  supports the visual share-card flow
+       reqCity    needs a city to mean anything
        sens   sensitive — never promoted on Home
        staple a tool almost everyone wants, so it survives the For-you filter
      --------------------------------------------------------- */
@@ -114,34 +106,34 @@ window.LUME = (function () {
     { id: 'events',     n: 'Events',           i: 'i-list',       c: 'planning', g: 'daily',    ints: ['calendar'],           m: 'Next 14:00',    act: 'toast:Next: Design review, 14:00' },
 
     /* ---- Prayer & Islam (17) ---- */
-    { id: 'prayer', staple: 1,     n: 'Prayer Times',     i: 'i-prayer',     c: 'islamic', g: 'islam', faith: 1, ints: ['prayer'],       m: 'Asr 15:53',     act: 'sheet:prayer', kw: 'salah namaz adhan azan jamaat' },
-    { id: 'qibla', staple: 1,      n: 'Qibla Compass',    i: 'i-navigation', c: 'islamic', g: 'islam', faith: 1, ints: ['prayer'],       m: '267° W',        act: 'sheet:qibla', kw: 'direction kaaba mecca makkah compass' },
-    { id: 'mosques',    n: 'Nearby Mosques',   i: 'i-mosque',     c: 'islamic', g: 'islam', faith: 1, ints: ['prayer', 'nearby'], m: '3 within 1 km', act: 'toast:3 mosques within 1 km' },
+    { id: 'prayer', staple: 1, reqCity: 1,     n: 'Prayer Times',     i: 'i-prayer',     c: 'islamic', g: 'islam', faith: 1, ints: ['prayer'],       m: 'Asr 15:53',     act: 'sheet:prayer', kw: 'salah namaz adhan azan jamaat' },
+    { id: 'qibla', staple: 1, reqCity: 1,      n: 'Qibla Compass',    i: 'i-navigation', c: 'islamic', g: 'islam', faith: 1, ints: ['prayer'],       m: '267° W',        act: 'sheet:qibla', kw: 'direction kaaba mecca makkah compass' },
+    { id: 'mosques', reqCity: 1,    n: 'Nearby Mosques',   i: 'i-mosque',     c: 'islamic', g: 'islam', faith: 1, ints: ['prayer', 'nearby'], m: '3 within 1 km', act: 'toast:3 mosques within 1 km' },
     { id: 'praytrack',  n: 'Prayer Tracker',   i: 'i-check-circle',c: 'islamic',g: 'islam', faith: 1, ints: ['prayer', 'habits'], m: '12-day streak', act: 'sheet:prayer' },
     { id: 'ramadan',    n: 'Ramadan',          i: 'i-moon-star',  c: 'islamic', g: 'islam', faith: 1, ints: ['ramadan'],      m: 'In 172 days',   act: 'toast:Ramadan begins in 172 days', kw: 'sehri iftar' },
     { id: 'fasting',    n: 'Fasting Tracker',  i: 'i-moon',       c: 'islamic', g: 'islam', faith: 1, ints: ['ramadan'],      m: '3 kept',        act: 'toast:Fasting tracker — 3 kept this month', kw: 'roza sawm' },
     { id: 'taraweeh',   n: 'Taraweeh',         i: 'i-prayer',     c: 'islamic', g: 'islam', faith: 1, ints: ['ramadan', 'prayer'], m: 'Ramadan',  act: 'toast:Taraweeh tracker' },
-    { id: 'ayah',       n: 'Ayah of the Day',  i: 'i-sparkles',   c: 'islamic', g: 'islam', faith: 1, ints: ['quran'],        m: 'Ar-Ra’d 28',    act: 'tab:today', kw: 'verse daily' },
-    { id: 'quran', staple: 1,      n: 'Al-Qur’an',        i: 'i-book',       c: 'islamic', g: 'islam', faith: 1, ints: ['quran', 'reading'], m: 'Al-Kahf 42', act: 'sheet:reading', kw: 'surah para juz recite mushaf' },
+    { id: 'ayah', shareable: 1,       n: 'Ayah of the Day',  i: 'i-sparkles',   c: 'islamic', g: 'islam', faith: 1, ints: ['quran'],        m: 'Ar-Ra’d 28',    act: 'tab:today', kw: 'verse daily' },
+    { id: 'quran', staple: 1, shareable: 1,      n: 'Al-Qur’an',        i: 'i-book',       c: 'islamic', g: 'islam', faith: 1, ints: ['quran', 'reading'], m: 'Al-Kahf 42', act: 'sheet:reading', kw: 'surah para juz recite mushaf' },
     { id: 'quransearch',n: 'Search the Qur’an',i: 'i-search',     c: 'islamic', g: 'islam', faith: 1, ints: ['quran'],        m: 'By word',       act: 'sheet:search', kw: 'surah rahman yaseen ayah verse find' },
-    { id: 'hadith',     n: 'Hadith',           i: 'i-quote',      c: 'islamic', g: 'islam', faith: 1, ints: ['hadith', 'reading'], m: 'Daily',    act: 'tab:today', kw: 'bukhari muslim sunnah' },
-    { id: 'duas',       n: 'Daily Duas',       i: 'i-heart',      c: 'islamic', g: 'islam', faith: 1, ints: ['duas'],         m: '42 saved',      act: 'toast:42 duas in your library', kw: 'supplication dua azkar' },
-    { id: 'names99',    n: '99 Names',         i: 'i-star',       c: 'islamic', g: 'islam', faith: 1, ints: ['duas', 'quran'], m: 'Asma ul Husna', act: 'toast:99 Names of Allah' },
+    { id: 'hadith', shareable: 1,     n: 'Hadith',           i: 'i-quote',      c: 'islamic', g: 'islam', faith: 1, ints: ['hadith', 'reading'], m: 'Daily',    act: 'tab:today', kw: 'bukhari muslim sunnah' },
+    { id: 'duas', shareable: 1,       n: 'Daily Duas',       i: 'i-heart',      c: 'islamic', g: 'islam', faith: 1, ints: ['duas'],         m: '42 saved',      act: 'toast:42 duas in your library', kw: 'supplication dua azkar' },
+    { id: 'names99', shareable: 1,    n: '99 Names',         i: 'i-star',       c: 'islamic', g: 'islam', faith: 1, ints: ['duas', 'quran'], m: 'Asma ul Husna', act: 'toast:99 Names of Allah' },
     { id: 'hijri',      n: 'Islamic Calendar', i: 'i-moon',       c: 'islamic', g: 'islam', faith: 1, ints: ['ramadan', 'calendar'], m: '15 Rabi’ I', act: 'toast:15 Rabi’ al-Awwal 1448', kw: 'hijri date lunar' },
     { id: 'tasbih', staple: 1,     n: 'Tasbih',           i: 'i-beads',      c: 'islamic', g: 'islam', faith: 1, ints: ['duas'],         m: 'Counter',       act: 'sheet:tasbeeh', kw: 'dhikr zikr counter beads tasbeeh' },
     { id: 'zakat',      n: 'Zakat Calculator', i: 'i-wallet',     c: 'islamic', g: 'islam', faith: 1, ints: ['zakat'],        m: 'Nisab check',   act: 'toast:Zakat calculator — nisab ₨ 258,400', kw: 'charity sadaqah nisab giving' },
     { id: 'faraid',     n: 'Faraid',           i: 'i-scales',     c: 'islamic', g: 'islam', faith: 1, ints: ['zakat'],        m: 'Inheritance',   act: 'toast:Faraid — inheritance shares', kw: 'inheritance mirath wirasat will' },
 
     /* ---- Money & Rates (14) ---- */
-    { id: 'goldrates',  n: 'Currency & Gold',  i: 'i-coins',      c: 'money', g: 'money', loc: 'PK', ints: ['rates'],         m: 'Tola ₨ 258,400', act: 'sheet:rates', kw: 'sona gold silver dollar rate open market' },
+    { id: 'goldrates',  n: 'Currency & Gold',  i: 'i-coins',      c: 'money', g: 'money', countries: ['PK'], ints: ['rates'],         m: 'Tola ₨ 258,400', act: 'sheet:rates', kw: 'sona gold silver dollar rate open market' },
     { id: 'markets',    n: 'Markets',          i: 'i-trending',   c: 'money', g: 'money',            ints: ['markets'],       m: 'KSE-100 ▲ 0.8%', act: 'toast:KSE-100 · 78,412 ▲ 0.8%', kw: 'stocks shares psx index' },
-    { id: 'fuel',       n: 'Fuel Prices',      i: 'i-fuel',       c: 'money', g: 'money', loc: 'PK', ints: ['fuel'],          m: '₨ 264.61',      act: 'sheet:fuel', kw: 'petrol diesel price ogra pump' },
-    { id: 'fuelcost',   n: 'Fuel Cost',        i: 'i-route',      c: 'money', g: 'money', loc: 'PK', ints: ['fuel'],          m: 'Trip cost',     act: 'toast:Karachi → Hyderabad · ₨ 2,380', kw: 'petrol trip mileage average' },
-    { id: 'tax',        n: 'Tax Calculator',   i: 'i-percent',    c: 'money', g: 'money', loc: 'PK', ints: ['expenses'],      m: 'FBR 2025-26',   act: 'sheet:tax', kw: 'salary income fbr slab withholding' },
-    { id: 'natsavings', n: 'National Savings', i: 'i-shield',     c: 'money', g: 'money', loc: 'PK', ints: ['savings'],       m: 'Profit rates',  act: 'toast:Behbood · 15.36% · profit ₨ 1,280/mo', kw: 'behbood pensioners defence certificate' },
-    { id: 'prizebonds', n: 'Prize Bonds',      i: 'i-ticket',     c: 'money', g: 'money', loc: 'PK', ints: ['savings'],       m: 'Draw 15 Sep',   act: 'toast:Next ₨ 750 draw — 15 September', kw: 'bond draw result winner' },
-    { id: 'bills',      n: 'Bills',            i: 'i-receipt',    c: 'money', g: 'money', loc: 'PK', ints: ['bills'],         m: '2 due',         act: 'sheet:bills', kw: 'k-electric sui gas wapda ptcl electricity due' },
-    { id: 'packages',   n: 'Mobile Packages',  i: 'i-signal',     c: 'money', g: 'money', loc: 'PK', ints: ['bills'],         m: 'Jazz · Zong',   act: 'toast:Compare Jazz, Zong, Ufone & Telenor', kw: 'jazz zong ufone telenor balance load mbs' },
+    { id: 'fuel',       n: 'Fuel Prices',      i: 'i-fuel',       c: 'money', g: 'money', countries: ['PK'], ints: ['fuel'],          m: '₨ 264.61',      act: 'sheet:fuel', kw: 'petrol diesel price ogra pump' },
+    { id: 'fuelcost',   n: 'Fuel Cost',        i: 'i-route',      c: 'money', g: 'money', countries: ['PK'], ints: ['fuel'],          m: 'Trip cost',     act: 'toast:Karachi → Hyderabad · ₨ 2,380', kw: 'petrol trip mileage average' },
+    { id: 'tax',        n: 'Tax Calculator',   i: 'i-percent',    c: 'money', g: 'money', countries: ['PK'], ints: ['expenses'],      m: 'FBR 2025-26',   act: 'sheet:tax', kw: 'salary income fbr slab withholding' },
+    { id: 'natsavings', n: 'National Savings', i: 'i-shield',     c: 'money', g: 'money', countries: ['PK'], ints: ['savings'],       m: 'Profit rates',  act: 'toast:Behbood · 15.36% · profit ₨ 1,280/mo', kw: 'behbood pensioners defence certificate' },
+    { id: 'prizebonds', n: 'Prize Bonds',      i: 'i-ticket',     c: 'money', g: 'money', countries: ['PK'], ints: ['savings'],       m: 'Draw 15 Sep',   act: 'toast:Next ₨ 750 draw — 15 September', kw: 'bond draw result winner' },
+    { id: 'bills',      n: 'Bills',            i: 'i-receipt',    c: 'money', g: 'money', countries: ['PK'], ints: ['bills'],         m: '2 due',         act: 'sheet:bills', kw: 'k-electric sui gas wapda ptcl electricity due' },
+    { id: 'packages',   n: 'Mobile Packages',  i: 'i-signal',     c: 'money', g: 'money', countries: ['PK'], ints: ['bills'],         m: 'Jazz · Zong',   act: 'toast:Compare Jazz, Zong, Ufone & Telenor', kw: 'jazz zong ufone telenor balance load mbs' },
     { id: 'loan',       n: 'Loan / EMI',       i: 'i-bank',       c: 'money', g: 'money',            ints: ['expenses'],      m: 'Instalments',   act: 'toast:Loan & EMI calculator', kw: 'emi mortgage interest markup car finance' },
     { id: 'tipsplit',   n: 'Tip & Split',      i: 'i-divide',     c: 'money', g: 'money',            ints: ['expenses'],      m: 'Split a bill',  act: 'toast:Split a bill between friends', kw: 'bill share restaurant' },
     { id: 'ledger',     n: 'Lending Ledger',   i: 'i-list',       c: 'money', g: 'money',            ints: ['expenses'],      m: '₨ 8,500 out',   act: 'toast:₨ 8,500 lent · 3 people', kw: 'udhaar borrow lend owe khata' },
@@ -149,23 +141,23 @@ window.LUME = (function () {
     { id: 'committee',  n: 'Committee',        i: 'i-users',      c: 'money', g: 'money',            ints: ['savings'],       m: 'Month 4 of 10', act: 'toast:Committee — your turn in month 7', kw: 'bisi rosca kameti pool circle' },
 
     /* ---- Daily Life (18) ---- */
-    { id: 'weather', staple: 1,    n: 'Weather',          i: 'i-cloud-sun',  c: 'daily', g: 'daily', adapts: 1, ints: ['weather'],       m: '34° Clear',     act: 'tab:explore', kw: 'forecast rain temperature humid' },
-    { id: 'loadshed',   n: 'Loadshedding',     i: 'i-bolt',       c: 'daily', g: 'daily', loc: 'PK', ints: ['bills'],         m: '14:00–16:00',   act: 'sheet:loadshed', kw: 'bijli power outage schedule ke lesco' },
-    { id: 'trains',     n: 'Trains',           i: 'i-train',      c: 'daily', g: 'daily', loc: 'PK', ints: ['trains'],        m: 'Green Line',    act: 'tab:trains', kw: 'railway pr green line tezgam bogie seat pnr' },
+    { id: 'weather', staple: 1, reqCity: 1,    n: 'Weather',          i: 'i-cloud-sun',  c: 'daily', g: 'daily', adapts: 1, ints: ['weather'],       m: '34° Clear',     act: 'tab:explore', kw: 'forecast rain temperature humid' },
+    { id: 'loadshed', reqCity: 1,   n: 'Loadshedding',     i: 'i-bolt',       c: 'daily', g: 'daily', countries: ['PK'], ints: ['bills'],         m: '14:00–16:00',   act: 'sheet:loadshed', kw: 'bijli power outage schedule ke lesco' },
+    { id: 'trains', reqCity: 1,     n: 'Trains',           i: 'i-train',      c: 'daily', g: 'daily', countries: ['PK'], ints: ['trains'],        m: 'Green Line',    act: 'tab:trains', kw: 'railway pr green line tezgam bogie seat pnr' },
     { id: 'flights',    n: 'Flights',          i: 'i-plane',      c: 'daily', g: 'daily',            ints: ['flights'],       m: 'Track live',    act: 'toast:Track a flight by number or route', kw: 'plane airport arrival departure pia' },
     { id: 'news', staple: 1,       n: 'News',             i: 'i-news',       c: 'daily', g: 'daily', adapts: 1, ints: ['news'],          m: '12 new',        act: 'tab:explore', kw: 'headlines stories today' },
     { id: 'cricket',    n: 'Cricket',          i: 'i-cricket',    c: 'daily', g: 'daily', adapts: 1, ints: ['cricket'],       m: 'PAK 214/4',     act: 'sheet:cricket', kw: 'score match psl live wickets' },
-    { id: 'emergency',  n: 'Emergency',        i: 'i-shield',     c: 'daily', g: 'daily', loc: 'PK',                          m: '15 · 1122',     act: 'sheet:emergency', kw: 'police ambulance rescue fire helpline' },
+    { id: 'emergency',  n: 'Emergency',        i: 'i-shield',     c: 'daily', g: 'daily', countries: ['PK'],                          m: '15 · 1122',     act: 'sheet:emergency', kw: 'police ambulance rescue fire helpline' },
     { id: 'qr',         n: 'QR Scanner',       i: 'i-qr',         c: 'daily', g: 'daily',                                     m: 'Scan & pay',    act: 'toast:Point the camera at a QR code', kw: 'scan barcode raast pay' },
     { id: 'docscan',    n: 'Document Scanner', i: 'i-scan',       c: 'daily', g: 'daily',            ints: ['notes'],         m: 'PDF ready',     act: 'toast:Scan to PDF', kw: 'pdf copy paper photo' },
     { id: 'passport',   n: 'Passport Photos',  i: 'i-image',      c: 'daily', g: 'daily', adapts: 1,                          m: 'NADRA sizes',   act: 'toast:Passport photo — NADRA & ICAO sizes', kw: 'photo size id nadra visa' },
-    { id: 'vehicle',    n: 'Vehicle & Fines',  i: 'i-car',        c: 'daily', g: 'daily', loc: 'PK',                          m: 'Check challan', act: 'toast:Enter a registration number', kw: 'excise token challan car bike registration' },
+    { id: 'vehicle',    n: 'Vehicle & Fines',  i: 'i-car',        c: 'daily', g: 'daily', countries: ['PK'],                          m: 'Check challan', act: 'toast:Enter a registration number', kw: 'excise token challan car bike registration' },
     { id: 'mediasaver', n: 'Media Saver',      i: 'i-download',   c: 'daily', g: 'daily',                                     m: 'Save posts',    act: 'toast:Paste a link to save it' },
     { id: 'wastatus',   n: 'WhatsApp Status',  i: 'i-message',    c: 'daily', g: 'daily', android: 1,                         m: 'Android',       act: 'toast:Status saver — Android only', kw: 'status save whatsapp' },
     { id: 'speedtest',  n: 'Speed Test',       i: 'i-wifi',       c: 'daily', g: 'daily',                                     m: 'Test now',      act: 'toast:Testing — 48.2 Mbps down', kw: 'internet mbps ping wifi' },
 
     /* ---- Personal (23) ---- */
-    { id: 'parcel',     n: 'Parcel Tracker',   i: 'i-package',    c: 'personal', g: 'personal', loc: 'PK', ints: ['news'],    m: '1 in transit',  act: 'sheet:parcel', kw: 'tcs leopards courier delivery order cn' },
+    { id: 'parcel',     n: 'Parcel Tracker',   i: 'i-package',    c: 'personal', g: 'personal', countries: ['PK'], ints: ['news'],    m: '1 in transit',  act: 'sheet:parcel', kw: 'tcs leopards courier delivery order cn' },
     { id: 'shopping',   n: 'Shopping List',    i: 'i-cart',       c: 'personal', g: 'personal',            ints: ['tasks'],   m: '6 items',       act: 'toast:Shopping list — 6 items', kw: 'groceries buy market' },
     { id: 'birthdays',  n: 'Birthdays',        i: 'i-cake',       c: 'personal', g: 'personal',            ints: ['calendar'],m: 'Ayesha in 4d',  act: 'toast:Ayesha’s birthday in 4 days', kw: 'anniversary remember' },
     { id: 'streak',     n: 'Daily Streak',     i: 'i-flame',      c: 'personal', g: 'personal',            ints: ['habits'],  m: '12 days',       act: 'tab:today' },
@@ -200,44 +192,65 @@ window.LUME = (function () {
   ];
 
   /* ---------------------------------------------------------
-     Hero carousel — slides are personalised, never hard-coded
-     --------------------------------------------------------- */
-  var SLIDES = [
-    { id: 'prayer',  faith: 1, art: 'night',  kicker: 'Next prayer', cta: 'Prayer times', act: 'sheet:prayer',
-      live: true },
-    { id: 'plan',    art: 'plan',   kicker: 'Today', title: 'Plan your day before it starts',
-      text: 'Tasks, reminders and events on one clean timeline.', cta: 'Open today', act: 'tab:today' },
-    { id: 'read',    faith: 1, art: 'read',  kicker: 'Read', title: 'Read something meaningful',
-      text: 'You’re 42 ayahs into Al-Kahf. Two minutes is enough.', cta: 'Continue', act: 'sheet:reading' },
-    { id: 'money',   art: 'money',  kicker: 'Money', title: 'Stay on top of your money',
-      text: 'Rates, bills and expenses — all in one place.', cta: 'See money', act: 'sheet:rates', ints: ['rates', 'expenses', 'bills'] },
-    { id: 'trains',  loc: 'PK', art: 'train', kicker: 'Travel', title: 'Trains, without the guesswork',
-      text: 'Live running status, fares and seat availability.', cta: 'Find a train', act: 'tab:trains' },
-    { id: 'tools',   art: 'tools',  kicker: 'Tools', title: 'Useful tools, all in one place',
-      text: 'Calculator, converters, weather, scanner and more.', cta: 'Browse tools', act: 'tab:tools' }
-  ];
-
-  /* ---------------------------------------------------------
      Content
      --------------------------------------------------------- */
-  var PRAYERS_BY_COUNTRY = {
-    PK: [ { name: 'Fajr', h: 5, m: 3 }, { name: 'Sunrise', h: 6, m: 22, minor: true },
-          { name: 'Dhuhr', h: 12, m: 29 }, { name: 'Asr', h: 15, m: 53 },
-          { name: 'Maghrib', h: 18, m: 36 }, { name: 'Isha', h: 19, m: 50 } ],
-    GB: [ { name: 'Fajr', h: 4, m: 52 }, { name: 'Sunrise', h: 6, m: 21, minor: true },
-          { name: 'Dhuhr', h: 12, m: 38 }, { name: 'Asr', h: 16, m: 12 },
-          { name: 'Maghrib', h: 19, m: 24 }, { name: 'Isha', h: 20, m: 46 } ]
+  /* Weather for any of ~190 countries: a per-country override where it
+     matters, otherwise a climate baseline read off the IANA zone. Demo data,
+     but it must never be blank for a country we happen not to have listed. */
+  var WEATHER_BY_COUNTRY = {
+    PK: [34, 38, 'Hazy sun · humid', 8, 14, 'i-sun'],
+    IN: [33, 37, 'Humid · light haze', 25, 12, 'i-sun'],
+    GB: [21, 19, 'Mostly clear', 12, 8, 'i-cloud-sun'],
+    US: [24, 24, 'Light cloud', 20, 10, 'i-cloud-sun'],
+    CA: [17, 15, 'Cloudy', 35, 13, 'i-cloud-sun'],
+    AE: [39, 44, 'Clear · very warm', 0, 11, 'i-sun'],
+    SA: [40, 42, 'Clear', 0, 9, 'i-sun'],
+    AU: [26, 26, 'Bright and breezy', 10, 18, 'i-sun'],
+    DE: [18, 17, 'Overcast', 40, 11, 'i-cloud-sun'],
+    FR: [21, 20, 'Sunny spells', 15, 9, 'i-cloud-sun'],
+    TR: [27, 27, 'Clear', 5, 12, 'i-sun'],
+    ID: [31, 35, 'Humid · showers later', 60, 7, 'i-cloud-sun'],
+    MY: [32, 36, 'Humid · afternoon storms', 65, 6, 'i-cloud-sun'],
+    BD: [32, 37, 'Humid', 45, 10, 'i-cloud-sun'],
+    EG: [35, 36, 'Clear and dry', 0, 14, 'i-sun'],
+    NG: [30, 34, 'Humid · cloud building', 55, 9, 'i-cloud-sun'],
+    ZA: [22, 21, 'Clear', 10, 16, 'i-sun'],
+    SG: [31, 36, 'Humid · passing showers', 60, 8, 'i-cloud-sun'],
+    JP: [26, 27, 'Mild and clear', 20, 10, 'i-cloud-sun'],
+    CN: [25, 26, 'Hazy sun', 25, 11, 'i-cloud-sun']
   };
 
-  var QIBLA_BY_COUNTRY = { PK: 267, GB: 119, AE: 258, US: 58, CA: 56, SA: 180 };
+  /* Fallback climate by IANA zone prefix. */
+  var WEATHER_BY_ZONE = {
+    Africa:   [31, 34, 'Warm and dry', 10, 11, 'i-sun'],
+    Asia:     [29, 32, 'Warm', 20, 10, 'i-sun'],
+    Europe:   [18, 17, 'Changeable', 35, 12, 'i-cloud-sun'],
+    America:  [23, 23, 'Light cloud', 25, 11, 'i-cloud-sun'],
+    Pacific:  [25, 26, 'Breezy', 30, 17, 'i-cloud-sun'],
+    Indian:   [28, 30, 'Warm and humid', 35, 13, 'i-cloud-sun'],
+    Atlantic: [20, 19, 'Fresh', 30, 20, 'i-cloud-sun']
+  };
 
-  var WEATHER = {
-    PK: { temp: 34, feels: 38, desc: 'Hazy sun · humid', rain: 8,  wind: '14 km/h', icon: 'i-sun' },
-    GB: { temp: 21, feels: 19, desc: 'Mostly clear',     rain: 12, wind: '8 km/h',  icon: 'i-cloud-sun' },
-    AE: { temp: 39, feels: 44, desc: 'Clear · very warm',rain: 0,  wind: '11 km/h', icon: 'i-sun' },
-    US: { temp: 24, feels: 24, desc: 'Light cloud',      rain: 20, wind: '10 km/h', icon: 'i-cloud-sun' },
-    CA: { temp: 17, feels: 15, desc: 'Cloudy',           rain: 35, wind: '13 km/h', icon: 'i-cloud-sun' },
-    SA: { temp: 40, feels: 42, desc: 'Clear',            rain: 0,  wind: '9 km/h',  icon: 'i-sun' }
+  function weatherFor(code, tz) {
+    var w = WEATHER_BY_COUNTRY[code] ||
+            WEATHER_BY_ZONE[(tz || '').split('/')[0]] ||
+            WEATHER_BY_ZONE.Europe;
+    return { temp: w[0], feels: w[1], desc: w[2], rain: w[3], wind: w[4], icon: w[5] };
+  }
+
+  /* A typical monthly household budget in local currency, for the markets we
+     know well. Everywhere else falls back to a converted USD figure — a rate
+     conversion of a Karachi budget would be nonsense in Tokyo, so the demo
+     figures are anchored per market instead. */
+  var BUDGET = {
+    PK: 80000, IN: 45000, BD: 30000, LK: 90000, NP: 40000,
+    US: 1500, CA: 1950, GB: 1200, IE: 1400, AU: 2100, NZ: 2200,
+    DE: 1400, FR: 1400, ES: 1100, IT: 1200, NL: 1500, SE: 15000, NO: 17000,
+    AE: 6000, SA: 5500, QA: 5500, KW: 450, OM: 550, BH: 550, JO: 700,
+    TR: 25000, EG: 15000, MA: 6000, NG: 400000, KE: 60000, ZA: 15000,
+    ID: 6000000, MY: 3500, PH: 30000, TH: 25000, VN: 12000000,
+    JP: 180000, CN: 6000, KR: 1800000, SG: 2200, HK: 12000,
+    MX: 18000, BR: 4000, AR: 500000, CL: 700000, CO: 3000000
   };
 
   var FUEL = [
@@ -254,18 +267,6 @@ window.LUME = (function () {
     { no: '27DN', name: 'Shalimar Express',   from: 'Lahore',        to: 'Karachi City',dep: '06:15', arr: '01:30', dur: '19h 15m', status: 'Departed',   cls: 'ok',   fare: '5,400' },
     { no: '101UP',name: 'Pakistan Express',   from: 'Karachi Cantt', to: 'Rawalpindi',  dep: '11:30', arr: '13:00', dur: '25h 30m', status: '1h 10m late',cls: 'late', fare: '4,850' }
   ];
-
-  /* Money figures are given per country rather than converted: a Karachi
-     grocery bill converted to sterling reads as nonsense, so each locale gets
-     its own realistic set. */
-  var MONEY = {
-    PK: { cur: '₨ ', spent: '42,300', budget: '80,000', pct: '53', groceries: '18,900', fuel: '11,400', bills: '12,000', ledger: '8,500', subs: '4,200', to: 'PKR', rate: '283.40', open: '285.10' },
-    GB: { cur: '£',  spent: '640',    budget: '1,200',  pct: '53', groceries: '285',    fuel: '95',     bills: '260',    ledger: '120',   subs: '38',    to: 'GBP', rate: '0.745',  open: '0.748' },
-    AE: { cur: 'AED ', spent: '3,150', budget: '6,000', pct: '53', groceries: '1,420',  fuel: '480',    bills: '1,250',  ledger: '600',   subs: '190',   to: 'AED', rate: '3.673',  open: '3.680' },
-    US: { cur: '$',  spent: '780',    budget: '1,500',  pct: '52', groceries: '340',    fuel: '120',    bills: '320',    ledger: '150',   subs: '46',    to: 'EUR', rate: '0.921',  open: '0.925' },
-    CA: { cur: 'C$', spent: '1,020',  budget: '1,950',  pct: '52', groceries: '445',    fuel: '160',    bills: '415',    ledger: '195',   subs: '58',    to: 'CAD', rate: '1.352',  open: '1.360' },
-    SA: { cur: 'SAR ', spent: '2,890', budget: '5,500', pct: '53', groceries: '1,290',  fuel: '410',    bills: '1,190',  ledger: '550',   subs: '175',   to: 'SAR', rate: '3.750',  open: '3.755' }
-  };
 
   var NEWS = {
     PK: [
@@ -284,15 +285,11 @@ window.LUME = (function () {
     INTEREST_GROUPS: INTEREST_GROUPS,
     FAITH_INTERESTS: FAITH_INTERESTS,
     DEFAULT_INTERESTS: DEFAULT_INTERESTS,
-    COUNTRIES: COUNTRIES,
     FEATURES: F,
     CATEGORIES: CATEGORIES,
-    SLIDES: SLIDES,
-    PRAYERS_BY_COUNTRY: PRAYERS_BY_COUNTRY,
-    QIBLA_BY_COUNTRY: QIBLA_BY_COUNTRY,
-    WEATHER: WEATHER,
+    weatherFor: weatherFor,
+    BUDGET: BUDGET,
     FUEL: FUEL,
-    MONEY: MONEY,
     TRAINS: TRAINS,
     NEWS: NEWS
   };
