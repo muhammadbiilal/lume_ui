@@ -1728,10 +1728,23 @@ button.crow:active { background: var(--card-hover); }
 .kard .mktbreadth + .metrics { margin-top: 16px; }
 
 /* ---------- responsive (§26.15) ---------------------------- */
+/* §26.15 — a wide screen gets more chart and more metrics side by side,
+   not three cells stretched across six columns. */
 @media (min-width: 1180px) {
-  .app--wide .kard--mkthero .chart--line svg { height: 240px; }
-  .app--wide .mktov { grid-template-columns: repeat(6, minmax(0, 1fr)); }
+  .app--wide .kard--mkthero .chart--line svg { height: 260px; }
   .app--wide .mktrange { max-width: 420px; }
+  .app--wide .mktov { grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); }
+  .app--wide .kard .mktbreadth + .metrics { --cols: 3; }
+  .app--wide [data-sect="assets"] .rrow__meta { flex-wrap: nowrap; }
+}
+
+/* Small screens keep the class control, the hero and the rich rows, and
+   let the secondary metrics wrap rather than truncate (§26.15). */
+@media (max-width: 359px) {
+  .mktov { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .mktov__cell:nth-child(3) { grid-column: 1 / -1; }
+  .mkthero__value { font-size: 28px; }
+  .mktrange__btn { padding: 7px 2px; font-size: 11px; }
 }
 
 /* ============================================================
@@ -1828,4 +1841,59 @@ button.crow:active { background: var(--card-hover); }
 .pushask__later {
   display: block; margin: 14px auto 0; padding: 8px 16px;
   font-size: 13px; font-weight: 650; color: var(--text-3);
+}
+
+/* In-app notification banner (§100.12) */
+.nbanner {
+  position: absolute; inset-inline: 12px; top: 8px; z-index: 70;
+  display: flex; align-items: stretch; gap: 4px;
+  padding: 4px 6px 4px 4px;
+  border-radius: var(--r-md);
+  background: color-mix(in srgb, var(--card) 94%, transparent);
+  border: 1px solid var(--border);
+  box-shadow: var(--shadow-lg);
+  backdrop-filter: saturate(1.6) blur(20px);
+  -webkit-backdrop-filter: saturate(1.6) blur(20px);
+  opacity: 0; transform: translateY(-14px);
+  transition: opacity var(--dur) var(--ease-out), transform var(--dur) var(--ease-out);
+}
+.nbanner.is-open { opacity: 1; transform: none; }
+.nbanner__main {
+  flex: 1; min-width: 0; display: flex; align-items: center; gap: 10px;
+  text-align: start; padding: 8px; border-radius: var(--r-sm);
+}
+.nbanner__main:active { background: var(--card-hover); }
+.nbanner__icon {
+  flex: none; width: 32px; height: 32px; border-radius: var(--r-icon);
+  display: grid; place-items: center;
+  background: var(--tint-neutral); color: var(--text-2);
+}
+.nbanner__icon svg { width: 16px; height: 16px; }
+.nbanner__body { flex: 1; min-width: 0; }
+.nbanner__title {
+  display: block; font-size: 13px; font-weight: 700; letter-spacing: -.024em;
+  overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+}
+.nbanner__text {
+  display: block; font-size: 11px; color: var(--text-3); font-weight: 550; margin-top: 1px;
+  overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+}
+.nbanner__close {
+  flex: none; width: 32px; border-radius: var(--r-sm);
+  display: grid; place-items: center; color: var(--text-3);
+}
+.nbanner__close svg { width: 14px; height: 14px; }
+
+/* Actioned and expired read differently from merely unread (§100.21) */
+.nrow.is-actioned .nrow__title { color: var(--text-2); }
+.nrow.is-expired { opacity: .58; }
+.nrow.is-expired .nrow__dot { display: none; }
+
+/* §100.17 — a count on the two tools that earn one */
+.cat-tool__count {
+  position: absolute; top: 8px; inset-inline-end: 8px;
+  min-width: 17px; height: 17px; padding: 0 4px; border-radius: var(--r-full);
+  display: grid; place-items: center;
+  background: var(--amber); color: #241505;
+  font-size: 10px; font-weight: 800; font-variant-numeric: tabular-nums;
 }

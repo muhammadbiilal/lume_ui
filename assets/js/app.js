@@ -894,8 +894,23 @@
     }).join('');
   }
 
+  /* §100.17 — a count where a count means something, and nowhere else. */
+  function toolBadgeCount(id) {
+    try {
+      if (id === 'bills') return toolCtx('bills').bills().overdueCount || 0;
+      if (id === 'documents') {
+        var d = toolCtx('documents').documents();
+        return (d.expiring || 0) + (d.expired || 0);
+      }
+    } catch (e) {}
+    return 0;
+  }
+
   function toolCard(f) {
     var badge = '';
+    var n = toolBadgeCount(f.id);
+    if (n) badge += '<span class="cat-tool__count" aria-label="' +
+      esc(t('n.needsAttention', { n: n })) + '">' + esc(n > 9 ? '9+' : n) + '</span>';
     if (f.sens) badge = '<span class="cat-tool__flag" aria-label="Private"><svg class="ico" viewBox="0 0 24 24"><use href="#i-lock"/></svg></span>';
     else if (f.loc) badge = '<span class="cat-tool__pin" aria-label="Local service"></span>';
     return '<button class="cat-tool pressable" data-act="' + actFor(f) + '" data-fid="' + f.id + '" ' +
@@ -2682,6 +2697,8 @@
     var host = $('#marketList');
     if (!host) return;
     var opts = toolCtx('markets').marketOptions();
+    /* §26.11 — country, its region, the exchanges within it, and the world
+       board. A market with two venues names both. */
     host.innerHTML = opts.map(function (o) {
       return '<button class="list-row pressable" data-market="' + esc(o.code) + '">' +
         '<span class="list-row__icon">' +
@@ -2691,7 +2708,10 @@
           '<span class="list-row__title">' + esc(o.name) +
             (o.home ? ' <span class="tag tag--neutral">' + esc(t('markets.default')) + '</span>' : '') +
           '</span>' +
-          '<span class="list-row__sub">' + esc(o.exchange) + '</span>' +
+          '<span class="list-row__sub">' + esc(o.region) + ' · ' + esc(o.exchange) + '</span>' +
+          (o.venues && o.venues.length > 1
+            ? '<span class="list-row__sub">' + esc(t('markets.venues')) + ': ' +
+              esc(o.venues.join(' · ')) + '</span>' : '') +
         '</span>' +
         '<span class="list-row__end">' +
           '<span class="list-row__value">' + esc(o.sub) + '</span>' +
@@ -2707,6 +2727,7 @@
     var c = toolCtx('markets');
     c.setState('market', code);
     c.setState('detail', '');
+    c.setState('class', 'stocks');
     profile.market = code;
     saveProfile();
     sheetClose();
@@ -2725,7 +2746,9 @@
       /* toolstate:<tool>:<key>:<value> — a tab, a filter, a selected row */
       var id = bits.shift(), key = bits.shift(), value = bits.join(':');
       var c = toolCtx(id);
-      if (c) c.setState(key, value === '' ? true : value);
+      /* An empty value clears the key. Coercing it to `true` turned
+         "leave the detail" into "open detail `true`". */
+      if (c) c.setState(key, value);
       if (currentTool === id) renderTool();
       return true;
     }
@@ -2929,8 +2952,19 @@
   document.addEventListener('click', function (e) {
     var up = e.target.closest('[data-step-up]');
     var down = up ? null : e.target.closest('[data-step-down]');
-    if ((!up && !down) || !currentTool) return;
+    if (!up && !down) return;
     var name = up ? up.dataset.stepUp : down.dataset.stepDown;
+
+    /* The quiet-hours steppers belong to the notification sheet, not to a
+       tool, so they are handled before the tool-context path. */
+    if (name === 'quietFrom' || name === 'quietTo') {
+      var np = NOTIFY.prefs();
+      np[name] = ((np[name] + (up ? 1 : -1)) + 24) % 24;
+      saveProfile();
+      renderNotifPrefs();
+      return;
+    }
+    if (!currentTool) return;
     var key = fieldKey(name);
     var c = toolCtx(currentTool);
     var cur = Number(c.field(key) || 0);
@@ -3230,6 +3264,59 @@
   });
 
   var notifReturnTab = 'home';
+  var bannerTimer = null;
+
+  /* §100.12 — an event reaches the user through exactly one surface. Push
+     when they are away, a banner when they are here and it is worth
+     interrupting for, the centre otherwise. Never two for one event. */
+  function showBanner(n) {
+    var host = $('#notifBanner');
+    if (!host) return;
+    host.innerHTML =
+      '<button class="nbanner__main pressable" data-notif-open="' + esc(n.id) + '">' +
+        '<span class="nbanner__icon nrow__icon--' + esc(n.category) + '">' +
+          '<svg class="ico" viewBox="0 0 24 24"><use href="#' + esc(n.icon) + '"/></svg></span>' +
+        '<span class="nbanner__body">' +
+          '<span class="nbanner__title">' + esc(n.title) + '</span>' +
+          '<span class="nbanner__text">' + esc(n.body) + '</span>' +
+        '</span>' +
+      '</button>' +
+      '<button class="nbanner__close pressable" data-banner-close aria-label="' + esc(t('n.dismiss')) + '">' +
+        '<svg class="ico" viewBox="0 0 24 24"><use href="#i-x"/></svg></button>';
+    host.hidden = false;
+    requestAnimationFrame(function () { host.classList.add('is-open'); });
+    if (NOTIFY.prefs().haptics && navigator.vibrate) navigator.vibrate(12);
+    clearTimeout(bannerTimer);
+    bannerTimer = setTimeout(hideBanner, 6000);
+  }
+
+  function hideBanner() {
+    var host = $('#notifBanner');
+    if (!host) return;
+    host.classList.remove('is-open');
+    clearTimeout(bannerTimer);
+    setTimeout(function () { if (!host.classList.contains('is-open')) host.hidden = true; }, 260);
+  }
+
+  document.addEventListener('click', function (e) {
+    if (e.target.closest('[data-banner-close]')) hideBanner();
+  });
+
+  /* The tick that presents. Away means the tab is hidden — the same event
+     then goes out as a push instead of a banner. */
+  function notifyTick() {
+    if (!NOTIFY.prefs().inApp && !NOTIFY.pushEnabled()) { renderNotifBadge(); return; }
+    var away = typeof document.hidden === 'boolean' ? document.hidden : false;
+    var result = NOTIFY.present(away);
+    if (result && result.surface === 'banner' && current !== 'notifications') {
+      showBanner(result.notification);
+    }
+    renderNotifBadge();
+  }
+
+  document.addEventListener('visibilitychange', function () {
+    if (!document.hidden) { renderNotifBadge(); }
+  });
 
   /* §100.1 — one badge, in the app header, formatted compactly. */
   function renderNotifBadge() {
@@ -3251,7 +3338,8 @@
     var badge = n.priority === 'critical' ? { label: t('n.pri.critical'), tone: 'late' }
       : n.priority === 'high' ? { label: t('n.pri.high'), tone: 'warn' } : null;
 
-    return '<article class="nrow' + (n.read ? '' : ' is-unread') + '"' +
+    return '<article class="nrow' + (n.read ? '' : ' is-unread') +
+      (n.actioned ? ' is-actioned' : '') + (n.expired ? ' is-expired' : '') + '"' +
       ' data-notif="' + esc(n.id) + '">' +
       '<button class="nrow__main pressable" data-notif-open="' + esc(n.id) + '">' +
         '<span class="nrow__icon nrow__icon--' + esc(n.category) + '">' +
@@ -3263,7 +3351,9 @@
           '</span>' +
           '<span class="nrow__text">' + esc(n.body) + '</span>' +
           '<span class="nrow__meta">' + esc(when) +
-            (n.grouped ? '' : ' · ' + esc(t(NOTIFY.category(n.category).key))) + '</span>' +
+            (n.grouped ? '' : ' · ' + esc(t(NOTIFY.category(n.category).key))) +
+            (n.actioned ? ' · ' + esc(t('n.actioned')) : '') +
+            (n.expired ? ' · ' + esc(t('n.expired')) : '') + '</span>' +
         '</span>' +
         (n.read ? '' : '<span class="nrow__dot" aria-label="' + esc(t('n.unread')) + '"></span>') +
       '</button>' +
@@ -3277,12 +3367,34 @@
     '</article>';
   }
 
+  var notifPainted = false;
+
   function renderNotifCentre() {
     var head = $('#notifHeader'), body = $('#notifBody');
     if (!head || !body) return;
 
+    /* §100.18 — the first paint shows the shape of what is coming, never a
+       blank screen. */
+    if (!notifPainted) {
+      head.innerHTML = UI.toolHeader({ title: t('nav.notifications'), backLabel: t('a11y.back') });
+      body.innerHTML = UI.section({ body: UI.skeleton('row', 4) });
+      notifPainted = true;
+      setTimeout(renderNotifCentre, 90);
+      return;
+    }
+
     var filter = notifFilter;
-    var all = NOTIFY.list('all');
+    var all;
+    try {
+      all = NOTIFY.list('all');
+    } catch (err) {
+      /* §100.18 — an engine that throws still leaves the user somewhere. */
+      if (window.console) console.error('Notification centre failed', err);
+      body.innerHTML = UI.section({ body: UI.errorState({
+        title: t('n.error.title'), text: t('n.error.text'),
+        retry: t('a.tryAgain'), act: 'notiffilter:' + filter }) });
+      return;
+    }
     var unread = all.filter(function (n) { return !n.read; }).length;
     var shown = NOTIFY.grouped(NOTIFY.list(filter));
 
@@ -3407,8 +3519,16 @@
         toggle('quiet', t('n.pref.quietOn'),
           L.time(p.quietFrom, 0) + ' – ' + L.time(p.quietTo, 0), p.quiet) +
         '<div class="list-row" style="cursor:default">' +
-          '<span class="list-row__body"><span class="list-row__title">' + esc(t('n.pref.quietWindow')) + '</span></span>' +
-          '<span class="list-row__end">' + UI.stepper({ name: 'quietFrom', value: L.time(p.quietFrom, 0), label: t('n.pref.from') }) + '</span>' +
+          '<span class="list-row__body"><span class="list-row__title">' + esc(t('n.pref.from')) + '</span></span>' +
+          '<span class="list-row__end">' +
+            UI.stepper({ name: 'quietFrom', value: L.time(p.quietFrom, 0), label: t('n.pref.from'),
+              less: t('n.pref.earlier'), more: t('n.pref.later') }) + '</span>' +
+        '</div>' +
+        '<div class="list-row" style="cursor:default">' +
+          '<span class="list-row__body"><span class="list-row__title">' + esc(t('n.pref.to')) + '</span></span>' +
+          '<span class="list-row__end">' +
+            UI.stepper({ name: 'quietTo', value: L.time(p.quietTo, 0), label: t('n.pref.to'),
+              less: t('n.pref.earlier'), more: t('n.pref.later') }) + '</span>' +
         '</div>' +
       '</div>' +
 
@@ -3476,25 +3596,32 @@
     var open = e.target.closest('[data-notif-open]');
     if (open) {
       var id = open.dataset.notifOpen;
-      var n = NOTIFY.list('all').concat(NOTIFY.grouped(NOTIFY.list('all')))
-        .filter(function (x) { return x.id === id; })[0];
-      NOTIFY.markRead(id);
-      if (n && n.items) { n.items.forEach(function (x) { NOTIFY.markRead(x.id); }); renderNotifCentre(); return; }
-      if (n && n.deepLink) runAct(n.deepLink);
-      else renderNotifCentre();
+      /* Resolve against what is on screen: under a filter, a group holds
+         different members than it would in the unfiltered list. */
+      var rows = NOTIFY.list(current === 'notifications' ? notifFilter : 'all');
+      var view = NOTIFY.grouped(rows);
+      var n = view.filter(function (x) { return x.id === id; })[0];
+      NOTIFY.markRead(id, rows);
+      hideBanner();
+      if (n && n.grouped) { renderNotifCentre(); return; }
+      if (n && n.deepLink) { runAct(n.deepLink); renderNotifBadge(); return; }
+      renderNotifCentre();
       return;
     }
     var act = e.target.closest('[data-notif-act]');
     if (act) {
       var aid = act.dataset.notifAct;
-      var an = NOTIFY.list('all').filter(function (x) { return x.id === aid; })[0];
-      NOTIFY.markRead(aid);
+      var rows2 = NOTIFY.list('all');
+      var an = rows2.filter(function (x) { return x.id === aid; })[0];
+      /* §100.21 — acting on a notification is a state of its own. */
+      NOTIFY.markActioned(aid, rows2);
       if (an && an.action) runAct(an.action.act);
+      renderNotifBadge();
       return;
     }
     var gone = e.target.closest('[data-notif-dismiss]');
     if (gone) {
-      NOTIFY.dismiss(gone.dataset.notifDismiss);
+      NOTIFY.dismiss(gone.dataset.notifDismiss, NOTIFY.list(notifFilter));
       renderNotifCentre();
     }
   });
@@ -3510,7 +3637,8 @@
   updateDayRing();
 
   setInterval(tickClock, 15000);
-  setInterval(renderNotifBadge, 60000);
+  setInterval(notifyTick, 45000);
+  setTimeout(notifyTick, 2500);
   setInterval(function () { updatePrayer(); }, 1000);
   setInterval(updateDayRing, 60000);
 

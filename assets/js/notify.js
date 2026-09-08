@@ -16,7 +16,7 @@
 window.LUME_NOTIFY = function (deps) {
   'use strict';
 
-  var t = deps.t, L = deps.L, store = deps.store;
+  var t = deps.t, L = deps.L;
   var P = deps.profile, ctxFor = deps.ctx;
   var featureFor = deps.featureFor, isVisible = deps.isVisible;
 
@@ -76,10 +76,43 @@ window.LUME_NOTIFY = function (deps) {
     return p.notifyRead;
   }
 
+  function actionedSet() {
+    var p = P();
+    p.notifyActed = p.notifyActed || {};
+    return p.notifyActed;
+  }
+
+  /* §100.13 — a dismissal applies to *this* occurrence, not to the event
+     for all time. "3 tasks left today" dismissed this morning must be able
+     to come back tomorrow; a permanent tombstone would silence it forever. */
   function dismissedSet() {
     var p = P();
     p.notifyGone = p.notifyGone || {};
     return p.notifyGone;
+  }
+
+  /* Which instance of a recurring event this is. Anything that recurs daily
+     stamps the day; anything tied to a specific record stamps the record. */
+  function occurrenceOf(src, made) {
+    if (src.occurrence === 'day' || !made.entity) {
+      var d = new Date();
+      return d.getFullYear() + '-' + (d.getMonth() + 1) + '-' + d.getDate();
+    }
+    return String(made.entity);
+  }
+
+  /* §100.19 — state is pruned to what is still live plus a short tail, so
+     localStorage cannot grow without bound. */
+  function prune(live) {
+    var keep = {};
+    live.forEach(function (n) { keep[n.id] = 1; });
+    [readSet(), dismissedSet(), actionedSet()].forEach(function (set) {
+      var keys = Object.keys(set);
+      if (keys.length <= 120) return;
+      keys.forEach(function (k) {
+        if (!keep[k] && k.indexOf('group:') !== 0) delete set[k];
+      });
+    });
   }
 
   /* ---------------------------------------------------------
@@ -94,7 +127,7 @@ window.LUME_NOTIFY = function (deps) {
   var SOURCES = [
     {
       id: 'prayer.next', tool: 'prayer', cat: 'faith', type: 'prayerReminder',
-      priority: 'normal', expiresMins: 60,
+      priority: 'normal', expiresMins: 60, occurrence: 'day',
       build: function (c) {
         var st = c.prayerState();
         if (st.minutes > 45) return null;
@@ -201,7 +234,9 @@ window.LUME_NOTIFY = function (deps) {
     },
     {
       id: 'weather.alert', tool: 'weather', cat: 'weather', type: 'severeWeather',
-      priority: 'high',
+      /* §100.6 — a severe-weather advisory is the one thing in this product
+         that is allowed through quiet hours. */
+      priority: 'critical', expiresMins: 720,
       build: function (c) {
         var w = c.weather();
         if (!w.alert) return null;
@@ -214,7 +249,7 @@ window.LUME_NOTIFY = function (deps) {
     },
     {
       id: 'weather.tomorrow', tool: 'weather', cat: 'weather', type: 'forecast',
-      priority: 'low',
+      priority: 'low', occurrence: 'day', expiresMins: 900,
       build: function (c) {
         var w = c.weather();
         var d = w.daily[1];
@@ -270,7 +305,7 @@ window.LUME_NOTIFY = function (deps) {
     },
     {
       id: 'todos.today', tool: 'todos', cat: 'reminders', type: 'taskReminder',
-      priority: 'normal',
+      priority: 'normal', occurrence: 'day', expiresMins: 720,
       build: function (c) {
         var td = c.todos();
         var left = td.today.filter(function (x) { return !x.done; });
@@ -285,7 +320,7 @@ window.LUME_NOTIFY = function (deps) {
     },
     {
       id: 'meds.dose', tool: 'meds', cat: 'health', type: 'medication',
-      priority: 'high', sensitive: true,
+      priority: 'high', sensitive: true, occurrence: 'day', expiresMins: 240,
       build: function (c) {
         var m = c.meds();
         if (!m.next || m.next.state === 'done') return null;
@@ -298,7 +333,7 @@ window.LUME_NOTIFY = function (deps) {
     },
     {
       id: 'habits.streak', tool: 'habits', cat: 'personal', type: 'habitReminder',
-      priority: 'low',
+      priority: 'low', occurrence: 'day', expiresMins: 600,
       build: function (c) {
         var h = c.habits();
         if (h.doneToday >= h.list.length) return null;
@@ -326,36 +361,64 @@ window.LUME_NOTIFY = function (deps) {
     return true;
   }
 
-  function build() {
-    var out = [];
+  function build(opts) {
+    opts = opts || {};
+    var now = Date.now();
+    var out = [], seen = {};
+
     SOURCES.forEach(function (src) {
       if (!allowed(src)) return;
+      var ctx;
+      try { ctx = ctxFor(src.tool); } catch (e) { return; }
+      if (!ctx) return;
+
       var made;
-      try { made = src.build(ctxFor(src.tool)); } catch (e) { made = null; }
-      if (!made) return;
+      try { made = src.build(ctx); } catch (e) { made = null; }
+      if (!made || !made.title) return;
 
       var id = src.id + (made.entity ? ':' + made.entity : '');
-      if (dismissedSet()[id]) return;
+      var occurrence = occurrenceOf(src, made);
+      var agoMins = made.ago === undefined ? 0 : made.ago;
+      var createdAt = now - agoMins * 60000;
+      var expiresAt = src.expiresMins ? createdAt + src.expiresMins * 60000 : null;
+      var expired = !!(expiresAt && now > expiresAt);
+
+      /* A dismissal only silences the occurrence it was made against. */
+      if (dismissedSet()[id] === occurrence) return;
+
+      /* §100.13 — the same event said twice in a short window is one event. */
+      var dedupeKey = src.id + '|' + made.title;
+      if (seen[dedupeKey] !== undefined && Math.abs(seen[dedupeKey] - agoMins) < 30) return;
+      seen[dedupeKey] = agoMins;
 
       out.push({
         id: id, sourceId: src.id, tool: src.tool, category: src.cat, type: src.type,
+        entityId: made.entity || null, occurrence: occurrence,
         priority: src.priority, priorityRank: PRIORITY[src.priority] || 1,
         title: made.title,
         body: bodyFor(src, made),
-        agoMins: made.ago === undefined ? 0 : made.ago,
+        image: made.image || null,
+        createdAt: createdAt, expiresAt: expiresAt, agoMins: agoMins,
         deepLink: made.deepLink, action: made.action,
         icon: category(src.cat).icon,
         read: !!readSet()[id],
-        expiresMins: src.expiresMins || null,
-        groupId: src.cat
+        actioned: !!actionedSet()[id],
+        expired: expired,
+        /* §100.13 — a group is repetition of one event, not a category of
+           unrelated ones. Grouping travel + parcels + trains told the user
+           nothing; four updates about the same index tells them a lot. */
+        groupId: src.id
       });
     });
 
-    /* §100.6 — priority first, then recency. */
+    /* §100.6 — priority first, then recency. An expired entry sinks. */
     out.sort(function (a, b) {
+      if (a.expired !== b.expired) return a.expired ? 1 : -1;
       if (a.priorityRank !== b.priorityRank) return b.priorityRank - a.priorityRank;
       return a.agoMins - b.agoMins;
     });
+
+    if (!opts.raw) prune(out);
     return out;
   }
 
@@ -368,22 +431,25 @@ window.LUME_NOTIFY = function (deps) {
     return made.body;
   }
 
-  /* §100.13 — repetition becomes one entry, not four. */
-  function grouped(list) {
+  /* §100.13 — three or more updates from the *same* event become one row,
+     so the user reads "KSE-100 activity — 4 updates" rather than four
+     near-identical lines. Unrelated events are never folded together. */
+  function grouped(rows) {
     var byGroup = {}, order = [];
-    list.forEach(function (n) {
+    rows.forEach(function (n) {
       if (!byGroup[n.groupId]) { byGroup[n.groupId] = []; order.push(n.groupId); }
       byGroup[n.groupId].push(n);
     });
     var out = [];
     order.forEach(function (g) {
       var items = byGroup[g];
-      if (items.length <= 2) { out = out.concat(items); return; }
+      if (items.length < 3) { out = out.concat(items); return; }
       var head = items[0];
       out.push(head);
       out.push({
-        id: 'group:' + g, grouped: true, category: g, icon: category(g).icon,
-        title: t('n.group.title', { name: t(category(g).key) }),
+        id: 'group:' + g, grouped: true, groupId: g,
+        category: head.category, icon: head.icon,
+        title: t('n.group.title', { name: head.title }),
         body: t('n.group.body', { n: items.length - 1 }),
         agoMins: items[1].agoMins, priorityRank: 0,
         items: items.slice(1),
@@ -393,35 +459,59 @@ window.LUME_NOTIFY = function (deps) {
     return out;
   }
 
+  /* An expired notification stays in history but stops presenting as
+     something to act on (§100.13, §100.21). */
   function list(filter) {
     var all = build();
-    if (filter === 'unread') return all.filter(function (n) { return !n.read; });
-    if (filter === 'important') return all.filter(function (n) { return n.priorityRank >= 2; });
+    if (filter === 'unread') return all.filter(function (n) { return !n.read && !n.expired; });
+    if (filter === 'important') return all.filter(function (n) { return n.priorityRank >= 2 && !n.expired; });
     if (filter && filter !== 'all') return all.filter(function (n) { return n.category === filter; });
     return all;
   }
 
   function unreadCount() {
-    return build().filter(function (n) { return !n.read; }).length;
+    return build().filter(function (n) { return !n.read && !n.expired; }).length;
   }
 
-  function markRead(id) {
-    if (id) readSet()[id] = 1;
-    else build().forEach(function (n) { readSet()[n.id] = 1; });
+  /* Rows and groups are addressed the same way, but a group id is
+     synthetic — it must never be written into persisted state. */
+  function resolve(id, rows) {
+    var flat = rows || build();
+    var direct = flat.filter(function (x) { return x.id === id; })[0];
+    if (direct) return [direct];
+    if (String(id).indexOf('group:') === 0) {
+      var g = String(id).slice(6);
+      return flat.filter(function (x) { return x.groupId === g; });
+    }
+    return [];
+  }
+
+  function markRead(id, rows) {
+    if (!id) {
+      build().forEach(function (n) { readSet()[n.id] = 1; });
+    } else {
+      resolve(id, rows).forEach(function (n) { readSet()[n.id] = 1; });
+    }
     deps.save();
   }
 
-  function dismiss(id) {
-    var n = build().filter(function (x) { return x.id === id; })[0];
-    if (n && n.items) n.items.forEach(function (x) { dismissedSet()[x.id] = 1; });
-    else dismissedSet()[id] = 1;
+  function markActioned(id, rows) {
+    resolve(id, rows).forEach(function (n) {
+      actionedSet()[n.id] = 1;
+      readSet()[n.id] = 1;
+    });
     deps.save();
   }
 
+  function dismiss(id, rows) {
+    resolve(id, rows).forEach(function (n) { dismissedSet()[n.id] = n.occurrence; });
+    deps.save();
+  }
+
+  /* The control says "Restore dismissed", so it restores dismissed — it does
+     not also mark everything unread. */
   function restoreAll() {
-    var p = P();
-    p.notifyGone = {};
-    p.notifyRead = {};
+    P().notifyGone = {};
     deps.save();
   }
 
@@ -492,8 +582,55 @@ window.LUME_NOTIFY = function (deps) {
     } catch (e) { return false; }
   }
 
+  /* ---------------------------------------------------------
+     §100.12 — the event reaches the user exactly once, through
+     whichever surface is right for where they are: a push when
+     they are away, a banner when they are here and it matters,
+     the centre otherwise. Nothing is presented twice.
+     --------------------------------------------------------- */
+  function presentedSet() {
+    var p = P();
+    p.notifySeen = p.notifySeen || {};
+    return p.notifySeen;
+  }
+
+  /* The next thing worth interrupting for, or null. */
+  function nextToPresent() {
+    var seen = presentedSet();
+    var candidates = build().filter(function (n) {
+      return !n.read && !n.expired && !seen[n.id];
+    });
+    return candidates[0] || null;
+  }
+
+  function markPresented(n) {
+    presentedSet()[n.id] = 1;
+    deps.save();
+  }
+
+  /* Called on a tick by the shell. Returns what it did, so the shell can
+     draw a banner without deciding policy itself. */
+  function present(away) {
+    var n = nextToPresent();
+    if (!n) return null;
+
+    if (away) {
+      if (push(n)) { markPresented(n); return { surface: 'push', notification: n }; }
+      return null;                      /* keep it for when they come back */
+    }
+    if (!mayInterrupt(n)) {
+      /* Not worth interrupting for: it waits in the centre, which is a
+         surface too. Mark it so it is not reconsidered every tick. */
+      markPresented(n);
+      return { surface: 'centre', notification: n };
+    }
+    markPresented(n);
+    return { surface: 'banner', notification: n };
+  }
+
   return {
     CATEGORIES: CATEGORIES, PRIORITY: PRIORITY, SOURCES: SOURCES,
+    present: present, nextToPresent: nextToPresent, markActioned: markActioned,
     category: category, prefs: prefs,
     list: list, grouped: grouped, unreadCount: unreadCount,
     markRead: markRead, dismiss: dismiss, restoreAll: restoreAll,

@@ -242,7 +242,119 @@ const wait = ms => new Promise(r => setTimeout(r, ms));
   ok('only modal workflows keep an explicit close',
      sheetsWithX.every(id => workflows.includes(id)), sheetsWithX.join(', '));
 
+  /* ── Markets, second round ──────────────────────────────────────────── */
+  console.log('\n=== Markets defects ===');
   win.close();
+  ({ dom } = await boot({ country: 'PK', region: 'Islamabad Capital Territory', city: 'Islamabad',
+      islamic: true, lang: 'en' }));
+  const w2 = dom.window, d2 = w2.document;
+  const g = s => d2.querySelector(s);
+  const gg = s => [...d2.querySelectorAll(s)];
+  const tap = el => el.dispatchEvent(new w2.MouseEvent('click', { bubbles: true, cancelable: true }));
+
+  tap(g('[data-tab="tools"]'));
+  await wait(20);
+  tap(g('[data-act="tool:markets"]'));
+  await wait(40);
+
+  // the in-content back control cleared `detail` to `true` and opened an asset
+  tap(g('#toolBody [data-sect="assets"] .rrow'));
+  await wait(40);
+  const inDetail = /Fundamentals/.test(g('#toolBody').textContent);
+  ok('an asset detail opens', inDetail);
+  const backLink = g('#toolBody [data-act="toolstate:markets:detail:"]');
+  ok('the detail has an in-content back control', !!backLink);
+  tap(backLink);
+  await wait(40);
+  ok('in-content back returns to the board, not to another asset',
+     !!g('#toolBody .mktov') && !/Fundamentals/.test(g('#toolBody').textContent),
+     g('#toolBody').textContent.slice(0, 90));
+
+  // §26.7 the controls sit above the list they act on
+  const order = gg('#toolBody [data-sect]').map(x => x.dataset.sect);
+  const assetsAt = order.indexOf('assets');
+  const searchAt = [...g('#toolBody').children].findIndex(c => c.querySelector('[data-tool-search]'));
+  const assetsIdx = [...g('#toolBody').children].findIndex(c => c.dataset.sect === 'assets');
+  ok('search sits above the list it filters (§26.7)', searchAt > -1 && searchAt < assetsIdx,
+     'search at ' + searchAt + ', assets at ' + assetsIdx);
+
+  // §26.8 filters are per class and do not go stale across classes
+  tap(gg('#toolBody .ttab').find(b => /Commodities/.test(b.textContent)));
+  await wait(40);
+  const energy = gg('#toolBody .fchip').find(b => /Energy/.test(b.textContent));
+  ok('commodities offer a category filter (§26.8)', !!energy);
+  tap(energy);
+  await wait(40);
+  tap(gg('#toolBody .ttab').find(b => /Forex/.test(b.textContent)));
+  await wait(40);
+  ok('a filter does not leak across asset classes',
+     gg('#toolBody .fchip').some(c => c.getAttribute('aria-pressed') === 'true'),
+     gg('#toolBody .fchip').map(c => c.textContent.trim() + '=' + c.getAttribute('aria-pressed')).join(' '));
+  ok('forex offers pair types, not gainers/losers (§26.8)',
+     !gg('#toolBody .fchip').some(c => /Gainers|Losers/.test(c.textContent)),
+     gg('#toolBody .fchip').map(c => c.textContent.trim()).join(' | '));
+
+  // §26.4/§26.6 rows carry the absolute change too
+  ok('a row shows the absolute change as well as the percentage (§26.6)',
+     /[+−]\s?[\d.,]+\s+[+−][\d.,]+%/.test(g('#toolBody [data-sect="assets"]').textContent),
+     g('#toolBody [data-sect="assets"]').textContent.slice(0, 120));
+
+  // a currency pair is not listed on a stock exchange
+  ok('an asset carries its own venue, not the local exchange',
+     !/PSX/.test(g('#toolBody [data-sect="assets"]').textContent),
+     g('#toolBody [data-sect="assets"]').textContent.slice(0, 140));
+
+  // FX charts are not flat
+  const sparks = gg('#toolBody .spark__line').map(p => p.getAttribute('d'));
+  const flat = sparks.filter(dd => {
+    const ys = (dd.match(/[ML][\d.]+ ([\d.]+)/g) || []).map(m => m.split(' ')[1]);
+    return ys.length > 3 && new Set(ys).size === 1;
+  });
+  ok('forex sparklines are not flat lines', flat.length === 0, flat.length + ' flat of ' + sparks.length);
+
+  // the FX converter reads what was typed
+  tap(g('#toolBody [data-sect="assets"] .rrow'));
+  await wait(40);
+  const amt = g('[data-input="mk_mkamount"]');
+  ok('a currency detail offers conversion', !!amt);
+  if (amt) {
+    const before2 = g('[data-input="mk_out"]').value;
+    amt.value = '250';
+    amt.dispatchEvent(new w2.Event('input', { bubbles: true }));
+    await wait(400);
+    ok('the conversion follows the amount typed',
+       g('[data-input="mk_out"]').value !== before2,
+       before2 + ' -> ' + g('[data-input="mk_out"]').value);
+  }
+
+  // §26.9 the detail timeframe changes the chart
+  const chartBefore = (g('#toolBody .chart__line') || {}).getAttribute
+    ? g('#toolBody .chart__line').getAttribute('d') : '';
+  const fiveY = gg('#toolBody .mktrange__btn').find(b => /5Y/.test(b.textContent));
+  ok('the detail has a timeframe selector', !!fiveY);
+  if (fiveY) {
+    tap(fiveY);
+    await wait(40);
+    ok('the detail chart follows the timeframe (§26.9)',
+       g('#toolBody .chart__line').getAttribute('d') !== chartBefore);
+  }
+  ok('the detail states whether the market is trading (§26.9)', !!g('#toolBody .mktstate'));
+  w2.close();
+
+  // §26.13 the world board keeps its composition
+  console.log('\n=== The world board ===');
+  ({ dom } = await boot({ country: 'PK', city: 'Islamabad', islamic: false, lang: 'en',
+      market: 'GLOBAL' }));
+  const w3 = dom.window;
+  const built = w3.LUME_TOOLS.build('markets');
+  const glob = [...built.body.matchAll(/data-sect="([a-z]+)"/g)].map(m => m[1])
+    .filter(x => ['context', 'classnav', 'hero', 'assets', 'overview'].includes(x));
+  ok('the world board keeps the approved composition (§123)',
+     glob.join('>') === 'context>classnav>hero>assets>overview', glob.join(' > '));
+  ok('the world board lists world equities, not three US ETFs',
+     /Aramco|Reliance|Shell/.test(built.body), built.body.replace(/<[^>]+>/g, ' ').slice(200, 340));
+  w3.close();
+
   console.log('\n' + (failures ? failures + ' FAILURES' : 'ALL REGRESSION CHECKS PASSED'));
   process.exit(failures ? 1 : 0);
 })().catch(e => { console.error('HARNESS ERROR', e); process.exit(2); });

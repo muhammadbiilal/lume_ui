@@ -81,7 +81,11 @@ const wait = ms => new Promise(r => setTimeout(r, ms));
   /* ── the centre ────────────────────────────────────────────────────── */
   console.log('\n=== Centre (§100.2, §100.3) ===');
   click(bell);
-  await wait(40);
+  await wait(20);
+  // §100.18 — the first paint is a skeleton, never a blank screen
+  ok('the centre paints a loading skeleton first (§100.18)',
+     !!$('#notifBody .sk'), $('#notifBody').innerHTML.slice(0, 80));
+  await wait(160);
   ok('the centre is a screen, not a sheet (§100.2)',
      $('#screen-notifications').classList.contains('is-active') && !$('#sheet-notifications'));
   ok('it has a header with back', !!$('#notifHeader [data-tool-back]'));
@@ -92,6 +96,10 @@ const wait = ms => new Promise(r => setTimeout(r, ms));
   const rows = $$('#notifBody .nrow');
   ok('rows are rendered', rows.length > 0, rows.length + ' rows');
   const first = rows[0];
+  ok('unrelated events are never folded together (§100.13)',
+     ![...doc.querySelectorAll('.nrow')].some(r => /activity/i.test(r.textContent) &&
+       /Travel|Money|Markets/i.test((r.querySelector('.nrow__title') || {}).textContent || '')),
+     'a category-level group was rendered');
   ok('a row carries icon, title, body and time (§100.3)',
      !!first.querySelector('.nrow__icon') && !!first.querySelector('.nrow__title') &&
      !!first.querySelector('.nrow__text') && !!first.querySelector('.nrow__meta'));
@@ -131,7 +139,7 @@ const wait = ms => new Promise(r => setTimeout(r, ms));
   await wait(40);
   // opening deep-links away, so come back
   click($('[data-act="tab:notifications"]') || $('[data-tab="home"]'));
-  await wait(40);
+  await wait(180);
   const after = Number(($('[data-act="tab:notifications"] .iconbtn__badge') || { textContent: '0' }).textContent);
   ok('opening a notification marks it read', after < before, before + ' -> ' + after);
 
@@ -143,12 +151,12 @@ const wait = ms => new Promise(r => setTimeout(r, ms));
      rowsBefore + ' -> ' + $$('#notifBody .nrow').length);
 
   click($('#notifHeader [data-act="notifreadall"]') || $('#notifHeader [data-tool-back]'));
-  await wait(40);
+  await wait(60);
 
   /* ── preferences ───────────────────────────────────────────────────── */
   console.log('\n=== Preferences (§100.8, §100.9) ===');
   click($('[data-act="tab:notifications"]'));
-  await wait(40);
+  await wait(180);
   click($('#notifBody [data-act="sheet:notifprefs"]') || $('#notifHeader [data-act="sheet:notifprefs"]'));
   await wait(40);
   ok('the settings sheet opens', $('#sheet-notifprefs').classList.contains('is-open'));
@@ -188,7 +196,7 @@ const wait = ms => new Promise(r => setTimeout(r, ms));
   const clk = el => el.dispatchEvent(new win.MouseEvent('click', { bubbles: true, cancelable: true }));
 
   clk(q('[data-act="tab:notifications"]'));
-  await wait(40);
+  await wait(180);
   const guarded = q('#notifBody').textContent;
   ok('a sensitive notification withholds its detail by default',
      !/Rs\s?\d|\$\d/.test(guarded) || /past its due date|expiring soon/.test(guarded),
@@ -202,7 +210,7 @@ const wait = ms => new Promise(r => setTimeout(r, ms));
       notify: { preview: false } }));
   win = dom.window; doc = win.document;
   clk(doc.querySelector('[data-act="tab:notifications"]'));
-  await wait(40);
+  await wait(180);
   // A group summary is a count ("3 more updates") and reveals nothing, so it
   // is not required to be masked; every individual body must be.
   const bodies = [...doc.querySelectorAll('.nrow:not([data-notif^="group:"]) .nrow__text')];
@@ -216,7 +224,7 @@ const wait = ms => new Promise(r => setTimeout(r, ms));
   ({ dom } = await boot({ country: 'US', city: 'New York', islamic: false, lang: 'en' }));
   win = dom.window; doc = win.document;
   clk(doc.querySelector('[data-act="tab:notifications"]'));
-  await wait(40);
+  await wait(180);
   const usText = doc.querySelector('#notifBody').textContent;
   ok('no faith notification reaches a non-Muslim user',
      !/Fajr|Dhuhr|Asr|Maghrib|Isha|prayer/i.test(usText), usText.slice(0, 140));
@@ -237,7 +245,7 @@ const wait = ms => new Promise(r => setTimeout(r, ms));
   ok('permission is not requested at boot (§100.11)', win.Notification.permission === 'default');
 
   clk2(p2('[data-act="tab:notifications"]'));
-  await wait(40);
+  await wait(180);
   clk2(p2('#notifBody [data-act="sheet:notifprefs"]'));
   await wait(40);
   clk2(p2('[data-npref="push"]'));
@@ -257,7 +265,7 @@ const wait = ms => new Promise(r => setTimeout(r, ms));
       { push: 'denied' }));
   win = dom.window; doc = win.document;
   clk(doc.querySelector('[data-act="tab:notifications"]'));
-  await wait(40);
+  await wait(180);
   clk(doc.querySelector('#notifBody [data-act="sheet:notifprefs"]'));
   await wait(40);
   clk(doc.querySelector('[data-npref="push"]'));

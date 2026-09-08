@@ -491,19 +491,26 @@ window.LUME_CTX = function (deps) {
     ];
     /* Only offered where the market has them. */
     if (!ex || ex.code === 'NASDAQ') out.push({ id: 'etfs', label: t('markets.tab.etfs') });
-    out.push({ id: 'crypto', label: t('markets.tab.crypto') });
+    /* Crypto is a venue-less class, so it belongs to the world board and to
+       the markets whose exchanges actually list it. */
+    if (!ex || ['NASDAQ', 'LSE'].indexOf(ex.code) !== -1) {
+      out.push({ id: 'crypto', label: t('markets.tab.crypto') });
+    }
     return out;
   }
 
   /* §26.10 — live, delayed, closed, opening soon, holiday. Each is a state
      the screen composes for, not an error string. */
   function marketState(ex) {
-    if (!ex) return { key: 'global', open: false, quality: 'delayed', label: t('markets.worldBoard') };
     var now = new Date();
-    var today = L.date(now, { day: 'numeric', month: 'short' });
-    var holidays = D.MARKET_HOLIDAYS[marketCode()] || [];
-    if (holidays.indexOf(today) !== -1) {
-      return { key: 'holiday', open: false, quality: 'cached', label: t('markets.st.holiday') };
+    if (!ex) {
+      /* The world board never closes: somewhere is always trading. */
+      return { key: 'global', open: true, quality: 'live', label: t('markets.st.global'),
+        detail: t('markets.st.globalDetail') };
+    }
+    if (D.isMarketHoliday(marketCode(), now)) {
+      return { key: 'holiday', open: false, quality: 'cached', label: t('markets.st.holiday'),
+        detail: t('markets.st.reopens', { day: L.date(nextWeekday(now), { weekday: 'long' }) }) };
     }
     var day = now.getDay();
     if (day === 0 || day === 6) {
@@ -513,7 +520,8 @@ window.LUME_CTX = function (deps) {
     var mins = now.getHours() * 60 + now.getMinutes();
     var o = hhmmToMins(ex.open), c = hhmmToMins(ex.close);
     if (mins >= o && mins <= c) {
-      return { key: 'open', open: true, quality: 'delayed', label: t('markets.st.open'),
+      /* Open means live, which is the whole point of the distinction (§19). */
+      return { key: 'open', open: true, quality: 'live', label: t('markets.st.live'),
         detail: t('markets.st.closesIn', { time: fmtGap(c - mins) }) };
     }
     if (mins < o && o - mins <= 90) {
@@ -552,7 +560,10 @@ window.LUME_CTX = function (deps) {
         sub: x.full || x.name, price: x.price !== undefined ? x.price : (x.rate !== undefined ? x.rate : x.value),
         chg: x.chg, pct: x.pct, ccy: currency, logo: x.logo || (x.sym || x.pair || '').slice(0, 2),
         tone: x.tone || 'slate', vol: x.vol, cap: x.cap,
-        sectorKey: x.sectorKey, exchange: ex ? ex.code : t('markets.global')
+        sectorKey: x.sectorKey,
+        /* A commodity is not listed on PSX and a currency pair is not listed
+           anywhere: the venue belongs to the asset, not to the screen. */
+        exchange: x.ex || (ex ? ex.code : t('markets.global'))
       };
       for (var k in (extra || {})) o[k] = extra[k];
       return o;
@@ -561,30 +572,44 @@ window.LUME_CTX = function (deps) {
     if (cls === 'indices') {
       var idx = ex ? ex.indices : D.GLOBAL_INDICES;
       return idx.map(function (i) {
-        return shape(i, 'index', ccy, { logo: i.sym.slice(0, 3), tone: 'accent', sub: i.full });
+        return shape(i, 'index', ccy, {
+          logo: i.sym.slice(0, 3), tone: 'accent',
+          name: i.name, sub: i.full          /* "Karachi 30 Index" is the description */
+        });
       });
     }
     if (cls === 'forex') {
       return D.forexFor(marketCode()).map(function (f) {
-        return shape(f, 'fx', f.quote, { logo: f.base.slice(0, 2), tone: 'indigo',
-          sub: f.base + ' / ' + f.quote, fxKind: f.kind, decimals: f.quote === 'JPY' ? 2 : 4 });
+        return shape(f, 'fx', f.quote, {
+          logo: f.base.slice(0, 2), tone: 'indigo',
+          name: f.base + ' / ' + f.quote,          /* the pair reads once, as a pair */
+          sub: t('markets.fx.' + f.kind),
+          fxKind: f.kind, exchange: t('markets.fxVenue'),
+          decimals: f.quote === 'JPY' ? 2 : 4
+        });
       });
     }
     if (cls === 'commodities') {
       return D.COMMODITIES.map(function (m) {
-        return shape(m, 'commodity', m.ccy, { logo: m.glyph, sub: t('markets.cm.' + m.cat),
-          unit: m.unit, contract: m.contract, cat: m.cat });
+        return shape(m, 'commodity', m.ccy, {
+          logo: m.glyph, name: m.name, sub: t('markets.cm.' + m.cat),
+          unit: m.unit, contract: m.contract, cat: m.cat, exchange: t('markets.cmVenue')
+        });
       });
     }
     if (cls === 'crypto') {
-      return D.CRYPTO.map(function (x) { return shape(x, 'crypto', 'USD', { sub: x.name }); });
+      return D.CRYPTO.map(function (x) {
+        return shape(x, 'crypto', 'USD', { sub: x.name, exchange: t('markets.cryptoVenue') });
+      });
     }
     if (cls === 'etfs') {
-      return D.ETFS.map(function (x) { return shape(x, 'etf', 'USD', { sub: x.name }); });
+      return D.ETFS.map(function (x) { return shape(x, 'etf', 'USD', { sub: x.name, exchange: 'NYSE Arca' }); });
     }
-    return (ex ? ex.stocks : D.ETFS).map(function (x) {
-      return shape(x, 'stock', ccy, { sub: x.name });
-    });
+    /* The world board lists the world's largest companies, not three US ETFs. */
+    if (!ex) {
+      return D.GLOBAL_STOCKS.map(function (x) { return shape(x, 'stock', 'USD', { sub: x.name }); });
+    }
+    return ex.stocks.map(function (x) { return shape(x, 'stock', ccy, { sub: x.name }); });
   }
 
   /* The one asset the hero leads with for this class. */
@@ -601,27 +626,53 @@ window.LUME_CTX = function (deps) {
   }
 
   /* §26.9 — a full record for the detail screen. */
-  function assetDetail(cls, sym) {
+  var RANGE_SHAPE = {
+    '1D': { n: 44, vol: 1 }, '1W': { n: 56, vol: 2.2 }, '1M': { n: 62, vol: 3.8 },
+    '3M': { n: 70, vol: 5.6 }, '1Y': { n: 78, vol: 8.2 }, '5Y': { n: 90, vol: 12 }
+  };
+
+  function seriesFor(asset, range) {
+    var shape = RANGE_SHAPE[range] || RANGE_SHAPE['1D'];
+    var base = asset.kind === 'fx' ? 0.0018 : 0.004;
+    /* The seed carries the range, so each timeframe is its own history
+       rather than the same walk sampled more finely. */
+    var seed = Math.round(asset.price * 1000) + (range || '1D').charCodeAt(0) * 31 +
+               (range || '').length * 7;
+    return D.walk(seed, shape.n, asset.price, base * shape.vol);
+  }
+
+  function assetDetail(cls, sym, range) {
     var list = assetsFor(cls);
     var a = list.filter(function (x) { return x.sym === sym; })[0] || list[0];
     if (!a) return null;
-    var f = D.fundamentals(a.price, (a.sym || '').length * 137 + Math.round(a.price));
     return {
-      asset: a, f: f,
-      series: D.walk(Math.round(a.price * 100) + 7, 48, a.price, a.kind === 'fx' ? 0.002 : 0.015)
+      asset: a,
+      f: D.fundamentals(a.price, (a.sym || '').length * 137 + Math.round(a.price)),
+      series: seriesFor(a, range || '1D')
     };
   }
 
   /* §26.11 — the markets the user can switch between. */
+  /* §26.11 — country, the exchanges within it, and the world board. */
+  var VENUES = {
+    US: ['NASDAQ', 'NYSE'], AE: ['DFM', 'ADX'], IN: ['NSE', 'BSE'],
+    PK: ['PSX'], GB: ['LSE'], SA: ['Tadawul']
+  };
+
   function marketOptions() {
-    var codes = Object.keys(D.EXCHANGES);
-    var out = codes.map(function (code) {
+    var here = marketCode();
+    var out = Object.keys(D.EXCHANGES).map(function (code) {
       var ex = D.EXCHANGES[code];
-      return { code: code, name: L.countryName(code), exchange: ex.name, sub: ex.code,
-        home: code === P().country, on: code === marketCode() };
+      return {
+        code: code, name: L.countryName(code), exchange: ex.name, sub: ex.code,
+        region: ex.city, venues: VENUES[code] || [ex.code],
+        home: code === P().country, on: code === here
+      };
     });
+    out.sort(function (a, b) { return (b.home ? 1 : 0) - (a.home ? 1 : 0); });
     out.push({ code: 'GLOBAL', name: t('markets.globalMarkets'), exchange: t('markets.worldBoard'),
-      sub: t('markets.global'), on: marketCode() === 'GLOBAL' });
+      sub: t('markets.global'), region: t('markets.everywhere'), venues: [],
+      on: here === 'GLOBAL' });
     return out;
   }
 
@@ -634,7 +685,7 @@ window.LUME_CTX = function (deps) {
     var o = parseFloat(ex.open.split(':')[0]) + parseFloat(ex.open.split(':')[1]) / 60;
     var cl = parseFloat(ex.close.split(':')[0]) + parseFloat(ex.close.split(':')[1]) / 60;
     var open = h >= o && h <= cl && now.getDay() > 0 && now.getDay() < 6;
-    var ov = D.overviewFor(marketCode());
+    var ov = marketCode() === 'GLOBAL' ? D.GLOBAL_OVERVIEW : D.overviewFor(marketCode());
     var adv = ov ? ov.adv : ex.stocks.filter(function (s) { return s.pct > 0; }).length;
     var dec = ov ? ov.dec : ex.stocks.filter(function (s) { return s.pct <= 0; }).length;
     return {
@@ -1765,7 +1816,7 @@ window.LUME_CTX = function (deps) {
       /* money */
       exchange: exchange, marketCode: marketCode, marketState: marketState,
       assetClasses: assetClasses, assetsFor: assetsFor, heroAsset: heroAsset,
-      assetDetail: assetDetail, marketOptions: marketOptions,
+      assetDetail: assetDetail, seriesFor: seriesFor, marketOptions: marketOptions,
       marketSession: marketSession, metals: metals, currencyBoard: currencyBoard,
       fuelCost: fuelCost, tax: tax, bills: bills, loan: loan, tipSplit: tipSplit,
       ledger: ledger, installments: installments, committee: committee, compound: compound,

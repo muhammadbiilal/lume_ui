@@ -519,6 +519,31 @@
     'n.ask.enable': 'Enable notifications', 'n.ask.later': 'Not now',
 
     /* §26 — the approved Markets composition */
+    'markets.st.live': 'Live', 'markets.st.global': 'Always trading',
+    'markets.st.globalDetail': 'Some market is open somewhere',
+    'markets.overviewFor': '{name}', 'markets.sessionLabel': 'Session',
+    'markets.session.fx': '24 / 5', 'markets.session.cme': 'Exchange hours',
+    'markets.session.24h': '24 / 7', 'markets.session.us': 'US hours',
+    'markets.pairsTracked': 'Pairs tracked', 'markets.contractsTracked': 'Contracts tracked',
+    'markets.fxVenue': 'Interbank', 'markets.cmVenue': 'Futures', 'markets.cryptoVenue': 'Global',
+    'markets.clearSearch': 'Clear search',
+    'markets.relatedIndices': 'Related indices',
+    'markets.everywhere': 'Worldwide',
+    'markets.f.category': 'Category', 'markets.f.pairType': 'Type', 'markets.f.family': 'Family',
+    'markets.f.broad': 'Broad market', 'markets.f.narrow': 'Focused',
+    'markets.f.largeCap': 'Large cap', 'markets.f.mostActive': 'Most active',
+    'markets.search.forex': 'Search a currency pair',
+    'markets.search.commodities': 'Search a commodity',
+    'markets.search.indices': 'Search an index',
+    'markets.venues': 'Exchanges',
+
+    /* §100 additions */
+    'n.actioned': 'Actioned', 'n.expired': 'Expired',
+    'n.error.title': 'Couldn’t load notifications',
+    'n.error.text': 'Something went wrong reading your alerts. Nothing has been lost.',
+    'n.needsAttention': '{n} need attention',
+    'n.pref.to': 'Until', 'n.pref.earlier': 'Earlier', 'n.pref.later': 'Later',
+
     'markets.assetClass': 'Asset class',
     'markets.tab.forex': 'Forex', 'markets.tab.commodities': 'Commodities',
     'markets.tab.indices': 'Indices',

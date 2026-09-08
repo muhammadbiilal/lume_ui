@@ -24,11 +24,15 @@ window.LUME_DATA = (function () {
   }
 
   /* A plausible price walk, so sparklines and charts move like data. */
+  /* Precision follows the magnitude: rounding an FX rate of 0.6584 to two
+     decimals produced a flat line where a chart should be. */
   function walk(seed, n, start, vol) {
     var r = seedRand(seed), out = [], v = start;
+    var dp = Math.abs(start) >= 100 ? 2 : Math.abs(start) >= 1 ? 4 : 6;
+    var f = Math.pow(10, dp);
     for (var i = 0; i < n; i++) {
       v = v * (1 + (r() - 0.5) * vol);
-      out.push(Math.round(v * 100) / 100);
+      out.push(Math.round(v * f) / f);
     }
     return out;
   }
@@ -155,6 +159,22 @@ window.LUME_DATA = (function () {
 
   function overviewFor(code) { return MARKET_OVERVIEW[code] || null; }
 
+  /* §26.5 — the overview follows the asset class, not just the exchange.
+     Showing PSX market cap while the user is looking at commodities is
+     padding, which the spec forbids. */
+  var CLASS_OVERVIEW = {
+    forex: { volume: 7.5e12, volPct: 1.8, pairs: 28, session: 'fx' },
+    commodities: { volume: 184e9, volPct: -0.9, contracts: 9, session: 'cme' },
+    crypto: { cap: 2.34e12, capPct: 1.9, volume: 68.4e9, volPct: 12.4, session: '24h' },
+    etfs: { cap: 891e9, capPct: 0.5, volume: 38.7e9, volPct: 2.1, session: 'us' }
+  };
+
+  function classOverview(cls) { return CLASS_OVERVIEW[cls] || null; }
+
+  /* The world board is a market in its own right, not an absence of one. */
+  var GLOBAL_OVERVIEW = { cap: 118e12, capPct: 0.36, volume: 9.4e9, volPct: 2.7,
+    turnover: 512e9, trades: 12840224, adv: 4, dec: 2, unch: 0 };
+
   /* ---------------------------------------------------------
      §26.2 — Forex. Majors everywhere, plus the pairs that
      matter where the user actually is.
@@ -233,17 +253,43 @@ window.LUME_DATA = (function () {
   }
 
   /* §26.10 — public holidays close a market as surely as the clock does. */
+  /* Stored as month/day numbers: comparing a locale-formatted string against
+     "1 May" never matched for en-US, ur-PK or ar-SA. */
   var MARKET_HOLIDAYS = {
-    PK: ['1 May', '14 Aug', '25 Dec'],
-    US: ['1 Jan', '4 Jul', '28 Nov', '25 Dec'],
-    GB: ['1 Jan', '25 Dec', '26 Dec'],
-    AE: ['1 Jan', '2 Dec'],
-    SA: ['23 Sep'],
-    IN: ['26 Jan', '15 Aug', '2 Oct']
+    PK: [[5, 1], [8, 14], [12, 25]],
+    US: [[1, 1], [7, 4], [11, 28], [12, 25]],
+    GB: [[1, 1], [12, 25], [12, 26]],
+    AE: [[1, 1], [12, 2]],
+    SA: [[9, 23]],
+    IN: [[1, 26], [8, 15], [10, 2]]
   };
+
+  function isMarketHoliday(code, date) {
+    var list = MARKET_HOLIDAYS[code] || [];
+    var m = date.getMonth() + 1, d = date.getDate();
+    for (var i = 0; i < list.length; i++) if (list[i][0] === m && list[i][1] === d) return true;
+    return false;
+  }
 
   /* Every market can reach the global board regardless of where the
      user is (§21) — local first, world always available. */
+  /* The largest listings worldwide, for the world board's Stocks class —
+     falling back to three US ETFs made "Top stocks" a lie. */
+  var GLOBAL_STOCKS = [
+    { sym: 'AAPL', name: 'Apple Inc.', logo: 'AA', tone: 'slate', price: 238.42, chg: 4.72, pct: 2.02,
+      vol: '54.1M', cap: '3.62T', sectorKey: 'sector.technology', ex: 'NASDAQ' },
+    { sym: '2222', name: 'Saudi Aramco', logo: 'AR', tone: 'green', price: 27.40, chg: 0.15, pct: 0.55,
+      vol: '14.2M', cap: '6.6T', sectorKey: 'sector.energy', ex: 'Tadawul' },
+    { sym: 'MSFT', name: 'Microsoft Corp.', logo: 'MS', tone: 'sky', price: 428.15, chg: 2.10, pct: 0.49,
+      vol: '18.7M', cap: '3.18T', sectorKey: 'sector.technology', ex: 'NASDAQ' },
+    { sym: 'NVDA', name: 'NVIDIA Corp.', logo: 'NV', tone: 'green', price: 138.90, chg: -1.84, pct: -1.31,
+      vol: '212M', cap: '3.41T', sectorKey: 'sector.semiconductors', ex: 'NASDAQ' },
+    { sym: 'SHEL', name: 'Shell plc', logo: 'SH', tone: 'green', price: 34.18, chg: 0.22, pct: 0.65,
+      vol: '6.1M', cap: '210B', sectorKey: 'sector.energy', ex: 'LSE' },
+    { sym: 'RELIANCE', name: 'Reliance Industries', logo: 'RI', tone: 'indigo', price: 35.12, chg: 0.26, pct: 0.76,
+      vol: '8.1M', cap: '237B', sectorKey: 'sector.conglomerate', ex: 'NSE' }
+  ];
+
   var GLOBAL_INDICES = [
     { sym: 'SPX', name: 'S&P 500', full: 'United States', value: 5812.44, chg: 24.18, pct: 0.42 },
     { sym: 'UKX', name: 'FTSE 100', full: 'United Kingdom', value: 8288.60, chg: 31.44, pct: 0.38 },
@@ -892,10 +938,11 @@ window.LUME_DATA = (function () {
 
   return {
     walk: walk, seedRand: seedRand,
-    EXCHANGES: EXCHANGES, exchangeFor: exchangeFor, GLOBAL_INDICES: GLOBAL_INDICES, CRYPTO: CRYPTO, ETFS: ETFS,
-    overviewFor: overviewFor, forexFor: forexFor, FX_MAJORS: FX_MAJORS,
+    EXCHANGES: EXCHANGES, exchangeFor: exchangeFor, GLOBAL_INDICES: GLOBAL_INDICES, GLOBAL_STOCKS: GLOBAL_STOCKS, CRYPTO: CRYPTO, ETFS: ETFS,
+    overviewFor: overviewFor, classOverview: classOverview, GLOBAL_OVERVIEW: GLOBAL_OVERVIEW,
+    forexFor: forexFor, FX_MAJORS: FX_MAJORS,
     COMMODITIES: COMMODITIES, COMMODITY_CATS: COMMODITY_CATS,
-    fundamentals: fundamentals, MARKET_HOLIDAYS: MARKET_HOLIDAYS,
+    fundamentals: fundamentals, MARKET_HOLIDAYS: MARKET_HOLIDAYS, isMarketHoliday: isMarketHoliday,
     fuelFor: fuelFor, emergencyFor: emergencyFor, holidaysFor: holidaysFor,
     hourly: hourly, daily: daily, aqiFor: aqiFor, aqiBand: aqiBand,
     FLIGHTS: FLIGHTS, TRAINS: TRAINS, TRAIN_STOPS: TRAIN_STOPS,
