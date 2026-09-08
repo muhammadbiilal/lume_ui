@@ -59,7 +59,12 @@
     interests: [],
     prefs: { news: true, cricket: true, finance: true, recos: true },
     recents: [],
-    recentCountries: []
+    recentCountries: [],
+
+    /* Account is capability-based: most tools work signed out, and only
+       persistence, sync and sensitive records require one. */
+    account: null,
+    perms: { camera: 'ask', notifications: 'ask', location: 'ask', files: 'ask', orientation: 'granted' }
   };
 
   function loadProfile() {
@@ -280,6 +285,7 @@
   }
 
   var current = 'home';
+  var lastTab = 'home';
 
   function renderTabs() {
     var bar = $('#tabbar');
@@ -313,6 +319,7 @@
 
     $$('.screen').forEach(function (s) { s.classList.remove('is-active'); });
     screen.classList.add('is-active');
+    if (name !== 'tool') lastTab = name;
     screen.scrollTop = 0;
 
     var active = null;
@@ -427,7 +434,8 @@
     var bits = act.split(':');
     var kind = bits.shift();
     var arg = bits.join(':');
-    if (kind === 'sheet') sheetOpen(arg);
+    if (kind === 'tool') { if (TOOLS) TOOLS.open(arg); }
+    else if (kind === 'sheet') sheetOpen(arg);
     else if (kind === 'tab') goTo(arg);
     else if (kind === 'toast') toast(arg);
     else if (kind === 'theme') { setTheme(root.dataset.theme === 'dark' ? 'light' : 'dark', true); toast('Theme switched'); }
@@ -2106,6 +2114,159 @@
   }
 
   /* ---------------------------------------------------------
+     Dialogs, undo and permissions
+     One dialog serves confirmations, prompts, OS-permission
+     education and sign-in, so every tool asks in the same voice.
+     --------------------------------------------------------- */
+  var dlgWrap = $('#dialogWrap');
+  var dlgState = null;
+
+  function dialog(o) {
+    if (!dlgWrap) return;
+    dlgState = o;
+    $('#dialogTitle').textContent = o.title;
+    $('#dialogText').textContent = o.text || '';
+    $('#dialogText').hidden = !o.text;
+    var icon = $('#dialogIcon');
+    icon.hidden = !o.icon;
+    if (o.icon) $('use', icon).setAttribute('href', '#' + o.icon);
+    var field = $('#dialogField');
+    field.hidden = !o.field;
+    if (o.field) {
+      $('#dialogLabel').textContent = o.field;
+      $('#dialogInput').value = o.value || '';
+    }
+    var yes = $('#dialogYes'), no = $('#dialogNo');
+    yes.textContent = o.yes || 'OK';
+    no.textContent = o.no || 'Cancel';
+    yes.classList.toggle('btn--danger', !!o.danger);
+    dlgWrap.hidden = false;
+    requestAnimationFrame(function () {
+      dlgWrap.classList.add('is-open');
+      if (o.field) { var i = $('#dialogInput'); if (i) i.focus(); }
+    });
+  }
+
+  function dialogClose() {
+    if (!dlgWrap) return;
+    dlgWrap.classList.remove('is-open');
+    setTimeout(function () { dlgWrap.hidden = true; }, 200);
+    dlgState = null;
+  }
+
+  if (dlgWrap) {
+    $('#dialogYes').addEventListener('click', function () {
+      var st = dlgState;
+      var value = st && st.field ? $('#dialogInput').value.trim() : null;
+      dialogClose();
+      if (st && st.onYes) st.onYes(value);
+    });
+    $('#dialogNo').addEventListener('click', function () {
+      var st = dlgState;
+      dialogClose();
+      if (st && st.onNo) st.onNo();
+    });
+    dlgWrap.addEventListener('click', function (e) {
+      if (e.target === dlgWrap) { var st = dlgState; dialogClose(); if (st && st.onNo) st.onNo(); }
+    });
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape' && dlgWrap && !dlgWrap.hidden) { dialogClose(); }
+    });
+  }
+
+  function confirmAction(o) {
+    dialog({ title: o.title, text: o.text, yes: o.danger || 'Confirm', no: 'Cancel',
+             danger: !!o.danger, onYes: o.onYes });
+  }
+
+  function promptFor(o) {
+    dialog({ title: o.title, field: o.label, yes: 'Add', onYes: o.onOk });
+  }
+
+  /* Undo snackbar — destructive actions stay recoverable. */
+  var snack = $('#snack'), snackTimer = null, snackFn = null;
+  function undo(message, fn) {
+    if (!snack) return;
+    $('#snackText').textContent = message;
+    snackFn = fn;
+    snack.classList.add('is-open');
+    clearTimeout(snackTimer);
+    snackTimer = setTimeout(function () { snack.classList.remove('is-open'); snackFn = null; }, 5200);
+  }
+  var snackUndo = $('#snackUndo');
+  if (snackUndo) {
+    snackUndo.addEventListener('click', function () {
+      snack.classList.remove('is-open');
+      if (snackFn) { snackFn(); snackFn = null; }
+      toast('Restored');
+    });
+  }
+
+  /* Permission: education first, then the OS prompt, then a recovery path. */
+  function askPermission(perm, done) {
+    dialog({
+      title: 'Allow Lume to use your ' + perm + '?',
+      text: 'Your device will ask next. You can change this later in settings.',
+      icon: 'i-shield',
+      yes: 'Allow', no: 'Don’t allow',
+      onYes: function () {
+        profile.perms[perm] = 'granted';
+        saveProfile();
+        toast('Allowed');
+        done(true);
+      },
+      onNo: function () {
+        profile.perms[perm] = 'denied';
+        saveProfile();
+        done(false);
+      }
+    });
+  }
+
+  function signIn(done) {
+    dialog({
+      title: 'Sign in to Lume',
+      text: 'Your records stay encrypted on this device and sync only to your account.',
+      icon: 'i-lock',
+      field: 'Email',
+      value: profile.name ? profile.name.toLowerCase() + '@example.com' : '',
+      yes: 'Sign in',
+      onYes: function (email) {
+        profile.account = { email: email || 'you@example.com' };
+        saveProfile();
+        renderProfileSummary();
+        toast('Signed in');
+        if (done) done();
+      }
+    });
+  }
+
+  function requestNotify(f) {
+    if (profile.perms.notifications === 'granted') { toast('You will be alerted'); return; }
+    if (profile.perms.notifications === 'denied') {
+      dialog({ title: 'Notifications are switched off',
+               text: 'Lume cannot alert you until you turn notifications back on in your device settings.',
+               yes: 'Open settings', no: 'Not now',
+               onYes: function () { toast('Opening your device settings'); } });
+      return;
+    }
+    askPermission('notifications', function (ok) {
+      toast(ok ? 'You will be alerted' : 'Reminder not set — notifications are off');
+    });
+  }
+
+  function methodSheet() {
+    var methods = Object.keys(window.LUME_SOLAR.METHODS);
+    var at = methods.indexOf(profile.method);
+    profile.method = methods[(at + 1) % methods.length];
+    prayerCache = null;
+    saveProfile();
+    renderAll();
+    if (TOOLS && TOOLS.currentId() === 'prayer') TOOLS.open('prayer', { keepReturn: 1 });
+    toast('Method: ' + profile.method);
+  }
+
+  /* ---------------------------------------------------------
      Share cards
      Shareable content leaves the app as a picture, not as plain
      text. Drawn on a canvas so the export is a real PNG and so
@@ -2279,6 +2440,15 @@
     ctx.globalAlpha = 1;
   }
 
+  function openShareData(data) {
+    shareData = { kind: data.kind || 'quote', arabic: data.arabic,
+                  text: data.text, source: data.source || '' };
+    sheetOpen('share');
+    var draw = function () { drawShareCard(shareData); };
+    if (document.fonts && document.fonts.ready) document.fonts.ready.then(draw);
+    draw();
+  }
+
   function openShare(id) {
     shareData = SHARE_CONTENT[id] || SHARE_CONTENT.quote;
     sheetOpen('share');
@@ -2365,6 +2535,36 @@
   }
 
   /* ---------------------------------------------------------
+     Tool journeys
+     --------------------------------------------------------- */
+  var TOOLS = window.LUME_TOOLKIT({
+    $: $, $$: $$, esc: esc, t: t, L: L, store: store, profile: profile,
+    feature: feature, visible: visible, fname: fname, noteRecent: noteRecent,
+    toast: toast, goTo: goTo, sheetOpen: sheetOpen, animateBars: animateBars,
+    prayerState: prayerState, prayerSet: prayerSet, hhmm: hhmm, qiblaDeg: qiblaDeg,
+    confirm: confirmAction, prompt: promptFor, undo: undo,
+    askPermission: askPermission, signIn: signIn, requestNotify: requestNotify,
+    methodSheet: methodSheet, openShareData: openShareData,
+    currentTab: function () { return lastTab; },
+    showToolScreen: function () { goTo('tool'); }
+  });
+
+  var toolShareBtn = $('#toolShare');
+  if (toolShareBtn) {
+    toolShareBtn.addEventListener('click', function () {
+      var el = $('#toolBody [data-tool-act="share-read"], #toolBody [data-tool-act="share-calc"], ' +
+                '#toolBody [data-tool-act="share-data"]');
+      if (el) el.click(); else toast('Nothing to share yet');
+    });
+  }
+  var toolSettingsBtn = $('#toolSettings');
+  if (toolSettingsBtn) toolSettingsBtn.addEventListener('click', function () { sheetOpen('personalise'); });
+
+  window.addEventListener('hashchange', function () {
+    if (!TOOLS.fromHash() && TOOLS.currentId()) goTo(lastTab);
+  });
+
+  /* ---------------------------------------------------------
      Boot
      --------------------------------------------------------- */
   ensureExploreBack();
@@ -2381,5 +2581,7 @@
   requestAnimationFrame(function () {
     movePill($('.tab.is-active'));
     animateBars($('#screen-home'));
+    /* A deep link should land on the exact tool, not on Home. */
+    TOOLS.fromHash();
   });
 })();

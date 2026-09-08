@@ -1378,6 +1378,30 @@
 
   </section>
 
+  <!-- ==========================================================
+       TOOL — the shell every tool journey runs inside
+       ========================================================== -->
+  <section class="screen screen--tool" id="screen-tool" role="tabpanel" aria-label="Tool">
+    <header class="toolbar">
+      <button class="iconbtn pressable" data-tool-act="back" data-i18n-aria="a.back" aria-label="Back">
+        <svg class="ico" viewBox="0 0 24 24"><use href="#i-chev-l"/></svg>
+      </button>
+      <div class="toolbar__text">
+        <h1 class="toolbar__title" id="toolTitle">Tool</h1>
+        <p class="toolbar__sub" id="toolSub"></p>
+      </div>
+      <button class="iconbtn pressable" id="toolShare" data-i18n-aria="a.share" aria-label="Share" hidden>
+        <svg class="ico" viewBox="0 0 24 24"><use href="#i-share"/></svg>
+      </button>
+      <button class="iconbtn pressable" id="toolSettings" data-i18n-aria="profile.preferences" aria-label="Settings">
+        <svg class="ico" viewBox="0 0 24 24"><use href="#i-sliders"/></svg>
+      </button>
+    </header>
+    <div class="toolstatus" id="toolStatus"></div>
+    <div class="toolbody" id="toolBody"></div>
+    <div id="toolRelated"></div>
+  </section>
+
   </main>
 
   <!-- ===== Bottom navigation — built from the profile ===== -->
@@ -1389,6 +1413,29 @@
   <div class="toast" id="toast" role="status" aria-live="polite">
     <svg class="ico" viewBox="0 0 24 24"><use href="#i-check-circle"/></svg>
     <span id="toastText"></span>
+  </div>
+
+  <!-- Undo snackbar: destructive actions are recoverable -->
+  <div class="snack" id="snack" role="status" aria-live="polite">
+    <span id="snackText"></span>
+    <button class="snack__act pressable" id="snackUndo">Undo</button>
+  </div>
+
+  <!-- One dialog for confirmations, prompts, permissions and sign-in -->
+  <div class="dialogwrap" id="dialogWrap" hidden>
+    <div class="dialog" role="dialog" aria-modal="true" aria-labelledby="dialogTitle">
+      <span class="dialog__icon" id="dialogIcon" hidden><svg class="ico" viewBox="0 0 24 24"><use href="#i-shield"/></svg></span>
+      <h2 class="dialog__title" id="dialogTitle">Title</h2>
+      <p class="dialog__text" id="dialogText"></p>
+      <label class="dialog__field" id="dialogField" hidden>
+        <span id="dialogLabel">Value</span>
+        <input type="text" id="dialogInput" autocomplete="off">
+      </label>
+      <div class="dialog__acts">
+        <button class="btn btn--ghost pressable" id="dialogNo">Cancel</button>
+        <button class="btn btn--accent pressable" id="dialogYes">OK</button>
+      </div>
+    </div>
   </div>
 
   <div class="scrim" id="scrim"></div>
@@ -2338,6 +2385,8 @@
 <script src="assets/js/locale.js"></script>
 <script src="assets/js/solar.js"></script>
 <script src="assets/js/catalogue.js"></script>
+<script src="assets/js/toolspec.js"></script>
+<script src="assets/js/toolkit.js"></script>
 <script src="assets/js/app.js"></script>
 </body>
 </html>
