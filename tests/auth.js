@@ -380,6 +380,28 @@ function rule(selector) {
   ok('a surface put in front of something the user was doing gets the cross',
      !!$(doc, '#authBody .auth__nav--close') && !$(doc, '#authBody .auth__nav--back'),
      screenId(doc));
+
+  /* §126.17 — the way out of an interruption is offered, but it does not
+     compete with the action the screen is for. */
+  const escape = $(doc, '#authBody .auth__foot [data-act="acctdo:authclose"]');
+  ok('the escape from an interruption is a secondary control',
+     !!escape && escape.classList.contains('btn--authsec') &&
+     !escape.classList.contains('btn--auth'),
+     escape ? escape.className : 'missing');
+  ok('and it sits below the action the screen is for',
+     !!$(doc, '#authBody .auth__actions .btn--auth') &&
+     $(doc, '#authBody .auth__actions').compareDocumentPosition(escape) &
+       win.Node.DOCUMENT_POSITION_FOLLOWING);
+
+  /* §126.9 — a deep-linked sign-up can still step back inside itself. */
+  hit(win, $(doc, '#authBody [data-act="auth:signup"]'));
+  await wait(70);
+  type(win, 'email', 'stepper@example.com');
+  await submit(win, 'signupstep');
+  ok('a sign-up reached from a deep link keeps both controls at step two',
+     !!$(doc, '#authBody [data-act="acctdo:signupback"]') &&
+     !!$(doc, '#authBody .auth__nav--close'),
+     text($(doc, '#authBody .auth__top')));
   win.close();
 
   /* ═══ 4. Input states and validation behaviour (§126.15, §126.39) ════ */

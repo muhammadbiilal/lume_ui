@@ -5344,6 +5344,25 @@ destination · header · brand · hero · fields · primary action · secondary
 actions · validation · loading · error · success · motion · keyboard behaviour
 · responsive layout · accessibility · deep-link behaviour.
 
+The columns that vary per screen are fixed here. Everything not in this table
+is the same on all ten screens, which is the point of having a shell.
+
+| id | Purpose | Entry | Exit | Header | Fields | Primary action | On failure |
+|---|---|---|---|---|---|---|---|
+| `signin` | Return to an account | Profile · a protected destination · `expired` | Where the user was going, else the entry tab | Back, or a cross when it interrupted | email · password | Sign in | Neutral form message; both factors named together |
+| `signup` | Create an account | Profile · `signin` · a protected destination | `created` | Back; Back to step one at step two | 1: name · email · 2: password · confirm | Continue, then Create account | Inline, per field |
+| `forgot` | Ask for a recovery link | `signin` | `sent` | Back | email | Send reset link | Inline, per field |
+| `sent` | Confirm the request neutrally | `forgot` | `reset` · `signin` | Back | — | Open the reset link | n/a |
+| `reset` | Set a new password | `sent` | `updated` · `trouble` | Back | password · confirm | Update password | Inline; a dead link goes to `trouble` |
+| `updated` | Confirm the change | `reset` | `signin` | none | — | Sign in | n/a |
+| `created` | Confirm the account | `signup` | The held destination, else Profile | none | — | Enter Lume | n/a |
+| `verify` | Confirm a new address | Personal information → Email | Account, with the address changed | Back | code | Verify email | Inline; resend after a wait |
+| `expired` | Explain a lapsed session | Launch · any account screen | `signin`, or guest | none | — | Sign in again | n/a |
+| `trouble` | Explain a dead recovery link | `reset` | `forgot` · `signin` | Back | — | Request a new link | n/a |
+
+**Deep-link behaviour is one rule, not ten**: the destination that sent the
+user here is held and resumed afterwards, never swapped for Home (§124.28).
+
 ---
 
 ## 126.46 Screen matrix
