@@ -177,7 +177,9 @@ window.LUME_ACCOUNT_UI = function (deps) {
 
   function identitySection() {
     var authed = ACCT.isAuthed();
-    var name = ACCT.fullName();
+    var expired = ACCT.isExpired();
+    var stale = expired ? ACCT.pendingUser() : null;
+    var name = authed ? ACCT.fullName() : null;
     var mail = ACCT.email();
 
     var lines;
@@ -186,8 +188,16 @@ window.LUME_ACCOUNT_UI = function (deps) {
          invent and nothing to apologise for. */
       lines = '<p class="phead__name">' + esc(name || mail) + '</p>' +
         (name && mail ? '<p class="phead__mail">' + esc(mail) + '</p>' : '');
+    } else if (expired) {
+      /* §124.2 lists four states, and this is the third. It used to render
+         as the second: the returning holder's own name sitting above "you're
+         using Lume as a guest". */
+      lines = '<p class="phead__name">' + esc(t('auth.expiredTitle')) + '</p>' +
+        '<p class="phead__mail">' + esc(stale ? t('acct.signedInAs', { email: stale.email })
+                                              : t('auth.expiredText')) + '</p>';
     } else {
-      lines = '<p class="phead__name">' + esc(name || t('acct.guestTitle')) + '</p>' +
+      /* A guest may still have named this device in onboarding. */
+      lines = '<p class="phead__name">' + esc(ACCT.displayName() || t('acct.guestTitle')) + '</p>' +
         '<p class="phead__mail">' + esc(t('acct.guestText')) + '</p>';
     }
 
@@ -202,6 +212,8 @@ window.LUME_ACCOUNT_UI = function (deps) {
       if (u && u.status && u.status !== 'active') {
         meta.push(UI.statusBadge({ label: t('acct.statusLocked'), tone: 'late' }));
       }
+    } else if (expired) {
+      meta.push(UI.statusBadge({ label: t('auth.expiredTitle'), tone: 'warn' }));
     } else {
       meta.push('<span class="tag tag--neutral">' + esc(t('acct.guestBadge')) + '</span>');
     }
@@ -209,12 +221,15 @@ window.LUME_ACCOUNT_UI = function (deps) {
     var acts = authed
       ? '<button class="btn btn--ghost pressable" data-act="acct:edit">' + ico('i-user') +
           esc(t('acct.editProfile')) + '</button>'
+      : expired
+      ? '<button class="btn btn--accent pressable" data-act="auth:signin">' + ico('i-login') +
+          esc(t('auth.expiredCta')) + '</button>'
       : '<button class="btn btn--accent pressable" data-act="auth:signup">' + ico('i-user') +
           esc(t('acct.create')) + '</button>' +
         '<button class="btn btn--ghost pressable" data-act="auth:signin">' + ico('i-login') +
           esc(t('acct.signIn')) + '</button>';
 
-    var why = authed ? '' :
+    var why = (authed || expired) ? '' :
       '<div class="guestwhy">' +
         '<p class="guestwhy__title">' + esc(t('acct.guestWhy')) + '</p>' +
         '<ul>' +
@@ -297,6 +312,7 @@ window.LUME_ACCOUNT_UI = function (deps) {
       ]
     });
 
+    var expired = ACCT.isExpired();
     var accountRows = authed
       ? [
           srow({ icon: 'i-user', tone: 'accent', title: t('acct.row.personal'),
@@ -309,10 +325,16 @@ window.LUME_ACCOUNT_UI = function (deps) {
                  sub: t('acct.row.syncSub'), act: 'acct:sync' })
         ]
       : [
-          srow({ icon: 'i-user', tone: 'accent', title: t('acct.create'),
-                 sub: t('acct.guestWhy1'), act: 'auth:signup' }),
-          srow({ icon: 'i-login', title: t('acct.signIn'),
-                 sub: t('auth.signInText'), act: 'auth:signin' }),
+          expired
+            ? srow({ icon: 'i-login', tone: 'accent', title: t('auth.expiredCta'),
+                     sub: t('auth.expiredText'), act: 'auth:signin' })
+            : srow({ icon: 'i-user', tone: 'accent', title: t('acct.create'),
+                     sub: t('acct.guestWhy1'), act: 'auth:signup' }),
+          expired
+            ? srow({ icon: 'i-user', title: t('acct.create'), sub: t('acct.guestWhy1'),
+                     act: 'auth:signup' })
+            : srow({ icon: 'i-login', title: t('acct.signIn'),
+                     sub: t('auth.signInText'), act: 'auth:signin' }),
           srow({ icon: 'i-lock', title: t('acct.row.privacy'),
                  sub: t('acct.row.privacySub'), act: 'acct:privacy' }),
           srow({ icon: 'i-cloud', title: t('acct.row.sync'),
@@ -501,14 +523,17 @@ window.LUME_ACCOUNT_UI = function (deps) {
       sub: t('acct.row.librarySub'),
       body: (favs.length
         ? UI.section({ title: t('acct.favourites'), body: UI.rows(favs.map(function (f) {
-            return UI.richRow({ icon: f.icon, title: deps.fname(f), sub: t('cat.' + f.cat),
+            /* A catalogue record spells these `i` and `c` (§19). Asking for
+               `.icon`/`.cat` rendered an unresolved icon and the literal
+               string "cat.undefined" — a leaked key on screen (§125). */
+            return UI.richRow({ icon: f.i, title: deps.fname(f), sub: t('cat.' + f.c),
                                 act: 'tool:' + f.id, chevron: true });
           })) })
         : UI.section({ body: UI.emptyState({ icon: 'i-bookmark', title: t('acct.noFavourites'),
             text: t('acct.noFavouritesText') }) })) +
         (recents.length
           ? UI.section({ title: t('tools.recent'), body: UI.rows(recents.map(function (f) {
-              return UI.compactRow({ icon: f.icon, label: deps.fname(f), act: 'tool:' + f.id });
+              return UI.compactRow({ icon: f.i, label: deps.fname(f), act: 'tool:' + f.id });
             })) })
           : '')
     };

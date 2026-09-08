@@ -335,10 +335,18 @@ function visibleText(doc) {
   type(win, 'email', 'nobody@example.com');
   await submit(win, 'forgot');
   const unknownSent = text($(doc, '#authBody'));
+  const unknownHasLink = !!$(doc, '[data-act="auth:reset"]');
   ok('an unknown address still reaches the confirmation',
      /Check your email/i.test(unknownSent), unknownSent.slice(0, 80));
-  ok('the confirmation does not offer a link for an address with no account',
-     !$(doc, '[data-act="auth:reset"]'));
+
+  /* The confirmation must be indistinguishable, and that includes what it
+     offers — a link shown only for real accounts is an existence oracle
+     wearing the right words (§124.11). */
+  const unknownToken = win.LUME_ACCT.requestReset('nobody-else@example.com').token;
+  ok('a recovery token is issued for an address with no account too',
+     !!unknownToken, String(unknownToken));
+  ok('redeeming a token that belongs to nothing fails honestly',
+     !win.LUME_ACCT.resetPassword({ token: unknownToken, password: 'Newpass12', confirm: 'Newpass12' }).ok);
 
   act(win, 'auth:forgot');
   await wait(60);
@@ -348,6 +356,11 @@ function visibleText(doc) {
   ok('a known address gets the identical wording',
      /Check your email/.test(knownSent) &&
      /If an account exists/.test(text($(doc, '#authBody'))), knownSent);
+  ok('a known address gets the identical affordances',
+     !!$(doc, '[data-act="auth:reset"]') === unknownHasLink,
+     'unknown had link=' + unknownHasLink);
+  ok('the two confirmations are the same screen',
+     text($(doc, '#authBody')) === unknownSent, 'wording diverged');
 
   hit(win, $(doc, '[data-act="auth:reset"]'));
   await wait(60);
@@ -608,7 +621,12 @@ function visibleText(doc) {
 
   /* ═══ 21. §125 sweep: nothing assumed, nothing untranslated ═════════ */
   console.log('\n=== The state and data contract (§125) ===');
-  ({ win, doc } = await boot({ profile: { country: 'SA', city: 'Riyadh', lang: 'ar', islamic: true } }));
+  /* Favourites and recents are seeded so the library renders rows rather
+     than its empty state: an empty screen proves nothing about the rows. */
+  ({ win, doc } = await boot({ profile: {
+    country: 'SA', city: 'Riyadh', lang: 'ar', islamic: true,
+    favourites: ['calculator', 'weather', 'prayer'], recents: ['calculator', 'quran']
+  } }));
   const routes = ['prefs', 'language', 'region', 'currency', 'units', 'time', 'appearance',
                   'notifications', 'library', 'privacy', 'sync', 'help', 'about'];
   const authRoutes = ['signin', 'signup', 'forgot'];
@@ -619,7 +637,12 @@ function visibleText(doc) {
     await wait(90);
     const body = text($(doc, '#accountBody')) + ' ' + text($(doc, '#accountHeader'));
     if (/undefined|null|NaN|\[object/.test(body)) blanks.push(r + ': ' + body.slice(0, 60));
-    const raw = body.match(/\b(acct|auth|onb|a11y)\.[a-zA-Z.]+/g);
+    /* An icon reference that resolves to nothing is the same defect in
+       another costume. */
+    const badIcons = $$(doc, '#accountBody use').map(u => u.getAttribute('href'))
+      .filter(h => !h || h === '#undefined' || h === '#null');
+    if (badIcons.length) blanks.push(r + ': ' + badIcons.length + ' unresolved icons');
+    const raw = body.match(/\b(acct|auth|onb|a11y|cat|tools|pers)\.[a-zA-Z.]+/g);
     if (raw) leaks.push(r + ': ' + raw.join(','));
     if (!body.trim()) blanks.push(r + ': empty screen');
   }
@@ -635,6 +658,176 @@ function visibleText(doc) {
   ok('no account screen renders undefined, null or NaN', blanks.length === 0, blanks.join(' | '));
   ok('no account screen leaks a translation key', leaks.length === 0, leaks.join(' | '));
   ok('the account screens follow the RTL direction', doc.documentElement.dir === 'rtl');
+  win.close();
+
+
+  /* ═══ 22. What the engine audit found ═══════════════════════════════ */
+  console.log('\n=== Engine regressions ===');
+  ({ win, doc } = await boot());
+  const A = () => win.LUME_ACCT;
+
+  /* An email change verified late must not overwrite whoever took the
+     address in the meantime. */
+  await fillSignUp(win, { name: 'Ada', email: 'ada@example.com', password: 'Password1', confirm: 'Password1' });
+  const pending = A().requestEmailChange('shared@example.com');
+  ok('an email change can be requested', pending.ok, JSON.stringify(pending));
+  A().signOut();
+  const carol = A().signUp({ email: 'shared@example.com', password: 'Carolpw9', confirm: 'Carolpw9' });
+  ok('someone else may take the address while the change is pending', carol.ok);
+  A().signOut();
+  A().signIn({ email: 'ada@example.com', password: 'Password1' });
+  const verdict = A().verifyEmail(pending.code);
+  ok('verifying a stale email change does not destroy the account that took it',
+     !verdict.ok, JSON.stringify(verdict));
+  A().signOut();
+  ok('the account that took the address still works',
+     A().signIn({ email: 'shared@example.com', password: 'Carolpw9' }).ok);
+  A().signOut();
+  win.close();
+
+  /* Identity belongs to whoever owns it: an account's name and photo never
+     become the device's, and never reach the next account created here. */
+  ({ win, doc } = await boot());
+  await fillSignUp(win, { name: 'Bilal', email: 'bilal@example.com', password: 'Password1', confirm: 'Password1' });
+  ok('an account holder is greeted by name', A().displayName() === 'Bilal', A().displayName());
+  act(win, 'acctdo:logoutgo');
+  await wait(80);
+  ok('signing out does not leave the last holder’s name on the device',
+     A().displayName() === null, String(A().displayName()));
+  ok('signing out does not leave the last holder’s photo on the device',
+     A().photo() === null, String(A().photo()));
+  await fillSignUp(win, { email: 'stranger@example.com', password: 'Password1', confirm: 'Password1' });
+  ok('a new account on the same device does not inherit a name',
+     A().fullName() === null, String(A().fullName()));
+  ok('the profile shows the address when there is no name',
+     /stranger@example\.com/.test(text($(doc, '#profileBody .phead'))),
+     text($(doc, '#profileBody .phead')).slice(0, 80));
+
+  /* A save that does not touch the name must not rewrite it. */
+  A().updateUser({ displayName: 'Zara' });
+  A().updateUser({ phone: '+44 7700 900000' });
+  ok('saving a phone number leaves the name alone', A().displayName() === 'Zara', A().displayName());
+
+  /* A patch carrying an email applies the rest of itself too. */
+  const mixed = A().updateUser({ firstName: 'Zara', lastName: 'K', email: 'moved@example.com' });
+  ok('a patch with an email still saves the other fields',
+     A().user().lastName === 'K', JSON.stringify(mixed));
+  ok('and starts a verification rather than moving the address',
+     A().user().email === 'stranger@example.com' && !!A().user().pendingEmail,
+     A().user().email + ' / ' + A().user().pendingEmail);
+  A().cancelEmailChange();
+
+  /* One browser is one device, however many times it signs in. */
+  const deviceRows = () => A().sessions().length;
+  ok('one browser is one device', deviceRows() === 1, deviceRows() + ' rows');
+  A().expireSession();
+  A().signIn({ email: 'stranger@example.com', password: 'Password1' });
+  A().expireSession();
+  A().signIn({ email: 'stranger@example.com', password: 'Password1' });
+  ok('expiring and signing back in does not invent devices', deviceRows() === 1,
+     deviceRows() + ' rows after three sign-ins');
+
+  /* A revoked session stops working. */
+  const mySession = JSON.parse(win.localStorage.getItem('lume-session'));
+  const accounts = JSON.parse(win.localStorage.getItem('lume-accounts'));
+  accounts['stranger@example.com'].sessions = [];
+  win.localStorage.setItem('lume-accounts', JSON.stringify(accounts));
+  ok('a session whose device was signed out elsewhere stops being signed in',
+     !A().isAuthed(), A().state());
+  ok('and is reported as a session that ended, not as a guest',
+     A().isExpired(), A().state());
+
+  /* A corrupt expiry fails closed, not open. */
+  win.localStorage.setItem('lume-session', JSON.stringify(
+    Object.assign({}, mySession, { expires: 'soon' })));
+  ok('a session with a corrupt expiry is not valid forever', !A().isAuthed(), A().state());
+  win.close();
+
+  /* The strength meter never contradicts the checklist beside it. */
+  ({ win, doc } = await boot());
+  const strengthOf = pw => A().passwordStrength(pw);
+  ok('a password that fails a displayed rule cannot read better than Fair',
+     strengthOf('aaaaaaaaaaaa!').score <= 2 && strengthOf('Ab1!').score <= 2,
+     'aaaaaaaaaaaa! -> ' + strengthOf('aaaaaaaaaaaa!').score + ', Ab1! -> ' + strengthOf('Ab1!').score);
+  ok('a compliant password reads at least Good', strengthOf('Password1').score >= 3,
+     String(strengthOf('Password1').score));
+
+  /* Initials are letters or they are nothing. */
+  const emoji = String.fromCodePoint(0x1F642);
+  A().signUp({ name: emoji, email: 'emoji@example.com', password: 'Password1', confirm: 'Password1' });
+  ok('an emoji name yields no initials rather than half a surrogate',
+     A().initials() === null, JSON.stringify(A().initials()));
+  /* Clearing the display name falls through to the first name, which is the
+     hierarchy 124.3 defines; clearing both leaves nothing, and nothing is a
+     valid answer. */
+  A().updateUser({ displayName: '   ' });
+  ok('an emptied display name falls back to the first name',
+     A().displayName() === emoji, JSON.stringify(A().displayName()));
+  A().updateUser({ firstName: '  ', lastName: '' });
+  ok('a name of spaces is not a name', A().displayName() === null, JSON.stringify(A().displayName()));
+
+  /* Recovery is bounded by the account it was issued for. */
+  const tok = A().requestReset('emoji@example.com').token;
+  A().signOut();
+  A().signUp({ email: 'bystander@example.com', password: 'Password1', confirm: 'Password1' });
+  A().resetPassword({ token: tok, password: 'Another12', confirm: 'Another12' });
+  ok('resetting one account’s password does not sign a bystander out',
+     A().isAuthed(), A().state());
+  win.close();
+
+  /* Addresses no mail system would accept are refused. */
+  ({ win, doc } = await boot());
+  const bad = ['a@b', 'a@-.com', '.a@b.com', 'a..b@c.com', 'a@b..com', 'a b@c.com',
+               'a'.repeat(70) + '@b.com'];
+  const accepted = bad.filter(v => A().emailValid(v));
+  ok('malformed addresses are refused', accepted.length === 0, accepted.join(' | '));
+  const good = ['a@b.com', 'first.last@sub.domain.co.uk', 'x+tag@example.org'];
+  const refused = good.filter(v => !A().emailValid(v));
+  ok('ordinary addresses are accepted', refused.length === 0, refused.join(' | '));
+
+  /* A device screen is not gated behind an account. */
+  act(win, 'acct:sync');
+  await wait(80);
+  ok('a guest can open Data & sync, which is a row they are shown',
+     screenId(doc) === 'account' && !/Sign in to continue/i.test(text($(doc, '#accountBody'))),
+     screenId(doc) + ' · ' + text($(doc, '#accountBody')).slice(0, 60));
+  win.close();
+
+  /* The expired state is designed, not borrowed from the guest. */
+  ({ win, doc } = await boot());
+  await fillSignUp(win, { name: 'Rehan', email: 'rehan@example.com', password: 'Password1', confirm: 'Password1' });
+  const expiredAccounts = win.localStorage.getItem('lume-accounts');
+  const expiredSession = JSON.parse(win.localStorage.getItem('lume-session'));
+  expiredSession.expires = Date.now() - 1000;
+  const deviceKey = win.localStorage.getItem('lume-device');
+  win.close();
+
+  ({ win, doc } = await boot({ storage: {
+    'lume-accounts': expiredAccounts,
+    'lume-session': JSON.stringify(expiredSession),
+    'lume-device': deviceKey
+  } }));
+  await wait(60);
+  hit(win, $(doc, '[data-tab="profile"]'));
+  await wait(80);
+  const head = text($(doc, '#profileBody .phead'));
+  ok('an expired session is not rendered as a guest',
+     !/using Lume as a guest/i.test(head), head.slice(0, 110));
+  ok('the expired profile does not show the last holder’s name as if signed in',
+     !/^Rehan/.test(head), head.slice(0, 60));
+  ok('the expired profile offers a way back in',
+     !!$(doc, '#profileBody [data-act="auth:signin"]'));
+
+  /* Leaving an expired session behind releases its notification state. */
+  act(win, 'auth:expired');
+  await wait(60);
+  act(win, 'acctdo:authclose');
+  await wait(100);
+  const left = JSON.parse(win.localStorage.getItem('lume-profile'));
+  ok('continuing as a guest releases the account’s notification state',
+     (!left.notifyRead || !Object.keys(left.notifyRead).length) &&
+     (!left.notify || left.notify.push === false),
+     JSON.stringify({ read: left.notifyRead, push: (left.notify || {}).push }));
   win.close();
 
   console.log('\n' + (failures ? failures + ' FAILURES' : 'ALL ACCOUNT CHECKS PASSED'));

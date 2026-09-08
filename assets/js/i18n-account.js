@@ -127,6 +127,8 @@
     'acct.err.codeWrong': 'That code is incorrect.',
     'acct.err.nothingPending': 'There’s no email change waiting.',
     'acct.err.network': 'Lume couldn’t reach the network. Nothing was lost.',
+    'acct.err.storage': 'Lume couldn’t save to this device. Check your browser’s storage settings and try again.',
+    'acct.err.photoTooBig': 'That image is too large for this device to keep. Try a smaller one.',
 
     /* ---- sign in / sign up ---- */
     'auth.signInTitle': 'Welcome back', 'auth.signInText': 'Continue to your Lume.',

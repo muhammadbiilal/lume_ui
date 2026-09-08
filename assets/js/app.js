@@ -31,7 +31,12 @@
   /* Storage can throw on a file:// origin or with site data blocked. */
   var store = {
     get: function (k) { try { return localStorage.getItem(k); } catch (e) { return null; } },
-    set: function (k, v) { try { localStorage.setItem(k, v); } catch (e) {} }
+    /* Reports whether the write happened. A blocked or full store used to
+       fail silently, which let the account system announce "Account created"
+       over an account that had not been written (§124.26). */
+    set: function (k, v) {
+      try { localStorage.setItem(k, v); return true; } catch (e) { return false; }
+    }
   };
 
   /* ---------------------------------------------------------
@@ -120,7 +125,8 @@
   var ACCT = window.LUME_ACCOUNT({
     t: t, L: L, store: store,
     profile: function () { return profile; },
-    save: saveProfile
+    save: saveProfile,
+    onSignOut: function () { resetNotificationsForAccount(); }
   });
   window.LUME_ACCT = ACCT;
 
@@ -1957,8 +1963,11 @@
   /* The one place onboarding writes an identity. An empty field writes an
      empty name — it does not leave the previous one standing (§125). */
   function commitName(value) {
-    profile.displayName = String(value || '').trim().slice(0, 40);
-    if (ACCT.isAuthed()) ACCT.updateUser({ displayName: profile.displayName });
+    var name = String(value || '').trim().slice(0, 40);
+    /* An account holder is naming their account; a guest is naming this
+       device. The two never write to each other (§125). */
+    if (ACCT.isAuthed()) ACCT.updateUser({ displayName: name });
+    else profile.displayName = name;
     saveProfile();
     initHeader();
     renderProfileSummary();
@@ -3886,6 +3895,7 @@
     var pending = AUI.authCtx.pending;
     AUI.authCtx.pending = null;
     AUI.authCtx.modal = false;
+    AUI.authCtx.token = null;      /* a recovery link does not outlive its flow */
     authRoute = null;
     authStack.length = 0;
     resetNotificationsForAccount();
@@ -4098,8 +4108,7 @@
       return;
     }
     if (verb === 'logoutgo') {
-      ACCT.signOut();
-      resetNotificationsForAccount();
+      ACCT.signOut();          /* releases the account's notification state */
       renderAll();
       goTo('profile');
       toast(t('acct.loggedOut'));
@@ -4118,7 +4127,12 @@
       return;
     }
 
-    if (verb === 'revoke') { ACCT.revokeSession(arg); renderAccount(); return; }
+    if (verb === 'revoke') {
+      var rv = ACCT.revokeSession(arg);
+      if (rv && rv.self) { renderAll(); goTo('profile'); toast(t('acct.loggedOut')); return; }
+      renderAccount();
+      return;
+    }
 
     if (verb === 'emailcancel') {
       ACCT.cancelEmailChange();
@@ -4138,7 +4152,6 @@
     if (verb === 'deletefinal') {
       var res = ACCT.deleteAccount(AUI.form.values.current);
       if (!res.ok) { fail(res); return; }
-      resetNotificationsForAccount();
       accountRoute = null;
       accountStack.length = 0;
       renderAll();
@@ -4157,13 +4170,43 @@
       if (!file) return;
       var reader = new FileReader();
       reader.onload = function () {
-        ACCT.updateUser({ photo: String(reader.result) });
-        renderAll();
-        renderAccount();
+        shrinkPhoto(String(reader.result), function (small) {
+          if (!small) { toast(t('acct.err.photoTooBig')); return; }
+          var res = ACCT.updateUser({ photo: small });
+          if (!res.ok) { toast(t(res.form || 'acct.err.storage')); return; }
+          renderAll();
+          renderAccount();
+        });
       };
       reader.readAsDataURL(file);
     });
     input.click();
+  }
+
+  /* Local storage holds a few megabytes for everything Lume keeps; a photo
+     straight off a phone camera is larger than that on its own. This scales
+     the longest edge to 256px, and refuses rather than filling the store
+     when it cannot. */
+  function shrinkPhoto(dataUrl, done) {
+    var MAX_RAW = 120000;
+    if (dataUrl.length <= MAX_RAW) { done(dataUrl); return; }
+
+    var img = new Image();
+    img.onload = function () {
+      var canvas = document.createElement('canvas');
+      var ctx = canvas.getContext ? canvas.getContext('2d') : null;
+      if (!ctx) { done(null); return; }
+      var side = 256;
+      var scale = Math.min(1, side / Math.max(img.width || side, img.height || side));
+      canvas.width = Math.max(1, Math.round((img.width || side) * scale));
+      canvas.height = Math.max(1, Math.round((img.height || side) * scale));
+      ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+      var out;
+      try { out = canvas.toDataURL('image/jpeg', 0.82); } catch (e) { out = null; }
+      done(out && out.length < 400000 ? out : null);
+    };
+    img.onerror = function () { done(null); };
+    img.src = dataUrl;
   }
 
   /* ---- live form behaviour -------------------------------------------- */
