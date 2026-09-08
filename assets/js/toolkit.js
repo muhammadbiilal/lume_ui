@@ -32,12 +32,14 @@ window.LUME_TOOLKIT = function (ctx) {
   /* ---------------------------------------------------------
      Freshness — never dress cached data as live
      --------------------------------------------------------- */
+  /* Each freshness state carries a glyph as well as a colour, so the
+     distinction survives for anyone who cannot rely on hue. */
   function freshnessChip(spec, state) {
-    if (state === 'offline') return { cls: 'is-stale', label: 'Offline · showing last saved' };
-    if (state === 'stale')   return { cls: 'is-stale', label: 'Cached · may be out of date' };
-    if (spec.fresh === 'computed') return { cls: 'is-calc', label: 'Calculated on your device' };
-    if (spec.fresh === 'local')    return { cls: 'is-calc', label: 'Saved on this device' };
-    if (spec.fresh === 'static')   return { cls: '', label: spec.updated || 'Bundled content' };
+    if (state === 'offline') return { cls: 'is-stale', icon: 'i-wifi', label: 'Offline · showing last saved' };
+    if (state === 'stale')   return { cls: 'is-stale', icon: 'i-clock', label: 'Cached · may be out of date' };
+    if (spec.fresh === 'computed') return { cls: 'is-calc', icon: 'i-calculator', label: 'Calculated on your device' };
+    if (spec.fresh === 'local')    return { cls: 'is-calc', icon: 'i-lock', label: 'Saved on this device' };
+    if (spec.fresh === 'static')   return { cls: '', icon: 'i-book', label: spec.updated || 'Bundled content' };
     return { cls: 'is-live', label: spec.updated || 'Live' };
   }
 
@@ -45,7 +47,10 @@ window.LUME_TOOLKIT = function (ctx) {
     var chip = freshnessChip(spec, state);
     var bits = [];
     bits.push('<span class="fresh ' + chip.cls + '">' +
-      (chip.cls === 'is-live' ? '<span class="live"></span>' : '') + esc(chip.label) + '</span>');
+      (chip.cls === 'is-live'
+        ? '<span class="live"></span>'
+        : '<svg class="ico" viewBox="0 0 24 24"><use href="#' + chip.icon + '"/></svg>') +
+      esc(chip.label) + '</span>');
     if (spec.reqCity) {
       bits.push('<button class="toolcity pressable" data-tool-city>' +
         '<svg class="ico" viewBox="0 0 24 24"><use href="#i-pin"/></svg>' +
@@ -58,15 +63,68 @@ window.LUME_TOOLKIT = function (ctx) {
   /* ---------------------------------------------------------
      Shared state screens
      --------------------------------------------------------- */
+  /* One drawing per state, in the app's illustration language — abstract
+     blobs, soft geometry, floating circles and sparkles. A single reused
+     glyph would read as stock art. */
+  var SPARK = '<path d="m78 13 1.7 4.2 4.2 1.7-4.2 1.7L78 24.8l-1.7-4.2-4.2-1.7 4.2-1.7z" ' +
+              'fill="var(--accent)" opacity=".45"/>' +
+              '<circle cx="17" cy="22" r="3.4" fill="var(--violet)" opacity=".3"/>' +
+              '<circle cx="24" cy="56" r="2.6" fill="var(--sky)" opacity=".35"/>';
+
+  var ART = {
+    empty:
+      '<ellipse cx="48" cy="55" rx="27" ry="6" fill="var(--accent)" opacity=".07"/>' +
+      '<rect x="31" y="17" width="34" height="30" rx="11" fill="none" stroke="var(--border-2)" ' +
+        'stroke-width="2" stroke-dasharray="4 6"/>' +
+      '<path d="M39 31h18M39 38h11" stroke="var(--border-2)" stroke-width="2" stroke-linecap="round"/>' + SPARK,
+    error:
+      '<circle cx="48" cy="33" r="23" fill="var(--rose)" opacity=".08"/>' +
+      '<path d="M29 33h12M55 33h12" stroke="var(--rose)" stroke-width="2.6" stroke-linecap="round"/>' +
+      '<circle cx="45" cy="33" r="2.3" fill="var(--rose)" opacity=".6"/>' +
+      '<circle cx="51" cy="33" r="2.3" fill="var(--rose)" opacity=".6"/>' + SPARK,
+    offline:
+      '<circle cx="48" cy="33" r="23" fill="var(--accent)" opacity=".06"/>' +
+      '<path d="M41 43a7.5 7.5 0 0 1 .7-14.9 10.5 10.5 0 0 1 19.6 3.1A6.6 6.6 0 0 1 60 43z" ' +
+        'fill="none" stroke="var(--text-3)" stroke-width="2" stroke-linejoin="round"/>' +
+      '<path d="m33 50 30-24" stroke="var(--text-3)" stroke-width="2.4" stroke-linecap="round"/>' + SPARK,
+    permission:
+      '<circle cx="48" cy="33" r="23" fill="var(--accent)" opacity=".08"/>' +
+      '<path d="M48 18l11.5 4.6v8.9c0 7.9-11.5 12.5-11.5 12.5S36.5 39.4 36.5 31.5v-8.9z" ' +
+        'fill="none" stroke="var(--accent)" stroke-width="2.2" stroke-linejoin="round"/>' +
+      '<path d="m43.5 32.5 3.2 3.2 6-6.4" stroke="var(--accent)" stroke-width="2.2" ' +
+        'stroke-linecap="round" stroke-linejoin="round"/>' + SPARK,
+    locked:
+      '<circle cx="48" cy="33" r="23" fill="var(--accent)" opacity=".08"/>' +
+      '<rect x="38" y="32" width="20" height="15" rx="4.5" fill="none" stroke="var(--accent)" stroke-width="2.2"/>' +
+      '<path d="M42 32v-3.4a6 6 0 0 1 12 0V32" fill="none" stroke="var(--accent)" stroke-width="2.2"/>' +
+      '<circle cx="48" cy="39" r="1.9" fill="var(--accent)"/>' + SPARK,
+    unavailable:
+      '<circle cx="48" cy="33" r="23" fill="var(--violet)" opacity=".07"/>' +
+      '<circle cx="48" cy="33" r="13.5" fill="none" stroke="var(--text-3)" stroke-width="2"/>' +
+      '<path d="M34.5 33h27" stroke="var(--text-3)" stroke-width="1.8"/>' +
+      '<path d="M48 19.5a21 21 0 0 1 0 27 21 21 0 0 1 0-27" fill="none" stroke="var(--text-3)" stroke-width="1.8"/>' + SPARK,
+    keypad:
+      '<circle cx="48" cy="33" r="23" fill="var(--accent)" opacity=".07"/>' +
+      '<rect x="36" y="14" width="24" height="40" rx="7" fill="none" stroke="var(--accent)" stroke-width="2.2"/>' +
+      '<path d="M41 23h14" stroke="var(--accent)" stroke-width="2.2" stroke-linecap="round"/>' +
+      '<path d="M42 33h.01M48 33h.01M54 33h.01M42 42h.01M48 42h.01M54 42h.01" ' +
+        'stroke="var(--accent)" stroke-width="2.6" stroke-linecap="round"/>' + SPARK,
+    beads:
+      '<circle cx="48" cy="35" r="23" fill="var(--accent)" opacity=".07"/>' +
+      '<circle cx="48" cy="36" r="17" fill="none" stroke="var(--accent)" stroke-width="2.2"/>' +
+      '<circle cx="48" cy="19" r="4.4" fill="var(--accent)"/>' +
+      '<circle cx="65" cy="36" r="2.8" fill="var(--accent)" opacity=".5"/>' +
+      '<circle cx="31" cy="36" r="2.8" fill="var(--accent)" opacity=".5"/>' + SPARK,
+    success:
+      '<circle cx="48" cy="33" r="23" fill="var(--accent)" opacity=".1"/>' +
+      '<path d="m38 33 7 7.5 14-16" stroke="var(--accent)" stroke-width="3.4" ' +
+        'stroke-linecap="round" stroke-linejoin="round"/>' + SPARK
+  };
+
   function stateBlock(o) {
     return '<div class="toolstate">' +
       '<span class="toolstate__art" aria-hidden="true">' +
-        '<svg viewBox="0 0 96 72" fill="none">' +
-          '<circle cx="48" cy="34" r="24" stroke="var(--border-2)" stroke-width="2" stroke-dasharray="5 7"/>' +
-          '<circle cx="20" cy="14" r="3" fill="var(--accent)" opacity=".4"/>' +
-          '<circle cx="78" cy="18" r="4" fill="var(--accent)" opacity=".22"/>' +
-          (o.glyph || '') +
-        '</svg></span>' +
+        '<svg viewBox="0 0 96 72" fill="none">' + (ART[o.art] || ART.empty) + '</svg></span>' +
       '<p class="toolstate__title">' + esc(o.title) + '</p>' +
       '<p class="toolstate__text">' + esc(o.text) + '</p>' +
       (o.actions || []).map(function (a) {
@@ -93,6 +151,7 @@ window.LUME_TOOLKIT = function (ctx) {
   function gate(feature, spec) {
     if (!ctx.visible(feature)) {
       return { kind: 'unavailable', html: stateBlock({
+        art: 'unavailable',
         title: 'Not available here',
         text: feature.countries
           ? feature.n + ' is only available in ' + feature.countries.map(L.countryName).join(', ') +
@@ -104,6 +163,7 @@ window.LUME_TOOLKIT = function (ctx) {
 
     if (spec.auth === 'account' && !ctx.profile.account) {
       return { kind: 'signedout', html: stateBlock({
+        art: 'locked',
         title: 'Sign in to use ' + feature.n,
         text: spec.sensitive
           ? 'This is private information, so it is kept to your account and encrypted on the device. Nothing is shared.'
@@ -120,6 +180,7 @@ window.LUME_TOOLKIT = function (ctx) {
       var p = need[0];
       var denied = (ctx.profile.perms || {})[p] === 'denied';
       return { kind: 'permission', html: stateBlock({
+        art: 'permission',
         title: denied ? 'Permission is switched off' : 'Lume needs your ' + p,
         text: denied
           ? 'You previously refused access to the ' + p + '. Turn it back on in your device settings, then try again.'
@@ -132,6 +193,7 @@ window.LUME_TOOLKIT = function (ctx) {
 
     if (spec.reqCity && !ctx.profile.city) {
       return { kind: 'nocity', html: stateBlock({
+        art: 'unavailable',
         title: 'Choose a city first',
         text: feature.n + ' works from your city. Pick one — Lume does not need GPS for this.',
         actions: [{ label: 'Choose a city', act: 'personalise', primary: 1 }]
@@ -148,13 +210,9 @@ window.LUME_TOOLKIT = function (ctx) {
       /* The keypad lives in a sheet so it is reachable from Home too. The tool
          page stays underneath, so closing the pad lands here, not on Home. */
       host.innerHTML =
-        '<div class="toolstate"><span class="toolstate__art" aria-hidden="true">' +
-        '<svg viewBox="0 0 96 72" fill="none"><rect x="34" y="10" width="28" height="52" rx="8" ' +
-        'stroke="var(--border-2)" stroke-width="2"/><path d="M41 22h14M41 34h.01M48 34h.01M55 34h.01' +
-        'M41 44h.01M48 44h.01M55 44h.01" stroke="var(--accent)" stroke-width="2.4" stroke-linecap="round"/>' +
-        '</svg></span><p class="toolstate__title">Keypad</p>' +
-        '<p class="toolstate__text">Standard arithmetic, with your keyboard if you have one.</p>' +
-        '<button class="btn btn--accent pressable toolstate__btn" data-tool-act="pad">Open the keypad</button></div>';
+        stateBlock({ art: 'keypad', title: 'Keypad',
+          text: 'Standard arithmetic, with your keyboard if you have one.',
+          actions: [{ label: 'Open the keypad', act: 'pad', primary: 1 }] });
       current.actions = { pad: function () { ctx.sheetOpen('calculator'); } };
       setTimeout(function () { if (current && current.id === 'calculator') ctx.sheetOpen('calculator'); }, 120);
       return;
@@ -250,7 +308,9 @@ window.LUME_TOOLKIT = function (ctx) {
         (restored ? '<div class="draftbar">Draft restored' +
           '<button class="draftbar__x pressable" data-tool-act="discard-draft">Discard</button></div>' : '') +
         (spec.intro ? '<p class="toolintro">' + esc(spec.intro) + '</p>' : '') +
-        (r && r.error ? '<div class="toolerr" role="alert">' + esc(r.error) + '</div>' : '') +
+        (r && r.error ? '<div class="toolerr" role="alert">' +
+          '<svg class="ico" viewBox="0 0 24 24"><use href="#i-help"/></svg>' +
+          esc(r.error) + '</div>' : '') +
         (r && !r.error ? resultCard(r) : '') +
         '<div class="tform">' + (spec.fields || []).map(fieldHtml).join('') + '</div>' +
         '<div class="tactions">' +
@@ -295,7 +355,7 @@ window.LUME_TOOLKIT = function (ctx) {
     function historyBlock() {
       var hist = load(f.id, 'hist', []);
       if (!hist.length) return '';
-      return '<p class="group-label" style="padding:0;margin:22px 0 9px">Saved</p>' +
+      return '<p class="toolgroup">Saved</p>' +
         '<div class="list list--flat">' + hist.slice(0, 5).map(function (h, i) {
           return '<div class="list-row"><span class="list-row__body">' +
             '<span class="list-row__title">' + esc(h.label) + '</span>' +
@@ -395,6 +455,7 @@ window.LUME_TOOLKIT = function (ctx) {
         host.innerHTML = cached
           ? renderRows(cached) + offlineNote()
           : stateBlock({
+              art: 'offline',
               title: 'You are offline',
               text: 'Lume has no saved copy of ' + f.n.toLowerCase() + ' yet. Reconnect and try again.',
               actions: [{ label: t('a.tryAgain'), act: 'reload', primary: 1 }]
@@ -404,6 +465,7 @@ window.LUME_TOOLKIT = function (ctx) {
       if (current.forceState === 'error') {
         setStatus(spec, 'stale');
         host.innerHTML = stateBlock({
+          art: 'error',
           title: 'Something went wrong',
           text: 'We could not reach ' + (spec.source || 'the service') + '. It is usually brief.',
           actions: [{ label: t('a.tryAgain'), act: 'reload', primary: 1 }]
@@ -414,6 +476,7 @@ window.LUME_TOOLKIT = function (ctx) {
       if (spec.custom === 'schedule') { host.innerHTML = loadshedView(); setStatus(spec, 'live'); return; }
       if (!rows.length) {
         host.innerHTML = stateBlock({
+          art: 'empty',
           title: 'Nothing to show yet',
           text: spec.searchable
             ? 'Enter ' + spec.searchable.toLowerCase() + ' to look something up.'
@@ -503,6 +566,7 @@ window.LUME_TOOLKIT = function (ctx) {
     function render() {
       if (!items.length) {
         host.innerHTML = stateBlock({
+          art: 'empty',
           title: 'No ' + spec.noun + 's yet',
           text: 'Add your first ' + spec.noun + ' and it will stay on this device.',
           actions: [{ label: 'Add a ' + spec.noun, act: 'add', primary: 1 }]
@@ -702,6 +766,7 @@ window.LUME_TOOLKIT = function (ctx) {
         setTimeout(function () {
           if (!current || current.id !== f.id) return;
           host.innerHTML = stateBlock({
+            art: 'success',
             title: f.id === 'qr' ? 'Code read' : 'Captured',
             text: f.id === 'qr' ? 'lume.app/invite/8f2c — open it, or copy the text.'
                                 : 'One page ready. Add more pages or finish now.',
@@ -722,12 +787,9 @@ window.LUME_TOOLKIT = function (ctx) {
   function viewTimer(f, spec, host) {
     if (f.id === 'tasbih') {
       host.innerHTML =
-        '<div class="toolstate"><span class="toolstate__art" aria-hidden="true">' +
-        '<svg viewBox="0 0 96 72" fill="none"><circle cx="48" cy="36" r="22" stroke="var(--accent)" ' +
-        'stroke-width="2.4"/><circle cx="48" cy="14" r="5" fill="var(--accent)"/></svg></span>' +
-        '<p class="toolstate__title">Tasbih</p>' +
-        '<p class="toolstate__text">Count to 33 and back, with a gentle buzz at each round.</p>' +
-        '<button class="btn btn--accent pressable toolstate__btn" data-tool-act="pad">Start counting</button></div>';
+        stateBlock({ art: 'beads', title: 'Tasbih',
+          text: 'Count to 33 and back, with a gentle buzz at each round.',
+          actions: [{ label: 'Start counting', act: 'pad', primary: 1 }] });
       current.actions = { pad: function () { ctx.sheetOpen('tasbeeh'); } };
       setTimeout(function () { if (current && current.id === 'tasbih') ctx.sheetOpen('tasbeeh'); }, 120);
       return;
@@ -888,7 +950,7 @@ window.LUME_TOOLKIT = function (ctx) {
             '<span class="list-row__sub">Event · 14:00 · Studio 2</span></span>' +
             '<span class="list-row__end"><svg class="ico" viewBox="0 0 24 24"><use href="#i-chev-r"/></svg></span></button>' +
         '</div></div>' +
-        '<p class="group-label" style="padding:0 var(--pad);margin:22px 0 9px">Showing on your calendar</p>' +
+        '<p class="toolgroup">Showing on your calendar</p>' +
         '<div class="row-gap"><div class="list">' + sources.map(function (s) {
           return '<button class="list-row pressable" data-tool-act="src:' + s.id + '">' +
             '<span class="list-row__icon"><svg class="ico" viewBox="0 0 24 24"><use href="#' + s.icon + '"/></svg></span>' +
@@ -963,7 +1025,7 @@ window.LUME_TOOLKIT = function (ctx) {
               '<span class="weather__stat"><svg class="ico" viewBox="0 0 24 24"><use href="#i-moon"/></svg> <b class="num">' +
                 esc(ctx.hhmm(sunset || list[4])) + '</b></span>' +
             '</div></article></div>' +
-          '<p class="group-label" style="padding:0 var(--pad);margin:20px 0 9px">Next 24 hours</p>' +
+          '<p class="toolgroup">Next 24 hours</p>' +
           '<div class="hscroll">' + hours.map(function (h) {
             var hh = (now + h) % 24;
             var swing = Math.round(Math.sin((hh - 6) / 24 * Math.PI * 2) * 4);
@@ -971,7 +1033,7 @@ window.LUME_TOOLKIT = function (ctx) {
               '<svg class="ico" viewBox="0 0 24 24"><use href="#' + (hh > 6 && hh < 19 ? w.icon : 'i-moon') + '"/></svg>' +
               '<span class="hourcell__v num">' + esc(L.temp(w.temp + swing)) + '</span></div>';
           }).join('') + '</div>' +
-          '<p class="group-label" style="padding:0 var(--pad);margin:20px 0 9px">Five days</p>' +
+          '<p class="toolgroup">Five days</p>' +
           '<div class="row-gap"><div class="list">' + days.map(function (d, i) {
             var hi = w.temp + (i % 3) - 1, lo = hi - 8;
             return '<div class="list-row"><span class="list-row__icon">' +
@@ -981,7 +1043,7 @@ window.LUME_TOOLKIT = function (ctx) {
               '<span class="list-row__end"><span class="list-row__value num">' + esc(L.temp(hi)) +
               '</span><span class="delta">' + esc(L.temp(lo)) + '</span></span></div>';
           }).join('') + '</div></div>' +
-          '<p class="group-label" style="padding:0 var(--pad);margin:20px 0 9px">Air quality</p>' +
+          '<p class="toolgroup">Air quality</p>' +
           '<div class="row-gap"><article class="card card--pad">' +
             '<p class="progress-card__title">Moderate · AQI 84</p>' +
             '<p class="progress-card__meta">Fine for most people. Sensitive groups may want to limit long spells outdoors.</p>' +
@@ -1051,7 +1113,7 @@ window.LUME_TOOLKIT = function (ctx) {
       return f && ctx.visible(f);
     });
     if (!ids.length) return '';
-    return '<p class="group-label" style="padding:0 var(--pad);margin:26px 0 9px">Next</p>' +
+    return '<p class="toolgroup">Next</p>' +
       '<div class="hscroll">' + ids.map(function (id) {
         var f = ctx.feature(id);
         return '<button class="recent pressable" data-tool-open="' + id + '">' +
@@ -1105,6 +1167,7 @@ window.LUME_TOOLKIT = function (ctx) {
 
     (BESPOKE[id] || SHAPES[spec.shape] || function (ff, ss, hh) {
       hh.innerHTML = stateBlock({
+        art: 'empty',
         title: ctx.fname(ff),
         text: 'This tool has no journey defined yet. That is a gap in the design, not a silent failure.',
         actions: [{ label: t('a.back'), act: 'back', primary: 1 }]
