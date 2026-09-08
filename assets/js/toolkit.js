@@ -184,6 +184,15 @@ window.LUME_TOOLKIT = function (ctx) {
     '</div>';
   }
 
+  /* "glass" + "s" is "glasss". Handle the ordinary English cases so counts
+     read correctly in every tool that pairs a number with a noun. */
+  function plural(word, n) {
+    if (n === 1) return word;
+    if (/(s|x|z|ch|sh)$/.test(word)) return word + 'es';
+    if (/[^aeiou]y$/.test(word)) return word.slice(0, -1) + 'ies';
+    return word + 's';
+  }
+
   function skeleton(rows) {
     var out = '';
     for (var i = 0; i < (rows || 4); i++) {
@@ -616,9 +625,53 @@ window.LUME_TOOLKIT = function (ctx) {
      --------------------------------------------------------- */
   function viewList(f, spec, host) {
     var items = load(f.id, 'items', null);
-    if (items === null) { items = (spec.seed || []).map(function (s) { return { t: s[0], m: s[1] }; }); }
+    if (items === null) {
+      items = (spec.seed || []).map(function (s) { return { t: s[0], m: s[1], amt: s[2] }; });
+    }
+    var query = '';
 
     function persist() { save(f.id, 'items', items); }
+
+    function amount(it) { return typeof it.amt === 'number' ? it.amt : 0; }
+
+    /* Lead with a total or a count, per the v2 composition rule that a list
+       should open with its summary rather than straight into rows. */
+    function summaryBar() {
+      var live = items.filter(function (it) { return !it.done; });
+      if (spec.money) {
+        var total = items.reduce(function (n, it) { return n + amount(it); }, 0);
+        var biggest = items.slice().sort(function (a, b) { return amount(b) - amount(a); })[0];
+        return '<div class="row-gap"><article class="card card--pad tsummary">' +
+          '<p class="t-label">' + esc(spec.period || 'Total') + '</p>' +
+          '<p class="tsummary__value num">' + esc(L.money(total)) + '</p>' +
+          '<div class="tsummary__split">' +
+            '<span><b class="num">' + L.num(items.length) + '</b>' +
+              esc(plural(spec.noun, items.length)) + '</span>' +
+            (biggest ? '<span><b class="num">' + esc(L.money(amount(biggest))) + '</b>' +
+              esc(biggest.t) + '</span>' : '') +
+          '</div></article></div>';
+      }
+      var done = items.length - live.length;
+      /* "3 tasks left" reads right for a to-do list and wrong for a notebook,
+         so only completable lists use the remaining-count phrasing. */
+      var label = spec.completable
+        ? plural(spec.noun, live.length) + ' left' +
+          (done ? ' · ' + L.num(done) + ' done' : '')
+        : plural(spec.noun, items.length);
+      var headline = spec.completable ? live.length : items.length;
+      return '<div class="row-gap"><article class="card card--pad tsummary tsummary--count">' +
+        '<p class="tsummary__value num">' + L.num(headline) + '</p>' +
+        '<p class="tsummary__label">' + esc(label) + '</p>' +
+      '</article></div>';
+    }
+
+    function searchBar() {
+      if (!spec.searchable) return '';
+      return '<label class="search search--sm" style="margin:var(--space-4) var(--pad) 0">' +
+        '<svg class="ico" viewBox="0 0 24 24"><use href="#i-search"/></svg>' +
+        '<input type="search" class="tsearch" value="' + esc(query) + '" ' +
+        'placeholder="' + esc(spec.searchable) + '" aria-label="' + esc(spec.searchable) + '"></label>';
+    }
 
     function groupOf(it, i) {
       if (!spec.groups) return null;
@@ -631,7 +684,7 @@ window.LUME_TOOLKIT = function (ctx) {
       if (!items.length) {
         host.innerHTML = stateBlock({
           art: 'empty',
-          title: 'No ' + spec.noun + 's yet',
+          title: 'No ' + plural(spec.noun, 0) + ' yet',
           text: 'Add your first ' + spec.noun + ' and it will stay on this device.',
           actions: [{ label: 'Add a ' + spec.noun, act: 'add', primary: 1 }]
         });
@@ -641,6 +694,14 @@ window.LUME_TOOLKIT = function (ctx) {
       if (spec.groups) {
         shown = shown.filter(function (x) { return groupOf(x.it, x.i) === tab; });
       }
+      if (query) {
+        var q = query.toLowerCase();
+        shown = shown.filter(function (x) {
+          return (x.it.t + ' ' + (x.it.m || '')).toLowerCase().indexOf(q) !== -1;
+        });
+      }
+      /* Completed work is kept but made secondary. */
+      shown.sort(function (a, b) { return (a.it.done ? 1 : 0) - (b.it.done ? 1 : 0); });
 
       if (spec.groups && !shown.length) {
         host.innerHTML = segmented(ctx.fname(f), spec.groups, tab) +
@@ -651,17 +712,27 @@ window.LUME_TOOLKIT = function (ctx) {
       }
 
       host.innerHTML =
-        (spec.groups ? segmented(ctx.fname(f), spec.groups, tab) : '') +
-        '<div class="row-gap"' + (spec.groups ? ' style="margin-top:var(--space-4)"' : '') +
-        '><div class="list">' + shown.map(function (x) {
+        summaryBar() +
+        (spec.groups ? '<div style="margin-top:var(--space-4)">' +
+          segmented(ctx.fname(f), spec.groups, tab) + '</div>' : '') +
+        searchBar() +
+        (query && !shown.length
+          ? '<p class="locempty">No ' + esc(spec.noun) + ' matches “' + esc(query) + '”.</p>' : '') +
+        '<div class="row-gap" style="margin-top:var(--space-4)">' +
+        '<div class="list">' + shown.map(function (x) {
           var it = x.it, i = x.i;
           return (function () {
           return '<div class="list-row' + (it.done ? ' is-done-row' : '') + '">' +
-            '<button class="task__box tlist__box pressable" data-tool-act="toggle:' + i + '" ' +
-              'aria-label="Mark done"><svg class="ico" viewBox="0 0 24 24"><use href="#i-check"/></svg></button>' +
+            (spec.completable
+              ? '<button class="task__box tlist__box pressable" data-tool-act="toggle:' + i + '" ' +
+                'aria-label="Mark done"><svg class="ico" viewBox="0 0 24 24"><use href="#i-check"/></svg></button>'
+              : '<span class="list-row__icon"><svg class="ico" viewBox="0 0 24 24">' +
+                '<use href="#' + f.i + '"/></svg></span>') +
             '<span class="list-row__body"><span class="list-row__title">' + esc(it.t) + '</span>' +
             (it.m ? '<span class="list-row__sub">' + esc(it.m) + '</span>' : '') + '</span>' +
             '<span class="list-row__end">' +
+              (typeof it.amt === 'number'
+                ? '<span class="list-row__value num">' + esc(L.money(it.amt)) + '</span>' : '') +
               '<button class="ghostbtn pressable" data-tool-act="del:' + i + '" aria-label="Delete">' +
               '<svg class="ico" viewBox="0 0 24 24"><use href="#i-x"/></svg></button></span></div>';
           })();
@@ -674,6 +745,15 @@ window.LUME_TOOLKIT = function (ctx) {
         '</div>' +
         (spec.sensitive ? '<p class="toolnote"><svg class="ico" viewBox="0 0 24 24" style="width:13px;height:13px;display:inline;vertical-align:-2px"><use href="#i-lock"/></svg> Private to you. Never shown on Home or in notification previews.</p>' : '');
     }
+
+    host.addEventListener('input', function (e) {
+      if (!e.target.classList.contains('tsearch')) return;
+      query = e.target.value;
+      var pos = e.target.selectionStart;
+      render();
+      var el = $('.tsearch', host);
+      if (el) { el.focus(); try { el.setSelectionRange(pos, pos); } catch (err) {} }
+    });
 
     var acts = {
       segChange: function () { render(); },
@@ -739,15 +819,26 @@ window.LUME_TOOLKIT = function (ctx) {
           '</svg><div class="ring__label"><span class="ring__value num">' + L.num(value) + '</span>' +
           '<span class="ring__unit">of ' + L.num(target) + '</span></div></div>' +
           '<div class="ring-card__body"><h2 class="ring-card__title">' +
-            esc(value >= target ? 'Target reached' : L.num(target - value) + ' ' + spec.unitLabel +
-              (target - value === 1 ? '' : 's') + ' to go') + '</h2>' +
-          '<p class="ring-card__text">' + esc(spec.unitLabel.charAt(0).toUpperCase() + spec.unitLabel.slice(1) +
-            's logged today. Kept on this device.') + '</p></div>' +
+            esc(value >= target ? 'Target reached'
+              : L.num(target - value) + ' ' + plural(spec.unitLabel, target - value) + ' to go') + '</h2>' +
+          '<p class="ring-card__text">' + esc(L.num(value) + ' ' + plural(spec.unitLabel, value) +
+            ' logged today. Kept on this device.') + '</p></div>' +
         '</article></div>' +
+        '<div class="row-gap" style="margin-top:var(--space-3)"><div class="list">' +
+          '<div class="list-row"><span class="list-row__body">' +
+            '<span class="list-row__title">' + esc(spec.goalLabel || 'Goal') + '</span></span>' +
+            '<span class="list-row__end"><span class="list-row__value num">' +
+              L.num(target) + ' ' + esc(plural(spec.unitLabel, target)) + '</span></span></div>' +
+          '<div class="list-row"><span class="list-row__body">' +
+            '<span class="list-row__title">Remaining</span></span>' +
+            '<span class="list-row__end"><span class="list-row__value num">' +
+              L.num(Math.max(0, target - value)) + '</span></span></div>' +
+        '</div></div>' +
         '<div class="tactions">' +
           '<button class="btn btn--ghost pressable" data-tool-act="minus">−1</button>' +
           '<button class="btn btn--accent pressable" data-tool-act="plus">+1 ' + esc(spec.unitLabel) + '</button>' +
         '</div>' +
+        '<p class="toolgroup">History</p>' +
         '<div class="row-gap" style="margin-top:6px"><div class="card habits">' +
           [0, 1, 2, 3, 4, 5, 6].map(function (d) { return ''; }).join('') +
           '<div class="habit"><span class="habit__name">Last 7</span><span class="habit__days">' +

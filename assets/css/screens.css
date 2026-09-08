@@ -1522,3 +1522,23 @@
 }
 [data-theme="dark"] .btn--accent.is-loading::after { color: #06231F; }
 @keyframes spin { to { transform: rotate(360deg); } }
+
+/* Lists and trackers lead with their summary (v2 §2 — minimal means low
+   clutter, not low information). */
+.tsummary { text-align: center; }
+.tsummary__value {
+  font-size: 1.75rem; font-weight: 820;
+  letter-spacing: -.045em; margin-top: var(--space-1);
+}
+.tsummary__label { font-size: .78125rem; color: var(--text-3); font-weight: 600; margin-top: var(--space-1); }
+.tsummary__split {
+  display: flex; justify-content: center; gap: var(--space-5);
+  margin-top: var(--space-3); padding-top: var(--space-3);
+  border-top: 1px solid var(--border);
+}
+.tsummary__split span { font-size: .65625rem; font-weight: 600; color: var(--text-3); }
+.tsummary__split b {
+  display: block; font-size: .875rem; font-weight: 750;
+  letter-spacing: -.03em; color: var(--text); margin-bottom: 2px;
+}
+.tsummary--count .tsummary__value { font-size: 2.125rem; }

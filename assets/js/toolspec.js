@@ -215,6 +215,8 @@ window.LUME_TOOLSPEC = (function () {
       },
       /* An index is points, volume is shares and crypto is dollars — none of
          them are the user's local currency (§47: identify the unit). */
+      timeframes: ['1W', '1M', '3M', '1Y'],
+      disclaimer: 'Information only, not investment advice. Prices are delayed.',
       valueFormat: function (v, row, tab, L) {
         if (tab === 'Crypto') return L.moneyRaw(v, 'USD', v < 10 ? 2 : 0);
         if (/volume/i.test(row[0])) return L.num(v);
@@ -265,40 +267,51 @@ window.LUME_TOOLSPEC = (function () {
                searchable: 'Registration number' },
     emergency: { source: 'National helplines', offline: 'full', fresh: 'static', related: ['health'] },
     weather: { source: 'Meteorological service', updated: 'Updated 4 min ago',
+               tabs: ['Now', '24 hours', '5 days'],
                related: ['calendar', 'prayer'], reqCity: 1 }
   };
 
   /* ---- Lists ------------------------------------------------------------- */
   var LIST = {
-    todos:    { noun: 'task', groups: ['Today', 'Upcoming', 'Completed'], seed: [['Finish the Q3 summary', 'Today · 15:00'], ['Call home', 'Today · 21:00'], ['Renew the car token', 'Fri']], related: ['calendar', 'reminders'], writesTo: ['calendar'] },
-    notes:    { noun: 'note', seed: [['Meeting notes', 'Edited yesterday'], ['Reading list', '6 items'], ['Gift ideas', 'Edited Monday']], related: ['todos', 'docscan'] },
-    shopping: { noun: 'item', seed: [['Milk', '2 litres'], ['Rice', '5 kg'], ['Bread', '']], related: ['recipes', 'expenses'] },
+    todos:    { noun: 'task', completable: 1, groups: ['Today', 'Upcoming', 'Completed'], seed: [['Finish the Q3 summary', 'Today · 15:00'], ['Call home', 'Today · 21:00'], ['Renew the car token', 'Fri']], related: ['calendar', 'reminders'], writesTo: ['calendar'] },
+    notes:    { noun: 'note', searchable: 'Search notes', pinnable: 1, seed: [['Meeting notes', 'Edited yesterday'], ['Reading list', '6 items'], ['Gift ideas', 'Edited Monday']], related: ['todos', 'docscan'] },
+    shopping: { noun: 'item', completable: 1, searchable: 'Search list', seed: [['Milk', '2 litres'], ['Rice', '5 kg'], ['Bread', '']], related: ['recipes', 'expenses'] },
     birthdays:{ noun: 'birthday', seed: [['Ayesha', 'In 4 days'], ['Abbu', '14 October'], ['Hamza', '2 January']], related: ['calendar', 'age'], writesTo: ['calendar'] },
     alarms:   { noun: 'alarm', seed: [['Wake up', '06:30 · weekdays'], ['Leave for work', '08:15 · weekdays']], related: ['timer', 'todos'] },
-    reminders:{ noun: 'reminder', seed: [['Pay the gas bill', 'Tomorrow · 10:00'], ['Book dentist', 'Thursday']], related: ['todos', 'calendar'], writesTo: ['calendar'] },
+    reminders:{ noun: 'reminder', completable: 1, seed: [['Pay the gas bill', 'Tomorrow · 10:00'], ['Book dentist', 'Thursday']], related: ['todos', 'calendar'], writesTo: ['calendar'] },
     events:   { noun: 'event', seed: [['Design review', 'Today · 14:00'], ['Nikah — Sana', '20 September']], related: ['calendar'], writesTo: ['calendar'] },
-    documents:{ noun: 'document', seed: [['CNIC', 'Expires 2031'], ['Passport', 'Expires June 2028'], ['Driving licence', 'Expires March 2027']], sensitive: 1, auth: 'account', related: ['docscan', 'vehicle'], writesTo: ['calendar'] },
+    documents:{ noun: 'document', searchable: 'Search documents', seed: [['CNIC', 'Expires 2031'], ['Passport', 'Expires June 2028'], ['Driving licence', 'Expires March 2027']], sensitive: 1, auth: 'account', related: ['docscan', 'vehicle'], writesTo: ['calendar'] },
     vaccines: { noun: 'record', seed: [['Hepatitis B', '3 of 3 · complete'], ['Influenza', 'Due October']], sensitive: 1, auth: 'account', related: ['health'] },
-    health:   { noun: 'record', seed: [['Blood test', '12 August'], ['Blood pressure', '118/76 · Monday']], sensitive: 1, auth: 'account', related: ['vaccines', 'meds'], canExport: 1 },
-    meds:     { noun: 'medication', seed: [['Metformin', '500 mg · twice daily'], ['Vitamin D', 'Weekly · Sunday']], sensitive: 1, auth: 'account', related: ['health'], writesTo: ['calendar'] },
-    subs:     { noun: 'subscription', seed: [['Netflix', 'Monthly · 12th'], ['Spotify', 'Monthly · 3rd'], ['iCloud', 'Monthly · 28th']], sensitive: 1, related: ['expenses'], writesTo: ['calendar'] },
-    goals:    { noun: 'goal', seed: [['Emergency fund', '64% of target'], ['Umrah', '30% of target']], sensitive: 1, related: ['expenses', 'natsavings'] },
-    expenses: { noun: 'expense', seed: [['Groceries', 'Today'], ['Fuel', 'Yesterday'], ['Electricity', '2 September']], sensitive: 1, related: ['goals', 'subs'], canExport: 1 },
-    ledger:   { noun: 'entry', seed: [['Bilal — lent', 'Since 12 August'], ['Sana — borrowed', 'Since 1 September']], sensitive: 1, related: ['expenses', 'committee'] },
-    installments:{ noun: 'plan', seed: [['Bike — 8 of 12', 'Next 15 September'], ['Laptop — 3 of 6', 'Next 20 September']], related: ['loan', 'calendar'], writesTo: ['calendar'] },
+    health:   { noun: 'record', searchable: 'Search records', seed: [['Blood test', '12 August'], ['Blood pressure', '118/76 · Monday']], sensitive: 1, auth: 'account', related: ['vaccines', 'meds'], canExport: 1 },
+    meds:     { noun: 'medication', completable: 1, seed: [['Metformin', '500 mg · twice daily'], ['Vitamin D', 'Weekly · Sunday']], sensitive: 1, auth: 'account', related: ['health'], writesTo: ['calendar'] },
+    subs:     { noun: 'subscription', money: 1, period: 'Every month',
+               seed: [['Netflix', 'Monthly · 12th', 6], ['Spotify', 'Monthly · 3rd', 4],
+                      ['iCloud', 'Monthly · 28th', 3], ['Gym', 'Monthly · 1st', 12]], sensitive: 1, related: ['expenses'], writesTo: ['calendar'] },
+    goals:    { noun: 'goal', money: 1, period: 'Saved so far',
+               seed: [['Emergency fund', '64% of target', 640], ['Umrah', '30% of target', 300]], sensitive: 1, related: ['expenses', 'natsavings'] },
+    expenses: { noun: 'expense', money: 1, period: 'This month',
+               seed: [['Groceries', 'Today', 67], ['Fuel', 'Yesterday', 40], ['Electricity', '2 September', 42],
+                      ['Chai Shai', '2 September', 6], ['Phone top-up', '1 September', 9]], sensitive: 1, related: ['goals', 'subs'], canExport: 1 },
+    ledger:   { noun: 'entry', money: 1, period: 'Outstanding',
+               seed: [['Bilal — lent', 'Since 12 August', 21], ['Sana — borrowed', 'Since 1 September', 9]], sensitive: 1, related: ['expenses', 'committee'] },
+    installments:{ noun: 'plan', money: 1, period: 'Due next',
+               seed: [['Bike — 8 of 12', 'Next 15 September', 32], ['Laptop — 3 of 6', 'Next 20 September', 55]], related: ['loan', 'calendar'], writesTo: ['calendar'] },
     committee:{ noun: 'committee', seed: [['Office committee', 'Month 4 of 10'], ['Family committee', 'Month 2 of 12']], related: ['ledger'], writesTo: ['calendar'] },
-    bills:    { noun: 'bill', groups: ['Upcoming', 'Paid'], seed: [['K-Electric', 'Due 12 September'], ['Sui Southern Gas', 'Due 14 September'], ['PTCL', 'Paid 2 September']], auth: 'history', related: ['packages', 'expenses'], writesTo: ['calendar'] },
-    recipes:  { noun: 'recipe', seed: [['Chicken karahi', '45 min'], ['Daal chawal', '30 min'], ['Kheer', '1 hr']], related: ['mealplan', 'shopping'] },
+    bills:    { noun: 'bill', groups: ['Upcoming', 'Paid'], money: 1, period: 'Due this month',
+               seed: [['K-Electric', 'Due 12 September', 65], ['Sui Southern Gas', 'Due 14 September', 14],
+                      ['PTCL', 'Paid 2 September', 12]], auth: 'history', related: ['packages', 'expenses'], writesTo: ['calendar'] },
+    recipes:  { noun: 'recipe', searchable: 'Search recipes', seed: [['Chicken karahi', '45 min'], ['Daal chawal', '30 min'], ['Kheer', '1 hr']], related: ['mealplan', 'shopping'] },
     mealplan: { noun: 'meal', seed: [['Monday — Daal chawal', 'Dinner'], ['Tuesday — Karahi', 'Dinner']], related: ['recipes', 'shopping'], writesTo: ['calendar'] },
-    learning: { noun: 'course', seed: [['Arabic — beginner', '3 of 20 lessons'], ['Product design', '12 of 30']], related: ['notes'] },
+    learning: { noun: 'course', searchable: 'Search courses', seed: [['Arabic — beginner', '3 of 20 lessons'], ['Product design', '12 of 30']], related: ['notes'] },
     parcel:   { noun: 'parcel', seed: [['TCS · 4820 9931 22', 'Out for delivery'], ['Leopards · LP7741', 'In transit']], related: ['notes'], custom: 'parcel' },
-    babybudget:{ noun: 'item', seed: [['Cot', 'Planned'], ['Pram', 'Bought']], related: ['expenses', 'goals'] }
+    babybudget:{ noun: 'item', money: 1, period: 'Planned',
+               seed: [['Cot', 'Planned', 120], ['Pram', 'Bought', 180], ['Car seat', 'Planned', 90]], related: ['expenses', 'goals'] }
   };
 
   /* ---- Trackers ---------------------------------------------------------- */
   var TRACK = {
     habits:   { unitLabel: 'day', target: 7, items: ['Walk 6k steps', '8 glasses', 'Read 10 pages'], related: ['streak', 'water'] },
-    water:    { unitLabel: 'glass', target: 8, current: 5, step: 1, related: ['habits'] },
+    water:    { unitLabel: 'glass', target: 8, current: 5, step: 1, goalLabel: 'Daily goal', related: ['habits'] },
     streak:   { unitLabel: 'day', target: 30, current: 12, related: ['habits'] },
     praytrack:{ unitLabel: 'prayer', target: 5, current: 3, faithItems: 1, related: ['prayer', 'calendar'], reads: ['prayer'], writesTo: ['calendar'] },
     fasting:  { unitLabel: 'fast', target: 30, current: 3, related: ['ramadan', 'calendar'] },
@@ -339,7 +352,7 @@ window.LUME_TOOLSPEC = (function () {
 
   /* ---- Scanners ---------------------------------------------------------- */
   var SCAN = {
-    qr:         { why: 'Lume needs the camera to read a QR code. Nothing is uploaded — the code is decoded on your device.', action: 'Scan a code', related: ['docscan'] },
+    qr:         { modes: ['Scan', 'Generate'], why: 'Lume needs the camera to read a QR code. Nothing is uploaded — the code is decoded on your device.', action: 'Scan a code', related: ['docscan'] },
     docscan:    { why: 'Lume needs the camera to photograph a page and turn it into a PDF. Pages stay on your device until you share them.', action: 'Scan a page', related: ['documents', 'notes'] },
     passport:   { why: 'Lume needs the camera to take a compliant passport photo at the right size.', action: 'Take a photo', related: ['documents'] },
     mediasaver: { why: 'Paste a link and Lume saves the media to your device.', action: 'Paste a link', perms: [], related: [] },
