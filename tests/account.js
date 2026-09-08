@@ -1159,6 +1159,47 @@ function visibleText(doc) {
      /USD/.test(currencyMarked), currencyMarked);
   win.close();
 
+  /* === 25. The same sweep, on the screens that need an account ======== */
+  console.log('\n=== The state and data contract, signed in ===');
+  ({ win, doc } = await boot({ profile: {
+    country: 'GB', city: 'London', lang: 'en',
+    favourites: ['calculator', 'weather'], recents: ['calculator']
+  } }));
+  await fillSignUp(win, { name: 'Nadia Rahman', email: 'nadia@example.com',
+                          password: 'Password1', confirm: 'Password1' });
+
+  const authedRoutes = ['account', 'edit', 'email', 'phone', 'security', 'password',
+                        'sessions', 'delete', 'prefs', 'library', 'sync'];
+  let leaks2 = [], blanks2 = [];
+  for (const r of authedRoutes) {
+    act(win, 'acct:' + r);
+    await wait(110);
+    const body = text($(doc, '#accountBody')) + ' ' + text($(doc, '#accountHeader'));
+    if (screenId(doc) !== 'account') { blanks2.push(r + ': did not open (' + screenId(doc) + ')'); continue; }
+    if (/undefined|null|NaN|\[object|Invalid Date/.test(body)) blanks2.push(r + ': ' + body.slice(0, 70));
+    const raw = body.match(/(acct|auth|onb|a11y|cat|tools|pers|n)\.[a-zA-Z][a-zA-Z.]+/g);
+    if (raw) leaks2.push(r + ': ' + raw.join(','));
+    const badIcons = $$(doc, '#accountBody use').map(u => u.getAttribute('href'))
+      .filter(h => !h || h === '#undefined' || h === '#null');
+    if (badIcons.length) blanks2.push(r + ': ' + badIcons.length + ' unresolved icons');
+    if (!body.trim()) blanks2.push(r + ': empty screen');
+    /* §124.30 — every row leads somewhere. */
+    const dead = $$(doc, '#accountBody .list-row')
+      .filter(x => x.tagName === 'BUTTON' && !x.dataset.act && !x.dataset.sheet);
+    if (dead.length) blanks2.push(r + ': ' + dead.length + ' rows lead nowhere');
+  }
+  ok('no account-only screen renders a value the product does not hold',
+     blanks2.length === 0, blanks2.join(' | '));
+  ok('no account-only screen leaks a translation key', leaks2.length === 0, leaks2.join(' | '));
+
+  /* The strings the removed security rows used are gone, and nothing asks
+     for them. */
+  const removed = ['acct.securityNotify', 'acct.twoFactor', 'acct.biometric'];
+  const stillDefined = removed.filter(k => win.LUME_I18N.DICTS.en[k] !== undefined);
+  ok('strings for rows that no longer exist were removed with them',
+     stillDefined.length === 0, stillDefined.join(', '));
+  win.close();
+
   console.log('\n' + (failures ? failures + ' FAILURES' : 'ALL ACCOUNT CHECKS PASSED'));
   process.exit(failures ? 1 : 0);
 })();
