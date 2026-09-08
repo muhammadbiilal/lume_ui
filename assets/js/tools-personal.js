@@ -715,8 +715,11 @@
         return UI.richRow({
           thumb: UI.art({ tone: r.tone, seed: r.name.length, glyph: r.glyph }),
           title: r.name, sub: r.cuisine,
-          meta: [(r.prep + r.cook) + ' ' + c.t('unit.min'), c.t('recipes.serves', { n: r.serves }),
-                 r.kcal + ' ' + c.t('unit.kcal'), r.ingredients + ' ' + c.t('recipes.ingredients')],
+          meta: [c.t('recipes.prepCook', { prep: r.prep, cook: r.cook }),
+                 c.t('recipes.serves', { n: r.serves }),
+                 c.num(r.kcal) + ' ' + c.t('unit.kcal'),
+                 c.t('recipes.stepsN', { n: r.steps }),
+                 r.tags.join(' · ')],
           badge: r.fav ? { label: c.t('common.saved'), tone: 'ok' } : null,
           act: 'toast:' + r.name, chevron: true
         });
@@ -742,6 +745,9 @@
           { value: c.money(m.cost), label: c.t('meal.estCost') }
         ]
       }) }) +
+      UI.section({ title: c.t('meal.calories'), body: UI.card(
+        UI.barChart({ values: m.kcalByDay, labels: c.weekLabels(), highlight: 0,
+          label: c.t('meal.calories'), caption: c.t('meal.caloriesCap', { n: c.num(m.kcal) }) })) }) +
       UI.section({ title: c.t('meal.week'), body: UI.rows(m.days.map(function (d) {
         return UI.expandRow({
           open: d.today,
@@ -796,7 +802,13 @@
           UI.progressBar({ value: x.progress, label: x.name }));
       }).join('') }) +
       UI.section({ title: c.t('learning.week'), body: UI.card(
-        UI.barChart({ values: l.week, labels: c.weekLabels(), highlight: 6, label: c.t('learning.week') })) });
+        UI.barChart({ values: l.week, labels: c.weekLabels(), highlight: 6, label: c.t('learning.week') })) }) +
+      UI.section({ title: c.t('learning.consistency'), body: UI.card(
+        UI.heatmap({ days: l.heat, label: c.t('learning.consistency'),
+          less: c.t('common.less'), more: c.t('common.more') })) }) +
+      UI.section({ title: c.t('habits.insights'), body: UI.rows(l.insights.map(function (i) {
+        return UI.richRow({ icon: i.icon, iconTone: 'accent', title: i.title, sub: i.text });
+      })) });
   });
 
   T.register('play', function (c) {
@@ -828,8 +840,14 @@
         label: c.t('baby.categories'), centre: c.money(b.monthly), centreSub: c.t('common.perMonth'),
         slices: b.categories
       })) }) +
+      UI.section({ title: c.t('baby.trend'), body: UI.card(
+        UI.barChart({ values: b.trend, labels: b.trendLabels, highlight: b.trend.length - 1,
+          label: c.t('baby.trend'), caption: c.t('baby.trendCap') })) }) +
       UI.section({ title: c.t('baby.upcoming'), body: UI.rows(b.upcoming.map(function (x) {
         return UI.compactRow({ icon: 'i-baby', label: x.label, sub: x.when, value: c.money(x.amount) });
+      })) }) +
+      UI.section({ title: c.t('baby.oneOff'), body: UI.rows(b.oneOff.map(function (x) {
+        return UI.compactRow({ icon: 'i-cart', label: x.label, sub: x.when, value: c.money(x.amount) });
       })) });
   });
 

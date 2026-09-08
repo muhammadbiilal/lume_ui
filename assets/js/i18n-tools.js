@@ -214,6 +214,68 @@
     'notif.tomorrow': 'Tomorrow in {city}',
     'extra.darkMode': 'Dark mode', 'extra.personalise': 'Personalisation',
 
+    /* Screens recomposed to match their archetype (§22, §112) */
+    'bonds.scheme': 'National prize bonds', 'bonds.nextDraw': 'Next draw',
+    'bonds.nextDrawSub': '{denom} bond · {draw}', 'bonds.prizePool': 'Total prizes',
+    'bonds.totalWinners': 'Winners', 'bonds.denominations': 'Denominations',
+    'bonds.prizeShape': 'First prize by denomination',
+    'bonds.prizeShapeCap': 'A larger bond buys a larger top prize, not better odds.',
+    'bonds.yourNumbers': 'Your numbers', 'bonds.notDrawn': 'Not drawn',
+    'bonds.noneSaved': 'No saved numbers',
+    'bonds.noneSavedText': 'Check a number above and save it to be told when it wins.',
+
+    'inst.stActive': 'Running', 'inst.stDone': 'Finished',
+    'inst.remainingShort': 'Remaining', 'inst.progress': 'Progress',
+    'inst.noneHere': 'Nothing here', 'inst.noneHereText': 'No plans match this filter.',
+    'inst.payoff': 'Monthly commitment',
+    'inst.payoffCap': 'Currently {amount} a month, falling as each plan finishes.',
+    'inst.paidCount': '{n} payments made',
+
+    'committee.collection': 'Collected each month',
+    'committee.collectionCap': 'Everyone contributes; one member is paid out.',
+
+    'rates.search': 'Search currencies', 'rates.noMatch': 'No currency matches',
+    'rates.noMatchText': 'Try a three-letter code such as USD or EUR.',
+    'savings.search': 'Search products',
+
+    'ramadan.dayTimeline': 'Today', 'ramadan.suhoorEnds': 'Suhoor ends',
+    'ramadan.suhoorSub': 'Stop eating at Fajr', 'ramadan.iftarSub': 'Break the fast at Maghrib',
+    'ramadan.taraweehSub': 'After Isha', 'ramadan.month': 'The month so far',
+
+    'taraweeh.map': 'Mosques near you', 'taraweeh.selected': 'Closest',
+    'taraweeh.noMatch': 'No mosques match',
+    'taraweeh.noMatchText': 'Try a different rakaat count, or clear the search.',
+
+    'meal.calories': 'Calories by day', 'meal.caloriesCap': 'Averaging {n} kcal a day',
+    'learning.consistency': 'Consistency',
+    'learning.insight1.title': 'Short sessions stick',
+    'learning.insight1.text': 'Your 20-minute sessions are completed twice as often as your hour-long ones.',
+    'learning.insight2.title': 'Arabic is your strongest streak',
+    'learning.insight2.text': 'Nine days running, well ahead of your other courses.',
+
+    'baby.trend': 'Six months', 'baby.trendCap': 'Monthly spend, excluding one-off purchases',
+    'baby.oneOff': 'One-off purchases', 'baby.oneOffWhen': 'Planned',
+    'baby.o1': 'Cot and mattress', 'baby.o2': 'Pram',
+
+    'pregnancy.milestones': 'Milestones', 'pregnancy.wk': 'wk {n}',
+    'pregnancy.m12': 'First trimester complete', 'pregnancy.m20': 'Anatomy scan',
+    'pregnancy.m28': 'Third trimester begins', 'pregnancy.m37': 'Full term',
+    'pregnancy.weightTrend': 'Weight',
+
+    'recipes.prepCook': '{prep} + {cook} min', 'recipes.stepsN': '{n} steps',
+
+    /* Markets with no personal income tax still have levies (§112) */
+    'tax.noneCaption': 'Your salary is not subject to personal income tax here.',
+    'tax.incomeTax': 'Income tax', 'tax.year': 'Year',
+    'tax.otherLevies': 'What does apply', 'tax.levy': 'Levy',
+    'tax.leviesNote': 'Worth knowing',
+    'tax.leviesNoteText': 'These are headline rates. Consumption taxes are paid on what you buy rather than deducted from pay, and social contributions are usually split between you and your employer.',
+    'levy.vat': 'VAT', 'levy.gst': 'GST', 'levy.pension': 'Pension contribution',
+    'levy.corporate': 'Corporate tax', 'levy.gosi': 'Social insurance (GOSI)',
+    'levy.zakatRate': 'Zakat', 'levy.ni': 'National Insurance',
+    'levy.socialSecurity': 'Social Security', 'levy.medicare': 'Medicare',
+    'levy.eobi': 'EOBI', 'levy.pf': 'Provident Fund',
+
     /* ---- prayer ---- */
     'prayer.fajr': 'Fajr', 'prayer.sunrise': 'Sunrise', 'prayer.dhuhr': 'Dhuhr',
     'prayer.asr': 'Asr', 'prayer.maghrib': 'Maghrib', 'prayer.isha': 'Isha',

@@ -204,6 +204,10 @@
      --------------------------------------------------------- */
   T.register('goldrates', function (c) {
     var g = c.metals();
+    var query = (c.state('q') || '').trim().toLowerCase();
+    var pairs = g.pairs.filter(function (p) {
+      return !query || (p.code + ' ' + p.name).toLowerCase().indexOf(query) !== -1;
+    });
     return UI.section({ flush: true, body: UI.contextBar([
         { icon: 'i-globe', label: c.L.countryName(c.profile.country), act: 'sheet:personalise' },
         { label: c.t('rates.openMarket') }]) }) +
@@ -232,7 +236,8 @@
                     UI.delta({ dir: dirOf(g.silver.pct), text: c.pct(g.silver.pct) })] }
         ]
       }) }) +
-      UI.section({ title: c.t('rates.currencies'), body: UI.rows(g.pairs.map(function (p) {
+      UI.section({ body: UI.searchBar({ placeholder: c.t('rates.search'), target: 'goldrates', value: c.state('q') || '' }) }) +
+      UI.section({ title: c.t('rates.currencies'), body: pairs.length ? UI.rows(pairs.map(function (p) {
         return UI.richRow({
           logo: p.flag, logoTone: 'var(--tint-neutral)',
           title: p.code, sub: p.name,
@@ -242,7 +247,8 @@
           value: c.num(p.sell, { maximumFractionDigits: 2 }),
           delta: { dir: dirOf(p.pct), text: c.pct(p.pct) }
         });
-      })) }) +
+      })) : UI.emptyState({ icon: 'i-currency', title: c.t('rates.noMatch'),
+        text: c.t('rates.noMatchText') }) }) +
       UI.section({ title: c.t('rates.history'), body: UI.card(
         UI.lineChart({ values: D.walk(9001, 30, g.gold.perTola, 0.01), labels: ['30d', '15d', c.t('common.today')],
           label: c.t('rates.goldHistory'), caption: c.t('rates.goldHistoryCap') })) }) +
@@ -372,6 +378,7 @@
      --------------------------------------------------------- */
   T.register('tax', function (c) {
     var tx = c.tax();
+    var tx0 = tx.config || {};
     if (!tx.config) {
       return UI.section({ body: UI.emptyState({
         icon: 'i-percent',
@@ -380,12 +387,41 @@
         action: { label: c.t('settings.changeCountry'), act: 'sheet:personalise', icon: 'i-globe' }
       }) });
     }
+    /* No income tax is not "nothing to show": the levies a salary actually
+       meets here are what the user came to find out (§91, §112). */
     if (!tx.taxable) {
+      var levies = D.leviesFor(c.profile.country);
+      var gross = Number(c.field('income') || 3000 * (c.L.RATES[tx0.ccy] || 1));
       return UI.section({ flush: true, body: UI.contextBar([
-          { icon: 'i-globe', label: c.L.countryName(c.profile.country) },
-          { label: tx.config.authority }]) }) +
+          { icon: 'i-globe', label: c.L.countryName(c.profile.country), act: 'sheet:personalise' },
+          { label: tx0.authority }, { label: tx0.year }]) }) +
+        UI.section({ body: UI.summaryCard({
+          tone: 'accent',
+          kicker: c.t('tax.takeHome'),
+          value: c.moneyRaw(gross, tx0.ccy, 0),
+          caption: c.t('tax.noneCaption'),
+          stats: [
+            { value: c.pct(0, 0), label: c.t('tax.incomeTax') },
+            { value: c.num(levies[0].rate, { maximumFractionDigits: 2 }) + '%', label: c.t(levies[0].key) },
+            { value: tx0.year, label: c.t('tax.year') }
+          ]
+        }) }) +
+        UI.section({ id: 'inputs', body: UI.card(UI.formGrid([
+          UI.field({ label: c.t('tax.incomeMonthly'), name: 'tax_income', type: 'number',
+            value: gross, prefix: tx0.ccy, wide: true })
+        ])) }) +
         UI.section({ body: UI.noteCard({ icon: 'i-info', tone: 'ok',
-          title: c.t('tax.none.title'), text: c.t('tax.none.text', { authority: tx.config.authority }) }) });
+          title: c.t('tax.none.title'), text: c.t('tax.none.text', { authority: tx0.authority }) }) }) +
+        UI.section({ title: c.t('tax.otherLevies'), body: UI.table({
+          label: c.t('tax.otherLevies'),
+          cols: [{ label: c.t('tax.levy') }, { label: c.t('tax.rate'), align: 'right' }],
+          rows: levies.map(function (l) {
+            return { cells: [UI.esc(c.t(l.key)),
+                             c.num(l.rate, { maximumFractionDigits: 2 }) + '%'] };
+          })
+        }) }) +
+        UI.section({ title: c.t('tax.leviesNote'), body: UI.card(
+          '<p class="kard__lead">' + UI.esc(c.t('tax.leviesNoteText')) + '</p>', { tone: 'quiet' }) });
     }
 
     return UI.section({ flush: true, body: UI.contextBar([
@@ -444,6 +480,11 @@
     var ccy = c.L.country().currency;
     var best = list.slice().sort(function (a, b) { return b.rate - a.rate; })[0];
 
+    var query = (c.state('q') || '').trim().toLowerCase();
+    var products = list.filter(function (p) {
+      return !query || (p.name + ' ' + p.eligible).toLowerCase().indexOf(query) !== -1;
+    });
+
     return UI.section({ flush: true, body: UI.contextBar([
         { icon: 'i-globe', label: c.L.countryName(c.profile.country) },
         { label: c.t('savings.scheme') }]) }) +
@@ -457,13 +498,14 @@
           { value: c.moneyRaw(best.min, ccy, 0), label: c.t('savings.minimum') }
         ]
       }) }) +
+      UI.section({ body: UI.searchBar({ placeholder: c.t('savings.search'), target: 'natsavings', value: c.state('q') || '' }) }) +
       UI.section({ body: UI.sortBar({ tool: 'natsavings', label: c.t('common.sort'),
         items: c.sortItems([
           { value: 'rate', label: c.t('savings.rate') },
           { value: 'term', label: c.t('savings.term') },
           { value: 'min', label: c.t('savings.minimum') }
         ], 'rate', 'desc') }) }) +
-      UI.section({ title: c.t('savings.products'), body: UI.rows(c.sortBy(list, {
+      UI.section({ title: c.t('savings.products'), body: UI.rows(c.sortBy(products, {
         rate: function (p) { return p.rate; },
         term: function (p) { return parseInt(p.term, 10); },
         min: function (p) { return p.min; }
@@ -499,7 +541,25 @@
       icon: 'i-ticket', title: c.t('bonds.unavailable.title'), text: c.t('bonds.unavailable.text') }) });
     var ccy = c.L.country().currency;
 
-    return UI.section({ body: UI.card(
+    var next = list.slice().sort(function (a, b) { return a.denom - b.denom; })[0];
+    var pool = list.reduce(function (a, b) { return a + b.first + b.second * 3 + b.third * b.winners; }, 0);
+    var saved = c.state('saved') || [];
+
+    return UI.section({ flush: true, body: UI.contextBar([
+        { icon: 'i-globe', label: c.L.countryName(c.profile.country), act: 'sheet:personalise' },
+        { label: c.t('bonds.scheme') }
+      ]) }) +
+      UI.section({ body: UI.summaryCard({
+        kicker: c.t('bonds.nextDraw'),
+        value: next.date,
+        caption: c.t('bonds.nextDrawSub', { denom: c.moneyRaw(next.denom, ccy, 0), draw: next.draw }),
+        stats: [
+          { value: c.moneyRaw(pool, ccy, 0), label: c.t('bonds.prizePool') },
+          { value: c.num(list.reduce(function (a, b) { return a + b.winners; }, 0)), label: c.t('bonds.totalWinners') },
+          { value: String(list.length), label: c.t('bonds.denominations') }
+        ]
+      }) }) +
+      UI.section({ body: UI.card(
         '<p class="kard__lead">' + UI.esc(c.t('bonds.checkLead')) + '</p>' +
         UI.formGrid([
           UI.selectField({ label: c.t('bonds.denomination'), name: 'pb_denom', value: '750',
@@ -527,7 +587,18 @@
           return { cells: [c.moneyRaw(b.denom, ccy, 0), c.moneyRaw(b.first, ccy, 0),
                            c.moneyRaw(b.second, ccy, 0), c.moneyRaw(b.third, ccy, 0)] };
         })
-      }) });
+      }) }) +
+      UI.section({ title: c.t('bonds.prizeShape'), body: UI.card(
+        UI.barChart({
+          values: list.map(function (b) { return b.first; }),
+          labels: list.map(function (b) { return c.moneyRaw(b.denom, ccy, 0); }),
+          label: c.t('bonds.prizeShape'), caption: c.t('bonds.prizeShapeCap') })) }) +
+      UI.section({ title: c.t('bonds.yourNumbers'), body: saved.length
+        ? UI.rows(saved.map(function (n) {
+            return UI.compactRow({ icon: 'i-ticket', label: n, value: c.t('bonds.notDrawn') });
+          }))
+        : UI.emptyState({ icon: 'i-ticket', title: c.t('bonds.noneSaved'),
+            text: c.t('bonds.noneSavedText') }) });
   });
 
   /* ---------------------------------------------------------
@@ -752,6 +823,16 @@
      --------------------------------------------------------- */
   T.register('installments', function (c) {
     var i = c.installments();
+    var state = c.filter('state', 'active');
+    var plans = c.sortBy(i.plans.filter(function (p) {
+      var done = p.paidCount >= p.total;
+      return state === 'all' || (state === 'active' ? !done : done);
+    }), {
+      next: function (p) { return p.total - p.paidCount; },
+      amount: function (p) { return p.monthly; },
+      progress: function (p) { return p.paidCount / p.total; }
+    }, 'next', 'asc');
+
     return UI.section({ body: UI.summaryCard({
         kicker: c.t('inst.monthlyTotal'),
         value: c.money(i.monthly),
@@ -762,7 +843,20 @@
           { value: i.nextDate, label: c.t('inst.nextPayment') }
         ]
       }) }) +
-      UI.section({ title: c.t('inst.plans'), body: UI.rows(i.plans.map(function (p) {
+      UI.section({ body: UI.filterBar([{ id: 'state', label: c.t('common.status'), items: [
+        { value: 'active', label: c.t('inst.stActive'), on: state === 'active',
+          count: i.plans.filter(function (p) { return p.paidCount < p.total; }).length },
+        { value: 'done', label: c.t('inst.stDone'), on: state === 'done',
+          count: i.plans.filter(function (p) { return p.paidCount >= p.total; }).length },
+        { value: 'all', label: c.t('common.all'), on: state === 'all', count: i.plans.length }
+      ] }], 'installments') }) +
+      UI.section({ body: UI.sortBar({ tool: 'installments', label: c.t('common.sort'),
+        items: c.sortItems([
+          { value: 'next', label: c.t('inst.remainingShort') },
+          { value: 'amount', label: c.t('common.amount') },
+          { value: 'progress', label: c.t('inst.progress') }
+        ], 'next', 'asc') }) }) +
+      UI.section({ title: c.t('inst.plans'), body: plans.length ? UI.rows(plans.map(function (p) {
         return UI.richRow({
           logo: p.logo, logoTone: 'var(--tone-' + p.tone + ')',
           title: p.item, sub: p.merchant,
@@ -770,9 +864,18 @@
           value: c.money(p.monthly),
           valueSub: c.t('common.perMonth')
         }) + '<div class="rowmeter">' + UI.progressBar({ value: p.paidCount / p.total, label: p.item }) + '</div>';
-      })) }) +
+      })) : UI.emptyState({ icon: 'i-calendar', title: c.t('inst.noneHere'),
+        text: c.t('inst.noneHereText'),
+        action: { label: c.t('common.all'), act: 'toolstate:installments:state:all', icon: 'i-refresh' } }) }) +
       UI.section({ title: c.t('inst.schedule'), body: UI.timeline(i.schedule.map(function (s) {
         return { time: s.date, title: s.item, sub: s.merchant, value: c.money(s.amount), state: s.state };
+      })) }) +
+      UI.section({ title: c.t('inst.payoff'), body: UI.card(
+        UI.barChart({
+          values: i.months, labels: i.monthLabels, highlight: 0,
+          label: c.t('inst.payoff'), caption: c.t('inst.payoffCap', { amount: c.money(i.monthly) }) })) }) +
+      UI.section({ title: c.t('common.history'), body: UI.rows(i.history.map(function (h) {
+        return UI.compactRow({ icon: 'i-check-circle', label: h.item, sub: h.when, value: c.money(h.amount) });
       })) });
   });
 
@@ -803,6 +906,12 @@
       })) }) +
       UI.section({ title: c.t('committee.payoutOrder'), body: UI.timeline(k.order.map(function (o) {
         return { time: o.month, title: o.name, sub: o.you ? c.t('committee.you') : '', value: c.money(k.pool), state: o.state };
+      })) }) +
+      UI.section({ title: c.t('committee.collection'), body: UI.card(
+        UI.barChart({ values: k.collected, labels: k.collectedLabels, highlight: k.month - 1,
+          label: c.t('committee.collection'), caption: c.t('committee.collectionCap') })) }) +
+      UI.section({ title: c.t('common.history'), body: UI.rows(k.history.map(function (h) {
+        return UI.compactRow({ icon: 'i-users', label: h.name, sub: h.when, value: c.money(h.amount) });
       })) });
   });
 

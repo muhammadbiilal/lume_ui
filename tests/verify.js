@@ -117,6 +117,23 @@ process.on('unhandledRejection', e => { console.error('UNHANDLED', e && (e.stack
       });
     }
     console.log('  tools built: ' + opened + ' (thin: ' + empty + ')');
+
+    // §6 — a screen must earn the density its contract declares.
+    const MIN_SECTIONS = { low: 1, medium: 3, high: 5, veryhigh: 7 };
+    const underweight = [];
+    for (const id of visible) {
+      const built = TOOLS.build(id);
+      if (!built) continue;
+      const sections = (built.body.match(/<section class="sect/g) || []).length;
+      const need = MIN_SECTIONS[built.density] || 3;
+      if (sections < need) underweight.push(id + ' (' + built.density + ': ' + sections + '/' + need + ')');
+    }
+    if (underweight.length) {
+      failures += underweight.length;
+      console.log('  FAIL density not earned: ' + underweight.join(', '));
+    } else {
+      console.log('  ok: every screen earns its declared density');
+    }
     if (buildErrors.length) {
       failures += buildErrors.length;
       buildErrors.slice(0, 10).forEach(e => console.log('  FAIL ' + e));

@@ -247,6 +247,9 @@ window.LUME_CTX = function (deps) {
         km: km, walk: Math.round(km * 12) + ' ' + t('unit.min'),
         facilities: facilities[i], reciter: ['Qari Ahmed', 'Hafiz Bilal', 'Qari Usman', 'Hafiz Salman'][i],
         next: set[next.index] || set[0],
+        /* Taraweeh belongs to the mosque, not to the row that draws it. */
+        rakaat: [20, 8, 20, 8][i],
+        taraweeh: { h: 20, m: [45, 50, 55, 40][i] },
         x: 22 + i * 19, y: 30 + (i % 2) * 34
       };
     });
@@ -284,6 +287,7 @@ window.LUME_CTX = function (deps) {
       juz: active ? Math.round(h.day) : 0,
       charity: 180, charityGoal: 400,
       iftarIn: t('duration.hm', { h: Math.floor(mins / 60), m: pad2(mins % 60) }),
+      heat: heatDays(30, 3312, active ? 0.15 : 0.9),
       daysUntil: monthsAway * 29 + (30 - h.day),
       startLabel: D.ISLAMIC_EVENTS[0].greg, hijriYear: h.year + (monthsAway ? 1 : 0),
       expectedFasts: 30
@@ -645,8 +649,21 @@ window.LUME_CTX = function (deps) {
       { item: 'Phone', merchant: 'Mobile Hub', logo: 'MH', tone: 'accent', monthly: 48, total: 18, paidCount: 3, next: relDate(20) }
     ];
     var monthly = plans.reduce(function (a, p) { return a + p.monthly; }, 0);
+    /* What the monthly commitment falls to as each plan finishes. */
+    var months = [], monthLabels = [];
+    for (var m = 0; m < 6; m++) {
+      months.push(plans.reduce(function (a, p) {
+        return a + (p.paidCount + m < p.total ? p.monthly : 0);
+      }, 0));
+      var d = new Date();
+      d.setMonth(d.getMonth() + m);
+      monthLabels.push(L.date(d, { month: 'narrow' }));
+    }
     return {
-      plans: plans, monthly: monthly,
+      plans: plans, monthly: monthly, months: months, monthLabels: monthLabels,
+      history: plans.map(function (p) {
+        return { item: p.item, when: t('inst.paidCount', { n: p.paidCount }), amount: p.monthly * p.paidCount };
+      }),
       remaining: plans.reduce(function (a, p) { return a + p.monthly * (p.total - p.paidCount); }, 0),
       paid: plans.reduce(function (a, p) { return a + p.monthly * p.paidCount; }, 0),
       nextDate: relDate(7),
@@ -666,6 +683,11 @@ window.LUME_CTX = function (deps) {
     ];
     return {
       pool: 500, contribution: 100, month: 4, months: 10, members: members, yourTurn: 7,
+      collected: [500, 500, 400, 300, 0, 0, 0, 0, 0, 0],
+      collectedLabels: ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10'],
+      history: members.filter(function (m) { return m.paid; }).map(function (m) {
+        return { name: m.name, when: m.when, amount: 100 };
+      }),
       order: members.slice().sort(function (a, b) { return a.turn - b.turn; }).map(function (m) {
         return { month: t('committee.monthN', { n: m.turn }), name: m.name, you: m.name === 'You',
           state: m.turn < 4 ? 'done' : m.turn === 4 ? 'now' : '' };
@@ -1292,7 +1314,12 @@ window.LUME_CTX = function (deps) {
         ]
       });
     }
-    return { days: days, planned: 18, slots: 21, kcal: 1980, shopItems: 24, cost: 96 };
+    return {
+      days: days, planned: 18, slots: 21, kcal: 1980, shopItems: 24, cost: 96,
+      kcalByDay: days.map(function (d) {
+        return d.meals.reduce(function (a, m) { return a + m.kcal; }, 0);
+      })
+    };
   }
 
   function alarms() {
@@ -1307,14 +1334,27 @@ window.LUME_CTX = function (deps) {
   }
 
   function learning() {
-    return { minutes: 185, streak: 9, weekPct: 0.74, milestone: t('learning.milestoneValue'),
-      week: [20, 35, 0, 40, 25, 35, 30] };
+    return {
+      minutes: 185, streak: 9, weekPct: 0.74, milestone: t('learning.milestoneValue'),
+      week: [20, 35, 0, 40, 25, 35, 30],
+      heat: heatDays(35, 6612, 0.32),
+      insights: [
+        { icon: 'i-clock', title: t('learning.insight1.title'), text: t('learning.insight1.text') },
+        { icon: 'i-trending', title: t('learning.insight2.title'), text: t('learning.insight2.text') }
+      ]
+    };
   }
 
   function babyBudget() {
     var monthly = 320;
     return {
       monthly: monthly, ratio: 0.82,
+      trend: [280, 305, 290, 340, 310, 320],
+      trendLabels: ['Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep'],
+      oneOff: [
+        { label: t('baby.o1'), amount: 420, when: t('baby.oneOffWhen') },
+        { label: t('baby.o2'), amount: 260, when: t('baby.oneOffWhen') }
+      ],
       categories: [
         { label: t('baby.c1'), value: 120, color: 'var(--accent)' },
         { label: t('baby.c2'), value: 80, color: 'var(--violet)' },
@@ -1352,7 +1392,14 @@ window.LUME_CTX = function (deps) {
       appointments: [
         { when: relDate(10), title: t('pregnancy.scan'), who: t('pregnancy.clinic'), state: 'now' },
         { when: relDate(38), title: t('pregnancy.checkup'), who: t('pregnancy.clinic'), state: '' }
-      ]
+      ],
+      milestones: [
+        { week: 12, label: t('pregnancy.m12'), done: week >= 12 },
+        { week: 20, label: t('pregnancy.m20'), done: week >= 20 },
+        { week: 28, label: t('pregnancy.m28'), done: week >= 28 },
+        { week: 37, label: t('pregnancy.m37'), done: week >= 37 }
+      ],
+      weightSeries: [58, 59.4, 61, 62.8, 64.1, 65.2]
     };
   }
 

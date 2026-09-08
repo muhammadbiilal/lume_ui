@@ -692,6 +692,24 @@ window.LUME_DATA = (function () {
 
   function taxFor(code) { return TAX[code] || null; }
 
+  /* Where there is no income tax there are still levies a salary meets, so
+     the screen has something true to say rather than an apology (§91, §112). */
+  var LEVIES = {
+    AE: [['levy.vat', 5], ['levy.pension', 5], ['levy.corporate', 9]],
+    SA: [['levy.vat', 15], ['levy.gosi', 9.75], ['levy.zakatRate', 2.5]],
+    GB: [['levy.vat', 20], ['levy.ni', 8]],
+    US: [['levy.socialSecurity', 6.2], ['levy.medicare', 1.45]],
+    PK: [['levy.gst', 18], ['levy.eobi', 1]],
+    IN: [['levy.gst', 18], ['levy.pf', 12]]
+  };
+  var LEVIES_FALLBACK = [['levy.vat', 20]];
+
+  function leviesFor(code) {
+    return (LEVIES[code] || LEVIES_FALLBACK).map(function (l) {
+      return { key: l[0], rate: l[1] };
+    });
+  }
+
   /* ---------------------------------------------------------
      Loadshedding, vehicle, learning, play
      --------------------------------------------------------- */
@@ -772,7 +790,7 @@ window.LUME_DATA = (function () {
     EXPENSE_CATEGORIES: EXPENSE_CATEGORIES, TRANSACTIONS: TRANSACTIONS, SUBSCRIPTIONS: SUBSCRIPTIONS,
     BILLS: BILLS, GOALS: GOALS, PARCELS: PARCELS, RECIPES: RECIPES,
     MOBILE_PACKAGES: MOBILE_PACKAGES, NAT_SAVINGS: NAT_SAVINGS, PRIZE_BONDS: PRIZE_BONDS,
-    taxFor: taxFor, TAX: TAX,
+    taxFor: taxFor, leviesFor: leviesFor, TAX: TAX,
     LOADSHED: LOADSHED, VEHICLES: VEHICLES, COURSES: COURSES, GAMES: GAMES, CRICKET: CRICKET,
     WORLD_CITIES: WORLD_CITIES
   };

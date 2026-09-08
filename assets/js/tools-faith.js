@@ -251,9 +251,22 @@
           { value: (30 - r.day) + '', label: c.t('ramadan.remaining') }
         ]
       }) }) +
-      UI.section({ title: c.t('prayer.today'), body: UI.rows(set.map(function (p) {
-        return UI.compactRow({ icon: 'i-prayer', label: c.t('prayer.' + p.key), value: c.time(p.h, p.m) });
-      })) }) +
+      UI.section({ title: c.t('ramadan.dayTimeline'), body: UI.timeline([
+        { time: c.time(sun.sunrise.h - 1, 42), title: c.t('ramadan.suhoorEnds'),
+          sub: c.t('ramadan.suhoorSub'), icon: 'i-moon', state: 'done' }
+      ].concat(set.map(function (p) {
+        var now = new Date().getHours() * 60 + new Date().getMinutes();
+        return { time: c.time(p.h, p.m), title: c.t('prayer.' + p.key),
+          state: p.h * 60 + p.m < now ? 'done' : '' };
+      })).concat([
+        { time: c.time(sun.sunset.h, sun.sunset.m), title: c.t('ramadan.iftar'),
+          sub: c.t('ramadan.iftarSub'), icon: 'i-utensils', state: '' },
+        { time: c.time(20, 45), title: c.t('f.taraweeh'), sub: c.t('ramadan.taraweehSub'),
+          icon: 'i-prayer', state: '' }
+      ])) }) +
+      UI.section({ title: c.t('ramadan.month'), body: UI.card(
+        UI.heatmap({ days: r.heat, label: c.t('ramadan.month'),
+          less: c.t('common.less'), more: c.t('common.more') })) }) +
       UI.section({ title: c.t('ramadan.progress'), body: UI.card(
         UI.meterRow({ label: c.t('ramadan.fastsKept'), value: r.kept + ' / ' + r.day, pct: r.kept / Math.max(1, r.day) }) +
         UI.meterRow({ label: c.t('ramadan.quranJuz'), value: r.juz + ' / 30', pct: r.juz / 30 }) +
@@ -302,24 +315,46 @@
      --------------------------------------------------------- */
   T.register('taraweeh', function (c) {
     var list = c.nearbyMosques();
+    var rakaat = c.filter('rakaat', 'all');
+    var query = (c.state('q') || '').trim().toLowerCase();
+    var shown = list.filter(function (m) {
+      if (rakaat !== 'all' && String(m.rakaat) !== rakaat) return false;
+      if (query && m.name.toLowerCase().indexOf(query) === -1) return false;
+      return true;
+    });
     return UI.section({ flush: true, body: UI.contextBar([
         { icon: 'i-pin', label: c.profile.city, act: 'sheet:personalise' },
         { label: c.t('taraweeh.season') }]) }) +
-      UI.section({ body: UI.searchBar({ placeholder: c.t('taraweeh.search') }) }) +
+      UI.section({ body: UI.searchBar({ placeholder: c.t('taraweeh.search'), target: 'taraweeh', value: c.state('q') || '' }) }) +
       UI.section({ body: UI.filterBar([{ id: 'rakaat', label: c.t('taraweeh.rakaat'), items: [
-        { value: 'all', label: c.t('common.all'), on: true },
-        { value: '8', label: '8 ' + c.t('taraweeh.rakaatShort') },
-        { value: '20', label: '20 ' + c.t('taraweeh.rakaatShort') }
-      ] }]) }) +
-      UI.section({ title: c.t('taraweeh.nearby'), body: UI.rows(list.map(function (m, i) {
+        { value: 'all', label: c.t('common.all'), on: rakaat === 'all' },
+        { value: '8', label: '8 ' + c.t('taraweeh.rakaatShort'), on: rakaat === '8' },
+        { value: '20', label: '20 ' + c.t('taraweeh.rakaatShort'), on: rakaat === '20' }
+      ] }], 'taraweeh') }) +
+      UI.section({ body: UI.map({
+        label: c.t('taraweeh.map'), caption: c.profile.city,
+        markers: shown.map(function (m, i) {
+          return { x: m.x, y: m.y, icon: 'i-mosque', label: m.name, active: i === 0 };
+        })
+      }) }) +
+      UI.section({ title: c.t('taraweeh.nearby'), body: shown.length ? UI.rows(shown.map(function (m) {
         return UI.richRow({
           icon: 'i-mosque', iconTone: 'accent',
           title: m.name, sub: m.address,
-          meta: [c.L.distance(m.km), (i % 2 ? '20' : '8') + ' ' + c.t('taraweeh.rakaatShort'), m.reciter],
-          value: c.time(20, 45 + i * 5), valueSub: c.t('taraweeh.starts'),
+          meta: [c.L.distance(m.km), m.rakaat + ' ' + c.t('taraweeh.rakaatShort'), m.reciter],
+          value: c.time(m.taraweeh.h, m.taraweeh.m), valueSub: c.t('taraweeh.starts'),
           act: 'toast:' + m.name, chevron: true
         });
-      })) }) +
+      })) : UI.emptyState({ icon: 'i-mosque', title: c.t('taraweeh.noMatch'),
+        text: c.t('taraweeh.noMatchText'),
+        action: { label: c.t('common.all'), act: 'toolstate:taraweeh:rakaat:all', icon: 'i-refresh' } }) }) +
+      UI.section({ title: c.t('taraweeh.selected'), body: UI.card(
+        UI.metrics([
+          { icon: 'i-clock', value: c.time(shown[0] ? shown[0].taraweeh.h : 20, shown[0] ? shown[0].taraweeh.m : 45),
+            label: c.t('taraweeh.starts') },
+          { icon: 'i-route', value: c.L.distance(shown[0] ? shown[0].km : 0), label: c.t('qibla.distance') },
+          { icon: 'i-beads', value: String(shown[0] ? shown[0].rakaat : 20), label: c.t('taraweeh.rakaat') }
+        ], 3)) }) +
       UI.section({ body: UI.noteCard({ icon: 'i-bell', tone: 'info',
         title: c.t('taraweeh.remind.title'), text: c.t('taraweeh.remind.text') }) });
   });
