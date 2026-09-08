@@ -145,6 +145,18 @@ window.LUME_TOOLKIT = function (ctx) {
       }).join('') + '</div>';
   }
 
+  /* Compact chips. Lighter than a segmented control, for a secondary choice
+     that sits beside content rather than switching the whole screen. */
+  function chips(name, options, selected, prefix) {
+    return '<div class="chips" role="group" aria-label="' + esc(name) + '">' +
+      options.map(function (o) {
+        var on = o === selected;
+        return '<button class="chip' + (on ? ' is-on' : '') + ' pressable" ' +
+          'aria-pressed="' + (on ? 'true' : 'false') + '" ' +
+          'data-tool-act="' + prefix + ':' + esc(o) + '">' + esc(o) + '</button>';
+      }).join('') + '</div>';
+  }
+
   /* Chart (§46): simple, labelled, and paired with a textual equivalent so
      the value is available without seeing the line. */
   function chart(o) {
@@ -243,7 +255,10 @@ window.LUME_TOOLKIT = function (ctx) {
         '<path d="m44 14 2 4.8 4.8 2-4.8 2-2 4.8-2-4.8-4.8-2 4.8-2z" ' +
           'fill="var(--accent)" opacity=".22"/></svg></span>' +
       (h.label ? '<p class="t-label">' + esc(h.label) + '</p>' : '') +
-      '<p class="toolhero__value num">' + esc(h.value) + '</p>' +
+      '<p class="toolhero__value num">' + esc(h.value) +
+        (h.delta ? ' <span class="delta ' +
+          (/^\u2212|^-/.test(h.delta) ? 'is-down' : 'is-up') + '">' +
+          esc(h.delta.replace(/^[+\u2212-]/, '')) + '</span>' : '') + '</p>' +
       (h.sub ? '<p class="toolhero__sub">' + esc(h.sub) + '</p>' : '') +
       (h.progress !== undefined
         ? '<span class="bar" style="margin-top:var(--space-3)">' +
@@ -291,7 +306,8 @@ window.LUME_TOOLKIT = function (ctx) {
   /* Context passed to any spec block written as a function. */
   function heroCtx() {
     return { L: L, t: t, profile: ctx.profile, prayer: ctx.prayerState,
-             hhmm: ctx.hhmm, plural: plural, feature: ctx.feature };
+             hhmm: ctx.hhmm, plural: plural, feature: ctx.feature,
+             tab: current && current.tab };
   }
 
   /* ---------------------------------------------------------
@@ -1330,6 +1346,415 @@ window.LUME_TOOLKIT = function (ctx) {
       };
     },
 
+    /* Markets is the densest data screen in the app, so it gets a bespoke
+       view: one shared payload behind a single skeleton, a chart the
+       timeframe chips actually move, and one sheet doing both the
+       gainers/losers filter and the sort. */
+    markets: function (f, spec, host) {
+      var tabs = spec.tabsFor(ctx.profile.country);
+      var tab = current.tab && tabs.indexOf(current.tab) >= 0 ? current.tab : tabs[0];
+      current.tab = tab;
+
+      var sorts = load(f.id, 'sort', {});
+      var view = {
+        tf: spec.timeframes.indexOf(load(f.id, 'tf', '1M')) >= 0 ? load(f.id, 'tf', '1M') : '1M',
+        filter: load(f.id, 'filter', 'All'),
+        sort: sorts[tab] || spec.sortsFor[tab][0],
+        open: null
+      };
+
+      wire();
+      host.innerHTML = skeleton(4);
+
+      setTimeout(function () {
+        if (!current || current.id !== f.id) return;
+
+        if (!navigator.onLine) {
+          var cached = load(f.id, 'cache', null);
+          current.state = 'offline';
+          setStatus(spec, 'offline');
+          host.innerHTML = cached
+            ? indexList(cached) + '<p class="toolnote">Saved copy from the last time you were online.</p>'
+            : stateBlock({
+                art: 'offline',
+                title: 'You are offline',
+                text: 'Lume has no saved prices yet. Reconnect and try again.',
+                actions: [{ label: t('a.tryAgain'), act: 'reload', primary: 1 }]
+              });
+          return;
+        }
+        if (current.forceState === 'error') {
+          setStatus(spec, 'stale');
+          host.innerHTML = stateBlock({
+            art: 'error',
+            title: 'Something went wrong',
+            text: 'We could not reach the exchange feed. It is usually brief.',
+            actions: [{ label: t('a.tryAgain'), act: 'reload', primary: 1 }]
+          });
+          return;
+        }
+        save(f.id, 'cache', spec.rowsByTab[tab]);
+        setStatus(spec, 'live');
+        render();
+      }, 620);
+
+      function render() {
+        host.innerHTML =
+          segmented(ctx.fname(f), tabs, tab) +
+          chartBlock() +
+          indexList(spec.rowsByTab[tab]) +
+          moversBlock() +
+          '<div class="tactions">' +
+            '<button class="btn btn--ghost pressable" data-tool-act="reload">' +
+              '<svg class="ico" viewBox="0 0 24 24"><use href="#i-refresh"/></svg>' +
+              esc(t('a.refresh')) + '</button>' +
+          '</div>';
+        wire();
+        ctx.animateBars(host);
+      }
+
+      function chartBlock() {
+        var c = spec.chartFor[tab], w = c.windows[view.tf];
+        return '<div style="margin-top:var(--space-4)">' +
+          chart({ label: c.label + ', ' + view.tf, from: w.from, to: w.to,
+                  series: w.series, format: c.format }) +
+          chips('Chart timeframe', spec.timeframes, view.tf, 'tf') +
+        '</div>';
+      }
+
+      function indexList(rows) {
+        return '<p class="toolgroup">Indices</p>' +
+          '<div class="row-gap"><div class="list">' + rows.map(function (r) {
+            var dir = /^\+/.test(r[2]) ? 'is-up' : /^\u2212|^-/.test(r[2]) ? 'is-down' : '';
+            /* A slot the feed did not carry stays visible and says so, rather
+               than vanishing and leaving the list quietly short. */
+            var missing = r[1] === null || r[1] === undefined;
+            return '<div class="list-row">' +
+              '<span class="list-row__icon"><svg class="ico" viewBox="0 0 24 24">' +
+                '<use href="#' + (missing ? 'i-help' : 'i-bar') + '"/></svg></span>' +
+              '<span class="list-row__body"><span class="list-row__title">' + esc(r[0]) + '</span>' +
+                (missing ? '<span class="list-row__sub">Not in this update</span>' : '') +
+              '</span>' +
+              (missing ? '' : '<span class="list-row__end">' +
+                '<span class="list-row__value num">' +
+                  esc(spec.valueFormat(r[1], r, tab, L)) + '</span>' +
+                (r[2] ? '<span class="delta ' + dir + '">' +
+                  esc(r[2].replace(/^[+\u2212-]/, '')) + '</span>' : '') +
+              '</span>') +
+            '</div>';
+          }).join('') + '</div></div>';
+      }
+
+      function movers() {
+        var list = spec.moversFor[tab].filter(function (m) {
+          return view.filter === 'All' ||
+                 (view.filter === 'Gainers' ? m.change > 0 : m.change < 0);
+        });
+        var by = view.sort;
+        return list.slice().sort(function (a, b) {
+          if (by === 'Name') return a.name.localeCompare(b.name);
+          if (by === 'Rank') return a.rank - b.rank;
+          if (by === 'Price') return b.price - a.price;
+          if (by === 'Volume') return b.vol - a.vol;
+          if (by === 'Market cap') return b.cap - a.cap;
+          return b.change - a.change;
+        });
+      }
+
+      function moversBlock() {
+        var list = movers();
+        var head = '<div class="toolgroup toolgroup--act">' +
+          '<span>' + (tab === 'Crypto' ? 'Coins' : tab === 'PSX' ? 'Scrips' : 'Stocks') + '</span>' +
+          '<span class="toolgroup__acts">' +
+            '<button class="chip chip--act pressable" data-tool-act="filter">' +
+              '<svg class="ico" viewBox="0 0 24 24"><use href="#i-sliders"/></svg>' +
+              esc(view.filter) + '</button>' +
+            '<button class="chip chip--act pressable" data-tool-act="sort">' +
+              '<svg class="ico" viewBox="0 0 24 24"><use href="#i-swap"/></svg>' +
+              esc(view.sort) + '</button>' +
+          '</span></div>';
+
+        if (!list.length) {
+          return head + stateBlock({
+            art: 'empty',
+            title: 'No ' + view.filter.toLowerCase() + ' right now',
+            text: 'Nothing moved that way in this session. Try another filter.',
+            actions: [{ label: 'Show all', act: 'filter-all', primary: 1 }]
+          });
+        }
+
+        return head + '<div class="row-gap"><div class="list">' + list.map(function (m, i) {
+          var dir = m.change > 0 ? 'is-up' : m.change < 0 ? 'is-down' : '';
+          var on = view.open === m.name;
+          return '<button class="list-row pressable' + (on ? ' is-open' : '') + '" ' +
+              'data-tool-act="mover:' + i + '" ' +
+              'aria-expanded="' + (on ? 'true' : 'false') + '">' +
+            '<span class="list-row__body"><span class="list-row__title">' + esc(m.name) + '</span>' +
+              '<span class="list-row__sub">' + esc(m.sub) + '</span>' +
+              (on ? '<span class="mover__detail">' + m.detail.map(function (d) {
+                return '<span class="mover__cell"><span class="mover__k">' + esc(d[0]) +
+                  '</span><span class="mover__v num">' + esc(d[1]) + '</span></span>';
+              }).join('') + '</span>' : '') +
+            '</span>' +
+            '<span class="list-row__end">' +
+              '<span class="list-row__value num">' +
+                esc(L.moneyRaw(m.price, m.cur, m.price < 10 ? 2 : m.price > 10000 ? 0 : 2)) + '</span>' +
+              '<span class="delta ' + dir + '">' +
+                esc(Math.abs(m.change).toFixed(1)) + '%</span>' +
+            '</span></button>';
+        }).join('') + '</div></div>';
+      }
+
+      function rerender() { if (current && current.id === f.id) render(); }
+
+      /* Indexed actions are registered per value, the same way the list shape
+         registers its per-row handlers. */
+      function wire() {
+        var acts = {
+          segChange: function () { open(f.id, { keepReturn: 1, tab: current.tab }); },
+          reload: function () {
+            /* One payload, one skeleton: drop the shared cache and reopen
+               rather than refreshing each region on its own. */
+            current.forceState = null;
+            drop(f.id, 'cache');
+            open(f.id, { keepReturn: 1, tab: tab });
+          },
+          'filter-all': function () { view.filter = 'All'; save(f.id, 'filter', 'All'); rerender(); },
+          filter: function () {
+            ctx.pick({
+              title: 'Show', sub: 'Filter the ' + tab + ' list',
+              options: ['All', 'Gainers', 'Losers'], value: view.filter,
+              onPick: function (v) { view.filter = v; save(f.id, 'filter', v); rerender(); }
+            });
+          },
+          sort: function () {
+            ctx.pick({
+              title: 'Sort by', sub: 'Applies to the ' + tab + ' list',
+              options: spec.sortsFor[tab], value: view.sort,
+              onPick: function (v) {
+                view.sort = v;
+                sorts[tab] = v;
+                save(f.id, 'sort', sorts);
+                rerender();
+              }
+            });
+          }
+        };
+        spec.timeframes.forEach(function (v) {
+          acts['tf:' + v] = function () { view.tf = v; save(f.id, 'tf', v); rerender(); };
+        });
+        movers().forEach(function (m, i) {
+          acts['mover:' + i] = function () {
+            view.open = view.open === m.name ? null : m.name;
+            rerender();
+          };
+        });
+        current.actions = acts;
+      }
+    },
+
+    /* Notes leads with what you were last writing and gets out of the way:
+       pinned first, then recent, and an editor that is mostly writing space
+       with an autosave rather than a Save button to remember. */
+    notes: function (f, spec, host) {
+      var items = load(f.id, 'items', null);
+      if (items === null) {
+        items = (spec.notes || []).map(function (n) {
+          return { t: n.t, b: n.b, pin: !!n.pin, at: Date.now() - n.ago * 60000 };
+        });
+      }
+      var query = '';
+      var editing = null;   /* index into items, or null in list mode */
+      var saveTimer = null;
+
+      function persist() { save(f.id, 'items', items); }
+
+      /* "Edited 4 minutes ago" tells you more here than a date does. */
+      function ago(ts) {
+        var mins = Math.round((Date.now() - ts) / 60000);
+        if (mins < 1) return 'just now';
+        if (mins < 60) return mins + ' ' + plural('minute', mins) + ' ago';
+        var hrs = Math.round(mins / 60);
+        if (hrs < 24) return hrs + ' ' + plural('hour', hrs) + ' ago';
+        var days = Math.round(hrs / 24);
+        if (days < 7) return days + ' ' + plural('day', days) + ' ago';
+        return L.dateShort(new Date(ts));
+      }
+
+      function preview(n) {
+        /* Keep the line breaks legible: a list of books should not preview as
+           one run-on sentence. */
+        var line = (n.b || '').replace(/[ \t]+/g, ' ')
+          .split(/\n+/).map(function (x) { return x.trim(); })
+          .filter(Boolean).join(' \u00b7 ');
+        return line || 'Empty note';
+      }
+
+      function card(n, i) {
+        return '<button class="notecard pressable" data-tool-act="edit:' + i + '">' +
+          '<span class="notecard__head">' +
+            '<span class="notecard__title">' + esc(n.t || 'Untitled') + '</span>' +
+            (n.pin ? '<svg class="ico notecard__pin" viewBox="0 0 24 24" aria-label="Pinned">' +
+              '<use href="#i-pushpin"/></svg>' : '') +
+          '</span>' +
+          '<span class="notecard__preview">' + esc(preview(n)) + '</span>' +
+          '<span class="notecard__meta">Edited ' + esc(ago(n.at)) + '</span>' +
+        '</button>';
+      }
+
+      function group(title, list) {
+        if (!list.length) return '';
+        return '<p class="toolgroup">' + esc(title) + '</p>' +
+          '<div class="notegrid">' + list.map(function (x) { return card(x.n, x.i); }).join('') + '</div>';
+      }
+
+      function renderList() {
+        var all = items.map(function (n, i) { return { n: n, i: i }; });
+        if (query) {
+          var q = query.toLowerCase();
+          all = all.filter(function (x) {
+            return ((x.n.t || '') + ' ' + (x.n.b || '')).toLowerCase().indexOf(q) !== -1;
+          });
+        }
+        all.sort(function (a, b) { return b.n.at - a.n.at; });
+
+        var search = '<label class="search search--sm" style="margin:0 var(--pad)">' +
+          '<svg class="ico" viewBox="0 0 24 24"><use href="#i-search"/></svg>' +
+          '<input type="search" class="tsearch" value="' + esc(query) + '" ' +
+          'placeholder="' + esc(spec.searchable) + '" aria-label="' + esc(spec.searchable) + '"></label>';
+
+        if (!items.length) {
+          host.innerHTML = stateBlock({
+            art: 'empty',
+            title: 'No notes yet',
+            text: 'Write anything down. It stays on this device.',
+            actions: [{ label: 'New note', act: 'new', primary: 1 }]
+          });
+          return;
+        }
+        if (!all.length) {
+          host.innerHTML = search +
+            '<p class="locempty">Nothing matches \u201c' + esc(query) + '\u201d.</p>';
+          return;
+        }
+
+        host.innerHTML = search +
+          group('Pinned', all.filter(function (x) { return x.n.pin; })) +
+          group(query ? 'Results' : 'Recent', all.filter(function (x) { return !x.n.pin; })) +
+          '<div class="tactions">' +
+            '<button class="btn btn--accent pressable" data-tool-act="new">' +
+              '<svg class="ico" viewBox="0 0 24 24"><use href="#i-plus"/></svg>New note</button>' +
+          '</div>';
+      }
+
+      function renderEditor() {
+        var n = items[editing];
+        host.innerHTML =
+          /* No back chevron here: the toolbar's own back already steps out of
+             the editor, and two stacked arrows read as two levels. */
+          '<div class="editorbar">' +
+            '<span class="editorbar__state" id="noteState">Edited ' + esc(ago(n.at)) + '</span>' +
+            '<span class="editorbar__acts">' +
+              '<button class="ghostbtn pressable' + (n.pin ? ' is-on' : '') + '" data-tool-act="pin" ' +
+                'aria-pressed="' + (n.pin ? 'true' : 'false') + '" aria-label="Pin note">' +
+                '<svg class="ico" viewBox="0 0 24 24"><use href="#i-pushpin"/></svg></button>' +
+              '<button class="ghostbtn pressable" data-tool-act="trash" aria-label="Delete note">' +
+                '<svg class="ico" viewBox="0 0 24 24"><use href="#i-x"/></svg></button>' +
+            '</span>' +
+          '</div>' +
+          '<div class="editor">' +
+            '<input class="editor__title" id="noteTitle" value="' + esc(n.t) + '" ' +
+              'placeholder="Title" aria-label="Note title">' +
+            '<textarea class="editor__body" id="noteBody" placeholder="Start writing\u2026" ' +
+              'aria-label="Note">' + esc(n.b || '') + '</textarea>' +
+          '</div>';
+        var body = $('#noteBody', host);
+        if (body) { body.focus(); body.setSelectionRange(body.value.length, body.value.length); }
+      }
+
+      function render() { editing === null ? renderList() : renderEditor(); wire(); }
+
+      /* Autosave: the note is the source of truth, not a Save button. */
+      function touch() {
+        var n = items[editing];
+        if (!n) return;
+        n.t = ($('#noteTitle', host) || {}).value || '';
+        n.b = ($('#noteBody', host) || {}).value || '';
+        n.at = Date.now();
+        clearTimeout(saveTimer);
+        saveTimer = setTimeout(function () {
+          persist();
+          var st = $('#noteState', host);
+          if (st) st.textContent = 'Saved';
+        }, 400);
+      }
+
+      host.addEventListener('input', function (e) {
+        if (e.target.classList.contains('tsearch')) {
+          query = e.target.value;
+          var pos = e.target.selectionStart;
+          render();
+          var el = $('.tsearch', host);
+          if (el) { el.focus(); try { el.setSelectionRange(pos, pos); } catch (err) {} }
+          return;
+        }
+        if (e.target.id === 'noteTitle' || e.target.id === 'noteBody') touch();
+      });
+
+      function wire() {
+        var acts = {
+          new: function () {
+            items.unshift({ t: '', b: '', pin: false, at: Date.now() });
+            editing = 0;
+            persist();
+            render();
+          }
+        };
+        if (editing !== null) {
+          /* Only while the editor is open does back mean "back to the list". */
+          acts.back = function () {
+            clearTimeout(saveTimer);
+            var n = items[editing];
+            if (n && !n.t && !n.b) items.splice(editing, 1);   /* never keep a blank note */
+            editing = null;
+            persist();
+            render();
+          };
+          acts.pin = function () {
+            var n = items[editing];
+            n.pin = !n.pin;
+            persist();
+            renderEditor(); wire();
+            ctx.toast(n.pin ? 'Pinned' : 'Unpinned');
+          };
+          acts.trash = function () {
+            var at = editing, n = items[at];
+            ctx.confirm({
+              title: 'Delete this note?',
+              text: n.t ? '\u201c' + n.t + '\u201d will be removed from Notes.'
+                        : 'This note will be removed from Notes.',
+              danger: 'Delete',
+              onYes: function () {
+                items.splice(at, 1);
+                editing = null;
+                persist(); render();
+                ctx.undo('Deleted', function () {
+                  items.splice(at, 0, n); persist(); render();
+                });
+              }
+            });
+          };
+        }
+        items.forEach(function (n, i) {
+          acts['edit:' + i] = function () { editing = i; render(); };
+        });
+        current.actions = acts;
+      }
+
+      current.cleanup = function () { clearTimeout(saveTimer); persist(); };
+      render();
+    },
+
     weather: function (f, spec, host) {
       host.innerHTML = skeleton(3);
       setTimeout(function () {
@@ -1573,8 +1998,18 @@ window.LUME_TOOLKIT = function (ctx) {
     if (!act || !current) return;
     var name = act.dataset.toolAct;
 
-    if (name === 'back') { back(); return; }
-    if (name === 'reload') { open(current.id, { keepReturn: 1 }); return; }
+    if (name === 'back') {
+      /* A tool inside a sub-view of its own steps back one level first. */
+      if (current.actions && current.actions.back) current.actions.back();
+      else back();
+      return;
+    }
+    if (name === 'reload') {
+      /* A tool that knows what its refresh should invalidate handles it. */
+      if (current.actions && current.actions.reload) current.actions.reload();
+      else open(current.id, { keepReturn: 1 });
+      return;
+    }
     if (name === 'personalise') { ctx.sheetOpen('personalise'); return; }
     if (name === 'nudge-no') {
       save(current.id, 'nudge', true);

@@ -1422,6 +1422,168 @@
 }
 .seg__btn:active { transform: scale(.97); }
 
+/* A delta riding a display-size number needs lifting off the baseline. */
+.toolhero__value .delta {
+  margin-inline-start: var(--space-2);
+  font-size: .75rem;
+  vertical-align: .4em;
+}
+
+/* ---- Notes -------------------------------------------------
+   Cards rather than rows: a note needs room for a preview, and
+   the preview is what makes a list of notes scannable. */
+.notegrid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--space-3);
+  padding: 0 var(--pad);
+}
+.notecard {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  padding: var(--space-4);
+  text-align: start;
+  border-radius: var(--r-md);
+  background: var(--card);
+  box-shadow: var(--shadow-xs);
+  border: 1px solid var(--border);
+  transition: transform var(--dur-fast) var(--ease), box-shadow var(--dur-fast) var(--ease);
+}
+.notecard:active { transform: scale(.98); }
+.notecard__head { display: flex; align-items: center; gap: var(--space-2); }
+.notecard__title {
+  flex: 1;
+  min-width: 0;
+  font-size: .875rem;
+  font-weight: 700;
+  color: var(--text);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.notecard__pin { width: 14px; height: 14px; color: var(--accent); flex: none; }
+.notecard__preview {
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  font-size: .8125rem;
+  line-height: 1.45;
+  color: var(--text-2);
+}
+.notecard__meta { font-size: 11px; color: var(--text-3); margin-top: 2px; }
+
+/* The editor is mostly writing space; its controls sit on one quiet bar. */
+.editorbar {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: 0 var(--pad);
+}
+.editorbar__state { flex: 1; font-size: 11px; color: var(--text-3); }
+.editorbar__acts { display: flex; gap: var(--space-1); }
+.editorbar .ghostbtn.is-on { color: var(--accent); background: var(--tint-accent); }
+
+.editor { padding: var(--space-3) var(--pad) 0; }
+.editor__title {
+  width: 100%;
+  border: 0;
+  background: none;
+  padding: 0;
+  font-size: 1.25rem;
+  font-weight: 750;
+  letter-spacing: -.01em;
+  color: var(--text);
+}
+.editor__title::placeholder { color: var(--text-3); }
+.editor__body {
+  width: 100%;
+  min-height: 46vh;
+  margin-top: var(--space-3);
+  border: 0;
+  background: none;
+  padding: 0;
+  resize: none;
+  font: inherit;
+  font-size: .9375rem;
+  line-height: 1.65;
+  color: var(--text-2);
+}
+.editor__body::placeholder { color: var(--text-3); }
+.editor__title:focus, .editor__body:focus { outline: none; }
+
+/* ---- Chips -------------------------------------------------
+   A lighter sibling of the segmented control, for a secondary
+   choice that sits beside content instead of switching screens.
+   Selection is carried by weight, fill and border together. */
+.chips {
+  display: flex;
+  gap: var(--space-2);
+  padding: 0 var(--pad);
+  margin-top: var(--space-3);
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+.chips::-webkit-scrollbar { display: none; }
+.chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  min-height: 32px;
+  padding: 0 var(--space-3);
+  border: 1px solid var(--border);
+  border-radius: var(--r-full);
+  background: var(--card);
+  font-size: .75rem;
+  font-weight: 600;
+  color: var(--text-2);
+  white-space: nowrap;
+  transition: background var(--dur-fast) var(--ease), color var(--dur-fast) var(--ease),
+              border-color var(--dur-fast) var(--ease);
+}
+.chip .ico { width: 14px; height: 14px; }
+.chip.is-on {
+  background: var(--tint-accent);
+  border-color: transparent;
+  color: var(--accent);
+  font-weight: 750;
+}
+.chip:active { transform: scale(.96); }
+
+/* A section label that also carries its own controls. */
+.toolgroup--act {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-3);
+}
+.toolgroup__acts { display: flex; gap: var(--space-2); }
+.toolgroup--act .chip--act { text-transform: none; letter-spacing: 0; }
+
+/* Progressive disclosure: the fields that will not fit a row appear
+   under it on tap rather than being crammed in or hidden away. */
+.mover__detail {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(96px, 1fr));
+  gap: var(--space-2) var(--space-3);
+  margin-top: var(--space-3);
+  padding-top: var(--space-3);
+  border-top: 1px solid var(--border);
+}
+/* Once a row expands, its price belongs beside the name, not floating in
+   the middle of the taller row. */
+.list-row.is-open { align-items: flex-start; }
+.mover__cell { display: flex; flex-direction: column; gap: 1px; min-width: 0; }
+.mover__k {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: .05em;
+  text-transform: uppercase;
+  color: var(--text-3);
+}
+.mover__v { font-size: .8125rem; font-weight: 650; color: var(--text); }
+
 /* ---- Chart (§46) ------------------------------------------
    Simple and task-oriented, with a textual equivalent for
    screen readers rather than a decorative graphic. */

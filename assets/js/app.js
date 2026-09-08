@@ -2260,6 +2260,41 @@
 
   /* Tool settings render into the shared dialog rather than each tool
      inventing its own surface. */
+  /* One reusable chooser. A tool that needs to filter or sort borrows this
+     rather than inventing its own control, so the pattern stays the same
+     wherever it appears (§3: secondary choices belong in a sheet). */
+  function pickSheet(cfg) {
+    var list = $('#pickList');
+    if (!list) return;
+    $('#pickTitle').textContent = cfg.title;
+    var sub = $('#pickSub');
+    sub.textContent = cfg.sub || '';
+    sub.hidden = !cfg.sub;
+
+    list.innerHTML = cfg.options.map(function (o, i) {
+      var label = typeof o === 'string' ? o : o.label;
+      var on = label === cfg.value;
+      return '<button class="list-row pressable" data-pick="' + i + '" ' +
+        'role="option" aria-selected="' + (on ? 'true' : 'false') + '">' +
+        '<span class="list-row__body"><span class="list-row__title">' + esc(label) + '</span>' +
+        (typeof o === 'object' && o.sub ? '<span class="list-row__sub">' + esc(o.sub) + '</span>' : '') +
+        '</span>' +
+        (on ? '<span class="list-row__end" style="color:var(--accent)">' +
+          '<svg class="ico" viewBox="0 0 24 24"><use href="#i-check"/></svg></span>' : '') +
+      '</button>';
+    }).join('');
+
+    list.onclick = function (e) {
+      var btn = e.target.closest('[data-pick]');
+      if (!btn) return;
+      var o = cfg.options[+btn.getAttribute('data-pick')];
+      sheetClose();
+      cfg.onPick(typeof o === 'string' ? o : o.label);
+    };
+
+    sheetOpen('pick');
+  }
+
   function settingsSheet(cfg) {
     var i = 0;
     function step() {
@@ -2570,6 +2605,7 @@
     confirm: confirmAction, prompt: promptFor, undo: undo,
     askPermission: askPermission, signIn: signIn, requestNotify: requestNotify,
     methodSheet: methodSheet, openShareData: openShareData, settingsSheet: settingsSheet,
+    pick: pickSheet,
     setMethod: function (m) { profile.method = m; prayerCache = null; saveProfile(); renderAll(); },
     currentTab: function () { return lastTab; },
     showToolScreen: function () { goTo('tool'); }

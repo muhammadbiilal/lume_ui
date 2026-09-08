@@ -139,6 +139,10 @@ window.LUME_LOCALE = function (getProfile) {
     try {
       return new Intl.NumberFormat(locale(), {
         style: 'currency', currency: code || currencyCode(),
+        /* Pin the minimum too. With only a maximum, Intl falls back to the
+           currency's own minimum and a price column ends up ragged:
+           "Rs 214.8" next to "Rs 421.15". */
+        minimumFractionDigits: decimals === undefined ? 0 : decimals,
         maximumFractionDigits: decimals === undefined ? 2 : decimals
       }).format(value);
     } catch (e) { return (code || currencyCode()) + ' ' + num(value); }

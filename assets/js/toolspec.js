@@ -204,17 +204,21 @@ window.LUME_TOOLSPEC = (function () {
     },
     markets: {
       source: 'Delayed 15 min', updated: 'Close, 8 September',
+      /* PSX is removed outside Pakistan rather than shown disabled: a tab the
+         user can never use is clutter, not a feature. */
       tabs: ['PSX', 'Global', 'Crypto'],
+      tabsFor: marketTabs,
       rowsByTab: {
         PSX: [['KSE-100', 78412, '+0.8%'], ['KSE-30', 24180, '+0.6%'],
-              ['All Share', 51230, '+0.4%'], ['Volume (shares)', 412000000, '']],
+              ['All Share', 51230, '+0.4%'], ['KMI-30', null, ''],
+              ['Volume (shares)', 412000000, '']],
         Global: [['S&P 500', 5642, '+0.4%'], ['NASDAQ', 17930, '+0.7%'],
-                 ['FTSE 100', 8298, '−0.2%'], ['Nikkei 225', 38104, '+1.1%']],
+                 ['FTSE 100', 8298, '\u22120.2%'], ['Nikkei 225', 38104, '+1.1%']],
         Crypto: [['Bitcoin', 61240, '+2.3%'], ['Ethereum', 2585, '+1.4%'],
-                 ['Solana', 143, '−0.8%'], ['XRP', 0.58, '+0.3%']]
+                 ['Solana', 143, '\u22120.8%'], ['XRP', 0.58, '+0.3%']]
       },
-      /* An index is points, volume is shares and crypto is dollars — none of
-         them are the user's local currency (§47: identify the unit). */
+      /* An index is points, volume is shares and crypto is dollars \u2014 none of
+         them are the user's local currency (\u00a747: identify the unit). */
       timeframes: ['1W', '1M', '3M', '1Y'],
       disclaimer: 'Information only, not investment advice. Prices are delayed.',
       valueFormat: function (v, row, tab, L) {
@@ -222,16 +226,100 @@ window.LUME_TOOLSPEC = (function () {
         if (/volume/i.test(row[0])) return L.num(v);
         return L.num(v, { maximumFractionDigits: 0 }) + ' pts';
       },
+      /* The lead instrument each tab charts and heroes. */
+      leadFor: {
+        PSX:    { name: 'KSE-100', value: '78,412 pts', delta: '+0.8%',
+                  sub: 'Pakistan Stock Exchange \u00b7 close, 8 September' },
+        Global: { name: 'S&P 500', value: '5,642 pts', delta: '+0.4%',
+                  sub: 'New York \u00b7 session closed' },
+        Crypto: { name: 'Bitcoin', value: '$61,240', delta: '+2.3%',
+                  sub: 'Trades around the clock \u00b7 delayed 15 min' }
+      },
+      /* One short series per timeframe, so the chips actually move the chart
+         instead of relabelling the same line. */
       chartFor: {
-        PSX:    { label: 'KSE-100, last 30 days', from: '9 Aug', to: 'Today',
-                  series: [74100, 74620, 75180, 74890, 75640, 76210, 75980, 76540, 77120, 77480, 78010, 78412],
-                  format: function (v) { return Math.round(v).toLocaleString(); } },
-        Global: { label: 'S&P 500, last 30 days', from: '9 Aug', to: 'Today',
-                  series: [5480, 5502, 5471, 5533, 5560, 5528, 5581, 5604, 5590, 5622, 5638, 5642],
-                  format: function (v) { return Math.round(v).toLocaleString(); } },
-        Crypto: { label: 'Bitcoin, last 30 days', from: '9 Aug', to: 'Today',
-                  series: [57200, 58100, 56800, 59400, 60100, 58900, 59800, 61050, 60420, 61800, 60900, 61240],
-                  format: function (v) { return '$' + Math.round(v).toLocaleString(); } }
+        PSX: {
+          label: 'KSE-100', format: function (v) { return Math.round(v).toLocaleString() + ' pts'; },
+          windows: {
+            '1W': { from: '1 Sep', to: 'Today', series: [77980, 78120, 77860, 78240, 78390, 78180, 78305, 78412] },
+            '1M': { from: '9 Aug', to: 'Today', series: [76210, 76540, 77120, 76890, 77480, 78010, 78180, 78412] },
+            '3M': { from: '10 Jun', to: 'Today', series: [71400, 72680, 74100, 73520, 75180, 76240, 77300, 78412] },
+            '1Y': { from: 'Sep 2025', to: 'Today', series: [62800, 65400, 68100, 66900, 70300, 73100, 75800, 78412] }
+          }
+        },
+        Global: {
+          label: 'S&P 500', format: function (v) { return Math.round(v).toLocaleString() + ' pts'; },
+          windows: {
+            '1W': { from: '1 Sep', to: 'Today', series: [5604, 5590, 5622, 5611, 5638, 5629, 5647, 5642] },
+            '1M': { from: '9 Aug', to: 'Today', series: [5528, 5560, 5581, 5571, 5604, 5622, 5638, 5642] },
+            '3M': { from: '10 Jun', to: 'Today', series: [5312, 5388, 5441, 5407, 5502, 5560, 5604, 5642] },
+            '1Y': { from: 'Sep 2025', to: 'Today', series: [4480, 4690, 4885, 4820, 5080, 5290, 5470, 5642] }
+          }
+        },
+        Crypto: {
+          label: 'Bitcoin', format: function (v) { return '$' + Math.round(v).toLocaleString(); },
+          windows: {
+            '1W': { from: '1 Sep', to: 'Today', series: [61050, 60420, 61800, 60900, 62100, 61400, 60880, 61240] },
+            '1M': { from: '9 Aug', to: 'Today', series: [58900, 59800, 61050, 60420, 61800, 60900, 61980, 61240] },
+            '3M': { from: '10 Jun', to: 'Today', series: [52400, 55100, 57200, 56800, 59400, 60100, 61800, 61240] },
+            '1Y': { from: 'Sep 2025', to: 'Today', series: [38200, 43600, 48900, 45300, 52700, 57400, 59900, 61240] }
+          }
+        }
+      },
+      overview: {
+        PSX:    [['Volume', '412M', 'i-bar'], ['Gainers', '218', 'i-trending'], ['Losers', '143', 'i-trending-down']],
+        Global: [['Advancing', '312', 'i-trending'], ['Declining', '188', 'i-trending-down'], ['Volume', '4.1B', 'i-bar']],
+        Crypto: [['Market cap', '$2.14T', 'i-bar'], ['24h volume', '$78B', 'i-trending'], ['BTC dominance', '56.4%', 'i-pie']]
+      },
+      sortsFor: {
+        PSX: ['Change', 'Price', 'Name'],
+        Global: ['Change', 'Price', 'Volume', 'Name'],
+        Crypto: ['Rank', 'Change', 'Price', 'Market cap']
+      },
+      /* Movers carry the per-market fields the brief asks for. Anything that
+         will not fit one row is disclosed on tap rather than crammed in. */
+      moversFor: {
+        PSX: [
+          { name: 'OGDC', sub: 'Oil & gas exploration', price: 214.80, change: 3.2, cur: 'PKR', vol: 8.4,
+            detail: [['Open', '208.20'], ['Day range', '207.90 \u2013 216.40'], ['Volume', '8.4M shares']] },
+          { name: 'Lucky Cement', sub: 'Cement', price: 1024.50, change: 2.4, cur: 'PKR', vol: 1.2,
+            detail: [['Open', '1,000.10'], ['Day range', '998.00 \u2013 1,031.75'], ['Volume', '1.2M shares']] },
+          { name: 'HBL', sub: 'Commercial banking', price: 178.30, change: 1.1, cur: 'PKR', vol: 5.1,
+            detail: [['Open', '176.35'], ['Day range', '175.80 \u2013 179.10'], ['Volume', '5.1M shares']] },
+          { name: 'Engro', sub: 'Fertiliser', price: 312.60, change: -1.4, cur: 'PKR', vol: 2.7,
+            detail: [['Open', '317.05'], ['Day range', '311.20 \u2013 317.90'], ['Volume', '2.7M shares']] },
+          { name: 'PSO', sub: 'Oil marketing', price: 421.15, change: -2.8, cur: 'PKR', vol: 3.9,
+            detail: [['Open', '433.30'], ['Day range', '419.60 \u2013 434.10'], ['Volume', '3.9M shares']] }
+        ],
+        Global: [
+          { name: 'Nvidia', sub: 'NVDA \u00b7 semiconductors', price: 118.60, change: 2.1, cur: 'USD', vol: 264.8,
+            detail: [['Open', '$116.30'], ['Volume', '264.8M'], ['Session', 'Closed \u00b7 delayed 15 min']] },
+          { name: 'Microsoft', sub: 'MSFT \u00b7 software', price: 416.20, change: 0.9, cur: 'USD', vol: 21.4,
+            detail: [['Open', '$413.10'], ['Volume', '21.4M'], ['Session', 'Closed \u00b7 delayed 15 min']] },
+          { name: 'Apple', sub: 'AAPL \u00b7 consumer tech', price: 228.40, change: 0.6, cur: 'USD', vol: 48.2,
+            detail: [['Open', '$226.90'], ['Volume', '48.2M'], ['Session', 'Closed \u00b7 delayed 15 min']] },
+          { name: 'Amazon', sub: 'AMZN \u00b7 retail', price: 178.90, change: -0.4, cur: 'USD', vol: 34.1,
+            detail: [['Open', '$179.70'], ['Volume', '34.1M'], ['Session', 'Closed \u00b7 delayed 15 min']] },
+          { name: 'Tesla', sub: 'TSLA \u00b7 automotive', price: 232.80, change: -1.3, cur: 'USD', vol: 88.6,
+            detail: [['Open', '$236.10'], ['Volume', '88.6M'], ['Session', 'Closed \u00b7 delayed 15 min']] }
+        ],
+        Crypto: [
+          { name: 'Bitcoin', sub: 'BTC \u00b7 rank 1', price: 61240, change: 2.3, cur: 'USD', rank: 1, cap: 1210,
+            detail: [['Market cap', '$1.21T'], ['24h volume', '$32.4B'], ['Circulating', '19.75M of 21M'],
+                     ['All-time high', '$73,738'], ['All-time low', '$67']] },
+          { name: 'Ethereum', sub: 'ETH \u00b7 rank 2', price: 2585, change: 1.4, cur: 'USD', rank: 2, cap: 311,
+            detail: [['Market cap', '$311B'], ['24h volume', '$14.8B'], ['Circulating', '120.3M'],
+                     ['All-time high', '$4,878'], ['All-time low', '$0.43']] },
+          { name: 'Solana', sub: 'SOL \u00b7 rank 5', price: 143, change: -0.8, cur: 'USD', rank: 5, cap: 67,
+            detail: [['Market cap', '$67B'], ['24h volume', '$2.9B'], ['Circulating', '468M'],
+                     ['All-time high', '$260'], ['All-time low', '$0.50']] },
+          { name: 'XRP', sub: 'XRP \u00b7 rank 7', price: 0.58, change: 0.3, cur: 'USD', rank: 7, cap: 32,
+            detail: [['Market cap', '$32B'], ['24h volume', '$1.1B'], ['Circulating', '56.2B of 100B'],
+                     ['All-time high', '$3.84'], ['All-time low', '$0.0028']] },
+          { name: 'Cardano', sub: 'ADA \u00b7 rank 11', price: 0.34, change: -1.9, cur: 'USD', rank: 11, cap: 12,
+            detail: [['Market cap', '$12B'], ['24h volume', '$310M'], ['Circulating', '35.1B of 45B'],
+                     ['All-time high', '$3.09'], ['All-time low', '$0.017']] }
+        ]
       },
       related: ['goldrates', 'currency']
     },
@@ -274,7 +362,13 @@ window.LUME_TOOLSPEC = (function () {
   /* ---- Lists ------------------------------------------------------------- */
   var LIST = {
     todos:    { noun: 'task', completable: 1, groups: ['Today', 'Upcoming', 'Completed'], seed: [['Finish the Q3 summary', 'Today · 15:00'], ['Call home', 'Today · 21:00'], ['Renew the car token', 'Fri']], related: ['calendar', 'reminders'], writesTo: ['calendar'] },
-    notes:    { noun: 'note', searchable: 'Search notes', pinnable: 1, seed: [['Meeting notes', 'Edited yesterday'], ['Reading list', '6 items'], ['Gift ideas', 'Edited Monday']], related: ['todos', 'docscan'] },
+    notes:    { noun: 'note', searchable: 'Search notes', pinnable: 1,
+                notes: [
+                  { t: 'Reading list', b: 'The Left Hand of Darkness\nPiranesi\nThe Dispossessed\nStation Eleven', pin: 1, ago: 2880 },
+                  { t: 'Standup, Monday', b: 'Shipped the rates cache. Next: the offline copy for markets, then the share card sizing on small screens.', ago: 95 },
+                  { t: 'Gift ideas', b: 'Ammi \u2014 the shawl from Anarkali\nHamza \u2014 headphones\nAyesha \u2014 the ceramic set she kept mentioning', ago: 4320 }
+                ],
+                related: ['todos', 'docscan'] },
     shopping: { noun: 'item', completable: 1, searchable: 'Search list', seed: [['Milk', '2 litres'], ['Rice', '5 kg'], ['Bread', '']], related: ['recipes', 'expenses'] },
     birthdays:{ noun: 'birthday', seed: [['Ayesha', 'In 4 days'], ['Abbu', '14 October'], ['Hamza', '2 January']], related: ['calendar', 'age'], writesTo: ['calendar'] },
     alarms:   { noun: 'alarm', seed: [['Wake up', '06:30 · weekdays'], ['Leave for work', '08:15 · weekdays']], related: ['timer', 'todos'] },
@@ -547,8 +641,28 @@ window.LUME_TOOLSPEC = (function () {
   };
 
 
+  /* One rule for which market tabs exist, so the hero, the metrics and the
+     screen itself cannot disagree about which market is being shown. */
+  function marketTabs(country) {
+    return ['PSX', 'Global', 'Crypto'].filter(function (tb) {
+      return tb !== 'PSX' || country === 'PK';
+    });
+  }
+  function marketTab(c) {
+    var tabs = marketTabs(c.profile.country);
+    return c.tab && tabs.indexOf(c.tab) >= 0 ? c.tab : tabs[0];
+  }
+
   /* ---- Money & Rates composition (v2 §9) --------------------------------- */
   var MONEYC = {
+    markets: {
+      hero: function (c) {
+        var lead = SPECS.markets.leadFor[marketTab(c)];
+        return { label: lead.name, value: lead.value, delta: lead.delta, sub: lead.sub };
+      },
+      metrics: function (c) { return SPECS.markets.overview[marketTab(c)]; }
+    },
+
     fuel: {
       hero: function (c) {
         return { label: 'Petrol · effective 1 September', value: c.L.moneyRaw(264.61, 'PKR', 2),
@@ -1029,10 +1143,10 @@ window.LUME_TOOLSPEC = (function () {
       settings: [{ label: 'Default view', value: 'Today', options: ['Today', 'Upcoming', 'Completed'] }]
     },
 
+    /* Pinning is real in the notes view, so the composed screen adds only
+       the privacy note the rest of Personal carries. */
     notes: {
-      sections: [{ title: 'Pinned', secondary: true, icon: 'i-note', rows: [
-        ['Reading list', '6 items \u00b7 edited Monday', '']
-      ] }]
+      disclaimer: 'Notes stay on this device. Nothing is uploaded and nothing syncs.'
     }
   };
 
