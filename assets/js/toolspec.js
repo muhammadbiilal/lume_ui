@@ -191,16 +191,46 @@ window.LUME_TOOLSPEC = (function () {
       unit: 'per litre', related: ['fuelcost', 'vehicle'], writesTo: ['fuelcost']
     },
     goldrates: {
-      source: 'Karachi Sarafa Association', updated: '11:20 today',
-      rows: [['Gold 24k · tola', 258400, '+1,900'], ['Gold 22k · 10g', 203120, '+1,630'],
-             ['Silver · tola', 3140, '0'], ['US Dollar', 285.10, '+0.35']],
+      source: 'Karachi Sarafa · open market', updated: '11:20 today',
+      tabs: ['Rates', 'Convert', 'Chart'],
+      currencies: [['US Dollar', 285.10, '+0.35'], ['UK Pound', 381.50, '+1.20'],
+                   ['Saudi Riyal', 76.00, '0.00'], ['UAE Dirham', 77.60, '+0.10']],
+      bullion: [['Gold 24k · tola', 258400, '+1,900'], ['Gold 22k · 10g', 203120, '+1,630'],
+                ['Silver · tola', 3140, '0.00']],
+      chartSeries: { label: 'USD to PKR, last 30 days', from: '9 Aug', to: 'Today',
+                     series: [278.4, 279.1, 280.3, 279.8, 281.2, 282.0, 281.4, 283.1, 284.0, 283.6, 284.8, 285.1],
+                     format: function (v) { return v.toFixed(2); } },
       related: ['currency', 'markets', 'zakat']
     },
     markets: {
-      source: 'PSX · delayed 15 min', updated: 'Close, 8 September',
+      source: 'Delayed 15 min', updated: 'Close, 8 September',
       tabs: ['PSX', 'Global', 'Crypto'],
-      rows: [['KSE-100', 78412, '+0.8%'], ['KSE-30', 24180, '+0.6%'],
-             ['All Share', 51230, '+0.4%'], ['Volume', 412000000, '']],
+      rowsByTab: {
+        PSX: [['KSE-100', 78412, '+0.8%'], ['KSE-30', 24180, '+0.6%'],
+              ['All Share', 51230, '+0.4%'], ['Volume (shares)', 412000000, '']],
+        Global: [['S&P 500', 5642, '+0.4%'], ['NASDAQ', 17930, '+0.7%'],
+                 ['FTSE 100', 8298, '−0.2%'], ['Nikkei 225', 38104, '+1.1%']],
+        Crypto: [['Bitcoin', 61240, '+2.3%'], ['Ethereum', 2585, '+1.4%'],
+                 ['Solana', 143, '−0.8%'], ['XRP', 0.58, '+0.3%']]
+      },
+      /* An index is points, volume is shares and crypto is dollars — none of
+         them are the user's local currency (§47: identify the unit). */
+      valueFormat: function (v, row, tab, L) {
+        if (tab === 'Crypto') return L.moneyRaw(v, 'USD', v < 10 ? 2 : 0);
+        if (/volume/i.test(row[0])) return L.num(v);
+        return L.num(v, { maximumFractionDigits: 0 }) + ' pts';
+      },
+      chartFor: {
+        PSX:    { label: 'KSE-100, last 30 days', from: '9 Aug', to: 'Today',
+                  series: [74100, 74620, 75180, 74890, 75640, 76210, 75980, 76540, 77120, 77480, 78010, 78412],
+                  format: function (v) { return Math.round(v).toLocaleString(); } },
+        Global: { label: 'S&P 500, last 30 days', from: '9 Aug', to: 'Today',
+                  series: [5480, 5502, 5471, 5533, 5560, 5528, 5581, 5604, 5590, 5622, 5638, 5642],
+                  format: function (v) { return Math.round(v).toLocaleString(); } },
+        Crypto: { label: 'Bitcoin, last 30 days', from: '9 Aug', to: 'Today',
+                  series: [57200, 58100, 56800, 59400, 60100, 58900, 59800, 61050, 60420, 61800, 60900, 61240],
+                  format: function (v) { return '$' + Math.round(v).toLocaleString(); } }
+      },
       related: ['goldrates', 'currency']
     },
     natsavings: {
@@ -240,7 +270,7 @@ window.LUME_TOOLSPEC = (function () {
 
   /* ---- Lists ------------------------------------------------------------- */
   var LIST = {
-    todos:    { noun: 'task', seed: [['Finish the Q3 summary', 'Today · 15:00'], ['Call home', 'Today · 21:00'], ['Renew the car token', 'Fri']], related: ['calendar', 'reminders'], writesTo: ['calendar'] },
+    todos:    { noun: 'task', groups: ['Today', 'Upcoming', 'Completed'], seed: [['Finish the Q3 summary', 'Today · 15:00'], ['Call home', 'Today · 21:00'], ['Renew the car token', 'Fri']], related: ['calendar', 'reminders'], writesTo: ['calendar'] },
     notes:    { noun: 'note', seed: [['Meeting notes', 'Edited yesterday'], ['Reading list', '6 items'], ['Gift ideas', 'Edited Monday']], related: ['todos', 'docscan'] },
     shopping: { noun: 'item', seed: [['Milk', '2 litres'], ['Rice', '5 kg'], ['Bread', '']], related: ['recipes', 'expenses'] },
     birthdays:{ noun: 'birthday', seed: [['Ayesha', 'In 4 days'], ['Abbu', '14 October'], ['Hamza', '2 January']], related: ['calendar', 'age'], writesTo: ['calendar'] },
@@ -257,7 +287,7 @@ window.LUME_TOOLSPEC = (function () {
     ledger:   { noun: 'entry', seed: [['Bilal — lent', 'Since 12 August'], ['Sana — borrowed', 'Since 1 September']], sensitive: 1, related: ['expenses', 'committee'] },
     installments:{ noun: 'plan', seed: [['Bike — 8 of 12', 'Next 15 September'], ['Laptop — 3 of 6', 'Next 20 September']], related: ['loan', 'calendar'], writesTo: ['calendar'] },
     committee:{ noun: 'committee', seed: [['Office committee', 'Month 4 of 10'], ['Family committee', 'Month 2 of 12']], related: ['ledger'], writesTo: ['calendar'] },
-    bills:    { noun: 'bill', seed: [['K-Electric', 'Due 12 September'], ['Sui Southern Gas', 'Due 14 September'], ['PTCL', 'Paid 2 September']], auth: 'history', related: ['packages', 'expenses'], writesTo: ['calendar'] },
+    bills:    { noun: 'bill', groups: ['Upcoming', 'Paid'], seed: [['K-Electric', 'Due 12 September'], ['Sui Southern Gas', 'Due 14 September'], ['PTCL', 'Paid 2 September']], auth: 'history', related: ['packages', 'expenses'], writesTo: ['calendar'] },
     recipes:  { noun: 'recipe', seed: [['Chicken karahi', '45 min'], ['Daal chawal', '30 min'], ['Kheer', '1 hr']], related: ['mealplan', 'shopping'] },
     mealplan: { noun: 'meal', seed: [['Monday — Daal chawal', 'Dinner'], ['Tuesday — Karahi', 'Dinner']], related: ['recipes', 'shopping'], writesTo: ['calendar'] },
     learning: { noun: 'course', seed: [['Arabic — beginner', '3 of 20 lessons'], ['Product design', '12 of 30']], related: ['notes'] },

@@ -1387,3 +1387,138 @@
 .fresh svg { width: 12px; height: 12px; }
 .toolerr { display: flex; align-items: center; gap: 8px; }
 .toolerr svg { width: 15px; height: 15px; flex: none; }
+
+/* ============================================================
+   Design System components the tool layer was missing
+   ============================================================ */
+
+/* ---- SegmentedControl (§18, §63) --------------------------
+   Selected state is never colour alone: the pill, the weight
+   change and the indicator all carry it. */
+.seg {
+  display: flex;
+  gap: var(--space-1);
+  padding: var(--space-1);
+  margin: 0 var(--pad);
+  border-radius: var(--r-full);
+  background: var(--tint-neutral);
+}
+.seg__btn {
+  flex: 1;
+  min-height: var(--tap);
+  padding: var(--space-2) var(--space-3);
+  border-radius: var(--r-full);
+  font-size: .8125rem;
+  font-weight: 600;
+  color: var(--text-2);
+  white-space: nowrap;
+  transition: background var(--dur-fast) var(--ease), color var(--dur-fast) var(--ease);
+}
+.seg__btn[aria-selected="true"] {
+  background: var(--card);
+  color: var(--text);
+  font-weight: 750;
+  box-shadow: var(--shadow-xs);
+}
+.seg__btn:active { transform: scale(.97); }
+
+/* ---- Chart (§46) ------------------------------------------
+   Simple and task-oriented, with a textual equivalent for
+   screen readers rather than a decorative graphic. */
+.chart {
+  margin: 0 var(--pad);
+  padding: var(--space-4);
+  border-radius: var(--r-lg);
+  background: var(--card);
+  border: 1px solid var(--border);
+}
+.chart__head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--space-3);
+  margin-bottom: var(--space-3);
+}
+.chart__value { font-size: 1.375rem; font-weight: 800; letter-spacing: -.04em; }
+.chart__delta { font-size: .75rem; font-weight: 700; display: inline-flex; align-items: center; gap: 3px; }
+.chart__plot { display: block; width: 100%; height: 92px; overflow: visible; }
+.chart__axis {
+  display: flex;
+  justify-content: space-between;
+  margin-top: var(--space-2);
+  font-size: .65625rem;
+  font-weight: 600;
+  color: var(--text-3);
+}
+
+/* ---- Status semantics (§5.2 / §5.3) -----------------------
+   Colour is paired with a glyph everywhere it appears. */
+.status-msg {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  margin: 0 var(--pad) var(--space-3);
+  padding: var(--space-3);
+  border-radius: var(--r-md);
+  font-size: .78125rem;
+  font-weight: 600;
+}
+.status-msg svg { width: 15px; height: 15px; flex: none; }
+.status-msg--error   { background: var(--error-bg);   color: var(--error);   border: 1px solid var(--error-border); }
+.status-msg--warning { background: var(--warning-bg); color: var(--warning); border: 1px solid var(--warning-border); }
+.status-msg--success { background: var(--success-bg); color: var(--success); border: 1px solid var(--success-border); }
+.status-msg--info    { background: var(--info-bg);    color: var(--info);    border: 1px solid var(--info-border); }
+
+/* ---- Financial gain / loss (§47) --------------------------
+   Direction is shown by an arrow glyph as well as by colour. */
+.delta { display: inline-flex; align-items: center; gap: 2px; }
+.delta.is-up::before   { content: "▲"; font-size: .55em; }
+.delta.is-down::before { content: "▼"; font-size: .55em; }
+.delta.is-up   { color: var(--success); }
+.delta.is-down { color: var(--error); }
+
+/* Retire the ad-hoc rose/amber usage in the tool layer in favour of the
+   semantic status roles. */
+.toolerr {
+  background: var(--error-bg);
+  color: var(--error);
+  border: 1px solid var(--error-border);
+}
+.fresh.is-stale {
+  background: var(--warning-bg);
+  color: var(--warning);
+}
+.status--late {
+  background: var(--warning-bg);
+  color: var(--warning);
+}
+.stat-row__delta.is-up { color: var(--success); }
+.btn--danger { background: var(--error); color: #fff; }
+[data-theme="dark"] .btn--danger { color: #2A0A10; }
+
+/* ---- Touch targets (§14) ----------------------------------
+   Small glyphs keep their size but sit inside a comfortable target. */
+.ghostbtn,
+.tresult__acts .btn,
+.draftbar__x,
+.snack__act,
+.locback { min-height: var(--tap); min-width: var(--tap); }
+.ghostbtn { display: inline-flex; align-items: center; justify-content: center; }
+.draftbar__x, .snack__act, .locback { display: inline-flex; align-items: center; }
+.calday { min-height: var(--tap); }
+.railchip, .seg__btn, .chip { min-height: 36px; }
+
+/* ---- Button loading state (§13) --------------------------- */
+.btn.is-loading { pointer-events: none; position: relative; color: transparent; }
+.btn.is-loading::after {
+  content: "";
+  position: absolute;
+  width: 16px; height: 16px;
+  border-radius: 50%;
+  border: 2px solid currentColor;
+  border-top-color: transparent;
+  color: #fff;
+  animation: spin .7s linear infinite;
+}
+[data-theme="dark"] .btn--accent.is-loading::after { color: #06231F; }
+@keyframes spin { to { transform: rotate(360deg); } }

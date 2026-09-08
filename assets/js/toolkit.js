@@ -134,6 +134,56 @@ window.LUME_TOOLKIT = function (ctx) {
     '</div>';
   }
 
+  /* SegmentedControl (§18). Selected state carries weight and a pill as well
+     as colour, and the group is announced as a tablist. */
+  function segmented(name, options, selected) {
+    return '<div class="seg" role="tablist" aria-label="' + esc(name) + '">' +
+      options.map(function (o) {
+        var on = o === selected;
+        return '<button class="seg__btn" role="tab" aria-selected="' + (on ? 'true' : 'false') + '" ' +
+          'data-tool-act="seg:' + esc(o) + '">' + esc(o) + '</button>';
+      }).join('') + '</div>';
+  }
+
+  /* Chart (§46): simple, labelled, and paired with a textual equivalent so
+     the value is available without seeing the line. */
+  function chart(o) {
+    var pts = o.series, n = pts.length;
+    var min = Math.min.apply(null, pts), max = Math.max.apply(null, pts);
+    var span = (max - min) || 1;
+    var W = 300, H = 92;
+    var coords = pts.map(function (v, i) {
+      return [(i / (n - 1)) * W, H - ((v - min) / span) * (H - 10) - 5];
+    });
+    var line = coords.map(function (c, i) {
+      return (i ? 'L' : 'M') + c[0].toFixed(1) + ' ' + c[1].toFixed(1);
+    }).join(' ');
+    var area = line + ' L' + W + ' ' + H + ' L0 ' + H + ' Z';
+    var first = pts[0], last = pts[n - 1];
+    var pct = ((last - first) / first) * 100;
+    var dir = pct >= 0 ? 'is-up' : 'is-down';
+
+    return '<div class="chart">' +
+      '<div class="chart__head">' +
+        '<span class="chart__value num">' + esc(o.format(last)) + '</span>' +
+        '<span class="chart__delta delta ' + dir + '">' +
+          esc(Math.abs(pct).toFixed(1)) + '%</span>' +
+      '</div>' +
+      '<svg class="chart__plot" viewBox="0 0 ' + W + ' ' + H + '" preserveAspectRatio="none" ' +
+        'role="img" aria-label="' + esc(o.label + '. ' + o.format(min) + ' to ' + o.format(max) +
+        ', ending at ' + o.format(last) + ', ' + (pct >= 0 ? 'up ' : 'down ') +
+        Math.abs(pct).toFixed(1) + ' percent.') + '">' +
+        '<defs><linearGradient id="cg" x1="0" y1="0" x2="0" y2="1">' +
+          '<stop offset="0" stop-color="var(--accent)" stop-opacity=".22"/>' +
+          '<stop offset="1" stop-color="var(--accent)" stop-opacity="0"/></linearGradient></defs>' +
+        '<path d="' + area + '" fill="url(#cg)"/>' +
+        '<path d="' + line + '" fill="none" stroke="var(--accent)" stroke-width="2.2" ' +
+          'stroke-linecap="round" stroke-linejoin="round" vector-effect="non-scaling-stroke"/>' +
+      '</svg>' +
+      '<div class="chart__axis"><span>' + esc(o.from) + '</span><span>' + esc(o.to) + '</span></div>' +
+    '</div>';
+  }
+
   function skeleton(rows) {
     var out = '';
     for (var i = 0; i < (rows || 4); i++) {
@@ -472,7 +522,7 @@ window.LUME_TOOLKIT = function (ctx) {
         });
         return;
       }
-      var rows = spec.rows || [];
+      var rows = spec.rowsByTab ? spec.rowsByTab[current.tab || spec.tabs[0]] : (spec.rows || []);
       if (spec.custom === 'schedule') { host.innerHTML = loadshedView(); setStatus(spec, 'live'); return; }
       if (!rows.length) {
         host.innerHTML = stateBlock({
@@ -497,11 +547,18 @@ window.LUME_TOOLKIT = function (ctx) {
 
     function renderRows(rows) {
       var money = spec.unit === '% a year' || f.id === 'natsavings';
-      return '<div class="row-gap"><div class="list">' + rows.map(function (r) {
+      var tab = current.tab || (spec.tabs ? spec.tabs[0] : null);
+      return (spec.tabs ? segmented(ctx.fname(f), spec.tabs, tab) : '') +
+        (spec.chartFor && spec.chartFor[tab]
+          ? '<div style="margin-top:var(--space-4)">' + chart(spec.chartFor[tab]) + '</div>' : '') +
+        '<div class="row-gap"' + (spec.tabs ? ' style="margin-top:var(--space-4)"' : '') + '><div class="list">' +
+        rows.map(function (r) {
         var val = r[1];
-        var shown = typeof val === 'number'
-          ? (money ? L.num(val, { maximumFractionDigits: 2 }) + '%' : L.moneyRaw(val, null, val < 1000 ? 2 : 0))
-          : String(val);
+        var shown;
+        if (typeof val !== 'number') shown = String(val);
+        else if (money) shown = L.num(val, { maximumFractionDigits: 2 }) + '%';
+        else if (spec.valueFormat) shown = spec.valueFormat(val, r, tab, L);
+        else shown = L.moneyRaw(val, null, val < 1000 ? 2 : 0);
         if (val === 0 && !money) shown = '';
         var dir = /^\+/.test(r[2]) ? 'is-up' : /^−|^-/.test(r[2]) ? 'is-down' : '';
         return '<div class="list-row">' +
@@ -563,7 +620,14 @@ window.LUME_TOOLKIT = function (ctx) {
 
     function persist() { save(f.id, 'items', items); }
 
+    function groupOf(it, i) {
+      if (!spec.groups) return null;
+      if (it.done) return spec.groups[spec.groups.length - 1];
+      return spec.groups[i % (spec.groups.length - 1)];
+    }
+
     function render() {
+      var tab = current.tab || (spec.groups ? spec.groups[0] : null);
       if (!items.length) {
         host.innerHTML = stateBlock({
           art: 'empty',
@@ -573,8 +637,25 @@ window.LUME_TOOLKIT = function (ctx) {
         });
         return;
       }
+      var shown = items.map(function (it, i) { return { it: it, i: i }; });
+      if (spec.groups) {
+        shown = shown.filter(function (x) { return groupOf(x.it, x.i) === tab; });
+      }
+
+      if (spec.groups && !shown.length) {
+        host.innerHTML = segmented(ctx.fname(f), spec.groups, tab) +
+          stateBlock({ art: 'empty', title: 'Nothing in ' + tab.toLowerCase(),
+            text: 'Anything you add will appear here once it belongs in ' + tab.toLowerCase() + '.',
+            actions: [{ label: 'Add ' + spec.noun, act: 'add', primary: 1 }] });
+        return;
+      }
+
       host.innerHTML =
-        '<div class="row-gap"><div class="list">' + items.map(function (it, i) {
+        (spec.groups ? segmented(ctx.fname(f), spec.groups, tab) : '') +
+        '<div class="row-gap"' + (spec.groups ? ' style="margin-top:var(--space-4)"' : '') +
+        '><div class="list">' + shown.map(function (x) {
+          var it = x.it, i = x.i;
+          return (function () {
           return '<div class="list-row' + (it.done ? ' is-done-row' : '') + '">' +
             '<button class="task__box tlist__box pressable" data-tool-act="toggle:' + i + '" ' +
               'aria-label="Mark done"><svg class="ico" viewBox="0 0 24 24"><use href="#i-check"/></svg></button>' +
@@ -583,6 +664,7 @@ window.LUME_TOOLKIT = function (ctx) {
             '<span class="list-row__end">' +
               '<button class="ghostbtn pressable" data-tool-act="del:' + i + '" aria-label="Delete">' +
               '<svg class="ico" viewBox="0 0 24 24"><use href="#i-x"/></svg></button></span></div>';
+          })();
         }).join('') + '</div></div>' +
         '<div class="tactions">' +
           (spec.canExport ? '<button class="btn btn--ghost pressable" data-tool-act="export">' +
@@ -594,6 +676,7 @@ window.LUME_TOOLKIT = function (ctx) {
     }
 
     var acts = {
+      segChange: function () { render(); },
       add: function () {
         ctx.prompt({
           title: 'New ' + spec.noun,
@@ -877,7 +960,21 @@ window.LUME_TOOLKIT = function (ctx) {
 
     qibla: function (f, spec, host) {
       var deg = ctx.qiblaDeg();
-      host.innerHTML =
+      var mode = current.tab || 'Compass';
+      if (mode === 'Map') {
+        host.innerHTML = segmented('Qibla mode', ['Compass', 'Map'], mode) +
+          '<div class="row-gap" style="margin-top:var(--space-4)"><article class="card card--pad">' +
+            '<p class="t-label">Bearing from ' + esc(ctx.profile.city) + '</p>' +
+            '<p class="chart__value num" style="margin-top:var(--space-2)">' + L.num(deg) + '° ' +
+              esc(window.LUME_SOLAR.compassPoint(deg)) + '</p>' +
+            '<p class="t-body-sm" style="color:var(--text-3);margin-top:var(--space-2)">' +
+              'Face this bearing from true north. Any map or compass will do — no sensor needed.</p>' +
+          '</article></div>' +
+          '<p class="toolnote">Map view keeps working when the magnetometer does not.</p>';
+        current.actions = { segChange: function () { open(f.id, { keepReturn: 1, tab: current.tab }); } };
+        return;
+      }
+      host.innerHTML = segmented('Qibla mode', ['Compass', 'Map'], mode) +
         '<div class="qibla"><div class="qibla__dial"><svg viewBox="0 0 200 200">' +
           '<circle cx="100" cy="100" r="94" fill="none" stroke="var(--border)" stroke-width="1.5"/>' +
           '<circle cx="100" cy="100" r="76" fill="none" stroke="var(--border)" stroke-width="1.5" stroke-dasharray="2 8" stroke-linecap="round"/>' +
@@ -896,13 +993,14 @@ window.LUME_TOOLKIT = function (ctx) {
         '<p class="qibla__deg num">' + L.num(deg) + '° ' + window.LUME_SOLAR.compassPoint(deg) + '</p>' +
         '<p class="qibla__hint">From ' + esc(ctx.profile.city) + '. Hold the phone flat and turn until the<br>marker points straight up.</p></div>' +
         '<div class="tactions">' +
-          '<button class="btn btn--ghost pressable" data-tool-act="bearing">Show bearing only</button>' +
+          '<button class="btn btn--ghost pressable" data-tool-act="bearing">Bearing only</button>' +
           '<button class="btn btn--accent pressable" data-tool-act="calib">Recalibrate</button>' +
         '</div>' +
         '<p class="toolnote">If the compass is unavailable, the bearing above still works with any compass.</p>';
       current.actions = {
         calib: function () { ctx.toast('Move the phone in a figure of eight'); },
-        bearing: function () { ctx.toast(L.num(deg) + '° from true north'); }
+        bearing: function () { current.tab = 'Map'; open(f.id, { keepReturn: 1, tab: 'Map' }); },
+        segChange: function () { open(f.id, { keepReturn: 1, tab: current.tab }); }
       };
     },
 
@@ -996,6 +1094,58 @@ window.LUME_TOOLKIT = function (ctx) {
       current.actions = {
         add: function () { ctx.prompt({ title: 'Track a parcel', label: 'Tracking number', onOk: function (v) { if (v) ctx.toast('Tracking ' + v); } }); },
         notify: function () { ctx.requestNotify(f); }
+      };
+    },
+
+    goldrates: function (f, spec, host) {
+      var tab = current.tab || 'Rates';
+      var seg = segmented(ctx.fname(f), spec.tabs, tab);
+
+      function rateList(title, rows, decimals) {
+        return '<p class="toolgroup">' + esc(title) + '</p>' +
+          '<div class="row-gap"><div class="list">' + rows.map(function (r) {
+            var dir = /^\+/.test(r[2]) ? 'is-up' : /^−|^-/.test(r[2]) ? 'is-down' : '';
+            return '<div class="list-row">' +
+              '<span class="list-row__icon"><svg class="ico" viewBox="0 0 24 24">' +
+                '<use href="#' + (title === 'Bullion' ? 'i-coins' : 'i-currency') + '"/></svg></span>' +
+              '<span class="list-row__body"><span class="list-row__title">' + esc(r[0]) + '</span></span>' +
+              '<span class="list-row__end">' +
+                '<span class="list-row__value num">' + esc(L.moneyRaw(r[1], 'PKR', decimals)) + '</span>' +
+                (r[2] && r[2] !== '0.00' && r[2] !== '0'
+                  ? '<span class="delta ' + dir + '">' + esc(r[2].replace(/^[+−-]/, '')) + '</span>'
+                  : '<span class="delta">—</span>') +
+              '</span></div>';
+          }).join('') + '</div></div>';
+      }
+
+      if (tab === 'Chart') {
+        host.innerHTML = seg +
+          '<div style="margin-top:var(--space-4)">' + chart(spec.chartSeries) + '</div>' +
+          '<p class="toolnote">Open-market rate, refreshed through the trading day. ' +
+          'Values are indicative, not a dealing quote.</p>';
+      } else if (tab === 'Convert') {
+        host.innerHTML = seg +
+          '<div style="margin-top:var(--space-4)" class="tresult">' +
+            '<p class="tresult__label">100 USD</p>' +
+            '<p class="tresult__value num">' + esc(L.moneyRaw(28510, 'PKR', 0)) + '</p>' +
+            '<p class="tresult__note">At the open-market rate of ' +
+              esc(L.moneyRaw(285.10, 'PKR', 2)) + ' per dollar.</p>' +
+          '</div>' +
+          '<div class="tactions"><button class="btn btn--accent pressable" data-tool-act="fullconv">' +
+            'Open the converter</button></div>' +
+          '<p class="toolnote">The full converter carries every currency and your base preference.</p>';
+      } else {
+        host.innerHTML = seg +
+          '<div style="margin-top:var(--space-4)"></div>' +
+          rateList('Currencies', spec.currencies, 2) +
+          rateList('Bullion', spec.bullion, 0) +
+          '<p class="toolnote">Open-market rates for ' + esc(ctx.profile.city) +
+          '. Interbank differs — the converter uses interbank.</p>';
+      }
+      setStatus(spec, 'live');
+      current.actions = {
+        segChange: function () { open(f.id, { keepReturn: 1, tab: current.tab }); },
+        fullconv: function () { open('currency'); }
       };
     },
 
@@ -1138,7 +1288,8 @@ window.LUME_TOOLKIT = function (ctx) {
 
     if (current && current.cleanup) current.cleanup();
     if (!opts.keepReturn) returnTo = ctx.currentTab();
-    current = { id: id, feature: f, spec: spec, actions: {}, forceState: opts.state || null };
+    current = { id: id, feature: f, spec: spec, actions: {},
+                forceState: opts.state || null, tab: opts.tab || null };
 
     ctx.showToolScreen();
     $('#toolTitle').textContent = ctx.fname(f);
@@ -1231,6 +1382,12 @@ window.LUME_TOOLKIT = function (ctx) {
         if (granted) open(current.id, { keepReturn: 1 });
         else open(current.id, { keepReturn: 1 });
       });
+      return;
+    }
+    if (name.indexOf('seg:') === 0) {
+      current.tab = name.slice(4);
+      if (current.actions && current.actions.segChange) current.actions.segChange(current.tab);
+      else open(current.id, { keepReturn: 1, tab: current.tab });
       return;
     }
     if (current.actions && current.actions[name]) current.actions[name]();
