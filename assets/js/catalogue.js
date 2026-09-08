@@ -287,6 +287,20 @@ window.LUME = (function () {
     ]
   };
 
+  /* Urdu and Arabic ship an `f.<id>` name for every feature; English never
+     did, because the catalogue already holds it. Any screen calling
+     t('f.bills') directly therefore rendered the raw key in English. The
+     catalogue is the source of truth (§19), so it seeds the dictionary from
+     itself rather than repeating 85 names in a second file. */
+  (function seedFeatureNames() {
+    var I = window.LUME_I18N;
+    if (!I || !I.DICTS || !I.DICTS.en) return;
+    F.forEach(function (f) {
+      var key = 'f.' + f.id;
+      if (I.DICTS.en[key] === undefined) I.DICTS.en[key] = f.n;
+    });
+  })();
+
   return {
     INTEREST_GROUPS: INTEREST_GROUPS,
     FAITH_INTERESTS: FAITH_INTERESTS,

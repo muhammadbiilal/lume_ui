@@ -699,8 +699,8 @@ window.LUME_ACCOUNT = function (deps) {
   /* Only the account's own surfaces. "Data & sync" is not one of them: it
      describes what is on this device, which is exactly as true for a guest,
      and a row a guest can see must lead somewhere (§124.30). */
-  var PROTECTED = ['edit', 'account', 'email', 'phone', 'security', 'password',
-                   'sessions', 'twofactor', 'delete'];
+  var PROTECTED = ['account', 'email', 'phone', 'security', 'password',
+                   'sessions', 'delete'];
 
   function requiresAccount(route) { return PROTECTED.indexOf(route) !== -1; }
 

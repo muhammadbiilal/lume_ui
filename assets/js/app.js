@@ -280,15 +280,8 @@
   function setTheme(theme, remember) {
     root.dataset.theme = theme;
     if (remember) store.set('lume-theme', theme);
-    var dark = theme === 'dark';
-    var sw = $('#themeSwitch');
-    if (sw) sw.classList.toggle('is-on', dark);
-    var sub = $('#themeSub');
-    if (sub) sub.textContent = dark ? 'On — easier on the eyes at night' : 'Off — following a light palette';
-    var icon = $('#themeIcon use');
-    if (icon) icon.setAttribute('href', dark ? '#i-moon' : '#i-sun');
     var meta = document.querySelector('meta[name="theme-color"]');
-    if (meta) meta.setAttribute('content', dark ? '#0A0A0B' : '#F6F6F4');
+    if (meta) meta.setAttribute('content', theme === 'dark' ? '#0A0A0B' : '#F6F6F4');
   }
   setTheme(root.dataset.theme, false);
 
@@ -304,12 +297,19 @@
     setTheme(mode, true);
   }
 
-  var themeRow = $('#themeRow');
-  if (themeRow) {
-    themeRow.addEventListener('click', function () {
-      setTheme(root.dataset.theme === 'dark' ? 'light' : 'dark', true);
-    });
-  }
+  /* "Follow the system" has to actually follow it, rather than sampling the
+     preference once at startup and freezing. */
+  (function watchSystemTheme() {
+    if (!window.matchMedia) return;
+    var mq = window.matchMedia('(prefers-color-scheme: dark)');
+    var onChange = function () {
+      if (store.get('lume-theme')) return;     /* an explicit choice wins */
+      setTheme(mq.matches ? 'dark' : 'light', false);
+      if (typeof renderProfile === 'function') renderProfile();
+    };
+    if (mq.addEventListener) mq.addEventListener('change', onChange);
+    else if (mq.addListener) mq.addListener(onChange);
+  })();
 
   /* ---------------------------------------------------------
      Clock, greeting, date
@@ -333,7 +333,7 @@
     var d = new Date();
     var g = $('#greetText');
     if (g) {
-      /* §124.44 — the name is used when Lume has one and the greeting stands
+      /* §124.3 — the name is used when Lume has one and the greeting stands
          alone when it does not. There is no third branch that invents one. */
       var who = ACCT.displayName();
       g.textContent = who
@@ -480,6 +480,18 @@
     scrim.classList.add('is-open');
     openSheet = sheet;
 
+    /* §101 — while a modal sheet is up, the screen behind it is not a place
+       to tab into, and focus starts inside the dialog rather than on the
+       destructive button it happens to contain first. */
+    var behind = $('.screen.is-active');
+    /* Only if the visibility system has not already hidden it for its own
+       reasons — restoring blindly would un-hide a gated screen (§64). */
+    if (behind && !behind.hasAttribute('aria-hidden')) {
+      behind.setAttribute('aria-hidden', 'true');
+      sheetHid = behind;
+    }
+    sheetOpener = document.activeElement;
+
     if (name === 'personalise' && setPicker) hydratePersonalise();
     if (name === 'market') renderMarketPicker();
     if (name === 'notifprefs') renderNotifPrefs();
@@ -489,12 +501,21 @@
       setTimeout(function () { var i = $('#globalSearch'); if (i) i.focus(); }, 320);
     }
     animateBars(sheet);
+    setTimeout(function () {
+      var first = $('[data-close], .btn--ghost, button', sheet);
+      if (first && first.focus) { try { first.focus(); } catch (e) {} }
+    }, 60);
   }
+
+  var sheetOpener = null, sheetHid = null;
 
   function sheetClose() {
     if (openSheet) openSheet.classList.remove('is-open');
     openSheet = null;
     scrim.classList.remove('is-open');
+    if (sheetHid) { sheetHid.removeAttribute('aria-hidden'); sheetHid = null; }
+    if (sheetOpener && sheetOpener.focus) { try { sheetOpener.focus(); } catch (e) {} }
+    sheetOpener = null;
   }
 
   scrim.addEventListener('click', sheetClose);
@@ -550,7 +571,15 @@
     if (kind === 'sheet') sheetOpen(arg);
     else if (kind === 'tab') goTo(arg);
     else if (kind === 'toast') toast(arg);
-    else if (kind === 'theme') { setTheme(root.dataset.theme === 'dark' ? 'light' : 'dark', true); toast('Theme switched'); }
+    else if (kind === 'theme') {
+      /* Through the same door as the Appearance screen, so the two cannot
+         disagree — and in the user's language. */
+      setThemeMode(root.dataset.theme === 'dark' ? 'light' : 'dark');
+      renderProfile();
+      toast(t('acct.themeSwitched', {
+        mode: t(root.dataset.theme === 'dark' ? 'acct.appearanceDark' : 'acct.appearanceLight')
+      }));
+    }
     else if (label) toast(label);
   }
 
@@ -1866,6 +1895,10 @@
        again once everything exists. Otherwise a freshly injected row inside a
        hidden section would still be addressable (§64). */
     applyVisibility();
+    /* A settings or authentication screen is as much a part of the render as
+       Home is: a language change has to reach the picker that made it. */
+    if (current === 'account') renderAccount();
+    else if (current === 'auth') renderAuth();
   }
 
   /* ---------------------------------------------------------
@@ -1918,10 +1951,13 @@
     if (i === 4) mountOnbCity();
     if (i === 5 && onbPicker) onbPicker.refresh();
     /* §124.4 — the field is prefilled from whatever Lume already holds,
-       which for a first run is nothing at all. */
+       which for a first run is nothing at all. It asks the same resolver
+       every other surface asks: for an account holder the name lives on the
+       account, not on the device, and reading the device here opened the
+       field empty and then saved that emptiness over their name. */
     if (i === 7) {
       var nameInput = $('#onbName');
-      if (nameInput) nameInput.value = profile.displayName || '';
+      if (nameInput) nameInput.value = ACCT.displayName() || '';
     }
     if (i === 6) {
       var loc = $('#onbLocSub');
@@ -2036,17 +2072,20 @@
     if (nameNext) {
       nameNext.addEventListener('click', function () {
         var input = $('#onbName');
-        commitName(input ? input.value : '');
+        var typed = input ? input.value : '';
+        /* An untouched field is not an instruction to erase anything. */
+        if (String(typed).trim() !== String(ACCT.displayName() || '')) commitName(typed);
         onbShow(onbStep + 1);
       });
     }
 
+    /* §124.4 — skipping is a first-class outcome, not a deletion. Re-running
+       the tour and skipping this step used to wipe a name the user had
+       already given, while the header's own Skip left it alone: two skip
+       controls on one screen doing opposite things. */
     var nameSkip = $('#onbNameSkip');
     if (nameSkip) {
-      nameSkip.addEventListener('click', function () {
-        commitName('');
-        onbShow(onbStep + 1);
-      });
+      nameSkip.addEventListener('click', function () { onbShow(onbStep + 1); });
     }
 
     var finish = $('#onbFinish');
@@ -2725,14 +2764,22 @@
     }
     currentTool = null;
     toolStack.length = 0;
-    /* An account route is abandoned the same way a tool is. */
-    accountRoute = null;
-    accountStack.length = 0;
+    /* An account route is abandoned the same way a tool is — but only when
+       the navigation is actually leaving it. renderTabs() routes through
+       here on every render, so an unguarded clear here silently killed the
+       screen that had just asked to be refreshed. */
+    if (name !== 'account') { accountRoute = null; accountStack.length = 0; }
     if (name !== 'auth') { authRoute = null; authStack.length = 0; }
     /* The centre is a destination, not a tab, so it remembers where the
        user was and the header's back control returns them there. */
     if (name === 'notifications') {
-      if (current !== 'notifications') notifReturnTab = current;
+      /* Only a tab is somewhere to come back to. Closing a tool that was
+         opened from the centre re-entered here with current === 'tool', and
+         back then returned to a tool screen with no tool in it — from which
+         every further back returned to the same dead screen. */
+      if (current !== 'notifications') {
+        notifReturnTab = tabOrder().indexOf(current) !== -1 ? current : 'home';
+      }
       goToBase(name, quiet);
       renderNotifCentre();
       return;
@@ -3755,6 +3802,8 @@
 
   var accountRoute = null, accountStack = [], accountReturn = 'profile';
   var authRoute = null, authStack = [], authReturn = 'profile';
+  /* Where the flow was entered from, so it can be returned to. */
+  var authFromAccount = null, authFromStack = null;
 
   var AUTH_VALUES = {
     signin: { email: '', password: '' },
@@ -3801,9 +3850,23 @@
     renderAccount();
   }
 
+  var pendingNav = null;
+
+  /* §124.14's dirty state is only honest if leaving respects it. */
+  function guardDirty(go) {
+    if (!AUI.form.dirty) { go(); return; }
+    pendingNav = go;
+    askConfirm({ title: t('acct.discardTitle'), text: t('acct.discardText'),
+                 cta: t('acct.discardCta'), tone: 'danger', act: 'acctdo:discard' });
+  }
+
   function openAccount(route, opts) {
     opts = opts || {};
     if (!AUI.ROUTES[route]) return;
+    if (accountRoute && accountRoute !== route && AUI.form.dirty) {
+      guardDirty(function () { openAccount(route, opts); });
+      return;
+    }
 
     /* §124.28 — a destination that belongs to the account is held across
        authentication and resumed afterwards, never swapped for Home. */
@@ -3825,13 +3888,20 @@
     head.innerHTML = UI.toolHeader({
       title: built.title, sub: built.sub ? esc(built.sub) : null, backLabel: t('a11y.back')
     });
+    /* One host, a dozen screens: a fixed label announced "Account" whichever
+       one was showing (§101). */
+    var host = $('#screen-account');
+    if (host) host.setAttribute('aria-label', built.title);
     body.innerHTML = built.body;
     applyStrings(body);
+    applyVisibility();
     if (built.after) built.after();
     animateBars($('#screen-account'));
   }
 
   function closeAccount() {
+    if (AUI.form.dirty) { guardDirty(closeAccount); return; }
+    cancelSubmit();
     if (accountStack.length) { enterAccountRoute(accountStack.pop()); return; }
     accountRoute = null;
     goTo(accountReturn || 'profile');
@@ -3844,8 +3914,19 @@
     if (opts.then !== undefined) AUI.authCtx.pending = opts.then;
     if (opts.modal !== undefined) AUI.authCtx.modal = !!opts.modal;
 
-    if (!authRoute) authReturn = homeTab();
-    else if (route !== authRoute) authStack.push(authRoute);
+    if (!authRoute) {
+      authReturn = homeTab();
+      /* An authentication flow entered from inside the account section comes
+         back to the screen that sent it there, not to the top (§124.25). */
+      authFromAccount = accountRoute;
+      authFromStack = accountStack.slice();
+    } else if (route !== authRoute) {
+      /* Sign in and sign up are siblings, not levels: hopping between them
+         used to stack, so escaping took one press per hop. */
+      var at = authStack.indexOf(route);
+      if (at !== -1) authStack.length = at;
+      else authStack.push(authRoute);
+    }
 
     if (currentTool) { stopClocks(); currentTool = null; toolStack.length = 0; }
     authRoute = route;
@@ -3857,12 +3938,20 @@
   function renderAuth() {
     var body = $('#authBody');
     if (!body || !authRoute) return;
+    var authHost = $('#screen-auth');
+    var authTitle = $('.auth__title', body);
     body.innerHTML = '<div class="auth" data-auth="' + esc(authRoute) + '">' + AUI.AUTH[authRoute]() + '</div>';
+    authTitle = $('.auth__title', body);
+    if (authHost && authTitle) authHost.setAttribute('aria-label', authTitle.textContent);
     applyStrings(body);
+    applyVisibility();
   }
 
-  function closeAuth() {
-    if (authStack.length) {
+  function closeAuth(dismiss) {
+    /* A cross dismisses the whole flow; a back chevron steps through it. The
+       two were the same control, so the X on a modal sign-in behaved as Back
+       and took two presses to escape (§124.25). */
+    if (authStack.length && !dismiss) {
       authRoute = authStack.pop();
       AUI.resetForm(AUTH_VALUES[authRoute] ? JSON.parse(JSON.stringify(AUTH_VALUES[authRoute])) : {});
       renderAuth();
@@ -3872,9 +3961,20 @@
        leaving it to interrupt again on the next launch (§124.27). */
     if (authRoute === 'expired') ACCT.signOut();
     var to = authReturn || 'profile';
+    var backTo = authFromAccount;
+    var backStack = authFromStack;
     authRoute = null;
+    authStack.length = 0;
+    authFromAccount = null;
+    authFromStack = null;
     AUI.authCtx.pending = null;
     AUI.authCtx.modal = false;
+    if (backTo && AUI.ROUTES[backTo]) {
+      accountStack = backStack || [];
+      enterAccountRoute(backTo);
+      renderAll();
+      return;
+    }
     goTo(to);
     renderAll();
   }
@@ -3928,10 +4028,21 @@
     AUI.form.errors = result.errors || {};
     AUI.form.message = result.form ? { tone: 'error', key: result.form } : null;
     repaintForm();
+    /* Announcing three errors at once and leaving focus on the body left the
+       user to hunt for which field was wrong (§101). */
+    var first = $('[aria-invalid="true"]', formHost());
+    if (first && first.focus) { try { first.focus(); } catch (e) {} }
   }
 
   /* Every submission is a designed loading state before it is a result
      (§124.26). */
+  var submitTimer = null;
+
+  function cancelSubmit() {
+    if (submitTimer) { clearTimeout(submitTimer); submitTimer = null; }
+    AUI.form.busy = false;
+  }
+
   function submitForm(kind) {
     if (AUI.form.busy) return;
     collectForm();
@@ -3939,7 +4050,8 @@
     AUI.form.message = null;
     AUI.form.busy = true;
     repaintForm();
-    setTimeout(function () {
+    submitTimer = setTimeout(function () {
+      submitTimer = null;
       AUI.form.busy = false;
       applySubmit(kind, AUI.form.values);
     }, 420);
@@ -3992,6 +4104,7 @@
         lastName: v.lastName, phone: v.phone
       });
       if (!r.ok) return fail(r);
+      AUI.form.dirty = false;      /* saved is not unsaved */
       renderAll();
       closeAccount();
       return toast(t('acct.editSaved'));
@@ -4024,6 +4137,10 @@
       if (!ACCT.verifyPassword(v.current)) {
         return fail({ errors: { current: v.current ? 'acct.err.currentWrong' : 'acct.err.currentRequired' } });
       }
+      /* The button was left in its busy state while the dialog was up, and
+         `pointer-events: none` then made it permanently dead if the dialog
+         was cancelled. */
+      repaintForm();
       askConfirm({
         title: t('acct.deleteFinalTitle'), text: t('acct.deleteFinalText'),
         cta: t('acct.deleteCta'), tone: 'danger', act: 'acctdo:deletefinal'
@@ -4032,7 +4149,7 @@
     }
   }
 
-  /* ---- the confirmation dialog (§124.21, §124.48) --------------------- */
+  /* ---- the confirmation dialog (§124.21, §124.22) --------------------- */
   var confirmAct = null;
 
   function askConfirm(o) {
@@ -4073,6 +4190,7 @@
       else if (key === 'currency') { profile.currency = value; }
       else if (key === 'units') { profile.units = value; }
       else if (key === 'clock') { profile.clock = value; }
+      else if (key === 'tz') { profile.tz = value === 'auto' ? '' : value; }
       else if (key === 'theme') { setThemeMode(value); }
       if (key !== 'theme') saveProfile();
       renderAll();
@@ -4100,7 +4218,15 @@
   function accountDo(verb, arg) {
     if (verb === 'tour') { sheetClose(); onbStart(); return; }
     if (verb === 'feedback') { toast(t('acct.helpContact')); return; }
-    if (verb === 'authclose') { closeAuth(); return; }
+    if (verb === 'authclose') { closeAuth(true); return; }
+
+    if (verb === 'discard') {
+      AUI.form.dirty = false;
+      var go = pendingNav;
+      pendingNav = null;
+      if (go) go();
+      return;
+    }
 
     if (verb === 'logout') {
       askConfirm({ title: t('acct.logoutTitle'), text: t('acct.logoutText'),
@@ -4160,7 +4286,7 @@
     }
   }
 
-  /* §124.19 — a real picker, and the file never leaves the device. */
+  /* §124.14 — a real picker, and the file never leaves the device. */
   function pickPhoto() {
     var input = document.createElement('input');
     input.type = 'file';
@@ -4253,17 +4379,46 @@
     f.dirty = changed;
     var btn = $('#accountBody [data-act="acctsubmit:edit"]');
     if (btn) btn.disabled = !changed;
+    var hint = $('#accountBody .dirtyhint');
+    if (hint) hint.hidden = changed;
   }
 
   document.addEventListener('click', function (e) {
     var b = e.target.closest('[data-pwtoggle]');
     if (!b) return;
-    var input = $('[data-afield="' + b.dataset.pwtoggle + '"]', formHost());
+    e.preventDefault();                 /* the toggle sits inside a label */
+    var name = b.dataset.pwtoggle;
+    var input = $('[data-afield="' + name + '"]', formHost());
     if (!input) return;
     var show = input.type === 'password';
     input.type = show ? 'text' : 'password';
+    /* Kept in form state so a failed submission — which repaints the form —
+       does not re-mask what the user asked to see. */
+    AUI.setRevealed(name, show);
+    b.setAttribute('aria-pressed', show ? 'true' : 'false');
     b.setAttribute('aria-label', t(show ? 'acct.pw.hide' : 'acct.pw.show'));
     b.innerHTML = '<svg class="ico" viewBox="0 0 24 24"><use href="#' + (show ? 'i-eye-off' : 'i-eye') + '"/></svg>';
+  });
+
+  /* §101 — a radio group is one tab stop, and the arrows move within it. */
+  document.addEventListener('keydown', function (e) {
+    var opt = e.target.closest ? e.target.closest('.optlist [role="radio"]') : null;
+    if (!opt) return;
+    var keys = { ArrowDown: 1, ArrowRight: 1, ArrowUp: -1, ArrowLeft: -1 };
+    var step = keys[e.key];
+    if (!step) return;
+    var group = opt.closest('.optlist');
+    var all = $$('[role="radio"]', group);
+    var at = all.indexOf(opt);
+    /* Left and right follow the reading direction. */
+    if (L.dir() === 'rtl' && (e.key === 'ArrowRight' || e.key === 'ArrowLeft')) step = -step;
+    var next = all[(at + step + all.length) % all.length];
+    if (!next) return;
+    e.preventDefault();
+    all.forEach(function (r) { r.setAttribute('tabindex', '-1'); });
+    next.setAttribute('tabindex', '0');
+    next.focus();
+    next.click();
   });
 
   /* Enter submits the form it is typed in. */

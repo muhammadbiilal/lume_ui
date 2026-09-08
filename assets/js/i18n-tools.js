@@ -569,7 +569,7 @@
     'markets.noAssetsText': 'This market has no data for that asset class. Try another market.',
     'markets.noAsset': 'That asset is no longer listed',
     'markets.noAssetText': 'It may have been delisted, or the market may have changed.',
-    'markets.open': 'Open', 'markets.high': 'High', 'markets.low': 'Low',
+    'markets.openPrice': 'Open', 'markets.high': 'High', 'markets.low': 'Low',
     'markets.prevClose': 'Previous close', 'markets.high52': '52-week high', 'markets.low52': '52-week low',
     'markets.unit': 'Unit', 'markets.contract': 'Contract',
     'markets.fundamentals': 'Fundamentals', 'markets.convert': 'Convert',

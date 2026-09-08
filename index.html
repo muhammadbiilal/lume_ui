@@ -1224,15 +1224,15 @@
   <!-- ==========================================================
        ACCOUNT & SETTINGS — one host, one back stack (§124.25)
        ========================================================== -->
-  <section class="screen screen--tool" id="screen-account" role="tabpanel" aria-label="Account">
+  <section class="screen screen--tool" id="screen-account" role="region" aria-label="Account">
     <div id="accountHeader"></div>
     <div id="accountBody"></div>
   </section>
 
   <!-- ==========================================================
-       AUTHENTICATION — a flow, not a tool (§124.25, §124.42)
+       AUTHENTICATION — a flow, not a tool (§124.25, §124.30)
        ========================================================== -->
-  <section class="screen screen--tool" id="screen-auth" role="tabpanel" aria-label="Sign in">
+  <section class="screen screen--tool" id="screen-auth" role="region" aria-label="Sign in">
     <div id="authBody"></div>
   </section>
 
@@ -1320,6 +1320,14 @@
     <div class="sheet__body">
 
       <p class="group-label" style="padding:0;margin:2px 0 9px" data-i18n="pers.whereYouAre">Where you are</p>
+      <!-- §124.17 — say what changing this changes, at the point of change.
+           The warning used to live only on the Region settings screen, while
+           the editor that actually moves the user is here. -->
+      <div class="notecard notecard--warn" style="margin-bottom:12px">
+        <svg class="ico" viewBox="0 0 24 24"><use href="#i-alert"/></svg>
+        <div><b data-i18n="acct.regionTitle">Region &amp; currency</b>
+        <p data-i18n="acct.regionWarn">Changing your region may update your currency, markets, holidays, emergency numbers and local services.</p></div>
+      </div>
       <div class="list list--flat">
         <button class="list-row pressable" id="setCountryRow">
           <span class="list-row__icon"><svg class="ico" viewBox="0 0 24 24"><use href="#i-globe"/></svg></span>
@@ -1467,7 +1475,7 @@
   </aside>
 
   <!-- Push permission, asked in context (§100.11) -->
-  <!-- Confirmation for anything that cannot be undone (§124.21, §124.48) -->
+  <!-- Confirmation for anything that cannot be undone (§124.21, §124.22) -->
   <aside class="sheet" id="sheet-confirm" role="dialog" aria-modal="true" aria-labelledby="confirmTitle">
     <span class="sheet__grab"></span>
     <div class="sheet__body">

@@ -258,7 +258,7 @@
     var RANGES = ['1D', '1W', '1M', '3M', '1Y', '5Y'];
 
     var rows = [
-      [c.t('markets.open'), c.moneyRaw(f.open, a.ccy, dp)],
+      [c.t('markets.openPrice'), c.moneyRaw(f.open, a.ccy, dp)],
       [c.t('markets.high'), c.moneyRaw(f.high, a.ccy, dp)],
       [c.t('markets.low'), c.moneyRaw(f.low, a.ccy, dp)],
       [c.t('markets.prevClose'), c.moneyRaw(f.prevClose, a.ccy, dp)]

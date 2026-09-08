@@ -26,13 +26,23 @@ window.LUME_ACCOUNT_UI = function (deps) {
      visual language (§119). */
   function srow(o) {
     var end = '';
+    var role = '';
     if (o.toggle !== undefined) {
       end = '<span class="switch' + (o.toggle ? ' is-on' : '') + '"><i class="switch__knob"></i></span>';
+      /* A row that toggles announces itself as a switch and says which way
+         it is set. Without this it read as "Notification previews, button"
+         with no state at all (§101). */
+      role = ' role="switch" aria-checked="' + (o.toggle ? 'true' : 'false') + '"';
     } else {
-      end = (o.value ? '<span class="srow__value">' + esc(o.value) + '</span>' : '') +
+      /* An empty string is a value the product holds and knows to be empty;
+         undefined is a value it does not have. They are not the same, and
+         the row for the first should say so rather than showing a bare
+         title (§125). */
+      var shown = o.value === '' ? t('a.notSet') : o.value;
+      end = (shown !== undefined && shown !== null ? '<span class="srow__value">' + esc(shown) + '</span>' : '') +
         (o.chevron === false ? '' : ico('i-chev-r'));
     }
-    var attrs = o.act ? ' data-act="' + esc(o.act) + '"' : '';
+    var attrs = (o.act ? ' data-act="' + esc(o.act) + '"' : '') + role;
     var tag = o.act ? 'button' : 'div';
     return '<' + tag + ' class="list-row' + (o.act ? ' pressable' : '') + (o.cls ? ' ' + o.cls : '') + '"' + attrs + '>' +
       (o.icon ? '<span class="list-row__icon"' +
@@ -56,8 +66,12 @@ window.LUME_ACCOUNT_UI = function (deps) {
 
   /* A choice, with the current state visible without opening anything. */
   function optrow(o) {
+    /* Roving tab stop: the group is one stop, and the arrows move within it.
+       Declaring role="radio" without this promised a keyboard contract the
+       screen did not honour (§101). */
     return '<button class="optrow pressable' + (o.on ? ' is-on' : '') + '"' +
       ' role="radio" aria-checked="' + (o.on ? 'true' : 'false') + '"' +
+      ' tabindex="' + (o.on ? '0' : '-1') + '"' +
       (o.act ? ' data-act="' + esc(o.act) + '"' : '') + '>' +
       '<span class="optrow__body">' +
         '<span class="optrow__title">' + esc(o.title) + '</span>' +
@@ -68,8 +82,18 @@ window.LUME_ACCOUNT_UI = function (deps) {
   }
 
   function optlist(o) {
-    return '<div class="list" role="radiogroup" aria-label="' + esc(o.label) + '">' +
-      o.items.map(optrow).join('') + '</div>';
+    /* If nothing is selected the first option carries the tab stop, so the
+       group is always reachable. */
+    var items = o.items.slice();
+    if (!items.some(function (i) { return i.on; }) && items.length) {
+      items[0] = Object.keys(items[0]).reduce(function (acc, k) { acc[k] = items[0][k]; return acc; }, {});
+      items[0].tabbable = true;
+    }
+    return '<div class="list optlist" role="radiogroup" aria-label="' + esc(o.label) + '">' +
+      items.map(function (i) {
+        var html = optrow(i);
+        return i.tabbable ? html.replace('tabindex="-1"', 'tabindex="0"') : html;
+      }).join('') + '</div>';
   }
 
   /* ---------------------------------------------------------
@@ -77,7 +101,16 @@ window.LUME_ACCOUNT_UI = function (deps) {
      --------------------------------------------------------- */
   var form = { values: {}, errors: {}, message: null, busy: false, base: {}, dirty: false };
 
+  /* Which password fields the user has chosen to show. Kept here rather than
+     in the DOM because every submission repaints the form, and a revealed
+     password used to re-mask itself the moment a submission failed — exactly
+     when the user most wants to read what they typed. */
+  var revealed = {};
+
+  function setRevealed(name, on) { revealed[name] = !!on; }
+
   function resetForm(values) {
+    revealed = {};
     form.values = values || {};
     form.base = JSON.parse(JSON.stringify(form.values));
     form.errors = {};
@@ -96,17 +129,20 @@ window.LUME_ACCOUNT_UI = function (deps) {
           esc(t('a.optional')) + '</i>' : '') + '</span>' +
       '<span class="field__box">' +
         (o.icon ? '<i class="field__affix">' + ico(o.icon) + '</i>' : '') +
-        '<input type="' + esc(o.type || 'text') + '" data-afield="' + esc(o.name) + '"' +
+        '<input type="' + esc(revealed[o.name] ? 'text' : (o.type || 'text')) + '" data-afield="' + esc(o.name) + '"' +
           ' value="' + esc(val(o.name)) + '"' +
           (o.placeholder ? ' placeholder="' + esc(o.placeholder) + '"' : '') +
           (o.autocomplete ? ' autocomplete="' + esc(o.autocomplete) + '"' : '') +
           (o.inputmode ? ' inputmode="' + esc(o.inputmode) + '"' : '') +
           (o.maxlength ? ' maxlength="' + esc(o.maxlength) + '"' : '') +
-          (err ? ' aria-invalid="true"' : '') + '>' +
+          (err ? ' aria-invalid="true" aria-describedby="err-' + esc(o.name) + '"' : '') + '>' +
         (o.reveal ? '<button type="button" class="pwtoggle" data-pwtoggle="' + esc(o.name) + '"' +
-          ' aria-label="' + esc(t('acct.pw.show')) + '">' + ico('i-eye') + '</button>' : '') +
+          ' aria-pressed="' + (revealed[o.name] ? 'true' : 'false') + '"' +
+          ' aria-label="' + esc(t(revealed[o.name] ? 'acct.pw.hide' : 'acct.pw.show')) + '">' +
+          ico(revealed[o.name] ? 'i-eye-off' : 'i-eye') + '</button>' : '') +
       '</span>' +
-      (err ? '<span class="field__err" role="alert">' + ico('i-alert') + esc(t(err)) + '</span>'
+      (err ? '<span class="field__err" id="err-' + esc(o.name) + '" role="alert">' +
+             ico('i-alert') + esc(t(err)) + '</span>'
            : (o.hint ? '<span class="field__hint">' + esc(o.hint) + '</span>' : '')) +
     '</label>';
   }
@@ -205,8 +241,11 @@ window.LUME_ACCOUNT_UI = function (deps) {
     if (authed) {
       var since = ACCT.memberSince();
       if (since) {
+        /* A membership date needs the year: dateLong is weekday/day/month,
+           so an account created in 2024 read exactly like one created today. */
         meta.push('<span class="tag tag--neutral">' + ico('i-star') + ' ' +
-          esc(t('acct.memberSince', { date: L.dateLong(new Date(since)) })) + '</span>');
+          esc(t('acct.memberSince', { date: L.date(new Date(since),
+            { day: 'numeric', month: 'long', year: 'numeric' }) })) + '</span>');
       }
       var u = ACCT.user();
       if (u && u.status && u.status !== 'active') {
@@ -239,7 +278,7 @@ window.LUME_ACCOUNT_UI = function (deps) {
         '</ul>' +
       '</div>';
 
-    /* §124.47 — an incomplete profile is invited to complete itself, never
+    /* §124.14 — an incomplete profile is invited to complete itself, never
        forced to. */
     var complete = (authed && !ACCT.fullName())
       ? UI.section({ tight: true, body: UI.noteCard({
@@ -306,6 +345,10 @@ window.LUME_ACCOUNT_UI = function (deps) {
         srow({ icon: 'i-sparkles', title: t('acct.row.interests'),
                sub: t('acct.row.interestsSub'), value: L.num(profile().interests.length),
                act: 'sheet:personalise' }),
+        /* A guest has a name too, and §124.4 said it could be changed. */
+        (authed ? '' : srow({ icon: 'i-user', title: t('acct.f.displayName'),
+                              sub: t('acct.nameNote'),
+                              value: ACCT.displayName() || '', act: 'acct:edit' })),
         srow({ icon: 'i-bookmark', title: t('acct.row.library'),
                sub: t('acct.row.librarySub'), value: L.num(deps.favourites().length),
                act: 'acct:library' })
@@ -423,7 +466,8 @@ window.LUME_ACCOUNT_UI = function (deps) {
         UI.section({ tight: true, body: '<div class="list">' + [
           srow({ icon: 'i-globe', title: t('pers.country'), value: L.countryName(profile().country),
                  act: 'sheet:personalise' }),
-          srow({ icon: 'i-pin', title: t('pers.city'), value: profile().city, act: 'sheet:personalise' }),
+          srow({ icon: 'i-pin', title: t('pers.city'), value: profile().city || '',
+                 act: 'sheet:personalise' }),
           srow({ icon: 'i-currency', title: t('acct.currencyTitle'), value: L.currencyCode(),
                  act: 'acct:currency' })
         ].join('') + '</div>' }) +
@@ -446,7 +490,7 @@ window.LUME_ACCOUNT_UI = function (deps) {
         items: codes.map(function (c) {
           return {
             title: c === 'auto' ? t('acct.currencyAuto') : c,
-            sub: c === 'auto' ? t('pers.currencyAuto', { code: home || '' }) : null,
+            sub: c === 'auto' ? t('pers.currencyAuto', { code: home || L.currencyCode() }) : null,
             on: p.currency === c, act: 'acctset:currency:' + c
           };
         })
@@ -469,22 +513,46 @@ window.LUME_ACCOUNT_UI = function (deps) {
     };
   };
 
+  /* The zones Lume's own location database knows, narrowed to the user's
+     part of the world. A list of every zone on earth would be a search
+     problem; this is the set that is actually reachable from here. */
+  function zonesNear(country) {
+    var home = (deps.geo.get(country) || {}).tz || 'UTC';
+    var area = home.split('/')[0];
+    var seen = {}, out = [];
+    deps.geo.COUNTRIES.forEach(function (c) {
+      if (!c.tz || seen[c.tz]) return;
+      if (c.tz.split('/')[0] !== area) return;
+      seen[c.tz] = 1;
+      out.push(c.tz);
+    });
+    out.sort();
+    return out;
+  }
+
   ROUTES.time = function () {
     var p = profile();
+    var home = (deps.geo.get(p.country) || {}).tz || 'UTC';
+    var zones = zonesNear(p.country);
     return {
-      title: t('acct.timezoneTitle'),
+      title: t('acct.timeTitle'),
       sub: L.timezone(),
-      body: UI.section({ body: optlist({
-        label: t('acct.timezoneTitle'),
+      body: UI.section({ title: t('acct.clockFormat'), body: optlist({
+        label: t('acct.clockFormat'),
         items: [
           { title: t('acct.timezoneAuto'), on: p.clock === 'auto', act: 'acctset:clock:auto' },
           { title: t('acct.clock12'), on: p.clock === '12', act: 'acctset:clock:12' },
           { title: t('acct.clock24'), on: p.clock === '24', act: 'acctset:clock:24' }
         ]
       }) }) +
-      UI.section({ tight: true, body: '<div class="list">' +
-        srow({ icon: 'i-globe', title: t('acct.timezoneTitle'), value: L.timezone(), chevron: false }) +
-        '</div>' }) +
+      UI.section({ title: t('acct.timezoneTitle'), body: optlist({
+        label: t('acct.timezoneTitle'),
+        items: [{ title: t('acct.timezoneFollowRegion'), sub: home, on: !p.tz,
+                  act: 'acctset:tz:auto' }].concat(zones.map(function (z) {
+          return { title: z.split('/').slice(1).join(' · ').replace(/_/g, ' '),
+                   sub: z, on: p.tz === z, act: 'acctset:tz:' + z };
+        }))
+      }) }) +
       UI.section({ tight: true, body: UI.noteCard({
         icon: 'i-info', tone: 'info', title: t('acct.timezoneTitle'), text: t('acct.timezoneNote') }) })
     };
@@ -553,7 +621,8 @@ window.LUME_ACCOUNT_UI = function (deps) {
       srow({ icon: 'i-check-circle', title: t('acct.status'),
              value: t(u.status === 'locked' ? 'acct.statusLocked' : 'acct.statusActive'), chevron: false }),
       srow({ icon: 'i-calendar', title: t('acct.since'),
-             value: L.dateLong(new Date(u.createdAt)), chevron: false })
+             value: L.date(new Date(u.createdAt),
+               { day: 'numeric', month: 'long', year: 'numeric' }), chevron: false })
     ];
     return {
       title: t('acct.personalTitle'),
@@ -572,10 +641,14 @@ window.LUME_ACCOUNT_UI = function (deps) {
     };
   };
 
+  /* §124.4 promised the onboarding name could be changed later, and the only
+     screen that changes it required an account — so a guest who gave a name
+     could never edit or remove it. The form is the same; a guest simply has
+     fewer fields, because a guest has fewer things. */
   ROUTES.edit = function () {
     var u = ACCT.user();
-    if (!u) return signedOutRoute(t('acct.editTitle'));
-    var photo = u.photo || '';
+    var guest = !u;
+    var photo = (u ? u.photo : profile().photo) || '';
     return {
       title: t('acct.editTitle'),
       body: UI.section({ body:
@@ -597,21 +670,34 @@ window.LUME_ACCOUNT_UI = function (deps) {
         '<div class="fgrid">' +
           afield({ name: 'displayName', label: t('acct.f.displayName'), autocomplete: 'nickname',
                    maxlength: 40, hint: t('acct.nameNote') }) +
-          afield({ name: 'firstName', label: t('acct.f.first'), autocomplete: 'given-name', optional: true }) +
-          afield({ name: 'lastName', label: t('acct.f.last'), autocomplete: 'family-name', optional: true }) +
-          afield({ name: 'phone', label: t('acct.f.phone'), type: 'tel', autocomplete: 'tel',
-                   optional: true, hint: t('acct.phoneNote') }) +
+          (guest ? '' :
+            afield({ name: 'firstName', label: t('acct.f.first'), autocomplete: 'given-name', optional: true }) +
+            afield({ name: 'lastName', label: t('acct.f.last'), autocomplete: 'family-name', optional: true }) +
+            afield({ name: 'phone', label: t('acct.f.phone'), type: 'tel', autocomplete: 'tel',
+                     optional: true, hint: t('acct.phoneNote') })) +
         '</div>' +
         '<div class="btnrow" style="margin-top:18px">' +
           submitButton({ act: 'acctsubmit:edit', label: t('acct.saveChanges'), disabled: !form.dirty }) +
         '</div>' +
-        (form.dirty ? '' : '<p class="field__hint" style="text-align:center;margin-top:8px">' +
-          esc(t('acct.nothingChanged')) + '</p>') }) +
+        '<p class="field__hint dirtyhint" style="text-align:center;margin-top:8px"' +
+          (form.dirty ? ' hidden' : '') + '>' + esc(t('acct.nothingChanged')) + '</p>' }) +
       UI.section({ tight: true, body: '<div class="list">' +
-        srow({ icon: 'i-mail', title: t('acct.emailTitle'), value: u.email, act: 'acct:email' }) +
-        '</div>' }),
-      values: { displayName: u.displayName || '', firstName: u.firstName || '',
-                lastName: u.lastName || '', phone: u.phone || '' }
+        (guest ? '' : srow({ icon: 'i-mail', title: t('acct.emailTitle'), value: u.email,
+                             act: 'acct:email' })) +
+        /* §124.14 — country and region belong on this screen, but they are
+           chosen in the location picker rather than typed, so the row leads
+           there instead of duplicating it. */
+        srow({ icon: 'i-globe', title: t('pers.country'), value: L.countryName(profile().country),
+               act: 'acct:region' }) +
+        srow({ icon: 'i-pin', title: profile().region ? t('pers.region') : t('pers.city'),
+               value: profile().region || profile().city || '', act: 'acct:region' }) +
+        '</div>' }) +
+      (guest ? UI.section({ tight: true, body: UI.noteCard({ icon: 'i-info', tone: 'info',
+        title: t('acct.guestBadge'), text: t('acct.guestEditNote') }) }) : ''),
+      values: guest
+        ? { displayName: profile().displayName || '' }
+        : { displayName: u.displayName || '', firstName: u.firstName || '',
+            lastName: u.lastName || '', phone: u.phone || '' }
     };
   };
 
@@ -654,6 +740,8 @@ window.LUME_ACCOUNT_UI = function (deps) {
       body: UI.section({ body: formNote() + formError() +
         afield({ name: 'phone', label: t('acct.f.phone'), type: 'tel', autocomplete: 'tel',
                  inputmode: 'tel', placeholder: dial ? dial + ' ' : '', hint: t('acct.phoneNote') }) +
+        UI.noteCard({ icon: 'i-info', tone: 'info', title: t('acct.phoneScope'),
+                      text: t('acct.phoneScopeText') }) +
         '<div class="btnrow" style="margin-top:16px">' +
           submitButton({ act: 'acctsubmit:phone', label: t('a.save') }) +
           (u.phone ? UI.button({ label: t('a.remove'), tone: 'ghost', act: 'acctdo:phoneclear' }) : '') +
@@ -669,23 +757,18 @@ window.LUME_ACCOUNT_UI = function (deps) {
     var n = ACCT.sessions().length;
     return {
       title: t('acct.securityTitle'),
+      /* §124.13 — what is here is what exists. There is no two-factor
+         switch, no biometric unlock and no sign-in alerting in this build,
+         so there are no rows for them: a row reading "Off" for something
+         that was never built still advertises it. */
       body: UI.section({ body: '<div class="list">' + [
         srow({ icon: 'i-key', tone: 'accent', title: t('acct.changePassword'),
                sub: t('acct.changePasswordSub'), act: 'acct:password' }),
         srow({ icon: 'i-device', title: t('acct.sessionsTitle'),
-               sub: t('acct.sessionsSub', { n: L.num(n) }), act: 'acct:sessions' }),
-        srow({ icon: 'i-bell-ring', title: t('acct.securityNotify'),
-               sub: t('acct.securityNotifySub'),
-               toggle: NOTIFY.prefs().cats.system !== false, act: 'accttoggle:cat:system' })
+               sub: t('acct.sessionsSub', { n: L.num(n) }), act: 'acct:sessions' })
       ].join('') + '</div>' }) +
-      /* §124.13 — only what exists is listed, and what does not exist says
-         so rather than pretending. */
-      UI.section({ tight: true, body: '<div class="list">' + [
-        srow({ icon: 'i-lock', title: t('acct.twoFactor'), sub: t('acct.twoFactorSub'),
-               value: t('n.push.off'), chevron: false }),
-        srow({ icon: 'i-scan', title: t('acct.biometric'), sub: t('acct.biometricSub'),
-               value: t('n.push.off'), chevron: false })
-      ].join('') + '</div>' }) +
+      UI.section({ tight: true, body: UI.noteCard({ icon: 'i-shield', tone: 'info',
+        title: t('acct.securityScope'), text: t('acct.securityScopeText') }) }) +
       UI.section({ tight: true, body: '<div class="btnrow">' +
         UI.button({ label: t('acct.signOutOthers'), tone: 'ghost', icon: 'i-logout',
                     act: 'acctdo:signoutothers' }) + '</div>' })
@@ -793,9 +876,12 @@ window.LUME_ACCOUNT_UI = function (deps) {
       body: UI.section({ body: UI.noteCard({ icon: 'i-help', tone: 'info',
         title: t('acct.helpTitle'), text: t('acct.helpText') }) }) +
       UI.section({ tight: true, body: '<div class="list">' + [
-        srow({ icon: 'i-sparkles', title: t('acct.helpTour'), act: 'acctdo:tour' }),
-        srow({ icon: 'i-message', title: t('acct.helpContact'), act: 'acctdo:feedback' }),
-        srow({ icon: 'i-shield', title: t('acct.privacyTitle'), act: 'acct:privacy' })
+        srow({ icon: 'i-sparkles', title: t('acct.helpTour'), sub: t('acct.row.tourSub'),
+               act: 'acctdo:tour' }),
+        srow({ icon: 'i-shield', title: t('acct.privacyTitle'), sub: t('acct.row.privacySub'),
+               act: 'acct:privacy' }),
+        srow({ icon: 'i-cloud', title: t('acct.syncTitle'), sub: t('acct.row.syncSub'),
+               act: 'acct:sync' })
       ].join('') + '</div>' })
     };
   };
@@ -907,7 +993,7 @@ window.LUME_ACCOUNT_UI = function (deps) {
       '<div class="auth__foot">' +
         submitButton({ act: 'acctsubmit:signin', label: t('acct.signIn'), busyLabel: 'auth.signingIn' }) +
         (authCtx.modal
-          ? '<div class="auth__or">' + esc(t('a.or') === 'a.or' ? 'or' : t('a.or')) + '</div>' +
+          ? '<div class="auth__or">' + esc(t('a.or')) + '</div>' +
             '<button class="btn btn--ghost btn--block pressable" data-act="acctdo:authclose">' +
               esc(t('auth.continueAsGuest')) + '</button>'
           : '') +
@@ -1051,6 +1137,7 @@ window.LUME_ACCOUNT_UI = function (deps) {
   return {
     ROUTES: ROUTES, AUTH: AUTH, form: form, authCtx: authCtx,
     resetForm: resetForm, renderProfile: renderProfile, avatar: avatar,
+    setRevealed: setRevealed, revealed: function (n) { return !!revealed[n]; },
     srow: srow, pwrules: pwrules, pwmeter: pwmeter, signedOutRoute: signedOutRoute
   };
 };

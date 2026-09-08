@@ -170,11 +170,18 @@ function visibleText(doc) {
   hit(win, $(doc, '[data-tab="profile"]'));
   await wait(60);
   const wanted = win.LUME_SPEC.COMPOSITIONS.profile;
-  const order = $$(doc, '#profileBody [data-sect]').map(x => x.dataset.sect)
-    .filter(x => wanted.indexOf(x) !== -1);
+  /* Every section, in order, with nothing filtered out — filtering to the
+     approved list is exactly how an inserted section escapes notice. The
+     sign-out block is the one section allowed after the last binding one,
+     and only for an account holder (§123: "additional supporting sections
+     below the reference's last binding section"). */
+  const sections = doc => $$(doc, '#profileBody [data-sect]').map(x => x.dataset.sect);
+  const composed = order => {
+    const tail = order[order.length - 1] === 'session' ? order.slice(0, -1) : order;
+    return tail.join('>') === wanted.join('>');
+  };
   ok('the profile keeps its approved composition (§123, §124.7)',
-     order.slice(0, wanted.length).join('>') === wanted.join('>'),
-     order.join(' > ') + ' vs ' + wanted.join(' > '));
+     composed(sections(doc)), sections(doc).join(' > ') + ' vs ' + wanted.join(' > '));
   ok('a guest is offered an account', !!$(doc, '#profileBody [data-act="auth:signup"]'));
   ok('a guest is offered sign in', !!$(doc, '#profileBody [data-act="auth:signin"]'));
   ok('a guest is not shown a log-out row', !$(doc, '#profileBody [data-act="acctdo:logout"]'));
@@ -251,9 +258,7 @@ function visibleText(doc) {
   ok('an account holder is offered Edit profile', !!$(doc, '[data-act="acct:edit"]'));
   ok('an account holder is offered log out', !!$(doc, '[data-act="acctdo:logout"]'));
   ok('the composition does not change with the account state',
-     $$(doc, '#profileBody [data-sect]').map(x => x.dataset.sect)
-       .filter(x => wanted.indexOf(x) !== -1).slice(0, wanted.length).join('>') === wanted.join('>'),
-     $$(doc, '#profileBody [data-sect]').map(x => x.dataset.sect).join(' > '));
+     composed(sections(doc)), sections(doc).join(' > '));
 
   /* ═══ 6. A duplicate address is refused (§124.9) ═════════════════════ */
   console.log('\n=== Duplicate account ===');
@@ -291,8 +296,13 @@ function visibleText(doc) {
   act(win, 'acct:security');
   await wait(60);
   ok('security opens', screenId(doc) === 'account', screenId(doc));
-  ok('security lists only what exists',
-     /Not available/i.test(text($(doc, '#accountBody'))), 'two-factor is claimed but absent');
+  const secRows = $$(doc, '#accountBody .list-row')
+    .map(r => text(r.querySelector('.list-row__title')));
+  ok('security does not advertise protection that was never built',
+     !secRows.some(r => /Two-factor|Biometric/i.test(r)), secRows.join(' | '));
+  ok('and says plainly what it does protect',
+     /password and your signed-in devices/i.test(text($(doc, '#accountBody'))),
+     text($(doc, '#accountBody')).slice(0, 140));
 
   act(win, 'acct:password');
   await wait(60);
@@ -655,6 +665,16 @@ function visibleText(doc) {
     if (raw) leaks.push(r + ': ' + raw.join(','));
     if (!body.trim()) blanks.push(r + ': empty screen');
   }
+  hit(win, $(doc, '[data-tab="profile"]'));
+  await wait(80);
+  const profileText = text($(doc, '#profileBody'));
+  if (/undefined|null|NaN/.test(profileText)) blanks.push('profile: ' + profileText.slice(0, 60));
+  const profileRaw = profileText.match(/(acct|auth|onb|a11y|cat|tools|pers)\.[a-zA-Z.]+/g);
+  if (profileRaw) leaks.push('profile: ' + profileRaw.join(','));
+  const profileIcons = $$(doc, '#profileBody use').map(u => u.getAttribute('href'))
+    .filter(h => !h || h === '#undefined' || h === '#null');
+  if (profileIcons.length) blanks.push('profile: ' + profileIcons.length + ' unresolved icons');
+
   ok('no account screen renders undefined, null or NaN', blanks.length === 0, blanks.join(' | '));
   ok('no account screen leaks a translation key', leaks.length === 0, leaks.join(' | '));
   ok('the account screens follow the RTL direction', doc.documentElement.dir === 'rtl');
@@ -828,6 +848,315 @@ function visibleText(doc) {
      (!left.notifyRead || !Object.keys(left.notifyRead).length) &&
      (!left.notify || left.notify.push === false),
      JSON.stringify({ read: left.notifyRead, push: (left.notify || {}).push }));
+  win.close();
+
+
+  /* ═══ 23. What the UI and integration audits found ═════════════════════ */
+  console.log('\n=== Surface regressions ===');
+  ({ win, doc } = await boot({ profile: { country: 'PK', city: 'Islamabad', lang: 'en' } }));
+
+  /* renderAll() used to destroy the account route it was refreshing, so
+     every choice on a settings screen changed the product and left the
+     screen showing the old answer. */
+  act(win, 'acct:language');
+  await wait(80);
+  const urduRow = $$(doc, '#accountBody .optrow').find(o => /اردو/.test(o.textContent));
+  hit(win, urduRow);
+  await wait(120);
+  ok('a chosen language is the one the picker marks',
+     /اردو/.test(text($$(doc, '#accountBody .optrow').find(o => o.classList.contains('is-on')) || {})),
+     $$(doc, '#accountBody .optrow').filter(o => o.classList.contains('is-on')).map(o => text(o)).join(' | '));
+  ok('and the screen itself follows the language',
+     doc.documentElement.dir === 'rtl' && screenId(doc) === 'account', doc.documentElement.dir);
+  act(win, 'acctset:lang:en');
+  await wait(100);
+
+  act(win, 'acct:appearance');
+  await wait(80);
+  act(win, 'acctset:theme:dark');
+  await wait(120);
+  ok('a chosen appearance is the one the picker marks',
+     /Dark/i.test(text($$(doc, '#accountBody .optrow').find(o => o.classList.contains('is-on')) || {})),
+     $$(doc, '#accountBody .optrow').filter(o => o.classList.contains('is-on')).map(o => text(o)).join(' | '));
+  act(win, 'acctset:theme:system');
+  await wait(80);
+
+  /* The back stack survives a render. */
+  act(win, 'acct:prefs');
+  await wait(60);
+  act(win, 'acct:language');
+  await wait(60);
+  act(win, 'acctset:lang:en');
+  await wait(100);
+  hit(win, $(doc, '#accountHeader [data-tool-back]'));
+  await wait(80);
+  ok('a render does not wipe the settings back stack',
+     /Preferences/i.test(text($(doc, '#accountHeader'))), text($(doc, '#accountHeader')));
+
+  /* §124.17 — a timezone that can actually be set. */
+  act(win, 'acct:time');
+  await wait(80);
+  const zoneRows = $$(doc, '#accountBody .optrow').filter(o => /\//.test(o.textContent));
+  ok('the time screen offers real timezones, not only a clock format',
+     zoneRows.length > 3, zoneRows.length + ' zones');
+  const dubai = zoneRows.find(o => /Dubai/.test(o.textContent));
+  if (dubai) {
+    hit(win, dubai);
+    await wait(120);
+    ok('a manual timezone is stored and used',
+       JSON.parse(win.localStorage.getItem('lume-profile')).tz === 'Asia/Dubai',
+       JSON.parse(win.localStorage.getItem('lume-profile')).tz);
+    act(win, 'acctset:tz:auto');
+    await wait(80);
+    ok('and can be handed back to the region',
+       !JSON.parse(win.localStorage.getItem('lume-profile')).tz);
+  }
+
+  /* §101 — a switch says it is a switch, and which way it is set. */
+  act(win, 'acct:privacy');
+  await wait(80);
+  const sw = $(doc, '#accountBody [role="switch"]');
+  ok('a toggle row announces itself as a switch', !!sw);
+  if (sw) {
+    const before = sw.getAttribute('aria-checked');
+    ok('and says which way it is set', before === 'true' || before === 'false', String(before));
+    hit(win, sw);
+    await wait(100);
+    ok('and the announcement follows the state',
+       $(doc, '#accountBody [role="switch"]').getAttribute('aria-checked') !== before,
+       before + ' -> ' + $(doc, '#accountBody [role="switch"]').getAttribute('aria-checked'));
+  }
+
+  /* §101 — a radio group is one tab stop, and the arrows move within it. */
+  act(win, 'acct:units');
+  await wait(80);
+  const radios = $$(doc, '#accountBody [role="radio"]');
+  const stops = radios.filter(r => r.getAttribute('tabindex') === '0');
+  ok('a radio group is a single tab stop', stops.length === 1,
+     stops.length + ' of ' + radios.length + ' are tabbable');
+  radios[0].dispatchEvent(new win.KeyboardEvent('keydown', { key: 'ArrowDown', bubbles: true }));
+  await wait(100);
+  ok('the arrow keys move within the group',
+     JSON.parse(win.localStorage.getItem('lume-profile')).units !== 'auto',
+     JSON.parse(win.localStorage.getItem('lume-profile')).units);
+  act(win, 'acctset:units:auto');
+  await wait(80);
+  win.close();
+
+  /* An authentication flow entered over something else dismisses in one
+     press, and hopping between sign in and sign up does not stack. */
+  console.log('\n=== Authentication navigation ===');
+  ({ win, doc } = await boot());
+  act(win, 'acct:security');
+  await wait(80);
+  hit(win, $(doc, '[data-act="auth:signup"]'));
+  await wait(60);
+  hit(win, $(doc, '[data-act="auth:signin"]'));
+  await wait(60);
+  hit(win, $(doc, '[data-act="auth:signup"]'));
+  await wait(60);
+  hit(win, $(doc, '[data-act="acctdo:authclose"]'));
+  await wait(100);
+  ok('a modal authentication dismisses in one press', screenId(doc) !== 'auth', screenId(doc));
+
+  act(win, 'auth:signin');
+  await wait(60);
+  hit(win, $(doc, '[data-act="auth:signup"]'));
+  await wait(60);
+  hit(win, $(doc, '[data-act="auth:signin"]'));
+  await wait(60);
+  hit(win, $(doc, '#authBody [data-tool-back]'));
+  await wait(100);
+  ok('sign in and sign up are siblings, not levels', screenId(doc) !== 'auth', screenId(doc));
+  win.close();
+
+  /* Back out of an email verification returns to the screen that started it. */
+  ({ win, doc } = await boot());
+  await fillSignUp(win, { email: 'nav@example.com', password: 'Password1', confirm: 'Password1' });
+  act(win, 'acct:account');
+  await wait(60);
+  act(win, 'acct:email');
+  await wait(60);
+  type(win, 'email', 'nav2@example.com');
+  await submit(win, 'email');
+  ok('changing an email opens verification', screenId(doc) === 'auth', screenId(doc));
+  hit(win, $(doc, '#authBody [data-tool-back]'));
+  await wait(120);
+  ok('backing out of verification returns to the screen that started it',
+     screenId(doc) === 'account' && /Email/i.test(text($(doc, '#accountHeader'))),
+     screenId(doc) + ' · ' + text($(doc, '#accountHeader')));
+
+  /* A destructive button is not left inert by a cancelled dialog. */
+  act(win, 'acct:delete');
+  await wait(60);
+  type(win, 'current', 'Password1');
+  await submit(win, 'delete');
+  hit(win, $(doc, '#confirmCancel'));
+  await wait(80);
+  const delBtn = $(doc, '[data-act="acctsubmit:delete"]');
+  ok('a cancelled confirmation leaves its button usable',
+     !!delBtn && !delBtn.classList.contains('is-busy'),
+     delBtn ? delBtn.className : 'missing');
+
+  /* §101 — the dialog takes focus, and the screen behind it stops taking it. */
+  hit(win, $(doc, '[data-tab="profile"]'));
+  await wait(60);
+  hit(win, $(doc, '[data-act="acctdo:logout"]'));
+  await wait(140);
+  ok('a modal dialog moves focus into itself',
+     $(doc, '#sheet-confirm').contains(doc.activeElement),
+     doc.activeElement ? doc.activeElement.tagName + '.' + doc.activeElement.className : 'none');
+  ok('and the screen behind it is hidden from assistive technology',
+     ($(doc, '.screen.is-active') || {}).getAttribute &&
+       $(doc, '.screen.is-active').getAttribute('aria-hidden') === 'true');
+  hit(win, $(doc, '#confirmCancel'));
+  await wait(80);
+  ok('and the screen is handed back when it closes',
+     !$(doc, '.screen.is-active').getAttribute('aria-hidden'));
+
+  /* §125 — a membership date needs a year to be a date. */
+  act(win, 'acct:account');
+  await wait(80);
+  ok('the membership date carries its year',
+     /\b(19|20)\d\d/.test(text($(doc, '#accountBody'))),
+     text($(doc, '#accountBody')).slice(0, 140));
+
+  /* An empty value the product holds says so. */
+  ok('a field with no value shows a "not set" affordance',
+     /Not set/i.test(text($(doc, '#accountBody'))), text($(doc, '#accountBody')).slice(0, 160));
+
+  /* An error is reachable from the field it belongs to, and focus goes there. */
+  act(win, 'acct:password');
+  await wait(60);
+  type(win, 'current', 'Wrong1234');
+  type(win, 'password', 'Newpass12');
+  type(win, 'confirm', 'Newpass12');
+  await submit(win, 'password');
+  const invalid = $(doc, '[aria-invalid="true"]');
+  ok('an invalid field points at its own error',
+     !!invalid && !!invalid.getAttribute('aria-describedby') &&
+       !!doc.getElementById(invalid.getAttribute('aria-describedby')),
+     invalid ? String(invalid.getAttribute('aria-describedby')) : 'no invalid field');
+  ok('and focus moves to it', doc.activeElement === invalid,
+     doc.activeElement ? doc.activeElement.getAttribute('data-afield') : 'none');
+
+  /* A revealed password stays revealed through a failed submission. */
+  const toggle = $(doc, '[data-pwtoggle="current"]');
+  ok('a password field can be revealed', !!toggle);
+  if (toggle) {
+    hit(win, toggle);
+    await wait(40);
+    ok('revealing shows the characters',
+       $(doc, '[data-afield="current"]').type === 'text');
+    type(win, 'current', 'Wrong5678');
+    await submit(win, 'password');
+    ok('and a failed submission does not re-mask them',
+       $(doc, '[data-afield="current"]').type === 'text',
+       $(doc, '[data-afield="current"]').type);
+    ok('the toggle says whether it is pressed',
+       $(doc, '[data-pwtoggle="current"]').getAttribute('aria-pressed') === 'true');
+  }
+
+  /* The host announces the screen it is actually showing. */
+  ok('the account host is labelled with the screen it holds',
+     /password/i.test($(doc, '#screen-account').getAttribute('aria-label') || ''),
+     String($(doc, '#screen-account').getAttribute('aria-label')));
+  win.close();
+
+  /* §124.14 — a dirty form is not thrown away in silence. */
+  console.log('\n=== Unsaved work ===');
+  ({ win, doc } = await boot());
+  await fillSignUp(win, { name: 'Dee', email: 'dee@example.com', password: 'Password1', confirm: 'Password1' });
+  act(win, 'acct:edit');
+  await wait(80);
+  ok('the "nothing to save" caption is shown while nothing has changed',
+     !!$(doc, '#accountBody .dirtyhint') && !$(doc, '#accountBody .dirtyhint').hidden);
+  type(win, 'displayName', 'Deelan');
+  await wait(60);
+  ok('and hidden the moment something has', $(doc, '#accountBody .dirtyhint').hidden);
+  hit(win, $(doc, '#accountHeader [data-tool-back]'));
+  await wait(100);
+  ok('leaving a dirty form asks before discarding it',
+     $(doc, '#sheet-confirm').classList.contains('is-open') && screenId(doc) === 'account',
+     screenId(doc));
+  hit(win, $(doc, '#confirmCancel'));
+  await wait(80);
+  ok('cancelling keeps the edit', $(doc, '[data-afield="displayName"]').value === 'Deelan',
+     $(doc, '[data-afield="displayName"]').value);
+  hit(win, $(doc, '#accountHeader [data-tool-back]'));
+  await wait(80);
+  hit(win, $(doc, '#confirmGo'));
+  await wait(120);
+  ok('and discarding leaves the screen', screenId(doc) !== 'account', screenId(doc));
+  ok('without having saved the discarded edit', win.LUME_ACCT.displayName() === 'Dee',
+     win.LUME_ACCT.displayName());
+  win.close();
+
+  /* §124.4 — a guest was told the name could be changed later. */
+  console.log('\n=== A guest owns their name ===');
+  ({ win, doc } = await boot({ profile: { displayName: 'Sara' } }));
+  hit(win, $(doc, '[data-tab="profile"]'));
+  await wait(80);
+  ok('a guest with a name is greeted by it',
+     /Sara/.test(text($(doc, '#profileBody .phead'))), text($(doc, '#profileBody .phead')).slice(0, 80));
+  act(win, 'acct:edit');
+  await wait(100);
+  ok('and can reach the screen that changes it',
+     screenId(doc) === 'account' && !!$(doc, '[data-afield="displayName"]'),
+     screenId(doc) + ' · ' + text($(doc, '#accountHeader')));
+  type(win, 'displayName', 'Sara Q');
+  await submit(win, 'edit');
+  await wait(80);
+  ok('a guest can change their own name', win.LUME_ACCT.displayName() === 'Sara Q',
+     String(win.LUME_ACCT.displayName()));
+  win.close();
+
+  /* An English feature name is never a raw key. */
+  console.log('\n=== Feature names ===');
+  ({ win, doc } = await boot());
+  const missing = ['bills', 'vaccines', 'meds', 'documents', 'mealplan', 'shopping',
+                   'taraweeh', 'fuelcost', 'vehicle']
+    .filter(id => win.LUME_I18N.DICTS.en['f.' + id] === undefined);
+  ok('every feature has an English name', missing.length === 0, missing.join(', '));
+  ok('the market status and the opening price no longer share one key',
+     win.LUME_I18N.DICTS.en['markets.open'] === 'Market open' &&
+     win.LUME_I18N.DICTS.en['markets.openPrice'] === 'Open',
+     JSON.stringify([win.LUME_I18N.DICTS.en['markets.open'], win.LUME_I18N.DICTS.en['markets.openPrice']]));
+  win.close();
+
+  /* === 24. The region editor, and what a sheet may hide =============== */
+  console.log('\n=== Region, and sheets over gated screens ===');
+  ({ win, doc } = await boot({ profile: { country: 'PK', city: 'Islamabad', lang: 'en' } }));
+  act(win, 'acct:region');
+  await wait(80);
+  ok('the region screen states what changing it changes',
+     /may update your currency/i.test(text($(doc, '#accountBody'))),
+     text($(doc, '#accountBody')).slice(0, 120));
+
+  hit(win, $(doc, '#accountBody [data-act="sheet:personalise"]'));
+  await wait(140);
+  ok('and so does the sheet where the change is actually made',
+     /may update your currency/i.test(text($(doc, '#sheet-personalise'))),
+     text($(doc, '#sheet-personalise')).slice(0, 140));
+
+  /* A sheet hides the screen behind it from assistive technology, but must
+     not hand back one the visibility system is holding hidden (§64). */
+  const trains = $(doc, '#screen-trains');
+  const trainsHidden = trains ? trains.getAttribute('aria-hidden') : null;
+  hit(win, $(doc, '#sheet-personalise [data-close]'));
+  await wait(120);
+  ok('closing a sheet does not un-hide a screen the visibility system hid',
+     (trains ? trains.getAttribute('aria-hidden') : null) === trainsHidden,
+     trainsHidden + ' -> ' + (trains ? trains.getAttribute('aria-hidden') : 'none'));
+
+  /* A change made from a settings screen reaches that settings screen. */
+  act(win, 'acct:currency');
+  await wait(80);
+  act(win, 'acctset:currency:USD');
+  await wait(160);
+  const currencyMarked = $$(doc, '#accountBody .optrow.is-on').map(o => text(o)).join(' | ');
+  ok('a currency chosen here is the one the picker marks',
+     /USD/.test(currencyMarked), currencyMarked);
   win.close();
 
   console.log('\n' + (failures ? failures + ' FAILURES' : 'ALL ACCOUNT CHECKS PASSED'));

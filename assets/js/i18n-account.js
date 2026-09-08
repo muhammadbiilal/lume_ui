@@ -186,7 +186,7 @@
     'acct.emailPendingText': '{email} becomes your address once you verify it.',
     'acct.emailChanged': 'Email updated',
     'acct.phoneTitle': 'Phone number',
-    'acct.phoneNote': 'Used for account recovery only. Optional.',
+    'acct.phoneNote': 'Optional. Stored on this device.',
     'acct.phoneSaved': 'Phone number saved',
 
     /* ---- security ---- */
@@ -203,12 +203,6 @@
     'acct.signOutOthersText': 'Every other signed-in device will need to sign in again.',
     'acct.signedOutOthers': 'Signed out {n} other devices',
     'acct.noOtherDevices': 'No other devices are signed in.',
-    'acct.twoFactor': 'Two-factor authentication',
-    'acct.twoFactorSub': 'Not available in this build',
-    'acct.biometric': 'Biometric unlock',
-    'acct.biometricSub': 'Not available on this device',
-    'acct.securityNotify': 'Security alerts',
-    'acct.securityNotifySub': 'Tell me about new sign-ins',
     'acct.device.ios': 'iPhone', 'acct.device.android': 'Android phone',
     'acct.device.mac': 'Mac', 'acct.device.windows': 'Windows PC',
     'acct.device.browser': 'This browser',
@@ -232,6 +226,19 @@
     'acct.regionTitle': 'Region & currency',
     'acct.regionWarn': 'Changing your region may update your currency, markets, holidays, emergency numbers and local services.',
     'acct.regionChange': 'Change country or city',
+
+    'acct.themeSwitched': 'Appearance: {mode}',
+    'acct.securityScope': 'What Lume protects',
+    'acct.securityScopeText': 'Your password and your signed-in devices. There is no two-factor or biometric unlock in this build, so nothing here claims otherwise.',
+    'acct.phoneScope': 'What this is for',
+    'acct.phoneScopeText': 'Kept on this device so a tool can offer it. Lume has no phone sign-in or phone recovery, so it does nothing else.',
+    'acct.timeTitle': 'Time & timezone',
+    'acct.clockFormat': 'Clock',
+    'acct.timezoneFollowRegion': 'Follow my region',
+    'acct.discardTitle': 'Discard your changes?',
+    'acct.discardText': 'You’ve edited this screen without saving. Leaving now loses those edits.',
+    'acct.discardCta': 'Discard',
+    'acct.guestEditNote': 'This name is kept on this device. Creating an account brings it with you.',
 
     /* ---- privacy & data ---- */
     'acct.privacyTitle': 'Privacy',

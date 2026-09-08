@@ -4167,10 +4167,19 @@ renders what exists and omits what does not.
 `displayName` resolves through one hierarchy, everywhere, without exception:
 
 ```text
-account.displayName → account.firstName → local displayName → (nothing)
+signed in:  account.displayName → account.firstName → (nothing)
+guest:      device displayName → (nothing)
 ```
 
 "(nothing)" is a valid, designed outcome. It is not an error state.
+
+The two branches do not join, and the omission is deliberate. An earlier
+draft let a signed-in account with no name fall through to the name typed on
+the device, which reads as helpful and is not: a device is shared, and the
+name on it may belong to somebody else. An account's identity comes from the
+account. A device's identity is the device's, and returns when the account
+signs out. Nothing crosses in either direction except at the single moment
+§124.24 defines, where a guest's name fills an account that has none.
 
 ## 124.4 Onboarding — the optional name
 
@@ -4272,21 +4281,29 @@ Your Lume
 ◉ Appearance                     ›
 ◉ Language                       ›
 ◉ Region & currency              ›
+◉ Your interests                 ›
+◉ Your library                   ›
 
 Account
 ◉ Personal information           ›
 ◉ Security                       ›
 ◉ Privacy                        ›
+◉ Data & sync                    ›
 
 Support
 ◉ Help                           ›
 ◉ About Lume                     ›
+◉ Replay the welcome tour        ›
 
 Log out
 ```
 
-This is an **approved reference composition** under §123. Its section order,
-its identity header and its grouping are binding.
+This is an **approved reference composition** under §123. What is binding is
+the **section order** — identity, Your Lume, Account, Support — the identity
+header at the top, and which group each row belongs to. The rows within a
+group may grow: a guest's Account group holds the offer of an account where
+an account holder's holds the account itself, and both are the same section
+in the same place.
 
 ## 124.8 Sign up
 
@@ -4431,8 +4448,15 @@ The account's identity does not move silently.
 
 ## 124.16 Phone
 
-Add · verify · change · remove, with country-aware formatting driven by the
-user's country (§105) — never a hardcoded dialling code.
+Add · change · remove, with country-aware formatting driven by the user's
+country (§105) — never a hardcoded dialling code.
+
+**Verification is required exactly when the number is load-bearing.** A number
+used for sign-in or for account recovery must be verified before it can be
+relied on for either. A number that is only kept for the user's own reference
+must not be, and — more importantly — the screen must not claim a use the
+product does not make of it. Lume has no phone sign-in and no phone recovery,
+so the field says what it is: stored on this device, and nothing more.
 
 ## 124.17 Region, language, currency, timezone, units, appearance
 
@@ -4446,8 +4470,13 @@ Changing your region may update your default currency, markets,
 holidays, emergency numbers and local services.
 ```
 
-Timezone supports automatic and manual. **The device timezone is never assumed
-to be a venue's timezone** — a market, a flight or a train reads its own (§26.10).
+Timezone supports automatic and manual: automatic follows the user's region,
+and a manual choice overrides it. **Neither is the device's clock, and neither
+is a venue's** — a market, a flight or a train reads its own (§26.10).
+
+The warning above is owed at the point of change, not on the screen that
+happens to describe the setting. Wherever region is actually edited — a
+settings screen, a picker, a sheet — the consequences are stated there.
 
 ## 124.18 Notifications
 

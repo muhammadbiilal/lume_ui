@@ -84,7 +84,13 @@ window.LUME_LOCALE = function (getProfile) {
     return country().clock;
   }
 
-  function timezone() { return country().tz; }
+  /* §124.17 — automatic follows the user's region; a manual choice overrides
+     it. Neither is the device's clock, and neither is a venue's: a market, a
+     flight and a train each carry their own (§26.10). */
+  function timezone() {
+    var manual = p().tz;
+    return manual ? manual : country().tz;
+  }
 
   /* ---- strings ---- */
 
