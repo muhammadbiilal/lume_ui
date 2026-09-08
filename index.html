@@ -19,6 +19,7 @@
 <link rel="stylesheet" href="assets/css/onboarding.css">
 <link rel="stylesheet" href="assets/css/tools.css">
 <link rel="stylesheet" href="assets/css/account.css">
+<link rel="stylesheet" href="assets/css/auth.css">
 
 <script>
   // Set theme before first paint to avoid a flash.
@@ -1231,8 +1232,12 @@
 
   <!-- ==========================================================
        AUTHENTICATION — a flow, not a tool (§124.25, §124.30)
+
+       Its own layout system (§126): the safe-area-aware canvas
+       is the composition, so this screen keeps no tool padding
+       and hands its whole height to the auth shell.
        ========================================================== -->
-  <section class="screen screen--tool" id="screen-auth" role="region" aria-label="Sign in">
+  <section class="screen screen--auth" id="screen-auth" role="region" aria-label="Sign in">
     <div id="authBody"></div>
   </section>
 
@@ -1485,6 +1490,24 @@
         <div class="confirm__acts">
           <button class="btn btn--danger btn--block pressable" id="confirmGo"></button>
           <button class="btn btn--ghost btn--block pressable" data-close id="confirmCancel"></button>
+        </div>
+      </div>
+    </div>
+  </aside>
+
+  <!-- §126.40 — the legal line's link, as a sheet rather than a screen.
+       Navigating away from step two of a sign-up would take the password
+       the user has just typed with it; a sheet keeps the form underneath
+       exactly as it was. -->
+  <aside class="sheet" id="sheet-authlegal" role="dialog" aria-modal="true" aria-labelledby="authLegalTitle">
+    <span class="sheet__grab"></span>
+    <div class="sheet__body">
+      <div class="confirm">
+        <h2 class="confirm__title" id="authLegalTitle" data-i18n="auth.legalTitle">How Lume handles your data</h2>
+        <p class="confirm__text" data-i18n="auth.legalBody">Your account, your settings and everything you create in Lume are stored on this device. Lume does not sell your information and does not share it with anyone.</p>
+        <p class="confirm__text" data-i18n="auth.legalWhere">The full detail lives under Privacy in your profile, and you can delete your account and everything in it at any time.</p>
+        <div class="confirm__acts">
+          <button class="btn btn--ghost btn--block pressable" data-close data-i18n="a.close">Close</button>
         </div>
       </div>
     </div>

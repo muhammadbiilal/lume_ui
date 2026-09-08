@@ -271,14 +271,28 @@ window.LUME_ACCOUNT = function (deps) {
   /* ---------------------------------------------------------
      Sign up  (§124.8)
      --------------------------------------------------------- */
-  function signUp(input) {
-    input = input || {};
+  /* The identity half of sign-up, checked on its own so a progressive form
+     (§126.9) can never accept a first step that the second step's submission
+     would then reject. Same rules, same keys — one implementation. */
+  function identityErrors(input) {
     var errors = {};
     var mail = key(input.email);
-
     if (!mail) errors.email = 'acct.err.emailRequired';
     else if (!emailValid(mail)) errors.email = 'acct.err.emailInvalid';
     else if (users()[mail]) errors.email = 'acct.err.emailTaken';
+    return errors;
+  }
+
+  function signUpStep(input) {
+    var errors = identityErrors(input || {});
+    for (var k in errors) if (errors.hasOwnProperty(k)) return { ok: false, errors: errors };
+    return { ok: true };
+  }
+
+  function signUp(input) {
+    input = input || {};
+    var errors = identityErrors(input);
+    var mail = key(input.email);
 
     if (!input.password) errors.password = 'acct.err.passwordRequired';
     else if (!passwordOK(input.password)) errors.password = 'acct.err.passwordWeak';
@@ -711,7 +725,7 @@ window.LUME_ACCOUNT = function (deps) {
     email: email, photo: photo, memberSince: memberSince,
     emailValid: emailValid, passwordChecks: passwordChecks, passwordOK: passwordOK,
     passwordStrength: passwordStrength,
-    signUp: signUp, signIn: signIn, signOut: signOut,
+    signUp: signUp, signUpStep: signUpStep, signIn: signIn, signOut: signOut,
     requestReset: requestReset, resetPassword: resetPassword, changePassword: changePassword,
     updateUser: updateUser, requestEmailChange: requestEmailChange,
     verifyEmail: verifyEmail, cancelEmailChange: cancelEmailChange,

@@ -86,14 +86,19 @@ async function submit(win, kind) {
   return true;
 }
 
+/* Sign-up is a progressive form (§126.9): who you are, then how you get
+   back in, then the arrival screen. */
 async function fillSignUp(win, { name, email, password, confirm }) {
   act(win, 'auth:signup');
   await wait(60);
   if (name !== undefined) type(win, 'name', name);
   if (email !== undefined) type(win, 'email', email);
+  await submit(win, 'signupstep');
   if (password !== undefined) type(win, 'password', password);
   if (confirm !== undefined) type(win, 'confirm', confirm);
   await submit(win, 'signup');
+  const enter = win.document.querySelector('[data-act="acctdo:authdone"]');
+  if (enter) { hit(win, enter); await wait(90); }
 }
 
 /* Text that reached the eye, not text that exists in the file. */
@@ -196,29 +201,42 @@ function visibleText(doc) {
   ok('every settings row has a destination', deadRows.length === 0,
      deadRows.map(r => text(r)).join(' | '));
 
-  /* ═══ 4. Sign up: validation before acceptance (§124.9) ══════════════ */
+  /* ═══ 4. Sign up: validation before acceptance (§124.9, §126.9) ══════ */
   console.log('\n=== Sign up ===');
   act(win, 'auth:signup');
   await wait(60);
   ok('the sign-up screen opens', screenId(doc) === 'auth', screenId(doc));
-  ok('the password rules are shown before submission', !!$(doc, '[data-pwrules="password"]'));
+  ok('sign-up begins at its first step',
+     $$(doc, '.authsteps__seg.is-on').length === 1,
+     $$(doc, '.authsteps__seg.is-on').length + ' of ' + $$(doc, '.authsteps__seg').length);
+  ok('the first step asks who, not how',
+     !!$(doc, '[data-afield="email"]') && !$(doc, '[data-afield="password"]'));
 
-  await submit(win, 'signup');
-  ok('an empty sign-up reports the email inline',
+  await submit(win, 'signupstep');
+  ok('an empty first step reports the email inline',
      !!$(doc, '.field.is-invalid [data-afield="email"]'));
-  ok('an empty sign-up reports the password inline',
-     !!$(doc, '.field.is-invalid [data-afield="password"]'));
-  ok('errors are inline, not only a toast', $$(doc, '.field__err').length >= 2,
+  ok('errors are inline, not only a toast', $$(doc, '.field__err').length >= 1,
      $$(doc, '.field__err').length + ' inline errors');
 
   type(win, 'email', 'not-an-email');
-  type(win, 'password', 'Password1');
-  type(win, 'confirm', 'Password1');
-  await submit(win, 'signup');
+  await submit(win, 'signupstep');
   ok('an invalid email is caught', /email address/i.test(text($(doc, '.field__err'))),
      text($(doc, '.field__err')));
+  ok('and an invalid first step does not advance', !$(doc, '[data-afield="password"]'));
 
+  type(win, 'name', 'Muhammad Bilal');
   type(win, 'email', 'muhammad@example.com');
+  await submit(win, 'signupstep');
+  ok('a valid first step advances', !!$(doc, '[data-afield="password"]'));
+  ok('the progress indicator moves with it',
+     $$(doc, '.authsteps__seg.is-on').length === 2,
+     $$(doc, '.authsteps__seg.is-on').length + ' lit');
+  ok('the password rules are shown before submission', !!$(doc, '[data-pwrules="password"]'));
+
+  await submit(win, 'signup');
+  ok('an empty password is reported inline',
+     !!$(doc, '.field.is-invalid [data-afield="password"]'));
+
   type(win, 'password', 'short');
   type(win, 'confirm', 'short');
   await submit(win, 'signup');
@@ -237,13 +255,26 @@ function visibleText(doc) {
   const rulesOn = $$(doc, '[data-pwrules="password"] .pwrule.is-ok').length;
   ok('the checklist ticks as the rules are met', rulesOn === 4, rulesOn + ' of 4');
 
-  type(win, 'name', 'Muhammad Bilal');
+  /* A step is not a screen the user is leaving (§126.9). */
+  hit(win, $(doc, '[data-act="acctdo:signupback"]'));
+  await wait(80);
+  ok('stepping back returns to the first step', !!$(doc, '[data-afield="email"]'));
+  ok('and keeps what was already typed',
+     ($(doc, '[data-afield="email"]') || {}).value === 'muhammad@example.com',
+     ($(doc, '[data-afield="email"]') || {}).value);
+
+  await submit(win, 'signupstep');
+  type(win, 'password', 'Password1');
   type(win, 'confirm', 'Password1');
   await submit(win, 'signup');
   ok('a valid sign-up creates the account', win.LUME_ACCT.isAuthed(), win.LUME_ACCT.state());
   ok('the account carries the name that was given',
      win.LUME_ACCT.fullName() === 'Muhammad Bilal', win.LUME_ACCT.fullName());
-  ok('sign-up lands somewhere designed, not on a blank screen',
+  ok('sign-up ends on the designed arrival screen (§126.13)',
+     !!$(doc, '.authseal') && !!$(doc, '[data-act="acctdo:authdone"]'), screenId(doc));
+  hit(win, $(doc, '[data-act="acctdo:authdone"]'));
+  await wait(100);
+  ok('and that screen leads into the app',
      ['home', 'profile'].indexOf(screenId(doc)) !== -1, screenId(doc));
 
   /* ═══ 5. Profile as an account holder (§124.7) ═══════════════════════ */
@@ -438,9 +469,11 @@ function visibleText(doc) {
   hit(win, $(doc, '[data-act="auth:signup"]'));
   await wait(60);
   type(win, 'email', 'deep@example.com');
+  await submit(win, 'signupstep');
   type(win, 'password', 'Password1');
   type(win, 'confirm', 'Password1');
   await submit(win, 'signup');
+  hit(win, $(doc, '[data-act="acctdo:authdone"]'));
   await wait(120);
   ok('after signing in the user lands on what they asked for, not Home',
      screenId(doc) === 'account' && /Security/i.test(text($(doc, '#accountHeader'))),

@@ -3799,6 +3799,9 @@
     },
     renderNotifPrefs: renderNotifPrefs
   });
+  /* The surfaces, reachable the way the engine already is — the layout
+     contract in §126 is asserted against them rather than described. */
+  window.LUME_ACCT_UI = AUI;
 
   var accountRoute = null, accountStack = [], accountReturn = 'profile';
   var authRoute = null, authStack = [], authReturn = 'profile';
@@ -3928,23 +3931,56 @@
       else authStack.push(authRoute);
     }
 
+    /* An outcome is not a step. Nothing behind "your account is ready" is
+       worth returning to, so the flow's history ends there (§126.30). */
+    if (opts.fresh) authStack.length = 0;
+
     if (currentTool) { stopClocks(); currentTool = null; toolStack.length = 0; }
     authRoute = route;
+    /* §126.30 — forward navigation and backward navigation are different
+       transitions, so the shell is told which one it is. */
+    AUI.authCtx.nav = opts.back ? 'back' : 'fwd';
+    /* §126.9 — a sign-up always starts at its first step. */
+    if (route === 'signup') AUI.authCtx.step = 1;
+    /* §126.12 — the resend window opens when the screen does. */
+    if (route === 'verify') AUI.authCtx.resendAt = Date.now() + RESEND_WAIT;
     AUI.resetForm(AUTH_VALUES[route] ? JSON.parse(JSON.stringify(AUTH_VALUES[route])) : {});
     showScreen('auth');
     renderAuth();
+  }
+
+  /* ---- the resend countdown (§126.12) ---------------------------------
+     A number that counts down is only honest if it moves. */
+  var RESEND_WAIT = 45000;
+  var resendTimer = null;
+
+  function tickResend() {
+    if (resendTimer) { clearInterval(resendTimer); resendTimer = null; }
+    if (authRoute !== 'verify') return;
+    if (!$('[data-resend]')) return;
+    resendTimer = setInterval(function () {
+      var el = $('[data-resend]');
+      if (authRoute !== 'verify' || !el) { clearInterval(resendTimer); resendTimer = null; return; }
+      var left = Math.max(0, Math.ceil((AUI.authCtx.resendAt - Date.now()) / 1000));
+      if (left > 0) { el.textContent = t('auth.resendIn', { s: left }); return; }
+      clearInterval(resendTimer);
+      resendTimer = null;
+      renderAuth();                     /* the wait is over: offer the action */
+    }, 1000);
   }
 
   function renderAuth() {
     var body = $('#authBody');
     if (!body || !authRoute) return;
     var authHost = $('#screen-auth');
+    /* §126.44 — the shell is the screen's own; every route returns the whole
+       composition rather than a fragment someone else wraps. */
+    body.innerHTML = AUI.AUTH[authRoute]();
     var authTitle = $('.auth__title', body);
-    body.innerHTML = '<div class="auth" data-auth="' + esc(authRoute) + '">' + AUI.AUTH[authRoute]() + '</div>';
-    authTitle = $('.auth__title', body);
     if (authHost && authTitle) authHost.setAttribute('aria-label', authTitle.textContent);
     applyStrings(body);
     applyVisibility();
+    tickResend();
   }
 
   function closeAuth(dismiss) {
@@ -3953,10 +3989,13 @@
        and took two presses to escape (§124.25). */
     if (authStack.length && !dismiss) {
       authRoute = authStack.pop();
+      AUI.authCtx.nav = 'back';
+      if (authRoute === 'signup') AUI.authCtx.step = 1;
       AUI.resetForm(AUTH_VALUES[authRoute] ? JSON.parse(JSON.stringify(AUTH_VALUES[authRoute])) : {});
       renderAuth();
       return;
     }
+    if (resendTimer) { clearInterval(resendTimer); resendTimer = null; }
     /* Choosing to stay a guest ends the expired session rather than
        leaving it to interrupt again on the next launch (§124.27). */
     if (authRoute === 'expired') ACCT.signOut();
@@ -3996,6 +4035,8 @@
     AUI.authCtx.pending = null;
     AUI.authCtx.modal = false;
     AUI.authCtx.token = null;      /* a recovery link does not outlive its flow */
+    AUI.authCtx.step = 1;
+    if (resendTimer) { clearInterval(resendTimer); resendTimer = null; }
     authRoute = null;
     authStack.length = 0;
     resetNotificationsForAccount();
@@ -4057,6 +4098,10 @@
     }, 420);
   }
 
+  /* The two ways a recovery link dies. Both are the link's fault, not the
+     password's, and both belong on the error screen (§126.46). */
+  var LINK_FAILURES = { 'acct.err.linkInvalid': 1, 'acct.err.linkExpired': 1 };
+
   function applySubmit(kind, v) {
     var r;
 
@@ -4067,10 +4112,25 @@
       return authSucceeded(who ? t('auth.welcomeBack', { name: who }) : t('auth.welcome'));
     }
 
+    /* §126.9 — the identity step is checked by the same engine that will
+       check the whole form, so step one can never accept what step two's
+       submission would reject. */
+    if (kind === 'signupstep') {
+      r = ACCT.signUpStep(v);
+      if (!r.ok) return fail(r);
+      AUI.authCtx.step = 2;
+      AUI.authCtx.nav = 'fwd';
+      AUI.form.errors = {};
+      AUI.form.message = null;
+      return renderAuth();
+    }
+
     if (kind === 'signup') {
       r = ACCT.signUp(v);
       if (!r.ok) return fail(r);
-      return authSucceeded(t('auth.accountCreated'));
+      /* §126.13 — the account exists; the arrival is designed rather than a
+         toast over whatever screen happened to be behind. */
+      return openAuth('created', { fresh: true });
     }
 
     if (kind === 'forgot') {
@@ -4083,9 +4143,18 @@
 
     if (kind === 'reset') {
       r = ACCT.resetPassword({ token: AUI.authCtx.token, password: v.password, confirm: v.confirm });
+      /* §126.34 — a link that cannot be redeemed is not something the user
+         can fix by retyping, so it gets a screen with a way out rather than
+         a red line above a form that will refuse them again. */
+      if (!r.ok && LINK_FAILURES[r.form]) {
+        AUI.authCtx.token = null;
+        AUI.authCtx.troubleText = r.form === 'acct.err.linkExpired'
+          ? 'auth.troubleExpired' : 'auth.troubleText';
+        return openAuth('trouble', { fresh: true });
+      }
       if (!r.ok) return fail(r);
       AUI.authCtx.token = null;
-      return openAuth('updated');
+      return openAuth('updated', { fresh: true });
     }
 
     if (kind === 'verify') {
@@ -4219,6 +4288,34 @@
     if (verb === 'tour') { sheetClose(); onbStart(); return; }
     if (verb === 'feedback') { toast(t('acct.helpContact')); return; }
     if (verb === 'authclose') { closeAuth(true); return; }
+
+    /* §126.9 — stepping back inside sign-up keeps what was typed. A step is
+       not a screen the user is leaving. */
+    if (verb === 'signupback') {
+      collectForm();
+      AUI.authCtx.step = 1;
+      AUI.authCtx.nav = 'back';
+      AUI.form.errors = {};
+      AUI.form.message = null;
+      renderAuth();
+      return;
+    }
+
+    /* The success screen's own way out (§126.13). */
+    if (verb === 'authdone') {
+      var who = ACCT.displayName();
+      authSucceeded(who ? t('auth.welcomeBack', { name: who }) : t('auth.accountCreated'));
+      return;
+    }
+
+    if (verb === 'resend') {
+      var pending = ACCT.user() && ACCT.user().pendingEmail;
+      if (pending) ACCT.requestEmailChange(pending);
+      AUI.authCtx.resendAt = Date.now() + RESEND_WAIT;
+      renderAuth();
+      toast(t('auth.resent'));
+      return;
+    }
 
     if (verb === 'discard') {
       AUI.form.dirty = false;
@@ -4363,9 +4460,109 @@
     }
 
     var field = el.closest('.field');
-    if (field) field.classList.remove('is-invalid');
+    if (field) {
+      /* §126.39 — editing a field withdraws the complaint about it, and the
+         message line empties without collapsing, so nothing below moves. */
+      field.classList.remove('is-invalid');
+      field.classList.remove('is-valid');
+      field.classList.toggle('is-filled', el.value !== '');
+      delete AUI.form.errors[name];
+      delete AUI.form.valid[name];
+      var msg = $('.field__msg', field);
+      if (msg && msg.classList.contains('field__err')) {
+        msg.className = 'field__msg field__hint';
+        msg.removeAttribute('role');
+        msg.textContent = '';
+        el.removeAttribute('aria-invalid');
+      }
+    }
     updateDirty();
   });
+
+  /* §126.39 — nothing is judged on first render. A field is checked once the
+     user has finished with it, and the whole form is checked on submission.
+     Only the two checks that can be made in isolation happen here: whether
+     an address is an address, and whether a confirmation matches. */
+  var LEAVE_CHECKS = {
+    email: function (v) {
+      if (!v) return null;
+      return ACCT.emailValid(v) ? true : 'acct.err.emailInvalid';
+    },
+    confirm: function (v) {
+      if (!v) return null;
+      return v === (AUI.form.values.password || '') ? true : 'acct.err.confirmMismatch';
+    }
+  };
+
+  document.addEventListener('focusout', function (e) {
+    var el = e.target.closest ? e.target.closest('[data-afield]') : null;
+    if (!el || current !== 'auth') return;
+    var name = el.dataset.afield;
+    var check = LEAVE_CHECKS[name];
+    if (!check) return;
+    AUI.form.touched[name] = true;
+    var verdict = check(el.value);
+    if (verdict === null) return;
+    var field = el.closest('.field');
+    if (!field) return;
+    if (verdict === true) {
+      AUI.form.valid[name] = true;
+      markValid(field, el);
+      return;
+    }
+    AUI.form.errors[name] = verdict;
+    markInvalid(field, el, verdict);
+  });
+
+  /* §126.15 — a field that passed says so with a mark as well as a border,
+     because a border is a colour and a colour on its own is not a signal.
+     A password field keeps its reveal control instead: two glyphs in one box
+     is clutter, and the rules underneath already report on it. */
+  function markValid(field, el) {
+    field.classList.remove('is-invalid');
+    field.classList.add('is-valid');
+    el.removeAttribute('aria-invalid');
+    var box = $('.field__box', field);
+    if (!box || $('.pwtoggle', box) || $('.field__ok', box)) return;
+    var tick = document.createElement('span');
+    tick.className = 'field__ok';
+    tick.setAttribute('aria-hidden', 'true');
+    tick.innerHTML = '<svg class="ico" viewBox="0 0 24 24"><use href="#i-check"/></svg>';
+    box.appendChild(tick);
+  }
+
+  /* The field is corrected where it stands. A repaint here would take the
+     caret and the focus with it, at the moment the user is moving on. */
+  function markInvalid(field, el, key) {
+    field.classList.remove('is-valid');
+    field.classList.add('is-invalid');
+    el.setAttribute('aria-invalid', 'true');
+    var msg = $('.field__msg', field);
+    if (!msg) return;
+    msg.className = 'field__msg field__err';
+    msg.setAttribute('role', 'alert');
+    msg.innerHTML = '<svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-alert"/></svg>' +
+      esc(t(key));
+  }
+
+  /* §126.38 — when the software keyboard opens, the panel keeps its own
+     bottom above it, so the field being typed into and the button that
+     submits it are never underneath it. */
+  (function keyboardInset() {
+    var vv = window.visualViewport;
+    if (!vv) return;
+    var apply = function () {
+      var hidden = Math.max(0, window.innerHeight - vv.height - vv.offsetTop);
+      var el = $('#authBody .auth__panel');
+      if (el) el.style.setProperty('--auth-kb', hidden > 80 ? hidden + 'px' : '0px');
+      var focused = document.activeElement;
+      if (hidden > 80 && focused && focused.dataset && focused.dataset.afield && focused.scrollIntoView) {
+        try { focused.scrollIntoView({ block: 'center', behavior: 'smooth' }); } catch (err) {}
+      }
+    };
+    vv.addEventListener('resize', apply);
+    vv.addEventListener('scroll', apply);
+  })();
 
   /* §124.18 — Save stays inert until something actually changed. */
   function updateDirty() {

@@ -67,6 +67,21 @@ window.LUME_SPEC = (function () {
       'lume',       /* Your Lume: preferences, notifications, region */
       'account',    /* the account itself, or the offer of one       */
       'support'     /* help, about, the tour                          */
+    ],
+    /* §126.3 — the authentication shell. Every auth screen is these slots in
+       this order; a screen that needs less leaves one empty, and no screen
+       reorders them. Recorded here so the order is asserted rather than
+       remembered. */
+    auth: [
+      'top',        /* back inside the flow, or a cross on an interruption */
+      'brand',      /* the mark, in air                                    */
+      'visual',     /* the optional ambient or status visual               */
+      'hero',       /* heading, then supporting text                       */
+      'form',       /* fields and the recovery link that belongs to them   */
+      'actions',    /* the primary action                                  */
+      'alt',        /* federated providers, when any are implemented       */
+      'foot',       /* the alternate route out of this screen              */
+      'legal'       /* supporting copy, last and smallest                  */
     ]
   };
 

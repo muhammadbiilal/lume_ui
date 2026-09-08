@@ -99,7 +99,8 @@ window.LUME_ACCOUNT_UI = function (deps) {
   /* ---------------------------------------------------------
      Forms
      --------------------------------------------------------- */
-  var form = { values: {}, errors: {}, message: null, busy: false, base: {}, dirty: false };
+  var form = { values: {}, errors: {}, valid: {}, touched: {},
+               message: null, busy: false, base: {}, dirty: false };
 
   /* Which password fields the user has chosen to show. Kept here rather than
      in the DOM because every submission repaints the form, and a revealed
@@ -114,6 +115,10 @@ window.LUME_ACCOUNT_UI = function (deps) {
     form.values = values || {};
     form.base = JSON.parse(JSON.stringify(form.values));
     form.errors = {};
+    /* §126.39 — nothing is judged before the user has touched it. `valid`
+       only ever fills in after a field has been left. */
+    form.valid = {};
+    form.touched = {};
     form.message = null;
     form.busy = false;
     form.dirty = false;
@@ -121,9 +126,18 @@ window.LUME_ACCOUNT_UI = function (deps) {
 
   function val(name) { return form.values[name] === undefined ? '' : form.values[name]; }
 
+  /* §126.14, §126.15 — every input carries all six states, and the line that
+     explains it is always in the layout even when it has nothing to say, so
+     an error appearing never moves the button the user is reaching for
+     (§126.39). */
   function afield(o) {
     var err = form.errors[o.name];
-    return '<label class="field field--wide' + (err ? ' is-invalid' : '') + '">' +
+    var filled = String(val(o.name)) !== '';
+    var good = !err && !!form.valid[o.name];
+    var msgId = 'fm-' + o.name;
+    return '<label class="field field--wide' + (err ? ' is-invalid' : '') +
+        (good ? ' is-valid' : '') + (filled ? ' is-filled' : '') +
+        '" data-field="' + esc(o.name) + '">' +
       '<span class="field__label">' + esc(o.label) +
         (o.optional ? ' <i style="text-transform:none;font-style:normal;font-weight:600">· ' +
           esc(t('a.optional')) + '</i>' : '') + '</span>' +
@@ -135,15 +149,20 @@ window.LUME_ACCOUNT_UI = function (deps) {
           (o.autocomplete ? ' autocomplete="' + esc(o.autocomplete) + '"' : '') +
           (o.inputmode ? ' inputmode="' + esc(o.inputmode) + '"' : '') +
           (o.maxlength ? ' maxlength="' + esc(o.maxlength) + '"' : '') +
-          (err ? ' aria-invalid="true" aria-describedby="err-' + esc(o.name) + '"' : '') + '>' +
+          ' aria-describedby="' + msgId + '"' +
+          (err ? ' aria-invalid="true"' : '') + '>' +
+        /* The tick is a second signal beside the border colour, so a valid
+           field does not read by colour alone (§126.15). */
+        (good && !o.reveal ? '<span class="field__ok" aria-hidden="true">' + ico('i-check') + '</span>' : '') +
         (o.reveal ? '<button type="button" class="pwtoggle" data-pwtoggle="' + esc(o.name) + '"' +
           ' aria-pressed="' + (revealed[o.name] ? 'true' : 'false') + '"' +
           ' aria-label="' + esc(t(revealed[o.name] ? 'acct.pw.hide' : 'acct.pw.show')) + '">' +
           ico(revealed[o.name] ? 'i-eye-off' : 'i-eye') + '</button>' : '') +
       '</span>' +
-      (err ? '<span class="field__err" id="err-' + esc(o.name) + '" role="alert">' +
-             ico('i-alert') + esc(t(err)) + '</span>'
-           : (o.hint ? '<span class="field__hint">' + esc(o.hint) + '</span>' : '')) +
+      '<span class="field__msg ' + (err ? 'field__err' : 'field__hint') + '" id="' + msgId + '"' +
+        (err ? ' role="alert"' : '') + '>' +
+        (err ? ico('i-alert') + esc(t(err)) : (o.hint ? esc(o.hint) : '')) +
+      '</span>' +
     '</label>';
   }
 
@@ -946,198 +965,422 @@ window.LUME_ACCOUNT_UI = function (deps) {
   }
 
   /* ---------------------------------------------------------
-     Authentication routes  (§124.8 – §124.12, §124.26)
+     Authentication  (§126 — the authentication layout system)
+
+     Every screen below is assembled from the same shell in the
+     same order: header → brand → visual → heading → supporting
+     text → form → primary action → alternates → footer → legal
+     (§126.3, §126.44). A screen that needs less leaves a slot
+     empty; none of them reorders the slots.
      --------------------------------------------------------- */
   var AUTH = {};
-  var authCtx = { pending: null, modal: false, token: null, email: '' };
+  var authCtx = { pending: null, modal: false, token: null, email: '',
+                  step: 1, resendAt: 0, nav: 'fwd' };
 
-  function authTop() {
-    /* §124.25 — back within the flow. A cross only where the flow was put in
-       front of something the user was already doing. */
-    return '<div class="auth__top">' +
-      (authCtx.modal
-        ? '<div class="auth__spacer"></div><button class="iconbtn pressable" data-act="acctdo:authclose"' +
-          ' aria-label="' + esc(t('a.close')) + '">' + ico('i-x') + '</button>'
-        : '<button class="iconbtn iconbtn--back pressable" data-tool-back aria-label="' +
-          esc(t('a11y.back')) + '">' + ico('i-chev-l') + '</button>') +
-    '</div>';
+  /* §126.7 fixes where a federated provider sits in the composition — below
+     the email action, never above it. The list is empty because Lume
+     implements no provider, and a button that opens nothing is exactly the
+     claim §125 forbids. Add one here and the divider and the buttons appear
+     in their defined place; until then the screen says nothing about it. */
+  var PROVIDERS = [];
+
+  /* §126.12 — enough of the address to recognise, not enough to hand it to
+     whoever is looking over the shoulder. */
+  function maskEmail(mail) {
+    var s = String(mail || '');
+    var at = s.indexOf('@');
+    if (at < 1) return s;
+    var head = s.slice(0, at);
+    var dots = new Array(Math.min(Math.max(head.length - 1, 1), 5) + 1).join('•');
+    return head.charAt(0) + dots + s.slice(at);
   }
 
+  var AMBIENT =
+    '<div class="auth__ambient" aria-hidden="true">' +
+      '<span class="auth__glow auth__glow--a"></span>' +
+      '<span class="auth__glow auth__glow--b"></span>' +
+      '<span class="auth__spec"></span><span class="auth__spec"></span><span class="auth__spec"></span>' +
+    '</div>';
+
+  /* The desktop visual region (§126.41). It carries atmosphere and one line
+     of brand message — never a field, never a control, so nothing is lost
+     when the composition collapses back to one column on a phone. */
+  var ASIDE_ART =
+    '<svg viewBox="0 0 400 500" fill="none" aria-hidden="true" preserveAspectRatio="xMidYMid slice">' +
+      '<circle cx="316" cy="96" r="120" fill="var(--accent)" opacity=".10"/>' +
+      '<circle cx="86" cy="392" r="96" fill="var(--violet)" opacity=".10"/>' +
+      '<path d="M300 300h1" stroke="var(--accent)"/>' +
+      '<path d="m132 118 4.4 10.6L147 133l-10.6 4.4L132 148l-4.4-10.6L117 133l10.6-4.4z"' +
+        ' fill="var(--accent)" opacity=".42"/>' +
+      '<circle cx="330" cy="330" r="7" fill="var(--sky)" opacity=".4"/>' +
+      '<circle cx="252" cy="188" r="4.5" fill="var(--violet)" opacity=".45"/>' +
+    '</svg>';
+
+  function authAside() {
+    return '<aside class="auth__aside" aria-hidden="true">' +
+      '<div class="auth__asideart">' + ASIDE_ART + '</div>' +
+      '<p class="auth__asidemsg">' + esc(t('auth.asideTitle')) + '</p>' +
+      '<p class="auth__asidesub">' + esc(t('auth.asideText')) + '</p>' +
+    '</aside>';
+  }
+
+  /* §126.4 — back inside a flow, a cross only on a surface that interrupted
+     something. They are different controls with different meanings, so they
+     are never the same button. */
+  function authTop(o) {
+    var lead = '', trail = '';
+    var modal = authCtx.modal && o.dismissible !== false;
+    if (modal) {
+      trail = '<button class="auth__nav auth__nav--close pressable" data-act="acctdo:authclose"' +
+        ' aria-label="' + esc(t('a.close')) + '">' + ico('i-x') + '</button>';
+    }
+    /* The two controls do different jobs, so a screen that has a step behind
+       it keeps its Back even when the whole flow can also be dismissed —
+       otherwise step two of a sign-up reached from a deep link has no way
+       home to step one. */
+    if (o.back !== false && (!modal || o.backAct)) {
+      lead = '<button class="auth__nav auth__nav--back pressable"' +
+        (o.backAct ? ' data-act="' + esc(o.backAct) + '"' : ' data-tool-back') +
+        ' aria-label="' + esc(t('a11y.back')) + '">' + ico('i-chev-l') + '</button>';
+    }
+    if (o.stepOf) trail = '<span class="auth__step-of">' + esc(o.stepOf) + '</span>' + trail;
+    return '<header class="auth__top" data-slot="top">' + lead + '<div class="auth__spacer"></div>' + trail + '</header>';
+  }
+
+  /* §126.5 — the mark, at its own size, in air. */
   function authBrand() {
-    return '<div class="auth__brand">' +
+    return '<div class="auth__brand" data-slot="brand">' +
       '<span class="auth__mark">' + ico('i-lume') + '</span>' +
-      '<span class="auth__word">Lume<span>' + esc(t('app.tagline')) + '</span></span>' +
+      '<span class="auth__word">Lume</span>' +
     '</div>';
   }
 
-  function authHead(title, text) {
-    return '<h1 class="auth__title">' + esc(title) + '</h1>' +
-      (text ? '<p class="auth__text">' + esc(text) + '</p>' : '');
+  /* §126.13, §126.35 — the success visual: ring, disc, drawn check, two
+     specks. `calm` and `warn` are the same geometry at lower temperature,
+     for the screens that are a status rather than a celebration. */
+  function seal(icon, tone) {
+    return '<div class="auth__visual auth__visual--seal" data-slot="visual">' +
+      '<div class="authseal' + (tone ? ' authseal--' + tone : '') + '">' +
+        '<span class="authseal__ring"></span>' +
+        '<span class="authseal__disc">' + ico(icon) + '</span>' +
+        '<span class="authseal__spark authseal__spark--a">' + ico('i-sparkles') + '</span>' +
+        '<span class="authseal__spark authseal__spark--b">' + ico('i-sparkles') + '</span>' +
+      '</div>' +
+    '</div>';
   }
 
+  function arrow() {
+    return '<svg class="btn__arrow" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-arrow-r"/></svg>';
+  }
+
+  /* §126.16, §126.33 — the button keeps its width and its height when it
+     starts working. The label changes; the layout does not. */
+  function authSubmit(o) {
+    return '<button class="btn btn--auth pressable' + (form.busy ? ' is-busy' : '') + '"' +
+      ' data-act="' + esc(o.act) + '"' + (o.disabled ? ' disabled' : '') + '>' +
+      (form.busy
+        ? '<i class="btn__spin"></i><span>' + esc(t(o.busyLabel || 'auth.working')) + '</span>'
+        : '<span>' + esc(o.label) + '</span>' + arrow()) +
+    '</button>';
+  }
+
+  function authLink(o) {
+    return '<button class="auth__link pressable" data-act="' + esc(o.act) + '">' +
+      esc(o.text) + (o.strong ? '<b>' + esc(o.strong) + '</b>' : '') + '</button>';
+  }
+
+  /* Where a provider button would go. Nothing renders while the list is
+     empty — including the divider, which would otherwise separate the
+     primary action from a blank space. */
+  function providerBlock() {
+    if (!PROVIDERS.length) return '';
+    return '<div class="auth__or">' + esc(t('a.or')) + '</div>' +
+      '<div class="auth__alt" data-slot="alt">' + PROVIDERS.map(function (p) {
+        return '<button class="btn btn--authsec pressable" data-act="' + esc(p.act) + '">' +
+          ico(p.icon) + esc(t('auth.continueWith', { provider: p.name })) + '</button>';
+      }).join('') + '</div>';
+  }
+
+  function mix(a, b) {
+    var out = {}, k;
+    for (k in a) if (a.hasOwnProperty(k)) out[k] = a[k];
+    for (k in b) if (b.hasOwnProperty(k)) out[k] = b[k];
+    return out;
+  }
+
+  /* The slots carry their name in the DOM. The order below is the one
+     recorded in LUME_SPEC.COMPOSITIONS.auth, and it is asserted rather than
+     remembered (§123, §126.3). */
+  function authScreen(o) {
+    var panel =
+      authTop(o) +
+      (o.brand === false ? '' : authBrand()) +
+      (o.visual || '') +
+      '<div class="auth__hero" data-slot="hero">' +
+        '<h1 class="auth__title">' + esc(o.title) + '</h1>' +
+        (o.text ? '<p class="auth__text">' + (o.html ? o.text : esc(o.text)) + '</p>' : '') +
+        (o.note ? '<p class="auth__note">' + esc(o.note) + '</p>' : '') +
+      '</div>' +
+      (o.steps || '') +
+      (o.notice || '') +
+      (o.form ? '<div class="auth__form" data-slot="form">' + o.form + '</div>' : '') +
+      (o.grow ? '<div class="auth__grow"></div>' : '') +
+      (o.actions ? '<div class="auth__actions" data-slot="actions">' + o.actions + '</div>' : '') +
+      (o.alt || '') +
+      (o.foot ? '<div class="auth__foot" data-slot="foot">' + o.foot + '</div>' : '') +
+      (o.legal ? '<p class="auth__legal" data-slot="legal">' + o.legal + '</p>' : '');
+
+    return '<div class="auth" data-auth="' + esc(o.id) + '" data-nav="' + esc(authCtx.nav) + '">' +
+      AMBIENT + authAside() +
+      '<div class="auth__region"><div class="auth__panel">' + panel + '</div></div>' +
+    '</div>';
+  }
+
+  /* §126.9 — the progress indicator: 4px, 150px, and never the only way to
+     know where you are. The count is written out beside it. */
+  function authSteps(step, total) {
+    var segs = '';
+    for (var i = 1; i <= total; i++) {
+      segs += '<span class="authsteps__seg' + (i <= step ? ' is-on' : '') + '"><i></i></span>';
+    }
+    return '<div class="authsteps" aria-hidden="true">' + segs + '</div>';
+  }
+
+  /* ---- sign in (§126.7) ---------------------------------------------- */
   AUTH.signin = function () {
-    return authTop() + authBrand() +
-      authHead(t('auth.signInTitle'), t('auth.signInText')) +
-      (authCtx.pending
-        ? '<div class="formok" role="status" style="margin-top:16px">' + ico('i-lock') +
+    return authScreen({
+      id: 'signin',
+      title: t('auth.signInTitle'),
+      text: t('auth.signInText'),
+      notice: authCtx.pending
+        ? '<div class="formok" role="status" style="margin-top:18px">' + ico('i-lock') +
           '<span>' + esc(t('auth.needAccountText')) + '</span></div>'
-        : '') +
-      '<div class="auth__form">' +
-        formError() +
+        : '',
+      form: formError() +
         afield({ name: 'email', label: t('acct.f.email'), type: 'email', inputmode: 'email',
-                 autocomplete: 'email' }) +
+                 autocomplete: 'email', placeholder: t('auth.emailPh') }) +
         afield({ name: 'password', label: t('acct.f.password'), type: 'password',
                  autocomplete: 'current-password', reveal: true }) +
-        '<button class="auth__inline pressable" data-act="auth:forgot">' + esc(t('auth.forgot')) + '</button>' +
-      '</div>' +
-      '<div class="auth__foot">' +
-        submitButton({ act: 'acctsubmit:signin', label: t('acct.signIn'), busyLabel: 'auth.signingIn' }) +
-        (authCtx.modal
-          ? '<div class="auth__or">' + esc(t('a.or')) + '</div>' +
-            '<button class="btn btn--ghost btn--block pressable" data-act="acctdo:authclose">' +
-              esc(t('auth.continueAsGuest')) + '</button>'
-          : '') +
-        '<button class="auth__link pressable" data-act="auth:signup">' +
-          esc(t('auth.noAccount')) + ' <b>' + esc(t('auth.createOne')) + '</b></button>' +
-      '</div>';
+        '<button class="auth__inline pressable" data-act="auth:forgot">' +
+          esc(t('auth.forgot')) + '</button>',
+      actions: authSubmit({ act: 'acctsubmit:signin', label: t('acct.signIn'),
+                            busyLabel: 'auth.signingIn' }),
+      alt: providerBlock(),
+      foot: (authCtx.modal
+        ? '<button class="btn btn--authsec pressable" data-act="acctdo:authclose">' +
+          esc(t('auth.continueAsGuest')) + '</button>'
+        : '') +
+        authLink({ act: 'auth:signup', text: t('auth.noAccount'), strong: t('auth.createOne') })
+    });
   };
 
+  /* ---- sign up (§126.8, §126.9) --------------------------------------
+     Two steps rather than one tall form: who you are, then how you get back
+     in. §126.46 names the composition "progressive form", and the second
+     step is where the password rules have room to be read. */
   AUTH.signup = function () {
-    return authTop() + authBrand() +
-      authHead(t('auth.signUpTitle'), t('auth.signUpText')) +
-      '<div class="auth__form">' +
-        formError() +
-        afield({ name: 'name', label: t('acct.f.name'), autocomplete: 'name', optional: true,
-                 maxlength: 40 }) +
-        afield({ name: 'email', label: t('acct.f.email'), type: 'email', inputmode: 'email',
-                 autocomplete: 'email' }) +
+    var step = authCtx.step === 2 ? 2 : 1;
+    var common = {
+      id: 'signup',
+      steps: authSteps(step, 2),
+      stepOf: t('auth.stepOf', { n: step, total: 2 })
+    };
+
+    if (step === 1) {
+      return authScreen(mix(common, {
+        title: t('auth.signUpTitle'),
+        text: t('auth.signUpText'),
+        form: formError() +
+          afield({ name: 'name', label: t('acct.f.name'), autocomplete: 'name', optional: true,
+                   maxlength: 40, hint: t('auth.nameHint') }) +
+          afield({ name: 'email', label: t('acct.f.email'), type: 'email', inputmode: 'email',
+                   autocomplete: 'email', placeholder: t('auth.emailPh') }),
+        actions: authSubmit({ act: 'acctsubmit:signupstep', label: t('auth.continue') }),
+        foot: authLink({ act: 'auth:signin', text: t('auth.haveAccount'), strong: t('acct.signIn') })
+      }));
+    }
+
+    return authScreen(mix(common, {
+      backAct: 'acctdo:signupback',
+      title: t('auth.signUpPwTitle'),
+      text: t('auth.signUpPwText'),
+      form: formError() +
         afield({ name: 'password', label: t('acct.f.password'), type: 'password',
                  autocomplete: 'new-password', reveal: true }) +
         pwmeter('password') + pwrules('password') +
         afield({ name: 'confirm', label: t('acct.f.confirm'), type: 'password',
-                 autocomplete: 'new-password', reveal: true }) +
-      '</div>' +
-      '<div class="auth__foot">' +
-        submitButton({ act: 'acctsubmit:signup', label: t('acct.create'), busyLabel: 'auth.creating' }) +
-        '<button class="auth__link pressable" data-act="auth:signin">' +
-          esc(t('auth.haveAccount')) + ' <b>' + esc(t('acct.signIn')) + '</b></button>' +
-      '</div>';
+                 autocomplete: 'new-password', reveal: true }),
+      actions: authSubmit({ act: 'acctsubmit:signup', label: t('acct.create'),
+                            busyLabel: 'auth.creating' }),
+      /* §126.40 — the link opens a sheet, not a screen: leaving here would
+         take the password the user has just typed with it. */
+      legal: esc(t('auth.legal')) + ' ' +
+        '<button data-act="sheet:authlegal">' + esc(t('auth.legalLink')) + '</button>'
+    }));
   };
 
+  /* ---- recovery (§126.10) -------------------------------------------- */
   AUTH.forgot = function () {
-    return authTop() + authBrand() +
-      authHead(t('auth.forgotTitle'), t('auth.forgotText')) +
-      '<div class="auth__form">' +
-        formError() +
+    return authScreen({
+      id: 'forgot',
+      visual: seal('i-key', 'calm'),
+      title: t('auth.forgotTitle'),
+      text: t('auth.forgotText'),
+      form: formError() +
         afield({ name: 'email', label: t('acct.f.email'), type: 'email', inputmode: 'email',
-                 autocomplete: 'email' }) +
-      '</div>' +
-      '<div class="auth__foot">' +
-        submitButton({ act: 'acctsubmit:forgot', label: t('auth.forgotCta') }) +
-        '<button class="auth__link pressable" data-act="auth:signin">' +
-          esc(t('auth.backToSignIn')) + '</button>' +
-      '</div>';
+                 autocomplete: 'email', placeholder: t('auth.emailPh') }),
+      actions: authSubmit({ act: 'acctsubmit:forgot', label: t('auth.forgotCta') }),
+      foot: authLink({ act: 'auth:signin', text: t('auth.rememberPw'), strong: t('acct.signIn') })
+    });
   };
 
-  /* The neutral confirmation: identical whether or not the address exists. */
+  /* The neutral confirmation: identical whether or not the address exists
+     (§124.11). Nothing on this screen differs between the two cases. */
   AUTH.sent = function () {
-    return authTop() +
-      '<div class="auth__art">' + sealArt('i-mail') + '</div>' +
-      authHead(t('auth.sentTitle'), t('auth.sentText')) +
-      '<p class="auth__text" style="font-size:12.5px;color:var(--text-3);margin-top:10px">' +
-        esc(t('auth.sentNote')) + '</p>' +
-      '<div class="auth__grow"></div>' +
-      '<div class="auth__foot">' +
-        (authCtx.token
-          ? '<button class="btn btn--accent btn--block pressable" data-act="auth:reset">' +
-            esc(t('auth.openLink')) + '</button>'
-          : '') +
-        '<button class="auth__link pressable" data-act="auth:signin">' +
-          esc(t('auth.backToSignIn')) + '</button>' +
-        '<p class="auth__link auth__link--quiet">' + esc(t('auth.sentLocal')) + '</p>' +
-      '</div>';
+    return authScreen({
+      id: 'sent',
+      brand: false,
+      visual: seal('i-mail', 'calm'),
+      title: t('auth.sentTitle'),
+      /* The address the user just typed is deliberately not echoed here.
+         §126.12 puts the masked address on the verification screen, where it
+         is the account's address and the user may not remember it. Here it
+         would only add a string that varies with the input — and this screen
+         has to be byte-identical whether or not the account exists
+         (§124.11). */
+      text: t('auth.sentText'),
+      note: t('auth.sentNote'),
+      grow: true,
+      actions: authCtx.token
+        ? '<button class="btn btn--auth pressable" data-act="auth:reset">' +
+          '<span>' + esc(t('auth.openLink')) + '</span>' + arrow() + '</button>'
+        : '',
+      foot: authLink({ act: 'auth:signin', text: t('auth.backToSignIn') }) +
+        '<p class="auth__link auth__link--quiet">' + esc(t('auth.sentLocal')) + '</p>'
+    });
   };
 
+  /* ---- reset (§126.11) ------------------------------------------------ */
   AUTH.reset = function () {
-    return authTop() + authBrand() +
-      authHead(t('auth.resetTitle'), t('auth.resetText')) +
-      '<div class="auth__form">' +
-        formError() +
+    return authScreen({
+      id: 'reset',
+      visual: seal('i-shield', 'calm'),
+      title: t('auth.resetTitle'),
+      text: t('auth.resetText'),
+      form: formError() +
         afield({ name: 'password', label: t('acct.f.new'), type: 'password',
                  autocomplete: 'new-password', reveal: true }) +
         pwmeter('password') + pwrules('password') +
         afield({ name: 'confirm', label: t('acct.f.confirm'), type: 'password',
-                 autocomplete: 'new-password', reveal: true }) +
-      '</div>' +
-      '<div class="auth__foot">' +
-        submitButton({ act: 'acctsubmit:reset', label: t('auth.resetCta') }) +
-      '</div>';
+                 autocomplete: 'new-password', reveal: true }),
+      actions: authSubmit({ act: 'acctsubmit:reset', label: t('auth.resetCta') })
+    });
   };
 
   AUTH.updated = function () {
-    return authTop() +
-      '<div class="auth__art">' + sealArt('i-check') + '</div>' +
-      authHead(t('auth.updatedTitle'), t('auth.updatedText')) +
-      '<div class="auth__grow"></div>' +
-      '<div class="auth__foot">' +
-        '<button class="btn btn--accent btn--block pressable" data-act="auth:signin">' +
-          esc(t('acct.signIn')) + '</button>' +
-      '</div>';
+    return authScreen({
+      id: 'updated',
+      brand: false,
+      back: false,
+      visual: seal('i-check'),
+      title: t('auth.updatedTitle'),
+      text: t('auth.updatedText'),
+      grow: true,
+      actions: '<button class="btn btn--auth pressable" data-act="auth:signin">' +
+        '<span>' + esc(t('acct.signIn')) + '</span>' + arrow() + '</button>'
+    });
   };
 
+  /* ---- account created (§126.13) -------------------------------------
+     The account already exists by the time this renders; the screen is the
+     designed arrival, not a step that could fail. */
+  AUTH.created = function () {
+    var who = ACCT.displayName();
+    return authScreen({
+      id: 'created',
+      brand: false,
+      back: false,
+      dismissible: false,
+      visual: seal('i-check'),
+      title: t('auth.createdTitle'),
+      text: who ? t('auth.createdTextNamed', { name: who }) : t('auth.createdText'),
+      grow: true,
+      actions: '<button class="btn btn--auth pressable" data-act="acctdo:authdone">' +
+        '<span>' + esc(t('auth.enterCta')) + '</span>' + arrow() + '</button>'
+    });
+  };
+
+  /* ---- session expired (§126.46) -------------------------------------- */
   AUTH.expired = function () {
     var u = ACCT.pendingUser();
-    return '<div class="auth__top"></div>' +
-      '<div class="auth__art">' + sealArt('i-clock') + '</div>' +
-      authHead(t('auth.expiredTitle'), t('auth.expiredText')) +
-      (u ? '<p class="auth__text" style="margin-top:8px">' +
-        esc(t('acct.signedInAs', { email: u.email })) + '</p>' : '') +
-      '<div class="auth__grow"></div>' +
-      '<div class="auth__foot">' +
-        '<button class="btn btn--accent btn--block pressable" data-act="auth:signin">' +
-          esc(t('auth.expiredCta')) + '</button>' +
-        '<button class="auth__link pressable" data-act="acctdo:authclose">' +
-          esc(t('auth.continueAsGuest')) + '</button>' +
-      '</div>';
+    return authScreen({
+      id: 'expired',
+      brand: false,
+      back: false,
+      dismissible: false,
+      visual: seal('i-clock', 'warn'),
+      title: t('auth.expiredTitle'),
+      html: true,
+      text: esc(t('auth.expiredText')) +
+        (u ? '<br><b>' + esc(maskEmail(u.email)) + '</b>' : ''),
+      grow: true,
+      actions: '<button class="btn btn--auth pressable" data-act="auth:signin">' +
+        '<span>' + esc(t('auth.expiredCta')) + '</span>' + arrow() + '</button>',
+      foot: authLink({ act: 'acctdo:authclose', text: t('auth.continueAsGuest') })
+    });
   };
 
+  /* ---- authentication error (§126.46) --------------------------------
+     A failure the user cannot fix by retyping gets a screen and a way out,
+     not a red line above a form that will refuse them again (§126.34). */
+  AUTH.trouble = function () {
+    return authScreen({
+      id: 'trouble',
+      brand: false,
+      visual: seal('i-alert', 'warn'),
+      title: t('auth.troubleTitle'),
+      text: authCtx.troubleText ? t(authCtx.troubleText) : t('auth.troubleText'),
+      grow: true,
+      actions: '<button class="btn btn--auth pressable" data-act="auth:forgot">' +
+        '<span>' + esc(t('auth.troubleCta')) + '</span>' + arrow() + '</button>',
+      foot: authLink({ act: 'auth:signin', text: t('auth.backToSignIn') })
+    });
+  };
+
+  /* ---- email verification (§126.12) ----------------------------------- */
   AUTH.verify = function () {
     var u = ACCT.user();
     var target = u && u.pendingEmail ? u.pendingEmail : '';
-    return authTop() +
-      '<div class="auth__art">' + sealArt('i-mail') + '</div>' +
-      authHead(t('auth.verifyTitle'), t('auth.verifyText', { email: target })) +
-      '<div class="auth__form">' +
-        formError() +
-        afield({ name: 'code', label: t('acct.f.code'), inputmode: 'numeric', maxlength: 6 }) +
+    var left = Math.max(0, Math.ceil((authCtx.resendAt - Date.now()) / 1000));
+    return authScreen({
+      id: 'verify',
+      brand: false,
+      visual: seal('i-mail', 'calm'),
+      title: t('auth.verifyTitle'),
+      html: true,
+      text: esc(t('auth.verifyText')) +
+        (target ? '<br><b>' + esc(maskEmail(target)) + '</b>' : ''),
+      form: formError() +
+        afield({ name: 'code', label: t('acct.f.code'), inputmode: 'numeric', maxlength: 6,
+                 autocomplete: 'one-time-code' }) +
         (u && u.pendingCode
-          ? '<p class="field__hint">' + esc(t('auth.verifyLocal', { code: u.pendingCode })) + '</p>'
-          : '') +
-      '</div>' +
-      '<div class="auth__foot">' +
-        submitButton({ act: 'acctsubmit:verify', label: t('auth.verifyCta') }) +
-        '<button class="auth__link pressable" data-act="acctdo:emailcancel">' +
-          esc(t('a.cancel')) + '</button>' +
-      '</div>';
+          ? '<p class="auth__note">' + esc(t('auth.verifyLocal', { code: u.pendingCode })) + '</p>'
+          : ''),
+      actions: authSubmit({ act: 'acctsubmit:verify', label: t('auth.verifyCta') }),
+      foot: '<p class="auth__link auth__link--quiet">' + esc(t('auth.resendNone')) + '</p>' +
+        (left > 0
+          ? '<p class="auth__link auth__link--quiet" data-resend role="status">' +
+            esc(t('auth.resendIn', { s: left })) + '</p>'
+          : authLink({ act: 'acctdo:resend', text: '', strong: t('auth.resend') })) +
+        authLink({ act: 'acctdo:emailcancel', text: t('a.cancel') })
+    });
   };
-
-  function sealArt(icon) {
-    return '<svg viewBox="0 0 240 150" fill="none" aria-hidden="true">' +
-      '<circle cx="120" cy="72" r="58" fill="var(--accent)" opacity=".07"/>' +
-      '<circle cx="120" cy="72" r="38" fill="var(--tint-accent)"/>' +
-      '<g transform="translate(102 54) scale(1.5)" stroke="var(--accent)" stroke-width="1.6"' +
-        ' fill="none" stroke-linecap="round" stroke-linejoin="round">' +
-        '<use href="#' + esc(icon) + '" width="24" height="24"/></g>' +
-      '<path d="m40 34 2.4 5.8 5.8 2.4-5.8 2.4L40 50l-2.4-5.8-5.8-2.4 5.8-2.4z" fill="var(--accent)" opacity=".5"/>' +
-      '<circle cx="196" cy="46" r="4.5" fill="var(--violet)" opacity=".45"/>' +
-      '<circle cx="188" cy="112" r="3.5" fill="var(--sky)" opacity=".45"/>' +
-    '</svg>';
-  }
 
   return {
     ROUTES: ROUTES, AUTH: AUTH, form: form, authCtx: authCtx,
     resetForm: resetForm, renderProfile: renderProfile, avatar: avatar,
     setRevealed: setRevealed, revealed: function (n) { return !!revealed[n]; },
-    srow: srow, pwrules: pwrules, pwmeter: pwmeter, signedOutRoute: signedOutRoute
+    srow: srow, pwrules: pwrules, pwmeter: pwmeter, signedOutRoute: signedOutRoute,
+    providers: PROVIDERS, maskEmail: maskEmail, afield: afield
   };
 };

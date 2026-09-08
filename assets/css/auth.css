@@ -1,0 +1,822 @@
+/* ============================================================
+   Lume — Authentication layout system  (Master Spec §126)
+
+   Authentication has its own explicit layout inside the Lume
+   design system: its own canvas, its own vertical rhythm, its
+   own input and button sizing, its own motion.
+
+   What it does not have is its own palette, its own font or
+   its own geometry language. Every token below resolves to a
+   global Lume token (§126.21). Authentication is the first
+   room of the same house, not a different building.
+   ============================================================ */
+
+/* ------------------------------------------------------------
+   1. Semantic tokens  (§126.21 – §126.29)
+
+   Named for the role they play in the flow, so a screen never
+   reaches past them for a raw colour.
+   ------------------------------------------------------------ */
+:root {
+  /* ---- brand ---- */
+  --auth-brand-primary: var(--accent);
+  --auth-brand-pressed: var(--accent-600);
+  --auth-brand-soft: var(--tint-accent);
+  --auth-brand-ink: var(--accent-ink);
+  --auth-on-brand: var(--on-accent, #fff);
+
+  /* ---- background ---- */
+  --auth-bg: var(--bg);
+  --auth-bg-elevated: var(--card);
+  --auth-bg-ambient: color-mix(in srgb, var(--accent) 12%, transparent);
+  --auth-bg-ambient-2: color-mix(in srgb, var(--violet) 10%, transparent);
+
+  /* ---- surface ---- */
+  --auth-surface: var(--card);
+  --auth-surface-elevated: var(--card);
+  --auth-surface-interactive: var(--card-2);
+
+  /* ---- text ---- */
+  --auth-text-primary: var(--text);
+  --auth-text-secondary: var(--text-2);
+  --auth-text-tertiary: var(--text-3);
+  --auth-text-inverse: var(--on-accent, #fff);
+
+  /* ---- border ---- */
+  --auth-border: var(--border-2);
+  --auth-border-focused: var(--accent);
+  --auth-border-error: color-mix(in srgb, var(--rose) 60%, var(--border-2));
+  --auth-border-success: color-mix(in srgb, var(--accent) 55%, var(--border-2));
+
+  /* ---- status ---- */
+  --auth-status-success: var(--accent);
+  --auth-status-warning: var(--amber);
+  --auth-status-error: var(--rose);
+  --auth-status-error-ink: var(--rose-ink);
+  --auth-status-info: var(--sky);
+
+  /* ---- type (§126.24) ---- */
+  --auth-type-display:    750 clamp(34px, 10vw, 44px)/1.06 var(--font);
+  --auth-type-heading:    720 clamp(31px, 8.6vw, 38px)/1.1 var(--font);
+  --auth-type-subheading: 600 17px/1.45 var(--font);
+  --auth-type-body:       500 15.5px/1.5 var(--font);
+  --auth-type-label:      650 13px/1.3 var(--font);
+  --auth-type-caption:    500 12.5px/1.45 var(--font);
+  --auth-type-button:     700 15.5px/1 var(--font);
+  --auth-type-link:       700 14px/1.35 var(--font);
+  --auth-type-error:      600 12.5px/1.4 var(--font);
+  --auth-track-display: -.038em;
+  --auth-track-heading: -.034em;
+
+  /* ---- space (§126.25) ---- */
+  --auth-space-xs: 4px;
+  --auth-space-sm: 8px;
+  --auth-space-md: 12px;
+  --auth-space-lg: 16px;
+  --auth-space-xl: 24px;
+  --auth-space-2xl: 32px;
+  --auth-space-3xl: 40px;
+  --auth-space-4xl: 48px;
+  --auth-space-5xl: 64px;
+
+  /* ---- radius (§126.26) ---- */
+  --auth-radius-input: 14px;
+  --auth-radius-button: 15px;
+  --auth-radius-card: 28px;
+  --auth-radius-visual: 26px;
+  --auth-radius-pill: 999px;
+
+  /* ---- elevation (§126.27) — restrained by design ---- */
+  --auth-elevation-none: none;
+  --auth-elevation-subtle: var(--shadow-xs);
+  --auth-elevation-card: 0 2px 6px -4px rgba(16, 24, 40, .10), 0 24px 56px -28px rgba(16, 24, 40, .22);
+  --auth-elevation-floating: var(--shadow-md);
+
+  /* ---- icon (§126.28) ---- */
+  --auth-icon: 21px;
+  --auth-icon-sm: 16px;
+  --auth-icon-lg: 28px;
+  --auth-icon-stroke: 1.8;
+
+  /* ---- motion (§126.29) ---- */
+  --auth-motion-instant: .12s;
+  --auth-motion-fast: .18s;
+  --auth-motion-standard: .3s;
+  --auth-motion-emphasis: .48s;
+  --auth-motion-success: .64s;
+  --auth-motion-ambient: 18s;
+  --auth-ease: var(--ease-out);
+
+  /* ---- canvas ---- */
+  --auth-pad: 24px;
+  --auth-form-max: 420px;
+  --auth-heading-max: 360px;
+}
+
+/* Dark mode is authored, not inverted (§126.23): the ambient light drops
+   below the card so it reads as depth rather than as glow, the surfaces
+   separate from the ground by one step, and the shadow stops pretending
+   there is a light source in a near-black room. */
+[data-theme="dark"] {
+  --auth-bg-ambient: color-mix(in srgb, var(--accent) 16%, transparent);
+  --auth-bg-ambient-2: color-mix(in srgb, var(--violet) 14%, transparent);
+  --auth-surface: var(--card-2);
+  --auth-surface-elevated: var(--card-hover);
+  --auth-surface-interactive: var(--card);
+  --auth-elevation-card: 0 1px 0 rgba(255, 255, 255, .04) inset, 0 24px 56px -30px rgba(0, 0, 0, .9);
+}
+
+/* ------------------------------------------------------------
+   2. Canvas  (§126.2)
+
+   The screen is the composition. On a phone there is no card
+   around the form (§126.19) — the safe-area-aware viewport is
+   the surface.
+   ------------------------------------------------------------ */
+.screen--auth {
+  padding-bottom: 0;
+  display: flex;
+  flex-direction: column;
+  background: var(--auth-bg);
+}
+.screen--auth > div { flex: 1; display: flex; min-height: 0; }
+
+.auth {
+  position: relative;
+  flex: 1;
+  display: flex;
+  min-height: 100%;
+  isolation: isolate;
+}
+
+.auth__region {
+  position: relative;
+  z-index: 1;
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  min-width: 0;
+}
+
+/* The form stays constrained however wide the region gets (§126.2). */
+.auth__panel {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  max-width: var(--auth-form-max);
+  /* §126.38 — the panel keeps its own bottom above the software keyboard, so
+     the field being typed into and the button that submits it are never
+     underneath it. --auth-kb is set from the visual viewport. */
+  padding: 0 var(--auth-pad)
+           calc(var(--auth-space-xl) + env(safe-area-inset-bottom) + var(--auth-kb, 0px));
+}
+
+/* ------------------------------------------------------------
+   3. Ambient background  (§126.20)
+
+   Very slow, very quiet, always behind the content. Two soft
+   fields of light and three specks — no more.
+   ------------------------------------------------------------ */
+.auth__ambient {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+.auth__glow {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(48px);
+  opacity: .9;
+}
+.auth__glow--a {
+  width: 320px; height: 320px;
+  top: -140px; inset-inline-start: -110px;
+  background: var(--auth-bg-ambient);
+  animation: auth-drift-a var(--auth-motion-ambient) var(--ease) infinite alternate;
+}
+.auth__glow--b {
+  width: 280px; height: 280px;
+  bottom: -130px; inset-inline-end: -100px;
+  background: var(--auth-bg-ambient-2);
+  animation: auth-drift-b calc(var(--auth-motion-ambient) * 1.15) var(--ease) infinite alternate;
+}
+.auth__spec {
+  position: absolute;
+  width: 5px; height: 5px;
+  border-radius: 50%;
+  background: var(--auth-brand-primary);
+  opacity: .28;
+  animation: auth-float calc(var(--auth-motion-ambient) * .8) var(--ease) infinite alternate;
+}
+.auth__spec:nth-of-type(1) { top: 22%; inset-inline-end: 16%; }
+.auth__spec:nth-of-type(2) { top: 62%; inset-inline-start: 11%; animation-delay: -6s; width: 4px; height: 4px; }
+.auth__spec:nth-of-type(3) { top: 79%; inset-inline-end: 24%; animation-delay: -11s; width: 3px; height: 3px; }
+
+@keyframes auth-drift-a {
+  from { transform: translate3d(0, 0, 0) scale(1); }
+  to   { transform: translate3d(26px, 34px, 0) scale(1.12); }
+}
+@keyframes auth-drift-b {
+  from { transform: translate3d(0, 0, 0) scale(1.06); }
+  to   { transform: translate3d(-30px, -26px, 0) scale(1); }
+}
+@keyframes auth-float {
+  from { transform: translateY(0); opacity: .28; }
+  to   { transform: translateY(-18px); opacity: .1; }
+}
+
+/* ------------------------------------------------------------
+   4. Header  (§126.4)
+
+   Back, not a cross. A cross belongs only to a surface that was
+   put in front of something the user was already doing.
+   ------------------------------------------------------------ */
+.auth__top {
+  display: flex;
+  align-items: center;
+  gap: var(--auth-space-sm);
+  min-height: 48px;
+  padding-top: max(var(--auth-space-lg), env(safe-area-inset-top));
+}
+.auth__spacer { flex: 1; }
+
+.auth__nav {
+  flex: none;
+  width: 44px; height: 44px;
+  display: grid;
+  place-items: center;
+  margin-inline-start: -10px;
+  border-radius: var(--auth-radius-input);
+  color: var(--auth-text-secondary);
+  transition: background-color var(--auth-motion-fast) var(--auth-ease),
+              color var(--auth-motion-fast) var(--auth-ease);
+}
+.auth__nav svg {
+  width: var(--auth-icon); height: var(--auth-icon);
+  /* A larger glyph needs a fraction more weight to keep the same visual
+     density as the 20px icons everywhere else (§126.28). */
+  stroke-width: var(--auth-icon-stroke);
+}
+.auth__nav:active { background: var(--auth-surface-interactive); color: var(--auth-text-primary); }
+.auth__nav--close { margin-inline: 0 -10px; }
+
+/* The chevron follows the reading direction; a dismissal never does (§17). */
+.is-rtl .auth__nav--back svg { transform: scaleX(-1); }
+
+.auth__step-of {
+  font: var(--auth-type-caption);
+  color: var(--auth-text-tertiary);
+  letter-spacing: .01em;
+}
+
+/* ------------------------------------------------------------
+   5. Brand  (§126.5)
+
+   The mark at 32px, in air, never inside a heavy card.
+   ------------------------------------------------------------ */
+.auth__brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: var(--auth-space-xl);
+}
+.auth__mark {
+  width: 34px; height: 34px;
+  flex: none;
+  display: grid;
+  place-items: center;
+  border-radius: 11px;
+  background: var(--auth-brand-primary);
+  color: var(--auth-on-brand);
+  box-shadow: var(--auth-elevation-subtle);
+}
+.auth__mark svg { width: 19px; height: 19px; }
+.auth__word {
+  font-size: 17px;
+  font-weight: 800;
+  letter-spacing: -.035em;
+  color: var(--auth-text-primary);
+}
+
+/* ------------------------------------------------------------
+   6. Ambient visual  (§126.6, §126.13)
+   ------------------------------------------------------------ */
+.auth__visual {
+  margin-top: var(--auth-space-xl);
+  height: 116px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.auth__visual svg { height: 100%; width: auto; max-width: 100%; display: block; }
+.auth__visual--tall { height: 132px; }
+.auth__visual--seal { height: auto; }
+
+/* ------------------------------------------------------------
+   7. Hero  (§126.6)
+   ------------------------------------------------------------ */
+.auth__hero { margin-top: var(--auth-space-xl); }
+.auth__title {
+  font: var(--auth-type-heading);
+  letter-spacing: var(--auth-track-heading);
+  color: var(--auth-text-primary);
+  max-width: var(--auth-heading-max);
+  text-wrap: balance;
+}
+.auth__text {
+  margin-top: 10px;
+  font: var(--auth-type-body);
+  color: var(--auth-text-secondary);
+  max-width: 34ch;
+}
+.auth__text b { font-weight: 700; color: var(--auth-text-primary); }
+.auth__note {
+  margin-top: var(--auth-space-md);
+  font: var(--auth-type-caption);
+  color: var(--auth-text-tertiary);
+}
+
+/* ------------------------------------------------------------
+   8. Progressive signup indicator  (§126.9)
+
+   4px tall, 150px wide, never visually dominant, and never the
+   only way to know which step this is — the count is spelled out.
+   ------------------------------------------------------------ */
+.authsteps {
+  margin-top: var(--auth-space-lg);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  max-width: 150px;
+}
+.authsteps__seg {
+  flex: 1;
+  height: 4px;
+  border-radius: var(--auth-radius-pill);
+  background: var(--auth-surface-interactive);
+  border: 1px solid var(--auth-border);
+  overflow: hidden;
+}
+.authsteps__seg i {
+  display: block;
+  height: 100%;
+  width: 0;
+  background: var(--auth-brand-primary);
+  border-radius: inherit;
+  transition: width var(--auth-motion-emphasis) var(--auth-ease);
+}
+.authsteps__seg.is-on i { width: 100%; }
+
+/* ------------------------------------------------------------
+   9. Form  (§126.14, §126.15, §126.39)
+   ------------------------------------------------------------ */
+.auth__form {
+  margin-top: var(--auth-space-xl);
+  display: flex;
+  flex-direction: column;
+  gap: var(--auth-space-md);
+}
+
+.auth .field { gap: var(--auth-space-sm); }
+.auth .field__label {
+  font: var(--auth-type-label);
+  letter-spacing: -.005em;
+  text-transform: none;
+  color: var(--auth-text-secondary);
+}
+.auth .field__box {
+  min-height: 52px;
+  padding: 0 var(--auth-space-lg);
+  gap: 10px;
+  border-radius: var(--auth-radius-input);
+  background: var(--auth-surface);
+  border: 1px solid var(--auth-border);
+  transition: border-color var(--auth-motion-fast) var(--auth-ease),
+              box-shadow var(--auth-motion-fast) var(--auth-ease),
+              background-color var(--auth-motion-fast) var(--auth-ease);
+}
+.auth .field__box input {
+  font-size: 16px;            /* never below 16px: smaller zooms on focus */
+  font-weight: 600;
+  letter-spacing: -.012em;
+  color: var(--auth-text-primary);
+}
+.auth .field__box input::placeholder { color: var(--auth-text-tertiary); font-weight: 500; }
+.auth .field__box:focus-within {
+  border-color: var(--auth-border-focused);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--auth-brand-primary) 16%, transparent);
+}
+.auth .field__affix { color: var(--auth-text-tertiary); }
+.auth .field__affix svg { width: 17px; height: 17px; }
+
+/* Filled reads differently from empty without relying on colour alone. */
+.auth .field.is-filled .field__box { background: var(--auth-surface-elevated); }
+
+.auth .field.is-invalid .field__box {
+  border-color: var(--auth-border-error);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--auth-status-error) 13%, transparent);
+}
+.auth .field.is-valid .field__box { border-color: var(--auth-border-success); }
+/* The mark belongs to the valid state, not to the node: editing the field
+   drops `is-valid` and the tick goes with it, whether the field was
+   repainted or corrected where it stood. */
+.auth .field__ok { display: none; }
+.auth .field.is-valid .field__ok {
+  flex: none;
+  color: var(--auth-status-success);
+  display: grid;
+  place-items: center;
+  animation: auth-pop var(--auth-motion-fast) var(--ease-spring) both;
+}
+.auth .field__ok svg { width: 17px; height: 17px; }
+@keyframes auth-pop { from { transform: scale(.4); opacity: 0; } to { transform: none; opacity: 1; } }
+
+.auth [disabled] .field__box,
+.auth .field__box:has(input:disabled) { opacity: .55; }
+
+/* §126.39 — the message line is always present, so an error appearing does
+   not push the button the user is reaching for. */
+.auth .field__msg {
+  min-height: 17px;
+  display: flex;
+  align-items: flex-start;
+  gap: 5px;
+  font: var(--auth-type-caption);
+  font-size: 12px;
+  color: var(--auth-text-tertiary);
+}
+.auth .field__msg.field__err { font: var(--auth-type-error); color: var(--auth-status-error-ink); }
+.auth .field__msg svg { width: 12px; height: 12px; flex: none; margin-top: 2px; }
+
+.auth .field.is-invalid { animation: auth-shake var(--auth-motion-standard) var(--ease) both; }
+@keyframes auth-shake {
+  0%, 100% { transform: none; }
+  22% { transform: translateX(-5px); }
+  55% { transform: translateX(4px); }
+  80% { transform: translateX(-2px); }
+}
+
+.pwtoggle {
+  flex: none;
+  width: 34px; height: 34px;
+  margin-inline-end: -8px;
+  display: grid;
+  place-items: center;
+  border-radius: 10px;
+  color: var(--auth-text-tertiary);
+  transition: color var(--auth-motion-fast) var(--auth-ease),
+              background-color var(--auth-motion-fast) var(--auth-ease);
+}
+.pwtoggle svg { width: var(--auth-icon-sm); height: var(--auth-icon-sm); }
+.pwtoggle:active { background: var(--auth-surface-interactive); color: var(--auth-text-primary); }
+
+/* The recovery link sits with the field it belongs to, at the end of the
+   line, exactly where §126.7 draws it. */
+.auth__inline {
+  align-self: flex-end;
+  margin-top: -4px;
+  min-height: 44px;
+  display: inline-flex;
+  align-items: center;
+  padding: 0 2px;
+  font: var(--auth-type-link);
+  color: var(--auth-brand-ink);
+}
+[data-theme="dark"] .auth__inline { color: var(--auth-brand-primary); }
+.auth__inline:active { opacity: .6; }
+
+/* ------------------------------------------------------------
+   10. Actions  (§126.16 – §126.18)
+   ------------------------------------------------------------ */
+.auth__actions { margin-top: var(--auth-space-xl); }
+
+.btn--auth {
+  width: 100%;
+  height: 54px;
+  padding: 0 22px;
+  border-radius: var(--auth-radius-button);
+  font: var(--auth-type-button);
+  letter-spacing: -.018em;
+  background: var(--auth-brand-primary);
+  color: var(--auth-on-brand);
+  box-shadow: 0 10px 26px -14px color-mix(in srgb, var(--auth-brand-primary) 90%, transparent);
+  transition: transform var(--auth-motion-instant) var(--auth-ease),
+              background-color var(--auth-motion-fast) var(--auth-ease),
+              box-shadow var(--auth-motion-fast) var(--auth-ease);
+}
+.btn--auth:active { transform: scale(.988); background: var(--auth-brand-pressed); }
+.btn--auth .btn__arrow {
+  width: 17px; height: 17px;
+  transition: transform var(--auth-motion-fast) var(--auth-ease);
+}
+.btn--auth:active .btn__arrow { transform: translateX(3px); }
+.is-rtl .btn--auth .btn__arrow { transform: scaleX(-1); }
+.is-rtl .btn--auth:active .btn__arrow { transform: scaleX(-1) translateX(3px); }
+
+/* §126.33 — the button never changes size when it starts working. */
+.btn--auth.is-busy {
+  pointer-events: none;
+  background: color-mix(in srgb, var(--auth-brand-primary) 82%, var(--auth-surface));
+  box-shadow: none;
+}
+
+.btn--authsec {
+  width: 100%;
+  height: 50px;
+  padding: 0 20px;
+  border-radius: var(--auth-radius-input);
+  font: var(--auth-type-button);
+  font-size: 14.5px;
+  letter-spacing: -.015em;
+  background: var(--auth-surface);
+  border: 1px solid var(--auth-border);
+  color: var(--auth-text-primary);
+  box-shadow: var(--auth-elevation-none);
+}
+.btn--authsec:active { background: var(--auth-surface-interactive); }
+
+.auth__alt { margin-top: var(--auth-space-lg); display: flex; flex-direction: column; gap: 10px; }
+
+.auth__or {
+  display: flex;
+  align-items: center;
+  gap: var(--auth-space-md);
+  margin: var(--auth-space-lg) 0 var(--auth-space-md);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  color: var(--auth-text-tertiary);
+}
+.auth__or::before, .auth__or::after {
+  content: "";
+  flex: 1;
+  height: 1px;
+  background: var(--auth-border);
+}
+
+.auth__foot {
+  margin-top: var(--auth-space-lg);
+  display: flex;
+  flex-direction: column;
+  gap: var(--auth-space-sm);
+}
+.auth__grow { flex: 1; min-height: var(--auth-space-lg); }
+
+/* §126.18 — a link is a control, with a real target and a real press. */
+.auth__link {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  min-height: 46px;
+  font: var(--auth-type-link);
+  font-weight: 550;
+  color: var(--auth-text-secondary);
+  border-radius: var(--auth-radius-input);
+  transition: background-color var(--auth-motion-fast) var(--auth-ease);
+}
+.auth__link b { color: var(--auth-brand-ink); font-weight: 750; margin-inline-start: 5px; }
+[data-theme="dark"] .auth__link b { color: var(--auth-brand-primary); }
+.auth__link:active { background: var(--auth-surface-interactive); }
+.auth__link--quiet {
+  color: var(--auth-text-tertiary);
+  font: var(--auth-type-caption);
+  min-height: 0;
+  padding: var(--auth-space-sm) 0;
+}
+
+.auth__legal {
+  margin-top: var(--auth-space-xl);
+  font: var(--auth-type-caption);
+  font-size: 12px;
+  color: var(--auth-text-tertiary);
+  text-align: center;
+}
+.auth__legal button {
+  font: inherit;
+  font-weight: 700;
+  color: var(--auth-brand-ink);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+  padding: 2px;
+}
+[data-theme="dark"] .auth__legal button { color: var(--auth-brand-primary); }
+
+/* ------------------------------------------------------------
+   11. Form-level message  (§126.34)
+
+   Tinted, iconed, explained, and — where the failure is not the
+   user's to fix by retyping — carrying the way out.
+   ------------------------------------------------------------ */
+.auth .formerr,
+.auth .formok {
+  border-radius: var(--auth-radius-input);
+  padding: 13px var(--auth-space-lg);
+  font: var(--auth-type-caption);
+  font-weight: 600;
+  animation: auth-rise var(--auth-motion-fast) var(--auth-ease) both;
+}
+@keyframes auth-rise {
+  from { opacity: 0; transform: translateY(-6px); }
+  to   { opacity: 1; transform: none; }
+}
+.formerr__title { display: block; font-weight: 750; margin-bottom: 2px; }
+
+/* ------------------------------------------------------------
+   12. Success visual  (§126.13, §126.35)
+
+   Ring expands, check draws, two specks appear. About 640ms,
+   and the button underneath is live the whole time.
+   ------------------------------------------------------------ */
+.authseal {
+  position: relative;
+  width: 128px; height: 128px;
+  margin: 0 auto;
+  display: grid;
+  place-items: center;
+}
+.authseal__ring {
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  background: var(--auth-brand-soft);
+  animation: auth-ring var(--auth-motion-success) var(--ease-spring) both;
+}
+.authseal__ring::after {
+  content: "";
+  position: absolute;
+  inset: -10px;
+  border-radius: 50%;
+  border: 1px solid color-mix(in srgb, var(--auth-brand-primary) 26%, transparent);
+}
+.authseal__disc {
+  position: relative;
+  width: 68px; height: 68px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  background: var(--auth-brand-primary);
+  color: var(--auth-on-brand);
+  box-shadow: 0 12px 30px -14px color-mix(in srgb, var(--auth-brand-primary) 95%, transparent);
+  animation: auth-disc var(--auth-motion-emphasis) var(--ease-spring) both;
+}
+/* The glyph is referenced through <use>, so the dash properties are set on
+   the <svg> itself and inherited into the shadow content — a rule written
+   against `svg path` would never reach it. */
+.authseal__disc svg {
+  width: var(--auth-icon-lg); height: var(--auth-icon-lg);
+  stroke-dasharray: 44;
+  stroke-dashoffset: 44;
+  animation: auth-draw var(--auth-motion-emphasis) var(--auth-ease) .16s both;
+}
+.authseal__spark {
+  position: absolute;
+  color: var(--auth-brand-primary);
+  opacity: 0;
+  animation: auth-spark var(--auth-motion-success) var(--auth-ease) .28s both;
+}
+.authseal__spark svg { width: 15px; height: 15px; }
+.authseal__spark--a { top: 6px; inset-inline-end: 10px; }
+.authseal__spark--b { bottom: 14px; inset-inline-start: 6px; animation-delay: .4s; }
+
+@keyframes auth-ring  { from { transform: scale(.4); opacity: 0; } to { transform: none; opacity: 1; } }
+@keyframes auth-disc  { from { transform: scale(.55); opacity: 0; } to { transform: none; opacity: 1; } }
+@keyframes auth-draw  { to { stroke-dashoffset: 0; } }
+@keyframes auth-spark { 0% { transform: scale(.3); opacity: 0; } 60% { opacity: .9; } 100% { transform: none; opacity: .55; } }
+
+/* The seal in its quiet form: status screens that are not a celebration. */
+.authseal--calm .authseal__disc { background: var(--auth-surface); color: var(--auth-brand-primary); box-shadow: none;
+  border: 1px solid var(--auth-border); }
+.authseal--calm .authseal__ring { background: color-mix(in srgb, var(--auth-brand-primary) 8%, transparent); }
+.authseal--warn .authseal__ring { background: color-mix(in srgb, var(--auth-status-warning) 12%, transparent); }
+.authseal--warn .authseal__ring::after { border-color: color-mix(in srgb, var(--auth-status-warning) 30%, transparent); }
+.authseal--warn .authseal__disc {
+  background: color-mix(in srgb, var(--auth-status-warning) 16%, var(--auth-surface));
+  color: var(--auth-status-warning);
+  border: 1px solid color-mix(in srgb, var(--auth-status-warning) 34%, transparent);
+  box-shadow: none;
+}
+.authseal--warn .authseal__spark { color: var(--auth-status-warning); }
+
+/* ------------------------------------------------------------
+   13. Screen transition  (§126.30)
+   ------------------------------------------------------------ */
+.auth[data-nav="fwd"] .auth__panel { animation: auth-fwd var(--auth-motion-standard) var(--auth-ease) both; }
+.auth[data-nav="back"] .auth__panel { animation: auth-back .24s var(--auth-ease) both; }
+@keyframes auth-fwd  { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: none; } }
+@keyframes auth-back { from { opacity: 0; transform: translateY(-8px); } to { opacity: 1; transform: none; } }
+
+/* ------------------------------------------------------------
+   14. Focus  (§126.36)
+
+   Two pixels of accent, on every control, never removed.
+   ------------------------------------------------------------ */
+.auth :is(button, a, input, [tabindex]):focus-visible {
+  outline: 2px solid var(--auth-border-focused);
+  outline-offset: 2px;
+  border-radius: 10px;
+}
+.auth .field__box:focus-within {
+  outline: 2px solid transparent;   /* the ring above is the focus signal */
+}
+
+/* ------------------------------------------------------------
+   15. Reduced motion  (§126.37)
+
+   The ambient loop, the specks and the entrance movement stop.
+   The state transitions that carry meaning stay.
+   ------------------------------------------------------------ */
+@media (prefers-reduced-motion: reduce) {
+  .auth__glow, .auth__spec { animation: none; }
+  .auth__spec { display: none; }
+  .auth[data-nav] .auth__panel { animation: none; }
+  .auth .field.is-invalid { animation: none; }
+  .authseal__ring, .authseal__disc, .authseal__spark { animation: none; opacity: 1; transform: none; }
+  .authseal__disc svg { stroke-dasharray: none; stroke-dashoffset: 0; animation: none; }
+}
+
+/* ------------------------------------------------------------
+   16. Tablet  (§126.2)
+
+   A centred composition with a subtle surface. Still one column,
+   still the same rhythm.
+   ------------------------------------------------------------ */
+@media (min-width: 1180px) {
+  .app--wide .screen--auth { padding-inline: 0; }
+  .app--wide .auth__region { align-items: center; padding: var(--auth-space-3xl) 0; }
+  .app--wide .auth__panel {
+    flex: none;
+    max-width: 460px;
+    padding: var(--auth-space-4xl);
+    border-radius: var(--auth-radius-card);
+    background: var(--auth-bg-elevated);
+    border: 1px solid var(--border);
+    box-shadow: var(--auth-elevation-card);
+  }
+  .app--wide .auth__top { padding-top: 0; min-height: 44px; }
+  .app--wide .auth__nav { margin-inline-start: -12px; }
+  .app--wide .auth__grow { display: none; }
+  .app--wide .auth__title { font: var(--auth-type-display); letter-spacing: var(--auth-track-display); }
+}
+
+/* ------------------------------------------------------------
+   17. Desktop  (§126.41)
+
+   Two regions. The left is atmosphere and one line of brand
+   message; the right is the task. The form does not stretch to
+   fill the half it sits in.
+   ------------------------------------------------------------ */
+@media (min-width: 1380px) {
+  .app--wide .auth { align-items: stretch; }
+  .app--wide .auth__aside {
+    position: relative;
+    flex: 1 1 48%;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    gap: var(--auth-space-lg);
+    padding: var(--auth-space-5xl);
+    margin: var(--auth-space-xl);
+    border-radius: var(--auth-radius-card);
+    background:
+      radial-gradient(90% 70% at 20% 10%, color-mix(in srgb, var(--accent) 22%, transparent), transparent 65%),
+      radial-gradient(80% 70% at 90% 95%, color-mix(in srgb, var(--violet) 20%, transparent), transparent 65%),
+      var(--auth-surface-interactive);
+    overflow: hidden;
+  }
+  .app--wide .auth__region { flex: 1 1 52%; }
+  .app--wide .auth__asideart { position: absolute; inset: 0; opacity: .9; }
+  .app--wide .auth__asideart svg { width: 100%; height: 100%; }
+  .app--wide .auth__asidemsg {
+    position: relative;
+    font: var(--auth-type-heading);
+    font-size: 30px;
+    letter-spacing: var(--auth-track-heading);
+    color: var(--auth-text-primary);
+    max-width: 15ch;
+  }
+  .app--wide .auth__asidesub {
+    position: relative;
+    font: var(--auth-type-body);
+    color: var(--auth-text-secondary);
+    max-width: 34ch;
+  }
+  .app--wide .auth__ambient { display: none; }   /* the aside carries it */
+}
+
+.auth__aside { display: none; }
+
+/* ------------------------------------------------------------
+   18. Small phones
+   ------------------------------------------------------------ */
+@media (max-width: 359px) {
+  .auth { --auth-pad: 20px; }
+  .auth__title { font-size: 28px; }
+  .auth__visual { height: 96px; }
+  .authseal { width: 108px; height: 108px; }
+}

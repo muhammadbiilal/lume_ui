@@ -4079,11 +4079,13 @@ These remain free:
 |---|---|
 | Markets | §26.13 |
 | Profile | §124.7 |
+| Authentication | §126.3 |
 
 Others are added here as they are designed. A tool with no entry in this table
 is composed from its archetype (§22) and its density (§6) as before. Profile is
 not a tool — it is a surface of the account system (§124) — but its reference
-composition is binding in exactly the same way.
+composition is binding in exactly the same way. So is the authentication shell,
+which is one composition serving ten screens rather than ten compositions.
 
 **Enforcement**
 
@@ -4738,3 +4740,660 @@ Machine-checkable, and checked (§65):
 
 A rule that is only written down is a suggestion. A rule that is tested is a
 specification.
+
+---
+
+# 126. AUTHENTICATION LAYOUT SYSTEM
+
+§124 settled what authentication *is*: a global flow, not a tool, that never
+invents a person. This section settles what it *looks like*.
+
+Authentication is the first substantial thing a person does inside Lume, and
+until now it was the one part of the product with no layout of its own — a
+form assembled from tool components, which is how authentication screens come
+to look like they belong to a different application. §126 gives it an explicit
+canvas, an explicit vertical rhythm, an explicit token layer, explicit states
+and explicit motion.
+
+What it does not give it is a palette, a typeface or a geometry language of its
+own. Every token in §126.21–§126.29 resolves to a global Lume token. **The
+authentication experience is the first room of the same house, not a different
+building.**
+
+---
+
+## 126.1 Visual direction
+
+Editorial typography, generous whitespace, a soft atmospheric ground,
+restrained gradients, rounded surfaces, subtle depth, strong focus states.
+
+Not: a centred login card, stacked borders, layered shadows, an oversized
+illustration, a template.
+
+The hierarchy is fixed and does not vary by screen:
+
+```text
+BRAND → PURPOSE → INPUT → PRIMARY ACTION → SECONDARY ACTION → SUPPORTING INFO
+```
+
+---
+
+## 126.2 Canvas
+
+**Mobile** — the safe-area-aware viewport is the composition. Horizontal
+padding 24px; form width capped at 420px and centred above that. Content never
+touches the edge.
+
+**Tablet** — a centred composition on a subtle surface: max 460px, padded
+40–48px, radius 24–32px, low elevation.
+
+**Desktop** — two regions (§126.41). The form stays capped at 420px inside its
+region; it does not stretch to fill the half it sits in.
+
+In this build the shell presents as a handset below 1180px, so the tablet
+composition begins at `.app--wide` and the two-region composition at 1380px.
+The three compositions are the same slots at three widths, never three designs.
+
+---
+
+## 126.3 Mobile composition — the reference composition
+
+This is an **approved reference composition under §123**, recorded in
+`toolspec.js` as `COMPOSITIONS.auth` and asserted per screen:
+
+```text
+SAFE AREA
+↓
+top      · back inside the flow, or a cross on an interruption
+↓
+brand    · the mark, in air
+↓
+visual   · the optional ambient or status visual
+↓
+hero     · heading, then supporting text
+↓
+form     · fields, and the recovery link that belongs to them
+↓
+actions  · the primary action
+↓
+alt      · federated providers, when any are implemented
+↓
+foot     · the alternate route out of this screen
+↓
+legal    · supporting copy, last and smallest
+↓
+SAFE AREA
+```
+
+**A screen that needs less leaves a slot empty. No screen reorders the slots.**
+
+Vertical rhythm, from the top:
+
+| Step | Value |
+|---|---|
+| Top safe area | 16–24px |
+| Header | 48px |
+| Gap after header | 24–32px |
+| Brand | 32–40px visual height |
+| Gap | 24–32px |
+| Visual | 72–140px |
+| Gap | 24–32px |
+| Heading | 32–40px type |
+| Gap | 8–12px |
+| Supporting text | 15–17px type |
+| Gap | 24–32px |
+| Field | 52px, 12px between |
+| Gap before primary | 20–24px |
+| Primary action | 52–56px |
+| Gap | 16px |
+| Secondary / links | 44–48px minimum target |
+| Bottom | 16–24px |
+
+These are targets. Where a device forces a compromise, the *order* survives and
+the spacing adapts — never the reverse.
+
+---
+
+## 126.4 Header
+
+**Back inside a flow. A cross only on a surface that interrupted something the
+user was already doing.** They are different controls with different meanings,
+so they are never the same button and never both present.
+
+Target 44px, glyph 20–22px. The chevron mirrors under RTL; the cross does not
+(§17).
+
+---
+
+## 126.5 Brand
+
+The Lume mark at 32–36px, with air around it, never inside a heavy card and
+never redrawn as styled text.
+
+---
+
+## 126.6 Hero
+
+Heading 32–40px on mobile and up to 44px on desktop, weight 700–750, line
+height 1.05–1.15, capped at 360px so it breaks where it was meant to.
+Supporting text 15–17px at 1.4–1.55, in the secondary text token, and short.
+
+---
+
+## 126.7 Sign in
+
+```text
+←
+
+LUME
+
+Welcome back
+Continue to your Lume.
+
+Email
+[ you@example.com                    ]
+
+Password
+[ ••••••••••                      ◉  ]
+                    Forgot password?
+
+[         Sign in  →                 ]
+
+              ── or ──
+
+[      Continue with <provider>      ]
+
+     Don't have an account? Create one
+```
+
+The order is intentional. **Federated providers sit below the email action,
+never above it.**
+
+The `alt` slot is defined and empty. Lume implements no provider, and a button
+that opens nothing is exactly the claim §125 forbids — so neither the buttons
+nor the divider that would separate them is drawn. Add a provider to the list
+and both appear in their defined place.
+
+---
+
+## 126.8 Sign up
+
+Sign-up asks for a name, an address and a password, plus the confirmation that
+guards a typo the user cannot see. That is more than fits calmly on one screen,
+and §126.43 does not allow a dense authentication screen. So sign-up is a
+**progressive form** (§126.46), in two steps:
+
+```text
+Step 1 — who you are          Step 2 — how you get back in
+● ━━━━━ ○                      ● ━━━━━ ●
+
+Create your Lume account       Choose a password
+Name  · optional               Password        [ ••••••••  ◉ ]
+[                    ]         ▬▬▬▬▬▬▬▬  Strong
+Email                          ✓ 8+ characters  ✓ Uppercase
+[ you@example.com    ]         ✓ Lowercase      ✓ Number
+                               Confirm password
+[   Continue  →      ]         [ ••••••••  ◉ ]
+
+Already have an account?       [  Create account  →  ]
+Sign in                        <legal>
+```
+
+**Stepping back keeps what was typed.** A step is not a screen the user is
+leaving.
+
+The first step is validated by the same engine call the second step's
+submission uses, so step one can never accept an address that step two would
+then reject.
+
+---
+
+## 126.9 Progress indicator
+
+4px tall, capped at 150px, animated, and never visually dominant.
+
+It is never the only way to know where you are: the step count is written out
+beside it, because a progress bar is a colour and a colour on its own is not a
+signal (§60).
+
+---
+
+## 126.10 Forgot password
+
+Compact recovery visual, heading, one field, one action, and the way back to
+sign in.
+
+The confirmation that follows is **byte-identical whether or not the address is
+registered** — the wording, the affordances, and what it does not echo back
+(§124.11). That is why the confirmation screen does not repeat the address the
+user just typed: a string that varies with the input is one more surface on
+which the two cases could come to differ.
+
+---
+
+## 126.11 Reset password
+
+New password, strength, rules, confirmation, one action. Validation appears
+directly below the field it belongs to.
+
+---
+
+## 126.12 Email verification
+
+Status visual, heading, and the address **masked** — first character, dots, and
+the whole domain:
+
+```text
+              ✉
+
+      Check your inbox
+   We sent a six-digit code to
+       n•••••@example.com
+
+   [ 000000 ]
+   [  Verify email  →  ]
+
+      Didn't receive it?
+   You can ask again in 42s
+```
+
+The address is masked here because it is the account's address rather than
+something typed a moment ago, and because this screen is often open in front of
+somebody else.
+
+**A resend that says when is only honest if the number moves.** The countdown
+ticks, is announced as a status, and becomes the action the moment it reaches
+zero.
+
+---
+
+## 126.13 Success
+
+A visual focal point in a 96–144px region: a ring expands, a check draws, two
+specks appear, the content settles. About 500–800ms in total.
+
+**The user is never blocked from pressing the button while it runs.**
+
+A success screen is an outcome, not a step, so it offers no way back into the
+flow behind it and the flow's history ends there.
+
+No confetti.
+
+---
+
+## 126.14 Inputs
+
+Height 52px, minimum target 48px, horizontal padding 16px, radius 14px, 1px
+border. Label 13–14px, input text 16px, supporting text 12–13px, 8px from label
+to input and 12px from field to field.
+
+Input text is never below 16px: smaller text zooms the page on focus.
+
+---
+
+## 126.15 Input states
+
+Default · focused · filled · disabled · error · valid.
+
+**Never colour alone.** The valid state carries a mark as well as a border; the
+error state carries an icon and a sentence. A password field keeps its reveal
+control instead of a tick — two glyphs in one box is clutter, and the rules
+underneath already report on it.
+
+---
+
+## 126.16 Primary action
+
+Height 52–56px, radius 14–16px, full width, 15–16px at weight 650–700, with a
+trailing arrow that moves on press.
+
+```text
+Sign in →   ·   Continue →   ·   Create account →   ·   Update password →
+```
+
+---
+
+## 126.17 Secondary actions
+
+Height 48–52px, radius 14px, on a surface with a border. A secondary action
+must not look like a second primary.
+
+---
+
+## 126.18 Text links
+
+Accent colour, a 44px touch area, a visible pressed and focused state. A link
+that reads as body text is not a link.
+
+---
+
+## 126.19 The card rule
+
+**Mobile: the form is not in a card.** The screen is the composition.
+
+Desktop may use a subtle surface: max 460px, padding 40–48px, radius 24–32px,
+soft low elevation. No heavy glass.
+
+---
+
+## 126.20 Background
+
+Two soft fields of light and three specks, drifting on an 8–20s cycle. Content
+always has more contrast than decoration. Nothing loops quickly, and under
+reduced motion nothing loops at all.
+
+---
+
+## 126.21 Colour tokens
+
+Semantic, and every one of them **resolves to a global Lume token**. A hex value
+here would be authentication inventing a palette, which is the failure this
+section exists to prevent. Machine-checked (§65).
+
+```text
+--auth-brand-primary   --auth-brand-pressed    --auth-brand-soft
+--auth-bg              --auth-bg-elevated      --auth-bg-ambient
+--auth-surface         --auth-surface-elevated --auth-surface-interactive
+--auth-text-primary    --auth-text-secondary   --auth-text-tertiary
+--auth-text-inverse
+--auth-border          --auth-border-focused   --auth-border-error
+--auth-border-success
+--auth-status-success  --auth-status-warning   --auth-status-error
+--auth-status-info
+```
+
+---
+
+## 126.22 Light mode
+
+Values inherit. Nothing is duplicated from §57.
+
+---
+
+## 126.23 Dark mode
+
+**Authored, not inverted.** The ambient light drops below the card so it reads
+as depth rather than as glow; the surfaces separate from the ground by one
+step; the elevation stops pretending there is a light source in a near-black
+room. The tokens that need a different *relationship* in the dark are
+redefined; the ones that merely need a different *value* inherit it from the
+global palette, which already flips.
+
+---
+
+## 126.24 Type tokens
+
+`display · heading · subheading · body · label · caption · button · link ·
+error`, each a complete font shorthand over the Lume family so a screen never
+assembles type by hand.
+
+Display 40–48/700–750 · Heading 32–40/700 · Subheading 16–18/500–600 ·
+Body 15–17/400–500 · Label 13–14/550–650 · Caption 12–13 · Button 15–16/650–700.
+
+---
+
+## 126.25 Space tokens
+
+`4 · 8 · 12 · 16 · 24 · 32 · 40 · 48 · 64`. No arbitrary values.
+
+---
+
+## 126.26 Radius tokens
+
+Input 14px · button 14–16px · card 24–32px · visual 24–32px · pill 999px.
+
+---
+
+## 126.27 Elevation tokens
+
+`none · subtle · card · floating`, all restrained. The premium reading comes
+from spacing, typography, contrast and surface — not from shadow depth.
+
+---
+
+## 126.28 Icon tokens
+
+Default 20–22px, small 16px, large 24–32px, stroke ~1.75–2px, one family.
+
+---
+
+## 126.29 Motion tokens
+
+```text
+instant  100–150ms      emphasis  400–600ms
+fast     150–200ms      success   500–800ms
+standard 250–350ms      ambient   8–20s
+```
+
+Controls respond. Decoration drifts.
+
+---
+
+## 126.30 Screen transitions
+
+Forward: fade with slight upward movement, 250–350ms. Backward: the reverse,
+200–300ms. Success: scale and fade, 500–800ms. The shell is told which
+direction it is moving, so back does not read as forward.
+
+No rotation, no 3D, no parallax.
+
+---
+
+## 126.31 Input motion
+
+Focus 150–200ms on border and ring. Error 200–300ms, a short horizontal
+movement. Valid 150–250ms. Reveal 150–200ms.
+
+---
+
+## 126.32 Button motion
+
+Press 100–150ms at scale 0.98–0.99. Release 150–200ms. Loading fades content
+into a spinner. **The button never changes size between states.**
+
+---
+
+## 126.33 Loading
+
+A 16–20px indicator inside a button that keeps its width, its height and its
+place:
+
+```text
+┌───────────────────────────────┐
+│         ◌  Signing you in     │
+└───────────────────────────────┘
+```
+
+A form submission never replaces the screen with a spinner.
+
+---
+
+## 126.34 Errors
+
+Semantic colour, tinted ground, an icon, an explanation, and — where the user
+cannot fix it by retyping — **the way out**. A recovery link that cannot be
+redeemed is not a red line above a form that will refuse them again; it is a
+screen with a recovery action (§126.46).
+
+---
+
+## 126.35 Success visual
+
+The Lume success colour, a circular confirmation, a drawn check, a controlled
+glow. Restraint over celebration.
+
+---
+
+## 126.36 Focus
+
+**2px of accent on every control, never removed.** Everything is reachable by
+keyboard.
+
+---
+
+## 126.37 Reduced motion
+
+Stops: the ambient loop, the specks, the entrance movement, the error shake.
+
+Keeps: focus, state changes, and the success state — which resolves to its
+finished form immediately rather than never arriving.
+
+---
+
+## 126.38 Keyboard-aware layout
+
+The panel keeps its own bottom above the software keyboard, the focused field
+scrolls into view, and the return key does what the primary button does.
+
+**The keyboard must never permanently cover the password field, the primary
+action or an active validation message.**
+
+---
+
+## 126.39 Validation behaviour
+
+```text
+first render   → neutral, nothing is judged
+after leaving  → that field is checked
+on submission  → everything is checked
+while editing  → the complaint is withdrawn
+```
+
+Only the checks that can be made in isolation happen on leaving a field:
+whether an address is an address, and whether a confirmation matches. A
+password is not scolded mid-thought — the live checklist is already telling it
+the truth.
+
+**The message line is always in the layout, even when it has nothing to say.**
+An error appearing must not move the button the user is reaching for.
+
+---
+
+## 126.40 Legal copy
+
+Compact, below the primary form, 12–13px, links accessible.
+
+And true: it says what Lume actually does with the information, and links to a
+screen that exists. A "Terms of Service" link to a page the product does not
+have is the same defect as a social button that opens nothing (§125).
+
+---
+
+## 126.41 Desktop composition
+
+```text
+┌───────────────────────┬───────────────────────────────┐
+│                       │          LUME                 │
+│   Lume ambient        │     Welcome back              │
+│   environment         │     Continue to your Lume.    │
+│                       │                               │
+│   one line of         │     Email    [____________]   │
+│   brand message       │     Password [____________]   │
+│                       │     [ Sign in → ]             │
+│                       │     Forgot password?          │
+└───────────────────────┴───────────────────────────────┘
+```
+
+Visual region 45–55%, auth region 45–55%, form capped at 420px inside it.
+
+**The visual region carries no control and no information the phone layout
+would lose**, because on a phone it does not exist.
+
+---
+
+## 126.42 Visual hierarchy
+
+Heading → primary input and action → supporting explanation → secondary options
+→ decoration. Decoration never overpowers the form.
+
+---
+
+## 126.43 Density
+
+Low to medium. Unlike Markets (§26), authentication is not information-dense.
+The calm is the design.
+
+---
+
+## 126.44 Component anatomy
+
+```text
+AuthShell
+├── AuthHeader
+├── Brand
+├── AmbientVisual
+├── AuthHeading + AuthSupportingText
+├── AuthForm
+│   ├── AuthInput
+│   ├── AuthPasswordInput
+│   └── ValidationMessage
+├── PrimaryAction
+├── SecondaryActions
+├── RecoveryAction
+└── AuthFooter
+```
+
+Not every screen needs every component. Every screen is built from these.
+
+---
+
+## 126.45 Screen contract
+
+Every authentication screen defines: id · purpose · entry point · exit
+destination · header · brand · hero · fields · primary action · secondary
+actions · validation · loading · error · success · motion · keyboard behaviour
+· responsive layout · accessibility · deep-link behaviour.
+
+---
+
+## 126.46 Screen matrix
+
+| Screen | Density | Composition | Visual |
+|---|---|---|---|
+| Sign in | Low | Form + brand | Ambient |
+| Sign up | Low/Medium | Progressive form | Ambient |
+| Forgot password | Low | Recovery form | Recovery seal |
+| Check your email | Low | Status + action | Mail seal |
+| Reset password | Low | Password form | Security seal |
+| Password updated | Low | Success | Success seal |
+| Account created | Low | Success | Success seal |
+| Email verification | Low | Status + action | Mail seal |
+| Session expired | Low | Message + CTA | Warning seal |
+| Authentication error | Low | Recovery state | Warning seal |
+
+---
+
+## 126.47 Quality test
+
+- [ ] It does not look like a generic form.
+- [ ] Sign in, sign up and recovery read as one experience.
+- [ ] The slot order is preserved on every screen.
+- [ ] Mobile uses the defined composition; desktop uses the two-region one.
+- [ ] Inputs, buttons, type and colour come from the tokens.
+- [ ] Dark mode is authored.
+- [ ] Motion is purposeful and reduced motion is honoured.
+- [ ] Keyboard behaviour is correct.
+- [ ] Loading preserves layout dimensions.
+- [ ] Errors do not move the layout.
+- [ ] Success has designed motion.
+- [ ] **Authentication never invents user information** (§125).
+- [ ] It integrates with the profile and notification systems (§124.29).
+- [ ] Back navigation is correct (§124.25).
+- [ ] Deep links resume after authentication (§124.28).
+
+---
+
+## 126.48 The non-negotiable rule
+
+The implementation must not be a modern login screen. It must be **this**
+layout, this hierarchy, these dimensions, these tokens, these states, this
+motion, this responsive behaviour and this accessibility behaviour.
+
+Authentication is the user's first substantial interaction with Lume. It is
+art-directed, and it is product-specific.
+
+**And it is checked.** `tests/auth.js` asserts the token layer against the
+stylesheet, the slot order against the recorded composition, the control
+dimensions against the rules that produce them, and the states against the
+running application. A layout specification that is only written down is a
+suggestion.
