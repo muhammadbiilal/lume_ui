@@ -205,6 +205,96 @@ window.LUME_TOOLKIT = function (ctx) {
   }
 
   /* ---------------------------------------------------------
+     Composition blocks (v2 §3)
+     A tool declares the layers its screen needs; the shell draws
+     them around the shape's primary content. No tool builds its
+     own page furniture.
+     --------------------------------------------------------- */
+
+  /* A dismissible, contextual prompt — never a permanent banner. */
+  function nudgeHtml(f, spec) {
+    if (!spec.nudge) return '';
+    if (load(f.id, 'nudge', false)) return '';
+    if (spec.nudge.when === 'notifications' &&
+        (ctx.profile.perms || {}).notifications === 'granted') return '';
+    return '<div class="nudge">' +
+      '<span class="nudge__icon"><svg class="ico" viewBox="0 0 24 24">' +
+        '<use href="#' + (spec.nudge.icon || 'i-bell-ring') + '"/></svg></span>' +
+      '<span class="nudge__body"><b>' + esc(spec.nudge.title) + '</b>' +
+        esc(spec.nudge.text) + '</span>' +
+      '<button class="nudge__act pressable" data-tool-act="nudge-yes">' +
+        esc(spec.nudge.action) + '</button>' +
+      '<button class="nudge__x pressable" data-tool-act="nudge-no" aria-label="Dismiss">' +
+        '<svg class="ico" viewBox="0 0 24 24"><use href="#i-x"/></svg></button>' +
+    '</div>';
+  }
+
+  /* The one piece of information the tool exists to give. */
+  function heroHtml(spec) {
+    var h = typeof spec.hero === 'function' ? spec.hero(heroCtx()) : spec.hero;
+    if (!h) return '';
+    return '<div class="row-gap"><article class="card card--pad toolhero' +
+        (h.tone ? ' toolhero--' + h.tone : '') + '">' +
+      /* A fixed corner motif, not a stretched full-bleed graphic, so it can
+         never drift under the value or the progress bar (§53). */
+      '<span class="toolhero__art" aria-hidden="true"><svg viewBox="0 0 120 120">' +
+        '<circle cx="104" cy="12" r="42" fill="var(--accent)" opacity=".08"/>' +
+        '<circle cx="66" cy="30" r="13" fill="var(--violet)" opacity=".07"/>' +
+        '<path d="m44 14 2 4.8 4.8 2-4.8 2-2 4.8-2-4.8-4.8-2 4.8-2z" ' +
+          'fill="var(--accent)" opacity=".22"/></svg></span>' +
+      (h.label ? '<p class="t-label">' + esc(h.label) + '</p>' : '') +
+      '<p class="toolhero__value num">' + esc(h.value) + '</p>' +
+      (h.sub ? '<p class="toolhero__sub">' + esc(h.sub) + '</p>' : '') +
+      (h.progress !== undefined
+        ? '<span class="bar" style="margin-top:var(--space-3)">' +
+          '<span class="bar__fill" style="width:' + h.progress + '%" ' +
+          'data-fill="' + h.progress + '"></span></span>' : '') +
+      (h.foot ? '<p class="toolhero__foot">' + esc(h.foot) + '</p>' : '') +
+    '</article></div>';
+  }
+
+  /* Supporting numbers — never a wall of them (§10.3). */
+  function metricsHtml(spec) {
+    var m = typeof spec.metrics === 'function' ? spec.metrics(heroCtx()) : spec.metrics;
+    if (!m || !m.length) return '';
+    return '<div class="stats" style="margin-top:var(--space-3)">' + m.slice(0, 3).map(function (x) {
+      return '<article class="stat">' +
+        (x[2] ? '<span class="stat__icon"><svg class="ico" viewBox="0 0 24 24">' +
+          '<use href="#' + x[2] + '"/></svg></span>' : '') +
+        '<p class="stat__value num">' + esc(x[1]) + '</p>' +
+        '<p class="stat__label">' + esc(x[0]) + '</p></article>';
+    }).join('') + '</div>';
+  }
+
+  /* Everything the composition calls secondary lives below the primary
+     task, visually lighter. */
+  function sectionsHtml(spec) {
+    var secs = typeof spec.sections === 'function' ? spec.sections(heroCtx()) : spec.sections;
+    if (!secs || !secs.length) return '';
+    return secs.map(function (sec) {
+      if (!sec.rows || !sec.rows.length) return '';
+      return '<p class="toolgroup">' + esc(sec.title) + '</p>' +
+        '<div class="row-gap"><div class="list' + (sec.secondary ? ' list--soft' : '') + '">' +
+        sec.rows.map(function (r) {
+          return '<div class="list-row">' +
+            (sec.icon ? '<span class="list-row__icon"><svg class="ico" viewBox="0 0 24 24">' +
+              '<use href="#' + (r[3] || sec.icon) + '"/></svg></span>' : '') +
+            '<span class="list-row__body"><span class="list-row__title">' + esc(r[0]) + '</span>' +
+            (r[1] ? '<span class="list-row__sub">' + esc(r[1]) + '</span>' : '') + '</span>' +
+            (r[2] ? '<span class="list-row__end"><span class="list-row__value num">' +
+              esc(r[2]) + '</span></span>' : '') +
+          '</div>';
+        }).join('') + '</div></div>';
+    }).join('');
+  }
+
+  /* Context passed to any spec block written as a function. */
+  function heroCtx() {
+    return { L: L, t: t, profile: ctx.profile, prayer: ctx.prayerState,
+             hhmm: ctx.hhmm, plural: plural, feature: ctx.feature };
+  }
+
+  /* ---------------------------------------------------------
      Gates — country, account, permission, city
      --------------------------------------------------------- */
   function gate(feature, spec) {
@@ -637,6 +727,8 @@ window.LUME_TOOLKIT = function (ctx) {
     /* Lead with a total or a count, per the v2 composition rule that a list
        should open with its summary rather than straight into rows. */
     function summaryBar() {
+      /* The composed hero already leads the screen; two summaries is one too many. */
+      if (spec.hero) return '';
       var live = items.filter(function (it) { return !it.done; });
       if (spec.money) {
         var total = items.reduce(function (n, it) { return n + amount(it); }, 0);
@@ -1018,34 +1110,32 @@ window.LUME_TOOLKIT = function (ctx) {
   var BESPOKE = {
     prayer: function (f, spec, host) {
       var st = ctx.prayerState();
+      var isFriday = new Date().getDay() === 5;
       host.innerHTML =
-        '<div class="row-gap"><article class="card card--pad nextprayer">' +
-          '<p class="nextprayer__label">' + esc(t('home.nextPrayer')) + '</p>' +
-          '<p class="nextprayer__name">' + esc(st.next.name) + '</p>' +
-          '<p class="nextprayer__time num">' + esc(ctx.hhmm(st.next)) + '</p>' +
-          '<span class="bar" style="margin-top:14px"><span class="bar__fill" data-fill="' +
-            Math.round(st.progress * 100) + '"></span></span>' +
-        '</article></div>' +
-        '<div class="row-gap" style="margin-top:12px"><div class="list">' +
+        '<div class="row-gap"><div class="list">' +
           st.list.map(function (p) {
             var isNext = p.name === st.next.name;
+            var label = (isFriday && p.name === 'Dhuhr') ? 'Jumma' : p.name;
+            var note = p.minor ? 'Not a prayer'
+              : (isFriday && p.name === 'Dhuhr') ? 'Friday congregation · khutbah before'
+              : isNext ? 'Next' : 'Reminder on';
             return '<div class="list-row' + (isNext ? ' is-next' : '') + '">' +
               '<span class="list-row__icon"' + (isNext ? ' style="background:var(--tint-accent);color:var(--accent)"' : '') + '>' +
               '<svg class="ico" viewBox="0 0 24 24"><use href="#' + (p.minor ? 'i-sun' : 'i-prayer') + '"/></svg></span>' +
-              '<span class="list-row__body"><span class="list-row__title">' + esc(p.name) + '</span>' +
-              '<span class="list-row__sub">' + (p.minor ? 'Not a prayer' : isNext ? 'Next' : 'Reminder on') + '</span></span>' +
+              '<span class="list-row__body"><span class="list-row__title">' + esc(label) + '</span>' +
+              '<span class="list-row__sub">' + esc(note) + '</span></span>' +
               '<span class="list-row__end"><span class="list-row__value num">' + esc(ctx.hhmm(p)) + '</span></span></div>';
           }).join('') + '</div></div>' +
         '<div class="tactions">' +
-          '<button class="btn btn--ghost pressable" data-tool-act="method">Method</button>' +
+          '<button class="btn btn--ghost pressable" data-tool-act="settings-sheet">Settings</button>' +
           '<button class="btn btn--accent pressable" data-tool-act="log">Log this prayer</button>' +
         '</div>' +
-        '<p class="toolnote">Computed for ' + esc(ctx.profile.city) + ' using ' + esc(ctx.profile.method) +
-        '. Change the method if your mosque follows another.</p>';
+        '<p class="toolnote">Using the ' + esc(ctx.profile.method) + ' method' +
+        (ctx.profile.hanafi ? ' with Hanafi Asr' : '') + '. Change it in settings if your mosque differs.</p>';
       ctx.animateBars(host);
       current.actions = {
         log: function () { open('praytrack'); },
-        method: function () { ctx.methodSheet(); }
+        'settings-sheet': function () { openToolSettings(); }
       };
     },
 
@@ -1378,6 +1468,7 @@ window.LUME_TOOLKIT = function (ctx) {
     var spec = SPEC.specFor(f);
 
     if (current && current.cleanup) current.cleanup();
+    if (current && current.heroTimer) clearInterval(current.heroTimer);
     if (!opts.keepReturn) returnTo = ctx.currentTab();
     current = { id: id, feature: f, spec: spec, actions: {},
                 forceState: opts.state || null, tab: opts.tab || null };
@@ -1407,6 +1498,14 @@ window.LUME_TOOLKIT = function (ctx) {
       return;
     }
 
+    host.innerHTML =
+      nudgeHtml(f, spec) +
+      heroHtml(spec) +
+      metricsHtml(spec) +
+      '<div class="toolprimary" id="toolPrimary"></div>' +
+      '<div class="toolsecondary" id="toolSecondary"></div>';
+
+    var primary = $('#toolPrimary');
     (BESPOKE[id] || SHAPES[spec.shape] || function (ff, ss, hh) {
       hh.innerHTML = stateBlock({
         art: 'empty',
@@ -1414,7 +1513,23 @@ window.LUME_TOOLKIT = function (ctx) {
         text: 'This tool has no journey defined yet. That is a gap in the design, not a silent failure.',
         actions: [{ label: t('a.back'), act: 'back', primary: 1 }]
       });
-    })(f, spec, host);
+    })(f, spec, primary);
+
+    $('#toolSecondary').innerHTML = sectionsHtml(spec) +
+      (spec.disclaimer ? '<p class="toolnote">' + esc(spec.disclaimer) + '</p>' : '');
+    ctx.animateBars(host);
+
+    /* A countdown that does not count down is not a countdown. */
+    if (spec.heroLive) {
+      current.heroTimer = setInterval(function () {
+        if (!current || current.id !== id) return;
+        var h = typeof spec.hero === 'function' ? spec.hero(heroCtx()) : spec.hero;
+        var v = $('.toolhero__value'), sb = $('.toolhero__sub');
+        if (!v) { clearInterval(current.heroTimer); return; }
+        v.textContent = h.value;
+        if (sb && h.sub) sb.textContent = h.sub;
+      }, 1000);
+    }
 
     $('#toolRelated').innerHTML = relatedHtml(spec);
     ctx.noteRecent(id);
@@ -1423,6 +1538,7 @@ window.LUME_TOOLKIT = function (ctx) {
 
   function back() {
     if (current && current.cleanup) current.cleanup();
+    if (current && current.heroTimer) clearInterval(current.heroTimer);
     current = null;
     clearHash();
     ctx.goTo(returnTo);
@@ -1460,6 +1576,19 @@ window.LUME_TOOLKIT = function (ctx) {
     if (name === 'back') { back(); return; }
     if (name === 'reload') { open(current.id, { keepReturn: 1 }); return; }
     if (name === 'personalise') { ctx.sheetOpen('personalise'); return; }
+    if (name === 'nudge-no') {
+      save(current.id, 'nudge', true);
+      var n = $('.nudge'); if (n) n.remove();
+      return;
+    }
+    if (name === 'nudge-yes') {
+      var sp = current.spec;
+      if (sp.nudge && sp.nudge.when === 'notifications') ctx.requestNotify(current.feature);
+      else ctx.toast(sp.nudge && sp.nudge.done ? sp.nudge.done : 'Done');
+      save(current.id, 'nudge', true);
+      var el = $('.nudge'); if (el) el.remove();
+      return;
+    }
     if (name === 'settings') { ctx.toast('Opening your device settings'); return; }
     if (name === 'signin') {
       /* Intent is preserved: sign in, come back to the exact tool. */
@@ -1488,5 +1617,27 @@ window.LUME_TOOLKIT = function (ctx) {
     if (e.target.closest('[data-tool-city]')) ctx.sheetOpen('personalise');
   });
 
-  return { open: open, back: back, fromHash: fromHash, currentId: function () { return current && current.id; } };
+  /* Tool-level settings belong in a sheet, not on the main canvas (§3). */
+  function openToolSettings() {
+    if (!current) { ctx.sheetOpen('personalise'); return; }
+    var spec = current.spec;
+    if (!spec.settings) { ctx.sheetOpen('personalise'); return; }
+    ctx.settingsSheet({
+      title: ctx.fname(current.feature),
+      rows: spec.settings.map(function (row) {
+        return {
+          label: row.label,
+          value: typeof row.value === 'function' ? row.value(heroCtx()) : row.value,
+          options: row.options,
+          onPick: function (v) {
+            if (row.apply) row.apply(v, ctx);
+            open(current.id, { keepReturn: 1, tab: current.tab });
+          }
+        };
+      })
+    });
+  }
+
+  return { open: open, back: back, fromHash: fromHash, settings: openToolSettings,
+           currentId: function () { return current && current.id; } };
 };

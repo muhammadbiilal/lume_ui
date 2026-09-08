@@ -414,6 +414,9 @@
 .progress-card__meta { font-size: 11.5px; color: var(--text-3); font-weight: 500; margin-top: 2px; }
 
 .bar {
+  /* A span is inline by default, so height is ignored unless a flex parent
+     happens to blockify it. Every other use sat inside one, which hid this. */
+  display: block;
   height: 5px;
   border-radius: var(--r-full);
   background: var(--tint-neutral);

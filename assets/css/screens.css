@@ -1542,3 +1542,53 @@
   letter-spacing: -.03em; color: var(--text); margin-bottom: 2px;
 }
 .tsummary--count .tsummary__value { font-size: 2.125rem; }
+
+/* ---- Composition blocks (v2 §3) --------------------------- */
+
+.toolhero { position: relative; overflow: hidden; text-align: center; }
+.toolhero__art {
+  position: absolute;
+  top: 0; inset-inline-end: 0;
+  width: 120px; height: 120px;
+  pointer-events: none;
+  overflow: hidden;
+}
+.toolhero__art svg { width: 100%; height: 100%; }
+.toolhero > *:not(.toolhero__art) { position: relative; }
+.toolhero__value {
+  font-size: 2.125rem; font-weight: 820;
+  letter-spacing: -.05em; line-height: 1.05;
+  margin-top: var(--space-1);
+}
+.toolhero__sub { font-size: .8125rem; color: var(--text-2); font-weight: 560; margin-top: var(--space-2); }
+.toolhero__foot { font-size: .71875rem; color: var(--text-3); font-weight: 550; margin-top: var(--space-2); }
+.toolhero--calm .toolhero__value { font-size: 1.75rem; }
+
+.toolprimary { display: block; }
+.toolsecondary { display: block; }
+
+/* Secondary sections read lighter than the primary task. */
+.list--soft { box-shadow: none; background: var(--card-2); }
+.list--soft .list-row__title { font-weight: 600; }
+
+/* Contextual, dismissible nudge — not a permanent banner. */
+.nudge {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  margin: 0 var(--pad) var(--space-4);
+  padding: var(--space-3);
+  border-radius: var(--r-md);
+  background: var(--info-bg);
+  border: 1px solid var(--info-border);
+}
+.nudge__icon { flex: none; color: var(--info); }
+.nudge__icon svg { width: 18px; height: 18px; }
+.nudge__body { flex: 1; min-width: 0; font-size: .71875rem; color: var(--text-2); line-height: 1.4; }
+.nudge__body b { display: block; font-size: .78125rem; color: var(--text); font-weight: 700; }
+.nudge__act {
+  flex: none; font-size: .71875rem; font-weight: 750; color: var(--info);
+  min-height: var(--tap); display: inline-flex; align-items: center; padding: 0 var(--space-1);
+}
+.nudge__x { flex: none; color: var(--text-3); min-height: var(--tap); min-width: 32px; display: grid; place-items: center; }
+.nudge__x svg { width: 14px; height: 14px; }

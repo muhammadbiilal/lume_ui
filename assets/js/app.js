@@ -55,6 +55,7 @@
     currency: 'auto',
     clock: 'auto',
     method: 'MWL',
+    hanafi: false,
 
     interests: [],
     prefs: { news: true, cricket: true, finance: true, recos: true },
@@ -344,10 +345,12 @@
 
   function animateBars(scope) {
     $$('[data-fill]', scope).forEach(function (bar) {
+      var apply = function () { bar.style.width = bar.dataset.fill + '%'; };
       bar.style.width = '0%';
-      requestAnimationFrame(function () {
-        requestAnimationFrame(function () { bar.style.width = bar.dataset.fill + '%'; });
-      });
+      requestAnimationFrame(function () { requestAnimationFrame(apply); });
+      /* rAF can starve when no frames are produced (a backgrounded tab, or a
+         headless render). The bar must still end up at its real value. */
+      setTimeout(apply, 260);
     });
     var pin = $('.live-train__pin', scope);
     if (pin) {
@@ -589,13 +592,13 @@
   function prayerSet() {
     var pos = here();
     var key = profile.country + '|' + profile.city + '|' + profile.method + '|' +
-              new Date().toDateString();
+              (profile.hanafi ? 'h' : 's') + '|' + new Date().toDateString();
     if (prayerCache && prayerCache.key === key) return prayerCache.list;
     prayerCache = {
       key: key,
       list: SOLAR.prayerTimes({
         lat: pos.lat, lon: pos.lon, tz: L.country().tz,
-        method: profile.method, date: new Date()
+        method: profile.method, hanafi: profile.hanafi, date: new Date()
       })
     };
     return prayerCache.list;
@@ -2255,6 +2258,28 @@
     });
   }
 
+  /* Tool settings render into the shared dialog rather than each tool
+     inventing its own surface. */
+  function settingsSheet(cfg) {
+    var i = 0;
+    function step() {
+      if (i >= cfg.rows.length) return;
+      var row = cfg.rows[i++];
+      if (!row.options || !row.options.length) { step(); return; }
+      var at = row.options.indexOf(row.value);
+      var next = row.options[(at + 1) % row.options.length];
+      dialog({
+        title: row.label,
+        text: 'Currently ' + row.value + '. Tap change to use ' + next + '.',
+        icon: 'i-sliders',
+        yes: 'Change', no: i < cfg.rows.length ? 'Next setting' : 'Done',
+        onYes: function () { row.onPick(next); },
+        onNo: step
+      });
+    }
+    step();
+  }
+
   function methodSheet() {
     var methods = Object.keys(window.LUME_SOLAR.METHODS);
     var at = methods.indexOf(profile.method);
@@ -2544,7 +2569,8 @@
     prayerState: prayerState, prayerSet: prayerSet, hhmm: hhmm, qiblaDeg: qiblaDeg,
     confirm: confirmAction, prompt: promptFor, undo: undo,
     askPermission: askPermission, signIn: signIn, requestNotify: requestNotify,
-    methodSheet: methodSheet, openShareData: openShareData,
+    methodSheet: methodSheet, openShareData: openShareData, settingsSheet: settingsSheet,
+    setMethod: function (m) { profile.method = m; prayerCache = null; saveProfile(); renderAll(); },
     currentTab: function () { return lastTab; },
     showToolScreen: function () { goTo('tool'); }
   });
@@ -2558,7 +2584,7 @@
     });
   }
   var toolSettingsBtn = $('#toolSettings');
-  if (toolSettingsBtn) toolSettingsBtn.addEventListener('click', function () { sheetOpen('personalise'); });
+  if (toolSettingsBtn) toolSettingsBtn.addEventListener('click', function () { TOOLS.settings(); });
 
   window.addEventListener('hashchange', function () {
     if (!TOOLS.fromHash() && TOOLS.currentId()) goTo(lastTab);
