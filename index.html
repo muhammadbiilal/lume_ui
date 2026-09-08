@@ -17,6 +17,7 @@
 <link rel="stylesheet" href="assets/css/components.css">
 <link rel="stylesheet" href="assets/css/screens.css">
 <link rel="stylesheet" href="assets/css/onboarding.css">
+<link rel="stylesheet" href="assets/css/tools.css">
 
 <script>
   // Set theme before first paint to avoid a flash.
@@ -130,6 +131,12 @@
   <symbol id="i-signal" viewBox="0 0 24 24"><path d="M3 18h1.6M8 14v4M13 10v8M18 5.4V18" stroke-width="2.6"/></symbol>
   <symbol id="i-wifi" viewBox="0 0 24 24"><path d="M2.6 9.4a14 14 0 0 1 18.8 0M6.2 13.2a9 9 0 0 1 11.6 0M9.8 17a4 4 0 0 1 4.4 0"/><path d="M12 20.4h.01"/></symbol>
   <symbol id="i-battery" viewBox="0 0 24 24"><rect x="2.4" y="8" width="16.4" height="8" rx="2.4"/><path d="M21.4 11v2"/><rect x="4.6" y="10.2" width="11" height="3.6" rx="1.2" fill="currentColor" stroke="none"/></symbol>
+  <symbol id="i-minus" viewBox="0 0 24 24"><path d="M5 12h14"/></symbol>
+  <symbol id="i-alert" viewBox="0 0 24 24"><path d="M10.3 3.9 2.6 17.2A2 2 0 0 0 4.3 20.2h15.4a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0"/><path d="M12 9.4v4"/><path d="M12 16.8h.01"/></symbol>
+  <symbol id="i-info" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 11.2v5.2"/><path d="M12 7.8h.01"/></symbol>
+  <symbol id="i-gauge" viewBox="0 0 24 24"><path d="M3.4 17.6a9 9 0 1 1 17.2 0"/><path d="m12 13.4 4.2-4"/><circle cx="12" cy="14.6" r="1.4"/></symbol>
+  <symbol id="i-arrow-up" viewBox="0 0 24 24"><path d="M12 19.4V5"/><path d="m5.6 11.4 6.4-6.4 6.4 6.4"/></symbol>
+  <symbol id="i-arrow-down" viewBox="0 0 24 24"><path d="M12 4.6V19"/><path d="m5.6 12.6 6.4 6.4 6.4-6.4"/></symbol>
   <symbol id="i-prayer" viewBox="0 0 24 24"><path d="M12 2.6c2.8 2 4.6 4.4 4.6 7.6v9.4H7.4v-9.4c0-3.2 1.8-5.6 4.6-7.6"/><path d="M4.4 21h15.2"/><path d="M4.8 21v-6.4a3 3 0 0 1 2.6-2.6M19.2 21v-6.4a3 3 0 0 0-2.6-2.6"/></symbol>
 </svg>
 
@@ -180,7 +187,7 @@
       <div class="row-gap">
 
         <!-- Muslim: next prayer -->
-        <button class="ctx pressable" data-faith="islamic" data-sheet="prayer">
+        <button class="ctx pressable" data-faith="islamic" data-act="tool:prayer">
           <span class="ctx__art" aria-hidden="true">
             <svg viewBox="0 0 350 72" preserveAspectRatio="xMidYMid slice">
               <circle cx="316" cy="10" r="42" fill="var(--accent)" opacity=".07"/>
@@ -287,7 +294,7 @@
         </article>
 
         <!-- Read something meaningful -->
-        <article class="slide slide--read" data-slide="read" data-faith="islamic" data-sheet="reading">
+        <article class="slide slide--read" data-slide="read" data-faith="islamic" data-act="tool:quran">
           <div class="slide__art" aria-hidden="true">
             <svg viewBox="0 0 320 190" preserveAspectRatio="xMidYMid slice">
               <defs>
@@ -316,7 +323,7 @@
         </article>
 
         <!-- Money -->
-        <article class="slide slide--money" data-slide="money" data-sheet="rates">
+        <article class="slide slide--money" data-slide="money" data-act="tool:goldrates">
           <div class="slide__art" aria-hidden="true">
             <svg viewBox="0 0 320 190" preserveAspectRatio="xMidYMid slice">
               <defs>
@@ -405,6 +412,11 @@
       <div class="hero__dots" id="heroDots" role="tablist" aria-label="Slide"></div>
     </div>
 
+    <!-- ===== Quick actions (§118) — a task, not a destination ===== -->
+    <div class="section" id="quickActionsWrap">
+      <div class="qactions" id="quickActions"></div>
+    </div>
+
     <!-- ===== Quick tools ===== -->
     <div class="section">
       <div class="section__head">
@@ -415,6 +427,17 @@
         <button class="section__link" data-tab="tools"><span data-i18n="a.all">All</span> <svg class="ico" viewBox="0 0 24 24"><use href="#i-chev-r"/></svg></button>
       </div>
       <div class="tools-grid" id="quickTools"></div>
+    </div>
+
+    <!-- ===== Right now (§95) — live, time-of-day aware ===== -->
+    <div class="section" id="liveWrap" hidden>
+      <div class="section__head">
+        <div>
+          <h2 class="section__title" data-i18n="home.liveNow">Right now</h2>
+          <p class="section__sub" id="liveSub"></p>
+        </div>
+      </div>
+      <div class="row-gap" id="liveNow"></div>
     </div>
 
     <!-- ===== Today at a glance ===== -->
@@ -430,7 +453,7 @@
       <div class="row-gap">
 
         <!-- Qur'an — continue reading -->
-        <article class="card card--pad progress-card" data-faith="islamic" data-sheet="reading">
+        <article class="card card--pad progress-card" data-faith="islamic" data-act="tool:quran">
           <span class="progress-card__art"><svg class="ico" viewBox="0 0 24 24"><use href="#i-book"/></svg></span>
           <div class="progress-card__body">
             <p class="progress-card__title">Continue Al-Kahf</p>
@@ -441,7 +464,7 @@
         </article>
 
         <!-- Fuel — Pakistan -->
-        <article class="card card--pad stat-row" data-loc="PK" data-sheet="fuel">
+        <article class="card card--pad stat-row" data-loc="PK" data-act="tool:fuel">
           <span class="stat-row__icon"><svg class="ico" viewBox="0 0 24 24"><use href="#i-fuel"/></svg></span>
           <div class="stat-row__body">
             <p class="stat-row__title">Petrol <span class="tag tag--neutral">Pakistan</span></p>
@@ -467,6 +490,17 @@
       </div>
     </div>
 
+    <!-- ===== Coming up (§95) ===== -->
+    <div class="section" id="upcomingWrap" hidden>
+      <div class="section__head">
+        <div>
+          <h2 class="section__title" data-i18n="home.upcoming">Coming up</h2>
+          <p class="section__sub" data-i18n="home.upcomingSub">The next few days</p>
+        </div>
+      </div>
+      <div id="upcomingList"></div>
+    </div>
+
     <!-- ===== Discover ===== -->
     <div class="section">
       <div class="section__head">
@@ -478,7 +512,7 @@
       </div>
       <div class="hscroll" id="homeDiscover">
 
-        <button class="minicard pressable" data-loc="PK" data-sheet="cricket">
+        <button class="minicard pressable" data-loc="PK" data-act="tool:cricket">
           <span class="minicard__art"><svg viewBox="0 0 148 84" preserveAspectRatio="none"><defs><linearGradient id="d1" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#E7F4F1"/><stop offset="1" stop-color="#8FD6C6"/></linearGradient></defs><rect width="148" height="84" fill="url(#d1)"/><ellipse cx="74" cy="52" rx="52" ry="30" fill="none" stroke="#0B7F73" stroke-opacity=".3" stroke-width="2"/><circle cx="108" cy="22" r="9" fill="#DE6B7A" opacity=".7"/><path d="M46 62 66 38" stroke="#0B7F73" stroke-opacity=".5" stroke-width="4" stroke-linecap="round"/></svg></span>
           <span class="minicard__body">
             <span class="minicard__title">PAK 214/4</span>
@@ -494,7 +528,7 @@
           </span>
         </button>
 
-        <button class="minicard pressable" data-loc="PK" data-sheet="loadshed">
+        <button class="minicard pressable" data-loc="PK" data-act="tool:loadshed">
           <span class="minicard__art"><svg viewBox="0 0 148 84" preserveAspectRatio="none"><defs><linearGradient id="d3" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#FBEEDD"/><stop offset="1" stop-color="#EFC894"/></linearGradient></defs><rect width="148" height="84" fill="url(#d3)"/><path d="M78 16 58 48h14l-4 22 22-30H76z" fill="#C9793F" opacity=".65"/><circle cx="28" cy="24" r="7" fill="#fff" opacity=".65"/></svg></span>
           <span class="minicard__body">
             <span class="minicard__title">Next outage 14:00</span>
@@ -510,7 +544,7 @@
           </span>
         </button>
 
-        <button class="minicard pressable" data-loc="PK" data-sheet="parcel">
+        <button class="minicard pressable" data-loc="PK" data-act="tool:parcel">
           <span class="minicard__art"><svg viewBox="0 0 148 84" preserveAspectRatio="none"><defs><linearGradient id="d5" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#EDEAFB"/><stop offset="1" stop-color="#B7AEF6"/></linearGradient></defs><rect width="148" height="84" fill="url(#d5)"/><path d="m74 24 26 13v26L74 76 48 63V37z" fill="#6E62E5" opacity=".35"/><path d="m48 37 26 13 26-13M74 50v26" stroke="#4A3F9E" stroke-opacity=".4" stroke-width="2"/></svg></span>
           <span class="minicard__body">
             <span class="minicard__title">Out for delivery</span>
@@ -1020,51 +1054,16 @@
       </div>
     </div>
 
-    <!-- Around Pakistan -->
-    <div class="section" data-loc="PK">
+    <!-- Around you — built from the user's regional configuration (§105) -->
+    <div class="section" id="aroundWrap" hidden>
       <div class="section__head">
         <div>
           <h2 class="section__title" data-i18n="explore.around">Around you</h2>
           <p class="section__sub" data-i18n="explore.aroundSub">Local services, kept current</p>
         </div>
-        <span class="tag tag--neutral">Pakistan</span>
+        <span class="tag tag--neutral" id="aroundTag"></span>
       </div>
-      <div class="row-gap">
-        <div class="list">
-          <button class="list-row pressable" data-sheet="fuel">
-            <span class="list-row__icon"><svg class="ico" viewBox="0 0 24 24"><use href="#i-fuel"/></svg></span>
-            <span class="list-row__body">
-              <span class="list-row__title">Fuel prices</span>
-              <span class="list-row__sub">Petrol · Hi-Octane · Diesel</span>
-            </span>
-            <span class="list-row__end"><span class="list-row__value num">₨ 264.61</span><svg class="ico" viewBox="0 0 24 24"><use href="#i-chev-r"/></svg></span>
-          </button>
-          <button class="list-row pressable" data-sheet="loadshed">
-            <span class="list-row__icon"><svg class="ico" viewBox="0 0 24 24"><use href="#i-bolt"/></svg></span>
-            <span class="list-row__body">
-              <span class="list-row__title">Loadshedding</span>
-              <span class="list-row__sub">Gulshan-e-Iqbal · next 14:00</span>
-            </span>
-            <span class="list-row__end"><span class="list-row__value">2 hrs</span><svg class="ico" viewBox="0 0 24 24"><use href="#i-chev-r"/></svg></span>
-          </button>
-          <button class="list-row pressable" data-sheet="rates">
-            <span class="list-row__icon"><svg class="ico" viewBox="0 0 24 24"><use href="#i-coins"/></svg></span>
-            <span class="list-row__body">
-              <span class="list-row__title">Gold & currency</span>
-              <span class="list-row__sub">Open market · 24k per tola</span>
-            </span>
-            <span class="list-row__end"><span class="list-row__value num">₨ 258,400</span><svg class="ico" viewBox="0 0 24 24"><use href="#i-chev-r"/></svg></span>
-          </button>
-          <button class="list-row pressable" data-tab="trains">
-            <span class="list-row__icon"><svg class="ico" viewBox="0 0 24 24"><use href="#i-train"/></svg></span>
-            <span class="list-row__body">
-              <span class="list-row__title">Trains</span>
-              <span class="list-row__sub">Green Line · on time</span>
-            </span>
-            <span class="list-row__end"><svg class="ico" viewBox="0 0 24 24"><use href="#i-chev-r"/></svg></span>
-          </button>
-        </div>
-      </div>
+      <div class="row-gap"><div class="list" id="aroundList"></div></div>
     </div>
 
     <!-- Cricket -->
@@ -1074,10 +1073,10 @@
           <h2 class="section__title" data-i18n="explore.cricket">Cricket</h2>
           <p class="section__sub">Live · 2nd Test, day 2</p>
         </div>
-        <button class="section__link" data-sheet="cricket">Scorecard <svg class="ico" viewBox="0 0 24 24"><use href="#i-chev-r"/></svg></button>
+        <button class="section__link" data-act="tool:cricket">Scorecard <svg class="ico" viewBox="0 0 24 24"><use href="#i-chev-r"/></svg></button>
       </div>
       <div class="row-gap">
-        <article class="card card--pad score" data-sheet="cricket">
+        <article class="card card--pad score" data-act="tool:cricket">
           <div class="score__side">
             <span class="score__flag">PAK</span>
             <span class="score__runs num">214<span>/4</span></span>
@@ -1118,7 +1117,7 @@
         <button class="section__link" data-toast="All collections"><span data-i18n="a.all">All</span> <svg class="ico" viewBox="0 0 24 24"><use href="#i-chev-r"/></svg></button>
       </div>
       <div class="hscroll">
-        <button class="minicard pressable" data-faith="islamic" data-sheet="reading">
+        <button class="minicard pressable" data-faith="islamic" data-act="tool:quran">
           <span class="minicard__art"><svg viewBox="0 0 148 84" preserveAspectRatio="none"><defs><linearGradient id="c1" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#1E2C6B"/><stop offset="1" stop-color="#4A54A8"/></linearGradient></defs><rect width="148" height="84" fill="url(#c1)"/><circle cx="112" cy="24" r="18" fill="#FFE9B8" opacity=".9"/><circle cx="104" cy="20" r="15" fill="#2A3670"/><circle cx="40" cy="56" r="3" fill="#fff" opacity=".7"/><circle cx="66" cy="30" r="2" fill="#fff" opacity=".5"/></svg></span>
           <span class="minicard__body">
             <span class="minicard__title">Night surahs</span>
@@ -1378,6 +1377,15 @@
 
   </section>
 
+  <!-- ==========================================================
+       TOOL SCREEN — every tool opens here, composed from its own
+       information architecture (Master Spec §7, §8, §113)
+       ========================================================== -->
+  <section class="screen screen--tool" id="screen-tool" role="tabpanel" aria-label="Tool">
+    <div id="toolHeader"></div>
+    <div id="toolBody"></div>
+  </section>
+
   </main>
 
   <!-- ===== Bottom navigation — built from the profile ===== -->
@@ -1590,456 +1598,20 @@
     </div>
   </aside>
 
-  <!-- Prayer times -->
-  <aside class="sheet" id="sheet-prayer" data-faith="islamic" role="dialog" aria-modal="true" aria-label="Prayer times">
-    <span class="sheet__grab"></span>
-    <div class="sheet__head">
-      <div>
-        <h2 class="sheet__title">Prayer times</h2>
-        <p class="sheet__sub"><span id="prayerSheetCity">Karachi</span> · University of Karachi</p>
-      </div>
-      <button class="closebtn pressable" data-close aria-label="Close"><svg class="ico" viewBox="0 0 24 24"><use href="#i-x"/></svg></button>
-    </div>
-    <div class="sheet__body">
-      <div class="list list--flat" id="prayerList"></div>
-      <button class="btn btn--ghost btn--block pressable" style="margin:14px 0 6px" data-toast="Reminders updated">
-        <svg class="ico" viewBox="0 0 24 24"><use href="#i-bell-ring"/></svg> Reminder settings
-      </button>
-    </div>
-  </aside>
 
-  <!-- Continue reading -->
-  <aside class="sheet" id="sheet-reading" data-faith="islamic" role="dialog" aria-modal="true" aria-label="Continue reading">
-    <span class="sheet__grab"></span>
-    <div class="sheet__head">
-      <div>
-        <h2 class="sheet__title">Al-Kahf</h2>
-        <p class="sheet__sub">The Cave · ayah 42 of 110</p>
-      </div>
-      <button class="closebtn pressable" data-close aria-label="Close"><svg class="ico" viewBox="0 0 24 24"><use href="#i-x"/></svg></button>
-    </div>
-    <div class="sheet__body">
-      <article class="card card--pad" style="margin-bottom:12px">
-        <p class="arabic" dir="rtl" lang="ar">وَأُحِيطَ بِثَمَرِهِ فَأَصْبَحَ يُقَلِّبُ كَفَّيْهِ عَلَىٰ مَآ أَنفَقَ فِيهَا</p>
-        <p class="body" style="margin-top:12px">And his fruits were encompassed by ruin, so he began turning his hands over what he had spent on it.</p>
-        <p class="quote__by" style="margin-top:10px">Al-Kahf 18:42</p>
-      </article>
-      <span class="bar" style="margin-bottom:14px"><span class="bar__fill" data-fill="38"></span></span>
-      <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px">
-        <button class="btn btn--ghost pressable" data-toast="Bookmark saved"><svg class="ico" viewBox="0 0 24 24"><use href="#i-bookmark"/></svg> Bookmark</button>
-        <button class="btn btn--accent pressable" data-toast="Reading Al-Kahf 43"><svg class="ico" viewBox="0 0 24 24"><use href="#i-play"/></svg> Continue</button>
-      </div>
-    </div>
-  </aside>
 
-  <!-- Calculator -->
-  <aside class="sheet" id="sheet-calculator" role="dialog" aria-modal="true" aria-label="Calculator">
-    <span class="sheet__grab"></span>
-    <div class="sheet__head">
-      <div>
-        <h2 class="sheet__title">Calculator</h2>
-        <p class="sheet__sub">Tap or use your keyboard</p>
-      </div>
-      <button class="closebtn pressable" data-close aria-label="Close"><svg class="ico" viewBox="0 0 24 24"><use href="#i-x"/></svg></button>
-    </div>
-    <div class="sheet__body">
-      <div class="calc__screen">
-        <p class="calc__history num" id="calcHistory"></p>
-        <p class="calc__value num" id="calcValue">0</p>
-      </div>
-      <div class="calc__pad" id="calcPad">
-        <button class="calc__key calc__key--fn" data-k="clear">AC</button>
-        <button class="calc__key calc__key--fn" data-k="sign">+/−</button>
-        <button class="calc__key calc__key--fn" data-k="percent"><svg class="ico" viewBox="0 0 24 24"><use href="#i-percent"/></svg></button>
-        <button class="calc__key calc__key--op" data-k="÷"><svg class="ico" viewBox="0 0 24 24"><use href="#i-divide"/></svg></button>
-        <button class="calc__key" data-k="7">7</button>
-        <button class="calc__key" data-k="8">8</button>
-        <button class="calc__key" data-k="9">9</button>
-        <button class="calc__key calc__key--op" data-k="×">×</button>
-        <button class="calc__key" data-k="4">4</button>
-        <button class="calc__key" data-k="5">5</button>
-        <button class="calc__key" data-k="6">6</button>
-        <button class="calc__key calc__key--op" data-k="−">−</button>
-        <button class="calc__key" data-k="1">1</button>
-        <button class="calc__key" data-k="2">2</button>
-        <button class="calc__key" data-k="3">3</button>
-        <button class="calc__key calc__key--op" data-k="+">+</button>
-        <button class="calc__key" data-k="0">0</button>
-        <button class="calc__key" data-k=".">.</button>
-        <button class="calc__key calc__key--fn" data-k="back"><svg class="ico" viewBox="0 0 24 24"><use href="#i-backspace"/></svg></button>
-        <button class="calc__key calc__key--eq" data-k="=">=</button>
-      </div>
-    </div>
-  </aside>
 
-  <!-- Tasbih -->
-  <aside class="sheet" id="sheet-tasbeeh" data-faith="islamic" role="dialog" aria-modal="true" aria-label="Tasbih counter">
-    <span class="sheet__grab"></span>
-    <div class="sheet__head">
-      <div>
-        <h2 class="sheet__title">Tasbih</h2>
-        <p class="sheet__sub">Tap the circle to count</p>
-      </div>
-      <button class="closebtn pressable" data-close aria-label="Close"><svg class="ico" viewBox="0 0 24 24"><use href="#i-x"/></svg></button>
-    </div>
-    <div class="sheet__body">
-      <div class="tasbeeh">
-        <p class="tasbeeh__phrase" dir="rtl" lang="ar">سُبْحَانَ ٱللَّٰهِ</p>
-        <p class="tasbeeh__trans">Subhan Allah · Glory be to God</p>
-        <div class="tasbeeh__ring">
-          <svg viewBox="0 0 100 100" aria-hidden="true">
-            <circle class="ring__bg" cx="50" cy="50" r="45" fill="none" stroke-width="5"/>
-            <circle class="ring__fg" id="tasbeehRing" cx="50" cy="50" r="45" fill="none" stroke-width="5"
-                    stroke-dasharray="282.7" stroke-dashoffset="282.7"/>
-          </svg>
-          <button class="tasbeeh__btn" id="tasbeehBtn" aria-label="Count">
-            <span>
-              <span class="tasbeeh__count num" id="tasbeehCount">0</span>
-              <span class="tasbeeh__target num">of 33</span>
-            </span>
-          </button>
-        </div>
-        <div class="tasbeeh__actions">
-          <button class="btn btn--ghost pressable" id="tasbeehReset"><svg class="ico" viewBox="0 0 24 24"><use href="#i-refresh"/></svg> Reset</button>
-          <button class="btn btn--accent pressable" id="tasbeehSave"><svg class="ico" viewBox="0 0 24 24"><use href="#i-check"/></svg> Save session</button>
-        </div>
-      </div>
-    </div>
-  </aside>
 
-  <!-- Qibla -->
-  <aside class="sheet" id="sheet-qibla" data-faith="islamic" role="dialog" aria-modal="true" aria-label="Qibla direction">
-    <span class="sheet__grab"></span>
-    <div class="sheet__head">
-      <div>
-        <h2 class="sheet__title">Qibla</h2>
-        <p class="sheet__sub"><span id="qiblaCity">Karachi</span> · <span class="num" id="qiblaSub">267</span>° from north</p>
-      </div>
-      <button class="closebtn pressable" data-close aria-label="Close"><svg class="ico" viewBox="0 0 24 24"><use href="#i-x"/></svg></button>
-    </div>
-    <div class="sheet__body">
-      <div class="qibla">
-        <div class="qibla__dial">
-          <svg viewBox="0 0 200 200">
-            <circle cx="100" cy="100" r="94" fill="none" stroke="var(--border)" stroke-width="1.5"/>
-            <circle cx="100" cy="100" r="76" fill="none" stroke="var(--border)" stroke-width="1.5" stroke-dasharray="2 8" stroke-linecap="round"/>
-            <circle cx="100" cy="100" r="58" fill="var(--tint-neutral)" opacity=".55"/>
-            <text x="100" y="22" text-anchor="middle" font-size="12" font-weight="700" fill="var(--text-3)" font-family="inherit">N</text>
-            <text x="182" y="105" text-anchor="middle" font-size="12" font-weight="700" fill="var(--text-3)" font-family="inherit">E</text>
-            <text x="100" y="188" text-anchor="middle" font-size="12" font-weight="700" fill="var(--text-3)" font-family="inherit">S</text>
-            <text x="18" y="105" text-anchor="middle" font-size="12" font-weight="700" fill="var(--text-3)" font-family="inherit">W</text>
-            <g class="qibla__needle" id="qiblaNeedle">
-              <path d="M100 30 112 108 100 100 88 108z" fill="var(--accent)"/>
-              <path d="M100 170 88 100 100 108 112 100z" fill="var(--text-3)" opacity=".45"/>
-              <circle cx="100" cy="30" r="9" fill="var(--accent)"/>
-              <path d="M96 30h8M100 26v8" stroke="#fff" stroke-width="1.8" stroke-linecap="round"/>
-            </g>
-            <circle cx="100" cy="100" r="6" fill="var(--card)" stroke="var(--border-2)" stroke-width="1.5"/>
-          </svg>
-        </div>
-        <p class="qibla__deg num" id="qiblaDeg">267° W</p>
-        <p class="qibla__hint">Hold your phone flat and turn until the marker<br>points straight up.</p>
-        <button class="btn btn--ghost btn--block pressable" style="margin-top:16px" data-toast="Compass recalibrated">
-          <svg class="ico" viewBox="0 0 24 24"><use href="#i-refresh"/></svg> Recalibrate
-        </button>
-      </div>
-    </div>
-  </aside>
 
-  <!-- Currency converter -->
-  <aside class="sheet" id="sheet-currency" role="dialog" aria-modal="true" aria-label="Currency converter">
-    <span class="sheet__grab"></span>
-    <div class="sheet__head">
-      <div>
-        <h2 class="sheet__title">Currency</h2>
-        <p class="sheet__sub">Interbank · updated 12 min ago</p>
-      </div>
-      <button class="closebtn pressable" data-close aria-label="Close"><svg class="ico" viewBox="0 0 24 24"><use href="#i-x"/></svg></button>
-    </div>
-    <div class="sheet__body">
-      <div class="fx">
-        <div class="fx__row">
-          <span class="fx__code">USD</span>
-          <span class="fx__val num">1.00</span>
-        </div>
-        <button class="fx__swap pressable" data-toast="Swapped" aria-label="Swap currencies"><svg class="ico" viewBox="0 0 24 24"><use href="#i-swap"/></svg></button>
-        <div class="fx__row fx__row--to">
-          <span class="fx__code" data-money="to"></span>
-          <span class="fx__val num" data-money="rate"></span>
-        </div>
-      </div>
-      <p class="meta" style="text-align:center;margin-top:12px" id="fxNote"></p>
-      <div class="list list--flat" style="margin-top:16px">
-        <div class="list-row" style="cursor:default"><span class="list-row__icon"><svg class="ico" viewBox="0 0 24 24"><use href="#i-currency"/></svg></span><span class="list-row__body"><span class="list-row__title">GBP</span><span class="list-row__sub">Pound sterling</span></span><span class="list-row__end"><span class="list-row__value num">380.15</span></span></div>
-        <div class="list-row" style="cursor:default"><span class="list-row__icon"><svg class="ico" viewBox="0 0 24 24"><use href="#i-currency"/></svg></span><span class="list-row__body"><span class="list-row__title">SAR</span><span class="list-row__sub">Saudi riyal</span></span><span class="list-row__end"><span class="list-row__value num">75.56</span></span></div>
-        <div class="list-row" style="cursor:default"><span class="list-row__icon"><svg class="ico" viewBox="0 0 24 24"><use href="#i-currency"/></svg></span><span class="list-row__body"><span class="list-row__title">AED</span><span class="list-row__sub">UAE dirham</span></span><span class="list-row__end"><span class="list-row__value num">77.16</span></span></div>
-      </div>
-    </div>
-  </aside>
 
-  <!-- Gold & currency rates (Pakistan) -->
-  <aside class="sheet" id="sheet-rates" data-loc="PK" role="dialog" aria-modal="true" aria-label="Gold and currency rates">
-    <span class="sheet__grab"></span>
-    <div class="sheet__head">
-      <div>
-        <h2 class="sheet__title">Gold & currency</h2>
-        <p class="sheet__sub">Open market · 8 September, 11:20</p>
-      </div>
-      <button class="closebtn pressable" data-close aria-label="Close"><svg class="ico" viewBox="0 0 24 24"><use href="#i-x"/></svg></button>
-    </div>
-    <div class="sheet__body">
-      <div class="ratecards">
-        <article class="ratecard">
-          <span class="ratecard__label">Gold 24k · tola</span>
-          <span class="ratecard__value num">₨ 258,400</span>
-          <span class="ratecard__delta is-up">+1,900</span>
-        </article>
-        <article class="ratecard">
-          <span class="ratecard__label">Gold 22k · 10g</span>
-          <span class="ratecard__value num">₨ 203,120</span>
-          <span class="ratecard__delta is-up">+1,630</span>
-        </article>
-      </div>
-      <div class="list list--flat" style="margin-top:14px">
-        <div class="list-row" style="cursor:default"><span class="list-row__icon"><svg class="ico" viewBox="0 0 24 24"><use href="#i-currency"/></svg></span><span class="list-row__body"><span class="list-row__title">US Dollar</span><span class="list-row__sub">Buying 284.20 · selling 285.10</span></span><span class="list-row__end"><span class="list-row__value num">285.10</span></span></div>
-        <div class="list-row" style="cursor:default"><span class="list-row__icon"><svg class="ico" viewBox="0 0 24 24"><use href="#i-currency"/></svg></span><span class="list-row__body"><span class="list-row__title">Saudi Riyal</span><span class="list-row__sub">Buying 75.20 · selling 76.00</span></span><span class="list-row__end"><span class="list-row__value num">76.00</span></span></div>
-        <div class="list-row" style="cursor:default"><span class="list-row__icon"><svg class="ico" viewBox="0 0 24 24"><use href="#i-currency"/></svg></span><span class="list-row__body"><span class="list-row__title">UK Pound</span><span class="list-row__sub">Buying 379.00 · selling 381.50</span></span><span class="list-row__end"><span class="list-row__value num">381.50</span></span></div>
-        <div class="list-row" style="cursor:default"><span class="list-row__icon"><svg class="ico" viewBox="0 0 24 24"><use href="#i-trending"/></svg></span><span class="list-row__body"><span class="list-row__title">Silver · tola</span><span class="list-row__sub">Unchanged today</span></span><span class="list-row__end"><span class="list-row__value num">₨ 3,140</span></span></div>
-      </div>
-      <p class="meta" style="text-align:center;margin:14px 0 6px">Indicative rates from local bullion associations.</p>
-    </div>
-  </aside>
 
-  <!-- Fuel prices -->
-  <aside class="sheet" id="sheet-fuel" data-loc="PK" role="dialog" aria-modal="true" aria-label="Fuel prices">
-    <span class="sheet__grab"></span>
-    <div class="sheet__head">
-      <div>
-        <h2 class="sheet__title">Fuel prices</h2>
-        <p class="sheet__sub">OGRA notification · effective 1 September</p>
-      </div>
-      <button class="closebtn pressable" data-close aria-label="Close"><svg class="ico" viewBox="0 0 24 24"><use href="#i-x"/></svg></button>
-    </div>
-    <div class="sheet__body">
-      <div class="list list--flat" id="fuelList"></div>
-      <button class="btn btn--ghost btn--block pressable" style="margin:14px 0 6px" data-toast="Karachi → Hyderabad · about ₨ 2,380">
-        <svg class="ico" viewBox="0 0 24 24"><use href="#i-route"/></svg> Work out a trip cost
-      </button>
-      <p class="meta" style="text-align:center;margin-bottom:6px">Next review expected 15 September.</p>
-    </div>
-  </aside>
 
-  <!-- Bills -->
-  <aside class="sheet" id="sheet-bills" data-loc="PK" role="dialog" aria-modal="true" aria-label="Bills">
-    <span class="sheet__grab"></span>
-    <div class="sheet__head">
-      <div>
-        <h2 class="sheet__title">Bills</h2>
-        <p class="sheet__sub">2 due in the next week</p>
-      </div>
-      <button class="closebtn pressable" data-close aria-label="Close"><svg class="ico" viewBox="0 0 24 24"><use href="#i-x"/></svg></button>
-    </div>
-    <div class="sheet__body">
-      <div class="list list--flat">
-        <button class="list-row pressable" data-toast="K-Electric · due 12 September">
-          <span class="list-row__icon" style="background:var(--tint-accent);color:var(--accent)"><svg class="ico" viewBox="0 0 24 24"><use href="#i-bolt"/></svg></span>
-          <span class="list-row__body"><span class="list-row__title">K-Electric</span><span class="list-row__sub">Due 12 September · 4 days</span></span>
-          <span class="list-row__end"><span class="list-row__value num">₨ 18,420</span><svg class="ico" viewBox="0 0 24 24"><use href="#i-chev-r"/></svg></span>
-        </button>
-        <button class="list-row pressable" data-toast="SSGC · due 14 September">
-          <span class="list-row__icon"><svg class="ico" viewBox="0 0 24 24"><use href="#i-flame"/></svg></span>
-          <span class="list-row__body"><span class="list-row__title">Sui Southern Gas</span><span class="list-row__sub">Due 14 September</span></span>
-          <span class="list-row__end"><span class="list-row__value num">₨ 3,860</span><svg class="ico" viewBox="0 0 24 24"><use href="#i-chev-r"/></svg></span>
-        </button>
-        <button class="list-row pressable" data-toast="PTCL · paid 2 September">
-          <span class="list-row__icon"><svg class="ico" viewBox="0 0 24 24"><use href="#i-wifi"/></svg></span>
-          <span class="list-row__body"><span class="list-row__title">PTCL broadband</span><span class="list-row__sub">Paid 2 September</span></span>
-          <span class="list-row__end"><span class="tag tag--neutral">Paid</span></span>
-        </button>
-      </div>
-      <button class="btn btn--accent btn--block pressable" style="margin:14px 0 6px" data-toast="Add a bill by consumer number">
-        <svg class="ico" viewBox="0 0 24 24"><use href="#i-plus"/></svg> Add a bill
-      </button>
-    </div>
-  </aside>
 
-  <!-- Tax calculator -->
-  <aside class="sheet" id="sheet-tax" data-loc="PK" role="dialog" aria-modal="true" aria-label="Tax calculator">
-    <span class="sheet__grab"></span>
-    <div class="sheet__head">
-      <div>
-        <h2 class="sheet__title">Salary tax</h2>
-        <p class="sheet__sub">FBR slabs · tax year 2025-26</p>
-      </div>
-      <button class="closebtn pressable" data-close aria-label="Close"><svg class="ico" viewBox="0 0 24 24"><use href="#i-x"/></svg></button>
-    </div>
-    <div class="sheet__body">
-      <div class="taxout">
-        <p class="taxout__label">Monthly salary</p>
-        <p class="taxout__value num">₨ 350,000</p>
-        <div class="taxout__split">
-          <span><b class="num">₨ 41,667</b>Tax a month</span>
-          <span><b class="num">₨ 308,333</b>Take home</span>
-        </div>
-      </div>
-      <div class="list list--flat" style="margin-top:14px">
-        <div class="list-row" style="cursor:default"><span class="list-row__body"><span class="list-row__title">Annual income</span></span><span class="list-row__end"><span class="list-row__value num">₨ 4,200,000</span></span></div>
-        <div class="list-row" style="cursor:default"><span class="list-row__body"><span class="list-row__title">Annual tax</span></span><span class="list-row__end"><span class="list-row__value num">₨ 500,000</span></span></div>
-        <div class="list-row" style="cursor:default"><span class="list-row__body"><span class="list-row__title">Effective rate</span></span><span class="list-row__end"><span class="list-row__value num">11.9%</span></span></div>
-      </div>
-      <p class="meta" style="text-align:center;margin:14px 0 6px">An estimate for salaried individuals. Confirm with your employer or FBR.</p>
-    </div>
-  </aside>
 
-  <!-- Expenses -->
-  <aside class="sheet" id="sheet-expenses" role="dialog" aria-modal="true" aria-label="Expenses">
-    <span class="sheet__grab"></span>
-    <div class="sheet__head">
-      <div>
-        <h2 class="sheet__title">Expenses</h2>
-        <p class="sheet__sub">September · private to this device</p>
-      </div>
-      <button class="closebtn pressable" data-close aria-label="Close"><svg class="ico" viewBox="0 0 24 24"><use href="#i-x"/></svg></button>
-    </div>
-    <div class="sheet__body">
-      <div class="taxout">
-        <p class="taxout__label">Spent this month</p>
-        <p class="taxout__value num" data-money="spent"></p>
-        <div class="taxout__split">
-          <span><b class="num" data-money="budget"></b>Budget</span>
-          <span><b class="num" data-money="pct">%</b>Used</span>
-        </div>
-      </div>
-      <span class="bar" style="margin:14px 0"><span class="bar__fill" id="expensesBar" data-fill="53"></span></span>
-      <div class="list list--flat">
-        <div class="list-row" style="cursor:default"><span class="list-row__icon"><svg class="ico" viewBox="0 0 24 24"><use href="#i-cart"/></svg></span><span class="list-row__body"><span class="list-row__title">Groceries</span><span class="list-row__sub">14 transactions</span></span><span class="list-row__end"><span class="list-row__value num" data-money="groceries"></span></span></div>
-        <div class="list-row" style="cursor:default"><span class="list-row__icon"><svg class="ico" viewBox="0 0 24 24"><use href="#i-fuel"/></svg></span><span class="list-row__body"><span class="list-row__title">Fuel</span><span class="list-row__sub">4 fill-ups</span></span><span class="list-row__end"><span class="list-row__value num" data-money="fuel"></span></span></div>
-        <div class="list-row" style="cursor:default"><span class="list-row__icon"><svg class="ico" viewBox="0 0 24 24"><use href="#i-receipt"/></svg></span><span class="list-row__body"><span class="list-row__title">Bills</span><span class="list-row__sub">2 paid</span></span><span class="list-row__end"><span class="list-row__value num" data-money="bills"></span></span></div>
-      </div>
-    </div>
-  </aside>
 
-  <!-- Loadshedding -->
-  <aside class="sheet" id="sheet-loadshed" data-loc="PK" role="dialog" aria-modal="true" aria-label="Loadshedding schedule">
-    <span class="sheet__grab"></span>
-    <div class="sheet__head">
-      <div>
-        <h2 class="sheet__title">Loadshedding</h2>
-        <p class="sheet__sub">Gulshan-e-Iqbal · K-Electric</p>
-      </div>
-      <button class="closebtn pressable" data-close aria-label="Close"><svg class="ico" viewBox="0 0 24 24"><use href="#i-x"/></svg></button>
-    </div>
-    <div class="sheet__body">
-      <article class="card card--pad" style="display:flex;align-items:center;gap:14px;margin-bottom:14px">
-        <span class="stat-row__icon" style="background:var(--tint-accent);color:var(--accent)"><svg class="ico" viewBox="0 0 24 24"><use href="#i-bolt"/></svg></span>
-        <div style="flex:1">
-          <p class="progress-card__title">Power is on</p>
-          <p class="progress-card__meta">Next outage in 2 hours 12 minutes</p>
-        </div>
-      </article>
-      <p class="group-label" style="padding:0;margin:0 0 9px">Today</p>
-      <div class="list list--flat">
-        <div class="list-row" style="cursor:default"><span class="list-row__icon"><svg class="ico" viewBox="0 0 24 24"><use href="#i-clock"/></svg></span><span class="list-row__body"><span class="list-row__title num">06:00 – 08:00</span><span class="list-row__sub">Completed</span></span><span class="list-row__end"><span class="tag tag--neutral">Done</span></span></div>
-        <div class="list-row" style="cursor:default"><span class="list-row__icon" style="background:var(--tint-accent);color:var(--accent)"><svg class="ico" viewBox="0 0 24 24"><use href="#i-clock"/></svg></span><span class="list-row__body"><span class="list-row__title num">14:00 – 16:00</span><span class="list-row__sub">Next · 2 hours</span></span><span class="list-row__end"><span class="tag">Next</span></span></div>
-        <div class="list-row" style="cursor:default"><span class="list-row__icon"><svg class="ico" viewBox="0 0 24 24"><use href="#i-clock"/></svg></span><span class="list-row__body"><span class="list-row__title num">22:00 – 23:00</span><span class="list-row__sub">Scheduled</span></span><span class="list-row__end"><svg class="ico" viewBox="0 0 24 24"><use href="#i-bell"/></svg></span></div>
-      </div>
-      <p class="meta" style="text-align:center;margin:14px 0 6px">Schedules can change at short notice.</p>
-    </div>
-  </aside>
 
-  <!-- Cricket -->
-  <aside class="sheet" id="sheet-cricket" role="dialog" aria-modal="true" aria-label="Cricket score">
-    <span class="sheet__grab"></span>
-    <div class="sheet__head">
-      <div>
-        <h2 class="sheet__title">Pakistan v South Africa</h2>
-        <p class="sheet__sub">2nd Test · day 2 · Rawalpindi</p>
-      </div>
-      <button class="closebtn pressable" data-close aria-label="Close"><svg class="ico" viewBox="0 0 24 24"><use href="#i-x"/></svg></button>
-    </div>
-    <div class="sheet__body">
-      <article class="card card--pad score" style="margin-bottom:14px">
-        <div class="score__side">
-          <span class="score__flag">PAK</span>
-          <span class="score__runs num">214<span>/4</span></span>
-          <span class="score__overs num">58.2 ov</span>
-        </div>
-        <span class="score__vs">vs</span>
-        <div class="score__side score__side--away">
-          <span class="score__flag">SA</span>
-          <span class="score__runs num">301</span>
-          <span class="score__overs num">all out</span>
-        </div>
-        <p class="score__note">Pakistan trail by 87 runs</p>
-      </article>
-      <p class="group-label" style="padding:0;margin:0 0 9px">At the crease</p>
-      <div class="list list--flat">
-        <div class="list-row" style="cursor:default"><span class="list-row__body"><span class="list-row__title">Babar Azam</span><span class="list-row__sub">112 balls · 9 fours</span></span><span class="list-row__end"><span class="list-row__value num">78*</span></span></div>
-        <div class="list-row" style="cursor:default"><span class="list-row__body"><span class="list-row__title">Saud Shakeel</span><span class="list-row__sub">64 balls · 3 fours</span></span><span class="list-row__end"><span class="list-row__value num">41*</span></span></div>
-        <div class="list-row" style="cursor:default"><span class="list-row__body"><span class="list-row__title">Current run rate</span></span><span class="list-row__end"><span class="list-row__value num">3.67</span></span></div>
-      </div>
-    </div>
-  </aside>
 
-  <!-- Parcel -->
-  <aside class="sheet" id="sheet-parcel" data-loc="PK" role="dialog" aria-modal="true" aria-label="Parcel tracking">
-    <span class="sheet__grab"></span>
-    <div class="sheet__head">
-      <div>
-        <h2 class="sheet__title">Your parcel</h2>
-        <p class="sheet__sub">TCS · CN 4820 9931 22</p>
-      </div>
-      <button class="closebtn pressable" data-close aria-label="Close"><svg class="ico" viewBox="0 0 24 24"><use href="#i-x"/></svg></button>
-    </div>
-    <div class="sheet__body">
-      <div class="timeline" style="padding:0">
-        <div class="tl-item is-done">
-          <span class="tl-time num">6 Sep</span>
-          <span class="tl-line"><span class="tl-node"></span></span>
-          <span class="tl-card" style="cursor:default"><span class="tl-card__body"><span class="tl-card__title">Picked up</span><span class="tl-card__meta">Lahore · 18:40</span></span></span>
-        </div>
-        <div class="tl-item is-done">
-          <span class="tl-time num">7 Sep</span>
-          <span class="tl-line"><span class="tl-node"></span></span>
-          <span class="tl-card" style="cursor:default"><span class="tl-card__body"><span class="tl-card__title">In transit</span><span class="tl-card__meta">Sukkur hub · 04:15</span></span></span>
-        </div>
-        <div class="tl-item is-now">
-          <span class="tl-time num">8 Sep</span>
-          <span class="tl-line"><span class="tl-node"></span></span>
-          <span class="tl-card" style="cursor:default"><span class="tl-card__body"><span class="tl-card__title">Out for delivery</span><span class="tl-card__meta">Karachi · rider assigned 09:20</span></span><span class="tl-card__icon"><svg class="ico" viewBox="0 0 24 24"><use href="#i-clock"/></svg></span></span>
-        </div>
-        <div class="tl-item">
-          <span class="tl-time num">Today</span>
-          <span class="tl-line"><span class="tl-node"></span></span>
-          <span class="tl-card" style="cursor:default"><span class="tl-card__body"><span class="tl-card__title">Delivery expected</span><span class="tl-card__meta">Between 14:00 and 18:00</span></span></span>
-        </div>
-      </div>
-      <button class="btn btn--ghost btn--block pressable" style="margin:6px 0" data-toast="Tracking another parcel">
-        <svg class="ico" viewBox="0 0 24 24"><use href="#i-plus"/></svg> Track another parcel
-      </button>
-    </div>
-  </aside>
 
-  <!-- Emergency -->
-  <aside class="sheet" id="sheet-emergency" data-loc="PK" role="dialog" aria-modal="true" aria-label="Emergency numbers">
-    <span class="sheet__grab"></span>
-    <div class="sheet__head">
-      <div>
-        <h2 class="sheet__title">Emergency</h2>
-        <p class="sheet__sub">Karachi · tap to call</p>
-      </div>
-      <button class="closebtn pressable" data-close aria-label="Close"><svg class="ico" viewBox="0 0 24 24"><use href="#i-x"/></svg></button>
-    </div>
-    <div class="sheet__body">
-      <div class="list list--flat">
-        <button class="list-row pressable" data-toast="Calling Rescue 1122"><span class="list-row__icon" style="background:var(--tint-accent);color:var(--accent)"><svg class="ico" viewBox="0 0 24 24"><use href="#i-pulse"/></svg></span><span class="list-row__body"><span class="list-row__title">Rescue</span><span class="list-row__sub">Ambulance and fire</span></span><span class="list-row__end"><span class="list-row__value num">1122</span></span></button>
-        <button class="list-row pressable" data-toast="Calling Police 15"><span class="list-row__icon"><svg class="ico" viewBox="0 0 24 24"><use href="#i-shield"/></svg></span><span class="list-row__body"><span class="list-row__title">Police</span><span class="list-row__sub">Madadgar helpline</span></span><span class="list-row__end"><span class="list-row__value num">15</span></span></button>
-        <button class="list-row pressable" data-toast="Calling Edhi 115"><span class="list-row__icon"><svg class="ico" viewBox="0 0 24 24"><use href="#i-heart"/></svg></span><span class="list-row__body"><span class="list-row__title">Edhi ambulance</span><span class="list-row__sub">Round the clock</span></span><span class="list-row__end"><span class="list-row__value num">115</span></span></button>
-        <button class="list-row pressable" data-toast="Calling K-Electric 118"><span class="list-row__icon"><svg class="ico" viewBox="0 0 24 24"><use href="#i-bolt"/></svg></span><span class="list-row__body"><span class="list-row__title">K-Electric</span><span class="list-row__sub">Power complaints</span></span><span class="list-row__end"><span class="list-row__value num">118</span></span></button>
-      </div>
-      <p class="meta" style="text-align:center;margin:14px 0 6px">These numbers work without credit on most networks.</p>
-    </div>
-  </aside>
 
   <!-- ==========================================================
        ONBOARDING
@@ -2335,9 +1907,19 @@
 
 <script src="assets/js/geo.js"></script>
 <script src="assets/js/i18n.js"></script>
+<script src="assets/js/i18n-tools.js"></script>
 <script src="assets/js/locale.js"></script>
 <script src="assets/js/solar.js"></script>
 <script src="assets/js/catalogue.js"></script>
+<script src="assets/js/toolspec.js"></script>
+<script src="assets/js/tooldata.js"></script>
+<script src="assets/js/toolkit.js"></script>
+<script src="assets/js/toolctx.js"></script>
+<script src="assets/js/tools.js"></script>
+<script src="assets/js/tools-faith.js"></script>
+<script src="assets/js/tools-money.js"></script>
+<script src="assets/js/tools-life.js"></script>
+<script src="assets/js/tools-personal.js"></script>
 <script src="assets/js/app.js"></script>
 </body>
 </html>

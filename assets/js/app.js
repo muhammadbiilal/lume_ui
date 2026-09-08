@@ -12,6 +12,10 @@
 
   var C = window.LUME;
   var GEO = window.LUME_GEO;
+  var SPEC = window.LUME_SPEC;
+  var TOOLS = window.LUME_TOOLS;
+  var UI = window.LUME_UI;
+  var C_DATA = window.LUME_DATA;
   var SOLAR = window.LUME_SOLAR;
   var I18N = window.LUME_I18N;
 
@@ -137,6 +141,14 @@
     return null;
   }
 
+  /* Every feature opens its own tool screen. The catalogue's `act` is kept
+     as the quick-glance surface (a sheet) but the tool screen is the tool:
+     that is what makes each one its own information architecture rather
+     than a toast (Master Spec §113). */
+  function actFor(f) {
+    return 'tool:' + f.id;
+  }
+
   /* Markets that have any localised feature of their own. */
   var LOCAL_MARKETS = null;
   function localMarkets() {
@@ -165,28 +177,56 @@
     });
   }
 
+  /* Hiding is not the same as disabling (§64). A gated node loses its action
+     and its tab stop as well as its box, so a stray querySelector, a stale
+     deep link or a screen reader cannot reach through it. */
+  function disarm(el, ok) {
+    if (ok) {
+      if (el.dataset.actOff !== undefined) { el.dataset.act = el.dataset.actOff; delete el.dataset.actOff; }
+      if (el.dataset.sheetOff !== undefined) { el.dataset.sheet = el.dataset.sheetOff; delete el.dataset.sheetOff; }
+      if (el.dataset.tabOff !== undefined) { el.removeAttribute('tabindex'); delete el.dataset.tabOff; }
+      el.removeAttribute('aria-hidden');
+    } else {
+      if (el.dataset.act !== undefined) { el.dataset.actOff = el.dataset.act; delete el.dataset.act; }
+      if (el.dataset.sheet !== undefined) { el.dataset.sheetOff = el.dataset.sheet; delete el.dataset.sheet; }
+      el.setAttribute('aria-hidden', 'true');
+      el.setAttribute('tabindex', '-1');
+      el.dataset.tabOff = '1';
+    }
+  }
+
+  function gate(el, ok) {
+    el.classList.toggle('is-off', !ok);
+    el.hidden = !ok;
+    disarm(el, ok);
+    /* A gated section takes its whole subtree with it — otherwise the
+       section is hidden but the buttons inside it are still addressable. */
+    $$('[data-act], [data-sheet], [data-act-off], [data-sheet-off]', el).forEach(function (child) {
+      disarm(child, ok);
+    });
+  }
+
   /* Static markup opts in with data-faith / data-loc / data-int. */
   function applyVisibility() {
     $$('[data-faith]').forEach(function (el) {
       var want = el.dataset.faith;
-      var ok = want === 'islamic' ? profile.islamic : !profile.islamic;
-      el.classList.toggle('is-off', !ok);
+      gate(el, want === 'islamic' ? profile.islamic : !profile.islamic);
     });
 
     /* data-loc takes a comma-separated country list, or "global" for markup
        that should show everywhere the listed markets do not. */
     $$('[data-loc]').forEach(function (el) {
       var want = el.dataset.loc;
-      var ok = want === 'global'
+      gate(el, want === 'global'
         ? !localMarkets().length || localMarkets().indexOf(profile.country) === -1
-        : want.split(',').indexOf(profile.country) !== -1;
-      el.classList.toggle('is-off', !ok);
+        : want.split(',').indexOf(profile.country) !== -1);
     });
 
+    /* Interests only re-order relevance; they never hide a tool outright,
+       so this stays a soft toggle rather than a gate. */
     $$('[data-int]').forEach(function (el) {
-      if (!profile.interests.length) { el.classList.remove('is-off'); return; }
-      var ok = el.dataset.int.split(/\s+/).some(hasInterest);
-      el.classList.toggle('is-off', !ok);
+      if (!profile.interests.length) { gate(el, true); return; }
+      gate(el, el.dataset.int.split(/\s+/).some(hasInterest));
     });
   }
 
@@ -279,6 +319,8 @@
       : ['home', 'tools', 'today', 'explore', 'profile'];
   }
 
+  var PKEYS = { Fajr: 'fajr', Sunrise: 'sunrise', Dhuhr: 'dhuhr', Asr: 'asr', Maghrib: 'maghrib', Isha: 'isha' };
+
   var current = 'home';
 
   function renderTabs() {
@@ -331,7 +373,16 @@
     if (!quiet) animateBars(screen);
   }
 
+  /* §116 — above a real desktop width the shell stops presenting itself as a
+     handset and the compositions inside gain columns. Everything below that
+     stays exactly as designed for a phone. */
+  function applyWidth() {
+    var el = $('#app');
+    if (el) el.classList.toggle('app--wide', window.innerWidth >= 1180);
+  }
+
   window.addEventListener('resize', function () {
+    applyWidth();
     movePill($('.tab.is-active'));
   });
 
@@ -365,7 +416,6 @@
     scrim.classList.add('is-open');
     openSheet = sheet;
 
-    if (name === 'qibla') spinQibla();
     if (name === 'personalise' && setPicker) hydratePersonalise();
     if (name === 'search') {
       resetSearch();
@@ -427,6 +477,8 @@
     var bits = act.split(':');
     var kind = bits.shift();
     var arg = bits.join(':');
+    /* Tool screens own most of the vocabulary now; the shell keeps the rest. */
+    if (typeof toolAction === 'function' && toolAction(kind, arg)) return;
     if (kind === 'sheet') sheetOpen(arg);
     else if (kind === 'tab') goTo(arg);
     else if (kind === 'toast') toast(arg);
@@ -627,21 +679,6 @@
     return Math.floor(total / 60) + ':' + pad2(total % 60);
   }
 
-  function renderPrayerList() {
-    var host = $('#prayerList');
-    if (!host) return;
-    var st = prayerState();
-    host.innerHTML = st.list.map(function (p) {
-      var isNext = p.name === st.next.name;
-      return '<div class="list-row' + (isNext ? ' is-next' : '') + '" style="cursor:default">' +
-        '<span class="list-row__icon"' + (isNext ? ' style="background:var(--tint-accent);color:var(--accent)"' : '') + '>' +
-          '<svg class="ico" viewBox="0 0 24 24"><use href="#' + (p.minor ? 'i-sun' : 'i-prayer') + '"/></svg></span>' +
-        '<span class="list-row__body"><span class="list-row__title">' + esc(p.name) + '</span>' +
-        '<span class="list-row__sub">' + (isNext ? 'Next · reminder on' : p.minor ? 'Not a prayer' : 'Reminder on') + '</span></span>' +
-        '<span class="list-row__end"><span class="list-row__value num">' + hhmm(p) + '</span></span></div>';
-    }).join('');
-  }
-
   function updatePrayer() {
     if (!profile.islamic) return;
     var st = prayerState();
@@ -688,13 +725,16 @@
     if (!host) return;
 
     var events = [
-      { t: '09:30', title: 'Team standup', meta: '15 min · Video call', icon: 'i-check-circle', done: true },
-      { t: '14:00', title: 'Design review', meta: '45 min · Studio 2', icon: 'i-clock', now: true },
-      { t: '18:30', title: 'Pick up groceries', meta: 'Reminder · Tariq Road', icon: 'i-pin', act: 'toast:Groceries · reminder set' }
+      { t: '09:30', title: t('agenda.standup'), meta: t('agenda.standupMeta'), icon: 'i-check-circle', done: true },
+      { t: '14:00', title: t('agenda.review'), meta: t('agenda.reviewMeta'), icon: 'i-clock', now: true },
+      { t: '18:30', title: t('agenda.groceries'), meta: t('agenda.groceriesMeta'), icon: 'i-cart', act: 'tool:shopping' }
     ];
 
-    if (profile.country === 'PK') {
-      events.push({ t: '14:00', title: 'Loadshedding', meta: 'Gulshan · 2 hours', icon: 'i-bolt', act: 'sheet:loadshed' });
+    var lsf = feature('loadshed');
+    if (lsf && visible(lsf)) {
+      var ls = toolCtx('loadshed').loadshed();
+      events.push({ t: ls.slot.from, title: t('loadshed.outage'),
+        meta: ls.area + ' · ' + ls.slot.duration, icon: 'i-bolt', act: 'tool:loadshed' });
     }
 
     if (profile.islamic) {
@@ -703,9 +743,9 @@
         var past = mins(p) < (new Date().getHours() * 60 + new Date().getMinutes());
         events.push({
           t: hhmm(p), title: p.name,
-          meta: past ? 'Prayed' : 'Adhan · reminder on',
+          meta: past ? t('agenda.prayed') : t('agenda.adhanOn'),
           icon: past ? 'i-check-circle' : 'i-bell',
-          done: past, act: 'sheet:prayer'
+          done: past, act: 'tool:prayer'
         });
       });
     }
@@ -718,7 +758,7 @@
       var done = e.done || (em < nowM && !e.now);
       var cls = e.now ? ' is-now' : done ? ' is-done' : '';
       return '<div class="tl-item' + cls + '">' +
-        '<span class="tl-time num">' + e.t + '</span>' +
+        '<span class="tl-time num">' + esc(L.time(parseInt(e.t.slice(0, 2), 10), parseInt(e.t.slice(3), 10))) + '</span>' +
         '<span class="tl-line"><span class="tl-node"></span></span>' +
         '<button class="tl-card pressable" data-act="' + (e.act || ('toast:' + e.title)) + '">' +
           '<span class="tl-card__body"><span class="tl-card__title">' + esc(e.title) + '</span>' +
@@ -793,18 +833,16 @@
 
     host.innerHTML = picked.map(function (f) {
       var accent = !!f.faith;
-      return '<button class="tool pressable" data-act="' + f.act + '" data-fid="' + f.id + '">' +
+      return '<button class="tool pressable" data-act="' + actFor(f) + '" data-fid="' + f.id + '">' +
         '<span class="tool__icon' + (accent ? ' tool__icon--accent' : '') + '">' +
           '<svg class="ico" viewBox="0 0 24 24"><use href="#' + f.i + '"/></svg></span>' +
         '<span class="tool__label">' + esc(fname(f)) + '</span>' +
-        (f.m ? '<span class="tool__value num"' + (f.id === 'tasbih' ? ' id="tasbeehQuick"' : '') + '>' +
-               esc(f.id === 'tasbih' ? String(beads) : f.m) + '</span>' : '') +
+        (f.m ? '<span class="tool__value num">' + esc(f.m) + '</span>' : '') +
       '</button>';
     }).join('');
 
     var sub = $('#quickToolsSub');
     if (sub) sub.textContent = t(profile.interests.length ? 'home.quickFromInterests' : 'home.quickDefault');
-    renderBeads();
   }
 
   /* ---------------------------------------------------------
@@ -834,7 +872,7 @@
     var badge = '';
     if (f.sens) badge = '<span class="cat-tool__flag" aria-label="Private"><svg class="ico" viewBox="0 0 24 24"><use href="#i-lock"/></svg></span>';
     else if (f.loc) badge = '<span class="cat-tool__pin" aria-label="Local service"></span>';
-    return '<button class="cat-tool pressable" data-act="' + f.act + '" data-fid="' + f.id + '" ' +
+    return '<button class="cat-tool pressable" data-act="' + actFor(f) + '" data-fid="' + f.id + '" ' +
       'data-hay="' + esc((f.n + ' ' + (f.kw || '')).toLowerCase()) + '" ' +
       (f.staple ? 'data-staple="1" ' : '') +
       'data-ints="' + esc((f.ints || []).join(' ')) + '">' +
@@ -954,7 +992,7 @@
     var items = profile.recents.map(feature).filter(function (f) { return f && visible(f); });
     wrap.hidden = items.length < 2;
     host.innerHTML = items.map(function (f) {
-      return '<button class="recent pressable" data-act="' + f.act + '" data-fid="' + f.id + '">' +
+      return '<button class="recent pressable" data-act="' + actFor(f) + '" data-fid="' + f.id + '">' +
         '<span class="recent__icon"><svg class="ico" viewBox="0 0 24 24"><use href="#' + f.i + '"/></svg></span>' +
         '<span class="recent__label">' + esc(fname(f)) + '</span></button>';
     }).join('');
@@ -964,11 +1002,11 @@
      Global search
      --------------------------------------------------------- */
   var EXTRA_INDEX = [
-    { n: 'Dark mode', sub: 'Settings', i: 'i-moon', act: 'theme', kw: 'theme night light appearance' },
-    { n: 'Personalisation', sub: 'Settings', i: 'i-sliders', act: 'sheet:personalise', kw: 'interests country islamic content preferences religion' },
-    { n: 'Surah Ar-Rahman', sub: 'Qur’an · chapter 55', i: 'i-book', act: 'sheet:reading', faith: 1, kw: 'surah rahman 55 recite' },
-    { n: 'Surah Al-Kahf', sub: 'Qur’an · chapter 18', i: 'i-book', act: 'sheet:reading', faith: 1, kw: 'surah kahf 18 friday cave' },
-    { n: 'Surah Yaseen', sub: 'Qur’an · chapter 36', i: 'i-book', act: 'sheet:reading', faith: 1, kw: 'surah yaseen yasin 36' },
+    { nk: 'extra.darkMode', sub: 'Settings', i: 'i-moon', act: 'theme', kw: 'theme night light appearance' },
+    { nk: 'extra.personalise', sub: 'Settings', i: 'i-sliders', act: 'sheet:personalise', kw: 'interests country islamic content preferences religion' },
+    { n: 'Surah Ar-Rahman', sub: 'Qur’an · chapter 55', i: 'i-book', act: 'tool:quran', faith: 1, kw: 'surah rahman 55 recite' },
+    { n: 'Surah Al-Kahf', sub: 'Qur’an · chapter 18', i: 'i-book', act: 'tool:quran', faith: 1, kw: 'surah kahf 18 friday cave' },
+    { n: 'Surah Yaseen', sub: 'Qur’an · chapter 36', i: 'i-book', act: 'tool:quran', faith: 1, kw: 'surah yaseen yasin 36' },
     { n: 'Karachi Cantt', sub: 'Station · Pakistan Railways', i: 'i-train', act: 'tab:trains', loc: 'PK', kw: 'station karachi cantt platform' },
     { n: 'Masjid-e-Tooba', sub: 'Nearby · 650 m', i: 'i-mosque', act: 'toast:Masjid-e-Tooba · 650 m', faith: 1, kw: 'mosque masjid nearby' }
   ];
@@ -976,13 +1014,17 @@
   function searchIndex() {
     var out = visibleFeatures().map(function (f) {
       var cat = C.CATEGORIES.filter(function (c) { return c.id === f.c; })[0];
-      return { n: fname(f), sub: cat ? t('cat.' + cat.id) : '', i: f.i, act: f.act, fid: f.id,
+      return { n: fname(f), sub: cat ? t('cat.' + cat.id) : '', i: f.i, act: actFor(f), fid: f.id,
                hay: (f.n + ' ' + fname(f) + ' ' + (f.kw || '')).toLowerCase() };
     });
     EXTRA_INDEX.forEach(function (x) {
       if (x.faith && !profile.islamic) return;
       if (x.loc && x.loc !== profile.country) return;
-      out.push({ n: x.n, sub: x.sub, i: x.i, act: x.act, hay: (x.n + ' ' + (x.kw || '')).toLowerCase() });
+      /* Proper nouns (a surah, a station) stay as written; anything that is
+         really a UI label carries a key instead (§47, §106). */
+      var name = x.nk ? t(x.nk) : x.n;
+      out.push({ n: name, sub: x.subk ? t(x.subk) : x.sub, i: x.i, act: x.act,
+                 hay: (name + ' ' + x.n + ' ' + (x.kw || '')).toLowerCase() });
     });
     return out;
   }
@@ -1048,7 +1090,7 @@
       var items = profile.recents.map(feature).filter(function (f) { return f && visible(f); }).slice(0, 4);
       if (!items.length) items = ['calculator', 'weather', 'calendar'].map(feature).filter(function (f) { return f && visible(f); });
       rec.innerHTML = items.map(function (f) {
-        return '<button class="list-row pressable" data-act="' + f.act + '" data-fid="' + f.id + '">' +
+        return '<button class="list-row pressable" data-act="' + actFor(f) + '" data-fid="' + f.id + '">' +
           '<span class="list-row__icon"><svg class="ico" viewBox="0 0 24 24"><use href="#' + f.i + '"/></svg></span>' +
           '<span class="list-row__body"><span class="list-row__title">' + esc(fname(f)) + '</span>' +
           '<span class="list-row__sub">' + esc(f.m || '') + '</span></span>' +
@@ -1152,58 +1194,23 @@
     }
   }
 
-  function qiblaDeg() {
-    var pos = here();
-    return Math.round(SOLAR.qibla(pos.lat, pos.lon));
-  }
-
-  function renderQibla() {
-    var deg = qiblaDeg();
-    var label = L.num(deg) + '° ' + SOLAR.compassPoint(deg);
-    var d = $('#qiblaDeg'); if (d) d.textContent = label;
-    var s = $('#qiblaSub'); if (s) s.textContent = L.num(deg);
-    var f = feature('qibla'); if (f) f.m = label;
-  }
-
-  function spinQibla() {
-    var needle = $('#qiblaNeedle');
-    if (!needle) return;
-    var deg = qiblaDeg();
-    needle.style.transition = 'none';
-    needle.style.transform = 'rotate(-40deg)';
-    requestAnimationFrame(function () {
-      requestAnimationFrame(function () {
-        needle.style.transition = '';
-        needle.style.transform = 'rotate(' + deg + 'deg)';
-      });
-    });
-  }
-
-  function renderFuel() {
-    var host = $('#fuelList');
-    if (!host) return;
-    host.innerHTML = C.FUEL.map(function (f) {
-      var dir = f.d.charAt(0) === '+' ? 'is-up' : f.d.charAt(0) === '−' ? 'is-down' : '';
-      return '<div class="list-row" style="cursor:default">' +
-        '<span class="list-row__icon"><svg class="ico" viewBox="0 0 24 24"><use href="#i-fuel"/></svg></span>' +
-        '<span class="list-row__body"><span class="list-row__title">' + esc(f.n) + '</span>' +
-        '<span class="list-row__sub">per litre</span></span>' +
-        '<span class="list-row__end"><span class="list-row__value num">₨ ' + f.v + '</span>' +
-        '<span class="delta ' + dir + '">' + f.d + '</span></span></div>';
-    }).join('');
-  }
-
+  /* The Trains tab shows the same roster the Trains tool does, formatted by
+     the locale rather than hard-coded to rupees and English. */
   function renderTrains() {
     var host = $('#trainList');
     if (!host) return;
-    host.innerHTML = C.TRAINS.map(function (t) {
-      return '<button class="list-row pressable" data-toast="' + esc(t.name + ' · ' + t.status) + '">' +
+    var ccy = L.country().currency;
+    host.innerHTML = C_DATA.TRAINS.map(function (tr) {
+      var status = t(tr.statusKey, { n: tr.delay });
+      return '<button class="list-row pressable" data-act="tool:trains" data-fid="trains">' +
         '<span class="list-row__icon"><svg class="ico" viewBox="0 0 24 24"><use href="#i-train"/></svg></span>' +
         '<span class="list-row__body">' +
-          '<span class="list-row__title">' + esc(t.name) + ' <span class="trainno num">' + esc(t.no) + '</span></span>' +
-          '<span class="list-row__sub"><span class="num">' + t.dep + '</span> → <span class="num">' + t.arr + '</span> · ' + t.dur + ' · ₨ ' + t.fare + '</span>' +
+          '<span class="list-row__title">' + esc(tr.name) + ' <span class="trainno num">' + esc(tr.no) + '</span></span>' +
+          '<span class="list-row__sub"><span class="num">' + esc(tr.dep) + '</span> → <span class="num">' +
+            esc(tr.arr) + '</span> · ' + esc(tr.dur) + ' · ' + esc(L.moneyRaw(tr.fare, ccy, 0)) + '</span>' +
         '</span>' +
-        '<span class="list-row__end"><span class="status status--' + t.cls + '">' + esc(t.status) + '</span></span></button>';
+        '<span class="list-row__end"><span class="status status--' + (tr.delay ? 'late' : 'ok') + '">' +
+          esc(status) + '</span></span></button>';
     }).join('');
   }
 
@@ -1236,14 +1243,20 @@
 
     if (profile.islamic) {
       var st = prayerState();
-      items.push({ icon: 'i-prayer', title: st.next.name + ' in ' + fmtShort(st.toNext), sub: 'Adhan at ' + hhmm(st.next), fresh: true });
+      items.push({ icon: 'i-prayer',
+        title: t('notif.prayerIn', { name: t('prayer.' + (PKEYS[st.next.name] || 'fajr')), time: fmtShort(st.toNext) }),
+        sub: t('notif.adhanAt', { time: hhmm(st.next) }), fresh: true });
     }
     if (profile.country === 'PK') {
-      items.push({ icon: 'i-bolt', title: 'Loadshedding at 14:00', sub: 'Gulshan-e-Iqbal · about 2 hours', fresh: true });
-      items.push({ icon: 'i-package', title: 'Your parcel is out for delivery', sub: 'TCS · arriving between 14:00 and 18:00' });
+      var ls = toolCtx('loadshed').loadshed();
+      items.push({ icon: 'i-bolt', title: t('notif.loadshed', { time: ls.slot.from }),
+        sub: ls.area + ' · ' + ls.slot.duration, fresh: true });
     }
     items.push({ icon: 'i-check-square', title: '3 tasks left today', sub: 'Next: finish the Q3 summary at 15:00' });
-    items.push({ icon: 'i-cloud-sun', title: 'Warm again tomorrow', sub: 'High of 35° · little chance of rain' });
+    var wx = toolCtx('weather').weather();
+    items.push({ icon: 'i-cloud-sun', title: t('notif.tomorrow', { city: profile.city }),
+      sub: t('weather.hilo', { hi: L.temp(wx.daily[1].hi), lo: L.temp(wx.daily[1].lo) }) +
+        ' · ' + wx.daily[1].rain + '% ' + t('weather.rain') });
 
     host.innerHTML = items.map(function (n) {
       return '<div class="list-row" style="cursor:default">' +
@@ -1267,92 +1280,17 @@
     return String(Math.round(n * 1e10) / 1e10);
   }
 
-  function calcRender() {
-    if (!calcValue) return;
-    var v = calc.entry;
-    if (v.length > 12 && v.indexOf('.') !== -1) v = String(parseFloat(v).toPrecision(10));
-    calcValue.textContent = v;
-    calcHistory.textContent = calc.acc !== null ? trimNum(calc.acc) + ' ' + (calc.op || '') : '';
-  }
-
-  function calcCompute(a, op, b) {
-    switch (op) {
-      case '+': return a + b;
-      case '−': return a - b;
-      case '×': return a * b;
-      case '÷': return b === 0 ? NaN : a / b;
-      default: return b;
-    }
-  }
-
-  function calcKey(k) {
-    if (/^[0-9]$/.test(k)) {
-      calc.entry = calc.fresh || calc.entry === '0' ? k : calc.entry + k;
-      calc.fresh = false;
-    } else if (k === '.') {
-      if (calc.fresh) { calc.entry = '0.'; calc.fresh = false; }
-      else if (calc.entry.indexOf('.') === -1) calc.entry += '.';
-    } else if (k === 'clear') {
-      calc = { acc: null, op: null, entry: '0', fresh: true };
-    } else if (k === 'back') {
-      calc.entry = calc.entry.length > 1 ? calc.entry.slice(0, -1) : '0';
-    } else if (k === 'sign') {
-      calc.entry = calc.entry.charAt(0) === '-' ? calc.entry.slice(1) : '-' + calc.entry;
-    } else if (k === 'percent') {
-      calc.entry = trimNum(parseFloat(calc.entry) / 100);
-    } else if (k === '+' || k === '−' || k === '×' || k === '÷') {
-      var cur = parseFloat(calc.entry);
-      calc.acc = calc.acc === null || calc.fresh ? (calc.fresh && calc.acc !== null ? calc.acc : cur)
-                                                 : calcCompute(calc.acc, calc.op, cur);
-      calc.op = k;
-      calc.fresh = true;
-    } else if (k === '=') {
-      if (calc.op !== null) {
-        calc.entry = trimNum(calcCompute(calc.acc, calc.op, parseFloat(calc.entry)));
-        calc.acc = null;
-        calc.op = null;
-        calc.fresh = true;
-      }
-    }
-    calcRender();
-  }
-
-  var calcPad = $('#calcPad');
-  if (calcPad) {
-    calcPad.addEventListener('click', function (e) {
-      var key = e.target.closest('[data-k]');
-      if (key) calcKey(key.dataset.k);
-    });
-  }
-
-  document.addEventListener('keydown', function (e) {
-    if (!openSheet || openSheet.id !== 'sheet-calculator') return;
-    var map = { '/': '÷', '*': '×', '-': '−', '+': '+', 'Enter': '=', '=': '=', 'Backspace': 'back', 'Escape': 'clear', '%': 'percent' };
-    var k = map[e.key] || (/^[0-9.]$/.test(e.key) ? e.key : null);
-    if (k) { e.preventDefault(); calcKey(k); }
-  });
-
   /* ---------------------------------------------------------
      Tasbih
      --------------------------------------------------------- */
-  var TARGET = 33;
-  var beads = 0;
   var tCount = $('#tasbeehCount'), tRing = $('#tasbeehRing');
   var tCirc = 2 * Math.PI * 45;
-
-  function renderBeads() {
-    if (tCount) tCount.textContent = beads;
-    var tQuick = $('#tasbeehQuick');          /* re-queried: the grid is rebuilt */
-    if (tQuick) tQuick.textContent = beads;
-    if (tRing) tRing.style.strokeDashoffset = (tCirc * (1 - Math.min(1, beads / TARGET))).toFixed(1);
-  }
 
   var tBtn = $('#tasbeehBtn');
   if (tBtn) {
     tBtn.addEventListener('click', function () {
       beads++;
-      renderBeads();
-      tCount.classList.remove('bump');
+        tCount.classList.remove('bump');
       void tCount.offsetWidth;
       tCount.classList.add('bump');
       if (navigator.vibrate) navigator.vibrate(8);
@@ -1898,7 +1836,6 @@
     applyVisibility();
     /* Metadata first — the tool cards below read it. */
     renderWeather();
-    renderQibla();
     renderMoney();
     syncFeatureMeta();
     renderTabs();
@@ -1907,16 +1844,22 @@
     renderToolChips();
     renderTools();
     renderRecents();
+    renderQuickActions();
+    renderLiveNow();
+    renderUpcoming();
+    renderAround();
     renderTodayStats();
     renderAgenda();
-    renderFuel();
     renderTrains();
     renderNews();
     renderNotifications();
-    renderPrayerList();
     renderProfileSummary();
     initHeader();
     updatePrayer();
+    /* Rendered content lands inside gated containers, so the gate is applied
+       again once everything exists. Otherwise a freshly injected row inside a
+       hidden section would still be addressable (§64). */
+    applyVisibility();
   }
 
   /* ---------------------------------------------------------
@@ -2280,7 +2223,7 @@
   }
 
   function openShare(id) {
-    shareData = SHARE_CONTENT[id] || SHARE_CONTENT.quote;
+    shareData = shareForTool(id) || SHARE_CONTENT[id] || SHARE_CONTENT.quote;
     sheetOpen('share');
     /* Wait for the webfonts, or the first draw falls back to a system face. */
     var draw = function () { drawShareCard(shareData); };
@@ -2364,15 +2307,760 @@
     });
   }
 
+
+  /* ---------------------------------------------------------
+     Home — quick actions, live information, coming up
+     (Master Spec §95, §117, §118)
+
+     Home is not a grid of every tool. It is: what is true right
+     now, what you would do immediately, and what is about to
+     happen. All three are personalised and none of them is
+     allowed to surface a sensitive or hidden tool.
+     --------------------------------------------------------- */
+
+  /* §118 — an action performs a task; it does not just open a screen. */
+  var QUICK_ACTIONS = [
+    { id: 'expenses',  icon: 'i-plus',    key: 'qa.expense',  act: 'tool:expenses' },
+    { id: 'todos',     icon: 'i-check-square', key: 'qa.task', act: 'tool:todos' },
+    { id: 'qr',        icon: 'i-qr',      key: 'qa.scan',     act: 'tool:qr' },
+    { id: 'notes',     icon: 'i-note',    key: 'qa.note',     act: 'tool:notes' },
+    { id: 'water',     icon: 'i-droplet', key: 'qa.water',    act: 'water:small' },
+    { id: 'tasbih',    icon: 'i-beads',   key: 'qa.tasbih',   act: 'tool:tasbih' },
+    { id: 'timer',     icon: 'i-timer',   key: 'qa.timer',    act: 'tool:timer' },
+    { id: 'shopping',  icon: 'i-cart',    key: 'qa.shop',     act: 'tool:shopping' },
+    { id: 'parcel',    icon: 'i-package', key: 'qa.parcel',   act: 'tool:parcel' },
+    { id: 'docscan',   icon: 'i-scan',    key: 'qa.docscan',  act: 'tool:docscan' }
+  ];
+
+  function renderQuickActions() {
+    var host = $('#quickActions');
+    if (!host) return;
+    var picked = QUICK_ACTIONS.filter(function (a) {
+      var f = feature(a.id);
+      /* The spec allows a sensitive tool as a quick *action* (adding an
+         expense) even though it is never promoted as a Home card. */
+      return f && visible(f) && SPEC.get(a.id).quickEligible;
+    }).slice(0, 5);
+
+    $('#quickActionsWrap').hidden = picked.length < 3;
+    host.innerHTML = picked.map(function (a) {
+      return '<button class="qaction pressable" data-act="' + a.act + '" data-fid="' + a.id + '">' +
+        '<span class="qaction__icon"><svg class="ico" viewBox="0 0 24 24"><use href="#' + a.icon + '"/></svg></span>' +
+        '<span class="qaction__label">' + esc(t(a.key)) + '</span></button>';
+    }).join('');
+  }
+
+  /* §95 — what Home shows depends on the hour, the market session and the
+     season, not on a fixed list. */
+  function liveCards() {
+    var h = new Date().getHours();
+    var out = [];
+
+    function card(o) {
+      return '<button class="livecard pressable" data-act="' + o.act + '" data-fid="' + o.fid + '">' +
+        '<span class="livecard__icon livecard__icon--' + (o.tone || 'accent') + '">' +
+          '<svg class="ico" viewBox="0 0 24 24"><use href="#' + o.icon + '"/></svg></span>' +
+        '<span class="livecard__body">' +
+          '<span class="livecard__title">' + esc(o.title) + '</span>' +
+          '<span class="livecard__meta">' + esc(o.meta) + '</span>' +
+        '</span>' +
+        '<span class="livecard__end">' +
+          '<span class="livecard__value">' + o.value + '</span>' +
+          (o.badge || '') +
+        '</span></button>';
+    }
+
+    /* Weather is relevant all day; before bed it flips to tomorrow. */
+    var wf = feature('weather');
+    if (wf && visible(wf)) {
+      var w = toolCtx('weather').weather();
+      var evening = h >= 19 || h < 5;
+      var day = evening ? w.daily[1] : w.daily[0];
+      out.push(card({
+        fid: 'weather', act: 'tool:weather', icon: w.icon, tone: 'sky',
+        title: evening ? t('home.tomorrowIn', { city: profile.city }) : profile.city,
+        meta: day.desc + ' · ' + t('weather.rain') + ' ' + day.rain + '%',
+        value: L.temp(evening ? day.hi : w.temp),
+        badge: '<span class="livecard__sub">' + esc(L.temp(day.hi) + ' / ' + L.temp(day.lo)) + '</span>'
+      }));
+    }
+
+    /* A market snapshot, but only while a market the user follows is open. */
+    var mf = feature('markets');
+    if (mf && visible(mf)) {
+      var c = toolCtx('markets');
+      var ex = c.exchange();
+      var session = c.marketSession(ex);
+      var ix = ex ? ex.indices[0] : window.LUME_DATA.GLOBAL_INDICES[0];
+      if (session.open || h >= 8) {
+        out.push(card({
+          fid: 'markets', act: 'tool:markets', icon: 'i-trending',
+          tone: ix.pct >= 0 ? 'up' : 'down',
+          title: ix.name,
+          meta: (ex ? ex.name : t('markets.worldBoard')) + ' · ' + session.label,
+          value: L.num(ix.value, { maximumFractionDigits: 0 }),
+          badge: '<span class="delta delta--' + (ix.pct >= 0 ? 'up' : 'down') + '">' +
+            '<i aria-hidden="true">' + (ix.pct >= 0 ? '▲' : '▼') + '</i>' +
+            Math.abs(ix.pct).toFixed(2) + '%</span>'
+        }));
+      }
+    }
+
+    /* A live outage or a bill that is actually overdue outranks both. */
+    var lf = feature('loadshed');
+    if (lf && visible(lf)) {
+      var ls = toolCtx('loadshed').loadshed();
+      if (ls.now) {
+        out.unshift(card({
+          fid: 'loadshed', act: 'tool:loadshed', icon: 'i-bolt', tone: 'warn',
+          title: t('loadshed.currentlyOff'), meta: ls.area + ' · ' + t('loadshed.until', { time: ls.slot.to }),
+          value: ls.endsIn
+        }));
+      }
+    }
+
+    var bf = feature('bills');
+    if (bf && visible(bf)) {
+      var b = toolCtx('bills').bills();
+      if (b.overdueCount) {
+        out.push(card({
+          fid: 'bills', act: 'tool:bills', icon: 'i-receipt', tone: 'warn',
+          title: t('bills.overdue.title', { n: b.overdueCount }),
+          meta: t('bills.dueThisMonth') + ' · ' + L.money(b.totalDue),
+          value: L.money(b.overdue)
+        }));
+      }
+    }
+
+    return out.slice(0, 3);
+  }
+
+  function renderLiveNow() {
+    var host = $('#liveNow'), wrap = $('#liveWrap');
+    if (!host || !wrap) return;
+    var cards = liveCards();
+    wrap.hidden = !cards.length;
+    host.innerHTML = cards.join('');
+    var sub = $('#liveSub');
+    if (sub) sub.textContent = t('home.liveNowSub', { time: L.time(new Date().getHours(), new Date().getMinutes()) });
+  }
+
+  /* §95 — upcoming items, drawn from whatever the user actually has:
+     prayers, bills, renewals, birthdays, document expiries. */
+  function upcomingItems() {
+    var out = [];
+
+    if (profile.islamic && visible(feature('prayer'))) {
+      var st = toolCtx('prayer').prayerState();
+      out.push({ when: L.time(st.next.h, st.next.m), title: t('prayer.' + st.next.key),
+        sub: t('prayer.next'), icon: 'i-prayer', act: 'tool:prayer', order: st.minutes });
+    }
+
+    var bf = feature('bills');
+    if (bf && visible(bf)) {
+      toolCtx('bills').bills().list.filter(function (b) { return b.state === 'due' || b.state === 'overdue'; })
+        .slice(0, 2).forEach(function (b) {
+          out.push({ when: L.money(b.amount), title: b.name, sub: b.dueLabel,
+            icon: b.icon, act: 'tool:bills', order: 500 });
+        });
+    }
+
+    var sf = feature('subs');
+    if (sf && visible(sf)) {
+      var next = toolCtx('subs').subscriptions().next;
+      out.push({ when: next.renews, title: next.name, sub: t('subs.renews', { date: next.renews }),
+        icon: 'i-refresh', act: 'tool:subs', order: 600 + next.days });
+    }
+
+    var bd = feature('birthdays');
+    if (bd && visible(bd)) {
+      var nb = toolCtx('birthdays').birthdays().next;
+      out.push({ when: nb.date, title: nb.name, sub: nb.kind + ' · ' + t('common.inDays', { n: nb.days }),
+        icon: 'i-cake', act: 'tool:birthdays', order: 700 + nb.days });
+    }
+
+    var df = feature('documents');
+    if (df && visible(df)) {
+      var docs = toolCtx('documents').documents();
+      var soon = docs.list.filter(function (d) { return d.days !== null && d.days >= 0 && d.days < 45; })[0];
+      /* A document is sensitive, so Home names the renewal, not the number. */
+      if (soon) {
+        out.push({ when: soon.expires, title: t('docs.renewSoon', { name: soon.name }),
+          sub: t('common.inDays', { n: soon.days }), icon: 'i-folder', act: 'tool:documents', order: 800 });
+      }
+    }
+
+    return out.sort(function (a, b) { return a.order - b.order; }).slice(0, 4);
+  }
+
+  function renderUpcoming() {
+    var host = $('#upcomingList'), wrap = $('#upcomingWrap');
+    if (!host || !wrap) return;
+    var items = upcomingItems();
+    wrap.hidden = !items.length;
+    host.innerHTML = '<div class="rows">' + items.map(function (i) {
+      return '<button class="crow pressable" data-act="' + i.act + '">' +
+        '<span class="crow__icon"><svg class="ico" viewBox="0 0 24 24"><use href="#' + i.icon + '"/></svg></span>' +
+        '<span class="crow__label">' + esc(i.title) + '<i>' + esc(i.sub) + '</i></span>' +
+        '<span class="crow__value">' + esc(i.when) + '</span></button>';
+    }).join('') + '</div>';
+  }
+
+
+  /* §105 — "Around you" is the regional configuration made visible. It lists
+     whichever local services this country actually has, with a live value
+     pulled from the same context the tool screen uses. Nothing here knows
+     the name of a country. */
+  var LOCAL_SERVICES = [
+    { id: 'fuel',       icon: 'i-fuel',   value: function (c) {
+        var f = C_DATA.fuelFor(profile.country);
+        return L.moneyRaw(f.items[0].v, f.ccy, 2);
+      }, sub: function () {
+        return C_DATA.fuelFor(profile.country).items.map(function (i) { return i.n; }).slice(0, 3).join(' · ');
+      } },
+    { id: 'loadshed',   icon: 'i-bolt',   value: function (c) {
+        var ls = c.loadshed();
+        return ls.now ? ls.endsIn : ls.slot.from;
+      }, sub: function (c) {
+        var ls = c.loadshed();
+        return ls.area + ' · ' + (ls.now ? t('loadshed.currentlyOff') : t('loadshed.nextOutage', { from: ls.slot.from, to: ls.slot.to }));
+      } },
+    { id: 'goldrates',  icon: 'i-coins',  value: function (c) {
+        var g = c.metals();
+        return L.moneyRaw(g.gold.perTola, g.ccy, 0);
+      }, sub: function () { return t('rates.openMarket') + ' · ' + t('rates.gold24'); } },
+    { id: 'trains',     icon: 'i-train',  value: function () { return ''; },
+      sub: function () {
+        var tr = C_DATA.TRAINS[0];
+        return tr.name + ' · ' + t(tr.statusKey, { n: tr.delay });
+      } },
+    { id: 'emergency',  icon: 'i-shield', value: function () {
+        return C_DATA.emergencyFor(profile.country)[0].num;
+      }, sub: function () { return C_DATA.emergencyFor(profile.country)[0].n; } },
+    { id: 'holidays',   icon: 'i-calendar', value: function () {
+        return C_DATA.holidaysFor(profile.country)[0].date;
+      }, sub: function () { return C_DATA.holidaysFor(profile.country)[0].name; } }
+  ];
+
+  function renderAround() {
+    var wrap = $('#aroundWrap'), host = $('#aroundList'), tag = $('#aroundTag');
+    if (!wrap || !host) return;
+
+    var rows = [];
+    LOCAL_SERVICES.forEach(function (svc) {
+      var f = feature(svc.id);
+      if (!f || !visible(f)) return;
+      var c = toolCtx(svc.id);
+      var value = '', sub = '';
+      try { value = svc.value(c); sub = svc.sub(c); } catch (e) { return; }
+      rows.push('<button class="list-row pressable" data-act="tool:' + f.id + '" data-fid="' + f.id + '">' +
+        '<span class="list-row__icon"><svg class="ico" viewBox="0 0 24 24"><use href="#' + svc.icon + '"/></svg></span>' +
+        '<span class="list-row__body"><span class="list-row__title">' + esc(fname(f)) + '</span>' +
+        '<span class="list-row__sub">' + esc(sub) + '</span></span>' +
+        '<span class="list-row__end">' + (value ? '<span class="list-row__value num">' + esc(value) + '</span>' : '') +
+        '<svg class="ico" viewBox="0 0 24 24"><use href="#i-chev-r"/></svg></span></button>');
+    });
+
+    wrap.hidden = rows.length < 2;
+    host.innerHTML = rows.join('');
+    if (tag) tag.textContent = L.countryName(profile.country);
+  }
+
+  /* ---------------------------------------------------------
+     Tool screens  (Master Spec §7, §8, §64, §109)
+
+     One host, one router, one back stack. Opening a tool is
+     gated by the same visible() every other surface uses, so a
+     hidden feature cannot be reached through a deep link, a
+     related-tool card or a search result either.
+     --------------------------------------------------------- */
+  var toolCtx = window.LUME_CTX({
+    L: L, t: t,
+    profile: function () { return profile; },
+    store: store,
+    featureFor: feature,
+    fname: fname,
+    isVisible: visible
+  });
+  TOOLS.init(toolCtx);
+
+  var toolStack = [];       /* tools opened on top of each other */
+  var toolReturnTab = 'home';
+  var currentTool = null;
+
+  function renderTool() {
+    if (!currentTool) return;
+    var built = TOOLS.build(currentTool);
+    var head = $('#toolHeader'), body = $('#toolBody');
+    if (!built || !body) return;
+    head.innerHTML = built.header;
+    body.innerHTML = built.body;
+    body.dataset.density = built.density;
+    body.dataset.archetype = built.archetype;
+    applyStrings(body);
+    animateBars($('#screen-tool'));
+    if (currentTool === 'calculator') calcToolRender();
+  }
+
+  function openTool(id, opts) {
+    var f = feature(id);
+    /* Defence in depth: the entry point is not the only gate (§64). */
+    if (!f || !visible(f)) { toast(t('tool.unavailable')); return; }
+
+    if (currentTool && (!opts || !opts.replace)) toolStack.push(currentTool);
+    else if (!currentTool) toolReturnTab = current;
+
+    currentTool = id;
+    noteRecent(id);
+
+    var screen = $('#screen-tool');
+    $$('.screen').forEach(function (sc) { sc.classList.remove('is-active'); });
+    screen.classList.add('is-active');
+    screen.scrollTop = 0;
+    $$('.tab').forEach(function (tb) {
+      tb.classList.remove('is-active');
+      tb.setAttribute('aria-selected', 'false');
+    });
+    movePill(null);
+    var back = $('#exploreBack');
+    if (back) back.hidden = true;
+
+    renderTool();
+    renderRecents();
+  }
+
+  function closeTool() {
+    if (toolStack.length) { currentTool = toolStack.pop(); renderTool(); return; }
+    currentTool = null;
+    goTo(toolReturnTab);
+  }
+
+  /* Leaving through the tab bar abandons the whole tool stack. */
+  var goToBase = goTo;
+  goTo = function (name, quiet) {
+    currentTool = null;
+    toolStack.length = 0;
+    goToBase(name, quiet);
+  };
+
+  /* The header sticks; a hairline appears once content scrolls under it. */
+  (function stickyToolbar() {
+    var screen = $('#screen-tool');
+    if (!screen) return;
+    screen.addEventListener('scroll', function () {
+      var bar = $('.toolbar', screen);
+      if (bar) bar.classList.toggle('is-stuck', screen.scrollTop > 4);
+    }, { passive: true });
+  })();
+
+  /* Field names are prefixed per tool so two screens can each have an
+     "amount"; the context stores the bare key. */
+  var FIELD_ALIAS = {
+    z_cash: 'cash', z_gold: 'gold', z_silver: 'silver', z_inv: 'inv', z_biz: 'biz', z_liab: 'liab',
+    fa_gross: 'gross', fa_debts: 'debts', fa_bequest: 'bequest',
+    fc_dist: 'dist', fc_econ: 'econ', fc_price: 'price', fc_people: 'people',
+    tax_income: 'income', tax_ded: 'deductions',
+    ln_principal: 'principal', ln_rate: 'rate', ln_years: 'years',
+    tp_bill: 'bill', tp_people: 'people',
+    ci_initial: 'initial', ci_monthly: 'monthly', ci_rate: 'rate', ci_years: 'years',
+    bmi_h: 'height', bmi_w: 'weight',
+    age_dob: 'dob',
+    dc_from: 'from', dc_to: 'to', dc_days: 'days', dc_start: 'from',
+    cv_amount: 'amount', uc_amount: 'amount'
+  };
+
+  /* ---- the action vocabulary tool screens speak ---- */
+  function toolAction(kind, arg) {
+    var bits = String(arg).split(':');
+
+    if (kind === 'tool') { openTool(bits[0]); return true; }
+
+    if (kind === 'toolstate') {
+      /* toolstate:<tool>:<key>:<value> — a tab, a filter, a selected row */
+      var id = bits.shift(), key = bits.shift(), value = bits.join(':');
+      var c = toolCtx(id);
+      if (c) c.setState(key, value === '' ? true : value);
+      if (currentTool === id) renderTool();
+      return true;
+    }
+
+    if (kind === 'toolsearch') {
+      var tid = bits.shift();
+      var q = bits.join(':');
+      if (q) {
+        var cs = toolCtx(tid);
+        if (cs) cs.setState('q', q);
+        if (currentTool === tid) renderTool();
+      } else {
+        var input = $('[data-tool-search]', $('#screen-tool'));
+        if (input) input.focus();
+      }
+      return true;
+    }
+
+    if (kind === 'share') { openShare(bits[0] || currentTool); return true; }
+    if (kind === 'export') { toast(t('tool.exported')); return true; }
+    if (kind === 'fav') { toast(t('tool.favourited')); return true; }
+    if (kind === 'bookmark') { toast(t('tool.bookmarked')); return true; }
+
+    if (kind === 'track') {
+      toast(t('track.marked', { name: t('prayer.' + bits[0]) }));
+      return true;
+    }
+
+    if (kind === 'water') {
+      var cw = toolCtx('water');
+      var add = bits[0] === 'large' ? 500 : 250;
+      cw._state.water = cw._state.water || {};
+      cw._state.water.ml = (cw._state.water.ml === undefined ? 1250 : cw._state.water.ml) + add;
+      if (currentTool === 'water') renderTool();
+      toast(t('water.added', { amount: add + ' ml' }));
+      return true;
+    }
+
+    if (kind === 'alarmtoggle') {
+      var host = $('#screen-tool');
+      var row = host && host.querySelector('[data-act="alarmtoggle:' + bits[0] + '"]');
+      var sw = row && row.querySelector('.switch');
+      if (sw) sw.classList.toggle('is-on');
+      return true;
+    }
+
+    if (kind === 'speedtest') { runSpeedTest(); return true; }
+    if (kind === 'tasbihreset') { resetToolTasbih(); return true; }
+    if (kind === 'cvswap' || kind === 'ucswap') { swapConverter(kind); return true; }
+    if (kind === 'clock') { runClock(bits); return true; }
+
+    return false;
+  }
+
+  /* ---- live inputs: a calculator recomputes as you type ---- */
+  var reflowTimer;
+
+  function reflowSoon() {
+    clearTimeout(reflowTimer);
+    reflowTimer = setTimeout(function () {
+      var active = document.activeElement;
+      var activeName = active && active.dataset ? active.dataset.input : null;
+      var isSearch = active && active.hasAttribute && active.hasAttribute('data-tool-search');
+      var caret = null;
+      try { caret = active && active.selectionStart; } catch (err) {}
+      var value = active ? active.value : null;
+      renderTool();
+      var again = null;
+      if (activeName) again = $('[data-input="' + activeName + '"]', $('#screen-tool'));
+      else if (isSearch) again = $('[data-tool-search]', $('#screen-tool'));
+      if (again) {
+        if (isSearch) again.value = value;
+        again.focus();
+        try { again.setSelectionRange(caret, caret); } catch (err2) {}
+      }
+    }, 280);
+  }
+
+  document.addEventListener('input', function (e) {
+    if (!currentTool) return;
+    var c = toolCtx(currentTool);
+    if (!c) return;
+
+    var search = e.target.closest('[data-tool-search]');
+    if (search) { c.setState('q', search.value); reflowSoon(); return; }
+
+    var el = e.target.closest('[data-input]');
+    if (!el) return;
+    var name = el.dataset.input;
+    var key = FIELD_ALIAS[name] || (name.indexOf('_') !== -1 ? name.split('_').slice(1).join('_') : name);
+    c.setField(key, el.type === 'number' ? (el.value === '' ? 0 : Number(el.value)) : el.value);
+    reflowSoon();
+  });
+
+  /* ---- steppers ---- */
+  document.addEventListener('click', function (e) {
+    var up = e.target.closest('[data-step-up]');
+    var down = up ? null : e.target.closest('[data-step-down]');
+    if ((!up && !down) || !currentTool) return;
+    var name = up ? up.dataset.stepUp : down.dataset.stepDown;
+    var key = FIELD_ALIAS[name] || name;
+    var c = toolCtx(currentTool);
+    var cur = Number(c.field(key) || 0);
+    c.setField(key, Math.max(0, cur + (up ? 1 : -1)));
+    renderTool();
+  });
+
+  /* ---- checkable rows (tasks, shopping) ---- */
+  document.addEventListener('click', function (e) {
+    var row = e.target.closest('[data-task], [data-shop]');
+    if (!row || !currentTool) return;
+    var c = toolCtx(currentTool);
+    var bucket = c._state[currentTool] = c._state[currentTool] || {};
+    bucket.done = bucket.done || {};
+    var id = row.dataset.task || row.dataset.shop;
+    bucket.done[id] = !bucket.done[id];
+    row.classList.toggle('is-done', !!bucket.done[id]);
+  });
+
+  /* ---- tasbih (§24.15) ---- */
+  function resetToolTasbih() {
+    var c = toolCtx('tasbih');
+    var st = c._state.tasbih = c._state.tasbih || {};
+    st.sets = (st.sets || 0) + (st.count ? 1 : 0);
+    st.count = 0;
+    renderTool();
+  }
+
+  document.addEventListener('click', function (e) {
+    if (currentTool !== 'tasbih') return;
+    var pick = e.target.closest('[data-dhikr]');
+    if (pick) {
+      var cp = toolCtx('tasbih');
+      cp._state.tasbih = cp._state.tasbih || {};
+      cp._state.tasbih.dhikrIndex = Number(pick.dataset.dhikr);
+      cp._state.tasbih.count = 0;
+      renderTool();
+      return;
+    }
+    if (!e.target.closest('[data-tasbih-count]')) return;
+    var c = toolCtx('tasbih');
+    var st = c._state.tasbih = c._state.tasbih || { count: 0, dhikrIndex: 0, sets: 0 };
+    var target = window.LUME_DATA.DHIKR[st.dhikrIndex || 0].target;
+    st.count = (st.count || 0) + 1;
+    var num = $('[data-tasbih-num]'), ring = $('[data-tasbih-ring]');
+    if (num) num.textContent = st.count;
+    if (ring) {
+      var circ = 2 * Math.PI * 88;
+      ring.setAttribute('stroke-dashoffset', Math.max(0, (1 - st.count / target) * circ).toFixed(1));
+    }
+    if (navigator.vibrate) navigator.vibrate(st.count >= target ? [18, 40, 18] : 8);
+    if (st.count >= target) {
+      st.sets = (st.sets || 0) + 1;
+      st.count = 0;
+      toast(t('tasbih.complete'));
+      setTimeout(renderTool, 280);
+    }
+  });
+
+  /* ---- converters ---- */
+  function swapConverter(kind) {
+    var id = kind === 'cvswap' ? 'currency' : 'converter';
+    var c = toolCtx(id);
+    var st = c._state[id] = c._state[id] || {};
+    if (id === 'currency') {
+      var board = c.currencyBoard();
+      var from = st.from || board.from;
+      st.from = st.to || board.to;
+      st.to = from;
+    } else {
+      st.swapped = !st.swapped;
+    }
+    renderTool();
+  }
+
+  /* ---- speed test (§56) — animated measurement, not a number swap ---- */
+  function runSpeedTest() {
+    var c = toolCtx('speedtest');
+    var st = c._state.speedtest = c._state.speedtest || {};
+    var value = $('[data-speed-value]'), fill = $('.gauge__fill');
+    var target = 30 + Math.random() * 70;
+    var start = performance.now();
+    (function step(now) {
+      var p = Math.min(1, (now - start) / 1800);
+      var eased = 1 - Math.pow(1 - p, 3);
+      var v = target * eased;
+      if (value) value.textContent = v.toFixed(1);
+      if (fill) fill.style.setProperty('--p', Math.min(1, v / 200).toFixed(3));
+      if (p < 1) requestAnimationFrame(step);
+      else {
+        st.down = Math.round(target * 10) / 10;
+        toast(t('speed.done', { n: st.down }));
+      }
+    })(start);
+  }
+
+  /* ---- stopwatch / timer / focus ---- */
+  var clockTimers = {};
+
+  function fmtClock(kind, secs) {
+    return pad2(Math.floor(secs / 60)) + ':' + pad2(secs % 60) + (kind === 'stopwatch' ? '.00' : '');
+  }
+
+  function runClock(bits) {
+    var kind = bits[0], cmd = bits[1], arg = bits[2];
+    var c = toolCtx(kind);
+    var st = c._state[kind] = c._state[kind] || {};
+    var display = $('[data-clock-display]');
+
+    function paint() {
+      st.display = fmtClock(kind, Math.max(0, st.secs));
+      var d = $('[data-clock-display]');
+      if (d) d.textContent = st.display;
+    }
+
+    if (cmd === 'reset') {
+      clearInterval(clockTimers[kind]);
+      st.running = false;
+      st.secs = kind === 'stopwatch' ? 0 : (st.total || (kind === 'focus' ? 1500 : 300));
+      paint();
+      return;
+    }
+    if (cmd === 'set') {
+      clearInterval(clockTimers[kind]);
+      st.running = false;
+      st.total = Number(arg);
+      st.secs = st.total;
+      paint();
+      return;
+    }
+    if (st.running) { clearInterval(clockTimers[kind]); st.running = false; return; }
+
+    st.running = true;
+    if (st.secs === undefined) st.secs = kind === 'stopwatch' ? 0 : (st.total || (kind === 'focus' ? 1500 : 300));
+    clockTimers[kind] = setInterval(function () {
+      st.secs += kind === 'stopwatch' ? 1 : -1;
+      if (st.secs <= 0 && kind !== 'stopwatch') {
+        clearInterval(clockTimers[kind]);
+        st.running = false;
+        st.secs = 0;
+        toast(t(kind === 'focus' ? 'focus.done' : 'timer.done'));
+        if (navigator.vibrate) navigator.vibrate([30, 60, 30]);
+      }
+      paint();
+    }, 1000);
+  }
+
+  /* ---- calculator, inside its own tool screen ---- */
+  var toolCalc = { a: null, op: null, b: '0', fresh: true, expr: '' };
+
+  function calcToolRender() {
+    var out = $('[data-calc-out]'), expr = $('[data-calc-expr]');
+    if (out) out.textContent = toolCalc.b;
+    if (expr) expr.textContent = toolCalc.expr;
+  }
+
+  function calcApply() {
+    var a = toolCalc.a, b = Number(toolCalc.b), op = toolCalc.op;
+    var r = op === '+' ? a + b : op === '-' ? a - b : op === '*' ? a * b : (b === 0 ? 0 : a / b);
+    return Math.round(r * 1e10) / 1e10;
+  }
+
+  function opSymbol(op) { return { '+': '+', '-': '−', '*': '×', '/': '÷' }[op] || op; }
+
+  document.addEventListener('click', function (e) {
+    var key = e.target.closest('[data-calckey]');
+    if (!key) return;
+    var parts = key.dataset.calckey.split(':');
+    var kind = parts[0], arg = parts[1];
+
+    if (kind === 'n') {
+      toolCalc.b = (toolCalc.fresh || toolCalc.b === '0') ? arg : toolCalc.b + arg;
+      toolCalc.fresh = false;
+    } else if (kind === 'dot') {
+      if (toolCalc.fresh) { toolCalc.b = '0.'; toolCalc.fresh = false; }
+      else if (toolCalc.b.indexOf('.') === -1) toolCalc.b += '.';
+    } else if (kind === 'ac') {
+      toolCalc = { a: null, op: null, b: '0', fresh: true, expr: '' };
+    } else if (kind === 'back') {
+      toolCalc.b = toolCalc.b.length > 1 ? toolCalc.b.slice(0, -1) : '0';
+    } else if (kind === 'pct') {
+      toolCalc.b = String(Number(toolCalc.b) / 100);
+    } else if (kind === 'op') {
+      if (toolCalc.a !== null && !toolCalc.fresh) toolCalc.b = String(calcApply());
+      toolCalc.a = Number(toolCalc.b);
+      toolCalc.op = arg;
+      toolCalc.expr = trimNum(toolCalc.a) + ' ' + opSymbol(arg);
+      toolCalc.fresh = true;
+    } else if (kind === 'eq') {
+      if (toolCalc.op !== null) {
+        var result = calcApply();
+        toolCalc.expr = trimNum(toolCalc.a) + ' ' + opSymbol(toolCalc.op) + ' ' +
+                        trimNum(Number(toolCalc.b)) + ' =';
+        var store2 = toolCtx('calculator')._state;
+        store2.calculator = store2.calculator || {};
+        store2.calculator.history = [{ expr: toolCalc.expr, result: trimNum(result) }]
+          .concat(store2.calculator.history || []).slice(0, 6);
+        toolCalc.b = String(result);
+        toolCalc.a = null; toolCalc.op = null; toolCalc.fresh = true;
+      }
+    }
+    calcToolRender();
+  });
+
+  /* ---- back ---- */
+  document.addEventListener('click', function (e) {
+    if (e.target.closest('[data-tool-back]')) closeTool();
+  });
+
+  document.addEventListener('keydown', function (e) {
+    if (e.key === 'Escape' && currentTool && !openSheet) closeTool();
+  });
+
+  /* The prayer countdown in an open tool ticks like the one on Home. */
+  setInterval(function () {
+    if (currentTool !== 'prayer') return;
+    var el = $('[data-prayer-count]');
+    if (el) el.textContent = toolCtx('prayer').prayerState().countdown;
+  }, 1000);
+
+
+  /* Share cards for data tools (Master Spec §98). A shared snapshot carries
+     the figure, the place and the moment it was true — never a bare number. */
+  function shareForTool(id) {
+    var stamp = L.dateShort(new Date()) + ' · ' + L.time(new Date().getHours(), new Date().getMinutes());
+    try {
+      if (id === 'prayer') {
+        var st = toolCtx('prayer').prayerState();
+        return { kind: 'reminder',
+          text: t('prayer.' + st.next.key) + ' — ' + L.time(st.next.h, st.next.m) + ', ' + profile.city,
+          source: stamp };
+      }
+      if (id === 'weather') {
+        var w = toolCtx('weather').weather();
+        return { kind: 'quote',
+          text: profile.city + ' · ' + L.temp(w.temp) + ' ' + w.desc + '. ' +
+                t('weather.hilo', { hi: L.temp(w.hi), lo: L.temp(w.lo) }),
+          source: stamp };
+      }
+      if (id === 'markets') {
+        var ex = toolCtx('markets').exchange();
+        var ix = ex ? ex.indices[0] : window.LUME_DATA.GLOBAL_INDICES[0];
+        return { kind: 'quote',
+          text: ix.name + ' ' + L.num(ix.value, { maximumFractionDigits: 2 }) + '  ' +
+                (ix.pct >= 0 ? '+' : '−') + Math.abs(ix.pct).toFixed(2) + '%',
+          source: (ex ? ex.name : t('markets.worldBoard')) + ' · ' + stamp };
+      }
+      if (id === 'zakat') {
+        var z = toolCtx('zakat').zakat();
+        return { kind: 'reminder',
+          text: t('zakat.payable') + ': ' + L.moneyRaw(z.due, L.currencyCode(), 0),
+          source: stamp };
+      }
+      if (id === 'goals') {
+        var g = toolCtx('goals').goals();
+        return { kind: 'quote',
+          text: t('goals.saved') + ' ' + L.money(g.saved) + ' ' + t('common.of') + ' ' + L.money(g.target) +
+                ' — ' + Math.round(g.ratio * 100) + '%',
+          source: stamp };
+      }
+      if (id === 'tax') {
+        var tx = toolCtx('tax').tax();
+        if (tx && tx.taxable) {
+          return { kind: 'reminder',
+            text: t('tax.dueAnnual') + ': ' + L.moneyRaw(tx.dueAnnual, tx.ccy, 0) +
+                  ' · ' + t('tax.effective', { rate: L.num(tx.effective * 100, { maximumFractionDigits: 1 }) + '%' }),
+            source: tx.config.authority + ' · ' + tx.config.year };
+        }
+      }
+    } catch (err) {}
+    return null;
+  }
+
   /* ---------------------------------------------------------
      Boot
      --------------------------------------------------------- */
   ensureExploreBack();
+  applyWidth();
   tickClock();
   renderAll();
   updateDayRing();
-  renderBeads();
-  calcRender();
 
   setInterval(tickClock, 15000);
   setInterval(function () { updatePrayer(); }, 1000);

@@ -1,0 +1,12 @@
+{
+  "name": "lume",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Lume — a global daily-life super-app. Static, dependency-free at runtime.",
+  "scripts": {
+    "test": "node tests/verify.js && node tests/interact.js && node tests/controls.js"
+  },
+  "devDependencies": {
+    "jsdom": "^25.0.0"
+  }
+}
