@@ -599,5 +599,10 @@ window.LUME_I18N = (function () {
 
   var DICTS = { en: en, ur: ur, ar: ar };
 
-  return { LANGS: LANGS, DICTS: DICTS };
+  /* Offering a language the app cannot speak is worse than not offering it:
+     the picker would show French as active while every screen stayed English.
+     A language appears once its dictionary exists (§10, §106). */
+  var SHIPPED = LANGS.filter(function (l) { return !!DICTS[l.code]; });
+
+  return { LANGS: SHIPPED, ALL_LANGS: LANGS, DICTS: DICTS };
 })();

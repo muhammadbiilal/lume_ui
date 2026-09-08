@@ -44,19 +44,23 @@
   --shadow-md: 0 2px 4px -2px rgba(16, 24, 40, .05), 0 8px 20px -6px rgba(16, 24, 40, .10);
   --shadow-lg: 0 8px 16px -8px rgba(16, 24, 40, .10), 0 24px 48px -16px rgba(16, 24, 40, .20);
   --shadow-nav: 0 -1px 0 var(--border), 0 -8px 32px -12px rgba(16, 24, 40, .16);
+  --shadow-accent: 0 8px 24px -8px color-mix(in srgb, var(--accent) 80%, transparent);
 
   /* ---- Radii ---- */
-  --r-xs: 8px;
-  --r-sm: 12px;
-  --r-md: 16px;
-  --r-lg: 20px;
-  --r-xl: 26px;
+  --r-xs: 8px;      /* small controls (§15) */
+  --r-icon: 12px;   /* icon containers — one value, not nine */
+  --r-sm: 12px;     /* compact cards */
+  --r-md: 16px;     /* standard cards */
+  --r-lg: 20px;     /* prominent surfaces */
+  --r-xl: 26px;     /* sheets and hero surfaces */
   --r-full: 999px;
 
   /* ---- Spacing scale ---- */
   --pad: 20px;          /* page horizontal padding */
-  --gap-card: 14px;     /* between cards */
-  --gap-section: 26px;  /* between sections */
+  --gap-card: 16px;     /* between cards */
+  --gap-section: 24px;  /* between sections */
+  --pad-card: 16px;     /* inside a card */
+  --pad-row: 12px 16px; /* inside a list row — one value for nine row types */
 
   /* ---- Type ---- */
   --font: "Plus Jakarta Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
@@ -73,6 +77,25 @@
   /* ---- Decorative ---- */
   --sticker-opacity: 1;
   --mesh-opacity: .55;
+
+
+  /* ---- Gradient colourways ----
+     Reserved for hero surfaces, featured content and decoration (§57).
+     Each pair is re-authored for dark mode below rather than reused at the
+     same intensity, and each carries the ink that stays legible on it. */
+  --grad-accent-a: #0B7F73;  --grad-accent-b: #23A894;
+  --grad-prayer-a: #0B4F63;  --grad-prayer-b: #10998A;
+  --grad-night-a:  #1F2352;  --grad-night-b:  #4B3E8E;
+  --grad-gold-a:   #5E4110;  --grad-gold-b:   #8A6420;
+  --grad-sky-a:    #1F5680;  --grad-sky-b:    #3E86BB;
+  --grad-flame-a:  #8A3A16;  --grad-flame-b:  #B36A22;
+  --grad-lock-a:   #2E3440;  --grad-lock-b:   #55606F;
+  --grad-sport-a:  #14513A;  --grad-sport-b:  #2E8F63;
+  --grad-warn-a:   #7A3A14;  --grad-warn-b:   #A8672C;
+  --grad-sos-a:    #8E1B2E;  --grad-sos-b:    #B83D48;
+  --grad-scan-a:   #1A1D22;  --grad-scan-b:   #2B3038;
+  --on-grad:       #FFFFFF;
+  --on-grad-dim:   rgba(255, 255, 255, .82);
 
   color-scheme: light;
 }
@@ -113,9 +136,28 @@
   --shadow-md: 0 2px 4px -2px rgba(0, 0, 0, .4), 0 8px 20px -6px rgba(0, 0, 0, .55);
   --shadow-lg: 0 8px 16px -8px rgba(0, 0, 0, .5), 0 24px 48px -16px rgba(0, 0, 0, .7);
   --shadow-nav: 0 -1px 0 var(--border), 0 -8px 32px -12px rgba(0, 0, 0, .8);
+  --shadow-accent: 0 8px 24px -10px color-mix(in srgb, var(--accent) 55%, transparent);
 
   --sticker-opacity: .72;
   --mesh-opacity: .35;
+
+
+  /* Dark mode is a designed treatment, not the same gradient on a darker
+     ground: each colourway drops in luminance so it sits on #0A0A0B
+     without glowing, and the ink is re-checked against the lighter stop. */
+  --grad-accent-a: #06463F;  --grad-accent-b: #0E6F63;
+  --grad-prayer-a: #072F3C;  --grad-prayer-b: #0A6156;
+  --grad-night-a:  #14163a;  --grad-night-b:  #2E2760;
+  --grad-gold-a:   #3B2909;  --grad-gold-b:   #5E4415;
+  --grad-sky-a:    #133753;  --grad-sky-b:    #24567A;
+  --grad-flame-a:  #57240D;  --grad-flame-b:  #7A4716;
+  --grad-lock-a:   #1D222B;  --grad-lock-b:   #364049;
+  --grad-sport-a:  #0C3325;  --grad-sport-b:  #1B5C40;
+  --grad-warn-a:   #4E250D;  --grad-warn-b:   #6F441D;
+  --grad-sos-a:    #5C111E;  --grad-sos-b:    #7C2831;
+  --grad-scan-a:   #101216;  --grad-scan-b:   #1B1F25;
+  --on-grad:       #F4F6F5;
+  --on-grad-dim:   rgba(244, 246, 245, .80);
 
   color-scheme: dark;
 }

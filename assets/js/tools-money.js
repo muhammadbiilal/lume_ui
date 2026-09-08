@@ -31,7 +31,7 @@
     var tab = c.state('tab') || 'overview';
 
     var header = UI.section({ flush: true, body: UI.contextBar([
-      { icon: 'i-globe', label: ex ? ex.code : c.t('markets.global'), act: 'toolstate:markets:exchange' },
+      { icon: 'i-globe', label: ex ? ex.code : c.t('markets.global'), act: 'sheet:personalise' },
       { label: ex ? ex.name : c.t('markets.worldBoard') },
       { label: c.L.currencyCode() }
     ]) });
@@ -263,6 +263,10 @@
      --------------------------------------------------------- */
   T.register('currency', function (c) {
     var cv = c.currencyBoard();
+    var query = (c.state('q') || '').trim().toLowerCase();
+    var popular = cv.popular.filter(function (p) {
+      return !query || (p.code + ' ' + p.name).toLowerCase().indexOf(query) !== -1;
+    });
     return UI.section({ body: UI.card(
         '<div class="convert">' +
           '<div class="convert__side">' +
@@ -279,8 +283,8 @@
           '</div>' +
         '</div>' +
         '<p class="convert__rate">1 ' + UI.esc(cv.from) + ' = ' + c.num(cv.rate, { maximumFractionDigits: 4 }) + ' ' + UI.esc(cv.to) + '</p>') }) +
-      UI.section({ body: UI.searchBar({ placeholder: c.t('convert.search'), target: 'currency' }) }) +
-      UI.section({ title: c.t('convert.popular'), body: UI.rows(cv.popular.map(function (p) {
+      UI.section({ body: UI.searchBar({ placeholder: c.t('convert.search'), target: 'currency', value: c.state('q') || '' }) }) +
+      UI.section({ title: c.t('convert.popular'), body: popular.length ? UI.rows(popular.map(function (p) {
         return UI.richRow({
           logo: p.flag, logoTone: 'var(--tint-neutral)',
           title: p.code, sub: p.name,
@@ -289,7 +293,7 @@
           delta: { dir: dirOf(p.pct), text: c.pct(p.pct) },
           act: 'toast:1 ' + cv.from + ' = ' + c.num(p.rate, { maximumFractionDigits: 3 }) + ' ' + p.code
         });
-      })) }) +
+      })) : UI.emptyState({ icon: 'i-currency', title: c.t('rates.noMatch'), text: c.t('rates.noMatchText') }) }) +
       UI.section({ title: c.t('convert.chart', { pair: cv.from + '/' + cv.to }), body: UI.card(
         UI.lineChart({ values: D.walk(4242, 30, cv.rate, 0.006), labels: ['30d', '15d', c.t('common.today')],
           label: cv.from + '/' + cv.to })) }) +
@@ -606,6 +610,10 @@
      --------------------------------------------------------- */
   T.register('bills', function (c) {
     var b = c.bills();
+    var state = c.filter('state', 'all');
+    var shownBills = b.list.filter(function (x) {
+      return state === 'all' || x.state === state || (state === 'due' && x.state === 'upcoming');
+    });
     return UI.section({ body: UI.summaryCard({
         kicker: c.t('bills.dueThisMonth'),
         value: c.money(b.totalDue),
@@ -623,12 +631,12 @@
         title: c.t('bills.overdue.title', { n: b.overdueCount }),
         text: c.t('bills.overdue.text') }) }) : '') +
       UI.section({ body: UI.filterBar([{ id: 'state', label: c.t('common.status'), items: [
-        { value: 'all', label: c.t('common.all'), on: true, count: b.list.length },
-        { value: 'overdue', label: c.t('bills.overdue'), count: b.overdueCount },
-        { value: 'due', label: c.t('bills.due'), count: b.dueCount },
-        { value: 'paid', label: c.t('bills.paidState'), count: b.paidCount }
-      ] }]) }) +
-      UI.section({ title: c.t('bills.all'), body: UI.rows(b.list.map(function (x) {
+        { value: 'all', label: c.t('common.all'), on: state === 'all', count: b.list.length },
+        { value: 'overdue', label: c.t('bills.overdue'), on: state === 'overdue', count: b.overdueCount },
+        { value: 'due', label: c.t('bills.due'), on: state === 'due', count: b.dueCount },
+        { value: 'paid', label: c.t('bills.paidState'), on: state === 'paid', count: b.paidCount }
+      ] }], 'bills') }) +
+      UI.section({ title: c.t('bills.all'), body: shownBills.length ? UI.rows(shownBills.map(function (x) {
         return UI.richRow({
           icon: x.icon, iconTone: x.state === 'overdue' ? 'warn' : null,
           title: x.name, sub: x.provider,
@@ -638,7 +646,8 @@
           act: x.state === 'paid' ? 'toast:' + x.name + ' — ' + c.t('bills.paidState')
                                   : 'toast:' + c.t('bills.opening', { name: x.provider })
         });
-      })) }) +
+      })) : UI.emptyState({ icon: 'i-receipt', title: c.t('bills.noMatch'), text: c.t('bills.noMatchText'),
+        action: { label: c.t('common.all'), act: 'toolstate:bills:state:all', icon: 'i-refresh' } }) }) +
       UI.section({ title: c.t('bills.trend'), body: UI.card(
         UI.barChart({ values: b.trend, labels: b.trendLabels, highlight: b.trend.length - 1,
           label: c.t('bills.trend'), caption: c.t('bills.trendCap') })) }) +
@@ -782,6 +791,13 @@
      --------------------------------------------------------- */
   T.register('ledger', function (c) {
     var g = c.ledger();
+    var dir = c.filter('dir', 'all');
+    var people = g.people.filter(function (p) {
+      if (dir === 'lent') return p.amount > 0;
+      if (dir === 'borrowed') return p.amount < 0;
+      if (dir === 'overdue') return !!p.overdue;
+      return true;
+    });
     return UI.section({ body: UI.summaryCard({
         kicker: c.t('ledger.net'),
         value: c.money(g.net),
@@ -793,12 +809,12 @@
         ]
       }) }) +
       UI.section({ body: UI.filterBar([{ id: 'dir', label: c.t('ledger.direction'), items: [
-        { value: 'all', label: c.t('common.all'), on: true },
-        { value: 'lent', label: c.t('ledger.lent') },
-        { value: 'borrowed', label: c.t('ledger.borrowed') },
-        { value: 'overdue', label: c.t('common.overdue') }
-      ] }]) }) +
-      UI.section({ title: c.t('ledger.people'), body: UI.rows(g.people.map(function (p) {
+        { value: 'all', label: c.t('common.all'), on: dir === 'all' },
+        { value: 'lent', label: c.t('ledger.lent'), on: dir === 'lent' },
+        { value: 'borrowed', label: c.t('ledger.borrowed'), on: dir === 'borrowed' },
+        { value: 'overdue', label: c.t('common.overdue'), on: dir === 'overdue' }
+      ] }], 'ledger') }) +
+      UI.section({ title: c.t('ledger.people'), body: people.length ? UI.rows(people.map(function (p) {
         return UI.richRow({
           logo: p.initials, logoTone: 'var(--tone-' + p.tone + ')',
           title: p.name, sub: p.note,
@@ -808,7 +824,8 @@
           valueSub: p.amount >= 0 ? c.t('ledger.owesYou') : c.t('ledger.youOweShort'),
           act: 'toast:' + p.name, chevron: true
         });
-      })) }) +
+      })) : UI.emptyState({ icon: 'i-users', title: c.t('ledger.noMatch'), text: c.t('ledger.noMatchText'),
+        action: { label: c.t('common.all'), act: 'toolstate:ledger:dir:all', icon: 'i-refresh' } }) }) +
       UI.section({ title: c.t('common.recent'), body: UI.rows(g.entries.map(function (e) {
         return UI.compactRow({ icon: e.amount >= 0 ? 'i-arrow-r' : 'i-arrow-r', label: e.who, sub: e.when,
           value: (e.amount >= 0 ? '+' : '−') + c.money(Math.abs(e.amount)) });

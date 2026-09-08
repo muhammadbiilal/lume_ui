@@ -424,7 +424,7 @@
       })) }) +
       UI.section({ body: UI.buttonRow([
         { label: c.t('parcel.notify'), tone: 'accent', icon: 'i-bell', act: 'toast:' + c.t('parcel.notifying') },
-        { label: c.t('common.share'), icon: 'i-share', act: 'toast:' + p.ref }]) });
+        { label: c.t('common.share'), icon: 'i-share', act: 'share:parcel' }]) });
   });
 
   /* ---------------------------------------------------------
@@ -488,7 +488,11 @@
 
   T.register('notes', function (c) {
     var n = c.notes();
-    return UI.section({ body: UI.searchBar({ placeholder: c.t('notes.search'), target: 'notes' }) }) +
+    var query = (c.state('q') || '').trim().toLowerCase();
+    var notesShown = n.all.filter(function (x) {
+      return !query || (x.title + ' ' + x.excerpt + ' ' + x.folder).toLowerCase().indexOf(query) !== -1;
+    });
+    return UI.section({ body: UI.searchBar({ placeholder: c.t('notes.search'), target: 'notes', value: c.state('q') || '' }) }) +
       UI.section({ body: UI.metrics([
         { value: String(n.all.length), label: c.t('notes.total') },
         { value: String(n.pinned.length), label: c.t('notes.pinned') },
@@ -504,10 +508,10 @@
       UI.section({ title: c.t('notes.folders'), body: UI.rows(n.folders.map(function (f) {
         return UI.compactRow({ icon: 'i-folder', label: f.label, value: String(f.n) });
       })) }) +
-      UI.section({ title: c.t('notes.recent'), body: UI.rows(n.all.map(function (x) {
+      UI.section({ title: c.t('notes.recent'), body: notesShown.length ? UI.rows(notesShown.map(function (x) {
         return UI.richRow({ icon: 'i-note', title: x.title, sub: x.excerpt,
           meta: [x.folder, x.when], act: 'toast:' + x.title, chevron: true });
-      })) }) +
+      })) : UI.emptyState({ icon: 'i-note', title: c.t('notes.noMatch'), text: c.t('notes.noMatchText') }) }) +
       UI.fab({ icon: 'i-plus', label: c.t('notes.new'), act: 'toast:' + c.t('notes.creating') });
   });
 
@@ -523,12 +527,16 @@
   });
 
   T.register('events', function (c) {
-    var e = c.events();
-    return UI.section({ body: UI.searchBar({ placeholder: c.t('events.search'), target: 'events' }) }) +
-      UI.section({ title: c.t('events.upcoming'), body: UI.rows(e.map(function (x) {
+    var e0 = c.events();
+    var query = (c.state('q') || '').trim().toLowerCase();
+    var e = e0.filter(function (x) {
+      return !query || (x.title + ' ' + x.where).toLowerCase().indexOf(query) !== -1;
+    });
+    return UI.section({ body: UI.searchBar({ placeholder: c.t('events.search'), target: 'events', value: c.state('q') || '' }) }) +
+      UI.section({ title: c.t('events.upcoming'), body: e.length ? UI.rows(e.map(function (x) {
         return UI.richRow({ icon: 'i-calendar', iconTone: 'accent', title: x.title, sub: x.where,
           meta: [x.when, x.people], act: 'toast:' + x.title, chevron: true });
-      })) });
+      })) : UI.emptyState({ icon: 'i-calendar', title: c.t('events.noMatch'), text: c.t('events.noMatchText') }) });
   });
 
   /* ---------------------------------------------------------
@@ -560,6 +568,13 @@
      --------------------------------------------------------- */
   T.register('shopping', function (c) {
     var s = c.shopping();
+    var query = (c.state('q') || '').trim().toLowerCase();
+    var shopGroups = s.groups.map(function (g) {
+      return { label: g.label, items: g.items.filter(function (i) {
+        return !query || i.label.toLowerCase().indexOf(query) !== -1;
+      }) };
+    }).filter(function (g) { return g.items.length; });
+
     return UI.section({ body: UI.summaryCard({
         kicker: c.t('shopping.list'),
         value: s.remaining + ' <small>/ ' + s.items.length + '</small>',
@@ -567,8 +582,8 @@
         aside: UI.progressRing({ value: s.checked / s.items.length,
           centre: s.checked + '/' + s.items.length, label: c.t('shopping.progress') })
       }) }) +
-      UI.section({ body: UI.searchBar({ placeholder: c.t('shopping.add'), target: 'shopping' }) }) +
-      s.groups.map(function (g) {
+      UI.section({ body: UI.searchBar({ placeholder: c.t('shopping.add'), target: 'shopping', value: c.state('q') || '' }) }) +
+      shopGroups.map(function (g) {
         return UI.section({ title: g.label, body: UI.rows(g.items.map(function (x) {
           return '<button class="taskrow pressable' + (x.done ? ' is-done' : '') + '" data-shop="' + UI.esc(x.id) + '"' +
             ' role="checkbox" aria-checked="' + (x.done ? 'true' : 'false') + '">' +
@@ -692,11 +707,15 @@
      --------------------------------------------------------- */
   T.register('recipes', function (c) {
     var cuisine = c.state('cuisine') || 'all';
-    var list = cuisine === 'all' ? D.RECIPES : D.RECIPES.filter(function (r) { return r.cuisine === cuisine; });
+    var query = (c.state('q') || '').trim().toLowerCase();
+    var list = (cuisine === 'all' ? D.RECIPES : D.RECIPES.filter(function (r) { return r.cuisine === cuisine; }))
+      .filter(function (r) {
+        return !query || (r.name + ' ' + r.cuisine + ' ' + r.tags.join(' ')).toLowerCase().indexOf(query) !== -1;
+      });
     var cuisines = ['all'].concat(D.RECIPES.map(function (r) { return r.cuisine; })
       .filter(function (v, i, a) { return a.indexOf(v) === i; }));
 
-    return UI.section({ body: UI.searchBar({ placeholder: c.t('recipes.search'), target: 'recipes' }) }) +
+    return UI.section({ body: UI.searchBar({ placeholder: c.t('recipes.search'), target: 'recipes', value: c.state('q') || '' }) }) +
       UI.section({ flush: true, body: '<div class="chips chips--scroll">' +
         cuisines.map(function (x) {
           return '<button class="chip' + (x === cuisine ? ' is-on' : '') + '" data-act="toolstate:recipes:cuisine:' + UI.esc(x) + '">' +
@@ -711,7 +730,7 @@
             act: 'toast:' + r.name
           });
         })) }) +
-      UI.section({ title: c.t('recipes.all'), body: UI.rows(list.map(function (r) {
+      UI.section({ title: c.t('recipes.all'), body: list.length ? UI.rows(list.map(function (r) {
         return UI.richRow({
           thumb: UI.art({ tone: r.tone, seed: r.name.length, glyph: r.glyph }),
           title: r.name, sub: r.cuisine,
@@ -719,11 +738,13 @@
                  c.t('recipes.serves', { n: r.serves }),
                  c.num(r.kcal) + ' ' + c.t('unit.kcal'),
                  c.t('recipes.stepsN', { n: r.steps }),
+                 r.ingredients + ' ' + c.t('recipes.ingredients'),
                  r.tags.join(' · ')],
           badge: r.fav ? { label: c.t('common.saved'), tone: 'ok' } : null,
           act: 'toast:' + r.name, chevron: true
         });
-      })) }) +
+      })) : UI.emptyState({ icon: 'i-utensils', title: c.t('recipes.noMatch'),
+        text: c.t('recipes.noMatchText') }) }) +
       UI.section({ title: c.t('recipes.related'), body: UI.rows([
         UI.compactRow({ icon: 'i-calendar', label: c.t('f.mealplan'), act: 'tool:mealplan' }),
         UI.compactRow({ icon: 'i-cart', label: c.t('f.shopping'), act: 'tool:shopping' })

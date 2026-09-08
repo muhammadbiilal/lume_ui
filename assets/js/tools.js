@@ -40,6 +40,7 @@ window.LUME_TOOLS = (function () {
   /* This line appears on every tool screen, so it is a key, not a string. */
   var FRESH_TEXT = {
     live: { quality: 'live', key: 'fresh.live' },
+    cached: { quality: 'cached', key: 'fresh.cached' },
     delayed: { quality: 'delayed', key: 'fresh.delayed' },
     daily: { quality: 'cached', key: 'fresh.daily' },
     weekly: { quality: 'cached', key: 'fresh.weekly' },
@@ -56,15 +57,39 @@ window.LUME_TOOLS = (function () {
   }
 
   /* §107 — source is discoverable but never dominant. */
+  /* §19 — "Live" alone is not freshness. A live or delayed feed says when it
+     last moved; a computed or local one says what it is instead. */
+  function updatedLabel(c) {
+    var f = c.spec.freshness;
+    if (f === 'live') return c.t('fresh.agoSec', { n: 30 });
+    if (f === 'delayed') return c.t('fresh.agoMin', { n: 15 });
+    if (f === 'daily' || f === 'draw') return c.t('fresh.at', { time: c.time(6, 0) });
+    if (f === 'weekly' || f === 'annual') return c.t('fresh.on', { date: c.dateShort(new Date()) });
+    if (f === 'computed') return c.t('fresh.forCity', { city: c.profile.city });
+    return null;
+  }
+
   function sourceSection(c) {
-    return UI.section({
-      id: 'source',
-      body: '<div class="srcbar">' +
-        UI.freshness(freshnessOf(c.spec, c.t)) +
-        UI.sourceLine({ source: c.t('src.' + c.spec.id) !== 'src.' + c.spec.id
-          ? c.t('src.' + c.spec.id) : c.spec.source, updated: c.updatedLabel || null }) +
-      '</div>'
-    });
+    var offline = typeof navigator !== 'undefined' && navigator.onLine === false;
+    var networked = c.spec.freshness !== 'local' && c.spec.freshness !== 'static';
+    return (offline && networked
+      ? UI.section({ body: UI.offlineBanner({
+          title: c.t('state.offline.title'),
+          text: c.spec.supports.offline ? c.t('state.offline.cached') : c.t('state.offline.text')
+        }) })
+      : '') +
+      UI.section({
+        id: 'source',
+        body: '<div class="srcbar">' +
+          UI.freshness(offline && networked
+            ? { quality: 'cached', label: c.t('fresh.offline') }
+            : freshnessOf(c.spec, c.t)) +
+          UI.sourceLine({
+            source: c.t('src.' + c.spec.id) !== 'src.' + c.spec.id ? c.t('src.' + c.spec.id) : c.spec.source,
+            updated: offline && networked ? c.t('fresh.lastSync') : updatedLabel(c)
+          }) +
+        '</div>'
+      });
   }
 
   /* §97 — the links that make Lume one ecosystem instead of 80 apps. */
@@ -183,13 +208,16 @@ window.LUME_TOOLS = (function () {
     return UI.esc(bits.filter(Boolean).join(' · '));
   }
 
+  /* Sharing and export are declared capabilities, so they get a place in the
+     header rather than being cut by a slice (§98, §99). Search comes last
+     because every screen that declares it also renders a search field. */
   function headerActions(c) {
     var s = c.spec, out = [];
-    if (s.supports.search) out.push({ id: 'search', icon: 'i-search', label: c.t('a11y.search'), act: 'toolsearch:' + s.id });
-    if (s.supports.favorites) out.push({ id: 'fav', icon: 'i-bookmark', label: c.t('a11y.favourite'), act: 'fav:' + s.id });
     if (s.supports.sharing) out.push({ id: 'share', icon: 'i-share', label: c.t('a11y.share'), act: 'share:' + s.id });
-    if (s.supports.export && !s.supports.sharing) out.push({ id: 'export', icon: 'i-download', label: c.t('a11y.export'), act: 'export:' + s.id });
-    return out.slice(0, 2);
+    if (s.supports.export) out.push({ id: 'export', icon: 'i-download', label: c.t('a11y.export'), act: 'export:' + s.id });
+    if (s.supports.favorites && out.length < 3) out.push({ id: 'fav', icon: 'i-bookmark', label: c.t('a11y.favourite'), act: 'fav:' + s.id });
+    if (s.supports.search && out.length < 3) out.push({ id: 'search', icon: 'i-search', label: c.t('a11y.search'), act: 'toolsearch:' + s.id });
+    return out.slice(0, 3);
   }
 
   return {

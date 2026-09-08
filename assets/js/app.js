@@ -63,6 +63,7 @@
     interests: [],
     prefs: { news: true, cricket: true, finance: true, recos: true },
     recents: [],
+    favourites: [],
     recentCountries: []
   };
 
@@ -213,13 +214,27 @@
       gate(el, want === 'islamic' ? profile.islamic : !profile.islamic);
     });
 
-    /* data-loc takes a comma-separated country list, or "global" for markup
-       that should show everywhere the listed markets do not. */
+    /* data-loc takes a comma-separated country list, or "global" for the
+       fallback copy shown when no sibling claims the user's country. It is
+       resolved against the siblings, not against the whole catalogue —
+       otherwise a country that has *any* localised feature would lose the
+       fallback and render nothing at all. */
+    $$('[data-loc="global"]').forEach(function (el) {
+      var claimed = false;
+      var parent = el.parentNode;
+      if (parent) {
+        $$('[data-loc]', parent).forEach(function (sib) {
+          if (sib === el || sib.dataset.loc === 'global') return;
+          if (sib.dataset.loc.split(',').indexOf(profile.country) !== -1) claimed = true;
+        });
+      }
+      gate(el, !claimed);
+    });
+
     $$('[data-loc]').forEach(function (el) {
       var want = el.dataset.loc;
-      gate(el, want === 'global'
-        ? !localMarkets().length || localMarkets().indexOf(profile.country) === -1
-        : want.split(',').indexOf(profile.country) !== -1);
+      if (want === 'global') return;
+      gate(el, want.split(',').indexOf(profile.country) !== -1);
     });
 
     /* Interests only re-order relevance; they never hide a tool outright,
@@ -724,17 +739,20 @@
     var host = $('#agenda');
     if (!host) return;
 
+    /* Times are carried as {h, m} and formatted only when drawn: a
+       locale-formatted string cannot be sorted or sliced. */
     var events = [
-      { t: '09:30', title: t('agenda.standup'), meta: t('agenda.standupMeta'), icon: 'i-check-circle', done: true },
-      { t: '14:00', title: t('agenda.review'), meta: t('agenda.reviewMeta'), icon: 'i-clock', now: true },
-      { t: '18:30', title: t('agenda.groceries'), meta: t('agenda.groceriesMeta'), icon: 'i-cart', act: 'tool:shopping' }
+      { h: 9, m: 30, title: t('agenda.standup'), meta: t('agenda.standupMeta'), icon: 'i-check-circle', done: true },
+      { h: 14, m: 0, title: t('agenda.review'), meta: t('agenda.reviewMeta'), icon: 'i-clock', now: true },
+      { h: 18, m: 30, title: t('agenda.groceries'), meta: t('agenda.groceriesMeta'), icon: 'i-cart', act: 'tool:shopping' }
     ];
 
     var lsf = feature('loadshed');
     if (lsf && visible(lsf)) {
       var ls = toolCtx('loadshed').loadshed();
-      events.push({ t: ls.slot.from, title: t('loadshed.outage'),
-        meta: ls.area + ' · ' + ls.slot.duration, icon: 'i-bolt', act: 'tool:loadshed' });
+      events.push({ h: Math.floor(ls.slot.fromM / 60), m: ls.slot.fromM % 60,
+        title: t('loadshed.outage'), meta: ls.area + ' · ' + ls.slot.duration,
+        icon: 'i-bolt', act: 'tool:loadshed' });
     }
 
     if (profile.islamic) {
@@ -742,7 +760,7 @@
       st.main.forEach(function (p) {
         var past = mins(p) < (new Date().getHours() * 60 + new Date().getMinutes());
         events.push({
-          t: hhmm(p), title: p.name,
+          h: p.h, m: p.m, title: t('prayer.' + (PKEYS[p.name] || 'fajr')),
           meta: past ? t('agenda.prayed') : t('agenda.adhanOn'),
           icon: past ? 'i-check-circle' : 'i-bell',
           done: past, act: 'tool:prayer'
@@ -750,15 +768,15 @@
       });
     }
 
-    events.sort(function (a, b) { return a.t.localeCompare(b.t); });
+    events.sort(function (a, b) { return (a.h * 60 + a.m) - (b.h * 60 + b.m); });
 
     var nowM = new Date().getHours() * 60 + new Date().getMinutes();
     host.innerHTML = events.map(function (e) {
-      var em = parseInt(e.t.slice(0, 2), 10) * 60 + parseInt(e.t.slice(3), 10);
+      var em = e.h * 60 + e.m;
       var done = e.done || (em < nowM && !e.now);
       var cls = e.now ? ' is-now' : done ? ' is-done' : '';
       return '<div class="tl-item' + cls + '">' +
-        '<span class="tl-time num">' + esc(L.time(parseInt(e.t.slice(0, 2), 10), parseInt(e.t.slice(3), 10))) + '</span>' +
+        '<span class="tl-time num">' + esc(L.time(e.h, e.m)) + '</span>' +
         '<span class="tl-line"><span class="tl-node"></span></span>' +
         '<button class="tl-card pressable" data-act="' + (e.act || ('toast:' + e.title)) + '">' +
           '<span class="tl-card__body"><span class="tl-card__title">' + esc(e.title) + '</span>' +
@@ -811,6 +829,7 @@
     /* Recently used first, then round-robin across the chosen interests —
        one tool per interest per pass. Without the round-robin, a single
        interest like "prayer" would fill the whole grid on its own. */
+    (profile.favourites || []).slice(0, 3).forEach(function (id) { add(feature(id)); });
     profile.recents.slice(0, 2).forEach(function (id) { add(feature(id)); });
 
     if (profile.interests.length) {
@@ -829,6 +848,9 @@
       }
     }
     QUICK_FALLBACK.forEach(function (id) { add(feature(id)); });
+    /* §117 — the last resort still respects the contract: a tool that never
+       declared itself Home-eligible does not get to fill the grid. */
+    visibleFeatures().filter(function (f) { return SPEC.get(f.id).homeEligible; }).forEach(add);
     visibleFeatures().forEach(add);
 
     host.innerHTML = picked.map(function (f) {
@@ -1247,12 +1269,19 @@
         title: t('notif.prayerIn', { name: t('prayer.' + (PKEYS[st.next.name] || 'fajr')), time: fmtShort(st.toNext) }),
         sub: t('notif.adhanAt', { time: hhmm(st.next) }), fresh: true });
     }
-    if (profile.country === 'PK') {
+    var lsFeature = feature('loadshed');
+    if (lsFeature && visible(lsFeature)) {
       var ls = toolCtx('loadshed').loadshed();
       items.push({ icon: 'i-bolt', title: t('notif.loadshed', { time: ls.slot.from }),
         sub: ls.area + ' · ' + ls.slot.duration, fresh: true });
     }
-    items.push({ icon: 'i-check-square', title: '3 tasks left today', sub: 'Next: finish the Q3 summary at 15:00' });
+    var todo = toolCtx('todos').todos();
+    var left = todo.today.filter(function (x) { return !x.done; });
+    if (left.length) {
+      items.push({ icon: 'i-check-square',
+        title: t('notif.tasksLeft', { n: left.length }),
+        sub: t('notif.taskNext', { title: left[0].label }) });
+    }
     var wx = toolCtx('weather').weather();
     items.push({ icon: 'i-cloud-sun', title: t('notif.tomorrow', { city: profile.city }),
       sub: t('weather.hilo', { hi: L.temp(wx.daily[1].hi), lo: L.temp(wx.daily[1].lo) }) +
@@ -1279,29 +1308,6 @@
     if (!isFinite(n)) return 'Error';
     return String(Math.round(n * 1e10) / 1e10);
   }
-
-  /* ---------------------------------------------------------
-     Tasbih
-     --------------------------------------------------------- */
-  var tCount = $('#tasbeehCount'), tRing = $('#tasbeehRing');
-  var tCirc = 2 * Math.PI * 45;
-
-  var tBtn = $('#tasbeehBtn');
-  if (tBtn) {
-    tBtn.addEventListener('click', function () {
-      beads++;
-        tCount.classList.remove('bump');
-      void tCount.offsetWidth;
-      tCount.classList.add('bump');
-      if (navigator.vibrate) navigator.vibrate(8);
-      if (beads === TARGET) toast('33 complete — well done');
-      else if (beads > 0 && beads % TARGET === 0) toast(beads + ' counted');
-    });
-  }
-  var tReset = $('#tasbeehReset');
-  if (tReset) tReset.addEventListener('click', function () { beads = 0; renderBeads(); toast('Counter reset'); });
-  var tSave = $('#tasbeehSave');
-  if (tSave) tSave.addEventListener('click', function () { toast('Saved ' + beads + ' to today'); });
 
   /* ---------------------------------------------------------
      Interest picker — grouped, with the faith group behind a switch
@@ -1684,7 +1690,6 @@
       syncFormatRows();
       syncLocationRows();
       if (locPicker) locPicker.render();
-      profile.lang = keep;
       profile.lang = draft.lang;
       return;
     }
@@ -2055,18 +2060,24 @@
      Arabic and Urdu shape and align correctly.
      --------------------------------------------------------- */
   var SHARE_CONTENT = {
+    names99: {
+      kind: 'dua',
+      arabic: 'الرَّحْمَٰن',
+      text: 'Ar-Rahman — The Most Compassionate.',
+      source: 'Asma ul Husna'
+    },
+    hadith: {
+      kind: 'hadith',
+      text: 'The best of people are those who are most beneficial to people.',
+      source: 'Al-Mu‘jam al-Awsat 5787'
+    },
     ayah: {
       kind: 'quran',
       arabic: 'أَلَا بِذِكْرِ ٱللَّهِ تَطْمَئِنُّ ٱلْقُلُوبُ',
       text: 'Truly, it is in the remembrance of God that hearts find rest.',
       source: 'Ar-Ra’d 13:28'
     },
-    hadith: {
-      kind: 'hadith',
-      text: 'The most beloved deeds to God are those done consistently, even if they are few.',
-      source: 'Sahih al-Bukhari 6464'
-    },
-    dua: {
+    duas: {
       kind: 'dua',
       arabic: 'رَبَّنَا آتِنَا فِي الدُّنْيَا حَسَنَةً',
       text: 'Our Lord, give us good in this world.',
@@ -2629,7 +2640,20 @@
     renderRecents();
   }
 
+  function stopClocks() {
+    for (var k in clockTimers) {
+      if (Object.prototype.hasOwnProperty.call(clockTimers, k)) {
+        clearInterval(clockTimers[k]);
+        var st = toolCtx(k)._state[k];
+        if (st) st.running = false;
+      }
+    }
+  }
+
   function closeTool() {
+    /* A countdown that keeps running would announce itself from an
+       unrelated screen. */
+    stopClocks();
     if (toolStack.length) { currentTool = toolStack.pop(); renderTool(); return; }
     currentTool = null;
     goTo(toolReturnTab);
@@ -2655,6 +2679,12 @@
 
   /* Field names are prefixed per tool so two screens can each have an
      "amount"; the context stores the bare key. */
+  /* One rule for both the typed and the stepped inputs. */
+  function fieldKey(name) {
+    if (FIELD_ALIAS[name]) return FIELD_ALIAS[name];
+    return name.indexOf('_') !== -1 ? name.split('_').slice(1).join('_') : name;
+  }
+
   var FIELD_ALIAS = {
     z_cash: 'cash', z_gold: 'gold', z_silver: 'silver', z_inv: 'inv', z_biz: 'biz', z_liab: 'liab',
     fa_gross: 'gross', fa_debts: 'debts', fa_bequest: 'bequest',
@@ -2699,9 +2729,8 @@
     }
 
     if (kind === 'share') { openShare(bits[0] || currentTool); return true; }
-    if (kind === 'export') { toast(t('tool.exported')); return true; }
-    if (kind === 'fav') { toast(t('tool.favourited')); return true; }
-    if (kind === 'bookmark') { toast(t('tool.bookmarked')); return true; }
+    if (kind === 'export') { exportTool(bits[0] || currentTool); return true; }
+    if (kind === 'fav' || kind === 'bookmark') { toggleFavourite(bits[0] || currentTool); return true; }
 
     if (kind === 'track') {
       toast(t('track.marked', { name: t('prayer.' + bits[0]) }));
@@ -2734,6 +2763,59 @@
     return false;
   }
 
+  /* §99 — export writes a real file. A CSV where the screen is a list or a
+     table, JSON where it is a calculation, named for the tool and the day. */
+  function exportTool(id) {
+    var c = toolCtx(id);
+    if (!c) return;
+    var rows = c.exportRows ? c.exportRows() : null;
+    var name = 'lume-' + id + '-' + c.isoToday();
+    var blob, ext;
+
+    if (rows && rows.length) {
+      var csv = rows.map(function (r) {
+        return r.map(function (cell) {
+          var v = cell === undefined || cell === null ? '' : String(cell);
+          return /[",\n]/.test(v) ? '"' + v.replace(/"/g, '""') + '"' : v;
+        }).join(',');
+      }).join('\r\n');
+      blob = new Blob(['\ufeff' + csv], { type: 'text/csv;charset=utf-8' });
+      ext = '.csv';
+    } else {
+      blob = new Blob([JSON.stringify({ tool: id, exported: new Date().toISOString(),
+        locale: L.locale(), currency: L.currencyCode() }, null, 2)],
+        { type: 'application/json' });
+      ext = '.json';
+    }
+
+    try {
+      var url = URL.createObjectURL(blob);
+      var a = document.createElement('a');
+      a.href = url;
+      a.download = name + ext;
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      setTimeout(function () { URL.revokeObjectURL(url); }, 1000);
+      toast(t('tool.exportedAs', { name: name + ext }));
+    } catch (e) {
+      toast(t('tool.exportFailed'));
+    }
+  }
+
+  /* Favourites persist on the profile, so the star means something. */
+  function toggleFavourite(id) {
+    if (!id) return;
+    profile.favourites = profile.favourites || [];
+    var at = profile.favourites.indexOf(id);
+    if (at === -1) profile.favourites.push(id); else profile.favourites.splice(at, 1);
+    saveProfile();
+    var f = feature(id);
+    toast(t(at === -1 ? 'tool.favourited' : 'tool.unfavourited', { name: f ? fname(f) : id }));
+    if (currentTool === id) renderTool();
+    renderQuickTools();
+  }
+
   /* ---- live inputs: a calculator recomputes as you type ---- */
   var reflowTimer;
 
@@ -2751,8 +2833,10 @@
       if (activeName) again = $('[data-input="' + activeName + '"]', $('#screen-tool'));
       else if (isSearch) again = $('[data-tool-search]', $('#screen-tool'));
       if (again) {
-        if (isSearch) again.value = value;
+        if (value !== null && value !== undefined) again.value = value;
         again.focus();
+        /* setSelectionRange throws on type=number; the caret is already at
+           the end there, which is where it was. */
         try { again.setSelectionRange(caret, caret); } catch (err2) {}
       }
     }, 280);
@@ -2769,8 +2853,11 @@
     var el = e.target.closest('[data-input]');
     if (!el) return;
     var name = el.dataset.input;
-    var key = FIELD_ALIAS[name] || (name.indexOf('_') !== -1 ? name.split('_').slice(1).join('_') : name);
-    c.setField(key, el.type === 'number' ? (el.value === '' ? 0 : Number(el.value)) : el.value);
+    /* A number input reports '' for a half-typed decimal like "12.", so
+       committing 0 on every keystroke would rewrite the field under the
+       user. Leave the model alone until the value parses. */
+    if (el.type === 'number' && el.value === '') return;
+    c.setField(fieldKey(name), el.type === 'number' ? Number(el.value) : el.value);
     reflowSoon();
   });
 
@@ -2780,7 +2867,7 @@
     var down = up ? null : e.target.closest('[data-step-down]');
     if ((!up && !down) || !currentTool) return;
     var name = up ? up.dataset.stepUp : down.dataset.stepDown;
-    var key = FIELD_ALIAS[name] || name;
+    var key = fieldKey(name);
     var c = toolCtx(currentTool);
     var cur = Number(c.field(key) || 0);
     c.setField(key, Math.max(0, cur + (up ? 1 : -1)));
@@ -2912,6 +2999,9 @@
     }
     if (st.running) { clearInterval(clockTimers[kind]); st.running = false; return; }
 
+    if (kind !== 'stopwatch' && !st.secs) {
+      st.secs = st.total || (kind === 'focus' ? 1500 : 300);
+    }
     st.running = true;
     if (st.secs === undefined) st.secs = kind === 'stopwatch' ? 0 : (st.total || (kind === 'focus' ? 1500 : 300));
     clockTimers[kind] = setInterval(function () {
@@ -2983,6 +3073,10 @@
     }
     calcToolRender();
   });
+
+  /* §93 — the freshness line must tell the truth the moment it changes. */
+  window.addEventListener('online', function () { if (currentTool) renderTool(); });
+  window.addEventListener('offline', function () { if (currentTool) renderTool(); });
 
   /* ---- back ---- */
   document.addEventListener('click', function (e) {

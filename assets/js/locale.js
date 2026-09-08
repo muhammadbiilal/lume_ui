@@ -38,7 +38,7 @@ window.LUME_LOCALE = function (getProfile) {
     CLP: 970, COP: 4350, PEN: 3.75, BOB: 6.9, PYG: 7800, UYU: 42, VES: 47,
     GTQ: 7.7, HNL: 25, NIO: 36.8, CRC: 510, PAB: 1, DOP: 60, CUP: 24,
     JMD: 157, TTD: 6.8, BBD: 2, BSD: 1, BZD: 2, XCD: 2.7, GYD: 209,
-    SRD: 35, HTG: 131
+    SRD: 35, HTG: 131, BIF: 2900
   };
 
   /* Round to something a human would actually see on a price tag. */
@@ -144,6 +144,22 @@ window.LUME_LOCALE = function (getProfile) {
     } catch (e) { return (code || currencyCode()) + ' ' + num(value); }
   }
 
+  /* Compact notation, so a turnover figure reads "Rs 18.4 crore" in India
+     and "$184M" in New York rather than being sliced by a regex. */
+  function compact(n) {
+    try { return new Intl.NumberFormat(locale(), { notation: 'compact', maximumFractionDigits: 1 }).format(n); }
+    catch (e) { return num(Math.round(n)); }
+  }
+
+  function compactMoney(value, code) {
+    try {
+      return new Intl.NumberFormat(locale(), {
+        style: 'currency', currency: code || currencyCode(),
+        notation: 'compact', maximumFractionDigits: 1
+      }).format(value);
+    } catch (e) { return (code || currencyCode()) + ' ' + compact(value); }
+  }
+
   function date(d, opts) {
     try { return new Intl.DateTimeFormat(locale(), opts).format(d); }
     catch (e) { return d.toDateString(); }
@@ -200,7 +216,7 @@ window.LUME_LOCALE = function (getProfile) {
     t: t, dir: dir, lang: lang, langMeta: langMeta, locale: locale,
     country: country, countryName: countryName, languageName: languageName,
     currencyCode: currencyCode, unitSystem: unitSystem, clock: clock, timezone: timezone,
-    num: num, money: money, moneyRaw: moneyRaw,
+    num: num, money: money, moneyRaw: moneyRaw, compact: compact, compactMoney: compactMoney,
     date: date, dateLong: dateLong, dateShort: dateShort, time: time, weekStart: weekStart,
     temp: temp, tempUnit: tempUnit, speed: speed, distance: distance,
     RATES: RATES

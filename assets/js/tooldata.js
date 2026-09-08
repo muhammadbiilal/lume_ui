@@ -345,8 +345,14 @@ window.LUME_DATA = (function () {
   var AQI_BY_COUNTRY = { PK: 164, IN: 178, BD: 186, CN: 112, AE: 96, SA: 104, EG: 128,
     NG: 118, ID: 108, TR: 74, US: 42, GB: 34, DE: 30, FR: 38, CA: 26, AU: 22, JP: 40, SE: 18 };
 
-  function aqiFor(code) {
-    var v = AQI_BY_COUNTRY[code] || 56;
+  /* One national figure is not a city reading. Offset it deterministically
+     per city so two cities differ, and let the screen label the derived
+     pollutant rows as estimated rather than measured (§108). */
+  function aqiFor(code, city) {
+    var base = AQI_BY_COUNTRY[code] || 56;
+    var seed = 0;
+    for (var i = 0; i < (city || '').length; i++) seed = (seed * 31 + (city || '').charCodeAt(i)) % 997;
+    var v = Math.max(8, Math.round(base * (0.78 + (seed % 45) / 100)));
     return { value: v, band: aqiBand(v),
       parts: [
         { n: 'PM2.5', v: Math.round(v * 0.62), unit: 'µg/m³' },

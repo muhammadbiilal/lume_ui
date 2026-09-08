@@ -12,3 +12,9 @@ boot the real `index.html` in jsdom and drive it.
 `verify.js` covers Muslim/non-Muslim × Pakistan/UK/US/Saudi, English/Urdu/
 Arabic, and asserts that no hidden feature leaks and no untranslated key
 reaches the screen.
+
+`regress.js` holds one assertion per defect found by an adversarial read of
+the arithmetic and the edge cases — agenda times in a 12-hour locale, the
+`data-loc="global"` fallback, ISO dates west of UTC, the faraid steppers, a
+loan with zero tenure, the moon phase, market turnover, the offline banner
+and the freshness timestamp. Each of these failed before its fix.

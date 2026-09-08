@@ -56,7 +56,7 @@
     'tool.related': 'Related tools', 'tool.inputs': 'Inputs', 'tool.value': 'Value',
     'tool.unavailable': 'That tool isn’t part of your setup',
     'tool.exported': 'Exported to your device',
-    'tool.favourited': 'Added to your favourites',
+    'tool.favourited': 'Added {name} to favourites',
     'tool.bookmarked': 'Saved',
     'track.marked': '{name} marked as prayed',
     'water.added': '{amount} logged',
@@ -82,7 +82,18 @@
     'fresh.daily': 'Updated today', 'fresh.weekly': 'Updated this week',
     'fresh.annual': 'Current tax year', 'fresh.draw': 'Latest draw',
     'fresh.computed': 'Calculated for your location', 'fresh.static': 'Reference text',
-    'fresh.local': 'Stored on this device',
+    'fresh.local': 'Stored on this device', 'fresh.cached': 'Cached',
+    'fresh.agoSec': 'Updated {n} sec ago', 'fresh.agoMin': 'Updated {n} min ago',
+    'fresh.at': 'Updated at {time}', 'fresh.on': 'Updated {date}',
+    'fresh.forCity': 'For {city}', 'fresh.offline': 'Offline',
+    'fresh.lastSync': 'Last synced before you went offline',
+    'state.offline.title': 'You’re offline',
+    'state.offline.cached': 'Showing the last data this tool saved.',
+    'state.offline.text': 'This tool needs a connection to refresh.',
+
+    /* Export and favourites now do something (§99) */
+    'tool.exportedAs': 'Saved {name}', 'tool.exportFailed': 'Couldn’t write the file',
+    'tool.unfavourited': 'Removed {name} from favourites',
 
     /* Archetype, shown as the tool header's subtitle (§22) */
     'archetype.dashboard': 'Dashboard', 'archetype.explorer': 'Data explorer',
@@ -263,6 +274,28 @@
     'pregnancy.weightTrend': 'Weight',
 
     'recipes.prepCook': '{prep} + {cook} min', 'recipes.stepsN': '{n} steps',
+
+    /* Empty states the newly-live controls can now produce (§91) */
+    'flights.noMatch': 'No flights on this board',
+    'flights.noMatchText': 'Try arrivals, or search a flight number or airport.',
+    'clock.noMatch': 'No city matches', 'clock.noMatchText': 'Try a city or a time-zone name.',
+    'notes.noMatch': 'No notes match', 'notes.noMatchText': 'Try a different word, or a folder name.',
+    'events.noMatch': 'No events match', 'events.noMatchText': 'Try a different word.',
+    'recipes.noMatch': 'No recipes match', 'recipes.noMatchText': 'Try a cuisine, an ingredient or a tag.',
+    'names.noMatch': 'No name matches', 'names.noMatchText': 'Try the transliteration or the meaning.',
+    'bills.noMatch': 'No bills here', 'bills.noMatchText': 'Nothing in this state right now.',
+    'ledger.noMatch': 'Nobody here', 'ledger.noMatchText': 'No entries in this direction.',
+
+    /* Faraid now follows the heirs it is given */
+    'faraid.residuary': 'Residuary', 'faraid.residual': 'Residual estate',
+    'faraid.reason.none': 'With no surviving heirs entered, the estate passes to the wider family or the public treasury.',
+
+    /* Air quality is derived from a national figure, so it says so (§108) */
+    'aqi.estimated': 'Estimated',
+
+    /* Notifications derived from the user's own data (§100) */
+    'notif.tasksLeft': '{n} tasks left today', 'notif.taskNext': 'Next: {title}',
+    'notif.sub': 'Quiet by default',
 
     /* Markets with no personal income tax still have levies (§112) */
     'tax.noneCaption': 'Your salary is not subject to personal income tax here.',

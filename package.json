@@ -4,7 +4,7 @@
   "private": true,
   "description": "Lume — a global daily-life super-app. Static, dependency-free at runtime.",
   "scripts": {
-    "test": "node tests/verify.js && node tests/interact.js && node tests/controls.js"
+    "test": "node tests/verify.js && node tests/interact.js && node tests/controls.js && node tests/regress.js"
   },
   "devDependencies": {
     "jsdom": "^25.0.0"

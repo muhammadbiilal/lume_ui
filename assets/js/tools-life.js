@@ -121,7 +121,7 @@
       UI.section({ body: UI.noteCard({ tone: aq.band.tone === 'ok' ? 'ok' : 'warn', icon: 'i-info',
         title: c.t('aqi.advice'), text: c.t(aq.band.key + '.advice') }) }) +
       UI.section({ title: c.t('aqi.pollutants'), body: UI.rows(aq.parts.map(function (p) {
-        return UI.richRow({ icon: 'i-wind', title: p.n, sub: c.t('aqi.measured'),
+        return UI.richRow({ icon: 'i-wind', title: p.n, sub: c.t('aqi.estimated'),
           value: String(p.v), valueSub: p.unit });
       })) }) +
       UI.section({ title: c.t('aqi.trend'), body: UI.card(
@@ -263,7 +263,7 @@
       }) }) +
       UI.section({ body: UI.buttonRow([
         { label: c.t('trains.remind'), tone: 'accent', icon: 'i-bell', act: 'toast:' + c.t('trains.reminded', { name: train.name }) },
-        { label: c.t('common.share'), icon: 'i-share', act: 'toast:' + train.name }]) });
+        { label: c.t('common.share'), icon: 'i-share', act: 'share:trains' }]) });
   });
 
   /* ---------------------------------------------------------
@@ -272,11 +272,26 @@
   T.register('flights', function (c) {
     var sel = c.state('flight') || D.FLIGHTS[0].no;
     var fl = D.FLIGHTS.filter(function (f) { return f.no === sel; })[0] || D.FLIGHTS[0];
-    var view = c.state('view') || 'arrivals';
+    var view = c.filter('view', 'arrivals');
+    var query = (c.state('q') || '').trim().toLowerCase();
     var enRoute = D.FLIGHTS.filter(function (f) { return f.statusKey === 'flights.st.enroute'; }).length;
 
+    /* Arrivals are the flights landing at the user's city; departures leave
+       from it; tracked is what they asked to follow. The board actually
+       changes what it lists (§112). */
+    var home = (c.profile.city || '').slice(0, 3).toUpperCase();
+    var board = D.FLIGHTS.filter(function (f) {
+      if (view === 'departures') return f.fromCode !== f.toCode && f.progress < 1;
+      if (view === 'tracked') return (c.profile.favourites || []).indexOf('flights') !== -1 || f.tone2 === 'live';
+      return true;
+    }).filter(function (f) {
+      if (!query) return true;
+      return (f.no + ' ' + f.airline + ' ' + f.from + ' ' + f.to + ' ' + f.fromCode + ' ' + f.toCode)
+        .toLowerCase().indexOf(query) !== -1;
+    });
+
     return UI.section({ body: UI.searchBar({
-        placeholder: c.t('flights.search'), target: 'flights' }) }) +
+        placeholder: c.t('flights.search'), target: 'flights', value: c.state('q') || '' }) }) +
       UI.section({ body: UI.segmented({ id: 'flightview', label: c.t('flights.board'), items: [
         { value: 'arrivals', label: c.t('flights.arrivals'), on: view === 'arrivals', act: 'toolstate:flights:view:arrivals' },
         { value: 'departures', label: c.t('flights.departures'), on: view === 'departures', act: 'toolstate:flights:view:departures' },
@@ -296,7 +311,7 @@
           { x: 90, y: 16, icon: 'i-pin', label: fl.to }
         ]
       }) }) +
-      UI.section({ title: c.t('flights.live'), body: UI.rows(D.FLIGHTS.map(function (f) {
+      UI.section({ title: c.t('flights.live'), body: board.length ? UI.rows(board.map(function (f) {
         return UI.richRow({
           logo: f.logo, logoTone: 'var(--tone-' + f.tone + ')',
           title: f.no,
@@ -309,7 +324,9 @@
           act: 'toolstate:flights:flight:' + f.no,
           cls: f.no === sel ? 'is-selected' : ''
         });
-      })) }) +
+      })) : UI.emptyState({ icon: 'i-plane', title: c.t('flights.noMatch'),
+        text: c.t('flights.noMatchText'),
+        action: { label: c.t('flights.arrivals'), act: 'toolstate:flights:view:arrivals', icon: 'i-refresh' } }) }) +
       UI.section({ title: fl.no + ' · ' + fl.airline, body: UI.card(
         UI.journey({
           fromCode: fl.fromCode, from: fl.from, fromTime: fl.actual,
@@ -337,7 +354,7 @@
       ]) }) +
       UI.section({ body: UI.buttonRow([
         { label: c.t('flights.track'), tone: 'accent', icon: 'i-bell', act: 'toast:' + c.t('flights.tracking', { no: fl.no }) },
-        { label: c.t('common.share'), icon: 'i-share', act: 'toast:' + fl.no }]) });
+        { label: c.t('common.share'), icon: 'i-share', act: 'share:flights' }]) });
   });
 
   /* ---------------------------------------------------------
@@ -346,14 +363,18 @@
   T.register('news', function (c) {
     var cat = c.state('cat') || 'Top';
     var all = D.newsFor(c.profile.country);
-    var list = cat === 'Top' ? all : all.filter(function (n) { return n.cat === cat; });
+    var query = (c.state('q') || '').trim().toLowerCase();
+    var list = (cat === 'Top' ? all : all.filter(function (n) { return n.cat === cat; }))
+      .filter(function (n) {
+        return !query || (n.title + ' ' + n.src + ' ' + n.cat).toLowerCase().indexOf(query) !== -1;
+      });
     var lead = list[0] || null;
     var rest = list.slice(1);
 
     return UI.section({ flush: true, body: UI.contextBar([
         { icon: 'i-globe', label: c.L.countryName(c.profile.country), act: 'sheet:personalise' },
         { label: c.t('news.edition') }]) }) +
-      UI.section({ body: UI.searchBar({ placeholder: c.t('news.search'), target: 'news' }) }) +
+      UI.section({ body: UI.searchBar({ placeholder: c.t('news.search'), target: 'news', value: c.state('q') || '' }) }) +
       UI.section({ flush: true, body: '<div class="chips chips--scroll">' +
         D.NEWS_CATEGORIES.map(function (x) {
           return '<button class="chip' + (x === cat ? ' is-on' : '') + '" data-act="toolstate:news:cat:' + UI.esc(x) + '">' +
@@ -391,17 +412,17 @@
     var k = D.CRICKET, m = k.live;
     var tab = c.state('tab') || 'live';
     return UI.section({ body: UI.card(
-        '<div class="score">' +
-          '<div class="score__side"><b>' + UI.esc(m.t1) + '</b><span>' + UI.esc(m.t1full) + '</span></div>' +
-          '<div class="score__mid">' +
-            '<p class="score__runs">' + UI.esc(m.s1) + '</p>' +
-            '<p class="score__overs">' + UI.esc(m.o1) + ' ' + UI.esc(c.t('cricket.overs')) + '</p>' +
+        '<div class="mscore">' +
+          '<div class="mscore__side"><b>' + UI.esc(m.t1) + '</b><span>' + UI.esc(m.t1full) + '</span></div>' +
+          '<div class="mscore__mid">' +
+            '<p class="mscore__runs">' + UI.esc(m.s1) + '</p>' +
+            '<p class="mscore__overs">' + UI.esc(m.o1) + ' ' + UI.esc(c.t('cricket.overs')) + '</p>' +
             UI.freshness({ quality: 'live', label: c.t('cricket.live') }) +
           '</div>' +
-          '<div class="score__side score__side--away"><b>' + UI.esc(m.t2) + '</b><span>' + UI.esc(m.t2full) + '</span>' +
-            (m.s2 && m.s2 !== '—' ? '<i class="score__second">' + UI.esc(m.s2) + ' (' + UI.esc(m.o2) + ')</i>' : '') + '</div>' +
+          '<div class="mscore__side score__side--away"><b>' + UI.esc(m.t2) + '</b><span>' + UI.esc(m.t2full) + '</span>' +
+            (m.s2 && m.s2 !== '—' ? '<i class="mscore__second">' + UI.esc(m.s2) + ' (' + UI.esc(m.o2) + ')</i>' : '') + '</div>' +
         '</div>' +
-        '<p class="score__status">' + UI.esc(c.t(m.statusKey, { team: m.t1full })) + '</p>' +
+        '<p class="mscore__status">' + UI.esc(c.t(m.statusKey, { team: m.t1full })) + '</p>' +
         UI.metrics([
           { value: c.num(m.rr, { minimumFractionDigits: 2, maximumFractionDigits: 2 }), label: c.t('cricket.runRate') },
           { value: m.format, label: c.t('cricket.format') },
@@ -694,6 +715,10 @@
   T.register('vehicle', function (c) {
     var cfg = c.vehicleCosts();
     var ccy = cfg.ccy;
+    var query = (c.state('q') || '').trim().toLowerCase();
+    var vehicles = D.VEHICLES.filter(function (v) {
+      return !query || (v.plate + ' ' + v.make).toLowerCase().indexOf(query) !== -1;
+    });
     var fines = D.VEHICLES.reduce(function (a, v) { return a + v.fines; }, 0);
     return UI.section({ body: UI.summaryCard({
         kicker: c.t('vehicle.fleet'),
@@ -706,8 +731,8 @@
           { value: c.L.distance(D.VEHICLES[0].odo), label: c.t('vehicle.odometer') }
         ]
       }) }) +
-      UI.section({ body: UI.searchBar({ placeholder: c.t('vehicle.search'), target: 'vehicle' }) }) +
-      UI.section({ title: c.t('vehicle.yours'), body: UI.rows(D.VEHICLES.map(function (v) {
+      UI.section({ body: UI.searchBar({ placeholder: c.t('vehicle.search'), target: 'vehicle', value: c.state('q') || '' }) }) +
+      UI.section({ title: c.t('vehicle.yours'), body: UI.rows(vehicles.map(function (v) {
         return UI.richRow({
           logo: v.plate.slice(0, 3), logoTone: 'var(--tone-' + v.tone + ')',
           title: v.plate, sub: v.make + ' · ' + v.year,
@@ -722,11 +747,16 @@
         UI.field({ label: c.t('vehicle.registration'), name: 'veh_reg', placeholder: 'ABC-123', wide: true })
       ]) + UI.buttonRow([{ label: c.t('vehicle.lookup'), tone: 'accent', icon: 'i-search', block: true,
         act: 'toast:' + c.t('vehicle.lookingUp') }])) }) +
-      UI.section({ title: c.t('vehicle.reminders'), body: UI.timeline([
-        { time: '30 Sep', title: c.t('vehicle.tokenTax'), sub: 'ABC-124', state: 'now', value: c.money(cfg.tokenCar) },
-        { time: '11 Nov', title: c.t('vehicle.tokenTax'), sub: 'LEB-8842', value: c.money(cfg.tokenBike) },
-        { time: '14 Dec', title: c.t('vehicle.insuranceRenewal'), sub: 'ABC-124', value: c.money(cfg.insurance) }
-      ]) });
+      UI.section({ title: c.t('vehicle.reminders'), body: UI.timeline(
+        D.VEHICLES.map(function (v, i) {
+          return { time: v.token, title: c.t('vehicle.tokenTax'), sub: v.plate,
+            meta: c.t('common.inDays', { n: v.tokenDays }),
+            state: v.tokenDays < 30 ? 'now' : '',
+            value: c.money(i === 0 ? cfg.tokenCar : cfg.tokenBike) };
+        }).concat(D.VEHICLES.filter(function (v) { return v.insurance !== '—'; }).map(function (v) {
+          return { time: v.insurance, title: c.t('vehicle.insuranceRenewal'), sub: v.plate,
+            value: c.money(cfg.insurance) };
+        }))) });
   });
 
   /* ---------------------------------------------------------
@@ -798,20 +828,24 @@
      --------------------------------------------------------- */
   T.register('worldclock', function (c) {
     var zones = c.worldClock();
+    var query = (c.state('q') || '').trim().toLowerCase();
+    var shown = zones.filter(function (z) {
+      return !query || (z.city + ' ' + z.tz).toLowerCase().indexOf(query) !== -1;
+    });
     return UI.section({ body: UI.summaryCard({
         kicker: c.profile.city,
         value: c.clockNow(),
         caption: c.L.timezone() + ' · ' + c.dateLong(new Date())
       }) }) +
-      UI.section({ body: UI.searchBar({ placeholder: c.t('clock.search'), target: 'worldclock' }) }) +
-      UI.section({ title: c.t('clock.cities'), body: UI.rows(zones.map(function (z) {
+      UI.section({ body: UI.searchBar({ placeholder: c.t('clock.search'), target: 'worldclock', value: c.state('q') || '' }) }) +
+      UI.section({ title: c.t('clock.cities'), body: shown.length ? UI.rows(shown.map(function (z) {
         return UI.richRow({
           logo: z.cc, logoTone: 'var(--tint-neutral)',
           title: z.city, sub: z.tz,
           meta: [z.offsetLabel, z.dayLabel],
           value: z.time, valueSub: z.period
         });
-      })) }) +
+      })) : UI.emptyState({ icon: 'i-clock', title: c.t('clock.noMatch'), text: c.t('clock.noMatchText') }) }) +
       UI.section({ title: c.t('clock.converter'), body: UI.card(UI.formGrid([
         UI.selectField({ label: c.t('clock.from'), name: 'wc_from', value: c.L.timezone(),
           options: zones.map(function (z) { return { value: z.tz, label: z.city }; }) }),

@@ -115,7 +115,13 @@ window.LUME_CTX = function (deps) {
     var len = setM - riseM;
     var phases = ['moon.new', 'moon.waxCrescent', 'moon.firstQuarter', 'moon.waxGibbous',
                   'moon.full', 'moon.wanGibbous', 'moon.lastQuarter', 'moon.wanCrescent'];
-    var pIdx = Math.floor((dayIndex(29.53 * 100) / 100 / 29.53) * 8) % 8;
+    /* Age of the moon in days since a known new moon, wrapped by the synodic
+       month. The previous form advanced one phase step per year. */
+    var SYNODIC = 29.530588853;
+    var KNOWN_NEW = Date.UTC(2000, 0, 6, 18, 14);
+    var age = (((Date.now() - KNOWN_NEW) / 86400000) % SYNODIC + SYNODIC) % SYNODIC;
+    var frac = age / SYNODIC;
+    var pIdx = Math.floor(frac * 8 + 0.5) % 8;
     var noonM = Math.round((riseM + setM) / 2);
     return {
       sunrise: sunrise, sunset: sunset,
@@ -123,7 +129,8 @@ window.LUME_CTX = function (deps) {
       dayProgress: Math.max(0, Math.min(1, (nowM - riseM) / Math.max(1, len))),
       solarNoon: L.time(Math.floor(noonM / 60), noonM % 60),
       moonPhase: t(phases[pIdx]),
-      moonIllum: Math.round(Math.abs(Math.cos(pIdx / 8 * Math.PI)) * 100),
+      /* 0% at new moon, 100% at full — the old form had it exactly backwards. */
+      moonIllum: Math.round((1 - Math.cos(frac * 2 * Math.PI)) / 2 * 100),
       events: [
         { time: L.time(sunrise.h - 1, sunrise.m), label: t('sun.dawn'), note: t('sun.dawnNote'), icon: 'i-moon', state: 'done' },
         { time: L.time(sunrise.h, sunrise.m), label: t('sun.sunrise'), note: '', icon: 'i-sun', state: nowM > riseM ? 'done' : '' },
@@ -153,6 +160,16 @@ window.LUME_CTX = function (deps) {
     var name = D.HIJRI_MONTHS[Math.max(0, Math.min(11, month - 1))];
     return { day: day, month: name, monthIndex: month - 1, year: year,
       label: day + ' ' + name + ' ' + year };
+  }
+
+  /* `new Date('1993-04-18')` is UTC midnight, but every getDate/getDay and
+     every L.date() below reads local time. West of UTC that is yesterday,
+     so ages, birthdays and date differences all came out a day early. */
+  function parseISO(str) {
+    var m = /^(\d{4})-(\d{2})-(\d{2})$/.exec(String(str || ''));
+    if (!m) return null;
+    var d = new Date(Number(m[1]), Number(m[2]) - 1, Number(m[3]));
+    return isNaN(d.getTime()) ? null : d;
   }
 
   function isoToday() {
@@ -266,8 +283,14 @@ window.LUME_CTX = function (deps) {
 
   function prayerTracker() {
     var st = prayerState();
+    var set = prayerTimes();
+    var nowM = new Date().getHours() * 60 + new Date().getMinutes();
+    /* prayerState().index wraps to 0 after Isha because the *next* prayer is
+       tomorrow's Fajr. That is the wrong number for "prayed so far today" —
+       count the prayers whose time has passed instead. */
+    var done = set.filter(function (p) { return p.h * 60 + p.m <= nowM; }).length;
     return {
-      doneToday: st.index, streak: 12, month: 0.86, qada: 7,
+      doneToday: done, streak: 12, month: 0.86, qada: 7,
       heat: heatDays(35, 4211, 0.35),
       byPrayer: [28, 30, 26, 29, 24]
     };
@@ -359,14 +382,19 @@ window.LUME_CTX = function (deps) {
     });
     var goldPerGram = 88 * rate;      /* ≈ USD 88/g bullion */
     var silverPerGram = 1.05 * rate;
+    /* Two nisab thresholds are in use. The silver one is lower, so more
+       people owe zakat under it — which is the majority position, and the
+       one this screen applies. Show the figure that is actually tested. */
     var nisabGold = 87.48 * goldPerGram;
+    var nisabSilver = 612.36 * silverPerGram;
+    var nisab = Math.min(nisabGold, nisabSilver);
     var assets = Number(f.cash) + Number(f.gold) * goldPerGram + Number(f.silver) * silverPerGram +
                  Number(f.inv) + Number(f.biz);
     var net = assets - Number(f.liab);
-    var eligible = net >= 87.48 * silverPerGram * 7;
+    var eligible = net >= nisab;
     return {
       f: f, net: net, due: eligible ? net * 0.025 : 0, eligible: eligible,
-      nisabGold: nisabGold,
+      nisab: nisab, nisabGold: nisabGold, nisabSilver: nisabSilver,
       lines: [
         { label: t('zakat.cash'), value: Number(f.cash) },
         { label: t('zakat.gold') + ' (' + f.gold + ' ' + t('unit.gram') + ')', value: Number(f.gold) * goldPerGram },
@@ -385,25 +413,55 @@ window.LUME_CTX = function (deps) {
     var f = fieldsFor('faraid', {
       gross: Math.round(60000 * rate / 1000) * 1000,
       debts: Math.round(5000 * rate / 1000) * 1000,
-      bequest: 0
+      bequest: 0,
+      /* The steppers write these, so they are declared here rather than
+         hard-coded further down. */
+      wife: 1, son: 2, daughter: 1
     });
-    var net = Math.max(0, Number(f.gross) - Number(f.debts) - Number(f.bequest));
-    /* Wife 1/8, then residue split 2:1 between sons and daughters. */
-    var wife = net / 8, residue = net - wife;
-    var sons = 2, daughters = 1;
-    var unit = residue / (sons * 2 + daughters);
+    /* Bequest is capped at a third of the estate after debts. */
+    var afterDebts = Math.max(0, Number(f.gross) - Number(f.debts));
+    var bequest = Math.min(Number(f.bequest) || 0, afterDebts / 3);
+    var net = Math.max(0, afterDebts - bequest);
+
+    var wives = Math.max(0, Number(f.wife) || 0);
+    var sons = Math.max(0, Number(f.son) || 0);
+    var daughters = Math.max(0, Number(f.daughter) || 0);
+    var hasChildren = sons + daughters > 0;
+
+    /* A wife takes an eighth where there are children and a quarter where
+       there are none — the fraction has to follow the heirs, not a constant. */
+    var wifeFrac = wives ? (hasChildren ? 1 / 8 : 1 / 4) : 0;
+    var wifeShare = net * wifeFrac;
+    var residue = net - wifeShare;
+    var parts = sons * 2 + daughters;
+    var unit = parts ? residue / parts : 0;
+
+    var shares = [];
+    if (wives) {
+      shares.push({ label: t('faraid.wife'), fraction: hasChildren ? '1/8' : '1/4',
+        amount: wifeShare, color: 'var(--accent)', reason: t('faraid.reason.wife') });
+    }
+    if (sons) {
+      shares.push({ label: t('faraid.sons'), fraction: t('faraid.residuary'),
+        amount: unit * 2 * sons, color: 'var(--violet)', reason: t('faraid.reason.son') });
+    }
+    if (daughters) {
+      shares.push({ label: t('faraid.daughters'), fraction: t('faraid.residuary'),
+        amount: unit * daughters, color: 'var(--amber)', reason: t('faraid.reason.daughter') });
+    }
+    if (!shares.length && net > 0) {
+      shares.push({ label: t('faraid.residual'), fraction: '—', amount: net,
+        color: 'var(--text-3)', reason: t('faraid.reason.none') });
+    }
+
     return {
-      step: 2, gross: f.gross, debts: f.debts, bequest: f.bequest, net: net,
+      step: 2, gross: f.gross, debts: f.debts, bequest: bequest, net: net,
       heirs: [
-        { id: 'wife', label: t('faraid.wife'), rule: t('faraid.rule.wife'), n: 1 },
+        { id: 'wife', label: t('faraid.wife'), rule: t('faraid.rule.wife'), n: wives },
         { id: 'son', label: t('faraid.sons'), rule: t('faraid.rule.son'), n: sons },
         { id: 'daughter', label: t('faraid.daughters'), rule: t('faraid.rule.daughter'), n: daughters }
       ],
-      shares: [
-        { label: t('faraid.wife'), fraction: '1/8', amount: wife, color: 'var(--accent)', reason: t('faraid.reason.wife') },
-        { label: t('faraid.sons'), fraction: '2:1', amount: unit * 2 * sons, color: 'var(--violet)', reason: t('faraid.reason.son') },
-        { label: t('faraid.daughters'), fraction: '1', amount: unit * daughters, color: 'var(--amber)', reason: t('faraid.reason.daughter') }
-      ]
+      shares: shares
     };
   }
 
@@ -427,8 +485,10 @@ window.LUME_CTX = function (deps) {
       label: open ? t('markets.open') : t('markets.closed'),
       hours: ex.open + ' – ' + ex.close + ' · ' + ex.tz.split('/')[1].replace('_', ' '),
       adv: adv, dec: dec, advPct: Math.round(adv / (adv + dec) * 100),
-      turnover: L.moneyRaw(184000000, ex.ccy, 0).replace(/\d{3}$/, 'M').slice(0, 12),
-      volume: '412M', trades: '188,204',
+      /* Compact notation is the locale's job; slicing digits off a formatted
+         string produced "Rs 184,000,M". */
+      turnover: L.compactMoney(184000000, ex.ccy),
+      volume: L.compact(412000000), trades: L.num(188204),
       openLabel: ex.open, closeLabel: ex.close
     };
   }
@@ -579,13 +639,19 @@ window.LUME_CTX = function (deps) {
     var f = fieldsFor('loan', {
       principal: Math.round(20000 * rate / 1000) * 1000, rate: 12, years: 5
     });
-    var n = Number(f.years) * 12, r = Number(f.rate) / 100 / 12;
-    var emi = r ? Number(f.principal) * r * Math.pow(1 + r, n) / (Math.pow(1 + r, n) - 1)
-                : Number(f.principal) / n;
-    var totalPaid = emi * n, totalInterest = totalPaid - Number(f.principal);
+    /* Clearing the tenure field commits 0, which made the payment Infinity
+       and every total NaN. A loan over no months has no payment. */
+    var n = Math.max(0, Number(f.years) || 0) * 12;
+    var r = Math.max(0, Number(f.rate) || 0) / 100 / 12;
+    var principal = Math.max(0, Number(f.principal) || 0);
+    var emi = 0;
+    if (n > 0) {
+      emi = r ? principal * r * Math.pow(1 + r, n) / (Math.pow(1 + r, n) - 1) : principal / n;
+    }
+    var totalPaid = emi * n, totalInterest = Math.max(0, totalPaid - principal);
 
-    var balance = Number(f.principal), schedule = [];
-    for (var y = 1; y <= Math.min(Number(f.years), 8); y++) {
+    var balance = principal, schedule = [];
+    for (var y = 1; y <= Math.min(Number(f.years) || 0, 8); y++) {
       var pY = 0, iY = 0;
       for (var m = 0; m < 12 && balance > 0; m++) {
         var interest = balance * r;
@@ -595,12 +661,13 @@ window.LUME_CTX = function (deps) {
       schedule.push({ year: y, principal: pY, interest: iY, balance: Math.max(0, balance) });
     }
     function emiAt(rt) {
-      var rr = rt / 100 / 12;
-      return rr ? Number(f.principal) * rr * Math.pow(1 + rr, n) / (Math.pow(1 + rr, n) - 1) : Number(f.principal) / n;
+      if (n <= 0) return 0;
+      var rr = Math.max(0, rt) / 100 / 12;
+      return rr ? principal * rr * Math.pow(1 + rr, n) / (Math.pow(1 + rr, n) - 1) : principal / n;
     }
     return {
       f: f, ccy: ccy, emi: emi, totalPaid: totalPaid, totalInterest: totalInterest,
-      interestShare: totalInterest / totalPaid, schedule: schedule,
+      interestShare: totalPaid ? totalInterest / totalPaid : 0, schedule: schedule,
       compare: [
         { label: t('loan.rateAt', { r: (Number(f.rate) - 2).toFixed(1) }), sub: t('loan.lowerRate'), emi: emiAt(Number(f.rate) - 2) },
         { label: t('loan.rateAt', { r: Number(f.rate).toFixed(1) }), sub: t('loan.yourRate'), emi: emi },
@@ -802,6 +869,7 @@ window.LUME_CTX = function (deps) {
       category: catId, amount: f.amount, from: from, to: to,
       result: Number(f.amount) * from.factor / to.factor,
       units: cat.units.map(namedUnit),
+      toShort: to.short,
       categories: Object.keys(UNIT_CATS).map(function (k) {
         return { id: k, label: t(UNIT_CATS[k].key), icon: UNIT_CATS[k].icon };
       }),
@@ -831,7 +899,8 @@ window.LUME_CTX = function (deps) {
     var f = fieldsFor('bmi', { height: imperial ? 69 : 175, weight: imperial ? 165 : 75 });
     var hM = imperial ? Number(f.height) * 0.0254 : Number(f.height) / 100;
     var kg = imperial ? Number(f.weight) * 0.453592 : Number(f.weight);
-    var value = kg / (hM * hM);
+    /* A cleared height field divided by zero and printed "Infinity". */
+    var value = hM > 0 ? kg / (hM * hM) : 0;
     var raw = BMI_BANDS.filter(function (b) { return value < b.max; })[0] || BMI_BANDS[3];
     var band = { label: t(raw.key), tone: raw.tone };
     var lowKg = 18.5 * hM * hM, highKg = 24.9 * hM * hM;
@@ -853,8 +922,9 @@ window.LUME_CTX = function (deps) {
 
   function age() {
     var f = fieldsFor('age', { dob: '1993-04-18' });
-    var dob = new Date(f.dob), now = new Date();
-    if (isNaN(dob.getTime())) dob = new Date('1993-04-18');
+    var dob = parseISO(f.dob) || new Date(1993, 3, 18);
+    var now = new Date();
+    now.setHours(0, 0, 0, 0);
     var years = now.getFullYear() - dob.getFullYear();
     var months = now.getMonth() - dob.getMonth();
     var days = now.getDate() - dob.getDate();
@@ -862,7 +932,8 @@ window.LUME_CTX = function (deps) {
     if (months < 0) { years--; months += 12; }
     var totalDays = Math.floor((now - dob) / 86400000);
     var next = new Date(now.getFullYear(), dob.getMonth(), dob.getDate());
-    if (next < now) next.setFullYear(next.getFullYear() + 1);
+    /* Today counts as today, not as 365 days away. */
+    if (next.getTime() < now.getTime()) next.setFullYear(next.getFullYear() + 1);
     return {
       f: f, years: years, months: months, days: days,
       totalDays: totalDays, totalWeeks: Math.floor(totalDays / 7), totalHours: totalDays * 24,
@@ -880,15 +951,23 @@ window.LUME_CTX = function (deps) {
     var s = stateFor('datecalc');
     var mode = s.mode || 'diff';
     var f = fieldsFor('datecalc', { from: isoToday(), to: isoToday(), days: 30 });
-    var a = new Date(f.from), b = mode === 'diff' ? new Date(f.to) : new Date(new Date(f.from).getTime() + Number(f.days) * 86400000);
-    if (isNaN(a.getTime())) a = new Date();
-    if (isNaN(b.getTime())) b = new Date();
+    var a = parseISO(f.from) || new Date();
+    a.setHours(0, 0, 0, 0);
+    var b;
+    if (mode === 'diff') {
+      b = parseISO(f.to) || new Date();
+    } else {
+      b = new Date(a.getFullYear(), a.getMonth(), a.getDate() + Number(f.days || 0));
+    }
+    b.setHours(0, 0, 0, 0);
     var diff = Math.round((b - a) / 86400000);
     var abs = Math.abs(diff);
     var weekdays = 0, weekends = 0;
+    var walk = new Date(Math.min(a.getTime(), b.getTime()));
     for (var i = 0; i < Math.min(abs, 4000); i++) {
-      var d = new Date(Math.min(a, b) + i * 86400000);
-      if (d.getDay() === 0 || d.getDay() === 6) weekends++; else weekdays++;
+      var wd = walk.getDay();
+      if (wd === 0 || wd === 6) weekends++; else weekdays++;
+      walk.setDate(walk.getDate() + 1);
     }
     return {
       mode: mode, f: f,
@@ -1514,6 +1593,7 @@ window.LUME_CTX = function (deps) {
       num: function (n, o) { return L.num(n, o); },
       date: function (d, o) { return L.date(d, o); },
       dateLong: function (d) { return L.dateLong(d); },
+      dateShort: function (d) { return L.dateShort(d); },
       time: function (h, m) { return L.time(h, m); },
       dayName: dayName, weekLabels: weekLabels, clockNow: clockNow,
       isoToday: isoToday, dayIndex: dayIndex, monthGrid: monthGrid,
@@ -1539,6 +1619,88 @@ window.LUME_CTX = function (deps) {
       mealPlan: mealPlan, alarms: alarms, learning: learning, babyBudget: babyBudget,
       cycle: cycle, pregnancy: pregnancy,
       stopwatch: stopwatch, timer: timer, focus: focus, calcHistory: calcHistory,
+      /* §99 — what this tool writes when the user exports it. A screen that
+         is a list exports its rows; a calculation exports its breakdown. */
+      exportRows: function () {
+        var self = this;
+        var ccy = L.currencyCode();
+        switch (id) {
+          case 'expenses':
+            return [[t('common.date'), t('common.name'), t('expenses.category'), t('common.amount'), ccy]]
+              .concat(self.expenses().transactions.map(function (x) {
+                return [x.when, x.title, x.catLabel, x.amount, ccy];
+              }));
+          case 'documents':
+            return [[t('common.name'), t('docs.category'), t('docs.expiry'), t('health.age')]]
+              .concat(self.documents().list.map(function (d) {
+                return [d.name, d.cat, d.expires, d.holder];
+              }));
+          case 'health':
+            return [[t('common.date'), t('health.recordType'), t('common.name'), t('common.value')]]
+              .concat(self.health().records.map(function (r) {
+                return [r.date, r.kind, r.title, r.who];
+              }));
+          case 'subs':
+            return [[t('common.name'), t('expenses.category'), t('common.amount'), t('subs.renewal')]]
+              .concat(self.subscriptions().list.map(function (x) {
+                return [x.name, x.cat, x.price, x.renews];
+              }));
+          case 'bills':
+            return [[t('common.name'), t('bills.ref'), t('common.amount'), t('common.status')]]
+              .concat(self.bills().list.map(function (b) {
+                return [b.name + ' — ' + b.provider, b.ref, b.amount, b.dueLabel];
+              }));
+          case 'goals':
+            return [[t('common.name'), t('goals.saved'), t('common.total'), t('goals.by', { date: '' }).trim()]]
+              .concat(self.goals().list.map(function (g) {
+                return [g.name, g.saved, g.target, g.by];
+              }));
+          case 'loan': {
+            var l = self.loan();
+            return [[t('common.year'), t('loan.principalShort'), t('loan.interest'), t('loan.balance')]]
+              .concat(l.schedule.map(function (r) {
+                return [r.year, Math.round(r.principal), Math.round(r.interest), Math.round(r.balance)];
+              }));
+          }
+          case 'tax': {
+            var tx = self.tax();
+            if (!tx.taxable) return null;
+            return [[t('tax.band'), t('tax.rate'), t('tax.taxedHere')]]
+              .concat(tx.bands.map(function (b) {
+                return [b.label, (b.rate * 100).toFixed(0) + '%', Math.round(b.tax)];
+              }));
+          }
+          case 'zakat': {
+            var z = self.zakat();
+            return [[t('zakat.item'), t('zakat.value'), ccy]]
+              .concat(z.lines.map(function (x) { return [x.label, Math.round(x.value), ccy]; }));
+          }
+          case 'praytrack':
+            return [[t('common.day'), t('track.today')]].concat(self.prayerTracker().heat.map(function (d, i) {
+              return [i + 1, d.level];
+            }));
+          case 'vaccines':
+            return [[t('common.name'), t('vaccines.records'), t('common.date'), t('common.status')]]
+              .concat(self.vaccines().list.map(function (v) { return [v.name, v.dose, v.date, v.state]; }));
+          case 'meds':
+            return [[t('common.name'), t('meds.active'), t('meds.adherence')]]
+              .concat(D.MEDS.map(function (m) { return [m.name, m.dose, m.adherence]; }));
+          case 'calendar':
+            return [[t('common.date'), t('calendar.agenda')]]
+              .concat(self.calendar().agenda.map(function (a) { return [a.time, a.title]; }));
+          case 'habits':
+            return [[t('common.name'), t('habits.currentStreak')]]
+              .concat(self.habits().list.map(function (h) { return [h.name, h.streak]; }));
+          case 'faraid': {
+            var fr = self.faraid();
+            return [[t('faraid.heirs'), t('common.value'), ccy]]
+              .concat(fr.shares.map(function (x) { return [x.label, Math.round(x.amount), ccy]; }));
+          }
+          default:
+            return null;
+        }
+      },
+
       /* internals the shell needs */
       _state: STATE, _fields: FIELDS, _setField: setField
     };
