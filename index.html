@@ -18,6 +18,7 @@
 <link rel="stylesheet" href="assets/css/screens.css">
 <link rel="stylesheet" href="assets/css/onboarding.css">
 <link rel="stylesheet" href="assets/css/tools.css">
+<link rel="stylesheet" href="assets/css/account.css">
 
 <script>
   // Set theme before first paint to avoid a flash.
@@ -121,6 +122,15 @@
   <symbol id="i-globe" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M3.2 12h17.6"/><path d="M12 3a13.6 13.6 0 0 1 0 18 13.6 13.6 0 0 1 0-18"/></symbol>
   <symbol id="i-target" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.6"/><circle cx="12" cy="12" r="4.8"/><circle cx="12" cy="12" r="1.2"/></symbol>
   <symbol id="i-list" viewBox="0 0 24 24"><path d="M9 6.4h11M9 12h11M9 17.6h11"/><path d="M4.4 6.4h.01M4.4 12h.01M4.4 17.6h.01"/></symbol>
+  <symbol id="i-eye-off" viewBox="0 0 24 24"><path d="M9.9 5.9A9.6 9.6 0 0 1 12 5.6c6 0 9.6 6.4 9.6 6.4a17 17 0 0 1-2.7 3.5M6.4 7.6A16.6 16.6 0 0 0 2.4 12S6 18.4 12 18.4a9.4 9.4 0 0 0 3.6-.7"/><path d="M10 10a2.8 2.8 0 0 0 4 4"/><path d="m3.6 3.6 16.8 16.8"/></symbol>
+  <symbol id="i-mail" viewBox="0 0 24 24"><rect x="3" y="5.2" width="18" height="13.6" rx="2.6"/><path d="m3.8 7 7.1 5.2a2 2 0 0 0 2.2 0L20.2 7"/></symbol>
+  <symbol id="i-phone" viewBox="0 0 24 24"><rect x="6.6" y="2.6" width="10.8" height="18.8" rx="2.6"/><path d="M10.8 18.6h2.4"/></symbol>
+  <symbol id="i-trash" viewBox="0 0 24 24"><path d="M4.6 6.6h14.8"/><path d="M9.4 6.6V4.8a1.4 1.4 0 0 1 1.4-1.4h2.4a1.4 1.4 0 0 1 1.4 1.4v1.8"/><path d="M6.6 6.6 7.4 19a2 2 0 0 0 2 1.8h5.2a2 2 0 0 0 2-1.8l.8-12.4"/><path d="M10.4 10.4v6.4M13.6 10.4v6.4"/></symbol>
+  <symbol id="i-camera" viewBox="0 0 24 24"><path d="M3.4 8.6A2 2 0 0 1 5.4 6.6h1.9l1.2-2h6.9l1.2 2h2a2 2 0 0 1 2 2v8.8a2 2 0 0 1-2 2H5.4a2 2 0 0 1-2-2z"/><circle cx="12" cy="13" r="3.4"/></symbol>
+  <symbol id="i-device" viewBox="0 0 24 24"><rect x="2.6" y="4.4" width="18.8" height="12" rx="2.2"/><path d="M8 20.4h8M12 16.4v4"/></symbol>
+  <symbol id="i-key" viewBox="0 0 24 24"><circle cx="8.2" cy="8.2" r="4.6"/><path d="m11.6 11.6 8 8"/><path d="m16.6 16.6 2-2M14.2 14.2l2-2"/></symbol>
+  <symbol id="i-cloud" viewBox="0 0 24 24"><path d="M7.4 18.4a4.4 4.4 0 0 1-.4-8.8 5.6 5.6 0 0 1 10.7 1.2 3.8 3.8 0 0 1-.5 7.6z"/></symbol>
+  <symbol id="i-login" viewBox="0 0 24 24"><path d="M9.6 3.6H6.8a2.4 2.4 0 0 0-2.4 2.4v12a2.4 2.4 0 0 0 2.4 2.4h2.8"/><path d="m14.4 16.4 4.4-4.4-4.4-4.4M18.4 12H9"/></symbol>
   <symbol id="i-eye" viewBox="0 0 24 24"><path d="M2.4 12S6 5.6 12 5.6 21.6 12 21.6 12 18 18.4 12 18.4 2.4 12 2.4 12"/><circle cx="12" cy="12" r="3"/></symbol>
   <symbol id="i-wind" viewBox="0 0 24 24"><path d="M4.4 9.2h9.2a2.6 2.6 0 1 0-2.6-2.6M4.4 14.8h12a2.6 2.6 0 1 1-2.6 2.6"/></symbol>
   <symbol id="i-backspace" viewBox="0 0 24 24"><path d="M20 5.4H9.8a2 2 0 0 0-1.5.7L3.2 12l5.1 5.9a2 2 0 0 0 1.5.7H20a1.4 1.4 0 0 0 1.4-1.4V6.8A1.4 1.4 0 0 0 20 5.4"/><path d="m17 9.4-5.4 5.2M11.6 9.4l5.4 5.2"/></symbol>
@@ -179,7 +189,7 @@
         <svg class="ico" viewBox="0 0 24 24"><use href="#i-bell"/></svg>
         <span class="iconbtn__badge"></span>
       </button>
-      <button class="avatar pressable" data-tab="profile" aria-label="Your profile" id="appbarAvatar">ZK</button>
+      <button class="avatar pressable" data-tab="profile" data-i18n-aria="a11y.yourProfile" aria-label="Your profile" id="appbarAvatar"></button>
     </header>
 
     <!-- ===== Contextual strip — swaps with the faith dimension ===== -->
@@ -1191,190 +1201,39 @@
   <!-- ==========================================================
        PROFILE
        ========================================================== -->
+  <!-- ==========================================================
+       PROFILE — the account system's home surface (§124.7).
+       Rendered, never written: every value here comes from
+       state the user or the product actually produced (§125).
+       ========================================================== -->
   <section class="screen" id="screen-profile" role="tabpanel" aria-label="Profile">
-
     <div class="page-head">
       <div class="page-head__bar">
         <div>
           <h1 class="page-head__title" data-i18n="profile.title">Profile</h1>
           <p class="page-head__sub" data-i18n="profile.sub">Preferences and your saved things</p>
         </div>
-        <button class="iconbtn pressable" data-toast="Account settings" aria-label="Settings">
+        <button class="iconbtn pressable" data-act="acct:prefs" data-i18n-aria="acct.prefsTitle" aria-label="Preferences">
           <svg class="ico" viewBox="0 0 24 24"><use href="#i-settings"/></svg>
         </button>
       </div>
     </div>
+    <div id="profileBody"></div>
+  </section>
 
-    <div class="profile-head">
-      <div class="profile-head__art" aria-hidden="true">
-        <svg viewBox="0 0 350 108" preserveAspectRatio="xMidYMid slice">
-          <circle cx="322" cy="8" r="54" fill="var(--accent)" opacity=".08"/>
-          <circle cx="290" cy="96" r="34" fill="var(--violet)" opacity=".07"/>
-          <path d="m268 22 2.4 5.8 5.8 2.4-5.8 2.4-2.4 5.8-2.4-5.8-5.8-2.4 5.8-2.4z" fill="var(--accent)" opacity=".22"/>
-        </svg>
-      </div>
-      <span class="avatar avatar--lg" id="profileAvatar">ZK</span>
-      <div class="profile-head__body">
-        <h2 class="profile-head__name">Zeeshan K.</h2>
-        <p class="profile-head__mail">zeeshan@trillo.io</p>
-        <span class="tag profile-head__badge"><svg class="ico" viewBox="0 0 24 24" style="width:11px;height:11px"><use href="#i-star"/></svg> Member since 2024</span>
-      </div>
-    </div>
+  <!-- ==========================================================
+       ACCOUNT & SETTINGS — one host, one back stack (§124.25)
+       ========================================================== -->
+  <section class="screen screen--tool" id="screen-account" role="tabpanel" aria-label="Account">
+    <div id="accountHeader"></div>
+    <div id="accountBody"></div>
+  </section>
 
-    <div class="section">
-      <div class="stats">
-        <article class="stat">
-          <span class="stat__icon"><svg class="ico" viewBox="0 0 24 24"><use href="#i-bookmark"/></svg></span>
-          <p class="stat__value num">64</p>
-          <p class="stat__label" data-i18n="profile.savedItems">Saved items</p>
-        </article>
-        <article class="stat">
-          <span class="stat__icon"><svg class="ico" viewBox="0 0 24 24"><use href="#i-flame"/></svg></span>
-          <p class="stat__value num">12 <span>d</span></p>
-          <p class="stat__label" data-i18n="profile.bestStreak">Best streak</p>
-        </article>
-        <article class="stat">
-          <span class="stat__icon"><svg class="ico" viewBox="0 0 24 24"><use href="#i-target"/></svg></span>
-          <p class="stat__value num">86<span>%</span></p>
-          <p class="stat__label" data-i18n="profile.goalsMet">Goals met</p>
-        </article>
-      </div>
-    </div>
-
-    <!-- Personalisation: the one place that shapes the whole app -->
-    <div class="section">
-      <p class="group-label" data-i18n="profile.personalisation">Personalisation</p>
-      <div class="row-gap">
-        <div class="list">
-          <button class="list-row pressable" data-sheet="personalise">
-            <span class="list-row__icon" style="background:var(--tint-accent);color:var(--accent)"><svg class="ico" viewBox="0 0 24 24"><use href="#i-sparkles"/></svg></span>
-            <span class="list-row__body">
-              <span class="list-row__title" data-i18n="profile.interests">Your interests</span>
-              <span class="list-row__sub" id="profileInterests">Shapes your home, tools and reading</span>
-            </span>
-            <span class="list-row__end"><span class="list-row__value num" id="profileInterestCount">0</span><svg class="ico" viewBox="0 0 24 24"><use href="#i-chev-r"/></svg></span>
-          </button>
-          <button class="list-row pressable" data-sheet="personalise">
-            <span class="list-row__icon"><svg class="ico" viewBox="0 0 24 24"><use href="#i-globe"/></svg></span>
-            <span class="list-row__body">
-              <span class="list-row__title">Country & city</span>
-              <span class="list-row__sub" id="profileCountry">Pakistan · Karachi</span>
-            </span>
-            <span class="list-row__end"><svg class="ico" viewBox="0 0 24 24"><use href="#i-chev-r"/></svg></span>
-          </button>
-          <button class="list-row pressable" data-sheet="personalise">
-            <span class="list-row__icon"><svg class="ico" viewBox="0 0 24 24"><use href="#i-sliders"/></svg></span>
-            <span class="list-row__body">
-              <span class="list-row__title">Content preferences</span>
-              <span class="list-row__sub" id="profileContent">Islamic content on · news · sport</span>
-            </span>
-            <span class="list-row__end"><svg class="ico" viewBox="0 0 24 24"><use href="#i-chev-r"/></svg></span>
-          </button>
-        </div>
-      </div>
-    </div>
-
-    <div class="section">
-      <p class="group-label" data-i18n="profile.preferences">Preferences</p>
-      <div class="row-gap">
-        <div class="list">
-          <button class="list-row pressable" id="themeRow">
-            <span class="list-row__icon"><svg class="ico" viewBox="0 0 24 24" id="themeIcon"><use href="#i-moon"/></svg></span>
-            <span class="list-row__body">
-              <span class="list-row__title" data-i18n="profile.darkMode">Dark mode</span>
-              <span class="list-row__sub" id="themeSub">Follows your system by default</span>
-            </span>
-            <span class="switch" id="themeSwitch"><span class="switch__knob"></span></span>
-          </button>
-          <button class="list-row pressable" data-faith="islamic" data-toast="Prayer reminders are on">
-            <span class="list-row__icon"><svg class="ico" viewBox="0 0 24 24"><use href="#i-bell-ring"/></svg></span>
-            <span class="list-row__body">
-              <span class="list-row__title" data-i18n="profile.prayerReminders">Prayer reminders</span>
-              <span class="list-row__sub" data-i18n="profile.prayerRemindersSub">Adhan 5 minutes before each prayer</span>
-            </span>
-            <span class="switch is-on" data-switch><span class="switch__knob"></span></span>
-          </button>
-          <button class="list-row pressable" data-faith="islamic" data-toast="Calculation method: University of Karachi">
-            <span class="list-row__icon"><svg class="ico" viewBox="0 0 24 24"><use href="#i-prayer"/></svg></span>
-            <span class="list-row__body">
-              <span class="list-row__title" data-i18n="profile.calcMethod">Calculation method</span>
-              <span class="list-row__sub">University of Karachi</span>
-            </span>
-            <span class="list-row__end"><svg class="ico" viewBox="0 0 24 24"><use href="#i-chev-r"/></svg></span>
-          </button>
-          <button class="list-row pressable" data-faith="none" data-toast="Daily digest arrives at 08:00">
-            <span class="list-row__icon"><svg class="ico" viewBox="0 0 24 24"><use href="#i-bell-ring"/></svg></span>
-            <span class="list-row__body">
-              <span class="list-row__title" data-i18n="profile.digest">Daily digest</span>
-              <span class="list-row__sub" data-i18n="profile.digestSub">Your day, summarised at 08:00</span>
-            </span>
-            <span class="switch is-on" data-switch><span class="switch__knob"></span></span>
-          </button>
-          <button class="list-row pressable" data-toast="Language: English">
-            <span class="list-row__icon"><svg class="ico" viewBox="0 0 24 24"><use href="#i-globe"/></svg></span>
-            <span class="list-row__body">
-              <span class="list-row__title">Language</span>
-              <span class="list-row__sub" id="profileLang">English · اردو and العربية available</span>
-            </span>
-            <span class="list-row__end"><svg class="ico" viewBox="0 0 24 24"><use href="#i-chev-r"/></svg></span>
-          </button>
-        </div>
-      </div>
-    </div>
-
-    <div class="section">
-      <p class="group-label" data-i18n="profile.library">Your library</p>
-      <div class="row-gap">
-        <div class="list">
-          <button class="list-row pressable" data-toast="64 bookmarks">
-            <span class="list-row__icon"><svg class="ico" viewBox="0 0 24 24"><use href="#i-bookmark"/></svg></span>
-            <span class="list-row__body"><span class="list-row__title" data-i18n="profile.bookmarks">Bookmarks</span><span class="list-row__sub" id="profileBookmarks">Saved reads and quotes</span></span>
-            <span class="list-row__end"><span class="list-row__value num">64</span><svg class="ico" viewBox="0 0 24 24"><use href="#i-chev-r"/></svg></span>
-          </button>
-          <button class="list-row pressable" data-toast="12 notes">
-            <span class="list-row__icon"><svg class="ico" viewBox="0 0 24 24"><use href="#i-note"/></svg></span>
-            <span class="list-row__body"><span class="list-row__title" data-i18n="profile.notes">Notes</span><span class="list-row__sub">Last edited yesterday</span></span>
-            <span class="list-row__end"><span class="list-row__value num">12</span><svg class="ico" viewBox="0 0 24 24"><use href="#i-chev-r"/></svg></span>
-          </button>
-          <button class="list-row pressable" data-toast="Locked — unlock with Face ID">
-            <span class="list-row__icon"><svg class="ico" viewBox="0 0 24 24"><use href="#i-lock"/></svg></span>
-            <span class="list-row__body"><span class="list-row__title" data-i18n="profile.privateRecords">Private records</span><span class="list-row__sub" data-i18n="profile.privateRecordsSub">Health, documents and money</span></span>
-            <span class="list-row__end"><span class="list-row__value">Locked</span><svg class="ico" viewBox="0 0 24 24"><use href="#i-chev-r"/></svg></span>
-          </button>
-        </div>
-      </div>
-    </div>
-
-    <div class="section">
-      <p class="group-label" data-i18n="profile.support">Support</p>
-      <div class="row-gap">
-        <div class="list">
-          <button class="list-row pressable" data-toast="Everything stays on your device">
-            <span class="list-row__icon"><svg class="ico" viewBox="0 0 24 24"><use href="#i-shield"/></svg></span>
-            <span class="list-row__body"><span class="list-row__title" data-i18n="profile.privacy">Privacy &amp; data</span><span class="list-row__sub" data-i18n="profile.privacySub">Everything stays on device</span></span>
-            <span class="list-row__end"><svg class="ico" viewBox="0 0 24 24"><use href="#i-chev-r"/></svg></span>
-          </button>
-          <button class="list-row pressable" id="replayTour">
-            <span class="list-row__icon"><svg class="ico" viewBox="0 0 24 24"><use href="#i-sparkles"/></svg></span>
-            <span class="list-row__body"><span class="list-row__title" data-i18n="profile.replayTour">Replay the welcome tour</span><span class="list-row__sub" data-i18n="profile.replayTourSub">A quick reminder of what’s here</span></span>
-            <span class="list-row__end"><svg class="ico" viewBox="0 0 24 24"><use href="#i-chev-r"/></svg></span>
-          </button>
-          <button class="list-row pressable" data-toast="Help centre">
-            <span class="list-row__icon"><svg class="ico" viewBox="0 0 24 24"><use href="#i-help"/></svg></span>
-            <span class="list-row__body"><span class="list-row__title" data-i18n="profile.help">Help &amp; feedback</span><span class="list-row__sub" data-i18n="profile.helpSub">We reply within a day</span></span>
-            <span class="list-row__end"><svg class="ico" viewBox="0 0 24 24"><use href="#i-chev-r"/></svg></span>
-          </button>
-          <button class="list-row pressable" data-toast="Signed out">
-            <span class="list-row__icon"><svg class="ico" viewBox="0 0 24 24"><use href="#i-logout"/></svg></span>
-            <span class="list-row__body"><span class="list-row__title" data-i18n="profile.signOut">Sign out</span></span>
-            <span class="list-row__end"><svg class="ico" viewBox="0 0 24 24"><use href="#i-chev-r"/></svg></span>
-          </button>
-        </div>
-      </div>
-    </div>
-
-    <p class="meta" style="text-align:center;margin-top:22px">Lume · version 4.0.0</p>
-
+  <!-- ==========================================================
+       AUTHENTICATION — a flow, not a tool (§124.25, §124.42)
+       ========================================================== -->
+  <section class="screen screen--tool" id="screen-auth" role="tabpanel" aria-label="Sign in">
+    <div id="authBody"></div>
   </section>
 
   <!-- ==========================================================
@@ -1608,6 +1467,21 @@
   </aside>
 
   <!-- Push permission, asked in context (§100.11) -->
+  <!-- Confirmation for anything that cannot be undone (§124.21, §124.48) -->
+  <aside class="sheet" id="sheet-confirm" role="dialog" aria-modal="true" aria-labelledby="confirmTitle">
+    <span class="sheet__grab"></span>
+    <div class="sheet__body">
+      <div class="confirm">
+        <h2 class="confirm__title" id="confirmTitle"></h2>
+        <p class="confirm__text" id="confirmText"></p>
+        <div class="confirm__acts">
+          <button class="btn btn--danger btn--block pressable" id="confirmGo"></button>
+          <button class="btn btn--ghost btn--block pressable" data-close id="confirmCancel"></button>
+        </div>
+      </div>
+    </div>
+  </aside>
+
   <aside class="sheet" id="sheet-notifpush" role="dialog" aria-modal="true" aria-label="Enable notifications">
     <span class="sheet__grab"></span>
     <div class="sheet__body">
@@ -1650,6 +1524,7 @@
         <span class="onb__seg"></span><span class="onb__seg"></span><span class="onb__seg"></span>
         <span class="onb__seg"></span><span class="onb__seg"></span><span class="onb__seg"></span>
         <span class="onb__seg"></span><span class="onb__seg"></span>
+        <span class="onb__seg"></span>
       </div>
       <button class="onb__skip" id="onbSkip">Skip</button>
     </header>
@@ -1892,8 +1767,52 @@
         </div>
       </section>
 
-      <!-- 7 · Done -->
+      <!-- 7 · What should we call you? (optional — §124.4) -->
       <section class="onb-step" data-step="7">
+        <div class="onb__art" style="flex:0 0 auto;min-height:0;padding:6px 0 4px">
+          <svg viewBox="0 0 292 132" fill="none" aria-hidden="true" style="max-width:250px">
+            <circle cx="146" cy="70" r="58" fill="var(--accent)" opacity=".07"/>
+            <g class="onb__float">
+              <rect x="66" y="30" width="160" height="52" rx="18" fill="var(--card)" stroke="var(--border)"/>
+              <rect x="84" y="48" width="66" height="10" rx="5" fill="var(--text)" opacity=".14"/>
+              <rect x="156" y="46" width="2.6" height="16" rx="1.3" fill="var(--accent)"/>
+            </g>
+            <g class="onb__float onb__float--b">
+              <circle cx="146" cy="104" r="20" fill="var(--tint-accent)"/>
+              <circle cx="146" cy="99" r="6.4" fill="none" stroke="var(--accent)" stroke-width="2.4"/>
+              <path d="M137 114a9.6 9.6 0 0 1 18 0" stroke="var(--accent)" stroke-width="2.4" fill="none" stroke-linecap="round"/>
+            </g>
+            <path d="m44 42 2.6 6.4 6.4 2.6-6.4 2.6L44 60l-2.6-6.4-6.4-2.6 6.4-2.6z" fill="var(--accent)" opacity=".45"/>
+            <circle cx="248" cy="96" r="4.5" fill="var(--violet)" opacity=".4"/>
+          </svg>
+        </div>
+
+        <p class="onb__kicker" data-i18n="onb.nameKicker">One last thing</p>
+        <h1 class="onb__title" data-i18n="onb.nameTitle">What should we call you?</h1>
+        <p class="onb__text" data-i18n="onb.nameText">Only used to greet you. You can change it later, or skip it entirely.</p>
+
+        <div class="onb__namefield">
+          <label class="field field--wide">
+            <span class="field__label" data-i18n="acct.f.displayName">Display name</span>
+            <span class="field__box">
+              <input type="text" id="onbName" autocomplete="given-name" maxlength="40"
+                     data-i18n-ph="onb.namePlaceholder" placeholder="Your name">
+            </span>
+          </label>
+        </div>
+
+        <div class="onb__foot">
+          <button class="btn btn--accent btn--block pressable" id="onbNameNext">
+            <span data-i18n="a.continue">Continue</span>
+            <svg class="ico" viewBox="0 0 24 24"><use href="#i-arrow-r"/></svg>
+          </button>
+          <button class="onb__link pressable" id="onbNameSkip" data-i18n="onb.nameSkip">Skip for now</button>
+          <p class="onb__note" data-i18n="onb.nameNote">Lume keeps this on your device.</p>
+        </div>
+      </section>
+
+      <!-- 8 · Done -->
+      <section class="onb-step" data-step="8">
         <div class="onb__art">
           <div class="onb__seal">
             <svg viewBox="0 0 268 244" fill="none" aria-hidden="true">
@@ -1913,12 +1832,12 @@
         </div>
 
         <p class="onb__kicker" data-i18n="onb.allSet">All set</p>
-        <h1 class="onb__title">You’re ready, Zeeshan</h1>
-        <p class="onb__text" id="onbDoneText">Your home screen is waiting.</p>
+        <h1 class="onb__title" id="onbDoneTitle" data-i18n="onb.readyTitle">You’re all set</h1>
+        <p class="onb__text" id="onbDoneText">Today’s plan is waiting on the home screen.</p>
 
         <div class="onb__foot">
           <button class="btn btn--accent btn--block pressable" id="onbFinish">Enter Lume <svg class="ico" viewBox="0 0 24 24"><use href="#i-arrow-r"/></svg></button>
-          <p class="onb__note">You can revisit this tour any time from Profile.</p>
+          <p class="onb__note" data-i18n="onb.revisit">You can revisit this tour any time from Profile.</p>
         </div>
       </section>
 
@@ -1931,6 +1850,7 @@
 <script src="assets/js/geo.js"></script>
 <script src="assets/js/i18n.js"></script>
 <script src="assets/js/i18n-tools.js"></script>
+<script src="assets/js/i18n-account.js"></script>
 <script src="assets/js/locale.js"></script>
 <script src="assets/js/solar.js"></script>
 <script src="assets/js/catalogue.js"></script>
@@ -1938,6 +1858,8 @@
 <script src="assets/js/tooldata.js"></script>
 <script src="assets/js/toolkit.js"></script>
 <script src="assets/js/notify.js"></script>
+<script src="assets/js/account.js"></script>
+<script src="assets/js/account-ui.js"></script>
 <script src="assets/js/toolctx.js"></script>
 <script src="assets/js/tools.js"></script>
 <script src="assets/js/tools-faith.js"></script>

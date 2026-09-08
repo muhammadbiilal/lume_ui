@@ -4075,12 +4075,15 @@ These remain free:
 
 **Tools with an approved composition**
 
-| Tool | Composition |
+| Screen | Composition |
 |---|---|
 | Markets | §26.13 |
+| Profile | §124.7 |
 
 Others are added here as they are designed. A tool with no entry in this table
-is composed from its archetype (§22) and its density (§6) as before.
+is composed from its archetype (§22) and its density (§6) as before. Profile is
+not a tool — it is a surface of the account system (§124) — but its reference
+composition is binding in exactly the same way.
 
 **Enforcement**
 
@@ -4091,3 +4094,618 @@ composition in the tool metadata contract (§81), and the verification suite
 
 A composition that is only written down is a suggestion. A composition that is
 tested is a specification.
+
+---
+
+# 124. ACCOUNT, AUTHENTICATION, IDENTITY, PROFILE & SETTINGS
+
+Account, authentication, profile, security, preferences and notifications are
+**global Lume systems**. They are not tools. They do not live in the catalogue
+(§19), they are not composed from an archetype (§22), and they do not appear in
+Tools, search or Quick Actions. Lume owns the identity infrastructure; every
+other surface reads from it.
+
+The existing design system, spacing, typography, components, navigation,
+notification system (§100) and regional architecture (§105) are unchanged. The
+account experience is built *from* them.
+
+## 124.1 The defect this exists to fix
+
+The onboarding completion screen read:
+
+```text
+You’re ready, Zeeshan
+```
+
+while onboarding never asked for a name, and the profile screen showed an email
+address, a member-since date and three statistics that belonged to nobody.
+
+The screen was written from an *imagined* user record. Nothing in the product
+had ever produced that record. This is the identity form of the failure §123
+describes for layout: a surface invented its own truth because the truth was
+not available where the surface was written.
+
+The rule that follows from it is §125, and it is absolute:
+
+> Never display a user's name unless the application actually holds one.
+
+## 124.2 Identity model
+
+Four states, and they are the only four:
+
+| State | Onboarded | Account | Session |
+|---|---|---|---|
+| **New** | no | no | — |
+| **Guest** | yes | no | — |
+| **Authenticated** | yes | yes | valid |
+| **Returning, expired** | yes | yes | expired |
+
+Onboarding completion and account creation are **separate concepts**. Finishing
+onboarding never implies an account. Having an account never implies onboarding
+was completed on this device.
+
+Local personalisation (country, city, language, interests, units, currency,
+theme, notification preferences) belongs to the *device* until an account
+claims it. Everything a guest creates is real data and must survive the
+transition to an account (§124.24).
+
+## 124.3 Profile data
+
+The profile record conceptually supports:
+
+```text
+displayName   firstName   lastName   photo
+email         phone       status     createdAt
+country       region      city       language
+currency      timezone    units      notificationPrefs
+```
+
+Only `email` is required, and only for an account. Everything else is optional.
+A field the user has not filled in is **absent**, not a placeholder — the UI
+renders what exists and omits what does not.
+
+`displayName` resolves through one hierarchy, everywhere, without exception:
+
+```text
+account.displayName → account.firstName → local displayName → (nothing)
+```
+
+"(nothing)" is a valid, designed outcome. It is not an error state.
+
+## 124.4 Onboarding — the optional name
+
+Onboarding gains one step, after personalisation and before completion:
+
+```text
+┌───────────────────────────────────┐
+│ What should we call you?          │
+│                                   │
+│ [ Muhammad                    ]   │
+│                                   │
+│ You can change this later.        │
+└───────────────────────────────────┘
+```
+
+The step is skippable, and skipping is a first-class outcome, not a lesser one.
+Onboarding must not become authentication (§124.6): no email, no password, no
+account fields here.
+
+## 124.5 Onboarding completion
+
+The completion screen adapts to what was actually collected:
+
+```text
+displayName exists?
+       │
+   ┌───┴───┐
+  YES      NO
+   │        │
+"You're    "You're
+ ready,     all set"
+ {name}"
+```
+
+Forbidden, in every language:
+
+```text
+"You're ready, "          ← empty interpolation
+"You're ready, undefined"
+"You're ready, User"
+"You're ready, Guest"
+"You're ready, {anything the user did not type}"
+```
+
+## 124.6 Lifecycle
+
+```text
+FIRST LAUNCH          RETURNING (account)   RETURNING (guest)   EXPIRED
+Splash                Launch                Launch              Launch
+  ↓                     ↓                     ↓                   ↓
+Onboarding            Restore session       Restore local       Session check
+  ↓                     ↓                     ↓                   ↓
+Personalisation       Home                  Home                Session expired
+  ↓                                                               ↓
+Name (optional)                                                 Sign in
+  ↓                                                               ↓
+Completion                                                      Intended
+  ↓                                                             destination
+Enter Lume
+  ↓
+Home (as guest)
+```
+
+Lume is usable immediately. Authentication is introduced at the point where an
+account is actually required, never as a toll gate in front of the product.
+
+## 124.7 Account entry point
+
+Profile is the entry point, and it renders one of two compositions.
+
+**Guest**
+
+```text
+┌─────────────────────────────────┐
+│            Profile              │
+│           [Avatar]              │
+│        Welcome to Lume          │
+│   You're using Lume as a guest  │
+│      [Create account]           │
+│         [Sign in]               │
+└─────────────────────────────────┘
+Your Lume · Account · Support
+```
+
+**Authenticated**
+
+```text
+┌─────────────────────────────────┐
+│            Profile              │
+│           [Avatar]              │
+│        Muhammad Bilal           │
+│        user@email.com           │
+│        [Edit profile]           │
+└─────────────────────────────────┘
+
+Your Lume
+◉ Preferences                    ›
+◉ Notifications                  ›
+◉ Appearance                     ›
+◉ Language                       ›
+◉ Region & currency              ›
+
+Account
+◉ Personal information           ›
+◉ Security                       ›
+◉ Privacy                        ›
+
+Support
+◉ Help                           ›
+◉ About Lume                     ›
+
+Log out
+```
+
+This is an **approved reference composition** under §123. Its section order,
+its identity header and its grouping are binding.
+
+## 124.8 Sign up
+
+```text
+Create your Lume account
+
+Name              (optional)
+Email             (required)
+Password          (required)
+Confirm password  (required)
+
+[Create account]
+
+Already have an account? Sign in
+```
+
+Ask for nothing else. Phone is collected later, from Account, and only where
+it is used (§124.16).
+
+## 124.9 Validation
+
+Inline, next to the field, and present before submission wherever the rule can
+be checked as the user types. A toast is never the only signal.
+
+Checked: required fields · a syntactically valid email · password rules ·
+matching confirmation · an email already registered · network failure.
+
+Password rules are displayed as a live checklist, not as prose after failure:
+
+```text
+Password must contain
+  ✓ at least 8 characters
+  ✓ an uppercase letter
+  ✓ a lowercase letter
+  ○ a number
+```
+
+The rules shown must be the rules enforced. If a backend defines different
+rules, the backend's rules are displayed.
+
+## 124.10 Sign in
+
+```text
+Welcome back
+Continue to your Lume.
+
+Email     [__________________]
+Password  [__________________] 👁
+
+Forgot password?
+
+[Sign in]
+
+──────────── or ────────────
+[ only providers that actually work ]
+
+Don't have an account? Create one
+```
+
+States: default · loading · invalid credentials · account not found · network
+error · locked · success.
+
+Invalid credentials return one neutral message:
+
+```text
+Email or password is incorrect.
+```
+
+Never "no such account" or "wrong password" — both disclose whether an address
+is registered.
+
+A social provider appears **only if it is implemented**. A button that opens
+nothing is worse than an absent button.
+
+## 124.11 Forgot password
+
+```text
+Login → Forgot password → Enter email → Send → Confirmation
+      → Recovery link → New password → Success → Login
+```
+
+The confirmation is deliberately neutral:
+
+```text
+Check your email
+If an account exists for this email, we've sent instructions
+to reset your password.
+```
+
+The screen says the same thing whether or not the address is registered.
+
+## 124.12 Reset and change password
+
+**Reset** (from a recovery link): new password · confirm · strength indicator ·
+[Update password] → "Password updated. You can now sign in with your new
+password." → Sign in.
+
+**Change** (Profile → Security → Change password): current password · new
+password · confirm. The current password is required; a session alone is not
+sufficient to change the credential that protects it.
+
+Both provide show/hide, the live checklist of §124.9, and designed success and
+failure states.
+
+## 124.13 Security
+
+```text
+Security
+  Password              Change password
+  Active sessions       This device · others
+  Sign out all devices  Destructive, confirmed
+  Biometric unlock      Only where the device supports it
+  Two-factor            Only where it is implemented
+  Security notifications
+```
+
+Only capabilities that exist are listed. A security screen that advertises
+protection it does not provide is a lie with consequences.
+
+## 124.14 Profile, edit and photo
+
+Edit profile carries photo · display name · first name · last name · email ·
+phone · country · region, with dirty-state detection (Save is inert until
+something changed), a loading state, inline validation, a success confirmation
+and a designed failure.
+
+The photo may be added, replaced or removed, and is never required. Where no
+photo exists, the avatar shows initials derived from a real name — and where no
+name exists either, a neutral glyph. Initials are never invented.
+
+## 124.15 Email change
+
+Changing an email requires verification before the new address becomes
+authoritative. Until then both are shown:
+
+```text
+Email      user@email.com
+           new@email.com · Pending verification   [Resend] [Cancel]
+```
+
+The account's identity does not move silently.
+
+## 124.16 Phone
+
+Add · verify · change · remove, with country-aware formatting driven by the
+user's country (§105) — never a hardcoded dialling code.
+
+## 124.17 Region, language, currency, timezone, units, appearance
+
+These are personalisation, and they already exist (§36, §105, §106). The account
+system gives them a permanent home under Profile → Preferences, and adds one
+obligation: changing region must state what it will change *before* it changes
+it.
+
+```text
+Changing your region may update your default currency, markets,
+holidays, emergency numbers and local services.
+```
+
+Timezone supports automatic and manual. **The device timezone is never assumed
+to be a venue's timezone** — a market, a flight or a train reads its own (§26.10).
+
+## 124.18 Notifications
+
+Profile → Settings → Notifications is the same system as §100, reached from its
+permanent home: global toggles · push · in-app · badge · sound · haptics ·
+quiet hours, then the eleven categories and their per-tool types.
+
+There is one notification preference store. The centre's settings sheet and the
+Profile route are two doors into the same room, never two copies of it.
+
+## 124.19 Privacy
+
+Notification preview · sensitive content in previews · personalisation ·
+analytics · local data · account data · sharing. Every control listed must
+correspond to behaviour that actually exists (§104).
+
+## 124.20 Data and sync
+
+The user must be able to tell, per class of data, where it lives:
+
+```text
+Stored on this device      Synced to your account
+```
+
+Nothing is described as synced unless it is. In a build with no backend, the
+honest statement is that everything is on the device — and that statement is
+itself a designed screen, not an omission.
+
+## 124.21 Logout
+
+```text
+Log out?
+You'll need to sign in again to access your account.
+[Cancel]  [Log out]
+```
+
+If logging out changes what is on the device, say so before it happens.
+
+## 124.22 Delete account
+
+Deliberately separated from every other action — its own screen, below a
+divider, in the destructive tone.
+
+```text
+Delete account → Consequences → Confirm identity → Final confirmation
+               → Deletion → Signed-out state
+```
+
+Never reachable in one tap from a settings list.
+
+## 124.23 Guest → account
+
+```text
+You're using Lume as a guest.
+Create an account to
+  · sync your Lume
+  · keep your data across devices
+  · recover your settings
+[Create account]  [Sign in]
+```
+
+Offered where it is relevant. Never an interstitial, never a nag, never a
+blocking modal on launch.
+
+## 124.24 Guest data preservation
+
+```text
+Guest → Create account → local data preserved → associated with the account → Home
+```
+
+Interests, country, city, language, units, currency, theme, favourites, notes,
+tasks, expenses and notification preferences all survive. A user who creates an
+account must never find themselves in an emptier product than the one they had
+a moment earlier.
+
+## 124.25 Authentication navigation
+
+Authentication is a flow, not a tool, and it uses ordinary back navigation:
+
+```text
+Home → Profile → Sign in → Forgot password → Reset → Sign in → Home
+```
+
+Back moves one step within the flow. **X is not the default**: it appears only
+when authentication was presented as a temporary modal over something the user
+was already trying to do, where dismissal is a meaningful choice.
+
+## 124.26 States
+
+Every authentication screen supports: default · loading · validation error ·
+network error · success · session expired · signed out · recovery. A blank
+screen and an unexplained spinner are both defects.
+
+## 124.27 Sessions
+
+Defined behaviour for: valid · expired · invalid token · revoked · logout ·
+refresh failure.
+
+An expired session never silently discards context:
+
+```text
+Your session has expired.
+[Sign in again]
+```
+
+and, after signing in, the user returns to where they were going.
+
+## 124.28 Deep links and authentication
+
+```text
+Notification → Bill → sign-in required → Login → Bill detail
+```
+
+The intended destination is held across authentication and resumed on success.
+Dropping the user on Home and letting them find it again is a failure of the
+same kind as §124.27.
+
+## 124.29 Notifications and account context
+
+The notification system knows the account context. On sign-out, account-scoped
+subscriptions are released, account-scoped notification state is cleared, and
+the centre switches to its guest state. A notification belonging to one account
+must never appear to another.
+
+## 124.30 Composition and components
+
+Account screens are not enterprise settings pages. They use identity, hierarchy,
+grouped sections, descriptive subtitles, meaningful icons, status indicators and
+contextual controls — the same design system as everything else (§119).
+
+The settings row standard:
+
+```text
+[Icon]  Title
+        Supporting description                                      ›
+```
+
+Examples:
+
+```text
+Notifications        Manage push alerts and in-app updates          ›
+Security             Password, sessions and account protection      ›
+Region & currency    Pakistan · PKR                                 ›
+```
+
+An icon-only row with no explanation is not permitted. A row that leads nowhere
+is not permitted either — if there is no destination, there is no row.
+
+Components added to the library (§83):
+
+```text
+AuthHeader   AuthInput   PasswordInput   PasswordStrength   AuthButton
+ProfileHeader   AvatarPicker   ProfileRow   SettingsRow   SettingsSection
+SecurityRow   AccountStatus   NotificationPreferenceRow   SessionRow
+DestructiveAction   ConfirmationDialog   VerificationState
+AuthErrorState   AuthLoadingState
+```
+
+## 124.31 Screen map
+
+```text
+PROFILE                          AUTHENTICATION
+├── Overview                     ├── Sign in
+├── Edit profile                 ├── Sign up
+├── Account                      ├── Forgot password
+│   ├── Personal information     ├── Reset password
+│   ├── Email                    ├── Email verification
+│   ├── Phone                    └── Session expired
+│   ├── Region
+│   └── Delete account
+├── Security
+│   ├── Change password
+│   ├── Active sessions
+│   ├── Sign out all devices
+│   └── Two-factor
+├── Preferences
+│   ├── Language      ├── Currency
+│   ├── Timezone      ├── Appearance
+│   └── Units
+├── Notifications
+├── Privacy · Data & sync
+├── Help · About
+└── Log out
+```
+
+## 124.32 The rule
+
+The product must provide one coherent lifecycle:
+
+```text
+ONBOARDING → PERSONALISATION → GUEST OR ACCOUNT → HOME → PROFILE
+→ SETTINGS → SECURITY → NOTIFICATIONS → ACCOUNT MANAGEMENT → LOGOUT / DELETE
+```
+
+Every state has a designed screen. Every path is defined. Every identity value
+on screen came from the user.
+
+---
+
+# 125. STATE AND DATA CONTRACT
+
+A binding rule, of the same standing as §63 (centralised visibility), §122
+(single source of truth) and §123 (composition fidelity).
+
+> **The UI responds to actual application state. It never renders assumed data.**
+
+Composition fidelity (§123) governs *where things go*. This governs *what may be
+said*.
+
+**What it forbids**
+
+```js
+'You’re ready, ' + name          // when name may not exist
+'<h2>Zeeshan K.</h2>'            // an identity written into the markup
+'user@email.com'                 // a plausible value standing in for a real one
+'64 saved items'                 // a statistic with nothing behind it
+'Member since 2024'              // a fact the app never recorded
+```
+
+**What it requires**
+
+Every user-facing value is one of three things, and the screen says which:
+
+1. **Real** — read from state the user or the product actually produced.
+2. **Absent** — the field has no value, and the UI has a designed shape for
+   that: a neutral greeting, an omitted row, an empty state, a placeholder
+   avatar, a "not set" affordance that invites the value.
+3. **Loading or failed** — a skeleton or an error, never a fabricated stand-in
+   while the real value is on its way.
+
+**The branch is part of the design**
+
+A screen with a conditional value is not finished until both branches are
+designed:
+
+```text
+value exists? ──YES──> the personalised composition
+              └─NO───> the neutral composition (designed, not degraded)
+```
+
+**Demonstration data**
+
+A demonstration dataset is legitimate — the product must have something to show.
+It is subject to two conditions: it lives in the data layer where every screen
+reads it through the same accessor, and it never impersonates the *user's own
+identity*. Sample expenses are data. A sample name presented as the user's name
+is not.
+
+**Enforcement**
+
+Machine-checkable, and checked (§65):
+
+- no identity string is hardcoded in markup or in a builder
+- the completion screen renders the neutral copy when no name exists, and the
+  personalised copy when one does
+- no screen renders `undefined`, `null`, `NaN`, an empty interpolation, or a
+  dangling separator from a missing value
+- a statistic on screen can be traced to the accessor that produced it
+
+A rule that is only written down is a suggestion. A rule that is tested is a
+specification.

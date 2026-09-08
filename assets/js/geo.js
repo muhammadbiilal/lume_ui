@@ -13,6 +13,26 @@
 window.LUME_GEO = (function () {
   'use strict';
 
+  /* International dialling codes. Deliberately partial: a country that is
+     not here shows no prefix at all, which is honest -- far better than
+     assuming +92 for the world (§124.16). */
+  var DIAL = {
+    PK: 92, IN: 91, BD: 880, LK: 94, NP: 977, AF: 93, IR: 98,
+    US: 1, CA: 1, MX: 52, BR: 55, AR: 54, CL: 56, CO: 57, PE: 51,
+    GB: 44, IE: 353, FR: 33, DE: 49, IT: 39, ES: 34, PT: 351, NL: 31,
+    BE: 32, CH: 41, AT: 43, SE: 46, NO: 47, DK: 45, FI: 358, PL: 48,
+    GR: 30, RU: 7, UA: 380, TR: 90,
+    AE: 971, SA: 966, QA: 974, KW: 965, OM: 968, BH: 973, JO: 962,
+    LB: 961, IQ: 964, EG: 20, MA: 212, DZ: 213, TN: 216,
+    NG: 234, GH: 233, KE: 254, TZ: 255, UG: 256, ET: 251, ZA: 27,
+    CN: 86, JP: 81, KR: 82, ID: 62, MY: 60, SG: 65, TH: 66, VN: 84,
+    PH: 63, AU: 61, NZ: 64
+  };
+
+  function dial(cc) {
+    return DIAL[cc] ? '+' + DIAL[cc] : null;
+  }
+
   var ROWS = [
 'AD|EUR|ca|Europe/Andorra|Andorra la Vella|42.51,1.52',
 'AE|AED|ar|Asia/Dubai|Dubai,Abu Dhabi,Sharjah,Ajman,Al Ain,Ras Al Khaimah,Fujairah|25.20,55.27',
@@ -334,6 +354,7 @@ window.LUME_GEO = (function () {
     POPULAR: POPULAR,
     citiesOf: citiesOf,
     regionOf: regionOf,
+    dial: dial,
     get: function (code) { return BY_CODE[code] || null; }
   };
 })();

@@ -31,7 +31,7 @@ async function boot(profile) {
     beforeParse(window) {
       window.localStorage.setItem('lume-onboarded', '1');
       window.localStorage.setItem('lume-profile', JSON.stringify(Object.assign({
-        name: 'Zeeshan', initials: 'ZK', units: 'auto', currency: 'auto', clock: 'auto',
+        units: 'auto', currency: 'auto', clock: 'auto',
         method: 'MWL', interests: ['weather', 'calendar', 'tasks', 'notes', 'maths', 'expenses', 'news', 'markets', 'trains'],
         prefs: { news: true, cricket: true, finance: true, recos: true }, recents: [], recentCountries: []
       }, profile)));

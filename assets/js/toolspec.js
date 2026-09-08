@@ -58,6 +58,15 @@ window.LUME_SPEC = (function () {
       'hero',       /* primary market or index summary + chart */
       'assets',     /* Top Stocks / Top Assets · See all       */
       'overview'    /* Market Overview metrics                 */
+    ],
+    /* Profile is a surface of the account system rather than a tool (§124),
+       but its reference composition is binding in the same way, so it is
+       recorded in the same place (§123). */
+    profile: [
+      'identity',   /* who Lume knows this is — or that it does not */
+      'lume',       /* Your Lume: preferences, notifications, region */
+      'account',    /* the account itself, or the offer of one       */
+      'support'     /* help, about, the tour                          */
     ]
   };
 

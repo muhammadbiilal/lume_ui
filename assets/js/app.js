@@ -37,9 +37,14 @@
   /* ---------------------------------------------------------
      Profile — the single source of personalisation
      --------------------------------------------------------- */
+  var APP_VERSION = '4.1.0';
+
   var profile = {
-    name: 'Zeeshan',
-    initials: 'ZK',
+    /* §125 — identity starts empty. A name appears here only because the
+       user typed one, in onboarding or in Edit profile; the greeting and the
+       avatar have designed shapes for its absence. */
+    displayName: '',
+    photo: '',
 
     /* Location: country → region (where a country uses one) → city. */
     country: 'PK',
@@ -76,6 +81,11 @@
         for (var k in saved) if (Object.prototype.hasOwnProperty.call(saved, k)) profile[k] = saved[k];
       } catch (e) {}
     }
+    /* An older build shipped a placeholder name and initials in the profile
+       record itself. They were never entered by anyone, so they are dropped
+       rather than migrated (§125). */
+    delete profile.name;
+    delete profile.initials;
     if (!profile.interests || !profile.interests.length) {
       /* Onboarded but nothing stored (skipped, or an older build): fall back to
          the general defaults. Islamic content is never switched on for someone
@@ -103,6 +113,16 @@
   /* Language, formatting and names all come from here. */
   var L = window.LUME_LOCALE(function () { return profile; });
   var t = L.t;
+
+  /* The identity engine (§124). Constructed here because onboarding, the
+     greeting and the profile surface all ask it the same question, and it
+     must be able to answer "nothing" before any of them render. */
+  var ACCT = window.LUME_ACCOUNT({
+    t: t, L: L, store: store,
+    profile: function () { return profile; },
+    save: saveProfile
+  });
+  window.LUME_ACCT = ACCT;
 
   /* Language drives text direction; country never does. */
   function applyLanguage() {
@@ -266,6 +286,18 @@
   }
   setTheme(root.dataset.theme, false);
 
+  /* §124.27 — three states, not two: an explicit light, an explicit dark,
+     and following the system, which is the absence of a stored choice. */
+  function setThemeMode(mode) {
+    if (mode === 'system') {
+      store.set('lume-theme', '');
+      var dark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+      setTheme(dark ? 'dark' : 'light', false);
+      return;
+    }
+    setTheme(mode, true);
+  }
+
   var themeRow = $('#themeRow');
   if (themeRow) {
     themeRow.addEventListener('click', function () {
@@ -294,7 +326,14 @@
   function initHeader() {
     var d = new Date();
     var g = $('#greetText');
-    if (g) g.textContent = t(greetFor(d.getHours()));
+    if (g) {
+      /* §124.44 — the name is used when Lume has one and the greeting stands
+         alone when it does not. There is no third branch that invents one. */
+      var who = ACCT.displayName();
+      g.textContent = who
+        ? t('greet.named', { greeting: t(greetFor(d.getHours())), name: who })
+        : t(greetFor(d.getHours()));
+    }
     /* The header also carries the city, so it gets the short form — the long
        one would wrap onto a second line on a 390px screen. */
     var date = $('#todayDate');
@@ -354,7 +393,7 @@
        screen, the notification centre and Explore are destinations, not
        orphans. */
     if (tabOrder().indexOf(current) === -1 &&
-        ['explore', 'tool', 'notifications'].indexOf(current) === -1) current = 'home';
+        ['explore', 'tool', 'notifications', 'account', 'auth'].indexOf(current) === -1) current = 'home';
     goTo(current, true);
   }
 
@@ -501,6 +540,7 @@
     var arg = bits.join(':');
     /* Tool screens own most of the vocabulary now; the shell keeps the rest. */
     if (typeof toolAction === 'function' && toolAction(kind, arg)) return;
+    if (typeof accountAction === 'function' && accountAction(kind, arg)) return;
     if (kind === 'sheet') sheetOpen(arg);
     else if (kind === 'tab') goTo(arg);
     else if (kind === 'toast') toast(arg);
@@ -1743,47 +1783,19 @@
   }
 
   function renderProfileSummary() {
-    var count = $('#profileInterestCount');
-    if (count) count.textContent = profile.interests.length;
-
-    var label = $('#profileInterests');
-    if (label) {
-      label.textContent = profile.interests.length
-        ? profile.interests.slice(0, 3).map(interestLabel).join(', ') +
-          (profile.interests.length > 3 ? ' +' + (profile.interests.length - 3) + ' more' : '')
-        : t('profile.interestsSub');
+    /* The profile screen itself is rendered from state (§124.7); what is
+       left here are the summaries other screens carry. */
+    var avatar = $('#appbarAvatar');
+    if (avatar) {
+      /* Initials from a real name, or the neutral glyph — never invented
+         letters (§124.14). */
+      var inits = ACCT.initials();
+      avatar.textContent = inits || '';
+      avatar.classList.toggle('avatar--anon', !inits);
+      if (!inits) {
+        avatar.innerHTML = '<svg class="ico" viewBox="0 0 24 24"><use href="#i-user"/></svg>';
+      }
     }
-
-    var ctry = $('#profileCountry');
-    if (ctry) {
-      ctry.textContent = [L.countryName(profile.country), profile.region, profile.city]
-        .filter(Boolean).join(' · ');
-    }
-    var langRow = $('#profileLangValue');
-    if (langRow) {
-      langRow.textContent = (L.languageName(L.lang()) || L.lang()) + ' · ' +
-        L.currencyCode() + ' · ' + (L.unitSystem() === 'imperial' ? t('pers.unitsImperial') : t('pers.unitsMetric'));
-    }
-
-    var content = $('#profileContent');
-    if (content) {
-      var bits = [t('pers.islamic') + (profile.islamic ? ' ✓' : ' ✕')];
-      if (profile.prefs.news) bits.push(t('pers.news'));
-      if (profile.prefs.cricket) bits.push(t('pers.sport'));
-      if (profile.prefs.finance) bits.push(t('pers.finance'));
-      content.textContent = bits.join(' · ');
-    }
-
-    var avatars = [$('#appbarAvatar'), $('#profileAvatar')];
-    avatars.forEach(function (a) { if (a) a.textContent = profile.initials; });
-
-    var bm = $('#profileBookmarks');
-    if (bm) bm.textContent = profile.islamic ? 'Ayahs, hadith and quotes' : 'Saved reads and quotes';
-
-    var lang = $('#profileLang');
-    if (lang) lang.textContent = profile.country === 'PK'
-      ? 'English · اردو available'
-      : 'English · اردو and العربية available';
 
     var exploreSub = $('#exploreSub');
     if (exploreSub) {
@@ -1841,6 +1853,7 @@
     renderNews();
     renderNotifBadge();
     renderProfileSummary();
+    renderProfile();
     initHeader();
     updatePrayer();
     /* Rendered content lands inside gated containers, so the gate is applied
@@ -1898,6 +1911,12 @@
     if (i === 3) mountOnbCountry();
     if (i === 4) mountOnbCity();
     if (i === 5 && onbPicker) onbPicker.refresh();
+    /* §124.4 — the field is prefilled from whatever Lume already holds,
+       which for a first run is nothing at all. */
+    if (i === 7) {
+      var nameInput = $('#onbName');
+      if (nameInput) nameInput.value = profile.displayName || '';
+    }
     if (i === 6) {
       var loc = $('#onbLocSub');
       if (loc) loc.textContent = profile.islamic
@@ -1910,11 +1929,16 @@
       applyVisibility();
     }
     if (i === onbSteps.length - 1) {
+      /* §124.5 / §125 — two designed branches, and the neutral one is not
+         the lesser of them. */
+      var who = ACCT.displayName();
+      var title = $('#onbDoneTitle');
+      if (title) title.textContent = who ? t('onb.readyNamed', { name: who }) : t('onb.readyTitle');
       var el = $('#onbDoneText');
       if (el) {
         el.innerHTML = profile.islamic
-          ? 'Your next prayer is <b>' + esc(prayerState().next.name) + '</b>, and today’s plan is waiting on the home screen.'
-          : 'Today’s plan is waiting on the home screen.';
+          ? t('onb.readyFaith', { prayer: '<b>' + esc(prayerState().next.name) + '</b>' })
+          : esc(t('onb.readyGeneral'));
       }
     }
   }
@@ -1928,6 +1952,17 @@
       onb.classList.remove('is-leaving');
       if (msg) toast(msg);
     }, 380);
+  }
+
+  /* The one place onboarding writes an identity. An empty field writes an
+     empty name — it does not leave the previous one standing (§125). */
+  function commitName(value) {
+    profile.displayName = String(value || '').trim().slice(0, 40);
+    if (ACCT.isAuthed()) ACCT.updateUser({ displayName: profile.displayName });
+    saveProfile();
+    initHeader();
+    renderProfileSummary();
+    renderProfile();
   }
 
   function onbCommit(list, faith) {
@@ -1988,13 +2023,33 @@
       }
     });
 
+    var nameNext = $('#onbNameNext');
+    if (nameNext) {
+      nameNext.addEventListener('click', function () {
+        var input = $('#onbName');
+        commitName(input ? input.value : '');
+        onbShow(onbStep + 1);
+      });
+    }
+
+    var nameSkip = $('#onbNameSkip');
+    if (nameSkip) {
+      nameSkip.addEventListener('click', function () {
+        commitName('');
+        onbShow(onbStep + 1);
+      });
+    }
+
     var finish = $('#onbFinish');
     if (finish) finish.addEventListener('click', function () { onbFinish('Welcome to Lume'); });
 
+    /* §124.6 — "already have an account" leads to authentication, not to a
+       toast that pretends someone signed in. */
     var signIn = $('#onbSignIn');
     if (signIn) signIn.addEventListener('click', function () {
       if (!profile.interests.length) onbCommit(C.DEFAULT_INTERESTS.slice(), false);
-      onbFinish('Welcome back');
+      onbFinish();
+      openAuth('signin');
     });
 
     $$('[data-onb-toggle]').forEach(function (row) {
@@ -2024,7 +2079,7 @@
       var dx = e.changedTouches[0].clientX - sx2;
       var dy = e.changedTouches[0].clientY - sy2;
       if (Math.abs(dx) < 56 || Math.abs(dy) > Math.abs(dx)) return;
-      if (dx < 0 && onbStep < onbSteps.length - 1 && onbStep !== 5) onbShow(onbStep + 1);
+      if (dx < 0 && onbStep < onbSteps.length - 1 && onbStep !== 5 && onbStep !== 7) onbShow(onbStep + 1);
       if (dx > 0 && onbStep > 0) onbShow(onbStep - 1, true);
     }, { passive: true });
 
@@ -2661,6 +2716,10 @@
     }
     currentTool = null;
     toolStack.length = 0;
+    /* An account route is abandoned the same way a tool is. */
+    accountRoute = null;
+    accountStack.length = 0;
+    if (name !== 'auth') { authRoute = null; authStack.length = 0; }
     /* The centre is a destination, not a tab, so it remembers where the
        user was and the header's back control returns them there. */
     if (name === 'notifications') {
@@ -3203,11 +3262,16 @@
   document.addEventListener('click', function (e) {
     if (!e.target.closest('[data-tool-back]')) return;
     if (current === 'notifications') { goTo(notifReturnTab); return; }
+    if (current === 'account') { closeAccount(); return; }
+    if (current === 'auth') { closeAuth(); return; }
     closeTool();
   });
 
   document.addEventListener('keydown', function (e) {
-    if (e.key === 'Escape' && currentTool && !openSheet) closeTool();
+    if (e.key !== 'Escape' || openSheet) return;
+    if (current === 'account') { closeAccount(); return; }
+    if (current === 'auth') { closeAuth(); return; }
+    if (currentTool) closeTool();
   });
 
   /* The prayer countdown in an open tool ticks like the one on Home. */
@@ -3478,9 +3542,15 @@
   var notifFilter = 'all';
 
   /* §100.9 — general, categories, per-tool types, quiet hours, privacy. */
-  function renderNotifPrefs() {
-    var host = $('#notifPrefsBody');
-    if (!host) return;
+  /* §124.18 — the centre's settings sheet and Profile → Notifications are
+     two doors into one room. Both hosts are painted, so neither goes stale. */
+  function renderNotifPrefs(host) {
+    if (!host) {
+      [$('#notifPrefsBody'), $('#acctNotifPrefs')].forEach(function (h) {
+        if (h) renderNotifPrefs(h);
+      });
+      return;
+    }
     var p = NOTIFY.prefs();
 
     function toggle(key, label, sub, on) {
@@ -3650,6 +3720,519 @@
     }
   });
 
+
+  /* ---------------------------------------------------------
+     Account, profile and settings  (Master Spec §124)
+
+     Two hosts, two back stacks, one vocabulary. Authentication
+     is a flow rather than a tool, so it never enters the tool
+     router, the catalogue or search.
+     --------------------------------------------------------- */
+  var AUI = window.LUME_ACCOUNT_UI({
+    t: t, L: L, UI: UI, account: ACCT, notify: NOTIFY, geo: GEO,
+    profile: function () { return profile; },
+    version: APP_VERSION,
+    langs: function () { return I18N.LANGS; },
+    storedTheme: function () { return store.get('lume-theme'); },
+    fname: fname,
+    favourites: function () {
+      return (profile.favourites || []).map(feature).filter(function (f) { return f && visible(f); });
+    },
+    recents: function () {
+      return (profile.recents || []).map(feature).filter(function (f) { return f && visible(f); });
+    },
+    renderNotifPrefs: renderNotifPrefs
+  });
+
+  var accountRoute = null, accountStack = [], accountReturn = 'profile';
+  var authRoute = null, authStack = [], authReturn = 'profile';
+
+  var AUTH_VALUES = {
+    signin: { email: '', password: '' },
+    signup: { name: '', email: '', password: '', confirm: '' },
+    forgot: { email: '' },
+    reset:  { password: '', confirm: '' },
+    verify: { code: '' }
+  };
+
+  function renderProfile() {
+    var host = $('#profileBody');
+    if (!host) return;
+    host.innerHTML = AUI.renderProfile();
+    applyStrings(host);
+  }
+
+  /* A destination that is not a tab: the same treatment tools and the
+     notification centre get. */
+  function showScreen(name) {
+    var screen = $('#screen-' + name);
+    if (!screen) return;
+    current = name;
+    $$('.screen').forEach(function (sc) { sc.classList.remove('is-active'); });
+    screen.classList.add('is-active');
+    screen.scrollTop = 0;
+    $$('.tab').forEach(function (tb) {
+      tb.classList.remove('is-active');
+      tb.setAttribute('aria-selected', 'false');
+    });
+    movePill(null);
+    var back = $('#exploreBack');
+    if (back) back.hidden = true;
+  }
+
+  function homeTab() {
+    return tabOrder().indexOf(current) !== -1 ? current : 'profile';
+  }
+
+  function enterAccountRoute(route) {
+    accountRoute = route;
+    var def = AUI.ROUTES[route]();
+    AUI.resetForm(def.values || {});
+    showScreen('account');
+    renderAccount();
+  }
+
+  function openAccount(route, opts) {
+    opts = opts || {};
+    if (!AUI.ROUTES[route]) return;
+
+    /* §124.28 — a destination that belongs to the account is held across
+       authentication and resumed afterwards, never swapped for Home. */
+    if (ACCT.requiresAccount(route) && !ACCT.isAuthed()) {
+      openAuth('signin', { modal: true, then: 'acct:' + route });
+      return;
+    }
+
+    if (currentTool) { stopClocks(); currentTool = null; toolStack.length = 0; }
+    if (accountRoute && !opts.replace) accountStack.push(accountRoute);
+    else if (!accountRoute) accountReturn = homeTab();
+    enterAccountRoute(route);
+  }
+
+  function renderAccount() {
+    var head = $('#accountHeader'), body = $('#accountBody');
+    if (!head || !body || !accountRoute) return;
+    var built = AUI.ROUTES[accountRoute]();
+    head.innerHTML = UI.toolHeader({
+      title: built.title, sub: built.sub ? esc(built.sub) : null, backLabel: t('a11y.back')
+    });
+    body.innerHTML = built.body;
+    applyStrings(body);
+    if (built.after) built.after();
+    animateBars($('#screen-account'));
+  }
+
+  function closeAccount() {
+    if (accountStack.length) { enterAccountRoute(accountStack.pop()); return; }
+    accountRoute = null;
+    goTo(accountReturn || 'profile');
+  }
+
+  /* ---- authentication ------------------------------------------------ */
+  function openAuth(route, opts) {
+    opts = opts || {};
+    if (!AUI.AUTH[route]) return;
+    if (opts.then !== undefined) AUI.authCtx.pending = opts.then;
+    if (opts.modal !== undefined) AUI.authCtx.modal = !!opts.modal;
+
+    if (!authRoute) authReturn = homeTab();
+    else if (route !== authRoute) authStack.push(authRoute);
+
+    if (currentTool) { stopClocks(); currentTool = null; toolStack.length = 0; }
+    authRoute = route;
+    AUI.resetForm(AUTH_VALUES[route] ? JSON.parse(JSON.stringify(AUTH_VALUES[route])) : {});
+    showScreen('auth');
+    renderAuth();
+  }
+
+  function renderAuth() {
+    var body = $('#authBody');
+    if (!body || !authRoute) return;
+    body.innerHTML = '<div class="auth" data-auth="' + esc(authRoute) + '">' + AUI.AUTH[authRoute]() + '</div>';
+    applyStrings(body);
+  }
+
+  function closeAuth() {
+    if (authStack.length) {
+      authRoute = authStack.pop();
+      AUI.resetForm(AUTH_VALUES[authRoute] ? JSON.parse(JSON.stringify(AUTH_VALUES[authRoute])) : {});
+      renderAuth();
+      return;
+    }
+    /* Choosing to stay a guest ends the expired session rather than
+       leaving it to interrupt again on the next launch (§124.27). */
+    if (authRoute === 'expired') ACCT.signOut();
+    var to = authReturn || 'profile';
+    authRoute = null;
+    AUI.authCtx.pending = null;
+    AUI.authCtx.modal = false;
+    goTo(to);
+    renderAll();
+  }
+
+  /* §124.29 — notification state belongs to whoever was signed in. */
+  function resetNotificationsForAccount() {
+    profile.notifyRead = {};
+    profile.notifyActed = {};
+    profile.notifyGone = {};
+    profile.notifySeen = {};
+    if (profile.notify) profile.notify.push = false;
+    NOTIFY.prefsChanged();
+    saveProfile();
+    renderNotifBadge();
+  }
+
+  function authSucceeded(message) {
+    var pending = AUI.authCtx.pending;
+    AUI.authCtx.pending = null;
+    AUI.authCtx.modal = false;
+    authRoute = null;
+    authStack.length = 0;
+    resetNotificationsForAccount();
+    prayerCache = null;
+    saveProfile();
+    renderAll();
+    goTo(pending ? 'profile' : (authReturn || 'profile'));
+    if (pending) runAct(pending);
+    if (message) toast(message);
+  }
+
+  /* ---- forms --------------------------------------------------------- */
+  function formHost() {
+    return current === 'auth' ? $('#authBody') : $('#accountBody');
+  }
+
+  function collectForm() {
+    var host = formHost();
+    if (!host) return;
+    $$('[data-afield]', host).forEach(function (el) {
+      AUI.form.values[el.dataset.afield] = el.value;
+    });
+  }
+
+  function repaintForm() {
+    if (current === 'auth') renderAuth(); else renderAccount();
+  }
+
+  function fail(result) {
+    AUI.form.errors = result.errors || {};
+    AUI.form.message = result.form ? { tone: 'error', key: result.form } : null;
+    repaintForm();
+  }
+
+  /* Every submission is a designed loading state before it is a result
+     (§124.26). */
+  function submitForm(kind) {
+    if (AUI.form.busy) return;
+    collectForm();
+    AUI.form.errors = {};
+    AUI.form.message = null;
+    AUI.form.busy = true;
+    repaintForm();
+    setTimeout(function () {
+      AUI.form.busy = false;
+      applySubmit(kind, AUI.form.values);
+    }, 420);
+  }
+
+  function applySubmit(kind, v) {
+    var r;
+
+    if (kind === 'signin') {
+      r = ACCT.signIn(v);
+      if (!r.ok) return fail(r);
+      var who = ACCT.displayName();
+      return authSucceeded(who ? t('auth.welcomeBack', { name: who }) : t('auth.welcome'));
+    }
+
+    if (kind === 'signup') {
+      r = ACCT.signUp(v);
+      if (!r.ok) return fail(r);
+      return authSucceeded(t('auth.accountCreated'));
+    }
+
+    if (kind === 'forgot') {
+      r = ACCT.requestReset(v.email);
+      if (!r.ok) return fail(r);
+      AUI.authCtx.token = r.token;
+      AUI.authCtx.email = r.email;
+      return openAuth('sent');
+    }
+
+    if (kind === 'reset') {
+      r = ACCT.resetPassword({ token: AUI.authCtx.token, password: v.password, confirm: v.confirm });
+      if (!r.ok) return fail(r);
+      AUI.authCtx.token = null;
+      return openAuth('updated');
+    }
+
+    if (kind === 'verify') {
+      r = ACCT.verifyEmail(v.code);
+      if (!r.ok) return fail(r);
+      authRoute = null;
+      authStack.length = 0;
+      renderAll();
+      openAccount('account', { replace: true });
+      return toast(t('acct.emailChanged'));
+    }
+
+    if (kind === 'edit') {
+      r = ACCT.updateUser({
+        displayName: v.displayName, firstName: v.firstName,
+        lastName: v.lastName, phone: v.phone
+      });
+      if (!r.ok) return fail(r);
+      renderAll();
+      closeAccount();
+      return toast(t('acct.editSaved'));
+    }
+
+    if (kind === 'email') {
+      r = ACCT.requestEmailChange(v.email);
+      if (!r.ok) return fail(r);
+      openAuth('verify', { modal: false });
+      return;
+    }
+
+    if (kind === 'phone') {
+      r = ACCT.updateUser({ phone: v.phone });
+      if (!r.ok) return fail(r);
+      renderAccount();
+      return toast(t('acct.phoneSaved'));
+    }
+
+    if (kind === 'password') {
+      r = ACCT.changePassword({ current: v.current, password: v.password, confirm: v.confirm });
+      if (!r.ok) return fail(r);
+      closeAccount();
+      return toast(t('acct.passwordChanged'));
+    }
+
+    if (kind === 'delete') {
+      /* §124.22 — identity is confirmed here; the deletion itself waits for
+         one more, deliberately separate confirmation. */
+      if (!ACCT.verifyPassword(v.current)) {
+        return fail({ errors: { current: v.current ? 'acct.err.currentWrong' : 'acct.err.currentRequired' } });
+      }
+      askConfirm({
+        title: t('acct.deleteFinalTitle'), text: t('acct.deleteFinalText'),
+        cta: t('acct.deleteCta'), tone: 'danger', act: 'acctdo:deletefinal'
+      });
+      return;
+    }
+  }
+
+  /* ---- the confirmation dialog (§124.21, §124.48) --------------------- */
+  var confirmAct = null;
+
+  function askConfirm(o) {
+    var title = $('#confirmTitle'), text = $('#confirmText');
+    var go = $('#confirmGo'), cancel = $('#confirmCancel');
+    if (!title || !go) return;
+    title.textContent = o.title;
+    text.textContent = o.text || '';
+    go.textContent = o.cta;
+    go.className = 'btn btn--block pressable ' + (o.tone === 'danger' ? 'btn--danger' : 'btn--accent');
+    cancel.textContent = t('a.cancel');
+    confirmAct = o.act;
+    sheetOpen('confirm');
+  }
+
+  (function bindConfirm() {
+    var go = $('#confirmGo');
+    if (!go) return;
+    go.addEventListener('click', function () {
+      var act = confirmAct;
+      confirmAct = null;
+      sheetClose();
+      if (act) runAct(act);
+    });
+  })();
+
+  /* ---- the vocabulary ------------------------------------------------- */
+  function accountAction(kind, arg) {
+    var bits = String(arg).split(':');
+
+    if (kind === 'acct') { openAccount(bits[0]); return true; }
+    if (kind === 'auth') { openAuth(bits[0]); return true; }
+    if (kind === 'acctsubmit') { submitForm(bits[0]); return true; }
+
+    if (kind === 'acctset') {
+      var key = bits.shift(), value = bits.join(':');
+      if (key === 'lang') { profile.lang = value; }
+      else if (key === 'currency') { profile.currency = value; }
+      else if (key === 'units') { profile.units = value; }
+      else if (key === 'clock') { profile.clock = value; }
+      else if (key === 'theme') { setThemeMode(value); }
+      if (key !== 'theme') saveProfile();
+      renderAll();
+      renderAccount();
+      return true;
+    }
+
+    if (kind === 'accttoggle') {
+      var p = NOTIFY.prefs();
+      if (bits[0] === 'cat') { p.cats[bits[1]] = p.cats[bits[1]] === false; }
+      else if (bits[0] === 'recos') { profile.prefs.recos = profile.prefs.recos === false; }
+      else { p[bits[0]] = !p[bits[0]]; }
+      NOTIFY.prefsChanged();
+      saveProfile();
+      renderAccount();
+      renderNotifBadge();
+      return true;
+    }
+
+    if (kind === 'acctdo') { accountDo(bits.shift(), bits.join(':')); return true; }
+
+    return false;
+  }
+
+  function accountDo(verb, arg) {
+    if (verb === 'tour') { sheetClose(); onbStart(); return; }
+    if (verb === 'feedback') { toast(t('acct.helpContact')); return; }
+    if (verb === 'authclose') { closeAuth(); return; }
+
+    if (verb === 'logout') {
+      askConfirm({ title: t('acct.logoutTitle'), text: t('acct.logoutText'),
+                   cta: t('acct.signOut'), tone: 'danger', act: 'acctdo:logoutgo' });
+      return;
+    }
+    if (verb === 'logoutgo') {
+      ACCT.signOut();
+      resetNotificationsForAccount();
+      renderAll();
+      goTo('profile');
+      toast(t('acct.loggedOut'));
+      return;
+    }
+
+    if (verb === 'signoutothers') {
+      askConfirm({ title: t('acct.signOutOthers'), text: t('acct.signOutOthersText'),
+                   cta: t('acct.signOutOthers'), tone: 'danger', act: 'acctdo:signoutothersgo' });
+      return;
+    }
+    if (verb === 'signoutothersgo') {
+      var r = ACCT.signOutOthers();
+      renderAccount();
+      toast(t('acct.signedOutOthers', { n: L.num(r.revoked || 0) }));
+      return;
+    }
+
+    if (verb === 'revoke') { ACCT.revokeSession(arg); renderAccount(); return; }
+
+    if (verb === 'emailcancel') {
+      ACCT.cancelEmailChange();
+      if (current === 'auth') { authRoute = null; authStack.length = 0; openAccount('email', { replace: true }); }
+      else renderAccount();
+      return;
+    }
+
+    if (verb === 'photo') { pickPhoto(); return; }
+    if (verb === 'photoclear') {
+      ACCT.updateUser({ photo: '' });
+      renderAll();
+      renderAccount();
+      return;
+    }
+
+    if (verb === 'deletefinal') {
+      var res = ACCT.deleteAccount(AUI.form.values.current);
+      if (!res.ok) { fail(res); return; }
+      resetNotificationsForAccount();
+      accountRoute = null;
+      accountStack.length = 0;
+      renderAll();
+      goTo('profile');
+      toast(t('acct.deleted'));
+    }
+  }
+
+  /* §124.19 — a real picker, and the file never leaves the device. */
+  function pickPhoto() {
+    var input = document.createElement('input');
+    input.type = 'file';
+    input.accept = 'image/*';
+    input.addEventListener('change', function () {
+      var file = input.files && input.files[0];
+      if (!file) return;
+      var reader = new FileReader();
+      reader.onload = function () {
+        ACCT.updateUser({ photo: String(reader.result) });
+        renderAll();
+        renderAccount();
+      };
+      reader.readAsDataURL(file);
+    });
+    input.click();
+  }
+
+  /* ---- live form behaviour -------------------------------------------- */
+  document.addEventListener('input', function (e) {
+    var el = e.target.closest ? e.target.closest('[data-afield]') : null;
+    if (!el) return;
+    var name = el.dataset.afield;
+    AUI.form.values[name] = el.value;
+
+    /* The checklist and the meter follow the keystrokes; repainting the
+       whole form here would take the caret with it. */
+    var rules = $('[data-pwrules="' + name + '"]');
+    if (rules) {
+      ACCT.passwordChecks(el.value).forEach(function (c) {
+        var row = $('[data-rule="' + c.id + '"]', rules);
+        if (row) row.classList.toggle('is-ok', c.ok);
+      });
+    }
+    var meter = $('[data-pwmeter="' + name + '"]');
+    if (meter) {
+      var st = ACCT.passwordStrength(el.value);
+      meter.dataset.tone = st.tone;
+      $$('.pwmeter__seg', meter).forEach(function (seg, i) {
+        seg.classList.toggle('is-on', i < st.score);
+      });
+      var label = $('.pwmeter__label', meter);
+      if (label) label.textContent = t(st.key);
+    }
+
+    var field = el.closest('.field');
+    if (field) field.classList.remove('is-invalid');
+    updateDirty();
+  });
+
+  /* §124.18 — Save stays inert until something actually changed. */
+  function updateDirty() {
+    var f = AUI.form, changed = false, k;
+    for (k in f.base) {
+      if (Object.prototype.hasOwnProperty.call(f.base, k) &&
+          String(f.values[k] === undefined ? '' : f.values[k]) !== String(f.base[k] === undefined ? '' : f.base[k])) {
+        changed = true;
+      }
+    }
+    f.dirty = changed;
+    var btn = $('#accountBody [data-act="acctsubmit:edit"]');
+    if (btn) btn.disabled = !changed;
+  }
+
+  document.addEventListener('click', function (e) {
+    var b = e.target.closest('[data-pwtoggle]');
+    if (!b) return;
+    var input = $('[data-afield="' + b.dataset.pwtoggle + '"]', formHost());
+    if (!input) return;
+    var show = input.type === 'password';
+    input.type = show ? 'text' : 'password';
+    b.setAttribute('aria-label', t(show ? 'acct.pw.hide' : 'acct.pw.show'));
+    b.innerHTML = '<svg class="ico" viewBox="0 0 24 24"><use href="#' + (show ? 'i-eye-off' : 'i-eye') + '"/></svg>';
+  });
+
+  /* Enter submits the form it is typed in. */
+  document.addEventListener('keydown', function (e) {
+    if (e.key !== 'Enter') return;
+    var el = e.target.closest ? e.target.closest('[data-afield]') : null;
+    if (!el) return;
+    var host = formHost();
+    var submit = host ? $('[data-act^="acctsubmit:"]', host) : null;
+    if (submit && !submit.disabled) { e.preventDefault(); submit.click(); }
+  });
+
   /* ---------------------------------------------------------
      Boot
      --------------------------------------------------------- */
@@ -3665,6 +4248,10 @@
   setTimeout(notifyTick, 2500);
   setInterval(function () { updatePrayer(); }, 1000);
   setInterval(updateDayRing, 60000);
+
+  /* §124.6 — a returning user with a dead session is told so, and taken
+     back where they were going once they sign in. */
+  if (ACCT.isExpired() && store.get('lume-onboarded')) openAuth('expired');
 
   requestAnimationFrame(function () {
     movePill($('.tab.is-active'));

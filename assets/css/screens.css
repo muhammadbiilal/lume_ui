@@ -306,26 +306,6 @@
 
 /* ---------- Profile screen -------------------------------- */
 
-.profile-head {
-  position: relative;
-  display: flex;
-  align-items: center;
-  gap: 14px;
-  margin: 14px var(--pad) 0;
-  padding: 18px;
-  border-radius: var(--r-xl);
-  background: var(--card);
-  border: 1px solid var(--border);
-  box-shadow: var(--shadow-sm);
-  overflow: hidden;
-}
-.profile-head__art { position: absolute; inset: 0; pointer-events: none; opacity: .8; }
-.profile-head__art svg { width: 100%; height: 100%; }
-.profile-head__body { position: relative; flex: 1; min-width: 0; }
-.profile-head__name { font-size: 17px; font-weight: 800; letter-spacing: -.03em; }
-.profile-head__mail { font-size: 12px; color: var(--text-3); font-weight: 500; margin-top: 3px; }
-.profile-head__badge { margin-top: 8px; }
-
 .group-label {
   font-size: 11px;
   font-weight: 700;
