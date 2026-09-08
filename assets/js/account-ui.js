@@ -999,7 +999,9 @@ window.LUME_ACCOUNT_UI = function (deps) {
     '<div class="auth__ambient" aria-hidden="true">' +
       '<span class="auth__glow auth__glow--a"></span>' +
       '<span class="auth__glow auth__glow--b"></span>' +
-      '<span class="auth__spec"></span><span class="auth__spec"></span><span class="auth__spec"></span>' +
+      '<span class="auth__spec auth__spec--a"></span>' +
+      '<span class="auth__spec auth__spec--b"></span>' +
+      '<span class="auth__spec auth__spec--c"></span>' +
     '</div>';
 
   /* The desktop visual region (§126.41). It carries atmosphere and one line
@@ -1070,7 +1072,10 @@ window.LUME_ACCOUNT_UI = function (deps) {
   }
 
   function arrow() {
-    return '<svg class="btn__arrow" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-arrow-r"/></svg>';
+    /* `ico` carries fill:none and stroke:currentColor. Without it the sprite
+       falls back to the SVG defaults and the arrow renders as a filled
+       black blob. */
+    return '<svg class="ico btn__arrow" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-arrow-r"/></svg>';
   }
 
   /* §126.16, §126.33 — the button keeps its width and its height when it
@@ -1130,7 +1135,8 @@ window.LUME_ACCOUNT_UI = function (deps) {
       (o.foot ? '<div class="auth__foot" data-slot="foot">' + o.foot + '</div>' : '') +
       (o.legal ? '<p class="auth__legal" data-slot="legal">' + o.legal + '</p>' : '');
 
-    return '<div class="auth" data-auth="' + esc(o.id) + '" data-nav="' + esc(authCtx.nav) + '">' +
+    return '<div class="auth' + (o.status ? ' auth--status' : '') + '"' +
+      ' data-auth="' + esc(o.id) + '" data-nav="' + esc(authCtx.nav) + '">' +
       AMBIENT + authAside() +
       '<div class="auth__region"><div class="auth__panel">' + panel + '</div></div>' +
     '</div>';
@@ -1239,6 +1245,7 @@ window.LUME_ACCOUNT_UI = function (deps) {
   AUTH.sent = function () {
     return authScreen({
       id: 'sent',
+      status: true,
       brand: false,
       visual: seal('i-mail', 'calm'),
       title: t('auth.sentTitle'),
@@ -1280,6 +1287,7 @@ window.LUME_ACCOUNT_UI = function (deps) {
   AUTH.updated = function () {
     return authScreen({
       id: 'updated',
+      status: true,
       brand: false,
       back: false,
       visual: seal('i-check'),
@@ -1298,6 +1306,7 @@ window.LUME_ACCOUNT_UI = function (deps) {
     var who = ACCT.displayName();
     return authScreen({
       id: 'created',
+      status: true,
       brand: false,
       back: false,
       dismissible: false,
@@ -1315,6 +1324,7 @@ window.LUME_ACCOUNT_UI = function (deps) {
     var u = ACCT.pendingUser();
     return authScreen({
       id: 'expired',
+      status: true,
       brand: false,
       back: false,
       dismissible: false,
@@ -1336,6 +1346,7 @@ window.LUME_ACCOUNT_UI = function (deps) {
   AUTH.trouble = function () {
     return authScreen({
       id: 'trouble',
+      status: true,
       brand: false,
       visual: seal('i-alert', 'warn'),
       title: t('auth.troubleTitle'),
@@ -1354,6 +1365,7 @@ window.LUME_ACCOUNT_UI = function (deps) {
     var left = Math.max(0, Math.ceil((authCtx.resendAt - Date.now()) / 1000));
     return authScreen({
       id: 'verify',
+      status: true,
       brand: false,
       visual: seal('i-mail', 'calm'),
       title: t('auth.verifyTitle'),

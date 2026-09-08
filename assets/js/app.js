@@ -3987,6 +3987,13 @@
     /* A cross dismisses the whole flow; a back chevron steps through it. The
        two were the same control, so the X on a modal sign-in behaved as Back
        and took two presses to escape (§124.25). */
+    /* Escape and the shell's own Back step through a progressive form the
+       same way its Back control does — leaving the flow from step two would
+       throw away step one (§126.9). */
+    if (authRoute === 'signup' && AUI.authCtx.step === 2 && !dismiss) {
+      accountDo('signupback');
+      return;
+    }
     if (authStack.length && !dismiss) {
       authRoute = authStack.pop();
       AUI.authCtx.nav = 'back';
@@ -4128,8 +4135,12 @@
     if (kind === 'signup') {
       r = ACCT.signUp(v);
       if (!r.ok) return fail(r);
-      /* §126.13 — the account exists; the arrival is designed rather than a
-         toast over whatever screen happened to be behind. */
+      /* §124.29 — notification state belongs to whoever was signed in, and
+         the account exists from here, not from the moment the arrival screen
+         is dismissed. */
+      resetNotificationsForAccount();
+      /* §126.13 — the arrival is designed rather than a toast over whatever
+         screen happened to be behind. */
       return openAuth('created', { fresh: true });
     }
 

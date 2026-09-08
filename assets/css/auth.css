@@ -211,9 +211,11 @@
   opacity: .28;
   animation: auth-float calc(var(--auth-motion-ambient) * .8) var(--ease) infinite alternate;
 }
-.auth__spec:nth-of-type(1) { top: 22%; inset-inline-end: 16%; }
-.auth__spec:nth-of-type(2) { top: 62%; inset-inline-start: 11%; animation-delay: -6s; width: 4px; height: 4px; }
-.auth__spec:nth-of-type(3) { top: 79%; inset-inline-end: 24%; animation-delay: -11s; width: 3px; height: 3px; }
+/* Placed by name, not by position: the glows are spans in the same parent,
+   so :nth-of-type() counted those and left the specks stacked in a corner. */
+.auth__spec--a { top: 22%; inset-inline-end: 16%; }
+.auth__spec--b { top: 62%; inset-inline-start: 11%; animation-delay: -6s; width: 4px; height: 4px; }
+.auth__spec--c { top: 79%; inset-inline-end: 24%; animation-delay: -11s; width: 3px; height: 3px; }
 
 @keyframes auth-drift-a {
   from { transform: translate3d(0, 0, 0) scale(1); }
@@ -339,6 +341,14 @@
   color: var(--auth-text-tertiary);
 }
 
+/* §126.12, §126.13 — a status screen is a single centred statement around a
+   focal point. A form screen is ranged, because a label ranged to the centre
+   of the field it names is harder to read, not calmer. */
+.auth--status .auth__hero { text-align: center; }
+.auth--status .auth__title { max-width: none; }
+.auth--status .auth__text { margin-inline: auto; }
+.auth--status .auth__note { text-align: center; }
+
 /* ------------------------------------------------------------
    8. Progressive signup indicator  (§126.9)
 
@@ -434,7 +444,7 @@
 .auth .field__ok svg { width: 17px; height: 17px; }
 @keyframes auth-pop { from { transform: scale(.4); opacity: 0; } to { transform: none; opacity: 1; } }
 
-.auth [disabled] .field__box,
+.auth [disabled] .field__box { opacity: .55; }
 .auth .field__box:has(input:disabled) { opacity: .55; }
 
 /* §126.39 — the message line is always present, so an error appearing does

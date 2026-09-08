@@ -335,6 +335,41 @@ function rule(selector) {
   ok('and the divider that would separate them is not drawn either',
      !$(doc, '#authBody .auth__or'));
 
+  /* Every glyph on these screens comes from the sprite, and the sprite is
+     drawn by `.ico`: fill:none, stroke:currentColor. An svg without it is a
+     filled black blob where an arrow should be. */
+  const nakedIcons = [];
+  for (const s of SCREENS) {
+    act(win, 'auth:' + s);
+    await wait(60);
+    $$(doc, '#authBody svg').forEach(el => {
+      if (!el.classList.contains('ico') && el.querySelector('use')) nakedIcons.push(s + ':' + el.className.baseVal);
+    });
+  }
+  ok('every sprite reference is drawn as an icon', nakedIcons.length === 0, nakedIcons.join(' | '));
+
+  /* §126.12, §126.13 — a status screen is centred around its focal point; a
+     form screen is ranged. */
+  const centring = [];
+  for (const s of SCREENS) {
+    act(win, 'auth:' + s);
+    await wait(60);
+    const status = $(doc, '#authBody .auth').classList.contains('auth--status');
+    const wantCentred = ['sent', 'updated', 'created', 'expired', 'trouble', 'verify'].indexOf(s) !== -1;
+    if (status !== wantCentred) centring.push(s + ': centred=' + status);
+  }
+  ok('the status screens are centred and the form screens are not',
+     centring.length === 0, centring.join(' | '));
+
+  /* The ambient specks are placed by name. They were placed by position, and
+     the glows are siblings of the same element type, so none of them landed
+     where the design put it. */
+  act(win, 'auth:signin');
+  await wait(60);
+  ok('each ambient speck carries the class that places it',
+     $$(doc, '#authBody .auth__spec').length === 3 &&
+     ['a', 'b', 'c'].every(k => !!$(doc, '#authBody .auth__spec--' + k)));
+
   /* §126.4 — back inside the flow; a cross only over an interruption. */
   ok('the flow navigates with Back, not with a cross',
      !!$(doc, '#authBody .auth__nav--back') && !$(doc, '#authBody .auth__nav--close'));
@@ -521,6 +556,30 @@ function rule(selector) {
      $$(doc, '#authBody .auth__aside button, #authBody .auth__aside input').length === 0);
   ok('the ambient background is decoration and says so',
      $(doc, '#authBody .auth__ambient').getAttribute('aria-hidden') === 'true');
+  win.close();
+
+  /* ═══ 7. RTL (§17, §126.2) ══════════════════════════════════════════ */
+  console.log('\n=== Arabic ===');
+  ({ win, doc } = await boot({ profile: { lang: 'ar', country: 'SA', city: 'Riyadh' } }));
+  ok('the shell mirrors', doc.documentElement.getAttribute('dir') === 'rtl' &&
+     doc.body.classList.contains('is-rtl'));
+  const english = [];
+  for (const s of SCREENS) {
+    act(win, 'auth:' + s);
+    await wait(70);
+    /* The heading and the sentence under it are the whole message of an
+       authentication screen. A mirrored layout carrying English copy is a
+       half-translated product, not a localised one (§11). */
+    for (const sel of ['.auth__title', '.auth__text']) {
+      const el = $(doc, '#authBody ' + sel);
+      if (el && text(el) && !/[؀-ۿ]/.test(text(el))) english.push(s + ' ' + sel);
+    }
+  }
+  ok('every heading and every supporting line is translated',
+     english.length === 0, english.join(', '));
+  ok('and the primary action is too',
+     /[؀-ۿ]/.test(text($(doc, '#authBody .btn--auth'))),
+     text($(doc, '#authBody .btn--auth')));
   win.close();
 
   console.log('');
