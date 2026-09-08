@@ -38,6 +38,30 @@ window.LUME_SPEC = (function () {
   var DENSITY = ['low', 'medium', 'high', 'veryhigh'];
 
   /* ---------------------------------------------------------
+     Approved reference compositions (§123)
+
+     An archetype is an abstraction, and an abstraction invites
+     reinterpretation: read only "Markets is a data explorer"
+     and you get the right components in the wrong order with
+     the wrong element leading. Where a composition has been
+     designed and approved, its section order is binding, and
+     the verification suite asserts it.
+
+     Sections listed here must appear, in this order, at the top
+     of the screen. A screen may add supporting sections after
+     the last binding one.
+     --------------------------------------------------------- */
+  var COMPOSITIONS = {
+    markets: [
+      'context',    /* market context / selected region        */
+      'classnav',   /* Stocks | Indices | Forex | Commodities  */
+      'hero',       /* primary market or index summary + chart */
+      'assets',     /* Top Stocks / Top Assets · See all       */
+      'overview'    /* Market Overview metrics                 */
+    ]
+  };
+
+  /* ---------------------------------------------------------
      The contract table.
      a = archetype · d = density · aware · needs · supports
      src = data source · fresh = freshness model
@@ -116,7 +140,8 @@ window.LUME_SPEC = (function () {
     /* ---- Money & rates (§25–§38) ---- */
     goldrates: { a: 'explorer', d: 'high', aware: 'country currency units locale', supports: 'search history sharing favorites',
       src: 'Bullion + open market', fresh: 'delayed', home: 1, rel: ['currency', 'markets', 'zakat'] },
-    markets: { a: 'explorer', d: 'veryhigh', aware: 'country currency locale', supports: 'search filters sorting favorites sharing notifications',
+    markets: { a: 'explorer', d: 'veryhigh', aware: 'country currency locale',
+      supports: 'search filters sorting favorites sharing notifications export',
       src: 'Exchange feed', fresh: 'delayed', home: 1, rel: ['currency', 'goldrates', 'news'] },
     fuel: { a: 'explorer', d: 'high', aware: 'country region currency units locale', supports: 'history notifications sharing',
       src: 'Regulator notification', fresh: 'daily', home: 1, rel: ['fuelcost', 'vehicle', 'expenses'] },
@@ -268,7 +293,9 @@ window.LUME_SPEC = (function () {
       homeEligible: !!raw.home,
       quickEligible: !!raw.quick,
       related: raw.rel || [],
-      sections: (ARCHETYPES[raw.a] || ARCHETYPES.manager).sections
+      sections: (ARCHETYPES[raw.a] || ARCHETYPES.manager).sections,
+      /* Present only for a tool with an approved composition (§123). */
+      composition: COMPOSITIONS[id] || null
     };
     CACHE[id] = spec;
     return spec;
@@ -277,7 +304,7 @@ window.LUME_SPEC = (function () {
   function has(id) { return !!SPECS[id]; }
 
   return {
-    ARCHETYPES: ARCHETYPES, DENSITY: DENSITY, SPECS: SPECS,
+    ARCHETYPES: ARCHETYPES, DENSITY: DENSITY, SPECS: SPECS, COMPOSITIONS: COMPOSITIONS,
     get: get, has: has
   };
 })();

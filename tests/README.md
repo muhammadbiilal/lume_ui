@@ -18,3 +18,13 @@ the arithmetic and the edge cases — agenda times in a 12-hour locale, the
 `data-loc="global"` fallback, ISO dates west of UTC, the faraid steppers, a
 loan with zero tenure, the moon phase, market turnover, the offline banner
 and the freshness timestamp. Each of these failed before its fix.
+
+`notify.js` covers the notification system (§100): the engine, the centre,
+filtering, read state and dismissal, per-category and per-tool preferences,
+the privacy rules, faith/country gating, and the push permission flow —
+including that permission is never requested at boot and that a denial is
+final.
+
+`verify.js` also enforces §123: a tool with an approved composition in
+`toolspec.js` must render its binding sections in that order, or the suite
+fails. This is what stops a screen being reinterpreted from its archetype.

@@ -49,8 +49,9 @@ const wait = ms => new Promise(r => setTimeout(r, ms));
   const $$ = s => [...doc.querySelectorAll(s)];
   const click = el => el.dispatchEvent(new win.MouseEvent('click', { bubbles: true, cancelable: true }));
   const rows = () => $$('#toolBody .rrow').map(r => (r.querySelector('.rrow__title') || {}).textContent);
-  // the index rows above the securities list never sort; compare only the securities
-  const securities = () => rows().slice(4);
+  // only the Top-assets section sorts; the hero above it does not
+  const securities = () => [...doc.querySelectorAll('#toolBody [data-sect="assets"] .rrow__title')]
+    .map(e => e.textContent);
   const open = async id => { click($(`[data-act="tool:${id}"]`) || $('[data-tab="tools"]')); await wait(30); };
 
   ok('booted clean', errors.length === 0, errors.slice(0, 2).join(' | '));
@@ -62,6 +63,9 @@ const wait = ms => new Promise(r => setTimeout(r, ms));
   await open('markets');
   click($$('#toolBody .ttab').find(b => /Stocks/.test(b.textContent)));
   await wait(30);
+  // Top assets caps at five; expand it so sorting is compared over the whole list
+  const seeAll = $('#toolBody [data-sect="assets"] .sect__link');
+  if (seeAll) { click(seeAll); await wait(30); }
   const byChange = securities();
   const priceBtn = $$('#toolBody .sortopt').find(b => /Price/.test(b.textContent));
   ok('sort options carry an action', !!priceBtn && priceBtn.hasAttribute('data-act'),

@@ -175,7 +175,7 @@
       <button class="iconbtn pressable" data-sheet="search" aria-label="Search everything">
         <svg class="ico" viewBox="0 0 24 24"><use href="#i-search"/></svg>
       </button>
-      <button class="iconbtn pressable" data-sheet="notifications" aria-label="Notifications">
+      <button class="iconbtn pressable" data-act="tab:notifications" data-i18n-aria="a11y.notifications" aria-label="Notifications">
         <svg class="ico" viewBox="0 0 24 24"><use href="#i-bell"/></svg>
         <span class="iconbtn__badge"></span>
       </button>
@@ -1378,6 +1378,14 @@
   </section>
 
   <!-- ==========================================================
+       NOTIFICATION CENTRE (Master Spec §100.2)
+       ========================================================== -->
+  <section class="screen screen--tool" id="screen-notifications" role="tabpanel" aria-label="Notifications">
+    <div id="notifHeader"></div>
+    <div id="notifBody"></div>
+  </section>
+
+  <!-- ==========================================================
        TOOL SCREEN — every tool opens here, composed from its own
        information architecture (Master Spec §7, §8, §113)
        ========================================================== -->
@@ -1583,35 +1591,47 @@
   </aside>
 
   <!-- Notifications -->
-  <aside class="sheet" id="sheet-notifications" role="dialog" aria-modal="true" aria-label="Notifications">
+  <!-- Notification settings (§100.9) -->
+  <aside class="sheet sheet--tall" id="sheet-notifprefs" role="dialog" aria-modal="true" aria-label="Notification settings">
     <span class="sheet__grab"></span>
     <div class="sheet__head">
       <div>
-        <h2 class="sheet__title" data-i18n="home.notifications">Notifications</h2>
-        <p class="sheet__sub" data-i18n="notif.sub">Quiet by default</p>
+        <h2 class="sheet__title" data-i18n="n.settings">Notifications</h2>
+        <p class="sheet__sub" data-i18n="n.settingsSub">What Lume may tell you, and when</p>
       </div>
-      
+      <button class="closebtn pressable" data-close data-i18n-aria="a.close" aria-label="Close"><svg class="ico" viewBox="0 0 24 24"><use href="#i-x"/></svg></button>
     </div>
+    <div class="sheet__body" id="notifPrefsBody"></div>
+  </aside>
+
+  <!-- Push permission, asked in context (§100.11) -->
+  <aside class="sheet" id="sheet-notifpush" role="dialog" aria-modal="true" aria-label="Enable notifications">
+    <span class="sheet__grab"></span>
     <div class="sheet__body">
-      <div class="list list--flat" id="notifList"></div>
-      <button class="btn btn--ghost btn--block pressable" style="margin:14px 0 6px" data-toast="All caught up">Mark all as read</button>
+      <div class="pushask">
+        <span class="pushask__art"><svg class="ico" viewBox="0 0 24 24"><use href="#i-bell-ring"/></svg></span>
+        <h2 class="pushask__title" data-i18n="n.ask.title">Stay informed</h2>
+        <p class="pushask__text" data-i18n="n.ask.text">Useful alerts for the things you already follow — and nothing else.</p>
+        <ul class="pushask__list" id="pushAskList"></ul>
+        <div class="btnrow">
+          <button class="btn btn--accent btn--block" data-act="pushallow"><span data-i18n="n.ask.enable">Enable notifications</span></button>
+        </div>
+        <button class="pushask__later" data-close data-i18n="n.ask.later">Not now</button>
+      </div>
     </div>
   </aside>
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+  <!-- Change market (§26.11) -->
+  <aside class="sheet" id="sheet-market" role="dialog" aria-modal="true" aria-label="Change market">
+    <span class="sheet__grab"></span>
+    <div class="sheet__head">
+      <div>
+        <h2 class="sheet__title" data-i18n="markets.change">Change market</h2>
+        <p class="sheet__sub" data-i18n="markets.changeSub">Local exchanges and the world board</p>
+      </div>
+    </div>
+    <div class="sheet__body"><div class="list" id="marketList"></div></div>
+  </aside>
 
   <!-- ==========================================================
        ONBOARDING
@@ -1914,6 +1934,7 @@
 <script src="assets/js/toolspec.js"></script>
 <script src="assets/js/tooldata.js"></script>
 <script src="assets/js/toolkit.js"></script>
+<script src="assets/js/notify.js"></script>
 <script src="assets/js/toolctx.js"></script>
 <script src="assets/js/tools.js"></script>
 <script src="assets/js/tools-faith.js"></script>

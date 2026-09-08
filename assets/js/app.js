@@ -64,6 +64,7 @@
     prefs: { news: true, cricket: true, finance: true, recos: true },
     recents: [],
     favourites: [],
+    market: null,
     recentCountries: []
   };
 
@@ -432,6 +433,9 @@
     openSheet = sheet;
 
     if (name === 'personalise' && setPicker) hydratePersonalise();
+    if (name === 'market') renderMarketPicker();
+    if (name === 'notifprefs') renderNotifPrefs();
+    if (name === 'notifpush') renderPushAsk();
     if (name === 'search') {
       resetSearch();
       setTimeout(function () { var i = $('#globalSearch'); if (i) i.focus(); }, 320);
@@ -1258,46 +1262,6 @@
     }).join('');
   }
 
-  function renderNotifications() {
-    var host = $('#notifList');
-    if (!host) return;
-    var items = [];
-
-    if (profile.islamic) {
-      var st = prayerState();
-      items.push({ icon: 'i-prayer',
-        title: t('notif.prayerIn', { name: t('prayer.' + (PKEYS[st.next.name] || 'fajr')), time: fmtShort(st.toNext) }),
-        sub: t('notif.adhanAt', { time: hhmm(st.next) }), fresh: true });
-    }
-    var lsFeature = feature('loadshed');
-    if (lsFeature && visible(lsFeature)) {
-      var ls = toolCtx('loadshed').loadshed();
-      items.push({ icon: 'i-bolt', title: t('notif.loadshed', { time: ls.slot.from }),
-        sub: ls.area + ' · ' + ls.slot.duration, fresh: true });
-    }
-    var todo = toolCtx('todos').todos();
-    var left = todo.today.filter(function (x) { return !x.done; });
-    if (left.length) {
-      items.push({ icon: 'i-check-square',
-        title: t('notif.tasksLeft', { n: left.length }),
-        sub: t('notif.taskNext', { title: left[0].label }) });
-    }
-    var wx = toolCtx('weather').weather();
-    items.push({ icon: 'i-cloud-sun', title: t('notif.tomorrow', { city: profile.city }),
-      sub: t('weather.hilo', { hi: L.temp(wx.daily[1].hi), lo: L.temp(wx.daily[1].lo) }) +
-        ' · ' + wx.daily[1].rain + '% ' + t('weather.rain') });
-
-    host.innerHTML = items.map(function (n) {
-      return '<div class="list-row" style="cursor:default">' +
-        '<span class="list-row__icon"' + (n.fresh ? ' style="background:var(--tint-accent);color:var(--accent)"' : '') + '>' +
-          '<svg class="ico" viewBox="0 0 24 24"><use href="#' + n.icon + '"/></svg></span>' +
-        '<span class="list-row__body"><span class="list-row__title">' + esc(n.title) + '</span>' +
-        '<span class="list-row__sub">' + esc(n.sub) + '</span></span>' +
-        (n.fresh ? '<span class="list-row__end"><span class="notif-dot"></span></span>' : '') +
-      '</div>';
-    }).join('');
-  }
-
   /* ---------------------------------------------------------
      Calculator
      --------------------------------------------------------- */
@@ -1857,7 +1821,7 @@
     renderAgenda();
     renderTrains();
     renderNews();
-    renderNotifications();
+    renderNotifBadge();
     renderProfileSummary();
     initHeader();
     updatePrayer();
@@ -2651,6 +2615,12 @@
   }
 
   function closeTool() {
+    /* A detail view is a view *of* the tool, so back returns to the tool
+       before it returns to where the tool was opened from (§9). */
+    if (currentTool) {
+      var c = toolCtx(currentTool);
+      if (c && c.state('detail')) { c.setState('detail', ''); renderTool(); return; }
+    }
     /* A countdown that keeps running would announce itself from an
        unrelated screen. */
     stopClocks();
@@ -2664,6 +2634,14 @@
   goTo = function (name, quiet) {
     currentTool = null;
     toolStack.length = 0;
+    /* The centre is a destination, not a tab, so it remembers where the
+       user was and the header's back control returns them there. */
+    if (name === 'notifications') {
+      if (current !== 'notifications') notifReturnTab = current;
+      goToBase(name, quiet);
+      renderNotifCentre();
+      return;
+    }
     goToBase(name, quiet);
   };
 
@@ -2698,6 +2676,44 @@
     dc_from: 'from', dc_to: 'to', dc_days: 'days', dc_start: 'from',
     cv_amount: 'amount', uc_amount: 'amount'
   };
+
+  /* §26.11 — choosing a market persists and re-renders Markets in place. */
+  function renderMarketPicker() {
+    var host = $('#marketList');
+    if (!host) return;
+    var opts = toolCtx('markets').marketOptions();
+    host.innerHTML = opts.map(function (o) {
+      return '<button class="list-row pressable" data-market="' + esc(o.code) + '">' +
+        '<span class="list-row__icon">' +
+          '<svg class="ico" viewBox="0 0 24 24"><use href="#' +
+            (o.code === 'GLOBAL' ? 'i-globe' : 'i-trending') + '"/></svg></span>' +
+        '<span class="list-row__body">' +
+          '<span class="list-row__title">' + esc(o.name) +
+            (o.home ? ' <span class="tag tag--neutral">' + esc(t('markets.default')) + '</span>' : '') +
+          '</span>' +
+          '<span class="list-row__sub">' + esc(o.exchange) + '</span>' +
+        '</span>' +
+        '<span class="list-row__end">' +
+          '<span class="list-row__value">' + esc(o.sub) + '</span>' +
+          (o.on ? '<svg class="ico" viewBox="0 0 24 24"><use href="#i-check"/></svg>' : '') +
+        '</span></button>';
+    }).join('');
+  }
+
+  document.addEventListener('click', function (e) {
+    var row = e.target.closest('[data-market]');
+    if (!row) return;
+    var code = row.dataset.market;
+    var c = toolCtx('markets');
+    c.setState('market', code);
+    c.setState('detail', '');
+    profile.market = code;
+    saveProfile();
+    sheetClose();
+    if (currentTool === 'markets') renderTool();
+    renderLiveNow();
+    toast(t('markets.switched', { name: code === 'GLOBAL' ? t('markets.globalMarkets') : L.countryName(code) }));
+  });
 
   /* ---- the action vocabulary tool screens speak ---- */
   function toolAction(kind, arg) {
@@ -2755,6 +2771,32 @@
       return true;
     }
 
+    if (kind === 'pushallow') {
+      NOTIFY.requestPush(function (result) {
+        sheetClose();
+        if (result === 'granted') {
+          toast(t('n.push.thanks'));
+          if (pendingAlert) { toast(t('n.armed', { name: pendingAlert.entity || pendingAlert.tool })); pendingAlert = null; }
+        } else if (result === 'denied') {
+          toast(t('n.push.deniedHelp'));
+        } else {
+          toast(t('n.push.unsupported'));
+        }
+        renderNotifBadge();
+        if (current === 'notifications') renderNotifCentre();
+      });
+      return true;
+    }
+    if (kind === 'notifrestore') {
+      NOTIFY.restoreAll();
+      toast(t('n.restored'));
+      renderNotifBadge();
+      if (current === 'notifications') renderNotifCentre();
+      return true;
+    }
+    if (kind === 'notiffilter') { notifFilter = bits[0] || 'all'; renderNotifCentre(); return true; }
+    if (kind === 'notifreadall') { NOTIFY.markRead(); renderNotifCentre(); return true; }
+    if (kind === 'notify') { armAlert(bits[0], bits.slice(1).join(':')); return true; }
     if (kind === 'speedtest') { runSpeedTest(); return true; }
     if (kind === 'tasbihreset') { resetToolTasbih(); return true; }
     if (kind === 'cvswap' || kind === 'ucswap') { swapConverter(kind); return true; }
@@ -2815,6 +2857,28 @@
     if (currentTool === id) renderTool();
     renderQuickTools();
   }
+
+  /* §100.8 — a per-tool alert, asked for in context. Asking here is also
+     the right moment to ask for push permission (§100.11). */
+  function armAlert(tool, entity) {
+    var p = NOTIFY.prefs();
+    var f = feature(tool);
+    var name = f ? fname(f) : tool;
+    if (!p.cats[NOTIFY.SOURCES.filter(function (s) { return s.tool === tool; })
+        .map(function (s) { return s.cat; })[0] || 'system']) {
+      toast(t('n.catOff', { name: name }));
+      return;
+    }
+    if (NOTIFY.pushSupported() && NOTIFY.pushPermission() === 'default') {
+      sheetOpen('notifpush');
+      pendingAlert = { tool: tool, entity: entity };
+      return;
+    }
+    toast(t('n.armed', { name: entity || name }));
+    renderNotifBadge();
+  }
+
+  var pendingAlert = null;
 
   /* ---- live inputs: a calculator recomputes as you type ---- */
   var reflowTimer;
@@ -3080,7 +3144,9 @@
 
   /* ---- back ---- */
   document.addEventListener('click', function (e) {
-    if (e.target.closest('[data-tool-back]')) closeTool();
+    if (!e.target.closest('[data-tool-back]')) return;
+    if (current === 'notifications') { goTo(notifReturnTab); return; }
+    closeTool();
   });
 
   document.addEventListener('keydown', function (e) {
@@ -3148,15 +3214,303 @@
   }
 
   /* ---------------------------------------------------------
+     Notification centre  (Master Spec §100)
+
+     The engine decides what is true; this decides how it looks.
+     Tools never build a notification themselves — they declare
+     an event and the engine turns it into one.
+     --------------------------------------------------------- */
+  var NOTIFY = window.LUME_NOTIFY({
+    t: t, L: L, store: store,
+    profile: function () { return profile; },
+    ctx: function (id) { return toolCtx(id); },
+    featureFor: feature, isVisible: visible,
+    save: saveProfile,
+    open: function (link) { runAct(link); }
+  });
+
+  var notifReturnTab = 'home';
+
+  /* §100.1 — one badge, in the app header, formatted compactly. */
+  function renderNotifBadge() {
+    var n = NOTIFY.unreadCount();
+    $$('.iconbtn__badge').forEach(function (b) {
+      var host = b.parentNode;
+      if (!host || !host.matches('[data-act="tab:notifications"]')) return;
+      b.hidden = !n || !NOTIFY.prefs().badge;
+      b.textContent = n > 99 ? '99+' : String(n);
+    });
+  }
+
+  function notifRow(n) {
+    var when = n.agoMins < 1 ? t('n.now')
+      : n.agoMins < 60 ? t('n.minsAgo', { n: Math.round(n.agoMins) })
+      : n.agoMins < 1440 ? t('n.hoursAgo', { n: Math.round(n.agoMins / 60) })
+      : t('n.daysAgo', { n: Math.round(n.agoMins / 1440) });
+
+    var badge = n.priority === 'critical' ? { label: t('n.pri.critical'), tone: 'late' }
+      : n.priority === 'high' ? { label: t('n.pri.high'), tone: 'warn' } : null;
+
+    return '<article class="nrow' + (n.read ? '' : ' is-unread') + '"' +
+      ' data-notif="' + esc(n.id) + '">' +
+      '<button class="nrow__main pressable" data-notif-open="' + esc(n.id) + '">' +
+        '<span class="nrow__icon nrow__icon--' + esc(n.category) + '">' +
+          '<svg class="ico" viewBox="0 0 24 24"><use href="#' + esc(n.icon) + '"/></svg></span>' +
+        '<span class="nrow__body">' +
+          '<span class="nrow__titleline">' +
+            '<span class="nrow__title">' + esc(n.title) + '</span>' +
+            (badge ? UI.statusBadge(badge) : '') +
+          '</span>' +
+          '<span class="nrow__text">' + esc(n.body) + '</span>' +
+          '<span class="nrow__meta">' + esc(when) +
+            (n.grouped ? '' : ' · ' + esc(t(NOTIFY.category(n.category).key))) + '</span>' +
+        '</span>' +
+        (n.read ? '' : '<span class="nrow__dot" aria-label="' + esc(t('n.unread')) + '"></span>') +
+      '</button>' +
+      (n.action || !n.grouped ? '<div class="nrow__acts">' +
+        (n.action ? '<button class="nrow__act pressable" data-notif-act="' + esc(n.id) + '">' +
+          esc(t(n.action.key)) + '</button>' : '') +
+        '<button class="nrow__dismiss pressable" data-notif-dismiss="' + esc(n.id) + '"' +
+          ' aria-label="' + esc(t('n.dismiss')) + '">' +
+          '<svg class="ico" viewBox="0 0 24 24"><use href="#i-x"/></svg></button>' +
+      '</div>' : '') +
+    '</article>';
+  }
+
+  function renderNotifCentre() {
+    var head = $('#notifHeader'), body = $('#notifBody');
+    if (!head || !body) return;
+
+    var filter = notifFilter;
+    var all = NOTIFY.list('all');
+    var unread = all.filter(function (n) { return !n.read; }).length;
+    var shown = NOTIFY.grouped(NOTIFY.list(filter));
+
+    head.innerHTML = UI.toolHeader({
+      title: t('nav.notifications'),
+      sub: unread ? esc(t('n.unreadCount', { n: unread })) : esc(t('n.allRead')),
+      backLabel: t('a11y.back'),
+      actions: [
+        unread ? { id: 'read', icon: 'i-check', label: t('n.markAllRead'), act: 'notifreadall' } : null,
+        { id: 'prefs', icon: 'i-settings', label: t('n.settings'), act: 'sheet:notifprefs' }
+      ].filter(Boolean)
+    });
+
+    var TABS = [
+      { value: 'all', label: t('common.all'), count: all.length },
+      { value: 'unread', label: t('n.tab.unread'), count: unread },
+      { value: 'important', label: t('n.tab.important'),
+        count: all.filter(function (n) { return n.priorityRank >= 2; }).length }
+    ].map(function (x) { x.on = x.value === filter; x.act = 'notiffilter:' + x.value; return x; });
+
+    /* Only the categories that actually have something in them. */
+    var live = {};
+    all.forEach(function (n) { live[n.category] = (live[n.category] || 0) + 1; });
+    var catItems = [{ value: 'all', label: t('common.all'), on: ['all', 'unread', 'important'].indexOf(filter) !== -1 }]
+      .concat(NOTIFY.CATEGORIES.filter(function (c) { return live[c.id]; }).map(function (c) {
+        return { value: c.id, label: t(c.key), count: live[c.id], on: filter === c.id, icon: c.icon };
+      }));
+
+    var quiet = NOTIFY.inQuietHours()
+      ? UI.section({ body: UI.noteCard({ icon: 'i-moon', tone: 'info',
+          title: t('n.quiet.title'), text: t('n.quiet.text') }) })
+      : '';
+
+    body.innerHTML =
+      UI.section({ flush: true, body: UI.tabs({ id: 'notiftabs', label: t('nav.notifications'), items: TABS }) }) +
+      (catItems.length > 1
+        ? UI.section({ body: UI.filterBar([{ id: 'cat', label: t('n.category'),
+            items: catItems.map(function (i) {
+              i.act = 'notiffilter:' + i.value; return i;
+            }) }]) })
+        : '') +
+      quiet +
+      (shown.length
+        ? UI.section({ body: '<div class="nlist">' + shown.map(notifRow).join('') + '</div>' })
+        : UI.section({ body: UI.emptyState({
+            icon: filter === 'unread' ? 'i-check-circle' : 'i-bell',
+            title: filter === 'unread' ? t('n.empty.caughtUp') : t('n.empty.title'),
+            text: t('n.empty.text') }) })) +
+      UI.section({ body: UI.rows([
+        UI.compactRow({ icon: 'i-settings', label: t('n.settings'),
+          value: NOTIFY.pushEnabled() ? t('n.push.on') : t('n.push.off'), act: 'sheet:notifprefs' })
+      ]) });
+
+    applyStrings(body);
+    renderNotifBadge();
+  }
+
+  var notifFilter = 'all';
+
+  /* §100.9 — general, categories, per-tool types, quiet hours, privacy. */
+  function renderNotifPrefs() {
+    var host = $('#notifPrefsBody');
+    if (!host) return;
+    var p = NOTIFY.prefs();
+
+    function toggle(key, label, sub, on) {
+      return '<button class="list-row pressable" data-npref="' + esc(key) + '">' +
+        '<span class="list-row__body">' +
+          '<span class="list-row__title">' + esc(label) + '</span>' +
+          (sub ? '<span class="list-row__sub">' + esc(sub) + '</span>' : '') +
+        '</span>' +
+        '<span class="list-row__end"><span class="switch' + (on ? ' is-on' : '') +
+          '"><i class="switch__knob"></i></span></span></button>';
+    }
+
+    var pushState = NOTIFY.pushPermission();
+    var pushSub = pushState === 'granted' ? t('n.push.granted')
+      : pushState === 'denied' ? t('n.push.denied')
+      : pushState === 'unsupported' ? t('n.push.unsupported')
+      : t('n.push.ask');
+
+    /* Only the tools the user can actually see (§64). */
+    var byTool = {};
+    NOTIFY.SOURCES.forEach(function (src) {
+      var f = feature(src.tool);
+      if (!f || !visible(f)) return;
+      (byTool[src.tool] = byTool[src.tool] || []).push(src);
+    });
+
+    host.innerHTML =
+      UI.sectionHead({ title: t('n.pref.general') }) +
+      '<div class="list">' +
+        toggle('push', t('n.pref.push'), pushSub, p.push && pushState === 'granted') +
+        toggle('inApp', t('n.pref.inApp'), t('n.pref.inAppSub'), p.inApp) +
+        toggle('sound', t('n.pref.sound'), null, p.sound) +
+        toggle('haptics', t('n.pref.haptics'), null, p.haptics) +
+        toggle('badge', t('n.pref.badge'), t('n.pref.badgeSub'), p.badge) +
+      '</div>' +
+
+      UI.sectionHead({ title: t('n.pref.categories'), sub: t('n.pref.categoriesSub') }) +
+      '<div class="list">' + NOTIFY.CATEGORIES.filter(function (c) {
+        if (c.faith && !profile.islamic) return false;
+        return NOTIFY.SOURCES.some(function (src) {
+          var f = feature(src.tool);
+          return src.cat === c.id && f && visible(f);
+        });
+      }).map(function (c) {
+        return toggle('cat:' + c.id, t(c.key), null, p.cats[c.id] !== false);
+      }).join('') + '</div>' +
+
+      UI.sectionHead({ title: t('n.pref.perTool'), sub: t('n.pref.perToolSub') }) +
+      Object.keys(byTool).map(function (tool) {
+        var f = feature(tool);
+        return '<p class="npref__tool">' + esc(fname(f)) + '</p><div class="list">' +
+          byTool[tool].map(function (src) {
+            return toggle('type:' + src.id, t('ntype.' + src.type), null, p.types[src.id] !== false);
+          }).join('') + '</div>';
+      }).join('') +
+
+      UI.sectionHead({ title: t('n.pref.quiet'), sub: t('n.pref.quietSub') }) +
+      '<div class="list">' +
+        toggle('quiet', t('n.pref.quietOn'),
+          L.time(p.quietFrom, 0) + ' – ' + L.time(p.quietTo, 0), p.quiet) +
+        '<div class="list-row" style="cursor:default">' +
+          '<span class="list-row__body"><span class="list-row__title">' + esc(t('n.pref.quietWindow')) + '</span></span>' +
+          '<span class="list-row__end">' + UI.stepper({ name: 'quietFrom', value: L.time(p.quietFrom, 0), label: t('n.pref.from') }) + '</span>' +
+        '</div>' +
+      '</div>' +
+
+      UI.sectionHead({ title: t('n.pref.privacy'), sub: t('n.pref.privacySub') }) +
+      '<div class="list">' +
+        toggle('preview', t('n.pref.preview'), t('n.pref.previewSub'), p.preview) +
+        toggle('sensitivePreview', t('n.pref.sensitive'), t('n.pref.sensitiveSub'), p.sensitivePreview) +
+      '</div>' +
+
+      '<div class="btnrow" style="margin-top:20px">' +
+        UI.button({ label: t('n.pref.restore'), icon: 'i-refresh', act: 'notifrestore' }) +
+      '</div>';
+
+    applyStrings(host);
+  }
+
+  document.addEventListener('click', function (e) {
+    var row = e.target.closest('[data-npref]');
+    if (!row) return;
+    var key = row.dataset.npref;
+    var p = NOTIFY.prefs();
+
+    if (key === 'push') {
+      if (NOTIFY.pushPermission() === 'default') { sheetOpen('notifpush'); return; }
+      if (NOTIFY.pushPermission() === 'denied') { toast(t('n.push.deniedHelp')); return; }
+      if (NOTIFY.pushPermission() === 'unsupported') { toast(t('n.push.unsupported')); return; }
+      p.push = !p.push;
+    } else if (key.indexOf('cat:') === 0) {
+      var cid = key.slice(4);
+      p.cats[cid] = p.cats[cid] === false;
+    } else if (key.indexOf('type:') === 0) {
+      var tid = key.slice(5);
+      p.types[tid] = p.types[tid] === false;
+    } else {
+      p[key] = !p[key];
+    }
+    saveProfile();
+    renderNotifPrefs();
+    renderNotifBadge();
+    if (current === 'notifications') renderNotifCentre();
+  });
+
+  /* §100.11 — the education flow names what the user would actually get,
+     drawn from the tools they can see, then asks the system. */
+  function renderPushAsk() {
+    var host = $('#pushAskList');
+    if (!host) return;
+    var seen = {}, items = [];
+    NOTIFY.SOURCES.forEach(function (src) {
+      var f = feature(src.tool);
+      if (!f || !visible(f) || seen[src.cat]) return;
+      seen[src.cat] = 1;
+      items.push({ icon: NOTIFY.category(src.cat).icon, label: t(NOTIFY.category(src.cat).key) });
+    });
+    host.innerHTML = items.slice(0, 6).map(function (i) {
+      return '<li class="pushask__item">' +
+        '<svg class="ico" viewBox="0 0 24 24"><use href="#' + i.icon + '"/></svg>' +
+        esc(i.label) + '</li>';
+    }).join('');
+  }
+
+
+  /* §100.4 — a notification knows where it goes, and reading it marks it. */
+  document.addEventListener('click', function (e) {
+    var open = e.target.closest('[data-notif-open]');
+    if (open) {
+      var id = open.dataset.notifOpen;
+      var n = NOTIFY.list('all').concat(NOTIFY.grouped(NOTIFY.list('all')))
+        .filter(function (x) { return x.id === id; })[0];
+      NOTIFY.markRead(id);
+      if (n && n.items) { n.items.forEach(function (x) { NOTIFY.markRead(x.id); }); renderNotifCentre(); return; }
+      if (n && n.deepLink) runAct(n.deepLink);
+      else renderNotifCentre();
+      return;
+    }
+    var act = e.target.closest('[data-notif-act]');
+    if (act) {
+      var aid = act.dataset.notifAct;
+      var an = NOTIFY.list('all').filter(function (x) { return x.id === aid; })[0];
+      NOTIFY.markRead(aid);
+      if (an && an.action) runAct(an.action.act);
+      return;
+    }
+    var gone = e.target.closest('[data-notif-dismiss]');
+    if (gone) {
+      NOTIFY.dismiss(gone.dataset.notifDismiss);
+      renderNotifCentre();
+    }
+  });
+
+  /* ---------------------------------------------------------
      Boot
      --------------------------------------------------------- */
   ensureExploreBack();
   applyWidth();
+  renderNotifBadge();
   tickClock();
   renderAll();
   updateDayRing();
 
   setInterval(tickClock, 15000);
+  setInterval(renderNotifBadge, 60000);
   setInterval(function () { updatePrayer(); }, 1000);
   setInterval(updateDayRing, 60000);
 

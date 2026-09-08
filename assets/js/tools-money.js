@@ -23,123 +23,161 @@
   function dirOf(n) { return n > 0 ? 'up' : n < 0 ? 'down' : 'flat'; }
 
   /* ---------------------------------------------------------
-     §26 Markets — financial data explorer, very high density
+     §26 Markets — built to the approved reference composition
+     (§26.13, §123), not inferred from the archetype:
+
+       context → classnav → hero → assets → overview
+
+     The market-type control leads the content. The indices list
+     is one class within it, not the body of the screen.
      --------------------------------------------------------- */
   T.register('markets', function (c) {
+    /* §26.9 — an asset detail is a view of this tool, reached by
+       selecting a row and left with the header's back control. */
+    var detail = c.state('detail');
+    if (detail) return marketDetail(c, detail);
+
     var ex = c.exchange();
-    var session = c.marketSession(ex);
-    var tab = c.state('tab') || 'overview';
+    var st = c.marketState(ex);
+    var classes = c.assetClasses();
+    var cls = c.filter('class', 'stocks');
+    if (!classes.some(function (k) { return k.id === cls; })) cls = 'stocks';
 
-    var header = UI.section({ flush: true, body: UI.contextBar([
-      { icon: 'i-globe', label: ex ? ex.code : c.t('markets.global'), act: 'sheet:personalise' },
-      { label: ex ? ex.name : c.t('markets.worldBoard') },
-      { label: c.L.currencyCode() }
-    ]) });
+    var range = c.filter('range', '1D');
+    var query = (c.state('q') || '').trim().toLowerCase();
+    var hero = c.heroAsset(cls);
 
-    /* Market status strip — session, breadth and turnover, which is what
-       a trader reads before any individual row. */
-    var status = UI.section({ body: UI.card(
-      '<div class="mstat">' +
-        '<div class="mstat__lead">' +
-          UI.freshness({ quality: session.open ? 'live' : 'cached', label: session.label }) +
-          '<p class="mstat__hours">' + UI.esc(session.hours) + '</p>' +
-        '</div>' +
-        '<div class="mstat__breadth">' +
-          '<span class="mstat__bar"><i style="width:' + session.advPct + '%"></i></span>' +
-          '<span class="mstat__legend">' +
-            '<b class="is-up">' + session.adv + ' ' + UI.esc(c.t('markets.advancing')) + '</b>' +
-            '<b class="is-down">' + session.dec + ' ' + UI.esc(c.t('markets.declining')) + '</b>' +
-          '</span>' +
+    /* ---------- 1. context (§26.1) ---------- */
+    var context = UI.section({ id: 'context', flush: true, body:
+      UI.contextBar([
+        { icon: 'i-globe', label: ex ? ex.code : c.t('markets.global'), act: 'sheet:market' },
+        { label: ex ? ex.name : c.t('markets.worldBoard') },
+        { label: ex ? ex.ccy : c.L.currencyCode() }
+      ]) +
+      '<div class="mktstate mktstate--' + st.key + '">' +
+        UI.freshness({ quality: st.quality, label: st.label }) +
+        (st.detail ? '<span class="mktstate__detail">' + UI.esc(st.detail) + '</span>' : '') +
+        '<button class="mktstate__change pressable" data-act="sheet:market">' +
+          UI.esc(c.t('markets.change')) + UI.ico('i-chev-r') + '</button>' +
+      '</div>' });
+
+    /* ---------- 2. the primary control (§26.2) ---------- */
+    var classnav = UI.section({ id: 'classnav', flush: true, body:
+      UI.tabs({ id: 'assetclass', label: c.t('markets.assetClass'),
+        items: classes.map(function (k) {
+          return { value: k.id, label: k.label, on: k.id === cls,
+            act: 'toolstate:markets:class:' + k.id };
+        }) }) });
+
+    /* ---------- 3. hero + chart + timeframe (§26.3) ---------- */
+    var RANGES = ['1D', '1W', '1M', '3M', '1Y', '5Y'];
+    var RANGE_N = { '1D': 44, '1W': 56, '1M': 62, '3M': 70, '1Y': 78, '5Y': 90 };
+    var RANGE_V = { '1D': 0.004, '1W': 0.009, '1M': 0.016, '3M': 0.024, '1Y': 0.034, '5Y': 0.05 };
+
+    var heroSection = hero ? UI.section({ id: 'hero', body: UI.card(
+      '<button class="mkthero__top pressable" data-act="toolstate:markets:detail:' + cls + '|' + UI.esc(hero.sym) + '">' +
+        '<span class="mkthero__logo mkthero__logo--' + UI.esc(hero.tone || 'accent') + '">' +
+          UI.esc(hero.logo) + '</span>' +
+        '<span class="mkthero__id">' +
+          '<span class="mkthero__name">' + UI.esc(hero.name) + '</span>' +
+          '<span class="mkthero__sub">' + UI.esc(hero.sub || '') + '</span>' +
+        '</span>' +
+        UI.ico('i-chev-r', 'ico mkthero__go') +
+      '</button>' +
+      '<div class="mkthero__quote">' +
+        '<p class="mkthero__value">' + c.moneyRaw(hero.price, hero.ccy, priceDp(hero)) + '</p>' +
+        '<p class="mkthero__delta">' + UI.delta({ dir: dirOf(hero.pct),
+          text: c.signed(hero.chg, priceDp(hero)) + '  (' + c.pct(hero.pct) + ')' }) + '</p>' +
+      '</div>' +
+      UI.lineChart({
+        values: D.walk(Math.round(hero.price * 100), RANGE_N[range], hero.price, RANGE_V[range]),
+        labels: [], tone: dirOf(hero.pct), h: 120, label: hero.name
+      }) +
+      '<div class="mktrange">' + RANGES.map(function (r) {
+        return '<button class="mktrange__btn' + (r === range ? ' is-on' : '') +
+          '" aria-pressed="' + (r === range ? 'true' : 'false') +
+          '" data-act="toolstate:markets:range:' + r + '">' + UI.esc(r) + '</button>';
+      }).join('') + '</div>', { cls: 'kard--mkthero' }) }) : '';
+
+    /* ---------- 4. top assets (§26.4) ---------- */
+    var all = c.assetsFor(cls);
+    var filtered = all.filter(function (a) {
+      if (!query) return true;
+      return (a.sym + ' ' + a.name + ' ' + (a.sub || '')).toLowerCase().indexOf(query) !== -1;
+    });
+
+    var move = c.filter('move', 'all');
+    if (move === 'gainers') filtered = filtered.filter(function (a) { return a.pct > 0; });
+    if (move === 'losers') filtered = filtered.filter(function (a) { return a.pct < 0; });
+    if (cls === 'commodities' && move !== 'all' && D.COMMODITY_CATS.indexOf(move) !== -1) {
+      filtered = all.filter(function (a) { return a.cat === move; });
+    }
+    if (cls === 'forex' && (move === 'major' || move === 'minor')) {
+      filtered = all.filter(function (a) { return a.fxKind === move; });
+    }
+
+    var ordered = c.sortBy(filtered, {
+      pct: function (a) { return a.pct; },
+      price: function (a) { return a.price; },
+      vol: function (a) { return volNum(a.vol); },
+      cap: function (a) { return capNum(a.cap); },
+      name: function (a) { return a.name; }
+    }, 'pct', 'desc');
+
+    var showAll = c.state('showAll') === 'true';
+    var visible = showAll ? ordered : ordered.slice(0, 5);
+
+    var assetsSection = UI.section({
+      id: 'assets',
+      title: c.t('markets.top.' + cls) === 'markets.top.' + cls ? c.t('markets.topAssets') : c.t('markets.top.' + cls),
+      link: ordered.length > 5
+        ? { label: showAll ? c.t('markets.showLess') : c.t('markets.seeAll'),
+            act: 'toolstate:markets:showAll:' + (showAll ? 'false' : 'true') }
+        : null,
+      body: visible.length
+        ? UI.rows(visible.map(function (a, i) { return assetRow(c, a, i, cls); }))
+        : UI.emptyState({ icon: 'i-search',
+            title: query ? c.t('markets.noMatch', { q: query }) : c.t('markets.noAssets'),
+            text: query ? c.t('markets.noMatchText') : c.t('markets.noAssetsText'),
+            action: query ? null : { label: c.t('markets.change'), act: 'sheet:market', icon: 'i-globe' } })
+    });
+
+    /* ---------- 5. market overview (§26.5) ---------- */
+    var ov = ex ? D.overviewFor(c.marketCode()) : null;
+    var overviewSection = ov ? UI.section({ id: 'overview', title: c.t('markets.overview'), body: UI.card(
+      '<div class="mktov">' +
+        ovCell(c, c.t('markets.totalCap'), c.L.compactMoney(ov.cap, ex.ccy), ov.capPct) +
+        ovCell(c, c.t('markets.volume'), c.L.compact(ov.volume), ov.volPct) +
+        '<div class="mktov__cell">' +
+          '<span class="mktov__label">' + UI.esc(c.t('markets.advDec')) + '</span>' +
+          '<span class="mktov__value"><b class="is-up">↑ ' + c.num(ov.adv) + '</b>' +
+            ' <i>/</i> <b class="is-down">↓ ' + c.num(ov.dec) + '</b></span>' +
+          '<span class="mktov__sub">' + c.num(ov.unch) + ' ' + UI.esc(c.t('markets.unchanged')) + '</span>' +
         '</div>' +
       '</div>' +
+      '<div class="mktbreadth">' +
+        '<span class="mktbreadth__bar"><i style="width:' +
+          Math.round(ov.adv / (ov.adv + ov.dec + ov.unch) * 100) + '%"></i>' +
+          '<u style="width:' + Math.round(ov.unch / (ov.adv + ov.dec + ov.unch) * 100) + '%"></u></span>' +
+        '<span class="mktbreadth__label">' + UI.esc(c.t('markets.breadth')) + '</span>' +
+      '</div>' +
       UI.metrics([
-        { value: session.turnover, label: c.t('markets.turnover') },
-        { value: session.volume, label: c.t('markets.volume') },
-        { value: session.trades, label: c.t('markets.trades') }
-      ], 3)) });
+        { value: c.L.compactMoney(ov.turnover, ex.ccy), label: c.t('markets.turnover') },
+        { value: c.num(ov.trades), label: c.t('markets.trades') },
+        { value: c.pct(ov.capPct), label: c.t('markets.capMove') }
+      ], 3)) }) : '';
 
-    /* §26 index rows: logo, index, market, value, absolute change,
-       percentage change and a sparkline — all of it, because it exists. */
-    var indices = ex ? ex.indices : D.GLOBAL_INDICES;
-    var indexRows = UI.section({ title: c.t('markets.indices'),
-      body: UI.rows(indices.map(function (ix, i) {
-        var series = D.walk(ix.value + i, 24, ix.value, 0.006);
-        return UI.richRow({
-          logo: ix.sym.slice(0, 3), logoTone: 'var(--tint-accent)',
-          title: ix.name,
-          sub: ix.full,
-          meta: [ex ? ex.name : c.t('markets.worldBoard')],
-          spark: UI.sparkline(series, { tone: dirOf(ix.pct) }),
-          value: c.num(ix.value, { minimumFractionDigits: 2, maximumFractionDigits: 2 }),
-          delta: { dir: dirOf(ix.pct), text: c.signed(ix.chg) + '  ' + c.pct(ix.pct) },
-          act: 'toast:' + ix.name + ' ' + c.pct(ix.pct), chevron: false
-        });
-      })) });
+    /* ---------- supporting sections, below the binding ones ---------- */
+    var controls =
+      UI.section({ body: UI.searchBar({ placeholder: c.t('markets.search'),
+        target: 'markets', value: c.state('q') || '' }) }) +
+      UI.section({ body: UI.filterBar([{ id: 'move', label: c.t('markets.filter'),
+        items: filterItems(c, cls, move) }], 'markets') }) +
+      UI.section({ body: UI.sortBar({ tool: 'markets', label: c.t('common.sort'),
+        items: c.sortItems(sortDims(c, cls), 'pct', 'desc') }) });
 
-    var TABS = [
-      { value: 'overview', label: c.t('markets.tab.overview') },
-      { value: 'movers', label: c.t('markets.tab.movers') },
-      { value: 'watchlist', label: c.t('markets.tab.watchlist'), count: 4 },
-      { value: 'stocks', label: c.t('markets.tab.stocks') },
-      { value: 'etfs', label: c.t('markets.tab.etfs') },
-      { value: 'crypto', label: c.t('markets.tab.crypto') },
-      { value: 'global', label: c.t('markets.tab.global') }
-    ].map(function (x) { x.on = x.value === tab; x.act = 'toolstate:markets:tab:' + x.value; return x; });
-
-    /* One rich row shape, filled from whatever the dataset carries. */
-    function securityRow(s, i, ccy) {
-      var series = D.walk(Math.round(s.price * 100) + i, 20, s.price, 0.02);
-      return UI.richRow({
-        logo: s.logo, logoTone: 'var(--tone-' + (s.tone || 'slate') + ')',
-        title: s.sym,
-        sub: s.name,
-        meta: [ex ? ex.code : c.t('markets.global'), s.sectorKey ? c.t(s.sectorKey) : '', s.vol ? c.t('markets.vol') + ' ' + s.vol : '',
-               s.cap ? c.t('markets.cap') + ' ' + s.cap : ''],
-        spark: UI.sparkline(series, { tone: dirOf(s.pct) }),
-        value: c.moneyRaw(s.price, ccy, s.price < 10 ? 2 : 2),
-        valueSub: ccy,
-        delta: { dir: dirOf(s.pct), text: c.signed(s.chg) + '  ' + c.pct(s.pct) },
-        act: 'toast:' + s.name + ' · ' + c.moneyRaw(s.price, ccy, 2) + ' ' + c.pct(s.pct)
-      });
-    }
-
-    var stocks = ex ? ex.stocks : D.ETFS;
-    var ccy = ex ? ex.ccy : 'USD';
-    var listBody, listTitle;
-
-    /* Search, then sort — both read from the tool's own state, so the
-       controls above the list are the ones driving it (§87, §89). */
-    var query = (c.state('q') || '').trim().toLowerCase();
-    function searched(list) {
-      if (!query) return list;
-      return list.filter(function (x) {
-        return (x.sym + ' ' + x.name + ' ' + (x.sector || '')).toLowerCase().indexOf(query) !== -1;
-      });
-    }
-    var SORTS = {
-      pct: function (x) { return x.pct; },
-      price: function (x) { return x.price; },
-      vol: function (x) { return parseFloat(x.vol) * (/B/.test(x.vol || '') ? 1000 : 1); },
-      cap: function (x) { return parseFloat(x.cap) * (/T/.test(x.cap || '') ? 1e6 : /B/.test(x.cap || '') ? 1000 : 1); }
-    };
-    function ordered(list) { return c.sortBy(searched(list), SORTS, 'pct', 'desc'); }
-
-    if (tab === 'movers') {
-      var sorted = searched(stocks).slice().sort(function (a, b) { return b.pct - a.pct; });
-      listTitle = c.t('markets.tab.movers');
-      listBody = UI.sectionHead({ title: c.t('markets.gainers') }) +
-        UI.rows(sorted.slice(0, 3).map(function (s, i) { return securityRow(s, i, ccy); })) +
-        UI.sectionHead({ title: c.t('markets.losers') }) +
-        UI.rows(sorted.slice(-3).reverse().map(function (s, i) { return securityRow(s, i + 90, ccy); }));
-    } else if (tab === 'crypto') {
-      listTitle = c.t('markets.tab.crypto');
-      listBody = UI.rows(ordered(D.CRYPTO).map(function (s, i) { return securityRow(s, i, 'USD'); }));
-    } else if (tab === 'etfs') {
-      listTitle = c.t('markets.tab.etfs');
-      listBody = UI.rows(ordered(D.ETFS).map(function (s, i) { return securityRow(s, i, 'USD'); }));
-    } else if (tab === 'global') {
-      listTitle = c.t('markets.tab.global');
-      listBody = UI.rows(D.GLOBAL_INDICES.map(function (ix, i) {
+    var world = cls !== 'indices' ? '' : UI.section({ title: c.t('markets.tab.global'),
+      body: UI.rows(D.GLOBAL_INDICES.map(function (ix, i) {
         return UI.richRow({
           logo: ix.sym.slice(0, 3), logoTone: 'var(--tint-neutral)',
           title: ix.name, sub: ix.full,
@@ -147,57 +185,162 @@
           value: c.num(ix.value, { maximumFractionDigits: 2 }),
           delta: { dir: dirOf(ix.pct), text: c.pct(ix.pct) }
         });
-      }));
-    } else if (tab === 'watchlist') {
-      listTitle = c.t('markets.tab.watchlist');
-      var watch = ordered(stocks.slice(0, 4));
-      listBody = watch.length
-        ? UI.rows(watch.map(function (s, i) { return securityRow(s, i, ccy); }))
-        : UI.emptyState({ icon: 'i-star', title: c.t('markets.watch.empty'), text: c.t('markets.watch.emptyText'),
-            action: { label: c.t('markets.watch.add'), act: 'toolstate:markets:tab:stocks' } });
-    } else {
-      listTitle = c.t('markets.mostActive');
-      var rows = ordered(stocks);
-      listBody = rows.length
-        ? UI.rows(rows.map(function (s, i) { return securityRow(s, i, ccy); }))
-        : UI.emptyState({ icon: 'i-search', title: c.t('markets.noMatch', { q: query }),
-            text: c.t('markets.noMatchText') });
-    }
-
-    var chartIndex = indices[0];
-    var range = c.state('range') || '1d';
-    var RANGE_POINTS = { '1d': 40, '1w': 56, '1m': 60, '1y': 72 };
-    var RANGE_VOL = { '1d': 0.004, '1w': 0.009, '1m': 0.016, '1y': 0.03 };
-    var chart = UI.section({ title: c.t('markets.chart', { name: chartIndex.name }), body: UI.card(
-      UI.segmented({ id: 'range', label: c.t('markets.range'), tool: 'markets',
-        items: [
-          { value: '1d', label: c.t('range.1d') }, { value: '1w', label: c.t('range.1w') },
-          { value: '1m', label: c.t('range.1m') }, { value: '1y', label: c.t('range.1y') }
-        ].map(function (r) { r.on = r.value === range; return r; }) }) +
-      UI.lineChart({
-        values: D.walk(chartIndex.value, RANGE_POINTS[range], chartIndex.value, RANGE_VOL[range]),
-        labels: range === '1d'
-          ? [session.openLabel, c.time(12, 0), session.closeLabel]
-          : [c.t('range.' + range), '', c.t('common.now')],
-        tone: dirOf(chartIndex.pct),
-        label: chartIndex.name,
-        caption: '<b>' + c.num(chartIndex.value, { maximumFractionDigits: 2 }) + '</b> ' +
-          UI.delta({ dir: dirOf(chartIndex.pct), text: c.signed(chartIndex.chg) + ' ' + c.pct(chartIndex.pct) })
       })) });
 
-    return header + status + indexRows +
-      UI.section({ body: UI.searchBar({ placeholder: c.t('markets.search'), target: 'markets', value: c.state('q') || '' }) }) +
-      UI.section({ flush: true, body: UI.tabs({ id: 'markets', items: TABS }) }) +
-      UI.section({ body: UI.sortBar({ label: c.t('common.sort'), tool: 'markets',
-        items: c.sortItems([
-          { value: 'pct', label: c.t('markets.sort.change') },
-          { value: 'price', label: c.t('markets.sort.price') },
-          { value: 'vol', label: c.t('markets.sort.volume') },
-          { value: 'cap', label: c.t('markets.sort.cap') }
-        ], 'pct', 'desc') }) }) +
-      UI.section({ title: listTitle, body: listBody }) +
-      chart;
+    return context + classnav + heroSection + assetsSection + overviewSection +
+           controls + world;
   });
+
+  /* §26.4 — one rich row shape, filled from whatever the class carries. */
+  function assetRow(c, a, i, cls) {
+    var meta = [a.exchange];
+    if (a.sectorKey) meta.push(c.t(a.sectorKey));
+    if (a.vol) meta.push(c.t('markets.vol') + ' ' + a.vol);
+    if (a.cap) meta.push(c.t('markets.cap') + ' ' + a.cap);
+    if (a.unit) meta.push(c.t('markets.per', { unit: a.unit }));
+    if (a.contract) meta.push(a.contract);
+    if (a.fxKind) meta.push(c.t('markets.fx.' + a.fxKind));
+
+    return UI.richRow({
+      logo: a.logo, logoTone: 'var(--tone-' + (a.tone || 'slate') + ')',
+      title: a.sym,
+      sub: a.name,
+      meta: meta,
+      spark: UI.sparkline(D.walk(Math.round(a.price * 100) + i, 20, a.price,
+        a.kind === 'fx' ? 0.003 : 0.02), { tone: dirOf(a.pct) }),
+      value: c.moneyRaw(a.price, a.ccy, priceDp(a)),
+      valueSub: a.ccy,
+      delta: { dir: dirOf(a.pct), text: c.pct(a.pct) },
+      act: 'toolstate:markets:detail:' + cls + '|' + a.sym
+    });
+  }
+
+  /* §26.9 — the detail screen. */
+  function marketDetail(c, token) {
+    var parts = String(token).split('|');
+    var cls = parts[0], sym = parts.slice(1).join('|');
+    var d = c.assetDetail(cls, sym);
+    if (!d) return UI.section({ body: UI.emptyState({ icon: 'i-search',
+      title: c.t('markets.noAsset'), text: c.t('markets.noAssetText'),
+      action: { label: c.t('common.back'), act: 'toolstate:markets:detail:', icon: 'i-chev-l' } }) });
+
+    var a = d.asset, f = d.f, dp = priceDp(a);
+    var range = c.filter('range', '1D');
+    var RANGES = ['1D', '1W', '1M', '3M', '1Y', '5Y'];
+
+    var rows = [
+      [c.t('markets.open'), c.moneyRaw(f.open, a.ccy, dp)],
+      [c.t('markets.high'), c.moneyRaw(f.high, a.ccy, dp)],
+      [c.t('markets.low'), c.moneyRaw(f.low, a.ccy, dp)],
+      [c.t('markets.prevClose'), c.moneyRaw(f.prevClose, a.ccy, dp)]
+    ];
+    if (a.vol) rows.push([c.t('markets.volume'), a.vol]);
+    if (a.cap) rows.push([c.t('markets.cap'), a.cap]);
+    if (a.unit) rows.push([c.t('markets.unit'), a.unit]);
+    if (a.contract) rows.push([c.t('markets.contract'), a.contract]);
+    rows.push([c.t('markets.high52'), c.moneyRaw(f.high52, a.ccy, dp)]);
+    rows.push([c.t('markets.low52'), c.moneyRaw(f.low52, a.ccy, dp)]);
+
+    return UI.section({ flush: true, body: UI.contextBar([
+        { icon: 'i-chev-l', label: c.t('markets.backToMarkets'), act: 'toolstate:markets:detail:' },
+        { label: a.exchange }
+      ]) }) +
+      UI.section({ body: UI.card(
+        '<div class="mkthero__top">' +
+          '<span class="mkthero__logo mkthero__logo--' + UI.esc(a.tone || 'slate') + '">' +
+            UI.esc(a.logo) + '</span>' +
+          '<span class="mkthero__id">' +
+            '<span class="mkthero__name">' + UI.esc(a.sym) + '</span>' +
+            '<span class="mkthero__sub">' + UI.esc(a.name) + '</span>' +
+          '</span>' +
+        '</div>' +
+        '<div class="mkthero__quote">' +
+          '<p class="mkthero__value">' + c.moneyRaw(a.price, a.ccy, dp) + '</p>' +
+          '<p class="mkthero__delta">' + UI.delta({ dir: dirOf(a.pct),
+            text: c.signed(a.chg, dp) + '  (' + c.pct(a.pct) + ')' }) + '</p>' +
+        '</div>' +
+        UI.lineChart({ values: d.series, labels: [], tone: dirOf(a.pct), h: 148, label: a.name }) +
+        '<div class="mktrange">' + RANGES.map(function (r) {
+          return '<button class="mktrange__btn' + (r === range ? ' is-on' : '') +
+            '" aria-pressed="' + (r === range ? 'true' : 'false') +
+            '" data-act="toolstate:markets:range:' + r + '">' + UI.esc(r) + '</button>';
+        }).join('') + '</div>', { cls: 'kard--mkthero' }) }) +
+      UI.section({ title: c.t('markets.fundamentals'), body: UI.table({
+        label: c.t('markets.fundamentals'),
+        cols: [{ label: c.t('common.field') }, { label: c.t('common.value'), align: 'right' }],
+        rows: rows.map(function (r) { return { cells: [UI.esc(r[0]), r[1]] }; })
+      }) }) +
+      (a.kind === 'fx' ? UI.section({ title: c.t('markets.convert'), body: UI.card(
+        UI.formGrid([
+          UI.field({ label: a.sub.split(' / ')[0], name: 'mk_amount', type: 'number', value: 100 }),
+          UI.field({ label: a.sub.split(' / ')[1], name: 'mk_out',
+            value: c.num(100 * a.price, { maximumFractionDigits: 2 }) })
+        ])) }) : '') +
+      UI.section({ title: c.t('markets.related'), body: UI.rows(
+        c.assetsFor(cls).filter(function (x) { return x.sym !== a.sym; }).slice(0, 3)
+          .map(function (x, i) { return assetRow(c, x, i + 40, cls); })) }) +
+      UI.section({ body: UI.buttonRow([
+        { label: c.t('markets.alert'), tone: 'accent', icon: 'i-bell', act: 'notify:markets:' + a.sym },
+        { label: c.t('common.share'), icon: 'i-share', act: 'share:markets' }
+      ]) });
+  }
+
+  function filterItems(c, cls, move) {
+    var items = [{ value: 'all', label: c.t('common.all'), on: move === 'all' }];
+    if (cls === 'commodities') {
+      D.COMMODITY_CATS.forEach(function (cat) {
+        items.push({ value: cat, label: c.t('markets.cm.' + cat), on: move === cat });
+      });
+      return items;
+    }
+    if (cls === 'forex') {
+      items.push({ value: 'major', label: c.t('markets.fx.major'), on: move === 'major' });
+      items.push({ value: 'minor', label: c.t('markets.fx.minor'), on: move === 'minor' });
+      return items;
+    }
+    items.push({ value: 'gainers', label: c.t('markets.gainers'), on: move === 'gainers' });
+    items.push({ value: 'losers', label: c.t('markets.losers'), on: move === 'losers' });
+    return items;
+  }
+
+  function sortDims(c, cls) {
+    var dims = [
+      { value: 'pct', label: c.t('markets.sort.change') },
+      { value: 'price', label: c.t('markets.sort.price') },
+      { value: 'name', label: c.t('common.name') }
+    ];
+    if (cls === 'stocks' || cls === 'crypto' || cls === 'etfs') {
+      dims.splice(2, 0, { value: 'vol', label: c.t('markets.sort.volume') });
+      dims.splice(3, 0, { value: 'cap', label: c.t('markets.sort.cap') });
+    }
+    return dims;
+  }
+
+  function ovCell(c, label, value, pct) {
+    return '<div class="mktov__cell">' +
+      '<span class="mktov__label">' + UI.esc(label) + '</span>' +
+      '<span class="mktov__value">' + value + '</span>' +
+      '<span class="mktov__sub">' + UI.delta({ dir: dirOf(pct), text: c.pct(pct) }) + '</span>' +
+    '</div>';
+  }
+
+  function priceDp(a) {
+    if (a.decimals !== undefined) return a.decimals;
+    if (a.kind === 'index') return 2;
+    return a.price < 10 ? 2 : 2;
+  }
+
+  function volNum(v) {
+    if (!v) return 0;
+    var n = parseFloat(v);
+    return n * (/B/.test(v) ? 1e9 : /M/.test(v) ? 1e6 : 1);
+  }
+
+  function capNum(v) {
+    if (!v) return 0;
+    var n = parseFloat(v);
+    return n * (/T/.test(v) ? 1e12 : /B/.test(v) ? 1e9 : /M/.test(v) ? 1e6 : 1);
+  }
 
   /* ---------------------------------------------------------
      §25.1 Currency & Gold — data explorer

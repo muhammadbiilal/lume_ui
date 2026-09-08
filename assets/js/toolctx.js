@@ -468,7 +468,163 @@ window.LUME_CTX = function (deps) {
   /* ---------------------------------------------------------
      Money
      --------------------------------------------------------- */
-  function exchange() { return D.exchangeFor(P().country); }
+  /* §26.11 — the market the user is looking at, which is their own country
+     until they change it, and then whatever they chose. */
+  function marketCode() {
+    var s = stateFor('markets');
+    return s.market || P().market || P().country;
+  }
+
+  function exchange() {
+    var code = marketCode();
+    return code === 'GLOBAL' ? null : D.exchangeFor(code);
+  }
+
+  /* §26.2 — the classes this market can actually show. */
+  function assetClasses() {
+    var ex = exchange();
+    var out = [
+      { id: 'stocks', label: t('markets.tab.stocks') },
+      { id: 'indices', label: t('markets.tab.indices') },
+      { id: 'forex', label: t('markets.tab.forex') },
+      { id: 'commodities', label: t('markets.tab.commodities') }
+    ];
+    /* Only offered where the market has them. */
+    if (!ex || ex.code === 'NASDAQ') out.push({ id: 'etfs', label: t('markets.tab.etfs') });
+    out.push({ id: 'crypto', label: t('markets.tab.crypto') });
+    return out;
+  }
+
+  /* §26.10 — live, delayed, closed, opening soon, holiday. Each is a state
+     the screen composes for, not an error string. */
+  function marketState(ex) {
+    if (!ex) return { key: 'global', open: false, quality: 'delayed', label: t('markets.worldBoard') };
+    var now = new Date();
+    var today = L.date(now, { day: 'numeric', month: 'short' });
+    var holidays = D.MARKET_HOLIDAYS[marketCode()] || [];
+    if (holidays.indexOf(today) !== -1) {
+      return { key: 'holiday', open: false, quality: 'cached', label: t('markets.st.holiday') };
+    }
+    var day = now.getDay();
+    if (day === 0 || day === 6) {
+      return { key: 'weekend', open: false, quality: 'cached', label: t('markets.st.weekend'),
+        detail: t('markets.st.reopens', { day: L.date(nextWeekday(now), { weekday: 'long' }) }) };
+    }
+    var mins = now.getHours() * 60 + now.getMinutes();
+    var o = hhmmToMins(ex.open), c = hhmmToMins(ex.close);
+    if (mins >= o && mins <= c) {
+      return { key: 'open', open: true, quality: 'delayed', label: t('markets.st.open'),
+        detail: t('markets.st.closesIn', { time: fmtGap(c - mins) }) };
+    }
+    if (mins < o && o - mins <= 90) {
+      return { key: 'soon', open: false, quality: 'cached', label: t('markets.st.soon'),
+        detail: t('markets.st.opensIn', { time: fmtGap(o - mins) }) };
+    }
+    return { key: 'closed', open: false, quality: 'cached', label: t('markets.st.closed'),
+      detail: t('markets.st.reopensAt', { time: L.time(Math.floor(o / 60), o % 60) }) };
+  }
+
+  function hhmmToMins(str) {
+    var p2 = String(str).split(':');
+    return Number(p2[0]) * 60 + Number(p2[1] || 0);
+  }
+
+  function fmtGap(mins) {
+    var h = Math.floor(mins / 60), m = Math.round(mins % 60);
+    return h ? t('duration.hm', { h: h, m: pad2(m) }) : t('duration.m', { m: m });
+  }
+
+  function nextWeekday(from) {
+    var d = new Date(from);
+    do { d.setDate(d.getDate() + 1); } while (d.getDay() === 0 || d.getDay() === 6);
+    return d;
+  }
+
+  /* §26.3/§26.4 — the assets for the selected class, in one shape so the
+     hero, the list and the detail all read the same record. */
+  function assetsFor(cls) {
+    var ex = exchange();
+    var ccy = ex ? ex.ccy : 'USD';
+
+    function shape(x, kind, currency, extra) {
+      var o = {
+        kind: kind, sym: x.sym || x.pair, name: x.name || x.full || x.pair,
+        sub: x.full || x.name, price: x.price !== undefined ? x.price : (x.rate !== undefined ? x.rate : x.value),
+        chg: x.chg, pct: x.pct, ccy: currency, logo: x.logo || (x.sym || x.pair || '').slice(0, 2),
+        tone: x.tone || 'slate', vol: x.vol, cap: x.cap,
+        sectorKey: x.sectorKey, exchange: ex ? ex.code : t('markets.global')
+      };
+      for (var k in (extra || {})) o[k] = extra[k];
+      return o;
+    }
+
+    if (cls === 'indices') {
+      var idx = ex ? ex.indices : D.GLOBAL_INDICES;
+      return idx.map(function (i) {
+        return shape(i, 'index', ccy, { logo: i.sym.slice(0, 3), tone: 'accent', sub: i.full });
+      });
+    }
+    if (cls === 'forex') {
+      return D.forexFor(marketCode()).map(function (f) {
+        return shape(f, 'fx', f.quote, { logo: f.base.slice(0, 2), tone: 'indigo',
+          sub: f.base + ' / ' + f.quote, fxKind: f.kind, decimals: f.quote === 'JPY' ? 2 : 4 });
+      });
+    }
+    if (cls === 'commodities') {
+      return D.COMMODITIES.map(function (m) {
+        return shape(m, 'commodity', m.ccy, { logo: m.glyph, sub: t('markets.cm.' + m.cat),
+          unit: m.unit, contract: m.contract, cat: m.cat });
+      });
+    }
+    if (cls === 'crypto') {
+      return D.CRYPTO.map(function (x) { return shape(x, 'crypto', 'USD', { sub: x.name }); });
+    }
+    if (cls === 'etfs') {
+      return D.ETFS.map(function (x) { return shape(x, 'etf', 'USD', { sub: x.name }); });
+    }
+    return (ex ? ex.stocks : D.ETFS).map(function (x) {
+      return shape(x, 'stock', ccy, { sub: x.name });
+    });
+  }
+
+  /* The one asset the hero leads with for this class. */
+  function heroAsset(cls) {
+    var ex = exchange();
+    if (cls === 'stocks' || cls === 'indices') {
+      var idx = ex ? ex.indices : D.GLOBAL_INDICES;
+      var i = idx[0];
+      return { kind: 'index', sym: i.sym, name: i.name, sub: ex ? ex.name : i.full,
+        price: i.value, chg: i.chg, pct: i.pct, ccy: ex ? ex.ccy : 'USD',
+        logo: i.sym.slice(0, 3), tone: 'accent', exchange: ex ? ex.code : t('markets.global') };
+    }
+    return assetsFor(cls)[0];
+  }
+
+  /* §26.9 — a full record for the detail screen. */
+  function assetDetail(cls, sym) {
+    var list = assetsFor(cls);
+    var a = list.filter(function (x) { return x.sym === sym; })[0] || list[0];
+    if (!a) return null;
+    var f = D.fundamentals(a.price, (a.sym || '').length * 137 + Math.round(a.price));
+    return {
+      asset: a, f: f,
+      series: D.walk(Math.round(a.price * 100) + 7, 48, a.price, a.kind === 'fx' ? 0.002 : 0.015)
+    };
+  }
+
+  /* §26.11 — the markets the user can switch between. */
+  function marketOptions() {
+    var codes = Object.keys(D.EXCHANGES);
+    var out = codes.map(function (code) {
+      var ex = D.EXCHANGES[code];
+      return { code: code, name: L.countryName(code), exchange: ex.name, sub: ex.code,
+        home: code === P().country, on: code === marketCode() };
+    });
+    out.push({ code: 'GLOBAL', name: t('markets.globalMarkets'), exchange: t('markets.worldBoard'),
+      sub: t('markets.global'), on: marketCode() === 'GLOBAL' });
+    return out;
+  }
+
 
   function marketSession(ex) {
     if (!ex) return { open: false, label: t('markets.closed'), hours: t('markets.worldBoard'),
@@ -478,8 +634,9 @@ window.LUME_CTX = function (deps) {
     var o = parseFloat(ex.open.split(':')[0]) + parseFloat(ex.open.split(':')[1]) / 60;
     var cl = parseFloat(ex.close.split(':')[0]) + parseFloat(ex.close.split(':')[1]) / 60;
     var open = h >= o && h <= cl && now.getDay() > 0 && now.getDay() < 6;
-    var adv = ex.stocks.filter(function (s) { return s.pct > 0; }).length * 41;
-    var dec = ex.stocks.filter(function (s) { return s.pct <= 0; }).length * 38;
+    var ov = D.overviewFor(marketCode());
+    var adv = ov ? ov.adv : ex.stocks.filter(function (s) { return s.pct > 0; }).length;
+    var dec = ov ? ov.dec : ex.stocks.filter(function (s) { return s.pct <= 0; }).length;
     return {
       open: open,
       label: open ? t('markets.open') : t('markets.closed'),
@@ -487,8 +644,10 @@ window.LUME_CTX = function (deps) {
       adv: adv, dec: dec, advPct: Math.round(adv / (adv + dec) * 100),
       /* Compact notation is the locale's job; slicing digits off a formatted
          string produced "Rs 184,000,M". */
-      turnover: L.compactMoney(184000000, ex.ccy),
-      volume: L.compact(412000000), trades: L.num(188204),
+      turnover: ov ? L.compactMoney(ov.turnover, ex.ccy) : '—',
+      volume: ov ? L.compact(ov.volume) : '—',
+      trades: ov ? L.num(ov.trades) : '—',
+      overview: ov,
       openLabel: ex.open, closeLabel: ex.close
     };
   }
@@ -1604,7 +1763,10 @@ window.LUME_CTX = function (deps) {
       ayahOfDay: ayahOfDay, quranProgress: quranProgress, quranSearch: quranSearch,
       tasbih: tasbih, zakat: zakat, faraid: faraid,
       /* money */
-      exchange: exchange, marketSession: marketSession, metals: metals, currencyBoard: currencyBoard,
+      exchange: exchange, marketCode: marketCode, marketState: marketState,
+      assetClasses: assetClasses, assetsFor: assetsFor, heroAsset: heroAsset,
+      assetDetail: assetDetail, marketOptions: marketOptions,
+      marketSession: marketSession, metals: metals, currencyBoard: currencyBoard,
       fuelCost: fuelCost, tax: tax, bills: bills, loan: loan, tipSplit: tipSplit,
       ledger: ledger, installments: installments, committee: committee, compound: compound,
       /* daily life */

@@ -134,6 +134,114 @@ window.LUME_DATA = (function () {
     }
   };
 
+  /* ---------------------------------------------------------
+     §26.5 — market overview, per exchange. Only metrics the
+     market actually publishes; the screen never pads.
+     --------------------------------------------------------- */
+  var MARKET_OVERVIEW = {
+    PK: { cap: 9.8e12, capPct: 1.32, volume: 512.4e6, volPct: 18.7,
+          turnover: 184e9, trades: 188204, adv: 198, dec: 102, unch: 41 },
+    US: { cap: 52.4e12, capPct: 0.41, volume: 4.12e9, volPct: -3.2,
+          turnover: 218e9, trades: 4820114, adv: 312, dec: 188, unch: 24 },
+    GB: { cap: 2.71e12, capPct: 0.28, volume: 684e6, volPct: 4.1,
+          turnover: 4.8e9, trades: 412880, adv: 58, dec: 39, unch: 3 },
+    AE: { cap: 742e9, capPct: 0.40, volume: 188e6, volPct: 6.4,
+          turnover: 1.1e9, trades: 22840, adv: 34, dec: 21, unch: 8 },
+    SA: { cap: 9.4e12, capPct: 0.53, volume: 244e6, volPct: -1.8,
+          turnover: 6.2e9, trades: 318402, adv: 118, dec: 74, unch: 12 },
+    IN: { cap: 4.42e14, capPct: 0.49, volume: 1.84e9, volPct: 8.8,
+          turnover: 924e9, trades: 2140880, adv: 1284, dec: 802, unch: 96 }
+  };
+
+  function overviewFor(code) { return MARKET_OVERVIEW[code] || null; }
+
+  /* ---------------------------------------------------------
+     §26.2 — Forex. Majors everywhere, plus the pairs that
+     matter where the user actually is.
+     --------------------------------------------------------- */
+  var FX_MAJORS = [
+    { pair: 'EUR/USD', base: 'EUR', quote: 'USD', rate: 1.0874, chg: 0.0021, pct: 0.19, kind: 'major' },
+    { pair: 'GBP/USD', base: 'GBP', quote: 'USD', rate: 1.2681, chg: -0.0034, pct: -0.27, kind: 'major' },
+    { pair: 'USD/JPY', base: 'USD', quote: 'JPY', rate: 157.42, chg: 0.38, pct: 0.24, kind: 'major' },
+    { pair: 'USD/CHF', base: 'USD', quote: 'CHF', rate: 0.8812, chg: -0.0012, pct: -0.14, kind: 'major' },
+    { pair: 'AUD/USD', base: 'AUD', quote: 'USD', rate: 0.6584, chg: 0.0018, pct: 0.27, kind: 'major' },
+    { pair: 'USD/CAD', base: 'USD', quote: 'CAD', rate: 1.3612, chg: 0.0009, pct: 0.07, kind: 'major' }
+  ];
+
+  var FX_LOCAL = {
+    PK: [{ pair: 'USD/PKR', base: 'USD', quote: 'PKR', rate: 283.40, chg: 0.35, pct: 0.12, kind: 'minor' },
+         { pair: 'GBP/PKR', base: 'GBP', quote: 'PKR', rate: 359.28, chg: -0.84, pct: -0.23, kind: 'minor' },
+         { pair: 'AED/PKR', base: 'AED', quote: 'PKR', rate: 77.18, chg: 0.09, pct: 0.12, kind: 'minor' },
+         { pair: 'SAR/PKR', base: 'SAR', quote: 'PKR', rate: 75.58, chg: 0.11, pct: 0.15, kind: 'minor' }],
+    GB: [{ pair: 'EUR/GBP', base: 'EUR', quote: 'GBP', rate: 0.8574, chg: 0.0011, pct: 0.13, kind: 'minor' },
+         { pair: 'GBP/JPY', base: 'GBP', quote: 'JPY', rate: 199.62, chg: -0.48, pct: -0.24, kind: 'minor' }],
+    US: [{ pair: 'USD/MXN', base: 'USD', quote: 'MXN', rate: 20.14, chg: 0.08, pct: 0.40, kind: 'minor' },
+         { pair: 'USD/CNY', base: 'USD', quote: 'CNY', rate: 7.2480, chg: -0.0042, pct: -0.06, kind: 'minor' }],
+    AE: [{ pair: 'USD/AED', base: 'USD', quote: 'AED', rate: 3.6725, chg: 0, pct: 0, kind: 'pegged' },
+         { pair: 'EUR/AED', base: 'EUR', quote: 'AED', rate: 3.9932, chg: 0.0074, pct: 0.19, kind: 'minor' }],
+    SA: [{ pair: 'USD/SAR', base: 'USD', quote: 'SAR', rate: 3.7500, chg: 0, pct: 0, kind: 'pegged' },
+         { pair: 'EUR/SAR', base: 'EUR', quote: 'SAR', rate: 4.0778, chg: 0.0081, pct: 0.20, kind: 'minor' }],
+    IN: [{ pair: 'USD/INR', base: 'USD', quote: 'INR', rate: 84.12, chg: 0.06, pct: 0.07, kind: 'minor' },
+         { pair: 'GBP/INR', base: 'GBP', quote: 'INR', rate: 106.66, chg: -0.24, pct: -0.22, kind: 'minor' }]
+  };
+
+  function forexFor(code) {
+    return (FX_LOCAL[code] || []).concat(FX_MAJORS);
+  }
+
+  /* ---------------------------------------------------------
+     §26.2 — Commodities, quoted in their contract currency.
+     --------------------------------------------------------- */
+  var COMMODITIES = [
+    { sym: 'XAU', name: 'Gold', cat: 'metals', price: 2742.10, chg: 11.40, pct: 0.42,
+      unit: 'oz', ccy: 'USD', contract: 'Spot', tone: 'amber', glyph: 'Au' },
+    { sym: 'XAG', name: 'Silver', cat: 'metals', price: 32.68, chg: -0.18, pct: -0.55,
+      unit: 'oz', ccy: 'USD', contract: 'Spot', tone: 'slate', glyph: 'Ag' },
+    { sym: 'BRENT', name: 'Brent Crude', cat: 'energy', price: 78.44, chg: 0.92, pct: 1.19,
+      unit: 'bbl', ccy: 'USD', contract: 'Front month', tone: 'green', glyph: 'Br' },
+    { sym: 'WTI', name: 'WTI Crude', cat: 'energy', price: 74.18, chg: 0.81, pct: 1.10,
+      unit: 'bbl', ccy: 'USD', contract: 'Front month', tone: 'green', glyph: 'WT' },
+    { sym: 'NG', name: 'Natural Gas', cat: 'energy', price: 3.184, chg: -0.062, pct: -1.91,
+      unit: 'MMBtu', ccy: 'USD', contract: 'Front month', tone: 'sky', glyph: 'NG' },
+    { sym: 'XPT', name: 'Platinum', cat: 'metals', price: 988.40, chg: 4.20, pct: 0.43,
+      unit: 'oz', ccy: 'USD', contract: 'Spot', tone: 'indigo', glyph: 'Pt' },
+    { sym: 'HG', name: 'Copper', cat: 'metals', price: 4.284, chg: 0.031, pct: 0.73,
+      unit: 'lb', ccy: 'USD', contract: 'Front month', tone: 'rose', glyph: 'Cu' },
+    { sym: 'ZW', name: 'Wheat', cat: 'agriculture', price: 574.25, chg: -3.50, pct: -0.61,
+      unit: 'bu', ccy: 'USD', contract: 'Front month', tone: 'amber', glyph: 'Wh' },
+    { sym: 'KC', name: 'Coffee', cat: 'agriculture', price: 318.60, chg: 6.85, pct: 2.20,
+      unit: 'lb', ccy: 'USD', contract: 'Front month', tone: 'violet', glyph: 'Co' }
+  ];
+
+  var COMMODITY_CATS = ['metals', 'energy', 'agriculture'];
+
+  /* ---------------------------------------------------------
+     §26.9 — the fundamentals an asset detail screen shows.
+     Derived from the quote so they stay internally consistent.
+     --------------------------------------------------------- */
+  function fundamentals(price, seed) {
+    var r = seedRand(seed || Math.round(price * 100));
+    var open = price * (1 - (r() - 0.5) * 0.012);
+    var high = Math.max(price, open) * (1 + r() * 0.009);
+    var low = Math.min(price, open) * (1 - r() * 0.009);
+    return {
+      open: open, high: high, low: low,
+      prevClose: open * (1 - (r() - 0.5) * 0.006),
+      high52: price * (1 + 0.18 + r() * 0.2),
+      low52: price * (1 - 0.22 - r() * 0.16)
+    };
+  }
+
+  /* §26.10 — public holidays close a market as surely as the clock does. */
+  var MARKET_HOLIDAYS = {
+    PK: ['1 May', '14 Aug', '25 Dec'],
+    US: ['1 Jan', '4 Jul', '28 Nov', '25 Dec'],
+    GB: ['1 Jan', '25 Dec', '26 Dec'],
+    AE: ['1 Jan', '2 Dec'],
+    SA: ['23 Sep'],
+    IN: ['26 Jan', '15 Aug', '2 Oct']
+  };
+
   /* Every market can reach the global board regardless of where the
      user is (§21) — local first, world always available. */
   var GLOBAL_INDICES = [
@@ -785,6 +893,9 @@ window.LUME_DATA = (function () {
   return {
     walk: walk, seedRand: seedRand,
     EXCHANGES: EXCHANGES, exchangeFor: exchangeFor, GLOBAL_INDICES: GLOBAL_INDICES, CRYPTO: CRYPTO, ETFS: ETFS,
+    overviewFor: overviewFor, forexFor: forexFor, FX_MAJORS: FX_MAJORS,
+    COMMODITIES: COMMODITIES, COMMODITY_CATS: COMMODITY_CATS,
+    fundamentals: fundamentals, MARKET_HOLIDAYS: MARKET_HOLIDAYS,
     fuelFor: fuelFor, emergencyFor: emergencyFor, holidaysFor: holidaysFor,
     hourly: hourly, daily: daily, aqiFor: aqiFor, aqiBand: aqiBand,
     FLIGHTS: FLIGHTS, TRAINS: TRAINS, TRAIN_STOPS: TRAIN_STOPS,

@@ -1235,82 +1235,280 @@ Source/Freshness
 
 # 26. MARKETS
 
-**Density:** Very High  
+**Density:** Very High
 **Archetype:** Financial Data Explorer
+**Composition:** Approved reference composition — see §26.13
 
-This is one of Lume's most information-rich screens.
+This is one of Lume's most information-rich screens, and one of the few with an
+**approved reference composition**. The composition below is not a suggestion
+derived from the archetype: it is the specification. See §123 — Reference
+Composition Fidelity.
 
-### Market overview
+**Primary purpose**
 
-Show:
+Let the user understand the current state of the markets at a glance, move
+between asset classes, discover securities, inspect performance and follow
+what they care about.
 
-- selected region
-- exchange
-- market status
-- major indices
-- index value
-- index change
-- percentage change
-- market breadth where available
-- session information
+---
 
-### Index section
+## 26.1 Global markets context
 
-Rich rows:
+Markets is global and country-aware. The user's country selects the default
+local market; global markets stay reachable from anywhere.
 
-```text
-[Logo]  KSE-100
-        Pakistan Stock Exchange
-        154,230.42
-        +1,248.23   +0.82%
-        ╱╲╱╲╱╱╲
-```
+| Country | Exchange | Indices | Currency |
+|---|---|---|---|
+| Pakistan | Pakistan Stock Exchange | KSE-100, KSE-30, KMI-30, All Share | PKR |
+| United States | NYSE · NASDAQ | S&P 500, Nasdaq Composite, Dow Jones, Russell 2000 | USD |
+| United Kingdom | London Stock Exchange | FTSE 100, FTSE 250, FTSE All-Share | GBP |
+| UAE | DFM · ADX | DFM General, ADX General | AED |
+| Saudi Arabia | Saudi Exchange | TASI, Nomu | SAR |
+| India | NSE · BSE | NIFTY 50, SENSEX, Bank NIFTY | INR |
+| Elsewhere | the local exchange | its own index family | its own currency |
 
-### Security rows
+The interface must therefore expose a way to change **country/region,
+exchange and local/global market**. Pakistan is a configuration, never the
+definition of the product.
 
-Show where data exists:
+---
 
-- company logo
-- ticker
-- company name
-- exchange
-- price
-- currency
-- absolute change
-- percentage change
-- sparkline
-- volume
-- market cap
-- session/status
+## 26.2 Market-type navigation — the primary control
 
-### Main composition
+The primary Markets interface uses a prominent segmented control near the top
+of the content:
 
 ```text
-Header
-Region / Exchange Selector
-Market Status
-Major Indices
-Market Breadth
-Tabs
- ├── Overview
- ├── Movers
- ├── Watchlist
- ├── Stocks
- ├── ETFs
- ├── Crypto
- └── Global
-Rich Security Rows
-Mini Charts
-Detailed Security View
+[ Stocks ] [ Indices ] [ Forex ] [ Commodities ]
 ```
 
-### Important
+Additional classes where the market supports them: **ETFs, Crypto, Bonds,
+Futures**.
 
-Do NOT reduce Markets to:
+This is a major navigation element, not a filter chip row. It appears
+**before** the primary market content. The selected class must be
+unmistakable.
 
-> name + price + percentage
+Do **not** place an indices list directly below the header without this
+control. Doing so makes Indices the whole product rather than one asset class
+within it.
 
-The screen must use its available market data to create a professional financial-data interface.
+---
+
+## 26.3 Hero — the primary market summary
+
+Immediately after the market-type selector, show the most important
+market, index or security for the selected class:
+
+```text
+┌───────────────────────────────────────┐
+│ ◉  KSE 100                          › │
+│    Karachi Stock Exchange             │
+│                                       │
+│    72,348.21                          │
+│    ▲ +1,245.32  (+1.75%)             │
+│                          ╱╲╱╲╱╲╱╲    │
+│                                       │
+│  1D   1W   1M   3M   1Y   5Y         │
+└───────────────────────────────────────┘
+```
+
+Carries: logo, name, exchange, current value, absolute change, percentage
+change, direction, a real trend chart and a timeframe selector.
+
+The timeframe selector must change the chart. The hero should read as a
+financial market summary, not as a generic card with a number in it.
+
+---
+
+## 26.4 Top assets — discovery
+
+A prominent discovery section, titled for the selected asset class, with a
+**See all** affordance:
+
+```text
+Top Stocks                          See all
+```
+
+Each row carries every field the dataset has (§84, §114):
+
+```text
+[Logo]  HBL                       Rs. 142.50
+        Habib Bank Limited           +2.31%
+        PSX · Banking · Vol 8.9M    ╱╲╱╲╱╲
+```
+
+Never reduce a row to name + price + percentage.
+
+Where available add volume, market cap, exchange and session status.
+
+---
+
+## 26.5 Market overview
+
+Below the primary content, a Market Overview section:
+
+```text
+┌───────────────────────────────────────┐
+│ Market Overview                       │
+│                                       │
+│ Total Market Cap   Volume   Adv/Dec   │
+│ Rs. 9.8T           512.4M   198 / 102 │
+│ ▲ +1.32%           ▲ +18.7%           │
+└───────────────────────────────────────┘
+```
+
+Metrics adapt to the selected exchange and asset class: market cap, volume,
+turnover, trades, advancing, declining, unchanged, gainers, losers, breadth.
+
+Show only what the market actually provides. Never pad the section with
+metrics that are unavailable.
+
+---
+
+## 26.6 Indices
+
+Indices is a **dedicated class within the market-type control**, not the
+default body of the screen. Each row carries name, description, exchange,
+value, absolute change, percentage change, direction and a sparkline.
+
+---
+
+## 26.7 Search
+
+Markets provides search across company, ticker, index, currency pair,
+commodity and exchange.
+
+Search must be discoverable without displacing the hero. It belongs in the
+header or immediately above the asset list — not as the screen's opening
+element.
+
+---
+
+## 26.8 Filters
+
+Filters adapt to the selected market type.
+
+| Class | Filters |
+|---|---|
+| Stocks | exchange, sector, market cap, gainers, losers, volume |
+| Indices | country, exchange, index family |
+| Forex | currency, major/minor/exotic, region |
+| Commodities | category, contract/type, unit |
+
+Never expose a filter that does not apply to the current class.
+
+---
+
+## 26.9 Asset detail
+
+Selecting an asset opens a detailed financial screen.
+
+**Stock:** logo, name, ticker, exchange, price, absolute and percentage
+change, chart, timeframe selector, open, high, low, previous close, volume,
+market cap, 52-week high/low, related indices, session status, source and
+freshness.
+
+**Currency pair:** pair, bid/ask where available, rate, change, historical
+chart, inline conversion.
+
+**Commodity:** price, unit, contract/type, change, historical chart.
+
+---
+
+## 26.10 Market states
+
+Markets must have designed states for:
+
+live · delayed · stale · loading · empty · connection failure ·
+market closed · market opening soon · market holiday
+
+These are compositions, not error strings. "Market closed" says when it
+reopens; "empty" offers a retry; "loading" uses skeletons shaped like the
+content that is coming.
+
+---
+
+## 26.11 Market switching
+
+A **Change Market** interaction opens a bottom sheet containing country,
+region, exchange and a global option. The choice persists.
+
+```text
+┌───────────────────────────────────────┐
+│ Change Market                       ✕ │
+│                                       │
+│ 🇵🇰  Pakistan (Default)            ✓ │
+│ 🇺🇸  United States                    │
+│ 🇬🇧  United Kingdom                   │
+│ 🇦🇪  UAE                              │
+│ 🇸🇦  Saudi Arabia                     │
+│ 🌐  Global markets                    │
+└───────────────────────────────────────┘
+```
+
+---
+
+## 26.12 Light and dark
+
+Markets has both. Dark mode is designed, not inverted: charts, status
+indicators, surfaces, rows and text hierarchy are re-authored for a dark
+ground (§58).
+
+---
+
+## 26.13 Reference composition
+
+This is the approved order. It is binding (§123).
+
+```text
+Header  (back · title · subtitle · share · overflow)
+   ↓
+Market context / selected region
+   ↓
+Stocks │ Indices │ Forex │ Commodities        ← primary control
+   ↓
+Primary market / index hero
+   ↓
+Trend chart + timeframe selector
+   ↓
+Top Stocks / Top Assets          (See all)
+   ↓
+Market Overview
+   ↓
+Additional market data
+   ↓
+Search / discovery
+   ↓
+Bottom navigation
+```
+
+The following composition must **not** be used:
+
+```text
+Market status → Turnover / Volume / Trades → Indices → Search
+```
+
+---
+
+## 26.14 Visual direction
+
+Markets should read as a premium financial-data product: information-dense,
+structured, analytical, clean and readable. Use rich data rows, sparklines,
+financial charts, compact metrics, segmented controls, status badges, company
+and exchange marks, and restrained direction indicators.
+
+Markets must not look like a generic dashboard assembled from three large
+cards.
+
+---
+
+## 26.15 Responsive
+
+Small screens keep the market-type selector, the hero and the rich rows, and
+collapse secondary metrics. Large screens expand the chart, expose more
+metrics, widen the tables and add columns — they do not stretch mobile cards
+(§116).
 
 ---
 
@@ -2943,24 +3141,292 @@ Especially for:
 
 ---
 
-# 100. NOTIFICATIONS
+# 100. NOTIFICATIONS — GLOBAL SYSTEM
 
-Notifications must be contextual.
+Notifications are a **platform capability of Lume**, not a feature of any one
+tool. Lume owns the notification infrastructure; tools raise notification
+events into it.
 
-Examples:
+```text
+                    ┌─────────────────────┐
+                    │ Notification Engine │
+                    └──────────┬──────────┘
+                               │
+             ┌─────────────────┴─────────────────┐
+             │                                   │
+      In-App Notifications                Push Notifications
+             │                                   │
+      ┌──────┴──────┐                     OS Notification
+      │             │
+   Badge     Notification Centre
+      │             │
+      │      Detail / Deep Link
+      │
+  Banner / Snackbar
+```
 
-- prayer
-- bill due
-- subscription renewal
-- parcel update
-- flight status
-- train delay
-- market alert
-- savings contribution
-- document expiry
-- medication reminder
+Both paths share one model: categories, priorities, preferences, deep links,
+read state, grouping and privacy rules.
 
-Do not notify users merely because a tool supports notifications.
+A bell icon on its own is not a notification system.
+
+---
+
+## 100.1 Global entry point
+
+One global Notifications entry point, in the app header:
+
+```text
+┌───────────────────────────────────────┐
+│ Good morning 👋                 🔔 ③ │
+└───────────────────────────────────────┘
+```
+
+The badge shows the unread count, disappears at zero, formats compactly above
+99, and updates as state changes. It is not oversized.
+
+A tool screen does not repeat the bell when the global header already carries
+it.
+
+---
+
+## 100.2 Notification centre
+
+```text
+Header
+   ↓
+Unread summary / "All caught up"
+   ↓
+All │ Unread │ Important          ← filter tabs
+   ↓
+Category filters (optional)
+   ↓
+Notification list
+```
+
+Category filters: Prayer · Markets · Money · Travel · Weather · News ·
+Personal · System.
+
+---
+
+## 100.3 Notification row
+
+Carries category icon, title, short message, timestamp, unread indicator, and
+optionally an image, an action and a status.
+
+```text
+[📈]  KSE-100 moved +2.1%                    ● 
+      Crossed your alert threshold.
+      2 min ago                        [View Market]
+```
+
+Concise, but informative enough to act on without opening it.
+
+---
+
+## 100.4 Detail and deep linking
+
+Every actionable notification knows its destination:
+
+| Notification | Destination |
+|---|---|
+| Market alert | Markets → the security |
+| Flight change | Flights → the flight |
+| Parcel update | Parcel Tracker → the shipment |
+| Bill due | Bills → the bill |
+| Document expiry | Documents → the document |
+| Prayer reminder | Prayer Times |
+
+The user must never have to go and find the thing they were just told about.
+
+---
+
+## 100.5 Push notifications
+
+Lume supports OS-level push for market alerts, prayer reminders, bill due
+dates, parcel updates, flight changes, train delays, weather alerts, document
+expiry, subscription renewals, savings reminders, tasks, habits, medication
+and important system events.
+
+A notification is only generated when the user has enabled its category.
+
+**Structure:** title · body · category · priority · timestamp · deep link ·
+optional action · optional icon/image · unique id.
+
+---
+
+## 100.6 Priority
+
+**CRITICAL** emergency and critical system events
+**HIGH** flight cancellation, severe weather, imminent document expiry
+**NORMAL** parcel update, bill reminder, market alert
+**LOW** recommendations and informational updates
+
+Do not abuse high priority.
+
+---
+
+## 100.7 Categories
+
+Faith · Finance · Markets · Travel · Weather · News · Personal · Reminders ·
+Documents · Health · System.
+
+---
+
+## 100.8 Per-tool settings
+
+Every notification-enabled tool exposes its own controls, independently
+switchable:
+
+```text
+Markets            Weather           Bills            Prayer
+□ Price alerts     □ Severe          □ Upcoming       □ Prayer reminder
+□ % movement       □ Rain            □ Due today      □ Adhan
+□ Market open      □ Temperature     □ Overdue        □ Upcoming prayer
+□ Market close     □ AQI
+□ Major news
+```
+
+---
+
+## 100.9 Global settings
+
+**Settings → Notifications**
+
+*General* — push, in-app, sounds, haptics, badge count
+*Categories* — the eleven above
+*Quiet hours* — start and end
+*Privacy* — show preview, hide sensitive content, lock-screen detail
+
+---
+
+## 100.10 Quiet hours
+
+During quiet hours low-priority notifications are suppressed and high-priority
+behaviour follows the user's configuration; critical notifications may still
+pass.
+
+Nothing is silently lost — everything suppressed remains in the notification
+centre.
+
+---
+
+## 100.11 Permission
+
+Never request push permission cold. Use an education flow first:
+
+```text
+Stay informed
+
+Useful alerts for prayer, markets, travel,
+bills, weather and reminders.
+
+              [Enable notifications]
+                  Not now
+```
+
+If permission is denied: explain how to enable it later, keep in-app
+notifications working, and never prompt aggressively again.
+
+---
+
+## 100.12 In-app versus push
+
+Inside Lume: banner, snackbar, badge, inline alert or a centre entry.
+Outside Lume: push, where permission exists.
+
+Both refer to the same event. Never both for the same event at the same time.
+
+**Choosing the surface**
+
+*Snackbar* lightweight confirmation · *Banner* important context ·
+*Centre* persistence · *Modal* only for critical decisions ·
+*Push* only when the user is away.
+
+---
+
+## 100.13 Grouping, deduplication, expiry
+
+Group repetitive events:
+
+```text
+KSE-100 up 0.5% · up 0.8% · up 1.1% · up 1.4%
+                    ↓
+KSE-100 market activity — 4 updates
+```
+
+Suppress or merge duplicates raised within a short interval. Time-sensitive
+notifications expire: they stay in history but stop presenting as active.
+
+---
+
+## 100.14 Actions
+
+Where meaningful: Parcel [Track] · Bill [Pay] · Task [Complete] ·
+Flight [View Flight] · Market [View Market] · Prayer [View Prayer].
+
+No action is better than a meaningless one.
+
+---
+
+## 100.15 Data model
+
+```text
+notification_id · user_id · category · type · title · body · timestamp
+priority · read_state · deep_link · action · icon · image
+source_tool · related_entity_id · created_at · expires_at · group_id
+```
+
+**States:** unread · read · actioned · expired · dismissed · grouped.
+
+---
+
+## 100.16 Privacy
+
+Sensitive content respects the privacy setting.
+
+> "Your medical report for [condition] is ready."
+
+becomes
+
+> "Your health record has been updated."
+
+Financial amounts are withheld from previews when privacy mode is on.
+
+---
+
+## 100.17 Badges
+
+Global badge: unread count. Tool badges only where they mean something —
+Bills → overdue, Documents → expiring. Not on everything.
+
+---
+
+## 100.18 States of the centre
+
+*Empty* — "You're all caught up. New alerts and updates will appear here."
+Never "No data."
+*Loading* — skeleton rows, never a blank screen.
+*Error* — "Couldn't load notifications. [Retry]", with cached entries still
+visible.
+
+---
+
+## 100.19 Persistence
+
+History persists per the retention policy. Unread state stays consistent
+across launches, across the push and in-app paths, and across devices where
+synchronisation exists.
+
+---
+
+## 100.20 The rule
+
+Notifications must be useful, contextual and actionable. They are not an
+engagement mechanism.
+
+The user should think *"Lume told me something useful"*, never *"Lume keeps
+interrupting me."*
 
 ---
 
@@ -3551,3 +4017,77 @@ If an older Lume prompt conflicts with this document, this document takes preced
 Future tools should be added to this document using the same specification model.
 
 **End of Lume Master Specification.**
+
+
+---
+
+# 123. REFERENCE COMPOSITION FIDELITY
+
+Some Lume tools have an **approved reference composition**: a specific
+information architecture, section order, primary control and interaction model
+that has been designed and signed off.
+
+**The rule**
+
+> When a Lume tool has an approved reference composition, the generated UI must
+> preserve that reference's information architecture, hierarchy, section
+> ordering, primary controls and interaction model. The visual design system is
+> applied *to* the reference. The screen must not be reinterpreted into a
+> different layout merely because another generic Lume composition is available.
+
+**Why this exists**
+
+Without it, the generation path degrades into:
+
+```text
+Master specification → generic UI interpretation → invented layout
+```
+
+An archetype label such as "Markets = Financial Data Explorer" is an
+*abstraction*, and an abstraction invites reinterpretation. Reading only the
+archetype, a generator will produce a screen that satisfies "data explorer" in
+the abstract while contradicting the approved product — the right components in
+the wrong order, with the wrong element leading.
+
+The correct path is:
+
+```text
+Master specification → Tool blueprint → Approved composition → Visual styling
+```
+
+**What is binding**
+
+For a tool with an approved composition, these are fixed:
+
+1. **Section order** — the sequence in the reference, top to bottom
+2. **The primary control** — what the user reaches for first, and where it sits
+3. **The lead element** — what occupies the top of the content area
+4. **Hierarchy** — which information is primary, supporting and contextual
+5. **The interaction model** — what selecting, filtering and switching do
+
+These remain free:
+
+- typography, colour, spacing and radius, within the design system
+- illustration, iconography and motion
+- how a section is composed internally, provided its role is preserved
+- additional supporting sections **below** the reference's last binding section
+- responsive adaptation (§116), provided small screens keep 1–4 above
+
+**Tools with an approved composition**
+
+| Tool | Composition |
+|---|---|
+| Markets | §26.13 |
+
+Others are added here as they are designed. A tool with no entry in this table
+is composed from its archetype (§22) and its density (§6) as before.
+
+**Enforcement**
+
+An approved composition is machine-checkable: the order of a screen's sections
+can be asserted against the reference. A tool listed above must carry its
+composition in the tool metadata contract (§81), and the verification suite
+(§65) must fail when a screen's rendered section order diverges from it.
+
+A composition that is only written down is a suggestion. A composition that is
+tested is a specification.

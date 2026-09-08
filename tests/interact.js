@@ -75,20 +75,54 @@ const wait = ms => new Promise(r => setTimeout(r, ms));
   const mkBody = $('#toolBody');
   ok('Markets is very-high density', mkBody.dataset.density === 'veryhigh', mkBody.dataset.density);
   ok('Markets is a data explorer', mkBody.dataset.archetype === 'explorer', mkBody.dataset.archetype);
-  ok('index rows carry a sparkline (§114)', $$('#toolBody .rrow .spark').length >= 4);
-  ok('index rows carry an absolute + % change', /\+[\d,.]+\s+\+?[\d.]+%|▲/.test(mkBody.textContent));
-  ok('market status strip present', !!$('#toolBody .mstat'));
+  ok('asset rows carry a sparkline (§114)', $$('#toolBody .rrow .spark').length >= 4);
+  ok('asset rows carry an absolute + % change', /▲|▼/.test(mkBody.textContent));
+  ok('market state strip present (§26.10)', !!$('#toolBody .mktstate'));
   ok('sort controls present (§89)', $$('#toolBody .sortopt').length >= 3);
-  ok('tabs present (§26)', $$('#toolBody .ttab').length >= 6);
+
+  // §26.13 — the approved composition, in order
+  const sections = [...mkBody.querySelectorAll('[data-sect]')].map(s => s.dataset.sect);
+  const binding = sections.filter(x => ['context', 'classnav', 'hero', 'assets', 'overview'].includes(x));
+  ok('Markets follows its approved composition (§123)',
+     binding.join('>') === 'context>classnav>hero>assets>overview', binding.join(' > '));
+  ok('the market-type control leads the content (§26.2)',
+     $$('#toolBody .ttab').map(b => b.textContent.trim()).slice(0, 4)
+       .join('|').replace(/\s+/g, '') === 'Stocks|Indices|Forex|Commodities',
+     $$('#toolBody .ttab').map(b => b.textContent.trim()).join('|'));
+  ok('the hero carries a quote and a timeframe selector (§26.3)',
+     !!$('#toolBody .mkthero__value') && $$('#toolBody .mktrange__btn').length === 6);
+  ok('Top Stocks has a See all affordance (§26.4)',
+     /See all/.test(($('#toolBody [data-sect="assets"] .sect__link') || {}).textContent || ''));
+  ok('Market Overview shows cap, volume and breadth (§26.5)',
+     !!$('#toolBody .mktov') && !!$('#toolBody .mktbreadth'));
   ok('source + freshness shown (§107)', !!$('#toolBody .srcbar') && /Exchange feed/.test(mkBody.textContent));
   ok('related tools shown (§97)', $$('#toolBody .related__item').length >= 1);
   ok('PSX is the local exchange', /Pakistan Stock Exchange|KSE-100/.test(mkBody.textContent));
 
-  // switch a tab
-  const moversTab = $$('#toolBody .ttab').find(b => /Movers/.test(b.textContent));
-  click(win, moversTab);
-  await wait(20);
-  ok('Movers tab switches content', /Top gainers/.test($('#toolBody').textContent));
+  // §26.2 — the asset-class control changes the whole screen
+  const fxTab = $$('#toolBody .ttab').find(b => /Forex/.test(b.textContent));
+  click(win, fxTab);
+  await wait(30);
+  ok('Forex switches the screen to currency pairs',
+     /USD\/PKR|EUR\/USD/.test($('#toolBody').textContent), $('#toolBody').textContent.slice(0, 120));
+  const cmTab = $$('#toolBody .ttab').find(b => /Commodities/.test(b.textContent));
+  click(win, cmTab);
+  await wait(30);
+  ok('Commodities switches the screen to contracts',
+     /Gold|Brent|Silver/.test($('#toolBody').textContent));
+  click(win, $$('#toolBody .ttab').find(b => /Stocks/.test(b.textContent)));
+  await wait(30);
+
+  // §26.9 — selecting an asset opens its detail, and back returns
+  const firstAsset = $('#toolBody [data-sect="assets"] .rrow');
+  click(win, firstAsset);
+  await wait(30);
+  ok('selecting an asset opens the detail (§26.9)',
+     /Fundamentals|52-week/.test($('#toolBody').textContent), $('#toolBody').textContent.slice(0, 100));
+  click(win, $('#toolHeader [data-tool-back]'));
+  await wait(30);
+  ok('back returns to the Markets board, not out of the tool',
+     !!$('#toolBody .mktov') && $('#screen-tool').classList.contains('is-active'));
 
   // related tool navigation pushes onto the stack
   const rel = $('#toolBody .related__item');

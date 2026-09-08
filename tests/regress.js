@@ -236,10 +236,11 @@ const wait = ms => new Promise(r => setTimeout(r, ms));
      I.LANGS.filter(l => !I.DICTS[l.code]).map(l => l.code).join(', '));
 
   // §9 sheets are dismissed by drag/scrim, not an X, unless they are workflows
-  const sheetsWithX = $$('.sheet').filter(s => s.querySelector('[data-close]')).map(s => s.id);
+  // an X, not merely a dismissal affordance: "Not now" is text, not a close button
+  const sheetsWithX = $$('.sheet').filter(s => s.querySelector('.closebtn')).map(s => s.id);
+  const workflows = ['sheet-personalise', 'sheet-share', 'sheet-notifprefs'];
   ok('only modal workflows keep an explicit close',
-     sheetsWithX.every(id => id === 'sheet-personalise' || id === 'sheet-share'),
-     sheetsWithX.join(', '));
+     sheetsWithX.every(id => workflows.includes(id)), sheetsWithX.join(', '));
 
   win.close();
   console.log('\n' + (failures ? failures + ' FAILURES' : 'ALL REGRESSION CHECKS PASSED'));

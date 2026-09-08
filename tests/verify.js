@@ -118,6 +118,31 @@ process.on('unhandledRejection', e => { console.error('UNHANDLED', e && (e.stack
     }
     console.log('  tools built: ' + opened + ' (thin: ' + empty + ')');
 
+    // §123 — an approved composition is binding: the sections it names must
+    // appear, in order, at the top of the screen.
+    const compFails = [];
+    for (const id of visible) {
+      const spec = SPEC.get(id);
+      if (!spec.composition) continue;
+      const built = TOOLS.build(id);
+      if (!built) continue;
+      const rendered = [...built.body.matchAll(/data-sect="([a-z]+)"/g)].map(m => m[1]);
+      const wanted = spec.composition;
+      // the binding sections, in order, ignoring anything unnamed between them
+      const seen = [];
+      for (const sect of rendered) if (wanted.includes(sect)) seen.push(sect);
+      const head = seen.slice(0, wanted.length);
+      if (head.join('>') !== wanted.join('>')) {
+        compFails.push(id + ': wanted [' + wanted.join(' > ') + '] got [' + seen.join(' > ') + ']');
+      }
+    }
+    if (compFails.length) {
+      failures += compFails.length;
+      compFails.forEach(f => console.log('  FAIL composition: ' + f));
+    } else if (visible.some(id => SPEC.get(id).composition)) {
+      console.log('  ok: approved compositions preserved');
+    }
+
     // §6 — a screen must earn the density its contract declares.
     const MIN_SECTIONS = { low: 1, medium: 3, high: 5, veryhigh: 7 };
     const underweight = [];
