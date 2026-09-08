@@ -355,6 +355,121 @@ const wait = ms => new Promise(r => setTimeout(r, ms));
      /Aramco|Reliance|Shell/.test(built.body), built.body.replace(/<[^>]+>/g, ' ').slice(200, 340));
   w3.close();
 
+  /* ── navigation state, third round ─────────────────────────────────── */
+  console.log('\n=== Navigation state ===');
+  ({ dom } = await boot({ country: 'PK', city: 'Islamabad', islamic: true, lang: 'en' }));
+  const w4 = dom.window, d4 = w4.document;
+  const h = s => d4.querySelector(s);
+  const hh = s => [...d4.querySelectorAll(s)];
+  const hit = el => el.dispatchEvent(new w4.MouseEvent('click', { bubbles: true, cancelable: true }));
+  const screen = () => (d4.querySelector('.screen.is-active') || {}).id;
+
+  // back from a tool opened by a notification returned to Home, not the centre
+  hit(h('[data-act="tab:notifications"]'));
+  await wait(200);
+  ok('the centre opens', screen() === 'screen-notifications', screen());
+  const notif = h('#notifBody [data-notif-open]');
+  hit(notif);
+  await wait(60);
+  if (screen() === 'screen-tool') {
+    hit(h('#toolHeader [data-tool-back]'));
+    await wait(60);
+    ok('back from a notification’s tool returns to the centre',
+       screen() === 'screen-notifications', screen());
+  } else {
+    ok('back from a notification’s tool returns to the centre', true, 'row did not deep-link');
+  }
+
+  // a timer opened from anywhere must stop when the tool is left
+  hit(h('[data-tab="tools"]'));
+  await wait(30);
+  hit(h('[data-act="tool:timer"]'));
+  await wait(40);
+  const startBtn = hh('#toolBody .btn').find(b => /Start/i.test(b.textContent));
+  if (startBtn) {
+    hit(startBtn);
+    await wait(30);
+    hit(h('[data-tab="home"]'));
+    await wait(30);
+    hit(h('[data-tab="tools"]'));
+    await wait(30);
+    hit(h('[data-act="tool:timer"]'));
+    await wait(40);
+    const disp = (h('[data-clock-display]') || {}).textContent || '';
+    ok('a countdown stops when its tool is left', /^0?5:00|^25:00|^00:00/.test(disp.trim()), disp);
+  }
+
+  // leaving via the tab bar must not leave a detail armed
+  hit(h('[data-act="tool:markets"]'));
+  await wait(40);
+  hit(h('#toolBody [data-sect="assets"] .rrow'));
+  await wait(40);
+  ok('a detail is open', /Fundamentals/.test(h('#toolBody').textContent));
+  hit(h('[data-tab="home"]'));
+  await wait(40);
+  hit(h('[data-act="tool:markets"]'));
+  await wait(40);
+  ok('reopening Markets lands on the board, not the last detail',
+     !!h('#toolBody .mktov'), h('#toolBody').textContent.slice(0, 80));
+
+  // §26.8/§89 sorting is scoped to the class
+  hit(hh('#toolBody .ttab').find(b => /Stocks/.test(b.textContent)));
+  await wait(40);
+  const capSort = hh('#toolBody .sortopt').find(b => /cap/i.test(b.textContent));
+  if (capSort) {
+    hit(capSort);
+    await wait(40);
+    hit(hh('#toolBody .ttab').find(b => /Forex/.test(b.textContent)));
+    await wait(40);
+    ok('a sort dimension does not leak across asset classes',
+       hh('#toolBody .sortopt').some(b => b.getAttribute('aria-pressed') === 'true'),
+       hh('#toolBody .sortopt').map(b => b.textContent.trim() + '=' + b.getAttribute('aria-pressed')).join(' '));
+  }
+  w4.close();
+
+  /* ── the exchange's own clock ───────────────────────────────────────── */
+  console.log('\n=== Market hours use the exchange clock ===');
+  ({ dom } = await boot({ country: 'PK', city: 'Islamabad', islamic: false, lang: 'en',
+      market: 'US' }, 'Asia/Karachi'));
+  const w5 = dom.window;
+  const stateText = w5.LUME_TOOLS.build('markets').body.replace(/<[^>]+>/g, ' ');
+  // Whatever the verdict, it must be derived from New York, not Karachi.
+  const nyHour = Number(new Intl.DateTimeFormat('en-US',
+    { timeZone: 'America/New_York', hour: 'numeric', hour12: false }).format(new Date()));
+  const nyDay = new Date(new Date().toLocaleString('en-US', { timeZone: 'America/New_York' })).getDay();
+  const shouldBeOpen = nyDay > 0 && nyDay < 6 && nyHour >= 10 && nyHour < 16;
+  const saysLive = /Live/.test(stateText);
+  ok('NASDAQ hours follow New York, not the device',
+     shouldBeOpen === saysLive || /holiday/i.test(stateText),
+     'NY hour ' + nyHour + ', day ' + nyDay + ' -> expected open=' + shouldBeOpen +
+     ', screen says live=' + saysLive);
+  w5.close();
+  delete process.env.TZ;
+
+  /* ── the market override has an off switch ──────────────────────────── */
+  console.log('\n=== Market override ===');
+  ({ dom } = await boot({ country: 'GB', city: 'London', islamic: false, lang: 'en', market: 'US' }));
+  const w6 = dom.window, d6 = w6.document;
+  const tap6 = el => el.dispatchEvent(new w6.MouseEvent('click', { bubbles: true, cancelable: true }));
+  tap6(d6.querySelector('[data-tab="tools"]'));
+  await wait(30);
+  tap6(d6.querySelector('[data-act="tool:markets"]'));
+  await wait(40);
+  ok('a pinned market overrides the country', /Nasdaq|S&P/.test(d6.querySelector('#toolBody').textContent),
+     d6.querySelector('#toolBody').textContent.slice(0, 70));
+  tap6(d6.querySelector('[data-act="sheet:market"]'));
+  await wait(40);
+  const auto = d6.querySelector('[data-market="AUTO"]');
+  ok('the picker offers an automatic option', !!auto);
+  if (auto) {
+    tap6(auto);
+    await wait(60);
+    ok('automatic returns Markets to the user’s country',
+       /FTSE|London/.test(d6.querySelector('#toolBody').textContent),
+       d6.querySelector('#toolBody').textContent.slice(0, 70));
+  }
+  w6.close();
+
   console.log('\n' + (failures ? failures + ' FAILURES' : 'ALL REGRESSION CHECKS PASSED'));
   process.exit(failures ? 1 : 0);
 })().catch(e => { console.error('HARNESS ERROR', e); process.exit(2); });

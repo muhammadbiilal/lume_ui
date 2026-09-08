@@ -481,22 +481,16 @@ window.LUME_CTX = function (deps) {
   }
 
   /* §26.2 — the classes this market can actually show. */
+  /* §26.2/§63 — which classes a market offers is part of its configuration,
+     not a chain of exchange-code comparisons inside the view. */
+  var BASE_CLASSES = ['stocks', 'indices', 'forex', 'commodities'];
+
   function assetClasses() {
     var ex = exchange();
-    var out = [
-      { id: 'stocks', label: t('markets.tab.stocks') },
-      { id: 'indices', label: t('markets.tab.indices') },
-      { id: 'forex', label: t('markets.tab.forex') },
-      { id: 'commodities', label: t('markets.tab.commodities') }
-    ];
-    /* Only offered where the market has them. */
-    if (!ex || ex.code === 'NASDAQ') out.push({ id: 'etfs', label: t('markets.tab.etfs') });
-    /* Crypto is a venue-less class, so it belongs to the world board and to
-       the markets whose exchanges actually list it. */
-    if (!ex || ['NASDAQ', 'LSE'].indexOf(ex.code) !== -1) {
-      out.push({ id: 'crypto', label: t('markets.tab.crypto') });
-    }
-    return out;
+    var extra = ex ? (ex.classes || []) : ['etfs', 'crypto'];
+    return BASE_CLASSES.concat(extra).map(function (id) {
+      return { id: id, label: t('markets.tab.' + id) };
+    });
   }
 
   /* §26.10 — live, delayed, closed, opening soon, holiday. Each is a state
@@ -508,18 +502,19 @@ window.LUME_CTX = function (deps) {
       return { key: 'global', open: true, quality: 'live', label: t('markets.st.global'),
         detail: t('markets.st.globalDetail') };
     }
-    if (D.isMarketHoliday(marketCode(), now)) {
-      return { key: 'holiday', open: false, quality: 'cached', label: t('markets.st.holiday'),
-        detail: t('markets.st.reopens', { day: L.date(nextWeekday(now), { weekday: 'long' }) }) };
-    }
-    var day = now.getDay();
-    if (day === 0 || day === 6) {
+    var localNow = localDate(now, ex.tz);
+    if (localNow.getDay() === 0 || localNow.getDay() === 6) {
       return { key: 'weekend', open: false, quality: 'cached', label: t('markets.st.weekend'),
-        detail: t('markets.st.reopens', { day: L.date(nextWeekday(now), { weekday: 'long' }) }) };
+        detail: t('markets.st.reopens', { day: L.date(nextWeekday(localNow), { weekday: 'long' }) }) };
     }
-    var mins = now.getHours() * 60 + now.getMinutes();
+    if (D.isMarketHoliday(marketCode(), localNow)) {
+      return { key: 'holiday', open: false, quality: 'cached', label: t('markets.st.holiday'),
+        detail: t('markets.st.reopens', { day: L.date(nextOpenDay(localNow, marketCode()), { weekday: 'long' }) }) };
+    }
+    var mins = localMinutes(now, ex.tz);
     var o = hhmmToMins(ex.open), c = hhmmToMins(ex.close);
-    if (mins >= o && mins <= c) {
+    /* The close is exclusive: at exactly 15:30 the bell has rung. */
+    if (mins >= o && mins < c) {
       /* Open means live, which is the whole point of the distinction (§19). */
       return { key: 'open', open: true, quality: 'live', label: t('markets.st.live'),
         detail: t('markets.st.closesIn', { time: fmtGap(c - mins) }) };
@@ -528,8 +523,44 @@ window.LUME_CTX = function (deps) {
       return { key: 'soon', open: false, quality: 'cached', label: t('markets.st.soon'),
         detail: t('markets.st.opensIn', { time: fmtGap(o - mins) }) };
     }
+    /* After the close, "reopens at 09:32" is only true if that is still to
+       come; on a Friday evening the next open is Monday. */
+    var next = nextOpenDay(localNow, marketCode());
+    var sameDay = next.getDate() === localNow.getDate() && mins < o;
     return { key: 'closed', open: false, quality: 'cached', label: t('markets.st.closed'),
-      detail: t('markets.st.reopensAt', { time: L.time(Math.floor(o / 60), o % 60) }) };
+      detail: sameDay
+        ? t('markets.st.reopensAt', { time: L.time(Math.floor(o / 60), o % 60) })
+        : t('markets.st.reopensOn', {
+            day: L.date(next, { weekday: 'long' }),
+            time: L.time(Math.floor(o / 60), o % 60)
+          }) };
+  }
+
+  /* The exchange's own wall clock, not the device's. Reading New York hours
+     off a phone in Karachi reported NASDAQ open at 09:35 local and closed at
+     20:00 local — exactly inverted. */
+  function localDate(date, tz) {
+    if (!tz) return date;
+    try { return new Date(date.toLocaleString('en-US', { timeZone: tz })); }
+    catch (e) { return date; }
+  }
+
+  function localMinutes(date, tz) {
+    var d = localDate(date, tz);
+    return d.getHours() * 60 + d.getMinutes();
+  }
+
+  function localDay(date, tz) { return localDate(date, tz).getDay(); }
+
+  function nextOpenDay(from, code) {
+    var d = new Date(from);
+    for (var i = 0; i < 10; i++) {
+      d.setDate(d.getDate() + 1);
+      if (d.getDay() === 0 || d.getDay() === 6) continue;
+      if (D.isMarketHoliday(code, d)) continue;
+      return d;
+    }
+    return d;
   }
 
   function hhmmToMins(str) {
@@ -643,7 +674,9 @@ window.LUME_CTX = function (deps) {
 
   function assetDetail(cls, sym, range) {
     var list = assetsFor(cls);
-    var a = list.filter(function (x) { return x.sym === sym; })[0] || list[0];
+    /* Falling back to the first asset made "that asset is no longer listed"
+       unreachable and quietly showed the user the wrong company. */
+    var a = list.filter(function (x) { return x.sym === sym; })[0];
     if (!a) return null;
     return {
       asset: a,
@@ -661,6 +694,7 @@ window.LUME_CTX = function (deps) {
 
   function marketOptions() {
     var here = marketCode();
+    var overridden = !!(stateFor('markets').market || P().market);
     var out = Object.keys(D.EXCHANGES).map(function (code) {
       var ex = D.EXCHANGES[code];
       return {
@@ -670,6 +704,11 @@ window.LUME_CTX = function (deps) {
       };
     });
     out.sort(function (a, b) { return (b.home ? 1 : 0) - (a.home ? 1 : 0); });
+    /* An override needs a way back. Without this, choosing a market once was
+       permanent and survived every later change of country. */
+    out.unshift({ code: 'AUTO', name: t('markets.automatic'),
+      exchange: t('markets.automaticSub', { country: L.countryName(P().country) }),
+      sub: '', region: L.countryName(P().country), venues: [], on: !overridden });
     out.push({ code: 'GLOBAL', name: t('markets.globalMarkets'), exchange: t('markets.worldBoard'),
       sub: t('markets.global'), region: t('markets.everywhere'), venues: [],
       on: here === 'GLOBAL' });
@@ -1747,16 +1786,18 @@ window.LUME_CTX = function (deps) {
 
       /* §89 — sorting is a dimension plus a direction. Tapping the active
          dimension flips it; the chip carries the next direction with it. */
-      sortState: function (fallbackBy, fallbackDir) {
-        var raw = s.sort;
+      sortKey: function (scope) { return scope ? 'sort.' + scope : 'sort'; },
+
+      sortState: function (fallbackBy, fallbackDir, scope) {
+        var raw = s[this.sortKey(scope)];
         if (!raw) return { by: fallbackBy, dir: fallbackDir || 'desc' };
         var parts = String(raw).split('|');
         return { by: parts[0], dir: parts[1] || fallbackDir || 'desc' };
       },
 
       /* Sort a list by a named accessor, honouring the current direction. */
-      sortBy: function (list, accessors, fallbackBy, fallbackDir) {
-        var st = this.sortState(fallbackBy, fallbackDir);
+      sortBy: function (list, accessors, fallbackBy, fallbackDir, scope) {
+        var st = this.sortState(fallbackBy, fallbackDir, scope);
         var get = accessors[st.by] || accessors[fallbackBy];
         if (!get) return list;
         var dir = st.dir === 'asc' ? 1 : -1;
@@ -1770,8 +1811,8 @@ window.LUME_CTX = function (deps) {
       },
 
       /* Build the items a sortBar needs, marking the active dimension. */
-      sortItems: function (dims, fallbackBy, fallbackDir) {
-        var st = this.sortState(fallbackBy, fallbackDir);
+      sortItems: function (dims, fallbackBy, fallbackDir, scope) {
+        var st = this.sortState(fallbackBy, fallbackDir, scope);
         return dims.map(function (d) {
           return { value: d.value, label: d.label, on: d.value === st.by, dir: d.value === st.by ? st.dir : null };
         });

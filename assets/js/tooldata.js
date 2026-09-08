@@ -43,6 +43,7 @@ window.LUME_DATA = (function () {
   var EXCHANGES = {
     PK: {
       code: 'PSX', name: 'Pakistan Stock Exchange', city: 'Karachi', ccy: 'PKR', tz: 'Asia/Karachi',
+      classes: [],
       open: '09:32', close: '15:30',
       indices: [
         { sym: 'KSE100', name: 'KSE-100', full: 'Karachi 100 Index', value: 154230.42, chg: 1248.23, pct: 0.82 },
@@ -61,6 +62,7 @@ window.LUME_DATA = (function () {
     },
     US: {
       code: 'NASDAQ', name: 'Nasdaq · NYSE', city: 'New York', ccy: 'USD', tz: 'America/New_York',
+      classes: ['etfs', 'crypto'],
       open: '09:30', close: '16:00',
       indices: [
         { sym: 'SPX', name: 'S&P 500', full: 'Standard & Poor’s 500', value: 5812.44, chg: 24.18, pct: 0.42 },
@@ -79,6 +81,7 @@ window.LUME_DATA = (function () {
     },
     GB: {
       code: 'LSE', name: 'London Stock Exchange', city: 'London', ccy: 'GBP', tz: 'Europe/London',
+      classes: ['etfs', 'crypto'],
       open: '08:00', close: '16:30',
       indices: [
         { sym: 'UKX', name: 'FTSE 100', full: 'Financial Times 100', value: 8288.60, chg: 31.44, pct: 0.38 },
@@ -95,6 +98,7 @@ window.LUME_DATA = (function () {
     },
     AE: {
       code: 'DFM', name: 'Dubai Financial Market', city: 'Dubai', ccy: 'AED', tz: 'Asia/Dubai',
+      classes: [],
       open: '10:00', close: '15:00',
       indices: [
         { sym: 'DFMGI', name: 'DFM General', full: 'DFM General Index', value: 4622.18, chg: 18.44, pct: 0.40 },
@@ -109,6 +113,7 @@ window.LUME_DATA = (function () {
     },
     SA: {
       code: 'Tadawul', name: 'Saudi Exchange', city: 'Riyadh', ccy: 'SAR', tz: 'Asia/Riyadh',
+      classes: [],
       open: '10:00', close: '15:00',
       indices: [
         { sym: 'TASI', name: 'TASI', full: 'Tadawul All Share Index', value: 11844.20, chg: 62.10, pct: 0.53 },
@@ -123,6 +128,7 @@ window.LUME_DATA = (function () {
     },
     IN: {
       code: 'NSE', name: 'National Stock Exchange', city: 'Mumbai', ccy: 'INR', tz: 'Asia/Kolkata',
+      classes: ['etfs'],
       open: '09:15', close: '15:30',
       indices: [
         { sym: 'NIFTY', name: 'NIFTY 50', full: 'NSE NIFTY 50', value: 24188.65, chg: 118.40, pct: 0.49 },

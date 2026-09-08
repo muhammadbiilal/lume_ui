@@ -136,11 +136,49 @@ process.on('unhandledRejection', e => { console.error('UNHANDLED', e && (e.stack
         compFails.push(id + ': wanted [' + wanted.join(' > ') + '] got [' + seen.join(' > ') + ']');
       }
     }
+    // §123 — and in every market the picker can reach, not only the default.
+    // The world board dropped Market Overview and no test could see it.
+    for (const id of visible) {
+      const spec = SPEC.get(id);
+      if (!spec.composition) continue;
+      const ctx = win.LUME_TOOLS;
+      for (const market of ['GLOBAL', 'US', 'GB', 'AE', 'SA', 'IN']) {
+        try {
+          const c = win.LUME_CTX ? null : null;
+          // drive the real state the picker writes
+          win.eval(`(function(){
+            var b=document.createElement('button');
+            b.setAttribute('data-act','toolstate:${id}:market:${market}');
+            document.body.appendChild(b);
+            b.dispatchEvent(new MouseEvent('click',{bubbles:true}));
+            b.remove();
+          })()`);
+          const b2 = ctx.build(id);
+          if (!b2) continue;
+          const seen2 = [...b2.body.matchAll(/data-sect="([a-z]+)"/g)].map(m => m[1])
+            .filter(x => spec.composition.includes(x));
+          if (seen2.slice(0, spec.composition.length).join('>') !== spec.composition.join('>')) {
+            compFails.push(id + ' @' + market + ': wanted [' + spec.composition.join(' > ') +
+              '] got [' + seen2.join(' > ') + ']');
+          }
+        } catch (e) {
+          compFails.push(id + ' @' + market + ': threw ' + e.message);
+        }
+      }
+      win.eval(`(function(){
+        var b=document.createElement('button');
+        b.setAttribute('data-act','toolstate:${id}:market:');
+        document.body.appendChild(b);
+        b.dispatchEvent(new MouseEvent('click',{bubbles:true}));
+        b.remove();
+      })()`);
+    }
+
     if (compFails.length) {
       failures += compFails.length;
       compFails.forEach(f => console.log('  FAIL composition: ' + f));
     } else if (visible.some(id => SPEC.get(id).composition)) {
-      console.log('  ok: approved compositions preserved');
+      console.log('  ok: approved compositions preserved in every market');
     }
 
     // §6 — a screen must earn the density its contract declares.

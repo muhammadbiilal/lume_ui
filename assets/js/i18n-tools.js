@@ -220,9 +220,6 @@
     'agenda.review': 'Design review', 'agenda.reviewMeta': '45 min · Meeting room 2',
     'agenda.groceries': 'Pick up groceries', 'agenda.groceriesMeta': 'On the way home',
     'agenda.prayed': 'Prayed', 'agenda.adhanOn': 'Adhan · reminder on',
-    'notif.prayerIn': '{name} in {time}', 'notif.adhanAt': 'Adhan at {time}',
-    'notif.loadshed': 'Power off at {time}',
-    'notif.tomorrow': 'Tomorrow in {city}',
     'extra.darkMode': 'Dark mode', 'extra.personalise': 'Personalisation',
 
     /* Screens recomposed to match their archetype (§22, §112) */
@@ -563,6 +560,9 @@
     'markets.st.weekend': 'Closed for the weekend',
     'markets.st.closesIn': 'Closes in {time}', 'markets.st.opensIn': 'Opens in {time}',
     'markets.st.reopensAt': 'Reopens at {time}', 'markets.st.reopens': 'Reopens {day}',
+    'markets.st.reopensOn': 'Reopens {day} at {time}',
+    'markets.automatic': 'Automatic',
+    'markets.automaticSub': 'Follow my country — {country}',
     'markets.cm.metals': 'Metals', 'markets.cm.energy': 'Energy', 'markets.cm.agriculture': 'Agriculture',
     'markets.fx.major': 'Majors', 'markets.fx.minor': 'Minors', 'markets.fx.pegged': 'Pegged',
     'markets.noAssets': 'Nothing listed here yet',

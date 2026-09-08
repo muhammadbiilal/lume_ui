@@ -350,8 +350,11 @@
         '<span class="tab__label">' + esc(t(m.key)) + '</span></button>';
     }).join('');
 
-    /* A screen that is no longer a tab must not stay open. */
-    if (tabOrder().indexOf(current) === -1 && current !== 'explore') current = 'home';
+    /* A screen that is no longer a tab must not stay open — but the tool
+       screen, the notification centre and Explore are destinations, not
+       orphans. */
+    if (tabOrder().indexOf(current) === -1 &&
+        ['explore', 'tool', 'notifications'].indexOf(current) === -1) current = 'home';
     goTo(current, true);
   }
 
@@ -2601,6 +2604,7 @@
     else if (!currentTool) toolReturnTab = current;
 
     currentTool = id;
+    current = 'tool';          /* a tool is showing, whatever opened it */
     noteRecent(id);
 
     var screen = $('#screen-tool');
@@ -2630,6 +2634,7 @@
   }
 
   function closeTool() {
+    if (!currentTool) { goTo(notifReturnTab || 'home'); return; }
     /* A detail view is a view *of* the tool, so back returns to the tool
        before it returns to where the tool was opened from (§9). */
     if (currentTool) {
@@ -2647,6 +2652,13 @@
   /* Leaving through the tab bar abandons the whole tool stack. */
   var goToBase = goTo;
   goTo = function (name, quiet) {
+    /* A tool's sub-view does not survive leaving the tool: reopening
+       Markets from Home landed straight back inside an asset detail. */
+    if (currentTool) {
+      var leaving = toolCtx(currentTool);
+      if (leaving) leaving.setState('detail', '');
+      stopClocks();
+    }
     currentTool = null;
     toolStack.length = 0;
     /* The centre is a destination, not a tab, so it remembers where the
@@ -2725,15 +2737,26 @@
     if (!row) return;
     var code = row.dataset.market;
     var c = toolCtx('markets');
-    c.setState('market', code);
+    /* "Automatic" is not a market — it is the absence of an override, so
+       Markets follows the user's country again (§26.1). */
+    if (code === 'AUTO') {
+      c.setState('market', '');
+      profile.market = null;
+    } else {
+      c.setState('market', code);
+      profile.market = code;
+    }
     c.setState('detail', '');
     c.setState('class', 'stocks');
-    profile.market = code;
     saveProfile();
     sheetClose();
     if (currentTool === 'markets') renderTool();
     renderLiveNow();
-    toast(t('markets.switched', { name: code === 'GLOBAL' ? t('markets.globalMarkets') : L.countryName(code) }));
+    toast(t('markets.switched', {
+      name: code === 'AUTO' ? L.countryName(profile.country)
+          : code === 'GLOBAL' ? t('markets.globalMarkets')
+          : L.countryName(code)
+    }));
   });
 
   /* ---- the action vocabulary tool screens speak ---- */
@@ -3565,6 +3588,7 @@
     } else {
       p[key] = !p[key];
     }
+    NOTIFY.prefsChanged();
     saveProfile();
     renderNotifPrefs();
     renderNotifBadge();

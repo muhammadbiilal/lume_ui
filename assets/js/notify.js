@@ -39,6 +39,15 @@ window.LUME_NOTIFY = function (deps) {
 
   var PRIORITY = { critical: 3, high: 2, normal: 1, low: 0 };
 
+  /* A source states how long ago its event happened relative to when Lume
+     started; anchoring to the session means "18 min ago" becomes "24 min
+     ago" six minutes later instead of standing still forever. */
+  var ANCHOR = Date.now();
+
+  /* Bumped by every write, so a memoised list can never go stale. */
+  var version = 0;
+  function touch() { version++; cache = null; }
+
   function category(id) {
     for (var i = 0; i < CATEGORIES.length; i++) if (CATEGORIES[i].id === id) return CATEGORIES[i];
     return CATEGORIES[CATEGORIES.length - 1];
@@ -69,6 +78,10 @@ window.LUME_NOTIFY = function (deps) {
     });
     return p.notify;
   }
+
+  /* Preferences gate the build, so changing one must invalidate it. The
+     shell calls this after writing a preference. */
+  function prefsChanged() { touch(); }
 
   function readSet() {
     var p = P();
@@ -361,25 +374,45 @@ window.LUME_NOTIFY = function (deps) {
     return true;
   }
 
+  /* Every call constructed fifteen tool contexts and recomputed prayer
+     times, weather, bills, documents, subscriptions, meds and habits — three
+     times per render of the centre, and once a minute forever. The result is
+     stable within a tick, so it is memoised and invalidated on any write. */
+  var cache = null, cacheAt = 0, cacheVersion = 0;
+  var CACHE_MS = 4000;
+
+  function invalidate() { cache = null; }
+
   function build(opts) {
     opts = opts || {};
     var now = Date.now();
+    if (!opts.fresh && cache && now - cacheAt < CACHE_MS && cacheVersion === version) {
+      return cache;
+    }
     var out = [], seen = {};
 
     SOURCES.forEach(function (src) {
-      if (!allowed(src)) return;
-      var ctx;
-      try { ctx = ctxFor(src.tool); } catch (e) { return; }
-      if (!ctx) return;
-
-      var made;
-      try { made = src.build(ctx); } catch (e) { made = null; }
+      /* The gate is inside the guard too: a throw here used to abort the
+         whole build and take every remaining source with it. */
+      var made, ctx;
+      try {
+        if (!allowed(src)) return;
+        ctx = ctxFor(src.tool);
+        if (!ctx) return;
+        made = src.build(ctx);
+      } catch (e) {
+        if (window.console && window.console.warn) {
+          window.console.warn('Lume notification source "' + src.id + '" failed', e);
+        }
+        return;
+      }
       if (!made || !made.title) return;
 
       var id = src.id + (made.entity ? ':' + made.entity : '');
       var occurrence = occurrenceOf(src, made);
-      var agoMins = made.ago === undefined ? 0 : made.ago;
-      var createdAt = now - agoMins * 60000;
+      var baseAgo = made.ago === undefined ? 0 : made.ago;
+      var createdAt = ANCHOR - baseAgo * 60000;
+      var agoMins = Math.max(0, Math.round((now - createdAt) / 60000));
       var expiresAt = src.expiresMins ? createdAt + src.expiresMins * 60000 : null;
       var expired = !!(expiresAt && now > expiresAt);
 
@@ -419,6 +452,7 @@ window.LUME_NOTIFY = function (deps) {
     });
 
     if (!opts.raw) prune(out);
+    cache = out; cacheAt = now; cacheVersion = version;
     return out;
   }
 
@@ -492,6 +526,7 @@ window.LUME_NOTIFY = function (deps) {
     } else {
       resolve(id, rows).forEach(function (n) { readSet()[n.id] = 1; });
     }
+    touch();
     deps.save();
   }
 
@@ -500,11 +535,13 @@ window.LUME_NOTIFY = function (deps) {
       actionedSet()[n.id] = 1;
       readSet()[n.id] = 1;
     });
+    touch();
     deps.save();
   }
 
   function dismiss(id, rows) {
     resolve(id, rows).forEach(function (n) { dismissedSet()[n.id] = n.occurrence; });
+    touch();
     deps.save();
   }
 
@@ -512,6 +549,7 @@ window.LUME_NOTIFY = function (deps) {
      not also mark everything unread. */
   function restoreAll() {
     P().notifyGone = {};
+    touch();
     deps.save();
   }
 
@@ -605,6 +643,7 @@ window.LUME_NOTIFY = function (deps) {
 
   function markPresented(n) {
     presentedSet()[n.id] = 1;
+    touch();
     deps.save();
   }
 
@@ -631,7 +670,7 @@ window.LUME_NOTIFY = function (deps) {
   return {
     CATEGORIES: CATEGORIES, PRIORITY: PRIORITY, SOURCES: SOURCES,
     present: present, nextToPresent: nextToPresent, markActioned: markActioned,
-    category: category, prefs: prefs,
+    category: category, prefs: prefs, prefsChanged: prefsChanged,
     list: list, grouped: grouped, unreadCount: unreadCount,
     markRead: markRead, dismiss: dismiss, restoreAll: restoreAll,
     inQuietHours: inQuietHours, mayInterrupt: mayInterrupt,

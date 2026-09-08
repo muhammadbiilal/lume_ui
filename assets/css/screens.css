@@ -646,7 +646,6 @@
 .private-card__text { display: block; font-size: 11px; color: var(--text-3); font-weight: 500; margin-top: 3px; line-height: 1.45; }
 .private-card__chev { flex: none; color: var(--text-3); width: 16px; height: 16px; }
 
-.notif-dot { width: 7px; height: 7px; border-radius: 50%; background: var(--accent); }
 
 /* ---------- Interest picker groups ------------------------- */
 

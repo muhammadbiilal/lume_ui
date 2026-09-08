@@ -304,7 +304,10 @@ window.LUME_UI = (function () {
             'data-sort': i.value,
             'aria-pressed': i.on ? 'true' : 'false'
           }) +
-          actAttr(o.tool ? 'toolstate:' + o.tool + ':sort:' + i.value + '|' + next : null) + '>' + esc(i.label) +
+          actAttr(o.tool
+            ? 'toolstate:' + o.tool + ':' + (o.scope ? 'sort.' + o.scope : 'sort') +
+              ':' + i.value + '|' + next
+            : null) + '>' + esc(i.label) +
           (i.on && i.dir ? ico(i.dir === 'asc' ? 'i-arrow-up' : 'i-arrow-down') : '') + '</button>';
       }).join('') + '</div>' +
     '</div>';

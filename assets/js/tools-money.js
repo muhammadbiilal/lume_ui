@@ -120,16 +120,22 @@
       });
     }
 
+    /* Sorting is scoped to the class, like filtering: "market cap" is not a
+       dimension a currency pair has, and leaving it selected sorted Forex by
+       nothing with no chip lit. */
     var ordered = c.sortBy(filtered, {
       pct: function (a) { return a.pct; },
       price: function (a) { return a.price; },
       vol: function (a) { return volNum(a.vol); },
       cap: function (a) { return capNum(a.cap); },
       name: function (a) { return a.name; }
-    }, 'pct', 'desc');
+    }, 'pct', 'desc', cls);
 
     var showAll = c.state('showAll') === 'true';
-    var visible = showAll ? ordered : ordered.slice(0, 5);
+    /* The hero is already the lead asset; repeating it as row one wasted the
+       most valuable line on the screen. */
+    var listed = hero ? ordered.filter(function (a) { return a.sym !== hero.sym; }) : ordered;
+    var visible = showAll ? listed : listed.slice(0, 5);
 
     /* §26.7/§26.8 — the controls sit immediately above the list they act on,
        not two sections below it. */
@@ -138,13 +144,14 @@
           'markets.search.' + cls ? c.t('markets.search') : c.t('markets.search.' + cls),
         target: 'markets', value: c.state('q') || '' }) }) +
       UI.section({ tight: true, body: UI.filterBar(filterGroups(c, cls, move), 'markets') }) +
-      UI.section({ tight: true, body: UI.sortBar({ tool: 'markets', label: c.t('common.sort'),
-        items: c.sortItems(sortDims(c, cls), 'pct', 'desc') }) });
+      UI.section({ tight: true, body: UI.sortBar({ tool: 'markets', scope: cls,
+        label: c.t('common.sort'),
+        items: c.sortItems(sortDims(c, cls), 'pct', 'desc', cls) }) });
 
     var assetsSection = UI.section({
       id: 'assets',
       title: c.t('markets.top.' + cls) === 'markets.top.' + cls ? c.t('markets.topAssets') : c.t('markets.top.' + cls),
-      link: ordered.length > 5
+      link: listed.length > 5
         ? { label: showAll ? c.t('markets.showLess') : c.t('markets.seeAll'),
             act: 'toolstate:markets:showAll:' + (showAll ? 'false' : 'true') }
         : null,
