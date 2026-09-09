@@ -10,12 +10,15 @@
    the same screen shows PSX in Karachi, the LSE in London and
    Tadawul in Riyadh without a single `if country ==` branch.
    ============================================================ */
+import { LUME_UI } from './toolkit.js';
+import { LUME_DATA } from './tooldata.js';
+import { LUME_TOOLS } from './tools.js';
 (function () {
   'use strict';
 
-  var UI = window.LUME_UI;
-  var D = window.LUME_DATA;
-  var T = window.LUME_TOOLS;
+  var UI = LUME_UI;
+  var D = LUME_DATA;
+  var T = LUME_TOOLS;
 
   /* Percentages and signed changes are numbers: `1,25 %` in German, Eastern
      digits in Arabic. They go through the locale engine like every other

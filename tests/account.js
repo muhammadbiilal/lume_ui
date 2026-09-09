@@ -8,6 +8,7 @@
 const fs = require('fs');
 const path = require('path');
 const { JSDOM, VirtualConsole } = require('jsdom');
+const { loadInto } = require('./modules');
 
 const ROOT = path.resolve(__dirname, '..');
 let failures = 0;
@@ -47,9 +48,7 @@ async function boot(opts) {
       window.URL.revokeObjectURL = () => {};
     }
   });
-  for (const src of [...dom.window.document.querySelectorAll('script[src]')].map(s => s.getAttribute('src'))) {
-    dom.window.eval(fs.readFileSync(path.join(ROOT, src), 'utf8'));
-  }
+  loadInto(dom, ROOT, errors);
   await wait(80);
   return { dom, win: dom.window, doc: dom.window.document, errors };
 }
@@ -174,7 +173,7 @@ function visibleText(doc) {
   console.log('\n=== Profile: the guest composition ===');
   hit(win, $(doc, '[data-tab="profile"]'));
   await wait(60);
-  const wanted = win.LUME_SPEC.COMPOSITIONS.profile;
+  const wanted = win.Lume.spec.COMPOSITIONS.profile;
   /* Every section, in order, with nothing filtered out — filtering to the
      approved list is exactly how an inserted section escapes notice. The
      sign-out block is the one section allowed after the last binding one,
@@ -267,9 +266,9 @@ function visibleText(doc) {
   type(win, 'password', 'Password1');
   type(win, 'confirm', 'Password1');
   await submit(win, 'signup');
-  ok('a valid sign-up creates the account', win.LUME_ACCT.isAuthed(), win.LUME_ACCT.state());
+  ok('a valid sign-up creates the account', win.Lume.account.isAuthed(), win.Lume.account.state());
   ok('the account carries the name that was given',
-     win.LUME_ACCT.fullName() === 'Muhammad Bilal', win.LUME_ACCT.fullName());
+     win.Lume.account.fullName() === 'Muhammad Bilal', win.Lume.account.fullName());
   ok('sign-up ends on the designed arrival screen (§126.13)',
      !!$(doc, '.authseal') && !!$(doc, '[data-act="acctdo:authdone"]'), screenId(doc));
   hit(win, $(doc, '[data-act="acctdo:authdone"]'));
@@ -295,7 +294,7 @@ function visibleText(doc) {
   console.log('\n=== Duplicate account ===');
   act(win, 'acctdo:logoutgo');
   await wait(80);
-  ok('logging out returns to the guest state', win.LUME_ACCT.isGuest(), win.LUME_ACCT.state());
+  ok('logging out returns to the guest state', win.Lume.account.isGuest(), win.Lume.account.state());
   await fillSignUp(win, { email: 'muhammad@example.com', password: 'Password1', confirm: 'Password1' });
   ok('an address already registered is refused',
      /already exists/i.test(visibleText(doc)), text($(doc, '.field__err')));
@@ -308,7 +307,7 @@ function visibleText(doc) {
   type(win, 'password', 'Wrong1234');
   await submit(win, 'signin');
   const wrongPw = text($(doc, '.formerr'));
-  ok('a wrong password is refused', !win.LUME_ACCT.isAuthed() && !!wrongPw, wrongPw);
+  ok('a wrong password is refused', !win.Lume.account.isAuthed() && !!wrongPw, wrongPw);
 
   type(win, 'email', 'nobody@example.com');
   type(win, 'password', 'Wrong1234');
@@ -320,7 +319,7 @@ function visibleText(doc) {
   type(win, 'email', 'muhammad@example.com');
   type(win, 'password', 'Password1');
   await submit(win, 'signin');
-  ok('the right credentials sign in', win.LUME_ACCT.isAuthed(), win.LUME_ACCT.state());
+  ok('the right credentials sign in', win.Lume.account.isAuthed(), win.Lume.account.state());
 
   /* ═══ 8. Security and change password (§124.12, §124.13) ════════════ */
   console.log('\n=== Security ===');
@@ -349,7 +348,7 @@ function visibleText(doc) {
   type(win, 'confirm', 'Newpass12');
   await submit(win, 'password');
   await wait(60);
-  ok('the right current password changes it', win.LUME_ACCT.isAuthed());
+  ok('the right current password changes it', win.Lume.account.isAuthed());
 
   act(win, 'acctdo:logoutgo');
   await wait(60);
@@ -358,10 +357,10 @@ function visibleText(doc) {
   type(win, 'email', 'muhammad@example.com');
   type(win, 'password', 'Password1');
   await submit(win, 'signin');
-  ok('the old password no longer works', !win.LUME_ACCT.isAuthed(), win.LUME_ACCT.state());
+  ok('the old password no longer works', !win.Lume.account.isAuthed(), win.Lume.account.state());
   type(win, 'password', 'Newpass12');
   await submit(win, 'signin');
-  ok('the new password does', win.LUME_ACCT.isAuthed(), win.LUME_ACCT.state());
+  ok('the new password does', win.Lume.account.isAuthed(), win.Lume.account.state());
   win.close();
 
   /* ═══ 9. Recovery says the same thing either way (§124.11) ═══════════ */
@@ -383,11 +382,11 @@ function visibleText(doc) {
   /* The confirmation must be indistinguishable, and that includes what it
      offers — a link shown only for real accounts is an existence oracle
      wearing the right words (§124.11). */
-  const unknownToken = win.LUME_ACCT.requestReset('nobody-else@example.com').token;
+  const unknownToken = win.Lume.account.requestReset('nobody-else@example.com').token;
   ok('a recovery token is issued for an address with no account too',
      !!unknownToken, String(unknownToken));
   ok('redeeming a token that belongs to nothing fails honestly',
-     !win.LUME_ACCT.resetPassword({ token: unknownToken, password: 'Newpass12', confirm: 'Newpass12' }).ok);
+     !win.Lume.account.resetPassword({ token: unknownToken, password: 'Newpass12', confirm: 'Newpass12' }).ok);
 
   act(win, 'auth:forgot');
   await wait(60);
@@ -416,7 +415,7 @@ function visibleText(doc) {
   type(win, 'email', 'ada@example.com');
   type(win, 'password', 'Resetme12');
   await submit(win, 'signin');
-  ok('the reset password signs in', win.LUME_ACCT.isAuthed(), win.LUME_ACCT.state());
+  ok('the reset password signs in', win.Lume.account.isAuthed(), win.Lume.account.state());
   win.close();
 
   /* ═══ 10. A guest keeps everything they made (§124.24) ═══════════════ */
@@ -433,8 +432,8 @@ function visibleText(doc) {
   ok('creating an account keeps the country and city',
      after.country === 'GB' && after.city === 'London', after.country + '/' + after.city);
   ok('creating an account keeps the interests', after.interests.length === 5, after.interests.length);
-  ok('a guest name carries into the account', win.LUME_ACCT.displayName() === 'Sam',
-     win.LUME_ACCT.displayName());
+  ok('a guest name carries into the account', win.Lume.account.displayName() === 'Sam',
+     win.Lume.account.displayName());
 
   /* ═══ 11. Editing the profile (§124.14) ═════════════════════════════ */
   console.log('\n=== Edit profile ===');
@@ -448,7 +447,7 @@ function visibleText(doc) {
      !$(doc, '[data-act="acctsubmit:edit"]').disabled);
   await submit(win, 'edit');
   await wait(60);
-  ok('the new name is stored', win.LUME_ACCT.displayName() === 'Samira', win.LUME_ACCT.displayName());
+  ok('the new name is stored', win.Lume.account.displayName() === 'Samira', win.Lume.account.displayName());
   hit(win, $(doc, '[data-tab="home"]'));
   await wait(60);
   ok('the greeting follows the new name', /Samira/.test(text($(doc, '#greetText'))),
@@ -546,7 +545,7 @@ function visibleText(doc) {
   const firstToggle = $(doc, '#acctNotifPrefs [data-npref="inApp"]');
   ok('the same preferences are editable here', !!firstToggle);
   if (firstToggle) {
-    const before = win.LUME_NOTIFY_PREFS_INAPP = firstToggle.querySelector('.switch').classList.contains('is-on');
+    const before = win.notifyPrefsInApp = firstToggle.querySelector('.switch').classList.contains('is-on');
     hit(win, firstToggle);
     await wait(80);
     const now = $(doc, '#acctNotifPrefs [data-npref="inApp"]').querySelector('.switch').classList.contains('is-on');
@@ -573,12 +572,12 @@ function visibleText(doc) {
      /sign in again/i.test(text($(doc, '#confirmText'))), text($(doc, '#confirmText')));
   hit(win, $(doc, '#confirmCancel'));
   await wait(60);
-  ok('cancelling keeps the session', win.LUME_ACCT.isAuthed());
+  ok('cancelling keeps the session', win.Lume.account.isAuthed());
   hit(win, $(doc, '[data-act="acctdo:logout"]'));
   await wait(60);
   hit(win, $(doc, '#confirmGo'));
   await wait(120);
-  ok('confirming signs out', win.LUME_ACCT.isGuest(), win.LUME_ACCT.state());
+  ok('confirming signs out', win.Lume.account.isGuest(), win.Lume.account.state());
   ok('signing out returns to the guest profile',
      !!$(doc, '#profileBody [data-act="auth:signup"]'), screenId(doc));
   win.close();
@@ -603,19 +602,19 @@ function visibleText(doc) {
   type(win, 'current', 'Wrong1234');
   await submit(win, 'delete');
   ok('a wrong password does not delete anything',
-     win.LUME_ACCT.isAuthed() && /incorrect/i.test(visibleText(doc)), win.LUME_ACCT.state());
+     win.Lume.account.isAuthed() && /incorrect/i.test(visibleText(doc)), win.Lume.account.state());
 
   type(win, 'current', 'Password1');
   await submit(win, 'delete');
   ok('the right password still asks once more',
-     $(doc, '#sheet-confirm').classList.contains('is-open') && win.LUME_ACCT.isAuthed());
+     $(doc, '#sheet-confirm').classList.contains('is-open') && win.Lume.account.isAuthed());
   hit(win, $(doc, '#confirmGo'));
   await wait(140);
-  ok('the final confirmation deletes the account', win.LUME_ACCT.isGuest(), win.LUME_ACCT.state());
+  ok('the final confirmation deletes the account', win.Lume.account.isGuest(), win.Lume.account.state());
   ok('deletion leaves the device data alone',
      JSON.parse(win.localStorage.getItem('lume-profile')).interests.length > 0);
   ok('a deleted account cannot sign in again', (function () {
-    return !win.LUME_ACCT.signIn({ email: 'temp@example.com', password: 'Password1' }).ok;
+    return !win.Lume.account.signIn({ email: 'temp@example.com', password: 'Password1' }).ok;
   })());
   win.close();
 
@@ -635,19 +634,19 @@ function visibleText(doc) {
   ok('a dead session is reported rather than silently dropped',
      screenId(doc) === 'auth' && /expired/i.test(text($(doc, '#authBody'))),
      screenId(doc) + ' · ' + text($(doc, '.auth__title')));
-  ok('an expired session is not treated as signed in', !win.LUME_ACCT.isAuthed(),
-     win.LUME_ACCT.state());
+  ok('an expired session is not treated as signed in', !win.Lume.account.isAuthed(),
+     win.Lume.account.state());
   hit(win, $(doc, '[data-act="acctdo:authclose"]'));
   await wait(80);
-  ok('choosing to stay a guest ends the dead session', win.LUME_ACCT.isGuest(),
-     win.LUME_ACCT.state());
+  ok('choosing to stay a guest ends the dead session', win.Lume.account.isGuest(),
+     win.Lume.account.state());
   win.close();
 
   /* ═══ 20. Notifications belong to an account (§124.29) ══════════════ */
   console.log('\n=== Notifications and the account ===');
   ({ win, doc } = await boot());
   await fillSignUp(win, { email: 'one@example.com', password: 'Password1', confirm: 'Password1' });
-  win.LUME_NOTIFY_TEST = null;
+  win.notifyTestHook = null;
   act(win, 'tab:notifications');
   await wait(150);
   const firstRow = $(doc, '#notifBody [data-notif-open]');
@@ -717,7 +716,7 @@ function visibleText(doc) {
   /* ═══ 22. What the engine audit found ═══════════════════════════════ */
   console.log('\n=== Engine regressions ===');
   ({ win, doc } = await boot());
-  const A = () => win.LUME_ACCT;
+  const A = () => win.Lume.account;
 
   /* An email change verified late must not overwrite whoever took the
      address in the meantime. */
@@ -1121,8 +1120,8 @@ function visibleText(doc) {
   hit(win, $(doc, '#confirmGo'));
   await wait(120);
   ok('and discarding leaves the screen', screenId(doc) !== 'account', screenId(doc));
-  ok('without having saved the discarded edit', win.LUME_ACCT.displayName() === 'Dee',
-     win.LUME_ACCT.displayName());
+  ok('without having saved the discarded edit', win.Lume.account.displayName() === 'Dee',
+     win.Lume.account.displayName());
   win.close();
 
   /* §124.4 — a guest was told the name could be changed later. */
@@ -1140,8 +1139,8 @@ function visibleText(doc) {
   type(win, 'displayName', 'Sara Q');
   await submit(win, 'edit');
   await wait(80);
-  ok('a guest can change their own name', win.LUME_ACCT.displayName() === 'Sara Q',
-     String(win.LUME_ACCT.displayName()));
+  ok('a guest can change their own name', win.Lume.account.displayName() === 'Sara Q',
+     String(win.Lume.account.displayName()));
   win.close();
 
   /* An English feature name is never a raw key. */
@@ -1149,12 +1148,12 @@ function visibleText(doc) {
   ({ win, doc } = await boot());
   const missing = ['bills', 'vaccines', 'meds', 'documents', 'mealplan', 'shopping',
                    'taraweeh', 'fuelcost', 'vehicle']
-    .filter(id => win.LUME_I18N.DICTS.en['f.' + id] === undefined);
+    .filter(id => win.Lume.i18n.DICTS.en['f.' + id] === undefined);
   ok('every feature has an English name', missing.length === 0, missing.join(', '));
   ok('the market status and the opening price no longer share one key',
-     win.LUME_I18N.DICTS.en['markets.open'] === 'Market open' &&
-     win.LUME_I18N.DICTS.en['markets.openPrice'] === 'Open',
-     JSON.stringify([win.LUME_I18N.DICTS.en['markets.open'], win.LUME_I18N.DICTS.en['markets.openPrice']]));
+     win.Lume.i18n.DICTS.en['markets.open'] === 'Market open' &&
+     win.Lume.i18n.DICTS.en['markets.openPrice'] === 'Open',
+     JSON.stringify([win.Lume.i18n.DICTS.en['markets.open'], win.Lume.i18n.DICTS.en['markets.openPrice']]));
   win.close();
 
   /* === 24. The region editor, and what a sheet may hide =============== */
@@ -1228,7 +1227,7 @@ function visibleText(doc) {
   /* The strings the removed security rows used are gone, and nothing asks
      for them. */
   const removed = ['acct.securityNotify', 'acct.twoFactor', 'acct.biometric'];
-  const stillDefined = removed.filter(k => win.LUME_I18N.DICTS.en[k] !== undefined);
+  const stillDefined = removed.filter(k => win.Lume.i18n.DICTS.en[k] !== undefined);
   ok('strings for rows that no longer exist were removed with them',
      stillDefined.length === 0, stillDefined.join(', '));
   win.close();

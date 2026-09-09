@@ -10,14 +10,19 @@
    That is what keeps §63 of the product brief true — no
    scattered `if country ==` and no scattered `if Muslim`.
    ============================================================ */
-window.LUME_CTX = function (deps) {
+import { LUME } from './catalogue.js';
+import { LUME_DATA } from './tooldata.js';
+import { LUME_SOLAR } from './solar.js';
+import { LUME_SPEC } from './toolspec.js';
+import { LUME_UI } from './toolkit.js';
+export const LUME_CTX = function (deps) {
   'use strict';
 
-  var C = window.LUME;
-  var D = window.LUME_DATA;
-  var SPEC = window.LUME_SPEC;
-  var SOLAR = window.LUME_SOLAR;
-  var UI = window.LUME_UI;
+  var C = LUME;
+  var D = LUME_DATA;
+  var SPEC = LUME_SPEC;
+  var SOLAR = LUME_SOLAR;
+  var UI = LUME_UI;
 
   var L = deps.L, t = deps.t, getProfile = deps.profile;
   var store = deps.store;

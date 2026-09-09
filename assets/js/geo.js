@@ -10,7 +10,7 @@
 
    Row format: CC|CUR|LANG|TZ|City,City,City|lat,lon
    ============================================================ */
-window.LUME_GEO = (function () {
+export const LUME_GEO = (function () {
   'use strict';
 
   /* International dialling codes. Deliberately partial: a country that is

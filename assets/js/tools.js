@@ -16,12 +16,15 @@
 
    Builders are registered from tools-*.js.
    ============================================================ */
-window.LUME_TOOLS = (function () {
+import { LUME_DATA } from './tooldata.js';
+import { LUME_SPEC } from './toolspec.js';
+import { LUME_UI } from './toolkit.js';
+export const LUME_TOOLS = (function () {
   'use strict';
 
-  var UI = window.LUME_UI;
-  var D = window.LUME_DATA;
-  var SPEC = window.LUME_SPEC;
+  var UI = LUME_UI;
+  var D = LUME_DATA;
+  var SPEC = LUME_SPEC;
 
   var REG = {};
   var ctxFactory = null;

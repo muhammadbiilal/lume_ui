@@ -14,7 +14,7 @@
    composed honestly, and that swapping the country swaps the
    whole dataset rather than a label.
    ============================================================ */
-window.LUME_DATA = (function () {
+export const LUME_DATA = (function () {
   'use strict';
 
   function seedRand(seed) {

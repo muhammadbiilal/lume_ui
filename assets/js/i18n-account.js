@@ -6,9 +6,10 @@
    Arabic carry the load-bearing strings; anything untranslated
    falls back to English rather than showing a key (§106).
    ============================================================ */
+import { LUME_I18N } from './i18n.js';
 (function () {
   'use strict';
-  var I = window.LUME_I18N;
+  var I = LUME_I18N;
 
   var en = {
     /* generic verbs the account screens need */

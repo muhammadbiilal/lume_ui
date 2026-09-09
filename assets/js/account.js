@@ -12,7 +12,7 @@
    digest here is a local integrity check, not the slow KDF a
    real backend would use.
    ============================================================ */
-window.LUME_ACCOUNT = function (deps) {
+export const LUME_ACCOUNT = function (deps) {
   'use strict';
 
   var t = deps.t;

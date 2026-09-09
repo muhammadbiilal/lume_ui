@@ -11,7 +11,7 @@
    Parcels carries a carrier and an ETA. Consistency without
    making every tool identical.
    ============================================================ */
-window.LUME_UI = (function () {
+export const LUME_UI = (function () {
   'use strict';
 
   function esc(s) {

@@ -4,7 +4,7 @@
    looked up, so they are correct in every city the app offers
    instead of the two we happened to hard-code.
    ============================================================ */
-window.LUME_SOLAR = (function () {
+export const LUME_SOLAR = (function () {
   'use strict';
 
   var KAABA = { lat: 21.4225, lon: 39.8262 };

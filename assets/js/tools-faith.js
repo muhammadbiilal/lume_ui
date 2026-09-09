@@ -7,12 +7,15 @@
    an instrument for Qibla, a reader for the Qur'an, a focused
    interaction for Tasbih. Never one template applied 17 times.
    ============================================================ */
+import { LUME_UI } from './toolkit.js';
+import { LUME_DATA } from './tooldata.js';
+import { LUME_TOOLS } from './tools.js';
 (function () {
   'use strict';
 
-  var UI = window.LUME_UI;
-  var D = window.LUME_DATA;
-  var T = window.LUME_TOOLS;
+  var UI = LUME_UI;
+  var D = LUME_DATA;
+  var T = LUME_TOOLS;
 
   /* ---------------------------------------------------------
      24.1 Prayer Times — spiritual dashboard, high density

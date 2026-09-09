@@ -13,7 +13,8 @@
    deep link, grouping and privacy rules. A bell icon on its own
    is not a notification system.
    ============================================================ */
-window.LUME_NOTIFY = function (deps) {
+import { LUME_DATA } from './tooldata.js';
+export const LUME_NOTIFY = function (deps) {
   'use strict';
 
   var t = deps.t, L = deps.L;
@@ -204,7 +205,7 @@ window.LUME_NOTIFY = function (deps) {
       id: 'parcel.transit', tool: 'parcel', cat: 'travel', type: 'parcelUpdate',
       priority: 'normal',
       build: function (c) {
-        var p = window.LUME_DATA.PARCELS.filter(function (x) { return x.state === 'live'; })[0];
+        var p = LUME_DATA.PARCELS.filter(function (x) { return x.state === 'live'; })[0];
         if (!p) return null;
         return {
           title: t('n.parcel.title', { item: p.item }),
@@ -219,7 +220,7 @@ window.LUME_NOTIFY = function (deps) {
       id: 'flights.delay', tool: 'flights', cat: 'travel', type: 'flightChange',
       priority: 'high',
       build: function () {
-        var f = window.LUME_DATA.FLIGHTS.filter(function (x) { return x.delay > 15; })[0];
+        var f = LUME_DATA.FLIGHTS.filter(function (x) { return x.delay > 15; })[0];
         if (!f) return null;
         return {
           title: t('n.flight.title', { no: f.no }),
@@ -234,7 +235,7 @@ window.LUME_NOTIFY = function (deps) {
       id: 'trains.delay', tool: 'trains', cat: 'travel', type: 'trainDelay',
       priority: 'normal',
       build: function (c) {
-        var tr = window.LUME_DATA.TRAINS.filter(function (x) { return x.delay > 0; })[0];
+        var tr = LUME_DATA.TRAINS.filter(function (x) { return x.delay > 0; })[0];
         if (!tr) return null;
         return {
           title: t('n.train.title', { name: tr.name }),

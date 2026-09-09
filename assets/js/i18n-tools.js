@@ -9,10 +9,11 @@
 
    Merged into LUME_I18N.DICTS at load, before app.js runs.
    ============================================================ */
+import { LUME_I18N } from './i18n.js';
 (function () {
   'use strict';
 
-  var I = window.LUME_I18N;
+  var I = LUME_I18N;
 
   var en = {
     /* ---- shared vocabulary ---- */

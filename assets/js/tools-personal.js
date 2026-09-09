@@ -10,12 +10,15 @@
    dashboard, Documents a secure records manager, Recipes a
    visual library, Habits a tracker.
    ============================================================ */
+import { LUME_UI } from './toolkit.js';
+import { LUME_DATA } from './tooldata.js';
+import { LUME_TOOLS } from './tools.js';
 (function () {
   'use strict';
 
-  var UI = window.LUME_UI;
-  var D = window.LUME_DATA;
-  var T = window.LUME_TOOLS;
+  var UI = LUME_UI;
+  var D = LUME_DATA;
+  var T = LUME_TOOLS;
 
   /* ---------------------------------------------------------
      §76 Expenses — financial dashboard, very high density

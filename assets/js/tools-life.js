@@ -12,12 +12,15 @@
    None of them share a layout; all of them share the design
    language.
    ============================================================ */
+import { LUME_UI } from './toolkit.js';
+import { LUME_DATA } from './tooldata.js';
+import { LUME_TOOLS } from './tools.js';
 (function () {
   'use strict';
 
-  var UI = window.LUME_UI;
-  var D = window.LUME_DATA;
-  var T = window.LUME_TOOLS;
+  var UI = LUME_UI;
+  var D = LUME_DATA;
+  var T = LUME_TOOLS;
 
   function pad2(n) { return n < 10 ? '0' + n : '' + n; }
 

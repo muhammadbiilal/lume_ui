@@ -12,6 +12,7 @@
 const fs = require('fs');
 const path = require('path');
 const { JSDOM, VirtualConsole } = require('jsdom');
+const { loadInto } = require('./modules');
 
 const ROOT = path.resolve(__dirname, '..');
 let failures = 0;
@@ -46,9 +47,7 @@ async function boot(opts) {
       window.navigator.vibrate = () => true;
     }
   });
-  for (const src of [...dom.window.document.querySelectorAll('script[src]')].map(s => s.getAttribute('src'))) {
-    dom.window.eval(fs.readFileSync(path.join(ROOT, src), 'utf8'));
-  }
+  loadInto(dom, ROOT, errors);
   await wait(80);
   return { dom, win: dom.window, doc: dom.window.document, errors };
 }
@@ -273,7 +272,7 @@ function rule(selector) {
   let { win, doc, errors } = await boot();
   ok('booted with no script errors', errors.length === 0, errors.join(' | '));
 
-  const ORDER = win.LUME_SPEC.COMPOSITIONS.auth;
+  const ORDER = win.Lume.spec.COMPOSITIONS.auth;
   ok('the shell order is recorded where §123 records compositions',
      Array.isArray(ORDER) && ORDER[0] === 'top' && ORDER[ORDER.length - 1] === 'legal',
      String(ORDER));
@@ -281,8 +280,8 @@ function rule(selector) {
   const SCREENS = ['signin', 'signup', 'forgot', 'sent', 'reset', 'updated',
                    'created', 'expired', 'trouble', 'verify'];
   ok('every screen in the §126.46 matrix exists',
-     SCREENS.every(s => typeof win.LUME_ACCT_UI.AUTH[s] === 'function'),
-     SCREENS.filter(s => typeof win.LUME_ACCT_UI.AUTH[s] !== 'function').join(', '));
+     SCREENS.every(s => typeof win.Lume.accountUI.AUTH[s] === 'function'),
+     SCREENS.filter(s => typeof win.Lume.accountUI.AUTH[s] !== 'function').join(', '));
 
   const outOfOrder = [];
   const keyLeaks = [];
@@ -331,7 +330,7 @@ function rule(selector) {
      Lume implements none, and §125 forbids a button that opens nothing, so
      the slot is defined and empty rather than filled with a claim. */
   ok('no provider is offered, because none is implemented',
-     win.LUME_ACCT_UI.providers.length === 0 && !/Continue with/i.test(text($(doc, '#authBody'))));
+     win.Lume.accountUI.providers.length === 0 && !/Continue with/i.test(text($(doc, '#authBody'))));
   ok('and the divider that would separate them is not drawn either',
      !$(doc, '#authBody .auth__or'));
 
@@ -479,7 +478,7 @@ function rule(selector) {
   ({ win, doc } = await boot());
   await signUp(win, 'nadia@example.com');
   ok('sign-up ended on the arrival screen and then let go',
-     win.LUME_ACCT.isAuthed() && screenId(doc) !== 'auth', screenId(doc));
+     win.Lume.account.isAuthed() && screenId(doc) !== 'auth', screenId(doc));
 
   act(win, 'auth:created');
   await wait(70);
@@ -501,7 +500,7 @@ function rule(selector) {
   ok('the recovery confirmation is reached', !!$(doc, '#authBody [data-act="auth:reset"]'));
   hit(win, $(doc, '#authBody [data-act="auth:reset"]'));
   await wait(60);
-  win.LUME_ACCT_UI.authCtx.token = 'rst-nothing-at-all';
+  win.Lume.accountUI.authCtx.token = 'rst-nothing-at-all';
   type(win, 'password', 'Newpass12');
   type(win, 'confirm', 'Newpass12');
   await submit(win, 'reset');
@@ -530,10 +529,10 @@ function rule(selector) {
   ok('the address is shown masked, not in full',
      /n•+@example\.com/.test(shown) && !/nadia\.rahman@/.test(shown), shown);
   ok('masking keeps the first letter and the whole domain',
-     win.LUME_ACCT_UI.maskEmail('muhammad@example.com') === 'm•••••@example.com',
-     win.LUME_ACCT_UI.maskEmail('muhammad@example.com'));
+     win.Lume.accountUI.maskEmail('muhammad@example.com') === 'm•••••@example.com',
+     win.Lume.accountUI.maskEmail('muhammad@example.com'));
   ok('and it leaves alone what is not an address',
-     win.LUME_ACCT_UI.maskEmail('') === '' && win.LUME_ACCT_UI.maskEmail('@x') === '@x');
+     win.Lume.accountUI.maskEmail('') === '' && win.Lume.accountUI.maskEmail('@x') === '@x');
 
   const countdown = $(doc, '#authBody [data-resend]');
   ok('a resend is offered, and says when', !!countdown && /\d+s/.test(text(countdown)), text(countdown));
@@ -544,7 +543,7 @@ function rule(selector) {
   ok('and the number actually moves', text($(doc, '#authBody [data-resend]')) !== firstRead,
      firstRead + ' -> ' + text($(doc, '#authBody [data-resend]')));
 
-  win.LUME_ACCT_UI.authCtx.resendAt = Date.now() - 1;
+  win.Lume.accountUI.authCtx.resendAt = Date.now() - 1;
   await wait(1100);
   ok('when the wait is over the screen offers the action instead',
      !$(doc, '#authBody [data-resend]') && !!$(doc, '#authBody [data-act="acctdo:resend"]'),

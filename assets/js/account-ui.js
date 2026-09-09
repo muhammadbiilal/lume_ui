@@ -9,7 +9,7 @@
    Nothing in this file is a tool: it never enters the
    catalogue, search, Quick Actions or the tool router.
    ============================================================ */
-window.LUME_ACCOUNT_UI = function (deps) {
+export const LUME_ACCOUNT_UI = function (deps) {
   'use strict';
 
   var t = deps.t, L = deps.L, UI = deps.UI, ACCT = deps.account, NOTIFY = deps.notify;

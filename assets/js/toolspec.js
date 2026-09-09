@@ -17,7 +17,7 @@
      supports  offline search filters sorting history sharing
                export favorites notifications
    ============================================================ */
-window.LUME_SPEC = (function () {
+export const LUME_SPEC = (function () {
   'use strict';
 
   /* Screen archetypes (§22 + the focused kinds §113 names). */

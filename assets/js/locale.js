@@ -7,11 +7,13 @@
    Built as a factory over a profile getter: app.js owns the
    profile, this owns the presentation of it.
    ============================================================ */
-window.LUME_LOCALE = function (getProfile) {
+import { LUME_GEO } from './geo.js';
+import { LUME_I18N } from './i18n.js';
+export const LUME_LOCALE = function (getProfile) {
   'use strict';
 
-  var GEO = window.LUME_GEO;
-  var I18N = window.LUME_I18N;
+  var GEO = LUME_GEO;
+  var I18N = LUME_I18N;
 
   /* Approximate units of currency per 1 USD. Demo figures are authored in
      USD and converted, so a Karachi grocery total reads as rupees and a

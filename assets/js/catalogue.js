@@ -8,7 +8,8 @@
      adapts: true       → global feature whose *content* localises
    Nothing else in the app is allowed to invent its own rule.
    ============================================================ */
-window.LUME = (function () {
+import { LUME_I18N } from './i18n.js';
+export const LUME = (function () {
   'use strict';
 
   /* ---------------------------------------------------------
@@ -293,7 +294,7 @@ window.LUME = (function () {
      catalogue is the source of truth (§19), so it seeds the dictionary from
      itself rather than repeating 85 names in a second file. */
   (function seedFeatureNames() {
-    var I = window.LUME_I18N;
+    var I = LUME_I18N;
     if (!I || !I.DICTS || !I.DICTS.en) return;
     F.forEach(function (f) {
       var key = 'f.' + f.id;

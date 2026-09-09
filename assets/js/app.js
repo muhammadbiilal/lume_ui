@@ -7,17 +7,37 @@
    today, search, explore, nav, notifications — asks the same
    visible() function. Nothing gets its own rule.
    ============================================================ */
+import { LUME } from './catalogue.js';
+import { LUME_GEO } from './geo.js';
+import { LUME_SPEC } from './toolspec.js';
+import { LUME_TOOLS } from './tools.js';
+import { LUME_UI } from './toolkit.js';
+import { LUME_DATA } from './tooldata.js';
+import { LUME_SOLAR } from './solar.js';
+import { LUME_I18N } from './i18n.js';
+import { LUME_LOCALE } from './locale.js';
+import { LUME_NOTIFY } from './notify.js';
+import { LUME_ACCOUNT } from './account.js';
+import { LUME_ACCOUNT_UI } from './account-ui.js';
+import { LUME_CTX } from './toolctx.js';
+
+/* The two live instances the inspection surface in main.js publishes.
+   They are filled in while the shell boots, below; main.js reads them
+   after every import has evaluated, so they are never seen unset. */
+export let account = null;
+export let accountUI = null;
+
 (function () {
   'use strict';
 
-  var C = window.LUME;
-  var GEO = window.LUME_GEO;
-  var SPEC = window.LUME_SPEC;
-  var TOOLS = window.LUME_TOOLS;
-  var UI = window.LUME_UI;
-  var C_DATA = window.LUME_DATA;
-  var SOLAR = window.LUME_SOLAR;
-  var I18N = window.LUME_I18N;
+  var C = LUME;
+  var GEO = LUME_GEO;
+  var SPEC = LUME_SPEC;
+  var TOOLS = LUME_TOOLS;
+  var UI = LUME_UI;
+  var C_DATA = LUME_DATA;
+  var SOLAR = LUME_SOLAR;
+  var I18N = LUME_I18N;
 
   var $  = function (s, r) { return (r || document).querySelector(s); };
   var $$ = function (s, r) { return Array.prototype.slice.call((r || document).querySelectorAll(s)); };
@@ -116,19 +136,19 @@
   loadProfile();
 
   /* Language, formatting and names all come from here. */
-  var L = window.LUME_LOCALE(function () { return profile; });
+  var L = LUME_LOCALE(function () { return profile; });
   var t = L.t;
 
   /* The identity engine (§124). Constructed here because onboarding, the
      greeting and the profile surface all ask it the same question, and it
      must be able to answer "nothing" before any of them render. */
-  var ACCT = window.LUME_ACCOUNT({
+  var ACCT = LUME_ACCOUNT({
     t: t, L: L, store: store,
     profile: function () { return profile; },
     save: saveProfile,
     onSignOut: function () { resetNotificationsForAccount(); }
   });
-  window.LUME_ACCT = ACCT;
+  account = ACCT;
 
   /* Language drives text direction; country never does. */
   function applyLanguage() {
@@ -2487,7 +2507,7 @@
       var c = toolCtx('markets');
       var ex = c.exchange();
       var session = c.marketSession(ex);
-      var ix = ex ? ex.indices[0] : window.LUME_DATA.GLOBAL_INDICES[0];
+      var ix = ex ? ex.indices[0] : LUME_DATA.GLOBAL_INDICES[0];
       if (session.open || h >= 8) {
         out.push(card({
           fid: 'markets', act: 'tool:markets', icon: 'i-trending',
@@ -2670,7 +2690,7 @@
      hidden feature cannot be reached through a deep link, a
      related-tool card or a search result either.
      --------------------------------------------------------- */
-  var toolCtx = window.LUME_CTX({
+  var toolCtx = LUME_CTX({
     L: L, t: t,
     profile: function () { return profile; },
     store: store,
@@ -3145,7 +3165,7 @@
     if (!e.target.closest('[data-tasbih-count]')) return;
     var c = toolCtx('tasbih');
     var st = c._state.tasbih = c._state.tasbih || { count: 0, dhikrIndex: 0, sets: 0 };
-    var target = window.LUME_DATA.DHIKR[st.dhikrIndex || 0].target;
+    var target = LUME_DATA.DHIKR[st.dhikrIndex || 0].target;
     st.count = (st.count || 0) + 1;
     var num = $('[data-tasbih-num]'), ring = $('[data-tasbih-ring]');
     if (num) num.textContent = st.count;
@@ -3358,7 +3378,7 @@
       }
       if (id === 'markets') {
         var ex = toolCtx('markets').exchange();
-        var ix = ex ? ex.indices[0] : window.LUME_DATA.GLOBAL_INDICES[0];
+        var ix = ex ? ex.indices[0] : LUME_DATA.GLOBAL_INDICES[0];
         return { kind: 'quote',
           text: ix.name + ' ' + L.num(ix.value, { maximumFractionDigits: 2 }) + '  ' +
                 (ix.pct >= 0 ? '+' : '−') + Math.abs(ix.pct).toFixed(2) + '%',
@@ -3397,7 +3417,7 @@
      Tools never build a notification themselves — they declare
      an event and the engine turns it into one.
      --------------------------------------------------------- */
-  var NOTIFY = window.LUME_NOTIFY({
+  var NOTIFY = LUME_NOTIFY({
     t: t, L: L, store: store,
     profile: function () { return profile; },
     ctx: function (id) { return toolCtx(id); },
@@ -3784,7 +3804,7 @@
      is a flow rather than a tool, so it never enters the tool
      router, the catalogue or search.
      --------------------------------------------------------- */
-  var AUI = window.LUME_ACCOUNT_UI({
+  var AUI = LUME_ACCOUNT_UI({
     t: t, L: L, UI: UI, account: ACCT, notify: NOTIFY, geo: GEO,
     profile: function () { return profile; },
     version: APP_VERSION,
@@ -3801,7 +3821,7 @@
   });
   /* The surfaces, reachable the way the engine already is — the layout
      contract in §126 is asserted against them rather than described. */
-  window.LUME_ACCT_UI = AUI;
+  accountUI = AUI;
 
   var accountRoute = null, accountStack = [], accountReturn = 'profile';
   var authRoute = null, authStack = [], authReturn = 'profile';

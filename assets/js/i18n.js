@@ -5,7 +5,7 @@
    anything missing falls back to English, so a partial
    translation degrades gracefully instead of showing keys.
    ============================================================ */
-window.LUME_I18N = (function () {
+export const LUME_I18N = (function () {
   'use strict';
 
   var LANGS = [
