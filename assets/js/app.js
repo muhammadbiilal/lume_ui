@@ -26,6 +26,9 @@ import { createProfileStore } from './core/app-store.js';
 import { createEligibility } from './core/eligibility.js';
 import { createLifecycle } from './core/lifecycle.js';
 import { createRouter } from './core/router.js';
+import { createScreens } from './screens/index.js';
+import { sheetsTemplate } from './ui/sheets-markup.js';
+import { onboardingTemplate } from './screens/onboarding.screen.js';
 
 /* The two live instances the inspection surface in main.js publishes.
    They are filled in while the shell boots, below; main.js reads them
@@ -45,7 +48,31 @@ export let accountUI = null;
   var SOLAR = LUME_SOLAR;
   var I18N = LUME_I18N;
 
+  /* ---------------------------------------------------------
+     The screen set
 
+     index.html is a shell: it ships the outlet, not the screens.
+     Each screen builds its own root here, in the order it occupies
+     the outlet, before anything below looks for a node inside one.
+     --------------------------------------------------------- */
+  var LIFECYCLE = createLifecycle({
+    onError: function (id, hook, err) {
+      /* A screen failing to clean up is a defect worth seeing, but it must
+         not strand the user on the screen they asked to leave. */
+      console.error('screen ' + id + '.' + hook + ' failed', err);
+    }
+  });
+
+  var screenOutlet = $('#screens');
+  createScreens().forEach(function (screen) {
+    LIFECYCLE.register(screen);
+    LIFECYCLE.mount(screen.id, screenOutlet);
+  });
+
+  /* The overlays sit outside the screen outlet on purpose: a sheet belongs
+     to the shell, not to whichever screen happened to raise it. */
+  $('#overlay-root').innerHTML = sheetsTemplate();
+  $('#onboarding-root').innerHTML = onboardingTemplate();
 
   /* ---------------------------------------------------------
      Profile — the single source of personalisation
@@ -306,14 +333,6 @@ export let accountUI = null;
   /* Navigation lives in core/router.js and core/lifecycle.js. What stays
      here is the two things the router asks the product: which destinations
      are tabs right now, and what a tab looks like. */
-  var LIFECYCLE = createLifecycle({
-    onError: function (id, hook, err) {
-      /* A screen failing to clean up is a defect worth seeing, but it must
-         not strand the user on the screen they asked to leave. */
-      console.error('screen ' + id + '.' + hook + ' failed', err);
-    }
-  });
-
   function renderTabBar() {
     var bar = $('#tabbar');
     if (!bar) return;
