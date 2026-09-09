@@ -20,6 +20,12 @@ import { LUME_NOTIFY } from './notify.js';
 import { LUME_ACCOUNT } from './account.js';
 import { LUME_ACCOUNT_UI } from './account-ui.js';
 import { LUME_CTX } from './toolctx.js';
+import { store } from './core/storage.js';
+import { $, $$, pad2, esc } from './core/dom.js';
+import { createProfileStore } from './core/app-store.js';
+import { createEligibility } from './core/eligibility.js';
+import { createLifecycle } from './core/lifecycle.js';
+import { createRouter } from './core/router.js';
 
 /* The two live instances the inspection surface in main.js publishes.
    They are filled in while the shell boots, below; main.js reads them
@@ -39,101 +45,23 @@ export let accountUI = null;
   var SOLAR = LUME_SOLAR;
   var I18N = LUME_I18N;
 
-  var $  = function (s, r) { return (r || document).querySelector(s); };
-  var $$ = function (s, r) { return Array.prototype.slice.call((r || document).querySelectorAll(s)); };
-  var pad2 = function (n) { return n < 10 ? '0' + n : '' + n; };
-  var esc = function (s) {
-    return String(s).replace(/[&<>"']/g, function (c) {
-      return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c];
-    });
-  };
 
-  /* Storage can throw on a file:// origin or with site data blocked. */
-  var store = {
-    get: function (k) { try { return localStorage.getItem(k); } catch (e) { return null; } },
-    /* Reports whether the write happened. A blocked or full store used to
-       fail silently, which let the account system announce "Account created"
-       over an account that had not been written (§124.26). */
-    set: function (k, v) {
-      try { localStorage.setItem(k, v); return true; } catch (e) { return false; }
-    }
-  };
 
   /* ---------------------------------------------------------
      Profile — the single source of personalisation
      --------------------------------------------------------- */
   var APP_VERSION = '4.1.0';
 
-  var profile = {
-    /* §125 — identity starts empty. A name appears here only because the
-       user typed one, in onboarding or in Edit profile; the greeting and the
-       avatar have designed shapes for its absence. */
-    displayName: '',
-    photo: '',
+  /* The profile store owns the shape, the defaults, the load and the save.
+     `profile` stays a live reference to the same object the store hands to
+     the locale engine and the account engine, so nothing here holds a copy
+     that can drift. */
+  var STORE = createProfileStore(C);
+  var profile = STORE.load();
+  var saveProfile = STORE.save;
+  var syncFaithFromInterests = STORE.syncFaithFromInterests;
+  var hasInterest = STORE.has;
 
-    /* Location: country → region (where a country uses one) → city. */
-    country: 'PK',
-    region: 'Islamabad Capital Territory',
-    city: 'Islamabad',
-
-    /* The faith dimension, entirely separate from country. Off until the user
-       asks for it in onboarding or Personalisation — never assumed, and never
-       inferred from the country above. */
-    islamic: false,
-
-    /* Formatting. 'auto' follows the country; anything else is the user
-       overriding it, which they are always allowed to do. Language is
-       deliberately NOT derived from country. */
-    lang: 'en',
-    units: 'auto',
-    currency: 'auto',
-    clock: 'auto',
-    method: 'MWL',
-
-    interests: [],
-    prefs: { news: true, cricket: true, finance: true, recos: true },
-    recents: [],
-    favourites: [],
-    market: null,
-    recentCountries: []
-  };
-
-  function loadProfile() {
-    var raw = store.get('lume-profile');
-    if (raw) {
-      try {
-        var saved = JSON.parse(raw);
-        for (var k in saved) if (Object.prototype.hasOwnProperty.call(saved, k)) profile[k] = saved[k];
-      } catch (e) {}
-    }
-    /* An older build shipped a placeholder name and initials in the profile
-       record itself. They were never entered by anyone, so they are dropped
-       rather than migrated (§125). */
-    delete profile.name;
-    delete profile.initials;
-    if (!profile.interests || !profile.interests.length) {
-      /* Onboarded but nothing stored (skipped, or an older build): fall back to
-         the general defaults. Islamic content is never switched on for someone
-         who did not ask for it. */
-      profile.interests = store.get('lume-onboarded') ? C.DEFAULT_INTERESTS.slice() : [];
-    }
-    syncFaithFromInterests();
-  }
-
-  function saveProfile() {
-    store.set('lume-profile', JSON.stringify(profile));
-  }
-
-  /* Picking anything in the faith group is what turns Islamic content on.
-     We never ask "are you Muslim?" anywhere in the product. */
-  function syncFaithFromInterests() {
-    var any = profile.interests.some(function (id) { return C.FAITH_INTERESTS.indexOf(id) !== -1; });
-    if (any) profile.islamic = true;
-  }
-
-  function hasInterest(id) { return profile.interests.indexOf(id) !== -1; }
-
-  loadProfile();
 
   /* Language, formatting and names all come from here. */
   var L = LUME_LOCALE(function () { return profile; });
@@ -160,42 +88,15 @@ export let accountUI = null;
   /* ---------------------------------------------------------
      Visibility — the one rule everything obeys
      --------------------------------------------------------- */
-  function visibleIn(f, ctx) {
-    if (f.faith && !ctx.islamic) return false;
-    /* countries: the markets a feature has launched in. No entry = global.
-       This is availability, not localisation — a global feature whose content
-       adapts (weather, news) stays visible everywhere. */
-    if (f.countries && f.countries.indexOf(ctx.country) === -1) return false;
-    if (f.id === 'cricket' && !profile.prefs.cricket) return false;
-    if (f.id === 'news' && !profile.prefs.news) return false;
-    if ((f.id === 'markets' || f.id === 'goldrates') && !profile.prefs.finance) return false;
-    return true;
-  }
-
-  function visible(f) { return visibleIn(f, profile); }
-
-  function visibleFeatures() { return C.FEATURES.filter(visible); }
-
-  /* Feature names come from the catalogue in English; a dictionary entry
-     overrides it where a translation exists. */
-  function fname(f) {
-    var key = 'f.' + f.id;
-    var s2 = t(key);
-    return s2 === key ? f.n : s2;
-  }
-
-  function feature(id) {
-    for (var i = 0; i < C.FEATURES.length; i++) if (C.FEATURES[i].id === id) return C.FEATURES[i];
-    return null;
-  }
-
-  /* Every feature opens its own tool screen. The catalogue's `act` is kept
-     as the quick-glance surface (a sheet) but the tool screen is the tool:
-     that is what makes each one its own information architecture rather
-     than a toast (Master Spec §113). */
-  function actFor(f) {
-    return 'tool:' + f.id;
-  }
+  /* One selector, asked by every surface. See core/eligibility.js for the
+     two rules and why they are kept apart. */
+  var ELIGIBLE = createEligibility({ catalogue: C, profile: function () { return profile; }, t: t });
+  var visibleIn = ELIGIBLE.visibleIn;
+  var visible = ELIGIBLE.visible;
+  var visibleFeatures = ELIGIBLE.visibleFeatures;
+  var fname = ELIGIBLE.name;
+  var feature = ELIGIBLE.feature;
+  var actFor = ELIGIBLE.actFor;
 
   /* Markets that have any localised feature of their own. */
   var LOCAL_MARKETS = null;
@@ -402,9 +303,18 @@ export let accountUI = null;
 
   var PKEYS = { Fajr: 'fajr', Sunrise: 'sunrise', Dhuhr: 'dhuhr', Asr: 'asr', Maghrib: 'maghrib', Isha: 'isha' };
 
-  var current = 'home';
+  /* Navigation lives in core/router.js and core/lifecycle.js. What stays
+     here is the two things the router asks the product: which destinations
+     are tabs right now, and what a tab looks like. */
+  var LIFECYCLE = createLifecycle({
+    onError: function (id, hook, err) {
+      /* A screen failing to clean up is a defect worth seeing, but it must
+         not strand the user on the screen they asked to leave. */
+      console.error('screen ' + id + '.' + hook + ' failed', err);
+    }
+  });
 
-  function renderTabs() {
+  function renderTabBar() {
     var bar = $('#tabbar');
     if (!bar) return;
     var pill = '<span class="tabbar__pill" id="tabPill"></span>';
@@ -414,48 +324,21 @@ export let accountUI = null;
         '<svg class="ico" viewBox="0 0 24 24"><use href="#' + m.icon + '"/></svg>' +
         '<span class="tab__label">' + esc(t(m.key)) + '</span></button>';
     }).join('');
-
-    /* A screen that is no longer a tab must not stay open — but the tool
-       screen, the notification centre and Explore are destinations, not
-       orphans. */
-    if (tabOrder().indexOf(current) === -1 &&
-        ['explore', 'tool', 'notifications', 'account', 'auth'].indexOf(current) === -1) current = 'home';
-    goTo(current, true);
   }
 
-  function movePill(tab) {
-    var pill = $('#tabPill');
-    if (!pill) return;
-    if (!tab) { pill.style.opacity = '0'; return; }
-    pill.style.opacity = '';
-    pill.style.width = tab.offsetWidth + 'px';
-    pill.style.transform = 'translateX(' + tab.offsetLeft + 'px)';
-  }
+  var ROUTER = createRouter({
+    lifecycle: LIFECYCLE,
+    tabOrder: tabOrder,
+    renderTabBar: renderTabBar,
+    onActivate: function (name, previous, opts) {
+      if (!opts.quiet) animateBars($('#screen-' + name));
+    }
+  });
 
-  function goTo(name, quiet) {
-    var screen = $('#screen-' + name);
-    if (!screen) return;
-    current = name;
-
-    $$('.screen').forEach(function (s) { s.classList.remove('is-active'); });
-    screen.classList.add('is-active');
-    screen.scrollTop = 0;
-
-    var active = null;
-    $$('.tab').forEach(function (t) {
-      var on = t.dataset.tab === name;
-      t.classList.toggle('is-active', on);
-      t.setAttribute('aria-selected', on ? 'true' : 'false');
-      if (on) active = t;
-    });
-    movePill(active);
-
-    /* Explore is reachable for Pakistan users even though it is not a tab. */
-    var back = $('#exploreBack');
-    if (back) back.hidden = !!active || name !== 'explore';
-
-    if (!quiet) animateBars(screen);
-  }
+  /* The names the rest of this file still calls navigation by. */
+  function goTo(name, quiet) { ROUTER.go(name, { quiet: quiet }); }
+  function renderTabs() { ROUTER.refreshTabs(); }
+  function movePill(tab) { ROUTER.movePill(tab); }
 
   /* §116 — above a real desktop width the shell stops presenting itself as a
      handset and the compositions inside gain columns. Everything below that
@@ -1917,8 +1800,8 @@ export let accountUI = null;
     applyVisibility();
     /* A settings or authentication screen is as much a part of the render as
        Home is: a language change has to reach the picker that made it. */
-    if (current === 'account') renderAccount();
-    else if (current === 'auth') renderAuth();
+    if (ROUTER.current() === 'account') renderAccount();
+    else if (ROUTER.current() === 'auth') renderAuth();
   }
 
   /* ---------------------------------------------------------
@@ -2724,23 +2607,13 @@ export let accountUI = null;
     if (!f || !visible(f)) { toast(t('tool.unavailable')); return; }
 
     if (currentTool && (!opts || !opts.replace)) toolStack.push(currentTool);
-    else if (!currentTool) toolReturnTab = current;
+    else if (!currentTool) toolReturnTab = ROUTER.current();
 
     currentTool = id;
-    current = 'tool';          /* a tool is showing, whatever opened it */
     noteRecent(id);
 
-    var screen = $('#screen-tool');
-    $$('.screen').forEach(function (sc) { sc.classList.remove('is-active'); });
-    screen.classList.add('is-active');
-    screen.scrollTop = 0;
-    $$('.tab').forEach(function (tb) {
-      tb.classList.remove('is-active');
-      tb.setAttribute('aria-selected', 'false');
-    });
-    movePill(null);
-    var back = $('#exploreBack');
-    if (back) back.hidden = true;
+    /* A tool is showing, whatever opened it. */
+    ROUTER.go('tool', { quiet: true });
 
     renderTool();
     renderRecents();
@@ -2794,11 +2667,11 @@ export let accountUI = null;
        user was and the header's back control returns them there. */
     if (name === 'notifications') {
       /* Only a tab is somewhere to come back to. Closing a tool that was
-         opened from the centre re-entered here with current === 'tool', and
+         opened from the centre re-entered here with ROUTER.current() === 'tool', and
          back then returned to a tool screen with no tool in it — from which
          every further back returned to the same dead screen. */
-      if (current !== 'notifications') {
-        notifReturnTab = tabOrder().indexOf(current) !== -1 ? current : 'home';
+      if (ROUTER.current() !== 'notifications') {
+        notifReturnTab = ROUTER.currentTab('home');
       }
       goToBase(name, quiet);
       renderNotifCentre();
@@ -2964,7 +2837,7 @@ export let accountUI = null;
           toast(t('n.push.unsupported'));
         }
         renderNotifBadge();
-        if (current === 'notifications') renderNotifCentre();
+        if (ROUTER.current() === 'notifications') renderNotifCentre();
       });
       return true;
     }
@@ -2972,7 +2845,7 @@ export let accountUI = null;
       NOTIFY.restoreAll();
       toast(t('n.restored'));
       renderNotifBadge();
-      if (current === 'notifications') renderNotifCentre();
+      if (ROUTER.current() === 'notifications') renderNotifCentre();
       return true;
     }
     if (kind === 'notiffilter') { notifFilter = bits[0] || 'all'; renderNotifCentre(); return true; }
@@ -3337,16 +3210,16 @@ export let accountUI = null;
   /* ---- back ---- */
   document.addEventListener('click', function (e) {
     if (!e.target.closest('[data-tool-back]')) return;
-    if (current === 'notifications') { goTo(notifReturnTab); return; }
-    if (current === 'account') { closeAccount(); return; }
-    if (current === 'auth') { closeAuth(); return; }
+    if (ROUTER.current() === 'notifications') { goTo(notifReturnTab); return; }
+    if (ROUTER.current() === 'account') { closeAccount(); return; }
+    if (ROUTER.current() === 'auth') { closeAuth(); return; }
     closeTool();
   });
 
   document.addEventListener('keydown', function (e) {
     if (e.key !== 'Escape' || openSheet) return;
-    if (current === 'account') { closeAccount(); return; }
-    if (current === 'auth') { closeAuth(); return; }
+    if (ROUTER.current() === 'account') { closeAccount(); return; }
+    if (ROUTER.current() === 'auth') { closeAuth(); return; }
     if (currentTool) closeTool();
   });
 
@@ -3471,7 +3344,7 @@ export let accountUI = null;
     if (!NOTIFY.prefs().inApp && !NOTIFY.pushEnabled()) { renderNotifBadge(); return; }
     var away = typeof document.hidden === 'boolean' ? document.hidden : false;
     var result = NOTIFY.present(away);
-    if (result && result.surface === 'banner' && current !== 'notifications') {
+    if (result && result.surface === 'banner' && ROUTER.current() !== 'notifications') {
       showBanner(result.notification);
     }
     renderNotifBadge();
@@ -3738,7 +3611,7 @@ export let accountUI = null;
     saveProfile();
     renderNotifPrefs();
     renderNotifBadge();
-    if (current === 'notifications') renderNotifCentre();
+    if (ROUTER.current() === 'notifications') renderNotifCentre();
   });
 
   /* §100.11 — the education flow names what the user would actually get,
@@ -3768,7 +3641,7 @@ export let accountUI = null;
       var id = open.dataset.notifOpen;
       /* Resolve against what is on screen: under a filter, a group holds
          different members than it would in the unfiltered list. */
-      var rows = NOTIFY.list(current === 'notifications' ? notifFilter : 'all');
+      var rows = NOTIFY.list(ROUTER.current() === 'notifications' ? notifFilter : 'all');
       var view = NOTIFY.grouped(rows);
       var n = view.filter(function (x) { return x.id === id; })[0];
       NOTIFY.markRead(id, rows);
@@ -3844,26 +3717,11 @@ export let accountUI = null;
   }
 
   /* A destination that is not a tab: the same treatment tools and the
-     notification centre get. */
-  function showScreen(name) {
-    var screen = $('#screen-' + name);
-    if (!screen) return;
-    current = name;
-    $$('.screen').forEach(function (sc) { sc.classList.remove('is-active'); });
-    screen.classList.add('is-active');
-    screen.scrollTop = 0;
-    $$('.tab').forEach(function (tb) {
-      tb.classList.remove('is-active');
-      tb.setAttribute('aria-selected', 'false');
-    });
-    movePill(null);
-    var back = $('#exploreBack');
-    if (back) back.hidden = true;
-  }
+     notification centre get. The router works out that no tab is selected
+     from the destination itself, so there is nothing to say here. */
+  function showScreen(name) { ROUTER.go(name, { quiet: true }); }
 
-  function homeTab() {
-    return tabOrder().indexOf(current) !== -1 ? current : 'profile';
-  }
+  function homeTab() { return ROUTER.currentTab('profile'); }
 
   function enterAccountRoute(route) {
     accountRoute = route;
@@ -4077,7 +3935,7 @@ export let accountUI = null;
 
   /* ---- forms --------------------------------------------------------- */
   function formHost() {
-    return current === 'auth' ? $('#authBody') : $('#accountBody');
+    return ROUTER.current() === 'auth' ? $('#authBody') : $('#accountBody');
   }
 
   function collectForm() {
@@ -4089,7 +3947,7 @@ export let accountUI = null;
   }
 
   function repaintForm() {
-    if (current === 'auth') renderAuth(); else renderAccount();
+    if (ROUTER.current() === 'auth') renderAuth(); else renderAccount();
   }
 
   function fail(result) {
@@ -4390,7 +4248,7 @@ export let accountUI = null;
 
     if (verb === 'emailcancel') {
       ACCT.cancelEmailChange();
-      if (current === 'auth') { authRoute = null; authStack.length = 0; openAccount('email', { replace: true }); }
+      if (ROUTER.current() === 'auth') { authRoute = null; authStack.length = 0; openAccount('email', { replace: true }); }
       else renderAccount();
       return;
     }
@@ -4527,7 +4385,7 @@ export let accountUI = null;
 
   document.addEventListener('focusout', function (e) {
     var el = e.target.closest ? e.target.closest('[data-afield]') : null;
-    if (!el || current !== 'auth') return;
+    if (!el || ROUTER.current() !== 'auth') return;
     var name = el.dataset.afield;
     var check = LEAVE_CHECKS[name];
     if (!check) return;

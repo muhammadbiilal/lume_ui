@@ -223,8 +223,13 @@ export const LUME_TOOLS = (function () {
     return out.slice(0, 3);
   }
 
+  /* What the registry holds, so completeness can be asserted against the
+     catalogue rather than counted by hand. */
+  function ids() { return Object.keys(REG); }
+
   return {
-    register: register, registerMany: registerMany, has: has, init: init, build: build,
+    register: register, registerMany: registerMany, has: has, ids: ids,
+    init: init, build: build,
     freshnessOf: freshnessOf, contractCard: contractCard
   };
 })();

@@ -38,6 +38,7 @@ import { LUME_SPEC } from './toolspec.js';
 import { LUME_TOOLS } from './tools.js';
 import { LUME_CTX } from './toolctx.js';
 import { LUME_NOTIFY } from './notify.js';
+import { createLifecycle } from './core/lifecycle.js';
 
 /* ------------------------------------------------------------
    The inspection surface
@@ -63,6 +64,7 @@ window.Lume = {
   localeFactory: LUME_LOCALE,
   ctxFactory: LUME_CTX,
   notifyFactory: LUME_NOTIFY,
+  createLifecycle: createLifecycle,
   account: account,
   accountUI: accountUI
 };
