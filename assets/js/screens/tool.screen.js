@@ -544,6 +544,14 @@ export function createToolHostScreen(ctx) {
   }
 
   /* ---- calculator, inside its own tool screen ---- */
+
+  /* Trimmed rather than rounded to a fixed place, so 0.1 + 0.2 reads as
+     0.3 without 2/3 losing everything after the third digit. */
+  function trimNum(n) {
+    if (!isFinite(n)) return 'Error';
+    return String(Math.round(n * 1e10) / 1e10);
+  }
+
   var toolCalc = { a: null, op: null, b: '0', fresh: true, expr: '' };
 
   function calcToolRender() {

@@ -10,7 +10,7 @@
    Permission is asked for by a user action and never at boot,
    and a denial gets an explanation rather than a second prompt.
    ============================================================ */
-import { LUME_UI as UI } from '../../toolkit.js';
+import { LUME_UI as UI } from '../../ui/components.js';
 
 export function scannerScreen(c, o) {
   return UI.section({ body:

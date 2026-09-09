@@ -7,8 +7,8 @@
    Built as a factory over a profile getter: app.js owns the
    profile, this owns the presentation of it.
    ============================================================ */
-import { LUME_GEO } from './geo.js';
-import { LUME_I18N } from './i18n.js';
+import { LUME_GEO } from '../data/geo.js';
+import { LUME_I18N } from '../i18n/core.js';
 export const LUME_LOCALE = function (getProfile) {
   'use strict';
 

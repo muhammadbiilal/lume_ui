@@ -6,7 +6,7 @@
    keeps the controls, the lap/history treatment and the
    accessible announcements identical across all three.
    ============================================================ */
-import { LUME_UI as UI } from '../../toolkit.js';
+import { LUME_UI as UI } from '../../ui/components.js';
 
 export function clockScreen(c, o) {
   return '<div class="clockface">' +

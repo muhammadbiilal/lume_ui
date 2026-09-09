@@ -37,13 +37,16 @@ export function createTheme(options) {
   (function watchSystemTheme() {
     if (!window.matchMedia) return;
     var mq = window.matchMedia('(prefers-color-scheme: dark)');
-    var onChange = function () {
+    var followSystem = function () {
       if (store.get('lume-theme')) return;     /* an explicit choice wins */
       setTheme(mq.matches ? 'dark' : 'light', false);
+      /* Whoever asked to be told — the profile screen shows which of the
+         three appearance states is active, and "System" changing under it
+         is a change it has to redraw for. */
       onChange();
     };
-    if (mq.addEventListener) mq.addEventListener('change', onChange);
-    else if (mq.addListener) mq.addListener(onChange);
+    if (mq.addEventListener) mq.addEventListener('change', followSystem);
+    else if (mq.addListener) mq.addListener(followSystem);
   })();
 
   /* The theme is applied before first paint by a small inline script in

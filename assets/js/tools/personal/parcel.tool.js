@@ -4,8 +4,8 @@
    One tool, one module. The composition is the approved one;
    it is moved here rather than rewritten.
    ============================================================ */
-import { LUME_UI as UI } from '../../toolkit.js';
-import { LUME_DATA as D } from '../../tooldata.js';
+import { LUME_UI as UI } from '../../ui/components.js';
+import { LUME_DATA as D } from '../../data/tool-data.js';
 
 export default {
   id: 'parcel',

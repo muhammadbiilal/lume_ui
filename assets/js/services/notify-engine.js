@@ -13,7 +13,7 @@
    deep link, grouping and privacy rules. A bell icon on its own
    is not a notification system.
    ============================================================ */
-import { LUME_DATA } from './tooldata.js';
+import { LUME_DATA } from '../data/tool-data.js';
 export const LUME_NOTIFY = function (deps) {
   'use strict';
 

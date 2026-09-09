@@ -17,25 +17,25 @@
    them above the shell is the ordering guarantee.
    ============================================================ */
 
-/* Strings first — the packs merge into LUME_I18N.DICTS. */
-import './i18n-tools.js';
-import './i18n-account.js';
+/* Strings first — the packs merge into the shared dictionaries. */
+import './i18n/tools.js';
+import './i18n/account.js';
 
 /* Then the tool modules. The registry imports all 85 and checks them
    against the catalogue before the shell opens anything. */
 import './tools/registry.js';
 
-/* Then the shell, which reads both. */
-import { account, accountUI } from './app.js';
+/* Then the shell, which composes everything above into a running app. */
+import { account, accountUI } from './shell.js';
 
-import { LUME } from './catalogue.js';
-import { LUME_GEO } from './geo.js';
-import { LUME_I18N } from './i18n.js';
-import { LUME_LOCALE } from './locale.js';
-import { LUME_SPEC } from './toolspec.js';
-import { LUME_TOOLS } from './tools.js';
-import { LUME_CTX } from './toolctx.js';
-import { LUME_NOTIFY } from './notify.js';
+import { LUME } from './data/catalogue.js';
+import { LUME_GEO } from './data/geo.js';
+import { LUME_I18N } from './i18n/core.js';
+import { LUME_LOCALE } from './services/locale.js';
+import { LUME_SPEC } from './data/tool-specs.js';
+import { LUME_TOOLS } from './tools/engine.js';
+import { LUME_CTX } from './tools/context.js';
+import { LUME_NOTIFY } from './services/notify-engine.js';
 import { createLifecycle } from './core/lifecycle.js';
 
 /* ------------------------------------------------------------
@@ -50,7 +50,7 @@ import { createLifecycle } from './core/lifecycle.js';
    and are gone with the script tags that needed them.
 
    Every import above has finished evaluating by the time this
-   statement runs, so `account` and `accountUI` — which app.js
+   statement runs, so `account` and `accountUI` — which the shell
    fills in while it boots — are already the live instances.
    ------------------------------------------------------------ */
 window.Lume = {

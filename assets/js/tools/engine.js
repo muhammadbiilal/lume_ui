@@ -16,9 +16,9 @@
 
    Builders are registered from tools-*.js.
    ============================================================ */
-import { LUME_DATA } from './tooldata.js';
-import { LUME_SPEC } from './toolspec.js';
-import { LUME_UI } from './toolkit.js';
+import { LUME_DATA } from '../data/tool-data.js';
+import { LUME_SPEC } from '../data/tool-specs.js';
+import { LUME_UI } from '../ui/components.js';
 export const LUME_TOOLS = (function () {
   'use strict';
 

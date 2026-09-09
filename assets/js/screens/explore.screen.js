@@ -186,6 +186,12 @@ export function createExploreScreen(ctx) {
 
     <div class="page-head">
       <div class="page-head__bar">
+        <!-- Explore is reachable in Pakistan even though it is not a tab
+             there, so it carries its own way back. The router shows it only
+             when no tab is selected. -->
+        <button class="iconbtn pressable" id="exploreBack" data-act="tab:home" aria-label="Back to home" hidden>
+          <svg class="ico" viewBox="0 0 24 24"><use href="#i-chev-l"/></svg>
+        </button>
         <div>
           <h1 class="page-head__title" data-i18n="explore.title">Explore</h1>
           <p class="page-head__sub" id="exploreSub">What’s happening around you</p>

@@ -23,8 +23,8 @@
    wrong would otherwise fail at the moment a user taps
    something.
    ============================================================ */
-import { LUME_TOOLS } from '../tools.js';
-import { LUME } from '../catalogue.js';
+import { LUME_TOOLS } from './engine.js';
+import { LUME } from '../data/catalogue.js';
 /* everyday — 8 */
 import ageTool from './everyday/age.tool.js';
 import calculatorTool from './everyday/calculator.tool.js';

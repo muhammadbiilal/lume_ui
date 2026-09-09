@@ -4,7 +4,7 @@
    One tool, one module. The composition is the approved one;
    it is moved here rather than rewritten.
    ============================================================ */
-import { LUME_UI as UI } from '../../toolkit.js';
+import { LUME_UI as UI } from '../../ui/components.js';
 
 export default {
   id: 'ledger',

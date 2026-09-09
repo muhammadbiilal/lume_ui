@@ -1,25 +1,43 @@
 /* ============================================================
-   Lume — app behaviour
-   Vanilla JS, no dependencies. Runs from file:// too.
+   Lume — the shell
 
-   The whole app hangs off one profile object. Religion and
-   country are separate fields, and every surface — home, tools,
-   today, search, explore, nav, notifications — asks the same
-   visible() function. Nothing gets its own rule.
+   What is left when every screen, every tool and every service
+   owns itself: the composition root.
+
+   It builds the profile store, the eligibility selector, the
+   router and the lifecycle; mounts the ten screens into the
+   outlet; constructs the services and hands each of them the
+   few things it needs; and provides the one context object a
+   screen is allowed to read.
+
+   Two responsibilities genuinely belong here rather than
+   anywhere else.
+
+   The action vocabulary. Every tappable thing in the product
+   declares what it does as a string, and this is where that
+   string is turned into an action — because an action can cross
+   any boundary in the app, and no single screen or service can
+   own that.
+
+   The full re-render. Changing language, country or faith
+   preference changes what almost every surface should show, so
+   renderAll asks the lifecycle for every registered screen
+   rather than keeping a list somebody has to remember to add
+   to.
    ============================================================ */
-import { LUME } from './catalogue.js';
-import { LUME_GEO } from './geo.js';
-import { LUME_SPEC } from './toolspec.js';
-import { LUME_TOOLS } from './tools.js';
-import { LUME_UI } from './toolkit.js';
-import { LUME_DATA } from './tooldata.js';
-import { LUME_SOLAR } from './solar.js';
-import { LUME_I18N } from './i18n.js';
-import { LUME_LOCALE } from './locale.js';
-import { LUME_NOTIFY } from './notify.js';
-import { LUME_ACCOUNT } from './account.js';
-import { LUME_ACCOUNT_UI } from './account-ui.js';
-import { LUME_CTX } from './toolctx.js';
+import { LUME } from './data/catalogue.js';
+import { LUME_GEO } from './data/geo.js';
+import { LUME_SPEC } from './data/tool-specs.js';
+import { LUME_TOOLS } from './tools/engine.js';
+import { LUME_UI } from './ui/components.js';
+import { LUME_DATA } from './data/tool-data.js';
+import { LUME_SOLAR } from './data/solar.js';
+import { LUME_I18N } from './i18n/core.js';
+import { LUME_LOCALE } from './services/locale.js';
+import { LUME_NOTIFY } from './services/notify-engine.js';
+import { LUME_ACCOUNT } from './services/account.js';
+import { LUME_ACCOUNT_UI } from './ui/account-ui.js';
+import { LUME_CTX } from './tools/context.js';
 import { store } from './core/storage.js';
 import { $, $$, pad2, esc } from './core/dom.js';
 import { createProfileStore } from './core/app-store.js';
@@ -546,17 +564,6 @@ export let accountUI = null;
     }
   }
 
-  /* ---------------------------------------------------------
-     Calculator
-     --------------------------------------------------------- */
-  var calc = { acc: null, op: null, entry: '0', fresh: true };
-  var calcValue = $('#calcValue'), calcHistory = $('#calcHistory');
-
-  function trimNum(n) {
-    if (!isFinite(n)) return 'Error';
-    return String(Math.round(n * 1e10) / 1e10);
-  }
-
   /* The three pickers live in ui/pickers.js: interests, location and the
      Personalisation sheet that hosts both. */
   var PICKERS = createPickers({
@@ -580,28 +587,6 @@ export let accountUI = null;
   /* ---------------------------------------------------------
      Profile summaries
      --------------------------------------------------------- */
-  function interestLabel(id) {
-    for (var g = 0; g < C.INTEREST_GROUPS.length; g++) {
-      var items = C.INTEREST_GROUPS[g].items;
-      for (var i = 0; i < items.length; i++) if (items[i].id === id) return items[i].label;
-    }
-    return id;
-  }
-
-  function ensureExploreBack() {
-    if ($('#exploreBack')) return;
-    var bar = $('#screen-explore .page-head__bar');
-    if (!bar) return;
-    var b = document.createElement('button');
-    b.className = 'iconbtn pressable';
-    b.id = 'exploreBack';
-    b.setAttribute('aria-label', 'Back to home');
-    b.innerHTML = '<svg class="ico" viewBox="0 0 24 24"><use href="#i-chev-l"/></svg>';
-    b.addEventListener('click', function () { goTo('home'); });
-    b.hidden = true;
-    bar.insertBefore(b, bar.firstChild);
-  }
-
   /* ---------------------------------------------------------
      Render everything from the profile
      --------------------------------------------------------- */
@@ -879,7 +864,6 @@ export let accountUI = null;
   /* ---------------------------------------------------------
      Boot
      --------------------------------------------------------- */
-  ensureExploreBack();
   applyWidth();
   renderNotifBadge();
   tickClock();

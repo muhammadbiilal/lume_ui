@@ -8,7 +8,7 @@
      adapts: true       → global feature whose *content* localises
    Nothing else in the app is allowed to invent its own rule.
    ============================================================ */
-import { LUME_I18N } from './i18n.js';
+import { LUME_I18N } from '../i18n/core.js';
 export const LUME = (function () {
   'use strict';
 

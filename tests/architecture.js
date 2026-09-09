@@ -361,6 +361,32 @@ async function boot(profile, extra) {
        doc.querySelectorAll('.tab[aria-selected="true"]').length === 1);
     ok('nothing threw along the way', errors.length === 0, errors.slice(0, 2).join(' | '));
 
+    /* Drive a tool that computes, rather than only opening it. A builder
+       renders fine while the code behind its buttons is missing a name
+       that stayed behind in a refactor; only pressing them shows that. */
+    win.eval(`(function(){
+      var b=document.createElement('button');
+      b.setAttribute('data-act','tool:calculator');
+      document.body.appendChild(b);
+      b.dispatchEvent(new MouseEvent('click',{bubbles:true}));
+      b.remove();
+    })()`);
+    await wait(30);
+    const errorsBeforeKeys = errors.length;
+    for (const key of ['n:7', 'op:+', 'n:8', 'eq']) {
+      const button = doc.querySelector('#screen-tool [data-calckey="' + key + '"]');
+      if (button) button.dispatchEvent(new win.MouseEvent('click', { bubbles: true }));
+      await wait(10);
+    }
+    const display = doc.querySelector('#screen-tool [data-calc-out]');
+    ok('a calculator that is actually used computes',
+       !!display && /15/.test(display.textContent || ''),
+       display ? display.textContent : 'no display');
+    ok('and pressing its keys throws nothing',
+       errors.length === errorsBeforeKeys, errors.slice(errorsBeforeKeys, errorsBeforeKeys + 2).join(' | '));
+    click('.tab[data-tab="home"]');
+    await wait(20);
+
     /* Open a tool, leave it, open it again — the tool host is the screen
        most likely to leave a countdown behind.
 
@@ -445,7 +471,67 @@ async function boot(profile, extra) {
        errors.slice(0, 3).join(' | '));
   }
 
-  /* ── 7. screen isolation ─────────────────────────────────────────────── */
+  /* ── 7. following the system appearance ──────────────────────────────── */
+  console.log('\n=== Appearance ===');
+  {
+    /* "Follow the system" is a claim about what happens later, not about
+       what is read at startup. Sampling the preference once and freezing
+       was the defect the service exists to prevent, so the check has to
+       move the system preference after boot. */
+    const listeners = [];
+    let dark = false;
+    const { win, doc } = await boot(null, w => {
+      w.matchMedia = q => {
+        const isColourScheme = /prefers-color-scheme/.test(q);
+        return {
+          get matches() { return isColourScheme && dark && /dark/.test(q); },
+          media: q,
+          /* Only the colour-scheme handler is collected. Firing every
+             media handler the app registers would fire unrelated ones —
+             reduced motion, width — with the wrong event. */
+          addEventListener: (type, fn) => { if (isColourScheme) listeners.push(fn); },
+          removeEventListener: () => {},
+          addListener: fn => { if (isColourScheme) listeners.push(fn); },
+          removeListener: () => {}
+        };
+      };
+    });
+
+    const act = value => win.eval(`(function(){
+      var b=document.createElement('button');
+      b.setAttribute('data-act','${value}');
+      document.body.appendChild(b);
+      b.dispatchEvent(new MouseEvent('click',{bubbles:true}));
+      b.remove();
+    })()`);
+
+    act('acctset:theme:dark');
+    await wait(20);
+    ok('an explicit choice is applied', doc.documentElement.dataset.theme === 'dark',
+       doc.documentElement.dataset.theme);
+    ok('and remembered', !!win.localStorage.getItem('lume-theme'));
+
+    act('acctset:theme:system');
+    await wait(20);
+    ok('handing the choice back to the system forgets it',
+       !win.localStorage.getItem('lume-theme'), win.localStorage.getItem('lume-theme'));
+
+    ok('and the system preference is actually being watched', listeners.length > 0);
+    dark = true;
+    listeners.forEach(fn => fn({ matches: true }));
+    await wait(20);
+    ok('so a later change to it is followed',
+       doc.documentElement.dataset.theme === 'dark', doc.documentElement.dataset.theme);
+
+    act('acctset:theme:light');
+    await wait(20);
+    listeners.forEach(fn => fn({ matches: true }));
+    await wait(20);
+    ok('while an explicit choice still wins over it',
+       doc.documentElement.dataset.theme === 'light', doc.documentElement.dataset.theme);
+  }
+
+  /* ── 8. screen isolation ─────────────────────────────────────────────── */
   console.log('\n=== Screen isolation ===');
   {
     const dir = path.join(ROOT, 'assets/js/screens');
