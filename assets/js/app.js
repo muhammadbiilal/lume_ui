@@ -29,6 +29,9 @@ import { createRouter } from './core/router.js';
 import { createScreens } from './screens/index.js';
 import { createShellContext } from './core/shell-context.js';
 import { createAccountForms } from './services/account-forms.js';
+import { createTheme } from './services/theme.js';
+import { createSheets } from './ui/sheets.js';
+import { createPrayer } from './services/prayer.js';
 import { sheetsTemplate } from './ui/sheets-markup.js';
 import { onboardingTemplate } from './screens/onboarding.screen.js';
 
@@ -213,44 +216,11 @@ export let accountUI = null;
     });
   }
 
-  /* ---------------------------------------------------------
-     Theme
-     --------------------------------------------------------- */
+  /* Appearance lives in services/theme.js. The shell keeps the root
+     element, which several other things here also write to. */
   var root = document.documentElement;
-
-  function setTheme(theme, remember) {
-    root.dataset.theme = theme;
-    if (remember) store.set('lume-theme', theme);
-    var meta = document.querySelector('meta[name="theme-color"]');
-    if (meta) meta.setAttribute('content', theme === 'dark' ? '#0A0A0B' : '#F6F6F4');
-  }
-  setTheme(root.dataset.theme, false);
-
-  /* §124.27 — three states, not two: an explicit light, an explicit dark,
-     and following the system, which is the absence of a stored choice. */
-  function setThemeMode(mode) {
-    if (mode === 'system') {
-      store.set('lume-theme', '');
-      var dark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
-      setTheme(dark ? 'dark' : 'light', false);
-      return;
-    }
-    setTheme(mode, true);
-  }
-
-  /* "Follow the system" has to actually follow it, rather than sampling the
-     preference once at startup and freezing. */
-  (function watchSystemTheme() {
-    if (!window.matchMedia) return;
-    var mq = window.matchMedia('(prefers-color-scheme: dark)');
-    var onChange = function () {
-      if (store.get('lume-theme')) return;     /* an explicit choice wins */
-      setTheme(mq.matches ? 'dark' : 'light', false);
-      if (typeof renderProfile === 'function') renderProfile();
-    };
-    if (mq.addEventListener) mq.addEventListener('change', onChange);
-    else if (mq.addListener) mq.addListener(onChange);
-  })();
+  var THEME = createTheme({ onChange: function () { renderProfile(); } });
+  var setThemeMode = THEME.setMode;
 
   /* ---------------------------------------------------------
      Clock, greeting, date
@@ -368,96 +338,25 @@ export let accountUI = null;
     }
   }
 
-  /* ---------------------------------------------------------
-     Sheets
-     --------------------------------------------------------- */
-  var scrim = $('#scrim');
-  var openSheet = null;
-
-  function sheetOpen(name) {
-    var sheet = $('#sheet-' + name);
-    if (!sheet) return;
-    if (openSheet && openSheet !== sheet) openSheet.classList.remove('is-open');
-    sheet.classList.add('is-open');
-    scrim.classList.add('is-open');
-    openSheet = sheet;
-
-    /* §101 — while a modal sheet is up, the screen behind it is not a place
-       to tab into, and focus starts inside the dialog rather than on the
-       destructive button it happens to contain first. */
-    var behind = $('.screen.is-active');
-    /* Only if the visibility system has not already hidden it for its own
-       reasons — restoring blindly would un-hide a gated screen (§64). */
-    if (behind && !behind.hasAttribute('aria-hidden')) {
-      behind.setAttribute('aria-hidden', 'true');
-      sheetHid = behind;
+  /* Sheets live in ui/sheets.js. What stays here is which sheet needs
+     filling in before it opens, because that is product knowledge rather
+     than sheet behaviour. */
+  var SHEETS = createSheets({
+    animateBars: function (el) { animateBars(el); },
+    onOpen: function (name) {
+      if (name === 'personalise' && setPicker) hydratePersonalise();
+      if (name === 'market') TOOL_HOST.fillMarketPicker();
+      if (name === 'notifprefs') renderNotifPrefs();
+      if (name === 'notifpush') renderPushAsk();
+      if (name === 'search') {
+        resetSearch();
+        setTimeout(function () { var i = $('#globalSearch'); if (i) i.focus(); }, 320);
+      }
     }
-    sheetOpener = document.activeElement;
-
-    if (name === 'personalise' && setPicker) hydratePersonalise();
-    if (name === 'market') TOOL_HOST.fillMarketPicker();
-    if (name === 'notifprefs') renderNotifPrefs();
-    if (name === 'notifpush') renderPushAsk();
-    if (name === 'search') {
-      resetSearch();
-      setTimeout(function () { var i = $('#globalSearch'); if (i) i.focus(); }, 320);
-    }
-    animateBars(sheet);
-    setTimeout(function () {
-      var first = $('[data-close], .btn--ghost, button', sheet);
-      if (first && first.focus) { try { first.focus(); } catch (e) {} }
-    }, 60);
-  }
-
-  var sheetOpener = null, sheetHid = null;
-
-  function sheetClose() {
-    if (openSheet) openSheet.classList.remove('is-open');
-    openSheet = null;
-    scrim.classList.remove('is-open');
-    if (sheetHid) { sheetHid.removeAttribute('aria-hidden'); sheetHid = null; }
-    if (sheetOpener && sheetOpener.focus) { try { sheetOpener.focus(); } catch (e) {} }
-    sheetOpener = null;
-  }
-
-  scrim.addEventListener('click', sheetClose);
-  document.addEventListener('keydown', function (e) {
-    if (e.key === 'Escape' && openSheet) sheetClose();
   });
-  $$('[data-close]').forEach(function (b) { b.addEventListener('click', sheetClose); });
-
-  /* Swipe a sheet down to dismiss */
-  $$('.sheet').forEach(function (sheet) {
-    var startY = 0, dy = 0, dragging = false;
-    var handles = [$('.sheet__grab', sheet), $('.sheet__head', sheet)].filter(Boolean);
-
-    function down(y) { startY = y; dy = 0; dragging = true; sheet.style.transition = 'none'; }
-    function move(y) {
-      if (!dragging) return;
-      dy = Math.max(0, y - startY);
-      sheet.style.transform = 'translateY(' + dy + 'px)';
-    }
-    function up() {
-      if (!dragging) return;
-      dragging = false;
-      sheet.style.transition = '';
-      sheet.style.transform = '';
-      if (dy > 90) sheetClose();
-    }
-
-    handles.forEach(function (h) {
-      h.style.touchAction = 'none';
-      h.addEventListener('touchstart', function (e) { down(e.touches[0].clientY); }, { passive: true });
-      h.addEventListener('touchmove',  function (e) { move(e.touches[0].clientY); }, { passive: true });
-      h.addEventListener('touchend', up);
-      h.addEventListener('mousedown', function (e) {
-        if (e.target.closest('button, input')) return;
-        down(e.clientY);
-      });
-    });
-    document.addEventListener('mousemove', function (e) { move(e.clientY); });
-    document.addEventListener('mouseup', up);
-  });
+  var sheetOpen = SHEETS.open;
+  var sheetClose = SHEETS.close;
+  function openSheetName() { return SHEETS.current(); }
 
   /* ---------------------------------------------------------
      One action vocabulary for every tappable thing
@@ -551,54 +450,18 @@ export let accountUI = null;
     if (el.dataset.toast) { toast(el.dataset.toast); }
   });
 
-  /* ---------------------------------------------------------
-     Prayer times — location aware, only ever used when Islamic
-     content is on
-     --------------------------------------------------------- */
-  /* Where the user actually is: city coordinates when we have them, the
-     country's own point otherwise. */
-  function here() {
-    return SOLAR.coordsFor(L.country(), profile.city);
-  }
-
-  var prayerCache = null;
-  function prayerSet() {
-    var pos = here();
-    var key = profile.country + '|' + profile.city + '|' + profile.method + '|' +
-              new Date().toDateString();
-    if (prayerCache && prayerCache.key === key) return prayerCache.list;
-    prayerCache = {
-      key: key,
-      list: SOLAR.prayerTimes({
-        lat: pos.lat, lon: pos.lon, tz: L.country().tz,
-        method: profile.method, date: new Date()
-      })
-    };
-    return prayerCache.list;
-  }
-
-  function mins(p) { return p.h * 60 + p.m; }
+  /* Prayer arithmetic lives in services/prayer.js. It is a service rather
+     than a screen's business because Home, Today, the tool host and the
+     notification engine all ask it the same questions. */
+  var PRAYER = createPrayer({
+    profile: function () { return profile; },
+    locale: function () { return L; },
+    solar: SOLAR
+  });
+  var prayerSet = PRAYER.times;
+  var prayerState = PRAYER.state;
+  var mins = PRAYER.minutes;
   function hhmm(p) { return L.time(p.h, p.m); }
-
-  function prayerState() {
-    var list = prayerSet();
-    var main = list.filter(function (p) { return !p.minor; });
-    var now = new Date();
-    var nowM = now.getHours() * 60 + now.getMinutes() + now.getSeconds() / 60;
-
-    var next = null, prev = null;
-    for (var i = 0; i < main.length; i++) {
-      if (mins(main[i]) > nowM) { next = main[i]; prev = main[i - 1] || null; break; }
-    }
-    if (!next) { next = main[0]; prev = main[main.length - 1]; }
-
-    var toNext = mins(next) - nowM;
-    if (toNext < 0) toNext += 1440;
-    var span = prev ? mins(next) - mins(prev) : 1440;
-    if (span <= 0) span += 1440;
-
-    return { list: list, main: main, next: next, prev: prev, toNext: toNext, progress: Math.max(0, Math.min(1, 1 - toNext / span)) };
-  }
 
   /* ---------------------------------------------------------
      Recently used
@@ -1215,7 +1078,7 @@ export let accountUI = null;
       profile.units = draft.units;
       profile.currency = draft.currency;
       profile.clock = draft.clock;
-      prayerCache = null;
+      PRAYER.forget();
       syncFaithFromInterests();
       /* Anything now hidden must not linger in history. */
       profile.recents = profile.recents.filter(function (id) {
@@ -1396,7 +1259,7 @@ export let accountUI = null;
     profile.country = onbDraft.country;
     profile.region = onbDraft.region;
     profile.city = onbDraft.city;
-    prayerCache = null;
+    PRAYER.forget();
     syncFaithFromInterests();
     saveProfile();
     renderAll();
@@ -1439,7 +1302,7 @@ export let accountUI = null;
           profile.country = onbDraft.country;
           profile.region = onbDraft.region;
           profile.city = onbDraft.city;
-          prayerCache = null;
+          PRAYER.forget();
         }
         onbShow(onbStep + 1);
       });
@@ -1824,7 +1687,7 @@ export let accountUI = null;
   });
 
   document.addEventListener('keydown', function (e) {
-    if (e.key !== 'Escape' || openSheet) return;
+    if (e.key !== 'Escape' || openSheetName()) return;
     if (ROUTER.current() === 'account') { closeAccount(); return; }
     if (ROUTER.current() === 'auth') { closeAuth(); return; }
     if (toolIsOpen()) closeTool();
@@ -2195,7 +2058,7 @@ export let accountUI = null;
     /* Prayer arithmetic belongs to the faith system, not to whichever
        screen happens to be drawing a prayer time. */
     prayer: { state: prayerState, minutes: mins, times: prayerSet, KEYS: PKEYS },
-    forgetPrayerTimes: function () { prayerCache = null; },
+    forgetPrayerTimes: PRAYER.forget,
     notify: NOTIFY,
     account: ACCT,
 
