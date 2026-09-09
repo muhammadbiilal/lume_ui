@@ -21,11 +21,9 @@
 import './i18n-tools.js';
 import './i18n-account.js';
 
-/* Then the tool builders, which register into the tool registry. */
-import './tools-faith.js';
-import './tools-money.js';
-import './tools-life.js';
-import './tools-personal.js';
+/* Then the tool modules. The registry imports all 85 and checks them
+   against the catalogue before the shell opens anything. */
+import './tools/registry.js';
 
 /* Then the shell, which reads both. */
 import { account, accountUI } from './app.js';
