@@ -1,16 +1,472 @@
 /* ============================================================
-   Lume - Home screen
+   Lume — Home screen
 
-   The daily overview: the greeting, the cards that answer
-   "what matters now", and the routes into everything else.
+   Home answers one question: what matters to me now. It is not
+   a grid of every tool. It is what is true right now, what you
+   would do immediately, and what is about to happen — and all
+   three are personalised.
 
-   Owns its own markup and nobody else's. The composition and
-   the DOM order here are the ones the design specification
-   fixes, so they are moved rather than rewritten.
+   Two rules run through everything below, and they are the
+   reason several of these functions look fussier than a plain
+   list would:
+
+     · nothing sensitive is promoted here. A private tool can be
+       a quick action, because adding an expense is a task, but
+       it is never a card that says what is in it.
+     · nothing hidden can leak in. Every candidate is filtered
+       through the same eligibility selector the catalogue uses,
+       so a faith or country feature that is off cannot arrive
+       through the carousel, the grid, the live row or upcoming.
+
+   The quick-tool grid round-robins across the user's interests
+   rather than draining them in order. Without that, a single
+   interest fills all eight tiles on its own.
    ============================================================ */
 import { defineScreen } from './screen-base.js';
+import { $, $$, pad2 } from '../core/dom.js';
 
 export function createHomeScreen(ctx) {
+
+  /* ---------------------------------------------------------
+     Header — greeting, date and city
+     --------------------------------------------------------- */
+  function renderHeader(root) {
+    const t = ctx.t, L = ctx.L, profile = ctx.profile();
+    const now = new Date();
+
+    const greeting = $('#greetText', root);
+    if (greeting) {
+      /* The name is used when Lume has one, and the greeting stands alone
+         when it does not. There is no third branch that invents one. */
+      const who = ctx.account.displayName();
+      greeting.textContent = who
+        ? t('greet.named', { greeting: t(greetingKey(now.getHours())), name: who })
+        : t(greetingKey(now.getHours()));
+    }
+
+    /* The header also carries the city, so it gets the short date — the
+       long one would wrap onto a second line on a 390px screen. */
+    const date = $('#todayDate', root);
+    if (date) date.textContent = L.dateShort(now);
+
+    const city = $('#appbarCity', root);
+    if (city) city.textContent = profile.city;
+
+    /* Initials from a real name, or the neutral glyph — never invented
+       letters. The avatar is Home's, because it sits in Home's app bar. */
+    const avatar = $('#appbarAvatar', root);
+    if (avatar) {
+      const initials = ctx.account.initials();
+      avatar.textContent = initials || '';
+      avatar.classList.toggle('avatar--anon', !initials);
+      if (!initials) {
+        avatar.innerHTML = '<svg class="ico" viewBox="0 0 24 24"><use href="#i-user"/></svg>';
+      }
+    }
+
+    const glance = $('#glanceSub', root);
+    if (glance) glance.textContent = t(profile.islamic ? 'home.glanceMuslim' : 'home.glanceGeneral');
+  }
+
+  function greetingKey(hour) {
+    if (hour < 5) return 'greet.late';
+    if (hour < 12) return 'greet.morning';
+    if (hour < 17) return 'greet.afternoon';
+    if (hour < 21) return 'greet.evening';
+    return 'greet.winddown';
+  }
+
+  /* ---------------------------------------------------------
+     Context card — the weather line at the top of Home
+     --------------------------------------------------------- */
+  function renderContext(root) {
+    const L = ctx.L, profile = ctx.profile();
+    const w = ctx.catalogue.weatherFor(profile.country, L.country().tz);
+
+    const temp = $('#ctxTemp', root);
+    if (temp) temp.textContent = L.temp(w.temp);
+    const desc = $('#ctxWeather', root);
+    if (desc) desc.textContent = w.desc.split(' · ')[0];
+  }
+
+  /* ---------------------------------------------------------
+     Hero carousel
+
+     The brief asks for two to four slides, so eligibility alone
+     is not enough: they compete, and the most relevant four win.
+     --------------------------------------------------------- */
+  function slideScore(slide) {
+    const profile = ctx.profile();
+    const id = slide.dataset.slide;
+    if (slide.dataset.faith === 'islamic' && !profile.islamic) return -1;
+    if (slide.dataset.loc && slide.dataset.loc !== profile.country) return -1;
+    if (id === 'prayer') return 100;
+    if (id === 'plan') return 80;
+    if (id === 'trains') return ctx.hasInterest('trains') ? 78 : 74;
+    if (id === 'read') return 70;
+    if (id === 'money') {
+      if (!profile.prefs.finance) return -1;
+      return ['rates', 'expenses', 'bills', 'savings'].some(ctx.hasInterest) ? 62 : 45;
+    }
+    return 40;
+  }
+
+  function renderHero(root) {
+    const track = $('#heroTrack', root), dotsHost = $('#heroDots', root);
+    if (!track || !dotsHost) return;
+
+    const slides = $$('.slide', track);
+    const keep = slides
+      .map(function (el) { return { el: el, score: slideScore(el) }; })
+      .filter(function (x) { return x.score > 0; })
+      .sort(function (a, b) { return b.score - a.score; })
+      .slice(0, 4)
+      .map(function (x) { return x.el; });
+
+    slides.forEach(function (el) { el.classList.toggle('is-off', keep.indexOf(el) === -1); });
+    keep.forEach(function (el, i) { el.style.order = i; });
+
+    dotsHost.innerHTML = keep.map(function (el, i) {
+      return '<button class="hero__dot' + (i === 0 ? ' is-active' : '') + '" role="tab" ' +
+             'aria-label="Slide ' + (i + 1) + ' of ' + keep.length + '"></button>';
+    }).join('');
+
+    /* scrollLeft 0 is the right-hand end in RTL, which would open the
+       carousel on its last slide. */
+    if (keep.length) track.scrollLeft = ctx.L.dir() === 'rtl' ? track.scrollWidth : 0;
+  }
+
+  /* Which dot is lit follows the scroll position rather than a counter, so
+     a drag, a swipe and a dot tap all agree. Slides are reordered with flex
+     `order`, so they are ranked by position, not by DOM order. */
+  function syncDots(root) {
+    const track = $('#heroTrack', root), dotsHost = $('#heroDots', root);
+    if (!track || !dotsHost) return;
+    const shown = $$('.slide', track)
+      .filter(function (el) { return !el.classList.contains('is-off'); })
+      .sort(function (a, b) { return a.offsetLeft - b.offsetLeft; });
+    const mid = track.scrollLeft + track.clientWidth / 2;
+    let best = 0, bestDistance = Infinity;
+    shown.forEach(function (el, i) {
+      const centre = el.offsetLeft - track.offsetLeft + el.offsetWidth / 2;
+      const distance = Math.abs(centre - mid);
+      if (distance < bestDistance) { bestDistance = distance; best = i; }
+    });
+    $$('.hero__dot', dotsHost).forEach(function (dot, i) {
+      dot.classList.toggle('is-active', i === best);
+    });
+    return shown;
+  }
+
+  /* ---------------------------------------------------------
+     Prayer — the countdown on the hero and the context card
+     --------------------------------------------------------- */
+  function countdown(minutes) {
+    const total = Math.max(0, Math.round(minutes * 60));
+    return Math.floor(total / 3600) + ':' + pad2(Math.floor(total % 3600 / 60)) + ':' + pad2(total % 60);
+  }
+
+  function shortCountdown(minutes) {
+    const total = Math.max(0, Math.round(minutes));
+    return Math.floor(total / 60) + ':' + pad2(total % 60);
+  }
+
+  function renderPrayer(root) {
+    if (!ctx.profile().islamic) return;
+    const t = ctx.t, L = ctx.L;
+    const state = ctx.prayer.state();
+    const at = L.time(state.next.h, state.next.m);
+
+    function set(id, value) {
+      const el = $(id, root);
+      if (el) el.textContent = value;
+    }
+
+    set('#heroPrayerName', state.next.name);
+    const line = $('#heroPrayerLine', root);
+    if (line) line.textContent = t('slide.prayer.x', { time: at, city: ctx.profile().city });
+    set('#heroCountdown', countdown(state.toNext));
+    set('#ctxPrayerName', state.next.name);
+    set('#ctxPrayerTime', at);
+    set('#ctxCountdown', shortCountdown(state.toNext));
+  }
+
+  /* ---------------------------------------------------------
+     Quick tools
+     --------------------------------------------------------- */
+  const QUICK_FALLBACK = ['calculator', 'weather', 'calendar', 'todos', 'currency', 'notes', 'timer', 'converter'];
+
+  function renderQuickTools(root) {
+    const host = $('#quickTools', root);
+    if (!host) return;
+    const t = ctx.t, esc = ctx.ui.esc, profile = ctx.profile();
+
+    const picked = [], seen = {};
+    function add(f) {
+      if (!f || seen[f.id] || picked.length >= 8) return;
+      /* Sensitive tools are never promoted here. */
+      if (!ctx.eligible.visible(f) || f.sens) return;
+      seen[f.id] = 1;
+      picked.push(f);
+    }
+
+    /* Favourites and recents first, then round-robin across the chosen
+       interests — one tool per interest per pass. */
+    (profile.favourites || []).slice(0, 3).forEach(function (id) { add(ctx.eligible.feature(id)); });
+    profile.recents.slice(0, 2).forEach(function (id) { add(ctx.eligible.feature(id)); });
+
+    if (profile.interests.length) {
+      const pools = profile.interests.map(function (interest) {
+        return ctx.eligible.visibleFeatures().filter(function (f) {
+          return f.ints && f.ints.indexOf(interest) !== -1 && !f.sens;
+        });
+      });
+      for (let round = 0; round < 4 && picked.length < 8; round++) {
+        for (let p = 0; p < pools.length && picked.length < 8; p++) {
+          let taken = false;
+          for (let k = 0; k < pools[p].length && !taken; k++) {
+            if (!seen[pools[p][k].id]) { add(pools[p][k]); taken = true; }
+          }
+        }
+      }
+    }
+
+    QUICK_FALLBACK.forEach(function (id) { add(ctx.eligible.feature(id)); });
+    /* The last resort still respects the contract: a tool that never
+       declared itself Home-eligible does not get to fill the grid. */
+    ctx.eligible.visibleFeatures()
+      .filter(function (f) { return ctx.spec.get(f.id).homeEligible; })
+      .forEach(add);
+    ctx.eligible.visibleFeatures().forEach(add);
+
+    host.innerHTML = picked.map(function (f) {
+      const accent = !!f.faith;
+      return '<button class="tool pressable" data-act="' + ctx.eligible.actFor(f) + '" data-fid="' + f.id + '">' +
+        '<span class="tool__icon' + (accent ? ' tool__icon--accent' : '') + '">' +
+          '<svg class="ico" viewBox="0 0 24 24"><use href="#' + f.i + '"/></svg></span>' +
+        '<span class="tool__label">' + esc(ctx.eligible.name(f)) + '</span>' +
+        (f.m ? '<span class="tool__value num">' + esc(f.m) + '</span>' : '') +
+      '</button>';
+    }).join('');
+
+    const sub = $('#quickToolsSub', root);
+    if (sub) sub.textContent = t(profile.interests.length ? 'home.quickFromInterests' : 'home.quickDefault');
+  }
+
+  /* ---------------------------------------------------------
+     Quick actions — an action performs a task; it does not just
+     open a screen
+     --------------------------------------------------------- */
+  const QUICK_ACTIONS = [
+    { id: 'expenses',  icon: 'i-plus',    key: 'qa.expense',  act: 'tool:expenses' },
+    { id: 'todos',     icon: 'i-check-square', key: 'qa.task', act: 'tool:todos' },
+    { id: 'qr',        icon: 'i-qr',      key: 'qa.scan',     act: 'tool:qr' },
+    { id: 'notes',     icon: 'i-note',    key: 'qa.note',     act: 'tool:notes' },
+    { id: 'water',     icon: 'i-droplet', key: 'qa.water',    act: 'water:small' },
+    { id: 'tasbih',    icon: 'i-beads',   key: 'qa.tasbih',   act: 'tool:tasbih' },
+    { id: 'timer',     icon: 'i-timer',   key: 'qa.timer',    act: 'tool:timer' },
+    { id: 'shopping',  icon: 'i-cart',    key: 'qa.shop',     act: 'tool:shopping' },
+    { id: 'parcel',    icon: 'i-package', key: 'qa.parcel',   act: 'tool:parcel' },
+    { id: 'docscan',   icon: 'i-scan',    key: 'qa.docscan',  act: 'tool:docscan' }
+  ];
+
+  function renderQuickActions(root) {
+    const host = $('#quickActions', root), wrap = $('#quickActionsWrap', root);
+    if (!host || !wrap) return;
+    const esc = ctx.ui.esc;
+
+    const picked = QUICK_ACTIONS.filter(function (a) {
+      const f = ctx.eligible.feature(a.id);
+      /* A sensitive tool is allowed as a quick action — adding an expense
+         is a task — even though it is never promoted as a Home card. */
+      return f && ctx.eligible.visible(f) && ctx.spec.get(a.id).quickEligible;
+    }).slice(0, 5);
+
+    wrap.hidden = picked.length < 3;
+    host.innerHTML = picked.map(function (a) {
+      return '<button class="qaction pressable" data-act="' + a.act + '" data-fid="' + a.id + '">' +
+        '<span class="qaction__icon"><svg class="ico" viewBox="0 0 24 24"><use href="#' + a.icon + '"/></svg></span>' +
+        '<span class="qaction__label">' + esc(ctx.t(a.key)) + '</span></button>';
+    }).join('');
+  }
+
+  /* ---------------------------------------------------------
+     Live now — what Home shows depends on the hour, the market
+     session and the season, not on a fixed list
+     --------------------------------------------------------- */
+  function liveCard(o) {
+    const esc = ctx.ui.esc;
+    return '<button class="livecard pressable" data-act="' + o.act + '" data-fid="' + o.fid + '">' +
+      '<span class="livecard__icon livecard__icon--' + (o.tone || 'accent') + '">' +
+        '<svg class="ico" viewBox="0 0 24 24"><use href="#' + o.icon + '"/></svg></span>' +
+      '<span class="livecard__body">' +
+        '<span class="livecard__title">' + esc(o.title) + '</span>' +
+        '<span class="livecard__meta">' + esc(o.meta) + '</span>' +
+      '</span>' +
+      '<span class="livecard__end">' +
+        '<span class="livecard__value">' + o.value + '</span>' +
+        (o.badge || '') +
+      '</span></button>';
+  }
+
+  function liveCards() {
+    const t = ctx.t, L = ctx.L, esc = ctx.ui.esc, profile = ctx.profile();
+    const hour = new Date().getHours();
+    const out = [];
+
+    function eligible(id) {
+      const f = ctx.eligible.feature(id);
+      return f && ctx.eligible.visible(f) ? f : null;
+    }
+
+    /* Weather is relevant all day; before bed it flips to tomorrow. */
+    if (eligible('weather')) {
+      const w = ctx.toolCtx('weather').weather();
+      const evening = hour >= 19 || hour < 5;
+      const day = evening ? w.daily[1] : w.daily[0];
+      out.push(liveCard({
+        fid: 'weather', act: 'tool:weather', icon: w.icon, tone: 'sky',
+        title: evening ? t('home.tomorrowIn', { city: profile.city }) : profile.city,
+        meta: day.desc + ' · ' + t('weather.rain') + ' ' + day.rain + '%',
+        value: L.temp(evening ? day.hi : w.temp),
+        badge: '<span class="livecard__sub">' + esc(L.temp(day.hi) + ' / ' + L.temp(day.lo)) + '</span>'
+      }));
+    }
+
+    /* A market snapshot, but only while a market the user follows is open. */
+    if (eligible('markets')) {
+      const c = ctx.toolCtx('markets');
+      const exchange = c.exchange();
+      const session = c.marketSession(exchange);
+      const index = exchange ? exchange.indices[0] : ctx.data.GLOBAL_INDICES[0];
+      if (session.open || hour >= 8) {
+        out.push(liveCard({
+          fid: 'markets', act: 'tool:markets', icon: 'i-trending',
+          tone: index.pct >= 0 ? 'up' : 'down',
+          title: index.name,
+          meta: (exchange ? exchange.name : t('markets.worldBoard')) + ' · ' + session.label,
+          value: L.num(index.value, { maximumFractionDigits: 0 }),
+          badge: '<span class="delta delta--' + (index.pct >= 0 ? 'up' : 'down') + '">' +
+            '<i aria-hidden="true">' + (index.pct >= 0 ? '▲' : '▼') + '</i>' +
+            Math.abs(index.pct).toFixed(2) + '%</span>'
+        }));
+      }
+    }
+
+    /* A live outage outranks both, so it goes to the front. */
+    if (eligible('loadshed')) {
+      const ls = ctx.toolCtx('loadshed').loadshed();
+      if (ls.now) {
+        out.unshift(liveCard({
+          fid: 'loadshed', act: 'tool:loadshed', icon: 'i-bolt', tone: 'warn',
+          title: t('loadshed.currentlyOff'),
+          meta: ls.area + ' · ' + t('loadshed.until', { time: ls.slot.to }),
+          value: ls.endsIn
+        }));
+      }
+    }
+
+    if (eligible('bills')) {
+      const bills = ctx.toolCtx('bills').bills();
+      if (bills.overdueCount) {
+        out.push(liveCard({
+          fid: 'bills', act: 'tool:bills', icon: 'i-receipt', tone: 'warn',
+          title: t('bills.overdue.title', { n: bills.overdueCount }),
+          meta: t('bills.dueThisMonth') + ' · ' + L.money(bills.totalDue),
+          value: L.money(bills.overdue)
+        }));
+      }
+    }
+
+    return out.slice(0, 3);
+  }
+
+  function renderLiveNow(root) {
+    const host = $('#liveNow', root), wrap = $('#liveWrap', root);
+    if (!host || !wrap) return;
+    const cards = liveCards();
+    /* No live content is a reason to show nothing, not a reason to show an
+       empty section explaining that there is nothing. */
+    wrap.hidden = !cards.length;
+    host.innerHTML = cards.join('');
+    const sub = $('#liveSub', root);
+    if (sub) {
+      const now = new Date();
+      sub.textContent = ctx.t('home.liveNowSub', { time: ctx.L.time(now.getHours(), now.getMinutes()) });
+    }
+  }
+
+  /* ---------------------------------------------------------
+     Coming up — drawn from whatever the user actually has
+     --------------------------------------------------------- */
+  function upcomingItems() {
+    const t = ctx.t, L = ctx.L;
+    const out = [];
+
+    function eligible(id) {
+      const f = ctx.eligible.feature(id);
+      return f && ctx.eligible.visible(f) ? f : null;
+    }
+
+    if (ctx.profile().islamic && eligible('prayer')) {
+      const state = ctx.toolCtx('prayer').prayerState();
+      out.push({ when: L.time(state.next.h, state.next.m), title: t('prayer.' + state.next.key),
+        sub: t('prayer.next'), icon: 'i-prayer', act: 'tool:prayer', order: state.minutes });
+    }
+
+    if (eligible('bills')) {
+      ctx.toolCtx('bills').bills().list
+        .filter(function (b) { return b.state === 'due' || b.state === 'overdue'; })
+        .slice(0, 2)
+        .forEach(function (b) {
+          out.push({ when: L.money(b.amount), title: b.name, sub: b.dueLabel,
+            icon: b.icon, act: 'tool:bills', order: 500 });
+        });
+    }
+
+    if (eligible('subs')) {
+      const next = ctx.toolCtx('subs').subscriptions().next;
+      out.push({ when: next.renews, title: next.name, sub: t('subs.renews', { date: next.renews }),
+        icon: 'i-refresh', act: 'tool:subs', order: 600 + next.days });
+    }
+
+    if (eligible('birthdays')) {
+      const next = ctx.toolCtx('birthdays').birthdays().next;
+      out.push({ when: next.date, title: next.name, sub: next.kind + ' · ' + t('common.inDays', { n: next.days }),
+        icon: 'i-cake', act: 'tool:birthdays', order: 700 + next.days });
+    }
+
+    if (eligible('documents')) {
+      const docs = ctx.toolCtx('documents').documents();
+      const soon = docs.list.filter(function (d) { return d.days !== null && d.days >= 0 && d.days < 45; })[0];
+      /* A document is sensitive, so Home names the renewal, not the number. */
+      if (soon) {
+        out.push({ when: soon.expires, title: t('docs.renewSoon', { name: soon.name }),
+          sub: t('common.inDays', { n: soon.days }), icon: 'i-folder', act: 'tool:documents', order: 800 });
+      }
+    }
+
+    return out.sort(function (a, b) { return a.order - b.order; }).slice(0, 4);
+  }
+
+  function renderUpcoming(root) {
+    const host = $('#upcomingList', root), wrap = $('#upcomingWrap', root);
+    if (!host || !wrap) return;
+    const esc = ctx.ui.esc;
+    const items = upcomingItems();
+    wrap.hidden = !items.length;
+    host.innerHTML = '<div class="rows">' + items.map(function (i) {
+      return '<button class="crow pressable" data-act="' + i.act + '">' +
+        '<span class="crow__icon"><svg class="ico" viewBox="0 0 24 24"><use href="#' + i.icon + '"/></svg></span>' +
+        '<span class="crow__label">' + esc(i.title) + '<i>' + esc(i.sub) + '</i></span>' +
+        '<span class="crow__value">' + esc(i.when) + '</span></button>';
+    }).join('') + '</div>';
+  }
+
+  /* The prayer countdown ticks once a second, and only while Home can be
+     seen. It used to run for the life of the page. */
+  let countdownTimer = null;
+
   return defineScreen({
     id: 'home',
     template: function () {
@@ -412,6 +868,82 @@ export function createHomeScreen(ctx) {
 
   </section>
 `;
+    },
+
+    bind: function (root, signal) {
+      const track = $('#heroTrack', root);
+      if (!track) return;
+
+      /* Dot selection follows the scroll rather than being set by whoever
+         caused it, so a drag, a swipe and a dot tap cannot disagree. */
+      let frame = null;
+      track.addEventListener('scroll', function () {
+        if (frame) return;
+        frame = requestAnimationFrame(function () {
+          frame = null;
+          syncDots(root);
+        });
+      }, { passive: true, signal: signal });
+
+      root.addEventListener('click', function (e) {
+        const dot = e.target.closest('#heroDots .hero__dot');
+        if (!dot) return;
+        const shown = syncDots(root) || [];
+        const index = $$('#heroDots .hero__dot', root).indexOf(dot);
+        if (shown[index]) {
+          track.scrollTo({ left: shown[index].offsetLeft - track.offsetLeft, behavior: 'smooth' });
+        }
+      }, { signal: signal });
+
+      /* Drag with a mouse, for anyone reviewing this on a desktop. The
+         move and release listeners have to be on the document, because a
+         drag routinely leaves the track — but they are bound with this
+         screen's signal, so they leave when it does. */
+      let down = false, startX = 0, startLeft = 0, moved = 0;
+      track.addEventListener('mousedown', function (e) {
+        down = true; moved = 0; startX = e.clientX; startLeft = track.scrollLeft;
+        track.classList.add('is-dragging');
+      }, { signal: signal });
+      document.addEventListener('mousemove', function (e) {
+        if (!down) return;
+        const dx = e.clientX - startX;
+        moved = Math.max(moved, Math.abs(dx));
+        track.scrollLeft = startLeft - dx;
+      }, { signal: signal });
+      document.addEventListener('mouseup', function () {
+        if (!down) return;
+        down = false;
+        track.classList.remove('is-dragging');
+      }, { signal: signal });
+
+      /* Swallow the click that ends a drag; otherwise let the slide's own
+         action flow through to the shared handler. */
+      track.addEventListener('click', function (e) {
+        if (moved > 8) { e.preventDefault(); e.stopPropagation(); }
+      }, { capture: true, signal: signal });
+    },
+
+    render: function (root) {
+      renderHeader(root);
+      renderContext(root);
+      renderHero(root);
+      renderPrayer(root);
+      renderQuickTools(root);
+      renderQuickActions(root);
+      renderLiveNow(root);
+      renderUpcoming(root);
+    },
+
+    onEnter: function (root) {
+      renderPrayer(root);
+      if (ctx.profile().islamic) {
+        countdownTimer = setInterval(function () { renderPrayer(root); }, 1000);
+      }
+    },
+
+    onLeave: function () {
+      clearInterval(countdownTimer);
+      countdownTimer = null;
     }
   });
 }

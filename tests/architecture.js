@@ -305,8 +305,10 @@ async function boot(profile, extra) {
     ok('re-entering a screen binds no further document listeners',
        timers.listeners.length === listenersAtRest,
        'was ' + listenersAtRest + ', now ' + timers.listeners.length);
-    ok('and starts no further intervals',
-       timers.intervals.size === intervalsAtRest,
+    /* Fewer is not a failure: a screen that stops its countdown on the way
+       out is the point. Growth across identical round trips is the defect. */
+    ok('and leaves no extra interval running',
+       timers.intervals.size <= intervalsAtRest,
        'was ' + intervalsAtRest + ', now ' + timers.intervals.size);
     ok('exactly one screen is showing afterwards',
        doc.querySelectorAll('.screen.is-active').length === 1,
@@ -316,9 +318,14 @@ async function boot(profile, extra) {
     ok('nothing threw along the way', errors.length === 0, errors.slice(0, 2).join(' | '));
 
     /* Open a tool, leave it, open it again — the tool host is the screen
-       most likely to leave a countdown behind. */
-    const beforeTool = timers.intervals.size;
-    for (let i = 0; i < 3; i++) {
+       most likely to leave a countdown behind.
+
+       The measurement takes one warm-up cycle first and compares against
+       that, not against the state before any of it. Landing back on a
+       screen that legitimately starts a timer would otherwise read as a
+       leak on the first cycle and hide a real one on the later cycles;
+       what actually matters is whether identical cycles keep adding. */
+    async function toolRoundTrip() {
       win.eval(`(function(){
         var b=document.createElement('button');
         b.setAttribute('data-act','tool:timer');
@@ -327,13 +334,20 @@ async function boot(profile, extra) {
         b.remove();
       })()`);
       await wait(10);
-      click('#screen-tool [data-act="back"]') || click('.tab[data-tab="home"]');
+      if (!click('#screen-tool [data-act="back"]')) click('.tab[data-tab="home"]');
       await wait(10);
     }
+
+    await toolRoundTrip();
+    await wait(20);
+    const afterFirstTrip = timers.intervals.size;
+
+    for (let i = 0; i < 3; i++) await toolRoundTrip();
     await wait(30);
-    ok('opening and leaving a tool three times leaves no timer behind',
-       timers.intervals.size <= beforeTool,
-       'was ' + beforeTool + ', now ' + timers.intervals.size);
+
+    ok('three more trips through a tool add no timer to the first',
+       timers.intervals.size <= afterFirstTrip,
+       'after one trip ' + afterFirstTrip + ', after four ' + timers.intervals.size);
   }
 
   /* ── 6. screen isolation ─────────────────────────────────────────────── */

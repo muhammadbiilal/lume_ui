@@ -44,6 +44,8 @@ export function createEligibility(deps) {
 
   function visible(f) { return visibleIn(f, getProfile()); }
 
+  let localised = null;
+
   function feature(id) {
     const all = catalogue.FEATURES;
     for (let i = 0; i < all.length; i++) if (all[i].id === id) return all[i];
@@ -62,6 +64,21 @@ export function createEligibility(deps) {
       const key = 'f.' + f.id;
       const s = t(key);
       return s === key ? f.n : s;
+    },
+
+    /* The markets that have any localised feature of their own. Computed
+       from the catalogue rather than listed, so adding a country-specific
+       feature is all it takes for that country to count as localised. */
+    localisedCountries: function () {
+      if (!localised) {
+        localised = [];
+        catalogue.FEATURES.forEach(function (f) {
+          (f.countries || []).forEach(function (code) {
+            if (localised.indexOf(code) === -1) localised.push(code);
+          });
+        });
+      }
+      return localised;
     },
 
     /* Every feature opens its own tool screen. The catalogue's `act` is kept

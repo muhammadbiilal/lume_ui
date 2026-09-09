@@ -1,16 +1,183 @@
 /* ============================================================
-   Lume - Explore screen
+   Lume — Explore screen
 
-   Context beyond the saved plan - weather, what is around,
-   live sport, news and curated discovery.
+   Useful context beyond the user's own plan: the weather where
+   they actually are, what is around them, live sport when it is
+   eligible, the news, and a few curated ways in.
 
-   Owns its own markup and nobody else's. The composition and
-   the DOM order here are the ones the design specification
-   fixes, so they are moved rather than rewritten.
+   Everything here is localised rather than translated. The
+   temperature follows the chosen units, the sunset follows the
+   city and time zone, and the news follows the country — so
+   this screen must never show a market, a unit or a venue from
+   somewhere the user is not.
    ============================================================ */
 import { defineScreen } from './screen-base.js';
+import { $ } from '../core/dom.js';
 
 export function createExploreScreen(ctx) {
+
+
+  /* ---------------------------------------------------------
+     Around you — the regional configuration made visible
+
+     It lists whichever local services this country actually has,
+     with a live value pulled from the same context the tool screen
+     uses. Nothing here knows the name of a country: each entry asks
+     the eligibility selector whether its feature exists, and the
+     ones that do not simply do not appear.
+     --------------------------------------------------------- */
+  const LOCAL_SERVICES = [
+    { id: 'fuel', icon: 'i-fuel',
+      value: function () {
+        const f = ctx.data.fuelFor(ctx.profile().country);
+        return ctx.L.moneyRaw(f.items[0].v, f.ccy, 2);
+      },
+      sub: function () {
+        /* Fuel grades carry a translation key, not a name — reading `.n`
+           here used to render the row as a row of empty separators. */
+        return ctx.data.fuelFor(ctx.profile().country).items
+          .slice(0, 3)
+          .map(function (item) { return ctx.t(item.nk); })
+          .join(' · ');
+      } },
+    { id: 'loadshed', icon: 'i-bolt',
+      value: function (c) {
+        const ls = c.loadshed();
+        return ls.now ? ls.endsIn : ls.slot.from;
+      },
+      sub: function (c) {
+        const ls = c.loadshed();
+        return ls.area + ' · ' + (ls.now
+          ? ctx.t('loadshed.currentlyOff')
+          : ctx.t('loadshed.nextOutage', { from: ls.slot.from, to: ls.slot.to }));
+      } },
+    { id: 'goldrates', icon: 'i-coins',
+      value: function (c) {
+        const g = c.metals();
+        return ctx.L.moneyRaw(g.gold.perTola, g.ccy, 0);
+      },
+      sub: function () { return ctx.t('rates.openMarket') + ' · ' + ctx.t('rates.gold24'); } },
+    { id: 'trains', icon: 'i-train',
+      value: function () { return ''; },
+      sub: function () {
+        const train = ctx.data.TRAINS[0];
+        return train.name + ' · ' + ctx.t(train.statusKey, { n: train.delay });
+      } },
+    { id: 'emergency', icon: 'i-shield',
+      value: function () { return ctx.data.emergencyFor(ctx.profile().country)[0].num; },
+      sub: function () { return ctx.data.emergencyFor(ctx.profile().country)[0].n; } },
+    { id: 'holidays', icon: 'i-calendar',
+      value: function () { return ctx.data.holidaysFor(ctx.profile().country)[0].date; },
+      sub: function () { return ctx.data.holidaysFor(ctx.profile().country)[0].name; } }
+  ];
+
+  function renderAround(root) {
+    const wrap = $('#aroundWrap', root), host = $('#aroundList', root), tag = $('#aroundTag', root);
+    if (!wrap || !host) return;
+    const esc = ctx.ui.esc;
+
+    const rows = [];
+    LOCAL_SERVICES.forEach(function (svc) {
+      const f = ctx.eligible.feature(svc.id);
+      if (!f || !ctx.eligible.visible(f)) return;
+      const c = ctx.toolCtx(svc.id);
+      let value = '', sub = '';
+      /* A service that cannot answer right now is left out rather than
+         shown with a blank where its number should be. */
+      try { value = svc.value(c); sub = svc.sub(c); } catch (e) { return; }
+      rows.push('<button class="list-row pressable" data-act="tool:' + f.id + '" data-fid="' + f.id + '">' +
+        '<span class="list-row__icon"><svg class="ico" viewBox="0 0 24 24"><use href="#' + svc.icon + '"/></svg></span>' +
+        '<span class="list-row__body"><span class="list-row__title">' + esc(ctx.eligible.name(f)) + '</span>' +
+        '<span class="list-row__sub">' + esc(sub) + '</span></span>' +
+        '<span class="list-row__end">' + (value ? '<span class="list-row__value num">' + esc(value) + '</span>' : '') +
+        '<svg class="ico" viewBox="0 0 24 24"><use href="#i-chev-r"/></svg></span></button>');
+    });
+
+    /* One local service is not a section. */
+    wrap.hidden = rows.length < 2;
+    host.innerHTML = rows.join('');
+    if (tag) tag.textContent = ctx.L.countryName(ctx.profile().country);
+  }
+
+  /* ---------------------------------------------------------
+     Weather — the city's, in the user's units
+     --------------------------------------------------------- */
+  /* The two subtitles that say what this screen is showing and where. */
+  function renderHeadings(root) {
+    const t = ctx.t, profile = ctx.profile();
+
+    const sub = $('#exploreSub', root);
+    if (sub) {
+      sub.textContent = t(ctx.eligible.localisedCountries().indexOf(profile.country) !== -1
+        ? 'explore.subLocal' : 'explore.subGlobal');
+    }
+
+    const weatherSub = $('#weatherSub', root);
+    if (weatherSub) weatherSub.textContent = t('explore.weatherSub', { city: profile.city, n: ctx.L.num(4) });
+  }
+
+  function renderWeather(root) {
+    const L = ctx.L, esc = ctx.ui.esc, profile = ctx.profile();
+    const w = ctx.catalogue.weatherFor(profile.country, L.country().tz);
+
+    function set(id, value) {
+      const el = $(id, root);
+      if (el) el.textContent = value;
+    }
+
+    set('#weatherCity', profile.city);
+    set('#weatherDesc', w.desc + ' · ' + L.temp(w.feels));
+    set('#weatherRain', L.num(w.rain / 100, { style: 'percent' }));
+    set('#weatherWind', L.speed(w.wind));
+
+    const temp = $('#weatherTemp', root);
+    if (temp) temp.innerHTML = esc(L.temp(w.temp)).replace('°', '<sup>°</sup>');
+
+    const icon = $('#weatherIcon use', root);
+    if (icon) icon.setAttribute('href', '#' + w.icon);
+
+    /* Sunset comes from the same solar calculation the prayer times use,
+       so the two cannot disagree about when the sun goes down here. */
+    const sunset = $('#weatherSunset', root);
+    if (sunset) {
+      const times = ctx.prayer.times();
+      const maghrib = times.filter(function (x) { return x.name === 'Maghrib'; })[0] || times[4];
+      sunset.textContent = L.time(maghrib.h, maghrib.m);
+    }
+  }
+
+  /* ---------------------------------------------------------
+     News — local where there is a local edition, global otherwise
+     --------------------------------------------------------- */
+  const TONES = {
+    accent: ['#E7F4F1', '#A5DED4', '#10998A'],
+    violet: ['#EDEAFB', '#B7AEF6', '#6E62E5'],
+    amber: ['#FBEEDD', '#EFC894', '#C9793F']
+  };
+
+  function renderNews(root) {
+    const host = $('#newsList', root);
+    if (!host) return;
+    const esc = ctx.ui.esc;
+    const items = ctx.profile().country === 'PK' ? ctx.catalogue.NEWS.PK : ctx.catalogue.NEWS.GLOBAL;
+
+    host.innerHTML = items.map(function (article, i) {
+      const tone = TONES[article.tone] || TONES.accent;
+      return '<button class="article pressable" data-toast="Opening the story">' +
+        '<span class="article__art"><svg viewBox="0 0 62 62"><defs>' +
+          '<linearGradient id="nw' + i + '" x1="0" y1="0" x2="1" y2="1">' +
+          '<stop offset="0" stop-color="' + tone[0] + '"/><stop offset="1" stop-color="' + tone[1] + '"/></linearGradient></defs>' +
+          '<rect width="62" height="62" fill="url(#nw' + i + ')"/>' +
+          '<circle cx="44" cy="18" r="12" fill="' + tone[2] + '" opacity=".3"/>' +
+          '<path d="M0 48c12-8 20 4 32-3s18-14 30-8v25H0z" fill="' + tone[2] + '" opacity=".3"/></svg></span>' +
+        '<span class="article__body">' +
+          '<span class="article__cat">' + esc(article.cat) + '</span>' +
+          '<span class="article__title">' + esc(article.title) + '</span>' +
+          '<span class="article__meta">' + esc(article.meta) + '</span>' +
+        '</span></button>';
+    }).join('');
+  }
+
   return defineScreen({
     id: 'explore',
     template: function () {
@@ -236,6 +403,13 @@ export function createExploreScreen(ctx) {
 
   </section>
 `;
+    },
+
+    render: function (root) {
+      renderHeadings(root);
+      renderWeather(root);
+      renderAround(root);
+      renderNews(root);
     }
   });
 }

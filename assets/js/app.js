@@ -131,20 +131,6 @@ export let accountUI = null;
   var feature = ELIGIBLE.feature;
   var actFor = ELIGIBLE.actFor;
 
-  /* Markets that have any localised feature of their own. */
-  var LOCAL_MARKETS = null;
-  function localMarkets() {
-    if (!LOCAL_MARKETS) {
-      LOCAL_MARKETS = [];
-      C.FEATURES.forEach(function (f) {
-        (f.countries || []).forEach(function (c) {
-          if (LOCAL_MARKETS.indexOf(c) === -1) LOCAL_MARKETS.push(c);
-        });
-      });
-    }
-    return LOCAL_MARKETS;
-  }
-
   /* Every user-facing string in the markup carries a key, so switching
      language re-renders the whole shell without touching any screen. */
   function applyStrings(scope) {
@@ -273,33 +259,6 @@ export let accountUI = null;
     if (!el) return;
     var d = new Date();
     el.textContent = d.getHours() + ':' + pad2(d.getMinutes());
-  }
-
-  function greetFor(h) {
-    if (h < 5)  return 'greet.late';
-    if (h < 12) return 'greet.morning';
-    if (h < 17) return 'greet.afternoon';
-    if (h < 21) return 'greet.evening';
-    return 'greet.winddown';
-  }
-
-  function initHeader() {
-    var d = new Date();
-    var g = $('#greetText');
-    if (g) {
-      /* §124.3 — the name is used when Lume has one and the greeting stands
-         alone when it does not. There is no third branch that invents one. */
-      var who = ACCT.displayName();
-      g.textContent = who
-        ? t('greet.named', { greeting: t(greetFor(d.getHours())), name: who })
-        : t(greetFor(d.getHours()));
-    }
-    /* The header also carries the city, so it gets the short form — the long
-       one would wrap onto a second line on a 390px screen. */
-    var date = $('#todayDate');
-    if (date) date.textContent = L.dateShort(d);
-    var sub = $('#todaySub');
-    if (sub) sub.textContent = profile.islamic ? L.dateLong(d) + ' · 15 Rabi’ al-Awwal' : L.dateLong(d);
   }
 
   /* ---------------------------------------------------------
@@ -544,107 +503,6 @@ export let accountUI = null;
   });
 
   /* ---------------------------------------------------------
-     Hero carousel
-     --------------------------------------------------------- */
-  var track = $('#heroTrack'), dotsHost = $('#heroDots');
-
-  /* The brief asks for 2–4 slides, so eligibility is not enough — they
-     compete, and the most relevant four win. */
-  function slideScore(s) {
-    var id = s.dataset.slide;
-    if (s.dataset.faith === 'islamic' && !profile.islamic) return -1;
-    if (s.dataset.loc && s.dataset.loc !== profile.country) return -1;
-    if (id === 'prayer') return 100;
-    if (id === 'plan') return 80;
-    if (id === 'trains') return hasInterest('trains') ? 78 : 74;
-    if (id === 'read') return 70;
-    if (id === 'money') {
-      if (!profile.prefs.finance) return -1;
-      return ['rates', 'expenses', 'bills', 'savings'].some(hasInterest) ? 62 : 45;
-    }
-    return 40;
-  }
-
-  function renderHero() {
-    if (!track) return;
-    var slides = $$('.slide', track);
-
-    var ranked = slides.map(function (s) { return { el: s, score: slideScore(s) }; })
-      .filter(function (x) { return x.score > 0; })
-      .sort(function (a, b) { return b.score - a.score; })
-      .slice(0, 4);
-
-    var keep = ranked.map(function (x) { return x.el; });
-    slides.forEach(function (s) { s.classList.toggle('is-off', keep.indexOf(s) === -1); });
-    keep.forEach(function (s, i) { s.style.order = i; });
-
-    dotsHost.innerHTML = keep.map(function (s, i) {
-      return '<button class="hero__dot' + (i === 0 ? ' is-active' : '') + '" role="tab" ' +
-             'aria-label="Slide ' + (i + 1) + ' of ' + keep.length + '"></button>';
-    }).join('');
-    /* scrollLeft 0 is the right-hand end in RTL, which would open the
-       carousel on the last slide. */
-    if (keep.length) {
-      track.scrollLeft = L.dir() === 'rtl' ? track.scrollWidth : 0;
-    }
-    bindDots(keep);
-  }
-
-  function bindDots(shown) {
-    var dots = $$('.hero__dot', dotsHost);
-    dots.forEach(function (d, i) {
-      d.addEventListener('click', function () {
-        if (shown[i]) track.scrollTo({ left: shown[i].offsetLeft - track.offsetLeft, behavior: 'smooth' });
-      });
-    });
-  }
-
-  if (track) {
-    var raf = null;
-    track.addEventListener('scroll', function () {
-      if (raf) return;
-      raf = requestAnimationFrame(function () {
-        raf = null;
-        /* Slides are reordered with flex `order`, so rank by position, not DOM. */
-        var shown = $$('.slide', track)
-          .filter(function (s) { return !s.classList.contains('is-off'); })
-          .sort(function (a, b) { return a.offsetLeft - b.offsetLeft; });
-        var mid = track.scrollLeft + track.clientWidth / 2;
-        var best = 0, bestD = Infinity;
-        shown.forEach(function (s, i) {
-          var c = s.offsetLeft - track.offsetLeft + s.offsetWidth / 2;
-          var d = Math.abs(c - mid);
-          if (d < bestD) { bestD = d; best = i; }
-        });
-        $$('.hero__dot', dotsHost).forEach(function (d, n) { d.classList.toggle('is-active', n === best); });
-      });
-    }, { passive: true });
-
-    /* Drag with a mouse, for anyone reviewing this on a desktop. */
-    var down = false, sx = 0, sl = 0, moved = 0;
-    track.addEventListener('mousedown', function (e) {
-      down = true; moved = 0; sx = e.clientX; sl = track.scrollLeft;
-      track.classList.add('is-dragging');
-    });
-    document.addEventListener('mousemove', function (e) {
-      if (!down) return;
-      var dx = e.clientX - sx;
-      moved = Math.max(moved, Math.abs(dx));
-      track.scrollLeft = sl - dx;
-    });
-    document.addEventListener('mouseup', function () {
-      if (!down) return;
-      down = false;
-      track.classList.remove('is-dragging');
-    });
-    /* Swallow the click that ends a drag; otherwise let the slide's own
-       data-tab / data-sheet flow through the delegated handler. */
-    track.addEventListener('click', function (e) {
-      if (moved > 8) { e.preventDefault(); e.stopPropagation(); }
-    }, true);
-  }
-
-  /* ---------------------------------------------------------
      Prayer times — location aware, only ever used when Islamic
      content is on
      --------------------------------------------------------- */
@@ -691,90 +549,6 @@ export let accountUI = null;
     if (span <= 0) span += 1440;
 
     return { list: list, main: main, next: next, prev: prev, toNext: toNext, progress: Math.max(0, Math.min(1, 1 - toNext / span)) };
-  }
-
-  function fmtCountdown(m) {
-    var total = Math.max(0, Math.round(m * 60));
-    var h = Math.floor(total / 3600);
-    return h + ':' + pad2(Math.floor(total % 3600 / 60)) + ':' + pad2(total % 60);
-  }
-
-  function fmtShort(m) {
-    var total = Math.max(0, Math.round(m));
-    return Math.floor(total / 60) + ':' + pad2(total % 60);
-  }
-
-  function updatePrayer() {
-    if (!profile.islamic) return;
-    var st = prayerState();
-
-    var set = function (id, v) { var el = $(id); if (el) el.textContent = v; };
-    set('#heroPrayerName', st.next.name);
-    var line = $('#heroPrayerLine');
-    if (line) line.textContent = t('slide.prayer.x', { time: hhmm(st.next), city: profile.city });
-    set('#heroCountdown', fmtCountdown(st.toNext));
-    set('#ctxPrayerName', st.next.name);
-    set('#ctxPrayerTime', hhmm(st.next));
-    set('#ctxCountdown', fmtShort(st.toNext));
-    set('#prayerSheetCity', profile.city);
-  }
-
-  /* ---------------------------------------------------------
-     Quick tools
-     --------------------------------------------------------- */
-  var QUICK_FALLBACK = ['calculator', 'weather', 'calendar', 'todos', 'currency', 'notes', 'timer', 'converter'];
-
-  function renderQuickTools() {
-    var host = $('#quickTools');
-    if (!host) return;
-
-    var picked = [], seen = {};
-    function add(f) {
-      if (!f || seen[f.id] || picked.length >= 8) return;
-      if (!visible(f) || f.sens) return;   /* sensitive tools are never promoted here */
-      seen[f.id] = 1;
-      picked.push(f);
-    }
-
-    /* Recently used first, then round-robin across the chosen interests —
-       one tool per interest per pass. Without the round-robin, a single
-       interest like "prayer" would fill the whole grid on its own. */
-    (profile.favourites || []).slice(0, 3).forEach(function (id) { add(feature(id)); });
-    profile.recents.slice(0, 2).forEach(function (id) { add(feature(id)); });
-
-    if (profile.interests.length) {
-      var pools = profile.interests.map(function (int) {
-        return visibleFeatures().filter(function (f) {
-          return f.ints && f.ints.indexOf(int) !== -1 && !f.sens;
-        });
-      });
-      for (var round = 0; round < 4 && picked.length < 8; round++) {
-        for (var p = 0; p < pools.length && picked.length < 8; p++) {
-          var taken = 0;
-          for (var k = 0; k < pools[p].length && !taken; k++) {
-            if (!seen[pools[p][k].id]) { add(pools[p][k]); taken = 1; }
-          }
-        }
-      }
-    }
-    QUICK_FALLBACK.forEach(function (id) { add(feature(id)); });
-    /* §117 — the last resort still respects the contract: a tool that never
-       declared itself Home-eligible does not get to fill the grid. */
-    visibleFeatures().filter(function (f) { return SPEC.get(f.id).homeEligible; }).forEach(add);
-    visibleFeatures().forEach(add);
-
-    host.innerHTML = picked.map(function (f) {
-      var accent = !!f.faith;
-      return '<button class="tool pressable" data-act="' + actFor(f) + '" data-fid="' + f.id + '">' +
-        '<span class="tool__icon' + (accent ? ' tool__icon--accent' : '') + '">' +
-          '<svg class="ico" viewBox="0 0 24 24"><use href="#' + f.i + '"/></svg></span>' +
-        '<span class="tool__label">' + esc(fname(f)) + '</span>' +
-        (f.m ? '<span class="tool__value num">' + esc(f.m) + '</span>' : '') +
-      '</button>';
-    }).join('');
-
-    var sub = $('#quickToolsSub');
-    if (sub) sub.textContent = t(profile.interests.length ? 'home.quickFromInterests' : 'home.quickDefault');
   }
 
   /* ---------------------------------------------------------
@@ -909,41 +683,20 @@ export let accountUI = null;
   });
 
   /* ---------------------------------------------------------
-     Content renderers
-     --------------------------------------------------------- */
-  function renderWeather() {
-    var w = C.weatherFor(profile.country, L.country().tz);
-    var set = function (id, v) { var el = $(id); if (el) el.textContent = v; };
-    set('#weatherCity', profile.city);
-    set('#appbarCity', profile.city);
-    set('#qiblaCity', profile.city);
-    set('#prayerSheetCity', profile.city);
-    set('#weatherDesc', w.desc + ' · ' + L.temp(w.feels));
-    set('#weatherRain', L.num(w.rain / 100, { style: 'percent' }));
-    set('#weatherWind', L.speed(w.wind));
-    set('#ctxWeather', w.desc.split(' · ')[0]);
-    var el = $('#weatherTemp');
-    if (el) el.innerHTML = esc(L.temp(w.temp)).replace('°', '<sup>°</sup>');
-    var ct = $('#ctxTemp');
-    if (ct) ct.textContent = L.temp(w.temp);
-    var icon = $('#weatherIcon use');
-    if (icon) icon.setAttribute('href', '#' + w.icon);
-    var sunset = $('#weatherSunset');
-    if (sunset) {
-      var list = prayerSet();
-      var mag = list.filter(function (x) { return x.name === 'Maghrib'; })[0] || list[4];
-      sunset.textContent = hhmm(mag);
-    }
-    /* Keep the catalogue in step, or the tool card would still claim 34°
-       in New York. */
-    var wf = feature('weather');
-    if (wf) wf.m = L.temp(w.temp) + ' ' + w.desc.split(' · ')[0];
-  }
+     Feature metadata
 
-  /* Every money figure is a share of a monthly budget, so the numbers stay
-     believable in Karachi, Tokyo and New York alike. Converting one country's
-     figures at the exchange rate would not. */
-  var SPEND = { spent: 0.53, groceries: 0.235, fuel: 0.14, bills: 0.15, ledger: 0.106, subs: 0.052 };
+     A catalogue entry carries the line shown under its name on a tool
+     card — "23° Clear", "Asr 3:39 pm", a running total. Those lines
+     are the catalogue's, not any one screen's: the same card appears in
+     Tools, in search, in recents and in related tools. So they are kept
+     in step here, once, before the screens that display them render.
+
+     Every figure below is a share of a monthly budget rather than a
+     converted amount, so the numbers stay believable in Karachi, Tokyo
+     and New York alike. Converting one country's figures at the exchange
+     rate would not.
+     --------------------------------------------------------- */
+  var SPEND = { ledger: 0.106, subs: 0.052 };
 
   function budget() {
     var b = C.BUDGET[profile.country];
@@ -952,84 +705,27 @@ export let accountUI = null;
     return 300 * (L.RATES[L.currencyCode()] || 1);
   }
 
-  function renderMoney() {
+  function syncFeatureMeta() {
     var b = budget();
-    var pct = Math.round(SPEND.spent * 100);
 
-    $$('[data-money]').forEach(function (el) {
-      var k = el.dataset.money;
-      if (k === 'pct') el.textContent = L.num(SPEND.spent, { style: 'percent' });
-      else if (k === 'budget') el.textContent = L.moneyRaw(b, null, 0);
-      else if (k === 'to') el.textContent = L.currencyCode();
-      else if (k === 'rate') el.textContent = L.num(L.RATES[L.currencyCode()] || 1, { maximumFractionDigits: 2 });
-      else if (SPEND[k] !== undefined) el.textContent = L.moneyRaw(Math.round(b * SPEND[k]), null, 0);
-    });
-
-    var note = $('#fxNote');
-    if (note) {
-      var code = L.currencyCode();
-      var base = code === 'USD' ? 'EUR' : code;
-      note.textContent = '1 USD = ' +
-        L.num(L.RATES[base] || 1, { maximumFractionDigits: 2 }) + ' ' + base;
+    var weather = feature('weather');
+    if (weather) {
+      /* Or the tool card would still claim 34° in New York. */
+      var w = C.weatherFor(profile.country, L.country().tz);
+      weather.m = L.temp(w.temp) + ' ' + w.desc.split(' · ')[0];
     }
-
-    var bar = $('#expensesBar');
-    if (bar) bar.dataset.fill = pct;
 
     var ledger = feature('ledger');
     if (ledger) ledger.m = L.moneyRaw(Math.round(b * SPEND.ledger), null, 0);
+
     var subs = feature('subs');
     if (subs) subs.m = L.moneyRaw(Math.round(b * SPEND.subs), null, 0);
-  }
 
-  function syncFeatureMeta() {
-    var pf = feature('prayer');
-    if (pf && profile.islamic) {
+    var prayer = feature('prayer');
+    if (prayer && profile.islamic) {
       var st = prayerState();
-      pf.m = st.next.name + ' ' + hhmm(st.next);
+      prayer.m = st.next.name + ' ' + hhmm(st.next);
     }
-  }
-
-  /* The Trains tab shows the same roster the Trains tool does, formatted by
-     the locale rather than hard-coded to rupees and English. */
-  function renderTrains() {
-    var host = $('#trainList');
-    if (!host) return;
-    var ccy = L.country().currency;
-    host.innerHTML = C_DATA.TRAINS.map(function (tr) {
-      var status = t(tr.statusKey, { n: tr.delay });
-      return '<button class="list-row pressable" data-act="tool:trains" data-fid="trains">' +
-        '<span class="list-row__icon"><svg class="ico" viewBox="0 0 24 24"><use href="#i-train"/></svg></span>' +
-        '<span class="list-row__body">' +
-          '<span class="list-row__title">' + esc(tr.name) + ' <span class="trainno num">' + esc(tr.no) + '</span></span>' +
-          '<span class="list-row__sub"><span class="num">' + esc(tr.dep) + '</span> → <span class="num">' +
-            esc(tr.arr) + '</span> · ' + esc(tr.dur) + ' · ' + esc(L.moneyRaw(tr.fare, ccy, 0)) + '</span>' +
-        '</span>' +
-        '<span class="list-row__end"><span class="status status--' + (tr.delay ? 'late' : 'ok') + '">' +
-          esc(status) + '</span></span></button>';
-    }).join('');
-  }
-
-  function renderNews() {
-    var host = $('#newsList');
-    if (!host) return;
-    var items = profile.country === 'PK' ? C.NEWS.PK : C.NEWS.GLOBAL;
-    var tones = { accent: ['#E7F4F1', '#A5DED4', '#10998A'], violet: ['#EDEAFB', '#B7AEF6', '#6E62E5'], amber: ['#FBEEDD', '#EFC894', '#C9793F'] };
-    host.innerHTML = items.map(function (a, i) {
-      var t = tones[a.tone] || tones.accent;
-      return '<button class="article pressable" data-toast="Opening the story">' +
-        '<span class="article__art"><svg viewBox="0 0 62 62"><defs>' +
-          '<linearGradient id="nw' + i + '" x1="0" y1="0" x2="1" y2="1">' +
-          '<stop offset="0" stop-color="' + t[0] + '"/><stop offset="1" stop-color="' + t[1] + '"/></linearGradient></defs>' +
-          '<rect width="62" height="62" fill="url(#nw' + i + ')"/>' +
-          '<circle cx="44" cy="18" r="12" fill="' + t[2] + '" opacity=".3"/>' +
-          '<path d="M0 48c12-8 20 4 32-3s18-14 30-8v25H0z" fill="' + t[2] + '" opacity=".3"/></svg></span>' +
-        '<span class="article__body">' +
-          '<span class="article__cat">' + esc(a.cat) + '</span>' +
-          '<span class="article__title">' + esc(a.title) + '</span>' +
-          '<span class="article__meta">' + esc(a.meta) + '</span>' +
-        '</span></button>';
-    }).join('');
   }
 
   /* ---------------------------------------------------------
@@ -1494,35 +1190,6 @@ export let accountUI = null;
     return id;
   }
 
-  function renderProfileSummary() {
-    /* The profile screen itself is rendered from state (§124.7); what is
-       left here are the summaries other screens carry. */
-    var avatar = $('#appbarAvatar');
-    if (avatar) {
-      /* Initials from a real name, or the neutral glyph — never invented
-         letters (§124.14). */
-      var inits = ACCT.initials();
-      avatar.textContent = inits || '';
-      avatar.classList.toggle('avatar--anon', !inits);
-      if (!inits) {
-        avatar.innerHTML = '<svg class="ico" viewBox="0 0 24 24"><use href="#i-user"/></svg>';
-      }
-    }
-
-    var exploreSub = $('#exploreSub');
-    if (exploreSub) {
-      exploreSub.textContent = t(localMarkets().indexOf(profile.country) !== -1
-        ? 'explore.subLocal' : 'explore.subGlobal');
-    }
-
-    var glance = $('#glanceSub');
-    if (glance) glance.textContent = t(profile.islamic ? 'home.glanceMuslim' : 'home.glanceGeneral');
-
-    var wsub = $('#weatherSub');
-    if (wsub) wsub.textContent = t('explore.weatherSub', { city: profile.city, n: L.num(4) });
-  }
-
-  /* Explore stops being a tab in Pakistan, so it needs a way back. */
   function ensureExploreBack() {
     if ($('#exploreBack')) return;
     var bar = $('#screen-explore .page-head__bar');
@@ -1545,26 +1212,14 @@ export let accountUI = null;
     applyLanguage();
     applyStrings();
     applyVisibility();
-    /* Metadata first — the tool cards below read it. */
-    renderWeather();
-    renderMoney();
+    /* Metadata first: the screens below render cards that quote it. */
     syncFeatureMeta();
     renderTabs();
-    renderHero();
-    renderQuickTools();
-    LIFECYCLE.render('tools');
-    renderQuickActions();
-    renderLiveNow();
-    renderUpcoming();
-    renderAround();
-    LIFECYCLE.render('today');
-    renderTrains();
-    renderNews();
+    /* Every screen, not a list of screens somebody has to remember to add
+       to. A screen that is registered is a screen that gets rendered. */
+    LIFECYCLE.ids().forEach(function (id) { LIFECYCLE.render(id); });
     renderNotifBadge();
-    renderProfileSummary();
     renderProfile();
-    initHeader();
-    updatePrayer();
     /* Rendered content lands inside gated containers, so the gate is applied
        again once everything exists. Otherwise a freshly injected row inside a
        hidden section would still be addressable (§64). */
@@ -1679,8 +1334,10 @@ export let accountUI = null;
     if (ACCT.isAuthed()) ACCT.updateUser({ displayName: name });
     else profile.displayName = name;
     saveProfile();
-    initHeader();
-    renderProfileSummary();
+    /* A name shows up in three places at once: the greeting, the avatar and
+       the profile screen. Rendering the screen that carries the first two is
+       how they stay in step, rather than two separate pokes at their nodes. */
+    LIFECYCLE.render('home');
     renderProfile();
   }
 
@@ -2085,264 +1742,6 @@ export let accountUI = null;
 
 
   /* ---------------------------------------------------------
-     Home — quick actions, live information, coming up
-     (Master Spec §95, §117, §118)
-
-     Home is not a grid of every tool. It is: what is true right
-     now, what you would do immediately, and what is about to
-     happen. All three are personalised and none of them is
-     allowed to surface a sensitive or hidden tool.
-     --------------------------------------------------------- */
-
-  /* §118 — an action performs a task; it does not just open a screen. */
-  var QUICK_ACTIONS = [
-    { id: 'expenses',  icon: 'i-plus',    key: 'qa.expense',  act: 'tool:expenses' },
-    { id: 'todos',     icon: 'i-check-square', key: 'qa.task', act: 'tool:todos' },
-    { id: 'qr',        icon: 'i-qr',      key: 'qa.scan',     act: 'tool:qr' },
-    { id: 'notes',     icon: 'i-note',    key: 'qa.note',     act: 'tool:notes' },
-    { id: 'water',     icon: 'i-droplet', key: 'qa.water',    act: 'water:small' },
-    { id: 'tasbih',    icon: 'i-beads',   key: 'qa.tasbih',   act: 'tool:tasbih' },
-    { id: 'timer',     icon: 'i-timer',   key: 'qa.timer',    act: 'tool:timer' },
-    { id: 'shopping',  icon: 'i-cart',    key: 'qa.shop',     act: 'tool:shopping' },
-    { id: 'parcel',    icon: 'i-package', key: 'qa.parcel',   act: 'tool:parcel' },
-    { id: 'docscan',   icon: 'i-scan',    key: 'qa.docscan',  act: 'tool:docscan' }
-  ];
-
-  function renderQuickActions() {
-    var host = $('#quickActions');
-    if (!host) return;
-    var picked = QUICK_ACTIONS.filter(function (a) {
-      var f = feature(a.id);
-      /* The spec allows a sensitive tool as a quick *action* (adding an
-         expense) even though it is never promoted as a Home card. */
-      return f && visible(f) && SPEC.get(a.id).quickEligible;
-    }).slice(0, 5);
-
-    $('#quickActionsWrap').hidden = picked.length < 3;
-    host.innerHTML = picked.map(function (a) {
-      return '<button class="qaction pressable" data-act="' + a.act + '" data-fid="' + a.id + '">' +
-        '<span class="qaction__icon"><svg class="ico" viewBox="0 0 24 24"><use href="#' + a.icon + '"/></svg></span>' +
-        '<span class="qaction__label">' + esc(t(a.key)) + '</span></button>';
-    }).join('');
-  }
-
-  /* §95 — what Home shows depends on the hour, the market session and the
-     season, not on a fixed list. */
-  function liveCards() {
-    var h = new Date().getHours();
-    var out = [];
-
-    function card(o) {
-      return '<button class="livecard pressable" data-act="' + o.act + '" data-fid="' + o.fid + '">' +
-        '<span class="livecard__icon livecard__icon--' + (o.tone || 'accent') + '">' +
-          '<svg class="ico" viewBox="0 0 24 24"><use href="#' + o.icon + '"/></svg></span>' +
-        '<span class="livecard__body">' +
-          '<span class="livecard__title">' + esc(o.title) + '</span>' +
-          '<span class="livecard__meta">' + esc(o.meta) + '</span>' +
-        '</span>' +
-        '<span class="livecard__end">' +
-          '<span class="livecard__value">' + o.value + '</span>' +
-          (o.badge || '') +
-        '</span></button>';
-    }
-
-    /* Weather is relevant all day; before bed it flips to tomorrow. */
-    var wf = feature('weather');
-    if (wf && visible(wf)) {
-      var w = toolCtx('weather').weather();
-      var evening = h >= 19 || h < 5;
-      var day = evening ? w.daily[1] : w.daily[0];
-      out.push(card({
-        fid: 'weather', act: 'tool:weather', icon: w.icon, tone: 'sky',
-        title: evening ? t('home.tomorrowIn', { city: profile.city }) : profile.city,
-        meta: day.desc + ' · ' + t('weather.rain') + ' ' + day.rain + '%',
-        value: L.temp(evening ? day.hi : w.temp),
-        badge: '<span class="livecard__sub">' + esc(L.temp(day.hi) + ' / ' + L.temp(day.lo)) + '</span>'
-      }));
-    }
-
-    /* A market snapshot, but only while a market the user follows is open. */
-    var mf = feature('markets');
-    if (mf && visible(mf)) {
-      var c = toolCtx('markets');
-      var ex = c.exchange();
-      var session = c.marketSession(ex);
-      var ix = ex ? ex.indices[0] : LUME_DATA.GLOBAL_INDICES[0];
-      if (session.open || h >= 8) {
-        out.push(card({
-          fid: 'markets', act: 'tool:markets', icon: 'i-trending',
-          tone: ix.pct >= 0 ? 'up' : 'down',
-          title: ix.name,
-          meta: (ex ? ex.name : t('markets.worldBoard')) + ' · ' + session.label,
-          value: L.num(ix.value, { maximumFractionDigits: 0 }),
-          badge: '<span class="delta delta--' + (ix.pct >= 0 ? 'up' : 'down') + '">' +
-            '<i aria-hidden="true">' + (ix.pct >= 0 ? '▲' : '▼') + '</i>' +
-            Math.abs(ix.pct).toFixed(2) + '%</span>'
-        }));
-      }
-    }
-
-    /* A live outage or a bill that is actually overdue outranks both. */
-    var lf = feature('loadshed');
-    if (lf && visible(lf)) {
-      var ls = toolCtx('loadshed').loadshed();
-      if (ls.now) {
-        out.unshift(card({
-          fid: 'loadshed', act: 'tool:loadshed', icon: 'i-bolt', tone: 'warn',
-          title: t('loadshed.currentlyOff'), meta: ls.area + ' · ' + t('loadshed.until', { time: ls.slot.to }),
-          value: ls.endsIn
-        }));
-      }
-    }
-
-    var bf = feature('bills');
-    if (bf && visible(bf)) {
-      var b = toolCtx('bills').bills();
-      if (b.overdueCount) {
-        out.push(card({
-          fid: 'bills', act: 'tool:bills', icon: 'i-receipt', tone: 'warn',
-          title: t('bills.overdue.title', { n: b.overdueCount }),
-          meta: t('bills.dueThisMonth') + ' · ' + L.money(b.totalDue),
-          value: L.money(b.overdue)
-        }));
-      }
-    }
-
-    return out.slice(0, 3);
-  }
-
-  function renderLiveNow() {
-    var host = $('#liveNow'), wrap = $('#liveWrap');
-    if (!host || !wrap) return;
-    var cards = liveCards();
-    wrap.hidden = !cards.length;
-    host.innerHTML = cards.join('');
-    var sub = $('#liveSub');
-    if (sub) sub.textContent = t('home.liveNowSub', { time: L.time(new Date().getHours(), new Date().getMinutes()) });
-  }
-
-  /* §95 — upcoming items, drawn from whatever the user actually has:
-     prayers, bills, renewals, birthdays, document expiries. */
-  function upcomingItems() {
-    var out = [];
-
-    if (profile.islamic && visible(feature('prayer'))) {
-      var st = toolCtx('prayer').prayerState();
-      out.push({ when: L.time(st.next.h, st.next.m), title: t('prayer.' + st.next.key),
-        sub: t('prayer.next'), icon: 'i-prayer', act: 'tool:prayer', order: st.minutes });
-    }
-
-    var bf = feature('bills');
-    if (bf && visible(bf)) {
-      toolCtx('bills').bills().list.filter(function (b) { return b.state === 'due' || b.state === 'overdue'; })
-        .slice(0, 2).forEach(function (b) {
-          out.push({ when: L.money(b.amount), title: b.name, sub: b.dueLabel,
-            icon: b.icon, act: 'tool:bills', order: 500 });
-        });
-    }
-
-    var sf = feature('subs');
-    if (sf && visible(sf)) {
-      var next = toolCtx('subs').subscriptions().next;
-      out.push({ when: next.renews, title: next.name, sub: t('subs.renews', { date: next.renews }),
-        icon: 'i-refresh', act: 'tool:subs', order: 600 + next.days });
-    }
-
-    var bd = feature('birthdays');
-    if (bd && visible(bd)) {
-      var nb = toolCtx('birthdays').birthdays().next;
-      out.push({ when: nb.date, title: nb.name, sub: nb.kind + ' · ' + t('common.inDays', { n: nb.days }),
-        icon: 'i-cake', act: 'tool:birthdays', order: 700 + nb.days });
-    }
-
-    var df = feature('documents');
-    if (df && visible(df)) {
-      var docs = toolCtx('documents').documents();
-      var soon = docs.list.filter(function (d) { return d.days !== null && d.days >= 0 && d.days < 45; })[0];
-      /* A document is sensitive, so Home names the renewal, not the number. */
-      if (soon) {
-        out.push({ when: soon.expires, title: t('docs.renewSoon', { name: soon.name }),
-          sub: t('common.inDays', { n: soon.days }), icon: 'i-folder', act: 'tool:documents', order: 800 });
-      }
-    }
-
-    return out.sort(function (a, b) { return a.order - b.order; }).slice(0, 4);
-  }
-
-  function renderUpcoming() {
-    var host = $('#upcomingList'), wrap = $('#upcomingWrap');
-    if (!host || !wrap) return;
-    var items = upcomingItems();
-    wrap.hidden = !items.length;
-    host.innerHTML = '<div class="rows">' + items.map(function (i) {
-      return '<button class="crow pressable" data-act="' + i.act + '">' +
-        '<span class="crow__icon"><svg class="ico" viewBox="0 0 24 24"><use href="#' + i.icon + '"/></svg></span>' +
-        '<span class="crow__label">' + esc(i.title) + '<i>' + esc(i.sub) + '</i></span>' +
-        '<span class="crow__value">' + esc(i.when) + '</span></button>';
-    }).join('') + '</div>';
-  }
-
-
-  /* §105 — "Around you" is the regional configuration made visible. It lists
-     whichever local services this country actually has, with a live value
-     pulled from the same context the tool screen uses. Nothing here knows
-     the name of a country. */
-  var LOCAL_SERVICES = [
-    { id: 'fuel',       icon: 'i-fuel',   value: function (c) {
-        var f = C_DATA.fuelFor(profile.country);
-        return L.moneyRaw(f.items[0].v, f.ccy, 2);
-      }, sub: function () {
-        return C_DATA.fuelFor(profile.country).items.map(function (i) { return i.n; }).slice(0, 3).join(' · ');
-      } },
-    { id: 'loadshed',   icon: 'i-bolt',   value: function (c) {
-        var ls = c.loadshed();
-        return ls.now ? ls.endsIn : ls.slot.from;
-      }, sub: function (c) {
-        var ls = c.loadshed();
-        return ls.area + ' · ' + (ls.now ? t('loadshed.currentlyOff') : t('loadshed.nextOutage', { from: ls.slot.from, to: ls.slot.to }));
-      } },
-    { id: 'goldrates',  icon: 'i-coins',  value: function (c) {
-        var g = c.metals();
-        return L.moneyRaw(g.gold.perTola, g.ccy, 0);
-      }, sub: function () { return t('rates.openMarket') + ' · ' + t('rates.gold24'); } },
-    { id: 'trains',     icon: 'i-train',  value: function () { return ''; },
-      sub: function () {
-        var tr = C_DATA.TRAINS[0];
-        return tr.name + ' · ' + t(tr.statusKey, { n: tr.delay });
-      } },
-    { id: 'emergency',  icon: 'i-shield', value: function () {
-        return C_DATA.emergencyFor(profile.country)[0].num;
-      }, sub: function () { return C_DATA.emergencyFor(profile.country)[0].n; } },
-    { id: 'holidays',   icon: 'i-calendar', value: function () {
-        return C_DATA.holidaysFor(profile.country)[0].date;
-      }, sub: function () { return C_DATA.holidaysFor(profile.country)[0].name; } }
-  ];
-
-  function renderAround() {
-    var wrap = $('#aroundWrap'), host = $('#aroundList'), tag = $('#aroundTag');
-    if (!wrap || !host) return;
-
-    var rows = [];
-    LOCAL_SERVICES.forEach(function (svc) {
-      var f = feature(svc.id);
-      if (!f || !visible(f)) return;
-      var c = toolCtx(svc.id);
-      var value = '', sub = '';
-      try { value = svc.value(c); sub = svc.sub(c); } catch (e) { return; }
-      rows.push('<button class="list-row pressable" data-act="tool:' + f.id + '" data-fid="' + f.id + '">' +
-        '<span class="list-row__icon"><svg class="ico" viewBox="0 0 24 24"><use href="#' + svc.icon + '"/></svg></span>' +
-        '<span class="list-row__body"><span class="list-row__title">' + esc(fname(f)) + '</span>' +
-        '<span class="list-row__sub">' + esc(sub) + '</span></span>' +
-        '<span class="list-row__end">' + (value ? '<span class="list-row__value num">' + esc(value) + '</span>' : '') +
-        '<svg class="ico" viewBox="0 0 24 24"><use href="#i-chev-r"/></svg></span></button>');
-    });
-
-    wrap.hidden = rows.length < 2;
-    host.innerHTML = rows.join('');
-    if (tag) tag.textContent = L.countryName(profile.country);
-  }
-
-  /* ---------------------------------------------------------
      Tool screens  (Master Spec §7, §8, §64, §109)
 
      One host, one router, one back stack. Opening a tool is
@@ -2535,7 +1934,6 @@ export let accountUI = null;
     saveProfile();
     sheetClose();
     if (currentTool === 'markets') renderTool();
-    renderLiveNow();
     toast(t('markets.switched', {
       name: code === 'AUTO' ? L.countryName(profile.country)
           : code === 'GLOBAL' ? t('markets.globalMarkets')
@@ -2685,7 +2083,6 @@ export let accountUI = null;
     var f = feature(id);
     toast(t(at === -1 ? 'tool.favourited' : 'tool.unfavourited', { name: f ? fname(f) : id }));
     if (currentTool === id) renderTool();
-    renderQuickTools();
   }
 
   /* §100.8 — a per-tool alert, asked for in context. Asking here is also
@@ -4343,7 +3740,6 @@ export let accountUI = null;
   setInterval(tickClock, 15000);
   setInterval(notifyTick, 45000);
   setTimeout(notifyTick, 2500);
-  setInterval(function () { updatePrayer(); }, 1000);
 
   /* §124.6 — a returning user with a dead session is told so, and taken
      back where they were going once they sign in. */

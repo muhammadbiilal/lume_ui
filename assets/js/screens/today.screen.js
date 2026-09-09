@@ -20,6 +20,17 @@ export function createTodayScreen(ctx) {
   /* ---------------------------------------------------------
      Statistics — chosen for the user, not a fixed row
      --------------------------------------------------------- */
+  /* The date line under the heading. Today owns it because Today shows
+     it — the greeting on Home is a different line on a different screen. */
+  function renderDateLine(root) {
+    const sub = $('#todaySub', root);
+    if (!sub) return;
+    const now = new Date();
+    sub.textContent = ctx.profile().islamic
+      ? ctx.L.dateLong(now) + ' · 15 Rabi\u2019 al-Awwal'
+      : ctx.L.dateLong(now);
+  }
+
   function renderStats(root) {
     const host = $('#todayStats', root);
     if (!host) return;
@@ -359,6 +370,7 @@ export function createTodayScreen(ctx) {
     },
 
     render: function (root) {
+      renderDateLine(root);
       renderStats(root);
       renderAgenda(root);
       drawRing(root);

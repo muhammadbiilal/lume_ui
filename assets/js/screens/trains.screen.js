@@ -1,16 +1,40 @@
 /* ============================================================
-   Lume - Trains screen
+   Lume — Trains screen
 
-   The Pakistan transport destination, promoted to a tab
-   where it is a first-class part of the day.
+   Pakistan promotes Trains to a first-class destination, so it
+   gets a screen rather than only a tool. Nothing here asks which
+   country it is in: whether this destination is in the tab set
+   at all is the router's question, answered from the profile.
 
-   Owns its own markup and nobody else's. The composition and
-   the DOM order here are the ones the design specification
-   fixes, so they are moved rather than rewritten.
+   The roster is the same one the Trains tool shows, formatted by
+   the locale rather than hard-coded to rupees and English, so
+   the two never disagree about a fare or a departure.
    ============================================================ */
 import { defineScreen } from './screen-base.js';
+import { $ } from '../core/dom.js';
 
 export function createTrainsScreen(ctx) {
+
+  function renderRoster(root) {
+    const host = $('#trainList', root);
+    if (!host) return;
+    const t = ctx.t, L = ctx.L, esc = ctx.ui.esc;
+    const currency = L.country().currency;
+
+    host.innerHTML = ctx.data.TRAINS.map(function (train) {
+      const status = t(train.statusKey, { n: train.delay });
+      return '<button class="list-row pressable" data-act="tool:trains" data-fid="trains">' +
+        '<span class="list-row__icon"><svg class="ico" viewBox="0 0 24 24"><use href="#i-train"/></svg></span>' +
+        '<span class="list-row__body">' +
+          '<span class="list-row__title">' + esc(train.name) + ' <span class="trainno num">' + esc(train.no) + '</span></span>' +
+          '<span class="list-row__sub"><span class="num">' + esc(train.dep) + '</span> → <span class="num">' +
+            esc(train.arr) + '</span> · ' + esc(train.dur) + ' · ' + esc(L.moneyRaw(train.fare, currency, 0)) + '</span>' +
+        '</span>' +
+        '<span class="list-row__end"><span class="status status--' + (train.delay ? 'late' : 'ok') + '">' +
+          esc(status) + '</span></span></button>';
+    }).join('');
+  }
+
   return defineScreen({
     id: 'trains',
     template: function () {
@@ -145,6 +169,10 @@ export function createTrainsScreen(ctx) {
 
   </section>
 `;
+    },
+
+    render: function (root) {
+      renderRoster(root);
     }
   });
 }
