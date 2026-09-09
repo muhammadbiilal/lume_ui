@@ -26,13 +26,14 @@ const SLOTS = [
   /* formatting and language */
   't', 'L', 'applyStrings',
   /* data and metadata */
-  'catalogue', 'data', 'spec', 'ui', 'tools', 'toolCtx',
+  'catalogue', 'data', 'spec', 'ui', 'tools', 'toolCtx', 'store',
   /* personalisation */
-  'profile', 'eligible', 'hasInterest',
+  'profile', 'eligible', 'hasInterest', 'saveProfile', 'noteRecent',
   /* navigation and shell surfaces */
   'router', 'openTool', 'sheetOpen', 'sheetClose', 'toast', 'runAct',
   /* shared behaviour screens need but do not own */
-  'animateBars', 'prayer', 'notify', 'account'
+  'animateBars', 'prayer', 'notify', 'account',
+  'refreshNotifBadge', 'refreshNotifPrefs', 'returnTab'
 ];
 
 export function createShellContext() {

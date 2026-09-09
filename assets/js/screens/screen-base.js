@@ -25,7 +25,13 @@ export function defineScreen(config) {
 
   let root = null;
 
-  return {
+  /* The lifecycle keys the wrapper implements itself. Anything else a
+     screen declares is its own public surface — the tool host, for one,
+     has to offer the shell a way to say "open this tool" — and is carried
+     through onto the screen object rather than quietly dropped. */
+  const RESERVED = ['id', 'template', 'bind', 'render', 'onEnter', 'onLeave', 'unmount'];
+
+  const screen = {
     id: config.id,
 
     /* Set by the lifecycle controller at mount; aborted at unmount. */
@@ -63,4 +69,11 @@ export function defineScreen(config) {
       root = null;
     }
   };
+
+  Object.keys(config).forEach(function (key) {
+    if (RESERVED.indexOf(key) !== -1) return;
+    screen[key] = config[key];
+  });
+
+  return screen;
 }
