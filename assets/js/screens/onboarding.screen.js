@@ -1,16 +1,294 @@
 /* ============================================================
-   Lume - onboarding
+   Lume — onboarding
 
    The first run: what the product is, what the user is here
    for, and where they are. It is a full-canvas flow rather than
    a destination, so it is not in the tab set and not in the
-   screen outlet - it covers the shell until it is finished.
+   screen outlet — it covers the shell until it is finished.
+
+   Two rules run through it.
 
    Islamic interests are offered inside "What are you here for?"
-   and are never preselected. Country and city are asked for
-   separately from anything else, because location says nothing
-   about who someone is.
+   and are never preselected. Choosing one is what switches the
+   Islamic experience on; the product never asks whether someone
+   is Muslim, and never infers it.
+
+   Country and city are asked for separately from everything
+   else, because where a person is says nothing about who they
+   are. Skipping is a first-class outcome: an untouched name
+   field is not an instruction to erase a name.
    ============================================================ */
+import { $, $$ } from '../core/dom.js';
+
+export function createOnboarding(deps) {
+  const t = deps.t, L = deps.L, esc = deps.esc;
+  const C = deps.catalogue;
+  const getProfile = deps.profile;
+  const store = deps.store;
+  const account = deps.account;
+  const PICKERS = deps.pickers;
+  const saveProfile = deps.save;
+  const syncFaithFromInterests = deps.syncFaith;
+  const forgetPrayerTimes = deps.forgetPrayerTimes;
+  const toast = deps.toast;
+  const applyStrings = deps.applyStrings;
+  const sheetClose = deps.sheetClose;
+  const renderAll = deps.render;
+  const renderProfile = deps.renderProfile;
+  const renderHome = deps.renderHome;
+  const prayerState = deps.prayerState;
+  const applyVisibility = deps.applyVisibility;
+  const openAuth = deps.openAuth;
+  const sheetOpen = deps.sheetOpen;
+
+  var onb = $('#onb');
+  var onbSteps = $$('.onb-step');
+  var onbSegs = $$('#onbProgress .onb__seg');
+  var onbBack = $('#onbBack');
+  var onbSkip = $('#onbSkip');
+  var onbStep = 0;
+  var onbDraft = { country: 'PK', region: 'Islamabad Capital Territory', city: 'Islamabad' };
+
+  var onbCountryPicker = null, onbCityPicker = null;
+
+  function mountOnbCountry() {
+    if (!onbCountryPicker) {
+      onbCountryPicker = PICKERS.makeLocationPicker($('#onbCountry'), function () { return onbDraft; }, {
+        stage: 'country',
+        onChange: function () { mountOnbCity(); }
+      });
+    } else { onbCountryPicker.render(); }
+  }
+
+  function mountOnbCity() {
+    var host = $('#onbCity');
+    if (!host) return;
+    if (!onbCityPicker) {
+      onbCityPicker = PICKERS.makeLocationPicker(host, function () { return onbDraft; }, { stage: 'city' });
+    } else { onbCityPicker.reset('city'); }
+    var label = $('#onbCityCountry');
+    if (label) label.textContent = L.countryName(onbDraft.country);
+  }
+
+  function onbShow(i, back) {
+    i = Math.max(0, Math.min(onbSteps.length - 1, i));
+    onbStep = i;
+
+    onbSteps.forEach(function (s, n) {
+      s.classList.toggle('is-active', n === i);
+      s.classList.toggle('is-back', n === i && !!back);
+      if (n === i) s.scrollTop = 0;
+    });
+    onbSegs.forEach(function (seg, n) { seg.classList.toggle('is-done', n <= i); });
+
+    onbBack.disabled = i === 0;
+    onbSkip.disabled = i === onbSteps.length - 1;
+
+    if (i === 3) mountOnbCountry();
+    if (i === 4) mountOnbCity();
+    if (i === 5 && onbPicker) onbPicker.refresh();
+    /* §124.4 — the field is prefilled from whatever Lume already holds,
+       which for a first run is nothing at all. It asks the same resolver
+       every other surface asks: for an account holder the name lives on the
+       account, not on the device, and reading the device here opened the
+       field empty and then saved that emptiness over their name. */
+    if (i === 7) {
+      var nameInput = $('#onbName');
+      if (nameInput) nameInput.value = account.displayName() || '';
+    }
+    if (i === 6) {
+      var loc = $('#onbLocSub');
+      if (loc) loc.textContent = getProfile().islamic
+        ? 'For prayer times, Qibla, weather and nearby places'
+        : 'For weather, local services and nearby places';
+      var nt = $('#onbNotifSub');
+      if (nt) nt.textContent = getProfile().islamic
+        ? 'A quiet nudge 5 minutes before each adhan'
+        : 'A quiet nudge for the things you asked us to watch';
+      applyVisibility();
+    }
+    if (i === onbSteps.length - 1) {
+      /* §124.5 / §125 — two designed branches, and the neutral one is not
+         the lesser of them. */
+      var who = account.displayName();
+      var title = $('#onbDoneTitle');
+      if (title) title.textContent = who ? t('onb.readyNamed', { name: who }) : t('onb.readyTitle');
+      var el = $('#onbDoneText');
+      if (el) {
+        el.innerHTML = getProfile().islamic
+          ? t('onb.readyFaith', { prayer: '<b>' + esc(prayerState().next.name) + '</b>' })
+          : esc(t('onb.readyGeneral'));
+      }
+    }
+  }
+
+  function onbFinish(msg) {
+    if (!onb) return;
+    onb.classList.add('is-leaving');
+    store.set('lume-onboarded', '1');
+    setTimeout(function () {
+      onb.hidden = true;
+      onb.classList.remove('is-leaving');
+      if (msg) toast(msg);
+    }, 380);
+  }
+
+  /* The one place onboarding writes an identity. An empty field writes an
+     empty name — it does not leave the previous one standing (§125). */
+  function commitName(value) {
+    var name = String(value || '').trim().slice(0, 40);
+    /* An account holder is naming their account; a guest is naming this
+       device. The two never write to each other (§125). */
+    if (account.isAuthed()) account.updateUser({ displayName: name });
+    else getProfile().displayName = name;
+    saveProfile();
+    /* A name shows up in three places at once: the greeting, the avatar and
+       the profile screen. Rendering the screen that carries the first two is
+       how they stay in step, rather than two separate pokes at their nodes. */
+    renderHome();
+    renderProfile();
+  }
+
+  function onbCommit(list, faith) {
+    getProfile().interests = list;
+    getProfile().islamic = !!faith;
+    getProfile().country = onbDraft.country;
+    getProfile().region = onbDraft.region;
+    getProfile().city = onbDraft.city;
+    forgetPrayerTimes();
+    syncFaithFromInterests();
+    saveProfile();
+    renderAll();
+  }
+
+  var onbPicker = PICKERS.makeInterestPicker($('#onbPicker'), $('#onbPickCount'), $('#onbPickClear'), function (enough) {
+    var b = $('#onbPickNext');
+    if (b) b.disabled = !enough;
+  }, function () { return { country: onbDraft.country, islamic: true }; });
+
+  function onbStart() {
+    /* The tour quotes the size of the catalogue. It is onboarding's own
+       copy to keep up to date, not something the Tools screen reaches out
+       of its root to write. */
+    var onbCount = $('#onbToolCount');
+    if (onbCount) onbCount.textContent = C.FEATURES.length;
+
+    if (!onb) return;
+    onbDraft = { country: getProfile().country, region: getProfile().region, city: getProfile().city };
+    if (onbPicker) onbPicker.set(getProfile().interests.slice(), getProfile().islamic);
+    onb.hidden = false;
+    onb.classList.remove('is-leaving');
+    onbShow(0);
+  }
+
+  if (onb) {
+    var pickNext = $('#onbPickNext');
+    if (pickNext) {
+      pickNext.addEventListener('click', function () {
+        onbCommit(onbPicker.get(), onbPicker.faith());
+        onbShow(onbStep + 1);
+      });
+    }
+
+    $$('[data-onb-next]').forEach(function (b) {
+      b.addEventListener('click', function () {
+        /* Location commits before the interest step so the picker can drop
+           interests that lead nowhere in this country. */
+        if (onbStep === 4) {
+          getProfile().country = onbDraft.country;
+          getProfile().region = onbDraft.region;
+          getProfile().city = onbDraft.city;
+          forgetPrayerTimes();
+        }
+        onbShow(onbStep + 1);
+      });
+    });
+    onbBack.addEventListener('click', function () { onbShow(onbStep - 1, true); });
+    onbSkip.addEventListener('click', function () {
+      if (!getProfile().interests.length) {
+        onbCommit(C.DEFAULT_INTERESTS.slice(), false);
+        onbFinish('Set up with our defaults — edit them in Profile');
+      } else {
+        onbFinish('Tour skipped — find it again in Profile');
+      }
+    });
+
+    var nameNext = $('#onbNameNext');
+    if (nameNext) {
+      nameNext.addEventListener('click', function () {
+        var input = $('#onbName');
+        var typed = input ? input.value : '';
+        /* An untouched field is not an instruction to erase anything. */
+        if (String(typed).trim() !== String(account.displayName() || '')) commitName(typed);
+        onbShow(onbStep + 1);
+      });
+    }
+
+    /* §124.4 — skipping is a first-class outcome, not a deletion. Re-running
+       the tour and skipping this step used to wipe a name the user had
+       already given, while the header's own Skip left it alone: two skip
+       controls on one screen doing opposite things. */
+    var nameSkip = $('#onbNameSkip');
+    if (nameSkip) {
+      nameSkip.addEventListener('click', function () { onbShow(onbStep + 1); });
+    }
+
+    var finish = $('#onbFinish');
+    if (finish) finish.addEventListener('click', function () { onbFinish('Welcome to Lume'); });
+
+    /* §124.6 — "already have an account" leads to authentication, not to a
+       toast that pretends someone signed in. */
+    var signIn = $('#onbSignIn');
+    if (signIn) signIn.addEventListener('click', function () {
+      if (!getProfile().interests.length) onbCommit(C.DEFAULT_INTERESTS.slice(), false);
+      onbFinish();
+      openAuth('signin');
+    });
+
+    $$('[data-onb-toggle]').forEach(function (row) {
+      row.addEventListener('click', function () {
+        var on = !row.classList.contains('is-on');
+        row.classList.toggle('is-on', on);
+        var sw = $('.switch', row);
+        if (sw) sw.classList.toggle('is-on', on);
+      });
+    });
+
+    var method = $('#onbMethod');
+    if (method) {
+      method.addEventListener('click', function (e) {
+        var b = e.target.closest('button');
+        if (!b) return;
+        $$('button', method).forEach(function (x) { x.classList.remove('is-active'); });
+        b.classList.add('is-active');
+      });
+    }
+
+    var sx2 = 0, sy2 = 0;
+    onb.addEventListener('touchstart', function (e) {
+      sx2 = e.touches[0].clientX; sy2 = e.touches[0].clientY;
+    }, { passive: true });
+    onb.addEventListener('touchend', function (e) {
+      var dx = e.changedTouches[0].clientX - sx2;
+      var dy = e.changedTouches[0].clientY - sy2;
+      if (Math.abs(dx) < 56 || Math.abs(dy) > Math.abs(dx)) return;
+      if (dx < 0 && onbStep < onbSteps.length - 1 && onbStep !== 5 && onbStep !== 7) onbShow(onbStep + 1);
+      if (dx > 0 && onbStep > 0) onbShow(onbStep - 1, true);
+    }, { passive: true });
+
+    var forced = /[?&]tour=1/.test(location.search);
+    if (forced || !store.get('lume-onboarded')) onbStart();
+
+    var replay = $('#replayTour');
+    if (replay) replay.addEventListener('click', function () { sheetClose(); onbStart(); });
+  }
+
+
+  return {
+    start: onbStart,
+    commitName: commitName
+  };
+}
 
 export function onboardingTemplate() {
   return `

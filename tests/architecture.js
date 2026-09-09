@@ -394,7 +394,58 @@ async function boot(profile, extra) {
        'after one trip ' + afterFirstTrip + ', after four ' + timers.intervals.size);
   }
 
-  /* ── 6. screen isolation ─────────────────────────────────────────────── */
+  /* ── 6. the first run ────────────────────────────────────────────────── */
+  console.log('\n=== The first run ===');
+  {
+    /* Onboarding and the pickers are the code least likely to be reached by
+       a test that starts from a settled profile, and most likely to be left
+       holding a name that moved during a refactor. Walking the tour once,
+       watching for anything thrown, is what makes that visible. */
+    const { win, doc, errors } = await boot(null, w => {
+      w.localStorage.removeItem('lume-onboarded');
+    });
+    const hit = el => el && el.dispatchEvent(new win.MouseEvent('click', { bubbles: true, cancelable: true }));
+
+    ok('the tour runs on a first launch', !doc.querySelector('#onb').hidden);
+
+    const nextIn = () => [...doc.querySelectorAll(
+      '.onb-step.is-active [data-onb-next], .onb-step.is-active #onbPickNext')][0];
+    for (let step = 0; step < 10; step++) {
+      const button = nextIn();
+      if (!button || button.disabled) break;
+      hit(button);
+      await wait(40);
+    }
+
+    const named = doc.querySelector('#onbName');
+    ok('it reaches the step that asks for a name', !!named);
+    if (named) {
+      named.value = 'Ayesha';
+      named.dispatchEvent(new win.Event('input', { bubbles: true }));
+      hit(doc.querySelector('#onbNameNext'));
+      await wait(60);
+      ok('and the name it was given is the name it uses',
+         /Ayesha/.test((doc.querySelector('#onbDoneTitle') || {}).textContent || ''),
+         (doc.querySelector('#onbDoneTitle') || {}).textContent);
+    }
+
+    hit(doc.querySelector('#onbFinish'));
+    await wait(80);
+    ok('finishing lands in the app', !!doc.querySelector('.screen.is-active'));
+
+    /* The location and interest pickers, which onboarding and the
+       Personalisation sheet share. */
+    hit(doc.querySelector('[data-sheet="personalise"]') || doc.querySelector('[data-act="sheet:personalise"]'));
+    await wait(80);
+    ok('the Personalisation sheet opens', !!doc.querySelector('#sheet-personalise.is-open'));
+    ok('and its interest picker is filled',
+       (doc.querySelector('#setPicker') || { children: [] }).children.length > 0);
+
+    ok('nothing threw across the whole first run', errors.length === 0,
+       errors.slice(0, 3).join(' | '));
+  }
+
+  /* ── 7. screen isolation ─────────────────────────────────────────────── */
   console.log('\n=== Screen isolation ===');
   {
     const dir = path.join(ROOT, 'assets/js/screens');
