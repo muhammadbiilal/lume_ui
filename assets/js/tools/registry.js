@@ -78,9 +78,9 @@ import prizebondsTool from './money/prizebonds.tool.js';
 import taxTool from './money/tax.tool.js';
 import tipsplitTool from './money/tipsplit.tool.js';
 
-/* daily — 19 */
+/* daily — 18 */
 import aqiTool from './daily/aqi.tool.js';
-import bmiTool from './daily/bmi.tool.js';
+
 import cricketTool from './daily/cricket.tool.js';
 import docscanTool from './daily/docscan.tool.js';
 import emergencyTool from './daily/emergency.tool.js';
@@ -99,10 +99,11 @@ import wastatusTool from './daily/wastatus.tool.js';
 import weatherTool from './daily/weather.tool.js';
 import worldclockTool from './daily/worldclock.tool.js';
 
-/* personal — 21 */
+/* personal — 22 */
 import alarmsTool from './personal/alarms.tool.js';
 import babybudgetTool from './personal/babybudget.tool.js';
 import birthdaysTool from './personal/birthdays.tool.js';
+import bmiTool from './personal/bmi.tool.js';
 import cycleTool from './personal/cycle.tool.js';
 import documentsTool from './personal/documents.tool.js';
 import expensesTool from './personal/expenses.tool.js';
