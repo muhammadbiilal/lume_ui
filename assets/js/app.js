@@ -27,6 +27,7 @@ import { createEligibility } from './core/eligibility.js';
 import { createLifecycle } from './core/lifecycle.js';
 import { createRouter } from './core/router.js';
 import { createScreens } from './screens/index.js';
+import { createShellContext } from './core/shell-context.js';
 import { sheetsTemplate } from './ui/sheets-markup.js';
 import { onboardingTemplate } from './screens/onboarding.screen.js';
 
@@ -63,8 +64,13 @@ export let accountUI = null;
     }
   });
 
+  /* Screens read this during render and never during mount; see
+     core/shell-context.js for why that ordering is what makes it safe to
+     hand out an object the shell has not finished filling in. */
+  var SHELL = createShellContext();
+
   var screenOutlet = $('#screens');
-  createScreens().forEach(function (screen) {
+  createScreens(SHELL).forEach(function (screen) {
     LIFECYCLE.register(screen);
     LIFECYCLE.mount(screen.id, screenOutlet);
   });
@@ -714,106 +720,6 @@ export let accountUI = null;
   }
 
   /* ---------------------------------------------------------
-     Today — stats and agenda are assembled, not hard-coded
-     --------------------------------------------------------- */
-  function renderTodayStats() {
-    var host = $('#todayStats');
-    if (!host) return;
-    var stats = [];
-
-    function unit(u) { return ' <span>' + esc(t('unit.' + u)) + '</span>'; }
-    if (profile.islamic) {
-      stats.push({ icon: 'i-flame', value: L.num(12) + unit('days'), label: t('today.prayerStreak') });
-      stats.push({ icon: 'i-book', value: L.num(18) + unit('min'), label: t('today.readToday') });
-    } else {
-      stats.push({ icon: 'i-flame', value: L.num(12) + unit('days'), label: t('today.dailyStreak') });
-      stats.push({ icon: 'i-pulse', value: L.num(4.2) + unit('k'), label: t('today.steps') });
-    }
-    stats.push({ icon: 'i-check-circle', value: L.num(2) + '<span>/' + L.num(5) + '</span>', label: t('today.tasksDone') });
-
-    host.innerHTML = stats.map(function (s) {
-      return '<article class="stat"><span class="stat__icon">' +
-        '<svg class="ico" viewBox="0 0 24 24"><use href="#' + s.icon + '"/></svg></span>' +
-        '<p class="stat__value num">' + s.value + '</p>' +
-        '<p class="stat__label">' + s.label + '</p></article>';
-    }).join('');
-  }
-
-  function renderAgenda() {
-    var host = $('#agenda');
-    if (!host) return;
-
-    /* Times are carried as {h, m} and formatted only when drawn: a
-       locale-formatted string cannot be sorted or sliced. */
-    var events = [
-      { h: 9, m: 30, title: t('agenda.standup'), meta: t('agenda.standupMeta'), icon: 'i-check-circle', done: true },
-      { h: 14, m: 0, title: t('agenda.review'), meta: t('agenda.reviewMeta'), icon: 'i-clock', now: true },
-      { h: 18, m: 30, title: t('agenda.groceries'), meta: t('agenda.groceriesMeta'), icon: 'i-cart', act: 'tool:shopping' }
-    ];
-
-    var lsf = feature('loadshed');
-    if (lsf && visible(lsf)) {
-      var ls = toolCtx('loadshed').loadshed();
-      events.push({ h: Math.floor(ls.slot.fromM / 60), m: ls.slot.fromM % 60,
-        title: t('loadshed.outage'), meta: ls.area + ' · ' + ls.slot.duration,
-        icon: 'i-bolt', act: 'tool:loadshed' });
-    }
-
-    if (profile.islamic) {
-      var st = prayerState();
-      st.main.forEach(function (p) {
-        var past = mins(p) < (new Date().getHours() * 60 + new Date().getMinutes());
-        events.push({
-          h: p.h, m: p.m, title: t('prayer.' + (PKEYS[p.name] || 'fajr')),
-          meta: past ? t('agenda.prayed') : t('agenda.adhanOn'),
-          icon: past ? 'i-check-circle' : 'i-bell',
-          done: past, act: 'tool:prayer'
-        });
-      });
-    }
-
-    events.sort(function (a, b) { return (a.h * 60 + a.m) - (b.h * 60 + b.m); });
-
-    var nowM = new Date().getHours() * 60 + new Date().getMinutes();
-    host.innerHTML = events.map(function (e) {
-      var em = e.h * 60 + e.m;
-      var done = e.done || (em < nowM && !e.now);
-      var cls = e.now ? ' is-now' : done ? ' is-done' : '';
-      return '<div class="tl-item' + cls + '">' +
-        '<span class="tl-time num">' + esc(L.time(e.h, e.m)) + '</span>' +
-        '<span class="tl-line"><span class="tl-node"></span></span>' +
-        '<button class="tl-card pressable" data-act="' + (e.act || ('toast:' + e.title)) + '">' +
-          '<span class="tl-card__body"><span class="tl-card__title">' + esc(e.title) + '</span>' +
-          '<span class="tl-card__meta">' + esc(e.meta) + '</span></span>' +
-          '<span class="tl-card__icon"><svg class="ico" viewBox="0 0 24 24"><use href="#' + e.icon + '"/></svg></span>' +
-        '</button></div>';
-    }).join('');
-
-    var sub = $('#agendaSub');
-    if (sub) sub.textContent = t(profile.islamic ? 'today.agendaMuslim' : 'today.agendaGeneral');
-  }
-
-  function updateDayRing() {
-    var ring = $('#dayRing'), value = $('#dayRingValue');
-    if (!ring) return;
-    var d = new Date();
-    var pct = (d.getHours() * 60 + d.getMinutes()) / 1440;
-    var circ = 2 * Math.PI * 42;
-    ring.style.strokeDashoffset = (circ * (1 - pct)).toFixed(1);
-    if (value) value.textContent = Math.round(pct * 100) + '%';
-  }
-
-  /* ---------------------------------------------------------
-     Tasks
-     --------------------------------------------------------- */
-  document.addEventListener('click', function (e) {
-    var task = e.target.closest('#taskList .task');
-    if (!task) return;
-    var done = task.classList.toggle('is-done');
-    toast(done ? 'Nice — one less thing' : 'Back on the list');
-  });
-
-  /* ---------------------------------------------------------
      Quick tools
      --------------------------------------------------------- */
   var QUICK_FALLBACK = ['calculator', 'weather', 'calendar', 'todos', 'currency', 'notes', 'timer', 'converter'];
@@ -872,171 +778,20 @@ export let accountUI = null;
   }
 
   /* ---------------------------------------------------------
-     Tools screen
+     Recently used
+
+     Written by whoever opens a tool, read by the Tools screen. It lives
+     here rather than on that screen because opening a tool is not a Tools
+     screen event: it happens from Home, from search, from a notification
+     and from a related-tools row.
      --------------------------------------------------------- */
-  var filter = 'foryou';
-
-  function renderToolChips() {
-    var host = $('#toolChips');
-    if (!host) return;
-    var chips = [{ id: 'foryou', label: t('tools.forYou'), icon: 'i-sparkles' },
-                 { id: 'all', label: t('a.all') }];
-    C.CATEGORIES.forEach(function (cat) {
-      if (cat.faith && !profile.islamic) return;
-      chips.push({ id: cat.id, label: t('cat.' + cat.id) });
-    });
-    if (!chips.some(function (c) { return c.id === filter; })) filter = 'foryou';
-
-    host.innerHTML = chips.map(function (c) {
-      return '<button class="chip' + (c.id === filter ? ' is-active' : '') + '" data-filter="' + c.id + '">' +
-        (c.icon ? '<svg class="ico" viewBox="0 0 24 24"><use href="#' + c.icon + '"/></svg> ' : '') +
-        esc(c.label) + '</button>';
-    }).join('');
-  }
-
-  /* §100.17 — a count where a count means something, and nowhere else. */
-  function toolBadgeCount(id) {
-    try {
-      if (id === 'bills') return toolCtx('bills').bills().overdueCount || 0;
-      if (id === 'documents') {
-        var d = toolCtx('documents').documents();
-        return (d.expiring || 0) + (d.expired || 0);
-      }
-    } catch (e) {}
-    return 0;
-  }
-
-  function toolCard(f) {
-    var badge = '';
-    var n = toolBadgeCount(f.id);
-    if (n) badge += '<span class="cat-tool__count" aria-label="' +
-      esc(t('n.needsAttention', { n: n })) + '">' + esc(n > 9 ? '9+' : n) + '</span>';
-    if (f.sens) badge = '<span class="cat-tool__flag" aria-label="Private"><svg class="ico" viewBox="0 0 24 24"><use href="#i-lock"/></svg></span>';
-    else if (f.loc) badge = '<span class="cat-tool__pin" aria-label="Local service"></span>';
-    return '<button class="cat-tool pressable" data-act="' + actFor(f) + '" data-fid="' + f.id + '" ' +
-      'data-hay="' + esc((f.n + ' ' + (f.kw || '')).toLowerCase()) + '" ' +
-      (f.staple ? 'data-staple="1" ' : '') +
-      'data-ints="' + esc((f.ints || []).join(' ')) + '">' +
-      badge +
-      '<span class="cat-tool__icon"><svg class="ico" viewBox="0 0 24 24"><use href="#' + f.i + '"/></svg></span>' +
-      '<span class="cat-tool__label">' + esc(fname(f)) + '</span>' +
-      '<span class="cat-tool__meta">' + esc(f.m || '') + '</span></button>';
-  }
-
-  function renderTools() {
-    var host = $('#toolCats');
-    if (!host) return;
-    var list = visibleFeatures();
-
-    host.innerHTML = C.CATEGORIES.map(function (cat) {
-      if (cat.faith && !profile.islamic) return '';
-      var items = list.filter(function (f) { return f.c === cat.id; });
-      if (!items.length) return '';
-      return '<section class="cat" data-cat="' + cat.id + '">' +
-        '<div class="cat__head">' +
-          '<span class="cat__dot"><svg class="ico" viewBox="0 0 24 24"><use href="#' + cat.icon + '"/></svg></span>' +
-          '<div><h2 class="cat__title">' + esc(t('cat.' + cat.id)) + '</h2>' +
-          '<p class="cat__sub">' + esc(t('cat.' + cat.id + 'Sub')) + '</p></div>' +
-          '<span class="cat__count">' + items.length + '</span>' +
-        '</div>' +
-        '<div class="cat-grid">' + items.map(toolCard).join('') + '</div>' +
-      '</section>';
-    }).join('');
-
-    var sub = $('#toolSub');
-    if (sub) sub.textContent = t('tools.sub', { n: L.num(list.length) });
-    var ph = $('#toolSearch');
-    if (ph) {
-      ph.setAttribute('placeholder', t('tools.searchPlaceholder', {
-        example: profile.country === 'PK' ? 'petrol' : 'currency'
-      }));
-    }
-    var onbCount = $('#onbToolCount');
-    if (onbCount) onbCount.textContent = C.FEATURES.length;
-
-    applyFilter();
-  }
-
-  function applyFilter() {
-    var input = $('#toolSearch');
-    var q = (input && input.value || '').trim().toLowerCase();
-    var anyVisible = false;
-
-    $$('#toolCats .cat').forEach(function (cat) {
-      /* A search always looks across the whole visible catalogue — being on
-         "For you" should never stop someone finding a tool by name. */
-      var searching = !!q;
-      var forYou = !searching && filter === 'foryou' && profile.interests.length > 0;
-      var catMatch = searching || filter === 'all' || forYou || cat.dataset.cat === filter;
-      var shown = 0;
-
-      $$('.cat-tool', cat).forEach(function (tool) {
-        var match = catMatch && (!q || tool.dataset.hay.indexOf(q) !== -1);
-        if (match && forYou) {
-          /* "For you" is a shortlist, not a straitjacket: an interest match,
-             something reached for recently, or a tool nearly everyone wants. */
-          match = (tool.dataset.ints || '').split(/\s+/).some(function (t) { return t && hasInterest(t); }) ||
-                  tool.dataset.staple === '1' ||
-                  profile.recents.indexOf(tool.dataset.fid) !== -1;
-        }
-        tool.classList.toggle('is-hidden', !match);
-        if (match) shown++;
-      });
-
-      cat.style.display = shown ? '' : 'none';
-      var c = $('.cat__count', cat);
-      if (c) c.textContent = shown;
-      if (shown) anyVisible = true;
-    });
-
-    var empty = $('#toolEmpty');
-    if (empty) {
-      empty.classList.toggle('is-shown', !anyVisible);
-      var ttl = $('.empty__title', empty), x = $('.empty__text', empty);
-      if (ttl && x) {
-        if (!q && filter === 'foryou') {
-          ttl.textContent = t('tools.nothingYet');
-          x.textContent = t('tools.nothingYetSub');
-        } else {
-          ttl.textContent = t('tools.noMatch');
-          x.textContent = t('tools.noMatchSub');
-        }
-      }
-    }
-  }
-
-  var toolSearchInput = $('#toolSearch');
-  if (toolSearchInput) toolSearchInput.addEventListener('input', applyFilter);
-
-  document.addEventListener('click', function (e) {
-    var chip = e.target.closest('#toolChips .chip');
-    if (!chip) return;
-    $$('#toolChips .chip').forEach(function (c) { c.classList.remove('is-active'); });
-    chip.classList.add('is-active');
-    filter = chip.dataset.filter;
-    applyFilter();
-  });
-
-  /* ---- Recently used ---- */
   function noteRecent(id) {
     var f = feature(id);
+    /* A feature this user cannot see does not enter their history. */
     if (!f || !visible(f)) return;
-    profile.recents = [id].concat(profile.recents.filter(function (x) { return x !== id; })).slice(0, 6);
-    saveProfile();
-    renderRecents();
-  }
-
-  function renderRecents() {
-    var wrap = $('#toolRecent'), host = $('#toolRecentList');
-    if (!wrap || !host) return;
-    /* A hidden feature must not resurface through history. */
-    var items = profile.recents.map(feature).filter(function (f) { return f && visible(f); });
-    wrap.hidden = items.length < 2;
-    host.innerHTML = items.map(function (f) {
-      return '<button class="recent pressable" data-act="' + actFor(f) + '" data-fid="' + f.id + '">' +
-        '<span class="recent__icon"><svg class="ico" viewBox="0 0 24 24"><use href="#' + f.i + '"/></svg></span>' +
-        '<span class="recent__label">' + esc(fname(f)) + '</span></button>';
-    }).join('');
+    STORE.patch({
+      recents: [id].concat(profile.recents.filter(function (x) { return x !== id; })).slice(0, 6)
+    });
   }
 
   /* ---------------------------------------------------------
@@ -1797,15 +1552,12 @@ export let accountUI = null;
     renderTabs();
     renderHero();
     renderQuickTools();
-    renderToolChips();
-    renderTools();
-    renderRecents();
+    LIFECYCLE.render('tools');
     renderQuickActions();
     renderLiveNow();
     renderUpcoming();
     renderAround();
-    renderTodayStats();
-    renderAgenda();
+    LIFECYCLE.render('today');
     renderTrains();
     renderNews();
     renderNotifBadge();
@@ -1950,6 +1702,12 @@ export let accountUI = null;
   }, function () { return { country: onbDraft.country, islamic: true }; });
 
   function onbStart() {
+    /* The tour quotes the size of the catalogue. It is onboarding's own
+       copy to keep up to date, not something the Tools screen reaches out
+       of its root to write. */
+    var onbCount = $('#onbToolCount');
+    if (onbCount) onbCount.textContent = C.FEATURES.length;
+
     if (!onb) return;
     onbDraft = { country: profile.country, region: profile.region, city: profile.city };
     if (onbPicker) onbPicker.set(profile.interests.slice(), profile.islamic);
@@ -2635,7 +2393,6 @@ export let accountUI = null;
     ROUTER.go('tool', { quiet: true });
 
     renderTool();
-    renderRecents();
   }
 
   function stopClocks() {
@@ -4537,6 +4294,44 @@ export let accountUI = null;
   });
 
   /* ---------------------------------------------------------
+     Hand the screens what they are allowed to know
+
+     Everything above exists by now, which is what makes this the
+     right place for it: the context was created before the screens
+     were mounted, and a screen may only read it from render onward.
+     --------------------------------------------------------- */
+  SHELL.provide({
+    t: t,
+    L: L,
+    applyStrings: applyStrings,
+
+    catalogue: C,
+    data: C_DATA,
+    spec: SPEC,
+    ui: UI,
+    tools: TOOLS,
+    toolCtx: toolCtx,
+
+    profile: function () { return profile; },
+    eligible: ELIGIBLE,
+    hasInterest: hasInterest,
+
+    router: ROUTER,
+    openTool: openTool,
+    sheetOpen: sheetOpen,
+    sheetClose: sheetClose,
+    toast: toast,
+    runAct: runAct,
+    animateBars: animateBars,
+
+    /* Prayer arithmetic belongs to the faith system, not to whichever
+       screen happens to be drawing a prayer time. */
+    prayer: { state: prayerState, minutes: mins, times: prayerSet, KEYS: PKEYS },
+    notify: NOTIFY,
+    account: ACCT
+  });
+
+  /* ---------------------------------------------------------
      Boot
      --------------------------------------------------------- */
   ensureExploreBack();
@@ -4544,13 +4339,11 @@ export let accountUI = null;
   renderNotifBadge();
   tickClock();
   renderAll();
-  updateDayRing();
 
   setInterval(tickClock, 15000);
   setInterval(notifyTick, 45000);
   setTimeout(notifyTick, 2500);
   setInterval(function () { updatePrayer(); }, 1000);
-  setInterval(updateDayRing, 60000);
 
   /* §124.6 — a returning user with a dead session is told so, and taken
      back where they were going once they sign in. */

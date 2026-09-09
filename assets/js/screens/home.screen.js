@@ -10,7 +10,7 @@
    ============================================================ */
 import { defineScreen } from './screen-base.js';
 
-export function createHomeScreen() {
+export function createHomeScreen(ctx) {
   return defineScreen({
     id: 'home',
     template: function () {

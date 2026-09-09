@@ -9,7 +9,7 @@
    ============================================================ */
 import { defineScreen } from './screen-base.js';
 
-export function createNotificationsScreen() {
+export function createNotificationsScreen(ctx) {
   return defineScreen({
     id: 'notifications',
     template: function () {

@@ -9,7 +9,7 @@
    ============================================================ */
 import { defineScreen } from './screen-base.js';
 
-export function createProfileScreen() {
+export function createProfileScreen(ctx) {
   return defineScreen({
     id: 'profile',
     template: function () {

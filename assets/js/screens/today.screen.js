@@ -1,15 +1,129 @@
 /* ============================================================
-   Lume - Today screen
+   Lume — Today screen
 
-   The day as a plan: progress, statistics, agenda and tasks.
+   The day as a plan rather than a data dump: how far through
+   the day the user is, a few statistics worth glancing at, the
+   agenda in chronological order, and the task list.
 
-   Owns its own markup and nobody else's. The composition and
-   the DOM order here are the ones the design specification
-   fixes, so they are moved rather than rewritten.
+   Everything with a time in it is carried as {h, m} and
+   formatted only when it is drawn. A locale-formatted string
+   cannot be sorted or compared, and the agenda has to do both.
+
+   The ring is the only thing here that moves on its own, so it
+   is the only thing this screen has to stop when it leaves.
    ============================================================ */
 import { defineScreen } from './screen-base.js';
+import { $ } from '../core/dom.js';
 
-export function createTodayScreen() {
+export function createTodayScreen(ctx) {
+
+  /* ---------------------------------------------------------
+     Statistics — chosen for the user, not a fixed row
+     --------------------------------------------------------- */
+  function renderStats(root) {
+    const host = $('#todayStats', root);
+    if (!host) return;
+    const t = ctx.t, L = ctx.L, esc = ctx.ui.esc;
+    const stats = [];
+
+    function unit(u) { return ' <span>' + esc(t('unit.' + u)) + '</span>'; }
+
+    if (ctx.profile().islamic) {
+      stats.push({ icon: 'i-flame', value: L.num(12) + unit('days'), label: t('today.prayerStreak') });
+      stats.push({ icon: 'i-book', value: L.num(18) + unit('min'), label: t('today.readToday') });
+    } else {
+      stats.push({ icon: 'i-flame', value: L.num(12) + unit('days'), label: t('today.dailyStreak') });
+      stats.push({ icon: 'i-pulse', value: L.num(4.2) + unit('k'), label: t('today.steps') });
+    }
+    stats.push({ icon: 'i-check-circle', value: L.num(2) + '<span>/' + L.num(5) + '</span>', label: t('today.tasksDone') });
+
+    host.innerHTML = stats.map(function (s) {
+      return '<article class="stat"><span class="stat__icon">' +
+        '<svg class="ico" viewBox="0 0 24 24"><use href="#' + s.icon + '"/></svg></span>' +
+        '<p class="stat__value num">' + s.value + '</p>' +
+        '<p class="stat__label">' + s.label + '</p></article>';
+    }).join('');
+  }
+
+  /* ---------------------------------------------------------
+     Agenda — assembled from what is true today, then sorted
+     --------------------------------------------------------- */
+  function renderAgenda(root) {
+    const host = $('#agenda', root);
+    if (!host) return;
+    const t = ctx.t, L = ctx.L, esc = ctx.ui.esc;
+    const profile = ctx.profile();
+
+    const events = [
+      { h: 9, m: 30, title: t('agenda.standup'), meta: t('agenda.standupMeta'), icon: 'i-check-circle', done: true },
+      { h: 14, m: 0, title: t('agenda.review'), meta: t('agenda.reviewMeta'), icon: 'i-clock', now: true },
+      { h: 18, m: 30, title: t('agenda.groceries'), meta: t('agenda.groceriesMeta'), icon: 'i-cart', act: 'tool:shopping' }
+    ];
+
+    /* Regional items join the agenda only where they are available — the
+       same eligibility rule every other surface asks. */
+    const loadshed = ctx.eligible.feature('loadshed');
+    if (loadshed && ctx.eligible.visible(loadshed)) {
+      const ls = ctx.toolCtx('loadshed').loadshed();
+      events.push({
+        h: Math.floor(ls.slot.fromM / 60), m: ls.slot.fromM % 60,
+        title: t('loadshed.outage'), meta: ls.area + ' · ' + ls.slot.duration,
+        icon: 'i-bolt', act: 'tool:loadshed'
+      });
+    }
+
+    if (profile.islamic) {
+      const state = ctx.prayer.state();
+      const atNow = new Date().getHours() * 60 + new Date().getMinutes();
+      state.main.forEach(function (p) {
+        const past = ctx.prayer.minutes(p) < atNow;
+        events.push({
+          h: p.h, m: p.m, title: t('prayer.' + (ctx.prayer.KEYS[p.name] || 'fajr')),
+          meta: past ? t('agenda.prayed') : t('agenda.adhanOn'),
+          icon: past ? 'i-check-circle' : 'i-bell',
+          done: past, act: 'tool:prayer'
+        });
+      });
+    }
+
+    events.sort(function (a, b) { return (a.h * 60 + a.m) - (b.h * 60 + b.m); });
+
+    const nowM = new Date().getHours() * 60 + new Date().getMinutes();
+    host.innerHTML = events.map(function (e) {
+      const at = e.h * 60 + e.m;
+      const done = e.done || (at < nowM && !e.now);
+      const cls = e.now ? ' is-now' : done ? ' is-done' : '';
+      return '<div class="tl-item' + cls + '">' +
+        '<span class="tl-time num">' + esc(L.time(e.h, e.m)) + '</span>' +
+        '<span class="tl-line"><span class="tl-node"></span></span>' +
+        '<button class="tl-card pressable" data-act="' + (e.act || ('toast:' + e.title)) + '">' +
+          '<span class="tl-card__body"><span class="tl-card__title">' + esc(e.title) + '</span>' +
+          '<span class="tl-card__meta">' + esc(e.meta) + '</span></span>' +
+          '<span class="tl-card__icon"><svg class="ico" viewBox="0 0 24 24"><use href="#' + e.icon + '"/></svg></span>' +
+        '</button></div>';
+    }).join('');
+
+    const sub = $('#agendaSub', root);
+    if (sub) sub.textContent = t(profile.islamic ? 'today.agendaMuslim' : 'today.agendaGeneral');
+  }
+
+  /* ---------------------------------------------------------
+     The day ring — how far through the day it is
+     --------------------------------------------------------- */
+  function drawRing(root) {
+    const ring = $('#dayRing', root), value = $('#dayRingValue', root);
+    if (!ring) return;
+    const now = new Date();
+    const through = (now.getHours() * 60 + now.getMinutes()) / 1440;
+    const circumference = 2 * Math.PI * 42;
+    ring.style.strokeDashoffset = (circumference * (1 - through)).toFixed(1);
+    /* The share of the day is text as well as an arc, so the progress is
+       not carried by the drawing alone. */
+    if (value) value.textContent = Math.round(through * 100) + '%';
+  }
+
+  let ringTimer = null;
+
   return defineScreen({
     id: 'today',
     template: function () {
@@ -231,6 +345,34 @@ export function createTodayScreen() {
 
   </section>
 `;
+    },
+
+    bind: function (root, signal) {
+      /* Ticking a task is this screen's own interaction, so the listener
+         lives on this screen's root and leaves with it. */
+      root.addEventListener('click', function (e) {
+        const task = e.target.closest('#taskList .task');
+        if (!task) return;
+        const done = task.classList.toggle('is-done');
+        ctx.toast(done ? ctx.t('today.taskDone') : ctx.t('today.taskUndone'));
+      }, { signal: signal });
+    },
+
+    render: function (root) {
+      renderStats(root);
+      renderAgenda(root);
+      drawRing(root);
+    },
+
+    /* The ring is redrawn once a minute, and only while it can be seen. */
+    onEnter: function (root) {
+      drawRing(root);
+      ringTimer = setInterval(function () { drawRing(root); }, 60000);
+    },
+
+    onLeave: function () {
+      clearInterval(ringTimer);
+      ringTimer = null;
     }
   });
 }

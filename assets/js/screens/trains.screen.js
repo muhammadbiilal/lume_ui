@@ -10,7 +10,7 @@
    ============================================================ */
 import { defineScreen } from './screen-base.js';
 
-export function createTrainsScreen() {
+export function createTrainsScreen(ctx) {
   return defineScreen({
     id: 'trains',
     template: function () {

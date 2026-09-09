@@ -10,7 +10,7 @@
    ============================================================ */
 import { defineScreen } from './screen-base.js';
 
-export function createToolHostScreen() {
+export function createToolHostScreen(ctx) {
   return defineScreen({
     id: 'tool',
     template: function () {

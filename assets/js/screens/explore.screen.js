@@ -10,7 +10,7 @@
    ============================================================ */
 import { defineScreen } from './screen-base.js';
 
-export function createExploreScreen() {
+export function createExploreScreen(ctx) {
   return defineScreen({
     id: 'explore',
     template: function () {
