@@ -75,7 +75,12 @@ function codeMatches(src, re) {
   return out;
 }
 
-const IMPORT_RE = /^[ \t]*import\s+(?:([^'"]+?)\s+from\s+)?(['"])([^'"]+)\2\s*;?[ \t]*$/gm;
+/* The clause and the specifier must not cross a newline. Allowing them to
+   let the word "import" in a doc comment match across the comment's own
+   terminator and swallow the real import statement below it — and because
+   the match then started inside a comment, codeMatches discarded the whole
+   thing, so the import silently survived into the bundle. */
+const IMPORT_RE = /^[ \t]*import\s+(?:([^'"\n]+?)[ \t]+from[ \t]+)?(['"])([^'"\n]+)\2[ \t]*;?[ \t]*$/gm;
 const EXPORT_DECL_RE = /^[ \t]*export\s+(?=(?:async\s+)?(?:function|const|let|var|class)\b)/gm;
 const EXPORT_LIST_RE = /^[ \t]*export\s*\{([^}]*)\}\s*;?[ \t]*$/gm;
 const EXPORT_DEFAULT_RE = /^[ \t]*export\s+default\s+/gm;
@@ -177,9 +182,12 @@ function transform(src, specToKey) {
     previousStart = edit.start;
   }
 
-  const leftover = codeMatches(out, /^[ \t]*export\b/gm);
+  /* Nothing may reach the bundle still spelt as a module. A surviving
+     keyword means a form this loader does not understand, and it must say
+     so rather than emit a script the browser will reject at parse time. */
+  const leftover = codeMatches(out, /^[ \t]*(?:export|import)\b/gm);
   if (leftover.length) {
-    throw new Error('unhandled export form near: ' + out.slice(leftover[0].index, leftover[0].index + 60));
+    throw new Error('unhandled module syntax near: ' + out.slice(leftover[0].index, leftover[0].index + 80));
   }
 
   return out + '\n' + additions.join('\n') + '\n';

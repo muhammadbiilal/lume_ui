@@ -26,14 +26,18 @@ const SLOTS = [
   /* formatting and language */
   't', 'L', 'applyStrings',
   /* data and metadata */
-  'catalogue', 'data', 'spec', 'ui', 'tools', 'toolCtx', 'store',
+  'catalogue', 'data', 'spec', 'ui', 'tools', 'toolCtx', 'store', 'geo', 'i18n',
   /* personalisation */
   'profile', 'eligible', 'hasInterest', 'saveProfile', 'noteRecent',
   /* navigation and shell surfaces */
   'router', 'openTool', 'sheetOpen', 'sheetClose', 'toast', 'runAct',
+  'openAccount', 'openAuth', 'applyVisibility', 'renderAll', 'setThemeMode', 'startTour',
   /* shared behaviour screens need but do not own */
-  'animateBars', 'prayer', 'notify', 'account',
-  'refreshNotifBadge', 'refreshNotifPrefs', 'returnTab'
+  'animateBars', 'prayer', 'forgetPrayerTimes', 'notify', 'account',
+  'refreshNotifBadge', 'refreshNotifPrefs', 'returnTab',
+  /* The account surfaces reach each other through the shell rather than
+     importing one another, which would be a cycle in both directions. */
+  'accountUI', 'forms', 'accountScreen', 'authScreen'
 ];
 
 export function createShellContext() {

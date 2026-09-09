@@ -1,13 +1,18 @@
 /* ============================================================
-   Lume - Profile screen
+   Lume — Profile screen
 
-   Identity, account state, preferences, privacy and support.
+   The entry point for identity, preferences, privacy and
+   support. Its composition stays the same whether the user is a
+   guest, signed in, or holding a session that has expired —
+   what changes is which rows exist and what they say.
 
-   Owns its own markup and nobody else's. The composition and
-   the DOM order here are the ones the design specification
-   fixes, so they are moved rather than rewritten.
+   The screen renders from state rather than being edited in
+   place, so it cannot drift into claiming an account that is
+   not there. Nothing here invents a name, an email or a
+   statistic to fill a gap.
    ============================================================ */
 import { defineScreen } from './screen-base.js';
+import { $ } from '../core/dom.js';
 
 export function createProfileScreen(ctx) {
   return defineScreen({
@@ -29,6 +34,13 @@ export function createProfileScreen(ctx) {
     <div id="profileBody"></div>
   </section>
 `;
+    },
+
+    render: function (root) {
+      const host = $('#profileBody', root);
+      if (!host) return;
+      host.innerHTML = ctx.accountUI.renderProfile();
+      ctx.applyStrings(host);
     }
   });
 }
