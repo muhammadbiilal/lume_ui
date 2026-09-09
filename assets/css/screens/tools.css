@@ -1,0 +1,112 @@
+/* ============================================================
+   Lume — Tools screen
+
+   The catalogue, its chips, its category grid and its cards.
+   ============================================================ */
+
+/* ---------- Tools screen ---------------------------------- */
+
+.cat { margin-top: 24px; }
+.cat__head {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  padding: 0 var(--pad);
+  margin-bottom: 12px;
+}
+.cat__dot {
+  width: 26px; height: 26px;
+  border-radius: var(--r-icon);
+  display: grid;
+  place-items: center;
+  background: var(--tint-neutral);
+  color: var(--text-2);
+}
+.cat__dot svg { width: 14px; height: 14px; }
+.cat__title { font-size: 15px; font-weight: 700; letter-spacing: -.028em; }
+.cat__count { font-size: 11px; color: var(--text-3); font-weight: 600; margin-left: auto; }
+
+.cat--islamic .cat__dot { background: var(--tint-accent); color: var(--accent); }
+
+.cat-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+  padding: 0 var(--pad);
+}
+
+.cat-tool {
+  display: flex;
+  flex-direction: column;
+  gap: 9px;
+  padding: 13px 12px 14px;
+  border-radius: var(--r-md);
+  background: var(--card);
+  border: 1px solid var(--border);
+  box-shadow: var(--shadow-xs);
+  text-align: left;
+  min-height: 92px;
+}
+.cat-tool:active { background: var(--card-hover); }
+.cat-tool__icon { color: var(--text); }
+.cat-tool__icon svg { width: 20px; height: 20px; }
+.cat-tool__label { font-size: 12px; font-weight: 600; letter-spacing: -.022em; line-height: 1.25; margin-top: auto; }
+.cat-tool__meta { font-size: 10px; color: var(--text-3); font-weight: 500; margin-top: 2px; }
+.cat--islamic .cat-tool__icon { color: var(--accent); }
+
+.cat-tool.is-hidden { display: none; }
+
+.empty {
+  display: none;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  padding: 44px 30px;
+  text-align: center;
+}
+.empty.is-shown { display: flex; }
+.empty__title { font-size: 15px; font-weight: 700; letter-spacing: -.025em; }
+.empty__text { font-size: 12px; color: var(--text-3); line-height: 1.5; }
+
+/* ---------- Tools screen refinements ----------------------- */
+
+.cat__head > div { flex: 1; min-width: 0; }
+.cat__sub { font-size: 11px; color: var(--text-3); font-weight: 500; margin-top: 1px; }
+.cat-tool { position: relative; }
+.cat-tool__pin {
+  position: absolute; top: 10px; right: 10px;
+  width: 5px; height: 5px; border-radius: 50%;
+  background: var(--accent); opacity: .55;
+}
+.cat-tool__flag {
+  position: absolute; top: 8px; right: 8px;
+  color: var(--text-3); opacity: .6;
+}
+.cat-tool__flag svg { width: 12px; height: 12px; }
+
+.recent {
+  flex: none;
+  display: flex; align-items: center; gap: 8px;
+  padding: 9px 13px 9px 9px;
+  border-radius: var(--r-full);
+  background: var(--card);
+  border: 1px solid var(--border);
+  box-shadow: var(--shadow-xs);
+  scroll-snap-align: start;
+}
+.recent:active { background: var(--card-hover); }
+.recent__icon {
+  width: 26px; height: 26px;
+  border-radius: var(--r-icon);
+  display: grid; place-items: center;
+  background: var(--tint-neutral);
+  color: var(--text-2);
+}
+.recent__icon svg { width: 14px; height: 14px; }
+.recent__label { font-size: 12px; font-weight: 600; letter-spacing: -.022em; white-space: nowrap; }
+
+/* ---------- The narrowest phones ---------------------------- */
+
+@media (max-width: 359px) {
+  .cat-grid { grid-template-columns: repeat(2, 1fr); }
+}

@@ -1,0 +1,130 @@
+/* ============================================================
+   Lume — Markets
+
+   The one tool with enough of its own visual language to earn a
+   stylesheet: an asset-class control that leads, a hero
+   carrying a real quote and chart, dense rows, and a market-wide
+   overview that closes the board.
+
+   Nothing else uses these selectors, which is what makes this a
+   tool sheet rather than another component sheet.
+   ============================================================ */
+
+
+/* ---------- market state strip (§26.10) -------------------- */
+.mktstate {
+  display: flex; align-items: center; gap: 10px; flex-wrap: wrap;
+  padding: 10px var(--pad) 0;
+}
+.mktstate__detail { font-size: 11px; color: var(--text-3); font-weight: 600; }
+.mktstate__change {
+  margin-inline-start: auto;
+  display: inline-flex; align-items: center; gap: 2px;
+  font-size: 12px; font-weight: 700; color: var(--accent);
+  padding: 6px 2px; margin-block: -6px;
+}
+.mktstate__change svg { width: 13px; height: 13px; }
+.is-rtl .mktstate__change svg { transform: scaleX(-1); }
+.mktstate--holiday .fresh, .mktstate--weekend .fresh { color: var(--violet); }
+.mktstate--soon .fresh { color: var(--amber); }
+
+/* ---------- hero (§26.3) ----------------------------------- */
+.kard--mkthero { padding: 16px; }
+.mkthero__top {
+  display: flex; align-items: center; gap: 12px; width: 100%; text-align: start;
+}
+.mkthero__logo {
+  flex: none; width: 40px; height: 40px; border-radius: var(--r-icon);
+  display: grid; place-items: center;
+  font-size: 12px; font-weight: 800; letter-spacing: -.02em;
+  background: var(--tint-neutral); color: var(--text);
+}
+.mkthero__logo--accent { background: var(--tint-accent); color: var(--accent); }
+.mkthero__logo--indigo { background: var(--tone-indigo); color: var(--indigo); }
+.mkthero__logo--amber  { background: var(--tone-amber); color: var(--amber); }
+.mkthero__logo--green  { background: var(--tone-green); color: var(--up); }
+.mkthero__logo--sky    { background: var(--tone-sky); color: var(--sky); }
+.mkthero__logo--violet { background: var(--tone-violet); color: var(--violet); }
+.mkthero__logo--rose   { background: var(--tone-rose); color: var(--rose); }
+.mkthero__id { flex: 1; min-width: 0; }
+.mkthero__name {
+  display: block; font-size: 17px; font-weight: 700; letter-spacing: -.032em;
+  overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+}
+.mkthero__sub {
+  display: block; font-size: 12px; color: var(--text-3); font-weight: 500; margin-top: 1px;
+  overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+}
+.mkthero__go { width: 16px !important; height: 16px !important; color: var(--text-3); flex: none; }
+.is-rtl .mkthero__go { transform: scaleX(-1); }
+
+.mkthero__quote { margin: 16px 0 4px; }
+.mkthero__value {
+  font-size: 34px; font-weight: 800; letter-spacing: -.05em; line-height: 1.05;
+  font-variant-numeric: tabular-nums;
+}
+.mkthero__delta { margin-top: 6px; }
+.mkthero__delta .delta { font-size: 13px; }
+.kard--mkthero .chart { margin-top: 4px; }
+
+/* ---------- timeframe selector ----------------------------- */
+.mktrange {
+  display: flex; gap: 4px; margin-top: 12px;
+  background: var(--tint-neutral); border-radius: var(--r-full); padding: 3px;
+}
+.mktrange__btn {
+  flex: 1; padding: 7px 4px; border-radius: var(--r-full);
+  font-size: 12px; font-weight: 700; letter-spacing: -.01em;
+  color: var(--text-3); font-variant-numeric: tabular-nums;
+  transition: background var(--dur) var(--ease), color var(--dur) var(--ease);
+}
+.mktrange__btn.is-on { background: var(--card); color: var(--text); box-shadow: var(--shadow-xs); }
+
+/* ---------- market overview (§26.5) ------------------------ */
+.mktov { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; }
+.mktov__cell { min-width: 0; }
+.mktov__label {
+  display: block; font-size: 11px; font-weight: 700; letter-spacing: .02em;
+  color: var(--text-3); text-transform: uppercase;
+}
+.mktov__value {
+  display: block; font-size: 17px; font-weight: 800; letter-spacing: -.038em; margin-top: 5px;
+  font-variant-numeric: tabular-nums;
+  overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+}
+.mktov__value .is-up { color: var(--up); }
+.mktov__value .is-down { color: var(--down); }
+.mktov__value i { font-style: normal; color: var(--text-3); font-weight: 600; }
+.mktov__sub { display: block; font-size: 11px; margin-top: 3px; color: var(--text-3); font-weight: 600; }
+
+.mktbreadth { margin-top: 16px; }
+.mktbreadth__bar {
+  display: flex; height: 6px; border-radius: var(--r-full); overflow: hidden;
+  background: color-mix(in srgb, var(--down) 34%, transparent);
+}
+.mktbreadth__bar i { display: block; height: 100%; background: var(--up); }
+.mktbreadth__bar u { display: block; height: 100%; background: var(--text-3); opacity: .5; }
+.mktbreadth__label {
+  display: block; font-size: 11px; color: var(--text-3); font-weight: 600; margin-top: 6px;
+}
+.kard .mktbreadth + .metrics { margin-top: 16px; }
+
+/* ---------- responsive (§26.15) ---------------------------- */
+/* §26.15 — a wide screen gets more chart and more metrics side by side,
+   not three cells stretched across six columns. */
+@media (min-width: 1180px) {
+  .app--wide .kard--mkthero .chart--line svg { height: 260px; }
+  .app--wide .mktrange { max-width: 420px; }
+  .app--wide .mktov { grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); }
+  .app--wide .kard .mktbreadth + .metrics { --cols: 3; }
+  .app--wide [data-sect="assets"] .rrow__meta { flex-wrap: nowrap; }
+}
+
+/* Small screens keep the class control, the hero and the rich rows, and
+   let the secondary metrics wrap rather than truncate (§26.15). */
+@media (max-width: 359px) {
+  .mktov { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .mktov__cell:nth-child(3) { grid-column: 1 / -1; }
+  .mkthero__value { font-size: 28px; }
+  .mktrange__btn { padding: 7px 2px; font-size: 11px; }
+}

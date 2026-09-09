@@ -179,6 +179,50 @@ async function boot(profile, extra) {
     }
     ok('every stylesheet it links resolves', missingCss.length === 0, missingCss.join(', '));
 
+    /* Splitting a stylesheet is only safe where nothing is declared twice.
+       A selector that appears in two sheets is decided by load order, so
+       the pairs that do it are listed deliberately here — anything else
+       showing up means a rule was moved into a file where it can be
+       silently overridden, or silently start overriding. */
+    const ALLOWED_OVERRIDES = [
+      // screen sheets deliberately override the shared component sheet
+      'components.css|screens/today.css',
+      'components.css|screens/explore.css',
+      'components.css|screens/home.css',
+      // themes and keyframes, declared per sheet by design
+      'auth.css|tokens.css',
+      'auth.css|tokens.css|tools/shared.css',
+      'auth.css|base.css',
+      'auth.css|base.css|onboarding.css',
+      'auth.css|components.css',
+      'auth.css|screens/shared.css',
+      'base.css|onboarding.css',
+      'components.css|tools/shared.css',
+      'screens/shared.css|tools/shared.css'
+    ];
+    const declaredIn = new Map();
+    for (const href of styles) {
+      const body = (await get('http://127.0.0.1:' + port + '/' + href)).body
+        .replace(/\/\*[\s\S]*?\*\//g, '');
+      const sheet = href.replace('assets/css/', '');
+      for (const m of body.matchAll(/(^|\})\s*([^{}@]+?)\s*\{/g)) {
+        for (const raw of m[2].split(',')) {
+          const sel = raw.split(/\s+/).filter(Boolean).join(' ');
+          if (!sel) continue;
+          if (!declaredIn.has(sel)) declaredIn.set(sel, new Set());
+          declaredIn.get(sel).add(sheet);
+        }
+      }
+    }
+    const unexpected = [];
+    for (const [sel, sheets] of declaredIn) {
+      if (sheets.size < 2) continue;
+      const key = [...sheets].sort().join('|');
+      if (ALLOWED_OVERRIDES.indexOf(key) === -1) unexpected.push(sel + ' in ' + key);
+    }
+    ok('no selector is split across stylesheets by accident',
+       unexpected.length === 0, unexpected.slice(0, 6).join('; '));
+
     /* Walk the import graph the way a browser does: fetch, read the
        specifiers out of what came back, fetch those. A path that only works
        because the harness normalised it fails here. */

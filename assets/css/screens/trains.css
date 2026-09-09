@@ -1,0 +1,139 @@
+/* ============================================================
+   Lume — Trains screen
+
+   Route cards, the live running strip and the fare table.
+   ============================================================ */
+
+/* ---------- Trains ----------------------------------------- */
+
+.railsearch { position: relative; overflow: hidden; padding: 16px 15px 14px; }
+.railsearch__art { position: absolute; inset: 0; pointer-events: none; }
+.railsearch__art svg { width: 100%; height: 100%; }
+.railsearch__row { position: relative; display: flex; align-items: stretch; gap: 11px; }
+.railsearch__dots { flex: none; display: flex; flex-direction: column; align-items: center; padding: 12px 0; }
+.railsearch__dot {
+  flex: none;
+  width: 8px; height: 8px; border-radius: 50%;
+  border: 2px solid var(--accent); background: var(--card);
+}
+.railsearch__dot--end { border-color: var(--text-3); }
+.railsearch__line { flex: 1; width: 2px; min-height: 24px; background: var(--border-2); margin: 3px 0; border-radius: 2px; }
+.railsearch__fields { flex: 1; min-width: 0; display: grid; gap: 6px; }
+.railfield {
+  display: block; width: 100%; text-align: left;
+  padding: 7px 11px;
+  border-radius: var(--r-sm);
+  background: var(--card-2);
+  border: 1px solid var(--border);
+}
+.railfield:active { background: var(--card-hover); }
+.railfield__label { display: block; font-size: 10px; font-weight: 700; letter-spacing: .07em; text-transform: uppercase; color: var(--text-3); }
+.railfield__value { display: block; font-size: 14px; font-weight: 700; letter-spacing: -.026em; margin-top: 2px; }
+.railswap {
+  flex: none; align-self: center;
+  width: 34px; height: 34px;
+  border-radius: var(--r-icon);
+  display: grid; place-items: center;
+  background: var(--tint-neutral);
+  color: var(--text-2);
+}
+.railswap svg { width: 16px; height: 16px; }
+.railswap:active { background: var(--card-hover); }
+.railsearch__foot { position: relative; display: flex; align-items: center; gap: 7px; margin-top: 13px; }
+.railchip {
+  padding: 8px 12px;
+  border-radius: var(--r-full);
+  font-size: 12px; font-weight: 600;
+  background: var(--card-2);
+  border: 1px solid var(--border);
+  color: var(--text-2);
+  display: flex; align-items: center;
+}
+.railchip svg { width: 14px; height: 14px; }
+.railchip.is-active { background: var(--text); border-color: var(--text); color: var(--bg); }
+.railsearch__go { margin-left: auto; padding: 10px 15px; font-size: 13px; }
+.railsearch__go svg { width: 15px; height: 15px; }
+
+.live-train__head { display: flex; align-items: center; gap: 11px; }
+.live-train__no {
+  flex: none;
+  padding: 5px 8px;
+  border-radius: var(--r-icon);
+  background: var(--tint-accent);
+  color: var(--accent);
+  font-size: 11px; font-weight: 800;
+}
+.live-train__title { flex: 1; min-width: 0; }
+.live-train__name { font-size: 14px; font-weight: 700; letter-spacing: -.028em; }
+.live-train__route { font-size: 11px; color: var(--text-3); font-weight: 500; margin-top: 2px; }
+.live-train__track {
+  position: relative;
+  height: 4px; border-radius: 2px;
+  background: var(--tint-neutral);
+  margin: 22px 0 14px;
+}
+.live-train__fill {
+  display: block; height: 100%; width: 0;
+  border-radius: 2px; background: var(--accent);
+  transition: width var(--dur-slow) var(--ease-out);
+}
+.live-train__pin {
+  position: absolute; top: 50%; left: 0;
+  transform: translate(-50%, -50%);
+  width: 26px; height: 26px;
+  border-radius: 50%;
+  display: grid; place-items: center;
+  background: var(--card);
+  border: 1.5px solid var(--accent);
+  color: var(--accent);
+  box-shadow: var(--shadow-sm);
+  transition: left var(--dur-slow) var(--ease-out);
+}
+.live-train__pin svg { width: 13px; height: 13px; }
+.live-train__stops { display: flex; justify-content: space-between; gap: 8px; }
+.live-train__stops span { font-size: 10px; color: var(--text-3); font-weight: 500; text-align: center; }
+.live-train__stops span:first-child { text-align: left; }
+.live-train__stops span:last-child { text-align: right; }
+.live-train__stops b { display: block; font-size: 12px; font-weight: 700; color: var(--text-2); letter-spacing: -.02em; }
+.live-train__stops .is-now b { color: var(--accent); }
+
+.status {
+  font-size: 10px; font-weight: 700;
+  padding: 4px 9px;
+  border-radius: var(--r-full);
+  background: var(--tint-neutral);
+  color: var(--text-2);
+  display: inline-flex; align-items: center; gap: 5px;
+  white-space: nowrap;
+}
+.status--ok { background: var(--tint-accent); color: var(--accent-ink); }
+[data-theme="dark"] .status--ok { color: var(--accent-700); }
+.status--late { background: color-mix(in srgb, var(--amber) 16%, transparent); color: var(--amber); }
+.status .live {
+  width: 5px; height: 5px; border-radius: 50%;
+  background: currentColor;
+  animation: pulse 2s var(--ease) infinite;
+}
+.trainno {
+  font-size: 10px; font-weight: 700;
+  color: var(--text-3);
+  padding: 1px 5px;
+  border-radius: 5px;
+  background: var(--tint-neutral);
+}
+
+.routecard {
+  flex: none; width: 152px;
+  padding: 14px;
+  border-radius: var(--r-lg);
+  background: var(--card);
+  border: 1px solid var(--border);
+  box-shadow: var(--shadow-sm);
+  text-align: left;
+  scroll-snap-align: start;
+}
+.routecard:active { background: var(--card-hover); }
+.routecard__pair { display: flex; align-items: center; gap: 7px; font-size: 15px; font-weight: 800; letter-spacing: -.03em; }
+.routecard__pair svg { width: 14px; height: 14px; color: var(--text-3); }
+.routecard__meta { display: block; font-size: 11px; color: var(--text-3); font-weight: 500; margin-top: 7px; }
+.routecard__fare { display: block; font-size: 12px; font-weight: 700; color: var(--accent); margin-top: 5px; }
