@@ -1499,39 +1499,24 @@ button.crow:active { background: var(--card-hover); }
 }
 .fab svg { width: 19px; height: 19px; }
 .fab:active { transform: scale(.95); }
-@media (min-width: 760px) { .fab { position: absolute; } }
+@media (min-width: 600px) { .fab { position: absolute; } }
 
 /* ============================================================
-   Responsive (§116)
+   Desk-width refinement  (§116)
 
-   A tablet is not a stretched phone. Above 1180px the shell
-   stops pretending to be a handset, the reading column is
-   capped so line length stays comfortable, and compositions
-   that were single-column on a phone gain a second column —
-   hierarchy is preserved, not flattened.
+   The three width classes and everything structural about them
+   — navigation, content cap, master-detail — live in
+   responsive.css, which is the Design System's own model. What
+   is left here is the one thing that model deliberately does
+   not decide: how many columns a *grid* should have once there
+   is room for more of them.
+
+   A capped reading column with four metrics across is still one
+   readable column. Widening the column instead would flatten
+   the hierarchy, which is the failure the Design System calls
+   "stretched, not adapted".
    ============================================================ */
 @media (min-width: 1180px) {
-  .app.app--wide {
-    width: min(1080px, calc(100vw - 96px));
-    height: min(920px, calc(100dvh - 64px));
-    border-radius: var(--r-xl);
-    box-shadow: 0 0 0 1px var(--border), var(--shadow-lg);
-  }
-  .app--wide::after { display: none; }   /* no device notch at desk size */
-  .app--wide .statusbar { display: none; }
-
-  .app--wide .screen { padding-inline: 0; }
-
-  /* One reading column, centred, with denser grids inside it. */
-  .app--wide .sect,
-  .app--wide .section,
-  .app--wide .row-gap,
-  .app--wide .stats,
-  .app--wide .page-head,
-  .app--wide .timeline { max-width: 880px; margin-inline: auto; }
-
-  .app--wide .toolbar { max-width: 880px; margin-inline: auto; }
-
   .app--wide .metrics { --cols: 4; }
   .app--wide .tiles { grid-template-columns: repeat(5, 1fr); }
   .app--wide .ngrid { grid-template-columns: repeat(4, 1fr); }
@@ -1540,21 +1525,13 @@ button.crow:active { background: var(--card-hover); }
   .app--wide .tools-grid { grid-template-columns: repeat(8, 1fr); }
   .app--wide .cat-grid { grid-template-columns: repeat(6, 1fr); }
 
-  /* Two columns where the second column is genuinely supporting
-     information rather than a wrapped continuation. */
+  /* Two columns where the second is genuinely supporting information
+     rather than a wrapped continuation. */
   .app--wide .donutwrap { flex-wrap: nowrap; }
   .app--wide .chart--line svg { height: 200px; }
   .app--wide .lmap { height: 260px; }
   .app--wide .lmap--tall { height: 340px; }
   .app--wide .compass__face { width: 300px; height: 300px; }
-
-  .app--wide .tabbar { max-width: 880px; margin-inline: auto; border-radius: var(--r-xl) var(--r-xl) 0 0; }
-  .app--wide .fab { inset-inline-end: calc(50% - 420px); }
-}
-
-/* Phone-sized viewports keep the handset composition unchanged. */
-@media (max-width: 1179px) {
-  .app--wide { /* class is inert below the breakpoint */ }
 }
 
 /* ============================================================

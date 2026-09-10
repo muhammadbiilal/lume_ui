@@ -46,18 +46,24 @@ assets/js/
                       the services, mounts the screens, owns the action
                       vocabulary
   core/               router, lifecycle, profile store, eligibility,
-                      storage, the shell context and four DOM helpers
-  data/…              catalogue, tool specs, demonstration data, geography
+                      the record store, the width class, storage, the
+                      shell context and four DOM helpers
+  data/…              catalogue, tool specs, record schemas,
+                      demonstration data, geography
   services/           account forms, notifications, prayer times, search,
                       share cards, appearance
-  ui/                 sheets, pickers, the component builders
+  ui/                 sheets, pickers, the component builders and the
+                      record vocabulary
   screens/            one module per destination, each owning its markup,
                       its rendering and its own cleanup
   tools/              one module per tool, under its category, plus a
                       registry that checks itself against the catalogue
+                      and the CRUD engine every record tool runs on
 
 assets/css/
   tokens, base, components        global
+  crud.css                        record lists, details, forms and states
+  responsive.css                  the three width classes
   screens/…                       one sheet per screen
   tools/shared.css, markets.css   the tool component library, and the one
                                   tool with enough of its own language to
@@ -65,8 +71,8 @@ assets/css/
   rtl.css                         direction, last so it can correct
 ```
 
-Two rules hold the structure together, and `tests/architecture.js`
-enforces both:
+Four rules hold the structure together. `tests/architecture.js` enforces
+the first two; `tests/design.js` and `tests/crud.js` enforce the others.
 
 **Visibility is asked in one place.** Whether a feature exists for this
 user is decided by `core/eligibility.js` and nowhere else, so Home, Tools,
@@ -80,13 +86,40 @@ element into the outlet and is handed that element back on every later
 call, so it cannot reach a sibling. Listeners are bound with an abort
 signal and timers stop when the screen leaves.
 
+**The width is decided in one place.** `core/breakpoint.js` measures the
+shell — not the window, which is a different number once the shell is
+inside the stage's padding and capped at 1366 — and stamps `data-bp` on
+`<html>`. `responsive.css` switches on that attribute and nothing else
+counts pixels a second time. The three classes are the Design System's:
+compact below 600 with a bottom bar, medium 600–839 with a labelled
+navigation rail, expanded 840–1366 with a persistent sidebar and
+master-detail. The navigation is one destination set drawn twice, so the
+router selects a destination rather than keeping three bars in step.
+
+**A record flow is written once.** Twelve tools keep records — tasks,
+reminders, notes, expenses, medication, documents, health records, habits,
+water, shopping, events and birthdays — and none of them writes a list, a
+form or a delete confirmation. `data/record-schemas.js` says what each
+record *is*; `tools/crud-engine.js` builds every view from that, owns the
+validation lifecycle and the dirty guard, and `core/records.js` holds the
+records. The states the CRUD guide asks for are real rather than mocked: a
+collection hydrates on a genuinely deferred read, `navigator.onLine` drives
+offline, device storage genuinely refuses writes where it is blocked, a
+corrupt store is a genuine load error, and every record carries a version
+so a form opened against one cannot silently overwrite another.
+
+Deleting says which kind of deletion it is. Most families offer Undo and
+mean it; documents and health records — the two whose consideration in the
+guide is secure deletion and consent — say the action cannot be undone and
+then do not arm an Undo they could not honour.
+
 ## Tests
 
 ```bash
 npm test
 ```
 
-Eight suites, all of which boot the real `index.html`:
+Ten suites, all of which boot the real `index.html`:
 
 | Suite | What it holds |
 | --- | --- |
@@ -98,6 +131,8 @@ Eight suites, all of which boot the real `index.html`:
 | `notify.js` | the notification engine, centre, privacy rules and permission flow |
 | `account.js` | onboarding, identity, settings and the account lifecycle |
 | `auth.js` | the authentication flows and their layout contract |
+| `design.js` | the Design System's handoff contract: the palette, the type scale, spacing, motion, the three width classes and a golden pass at each |
+| `crud.js` | the CRUD guide's own checklist, driven: every state, the validation lifecycle, conflict, undo, the dirty guard and master-detail |
 
 jsdom has no module loader, so `scripts/bundler.js` resolves the import
 graph itself and hands jsdom one ordinary script — the same bundler

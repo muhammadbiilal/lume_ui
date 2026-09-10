@@ -15,8 +15,10 @@ export default {
     var notesShown = n.all.filter(function (x) {
       return !query || (x.title + ' ' + x.excerpt + ' ' + x.folder).toLowerCase().indexOf(query) !== -1;
     });
-    return UI.section({ body: UI.searchBar({ placeholder: c.t('notes.search'), target: 'notes', value: c.state('q') || '' }) }) +
-      UI.section({ body: UI.metrics([
+    /* The search for this tool is the one over its records, which the
+       CRUD engine draws above this composition. A second field here
+       would search a different list with the same words. */
+    return       UI.section({ body: UI.metrics([
         { value: String(n.all.length), label: c.t('notes.total') },
         { value: String(n.pinned.length), label: c.t('notes.pinned') },
         { value: String(n.folders.length), label: c.t('notes.folders') }

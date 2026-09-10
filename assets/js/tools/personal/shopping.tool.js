@@ -28,7 +28,6 @@ export default {
         aside: UI.progressRing({ value: s.checked / s.items.length,
           centre: s.checked + '/' + s.items.length, label: c.t('shopping.progress') })
       }) }) +
-      UI.section({ body: UI.searchBar({ placeholder: c.t('shopping.add'), target: 'shopping', value: c.state('q') || '' }) }) +
       shopGroups.map(function (g) {
         return UI.section({ title: g.label, body: UI.rows(g.items.map(function (x) {
           return '<button class="taskrow pressable' + (x.done ? ' is-done' : '') + '" data-shop="' + UI.esc(x.id) + '"' +

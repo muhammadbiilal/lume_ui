@@ -51,16 +51,27 @@ export function createRouter(deps) {
     pill.style.transform = 'translateX(' + tab.offsetLeft + 'px)';
   }
 
+  /* Every presentation of the navigation is selected at once — bottom bar,
+     rail and sidebar are the same destination set at three widths, and a
+     user who resizes must not find the other one still pointing at where
+     they used to be. The pill belongs to the bottom bar alone, so it is
+     read from there rather than from whichever .tab matched last. */
   function syncTabs(name) {
     let active = null;
-    $$('.tab').forEach(function (tab) {
+    $$('.tab, .navtab').forEach(function (tab) {
       const on = tab.dataset.tab === name;
       tab.classList.toggle('is-active', on);
       tab.setAttribute('aria-selected', on ? 'true' : 'false');
       if (on) active = tab;
     });
-    movePill(active);
+    movePill(barTab());
     return active;
+  }
+
+  /* The selected destination in the bottom bar specifically. */
+  function barTab() {
+    const bar = $('#tabbar');
+    return bar ? $('.tab.is-active', bar) : null;
   }
 
   /* The single activation path. Everything that shows a screen comes
@@ -103,7 +114,9 @@ export function createRouter(deps) {
     },
 
     isTab: isTab,
-    movePill: movePill,
+    /* Called after a resize, when the pill's arithmetic has changed but the
+       destination has not. */
+    movePill: function (tab) { movePill(tab === undefined ? barTab() : tab); },
 
     go: function (name, opts) { return activate(name, opts); },
 

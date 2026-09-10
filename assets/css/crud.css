@@ -1,0 +1,586 @@
+/* ============================================================
+   Lume — record flows  (CRUD guide §3-§10)
+
+   The visual half of the CRUD vocabulary. Every value here
+   comes from the token file: this stylesheet introduces no
+   colour, no radius and no type size of its own, because a
+   record screen is not a different product from the rest of
+   Lume — it is the same one, doing a different job.
+
+   Layout that changes with width lives in responsive.css. What
+   is here is true at every width.
+   ============================================================ */
+
+/* ------------------------------------------------------------
+   The list
+   ------------------------------------------------------------ */
+
+.rrecs {
+  display: grid;
+  gap: 10px;
+}
+
+.rrec {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  width: 100%;
+  min-height: var(--tap);
+  padding: 13px 14px;
+  border-radius: var(--r-md);
+  background: var(--card);
+  border: 1px solid var(--border);
+  box-shadow: var(--shadow-xs);
+  text-align: start;
+  transition: border-color var(--dur-fast) var(--ease),
+              background-color var(--dur-fast) var(--ease);
+}
+.rrec:hover { background: var(--card-hover); }
+
+/* Selection in a detail pane is a state of the row, not a press of it: it
+   persists, so it is drawn with a border and a tint rather than a flash. */
+.rrec.is-selected {
+  background: var(--tint-accent);
+  border-color: color-mix(in srgb, var(--accent) 45%, transparent);
+}
+
+/* A completed record is quieter, but never invisible: it is still a record
+   the user can open, edit and read. */
+.rrec.is-done .rrec__title { text-decoration: line-through; color: var(--text-3); }
+.rrec.is-done .rrec__disc { opacity: .55; }
+
+/* The initial disc from the reference list. Records are the user's own
+   words, and there is no icon for those. */
+.rrec__disc {
+  flex: none;
+  width: 38px; height: 38px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  background: var(--tint-accent);
+  color: var(--accent-700);
+  font: var(--t-cardtitle);
+  letter-spacing: -.01em;
+}
+
+/* Where a family logs completion, the disc is a checkbox instead — one tap
+   from the list, no form (guide §11, "fast optimistic logging"). */
+.rrec__check {
+  flex: none;
+  width: 38px; height: 38px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  background: var(--tint-neutral);
+  border: 1px solid var(--border-2);
+  color: transparent;
+  cursor: pointer;
+  transition: background-color var(--dur-fast) var(--ease), color var(--dur-fast) var(--ease);
+}
+.rrec__check svg { width: 17px; height: 17px; }
+.rrec__check.is-on {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: var(--on-accent);
+}
+
+.rrec__body { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 2px; }
+.rrec__titleline { display: flex; align-items: center; gap: 7px; min-width: 0; }
+.rrec__title {
+  font: var(--t-cardtitle);
+  letter-spacing: -.026em;
+  overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+}
+.rrec__sub {
+  font: var(--t-metasm);
+  color: var(--text-3);
+  overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+}
+.rrec__meta {
+  display: flex; align-items: center; gap: 5px;
+  font: var(--t-metasm);
+  color: var(--text-3);
+}
+.rrec__dot { width: 2.5px; height: 2.5px; border-radius: 50%; background: currentColor; opacity: .5; }
+
+.rrec__end { flex: none; display: flex; align-items: center; gap: 8px; }
+.rrec__value {
+  font: var(--t-cardtitle);
+  letter-spacing: -.03em;
+  color: var(--text-2);
+  font-variant-numeric: tabular-nums;
+}
+/* A write made offline says so rather than passing for current (§10). */
+.rrec__queued {
+  font: var(--t-metasm);
+  color: var(--amber);
+}
+.rrec__chev { width: 15px !important; height: 15px !important; color: var(--text-3); }
+
+.crud__count { font: var(--t-metasm); color: var(--text-3); }
+
+/* Filter chips with their counts. */
+.cchips {
+  display: flex;
+  gap: 8px;
+  margin: 12px 0;
+  overflow-x: auto;
+  scrollbar-width: none;
+  padding-bottom: 2px;
+}
+.cchips::-webkit-scrollbar { display: none; }
+.cchip {
+  flex: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  min-height: 38px;
+  padding: 0 16px;
+  border-radius: var(--r-full);
+  background: var(--card);
+  border: 1px solid var(--border-2);
+  color: var(--text-2);
+  font: var(--t-label);
+  white-space: nowrap;
+}
+.cchip.is-on {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: var(--on-accent);
+}
+.cchip__n { opacity: .7; font-variant-numeric: tabular-nums; }
+
+.cbulk { margin-top: 14px; }
+.cbulk .btn { width: 100%; }
+
+/* ------------------------------------------------------------
+   The detail
+   ------------------------------------------------------------ */
+
+/* The gradient hero the reference detail leads with. It reuses the
+   summary--* colourways so a record hero and a tool hero are the same
+   surface, re-authored for dark mode in the same place. */
+.chero {
+  padding: 22px;
+  border-radius: var(--r-lg);
+  color: var(--on-grad);
+  overflow: hidden;
+}
+.chero__kicker {
+  font: var(--t-label);
+  letter-spacing: .09em;
+  text-transform: uppercase;
+  opacity: .82;
+  margin-bottom: 14px;
+}
+.chero__value {
+  font: var(--t-display);
+  font-size: 32px;
+  letter-spacing: -.035em;
+  font-variant-numeric: tabular-nums;
+}
+.chero__title { font: var(--t-section); margin-top: 4px; }
+.chero__caption { font: var(--t-meta); opacity: .78; margin-top: 10px; }
+
+/* Label left, value right, hairline between — the reference detail card. */
+.cfacts {
+  margin-top: 12px;
+  padding: 4px 16px;
+  border-radius: var(--r-md);
+  background: var(--card);
+  border: 1px solid var(--border);
+  box-shadow: var(--shadow-xs);
+}
+.cfact {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 20px;
+  padding: 15px 0;
+  border-bottom: 1px solid var(--border);
+}
+.cfact:last-child { border-bottom: 0; }
+.cfact__label { font: var(--t-body); color: var(--text-3); flex: none; }
+.cfact__value {
+  font: var(--t-bodystrong);
+  font-weight: 700;
+  text-align: end;
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+/* A note is a paragraph, not a right-aligned column. */
+.cfact--block { display: block; }
+.cfact--block .cfact__value {
+  display: block;
+  text-align: start;
+  margin-top: 6px;
+  font-weight: 500;
+  color: var(--text-2);
+}
+
+/* Edit and delete are surfaces rather than filled buttons: the primary
+   action of a detail screen is reading it. */
+.cacts { display: grid; gap: 10px; margin-top: 20px; }
+.cact {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 9px;
+  min-height: 52px;
+  border-radius: var(--r-sm);
+  font: var(--t-cardtitle);
+}
+.cact svg { width: 17px; height: 17px; }
+.cact--edit { background: var(--tint-accent); color: var(--accent-700); }
+.cact--danger {
+  background: color-mix(in srgb, var(--rose) 10%, var(--card));
+  color: var(--rose-ink);
+}
+
+.crud__id {
+  margin-top: 18px;
+  text-align: center;
+  font: var(--t-metasm);
+  color: var(--text-3);
+}
+
+/* ------------------------------------------------------------
+   The form
+   ------------------------------------------------------------ */
+
+.cform { display: grid; gap: 18px; }
+
+.cfield { display: flex; flex-direction: column; gap: 7px; min-width: 0; }
+.cfield--wide { grid-column: 1 / -1; }
+
+/* Label above the field, in sentence case, at label weight — not a
+   shouted uppercase micro-label. It is read before the field, so it is
+   read at a readable size. */
+.cfield__label {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+  font: var(--t-label);
+  color: var(--text-2);
+}
+.cfield__opt { font: var(--t-metasm); color: var(--text-3); font-style: normal; }
+
+.cfield__box {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 48px;
+  padding: 0 14px;
+  background: var(--card);
+  border: 1px solid var(--border-2);
+  border-radius: var(--r-sm);
+  transition: border-color var(--dur-fast) var(--ease), box-shadow var(--dur-fast) var(--ease);
+}
+.cfield__box:focus-within {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px var(--tint-accent);
+}
+/* Invalid is a boundary *and* a message below it: colour never carries a
+   status alone (§9). */
+.cfield__box.is-invalid { border-color: var(--rose-ink); }
+.cfield__box.is-invalid:focus-within {
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--rose) 22%, transparent);
+}
+
+.cfield__box input,
+.cfield__box textarea,
+.cfield__box select {
+  flex: 1;
+  min-width: 0;
+  width: 100%;
+  border: 0;
+  background: none;
+  outline: none;
+  font: var(--t-body);
+  font-weight: 500;
+  color: var(--text);
+  padding: 12px 0;
+}
+.cfield__box textarea { resize: vertical; min-height: 76px; line-height: 1.55; }
+.cfield__box input::placeholder,
+.cfield__box textarea::placeholder { color: var(--text-3); font-weight: 400; }
+.cfield__affix { font: var(--t-label); color: var(--text-3); font-style: normal; }
+
+.cfield__select { display: flex; align-items: center; gap: 8px; flex: 1; min-width: 0; }
+.cfield__select select { appearance: none; -webkit-appearance: none; cursor: pointer; }
+.cfield__select svg { width: 15px; height: 15px; color: var(--text-3); flex: none; }
+
+.cfield__hint { font: var(--t-metasm); color: var(--text-3); }
+.cfield__err {
+  display: flex;
+  align-items: baseline;
+  gap: 6px;
+  font: var(--t-label);
+  color: var(--rose-ink);
+}
+.cfield__err i { font-style: normal; font-weight: 800; }
+
+/* A checkbox field is one row, and the whole row is the target. */
+.cfield--check {
+  flex-direction: row;
+  align-items: center;
+  gap: 12px;
+  min-height: var(--tap);
+  cursor: pointer;
+}
+.cfield--check input {
+  position: absolute;
+  width: 1px; height: 1px;
+  opacity: 0;
+  pointer-events: none;
+}
+.cfield__checkbox {
+  flex: none;
+  width: 24px; height: 24px;
+  border-radius: 7px;
+  display: grid;
+  place-items: center;
+  border: 1.5px solid var(--border-2);
+  background: var(--card);
+  color: transparent;
+  transition: background-color var(--dur-fast) var(--ease), border-color var(--dur-fast) var(--ease);
+}
+.cfield__checkbox svg { width: 15px; height: 15px; }
+.cfield--check input:checked + .cfield__checkbox {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: var(--on-accent);
+}
+.cfield--check input:focus-visible + .cfield__checkbox {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+.cfield--check .cfield__label { font: var(--t-body); font-weight: 600; color: var(--text); }
+
+.cattach {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 9px;
+  min-height: 64px;
+  border-radius: var(--r-sm);
+  border: 1px dashed var(--border-2);
+  background: var(--card);
+  color: var(--accent-700);
+  font: var(--t-cardtitle);
+}
+.cattach svg { width: 17px; height: 17px; }
+
+/* The tablet form card (reference visual, tablet create). */
+.cformcard {
+  padding: 24px;
+  border-radius: var(--r-md);
+  background: var(--card);
+  border: 1px solid var(--border);
+  box-shadow: var(--shadow-xs);
+}
+.cformcard__title { font: var(--t-section); margin-bottom: 20px; }
+
+.csubmit { display: grid; gap: 10px; margin-top: 28px; }
+.csubmit__note { text-align: center; font: var(--t-metasm); color: var(--text-3); }
+
+/* Inside a tablet form card the two actions sit side by side and size to
+   their labels, as the reference create screen does. A phone keeps them
+   stacked and full width, where the thumb is. */
+.cformcard .csubmit {
+  display: flex;
+  gap: 12px;
+  border-top: 1px solid var(--border);
+  padding-top: 24px;
+}
+.cformcard .csubmit .btn { flex: none; min-width: 180px; }
+.cformcard .csubmit .btn--ghost { background: var(--tint-neutral); }
+
+/* The busy button already exists — .btn.is-busy and .btn__spin are in
+   account.css, where the first flow that needed one put them. A record
+   form that saves is the same button doing the same thing, so it reaches
+   for that rather than declaring a second one. */
+
+/* ------------------------------------------------------------
+   Notices — failure, conflict, offline
+   ------------------------------------------------------------ */
+
+.cnotice {
+  display: flex;
+  align-items: flex-start;
+  gap: 11px;
+  padding: 14px;
+  border-radius: var(--r-sm);
+  margin-bottom: 18px;
+  border: 1px solid var(--border-2);
+  background: var(--card-2);
+}
+.cnotice svg { width: 18px; height: 18px; flex: none; margin-top: 1px; }
+.cnotice__body { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 3px; }
+.cnotice__body b { font: var(--t-label); font-size: 13px; }
+.cnotice__body i { font: var(--t-metasm); font-style: normal; color: var(--text-2); }
+.cnotice__acts { display: flex; gap: 6px; flex: none; }
+.cnotice__act {
+  flex: none;
+  min-height: 36px;
+  padding: 0 12px;
+  border-radius: var(--r-xs);
+  background: var(--card);
+  border: 1px solid var(--border-2);
+  font: var(--t-label);
+  color: var(--text);
+}
+.cnotice--error {
+  background: color-mix(in srgb, var(--rose) 8%, var(--card));
+  border-color: color-mix(in srgb, var(--rose) 26%, transparent);
+}
+.cnotice--error > svg { color: var(--rose-ink); }
+.cnotice--warn {
+  background: color-mix(in srgb, var(--amber) 10%, var(--card));
+  border-color: color-mix(in srgb, var(--amber) 30%, transparent);
+}
+.cnotice--warn > svg { color: var(--amber); }
+.cnotice--offline > svg { color: var(--text-3); }
+
+/* ------------------------------------------------------------
+   States
+   ------------------------------------------------------------ */
+
+/* Skeletons shaped like the rows they stand in for. */
+.csks { display: grid; gap: 10px; }
+.csk {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 13px 14px;
+  border-radius: var(--r-md);
+  background: var(--card);
+  border: 1px solid var(--border);
+}
+.csk__disc { width: 38px; height: 38px; border-radius: 50%; flex: none; }
+.csk__body { flex: 1; min-width: 0; display: grid; gap: 7px; }
+.csk__l1 { height: 12px; width: 58%; border-radius: 5px; }
+.csk__l2 { height: 10px; width: 38%; border-radius: 5px; }
+.csk__val { width: 60px; height: 12px; border-radius: 5px; flex: none; }
+
+.cstate {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 10px;
+  padding: 44px 24px;
+}
+.cstate__art {
+  width: 96px; height: 96px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  background: var(--tint-accent);
+  color: var(--accent);
+  margin-bottom: 8px;
+}
+.cstate__art svg { width: 34px; height: 34px; }
+.cstate__art--error {
+  background: color-mix(in srgb, var(--rose) 12%, transparent);
+  color: var(--rose-ink);
+}
+.cstate__title { font: var(--t-section); font-size: 19px; }
+.cstate__text { font: var(--t-body); color: var(--text-2); max-width: 34ch; }
+.cstate__cta { margin-top: 12px; min-width: 220px; }
+.cstate__foot { font: var(--t-metasm); color: var(--text-3); margin-top: 4px; }
+
+/* A quiet state is a smaller one: nothing found, nothing selected. */
+.cstate--quiet { padding: 32px 20px; }
+.cstate--quiet .cstate__title { font: var(--t-cardtitle); }
+.cstate--pane {
+  border-radius: var(--r-md);
+  border: 1px dashed var(--border-2);
+  min-height: 320px;
+  justify-content: center;
+}
+
+/* ------------------------------------------------------------
+   The confirmation sheet
+   ------------------------------------------------------------ */
+
+.sheet--confirm { padding-bottom: max(20px, env(safe-area-inset-bottom)); }
+
+.dconfirm {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 10px;
+  padding: 22px 20px 6px;
+}
+.dconfirm__mark {
+  width: 70px; height: 70px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  background: color-mix(in srgb, var(--rose) 12%, transparent);
+  color: var(--rose-ink);
+  font-size: 30px;
+  font-weight: 800;
+  margin-bottom: 6px;
+}
+.sheet--confirm.is-warn .dconfirm__mark {
+  background: color-mix(in srgb, var(--amber) 14%, transparent);
+  color: var(--amber);
+}
+.dconfirm__title { font: var(--t-title); }
+.dconfirm__text {
+  font: var(--t-body);
+  color: var(--text-2);
+  max-width: 36ch;
+  margin-bottom: 14px;
+}
+.dconfirm .btn { width: 100%; }
+.sheet--confirm.is-warn .btn--danger {
+  background: var(--amber);
+  color: var(--on-amber);
+  box-shadow: none;
+}
+.btn--quiet {
+  background: var(--tint-neutral);
+  color: var(--text);
+}
+
+/* ------------------------------------------------------------
+   The toast's action
+   ------------------------------------------------------------ */
+
+.toast--action { padding-inline-end: 6px; }
+.toast__act {
+  margin-inline-start: 10px;
+  min-height: 36px;
+  padding: 0 14px;
+  border-radius: var(--r-full);
+  color: var(--accent-400);
+  font: var(--t-label);
+  letter-spacing: .04em;
+  text-transform: uppercase;
+}
+.toast__act:active { background: rgba(255, 255, 255, .12); }
+
+/* ------------------------------------------------------------
+   A text action in the tool header
+   ------------------------------------------------------------ */
+
+.textbtn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  min-height: var(--tap);
+  padding: 0 10px;
+  border-radius: var(--r-xs);
+  color: var(--accent-700);
+  font: var(--t-cardtitle);
+}
+.textbtn svg { width: 16px; height: 16px; }
+.textbtn:active { background: var(--tint-accent); }
+
+@media (prefers-reduced-motion: reduce) {
+  .rrec, .cfield__box, .rrec__check, .cfield__checkbox { transition: none; }
+}

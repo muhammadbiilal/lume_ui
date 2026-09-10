@@ -44,6 +44,9 @@ import { createProfileStore } from './core/app-store.js';
 import { createEligibility } from './core/eligibility.js';
 import { createLifecycle } from './core/lifecycle.js';
 import { createRouter } from './core/router.js';
+import { createBreakpoint } from './core/breakpoint.js';
+import { createRecords } from './core/records.js';
+import { seedsFor } from './data/record-schemas.js';
 import { createScreens } from './screens/index.js';
 import { createShellContext } from './core/shell-context.js';
 import { createAccountForms } from './services/account-forms.js';
@@ -63,6 +66,11 @@ import { onboardingTemplate } from './screens/onboarding.screen.js';
    after every import has evaluated, so they are never seen unset. */
 export let account = null;
 export let accountUI = null;
+/* The record store and the width class, published for the same reason the
+   two above are: the harness drives them, and nothing in the app reads
+   this. */
+export let records = null;
+export let breakpoint = null;
 
 (function () {
   'use strict';
@@ -258,13 +266,40 @@ export let accountUI = null;
   /* ---------------------------------------------------------
      Toast
      --------------------------------------------------------- */
-  var toastEl = $('#toast'), toastText = $('#toastText'), toastTimer;
-  function toast(msg) {
+  var toastEl = $('#toast'), toastText = $('#toastText'), toastAct = $('#toastAct'), toastTimer;
+
+  /* A toast confirms and gets out of the way. It may carry exactly one
+     action — Undo, where reversal is safe — and it stays a little longer
+     when it does, because an action nobody has time to reach is not one
+     (CRUD guide §7, §10). */
+  function toast(msg, action) {
     if (!toastEl) return;
     toastText.textContent = msg;
+    if (toastAct) {
+      if (action && action.act) {
+        toastAct.textContent = action.label;
+        toastAct.dataset.act = action.act;
+        toastAct.hidden = false;
+      } else {
+        toastAct.hidden = true;
+        delete toastAct.dataset.act;
+      }
+    }
+    toastEl.classList.toggle('toast--action', !!(action && action.act));
     toastEl.classList.add('is-open');
     clearTimeout(toastTimer);
-    toastTimer = setTimeout(function () { toastEl.classList.remove('is-open'); }, 2100);
+    toastTimer = setTimeout(function () {
+      toastEl.classList.remove('is-open');
+      /* The undo entry goes with the toast that offered it: an Undo the
+         user can no longer see must not still be armed somewhere. */
+      if (action && action.act === 'rec:undo') RECORDS.forgetUndo();
+    }, action && action.act ? 6000 : 2100);
+  }
+
+  function hideToast() {
+    if (!toastEl) return;
+    toastEl.classList.remove('is-open');
+    clearTimeout(toastTimer);
   }
 
   /* ---------------------------------------------------------
@@ -292,16 +327,36 @@ export let accountUI = null;
   /* Navigation lives in core/router.js and core/lifecycle.js. What stays
      here is the two things the router asks the product: which destinations
      are tabs right now, and what a tab looks like. */
+  /* One destination set, three presentations (Design System §6). Both bars
+     are drawn from the same tabOrder(), carry the same data-tab and the
+     same .tab class, so the router selects a destination once rather than
+     keeping three navigations in step by hand. */
   function renderTabBar() {
+    var order = tabOrder();
+
     var bar = $('#tabbar');
-    if (!bar) return;
-    var pill = '<span class="tabbar__pill" id="tabPill"></span>';
-    bar.innerHTML = pill + tabOrder().map(function (id) {
-      var m = TAB_META[id];
-      return '<button class="tab" data-tab="' + id + '" role="tab" aria-selected="false">' +
-        '<svg class="ico" viewBox="0 0 24 24"><use href="#' + m.icon + '"/></svg>' +
-        '<span class="tab__label">' + esc(t(m.key)) + '</span></button>';
-    }).join('');
+    if (bar) {
+      var pill = '<span class="tabbar__pill" id="tabPill"></span>';
+      bar.innerHTML = pill + order.map(function (id) {
+        var m = TAB_META[id];
+        return '<button class="tab" data-tab="' + id + '" role="tab" aria-selected="false">' +
+          '<svg class="ico" viewBox="0 0 24 24"><use href="#' + m.icon + '"/></svg>' +
+          '<span class="tab__label">' + esc(t(m.key)) + '</span></button>';
+      }).join('');
+    }
+
+    /* The rail and the sidebar are the same element at two widths: the
+       stylesheet decides whether the label sits beside the icon or under
+       it, so there is one piece of markup rather than two. */
+    var side = $('#navside');
+    if (side) {
+      side.innerHTML = '<span class="navside__brand">Lume</span>' + order.map(function (id) {
+        var m = TAB_META[id];
+        return '<button class="navtab" data-tab="' + id + '" role="tab" aria-selected="false">' +
+          '<svg class="ico" viewBox="0 0 24 24"><use href="#' + m.icon + '"/></svg>' +
+          '<span class="navtab__label">' + esc(t(m.key)) + '</span></button>';
+      }).join('');
+    }
   }
 
   var ROUTER = createRouter({
@@ -332,17 +387,59 @@ export let accountUI = null;
   function renderTabs() { ROUTER.refreshTabs(); }
   function movePill(tab) { ROUTER.movePill(tab); }
 
-  /* §116 — above a real desktop width the shell stops presenting itself as a
-     handset and the compositions inside gain columns. Everything below that
-     stays exactly as designed for a phone. */
+  /* ---------------------------------------------------------
+     Width
+
+     Which of the three width classes is showing is answered
+     once, by core/breakpoint.js, and stamped on <html>. Two
+     things react to it here: the compositions that gain columns
+     at desk width, and every screen — because a screen that
+     rendered a phone list must re-render as a master-detail
+     when a pane appears beneath it, and back again when it goes
+     (Design System §6, CRUD guide §8).
+     --------------------------------------------------------- */
+  var BP = createBreakpoint({ shell: $('#app') });
+  breakpoint = BP;
+
+  /* ---------------------------------------------------------
+     Records
+
+     Everything the user creates — tasks, notes, expenses, doses,
+     documents, measurements, items, events — lives in one store
+     (CRUD guide §1). It is constructed here because it belongs
+     to no single tool: Home reads a count from it, the tool host
+     writes to it, and the notification engine will one day read
+     due dates from it.
+
+     Changing country, language or faith preference does not
+     touch it. That is §37 of the product brief, and it is true
+     here by construction rather than by care: nothing in the
+     personalisation path writes to this key.
+     --------------------------------------------------------- */
+  var RECORDS = createRecords({ store: store, seeds: seedsFor });
+  records = RECORDS;
+
+  /* §116 — above a real desktop width the compositions inside the capped
+     reading column gain columns. This is a refinement of `expanded`, not a
+     fourth width class. */
   function applyWidth() {
     var el = $('#app');
-    if (el) el.classList.toggle('app--wide', window.innerWidth >= 1180);
+    if (el) el.classList.toggle('app--wide', BP.is('expanded') && window.innerWidth >= 1180);
   }
 
-  window.addEventListener('resize', function () {
+  BP.subscribe(function () {
     applyWidth();
-    movePill($('.tab.is-active'));
+    /* Re-render rather than reflow: a compact list and an expanded
+       master-detail are different compositions of the same data, not the
+       same markup at two sizes. */
+    LIFECYCLE.ids().forEach(function (id) { LIFECYCLE.render(id); });
+    movePill();
+  });
+
+  window.addEventListener('resize', function () {
+    BP.refresh();
+    applyWidth();
+    movePill();
   });
 
   function animateBars(scope) {
@@ -468,7 +565,13 @@ export let accountUI = null;
       }
       return;
     }
-    if (el.dataset.act) { runAct(el.dataset.act); return; }
+    if (el.dataset.act) {
+      /* Tapping the toast's own action dismisses it: the confirmation has
+         been answered and should not linger over the result. */
+      if (el === toastAct) hideToast();
+      runAct(el.dataset.act);
+      return;
+    }
     if (el.dataset.sheet) { sheetOpen(el.dataset.sheet); return; }
     if (el.dataset.toast) { toast(el.dataset.toast); }
   });
@@ -671,6 +774,11 @@ export let accountUI = null;
     L: L, t: t,
     profile: function () { return profile; },
     store: store,
+    records: RECORDS,
+    breakpoint: BP,
+    /* Late-bound on purpose: the context is built before the tool host, and
+       the host is what knows how to redraw a tool. */
+    rerender: function () { if (TOOL_HOST && TOOL_HOST.isOpen()) TOOL_HOST.rerender(); },
     featureFor: feature,
     fname: fname,
     isVisible: visible
@@ -822,6 +930,8 @@ export let accountUI = null;
     noteRecent: noteRecent,
 
     router: ROUTER,
+    breakpoint: BP,
+    records: RECORDS,
     openTool: openTool,
     sheetOpen: sheetOpen,
     sheetClose: sheetClose,
@@ -878,7 +988,7 @@ export let accountUI = null;
   if (ACCT.isExpired() && store.get('lume-onboarded')) openAuth('expired');
 
   requestAnimationFrame(function () {
-    movePill($('.tab.is-active'));
+    movePill();
     animateBars($('#screen-home'));
   });
 })();

@@ -56,6 +56,14 @@ export const LUME_UI = (function () {
      surface the user is dismissing, so it never appears here. */
   function toolHeader(o) {
     var right = (o.actions || []).map(function (a) {
+      /* A record operation names its action in words — Save, Add — because
+         a glyph is not a promise (CRUD guide §2, and the reference
+         visuals). Everything else stays an icon button. */
+      if (a.text) {
+        return '<button class="textbtn pressable"' + actAttr(a.act) +
+          attrs({ 'aria-label': a.label, 'data-tool-action': a.id }) + '>' +
+          (a.icon ? ico(a.icon) : '') + esc(a.text) + '</button>';
+      }
       return '<button class="iconbtn pressable"' + actAttr(a.act) +
         attrs({ 'aria-label': a.label, 'data-tool-action': a.id }) + '>' + ico(a.icon) + '</button>';
     }).join('');
@@ -94,7 +102,7 @@ export const LUME_UI = (function () {
   }
 
   function section(o) {
-    return '<section class="sect' + (o.tight ? ' sect--tight' : '') + (o.flush ? ' sect--flush' : '') + '"' +
+    return '<section class="' + cls('sect', o.tight && 'sect--tight', o.flush && 'sect--flush', o.cls) + '"' +
       attrs({ 'data-sect': o.id }) + '>' +
       (o.title ? sectionHead(o) : '') + o.body + '</section>';
   }

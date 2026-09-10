@@ -37,7 +37,6 @@ export default {
           { value: String(t.done7), label: c.t('todos.done7') }
         ]
       }) }) +
-      UI.section({ body: UI.searchBar({ placeholder: c.t('todos.search'), target: 'todos', value: c.state('q') || '' }) }) +
       UI.section({ body: UI.filterBar([
         { id: 'when', label: c.t('todos.when'), items: [
           { value: 'today', label: c.t('common.today'), on: when === 'today' },

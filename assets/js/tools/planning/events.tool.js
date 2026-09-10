@@ -15,8 +15,10 @@ export default {
     var e = e0.filter(function (x) {
       return !query || (x.title + ' ' + x.where).toLowerCase().indexOf(query) !== -1;
     });
-    return UI.section({ body: UI.searchBar({ placeholder: c.t('events.search'), target: 'events', value: c.state('q') || '' }) }) +
-      UI.section({ title: c.t('events.upcoming'), body: e.length ? UI.rows(e.map(function (x) {
+    /* The search for this tool is the one over its records, which the
+       CRUD engine draws above this composition. A second field here
+       would search a different list with the same words. */
+    return       UI.section({ title: c.t('events.upcoming'), body: e.length ? UI.rows(e.map(function (x) {
         return UI.richRow({ icon: 'i-calendar', iconTone: 'accent', title: x.title, sub: x.where,
           meta: [x.when, x.people], act: 'toast:' + x.title, chevron: true });
       })) : UI.emptyState({ icon: 'i-calendar', title: c.t('events.noMatch'), text: c.t('events.noMatchText') }) });

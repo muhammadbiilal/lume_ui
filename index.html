@@ -15,6 +15,7 @@
 <link rel="stylesheet" href="assets/css/tokens.css">
 <link rel="stylesheet" href="assets/css/base.css">
 <link rel="stylesheet" href="assets/css/components.css">
+<link rel="stylesheet" href="assets/css/crud.css">
 <!-- The screen sheets take the slot screens.css had, so the places where
      they deliberately override components.css still win. rtl.css is last
      of them, because direction corrects whatever it applies to. -->
@@ -26,6 +27,7 @@
 <link rel="stylesheet" href="assets/css/screens/trains.css">
 <link rel="stylesheet" href="assets/css/screens/profile.css">
 <link rel="stylesheet" href="assets/css/screens/notifications.css">
+<link rel="stylesheet" href="assets/css/responsive.css">
 <link rel="stylesheet" href="assets/css/rtl.css">
 <link rel="stylesheet" href="assets/css/onboarding.css">
 <link rel="stylesheet" href="assets/css/tools/shared.css">
@@ -168,9 +170,14 @@
 
   <div class="app__mesh" aria-hidden="true"></div>
 
-  <!-- ===== Status bar ===== -->
+  <!-- ===== Status bar =====
+       A phone borrows the device's. A tablet is showing the top of the
+       application, so it carries the mark (Design System §2, §6). -->
   <div class="statusbar">
-    <span class="num" id="statusClock">9:41</span>
+    <span class="statusbar__brand" aria-hidden="true">
+      <svg class="ico" viewBox="0 0 24 24"><use href="#i-lume"/></svg>Lume
+    </span>
+    <span class="num statusbar__clock" id="statusClock">9:41</span>
     <span class="statusbar__icons">
       <svg class="ico" viewBox="0 0 24 24"><use href="#i-signal"/></svg>
       <svg class="ico" viewBox="0 0 24 24"><use href="#i-wifi"/></svg>
@@ -180,7 +187,15 @@
 
   <main class="screens" id="screens"></main>
 
-  <!-- ===== Bottom navigation — built from the profile ===== -->
+  <!-- ===== Navigation — one destination set, three presentations =====
+       Bottom bar when compact, labelled rail when medium, persistent
+       sidebar when expanded (Design System §6). Both elements are built
+       from the same personalised tab order, so the router syncs one
+       selection rather than three. -->
+  <nav class="navside" id="navside" role="tablist" aria-label="Main">
+    <span class="navside__brand">Lume</span>
+  </nav>
+
   <nav class="tabbar" id="tabbar" role="tablist" aria-label="Main">
     <span class="tabbar__pill" id="tabPill"></span>
   </nav>
@@ -188,10 +203,13 @@
   <!-- In-app notification banner (§100.12) -->
   <div class="nbanner" id="notifBanner" role="status" aria-live="polite" hidden></div>
 
-  <!-- ===== Toast ===== -->
+  <!-- ===== Toast =====
+       Success is confirmed without blocking the next action, and carries
+       Undo where reversal is safe (CRUD guide §7, §10). -->
   <div class="toast" id="toast" role="status" aria-live="polite">
     <svg class="ico" viewBox="0 0 24 24"><use href="#i-check-circle"/></svg>
     <span id="toastText"></span>
+    <button class="toast__act" id="toastAct" hidden></button>
   </div>
 
   <div class="scrim" id="scrim"></div>

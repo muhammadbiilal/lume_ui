@@ -30,7 +30,7 @@ const SLOTS = [
   /* personalisation */
   'profile', 'eligible', 'hasInterest', 'saveProfile', 'noteRecent',
   /* navigation and shell surfaces */
-  'router', 'openTool', 'sheetOpen', 'sheetClose', 'toast', 'runAct',
+  'router', 'breakpoint', 'records', 'openTool', 'sheetOpen', 'sheetClose', 'toast', 'runAct',
   'openAccount', 'openAuth', 'applyVisibility', 'renderAll', 'setThemeMode', 'startTour',
   /* shared behaviour screens need but do not own */
   'animateBars', 'prayer', 'forgetPrayerTimes', 'notify', 'account',

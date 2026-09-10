@@ -19,6 +19,7 @@
 import { LUME_DATA } from '../data/tool-data.js';
 import { LUME_SPEC } from '../data/tool-specs.js';
 import { LUME_UI } from '../ui/components.js';
+import { LUME_CRUD } from './crud-engine.js';
 export const LUME_TOOLS = (function () {
   'use strict';
 
@@ -175,6 +176,24 @@ export const LUME_TOOLS = (function () {
     var c = ctxFactory(id);
     if (!c) return null;
 
+    /* A record detail, a create form or an edit form is not a section of
+       the tool — it is the tool's screen for as long as it is open (CRUD
+       guide §2). The engine takes the whole frame, header included, and
+       hands it back when the operation completes. */
+    if (LUME_CRUD.active(c)) {
+      var head = LUME_CRUD.header(c);
+      return {
+        header: UI.toolHeader({
+          title: head.title, sub: head.sub ? UI.esc(head.sub) : '',
+          backLabel: c.t('a11y.back'), actions: head.actions
+        }),
+        body: LUME_CRUD.screen(c).body,
+        density: c.spec.density,
+        archetype: c.spec.archetype,
+        crud: LUME_CRUD.view(c)
+      };
+    }
+
     var body;
     try {
       body = REG[id] ? REG[id](c) : fallback(c);
@@ -192,14 +211,65 @@ export const LUME_TOOLS = (function () {
     return {
       header: UI.toolHeader({
         title: c.fname(c.f),
-        sub: c.headerSub || archetypeLine(c),
+        sub: recordSub(c) || c.headerSub || archetypeLine(c),
         backLabel: c.t('a11y.back'),
-        actions: headerActions(c)
+        /* Add comes first and in words. It is the primary action of a
+           record tool, and putting it last is what pushed the title into
+           an ellipsis while three icons sat beside it. The contextual
+           actions keep their places behind it, and the same cap of three
+           still applies. */
+        actions: recordActions(c).concat(headerActions(c)).slice(0, 3)
       }),
-      body: body + sourceSection(c) + privacyNote(c) + relatedSection(c),
+      body: withRecords(c, body) + sourceSection(c) + privacyNote(c) + relatedSection(c),
       density: c.spec.density,
       archetype: c.spec.archetype
     };
+  }
+
+  /* ---------------------------------------------------------
+     Where a record list goes
+
+     "Lists are the home of record-based tools" (CRUD guide §1),
+     so the list leads. Not after the summary, not after the
+     chart: first. Someone opening Expenses came to see and add
+     expenses, and the analysis of them is what follows.
+
+     The list is also not an optional section a tool may forget
+     to include — the engine places it, once, for all twelve
+     families. A tool that genuinely wants it elsewhere renders
+     it itself, and finding one already in the body is how this
+     knows to leave that composition alone.
+     --------------------------------------------------------- */
+  function withRecords(c, body) {
+    if (!LUME_CRUD.isRecordTool(c.id)) return body;
+    if (body.indexOf('data-sect="records"') !== -1) return body;
+    return LUME_CRUD.listSection(c, { bare: true }) + body;
+  }
+
+  /* "12 records", "No records yet", "Could not refresh" — the reference
+     visual's own sub-line, and the reason the section below needs no head
+     of its own. */
+  function recordSub(c) {
+    if (!LUME_CRUD.isRecordTool(c.id)) return null;
+    var sub = LUME_CRUD.headerSub(c);
+    return sub ? UI.esc(sub) : null;
+  }
+
+  /* Add is the primary action of a record tool, so it takes the header
+     first and in words (CRUD guide §2, "Create: top action, FAB or
+     empty-state CTA"). Share, export and search are contextual actions and
+     yield to it — the Design System allows the top bar back, a title and
+     one contextual action, and three icons crowding out the title is what
+     "Tablet content is adapted, not stretched" means at phone width too. */
+  function recordActions(c) {
+    if (!LUME_CRUD.isRecordTool(c.id)) return [];
+    var schema = LUME_CRUD.schemaFor(c.id);
+    return [{
+      id: 'recadd', icon: 'i-plus',
+      label: c.t('rec.add', { noun: c.t(schema.noun) }),
+      text: c.t('a.add'),
+      act: 'rec:new:' + c.id
+    }];
   }
 
   function archetypeLine(c) {

@@ -57,7 +57,6 @@ export default {
           return { label: x.label, value: x.amount, color: x.color, display: c.money(x.amount) };
         })
       })) }) +
-      UI.section({ body: UI.searchBar({ placeholder: c.t('expenses.search'), target: 'expenses', value: c.state('q') || '' }) }) +
       UI.section({ body: UI.filterBar([{ id: 'cat', label: c.t('expenses.category'), items: [
         { value: 'all', label: c.t('common.all'), on: cat === 'all' }
       ].concat(D.EXPENSE_CATEGORIES.map(function (x) {

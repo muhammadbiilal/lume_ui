@@ -28,3 +28,18 @@ final.
 `verify.js` also enforces §123: a tool with an approved composition in
 `toolspec.js` must render its binding sections in that order, or the suite
 fails. This is what stops a screen being reinterpreted from its archetype.
+
+`design.js` is the Design System's engineering-handoff section, driven
+rather than read. Where the document names a number — the jade palette, the
+type scale, 44 px touch targets, a 360-440 px list pane, a 680-760 px
+reading cap, 160/260/420 ms motion — that number is asserted. It also runs
+the golden pass §10 asks for by name, booting the shell at compact, medium
+and expanded widths and checking that the navigation each one shows agrees
+with the other two.
+
+`crud.js` is the CRUD guide's closing checklist, driven the same way: that
+every state is reachable rather than illustrated, that create and edit
+preserve input after a failure, that leaving a changed form asks first,
+that a newer version is never silently overwritten, that master-detail
+collapses safely below expanded width, and that delete behaviour matches
+whether recovery is actually possible.

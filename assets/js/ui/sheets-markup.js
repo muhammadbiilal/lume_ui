@@ -14,6 +14,23 @@
 export function sheetsTemplate() {
   return `
 
+  <!-- Destructive confirmation (CRUD guide §2, §10)
+       One sheet, filled by whoever raises it. It names the record and its
+       consequence before it asks, and its wording says whether the action
+       can be recovered — because a confirmation that promises an Undo the
+       system cannot honour is worse than no confirmation. -->
+  <aside class="sheet sheet--confirm" id="sheet-recdelete" role="alertdialog" aria-modal="true"
+         aria-labelledby="recDeleteTitle" aria-describedby="recDeleteText">
+    <span class="sheet__grab"></span>
+    <div class="dconfirm">
+      <span class="dconfirm__mark" aria-hidden="true">!</span>
+      <h2 class="dconfirm__title" id="recDeleteTitle" data-rec-title></h2>
+      <p class="dconfirm__text" id="recDeleteText" data-rec-text></p>
+      <button class="btn btn--danger btn--block" data-rec-go></button>
+      <button class="btn btn--quiet btn--block" data-close data-rec-cancel></button>
+    </div>
+  </aside>
+
   <!-- Global search -->
   <aside class="sheet sheet--tall" id="sheet-search" role="dialog" aria-modal="true" aria-label="Search">
     <span class="sheet__grab"></span>
@@ -218,9 +235,9 @@ export function sheetsTemplate() {
   <aside class="sheet" id="sheet-confirm" role="dialog" aria-modal="true" aria-labelledby="confirmTitle">
     <span class="sheet__grab"></span>
     <div class="sheet__body">
-      <div class="confirm">
-        <h2 class="confirm__title" id="confirmTitle"></h2>
-        <p class="confirm__text" id="confirmText"></p>
+      <div class="dconfirm">
+        <h2 class="dconfirm__title" id="confirmTitle"></h2>
+        <p class="dconfirm__text" id="confirmText"></p>
         <div class="confirm__acts">
           <button class="btn btn--danger btn--block pressable" id="confirmGo"></button>
           <button class="btn btn--ghost btn--block pressable" data-close id="confirmCancel"></button>
@@ -236,10 +253,10 @@ export function sheetsTemplate() {
   <aside class="sheet" id="sheet-authlegal" role="dialog" aria-modal="true" aria-labelledby="authLegalTitle">
     <span class="sheet__grab"></span>
     <div class="sheet__body">
-      <div class="confirm">
-        <h2 class="confirm__title" id="authLegalTitle" data-i18n="auth.legalTitle">How Lume handles your data</h2>
-        <p class="confirm__text" data-i18n="auth.legalBody">Your account, your settings and everything you create in Lume are stored on this device. Lume does not sell your information and does not share it with anyone.</p>
-        <p class="confirm__text" data-i18n="auth.legalWhere">The full detail lives under Privacy in your profile, and you can delete your account and everything in it at any time.</p>
+      <div class="dconfirm">
+        <h2 class="dconfirm__title" id="authLegalTitle" data-i18n="auth.legalTitle">How Lume handles your data</h2>
+        <p class="dconfirm__text" data-i18n="auth.legalBody">Your account, your settings and everything you create in Lume are stored on this device. Lume does not sell your information and does not share it with anyone.</p>
+        <p class="dconfirm__text" data-i18n="auth.legalWhere">The full detail lives under Privacy in your profile, and you can delete your account and everything in it at any time.</p>
         <div class="confirm__acts">
           <button class="btn btn--ghost btn--block pressable" data-close data-i18n="a.close">Close</button>
         </div>

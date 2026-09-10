@@ -20,13 +20,14 @@
 /* Strings first — the packs merge into the shared dictionaries. */
 import './i18n/tools.js';
 import './i18n/account.js';
+import './i18n/crud.js';
 
 /* Then the tool modules. The registry imports all 85 and checks them
    against the catalogue before the shell opens anything. */
 import './tools/registry.js';
 
 /* Then the shell, which composes everything above into a running app. */
-import { account, accountUI } from './shell.js';
+import { account, accountUI, records, breakpoint } from './shell.js';
 
 import { LUME } from './data/catalogue.js';
 import { LUME_GEO } from './data/geo.js';
@@ -64,5 +65,7 @@ window.Lume = {
   notifyFactory: LUME_NOTIFY,
   createLifecycle: createLifecycle,
   account: account,
-  accountUI: accountUI
+  accountUI: accountUI,
+  records: records,
+  breakpoint: breakpoint
 };

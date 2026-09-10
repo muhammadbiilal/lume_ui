@@ -40,7 +40,12 @@ svg { display: block; }
    the attribute win outright — several toggles here sit on flex/grid nodes. */
 [hidden] { display: none !important; }
 
-/* ---------- Device shell ---------------------------------- */
+/* ---------- App shell ------------------------------------- */
+
+/* The application supports 320-1366 logical pixels (Design System §1), so
+   the shell is a responsive surface rather than a phone rendered on a
+   desktop. What each width class does with it is in responsive.css; what
+   is here is true at every width. */
 
 .stage {
   min-height: 100dvh;
@@ -52,7 +57,7 @@ svg { display: block; }
 .app {
   position: relative;
   width: 100%;
-  max-width: 430px;
+  max-width: 1366px;
   height: 100dvh;
   margin-inline: auto;
   background: var(--bg);
@@ -62,36 +67,32 @@ svg { display: block; }
   isolation: isolate;
 }
 
-/* On larger screens, present the 390×844 device */
-@media (min-width: 760px) {
+/* Compact is a phone, and a phone is not 1366 px wide. Above the compact
+   ceiling the shell becomes the tablet layout; below it, on a wide
+   monitor, it stays a single column and is centred rather than stretched
+   into an unreadable 1200 px measure. */
+@media (max-width: 599px) {
+  .app { max-width: 560px; }
+}
+
+/* At medium and above the shell is presented as a device on a desk: air
+   around it, a soft ground behind it, its own rounded frame. This is
+   presentation, not a phone bezel — the layout inside is the real tablet
+   layout, not a scaled phone. */
+@media (min-width: 600px) {
   .stage {
-    padding: 32px;
+    padding: 24px;
     background:
       radial-gradient(80% 60% at 15% 0%, color-mix(in srgb, var(--accent) 10%, transparent), transparent 60%),
       radial-gradient(70% 60% at 100% 100%, color-mix(in srgb, var(--violet) 10%, transparent), transparent 60%),
       var(--bg-sunk);
   }
   .app {
-    width: 390px;
-    height: 844px;
-    border-radius: 44px;
-    box-shadow:
-      0 0 0 10px color-mix(in srgb, var(--text) 88%, transparent),
-      0 0 0 12px color-mix(in srgb, var(--text) 60%, transparent),
-      var(--shadow-lg);
+    height: min(100dvh - 48px, 980px);
+    border-radius: var(--r-xl);
+    border: 1px solid var(--border);
+    box-shadow: var(--shadow-lg);
   }
-  .app::after { /* device notch */
-    content: "";
-    position: absolute;
-    top: 8px; left: 50%;
-    translate: -50% 0;
-    width: 104px; height: 26px;
-    background: color-mix(in srgb, var(--text) 92%, transparent);
-    border-radius: var(--r-full);
-    z-index: 60;
-    pointer-events: none;
-  }
-  .statusbar { padding-top: 14px; }
 }
 
 /* ---------- Status bar ------------------------------------ */

@@ -26,6 +26,16 @@ export const LUME_CTX = function (deps) {
 
   var L = deps.L, t = deps.t, getProfile = deps.profile;
   var store = deps.store;
+  /* The record store and the width class. A record screen has to ask both
+     — what is in the collection, and whether there is a second pane to put
+     a detail in — and neither is something a screen should work out for
+     itself (CRUD guide §8). */
+  var RECORDS = deps.records;
+  var BP = deps.breakpoint;
+  /* Asked for by anything that finishes asynchronously — a collection
+     finishing its first read, a save landing. The host owns rendering; this
+     is the one way back to it that does not make a screen import the host. */
+  var rerender = deps.rerender || function () {};
 
   function pad2(n) { return n < 10 ? '0' + n : '' + n; }
   function P() { return getProfile(); }
@@ -1776,6 +1786,8 @@ export const LUME_CTX = function (deps) {
     return {
       /* identity */
       id: id, f: f, spec: spec, profile: P(),
+      /* records and layout */
+      records: RECORDS, bp: BP, rerender: rerender,
       /* services */
       UI: UI, D: D, L: L, t: t, esc: UI.esc,
       fname: deps.fname, featureFor: deps.featureFor, isVisible: deps.isVisible,
@@ -1845,6 +1857,16 @@ export const LUME_CTX = function (deps) {
         return one(lat, 'compass.n', 'compass.s') + ', ' + one(lon, 'compass.e', 'compass.w');
       },
       money: function (usd, o) { return L.money(usd, o); },
+      /* Millilitres are stored; litres or fluid ounces are shown, because
+         units are a locale dimension and the store is not (§15). */
+      volume: function (ml) {
+        if (L.unitSystem() === 'imperial') {
+          return L.num(ml / 29.574, { maximumFractionDigits: 0 }) + ' ' + t('unit.floz');
+        }
+        return ml >= 1000
+          ? L.num(ml / 1000, { minimumFractionDigits: 1, maximumFractionDigits: 1 }) + ' ' + t('unit.litre')
+          : L.num(ml, { maximumFractionDigits: 0 }) + ' ml';
+      },
       moneyRaw: function (v, ccy, dp) { return L.moneyRaw(v, ccy, dp); },
       num: function (n, o) { return L.num(n, o); },
       date: function (d, o) { return L.date(d, o); },

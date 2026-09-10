@@ -44,7 +44,6 @@ export default {
       }) }) +
       (d.expiring ? UI.section({ body: UI.noteCard({ tone: 'warn', icon: 'i-alert',
         title: c.t('docs.renew.title', { n: d.expiring }), text: c.t('docs.renew.text') }) }) : '') +
-      UI.section({ body: UI.searchBar({ placeholder: c.t('docs.search'), target: 'documents', value: c.state('q') || '' }) }) +
       UI.section({ body: UI.filterBar([{ id: 'cat', label: c.t('docs.category'), items: [
         { value: 'all', label: c.t('common.all'), on: cat === 'all', count: d.list.length }
       ].concat(d.categories.map(function (x) {

@@ -285,9 +285,8 @@
 .onb__float--b { animation-duration: 6.4s; animation-delay: -2.2s; }
 .onb__float--c { animation-duration: 9.2s; animation-delay: -4.6s; }
 
-/* Keep the status bar and the device notch above the flow */
+/* Keep the status bar above the flow */
 .statusbar { z-index: 90; }
-@media (min-width: 760px) { .app::after { z-index: 95; } }
 
 /* Sticky footer for steps whose content scrolls (the interest picker) */
 .onb__foot--sticky {

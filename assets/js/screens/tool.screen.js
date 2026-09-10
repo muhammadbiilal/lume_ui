@@ -23,6 +23,8 @@
    ============================================================ */
 import { defineScreen } from './screen-base.js';
 import { $, $$, pad2, esc } from '../core/dom.js';
+import { LUME_CRUD } from '../tools/crud-engine.js';
+import { sentence } from '../data/record-schemas.js';
 
 export function createToolHostScreen(ctx) {
   /* The shell's names, bound once. Every entry point below is a render or
@@ -32,7 +34,8 @@ export function createToolHostScreen(ctx) {
   let bound = false;
   let t, L, D, SPEC, TOOLS, toolCtx, profile, router, store, NOTIFY,
       feature, visible, visibleFeatures, fname, actFor,
-      toast, sheetOpen, sheetClose, applyStrings, animateBars, noteRecent, saveProfile;
+      toast, sheetOpen, sheetClose, applyStrings, animateBars, noteRecent, saveProfile,
+      records, breakpoint;
 
   function bindShell() {
     if (bound) return;
@@ -45,6 +48,7 @@ export function createToolHostScreen(ctx) {
     toast = ctx.toast; sheetOpen = ctx.sheetOpen; sheetClose = ctx.sheetClose;
     applyStrings = ctx.applyStrings; animateBars = ctx.animateBars;
     noteRecent = ctx.noteRecent; saveProfile = ctx.saveProfile;
+    records = ctx.records; breakpoint = ctx.breakpoint;
   }
 
   /* The screen root, so nothing here has to search the whole document for
@@ -64,6 +68,9 @@ export function createToolHostScreen(ctx) {
     body.innerHTML = built.body;
     body.dataset.density = built.density;
     body.dataset.archetype = built.archetype;
+    /* A screen showing two panes is a wide composition, and everything
+       below the panes lines up with them. */
+    body.dataset.panes = toolCtx(currentTool).state('panes') || '';
     applyStrings(body);
     animateBars($('#screen-tool'));
     if (currentTool === 'calculator') calcToolRender();
@@ -98,6 +105,18 @@ export function createToolHostScreen(ctx) {
 
   function closeTool() {
     if (!currentTool) { router.go(ctx.returnTab()); return; }
+
+    /* A record view is a view *of* the tool, so Back returns through it
+       rather than out of the tool — and a form with unsaved changes asks
+       before it is abandoned (CRUD guide §12). */
+    var rc = toolCtx(currentTool);
+    if (rc && LUME_CRUD.active(rc)) {
+      var view = LUME_CRUD.view(rc);
+      if (view === 'new' || view === 'edit') { recordAction(['cancel', currentTool]); return; }
+      rc.setState('view', '');
+      renderTool();
+      return;
+    }
     /* A detail view is a view *of* the tool, so back returns to the tool
        before it returns to where the tool was opened from (§9). */
     if (currentTool) {
@@ -254,7 +273,251 @@ export function createToolHostScreen(ctx) {
     if (kind === 'cvswap' || kind === 'ucswap') { swapConverter(kind); return true; }
     if (kind === 'clock') { runClock(bits); return true; }
 
+    if (kind === 'rec') return recordAction(bits);
+
     return false;
+  }
+
+  /* ---------------------------------------------------------
+     The record vocabulary  (CRUD guide §2)
+
+     Every verb in the guide's operation table is one word here,
+     and the five views are reached only through them. A screen
+     never sets a view directly, so "open this record" can mean
+     a push on a phone and a selection in a pane on a tablet
+     without any screen knowing the difference.
+     --------------------------------------------------------- */
+  function recordAction(bits) {
+    var verb = bits.shift();
+    var tool = bits.shift();
+    var arg = bits.join(':');
+
+    /* Undo is the only one that is not about a particular collection: it
+       reverses whatever was last done, wherever the user now is. */
+    if (verb === 'undo') { undoRecord(); return true; }
+
+    var c = toolCtx(tool);
+    if (!c || !LUME_CRUD.isRecordTool(tool)) return true;
+    var schema = LUME_CRUD.schemaFor(tool);
+
+    function redraw() { if (currentTool === tool) renderTool(); }
+
+    if (verb === 'new') {
+      LUME_CRUD.startCreate(c);
+      redraw();
+      focusFirstField();
+      return true;
+    }
+
+    if (verb === 'open') {
+      c.setState('rec', arg);
+      /* The width decides what opening means. With a detail pane the record
+         is selected beside the list, and the list keeps its scroll, its
+         filter and its position; without one, it is the next screen. */
+      if (!(c.bp && c.bp.hasDetailPane())) c.setState('view', 'detail');
+      redraw();
+      return true;
+    }
+
+    if (verb === 'edit') {
+      if (!LUME_CRUD.startEdit(c, arg)) { toast(t('rec.gone')); return true; }
+      redraw();
+      focusFirstField();
+      return true;
+    }
+
+    if (verb === 'list') {
+      LUME_CRUD.discard(c);
+      c.setState('view', '');
+      c.setState('rec', '');
+      redraw();
+      return true;
+    }
+
+    if (verb === 'cancel') { leaveForm(c, tool); return true; }
+    if (verb === 'discard') {
+      LUME_CRUD.discard(c);
+      c.setState('view', '');
+      sheetClose();
+      redraw();
+      return true;
+    }
+
+    if (verb === 'save') { saveRecord(c, tool, schema); return true; }
+
+    if (verb === 'askdelete') {
+      var prompt = LUME_CRUD.deletePrompt(c, arg);
+      if (!prompt) { toast(t('rec.gone')); return true; }
+      fillDeleteSheet(prompt);
+      sheetOpen('recdelete');
+      return true;
+    }
+
+    if (verb === 'delete') { deleteRecord(c, tool, schema, arg); return true; }
+
+    if (verb === 'toggle') {
+      /* Fast optimistic logging: the row flips now and the write follows.
+         These are the families where waiting for confirmation would make
+         the interaction not worth doing (guide §11). */
+      var rec = c.records.get(tool, arg);
+      if (rec) {
+        c.records.update(tool, arg, { done: !rec.done }, rec._v);
+        redraw();
+      }
+      return true;
+    }
+
+    if (verb === 'filter') { c.setState('cfil', arg); redraw(); return true; }
+    if (verb === 'clear') { c.setState('q', ''); c.setState('cfil', 'all'); redraw(); return true; }
+    if (verb === 'retry') { c.records.retry(tool); redraw(); return true; }
+    if (verb === 'review') { LUME_CRUD.reviewConflict(c); redraw(); return true; }
+    if (verb === 'reload') { LUME_CRUD.reloadConflict(c); redraw(); toast(t('rec.reloaded')); return true; }
+    if (verb === 'attach') { toast(t('rec.attachSoon')); return true; }
+
+    if (verb === 'bulk') {
+      var doomed = c.records.list(tool).filter(schema.bulk.test);
+      if (!doomed.length) return true;
+      fillDeleteSheet({
+        title: t(schema.bulk.label, { n: doomed.length }),
+        text: t(schema.bulk.confirm, { n: doomed.length }),
+        confirm: t(schema.bulk.label, { n: doomed.length }),
+        cancel: t('rec.cancel'),
+        act: 'rec:bulkgo:' + tool
+      });
+      sheetOpen('recdelete');
+      return true;
+    }
+
+    if (verb === 'bulkgo') {
+      var cleared = c.records.list(tool).filter(schema.bulk.test);
+      cleared.forEach(function (r) { c.records.remove(tool, r.id); });
+      /* A bulk clear removes many records and could restore only the last,
+         so it does not offer an Undo it cannot honour. */
+      c.records.forgetUndo();
+      sheetClose();
+      redraw();
+      toast(t('rec.cleared', { n: cleared.length }));
+      return true;
+    }
+
+    return true;
+  }
+
+  /* A form opens with the cursor in its first field, so creating a record
+     is one tap and then typing. */
+  function focusFirstField() {
+    setTimeout(function () {
+      var first = $('.cfield input, .cfield textarea, .cfield select', $('#screen-tool'));
+      if (first && first.focus) { try { first.focus(); } catch (e) {} }
+    }, 60);
+  }
+
+  function saveRecord(c, tool, schema) {
+    var outcome = LUME_CRUD.save(c, function (result) {
+      if (result.status === 'conflict') {
+        if (currentTool === tool) renderTool();
+        toast(t('rec.conflict'));
+        return;
+      }
+      if (result.status === 'failed') {
+        if (currentTool === tool) renderTool();
+        toast(t('rec.saveFailed'));
+        return;
+      }
+
+      /* Saved. Return to the detail on a phone and to the list beside its
+         pane on a tablet, then confirm without blocking the next action. */
+      c.setState('rec', result.record.id);
+      c.setState('view', c.bp && c.bp.hasDetailPane() ? '' : 'detail');
+      if (currentTool === tool) renderTool();
+
+      toastUndo(said(result.mode === 'new' ? 'rec.added' : 'rec.updated',
+        { noun: t(schema.noun) }));
+    });
+
+    if (outcome.status === 'invalid') {
+      renderTool();
+      /* Focus the first error rather than the top of the form, and say why
+         the save did not happen. */
+      setTimeout(function () {
+        var el = outcome.focus && $('[data-field="' + outcome.focus + '"]', $('#screen-tool'));
+        if (el && el.focus) { try { el.focus(); } catch (e) {} }
+      }, 40);
+      toast(t('rec.checkFields'));
+      return;
+    }
+    if (outcome.status === 'saving') renderTool();
+  }
+
+  function deleteRecord(c, tool, schema, id) {
+    var result = c.records.remove(tool, id);
+    sheetClose();
+    if (!result.ok) { toast(t('rec.deleteFailed')); return; }
+
+    /* The record leaves the list at once — never a ghost row. */
+    c.setState('rec', '');
+    c.setState('view', '');
+    if (currentTool === tool) renderTool();
+
+    if (schema.recoverable) {
+      toastUndo(said('rec.deleted', { noun: t(schema.noun) }));
+    } else {
+      /* Nothing to offer: this family deletes for good, and its
+         confirmation said so rather than promising otherwise. */
+      c.records.forgetUndo();
+      toast(said('rec.deletedFinal', { noun: t(schema.noun) }));
+    }
+  }
+
+  /* A line that begins with a noun begins with a capital: the dictionaries
+     hold nouns in the form they take inside a sentence, and a toast is a
+     sentence. Identity in the scripts that have no case. */
+  function said(key, vars) { return sentence(L.lang(), t(key, vars)); }
+
+  function toastUndo(message) {
+    toast(message, { label: t('rec.undo'), act: 'rec:undo' });
+  }
+
+  function undoRecord() {
+    var done = records.undo();
+    if (!done) { toast(t('rec.nothingToUndo')); return; }
+    var c = toolCtx(done.coll);
+    if (c && done.record) c.setState('rec', done.record.id);
+    if (currentTool === done.coll) renderTool();
+    toast(t('rec.undone'));
+  }
+
+  /* Leaving a changed form asks first (§12, "dirty-state protection"). */
+  function leaveForm(c, tool) {
+    if (!LUME_CRUD.isDirty(c)) {
+      LUME_CRUD.discard(c);
+      c.setState('view', c.state('rec') && !(c.bp && c.bp.hasDetailPane()) ? 'detail' : '');
+      if (currentTool === tool) renderTool();
+      return;
+    }
+    fillDeleteSheet({
+      title: t('rec.discardAsk'),
+      text: t('rec.discardText'),
+      confirm: t('rec.discard'),
+      cancel: t('rec.keepEditing'),
+      act: 'rec:discard:' + tool,
+      tone: 'warn'
+    });
+    sheetOpen('recdelete');
+  }
+
+  function fillDeleteSheet(o) {
+    var sheet = $('#sheet-recdelete');
+    if (!sheet) return;
+    sheet.classList.toggle('is-warn', o.tone === 'warn');
+    var title = $('[data-rec-title]', sheet);
+    var text = $('[data-rec-text]', sheet);
+    var go = $('[data-rec-go]', sheet);
+    var cancel = $('[data-rec-cancel]', sheet);
+    if (title) title.textContent = o.title;
+    if (text) text.textContent = o.text;
+    if (go) { go.textContent = o.confirm; go.dataset.act = o.act; }
+    if (cancel) cancel.textContent = o.cancel;
   }
 
   /* §99 — export writes a real file. A CSV where the screen is a list or a
@@ -357,8 +620,93 @@ export function createToolHostScreen(ctx) {
     }, 280);
   }
 
+  /* ---- record form fields ----
+     A form's values live in its draft, never in the DOM, so a re-render
+     cannot lose what was typed and a failed save cannot clear it. Typing
+     therefore does NOT redraw: redrawing under a cursor is how a form
+     loses a half-typed decimal and the caret with it. The screen redraws
+     when the field is left, when a choice is made, and when the form is
+     submitted — the three moments its appearance can change. */
+  document.addEventListener('input', function (e) {
+    var field = e.target.closest('[data-field]');
+    if (!field || !currentTool) return;
+    var c = toolCtx(currentTool);
+    if (!c || !LUME_CRUD.active(c)) return;
+    LUME_CRUD.setValue(c, field.dataset.field, valueOf(field));
+  }, true);
+
+  document.addEventListener('change', function (e) {
+    var field = e.target.closest('[data-field]');
+    if (!field || !currentTool) return;
+    var c = toolCtx(currentTool);
+    if (!c || !LUME_CRUD.active(c)) return;
+    LUME_CRUD.setValue(c, field.dataset.field, valueOf(field));
+  });
+
+  /* "Validate only independently judgeable rules on blur" (§10).
+
+     The verdict is painted onto the one field it belongs to, and the form
+     is not rebuilt. Rebuilding it here looked harmless and was not: moving
+     from one field to the next fires this first, so the form would be
+     replaced underneath the tap that was on its way to the next field —
+     which detaches the node the browser was about to focus and closes the
+     keyboard. A form redraws when it is submitted, not while it is being
+     filled in. */
+  document.addEventListener('focusout', function (e) {
+    var field = e.target.closest && e.target.closest('[data-field]');
+    if (!field || !currentTool) return;
+    var c = toolCtx(currentTool);
+    if (!c || !LUME_CRUD.active(c)) return;
+    var name = field.dataset.field;
+    LUME_CRUD.setValue(c, name, valueOf(field));
+    LUME_CRUD.touch(c, name);
+    paintFieldError(c, name, field);
+  });
+
+  function valueOf(el) {
+    if (el.type === 'checkbox') return el.checked;
+    return el.value;
+  }
+
+  /* Show or clear one field's error in place. The markup is the same shape
+     ui/crud.js builds, so a field validated on blur and a field validated
+     on submit look identical. */
+  function paintFieldError(c, name, input) {
+    var wrap = input.closest('.cfield');
+    if (!wrap) return;
+    var message = LUME_CRUD.fieldError(c, name);
+    var box = wrap.querySelector('.cfield__box');
+    var existing = wrap.querySelector('.cfield__err');
+
+    wrap.classList.toggle('is-invalid', !!message);
+    if (box) box.classList.toggle('is-invalid', !!message);
+
+    if (!message) {
+      if (existing) existing.remove();
+      input.removeAttribute('aria-invalid');
+      input.removeAttribute('aria-describedby');
+      return;
+    }
+
+    input.setAttribute('aria-invalid', 'true');
+    input.setAttribute('aria-describedby', input.id + '-err');
+    if (existing) { existing.lastChild.textContent = message; return; }
+
+    var note = document.createElement('p');
+    note.className = 'cfield__err';
+    note.id = input.id + '-err';
+    note.setAttribute('role', 'alert');
+    var glyph = document.createElement('i');
+    glyph.setAttribute('aria-hidden', 'true');
+    glyph.textContent = '!';
+    note.appendChild(glyph);
+    note.appendChild(document.createTextNode(message));
+    wrap.appendChild(note);
+  }
+
   document.addEventListener('input', function (e) {
     if (!currentTool) return;
+    if (e.target.closest('[data-field]')) return;
     var c = toolCtx(currentTool);
     if (!c) return;
 
@@ -726,6 +1074,10 @@ export function createToolHostScreen(ctx) {
     /* ---- what the shell asks of this screen ---- */
     open: function (id, opts) { bindShell(); openTool(id, opts); },
     close: function () { bindShell(); closeTool(); },
+    /* Redraw whatever tool is showing. Asked for by anything that finishes
+       after the render that started it — a collection finishing its first
+       read, a save landing (CRUD guide §10). */
+    rerender: function () { bindShell(); renderTool(); },
     action: function (kind, arg) { bindShell(); return toolAction(kind, arg); },
     shareFor: function (id) { bindShell(); return shareForTool(id); },
     /* The shell hands a pending alert back once the user answers the
