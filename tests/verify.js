@@ -4,6 +4,7 @@
 const fs = require('fs');
 const path = require('path');
 const { JSDOM, VirtualConsole } = require('jsdom');
+const { loadInto } = require('./modules');
 
 const ROOT = require('path').resolve(__dirname, '..');
 
@@ -31,7 +32,7 @@ async function boot(profile) {
     beforeParse(window) {
       window.localStorage.setItem('lume-onboarded', '1');
       window.localStorage.setItem('lume-profile', JSON.stringify(Object.assign({
-        name: 'Zeeshan', initials: 'ZK', units: 'auto', currency: 'auto', clock: 'auto',
+        units: 'auto', currency: 'auto', clock: 'auto',
         method: 'MWL', interests: ['weather', 'calendar', 'tasks', 'notes', 'maths', 'expenses', 'news', 'markets', 'trains'],
         prefs: { news: true, cricket: true, finance: true, recos: true }, recents: [], recentCountries: []
       }, profile)));
@@ -43,16 +44,7 @@ async function boot(profile) {
     }
   });
 
-  // Load every local script manually (jsdom won't fetch file:// subresources here).
-  const scripts = [...dom.window.document.querySelectorAll('script[src]')].map(s => s.getAttribute('src'));
-  for (const src of scripts) {
-    const code = fs.readFileSync(path.join(ROOT, src), 'utf8');
-    try {
-      dom.window.eval(code);
-    } catch (e) {
-      errors.push('script ' + src + ': ' + e.message + '\n' + (e.stack || '').split('\n').slice(0, 4).join('\n'));
-    }
-  }
+  loadInto(dom, ROOT, errors);
   await new Promise(r => setTimeout(r, 60));
   return { dom, errors };
 }
@@ -68,7 +60,7 @@ process.on('unhandledRejection', e => { console.error('UNHANDLED', e && (e.stack
   for (const state of STATES) {
     const { dom, errors } = await boot(state.profile);
     const win = dom.window, doc = win.document;
-    const C = win.LUME, SPEC = win.LUME_SPEC, TOOLS = win.LUME_TOOLS;
+    const C = win.Lume.catalogue, SPEC = win.Lume.spec, TOOLS = win.Lume.tools;
 
     console.log('\n=== ' + state.name + ' ===');
     if (errors.length) {
@@ -141,10 +133,10 @@ process.on('unhandledRejection', e => { console.error('UNHANDLED', e && (e.stack
     for (const id of visible) {
       const spec = SPEC.get(id);
       if (!spec.composition) continue;
-      const ctx = win.LUME_TOOLS;
+      const ctx = win.Lume.tools;
       for (const market of ['GLOBAL', 'US', 'GB', 'AE', 'SA', 'IN']) {
         try {
-          const c = win.LUME_CTX ? null : null;
+          const c = win.Lume.ctxFactory ? null : null;
           // drive the real state the picker writes
           win.eval(`(function(){
             var b=document.createElement('button');

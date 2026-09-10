@@ -1,0 +1,302 @@
+/* ============================================================
+   Lume — account, profile and settings  (Master Spec §124)
+
+   No new visual language. Every surface below is built from the
+   existing tokens, the existing row, field and card components
+   and the existing motion — a settings screen that looks like a
+   third-party form is the failure §124.30 names.
+
+   Authentication is the one part of this system with a layout
+   of its own, and it lives in auth.css (§126).
+   ============================================================ */
+
+/* ---------- fields, errors, password ------------------------ */
+.field.is-invalid .field__box {
+  border-color: color-mix(in srgb, var(--rose) 60%, var(--border));
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--rose) 12%, transparent);
+}
+/* The least readable text on the authentication screens was the one telling
+   the user what went wrong: rose on card is 3.24:1 in light mode. */
+.field__err {
+  display: flex; align-items: flex-start; gap: 5px;
+  font-size: 11px; font-weight: 600; line-height: 1.4;
+  color: var(--rose-ink);
+}
+.field__err svg { width: 12px; height: 12px; flex: none; margin-top: 1px; }
+
+.pwrules {
+  display: grid; gap: 5px;
+  margin-top: 2px;
+  padding: 12px 14px;
+  background: var(--card-2);
+  border: 1px solid var(--border);
+  border-radius: var(--r-sm);
+}
+.pwrules__title {
+  font-size: 11px; font-weight: 700; letter-spacing: .02em;
+  text-transform: uppercase; color: var(--text-3); margin-bottom: 2px;
+}
+.pwrule {
+  display: flex; align-items: center; gap: 7px;
+  font-size: 12px; font-weight: 600; color: var(--text-3);
+}
+.pwrule__mark {
+  width: 14px; height: 14px; flex: none;
+  display: grid; place-items: center;
+  border-radius: 50%;
+  border: 1.5px solid var(--border-2);
+  color: transparent;
+}
+.pwrule__mark svg { width: 9px; height: 9px; }
+.pwrule.is-ok { color: var(--text-2); }
+.pwrule.is-ok .pwrule__mark {
+  background: var(--accent); border-color: var(--accent); color: var(--on-accent);
+}
+
+.pwmeter { display: flex; align-items: center; gap: 10px; margin-top: 2px; }
+.pwmeter__track {
+  flex: 1; display: flex; gap: 4px;
+}
+.pwmeter__seg {
+  flex: 1; height: 4px; border-radius: var(--r-full);
+  background: var(--tint-neutral);
+  transition: background var(--dur-fast) var(--ease);
+}
+.pwmeter__seg.is-on { background: var(--accent); }
+.pwmeter[data-tone="late"] .pwmeter__seg.is-on { background: var(--rose); }
+.pwmeter[data-tone="warn"] .pwmeter__seg.is-on { background: var(--amber); }
+.pwmeter[data-tone="info"] .pwmeter__seg.is-on { background: var(--sky); }
+.pwmeter__label {
+  flex: none; font-size: 11px; font-weight: 700; color: var(--text-3);
+  letter-spacing: -.01em;
+}
+
+/* A form-level failure: one message, at the top, announced. */
+.formerr {
+  display: flex; align-items: flex-start; gap: 9px;
+  padding: 12px 14px;
+  border-radius: var(--r-sm);
+  background: color-mix(in srgb, var(--rose) 10%, var(--card));
+  border: 1px solid color-mix(in srgb, var(--rose) 26%, transparent);
+  font-size: 12.5px; font-weight: 600; line-height: 1.45; color: var(--text);
+}
+.formerr svg { width: 16px; height: 16px; flex: none; color: var(--rose); margin-top: 1px; }
+
+.formok {
+  display: flex; align-items: flex-start; gap: 9px;
+  padding: 12px 14px;
+  border-radius: var(--r-sm);
+  background: var(--tint-accent);
+  border: 1px solid color-mix(in srgb, var(--accent) 24%, transparent);
+  font-size: 12.5px; font-weight: 600; line-height: 1.45; color: var(--text);
+}
+.formok svg { width: 16px; height: 16px; flex: none; color: var(--accent); margin-top: 1px; }
+
+/* A button that is working says so, and cannot be pressed twice. */
+.btn.is-busy { pointer-events: none; opacity: .82; }
+.btn__spin {
+  width: 15px; height: 15px; flex: none;
+  border-radius: 50%;
+  border: 2px solid color-mix(in srgb, currentColor 28%, transparent);
+  border-top-color: currentColor;
+  animation: btnspin .7s linear infinite;
+}
+@keyframes btnspin { to { transform: rotate(360deg); } }
+@media (prefers-reduced-motion: reduce) {
+  .btn__spin { animation-duration: 2.4s; }
+}
+
+/* ---------- profile identity header ------------------------- */
+.phead {
+  position: relative;
+  margin: 14px var(--pad) 0;
+  padding: 20px 18px 18px;
+  border-radius: var(--r-xl);
+  background: var(--card);
+  border: 1px solid var(--border);
+  box-shadow: var(--shadow-sm);
+  overflow: hidden;
+  text-align: center;
+}
+.phead__art { position: absolute; inset: 0; pointer-events: none; opacity: .85; }
+.phead__art svg { width: 100%; height: 100%; }
+.phead__id { position: relative; display: flex; flex-direction: column; align-items: center; gap: 10px; }
+.phead__name {
+  font-size: 19px; font-weight: 800; letter-spacing: -.032em;
+  max-width: 100%; overflow-wrap: anywhere;
+}
+.phead__mail {
+  font-size: 12.5px; font-weight: 500; color: var(--text-3);
+  overflow-wrap: anywhere;
+}
+.phead__meta { display: flex; flex-wrap: wrap; gap: 6px; justify-content: center; }
+.phead__acts { position: relative; margin-top: 14px; display: flex; flex-direction: column; gap: 9px; }
+.phead__acts .btn { width: 100%; }
+
+/* Avatar: a photo, initials from a real name, or a neutral glyph — in that
+   order, and never an invented set of letters (§124.14). */
+.pavatar {
+  width: 76px; height: 76px;
+  border-radius: 26px;
+  display: grid; place-items: center;
+  font-size: 23px; font-weight: 800; letter-spacing: -.02em;
+  background: var(--tint-accent); color: var(--accent-ink);
+  overflow: hidden;
+  border: 1px solid color-mix(in srgb, var(--accent) 18%, transparent);
+}
+.pavatar img { width: 100%; height: 100%; object-fit: cover; }
+.pavatar svg { width: 30px; height: 30px; color: var(--accent); }
+.pavatar--sm { width: 54px; height: 54px; border-radius: 18px; font-size: 17px; }
+.pavatar--anon { background: var(--tint-neutral); color: var(--text-3); border-color: var(--border); }
+.pavatar--anon svg { color: var(--text-3); }
+
+/* The app-bar avatar with no name behind it: a glyph, not two letters
+   someone made up (§124.14). */
+.avatar--anon { background: var(--tint-neutral); color: var(--text-3); }
+.avatar--anon svg { width: 17px; height: 17px; }
+
+.guestwhy {
+  position: relative;
+  margin-top: 14px;
+  padding: 14px 16px;
+  border-radius: var(--r-md);
+  background: var(--card-2);
+  border: 1px solid var(--border);
+  text-align: start;
+}
+.guestwhy__title {
+  font-size: 11px; font-weight: 700; letter-spacing: .04em;
+  text-transform: uppercase; color: var(--text-3);
+}
+.guestwhy ul { margin: 8px 0 0; padding: 0; list-style: none; display: grid; gap: 7px; }
+.guestwhy li {
+  display: flex; align-items: flex-start; gap: 8px;
+  font-size: 12.5px; font-weight: 600; color: var(--text-2); line-height: 1.4;
+}
+.guestwhy li svg { width: 14px; height: 14px; flex: none; color: var(--accent); margin-top: 1px; }
+
+/* ---------- settings rows ----------------------------------- */
+/* The §124.30 standard is the existing list row: icon, title, description,
+   value, chevron. It is not re-invented here — only the account-specific
+   variants are. */
+.list-row__sub--wrap { white-space: normal; }
+
+/* A value the user owns — an address, a city, a currency — wraps rather
+   than ending in an ellipsis with nowhere else to read it (§116). */
+.srow__value {
+  font-size: 12.5px; font-weight: 700; color: var(--text-2);
+  max-width: 46vw; overflow-wrap: anywhere; white-space: normal; text-align: end;
+}
+.is-rtl .list-row__end > svg { transform: scaleX(-1); }
+
+/* A chooser: one live setting per row, current state visible without opening. */
+.optrow {
+  display: flex; align-items: center; gap: 12px;
+  width: 100%; padding: var(--pad-row);
+  border-bottom: 1px solid var(--border);
+  text-align: start;
+}
+.optrow:last-child { border-bottom: 0; }
+.optrow:active { background: var(--card-hover); }
+.optrow__body { flex: 1; min-width: 0; }
+.optrow__title { font-size: 14px; font-weight: 700; letter-spacing: -.02em; }
+.optrow__sub { font-size: 11px; font-weight: 500; color: var(--text-3); margin-top: 1px; }
+.optrow__mark {
+  flex: none; width: 20px; height: 20px;
+  display: grid; place-items: center;
+  border-radius: 50%;
+  border: 1.5px solid var(--border-2);
+  color: transparent;
+}
+.optrow__mark svg { width: 12px; height: 12px; }
+.optrow.is-on .optrow__mark { background: var(--accent); border-color: var(--accent); color: var(--on-accent); }
+.optrow.is-on .optrow__title { color: var(--accent-ink); }
+
+/* ---------- sessions ---------------------------------------- */
+.sessrow { align-items: flex-start; }
+.sessrow .list-row__icon { margin-top: 2px; }
+.sessrow__here {
+  font-size: 10px; font-weight: 800; letter-spacing: .04em; text-transform: uppercase;
+  color: var(--accent);
+}
+.sessrow__out {
+  flex: none;
+  font-size: 12px; font-weight: 700; color: var(--rose-ink);
+  padding: 6px 10px; border-radius: var(--r-xs);
+}
+.sessrow__out:active { background: color-mix(in srgb, var(--rose) 12%, transparent); }
+
+/* ---------- destructive ------------------------------------- */
+.danger {
+  margin-top: var(--gap-section);
+  padding: 0 var(--pad);
+}
+.danger__label {
+  font-size: 11px; font-weight: 700; letter-spacing: .07em;
+  text-transform: uppercase; color: var(--rose-ink);
+  margin-bottom: 9px;
+}
+.danger__card {
+  padding: 16px;
+  border-radius: var(--r-md);
+  background: color-mix(in srgb, var(--rose) 6%, var(--card));
+  border: 1px solid color-mix(in srgb, var(--rose) 22%, transparent);
+}
+.danger__text {
+  font-size: 12.5px; font-weight: 500; line-height: 1.5; color: var(--text-2);
+  margin-bottom: 12px;
+}
+.btn--danger {
+  background: var(--rose); color: var(--on-rose);
+  box-shadow: 0 6px 18px -8px color-mix(in srgb, var(--rose) 80%, transparent);
+}
+.btn--dangerghost {
+  background: transparent; color: var(--rose-ink);
+  border: 1px solid color-mix(in srgb, var(--rose) 34%, transparent);
+}
+
+.conseq { display: grid; gap: 9px; margin: 4px 0 0; padding: 0; list-style: none; }
+.conseq li {
+  display: flex; align-items: flex-start; gap: 9px;
+  font-size: 13px; font-weight: 600; line-height: 1.45; color: var(--text-2);
+}
+.conseq li svg { width: 15px; height: 15px; flex: none; margin-top: 1px; }
+.conseq--lose li svg { color: var(--rose); }
+.conseq--keep li svg { color: var(--accent); }
+
+/* ---------- confirmation dialog ----------------------------- */
+.confirm { padding: 4px 2px 2px; }
+.confirm__title { font-size: 18px; font-weight: 800; letter-spacing: -.03em; }
+.confirm__text {
+  margin-top: 8px;
+  font-size: 13.5px; font-weight: 500; line-height: 1.5; color: var(--text-2);
+}
+.confirm__acts { margin-top: 20px; display: flex; flex-direction: column; gap: 10px; }
+
+/* ---------- onboarding name step ---------------------------- */
+.onb__namefield { margin-top: 22px; }
+.onb__namefield .field__box { padding: 14px 16px; border-radius: var(--r-md); }
+.onb__namefield .field__box input { font-size: 16px; }
+
+/* ---------- data & sync ------------------------------------- */
+.storegroup { margin-top: 4px; }
+.storegroup__label {
+  display: flex; align-items: center; gap: 7px;
+  font-size: 11px; font-weight: 700; letter-spacing: .04em;
+  text-transform: uppercase; color: var(--text-3);
+  margin: 0 0 9px;
+}
+.storegroup__label svg { width: 13px; height: 13px; }
+
+/* ---------- wide screens (§116) ----------------------------- */
+@media (min-width: 1180px) {
+  .app--wide .phead { max-width: 620px; margin-inline: auto; }
+  .app--wide .phead__acts { flex-direction: row; justify-content: center; }
+  .app--wide .phead__acts .btn { width: auto; min-width: 190px; }
+}
+
+@media (max-width: 359px) {
+  /* .auth__title lives in auth.css now — it has its own layout system. */
+  .pavatar { width: 66px; height: 66px; border-radius: 22px; font-size: 20px; }
+  .srow__value { max-width: 40vw; font-size: 12px; }
+}

@@ -3,6 +3,7 @@
 const fs = require('fs');
 const path = require('path');
 const { JSDOM, VirtualConsole } = require('jsdom');
+const { loadInto } = require('./modules');
 
 const ROOT = require('path').resolve(__dirname, '..');
 let failures = 0;
@@ -24,7 +25,7 @@ async function boot(profile, tz) {
     beforeParse(window) {
       window.localStorage.setItem('lume-onboarded', '1');
       window.localStorage.setItem('lume-profile', JSON.stringify(Object.assign({
-        name: 'Zeeshan', initials: 'ZK', units: 'auto', currency: 'auto', clock: 'auto', method: 'MWL',
+        units: 'auto', currency: 'auto', clock: 'auto', method: 'MWL',
         interests: ['weather', 'calendar', 'tasks', 'notes', 'maths', 'expenses', 'news', 'markets'],
         prefs: { news: true, cricket: true, finance: true, recos: true },
         recents: [], favourites: [], recentCountries: []
@@ -37,9 +38,7 @@ async function boot(profile, tz) {
       window.URL.revokeObjectURL = () => {};
     }
   });
-  for (const src of [...dom.window.document.querySelectorAll('script[src]')].map(s => s.getAttribute('src'))) {
-    dom.window.eval(fs.readFileSync(path.join(ROOT, src), 'utf8'));
-  }
+  loadInto(dom, ROOT, errors);
   await new Promise(r => setTimeout(r, 60));
   return { dom, errors };
 }
@@ -86,8 +85,8 @@ const wait = ms => new Promise(r => setTimeout(r, ms));
   /* ── 3. ISO dates parsed as UTC but read locally ────────────────────── */
   console.log('\n=== Dates west of UTC (America/New_York) ===');
   ({ dom } = await boot({ country: 'US', city: 'New York', islamic: false, lang: 'en' }, 'America/New_York'));
-  let ctx = dom.window.LUME_CTX;
-  let TOOLS = dom.window.LUME_TOOLS;
+  let ctx = dom.window.Lume.ctxFactory;
+  let TOOLS = dom.window.Lume.tools;
   let age = TOOLS.build('age');
   ok('the age screen builds', !!age);
   const ageBody = age.body.replace(/<[^>]+>/g, ' ');
@@ -102,7 +101,7 @@ const wait = ms => new Promise(r => setTimeout(r, ms));
   ({ dom } = await boot({ country: 'PK', region: 'Islamabad Capital Territory', city: 'Islamabad', islamic: true, lang: 'en' }));
   const win = dom.window;
   doc = win.document;
-  TOOLS = win.LUME_TOOLS;
+  TOOLS = win.Lume.tools;
   const $ = s => doc.querySelector(s);
   const $$ = s => [...doc.querySelectorAll(s)];
   const click = el => el.dispatchEvent(new win.MouseEvent('click', { bubbles: true, cancelable: true }));
@@ -159,7 +158,7 @@ const wait = ms => new Promise(r => setTimeout(r, ms));
   // 9. the prayer tracker read 0/5 between Isha and midnight
   const track = TOOLS.build('praytrack').body.replace(/<[^>]+>/g, ' ');
   const nowM = new Date().getHours() * 60 + new Date().getMinutes();
-  const set = win.LUME_CTX ? null : null;
+  const set = win.Lume.ctxFactory ? null : null;
   ok('prayers-done is never a wrapped 0 after the last prayer',
      !(nowM > 20 * 60 && /\b0\s*\/ 5/.test(track)), track.slice(0, 160));
 
@@ -224,13 +223,13 @@ const wait = ms => new Promise(r => setTimeout(r, ms));
      /Updated|For /.test($('#toolBody .srcline').textContent), $('#toolBody .srcline').textContent);
 
   // 11. every currency geo.js can produce has a rate
-  const GEO = win.LUME_GEO, L = win.LUME_LOCALE(() => ({ country: 'PK', lang: 'en' }));
+  const GEO = win.Lume.geo, L = win.Lume.localeFactory(() => ({ country: 'PK', lang: 'en' }));
   const missing = GEO.COUNTRIES.map(c => c.currency).filter((v, i, a) => a.indexOf(v) === i)
     .filter(code => !L.RATES[code]);
   ok('every country currency has an exchange rate', missing.length === 0, missing.join(', '));
 
   // §106 only languages with a dictionary are offered
-  const I = win.LUME_I18N;
+  const I = win.Lume.i18n;
   ok('no language is offered without a dictionary',
      I.LANGS.every(l => !!I.DICTS[l.code]),
      I.LANGS.filter(l => !I.DICTS[l.code]).map(l => l.code).join(', '));
@@ -346,7 +345,7 @@ const wait = ms => new Promise(r => setTimeout(r, ms));
   ({ dom } = await boot({ country: 'PK', city: 'Islamabad', islamic: false, lang: 'en',
       market: 'GLOBAL' }));
   const w3 = dom.window;
-  const built = w3.LUME_TOOLS.build('markets');
+  const built = w3.Lume.tools.build('markets');
   const glob = [...built.body.matchAll(/data-sect="([a-z]+)"/g)].map(m => m[1])
     .filter(x => ['context', 'classnav', 'hero', 'assets', 'overview'].includes(x));
   ok('the world board keeps the approved composition (§123)',
@@ -432,7 +431,7 @@ const wait = ms => new Promise(r => setTimeout(r, ms));
   ({ dom } = await boot({ country: 'PK', city: 'Islamabad', islamic: false, lang: 'en',
       market: 'US' }, 'Asia/Karachi'));
   const w5 = dom.window;
-  const stateText = w5.LUME_TOOLS.build('markets').body.replace(/<[^>]+>/g, ' ');
+  const stateText = w5.Lume.tools.build('markets').body.replace(/<[^>]+>/g, ' ');
   // Whatever the verdict, it must be derived from New York, not Karachi.
   const nyHour = Number(new Intl.DateTimeFormat('en-US',
     { timeZone: 'America/New_York', hour: 'numeric', hour12: false }).format(new Date()));
