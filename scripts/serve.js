@@ -46,6 +46,21 @@ const server = http.createServer((req, res) => {
   res.end(fs.readFileSync(file));
 });
 
+/* A port already in use is an ordinary thing to happen — usually another
+   copy of this server — and deserves an answer rather than a stack trace. */
+server.on('error', err => {
+  if (err.code === 'EADDRINUSE') {
+    console.error(
+      'Port ' + PORT + ' is already in use.\n' +
+      'Either something else is serving it — try http://localhost:' + PORT + '/ —\n' +
+      'or pick another: PORT=8081 npm run serve'
+    );
+    process.exit(1);
+  }
+  throw err;
+});
+
 server.listen(PORT, () => {
   console.log('Lume is running at http://localhost:' + PORT + '/');
+  console.log('Press Ctrl+C to stop.');
 });

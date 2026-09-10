@@ -11,14 +11,27 @@ data is realistic demonstration data; there is no backend yet.
 
 ## Running it
 
-ES modules are fetched rather than read, so the app no longer opens from
-`file://` — a browser refuses a module script on that origin.
-
 ```bash
-npm install     # jsdom, for the tests; nothing is needed at runtime
+npm install     # jsdom, for the tests and the build; nothing is needed at runtime
 npm run serve   # http://localhost:8080
 npm test        # the full suite
 ```
+
+The app is ES modules, so a browser refuses to load it from `file://` and
+opening `index.html` directly gives a blank page. Serve it instead.
+
+If you want a page you can just double-click:
+
+```bash
+npm run build   # then open build/index.html
+```
+
+That bundles the module graph into one classic script and writes a page
+that loads it, referencing the real stylesheets in place so there is no
+second copy to fall out of date. The build opens its own output in jsdom
+and checks the shell, the screens, the tab bar and a rendered Home before
+reporting success — it will tell you if it produced something broken.
+Rebuild after changing any JavaScript; CSS edits show up on reload.
 
 ## How it is put together
 
@@ -86,8 +99,9 @@ Eight suites, all of which boot the real `index.html`:
 | `account.js` | onboarding, identity, settings and the account lifecycle |
 | `auth.js` | the authentication flows and their layout contract |
 
-jsdom has no module loader, so `tests/modules.js` resolves the import graph
-itself and hands jsdom one ordinary script. It refuses a cycle rather than
+jsdom has no module loader, so `scripts/bundler.js` resolves the import
+graph itself and hands jsdom one ordinary script — the same bundler
+`npm run build` uses. It refuses a cycle rather than
 emitting a bundle that half-works, and `architecture.js` walks the same
 graph over a real HTTP server so a specifier that resolves only in the test
 cannot pass.
