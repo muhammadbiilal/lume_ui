@@ -1,96 +1,14 @@
 /* ============================================================
-   Lume — account, authentication and settings  (Master Spec §124)
+   Lume — account, profile and settings  (Master Spec §124)
 
    No new visual language. Every surface below is built from the
    existing tokens, the existing row, field and card components
-   and the existing motion — an authentication screen that looks
-   like a third-party form is the failure §124.30 names.
+   and the existing motion — a settings screen that looks like a
+   third-party form is the failure §124.30 names.
+
+   Authentication is the one part of this system with a layout
+   of its own, and it lives in auth.css (§126).
    ============================================================ */
-
-/* ---------- authentication shell ---------------------------- */
-.auth {
-  display: flex;
-  flex-direction: column;
-  min-height: 100%;
-  padding: 0 var(--pad) calc(28px + env(safe-area-inset-bottom));
-}
-
-.auth__top {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  padding: 10px 0 4px;
-  min-height: 52px;
-}
-.auth__top .iconbtn { flex: none; }
-.auth__spacer { flex: 1; }
-
-/* The back chevron mirrors in RTL; a dismissal cross never does (§17). */
-.is-rtl .auth__top .iconbtn--back svg { transform: scaleX(-1); }
-
-.auth__brand {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  margin: 8px 0 22px;
-}
-.auth__mark {
-  width: 38px; height: 38px;
-  display: grid; place-items: center;
-  border-radius: var(--r-sm);
-  background: var(--accent);
-  color: var(--on-accent);
-  box-shadow: var(--shadow-accent);
-}
-.auth__mark svg { width: 20px; height: 20px; }
-.auth__word {
-  font-size: 17px; font-weight: 800; letter-spacing: -.03em;
-  display: flex; flex-direction: column;
-}
-.auth__word span {
-  font-size: 11px; font-weight: 600; letter-spacing: -.01em; color: var(--text-3);
-}
-
-.auth__title {
-  font-size: 26px; font-weight: 800; letter-spacing: -.04em; line-height: 1.15;
-}
-.auth__text {
-  margin-top: 8px;
-  font-size: 14px; font-weight: 500; line-height: 1.5; color: var(--text-2);
-}
-
-.auth__form { margin-top: 22px; display: flex; flex-direction: column; gap: 14px; }
-.auth__foot { margin-top: 20px; display: flex; flex-direction: column; gap: 12px; }
-.auth__grow { flex: 1; min-height: 12px; }
-
-.auth__link {
-  display: block; width: 100%;
-  padding: 12px 0;
-  font-size: 13px; font-weight: 600; color: var(--text-2);
-  text-align: center;
-}
-.auth__link b { color: var(--accent); font-weight: 800; }
-.auth__link--quiet { color: var(--text-3); font-weight: 500; }
-
-.auth__inline {
-  align-self: flex-start;
-  font-size: 12.5px; font-weight: 700; color: var(--accent);
-  padding: 4px 0;
-}
-
-.auth__or {
-  display: flex; align-items: center; gap: 12px;
-  margin: 18px 0 14px;
-  font-size: 11px; font-weight: 700; letter-spacing: .06em;
-  text-transform: uppercase; color: var(--text-3);
-}
-.auth__or::before, .auth__or::after {
-  content: ""; flex: 1; height: 1px; background: var(--border-2);
-}
-
-/* An illustration, so the flow belongs to Lume rather than to a form. */
-.auth__art { margin: 6px 0 4px; }
-.auth__art svg { width: 100%; max-width: 260px; height: auto; display: block; margin: 0 auto; }
 
 /* ---------- fields, errors, password ------------------------ */
 .field.is-invalid .field__box {
@@ -105,16 +23,6 @@
   color: var(--rose-ink);
 }
 .field__err svg { width: 12px; height: 12px; flex: none; margin-top: 1px; }
-
-.pwtoggle {
-  flex: none;
-  width: 30px; height: 30px; margin: -6px -6px -6px 0;
-  display: grid; place-items: center;
-  border-radius: var(--r-xs);
-  color: var(--text-3);
-}
-.pwtoggle svg { width: 16px; height: 16px; }
-.pwtoggle:active { background: var(--tint-neutral); }
 
 .pwrules {
   display: grid; gap: 5px;
@@ -382,14 +290,13 @@
 
 /* ---------- wide screens (§116) ----------------------------- */
 @media (min-width: 1180px) {
-  .app--wide .auth { max-width: 460px; margin: 0 auto; }
   .app--wide .phead { max-width: 620px; margin-inline: auto; }
   .app--wide .phead__acts { flex-direction: row; justify-content: center; }
   .app--wide .phead__acts .btn { width: auto; min-width: 190px; }
 }
 
 @media (max-width: 359px) {
-  .auth__title { font-size: 23px; }
+  /* .auth__title lives in auth.css now — it has its own layout system. */
   .pavatar { width: 66px; height: 66px; border-radius: 22px; font-size: 20px; }
   .srow__value { max-width: 40vw; font-size: 12px; }
 }

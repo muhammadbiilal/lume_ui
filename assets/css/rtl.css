@@ -1,0 +1,53 @@
+/* ============================================================
+   Lume — Right-to-left and script sizing
+
+   Only what is genuinely directional flips. This is global rather
+   than per-screen because direction is a property of the page,
+   and it loads last in its slot so it can override the screens
+   it corrects.
+   ============================================================ */
+
+/* ---------- RTL -------------------------------------------- */
+
+/* Only what is genuinely directional flips. Chevrons that mean
+   "forward" must keep pointing the way the language reads, while a
+   clock or a play button must not mirror at all. */
+.is-rtl .appbar__sub,
+.is-rtl .ctx__end,
+.is-rtl .stat-row__end,
+.is-rtl .live-train__stops span:first-child { text-align: start; }
+
+.is-rtl .section__link svg,
+.is-rtl .list-row__end svg,
+.is-rtl .private-card__chev,
+.is-rtl .routecard__pair svg,
+.is-rtl .slide__cta svg,
+.is-rtl .onb__foot .btn svg,
+.is-rtl .locback svg { transform: scaleX(-1); }
+
+.is-rtl .tl-time { text-align: start; }
+.is-rtl .habit__name { text-align: start; }
+
+/* Numerals, times and codes stay left-to-right inside RTL text. */
+.is-rtl .num,
+.is-rtl .locrow__code,
+.is-rtl .trainno { direction: ltr; unicode-bidi: isolate; }
+
+/* Status values are data, not chrome, so some are still English inside an
+   RTL page. plaintext takes the direction from the first strong character,
+   which keeps "32 units" in that order instead of reversing it. */
+.is-rtl .cat-tool__meta,
+.is-rtl .tool__value,
+.is-rtl .list-row__sub,
+.is-rtl .minicard__meta,
+.is-rtl .stat-row__meta { unicode-bidi: plaintext; }
+
+.is-rtl .quote__mark { left: auto; right: 14px; }
+.is-rtl .arabic { text-align: right; }
+
+/* Urdu and Arabic need a little more line height to breathe. */
+[lang="ur"] body, [lang="ar"] body { line-height: 1.6; }
+[lang="ur"] .appbar__greet, [lang="ar"] .appbar__greet { letter-spacing: 0; }
+[lang="ur"] .page-head__title, [lang="ar"] .page-head__title { letter-spacing: 0; }
+[lang="ur"] .onb__title, [lang="ar"] .onb__title { letter-spacing: 0; line-height: 1.45; }
+[lang="ur"] .tab__label, [lang="ar"] .tab__label { font-size: 10px; }

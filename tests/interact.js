@@ -2,6 +2,7 @@
 const fs = require('fs');
 const path = require('path');
 const { JSDOM, VirtualConsole } = require('jsdom');
+const { loadInto } = require('./modules');
 
 const ROOT = require('path').resolve(__dirname, '..');
 let failures = 0;
@@ -35,8 +36,7 @@ async function boot(profile) {
       window.navigator.vibrate = () => true;
     }
   });
-  const scripts = [...dom.window.document.querySelectorAll('script[src]')].map(s => s.getAttribute('src'));
-  for (const src of scripts) dom.window.eval(fs.readFileSync(path.join(ROOT, src), 'utf8'));
+  loadInto(dom, ROOT, errors);
   await new Promise(r => setTimeout(r, 60));
   return { dom, errors };
 }

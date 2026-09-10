@@ -3,6 +3,7 @@
 const fs = require('fs');
 const path = require('path');
 const { JSDOM, VirtualConsole } = require('jsdom');
+const { loadInto } = require('./modules');
 
 const ROOT = require('path').resolve(__dirname, '..');
 let failures = 0;
@@ -33,9 +34,7 @@ async function boot(profile) {
       window.navigator.vibrate = () => true;
     }
   });
-  for (const src of [...dom.window.document.querySelectorAll('script[src]')].map(s => s.getAttribute('src'))) {
-    dom.window.eval(fs.readFileSync(path.join(ROOT, src), 'utf8'));
-  }
+  loadInto(dom, ROOT, errors);
   await new Promise(r => setTimeout(r, 60));
   return { dom, errors };
 }
@@ -184,7 +183,7 @@ const wait = ms => new Promise(r => setTimeout(r, ms));
 
   /* ---------------- no raw keys leaked anywhere ---------------- */
   console.log('\n=== Localisation ===');
-  const C = win.LUME, TOOLS = win.LUME_TOOLS;
+  const C = win.Lume.catalogue, TOOLS = win.Lume.tools;
   const keyRe = /\b(?:[a-z][a-zA-Z0-9]{1,18}\.){1,3}[a-zA-Z0-9]{2,24}\b/g;
   const leaked = new Set();
   C.FEATURES.forEach(f => {

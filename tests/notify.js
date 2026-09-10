@@ -4,6 +4,7 @@
 const fs = require('fs');
 const path = require('path');
 const { JSDOM, VirtualConsole } = require('jsdom');
+const { loadInto } = require('./modules');
 
 const ROOT = require('path').resolve(__dirname, '..');
 let failures = 0;
@@ -50,9 +51,7 @@ async function boot(profile, opts) {
       }
     }
   });
-  for (const src of [...dom.window.document.querySelectorAll('script[src]')].map(s => s.getAttribute('src'))) {
-    dom.window.eval(fs.readFileSync(path.join(ROOT, src), 'utf8'));
-  }
+  loadInto(dom, ROOT, errors);
   await new Promise(r => setTimeout(r, 60));
   return { dom, errors };
 }
@@ -69,7 +68,7 @@ const wait = ms => new Promise(r => setTimeout(r, ms));
   const click = el => el.dispatchEvent(new win.MouseEvent('click', { bubbles: true, cancelable: true }));
 
   ok('booted clean', errors.length === 0, errors.slice(0, 2).join(' | '));
-  ok('the engine is a module, not a screen', typeof win.LUME_NOTIFY === 'function');
+  ok('the engine is a module, not a screen', typeof win.Lume.notifyFactory === 'function');
 
   const bell = $('[data-act="tab:notifications"]');
   ok('the bell is the global entry point (§100.1)', !!bell);
@@ -106,7 +105,7 @@ const wait = ms => new Promise(r => setTimeout(r, ms));
   ok('unread rows are marked', $$('#notifBody .nrow.is-unread').length > 0);
 
   // §100.6 priority ordering
-  const N = win.LUME_NOTIFY;
+  const N = win.Lume.notifyFactory;
   ok('priority outranks recency (§100.6)', true);
 
   /* ── filters ───────────────────────────────────────────────────────── */
@@ -174,7 +173,7 @@ const wait = ms => new Promise(r => setTimeout(r, ms));
   if (marketsCat) {
     click(marketsCat);
     await wait(40);
-    const engine = win.LUME_NOTIFY;
+    const engine = win.Lume.notifyFactory;
     click($('#sheet-notifprefs [data-close]'));
     await wait(30);
     click($('[data-act="tab:notifications"]'));
