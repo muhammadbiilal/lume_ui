@@ -141,6 +141,31 @@ emitting a bundle that half-works, and `architecture.js` walks the same
 graph over a real HTTP server so a specifier that resolves only in the test
 cannot pass.
 
+## The Flutter reference
+
+`flutter_reference/` holds a native Flutter translation of this interface — the
+authoritative mobile and tablet UI reference, written so its presentation layer
+can later move into the Dayroz production app. It is not a WebView, a mockup or
+a redesign; it is this prototype re-authored as widgets and measured against it.
+
+**This prototype stays authoritative.** Nothing in `flutter_reference/` edits
+it, and the capture tooling copies it to a scratch directory rather than driving
+it in place. Where the two disagree, the rendered web interface wins and the
+difference is recorded.
+
+The conversion is documented in `docs/flutter_conversion/`:
+
+| Doc | What it answers |
+| --- | --- |
+| `README.md` | The source-of-truth order, the phases, and where each document fits |
+| `BASELINE_F0.md` | What was measured here before any Flutter work began |
+| `WEB_TO_FLUTTER_MAPPING.md` | Every token, class, layout, route and state, and its Flutter equivalent |
+| `DAYROZ_ARCHITECTURE_MAPPING.md` | How the reference is organised for integration, and what will need an adapter |
+| `COMPONENT_MATRIX.md` | Every shared component, its states and its status |
+| `SCREEN_MATRIX.md` | Ten screens, nine onboarding steps, thirty-one account and auth routes, eighty-five tools |
+| `VISUAL_VERIFICATION.md` | The capture pipeline, the viewport matrix and how a screen is proved |
+| `KNOWN_DIFFERENCES.md` | Permitted native differences, contradictions found in the sources, and the corrections made |
+
 ## Not yet production
 
 No backend, no real authentication, no live data providers, no cloud sync,
