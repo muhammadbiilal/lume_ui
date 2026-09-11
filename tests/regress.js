@@ -178,12 +178,17 @@ const wait = ms => new Promise(r => setTimeout(r, ms));
   const nisabShown = /Nisab[^0-9]*([\d,]+)/.exec(zakat);
   ok('the nisab on screen is the one being tested', !!nisabShown, zakat.slice(0, 200));
 
-  // 9. the prayer tracker read 0/5 between Isha and midnight
-  const track = TOOLS.build('praytrack').body.replace(/<[^>]+>/g, ' ');
-  const nowM = new Date().getHours() * 60 + new Date().getMinutes();
-  const set = win.Lume.ctxFactory ? null : null;
-  ok('prayers-done is never a wrapped 0 after the last prayer',
-     !(nowM > 20 * 60 && /\b0\s*\/ 5/.test(track)), track.slice(0, 160));
+  /* 9. the prayer tracker read 0/5 between Isha and midnight.
+
+     `prayerState().index` wraps to 0 once Isha has passed, because the
+     *next* prayer is tomorrow's Fajr. Read as "prayers so far today" that
+     is zero all evening. `prayerTracker` counts the prayers whose time has
+     passed instead.
+
+     This used to be asserted against the wall clock, and only when it was
+     already past 20:00 — so for twenty hours a day it checked nothing, and
+     the branch it guarded was the one branch it could not reach. The cases
+     are pinned below, after `boot` is in scope. */
 
   // 10. moon phase was frozen and the illumination inverted
   const sunmoon = TOOLS.build('sunmoon').body.replace(/<[^>]+>/g, ' ').replace(/\s+/g, ' ');
@@ -448,6 +453,66 @@ const wait = ms => new Promise(r => setTimeout(r, ms));
        hh('#toolBody .sortopt').map(b => b.textContent.trim() + '=' + b.getAttribute('aria-pressed')).join(' '));
   }
   w4.close();
+
+  /* ── the prayer tracker, on a pinned clock ─────────────────── */
+  /* `prayerTracker` counts the prayers whose time has passed today. The bug it
+     replaced read `prayerState().index`, which wraps to 0 the moment Isha
+     passes because the *next* prayer is tomorrow's Fajr — so the tracker said
+     "0 / 5" all evening.
+
+     Every case below fixes the device to Asia/Karachi and the instant to a
+     known moment, so the evening branch runs on every execution instead of
+     only when the suite happens to be run after dark. */
+  console.log('\n=== Prayer tracker counts what has passed ===');
+
+  async function prayedAt(instant) {
+    const booted = await boot({ country: 'PK', region: 'Islamabad Capital Territory',
+      city: 'Islamabad', islamic: true, lang: 'en' }, 'Asia/Karachi', instant);
+    const body = booted.dom.window.Lume.tools.build('praytrack').body
+      .replace(/<[^>]+>/g, ' ').replace(/\s+/g, ' ');
+    booted.dom.window.close();
+    const m = /(\d+)\s*\/ 5/.exec(body);
+    return { count: m ? Number(m[1]) : null, body: body.slice(0, 160) };
+  }
+
+  /* instant (UTC) → Karachi wall clock → prayers already passed today. */
+  const PRAYER_DAY = [
+    ['2026-06-15T19:30:00Z', '00:30, after midnight and before Fajr', 0],
+    ['2026-06-15T02:00:00Z', '07:00, Fajr has passed',                1],
+    ['2026-06-15T07:00:00Z', '12:00, still before Dhuhr',             1],
+    ['2026-06-15T18:30:00Z', '23:30, after Isha — the defect',        5]
+  ];
+
+  for (const [instant, label, expected] of PRAYER_DAY) {
+    const r = await prayedAt(instant);
+    ok('prayers done at ' + label + ' is ' + expected,
+       r.count === expected,
+       'got ' + r.count + ' — ' + r.body);
+  }
+
+  /* The defect specifically: a wrapped index reads 0 in the evening, and a
+     legitimate 0 exists just after midnight. Asserting "never 0" would pass
+     with the bug restored; asserting the pair is what separates them. */
+  const evening = await prayedAt('2026-06-15T18:30:00Z');
+  const smallHours = await prayedAt('2026-06-15T19:30:00Z');
+  ok('the evening count is not the wrapped zero the small hours legitimately show',
+     evening.count === 5 && smallHours.count === 0,
+     'evening=' + evening.count + ' smallHours=' + smallHours.count);
+
+  /* The count never goes backwards as the day advances. This is the property
+     the wrap broke, stated directly. */
+  const throughTheDay = [];
+  for (const hourUtc of ['19:30', '02:00', '07:00', '10:00', '13:00', '18:30']) {
+    const iso = hourUtc === '19:30'
+      ? '2026-06-14T19:30:00Z'   /* 00:30 on the 15th in Karachi */
+      : '2026-06-15T' + hourUtc + ':00Z';
+    throughTheDay.push((await prayedAt(iso)).count);
+  }
+  ok('the count never decreases across the day',
+     throughTheDay.every((v, i) => i === 0 || v >= throughTheDay[i - 1]),
+     throughTheDay.join(' → '));
+  ok('the day ends with all five counted', throughTheDay[throughTheDay.length - 1] === 5,
+     throughTheDay.join(' → '));
 
   /* ── the exchange's own clock ───────────────────────────────────────── */
   /* NASDAQ's regular session is 09:30–16:00 New York, declared as
