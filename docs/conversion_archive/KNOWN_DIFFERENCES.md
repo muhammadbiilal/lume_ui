@@ -102,18 +102,50 @@ reading cap.
 Flutter has no equivalent; its line breaker is greedy. Expect the last line of a
 long onboarding title to break at a different word than the browser does.
 
-**Not yet approved.** Where it changes the visible line count of a reference
-screen it will be corrected by hand-tuning the measure, and the remaining cases
-listed per screen in F4/F9. Raised in §3.
+**Approved with a condition (Q1, F1).** A shaping difference is accepted only
+when the line count matches, the same text stays visible, no truncation changes,
+the text measure and hierarchy match, and the component height and surrounding
+layout stay materially equivalent. Where the line count or the layout differs,
+the Flutter constraints and typography are adjusted until they do not. Anything
+left after that is rasterisation-only and is listed per screen.
 
 ### D3 — network-fetched fonts
 
-The web loads Plus Jakarta Sans and Noto Naskh Arabic from the Google Fonts CDN.
-The Flutter reference bundles them locally with their OFL licence, so it renders
-offline and on the first frame. This is a build difference with no visual
-consequence provided all five weights (400, 500, 600, 700, 800) ship real
-files — a missing weight makes Flutter synthesise a faux bold that is visibly
-not Plus Jakarta.
+**Resolved in F1.** The web loads Plus Jakarta Sans and Noto Naskh Arabic from
+the Google Fonts CDN; Flutter bundles both locally with their OFL licences, so
+it renders offline and on the first frame. All five Plus Jakarta weights (400,
+500, 600, 700, 800) ship real files, verified from each binary's
+`OS/2.usWeightClass` rather than from its filename, so nothing is synthesised.
+Checksums and provenance: `assets/fonts/PROVENANCE.md`. A build difference with
+no visual consequence.
+
+### D4 — Urdu is set in Naskh, not Nastaliq
+
+**New in F1, needs a decision (Q6).**
+
+Plus Jakarta Sans has no Arabic glyphs, and Flutter — unlike a browser — does
+not fall back to a system face on its own. Without a declared fallback every
+Urdu and Arabic interface string renders as tofu. `LumeType` therefore falls
+back to **Noto Naskh Arabic**, which is the face the reference loads and the
+only Arabic-script face the design asks for.
+
+Urdu is conventionally set in **Nastaliq**, which is a different face with a
+very different look. The reference does not ship it, so bundling one would be
+the conversion inventing a design decision. Dayroz separately bundles
+`NotoNastaliqUrdu-Medium.ttf`, which is evidence the production app considers
+Naskh wrong for Urdu.
+
+Recorded rather than decided. See §3, Q6.
+
+### D5 — numeric runs are direction-isolated
+
+**Resolved in F1, and worth recording because it is invisible until it is
+wrong.** `rtl.css` gives `.num`, `.locrow__code` and `.trainno`
+`direction: ltr; unicode-bidi: isolate`. Without the equivalent in Flutter, a
+line holding two numeric runs reorders them: `1,240.50  16:41` renders as
+`16:41 1,240.50` in an Urdu page. The digits are right; their *sequence* is not,
+so a price and a time silently swap places. `LumeNumerals` / `LumeLtr` supply
+both the direction and the isolation.
 
 ---
 
@@ -154,10 +186,25 @@ database.
 verified by full-tree grep. It is dead CSS from a superseded implementation.
 
 **Resolution.** The brief and the rendered interface agree; only the stale rule
-disagrees, and it has no effect because no element ever carries the class. The
-Flutter country step is the vertical list. The four dead lines in
-`onboarding.css` are **proposed for deletion** in F1 — proposed rather than
-done, so the F0 baseline stays byte-identical to what the tests measured.
+disagreed, and it had no effect because no element ever carried the class.
+
+**Deleted in F1**, in its own commit, against the evidence asked for:
+
+* a repository-wide search found `.onb-country` only in its own definition and
+  in this document — the JavaScript's `#onbCountry` is an element *id*, the
+  host the location picker renders into, and is unrelated;
+* the web suite was 10 suites / 697 assertions / 0 failures both before and
+  after;
+* the country step was captured at 390 × 844 before and after, and the two PNGs
+  are **byte-identical** (SHA-256 `81c4b116…`).
+
+That capture is also the definitive answer to the contradiction: the step shows
+a circular Back button, a nine-segment progress indicator, Skip, the
+"MAKE IT LOCAL" kicker, the title and supporting copy, a search field, a
+"POPULAR" heading, and a vertical list of rows carrying the country code on the
+left, the name in the middle and the currency code on the right, with dividers
+and a tinted selected row — exactly what §13 asks for, and nothing the §13
+"do not use" list forbids.
 
 ### C2 — "individual screens must not invent their own breakpoints"
 
@@ -232,15 +279,22 @@ id-reconciliation table is an F6 deliverable. Recorded in
 
 ## 3. Open questions
 
+### Resolved in F1
+
+| # | Question | Decision |
+|---|---|---|
+| Q1 | Accept `text-wrap: balance` shaping differences? | **Conditionally.** Only when line count, visible text, truncation, measure, hierarchy and component height all match. Otherwise adjust the Flutter constraints and typography. See D2 |
+| Q2 | Ship empty ARBs for fr/es/tr/id/hi? | **No.** Three languages — en, ur, ar — with full key parity enforced by test. An empty ARB would put a row in the picker that does nothing when chosen |
+| Q3 | Delete the dead `.onb-country` lines? | **Done**, in its own commit, with a repository-wide search, the web suite before and after, and byte-identical captures. See C1 |
+| Q4 | Extract the 112 icons mechanically? | **Done.** Path geometry, `viewBox` and the one per-symbol fill override copied byte-for-byte; the CSS presentation written onto each asset's root. Manifest, geometry and directionality tests added |
+| Q5 | Reproduce the frozen `9:41` clock? | **No.** Real time at runtime through an injectable clock; pinned to a fixture instant in fixtures, captures and goldens. A frozen clock in a shipping app is a bug |
+
+### Still open
+
 | # | Question | Blocks | Recommendation |
 |---|---|---|---|
-| Q1 | Should D2 (`text-wrap: balance`) be accepted as a permitted difference, or hand-tuned per screen? | F4 sign-off | Accept as permitted where the line **count** matches; hand-tune where it does not. Decide when the first Country/Interests comparison is on screen |
-| Q2 | Does the reference ship fr/es/tr/id/hi as empty ARBs so the language picker lists them, or only en/ur/ar? | F1 | Ship **only en/ur/ar**. The web's picker lists only shipped languages, so empty ARBs would make the Flutter picker show five options the web does not |
-| Q3 | May the four dead `.onb-country` lines be deleted from `onboarding.css`? | F1 | Yes — proven unreferenced, zero visual effect. Held for approval because it edits the comparison source |
-| Q4 | Icon assets: trace the 112 SVG symbols out of `index.html` mechanically, or hand-author? | F1 | Extract mechanically into individual SVG files, preserving the 1.75 px stroke; the sprite is already one consistent set |
-| Q5 | Does the reference reproduce the web's simulated `9:41` status clock at medium/expanded, or show the real time? | F3 | Reproduce the strip; show **real** time. A frozen clock is a mockup artifact, and the capture harness can pin it for goldens |
-
----
+| Q6 | **Should Urdu be set in Nastaliq rather than Naskh?** The reference ships only Noto Naskh Arabic, so Naskh is what the design asks for and what F1 implemented. But Urdu is conventionally Nastaliq, and Dayroz separately bundles `NotoNastaliqUrdu-Medium.ttf` — which is the production app judging Naskh wrong for Urdu | F4 onboarding sign-off in Urdu | Keep **Naskh**, because the reference is the source of truth and bundling a face the design has not asked for is the conversion inventing a design decision. Raise it as a *design* question against the reference instead. Decide before Urdu screens are signed off, since it changes how every Urdu screen looks |
+| Q7 | Should capture artifacts be committed, or regenerated? | F2 | **Regenerated.** They are large, reproducible, and the findings live in the comparison reports rather than in the pixels. Currently gitignored |
 
 ## 4. Change log
 
@@ -251,7 +305,14 @@ id-reconciliation table is an F6 deliverable. Recorded in
 | 2026-09-11 | C2 recorded — four sub-breakpoints found in the stylesheets; brief §9's literal wording corrected, intent preserved | Six files carry `max-width: 359px`; four carry `min-width: 1180px` |
 | 2026-09-11 | C3 / D1 recorded — no height media query exists in any of the 19 stylesheets; the compact-height rule is a native addition | Grep across all stylesheets |
 | 2026-09-11 | C5 recorded — 8 languages declared, 3 shipped, ur/ar at ~25 % | Measured from `LUME_I18N.DICTS` |
+| 2026-09-11 (F1) | Q1–Q5 resolved; C1 closed by deletion with byte-identical captures | The evidence the cleanup was gated on |
+| 2026-09-11 (F1) | D3 resolved — fonts bundled and verified from their binaries | `assets/fonts/PROVENANCE.md` |
+| 2026-09-11 (F1) | **D4 raised** — Urdu falls back to Naskh because that is the only Arabic-script face the reference ships; Nastaliq is the convention and Dayroz bundles it | Found when the Urdu type golden rendered as tofu |
+| 2026-09-11 (F1) | **D5 resolved** — numeric runs need direction isolation, not just an LTR direction | Found when the RTL type golden rendered `1,240.50  16:41` as `16:41 1,240.50` |
+| 2026-09-11 (F1) | Evidence for D1 captured — at 852 × 393 the web reports `data-bp=medium`, Flutter resolves `compact` | The height override, demonstrated rather than asserted |
 
-No Markdown or `.docx` specification has been edited yet. The corrections above
-are recorded and proposed; they are applied in F1 once approved, and the `.docx`
-files are re-rendered and visually inspected at that point.
+One correction has been applied to the web prototype: the four dead
+`.onb-country` lines, deleted in F1 under the evidence gate in C1. Nothing else
+in the prototype has been touched, and no Markdown or `.docx` specification has
+been rewritten yet — that is Phase F8, where both `.docx` files are re-rendered
+and visually inspected after every material revision.

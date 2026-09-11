@@ -1,0 +1,10 @@
+arb-dir: lib/l10n
+template-arb-file: app_en.arb
+output-localization-file: app_localizations.dart
+output-class: AppLocalizations
+nullable-getter: false
+# Lume ships three languages and holds all three to full key parity, so this
+# file should always be written as an empty object. A non-empty one is a
+# defect: test/core/localization/arb_parity_test.dart fails on any key that
+# English has and Urdu or Arabic does not.
+untranslated-messages-file: l10n_untranslated.json

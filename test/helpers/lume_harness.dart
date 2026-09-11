@@ -1,0 +1,149 @@
+/// The test harness every Lume widget test pumps through.
+///
+/// It exists because four things go wrong otherwise, and all four cost real
+/// time before they are understood.
+///
+/// **`pumpAndSettle` hangs on any screen carrying an indefinite animation.**
+/// A skeleton shimmer and a live-data pulse never end, so the pump never
+/// settles. Both stop when the platform asks for less motion, so the harness
+/// asks by default and a test that is actually testing an animation opts out
+/// with `animate: true`.
+///
+/// **Counting rendered widgets proves nothing on a phone-sized surface.**
+/// Lists and grids build only what is visible, so "before" and "after" a filter
+/// are both a screenful. A test that counts needs [tall].
+///
+/// **Time moves.** Every fixture runs on a pinned clock, so a golden taken
+/// today matches one taken next week.
+///
+/// **A width class is measured, not assumed.** The harness sizes the surface
+/// and lets [LumeBreakpointScope] measure it, exactly as the shell does, rather
+/// than stubbing the class.
+library;
+
+import 'package:flutter/material.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_test/flutter_test.dart';
+import 'package:lume/core/fixtures/lume_clock.dart';
+import 'package:lume/core/layout/lume_breakpoint.dart';
+import 'package:lume/core/localization/lume_locales.dart';
+import 'package:lume/core/theme/lume/lume_theme.dart';
+import 'package:lume/l10n/app_localizations.dart';
+
+/// The viewports the conversion is verified at.
+///
+/// The same nine geometries the capture matrix uses, so a widget test and a
+/// screenshot are talking about the same surface.
+abstract final class LumeViewport {
+  /// Triggers the sub-360 refinements.
+  static const Size narrow = Size(359, 800);
+
+  /// The first width that does *not* trigger them.
+  static const Size small = Size(360, 800);
+
+  /// The Design System's phone reference.
+  static const Size phone = Size(390, 844);
+
+  static const Size phoneMid = Size(400, 860);
+  static const Size phoneLarge = Size(430, 932);
+
+  /// Rail, centred content.
+  static const Size medium = Size(700, 1000);
+
+  /// Sidebar and master-detail, below the 1180 wide refinement.
+  static const Size expanded = Size(1100, 900);
+
+  /// Above 1180 — four-column metrics, five-column tiles.
+  static const Size wide = Size(1280, 800);
+
+  /// A landscape phone. Wide enough for `expanded` on width alone, and short
+  /// enough that the height override must claim it back.
+  static const Size landscapePhone = Size(852, 393);
+
+  /// Tall enough that a lazy list builds everything, for tests that count.
+  static const Size tall = Size(390, 5000);
+}
+
+/// Pump a widget inside the full Lume environment.
+///
+/// [surface] sizes the test view, and the width class is then *measured* from
+/// it rather than injected — so a test that asserts a presentation is asserting
+/// the same code path the shell runs.
+Future<void> pumpLume(
+  WidgetTester tester,
+  Widget child, {
+  Size surface = LumeViewport.phone,
+  ThemeMode theme = ThemeMode.light,
+  Locale locale = const Locale('en'),
+  DateTime? now,
+  bool animate = false,
+  double textScale = 1.0,
+  List<Override> overrides = const <Override>[],
+}) async {
+  tester.view.physicalSize = surface;
+  tester.view.devicePixelRatio = 1.0;
+  addTearDown(tester.view.reset);
+
+  // Pump an empty tree first. Re-pumping into the same slot otherwise reuses
+  // the old elements — a second `ProviderScope`'s overrides silently do not
+  // take, and `MaterialApp`'s `AnimatedTheme` lerps from the previous theme
+  // rather than arriving at the new one. Both make a test that pumps twice
+  // assert against the *first* pump's state.
+  await tester.pumpWidget(const SizedBox.shrink());
+
+  await tester.pumpWidget(
+    ProviderScope(
+      overrides: overrides,
+      child: MaterialApp(
+        debugShowCheckedModeBanner: false,
+        theme: LumeTheme.light(),
+        darkTheme: LumeTheme.dark(),
+        themeMode: theme,
+        locale: locale,
+        supportedLocales: LumeLocales.supported,
+        localizationsDelegates: const <LocalizationsDelegate<dynamic>>[
+          AppLocalizations.delegate,
+          GlobalMaterialLocalizations.delegate,
+          GlobalWidgetsLocalizations.delegate,
+          GlobalCupertinoLocalizations.delegate,
+        ],
+        // The MediaQuery has to sit *inside* MaterialApp. Wrapping the app
+        // instead is the obvious mistake and a silent one: MaterialApp inserts
+        // its own `MediaQuery.fromView`, so an outer one is replaced and both
+        // `textScaler` and `disableAnimations` are quietly discarded.
+        builder: (BuildContext context, Widget? navigator) => MediaQuery(
+          data: MediaQuery.of(context).copyWith(
+            textScaler: TextScaler.linear(textScale),
+            // Indefinite animation stops, so the pump can settle.
+            disableAnimations: !animate,
+          ),
+          child: navigator ?? const SizedBox.shrink(),
+        ),
+        home: LumeClockScope(
+          clock: LumeClock.fixed(now ?? kFixtureInstant),
+          child: LumeBreakpointScope(child: child),
+        ),
+      ),
+    ),
+  );
+  await tester.pump();
+}
+
+/// The `BuildContext` of a pumped subject, for asserting what the environment
+/// resolved to.
+BuildContext lumeContext(WidgetTester tester, Finder of) => tester.element(of);
+
+/// A probe that reports what the layout decided, so a responsive test can
+/// assert the resolved class rather than re-deriving it.
+class LumeProbe extends StatelessWidget {
+  const LumeProbe({super.key, this.onBuild});
+
+  final void Function(BuildContext context)? onBuild;
+
+  @override
+  Widget build(BuildContext context) {
+    onBuild?.call(context);
+    return const SizedBox.expand();
+  }
+}

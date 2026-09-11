@@ -306,9 +306,15 @@ gone, so there is no npm command left to run.
 
 ---
 
-## Approval requested
+## Status
 
-Phases F1–F10 do not begin until this plan is approved. F1 creates the Flutter
-project at the root, bundles the fonts, extracts the 112 icons, implements
-tokens, themes, the responsive system, localisation, fixtures and the test
-harness — and keeps every web file in place.
+**Approved, and F1 is complete.** The Flutter project exists at the root, the
+fonts are bundled and verified, the 112 icons are extracted, and the tokens,
+themes, responsive system, localisation, fixtures and test harness are in place.
+Every web file is still here and its suite is still green.
+
+What F1 changed about this plan: nothing structural. `assets/` did coexist
+without conflict, `tests/` and `test/` did stay distinct, and `npm test` did keep
+passing unmodified — the three assumptions §3 rested on. One item from §4's
+removal gate is now discharged early: the 112 icons no longer exist only inside
+`index.html`.

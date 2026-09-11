@@ -1,0 +1,316 @@
+{
+  "@@locale": "en",
+  "@@context": "Lume",
+  "actionAdd": "Add",
+  "@actionAdd": {
+    "description": "Reference key a.add"
+  },
+  "actionAll": "All",
+  "@actionAll": {
+    "description": "Reference key a.all"
+  },
+  "actionBack": "Back",
+  "@actionBack": {
+    "description": "Reference key a.back"
+  },
+  "actionBookmark": "Bookmark",
+  "@actionBookmark": {
+    "description": "Reference key a.bookmark"
+  },
+  "actionCancel": "Cancel",
+  "@actionCancel": {
+    "description": "Reference key a.cancel"
+  },
+  "actionClear": "Clear",
+  "@actionClear": {
+    "description": "Reference key a.clear"
+  },
+  "actionClose": "Close",
+  "@actionClose": {
+    "description": "Reference key a.close"
+  },
+  "actionContinue": "Continue",
+  "@actionContinue": {
+    "description": "Reference key a.continue"
+  },
+  "actionDelete": "Delete",
+  "@actionDelete": {
+    "description": "Reference key a.delete"
+  },
+  "actionDone": "Done",
+  "@actionDone": {
+    "description": "Reference key a.done"
+  },
+  "actionEdit": "Edit",
+  "@actionEdit": {
+    "description": "Reference key a.edit"
+  },
+  "actionGetStarted": "Get started",
+  "@actionGetStarted": {
+    "description": "Reference key a.getStarted"
+  },
+  "actionLooksGood": "Looks good",
+  "@actionLooksGood": {
+    "description": "Reference key a.looksGood"
+  },
+  "actionNext": "Next",
+  "@actionNext": {
+    "description": "Reference key a.next"
+  },
+  "actionNotSet": "Not set",
+  "@actionNotSet": {
+    "description": "Reference key a.notSet"
+  },
+  "actionRefresh": "Refresh",
+  "@actionRefresh": {
+    "description": "Reference key a.refresh"
+  },
+  "actionRemove": "Remove",
+  "@actionRemove": {
+    "description": "Reference key a.remove"
+  },
+  "actionSave": "Save",
+  "@actionSave": {
+    "description": "Reference key a.save"
+  },
+  "actionSaveImage": "Save image",
+  "@actionSaveImage": {
+    "description": "Reference key a.saveImage"
+  },
+  "actionSearch": "Search",
+  "@actionSearch": {
+    "description": "Reference key a.search"
+  },
+  "actionShare": "Share",
+  "@actionShare": {
+    "description": "Reference key a.share"
+  },
+  "actionSkip": "Skip",
+  "@actionSkip": {
+    "description": "Reference key a.skip"
+  },
+  "actionTryAgain": "Try again",
+  "@actionTryAgain": {
+    "description": "Reference key a.tryAgain"
+  },
+  "actionWeek": "Week",
+  "@actionWeek": {
+    "description": "Reference key a.week"
+  },
+  "a11yBack": "Back",
+  "@a11yBack": {
+    "description": "Reference key a11y.back"
+  },
+  "a11ySearch": "Search this tool",
+  "@a11ySearch": {
+    "description": "Reference key a11y.search"
+  },
+  "a11yShare": "Share",
+  "@a11yShare": {
+    "description": "Reference key a11y.share"
+  },
+  "appTagline": "Your day, in one place",
+  "@appTagline": {
+    "description": "Reference key app.tagline"
+  },
+  "commonAll": "All",
+  "@commonAll": {
+    "description": "Reference key common.all"
+  },
+  "commonDays": "days",
+  "@commonDays": {
+    "description": "Reference key common.days"
+  },
+  "commonDone": "Done",
+  "@commonDone": {
+    "description": "Reference key common.done"
+  },
+  "commonDue": "Due",
+  "@commonDue": {
+    "description": "Reference key common.due"
+  },
+  "commonExport": "Export",
+  "@commonExport": {
+    "description": "Reference key common.export"
+  },
+  "commonHistory": "History",
+  "@commonHistory": {
+    "description": "Reference key common.history"
+  },
+  "commonInDays": "in {n} days",
+  "@commonInDays": {
+    "description": "Reference key common.inDays"
+  },
+  "commonLocked": "Locked",
+  "@commonLocked": {
+    "description": "Reference key common.locked"
+  },
+  "commonMonth": "Month",
+  "@commonMonth": {
+    "description": "Reference key common.month"
+  },
+  "commonNo": "No",
+  "@commonNo": {
+    "description": "Reference key common.no"
+  },
+  "commonNow": "Now",
+  "@commonNow": {
+    "description": "Reference key common.now"
+  },
+  "commonOverdue": "Overdue",
+  "@commonOverdue": {
+    "description": "Reference key common.overdue"
+  },
+  "commonPaid": "Paid",
+  "@commonPaid": {
+    "description": "Reference key common.paid"
+  },
+  "commonReset": "Reset",
+  "@commonReset": {
+    "description": "Reference key common.reset"
+  },
+  "commonSave": "Save",
+  "@commonSave": {
+    "description": "Reference key common.save"
+  },
+  "commonShare": "Share",
+  "@commonShare": {
+    "description": "Reference key common.share"
+  },
+  "commonSort": "Sort",
+  "@commonSort": {
+    "description": "Reference key common.sort"
+  },
+  "commonStatus": "Status",
+  "@commonStatus": {
+    "description": "Reference key common.status"
+  },
+  "commonThisMonth": "This month",
+  "@commonThisMonth": {
+    "description": "Reference key common.thisMonth"
+  },
+  "commonToday": "Today",
+  "@commonToday": {
+    "description": "Reference key common.today"
+  },
+  "commonTomorrow": "Tomorrow",
+  "@commonTomorrow": {
+    "description": "Reference key common.tomorrow"
+  },
+  "commonTotal": "Total",
+  "@commonTotal": {
+    "description": "Reference key common.total"
+  },
+  "commonWeek": "Week",
+  "@commonWeek": {
+    "description": "Reference key common.week"
+  },
+  "commonYear": "Year",
+  "@commonYear": {
+    "description": "Reference key common.year"
+  },
+  "commonYes": "Yes",
+  "@commonYes": {
+    "description": "Reference key common.yes"
+  },
+  "commonYesterday": "Yesterday",
+  "@commonYesterday": {
+    "description": "Reference key common.yesterday"
+  },
+  "navExplore": "Explore",
+  "@navExplore": {
+    "description": "Reference key nav.explore"
+  },
+  "navHome": "Home",
+  "@navHome": {
+    "description": "Reference key nav.home"
+  },
+  "navProfile": "Profile",
+  "@navProfile": {
+    "description": "Reference key nav.profile"
+  },
+  "navToday": "Today",
+  "@navToday": {
+    "description": "Reference key nav.today"
+  },
+  "navTools": "Tools",
+  "@navTools": {
+    "description": "Reference key nav.tools"
+  },
+  "navTrains": "Trains",
+  "@navTrains": {
+    "description": "Reference key nav.trains"
+  },
+  "recConflict": "This record changed elsewhere",
+  "@recConflict": {
+    "description": "Reference key rec.conflict"
+  },
+  "recConflictText": "A newer version exists. Review your changes or reload the newer one.",
+  "@recConflictText": {
+    "description": "Reference key rec.conflictText"
+  },
+  "recDeleteFailed": "Could not delete this record",
+  "@recDeleteFailed": {
+    "description": "Reference key rec.deleteFailed"
+  },
+  "recLoadError": "We could not load {noun}",
+  "@recLoadError": {
+    "description": "Reference key rec.loadError"
+  },
+  "recLoadErrorText": "Check your connection. Your saved data is still safe on this device.",
+  "@recLoadErrorText": {
+    "description": "Reference key rec.loadErrorText"
+  },
+  "recNothingToUndo": "Nothing left to undo",
+  "@recNothingToUndo": {
+    "description": "Reference key rec.nothingToUndo"
+  },
+  "recOffline": "You are offline",
+  "@recOffline": {
+    "description": "Reference key rec.offline"
+  },
+  "recOfflineQueued": "This will be saved here and synced when you are back.",
+  "@recOfflineQueued": {
+    "description": "Reference key rec.offlineQueued"
+  },
+  "recOfflineText": "Showing records saved on this device.",
+  "@recOfflineText": {
+    "description": "Reference key rec.offlineText"
+  },
+  "recSaveFailed": "Could not save changes",
+  "@recSaveFailed": {
+    "description": "Reference key rec.saveFailed"
+  },
+  "recSaveFailedText": "Nothing you typed was lost. Try again.",
+  "@recSaveFailedText": {
+    "description": "Reference key rec.saveFailedText"
+  },
+  "searchJumpBack": "Jump back in",
+  "@searchJumpBack": {
+    "description": "Reference key search.jumpBack"
+  },
+  "searchNothing": "Nothing found",
+  "@searchNothing": {
+    "description": "Reference key search.nothing"
+  },
+  "searchPlaceholder": "Search anything — tools, rates, places",
+  "@searchPlaceholder": {
+    "description": "Reference key search.placeholder"
+  },
+  "searchTry": "Try searching for",
+  "@searchTry": {
+    "description": "Reference key search.try"
+  },
+  "toolPrivateText": "This information stays on your device, is never shown on Home and is never included in shared content.",
+  "@toolPrivateText": {
+    "description": "Reference key tool.private.text"
+  },
+  "toolPrivateTitle": "Private to you",
+  "@toolPrivateTitle": {
+    "description": "Reference key tool.private.title"
+  },
+  "toolsNothingYet": "Nothing here yet",
+  "@toolsNothingYet": {
+    "description": "Reference key tools.nothingYet"
+  }
+}

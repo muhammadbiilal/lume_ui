@@ -60,7 +60,7 @@ Dayroz widget is not copied.
 | Phase | Scope | State |
 |---|---|---|
 | F0 | Dual-source audit, final root architecture, retention and removal plan | **complete — awaiting approval** |
-| F1 | Flutter project **at the root**; fonts, tokens, themes, responsive, l10n, fixtures, test harness | not started |
+| F1 | Flutter project **at the root**; fonts, tokens, themes, responsive, l10n, fixtures, test harness | **complete — awaiting approval** |
 | F2 | Shared widget system and component gallery | not started |
 | F3 | Shell, routes, bottom bar, rail, sidebar, tool host, master-detail | not started |
 | F4 | Onboarding and authentication | not started |

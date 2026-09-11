@@ -1,0 +1,40 @@
+# This file configures the analyzer, which statically analyzes Dart code to
+# check for errors, warnings, and lints.
+#
+# Matches the Dayroz production app's configuration, so code moving between the
+# two is held to one standard.
+
+include: package:flutter_lints/flutter.yaml
+
+analyzer:
+  exclude:
+    - build/**
+    # Temporary: the web prototype Lume is being converted from. Its JavaScript
+    # is not Dart, but its directories carry generated artefacts the analyzer
+    # would otherwise walk. Removed with the prototype at Phase F9.
+    - node_modules/**
+  errors:
+    # A missing translation is a shipping defect, not a note.
+    missing_required_param: error
+    missing_return: error
+
+linter:
+  rules:
+    # The Lume design system is a set of tokens. A screen that reaches for a
+    # literal colour or a bare TextStyle has left the system, and these are the
+    # rules that make that visible in review rather than in a screenshot.
+    - always_declare_return_types
+    # Deliberately NOT enabled: avoid_redundant_argument_values. It cannot tell
+    # a redundant literal from a named token that happens to equal the default,
+    # so it argues for `Border.all(color: x)` over
+    # `Border.all(color: x, width: LumeSpace.border)` — which is exactly
+    # backwards. Naming the token is the point; if the hairline ever stops
+    # being 1, every border should move with it.
+    - prefer_const_constructors
+    - prefer_const_constructors_in_immutables
+    - prefer_const_declarations
+    - prefer_final_locals
+    - prefer_single_quotes
+    - sort_child_properties_last
+    - unnecessary_parenthesis
+    - use_super_parameters

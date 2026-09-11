@@ -1,0 +1,80 @@
+name: lume
+description: "Lume — a global daily-life super-app: everyday utilities, planning, money, local services, travel, personal records and an optional, deeply integrated Islamic experience."
+publish_to: 'none'
+version: 0.1.0+1
+
+environment:
+  # Matches the Dayroz production app, so the presentation layer moves across
+  # without an SDK negotiation.
+  sdk: ^3.11.5
+
+dependencies:
+  flutter:
+    sdk: flutter
+  flutter_localizations:
+    sdk: flutter
+
+  # Five packages, every one of them already pinned in Dayroz at these
+  # versions. Nothing is taken for convenience: no backend client, no
+  # google_fonts (the faces are bundled below), and no charting package —
+  # Lume's charts are bespoke and are painted, not configured.
+  flutter_riverpod: ^2.6.1
+  go_router: ^14.6.2
+  intl: any
+  flutter_svg: ^2.3.0
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^6.0.0
+  # Test-only. The font tests checksum each bundled binary so a face swapped
+  # underneath the project fails a test rather than silently redesigning the
+  # product. Dayroz already depends on crypto ^3.0.7, so this adds nothing to
+  # the production surface at integration.
+  crypto: ^3.0.7
+
+flutter:
+  uses-material-design: true
+  generate: true
+
+  assets:
+    - assets/icons/
+    - assets/images/
+    - assets/data/
+
+  # Bundled, not fetched. The web prototype pulls Plus Jakarta Sans and Noto
+  # Naskh Arabic from the Google Fonts CDN, which means a fresh launch renders
+  # in a fallback face until the download lands and then reflows. Declared here
+  # they load synchronously with the first frame and the app renders offline.
+  #
+  # Licences and verified per-file metadata: assets/fonts/PROVENANCE.md.
+  fonts:
+    # The Lume interface family. tokens.css sets `--font: "Plus Jakarta Sans"`
+    # and every --t-* role uses it, so this is the one face the interface is set
+    # in, headings and body alike.
+    #
+    # All five weights LumeType names have a real file, so Flutter never
+    # synthesises one — a faux-bold Plus Jakarta is visibly not Plus Jakarta.
+    # Each asset's OS/2 usWeightClass equals the weight declared beside it;
+    # test/core/theme/font_assets_test.dart asserts that from the binaries.
+    - family: PlusJakartaSans
+      fonts:
+        - asset: assets/fonts/PlusJakartaSans-Regular.ttf
+          weight: 400
+        - asset: assets/fonts/PlusJakartaSans-Medium.ttf
+          weight: 500
+        - asset: assets/fonts/PlusJakartaSans-SemiBold.ttf
+          weight: 600
+        - asset: assets/fonts/PlusJakartaSans-Bold.ttf
+          weight: 700
+        - asset: assets/fonts/PlusJakartaSans-ExtraBold.ttf
+          weight: 800
+
+    # Arabic-script reading content. One variable binary whose wght axis runs
+    # 400–700, which is the exact range the reference loads (400, 600, 700), so
+    # it is declared once and the heavier cuts are reached with
+    # FontVariation('wght', n) rather than by synthesising a bold.
+    - family: NotoNaskhArabic
+      fonts:
+        - asset: assets/fonts/NotoNaskhArabic-Regular.ttf
+          weight: 400
