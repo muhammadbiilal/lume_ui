@@ -12,8 +12,19 @@ function ok(label, cond, extra) {
   if (!cond) failures++;
 }
 
-async function boot(profile, tz) {
+/* `at` pins the clock to one instant, for anything whose verdict is a
+   function of the current time. Without it a test asserts whatever the
+   machine happened to be doing when it ran, which is how the market-hours
+   assertion below came to fail only between 09:30 and 09:59 New York time.
+
+   The window's own Date is replaced rather than the process's: the app runs
+   inside jsdom, `new Date()` there resolves to `window.Date`, and everything
+   else about Date — the string constructor, `toLocaleString`, `parse` — has to
+   keep working, because that is how the exchange's wall clock is read. */
+async function boot(profile, tz, at) {
   if (tz) process.env.TZ = tz;
+  const pinned = at == null ? null : Date.parse(at);
+  if (at != null && Number.isNaN(pinned)) throw new Error('boot: bad instant ' + at);
   const html = fs.readFileSync(path.join(ROOT, 'index.html'), 'utf8');
   const vc = new VirtualConsole();
   const errors = [];
@@ -23,6 +34,18 @@ async function boot(profile, tz) {
     url: 'http://localhost/index.html', runScripts: 'dangerously',
     virtualConsole: vc, pretendToBeVisual: true,
     beforeParse(window) {
+      if (pinned !== null) {
+        const Real = window.Date;
+        function Fixed(...a) {
+          if (!(this instanceof Fixed)) return new Real(pinned).toString();
+          return a.length ? new Real(...a) : new Real(pinned);
+        }
+        Fixed.prototype = Real.prototype;
+        Fixed.now = () => pinned;
+        Fixed.parse = Real.parse;
+        Fixed.UTC = Real.UTC;
+        window.Date = Fixed;
+      }
       window.localStorage.setItem('lume-onboarded', '1');
       window.localStorage.setItem('lume-profile', JSON.stringify(Object.assign({
         units: 'auto', currency: 'auto', clock: 'auto', method: 'MWL',
@@ -427,23 +450,69 @@ const wait = ms => new Promise(r => setTimeout(r, ms));
   w4.close();
 
   /* ── the exchange's own clock ───────────────────────────────────────── */
+  /* NASDAQ's regular session is 09:30–16:00 New York, declared as
+     `open: '09:30', close: '16:00'` on the US exchange in data/tool-data.js,
+     and `marketState` treats the close as exclusive: at 16:00 the bell has
+     rung.
+
+     This used to compare the screen against `nyHour >= 10 && nyHour < 16` at
+     whatever moment the suite happened to run. That approximation is wrong for
+     exactly thirty minutes a day — between 09:30 and 09:59 the market is open
+     and the assertion expected it closed — so the suite failed if you ran it
+     in that window and passed if you did not. The hour-only bound is replaced
+     by the real minute boundary, and every case below pins the clock. */
   console.log('\n=== Market hours use the exchange clock ===');
-  ({ dom } = await boot({ country: 'PK', city: 'Islamabad', islamic: false, lang: 'en',
-      market: 'US' }, 'Asia/Karachi'));
-  const w5 = dom.window;
-  const stateText = w5.Lume.tools.build('markets').body.replace(/<[^>]+>/g, ' ');
-  // Whatever the verdict, it must be derived from New York, not Karachi.
-  const nyHour = Number(new Intl.DateTimeFormat('en-US',
-    { timeZone: 'America/New_York', hour: 'numeric', hour12: false }).format(new Date()));
-  const nyDay = new Date(new Date().toLocaleString('en-US', { timeZone: 'America/New_York' })).getDay();
-  const shouldBeOpen = nyDay > 0 && nyDay < 6 && nyHour >= 10 && nyHour < 16;
-  const saysLive = /Live/.test(stateText);
-  ok('NASDAQ hours follow New York, not the device',
-     shouldBeOpen === saysLive || /holiday/i.test(stateText),
-     'NY hour ' + nyHour + ', day ' + nyDay + ' -> expected open=' + shouldBeOpen +
-     ', screen says live=' + saysLive);
-  w5.close();
-  delete process.env.TZ;
+
+  /* The device is in Karachi throughout: every verdict below has to come from
+     New York, which is the defect this section was written for. */
+  async function nasdaqAt(instant) {
+    const booted = await boot({ country: 'PK', city: 'Islamabad', islamic: false,
+      lang: 'en', market: 'US' }, 'Asia/Karachi', instant);
+    const text = booted.dom.window.Lume.tools.build('markets').body.replace(/<[^>]+>/g, ' ');
+    booted.dom.window.close();
+    return { live: /Live/.test(text), text: text };
+  }
+
+  /* instant (UTC) → New York wall clock → expected. Summer instants are EDT
+     and the January one is EST, so the pair also proves the offset is read
+     from the zone rather than assumed. */
+  const SESSION = [
+    ['2026-06-15T13:29:00Z', 'Mon 09:29 EDT, one minute before the bell', false],
+    ['2026-06-15T13:30:00Z', 'Mon 09:30 EDT, the opening bell',           true ],
+    ['2026-06-15T13:31:00Z', 'Mon 09:31 EDT, one minute after the bell',  true ],
+    ['2026-06-15T19:59:00Z', 'Mon 15:59 EDT, one minute before the close', true ],
+    ['2026-06-15T20:00:00Z', 'Mon 16:00 EDT, the close is exclusive',     false],
+    ['2026-06-15T20:01:00Z', 'Mon 16:01 EDT, one minute after the close', false],
+    ['2026-01-15T14:30:00Z', 'Thu 09:30 EST, the same bell in winter',    true ],
+    ['2026-01-15T21:00:00Z', 'Thu 16:00 EST, the same close in winter',   false],
+    ['2026-06-20T15:00:00Z', 'Sat 11:00 EDT, a weekend inside the hours', false],
+    /* A holiday that falls on a trading day, so the holiday branch is what
+       closes the market rather than the weekend one. 4 July 2026 is a
+       Saturday and would have proved nothing. */
+    ['2026-01-01T15:00:00Z', 'Thu 10:00 EST, New Year\'s Day',            false],
+    ['2026-12-25T15:00:00Z', 'Fri 10:00 EST, Christmas Day',              false]
+  ];
+
+  for (const [instant, label, expected] of SESSION) {
+    const r = await nasdaqAt(instant);
+    ok('NASDAQ ' + (expected ? 'open' : 'closed') + ' — ' + label,
+       r.live === expected,
+       'expected live=' + expected + ', screen says live=' + r.live);
+  }
+
+  /* The two instants where a device-clock implementation and an exchange-clock
+     implementation give opposite answers. These are the regression guards: on
+     a phone in Karachi, reading the hours off the device reported NASDAQ open
+     at 09:35 local and closed at 20:00 local — exactly inverted. */
+  const nyOpenPkClosed = await nasdaqAt('2026-06-15T14:00:00Z');
+  ok('open in New York (10:00) while Karachi says 19:00',
+     nyOpenPkClosed.live === true,
+     'a device-clock reading would call this closed');
+
+  const nyClosedPkOpen = await nasdaqAt('2026-06-15T06:00:00Z');
+  ok('closed in New York (02:00) while Karachi says 11:00',
+     nyClosedPkOpen.live === false,
+     'a device-clock reading would call this open');
 
   /* ── the market override has an off switch ──────────────────────────── */
   console.log('\n=== Market override ===');
