@@ -1,0 +1,163 @@
+{
+  "cell": "onboarding_step3_390x844_light_en",
+  "viewport": {
+    "width": 390,
+    "height": 844,
+    "innerWidth": 390
+  },
+  "step": 3,
+  "progress": {
+    "done": 4,
+    "total": 9
+  },
+  "theme": "light",
+  "lang": "en",
+  "dir": "ltr",
+  "missing": [
+    "picker.bar",
+    "picker.count",
+    "picker.clear",
+    "pickgroup.first",
+    "pickgroup.label.first",
+    "pick.first",
+    "pickgroup.faith"
+  ],
+  "bounds": {
+    "onb.top": {
+      "x": 0,
+      "y": 0,
+      "width": 390,
+      "height": 80,
+      "lines": null,
+      "text": null
+    },
+    "onb.nav": {
+      "x": 20,
+      "y": 46,
+      "width": 34,
+      "height": 34,
+      "lines": null,
+      "text": null
+    },
+    "onb.progress": {
+      "x": 66,
+      "y": 61.5,
+      "width": 257.11,
+      "height": 3,
+      "lines": null,
+      "text": null
+    },
+    "onb.seg.first": {
+      "x": 66,
+      "y": 61.5,
+      "width": 24.11,
+      "height": 3,
+      "lines": null,
+      "text": ""
+    },
+    "onb.skip": {
+      "x": 335.11,
+      "y": 47,
+      "width": 34.89,
+      "height": 32,
+      "lines": null,
+      "text": "Skip"
+    },
+    "onb.step": {
+      "x": 0,
+      "y": 80,
+      "width": 390,
+      "height": 764,
+      "lines": null,
+      "text": null
+    },
+    "onb.kicker": {
+      "x": 20,
+      "y": 90,
+      "width": 350,
+      "height": 13,
+      "lines": null,
+      "text": "Make it local"
+    },
+    "onb.title": {
+      "x": 20,
+      "y": 113,
+      "width": 350,
+      "height": 31.36,
+      "lines": 1,
+      "text": "Where are you based?"
+    },
+    "onb.text": {
+      "x": 20,
+      "y": 154.36,
+      "width": 304.08,
+      "height": 65.06,
+      "lines": 3,
+      "text": "This helps us personalise local information and services. It says nothing about who you are."
+    },
+    "onb.foot": {
+      "x": 20,
+      "y": 754,
+      "width": 350,
+      "height": 68,
+      "lines": null,
+      "text": null
+    },
+    "onb.continue": {
+      "x": 20,
+      "y": 772,
+      "width": 350,
+      "height": 46,
+      "lines": null,
+      "text": null
+    },
+    "locpicker": {
+      "x": 20,
+      "y": 235.42,
+      "width": 350,
+      "height": 518.58,
+      "lines": null,
+      "text": null
+    },
+    "locsearch": {
+      "x": 40,
+      "y": 235.42,
+      "width": 310,
+      "height": 44,
+      "lines": null,
+      "text": null
+    },
+    "locscroll": {
+      "x": 20,
+      "y": 289.42,
+      "width": 350,
+      "height": 464.58,
+      "lines": null,
+      "text": null
+    },
+    "locgroup.first": {
+      "x": 22,
+      "y": 291.42,
+      "width": 346,
+      "height": 12,
+      "lines": null,
+      "text": "Popular"
+    },
+    "loclist.first": {
+      "x": 20,
+      "y": 310.42,
+      "width": 350,
+      "height": 821,
+      "lines": null,
+      "text": null
+    },
+    "locrow.first": {
+      "x": 21,
+      "y": 311.42,
+      "width": 348,
+      "height": 41,
+      "lines": null,
+      "text": null
+    }
+  }
+}

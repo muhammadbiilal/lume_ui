@@ -57,6 +57,107 @@ const NAV = {
 };
 
 /** name -> { html, sel } — `sel` is the element that gets measured. */
+
+/* ---- Onboarding (F4A) ---------------------------------------------------
+   The first-run flow is markup in `onboardingTemplate()` plus two pickers
+   built by `ui/pickers.js`. Reproduced here with the same classes and the
+   same nesting, because the values that matter — the segment height, the
+   chip's padding, the row's divider — all come from the cascade rather than
+   from any one declaration. */
+const ONB = {
+  top:
+    '<div class="onb"><header class="onb__top">' +
+      '<button class="onb__nav pressable" aria-label="Back">' + ico('i-chev-l') + '</button>' +
+      '<div class="onb__progress">' +
+        Array.from({ length: 9 }, (_, i) =>
+          '<span class="onb__seg' + (i < 3 ? ' is-done' : '') + '"></span>').join('') +
+      '</div>' +
+      '<button class="onb__skip">Skip</button>' +
+    '</header></div>',
+  lead:
+    '<div class="onb"><section class="onb-step onb-step--list is-active"><div class="onb__lead">' +
+      '<p class="onb__kicker">Make it local</p>' +
+      '<h1 class="onb__title">Where are you based?</h1>' +
+      '<p class="onb__text">This helps us personalise local information and services. ' +
+      'It says nothing about who you are.</p>' +
+    '</div></section></div>',
+  foot:
+    '<div class="onb"><section class="onb-step is-active">' +
+      '<div class="onb__foot onb__foot--sticky">' +
+        '<button class="btn btn--accent btn--block pressable">' +
+          '<span>Continue</span> ' + ico('i-arrow-r') +
+        '</button>' +
+      '</div>' +
+    '</section></div>',
+  footDisabled:
+    '<div class="onb"><section class="onb-step is-active">' +
+      '<div class="onb__foot onb__foot--sticky">' +
+        '<button class="btn btn--accent btn--block pressable" disabled>' +
+          '<span>Continue</span> ' + ico('i-arrow-r') +
+        '</button>' +
+      '</div>' +
+    '</section></div>',
+  loc:
+    '<div class="onb"><section class="onb-step onb-step--list is-active">' +
+    '<div class="locpicker">' +
+      '<label class="search search--sm">' + ico('i-search') +
+        '<input type="search" class="locsearch" placeholder="Search countries" ' +
+        'aria-label="Search countries">' +
+      '</label>' +
+      '<div class="locscroll">' +
+        '<p class="locgroup">Popular</p>' +
+        '<div class="loclist">' +
+          /* Unselected first, so `.locrow` measures the ordinary row and
+             `.locrow.is-on` measures the selected one. The measurer reads the
+             first match for a selector, and with the selected row first both
+             specimens reported the same tinted values. */
+          '<button class="locrow pressable" data-pick-country="GB">' +
+            '<span class="locrow__code">GB</span>' +
+            '<span class="locrow__name">United Kingdom</span>' +
+            '<span class="locrow__meta">GBP</span>' +
+          '</button>' +
+          '<button class="locrow pressable is-on" data-pick-country="PK">' +
+            '<span class="locrow__code">PK</span>' +
+            '<span class="locrow__name">Pakistan</span>' +
+            '<span class="locrow__meta">PKR</span>' +
+          '</button>' +
+        '</div>' +
+        '<p class="locempty">Nothing matches</p>' +
+      '</div>' +
+    '</div></section></div>',
+  picker:
+    '<div class="onb"><section class="onb-step is-active">' +
+      '<div class="picker__bar">' +
+        '<span class="picker__count"><b>3</b> of 5 minimum</span>' +
+        '<button class="picker__clear pressable">Clear</button>' +
+      '</div>' +
+      '<div class="pickgroup"><p class="pickgroup__label">Everyday life</p>' +
+        '<div class="picker">' +
+          '<button type="button" class="pick" aria-pressed="false">' + ico('i-cloud-sun') +
+            '<span>Weather</span></button>' +
+          '<button type="button" class="pick is-on" aria-pressed="true">' + ico('i-calendar') +
+            '<span>Calendar</span></button>' +
+          '<button type="button" class="pick is-muted" aria-pressed="false">' + ico('i-note') +
+            '<span>Notes</span></button>' +
+        '</div>' +
+      '</div>' +
+      '<div class="pickgroup pickgroup--faith">' +
+        '<button type="button" class="faithtoggle" aria-pressed="false">' +
+          '<span class="faithtoggle__icon">' + ico('i-moon-star') + '</span>' +
+          '<span class="faithtoggle__body">' +
+            '<span class="faithtoggle__title">Islamic features</span>' +
+            '<span class="faithtoggle__sub">Prayer, reading and reminders</span>' +
+          '</span>' +
+          '<span class="switch"><span class="switch__knob"></span></span>' +
+        '</button>' +
+        '<div class="picker picker--nested">' +
+          '<button type="button" class="pick" aria-pressed="false">' + ico('i-beads') +
+            '<span>Duas</span></button>' +
+        '</div>' +
+      '</div>' +
+    '</section></div>',
+};
+
 export const SPECIMENS = {
   // ---- Navigation and chrome -------------------------------------------
   'toolbar': {
@@ -483,5 +584,45 @@ export const SPECIMENS = {
   'statusbar': { html: NAV.status, sel: '.statusbar' },
   'statusbar.brand': { html: NAV.status, sel: '.statusbar__brand' },
   'screen': { html: '<section class="screen is-active"><p>x</p></section>', sel: '.screen' },
+  // ---- Onboarding (F4A) --------------------------------------------------
+  'onb.top': { html: ONB.top, sel: '.onb__top' },
+  'onb.nav': { html: ONB.top, sel: '.onb__nav' },
+  'onb.seg': { html: ONB.top, sel: '.onb__seg' },
+  'onb.seg.done': { html: ONB.top, sel: '.onb__seg.is-done' },
+  'onb.progress': { html: ONB.top, sel: '.onb__progress' },
+  'onb.skip': { html: ONB.top, sel: '.onb__skip' },
+  'onb.kicker': { html: ONB.lead, sel: '.onb__kicker' },
+  'onb.title': { html: ONB.lead, sel: '.onb__title' },
+  'onb.text': { html: ONB.lead, sel: '.onb__text' },
+  'onb.step': { html: ONB.lead, sel: '.onb-step' },
+  'onb.foot': { html: ONB.foot, sel: '.onb__foot' },
+  'onb.continue': { html: ONB.foot, sel: '.btn--accent' },
+  'onb.continue.off': { html: ONB.footDisabled, sel: '.btn--accent' },
+  'locpicker': { html: ONB.loc, sel: '.locpicker' },
+  'locsearch': { html: ONB.loc, sel: '.search--sm' },
+  'locscroll': { html: ONB.loc, sel: '.locscroll' },
+  'locgroup': { html: ONB.loc, sel: '.locgroup' },
+  'loclist': { html: ONB.loc, sel: '.loclist' },
+  'locrow': { html: ONB.loc, sel: '.locrow' },
+  'locrow.on': { html: ONB.loc, sel: '.locrow.is-on' },
+  'locrow.code': { html: ONB.loc, sel: '.locrow__code' },
+  'locrow.name': { html: ONB.loc, sel: '.locrow__name' },
+  'locrow.meta': { html: ONB.loc, sel: '.locrow__meta' },
+  'locempty': { html: ONB.loc, sel: '.locempty' },
+  'picker.bar': { html: ONB.picker, sel: '.picker__bar' },
+  'picker.count': { html: ONB.picker, sel: '.picker__count' },
+  'picker.clear': { html: ONB.picker, sel: '.picker__clear' },
+  'picker': { html: ONB.picker, sel: '.picker' },
+  'pickgroup': { html: ONB.picker, sel: '.pickgroup' },
+  'pickgroup.label': { html: ONB.picker, sel: '.pickgroup__label' },
+  'pick': { html: ONB.picker, sel: '.pick' },
+  'pick.on': { html: ONB.picker, sel: '.pick.is-on' },
+  'pick.muted': { html: ONB.picker, sel: '.pick.is-muted' },
+  'pickgroup.faith': { html: ONB.picker, sel: '.pickgroup--faith' },
+  'faithtoggle': { html: ONB.picker, sel: '.faithtoggle' },
+  'faithtoggle.icon': { html: ONB.picker, sel: '.faithtoggle__icon' },
+  'faithtoggle.title': { html: ONB.picker, sel: '.faithtoggle__title' },
+  'faithtoggle.sub': { html: ONB.picker, sel: '.faithtoggle__sub' },
+  'picker.nested': { html: ONB.picker, sel: '.picker--nested' },
 };
 

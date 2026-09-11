@@ -360,5 +360,234 @@
   "recordsNoSelectionText": "Choose a record to see it here.",
   "@recordsNoSelectionText": {
     "description": "Master-detail pane before a record is chosen"
+  },
+  "onbLocalKicker": "Make it local",
+  "@onbLocalKicker": {
+    "description": "Reference key onb.localKicker"
+  },
+  "onbWhereTitle": "Where are you based?",
+  "@onbWhereTitle": {
+    "description": "Reference key onb.whereTitle"
+  },
+  "onbWhereText": "This helps us personalise local information and services. It says nothing about who you are.",
+  "@onbWhereText": {
+    "description": "Reference key onb.whereText"
+  },
+  "onbYoursKicker": "Make it yours",
+  "@onbYoursKicker": {
+    "description": "Reference key onb.yoursKicker"
+  },
+  "onbHereForTitle": "What are you here for?",
+  "@onbHereForTitle": {
+    "description": "Reference key onb.hereForTitle"
+  },
+  "onbHereForText": "Pick 5 to 10. Your home screen, tools and reading are built around them — change them whenever you like.",
+  "@onbHereForText": {
+    "description": "The interests step’s supporting copy. Untranslated in the reference; see D12"
+  },
+  "persSearchCountries": "Search countries",
+  "@persSearchCountries": {
+    "description": "Reference key pers.searchCountries"
+  },
+  "persRecent": "Recent",
+  "@persRecent": {
+    "description": "Reference key pers.recent"
+  },
+  "persPopular": "Popular",
+  "@persPopular": {
+    "description": "Reference key pers.popular"
+  },
+  "persAllCountries": "All countries",
+  "@persAllCountries": {
+    "description": "Reference key pers.allCountries"
+  },
+  "onbMinimum": "{count} of {min} minimum",
+  "@onbMinimum": {
+    "description": "Reference key onb.minimum, shown below the minimum",
+    "placeholders": {
+      "count": {
+        "type": "String"
+      },
+      "min": {
+        "type": "String"
+      }
+    }
+  },
+  "onbSelected": "{count} of {max} selected",
+  "@onbSelected": {
+    "description": "Reference key onb.selected, shown at or above the minimum",
+    "placeholders": {
+      "count": {
+        "type": "String"
+      },
+      "max": {
+        "type": "String"
+      }
+    }
+  },
+  "onbAtCap": "Up to {max} — remove one first",
+  "@onbAtCap": {
+    "description": "Refuses a tap once the cap is reached",
+    "placeholders": {
+      "max": {
+        "type": "String"
+      }
+    }
+  },
+  "persIslamic": "Islamic features",
+  "@persIslamic": {
+    "description": "Reference key pers.islamic"
+  },
+  "persIslamicSub": "Prayer times, Qur’an, duas, zakat and Ramadan",
+  "@persIslamicSub": {
+    "description": "Reference key pers.islamicSub"
+  },
+  "igEveryday": "Everyday life",
+  "@igEveryday": {
+    "description": "Reference key ig.everyday"
+  },
+  "igMoney": "Money & finance",
+  "@igMoney": {
+    "description": "Reference key ig.money"
+  },
+  "igHealth": "Health & wellness",
+  "@igHealth": {
+    "description": "Reference key ig.health"
+  },
+  "igTravel": "Travel & getting around",
+  "@igTravel": {
+    "description": "Reference key ig.travel"
+  },
+  "igNews": "News & entertainment",
+  "@igNews": {
+    "description": "Reference key ig.news"
+  },
+  "igFaith": "Islamic features",
+  "@igFaith": {
+    "description": "Reference key ig.faith"
+  },
+  "intWeather": "Weather",
+  "@intWeather": {
+    "description": "Interest \"weather\". The reference hard-codes the English label and never translates it; see D12"
+  },
+  "intCalendar": "Calendar",
+  "@intCalendar": {
+    "description": "Interest \"calendar\". The reference hard-codes the English label and never translates it; see D12"
+  },
+  "intTasks": "Tasks & to-dos",
+  "@intTasks": {
+    "description": "Interest \"tasks\". The reference hard-codes the English label and never translates it; see D12"
+  },
+  "intNotes": "Notes",
+  "@intNotes": {
+    "description": "Interest \"notes\". The reference hard-codes the English label and never translates it; see D12"
+  },
+  "intConvert": "Converters",
+  "@intConvert": {
+    "description": "Interest \"convert\". The reference hard-codes the English label and never translates it; see D12"
+  },
+  "intMaths": "Calculators",
+  "@intMaths": {
+    "description": "Interest \"maths\". The reference hard-codes the English label and never translates it; see D12"
+  },
+  "intAlarms": "Alarms & timers",
+  "@intAlarms": {
+    "description": "Interest \"alarms\". The reference hard-codes the English label and never translates it; see D12"
+  },
+  "intExpenses": "Expenses",
+  "@intExpenses": {
+    "description": "Interest \"expenses\". The reference hard-codes the English label and never translates it; see D12"
+  },
+  "intRates": "Rates & gold",
+  "@intRates": {
+    "description": "Interest \"rates\". The reference hard-codes the English label and never translates it; see D12"
+  },
+  "intBills": "Bills",
+  "@intBills": {
+    "description": "Interest \"bills\". The reference hard-codes the English label and never translates it; see D12"
+  },
+  "intSavings": "Saving & goals",
+  "@intSavings": {
+    "description": "Interest \"savings\". The reference hard-codes the English label and never translates it; see D12"
+  },
+  "intMarkets": "Markets",
+  "@intMarkets": {
+    "description": "Interest \"markets\". The reference hard-codes the English label and never translates it; see D12"
+  },
+  "intHabits": "Habits",
+  "@intHabits": {
+    "description": "Interest \"habits\". The reference hard-codes the English label and never translates it; see D12"
+  },
+  "intWater": "Water",
+  "@intWater": {
+    "description": "Interest \"water\". The reference hard-codes the English label and never translates it; see D12"
+  },
+  "intFitness": "Fitness",
+  "@intFitness": {
+    "description": "Interest \"fitness\". The reference hard-codes the English label and never translates it; see D12"
+  },
+  "intMeds": "Medication",
+  "@intMeds": {
+    "description": "Interest \"meds\". The reference hard-codes the English label and never translates it; see D12"
+  },
+  "intSleep": "Sleep",
+  "@intSleep": {
+    "description": "Interest \"sleep\". The reference hard-codes the English label and never translates it; see D12"
+  },
+  "intTrains": "Trains",
+  "@intTrains": {
+    "description": "Interest \"trains\". The reference hard-codes the English label and never translates it; see D12"
+  },
+  "intFlights": "Flights",
+  "@intFlights": {
+    "description": "Interest \"flights\". The reference hard-codes the English label and never translates it; see D12"
+  },
+  "intNearby": "Nearby places",
+  "@intNearby": {
+    "description": "Interest \"nearby\". The reference hard-codes the English label and never translates it; see D12"
+  },
+  "intFuel": "Fuel",
+  "@intFuel": {
+    "description": "Interest \"fuel\". The reference hard-codes the English label and never translates it; see D12"
+  },
+  "intNews": "News",
+  "@intNews": {
+    "description": "Interest \"news\". The reference hard-codes the English label and never translates it; see D12"
+  },
+  "intCricket": "Cricket",
+  "@intCricket": {
+    "description": "Interest \"cricket\". The reference hard-codes the English label and never translates it; see D12"
+  },
+  "intReading": "Reading",
+  "@intReading": {
+    "description": "Interest \"reading\". The reference hard-codes the English label and never translates it; see D12"
+  },
+  "intQuotes": "Daily quotes",
+  "@intQuotes": {
+    "description": "Interest \"quotes\". The reference hard-codes the English label and never translates it; see D12"
+  },
+  "intPrayer": "Prayer times",
+  "@intPrayer": {
+    "description": "Interest \"prayer\". The reference hard-codes the English label and never translates it; see D12"
+  },
+  "intQuran": "Qur’an",
+  "@intQuran": {
+    "description": "Interest \"quran\". The reference hard-codes the English label and never translates it; see D12"
+  },
+  "intHadith": "Hadith",
+  "@intHadith": {
+    "description": "Interest \"hadith\". The reference hard-codes the English label and never translates it; see D12"
+  },
+  "intDuas": "Duas & dhikr",
+  "@intDuas": {
+    "description": "Interest \"duas\". The reference hard-codes the English label and never translates it; see D12"
+  },
+  "intZakat": "Zakat & giving",
+  "@intZakat": {
+    "description": "Interest \"zakat\". The reference hard-codes the English label and never translates it; see D12"
+  },
+  "intRamadan": "Ramadan",
+  "@intRamadan": {
+    "description": "Interest \"ramadan\". The reference hard-codes the English label and never translates it; see D12"
   }
 }

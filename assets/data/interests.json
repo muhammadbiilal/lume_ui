@@ -1,0 +1,259 @@
+{
+  "source": "assets/js/data/catalogue.js",
+  "generator": "docs/conversion_archive/tool/gen_interests.mjs",
+  "groupCount": 6,
+  "interestCount": 31,
+  "minimum": 5,
+  "maximum": 10,
+  "faithInterests": [
+    "prayer",
+    "quran",
+    "hadith",
+    "duas",
+    "zakat",
+    "ramadan"
+  ],
+  "defaults": [
+    "weather",
+    "calendar",
+    "tasks",
+    "notes",
+    "maths",
+    "expenses",
+    "news"
+  ],
+  "referencedByFeatures": [
+    "alarms",
+    "bills",
+    "calendar",
+    "convert",
+    "cricket",
+    "duas",
+    "expenses",
+    "fitness",
+    "flights",
+    "fuel",
+    "habits",
+    "hadith",
+    "markets",
+    "maths",
+    "meds",
+    "nearby",
+    "news",
+    "notes",
+    "prayer",
+    "quran",
+    "ramadan",
+    "rates",
+    "reading",
+    "savings",
+    "tasks",
+    "trains",
+    "water",
+    "weather",
+    "zakat"
+  ],
+  "unreachable": [
+    "sleep",
+    "quotes"
+  ],
+  "groups": [
+    {
+      "id": "everyday",
+      "faith": false,
+      "referenceLabel": "Everyday life",
+      "items": [
+        {
+          "id": "weather",
+          "icon": "cloud-sun",
+          "referenceLabel": "Weather"
+        },
+        {
+          "id": "calendar",
+          "icon": "calendar",
+          "referenceLabel": "Calendar"
+        },
+        {
+          "id": "tasks",
+          "icon": "check-square",
+          "referenceLabel": "Tasks & to-dos"
+        },
+        {
+          "id": "notes",
+          "icon": "note",
+          "referenceLabel": "Notes"
+        },
+        {
+          "id": "convert",
+          "icon": "ruler",
+          "referenceLabel": "Converters"
+        },
+        {
+          "id": "maths",
+          "icon": "calculator",
+          "referenceLabel": "Calculators"
+        },
+        {
+          "id": "alarms",
+          "icon": "alarm",
+          "referenceLabel": "Alarms & timers"
+        }
+      ]
+    },
+    {
+      "id": "money",
+      "faith": false,
+      "referenceLabel": "Money & finance",
+      "items": [
+        {
+          "id": "expenses",
+          "icon": "wallet",
+          "referenceLabel": "Expenses"
+        },
+        {
+          "id": "rates",
+          "icon": "coins",
+          "referenceLabel": "Rates & gold"
+        },
+        {
+          "id": "bills",
+          "icon": "receipt",
+          "referenceLabel": "Bills"
+        },
+        {
+          "id": "savings",
+          "icon": "target",
+          "referenceLabel": "Saving & goals"
+        },
+        {
+          "id": "markets",
+          "icon": "trending",
+          "referenceLabel": "Markets"
+        }
+      ]
+    },
+    {
+      "id": "health",
+      "faith": false,
+      "referenceLabel": "Health & wellness",
+      "items": [
+        {
+          "id": "habits",
+          "icon": "flame",
+          "referenceLabel": "Habits"
+        },
+        {
+          "id": "water",
+          "icon": "droplet",
+          "referenceLabel": "Water"
+        },
+        {
+          "id": "fitness",
+          "icon": "pulse",
+          "referenceLabel": "Fitness"
+        },
+        {
+          "id": "meds",
+          "icon": "pill",
+          "referenceLabel": "Medication"
+        },
+        {
+          "id": "sleep",
+          "icon": "moon",
+          "referenceLabel": "Sleep"
+        }
+      ]
+    },
+    {
+      "id": "travel",
+      "faith": false,
+      "referenceLabel": "Travel & getting around",
+      "items": [
+        {
+          "id": "trains",
+          "icon": "train",
+          "referenceLabel": "Trains"
+        },
+        {
+          "id": "flights",
+          "icon": "plane",
+          "referenceLabel": "Flights"
+        },
+        {
+          "id": "nearby",
+          "icon": "pin",
+          "referenceLabel": "Nearby places"
+        },
+        {
+          "id": "fuel",
+          "icon": "fuel",
+          "referenceLabel": "Fuel"
+        }
+      ]
+    },
+    {
+      "id": "news",
+      "faith": false,
+      "referenceLabel": "News & entertainment",
+      "items": [
+        {
+          "id": "news",
+          "icon": "news",
+          "referenceLabel": "News"
+        },
+        {
+          "id": "cricket",
+          "icon": "cricket",
+          "referenceLabel": "Cricket"
+        },
+        {
+          "id": "reading",
+          "icon": "book",
+          "referenceLabel": "Reading"
+        },
+        {
+          "id": "quotes",
+          "icon": "quote",
+          "referenceLabel": "Daily quotes"
+        }
+      ]
+    },
+    {
+      "id": "faith",
+      "faith": true,
+      "referenceLabel": "Islamic features",
+      "items": [
+        {
+          "id": "prayer",
+          "icon": "prayer",
+          "referenceLabel": "Prayer times"
+        },
+        {
+          "id": "quran",
+          "icon": "book",
+          "referenceLabel": "Qur’an"
+        },
+        {
+          "id": "hadith",
+          "icon": "quote",
+          "referenceLabel": "Hadith"
+        },
+        {
+          "id": "duas",
+          "icon": "beads",
+          "referenceLabel": "Duas & dhikr"
+        },
+        {
+          "id": "zakat",
+          "icon": "wallet",
+          "referenceLabel": "Zakat & giving"
+        },
+        {
+          "id": "ramadan",
+          "icon": "moon-star",
+          "referenceLabel": "Ramadan"
+        }
+      ]
+    }
+  ]
+}

@@ -28,8 +28,13 @@ import 'lume_harness.dart';
 /// Where captures land. The web capture writes beside them.
 const String kShotsDir = 'docs/conversion_archive/shots';
 
-/// Capture [child] and write `<name>_<w>x<h>_<theme>_<lang>.flutter.png` plus
-/// its `.flutter.json` sidecar.
+/// Capture [child] and write `<name>_<w>x<h>_<theme>_<lang><suffix>.flutter.png`
+/// plus its `.flutter.json` sidecar.
+///
+/// [suffix] exists so a Flutter capture can be paired with a web capture whose
+/// name carries something extra — the onboarding captures carry `_step3` and
+/// `_step5`, because the web tool drives the flow to a step and says so in the
+/// filename. The comparison pairs on the whole name, so the two have to agree.
 ///
 /// Returns the sidecar, so a test can assert on the measured facts as well as
 /// leaving an image behind.
@@ -42,6 +47,7 @@ Future<Map<String, Object?>> captureLume(
   Locale locale = const Locale('en'),
   double textScale = 1.0,
   String outDir = kShotsDir,
+  String suffix = '',
 }) async {
   // `FontLoader.load` does real asynchronous work, and a widget test runs in a
   // fake-async zone where real work never completes. Both this and the image
@@ -88,7 +94,7 @@ Future<Map<String, Object?>> captureLume(
   final String themeName = theme == ThemeMode.dark ? 'dark' : 'light';
   final String cell =
       '${name}_${surface.width.round()}x${surface.height.round()}'
-      '_${themeName}_${locale.languageCode}';
+      '_${themeName}_${locale.languageCode}$suffix';
 
   final Directory dir = Directory('$outDir/$name');
   dir.createSync(recursive: true);

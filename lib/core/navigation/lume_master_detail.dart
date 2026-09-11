@@ -33,6 +33,7 @@ library;
 import 'package:flutter/material.dart';
 
 import '../layout/lume_breakpoint.dart';
+import 'lume_back_intercept.dart';
 import '../widgets/lume/lume_crud.dart';
 
 /// A collection screen drawn as a list, a detail, or both.
@@ -203,12 +204,6 @@ class _LumeMasterDetailShellState extends State<LumeMasterDetailShell> {
       ],
     );
 
-    // `BackButtonListener` reaches for the `Router`'s back-button dispatcher
-    // and throws when there is none. The product always has one; a widget test
-    // that pumps this on its own does not, and a collection screen that cannot
-    // be pumped in isolation is a collection screen that is hard to test. The
-    // guard costs one lookup and buys that back.
-    if (Router.maybeOf(context) == null) return stack;
-    return BackButtonListener(onBackButtonPressed: _onBack, child: stack);
+    return LumeBackIntercept(onBack: _onBack, child: stack);
   }
 }

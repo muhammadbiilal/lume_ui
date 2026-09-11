@@ -639,6 +639,318 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Choose a record to see it here.'**
   String get recordsNoSelectionText;
+
+  /// Reference key onb.localKicker
+  ///
+  /// In en, this message translates to:
+  /// **'Make it local'**
+  String get onbLocalKicker;
+
+  /// Reference key onb.whereTitle
+  ///
+  /// In en, this message translates to:
+  /// **'Where are you based?'**
+  String get onbWhereTitle;
+
+  /// Reference key onb.whereText
+  ///
+  /// In en, this message translates to:
+  /// **'This helps us personalise local information and services. It says nothing about who you are.'**
+  String get onbWhereText;
+
+  /// Reference key onb.yoursKicker
+  ///
+  /// In en, this message translates to:
+  /// **'Make it yours'**
+  String get onbYoursKicker;
+
+  /// Reference key onb.hereForTitle
+  ///
+  /// In en, this message translates to:
+  /// **'What are you here for?'**
+  String get onbHereForTitle;
+
+  /// The interests step’s supporting copy. Untranslated in the reference; see D12
+  ///
+  /// In en, this message translates to:
+  /// **'Pick 5 to 10. Your home screen, tools and reading are built around them — change them whenever you like.'**
+  String get onbHereForText;
+
+  /// Reference key pers.searchCountries
+  ///
+  /// In en, this message translates to:
+  /// **'Search countries'**
+  String get persSearchCountries;
+
+  /// Reference key pers.recent
+  ///
+  /// In en, this message translates to:
+  /// **'Recent'**
+  String get persRecent;
+
+  /// Reference key pers.popular
+  ///
+  /// In en, this message translates to:
+  /// **'Popular'**
+  String get persPopular;
+
+  /// Reference key pers.allCountries
+  ///
+  /// In en, this message translates to:
+  /// **'All countries'**
+  String get persAllCountries;
+
+  /// Reference key onb.minimum, shown below the minimum
+  ///
+  /// In en, this message translates to:
+  /// **'{count} of {min} minimum'**
+  String onbMinimum(String count, String min);
+
+  /// Reference key onb.selected, shown at or above the minimum
+  ///
+  /// In en, this message translates to:
+  /// **'{count} of {max} selected'**
+  String onbSelected(String count, String max);
+
+  /// Refuses a tap once the cap is reached
+  ///
+  /// In en, this message translates to:
+  /// **'Up to {max} — remove one first'**
+  String onbAtCap(String max);
+
+  /// Reference key pers.islamic
+  ///
+  /// In en, this message translates to:
+  /// **'Islamic features'**
+  String get persIslamic;
+
+  /// Reference key pers.islamicSub
+  ///
+  /// In en, this message translates to:
+  /// **'Prayer times, Qur’an, duas, zakat and Ramadan'**
+  String get persIslamicSub;
+
+  /// Reference key ig.everyday
+  ///
+  /// In en, this message translates to:
+  /// **'Everyday life'**
+  String get igEveryday;
+
+  /// Reference key ig.money
+  ///
+  /// In en, this message translates to:
+  /// **'Money & finance'**
+  String get igMoney;
+
+  /// Reference key ig.health
+  ///
+  /// In en, this message translates to:
+  /// **'Health & wellness'**
+  String get igHealth;
+
+  /// Reference key ig.travel
+  ///
+  /// In en, this message translates to:
+  /// **'Travel & getting around'**
+  String get igTravel;
+
+  /// Reference key ig.news
+  ///
+  /// In en, this message translates to:
+  /// **'News & entertainment'**
+  String get igNews;
+
+  /// Reference key ig.faith
+  ///
+  /// In en, this message translates to:
+  /// **'Islamic features'**
+  String get igFaith;
+
+  /// Interest "weather". The reference hard-codes the English label and never translates it; see D12
+  ///
+  /// In en, this message translates to:
+  /// **'Weather'**
+  String get intWeather;
+
+  /// Interest "calendar". The reference hard-codes the English label and never translates it; see D12
+  ///
+  /// In en, this message translates to:
+  /// **'Calendar'**
+  String get intCalendar;
+
+  /// Interest "tasks". The reference hard-codes the English label and never translates it; see D12
+  ///
+  /// In en, this message translates to:
+  /// **'Tasks & to-dos'**
+  String get intTasks;
+
+  /// Interest "notes". The reference hard-codes the English label and never translates it; see D12
+  ///
+  /// In en, this message translates to:
+  /// **'Notes'**
+  String get intNotes;
+
+  /// Interest "convert". The reference hard-codes the English label and never translates it; see D12
+  ///
+  /// In en, this message translates to:
+  /// **'Converters'**
+  String get intConvert;
+
+  /// Interest "maths". The reference hard-codes the English label and never translates it; see D12
+  ///
+  /// In en, this message translates to:
+  /// **'Calculators'**
+  String get intMaths;
+
+  /// Interest "alarms". The reference hard-codes the English label and never translates it; see D12
+  ///
+  /// In en, this message translates to:
+  /// **'Alarms & timers'**
+  String get intAlarms;
+
+  /// Interest "expenses". The reference hard-codes the English label and never translates it; see D12
+  ///
+  /// In en, this message translates to:
+  /// **'Expenses'**
+  String get intExpenses;
+
+  /// Interest "rates". The reference hard-codes the English label and never translates it; see D12
+  ///
+  /// In en, this message translates to:
+  /// **'Rates & gold'**
+  String get intRates;
+
+  /// Interest "bills". The reference hard-codes the English label and never translates it; see D12
+  ///
+  /// In en, this message translates to:
+  /// **'Bills'**
+  String get intBills;
+
+  /// Interest "savings". The reference hard-codes the English label and never translates it; see D12
+  ///
+  /// In en, this message translates to:
+  /// **'Saving & goals'**
+  String get intSavings;
+
+  /// Interest "markets". The reference hard-codes the English label and never translates it; see D12
+  ///
+  /// In en, this message translates to:
+  /// **'Markets'**
+  String get intMarkets;
+
+  /// Interest "habits". The reference hard-codes the English label and never translates it; see D12
+  ///
+  /// In en, this message translates to:
+  /// **'Habits'**
+  String get intHabits;
+
+  /// Interest "water". The reference hard-codes the English label and never translates it; see D12
+  ///
+  /// In en, this message translates to:
+  /// **'Water'**
+  String get intWater;
+
+  /// Interest "fitness". The reference hard-codes the English label and never translates it; see D12
+  ///
+  /// In en, this message translates to:
+  /// **'Fitness'**
+  String get intFitness;
+
+  /// Interest "meds". The reference hard-codes the English label and never translates it; see D12
+  ///
+  /// In en, this message translates to:
+  /// **'Medication'**
+  String get intMeds;
+
+  /// Interest "sleep". The reference hard-codes the English label and never translates it; see D12
+  ///
+  /// In en, this message translates to:
+  /// **'Sleep'**
+  String get intSleep;
+
+  /// Interest "trains". The reference hard-codes the English label and never translates it; see D12
+  ///
+  /// In en, this message translates to:
+  /// **'Trains'**
+  String get intTrains;
+
+  /// Interest "flights". The reference hard-codes the English label and never translates it; see D12
+  ///
+  /// In en, this message translates to:
+  /// **'Flights'**
+  String get intFlights;
+
+  /// Interest "nearby". The reference hard-codes the English label and never translates it; see D12
+  ///
+  /// In en, this message translates to:
+  /// **'Nearby places'**
+  String get intNearby;
+
+  /// Interest "fuel". The reference hard-codes the English label and never translates it; see D12
+  ///
+  /// In en, this message translates to:
+  /// **'Fuel'**
+  String get intFuel;
+
+  /// Interest "news". The reference hard-codes the English label and never translates it; see D12
+  ///
+  /// In en, this message translates to:
+  /// **'News'**
+  String get intNews;
+
+  /// Interest "cricket". The reference hard-codes the English label and never translates it; see D12
+  ///
+  /// In en, this message translates to:
+  /// **'Cricket'**
+  String get intCricket;
+
+  /// Interest "reading". The reference hard-codes the English label and never translates it; see D12
+  ///
+  /// In en, this message translates to:
+  /// **'Reading'**
+  String get intReading;
+
+  /// Interest "quotes". The reference hard-codes the English label and never translates it; see D12
+  ///
+  /// In en, this message translates to:
+  /// **'Daily quotes'**
+  String get intQuotes;
+
+  /// Interest "prayer". The reference hard-codes the English label and never translates it; see D12
+  ///
+  /// In en, this message translates to:
+  /// **'Prayer times'**
+  String get intPrayer;
+
+  /// Interest "quran". The reference hard-codes the English label and never translates it; see D12
+  ///
+  /// In en, this message translates to:
+  /// **'Qur’an'**
+  String get intQuran;
+
+  /// Interest "hadith". The reference hard-codes the English label and never translates it; see D12
+  ///
+  /// In en, this message translates to:
+  /// **'Hadith'**
+  String get intHadith;
+
+  /// Interest "duas". The reference hard-codes the English label and never translates it; see D12
+  ///
+  /// In en, this message translates to:
+  /// **'Duas & dhikr'**
+  String get intDuas;
+
+  /// Interest "zakat". The reference hard-codes the English label and never translates it; see D12
+  ///
+  /// In en, this message translates to:
+  /// **'Zakat & giving'**
+  String get intZakat;
+
+  /// Interest "ramadan". The reference hard-codes the English label and never translates it; see D12
+  ///
+  /// In en, this message translates to:
+  /// **'Ramadan'**
+  String get intRamadan;
 }
 
 class _AppLocalizationsDelegate

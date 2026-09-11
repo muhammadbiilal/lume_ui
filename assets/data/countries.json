@@ -1,0 +1,2952 @@
+{
+  "source": "assets/js/data/geo.js + Intl.DisplayNames",
+  "generator": "docs/conversion_archive/tool/gen_countries.mjs",
+  "count": 194,
+  "popular": [
+    "PK",
+    "IN",
+    "US",
+    "GB",
+    "AE",
+    "SA",
+    "CA",
+    "AU",
+    "DE",
+    "FR",
+    "TR",
+    "ID",
+    "MY",
+    "BD",
+    "EG",
+    "NG",
+    "ZA",
+    "SG",
+    "QA",
+    "KW"
+  ],
+  "languages": [
+    "en",
+    "ur",
+    "ar"
+  ],
+  "order": {
+    "en": [
+      "AF",
+      "AL",
+      "DZ",
+      "AD",
+      "AO",
+      "AG",
+      "AR",
+      "AM",
+      "AU",
+      "AT",
+      "AZ",
+      "BS",
+      "BH",
+      "BD",
+      "BB",
+      "BY",
+      "BE",
+      "BZ",
+      "BJ",
+      "BT",
+      "BO",
+      "BA",
+      "BW",
+      "BR",
+      "BN",
+      "BG",
+      "BF",
+      "BI",
+      "KH",
+      "CM",
+      "CA",
+      "CV",
+      "CF",
+      "TD",
+      "CL",
+      "CN",
+      "CO",
+      "KM",
+      "CG",
+      "CD",
+      "CR",
+      "CI",
+      "HR",
+      "CU",
+      "CY",
+      "CZ",
+      "DK",
+      "DJ",
+      "DM",
+      "DO",
+      "EC",
+      "EG",
+      "SV",
+      "GQ",
+      "ER",
+      "EE",
+      "SZ",
+      "ET",
+      "FJ",
+      "FI",
+      "FR",
+      "GA",
+      "GM",
+      "GE",
+      "DE",
+      "GH",
+      "GR",
+      "GD",
+      "GT",
+      "GN",
+      "GW",
+      "GY",
+      "HT",
+      "HN",
+      "HU",
+      "IS",
+      "IN",
+      "ID",
+      "IR",
+      "IQ",
+      "IE",
+      "IL",
+      "IT",
+      "JM",
+      "JP",
+      "JO",
+      "KZ",
+      "KE",
+      "KI",
+      "KW",
+      "KG",
+      "LA",
+      "LV",
+      "LB",
+      "LS",
+      "LR",
+      "LY",
+      "LI",
+      "LT",
+      "LU",
+      "MG",
+      "MW",
+      "MY",
+      "MV",
+      "ML",
+      "MT",
+      "MH",
+      "MR",
+      "MU",
+      "MX",
+      "FM",
+      "MD",
+      "MC",
+      "MN",
+      "ME",
+      "MA",
+      "MZ",
+      "MM",
+      "NA",
+      "NR",
+      "NP",
+      "NL",
+      "NZ",
+      "NI",
+      "NE",
+      "NG",
+      "MK",
+      "NO",
+      "OM",
+      "PK",
+      "PW",
+      "PS",
+      "PA",
+      "PG",
+      "PY",
+      "PE",
+      "PH",
+      "PL",
+      "PT",
+      "QA",
+      "RO",
+      "RU",
+      "RW",
+      "WS",
+      "SM",
+      "ST",
+      "SA",
+      "SN",
+      "RS",
+      "SC",
+      "SL",
+      "SG",
+      "SK",
+      "SI",
+      "SB",
+      "SO",
+      "ZA",
+      "KR",
+      "SS",
+      "ES",
+      "LK",
+      "KN",
+      "LC",
+      "VC",
+      "SD",
+      "SR",
+      "SE",
+      "CH",
+      "SY",
+      "TW",
+      "TJ",
+      "TZ",
+      "TH",
+      "TL",
+      "TG",
+      "TO",
+      "TT",
+      "TN",
+      "TR",
+      "TM",
+      "TV",
+      "UG",
+      "UA",
+      "AE",
+      "GB",
+      "US",
+      "UY",
+      "UZ",
+      "VU",
+      "VE",
+      "VN",
+      "YE",
+      "ZM",
+      "ZW"
+    ],
+    "ur": [
+      "IT",
+      "AR",
+      "JO",
+      "ER",
+      "UZ",
+      "GQ",
+      "EE",
+      "IL",
+      "AF",
+      "SV",
+      "AL",
+      "DZ",
+      "AG",
+      "AD",
+      "ID",
+      "AO",
+      "ET",
+      "IR",
+      "EC",
+      "AZ",
+      "AM",
+      "AT",
+      "AU",
+      "IE",
+      "IS",
+      "BB",
+      "BH",
+      "BR",
+      "BF",
+      "BN",
+      "BI",
+      "BG",
+      "BD",
+      "BW",
+      "BA",
+      "BO",
+      "BS",
+      "BY",
+      "BZ",
+      "BE",
+      "BJ",
+      "IN",
+      "BT",
+      "PG",
+      "PK",
+      "PA",
+      "PT",
+      "PW",
+      "PL",
+      "PY",
+      "PE",
+      "TJ",
+      "TW",
+      "TM",
+      "TR",
+      "TT",
+      "TZ",
+      "TN",
+      "TL",
+      "TH",
+      "TG",
+      "TO",
+      "TV",
+      "JP",
+      "GE",
+      "DJ",
+      "DE",
+      "JM",
+      "DO",
+      "ZA",
+      "SS",
+      "KR",
+      "TD",
+      "CL",
+      "CZ",
+      "CN",
+      "DK",
+      "DM",
+      "RW",
+      "RU",
+      "RO",
+      "US",
+      "ZM",
+      "ZW",
+      "WS",
+      "SM",
+      "ST",
+      "RS",
+      "LK",
+      "SC",
+      "SA",
+      "GB",
+      "SK",
+      "SI",
+      "SG",
+      "SZ",
+      "SD",
+      "SR",
+      "SB",
+      "CH",
+      "SE",
+      "SL",
+      "KN",
+      "LC",
+      "VC",
+      "SN",
+      "SY",
+      "MK",
+      "SO",
+      "IQ",
+      "OM",
+      "FJ",
+      "FR",
+      "PH",
+      "PS",
+      "FI",
+      "CY",
+      "KZ",
+      "QA",
+      "CG",
+      "CD",
+      "KG",
+      "HR",
+      "KI",
+      "KH",
+      "CI",
+      "CR",
+      "CO",
+      "KM",
+      "KW",
+      "CV",
+      "CM",
+      "KE",
+      "CA",
+      "CU",
+      "GD",
+      "GN",
+      "GW",
+      "GT",
+      "GY",
+      "GA",
+      "GM",
+      "GH",
+      "LA",
+      "LR",
+      "LB",
+      "LV",
+      "LU",
+      "LY",
+      "LT",
+      "LS",
+      "LI",
+      "MH",
+      "MU",
+      "MT",
+      "MD",
+      "MV",
+      "ML",
+      "FM",
+      "AE",
+      "MG",
+      "MA",
+      "EG",
+      "MW",
+      "MY",
+      "MN",
+      "MR",
+      "MZ",
+      "MC",
+      "ME",
+      "MM",
+      "MX",
+      "NO",
+      "NA",
+      "NE",
+      "NG",
+      "NI",
+      "NR",
+      "NP",
+      "NL",
+      "NZ",
+      "CF",
+      "VN",
+      "VE",
+      "VU",
+      "ES",
+      "HU",
+      "HN",
+      "HT",
+      "YE",
+      "UY",
+      "UA",
+      "UG",
+      "GR"
+    ],
+    "ar": [
+      "IS",
+      "ET",
+      "AZ",
+      "AM",
+      "ER",
+      "ES",
+      "AU",
+      "EE",
+      "IL",
+      "SZ",
+      "AF",
+      "PS",
+      "AR",
+      "JO",
+      "EC",
+      "AE",
+      "AL",
+      "BH",
+      "BR",
+      "PT",
+      "BA",
+      "CZ",
+      "ME",
+      "DZ",
+      "DK",
+      "CV",
+      "SV",
+      "SN",
+      "SD",
+      "SE",
+      "SO",
+      "CN",
+      "IQ",
+      "GA",
+      "PH",
+      "CM",
+      "CG",
+      "CD",
+      "KW",
+      "DE",
+      "MA",
+      "MX",
+      "SA",
+      "GB",
+      "NO",
+      "AT",
+      "NE",
+      "IN",
+      "US",
+      "JP",
+      "YE",
+      "GR",
+      "AG",
+      "AD",
+      "ID",
+      "AO",
+      "UY",
+      "UZ",
+      "UG",
+      "UA",
+      "IR",
+      "IE",
+      "IT",
+      "PG",
+      "PY",
+      "PK",
+      "PW",
+      "BB",
+      "BN",
+      "BE",
+      "BG",
+      "BZ",
+      "BD",
+      "PA",
+      "BJ",
+      "BT",
+      "BW",
+      "BF",
+      "BI",
+      "PL",
+      "BO",
+      "PE",
+      "BY",
+      "TH",
+      "TW",
+      "TM",
+      "TR",
+      "TT",
+      "TD",
+      "CL",
+      "TZ",
+      "TG",
+      "TV",
+      "TN",
+      "TO",
+      "TL",
+      "JM",
+      "BS",
+      "KM",
+      "MV",
+      "SB",
+      "MH",
+      "CF",
+      "DO",
+      "ZA",
+      "SS",
+      "GE",
+      "DJ",
+      "DM",
+      "RW",
+      "RU",
+      "RO",
+      "ZM",
+      "ZW",
+      "CI",
+      "WS",
+      "SM",
+      "VC",
+      "KN",
+      "LC",
+      "ST",
+      "LK",
+      "SK",
+      "SI",
+      "SG",
+      "SY",
+      "SR",
+      "CH",
+      "SL",
+      "SC",
+      "RS",
+      "TJ",
+      "OM",
+      "GM",
+      "GH",
+      "GD",
+      "GT",
+      "GY",
+      "GN",
+      "GQ",
+      "GW",
+      "VU",
+      "FR",
+      "VE",
+      "FI",
+      "VN",
+      "FJ",
+      "CY",
+      "QA",
+      "KG",
+      "KZ",
+      "HR",
+      "KH",
+      "CA",
+      "CU",
+      "KR",
+      "CR",
+      "CO",
+      "KI",
+      "KE",
+      "LV",
+      "LA",
+      "LB",
+      "LU",
+      "LY",
+      "LR",
+      "LT",
+      "LI",
+      "LS",
+      "MT",
+      "ML",
+      "MY",
+      "MG",
+      "EG",
+      "MK",
+      "MW",
+      "MN",
+      "MR",
+      "MU",
+      "MZ",
+      "MD",
+      "MC",
+      "MM",
+      "FM",
+      "NA",
+      "NR",
+      "NP",
+      "NG",
+      "NI",
+      "NZ",
+      "HT",
+      "HN",
+      "HU",
+      "NL"
+    ]
+  },
+  "countries": [
+    {
+      "code": "AD",
+      "currency": "EUR",
+      "language": "ca",
+      "timezone": "Europe/Andorra",
+      "popular": false,
+      "names": {
+        "en": "Andorra",
+        "ur": "انڈورا",
+        "ar": "أندورا"
+      }
+    },
+    {
+      "code": "AE",
+      "currency": "AED",
+      "language": "ar",
+      "timezone": "Asia/Dubai",
+      "popular": true,
+      "names": {
+        "en": "United Arab Emirates",
+        "ur": "متحدہ عرب امارات",
+        "ar": "الإمارات العربية المتحدة"
+      }
+    },
+    {
+      "code": "AF",
+      "currency": "AFN",
+      "language": "fa",
+      "timezone": "Asia/Kabul",
+      "popular": false,
+      "names": {
+        "en": "Afghanistan",
+        "ur": "افغانستان",
+        "ar": "أفغانستان"
+      }
+    },
+    {
+      "code": "AG",
+      "currency": "XCD",
+      "language": "en",
+      "timezone": "America/Antigua",
+      "popular": false,
+      "names": {
+        "en": "Antigua & Barbuda",
+        "ur": "انٹیگوا اور باربودا",
+        "ar": "أنتيغوا وبربودا"
+      }
+    },
+    {
+      "code": "AL",
+      "currency": "ALL",
+      "language": "sq",
+      "timezone": "Europe/Tirane",
+      "popular": false,
+      "names": {
+        "en": "Albania",
+        "ur": "البانیہ",
+        "ar": "ألبانيا"
+      }
+    },
+    {
+      "code": "AM",
+      "currency": "AMD",
+      "language": "hy",
+      "timezone": "Asia/Yerevan",
+      "popular": false,
+      "names": {
+        "en": "Armenia",
+        "ur": "آرمینیا",
+        "ar": "أرمينيا"
+      }
+    },
+    {
+      "code": "AO",
+      "currency": "AOA",
+      "language": "pt",
+      "timezone": "Africa/Luanda",
+      "popular": false,
+      "names": {
+        "en": "Angola",
+        "ur": "انگولا",
+        "ar": "أنغولا"
+      }
+    },
+    {
+      "code": "AR",
+      "currency": "ARS",
+      "language": "es",
+      "timezone": "America/Argentina/Buenos_Aires",
+      "popular": false,
+      "names": {
+        "en": "Argentina",
+        "ur": "ارجنٹینا",
+        "ar": "الأرجنتين"
+      }
+    },
+    {
+      "code": "AT",
+      "currency": "EUR",
+      "language": "de",
+      "timezone": "Europe/Vienna",
+      "popular": false,
+      "names": {
+        "en": "Austria",
+        "ur": "آسٹریا",
+        "ar": "النمسا"
+      }
+    },
+    {
+      "code": "AU",
+      "currency": "AUD",
+      "language": "en",
+      "timezone": "Australia/Sydney",
+      "popular": true,
+      "names": {
+        "en": "Australia",
+        "ur": "آسٹریلیا",
+        "ar": "أستراليا"
+      }
+    },
+    {
+      "code": "AZ",
+      "currency": "AZN",
+      "language": "az",
+      "timezone": "Asia/Baku",
+      "popular": false,
+      "names": {
+        "en": "Azerbaijan",
+        "ur": "آذربائیجان",
+        "ar": "أذربيجان"
+      }
+    },
+    {
+      "code": "BA",
+      "currency": "BAM",
+      "language": "bs",
+      "timezone": "Europe/Sarajevo",
+      "popular": false,
+      "names": {
+        "en": "Bosnia & Herzegovina",
+        "ur": "بوسنیا اور ہرزیگووینا",
+        "ar": "البوسنة والهرسك"
+      }
+    },
+    {
+      "code": "BB",
+      "currency": "BBD",
+      "language": "en",
+      "timezone": "America/Barbados",
+      "popular": false,
+      "names": {
+        "en": "Barbados",
+        "ur": "بارباڈوس",
+        "ar": "بربادوس"
+      }
+    },
+    {
+      "code": "BD",
+      "currency": "BDT",
+      "language": "bn",
+      "timezone": "Asia/Dhaka",
+      "popular": true,
+      "names": {
+        "en": "Bangladesh",
+        "ur": "بنگلہ دیش",
+        "ar": "بنغلاديش"
+      }
+    },
+    {
+      "code": "BE",
+      "currency": "EUR",
+      "language": "nl",
+      "timezone": "Europe/Brussels",
+      "popular": false,
+      "names": {
+        "en": "Belgium",
+        "ur": "بیلجیم",
+        "ar": "بلجيكا"
+      }
+    },
+    {
+      "code": "BF",
+      "currency": "XOF",
+      "language": "fr",
+      "timezone": "Africa/Ouagadougou",
+      "popular": false,
+      "names": {
+        "en": "Burkina Faso",
+        "ur": "برکینا فاسو",
+        "ar": "بوركينا فاسو"
+      }
+    },
+    {
+      "code": "BG",
+      "currency": "BGN",
+      "language": "bg",
+      "timezone": "Europe/Sofia",
+      "popular": false,
+      "names": {
+        "en": "Bulgaria",
+        "ur": "بلغاریہ",
+        "ar": "بلغاريا"
+      }
+    },
+    {
+      "code": "BH",
+      "currency": "BHD",
+      "language": "ar",
+      "timezone": "Asia/Bahrain",
+      "popular": false,
+      "names": {
+        "en": "Bahrain",
+        "ur": "بحرین",
+        "ar": "البحرين"
+      }
+    },
+    {
+      "code": "BI",
+      "currency": "BIF",
+      "language": "fr",
+      "timezone": "Africa/Bujumbura",
+      "popular": false,
+      "names": {
+        "en": "Burundi",
+        "ur": "برونڈی",
+        "ar": "بوروندي"
+      }
+    },
+    {
+      "code": "BJ",
+      "currency": "XOF",
+      "language": "fr",
+      "timezone": "Africa/Porto-Novo",
+      "popular": false,
+      "names": {
+        "en": "Benin",
+        "ur": "بینن",
+        "ar": "بنين"
+      }
+    },
+    {
+      "code": "BN",
+      "currency": "BND",
+      "language": "ms",
+      "timezone": "Asia/Brunei",
+      "popular": false,
+      "names": {
+        "en": "Brunei",
+        "ur": "برونائی",
+        "ar": "بروناي"
+      }
+    },
+    {
+      "code": "BO",
+      "currency": "BOB",
+      "language": "es",
+      "timezone": "America/La_Paz",
+      "popular": false,
+      "names": {
+        "en": "Bolivia",
+        "ur": "بولیویا",
+        "ar": "بوليفيا"
+      }
+    },
+    {
+      "code": "BR",
+      "currency": "BRL",
+      "language": "pt",
+      "timezone": "America/Sao_Paulo",
+      "popular": false,
+      "names": {
+        "en": "Brazil",
+        "ur": "برازیل",
+        "ar": "البرازيل"
+      }
+    },
+    {
+      "code": "BS",
+      "currency": "BSD",
+      "language": "en",
+      "timezone": "America/Nassau",
+      "popular": false,
+      "names": {
+        "en": "Bahamas",
+        "ur": "بہاماس",
+        "ar": "جزر البهاما"
+      }
+    },
+    {
+      "code": "BT",
+      "currency": "BTN",
+      "language": "dz",
+      "timezone": "Asia/Thimphu",
+      "popular": false,
+      "names": {
+        "en": "Bhutan",
+        "ur": "بھوٹان",
+        "ar": "بوتان"
+      }
+    },
+    {
+      "code": "BW",
+      "currency": "BWP",
+      "language": "en",
+      "timezone": "Africa/Gaborone",
+      "popular": false,
+      "names": {
+        "en": "Botswana",
+        "ur": "بوتسوانا",
+        "ar": "بوتسوانا"
+      }
+    },
+    {
+      "code": "BY",
+      "currency": "BYN",
+      "language": "be",
+      "timezone": "Europe/Minsk",
+      "popular": false,
+      "names": {
+        "en": "Belarus",
+        "ur": "بیلاروس",
+        "ar": "بيلاروس"
+      }
+    },
+    {
+      "code": "BZ",
+      "currency": "BZD",
+      "language": "en",
+      "timezone": "America/Belize",
+      "popular": false,
+      "names": {
+        "en": "Belize",
+        "ur": "بیلائز",
+        "ar": "بليز"
+      }
+    },
+    {
+      "code": "CA",
+      "currency": "CAD",
+      "language": "en",
+      "timezone": "America/Toronto",
+      "popular": true,
+      "names": {
+        "en": "Canada",
+        "ur": "کینیڈا",
+        "ar": "كندا"
+      }
+    },
+    {
+      "code": "CD",
+      "currency": "CDF",
+      "language": "fr",
+      "timezone": "Africa/Kinshasa",
+      "popular": false,
+      "names": {
+        "en": "Congo - Kinshasa",
+        "ur": "کانگو - کنشاسا",
+        "ar": "الكونغو - كينشاسا"
+      }
+    },
+    {
+      "code": "CF",
+      "currency": "XAF",
+      "language": "fr",
+      "timezone": "Africa/Bangui",
+      "popular": false,
+      "names": {
+        "en": "Central African Republic",
+        "ur": "وسط افریقی جمہوریہ",
+        "ar": "جمهورية أفريقيا الوسطى"
+      }
+    },
+    {
+      "code": "CG",
+      "currency": "XAF",
+      "language": "fr",
+      "timezone": "Africa/Brazzaville",
+      "popular": false,
+      "names": {
+        "en": "Congo - Brazzaville",
+        "ur": "کانگو - برازاویلے",
+        "ar": "الكونغو - برازافيل"
+      }
+    },
+    {
+      "code": "CH",
+      "currency": "CHF",
+      "language": "de",
+      "timezone": "Europe/Zurich",
+      "popular": false,
+      "names": {
+        "en": "Switzerland",
+        "ur": "سوئٹزر لینڈ",
+        "ar": "سويسرا"
+      }
+    },
+    {
+      "code": "CI",
+      "currency": "XOF",
+      "language": "fr",
+      "timezone": "Africa/Abidjan",
+      "popular": false,
+      "names": {
+        "en": "Côte d’Ivoire",
+        "ur": "کوٹ ڈی آئیوری",
+        "ar": "ساحل العاج"
+      }
+    },
+    {
+      "code": "CL",
+      "currency": "CLP",
+      "language": "es",
+      "timezone": "America/Santiago",
+      "popular": false,
+      "names": {
+        "en": "Chile",
+        "ur": "چلی",
+        "ar": "تشيلي"
+      }
+    },
+    {
+      "code": "CM",
+      "currency": "XAF",
+      "language": "fr",
+      "timezone": "Africa/Douala",
+      "popular": false,
+      "names": {
+        "en": "Cameroon",
+        "ur": "کیمرون",
+        "ar": "الكاميرون"
+      }
+    },
+    {
+      "code": "CN",
+      "currency": "CNY",
+      "language": "zh",
+      "timezone": "Asia/Shanghai",
+      "popular": false,
+      "names": {
+        "en": "China",
+        "ur": "چین",
+        "ar": "الصين"
+      }
+    },
+    {
+      "code": "CO",
+      "currency": "COP",
+      "language": "es",
+      "timezone": "America/Bogota",
+      "popular": false,
+      "names": {
+        "en": "Colombia",
+        "ur": "کولمبیا",
+        "ar": "كولومبيا"
+      }
+    },
+    {
+      "code": "CR",
+      "currency": "CRC",
+      "language": "es",
+      "timezone": "America/Costa_Rica",
+      "popular": false,
+      "names": {
+        "en": "Costa Rica",
+        "ur": "کوسٹا ریکا",
+        "ar": "كوستاريكا"
+      }
+    },
+    {
+      "code": "CU",
+      "currency": "CUP",
+      "language": "es",
+      "timezone": "America/Havana",
+      "popular": false,
+      "names": {
+        "en": "Cuba",
+        "ur": "کیوبا",
+        "ar": "كوبا"
+      }
+    },
+    {
+      "code": "CV",
+      "currency": "CVE",
+      "language": "pt",
+      "timezone": "Atlantic/Cape_Verde",
+      "popular": false,
+      "names": {
+        "en": "Cape Verde",
+        "ur": "کیپ ورڈی",
+        "ar": "الرأس الأخضر"
+      }
+    },
+    {
+      "code": "CY",
+      "currency": "EUR",
+      "language": "el",
+      "timezone": "Asia/Nicosia",
+      "popular": false,
+      "names": {
+        "en": "Cyprus",
+        "ur": "قبرص",
+        "ar": "قبرص"
+      }
+    },
+    {
+      "code": "CZ",
+      "currency": "CZK",
+      "language": "cs",
+      "timezone": "Europe/Prague",
+      "popular": false,
+      "names": {
+        "en": "Czechia",
+        "ur": "چیکیا",
+        "ar": "التشيك"
+      }
+    },
+    {
+      "code": "DE",
+      "currency": "EUR",
+      "language": "de",
+      "timezone": "Europe/Berlin",
+      "popular": true,
+      "names": {
+        "en": "Germany",
+        "ur": "جرمنی",
+        "ar": "ألمانيا"
+      }
+    },
+    {
+      "code": "DJ",
+      "currency": "DJF",
+      "language": "fr",
+      "timezone": "Africa/Djibouti",
+      "popular": false,
+      "names": {
+        "en": "Djibouti",
+        "ur": "جبوتی",
+        "ar": "جيبوتي"
+      }
+    },
+    {
+      "code": "DK",
+      "currency": "DKK",
+      "language": "da",
+      "timezone": "Europe/Copenhagen",
+      "popular": false,
+      "names": {
+        "en": "Denmark",
+        "ur": "ڈنمارک",
+        "ar": "الدانمرك"
+      }
+    },
+    {
+      "code": "DM",
+      "currency": "XCD",
+      "language": "en",
+      "timezone": "America/Dominica",
+      "popular": false,
+      "names": {
+        "en": "Dominica",
+        "ur": "ڈومنیکا",
+        "ar": "دومينيكا"
+      }
+    },
+    {
+      "code": "DO",
+      "currency": "DOP",
+      "language": "es",
+      "timezone": "America/Santo_Domingo",
+      "popular": false,
+      "names": {
+        "en": "Dominican Republic",
+        "ur": "جمہوریہ ڈومينيکن",
+        "ar": "جمهورية الدومينيكان"
+      }
+    },
+    {
+      "code": "DZ",
+      "currency": "DZD",
+      "language": "ar",
+      "timezone": "Africa/Algiers",
+      "popular": false,
+      "names": {
+        "en": "Algeria",
+        "ur": "الجیریا",
+        "ar": "الجزائر"
+      }
+    },
+    {
+      "code": "EC",
+      "currency": "USD",
+      "language": "es",
+      "timezone": "America/Guayaquil",
+      "popular": false,
+      "names": {
+        "en": "Ecuador",
+        "ur": "ایکواڈور",
+        "ar": "الإكوادور"
+      }
+    },
+    {
+      "code": "EE",
+      "currency": "EUR",
+      "language": "et",
+      "timezone": "Europe/Tallinn",
+      "popular": false,
+      "names": {
+        "en": "Estonia",
+        "ur": "اسٹونیا",
+        "ar": "إستونيا"
+      }
+    },
+    {
+      "code": "EG",
+      "currency": "EGP",
+      "language": "ar",
+      "timezone": "Africa/Cairo",
+      "popular": true,
+      "names": {
+        "en": "Egypt",
+        "ur": "مصر",
+        "ar": "مصر"
+      }
+    },
+    {
+      "code": "ER",
+      "currency": "ERN",
+      "language": "ti",
+      "timezone": "Africa/Asmara",
+      "popular": false,
+      "names": {
+        "en": "Eritrea",
+        "ur": "اریٹیریا",
+        "ar": "إريتريا"
+      }
+    },
+    {
+      "code": "ES",
+      "currency": "EUR",
+      "language": "es",
+      "timezone": "Europe/Madrid",
+      "popular": false,
+      "names": {
+        "en": "Spain",
+        "ur": "ہسپانیہ",
+        "ar": "إسبانيا"
+      }
+    },
+    {
+      "code": "ET",
+      "currency": "ETB",
+      "language": "am",
+      "timezone": "Africa/Addis_Ababa",
+      "popular": false,
+      "names": {
+        "en": "Ethiopia",
+        "ur": "ایتھوپیا",
+        "ar": "إثيوبيا"
+      }
+    },
+    {
+      "code": "FI",
+      "currency": "EUR",
+      "language": "fi",
+      "timezone": "Europe/Helsinki",
+      "popular": false,
+      "names": {
+        "en": "Finland",
+        "ur": "فن لینڈ",
+        "ar": "فنلندا"
+      }
+    },
+    {
+      "code": "FJ",
+      "currency": "FJD",
+      "language": "en",
+      "timezone": "Pacific/Fiji",
+      "popular": false,
+      "names": {
+        "en": "Fiji",
+        "ur": "فجی",
+        "ar": "فيجي"
+      }
+    },
+    {
+      "code": "FM",
+      "currency": "USD",
+      "language": "en",
+      "timezone": "Pacific/Pohnpei",
+      "popular": false,
+      "names": {
+        "en": "Micronesia",
+        "ur": "مائکرونیشیا",
+        "ar": "ميكرونيزيا"
+      }
+    },
+    {
+      "code": "FR",
+      "currency": "EUR",
+      "language": "fr",
+      "timezone": "Europe/Paris",
+      "popular": true,
+      "names": {
+        "en": "France",
+        "ur": "فرانس",
+        "ar": "فرنسا"
+      }
+    },
+    {
+      "code": "GA",
+      "currency": "XAF",
+      "language": "fr",
+      "timezone": "Africa/Libreville",
+      "popular": false,
+      "names": {
+        "en": "Gabon",
+        "ur": "گیبون",
+        "ar": "الغابون"
+      }
+    },
+    {
+      "code": "GB",
+      "currency": "GBP",
+      "language": "en",
+      "timezone": "Europe/London",
+      "popular": true,
+      "names": {
+        "en": "United Kingdom",
+        "ur": "سلطنت متحدہ",
+        "ar": "المملكة المتحدة"
+      }
+    },
+    {
+      "code": "GD",
+      "currency": "XCD",
+      "language": "en",
+      "timezone": "America/Grenada",
+      "popular": false,
+      "names": {
+        "en": "Grenada",
+        "ur": "گریناڈا",
+        "ar": "غرينادا"
+      }
+    },
+    {
+      "code": "GE",
+      "currency": "GEL",
+      "language": "ka",
+      "timezone": "Asia/Tbilisi",
+      "popular": false,
+      "names": {
+        "en": "Georgia",
+        "ur": "جارجیا",
+        "ar": "جورجيا"
+      }
+    },
+    {
+      "code": "GH",
+      "currency": "GHS",
+      "language": "en",
+      "timezone": "Africa/Accra",
+      "popular": false,
+      "names": {
+        "en": "Ghana",
+        "ur": "گھانا",
+        "ar": "غانا"
+      }
+    },
+    {
+      "code": "GM",
+      "currency": "GMD",
+      "language": "en",
+      "timezone": "Africa/Banjul",
+      "popular": false,
+      "names": {
+        "en": "Gambia",
+        "ur": "گیمبیا",
+        "ar": "غامبيا"
+      }
+    },
+    {
+      "code": "GN",
+      "currency": "GNF",
+      "language": "fr",
+      "timezone": "Africa/Conakry",
+      "popular": false,
+      "names": {
+        "en": "Guinea",
+        "ur": "گنی",
+        "ar": "غينيا"
+      }
+    },
+    {
+      "code": "GQ",
+      "currency": "XAF",
+      "language": "es",
+      "timezone": "Africa/Malabo",
+      "popular": false,
+      "names": {
+        "en": "Equatorial Guinea",
+        "ur": "استوائی گیانا",
+        "ar": "غينيا الاستوائية"
+      }
+    },
+    {
+      "code": "GR",
+      "currency": "EUR",
+      "language": "el",
+      "timezone": "Europe/Athens",
+      "popular": false,
+      "names": {
+        "en": "Greece",
+        "ur": "یونان",
+        "ar": "اليونان"
+      }
+    },
+    {
+      "code": "GT",
+      "currency": "GTQ",
+      "language": "es",
+      "timezone": "America/Guatemala",
+      "popular": false,
+      "names": {
+        "en": "Guatemala",
+        "ur": "گواٹے مالا",
+        "ar": "غواتيمالا"
+      }
+    },
+    {
+      "code": "GW",
+      "currency": "XOF",
+      "language": "pt",
+      "timezone": "Africa/Bissau",
+      "popular": false,
+      "names": {
+        "en": "Guinea-Bissau",
+        "ur": "گنی بساؤ",
+        "ar": "غينيا بيساو"
+      }
+    },
+    {
+      "code": "GY",
+      "currency": "GYD",
+      "language": "en",
+      "timezone": "America/Guyana",
+      "popular": false,
+      "names": {
+        "en": "Guyana",
+        "ur": "گیانا",
+        "ar": "غيانا"
+      }
+    },
+    {
+      "code": "HN",
+      "currency": "HNL",
+      "language": "es",
+      "timezone": "America/Tegucigalpa",
+      "popular": false,
+      "names": {
+        "en": "Honduras",
+        "ur": "ہونڈاروس",
+        "ar": "هندوراس"
+      }
+    },
+    {
+      "code": "HR",
+      "currency": "EUR",
+      "language": "hr",
+      "timezone": "Europe/Zagreb",
+      "popular": false,
+      "names": {
+        "en": "Croatia",
+        "ur": "کروشیا",
+        "ar": "كرواتيا"
+      }
+    },
+    {
+      "code": "HT",
+      "currency": "HTG",
+      "language": "fr",
+      "timezone": "America/Port-au-Prince",
+      "popular": false,
+      "names": {
+        "en": "Haiti",
+        "ur": "ہیٹی",
+        "ar": "هايتي"
+      }
+    },
+    {
+      "code": "HU",
+      "currency": "HUF",
+      "language": "hu",
+      "timezone": "Europe/Budapest",
+      "popular": false,
+      "names": {
+        "en": "Hungary",
+        "ur": "ہنگری",
+        "ar": "هنغاريا"
+      }
+    },
+    {
+      "code": "ID",
+      "currency": "IDR",
+      "language": "id",
+      "timezone": "Asia/Jakarta",
+      "popular": true,
+      "names": {
+        "en": "Indonesia",
+        "ur": "انڈونیشیا",
+        "ar": "إندونيسيا"
+      }
+    },
+    {
+      "code": "IE",
+      "currency": "EUR",
+      "language": "en",
+      "timezone": "Europe/Dublin",
+      "popular": false,
+      "names": {
+        "en": "Ireland",
+        "ur": "آئرلینڈ",
+        "ar": "أيرلندا"
+      }
+    },
+    {
+      "code": "IL",
+      "currency": "ILS",
+      "language": "he",
+      "timezone": "Asia/Jerusalem",
+      "popular": false,
+      "names": {
+        "en": "Israel",
+        "ur": "اسرائیل",
+        "ar": "إسرائيل"
+      }
+    },
+    {
+      "code": "IN",
+      "currency": "INR",
+      "language": "hi",
+      "timezone": "Asia/Kolkata",
+      "popular": true,
+      "names": {
+        "en": "India",
+        "ur": "بھارت",
+        "ar": "الهند"
+      }
+    },
+    {
+      "code": "IQ",
+      "currency": "IQD",
+      "language": "ar",
+      "timezone": "Asia/Baghdad",
+      "popular": false,
+      "names": {
+        "en": "Iraq",
+        "ur": "عراق",
+        "ar": "العراق"
+      }
+    },
+    {
+      "code": "IR",
+      "currency": "IRR",
+      "language": "fa",
+      "timezone": "Asia/Tehran",
+      "popular": false,
+      "names": {
+        "en": "Iran",
+        "ur": "ایران",
+        "ar": "إيران"
+      }
+    },
+    {
+      "code": "IS",
+      "currency": "ISK",
+      "language": "is",
+      "timezone": "Atlantic/Reykjavik",
+      "popular": false,
+      "names": {
+        "en": "Iceland",
+        "ur": "آئس لینڈ",
+        "ar": "آيسلندا"
+      }
+    },
+    {
+      "code": "IT",
+      "currency": "EUR",
+      "language": "it",
+      "timezone": "Europe/Rome",
+      "popular": false,
+      "names": {
+        "en": "Italy",
+        "ur": "اٹلی",
+        "ar": "إيطاليا"
+      }
+    },
+    {
+      "code": "JM",
+      "currency": "JMD",
+      "language": "en",
+      "timezone": "America/Jamaica",
+      "popular": false,
+      "names": {
+        "en": "Jamaica",
+        "ur": "جمائیکا",
+        "ar": "جامايكا"
+      }
+    },
+    {
+      "code": "JO",
+      "currency": "JOD",
+      "language": "ar",
+      "timezone": "Asia/Amman",
+      "popular": false,
+      "names": {
+        "en": "Jordan",
+        "ur": "اردن",
+        "ar": "الأردن"
+      }
+    },
+    {
+      "code": "JP",
+      "currency": "JPY",
+      "language": "ja",
+      "timezone": "Asia/Tokyo",
+      "popular": false,
+      "names": {
+        "en": "Japan",
+        "ur": "جاپان",
+        "ar": "اليابان"
+      }
+    },
+    {
+      "code": "KE",
+      "currency": "KES",
+      "language": "sw",
+      "timezone": "Africa/Nairobi",
+      "popular": false,
+      "names": {
+        "en": "Kenya",
+        "ur": "کینیا",
+        "ar": "كينيا"
+      }
+    },
+    {
+      "code": "KG",
+      "currency": "KGS",
+      "language": "ky",
+      "timezone": "Asia/Bishkek",
+      "popular": false,
+      "names": {
+        "en": "Kyrgyzstan",
+        "ur": "کرغزستان",
+        "ar": "قيرغيزستان"
+      }
+    },
+    {
+      "code": "KH",
+      "currency": "KHR",
+      "language": "km",
+      "timezone": "Asia/Phnom_Penh",
+      "popular": false,
+      "names": {
+        "en": "Cambodia",
+        "ur": "کمبوڈیا",
+        "ar": "كمبوديا"
+      }
+    },
+    {
+      "code": "KI",
+      "currency": "AUD",
+      "language": "en",
+      "timezone": "Pacific/Tarawa",
+      "popular": false,
+      "names": {
+        "en": "Kiribati",
+        "ur": "کریباتی",
+        "ar": "كيريباتي"
+      }
+    },
+    {
+      "code": "KM",
+      "currency": "KMF",
+      "language": "ar",
+      "timezone": "Indian/Comoro",
+      "popular": false,
+      "names": {
+        "en": "Comoros",
+        "ur": "کوموروس",
+        "ar": "جزر القمر"
+      }
+    },
+    {
+      "code": "KN",
+      "currency": "XCD",
+      "language": "en",
+      "timezone": "America/St_Kitts",
+      "popular": false,
+      "names": {
+        "en": "St. Kitts & Nevis",
+        "ur": "سینٹ کٹس اور نیویس",
+        "ar": "سانت كيتس ونيفيس"
+      }
+    },
+    {
+      "code": "KR",
+      "currency": "KRW",
+      "language": "ko",
+      "timezone": "Asia/Seoul",
+      "popular": false,
+      "names": {
+        "en": "South Korea",
+        "ur": "جنوبی کوریا",
+        "ar": "كوريا الجنوبية"
+      }
+    },
+    {
+      "code": "KW",
+      "currency": "KWD",
+      "language": "ar",
+      "timezone": "Asia/Kuwait",
+      "popular": true,
+      "names": {
+        "en": "Kuwait",
+        "ur": "کویت",
+        "ar": "الكويت"
+      }
+    },
+    {
+      "code": "KZ",
+      "currency": "KZT",
+      "language": "kk",
+      "timezone": "Asia/Almaty",
+      "popular": false,
+      "names": {
+        "en": "Kazakhstan",
+        "ur": "قزاخستان",
+        "ar": "كازاخستان"
+      }
+    },
+    {
+      "code": "LA",
+      "currency": "LAK",
+      "language": "lo",
+      "timezone": "Asia/Vientiane",
+      "popular": false,
+      "names": {
+        "en": "Laos",
+        "ur": "لاؤس",
+        "ar": "لاوس"
+      }
+    },
+    {
+      "code": "LB",
+      "currency": "LBP",
+      "language": "ar",
+      "timezone": "Asia/Beirut",
+      "popular": false,
+      "names": {
+        "en": "Lebanon",
+        "ur": "لبنان",
+        "ar": "لبنان"
+      }
+    },
+    {
+      "code": "LC",
+      "currency": "XCD",
+      "language": "en",
+      "timezone": "America/St_Lucia",
+      "popular": false,
+      "names": {
+        "en": "St. Lucia",
+        "ur": "سینٹ لوسیا",
+        "ar": "سانت لوسيا"
+      }
+    },
+    {
+      "code": "LI",
+      "currency": "CHF",
+      "language": "de",
+      "timezone": "Europe/Vaduz",
+      "popular": false,
+      "names": {
+        "en": "Liechtenstein",
+        "ur": "لیشٹنسٹائن",
+        "ar": "ليختنشتاين"
+      }
+    },
+    {
+      "code": "LK",
+      "currency": "LKR",
+      "language": "si",
+      "timezone": "Asia/Colombo",
+      "popular": false,
+      "names": {
+        "en": "Sri Lanka",
+        "ur": "سری لنکا",
+        "ar": "سريلانكا"
+      }
+    },
+    {
+      "code": "LR",
+      "currency": "LRD",
+      "language": "en",
+      "timezone": "Africa/Monrovia",
+      "popular": false,
+      "names": {
+        "en": "Liberia",
+        "ur": "لائبیریا",
+        "ar": "ليبيريا"
+      }
+    },
+    {
+      "code": "LS",
+      "currency": "LSL",
+      "language": "en",
+      "timezone": "Africa/Maseru",
+      "popular": false,
+      "names": {
+        "en": "Lesotho",
+        "ur": "لیسوتھو",
+        "ar": "ليسوتو"
+      }
+    },
+    {
+      "code": "LT",
+      "currency": "EUR",
+      "language": "lt",
+      "timezone": "Europe/Vilnius",
+      "popular": false,
+      "names": {
+        "en": "Lithuania",
+        "ur": "لیتھونیا",
+        "ar": "ليتوانيا"
+      }
+    },
+    {
+      "code": "LU",
+      "currency": "EUR",
+      "language": "fr",
+      "timezone": "Europe/Luxembourg",
+      "popular": false,
+      "names": {
+        "en": "Luxembourg",
+        "ur": "لکسمبرگ",
+        "ar": "لوكسمبورغ"
+      }
+    },
+    {
+      "code": "LV",
+      "currency": "EUR",
+      "language": "lv",
+      "timezone": "Europe/Riga",
+      "popular": false,
+      "names": {
+        "en": "Latvia",
+        "ur": "لٹویا",
+        "ar": "لاتفيا"
+      }
+    },
+    {
+      "code": "LY",
+      "currency": "LYD",
+      "language": "ar",
+      "timezone": "Africa/Tripoli",
+      "popular": false,
+      "names": {
+        "en": "Libya",
+        "ur": "لیبیا",
+        "ar": "ليبيا"
+      }
+    },
+    {
+      "code": "MA",
+      "currency": "MAD",
+      "language": "ar",
+      "timezone": "Africa/Casablanca",
+      "popular": false,
+      "names": {
+        "en": "Morocco",
+        "ur": "مراکش",
+        "ar": "المغرب"
+      }
+    },
+    {
+      "code": "MC",
+      "currency": "EUR",
+      "language": "fr",
+      "timezone": "Europe/Monaco",
+      "popular": false,
+      "names": {
+        "en": "Monaco",
+        "ur": "موناکو",
+        "ar": "موناكو"
+      }
+    },
+    {
+      "code": "MD",
+      "currency": "MDL",
+      "language": "ro",
+      "timezone": "Europe/Chisinau",
+      "popular": false,
+      "names": {
+        "en": "Moldova",
+        "ur": "مالدووا",
+        "ar": "مولدوفا"
+      }
+    },
+    {
+      "code": "ME",
+      "currency": "EUR",
+      "language": "sr",
+      "timezone": "Europe/Podgorica",
+      "popular": false,
+      "names": {
+        "en": "Montenegro",
+        "ur": "مونٹے نیگرو",
+        "ar": "الجبل الأسود"
+      }
+    },
+    {
+      "code": "MG",
+      "currency": "MGA",
+      "language": "fr",
+      "timezone": "Indian/Antananarivo",
+      "popular": false,
+      "names": {
+        "en": "Madagascar",
+        "ur": "مڈغاسکر",
+        "ar": "مدغشقر"
+      }
+    },
+    {
+      "code": "MH",
+      "currency": "USD",
+      "language": "en",
+      "timezone": "Pacific/Majuro",
+      "popular": false,
+      "names": {
+        "en": "Marshall Islands",
+        "ur": "مارشل آئلینڈز",
+        "ar": "جزر مارشال"
+      }
+    },
+    {
+      "code": "MK",
+      "currency": "MKD",
+      "language": "mk",
+      "timezone": "Europe/Skopje",
+      "popular": false,
+      "names": {
+        "en": "North Macedonia",
+        "ur": "شمالی مقدونیہ",
+        "ar": "مقدونيا الشمالية"
+      }
+    },
+    {
+      "code": "ML",
+      "currency": "XOF",
+      "language": "fr",
+      "timezone": "Africa/Bamako",
+      "popular": false,
+      "names": {
+        "en": "Mali",
+        "ur": "مالی",
+        "ar": "مالي"
+      }
+    },
+    {
+      "code": "MM",
+      "currency": "MMK",
+      "language": "my",
+      "timezone": "Asia/Yangon",
+      "popular": false,
+      "names": {
+        "en": "Myanmar (Burma)",
+        "ur": "میانمار (برما)",
+        "ar": "ميانمار (بورما)"
+      }
+    },
+    {
+      "code": "MN",
+      "currency": "MNT",
+      "language": "mn",
+      "timezone": "Asia/Ulaanbaatar",
+      "popular": false,
+      "names": {
+        "en": "Mongolia",
+        "ur": "منگولیا",
+        "ar": "منغوليا"
+      }
+    },
+    {
+      "code": "MR",
+      "currency": "MRU",
+      "language": "ar",
+      "timezone": "Africa/Nouakchott",
+      "popular": false,
+      "names": {
+        "en": "Mauritania",
+        "ur": "موریطانیہ",
+        "ar": "موريتانيا"
+      }
+    },
+    {
+      "code": "MT",
+      "currency": "EUR",
+      "language": "mt",
+      "timezone": "Europe/Malta",
+      "popular": false,
+      "names": {
+        "en": "Malta",
+        "ur": "مالٹا",
+        "ar": "مالطا"
+      }
+    },
+    {
+      "code": "MU",
+      "currency": "MUR",
+      "language": "en",
+      "timezone": "Indian/Mauritius",
+      "popular": false,
+      "names": {
+        "en": "Mauritius",
+        "ur": "ماریشس",
+        "ar": "موريشيوس"
+      }
+    },
+    {
+      "code": "MV",
+      "currency": "MVR",
+      "language": "dv",
+      "timezone": "Indian/Maldives",
+      "popular": false,
+      "names": {
+        "en": "Maldives",
+        "ur": "مالدیپ",
+        "ar": "جزر المالديف"
+      }
+    },
+    {
+      "code": "MW",
+      "currency": "MWK",
+      "language": "en",
+      "timezone": "Africa/Blantyre",
+      "popular": false,
+      "names": {
+        "en": "Malawi",
+        "ur": "ملاوی",
+        "ar": "ملاوي"
+      }
+    },
+    {
+      "code": "MX",
+      "currency": "MXN",
+      "language": "es",
+      "timezone": "America/Mexico_City",
+      "popular": false,
+      "names": {
+        "en": "Mexico",
+        "ur": "میکسیکو",
+        "ar": "المكسيك"
+      }
+    },
+    {
+      "code": "MY",
+      "currency": "MYR",
+      "language": "ms",
+      "timezone": "Asia/Kuala_Lumpur",
+      "popular": true,
+      "names": {
+        "en": "Malaysia",
+        "ur": "ملائشیا",
+        "ar": "ماليزيا"
+      }
+    },
+    {
+      "code": "MZ",
+      "currency": "MZN",
+      "language": "pt",
+      "timezone": "Africa/Maputo",
+      "popular": false,
+      "names": {
+        "en": "Mozambique",
+        "ur": "موزمبیق",
+        "ar": "موزمبيق"
+      }
+    },
+    {
+      "code": "NA",
+      "currency": "NAD",
+      "language": "en",
+      "timezone": "Africa/Windhoek",
+      "popular": false,
+      "names": {
+        "en": "Namibia",
+        "ur": "نامیبیا",
+        "ar": "ناميبيا"
+      }
+    },
+    {
+      "code": "NE",
+      "currency": "XOF",
+      "language": "fr",
+      "timezone": "Africa/Niamey",
+      "popular": false,
+      "names": {
+        "en": "Niger",
+        "ur": "نائجر",
+        "ar": "النيجر"
+      }
+    },
+    {
+      "code": "NG",
+      "currency": "NGN",
+      "language": "en",
+      "timezone": "Africa/Lagos",
+      "popular": true,
+      "names": {
+        "en": "Nigeria",
+        "ur": "نائجیریا",
+        "ar": "نيجيريا"
+      }
+    },
+    {
+      "code": "NI",
+      "currency": "NIO",
+      "language": "es",
+      "timezone": "America/Managua",
+      "popular": false,
+      "names": {
+        "en": "Nicaragua",
+        "ur": "نکاراگووا",
+        "ar": "نيكاراغوا"
+      }
+    },
+    {
+      "code": "NL",
+      "currency": "EUR",
+      "language": "nl",
+      "timezone": "Europe/Amsterdam",
+      "popular": false,
+      "names": {
+        "en": "Netherlands",
+        "ur": "نیدر لینڈز",
+        "ar": "هولندا"
+      }
+    },
+    {
+      "code": "NO",
+      "currency": "NOK",
+      "language": "no",
+      "timezone": "Europe/Oslo",
+      "popular": false,
+      "names": {
+        "en": "Norway",
+        "ur": "ناروے",
+        "ar": "النرويج"
+      }
+    },
+    {
+      "code": "NP",
+      "currency": "NPR",
+      "language": "ne",
+      "timezone": "Asia/Kathmandu",
+      "popular": false,
+      "names": {
+        "en": "Nepal",
+        "ur": "نیپال",
+        "ar": "نيبال"
+      }
+    },
+    {
+      "code": "NR",
+      "currency": "AUD",
+      "language": "en",
+      "timezone": "Pacific/Nauru",
+      "popular": false,
+      "names": {
+        "en": "Nauru",
+        "ur": "نؤرو",
+        "ar": "ناورو"
+      }
+    },
+    {
+      "code": "NZ",
+      "currency": "NZD",
+      "language": "en",
+      "timezone": "Pacific/Auckland",
+      "popular": false,
+      "names": {
+        "en": "New Zealand",
+        "ur": "نیوزی لینڈ",
+        "ar": "نيوزيلندا"
+      }
+    },
+    {
+      "code": "OM",
+      "currency": "OMR",
+      "language": "ar",
+      "timezone": "Asia/Muscat",
+      "popular": false,
+      "names": {
+        "en": "Oman",
+        "ur": "عمان",
+        "ar": "عُمان"
+      }
+    },
+    {
+      "code": "PA",
+      "currency": "PAB",
+      "language": "es",
+      "timezone": "America/Panama",
+      "popular": false,
+      "names": {
+        "en": "Panama",
+        "ur": "پانامہ",
+        "ar": "بنما"
+      }
+    },
+    {
+      "code": "PE",
+      "currency": "PEN",
+      "language": "es",
+      "timezone": "America/Lima",
+      "popular": false,
+      "names": {
+        "en": "Peru",
+        "ur": "پیرو",
+        "ar": "بيرو"
+      }
+    },
+    {
+      "code": "PG",
+      "currency": "PGK",
+      "language": "en",
+      "timezone": "Pacific/Port_Moresby",
+      "popular": false,
+      "names": {
+        "en": "Papua New Guinea",
+        "ur": "پاپوآ نیو گنی",
+        "ar": "بابوا غينيا الجديدة"
+      }
+    },
+    {
+      "code": "PH",
+      "currency": "PHP",
+      "language": "fil",
+      "timezone": "Asia/Manila",
+      "popular": false,
+      "names": {
+        "en": "Philippines",
+        "ur": "فلپائن",
+        "ar": "الفلبين"
+      }
+    },
+    {
+      "code": "PK",
+      "currency": "PKR",
+      "language": "en",
+      "timezone": "Asia/Karachi",
+      "popular": true,
+      "names": {
+        "en": "Pakistan",
+        "ur": "پاکستان",
+        "ar": "باكستان"
+      }
+    },
+    {
+      "code": "PL",
+      "currency": "PLN",
+      "language": "pl",
+      "timezone": "Europe/Warsaw",
+      "popular": false,
+      "names": {
+        "en": "Poland",
+        "ur": "پولینڈ",
+        "ar": "بولندا"
+      }
+    },
+    {
+      "code": "PS",
+      "currency": "ILS",
+      "language": "ar",
+      "timezone": "Asia/Hebron",
+      "popular": false,
+      "names": {
+        "en": "Palestinian Territories",
+        "ur": "فلسطینی خطے",
+        "ar": "الأراضي الفلسطينية"
+      }
+    },
+    {
+      "code": "PT",
+      "currency": "EUR",
+      "language": "pt",
+      "timezone": "Europe/Lisbon",
+      "popular": false,
+      "names": {
+        "en": "Portugal",
+        "ur": "پرتگال",
+        "ar": "البرتغال"
+      }
+    },
+    {
+      "code": "PW",
+      "currency": "USD",
+      "language": "en",
+      "timezone": "Pacific/Palau",
+      "popular": false,
+      "names": {
+        "en": "Palau",
+        "ur": "پلاؤ",
+        "ar": "بالاو"
+      }
+    },
+    {
+      "code": "PY",
+      "currency": "PYG",
+      "language": "es",
+      "timezone": "America/Asuncion",
+      "popular": false,
+      "names": {
+        "en": "Paraguay",
+        "ur": "پیراگوئے",
+        "ar": "باراغواي"
+      }
+    },
+    {
+      "code": "QA",
+      "currency": "QAR",
+      "language": "ar",
+      "timezone": "Asia/Qatar",
+      "popular": true,
+      "names": {
+        "en": "Qatar",
+        "ur": "قطر",
+        "ar": "قطر"
+      }
+    },
+    {
+      "code": "RO",
+      "currency": "RON",
+      "language": "ro",
+      "timezone": "Europe/Bucharest",
+      "popular": false,
+      "names": {
+        "en": "Romania",
+        "ur": "رومانیہ",
+        "ar": "رومانيا"
+      }
+    },
+    {
+      "code": "RS",
+      "currency": "RSD",
+      "language": "sr",
+      "timezone": "Europe/Belgrade",
+      "popular": false,
+      "names": {
+        "en": "Serbia",
+        "ur": "سربیا",
+        "ar": "صربيا"
+      }
+    },
+    {
+      "code": "RU",
+      "currency": "RUB",
+      "language": "ru",
+      "timezone": "Europe/Moscow",
+      "popular": false,
+      "names": {
+        "en": "Russia",
+        "ur": "روس",
+        "ar": "روسيا"
+      }
+    },
+    {
+      "code": "RW",
+      "currency": "RWF",
+      "language": "rw",
+      "timezone": "Africa/Kigali",
+      "popular": false,
+      "names": {
+        "en": "Rwanda",
+        "ur": "روانڈا",
+        "ar": "رواندا"
+      }
+    },
+    {
+      "code": "SA",
+      "currency": "SAR",
+      "language": "ar",
+      "timezone": "Asia/Riyadh",
+      "popular": true,
+      "names": {
+        "en": "Saudi Arabia",
+        "ur": "سعودی عرب",
+        "ar": "المملكة العربية السعودية"
+      }
+    },
+    {
+      "code": "SB",
+      "currency": "SBD",
+      "language": "en",
+      "timezone": "Pacific/Guadalcanal",
+      "popular": false,
+      "names": {
+        "en": "Solomon Islands",
+        "ur": "سولومن آئلینڈز",
+        "ar": "جزر سليمان"
+      }
+    },
+    {
+      "code": "SC",
+      "currency": "SCR",
+      "language": "en",
+      "timezone": "Indian/Mahe",
+      "popular": false,
+      "names": {
+        "en": "Seychelles",
+        "ur": "سشلیز",
+        "ar": "سيشل"
+      }
+    },
+    {
+      "code": "SD",
+      "currency": "SDG",
+      "language": "ar",
+      "timezone": "Africa/Khartoum",
+      "popular": false,
+      "names": {
+        "en": "Sudan",
+        "ur": "سوڈان",
+        "ar": "السودان"
+      }
+    },
+    {
+      "code": "SE",
+      "currency": "SEK",
+      "language": "sv",
+      "timezone": "Europe/Stockholm",
+      "popular": false,
+      "names": {
+        "en": "Sweden",
+        "ur": "سویڈن",
+        "ar": "السويد"
+      }
+    },
+    {
+      "code": "SG",
+      "currency": "SGD",
+      "language": "en",
+      "timezone": "Asia/Singapore",
+      "popular": true,
+      "names": {
+        "en": "Singapore",
+        "ur": "سنگاپور",
+        "ar": "سنغافورة"
+      }
+    },
+    {
+      "code": "SI",
+      "currency": "EUR",
+      "language": "sl",
+      "timezone": "Europe/Ljubljana",
+      "popular": false,
+      "names": {
+        "en": "Slovenia",
+        "ur": "سلووینیا",
+        "ar": "سلوفينيا"
+      }
+    },
+    {
+      "code": "SK",
+      "currency": "EUR",
+      "language": "sk",
+      "timezone": "Europe/Bratislava",
+      "popular": false,
+      "names": {
+        "en": "Slovakia",
+        "ur": "سلوواکیہ",
+        "ar": "سلوفاكيا"
+      }
+    },
+    {
+      "code": "SL",
+      "currency": "SLE",
+      "language": "en",
+      "timezone": "Africa/Freetown",
+      "popular": false,
+      "names": {
+        "en": "Sierra Leone",
+        "ur": "سیرالیون",
+        "ar": "سيراليون"
+      }
+    },
+    {
+      "code": "SM",
+      "currency": "EUR",
+      "language": "it",
+      "timezone": "Europe/San_Marino",
+      "popular": false,
+      "names": {
+        "en": "San Marino",
+        "ur": "سان مارینو",
+        "ar": "سان مارينو"
+      }
+    },
+    {
+      "code": "SN",
+      "currency": "XOF",
+      "language": "fr",
+      "timezone": "Africa/Dakar",
+      "popular": false,
+      "names": {
+        "en": "Senegal",
+        "ur": "سینیگل",
+        "ar": "السنغال"
+      }
+    },
+    {
+      "code": "SO",
+      "currency": "SOS",
+      "language": "so",
+      "timezone": "Africa/Mogadishu",
+      "popular": false,
+      "names": {
+        "en": "Somalia",
+        "ur": "صومالیہ",
+        "ar": "الصومال"
+      }
+    },
+    {
+      "code": "SR",
+      "currency": "SRD",
+      "language": "nl",
+      "timezone": "America/Paramaribo",
+      "popular": false,
+      "names": {
+        "en": "Suriname",
+        "ur": "سورینام",
+        "ar": "سورينام"
+      }
+    },
+    {
+      "code": "SS",
+      "currency": "SSP",
+      "language": "en",
+      "timezone": "Africa/Juba",
+      "popular": false,
+      "names": {
+        "en": "South Sudan",
+        "ur": "جنوبی سوڈان",
+        "ar": "جنوب السودان"
+      }
+    },
+    {
+      "code": "ST",
+      "currency": "STN",
+      "language": "pt",
+      "timezone": "Africa/Sao_Tome",
+      "popular": false,
+      "names": {
+        "en": "São Tomé & Príncipe",
+        "ur": "ساؤ ٹومے اور پرنسپے",
+        "ar": "ساو تومي وبرينسيبي"
+      }
+    },
+    {
+      "code": "SV",
+      "currency": "USD",
+      "language": "es",
+      "timezone": "America/El_Salvador",
+      "popular": false,
+      "names": {
+        "en": "El Salvador",
+        "ur": "ال سلواڈور",
+        "ar": "السلفادور"
+      }
+    },
+    {
+      "code": "SY",
+      "currency": "SYP",
+      "language": "ar",
+      "timezone": "Asia/Damascus",
+      "popular": false,
+      "names": {
+        "en": "Syria",
+        "ur": "شام",
+        "ar": "سوريا"
+      }
+    },
+    {
+      "code": "SZ",
+      "currency": "SZL",
+      "language": "en",
+      "timezone": "Africa/Mbabane",
+      "popular": false,
+      "names": {
+        "en": "Eswatini",
+        "ur": "سواتنی",
+        "ar": "إسواتيني"
+      }
+    },
+    {
+      "code": "TD",
+      "currency": "XAF",
+      "language": "fr",
+      "timezone": "Africa/Ndjamena",
+      "popular": false,
+      "names": {
+        "en": "Chad",
+        "ur": "چاڈ",
+        "ar": "تشاد"
+      }
+    },
+    {
+      "code": "TG",
+      "currency": "XOF",
+      "language": "fr",
+      "timezone": "Africa/Lome",
+      "popular": false,
+      "names": {
+        "en": "Togo",
+        "ur": "ٹوگو",
+        "ar": "توغو"
+      }
+    },
+    {
+      "code": "TH",
+      "currency": "THB",
+      "language": "th",
+      "timezone": "Asia/Bangkok",
+      "popular": false,
+      "names": {
+        "en": "Thailand",
+        "ur": "تھائی لینڈ",
+        "ar": "تايلاند"
+      }
+    },
+    {
+      "code": "TJ",
+      "currency": "TJS",
+      "language": "tg",
+      "timezone": "Asia/Dushanbe",
+      "popular": false,
+      "names": {
+        "en": "Tajikistan",
+        "ur": "تاجکستان",
+        "ar": "طاجيكستان"
+      }
+    },
+    {
+      "code": "TL",
+      "currency": "USD",
+      "language": "pt",
+      "timezone": "Asia/Dili",
+      "popular": false,
+      "names": {
+        "en": "Timor-Leste",
+        "ur": "تیمور لیسٹ",
+        "ar": "تيمور - ليشتي"
+      }
+    },
+    {
+      "code": "TM",
+      "currency": "TMT",
+      "language": "tk",
+      "timezone": "Asia/Ashgabat",
+      "popular": false,
+      "names": {
+        "en": "Turkmenistan",
+        "ur": "ترکمانستان",
+        "ar": "تركمانستان"
+      }
+    },
+    {
+      "code": "TN",
+      "currency": "TND",
+      "language": "ar",
+      "timezone": "Africa/Tunis",
+      "popular": false,
+      "names": {
+        "en": "Tunisia",
+        "ur": "تونس",
+        "ar": "تونس"
+      }
+    },
+    {
+      "code": "TO",
+      "currency": "TOP",
+      "language": "en",
+      "timezone": "Pacific/Tongatapu",
+      "popular": false,
+      "names": {
+        "en": "Tonga",
+        "ur": "ٹونگا",
+        "ar": "تونغا"
+      }
+    },
+    {
+      "code": "TR",
+      "currency": "TRY",
+      "language": "tr",
+      "timezone": "Europe/Istanbul",
+      "popular": true,
+      "names": {
+        "en": "Türkiye",
+        "ur": "ترکیہ",
+        "ar": "تركيا"
+      }
+    },
+    {
+      "code": "TT",
+      "currency": "TTD",
+      "language": "en",
+      "timezone": "America/Port_of_Spain",
+      "popular": false,
+      "names": {
+        "en": "Trinidad & Tobago",
+        "ur": "ترینیداد اور ٹوباگو",
+        "ar": "ترينيداد وتوباغو"
+      }
+    },
+    {
+      "code": "TV",
+      "currency": "AUD",
+      "language": "en",
+      "timezone": "Pacific/Funafuti",
+      "popular": false,
+      "names": {
+        "en": "Tuvalu",
+        "ur": "ٹووالو",
+        "ar": "توفالو"
+      }
+    },
+    {
+      "code": "TW",
+      "currency": "TWD",
+      "language": "zh",
+      "timezone": "Asia/Taipei",
+      "popular": false,
+      "names": {
+        "en": "Taiwan",
+        "ur": "تائیوان",
+        "ar": "تايوان"
+      }
+    },
+    {
+      "code": "TZ",
+      "currency": "TZS",
+      "language": "sw",
+      "timezone": "Africa/Dar_es_Salaam",
+      "popular": false,
+      "names": {
+        "en": "Tanzania",
+        "ur": "تنزانیہ",
+        "ar": "تنزانيا"
+      }
+    },
+    {
+      "code": "UA",
+      "currency": "UAH",
+      "language": "uk",
+      "timezone": "Europe/Kyiv",
+      "popular": false,
+      "names": {
+        "en": "Ukraine",
+        "ur": "یوکرین",
+        "ar": "أوكرانيا"
+      }
+    },
+    {
+      "code": "UG",
+      "currency": "UGX",
+      "language": "en",
+      "timezone": "Africa/Kampala",
+      "popular": false,
+      "names": {
+        "en": "Uganda",
+        "ur": "یوگنڈا",
+        "ar": "أوغندا"
+      }
+    },
+    {
+      "code": "US",
+      "currency": "USD",
+      "language": "en",
+      "timezone": "America/New_York",
+      "popular": true,
+      "names": {
+        "en": "United States",
+        "ur": "ریاست ہائے متحدہ امریکہ",
+        "ar": "الولايات المتحدة"
+      }
+    },
+    {
+      "code": "UY",
+      "currency": "UYU",
+      "language": "es",
+      "timezone": "America/Montevideo",
+      "popular": false,
+      "names": {
+        "en": "Uruguay",
+        "ur": "یوروگوئے",
+        "ar": "أورغواي"
+      }
+    },
+    {
+      "code": "UZ",
+      "currency": "UZS",
+      "language": "uz",
+      "timezone": "Asia/Tashkent",
+      "popular": false,
+      "names": {
+        "en": "Uzbekistan",
+        "ur": "ازبکستان",
+        "ar": "أوزبكستان"
+      }
+    },
+    {
+      "code": "VC",
+      "currency": "XCD",
+      "language": "en",
+      "timezone": "America/St_Vincent",
+      "popular": false,
+      "names": {
+        "en": "St. Vincent & Grenadines",
+        "ur": "سینٹ ونسنٹ اور گرینیڈائنز",
+        "ar": "سانت فنسنت وجزر غرينادين"
+      }
+    },
+    {
+      "code": "VE",
+      "currency": "VES",
+      "language": "es",
+      "timezone": "America/Caracas",
+      "popular": false,
+      "names": {
+        "en": "Venezuela",
+        "ur": "وینزوئیلا",
+        "ar": "فنزويلا"
+      }
+    },
+    {
+      "code": "VN",
+      "currency": "VND",
+      "language": "vi",
+      "timezone": "Asia/Ho_Chi_Minh",
+      "popular": false,
+      "names": {
+        "en": "Vietnam",
+        "ur": "ویتنام",
+        "ar": "فيتنام"
+      }
+    },
+    {
+      "code": "VU",
+      "currency": "VUV",
+      "language": "fr",
+      "timezone": "Pacific/Efate",
+      "popular": false,
+      "names": {
+        "en": "Vanuatu",
+        "ur": "وینوآٹو",
+        "ar": "فانواتو"
+      }
+    },
+    {
+      "code": "WS",
+      "currency": "WST",
+      "language": "en",
+      "timezone": "Pacific/Apia",
+      "popular": false,
+      "names": {
+        "en": "Samoa",
+        "ur": "ساموآ",
+        "ar": "ساموا"
+      }
+    },
+    {
+      "code": "YE",
+      "currency": "YER",
+      "language": "ar",
+      "timezone": "Asia/Aden",
+      "popular": false,
+      "names": {
+        "en": "Yemen",
+        "ur": "یمن",
+        "ar": "اليمن"
+      }
+    },
+    {
+      "code": "ZA",
+      "currency": "ZAR",
+      "language": "en",
+      "timezone": "Africa/Johannesburg",
+      "popular": true,
+      "names": {
+        "en": "South Africa",
+        "ur": "جنوبی افریقہ",
+        "ar": "جنوب أفريقيا"
+      }
+    },
+    {
+      "code": "ZM",
+      "currency": "ZMW",
+      "language": "en",
+      "timezone": "Africa/Lusaka",
+      "popular": false,
+      "names": {
+        "en": "Zambia",
+        "ur": "زامبیا",
+        "ar": "زامبيا"
+      }
+    },
+    {
+      "code": "ZW",
+      "currency": "ZWG",
+      "language": "en",
+      "timezone": "Africa/Harare",
+      "popular": false,
+      "names": {
+        "en": "Zimbabwe",
+        "ur": "زمبابوے",
+        "ar": "زيمبابوي"
+      }
+    }
+  ]
+}

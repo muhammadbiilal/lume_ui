@@ -514,6 +514,7 @@ class LumeSearchField extends StatelessWidget {
     this.enabled = true,
     this.autofocus = false,
     this.semanticLabel,
+    this.small = false,
   });
 
   final String? placeholder;
@@ -528,7 +529,16 @@ class LumeSearchField extends StatelessWidget {
   final bool autofocus;
   final String? semanticLabel;
 
+  /// `.search--sm` — the variant the two location pickers use. Same height,
+  /// tighter side padding and a 13 px input, so a picker's field does not read
+  /// as heavier than the list underneath it.
+  final bool small;
+
   static const double height = 44;
+
+  /// Measured: `.search` pads 14, `.search--sm` pads 12.
+  static const double horizontalPadding = 14;
+  static const double horizontalPaddingSmall = 12;
 
   @override
   Widget build(BuildContext context) {
@@ -540,7 +550,9 @@ class LumeSearchField extends StatelessWidget {
       label: semanticLabel ?? placeholder,
       child: Container(
         constraints: const BoxConstraints(minHeight: height),
-        padding: const EdgeInsets.symmetric(horizontal: 14),
+        padding: EdgeInsets.symmetric(
+          horizontal: small ? horizontalPaddingSmall : horizontalPadding,
+        ),
         decoration: BoxDecoration(
           color: lume.card,
           borderRadius: LumeRadius.brSm,
@@ -567,7 +579,7 @@ class LumeSearchField extends StatelessWidget {
                 style: LumeType.fit(
                   context,
                   context.lumeType.bodyStrong,
-                ).copyWith(color: lume.text),
+                ).copyWith(color: lume.text, fontSize: small ? 13 : null),
               ),
             ),
             if (onClear != null && hasText)

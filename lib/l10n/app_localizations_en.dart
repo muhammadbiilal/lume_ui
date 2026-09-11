@@ -286,4 +286,168 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get recordsNoSelectionText => 'Choose a record to see it here.';
+
+  @override
+  String get onbLocalKicker => 'Make it local';
+
+  @override
+  String get onbWhereTitle => 'Where are you based?';
+
+  @override
+  String get onbWhereText =>
+      'This helps us personalise local information and services. It says nothing about who you are.';
+
+  @override
+  String get onbYoursKicker => 'Make it yours';
+
+  @override
+  String get onbHereForTitle => 'What are you here for?';
+
+  @override
+  String get onbHereForText =>
+      'Pick 5 to 10. Your home screen, tools and reading are built around them — change them whenever you like.';
+
+  @override
+  String get persSearchCountries => 'Search countries';
+
+  @override
+  String get persRecent => 'Recent';
+
+  @override
+  String get persPopular => 'Popular';
+
+  @override
+  String get persAllCountries => 'All countries';
+
+  @override
+  String onbMinimum(String count, String min) {
+    return '$count of $min minimum';
+  }
+
+  @override
+  String onbSelected(String count, String max) {
+    return '$count of $max selected';
+  }
+
+  @override
+  String onbAtCap(String max) {
+    return 'Up to $max — remove one first';
+  }
+
+  @override
+  String get persIslamic => 'Islamic features';
+
+  @override
+  String get persIslamicSub => 'Prayer times, Qur’an, duas, zakat and Ramadan';
+
+  @override
+  String get igEveryday => 'Everyday life';
+
+  @override
+  String get igMoney => 'Money & finance';
+
+  @override
+  String get igHealth => 'Health & wellness';
+
+  @override
+  String get igTravel => 'Travel & getting around';
+
+  @override
+  String get igNews => 'News & entertainment';
+
+  @override
+  String get igFaith => 'Islamic features';
+
+  @override
+  String get intWeather => 'Weather';
+
+  @override
+  String get intCalendar => 'Calendar';
+
+  @override
+  String get intTasks => 'Tasks & to-dos';
+
+  @override
+  String get intNotes => 'Notes';
+
+  @override
+  String get intConvert => 'Converters';
+
+  @override
+  String get intMaths => 'Calculators';
+
+  @override
+  String get intAlarms => 'Alarms & timers';
+
+  @override
+  String get intExpenses => 'Expenses';
+
+  @override
+  String get intRates => 'Rates & gold';
+
+  @override
+  String get intBills => 'Bills';
+
+  @override
+  String get intSavings => 'Saving & goals';
+
+  @override
+  String get intMarkets => 'Markets';
+
+  @override
+  String get intHabits => 'Habits';
+
+  @override
+  String get intWater => 'Water';
+
+  @override
+  String get intFitness => 'Fitness';
+
+  @override
+  String get intMeds => 'Medication';
+
+  @override
+  String get intSleep => 'Sleep';
+
+  @override
+  String get intTrains => 'Trains';
+
+  @override
+  String get intFlights => 'Flights';
+
+  @override
+  String get intNearby => 'Nearby places';
+
+  @override
+  String get intFuel => 'Fuel';
+
+  @override
+  String get intNews => 'News';
+
+  @override
+  String get intCricket => 'Cricket';
+
+  @override
+  String get intReading => 'Reading';
+
+  @override
+  String get intQuotes => 'Daily quotes';
+
+  @override
+  String get intPrayer => 'Prayer times';
+
+  @override
+  String get intQuran => 'Qur’an';
+
+  @override
+  String get intHadith => 'Hadith';
+
+  @override
+  String get intDuas => 'Duas & dhikr';
+
+  @override
+  String get intZakat => 'Zakat & giving';
+
+  @override
+  String get intRamadan => 'Ramadan';
 }

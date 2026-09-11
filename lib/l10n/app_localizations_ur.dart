@@ -289,4 +289,168 @@ class AppLocalizationsUr extends AppLocalizations {
   @override
   String get recordsNoSelectionText =>
       'یہاں دیکھنے کے لیے کوئی ریکارڈ منتخب کریں۔';
+
+  @override
+  String get onbLocalKicker => 'مقامی بنائیں';
+
+  @override
+  String get onbWhereTitle => 'آپ کہاں رہتے ہیں؟';
+
+  @override
+  String get onbWhereText =>
+      'یہ مقامی معلومات اور خدمات کو ذاتی بنانے میں مدد دیتا ہے۔ اس کا آپ کی شناخت سے کوئی تعلق نہیں۔';
+
+  @override
+  String get onbYoursKicker => 'اپنی پسند';
+
+  @override
+  String get onbHereForTitle => 'آپ یہاں کس لیے آئے ہیں؟';
+
+  @override
+  String get onbHereForText =>
+      'پانچ سے دس منتخب کریں۔ آپ کا ہوم اسکرین، ٹولز اور مطالعہ انہی کے گرد بنتا ہے — جب چاہیں بدل لیں۔';
+
+  @override
+  String get persSearchCountries => 'ممالک تلاش کریں';
+
+  @override
+  String get persRecent => 'حالیہ';
+
+  @override
+  String get persPopular => 'مقبول';
+
+  @override
+  String get persAllCountries => 'تمام ممالک';
+
+  @override
+  String onbMinimum(String count, String min) {
+    return '$min میں سے $count کم از کم';
+  }
+
+  @override
+  String onbSelected(String count, String max) {
+    return '$max میں سے $count منتخب';
+  }
+
+  @override
+  String onbAtCap(String max) {
+    return '$max تک — پہلے ایک ہٹائیں';
+  }
+
+  @override
+  String get persIslamic => 'اسلامی خصوصیات';
+
+  @override
+  String get persIslamicSub => 'نماز کے اوقات، قرآن، دعائیں، زکوٰۃ اور رمضان';
+
+  @override
+  String get igEveryday => 'روزمرہ زندگی';
+
+  @override
+  String get igMoney => 'پیسہ اور مالیات';
+
+  @override
+  String get igHealth => 'صحت اور تندرستی';
+
+  @override
+  String get igTravel => 'سفر اور آمد و رفت';
+
+  @override
+  String get igNews => 'خبریں اور تفریح';
+
+  @override
+  String get igFaith => 'اسلامی خصوصیات';
+
+  @override
+  String get intWeather => 'موسم';
+
+  @override
+  String get intCalendar => 'کیلنڈر';
+
+  @override
+  String get intTasks => 'کام اور فہرستیں';
+
+  @override
+  String get intNotes => 'نوٹس';
+
+  @override
+  String get intConvert => 'کنورٹر';
+
+  @override
+  String get intMaths => 'کیلکولیٹر';
+
+  @override
+  String get intAlarms => 'الارم اور ٹائمر';
+
+  @override
+  String get intExpenses => 'اخراجات';
+
+  @override
+  String get intRates => 'ریٹ اور سونا';
+
+  @override
+  String get intBills => 'بل';
+
+  @override
+  String get intSavings => 'بچت اور اہداف';
+
+  @override
+  String get intMarkets => 'مارکیٹ';
+
+  @override
+  String get intHabits => 'عادات';
+
+  @override
+  String get intWater => 'پانی';
+
+  @override
+  String get intFitness => 'فٹنس';
+
+  @override
+  String get intMeds => 'ادویات';
+
+  @override
+  String get intSleep => 'نیند';
+
+  @override
+  String get intTrains => 'ٹرینیں';
+
+  @override
+  String get intFlights => 'پروازیں';
+
+  @override
+  String get intNearby => 'قریبی مقامات';
+
+  @override
+  String get intFuel => 'ایندھن';
+
+  @override
+  String get intNews => 'خبریں';
+
+  @override
+  String get intCricket => 'کرکٹ';
+
+  @override
+  String get intReading => 'مطالعہ';
+
+  @override
+  String get intQuotes => 'روزانہ اقوال';
+
+  @override
+  String get intPrayer => 'نماز کے اوقات';
+
+  @override
+  String get intQuran => 'قرآن';
+
+  @override
+  String get intHadith => 'حدیث';
+
+  @override
+  String get intDuas => 'دعائیں اور ذکر';
+
+  @override
+  String get intZakat => 'زکوٰۃ اور صدقہ';
+
+  @override
+  String get intRamadan => 'رمضان';
 }

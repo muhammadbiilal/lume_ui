@@ -289,6 +289,51 @@ brand mark and the clock. The signal, wifi and battery glyphs beside them are a
 *drawing of a device*, and on a device the device draws them. They are dropped;
 nothing else in the strip is.
 
+### D12 — three sets of string the reference never translates
+
+**Raised and resolved in F4A.** `INTEREST_GROUPS` hard-codes English labels in
+`data/catalogue.js` and `pickBtn` renders them with `esc(it.label)` — no `t()`,
+no `data-i18n`. The interests step's supporting copy and the `{n} of {min}
+minimum` counter are the same: English in the markup, English in Urdu, English
+in Arabic.
+
+The side-by-side capture at 390 × 844 in Urdu shows it plainly: the reference's
+chips read "Weather", "Tasks & to-dos", "Rates & gold" on an otherwise
+right-to-left page.
+
+**Not reproduced.** All 31 interest labels, the six group labels, the step's
+copy and the counter are translated into all three languages, and
+`interests_catalogue_test.dart` fails if any id has no label — the fallback
+returns the id, so a missing translation shows up as a chip called `weather`
+rather than as a blank.
+
+This is the same call as the `aria-label="Main"` one in F3: a string the
+reference forgot to route through its own translator is a defect in the
+reference, not a design decision to carry across. It is recorded rather than
+silently improved because it makes the Urdu and Arabic captures differ from the
+prototype by design.
+
+### D13 — the onboarding back chevron mirrors
+
+**Raised and resolved in F4A.** `rtl.css` and its siblings mirror exactly four
+glyphs, and two of them are the authentication flow's own back chevron and
+forward arrow:
+
+```css
+.is-rtl .auth__nav--back svg  { transform: scaleX(-1); }
+.is-rtl .btn--auth .btn__arrow { transform: scaleX(-1); }
+```
+
+`.onb__nav svg` has no such rule, so the *onboarding* back control points left
+in a right-to-left page while the identical control in authentication points
+right.
+
+Flutter mirrors both, because `LumeIcons.mirrors` is a property of the glyph
+rather than of the screen it appears on, and because §17 requires that
+"back/forward/next/previous icons must remain semantically correct". The
+reference already agrees with that everywhere it thought about it; onboarding is
+where it did not.
+
 ---
 
 ## 2. Contradictions found in the sources
@@ -437,6 +482,7 @@ id-reconciliation table is an F6 deliverable. Recorded in
 |---|---|---|---|
 | Q6 | **Should Urdu be set in Nastaliq rather than Naskh?** The reference ships only Noto Naskh Arabic, so Naskh is what the design asks for and what F1 implemented. But Urdu is conventionally Nastaliq, and Dayroz separately bundles `NotoNastaliqUrdu-Medium.ttf` — which is the production app judging Naskh wrong for Urdu | F4 onboarding sign-off in Urdu | Keep **Naskh**, because the reference is the source of truth and bundling a face the design has not asked for is the conversion inventing a design decision. Raise it as a *design* question against the reference instead. Decide before Urdu screens are signed off, since it changes how every Urdu screen looks |
 | ~~Q8~~ | ~~**The stepper's buttons are 44 tall but 32 wide.** Making them 44 wide would widen the pill from 64 to 96 and change the control's proportions. Accept the residual, or change the design? | F6, where steppers are actually used | **Accept**, and record it. The height is the axis a thumb misses on in a vertical list, and it is recovered. Changing the pill would be the conversion redesigning a control it was asked to reproduce — better raised against the reference~~ · **Superseded.** Rejected, and corrected properly in F3 — see D6 |
+| Q9 | **A country row is 41 points tall — three under §9's own 44 px floor.** Unlike the stepper's 26 × 26 (D6) and the onboarding chrome's 34 and 32, there is nowhere to overhang: the rows are adjacent, so a taller target would either overlap its neighbour's or change the list's rhythm, which is the thing this phase measures. The target is 350 points *wide*, so the miss the floor guards against — a thin control you jab past — is not the miss on offer. Reproduced at 41 and raised rather than decided | F4B, before the city step reuses the same row | Options: (a) keep 41 and record it as a permitted difference, (b) raise every row to 44 and accept a taller list than the design draws, (c) raise the floor only where a list is short enough to afford it. I recommend (a) |
 
 ## 4. Change log
 
@@ -464,6 +510,13 @@ id-reconciliation table is an F6 deliverable. Recorded in
 | 2026-09-11 (F3) | **D10 raised and resolved** — a master-detail selection stays out of the location | A route per selection is the rebuild the CRUD guide forbids |
 | 2026-09-11 (F3) | **D11 raised and resolved** — the tablet status strip keeps the wordmark and the clock, drops the device glyphs | The strip is application chrome; the glyphs are a drawing of a device |
 | 2026-09-11 (F3) | **Correction:** the shell's two width caps (1366, and 560 below 600) are **kept**, not dropped | F0 recorded them with the device frame; a cap is a measure, not a costume |
+| 2026-09-11 (F4A) | **The interest catalogue settled** — 31 ids, 6 groups, 29 rendered; the "57" was a document-wide `.pick` count across two mounted pickers | [INTERESTS_CATALOGUE.md](INTERESTS_CATALOGUE.md) |
+| 2026-09-11 (F4A) | **`sleep` and `quotes` found unreachable** — declared in a group, referenced by no feature, so never rendered. Recorded, not deleted | The prototype is the source of truth while the conversion runs |
+| 2026-09-11 (F4A) | **D12 raised and resolved** — interest labels, the interests copy and the counter are translated | The reference leaves all three in English in every language |
+| 2026-09-11 (F4A) | **D13 raised and resolved** — the onboarding back chevron mirrors in RTL | The reference mirrors the identical control in auth but not here |
+| 2026-09-11 (F4A) | **Q9 raised** — a 41 px country row, three under §9's floor, with nowhere to overhang | Recommendation given; not decided unilaterally |
+| 2026-09-11 (F4A) | **D6 extended to the onboarding chrome** — the 34 circle and the 32 Skip carry 44 px targets that overhang rather than grow the row | Growing it moved the whole flow five pixels, which the bounds comparison caught |
+| 2026-09-11 (F4A) | Four line boxes corrected against the running flow — kicker 13, Skip 32, row name 18, group label 12 | A type role's own height is not the reference's `line-height: normal` |
 | 2026-09-11 (F3) | **`LumeMasterDetail` extended** into a shell that survives rotation, with `GlobalKey`s carrying the list and the detail between the two layouts | The row and the stack put them at different depths, so a rotation would otherwise reset both |
 
 One correction has been applied to the web prototype: the four dead
