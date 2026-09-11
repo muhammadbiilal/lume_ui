@@ -1,239 +1,206 @@
 # Component matrix
 
 > **Temporary conversion evidence. Not part of the final Flutter maintenance
-> specification.** This document describes the browser prototype that Lume is
-> being converted *from*, and is removed or relabelled as historical at Phase F9.
-> The authoritative documents for the Flutter application are `claude.md`, `README.md`
-> and the rewritten `LUME_*` specifications.
+> specification.** It maps Flutter widgets back to the browser prototype they
+> were measured against, and is removed or relabelled historical at Phase F9.
+> The Dart doc comments carry the same contracts and outlive it.
 
-Every shared Lume component, where it comes from, the states it has to carry,
-and its conversion status. Status: `not started` · `built` · `measured` ·
-`signed off`. A component is `measured` when its rendered bounds, typography
-and spacing have been compared against the web component at the viewports in
-[VISUAL_VERIFICATION.md](VISUAL_VERIFICATION.md), and `signed off` when its
-states and goldens are complete.
+Every shared Lume component, its source, its Flutter widget, and how it was
+verified.
 
-**Renaming a Material widget does not make it Lume-compliant.** Its rendered
-output has to match. Every row below is held to that.
+**Completeness source:** the 60 builders in `assets/js/ui/components.js` and the
+22 in `assets/js/ui/crud.js`. Nothing is omitted for being used by one screen.
 
-Source counts: **60** builders in `ui/components.js`, **22** in `ui/crud.js`,
-**5** picker/sheet builders in `ui/pickers.js` and `ui/sheets.js`,
-**1,088** unique CSS class selectors across 19 stylesheets.
+**Verification:** each component is measured against a **real rendered
+specimen**, not read out of a stylesheet. The
+[fixture](tool/fixture/index.html) renders the production builders under the
+production CSS; [`measure_components.mjs`](tool/measure_components.mjs) reads
+`getComputedStyle` from the live page; the JSON lands in
+[`measurements/`](measurements/); and
+`test/core/widgets/component_parity_test.dart` asserts the Flutter widget
+against it. A declaration in a file is a claim — the cascade, specificity,
+inheritance, `color-mix`, custom properties and state classes all get a vote
+before it becomes a pixel.
 
----
+## Totals
 
-## 1. States vocabulary
+| | |
+|---|---:|
+| Measured specimens | **162** |
+| Measurement cells (width × theme × direction) | **5** |
+| Flutter widget and type classes | **79** in 14 files |
+| Parity tests (against measured values) | 48 |
+| Behaviour, state and semantics tests | 46 |
+| Responsive / RTL / text-scale sweeps | 20 |
+| Component goldens | 29 |
+| **Total Flutter tests** | **405** |
 
-Referenced by the `States` column below rather than repeated.
-
-| Code | State |
-|---|---|
-| `d` | default |
-| `p` | pressed |
-| `h` | hover (pointer devices) |
-| `f` | focus — 2 px accent outline, 2 px offset |
-| `s` | selected |
-| `x` | disabled |
-| `l` | loading / busy |
-| `e` | error / invalid |
-| `o` | offline |
-| `v` | private / sensitive |
-| `u` | unavailable |
-| `r` | RTL mirror |
-
-Every component additionally carries: dark theme, 200 % text scale, text
-wrapping with an explicit `maxLines` and overflow, and semantics.
+Status values: `done` — implemented, measured against the specimen, tested and
+golden-covered. `deferred` — with the reason, in §3.
 
 ---
 
-## 2. Shell and scaffolding
+## 1. The matrix
 
-| Component | Web source | Spec | States | Status |
-|---|---|---|---|---|
-| App shell | `.app`, `base.css` | Flex column compact; grid `nav + screens` under a status strip at medium/expanded | `r` | not started |
-| Stage / device frame | `.stage`, `base.css` | **Not reproduced** — browser presentation only, see KNOWN_DIFFERENCES | — | n/a |
-| Status strip | `.statusbar` | Compact: replaced by the OS bar. Medium/expanded: `card` bg, 1 px bottom border, 12 px block padding, wordmark, clock at `order: 2` | `r` | not started |
-| Page scaffold | `.screen`, `screens/shared.css` | Scroll container, 20/24/32 px gutters, 40 px bottom padding at medium+ | `r` | not started |
-| Content measure | `.sect` / `.section` caps, `responsive.css` | `min(contentMax + pad*2)` centred; `.is-wide` → `contentWide` | — | not started |
-| Decorative mesh | `.app__mesh` | Radial-gradient layers at `--mesh-opacity` (.55 light / .35 dark) | — | not started |
+Columns: the Lume builder → its CSS → the Flutter widget → the states it
+carries → responsive → RTL → accessibility → tests → goldens.
 
-## 3. Navigation
+State codes: `d` default · `p` pressed · `h` hover · `f` focus · `s` selected ·
+`x` disabled · `l` loading/busy · `e` error · `o` offline · `v` private ·
+`q` queued. Dark mode, 200 % text and both directions are carried by **every**
+row and are not repeated.
 
-| Component | Web source | Spec | States | Status |
-|---|---|---|---|---|
-| Bottom bar | `.tabbar`, `.tab`, components.css | Compact only, ≤ 5 destinations, `--t-tab` label, `--shadow-nav` | `d s f r` | not started |
-| Selection pill | `.tabbar__pill`, `#tabPill` | Animates `width` and `translateX` to the selected tab; opacity 0 when the destination is not a tab | `d s` | not started |
-| Navigation rail | `.navtab` at `data-bp=medium` | 84 px, column, gap 5, padding 10 4, `--t-tab` centred label, 20 px glyph | `d s h f r` | not started |
-| Sidebar | `.navtab` at `data-bp=expanded` | 244 px, row, gap 12, padding 10 12, radius 12, `--t-cardtitle`, ls −.02em, min-height 44 | `d s h f r` | not started |
-| Sidebar wordmark | `.navside__brand` | `--t-display`, ls −.035em, padding 4 12 20; expanded only | — | not started |
-| Tab/destination active | `.navtab.is-active` | bg `tintAccent`, fg `accent700`, glyph `accent` | `s` | not started |
-| App bar | `.appbar`, `screens/shared.css` | Greeting, date, city, notification entry, avatar | `d r` | not started |
-| Page head | `.page-head` | Title + optional subtitle, back affordance | `d r` | not started |
-| Tool header | `toolHeader()`, `.toolbar` | Back, title, contextual action | `d x r` | not started |
-| Circular back | `.onb__nav` | 34 × 34, `card` bg, 1 px `border`, `shadow-xs`, 17 px glyph; disabled → opacity 0, `scale(.8)` | `d p x r` | not started |
-| Context bar | `contextBar()`, `.ctx` | Location / freshness strip under the header | `d r` | not started |
+### Navigation and chrome
 
-## 4. Actions
+| Lume builder | CSS | Flutter | States | Responsive | RTL | A11y | Tests | Golden | Status |
+|---|---|---|---|---|---|---|---|---|---|
+| `toolHeader` | `.toolbar` | `LumeToolbar` | d | gutters follow width class | logical insets | `header: true` on the title | parity + responsive | `chrome_*` | done |
+| — (onboarding) | `.onb__nav` | `LumeBackButton` | d p x | — | chevron mirrors | button + label, disabled is inert | parity + behaviour | `chrome_*` | done |
+| `contextBar` | `.ctxbar` | `LumeContextBar` / `LumeContextItem` | d p | wraps | logical | pressable items named | responsive | `chrome_*` | done |
+| `sectionHead` | `.sect__head` | `LumeSectionHeader` | d p | — | link chevron mirrors | link is a named button | responsive | `chrome_*` | done |
+| `section` | `.sect` | `LumeSection` | d | page gutters per class | logical padding | — | responsive | — | done |
+| — (onboarding) | `.onb__seg` | `LumeSegmentedProgress` | d | fills width | fills from start edge | announces "step n of m" | behaviour | — | done |
+| `iconbtn` | `.iconbtn` | `LumeIconButton` | d p f x | — | — | **label required**; badge is decorative | parity + behaviour | `actions_*` | done |
+| `textbtn` | `.textbtn` | `LumeTextButton` | d p f x | — | logical | named | responsive | `actions_*` | done |
 
-| Component | Web source | Spec | States | Status |
-|---|---|---|---|---|
-| Primary button | `.btn` | h 46, pad 0 20, radius 12, 14 px w700, ls −.022em, gap 7; bg `text` / fg `bg` | `d p f x l` | not started |
-| Accent button | `.btn--accent` | bg `accent`, fg `#fff` (dark `#06231F`), shadow `0 6px 18px -8px accent@80%` | `d p f x l` | not started |
-| Secondary/ghost | `.btn--ghost` | bg `tintNeutral`, fg `text` | `d p f x` | not started |
-| Tertiary / link | `.onb__link`, `.picker__clear` | 13 px w700, `text-2`, `:active` opacity .5 | `d p f x` | not started |
-| Destructive | `.cact--danger` | `roseInk` ink, danger surface; carries white at AA | `d p f x l` | not started |
-| Block button | `.btn--block` | `width: 100%` | — | not started |
-| Icon button | `.iconbtn`, `.bar__act` | ≥ 44 px target, 20 px glyph, `aria-label` required | `d p f x r` | not started |
-| FAB | `fab()`, `.fab` | Floating; `bottom: 28` at medium+; absolute at ≥ 600 | `d p f r` | not started |
-| Button row | `buttonRow()` | Horizontal group with consistent gap | `r` | not started |
-| Detail actions | `detailActions()`, `.cacts` | Grid gap 10, margin-top 20; edit = `tintAccent`/`accent700` | `d p x` | not started |
+### Actions
 
-## 5. Inputs
+| Lume builder | CSS | Flutter | States | Responsive | RTL | A11y | Tests | Golden | Status |
+|---|---|---|---|---|---|---|---|---|---|
+| `button` | `.btn`, `--accent`, `--ghost`, `--block`, `--sm` | `LumeButton` (4 tones) | d p f x l | `block` fills | logical icon order | button + enabled; busy is a live region | parity + behaviour | `actions_*` | done |
+| `submitBar` busy | `.btn.is-busy` | `LumeButton(busy:)` | l | — | — | announces; **refuses the second tap** | behaviour | `actions_*` | done |
+| `buttonRow` | `.btnrow` | `LumeButtonRow` | — | equal share or wrap | logical | — | responsive | `actions_*` | done |
+| `fab` | `.fab` | `LumeFab` | d p f | — | — | named | parity | `actions_*` | done |
+| `detailActions` | `.cacts`, `.cact--edit`, `--danger` | `LumeDetailActions`, `LumeDetailAction` | d p f x | full width | logical | named buttons | parity + behaviour | `crud_*` | done |
+| toast Undo | `.toast__act` | `LumeToast(actionLabel:)` | d p | — | logical | in the live region | behaviour | `states_*` | done |
 
-| Component | Web source | Spec | States | Status |
-|---|---|---|---|---|
-| Text field | `.cfield__box` | min-h 48, pad 0 14, gap 8, radius 12, `card` bg, 1 px `border-2` | `d f e x r` | not started |
-| — focus | `:focus-within` | border `accent`, ring `0 0 0 3px tintAccent` | `f` | not started |
-| — invalid | `.is-invalid` | border `roseInk`, ring `rose@22%`, **plus a message below** | `e` | not started |
-| Field label | `.cfield__label` | `--t-label`; optional marker `--t-metasm` `text-3` | `r` | not started |
-| Helper / error | `.cfield__hint` / `.cfield__err` | `--t-metasm`; error pairs an icon with the text | `d e` | not started |
-| Text area | `.cfield__box textarea` | min-h 76, line-height 1.55, vertical resize only | `d f e x` | not started |
-| Search field | `.search` | h 44, pad 0 14, gap 9, radius 12, `card`, 1 px `border`, `shadow-xs`, `text-3` | `d f x r` | not started |
-| Small search | `.search--sm` | Picker variant | `d f r` | not started |
-| Select | `.cfield__select` | Appearance stripped, 15 px chevron, `text-3` | `d f x r` | not started |
-| Date / time control | `field({type:'date'})` | Native control in web; native pickers in Flutter | `d f x` | not started |
-| Switch | `.switch`, `.switch__knob` | Knob translate over `--dur`; used by the faith toggle | `d s f x r` | not started |
-| Checkbox | `.cfield__checkbox`, `.rrec__check` | 17 px glyph; exposes `role="checkbox"`; ≥ 44 px row | `d s f x` | not started |
-| Radio | `optlist()` rows | Single-select list with a tick | `d s f x` | not started |
-| Stepper | `stepper()` | Decrement / value / increment | `d p x r` | not started |
-| Selection chip | `.pick` | Interest chip with icon + label, `aria-pressed`; `.is-muted` when the max is reached | `d s x` | not started |
-| Filter chip | `.cchip`, `filterChips()` | Carries a tabular count `.cchip__n` at opacity .7 | `d s` | not started |
-| Segmented control | `segmented()` | Mutually exclusive inline options | `d s f r` | not started |
-| Tabs | `tabs()` | In-screen tab strip | `d s f r` | not started |
-| Sort bar | `sortBar()` | Sort key + direction | `d s r` | not started |
-| Filter bar | `filterBar()` | Chip group over a scroll rail | `d s r` | not started |
-| Choice pills | `.onb-choice button` | h 34, pad 0 13, radius full, 12 px w600; active = `text` bg, `bg` ink | `d s` | not started |
+### Inputs and selection
 
-## 6. Surfaces and rows
+| Lume builder | CSS | Flutter | States | Responsive | RTL | A11y | Tests | Golden | Status |
+|---|---|---|---|---|---|---|---|---|---|
+| `field` | `.field`, `.field__box` (42, r8, `card-2`) | `LumeToolField` | d f x | `wide` spans | logical affixes | label + hint | parity + responsive | `inputs_*` | done |
+| `formField` | `.cfield`, `.cfield__box` (48, r12, `card`) | `LumeFormField` | d f e x | `wide` spans; pair collapses | logical | `textField`, error in `value` | parity + behaviour | `inputs_*` | done |
+| `searchBar` | `.search` | `LumeSearchField` | d f x | — | logical glyph | `textField` + label | parity + responsive | `inputs_*` | done |
+| `formField` textarea | `.cfield__box textarea` | `LumeFormField(multiline)` | d f e x | min 76 | logical | — | behaviour | `inputs_*` | done |
+| `formField` money/date | input `type`/`inputmode` | `LumeFieldKind` | — | — | numerals isolated | right keyboard per kind | behaviour | `inputs_*` | done |
+| `selectField` | `.field__box--select` | `LumeFormField(kind: select)` **deferred** | — | — | — | — | — | — | deferred §3 |
+| `formField` check | `.cfield--check` | `LumeCheckbox` | d s f x | — | logical | `checked` | behaviour | `selection_*` | done |
+| account `optlist` | `.srow` option rows | `LumeRadioRow` | d s p | — | logical | `inMutuallyExclusiveGroup` + `checked` | responsive | — | done |
+| `switch` | `.switch` | `LumeSwitch` | d s f x | — | knob follows direction | `toggled` | behaviour | `selection_*` | done |
+| `stepper` | `.stepper` | `LumeStepper` | d p x | — | logical order | group + per-button names | parity + behaviour | `selection_*` | done |
+| `chip` | `.fchip`, `.is-on` | `LumeFilterChip` | d s p f x | wraps | logical | `toggled` | parity + behaviour | `selection_*` | done |
+| `filterChips` | `.cchip`, `.is-on` | `LumeRecordChip` | d s p | wraps | logical | `toggled` + count spoken | parity | `selection_*` | done |
+| `filterBar` | `.filterbar` | `LumeFilterBar` | — | scrolls | scrolls from start | — | responsive | — | done |
+| `segmented` | `.segmented`, `.seg.is-on` | `LumeSegmented` | d s p | — | logical order | exactly one `selected` | parity + behaviour | `selection_*` | done |
+| `tabs` | `.ttabs`, `.ttab.is-on` | `LumeTabs` | d s p | scrolls | scrolls from start | `selected` + count | responsive | `selection_*` | done |
+| `sortBar` | `.sortbar`, `.sortopt.is-on` | `LumeSortBar` | d s p | scrolls | direction glyph | speaks its direction | parity + behaviour | `selection_*` | done |
 
-| Component | Web source | Spec | States | Status |
-|---|---|---|---|---|
-| Card | `.card` | `card` bg, 1 px `border`, radius 20, `shadow-sm`, clipped | `d p l` | not started |
-| Section | `section()`, `sectionHead()` | Heading + optional link; 24 px section gap | `r` | not started |
-| Summary card | `summaryCard()`, `.sum` | Lead value + supporting lines | `d l` | not started |
-| Stat card | `.stat-card` | Value, label, optional delta | `d` | not started |
-| Metric grid | `metrics()`, `.metrics` | `--cols` 2–3; 4 at ≥ 1180 | `d r` | not started |
-| Delta tag | `deltaTag()` | Direction by **glyph and text**, never colour alone | `d` | not started |
-| Compact row | `compactRow()`, `.crow` | `--pad-row` 12 16 | `d p h s r` | not started |
-| Rich row | `richRow()`, `.list-row` | Icon, body, trailing value, chevron | `d p h s u r` | not started |
-| Expandable row | `expandRow()` | Collapsed / expanded | `d s` | not started |
-| Record row | `recordRow()`, `.rrec` | min-h 44, pad 13 14, gap 12, radius 16, `card`, 1 px `border`, `shadow-xs` | `d p h s o r` | not started |
-| — selected | `.rrec.is-selected` | bg `tintAccent`, border `accent@45%` — persists, not a flash | `s` | not started |
-| — done | `.rrec.is-done` | Title line-through + `text-3`; disc opacity .55 | `s` | not started |
-| — queued | `.rrec__queued` | Offline write pending | `o` | not started |
-| Note card | `noteCard()` | Title, excerpt, modified date | `d p` | not started |
-| Image card | `imageCard()` | Media + caption | `d l` | not started |
-| Horizontal scroll | `hscroll()`, `.hcards` | Snapping rail | `d r` | not started |
-| Table | `table()` | Header + aligned tabular rows | `d r` | not started |
-| Record hero | `recordHero()`, `.chero` | Kicker, value, title, caption on a gradient | `d r` | not started |
-| Fact card | `factCard()`, `.cfacts` | Label/value pairs; `.cfact--block` for long values | `d v r` | not started |
-| Tone ramp | `tools/shared.css` §tone | Per-category logo, avatar and art tinting | — | not started |
+### Content and data display
 
-## 7. Data display
+| Lume builder | CSS | Flutter | States | Responsive | RTL | A11y | Tests | Golden | Status |
+|---|---|---|---|---|---|---|---|---|---|
+| `card` | `.kard` | `LumeCard` | d p | — | — | optional label when pressable | parity | — | done |
+| `noteCard` | `.notecard` | `LumeNoteCard` (4 tones) | d | — | logical | — | responsive | `status_*` | done |
+| `rows` | `.rows` | `LumeRows` | — | — | hairline indent is logical | — | responsive | `rows_*` | done |
+| `richRow` | `.rrow` + parts | `LumeRichRow` | d p h | — | lead/value swap | link role + composed label | parity + responsive | `rows_*` | done |
+| `compactRow` | `.crow` | `LumeCompactRow` | d p h | — | lead/value swap | link role | parity | `rows_*` | done |
+| `recordRow` | `.rrec`, `.is-selected`, `.is-done` | `LumeRecordRow` | d p h s q | — | disc/value swap | `selected`; checkbox `checked` | parity + behaviour | `rows_*` | done |
+| `recordRows` | `.rrecs` | `LumeRecordList` | — | — | — | — | responsive | `rows_*` | done |
+| `expandRow` | `.xrow` | `LumeExpandRow` | d s | — | caret rotates | `expanded`; **body absent when closed** | behaviour | — | done |
+| `summaryCard` | `.summary` | `LumeSummaryCard` | d | stats share width | logical | numerals isolated | parity | `values_*` | done |
+| `metric` | `.metric` | `LumeMetric` | d p | — | logical | composed label | parity | `values_*` | done |
+| `metrics` | `.metrics` | `LumeMetrics` | — | 2–3 cols; **4 above 1180** | logical | — | responsive | `values_*` | done |
+| `recordHero` | `.chero` | `LumeRecordHero` | d | — | logical | numerals isolated | parity | `values_*` | done |
+| `factCard` | `.cfacts`, `.cfact--block` | `LumeFactCard` / `LumeFact` | d | block wraps | value to end edge | — | parity | `crud_*` | done |
+| `table` | `.dtable`, `.tablewrap` | `LumeTable` / `LumeColumn` | d p | scrolls horizontally | numerics isolated | **named scroll region** | behaviour | `chrome_*` | done |
+| `imageCard` | `.imgcard` | `LumeImageCard` | d p | fixed item width in a strip | logical | title is the label | responsive | — | done |
+| `art` | `.art` | `_ArtPainter` (deterministic) | — | — | — | decorative | responsive | — | done |
+| `hscroll` | `.hstrip` | `LumeHorizontalStrip` | — | scrolls | scrolls from start | — | responsive | — | done |
+| `relatedTools` | `.related` | `LumeRelatedTools` / `LumeRelatedTool` | d p | wraps | logical | named buttons | responsive | — | done |
+| `timeline` | `.tline` | `LumeTimeline` / `LumeTimelineEntry` | d s | — | rail follows direction | — | responsive | `progress_*` | done |
+| `journey` | `.journey` | `LumeJourney` / `LumeJourneyStep` | d s | shares width | fills from start | announces the reached step | behaviour | `progress_*` | done |
+| `progressBar` | `.pbar` | `LumeProgressBar` | d | fills | fills from start | announces its value; clamps | parity + behaviour | `progress_*` | done |
+| `meterRow` | `.meter` | `LumeMeterRow` | d | — | logical | value spoken | responsive | `progress_*` | done |
+| `progressRing` | `.pring` | `LumeProgressRing` | d | — | — | announces its value | responsive | `progress_*` | done |
 
-| Component | Web source | Spec | States | Status |
-|---|---|---|---|---|
-| Sparkline | `sparkline()` | Inline SVG path | `d` | not started |
-| Line chart | `lineChart()` | Axis, path, points | `d l o` | not started |
-| Bar chart | `barChart()` | Animated bars | `d l` | not started |
-| Donut | `donut()` | Segments + centre value | `d l` | not started |
-| Progress ring | `progressRing()` | Stroke-dash progress | `d l` | not started |
-| Progress bar | `progressBar()` | Track + fill | `d l` | not started |
-| Meter row | `meterRow()` | Label + inline meter | `d` | not started |
-| Heatmap | `heatmap()` | Calendar grid | `d` | not started |
-| Timeline | `timeline()`, `.tl` | Chronological entries; `.tl-time` `text-align: start` in RTL | `d r` | not started |
-| Journey | `journey()` | Stepped progress presentation | `d s` | not started |
-| Map | `map()` | Static map surface with pins | `d l o u` | not started |
-| Generated art | `art()` | Deterministic decorative SVG | — | not started |
+### States and feedback
 
-All twelve are bespoke SVG in the web with their own visual language. They are
-reproduced with `CustomPainter`, **not** with a charting package — see
-[DAYROZ_ARCHITECTURE_MAPPING.md §3](DAYROZ_ARCHITECTURE_MAPPING.md#3-dependency-plan).
+| Lume builder | CSS | Flutter | States | Responsive | RTL | A11y | Tests | Golden | Status |
+|---|---|---|---|---|---|---|---|---|---|
+| `statusBadge` | `.badge` ×6 tones | `LumeBadge` | d | — | — | label; **glyph per tone** | parity + behaviour | `status_*` | done |
+| `deltaTag` | `.delta` | `LumeDelta` | d | — | — | speaks "up"/"down" | parity + behaviour | `status_*` | done |
+| `freshness` | `.fresh` ×4 | `LumeFreshness` | d l o | — | — | label; **shape differs too** | parity + behaviour | `status_*` | done |
+| `sourceLine` | `.srcline` | `LumeSourceLine` | d o | wraps | logical | — | responsive | `status_*` | done |
+| `skeleton` | `.sk--*` | `LumeSkeleton` (5 kinds) | l | — | shimmer follows direction | "Loading" live region | parity + behaviour | `states_*` | done |
+| `loadingRows` | `.csks`, `.csk` | `LumeSkeleton(record)` | l | — | — | — | parity | `states_*` | done |
+| `emptyState` | `.state--empty` | `LumeToolState` | d | — | logical | — | parity | — | done |
+| `errorState` | `.state--error` | `LumeToolState.error` | e | — | logical | live region | parity | — | done |
+| `emptyCollection` | `.cstate` | `LumeCollectionState(empty)` | d | — | logical | **one primary CTA** | parity + behaviour | `states_*` | done |
+| `noMatches` | `.cstate--quiet` | `LumeCollectionState(noResults)` | d | — | logical | distinct from empty | behaviour | — | done |
+| `loadError` | `.cstate--error` | `LumeCollectionState(error)` | e | — | logical | live; **Retry first** | behaviour | — | done |
+| `noSelection` | `.cstate--pane` | `LumeCollectionState(pane)` | d | expanded only | logical | — | responsive | `crud_*` | done |
+| `saveError` | `.cnotice--error` | `LumeNotice(error)` | e | — | logical | live region | parity + behaviour | `states_*` | done |
+| `conflictNotice` | `.cnotice--warn` | `LumeNotice(warning)` | e | actions wrap | logical | live; Review **and** Reload | behaviour | `states_*` | done |
+| `offlineNotice` / `offlineBanner` | `.cnotice--offline`, `.obanner` | `LumeNotice(offline)`, `LumeOfflineBanner` | o | — | logical | status role | parity | `states_*` | done |
+| `.cnotice__act` | `.cnotice__act` | `LumeNoticeAction` | d p f x | wraps | logical | named; **44 px target** (see D6) | parity + responsive | `states_*` | done |
+| `.private-card` | `.private-card` | `LumePrivateState` | v | — | logical | reveal is a named action | behaviour | — | done |
+| `.toast` | `.toast` | `LumeToast` / `showLumeToast` | d l e | centred, above nav | logical | **live region + announcement** | behaviour | `states_*` | done |
+| `.sheet` | `.sheet` + responsive | `LumeSheet` / `showLumeSheet` | d p | **compact: bottom sheet · else: centred dialog** | logical | header semantics; named close | behaviour | — | done |
+| confirmation | delete sheet | `LumeDeleteConfirmation` | d x | — | logical | header; verb-labelled action | behaviour | — | done |
 
-## 8. Status and feedback
+### CRUD presentation
 
-| Component | Web source | Spec | States | Status |
-|---|---|---|---|---|
-| Badge | `statusBadge()` | Text + shape, never colour alone | `d` | not started |
-| Freshness label | `freshness()` | Live marker pulses; **must stop under reduced motion** | `d l o` | not started |
-| Source line | `sourceLine()` | Provenance + timestamp | `d o` | not started |
-| Skeleton | `skeleton()`, `.skel` | Shaped like the final content; shimmer **must stop under reduced motion** | `l` | not started |
-| Loading rows | `loadingRows()` | Record-row-shaped skeletons | `l` | not started |
-| Empty state | `emptyState()`, `emptyCollection()` | Reason, next step, exactly one primary CTA. Never a blank card | `d` | not started |
-| No results | `noMatches()` | Distinct from empty | `d` | not started |
-| Error state | `errorState()`, `loadError()` | Explanation, "saved data is still safe", **Try again first** | `e` | not started |
-| Offline banner | `offlineBanner()`, `offlineNotice()` | Cached records + offline label; never passes for current | `o` | not started |
-| Save error | `saveError()` | Preserved input + explanation + Retry | `e` | not started |
-| Conflict notice | `conflictNotice()` | Newer version explained; **Review or Reload**, never a silent overwrite | `e` | not started |
-| Private state | `.private-card` | Sensitive detail hidden by default | `v` | not started |
-| Unavailable state | eligibility | Feature not available here | `u` | not started |
-| Toast | `.toast` | High-contrast pill above the navigation; `bottom: 28` at medium+ | `d l` | not started |
-| Undo action | `.toast__act` | Armed only where deletion is recoverable | `d p` | not started |
-| Notification banner | `.nbanner` | Compact: top. Medium/expanded: trailing corner card, `min(400px, 100% − nav − 48px)` | `d r` | not started |
-
-## 9. Overlays
-
-| Component | Web source | Spec | States | Status |
-|---|---|---|---|---|
-| Bottom sheet | `.sheet`, `ui/sheets.js` | Top radius 26, safe-area padding. At ≥ 600: centred `min(520px, 100% − 48px)`, `bottom: 24`, full radius | `d p r` | not started |
-| Scrim | `.scrim` | `--overlay` | `d` | not started |
-| Confirmation dialog | delete confirmation sheet | Names the record, states the consequence, verb-labelled destructive action — never "OK" | `d x l` | not started |
-| Interest picker | `makePicker()` | Six groups, individual chips, live count, Clear, min 5 / max 10, separate faith switch | `d s x` | not started |
-| Location picker | `makeLocationPicker()` | Search + Recent / Popular / All over 194 countries; city stage with regions and "Use my current location" | `d s r` | not started |
-| Option picker | `optlist()` | Single-select list used by 21 account routes | `d s f` | not started |
-
-## 10. Forms and CRUD scaffolding
-
-| Component | Web source | Spec | States | Status |
-|---|---|---|---|---|
-| Form card | `formCard()`, `.cformcard` | Capped at `contentMax` even inside a wide composition | `d r` | not started |
-| Form section | `formGrid()`, `.cform` | Grid gap 18 | `r` | not started |
-| Two-column pair | `.fgrid--pair` | Expanded only, `1fr 1fr`, gap 16 20; `.field--wide` spans both; collapses in split-screen | `r` | not started |
-| Submit bar | `submitBar()` | Progress in the action; duplicate submission prevented | `d l x` | not started |
-| Inline validation | `.cfield__err` | Directly below its field; icon **and** text | `e` | not started |
-| List count | `listCount()`, `.crud__count` | Says the state rather than counting to zero when empty | `d o e` | not started |
-| Bulk action | `.cbulk` | Full-width; confirmed bulk clear | `d x` | not started |
-| Record id | `recordId()`, `.crud__id` | Provenance line | `d` | not started |
-| Panes | `panes()`, `.panes` | `minmax(320, 380)` + `minmax(0, 1fr)`, gap 20, detail sticky | `r` | not started |
-| No selection | `noSelection()` | Detail pane invites a selection | `d` | not started |
-| Master-detail scaffold | `responsive.css` §master-detail | Selection at expanded does not push; list keeps scroll, filters, position | `s r` | not started |
-| Related tools | `relatedTools()` | From the spec's `rel` list, eligibility-filtered | `d r` | not started |
-
-## 11. Icons and illustration
-
-| Item | Web source | Spec | Status |
-|---|---|---|---|
-| Icon set | `index.html` sprite | **112 symbols**, 24 px box, **1.75 px rounded stroke**, sizes 16 / 20 / 24 | not started |
-| Directional glyphs | `rtl.css` | Exactly seven selectors flip in RTL. Clocks, play buttons and media controls never do | not started |
-| Onboarding art | inline SVG in `onboarding.screen.js` | Floating stickers, 8 s / 6.4 s / 9.2 s cycles with negative delays | not started |
-| Success seal | `.onb__seal` | Ring draw 1 s, tick draw 0.5 s @ 0.8 s, three pops @ 1.0 / 1.1 / 1.2 s | not started |
-| Auth seal | `.authseal` | 108 px below 360 px width | not started |
+| Lume builder | CSS | Flutter | States | Responsive | RTL | A11y | Tests | Golden | Status |
+|---|---|---|---|---|---|---|---|---|---|
+| `listCount` | `.crud__count` | `LumeListCount` | d o e | — | — | live region | parity | — | done |
+| `recordId` | `.crud__id` | `LumeRecordId` | d | — | — | — | responsive | — | done |
+| `formGrid` | `.cform`, `.fgrid--pair` | `LumeFormSection` | — | **two columns at expanded, one otherwise or at large text** | logical | — | responsive | `crud_*` | done |
+| `formCard` | `.cformcard` | `LumeFormCard` | — | capped at the reading measure | logical | — | responsive | `crud_*` | done |
+| `submitBar` | `.csubmit` | `LumeSubmitBar` | d l x | block | logical | — | behaviour | `crud_*` | done |
+| `panes` | `.panes` | `LumeMasterDetail` | — | **two panes at expanded only; never on a landscape phone** | panes follow direction | — | behaviour | `crud_*` | done |
+| `.pressable` | `.pressable:active` | `LumePressable` | d p f x s | 44 px floor | — | button/link, selected, enabled | every component test | — | done |
 
 ---
 
-## 12. Completion rule
+## 2. What the measurement caught that reading would not
 
-A component is signed off when all of the following hold.
+Seven findings, each one a thing a transcription gets wrong.
 
-1. Rendered bounds, typography, spacing, radius, border and shadow match the
-   web component, measured — not eyeballed.
-2. Every state in its `States` column is implemented and has a golden.
-3. Light and dark both pass.
-4. LTR and RTL both pass, and only genuinely directional elements mirrored.
-5. 200 % text scale does not clip, and `maxLines`/overflow are explicit.
-6. Touch targets are ≥ 44 px.
+| # | Finding | Why a stylesheet read misses it |
+|---|---|---|
+| 1 | `.btn--sm` is still **46 px tall** | The padding shrinks but `min-height` wins. A small button is narrower, not shorter |
+| 2 | `.kard` is **20 px** radius, not 16 | It takes `--r-lg`; `--r-md` is the *record row's* radius |
+| 3 | **Two field systems**: `.field__box` 42/r8/`card-2` and `.cfield__box` 48/r12/`card` | They look like one component with a density flag until they are measured side by side |
+| 4 | `.seg.is-on` casts a **shadow** | It is a raised thumb on a track, not a tinted cell — invisible in the declaration, obvious in the computed style |
+| 5 | `.summary__value` is **34 px** and `.chero__value` **32 px** | Neither is in the type scale; both are per-surface display sizes |
+| 6 | `.notecard` sits on **`card-2`**, not `card` | One token apart, and the difference is the whole reason it reads as an aside |
+| 7 | `.sk--metric` is **76**, not 84 | The metric card is 84; its skeleton is not the same height |
+
+## 3. Deferred, with the reason
+
+| Component | Reason | When |
+|---|---|---|
+| **Select / picker field** (`.field__box--select`, `.cfield__select`) | The reference's select opens the platform's own control. Lume's real selection surface is the **picker sheet** — the country, city, language and interest pickers — which is a screen-level composition, not a component. Building a `LumeSelectField` now would either wrap Material's dropdown (wrong look) or pre-empt the picker's design. | F4, with the onboarding pickers it belongs to |
+| **Charts** — `sparkline`, `lineChart`, `barChart`, `donut`, `heatmap` | These are not general components: each answers one tool's question, and their contracts come from the data the tool has. Building them without their callers would be guessing at the API. `LumeProgressBar`, `LumeProgressRing` and `LumeMeterRow` — the four that *are* general — are done. | F6, per archetype batch |
+| **Map surface** (`map()`) | Needs a tile source and a location permission story, neither of which exists in a fixture-driven reference. | F6, location-tool batch |
+| **Date and time pickers** | The reference uses the browser's native controls. Flutter's platform pickers are the right equivalent and need no Lume wrapper beyond the field that launches them, which is done. | F7, with the record forms that use them |
+
+Nothing is deferred for being used by only one screen.
+
+## 4. Completion rule
+
+A component is done when all of these hold, and all of them are enforced by a
+test rather than a review:
+
+1. Its rendered geometry, typography, spacing, radius, border and shadow match
+   the **measured** specimen.
+2. Every state in its `States` column is implemented.
+3. Light and dark both pass — against the dark measurement, not a derivation.
+4. LTR and RTL both pass, and only genuinely directional elements mirror.
+5. 200 % text does not overflow, at 390 and at 359.
+6. Touch targets clear 44 px.
 7. Semantics are present: labels on icon-only controls, selected/toggled/checked
-   states exposed, validation outcomes announced.
-8. Any indefinite animation stops under reduced motion.
+   exposed, validation and status announced.
+8. Indefinite animation stops under reduced motion.
 9. Any remaining difference is in
    [KNOWN_DIFFERENCES.md](KNOWN_DIFFERENCES.md) with approval.

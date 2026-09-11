@@ -158,12 +158,40 @@ Takes a web PNG, a Flutter PNG and both sidecars, and emits:
 - a text report: visible line counts, text wrapping points, baseline offsets,
   item density, and whether either side scrolls where the other does not.
 
-### `tool/measure/measure.mjs`
+### `tool/measure_components.mjs` and `tool/fixture/`
 
-Reads bounding boxes, computed styles and text metrics for a named selector in
-the web, and the corresponding `RenderBox` and `TextPainter` metrics in Flutter,
-for the component-level measurement the
-[COMPONENT_MATRIX](COMPONENT_MATRIX.md) requires.
+Component-level measurement, and the thing that makes the conversion a
+conversion rather than an interpretation.
+
+`tool/fixture/` is a conversion-only page that imports the **production
+builders** and loads the **production stylesheets in the order `index.html`
+loads them**, then renders one specimen per component — and one per *state*,
+because a state is exactly the case where a declaration is not the final value.
+It adds no CSS of its own beyond scaffolding scoped to `.fx-` classes no
+component uses.
+
+`measure_components.mjs` drives that page over CDP and records
+`getComputedStyle` for 40-odd properties per specimen, plus the rendered rect
+and the ARIA attributes. It writes one JSON per cell — width × theme ×
+direction — into [`measurements/`](measurements/).
+
+```bash
+node docs/conversion_archive/tool/measure_components.mjs   --theme light --width 390 --dir ltr
+```
+
+**Why computed style and not the stylesheet.** A declaration in a file is a
+claim. The cascade, specificity, inheritance, `color-mix()`, custom properties
+and state classes all get a vote before it becomes a pixel. Reading
+`components.css` and transcribing it would have got seven values wrong that the
+measurement caught — they are listed in
+[COMPONENT_MATRIX.md §2](COMPONENT_MATRIX.md#2-what-the-measurement-caught-that-reading-would-not).
+
+`test/helpers/measured.dart` reads those JSON files and
+`test/core/widgets/component_parity_test.dart` asserts each Flutter widget
+against them, so a Flutter constant that drifts from the design fails a test
+rather than surviving a review.
+
+Current coverage: **162 specimens × 5 cells**, 0 unmatched selectors.
 
 ## 6. What is compared
 

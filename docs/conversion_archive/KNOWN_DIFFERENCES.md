@@ -137,6 +137,48 @@ Naskh wrong for Urdu.
 
 Recorded rather than decided. See §3, Q6.
 
+### D6 — two controls in the reference are under its own touch-target floor
+
+**New in F2. A defect found in the reference, fixed in Flutter without changing
+what is drawn.**
+
+The Design System's §9 sets a 44 × 44 minimum touch target, and
+`tests/design.js` asserts it for rows, fields and navigation. Two controls do
+not meet it, measured from the rendered page:
+
+| Control | Measured target | §9 floor |
+|---|---:|---:|
+| `.cnotice__act` — Retry, Review, Reload | **36 px** | 44 |
+| `.stepper__btn` — the − and + in a stepper | **26 px** | 44 |
+
+These are the actions on a save failure and a version conflict, and the way a
+quantity is changed. They are not rare paths.
+
+**Resolved in Flutter by separating the box from the target**, which is the
+pattern `.iconbtn` already uses (a 38 px box in a 44 px target). The notice
+action still *draws* at 36 and the stepper's buttons still draw at 26; both now
+*accept touch* across 44. Nothing visible moved — the component goldens before
+and after the fix differ only where the notice's actions stopped wrapping, which
+was a separate bug.
+
+One residual: the stepper's buttons are 44 tall but 32 wide, because 44 wide
+would push the pill out to 96 and change the design. Recorded rather than
+silently accepted; raised as Q8.
+
+### D7 — a collapsed disclosure does not render its body
+
+**New in F2. Flutter is stricter than the reference, deliberately.**
+
+The reference's `.xrow` is a `<details>`, which does not render a closed body.
+The obvious Flutter equivalent, `AnimatedCrossFade`, keeps both children in the
+tree at all times — so a collapsed section would be read aloud by a screen
+reader while being invisible to everyone else.
+
+`LumeExpandRow` builds the body only when open. The animation is an
+`AnimatedSize`, which is skipped entirely under reduced motion rather than given
+a zero duration: at zero it re-dirties itself inside its own `performLayout` and
+asserts.
+
 ### D5 — numeric runs are direction-isolated
 
 **Resolved in F1, and worth recording because it is invisible until it is
@@ -294,7 +336,7 @@ id-reconciliation table is an F6 deliverable. Recorded in
 | # | Question | Blocks | Recommendation |
 |---|---|---|---|
 | Q6 | **Should Urdu be set in Nastaliq rather than Naskh?** The reference ships only Noto Naskh Arabic, so Naskh is what the design asks for and what F1 implemented. But Urdu is conventionally Nastaliq, and Dayroz separately bundles `NotoNastaliqUrdu-Medium.ttf` — which is the production app judging Naskh wrong for Urdu | F4 onboarding sign-off in Urdu | Keep **Naskh**, because the reference is the source of truth and bundling a face the design has not asked for is the conversion inventing a design decision. Raise it as a *design* question against the reference instead. Decide before Urdu screens are signed off, since it changes how every Urdu screen looks |
-| Q7 | Should capture artifacts be committed, or regenerated? | F2 | **Regenerated.** They are large, reproducible, and the findings live in the comparison reports rather than in the pixels. Currently gitignored |
+| Q8 | **The stepper's buttons are 44 tall but 32 wide.** Making them 44 wide would widen the pill from 64 to 96 and change the control's proportions. Accept the residual, or change the design? | F6, where steppers are actually used | **Accept**, and record it. The height is the axis a thumb misses on in a vertical list, and it is recovered. Changing the pill would be the conversion redesigning a control it was asked to reproduce — better raised against the reference |
 
 ## 4. Change log
 
@@ -310,6 +352,10 @@ id-reconciliation table is an F6 deliverable. Recorded in
 | 2026-09-11 (F1) | **D4 raised** — Urdu falls back to Naskh because that is the only Arabic-script face the reference ships; Nastaliq is the convention and Dayroz bundles it | Found when the Urdu type golden rendered as tofu |
 | 2026-09-11 (F1) | **D5 resolved** — numeric runs need direction isolation, not just an LTR direction | Found when the RTL type golden rendered `1,240.50  16:41` as `16:41 1,240.50` |
 | 2026-09-11 (F1) | Evidence for D1 captured — at 852 × 393 the web reports `data-bp=medium`, Flutter resolves `compact` | The height override, demonstrated rather than asserted |
+| 2026-09-11 (F2) | Q7 settled by policy — goldens, reports and measurements committed; bulk raw captures ignored | The measurements are the durable evidence; the pixels are reproducible |
+| 2026-09-11 (F2) | **D6 raised and resolved** — `.cnotice__act` (36) and `.stepper__btn` (26) are under §9's own 44 px floor | Found by the touch-target sweep across every interactive component |
+| 2026-09-11 (F2) | **D7 raised** — a collapsed disclosure must not render its body | Found when `AnimatedCrossFade` kept hidden content in the semantics tree |
+| 2026-09-11 (F2) | Seven measurement findings recorded in [COMPONENT_MATRIX.md §2](COMPONENT_MATRIX.md#2-what-the-measurement-caught-that-reading-would-not) | Each is a value a stylesheet read gets wrong |
 
 One correction has been applied to the web prototype: the four dead
 `.onb-country` lines, deleted in F1 under the evidence gate in C1. Nothing else

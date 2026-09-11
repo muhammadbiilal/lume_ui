@@ -26,6 +26,7 @@ import '../../../core/theme/lume/lume_motion.dart';
 import '../../../core/theme/lume/lume_space.dart';
 import '../../../core/theme/lume/lume_theme.dart';
 import '../../../core/theme/lume/lume_type.dart';
+import 'component_gallery.dart';
 
 class GalleryScreen extends ConsumerWidget {
   const GalleryScreen({super.key});
@@ -112,6 +113,17 @@ class _GalleryBar extends ConsumerWidget {
                 codes[(i + 1) % codes.length],
               );
             },
+          ),
+          // The only way into the component gallery. No route resolves to it,
+          // so it cannot become a production destination by accident.
+          _Pill(
+            label: 'Components',
+            icon: LumeIcons.grid,
+            onTap: () => Navigator.of(context).push<void>(
+              MaterialPageRoute<void>(
+                builder: (BuildContext context) => const ComponentGallery(),
+              ),
+            ),
           ),
         ],
       ),

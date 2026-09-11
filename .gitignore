@@ -52,9 +52,12 @@ app.*.map.json
 # the actual/expected/isolated PNGs, regenerated on every failing run.
 /test/failures/
 
-# Capture artifacts. Regenerated on demand by the conversion tooling, and
+# Bulk raw captures. Regenerated on demand by the conversion tooling, and
 # large — a run writes a PNG per screen per viewport per theme per language.
-# The findings live in the comparison reports, not in the pixels.
+#
+# What IS committed, deliberately: the golden baselines the tests need, the
+# component measurements the parity tests read, and the comparison reports.
+# Those are the durable evidence; the raw pixels are reproducible from them.
 /docs/conversion_archive/shots/
 
 # ---------------------------------------------------------------------------

@@ -1,0 +1,421 @@
+/// The data table, the image card, the horizontal strip and the related-tools
+/// rail.
+///
+/// §86: a table scrolls horizontally rather than shrinking its columns to
+/// illegibility, and the scroll region is focusable and labelled so a keyboard
+/// can reach it. That last part is easy to lose in a port — a `Scrollable`
+/// with no semantics is a region a screen-reader user cannot move.
+library;
+
+import 'package:flutter/material.dart';
+
+import '../../icons/lume_icon.dart';
+import '../../localization/lume_numerals.dart';
+import '../../theme/lume/lume_colors.dart';
+import '../../theme/lume/lume_gradients.dart';
+import '../../theme/lume/lume_space.dart';
+import '../../theme/lume/lume_theme.dart';
+import '../../theme/lume/lume_type.dart';
+import 'lume_pressable.dart';
+
+/// A table column.
+@immutable
+class LumeColumn {
+  const LumeColumn({
+    required this.label,
+    this.numeric = false,
+    this.strong = false,
+    this.width,
+  });
+
+  final String label;
+
+  /// Right-aligned in LTR, and set in tabular figures so a column of numbers
+  /// lines up. Direction-isolated, so it does not reorder in an RTL page.
+  final bool numeric;
+
+  final bool strong;
+  final double? width;
+}
+
+/// `.dtable` — a horizontally scrollable table with priority columns.
+class LumeTable extends StatelessWidget {
+  const LumeTable({
+    super.key,
+    required this.columns,
+    required this.rows,
+    required this.label,
+    this.onRowTap,
+  });
+
+  final List<LumeColumn> columns;
+
+  /// Cell text, already formatted. One list per row, matching [columns].
+  final List<List<String>> rows;
+
+  /// The accessible name of the scroll region. Required: an unlabelled
+  /// scrollable is one a screen reader cannot announce.
+  final String label;
+
+  final void Function(int index)? onRowTap;
+
+  @override
+  Widget build(BuildContext context) {
+    final LumeColors lume = context.lume;
+
+    return Semantics(
+      label: label,
+      container: true,
+      child: DecoratedBox(
+        decoration: BoxDecoration(
+          color: lume.card,
+          borderRadius: LumeRadius.brMd,
+          border: Border.all(color: lume.border, width: LumeSpace.border),
+        ),
+        child: ClipRRect(
+          borderRadius: LumeRadius.brMd,
+          child: SingleChildScrollView(
+            scrollDirection: Axis.horizontal,
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: <Widget>[
+                _TableRow(
+                  columns: columns,
+                  cells: columns.map((LumeColumn c) => c.label).toList(),
+                  header: true,
+                ),
+                for (int i = 0; i < rows.length; i++)
+                  _TableRow(
+                    columns: columns,
+                    cells: rows[i],
+                    onTap: onRowTap == null ? null : () => onRowTap!(i),
+                  ),
+              ],
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class _TableRow extends StatelessWidget {
+  const _TableRow({
+    required this.columns,
+    required this.cells,
+    this.header = false,
+    this.onTap,
+  });
+
+  final List<LumeColumn> columns;
+  final List<String> cells;
+  final bool header;
+  final VoidCallback? onTap;
+
+  @override
+  Widget build(BuildContext context) {
+    final LumeColors lume = context.lume;
+
+    final Widget row = Container(
+      decoration: BoxDecoration(
+        color: header ? lume.card2 : null,
+        border: Border(
+          bottom: BorderSide(color: lume.border, width: LumeSpace.border),
+        ),
+      ),
+      child: Row(
+        children: <Widget>[
+          for (int i = 0; i < cells.length; i++)
+            Container(
+              width: columns[i].width ?? 120,
+              padding: LumeSpace.padRow,
+              alignment: columns[i].numeric
+                  ? AlignmentDirectional.centerEnd
+                  : AlignmentDirectional.centerStart,
+              child: columns[i].numeric && !header
+                  ? LumeNumerals(
+                      cells[i],
+                      style: _style(context, i),
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                    )
+                  : Text(
+                      cells[i],
+                      style: _style(context, i),
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                    ),
+            ),
+        ],
+      ),
+    );
+
+    if (onTap == null) return row;
+    return LumePressable(
+      onTap: onTap,
+      button: false,
+      borderRadius: BorderRadius.zero,
+      semanticLabel: cells.join(', '),
+      child: row,
+    );
+  }
+
+  TextStyle _style(BuildContext context, int i) {
+    final LumeColors lume = context.lume;
+    if (header) {
+      return LumeType.fit(
+        context,
+        context.lumeType.metaSmall,
+      ).copyWith(color: lume.text3, fontWeight: FontWeight.w700);
+    }
+    final TextStyle base = LumeType.fit(
+      context,
+      context.lumeType.meta,
+    ).copyWith(color: columns[i].strong ? lume.text : lume.text2);
+    return columns[i].numeric ? LumeType.numeric(base) : base;
+  }
+}
+
+/// `.imgcard` — a card whose lead is a generated illustration.
+///
+/// The art is deterministic from its seed, so the same story gets the same
+/// picture on every render and a golden does not flicker.
+class LumeImageCard extends StatelessWidget {
+  const LumeImageCard({
+    super.key,
+    required this.title,
+    required this.seed,
+    this.kicker,
+    this.meta,
+    this.gradient,
+    this.glyph,
+    this.onTap,
+    this.width,
+  });
+
+  final String title;
+
+  /// Chooses the colourway and the shapes. Same seed, same art.
+  final int seed;
+
+  final String? kicker;
+  final String? meta;
+  final LumeGradient? gradient;
+  final String? glyph;
+  final VoidCallback? onTap;
+  final double? width;
+
+  static const double artHeight = 108;
+
+  @override
+  Widget build(BuildContext context) {
+    final LumeColors lume = context.lume;
+    final Map<String, LumeGradient> ways = context.lumeGradients.all;
+    final LumeGradient g =
+        gradient ?? ways.values.elementAt(seed.abs() % ways.length);
+
+    final Widget card = Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      mainAxisSize: MainAxisSize.min,
+      children: <Widget>[
+        ClipRRect(
+          borderRadius: LumeRadius.brMd,
+          child: Container(
+            height: artHeight,
+            width: double.infinity,
+            decoration: BoxDecoration(gradient: g.linear),
+            child: CustomPaint(
+              painter: _ArtPainter(seed: seed, ink: g.on),
+            ),
+          ),
+        ),
+        const SizedBox(height: 10),
+        if (kicker != null)
+          Text(
+            LumeType.overline(context, kicker!),
+            style: LumeType.overlineStyle(
+              context,
+              context.lumeType,
+            ).copyWith(color: lume.accent700),
+          ),
+        Text(
+          title,
+          style: LumeType.fit(
+            context,
+            context.lumeType.cardTitle,
+          ).copyWith(color: lume.text),
+          maxLines: 2,
+          overflow: TextOverflow.ellipsis,
+        ),
+        if (meta != null)
+          Text(
+            meta!,
+            style: LumeType.fit(
+              context,
+              context.lumeType.metaSmall,
+            ).copyWith(color: lume.text3),
+            maxLines: 1,
+            overflow: TextOverflow.ellipsis,
+          ),
+      ],
+    );
+
+    final Widget sized = width == null
+        ? card
+        : SizedBox(width: width, child: card);
+
+    if (onTap == null) return sized;
+    return LumePressable(
+      onTap: onTap,
+      button: false,
+      semanticLabel: title,
+      borderRadius: LumeRadius.brMd,
+      minSize: 0,
+      child: sized,
+    );
+  }
+}
+
+/// Deterministic decorative shapes. Soft geometry and floating circles, from
+/// §53's visual language — never a stock illustration.
+class _ArtPainter extends CustomPainter {
+  const _ArtPainter({required this.seed, required this.ink});
+
+  final int seed;
+  final Color ink;
+
+  @override
+  void paint(Canvas canvas, Size size) {
+    // A tiny deterministic sequence: same seed, same picture, every time.
+    int s = seed.abs() * 2654435761 % 2147483647;
+    double next() {
+      s = (s * 1103515245 + 12345) % 2147483647;
+      return s / 2147483647;
+    }
+
+    final Paint p = Paint()..color = ink.withValues(alpha: 0.14);
+    for (int i = 0; i < 4; i++) {
+      canvas.drawCircle(
+        Offset(next() * size.width, next() * size.height),
+        12 + next() * 34,
+        p,
+      );
+    }
+    canvas.drawRRect(
+      RRect.fromRectAndRadius(
+        Rect.fromLTWH(
+          size.width * 0.55,
+          size.height * 0.35,
+          size.width * 0.5,
+          size.height * 0.7,
+        ),
+        const Radius.circular(26),
+      ),
+      Paint()..color = ink.withValues(alpha: 0.10),
+    );
+  }
+
+  @override
+  bool shouldRepaint(_ArtPainter old) => old.seed != seed || old.ink != ink;
+}
+
+/// `.hstrip` — a horizontally scrolling rail of cards.
+class LumeHorizontalStrip extends StatelessWidget {
+  const LumeHorizontalStrip({
+    super.key,
+    required this.children,
+    this.gutters = true,
+    this.itemWidth = 220,
+  });
+
+  final List<Widget> children;
+  final bool gutters;
+  final double itemWidth;
+
+  @override
+  Widget build(BuildContext context) => SingleChildScrollView(
+    scrollDirection: Axis.horizontal,
+    padding: gutters
+        ? const EdgeInsetsDirectional.symmetric(
+            horizontal: LumeSpace.pageCompact,
+          )
+        : EdgeInsets.zero,
+    child: Row(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: <Widget>[
+        for (int i = 0; i < children.length; i++) ...<Widget>[
+          if (i > 0) const SizedBox(width: LumeSpace.x3),
+          SizedBox(width: itemWidth, child: children[i]),
+        ],
+      ],
+    ),
+  );
+}
+
+/// One tool in the related rail.
+@immutable
+class LumeRelatedTool {
+  const LumeRelatedTool({
+    required this.id,
+    required this.name,
+    required this.icon,
+  });
+
+  final String id;
+  final String name;
+  final String icon;
+}
+
+/// `.related` — what makes Lume one product rather than a folder of apps.
+///
+/// The list is eligibility-filtered before it arrives: a related tool the user
+/// cannot see must not appear here, or the rail becomes a way around the
+/// visibility rules.
+class LumeRelatedTools extends StatelessWidget {
+  const LumeRelatedTools({super.key, required this.tools, this.onOpen});
+
+  final List<LumeRelatedTool> tools;
+  final void Function(String id)? onOpen;
+
+  @override
+  Widget build(BuildContext context) {
+    if (tools.isEmpty) return const SizedBox.shrink();
+    final LumeColors lume = context.lume;
+
+    return Wrap(
+      spacing: LumeSpace.x2,
+      runSpacing: LumeSpace.x2,
+      children: <Widget>[
+        for (final LumeRelatedTool t in tools)
+          LumePressable(
+            onTap: onOpen == null ? null : () => onOpen!(t.id),
+            semanticLabel: t.name,
+            borderRadius: LumeRadius.brSm,
+            minSize: LumeSpace.tap,
+            child: Container(
+              padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 12),
+              decoration: BoxDecoration(
+                color: lume.card,
+                borderRadius: LumeRadius.brSm,
+                border: Border.all(color: lume.border, width: LumeSpace.border),
+              ),
+              child: Row(
+                mainAxisSize: MainAxisSize.min,
+                children: <Widget>[
+                  LumeIcon(t.icon, size: LumeSpace.iconMd, color: lume.text2),
+                  const SizedBox(width: LumeSpace.x2),
+                  Text(
+                    t.name,
+                    style: LumeType.fit(
+                      context,
+                      context.lumeType.meta,
+                    ).copyWith(color: lume.text),
+                  ),
+                ],
+              ),
+            ),
+          ),
+      ],
+    );
+  }
+}

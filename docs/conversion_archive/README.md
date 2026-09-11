@@ -30,6 +30,7 @@ web screen, not against a description of it.
 | [COMPONENT_MATRIX.md](COMPONENT_MATRIX.md) | Every shared component, its states, and its conversion status |
 | [SCREEN_MATRIX.md](SCREEN_MATRIX.md) | Every screen and all 85 tools, with archetype, gating and conversion status |
 | [VISUAL_VERIFICATION.md](VISUAL_VERIFICATION.md) | The capture pipeline, the viewport matrix and how a screen is proved |
+| [tool/README.md](tool/README.md) | The conversion tooling: the component fixture, the measurer, the capture and the comparison |
 | [KNOWN_DIFFERENCES.md](KNOWN_DIFFERENCES.md) | Permitted native differences, contradictions found in the sources, and corrections made |
 | [BASELINE_F0.md](BASELINE_F0.md) | The measured state of the web prototype before any Flutter work |
 | [F0_FINAL_ARCHITECTURE.md](F0_FINAL_ARCHITECTURE.md) | **The corrected plan** — target root tree, web retention and removal, documentation rewrite |
@@ -61,7 +62,7 @@ Dayroz widget is not copied.
 |---|---|---|
 | F0 | Dual-source audit, final root architecture, retention and removal plan | **complete — awaiting approval** |
 | F1 | Flutter project **at the root**; fonts, tokens, themes, responsive, l10n, fixtures, test harness | **complete — awaiting approval** |
-| F2 | Shared widget system and component gallery | not started |
+| F2 | Shared widget system and component gallery | **complete — awaiting approval** |
 | F3 | Shell, routes, bottom bar, rail, sidebar, tool host, master-detail | not started |
 | F4 | Onboarding and authentication | not started |
 | F5 | Global screens | not started |
