@@ -31,7 +31,6 @@ library;
 import 'dart:math' as math;
 
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
 
 import '../../../core/icons/lume_icon.dart';
 import '../../../core/icons/lume_icons.dart';
@@ -799,107 +798,15 @@ class LumeTextMeasure extends StatelessWidget {
   final TextStyle style;
   final Widget Function(BuildContext context, TextStyle style) builder;
 
-  /// The advance width of `0` in [style], which is what CSS calls `1ch`.
-  static double chWidth(BuildContext context, TextStyle style) {
-    final TextPainter painter = TextPainter(
-      text: TextSpan(text: '0', style: style),
-      textDirection: TextDirection.ltr,
-      textScaler: MediaQuery.textScalerOf(context),
-    )..layout();
-    final double width = painter.width;
-    painter.dispose();
-    return width;
-  }
-
   @override
   Widget build(BuildContext context) {
     return Align(
       alignment: AlignmentDirectional.centerStart,
-      child: _Capped(
-        maxWidth: chWidth(context, style) * characters,
+      child: LumeMaxWidth(
+        maxWidth: lumeChWidth(context, style) * characters,
         child: builder(context, style),
       ),
     );
-  }
-}
-
-/// A `max-width` that the *intrinsic* height honours too.
-///
-/// `ConstrainedBox` caps the width it lays the child out with, but when it is
-/// asked how tall the child would be at a given width it forwards that width
-/// untouched. So a paragraph capped at 304 reports the height it would have at
-/// 812 — one line instead of two — and anything that sizes itself from that
-/// answer comes up short. `SliverFillRemaining(hasScrollBody: false)` is such
-/// a thing, and the shortfall arrived as a fraction-of-a-pixel overflow with
-/// no visible cause.
-class _Capped extends SingleChildRenderObjectWidget {
-  const _Capped({required this.maxWidth, required Widget super.child});
-
-  final double maxWidth;
-
-  @override
-  _RenderCapped createRenderObject(BuildContext context) =>
-      _RenderCapped(maxWidth);
-
-  @override
-  void updateRenderObject(BuildContext context, _RenderCapped renderObject) {
-    renderObject.maxWidth = maxWidth;
-  }
-}
-
-class _RenderCapped extends RenderProxyBox {
-  _RenderCapped(this._maxWidth);
-
-  double _maxWidth;
-  double get maxWidth => _maxWidth;
-  set maxWidth(double value) {
-    if (value == _maxWidth) return;
-    _maxWidth = value;
-    markNeedsLayout();
-  }
-
-  double _cap(double width) =>
-      width.isFinite ? math.min(width, _maxWidth) : _maxWidth;
-
-  @override
-  double computeMinIntrinsicHeight(double width) =>
-      super.computeMinIntrinsicHeight(_cap(width));
-
-  @override
-  double computeMaxIntrinsicHeight(double width) =>
-      super.computeMaxIntrinsicHeight(_cap(width));
-
-  @override
-  double computeMinIntrinsicWidth(double height) =>
-      math.min(super.computeMinIntrinsicWidth(height), _maxWidth);
-
-  @override
-  double computeMaxIntrinsicWidth(double height) =>
-      math.min(super.computeMaxIntrinsicWidth(height), _maxWidth);
-
-  @override
-  Size computeDryLayout(BoxConstraints constraints) {
-    final RenderBox? child = this.child;
-    if (child == null) return constraints.smallest;
-    return constraints.constrain(
-      child.getDryLayout(
-        BoxConstraints(maxWidth: _maxWidth).enforce(constraints),
-      ),
-    );
-  }
-
-  @override
-  void performLayout() {
-    final RenderBox? child = this.child;
-    if (child == null) {
-      size = constraints.smallest;
-      return;
-    }
-    child.layout(
-      BoxConstraints(maxWidth: _maxWidth).enforce(constraints),
-      parentUsesSize: true,
-    );
-    size = constraints.constrain(child.size);
   }
 }
 

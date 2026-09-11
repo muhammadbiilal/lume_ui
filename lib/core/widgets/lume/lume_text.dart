@@ -27,6 +27,8 @@
 /// an overflow with no visible cause.
 library;
 
+import 'dart:math' as math;
+
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 
@@ -186,5 +188,132 @@ class _RenderBalanced extends RenderProxyBox {
   @override
   void applyPaintTransform(RenderObject child, Matrix4 transform) {
     transform.translateByDouble(_childOffset.dx, _childOffset.dy, 0, 1);
+  }
+}
+
+/// The advance width of `0` in [style], which is what CSS calls `1ch`.
+///
+/// Measured rather than estimated: a `ch` is a property of the face at a size,
+/// and guessing it turns a cap that never binds into one that wraps a line
+/// early. Both `.onb__text` and `.auth__text` are capped in `ch`.
+double lumeChWidth(BuildContext context, TextStyle style) {
+  final TextPainter painter = TextPainter(
+    text: TextSpan(text: '0', style: style),
+    textDirection: TextDirection.ltr,
+    textScaler: MediaQuery.textScalerOf(context),
+  )..layout();
+  final double width = painter.width;
+  painter.dispose();
+  return width;
+}
+
+/// A `max-width` that the *intrinsic* height honours too.
+///
+/// `ConstrainedBox` caps the width it lays the child out with, but when it is
+/// asked how tall the child would be at a given width it forwards that width
+/// untouched. So a paragraph capped at 304 reports the height it would have at
+/// 812 — one line instead of two — and anything that sizes itself from that
+/// answer comes up short. `SliverFillRemaining(hasScrollBody: false)` is such
+/// a thing, and the shortfall arrived as a fraction-of-a-pixel overflow with
+/// no visible cause.
+class LumeMaxWidth extends SingleChildRenderObjectWidget {
+  const LumeMaxWidth({
+    super.key,
+    required this.maxWidth,
+    required Widget super.child,
+    this.fill = false,
+  });
+
+  final double maxWidth;
+
+  /// Whether the child is laid out at the *full* capped width rather than
+  /// being allowed to shrink-wrap.
+  ///
+  /// This is what a CSS block does: `width` is `min(available, max-width)`,
+  /// and the text inside is aligned within that, not around itself. A
+  /// paragraph that shrink-wraps sits at its own natural width, which moves
+  /// centred copy off the centre and makes a measured block the width of its
+  /// longest line.
+  final bool fill;
+
+  @override
+  RenderObject createRenderObject(BuildContext context) =>
+      _RenderMaxWidth(maxWidth, fill);
+
+  @override
+  void updateRenderObject(BuildContext context, RenderObject renderObject) {
+    (renderObject as _RenderMaxWidth)
+      ..maxWidth = maxWidth
+      ..fill = fill;
+  }
+}
+
+class _RenderMaxWidth extends RenderProxyBox {
+  _RenderMaxWidth(this._maxWidth, this._fill);
+
+  double _maxWidth;
+  double get maxWidth => _maxWidth;
+  set maxWidth(double value) {
+    if (value == _maxWidth) return;
+    _maxWidth = value;
+    markNeedsLayout();
+  }
+
+  bool _fill;
+  bool get fill => _fill;
+  set fill(bool value) {
+    if (value == _fill) return;
+    _fill = value;
+    markNeedsLayout();
+  }
+
+  /// What the child is laid out with: capped, and tight when it fills.
+  BoxConstraints _childConstraints(BoxConstraints constraints) {
+    if (!_fill) {
+      return BoxConstraints(maxWidth: _maxWidth).enforce(constraints);
+    }
+    final double width = constraints.maxWidth.isFinite
+        ? math.min(_maxWidth, constraints.maxWidth)
+        : _maxWidth;
+    return BoxConstraints.tightFor(width: width).enforce(constraints);
+  }
+
+  double _cap(double width) =>
+      width.isFinite ? math.min(width, _maxWidth) : _maxWidth;
+
+  @override
+  double computeMinIntrinsicHeight(double width) =>
+      super.computeMinIntrinsicHeight(_cap(width));
+
+  @override
+  double computeMaxIntrinsicHeight(double width) =>
+      super.computeMaxIntrinsicHeight(_cap(width));
+
+  @override
+  double computeMinIntrinsicWidth(double height) =>
+      math.min(super.computeMinIntrinsicWidth(height), _maxWidth);
+
+  @override
+  double computeMaxIntrinsicWidth(double height) =>
+      math.min(super.computeMaxIntrinsicWidth(height), _maxWidth);
+
+  @override
+  Size computeDryLayout(BoxConstraints constraints) {
+    final RenderBox? child = this.child;
+    if (child == null) return constraints.smallest;
+    return constraints.constrain(
+      child.getDryLayout(_childConstraints(constraints)),
+    );
+  }
+
+  @override
+  void performLayout() {
+    final RenderBox? child = this.child;
+    if (child == null) {
+      size = constraints.smallest;
+      return;
+    }
+    child.layout(_childConstraints(constraints), parentUsesSize: true);
+    size = constraints.constrain(child.size);
   }
 }

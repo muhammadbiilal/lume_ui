@@ -11,9 +11,11 @@ library;
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../core/navigation/lume_destination.dart';
-import '../../features/onboarding/domain/islamic_migration.dart';
+import '../../features/auth/data/fake_auth_repository.dart';
+import '../../features/auth/domain/auth_repository.dart';
 import '../../features/onboarding/domain/onboarding_state.dart';
 import '../../features/onboarding/domain/profile_repository.dart';
+import '../../features/startup/application/startup_controller.dart';
 
 /// The user's country, as an ISO 3166-1 alpha-2 code.
 ///
@@ -55,9 +57,24 @@ final Provider<LumeOnboardingStore> onboardingStoreProvider =
 final Provider<LumeProfileRepository> profileRepositoryProvider =
     Provider<LumeProfileRepository>((Ref ref) => LumeMemoryProfileRepository());
 
-/// Runs the one-shot profile migrations at startup, before anything reads a
-/// preference.
-final Provider<LumeProfileMigrator> profileMigratorProvider =
-    Provider<LumeProfileMigrator>(
-      (Ref ref) => LumeProfileMigrator(ref.watch(profileRepositoryProvider)),
+/// Where authentication goes. A deterministic double until Dayroz supplies an
+/// adapter: this repository connects to no backend, by design and by rule.
+///
+/// One account is seeded so the flow is walkable end to end — sign in, refuse,
+/// recover, verify — without a network and without a fixture file.
+final Provider<LumeAuthRepository> authRepositoryProvider =
+    Provider<LumeAuthRepository>(
+      (Ref ref) => LumeFakeAuthRepository.withAccount(),
     );
+
+/// The launch. Reads the profile, runs the one-shot migrations, restores the
+/// session, and is the router's `refreshListenable`.
+final Provider<LumeStartupController> startupControllerProvider =
+    Provider<LumeStartupController>((Ref ref) {
+      final LumeStartupController controller = LumeStartupController(
+        authRepository: ref.watch(authRepositoryProvider),
+        profileRepository: ref.watch(profileRepositoryProvider),
+      );
+      ref.onDispose(controller.dispose);
+      return controller;
+    });

@@ -1,0 +1,305 @@
+{
+  "cell": "auth_trouble_390x844_light_en",
+  "route": "trouble",
+  "viewport": {
+    "width": 390,
+    "height": 844,
+    "innerWidth": 390
+  },
+  "id": "trouble",
+  "status": true,
+  "theme": "light",
+  "lang": "en",
+  "dir": "ltr",
+  "state": {
+    "busy": false,
+    "invalid": 0,
+    "valid": 0,
+    "rules": {
+      "ok": 0,
+      "total": 0
+    },
+    "meterOn": 0,
+    "steps": {
+      "on": 0,
+      "total": 0
+    },
+    "ariaLabel": "That link didn’t work"
+  },
+  "missing": [
+    "auth.close",
+    "auth.stepOf",
+    "auth.brand",
+    "auth.mark",
+    "auth.word",
+    "auth.note",
+    "auth.steps",
+    "auth.steps.seg",
+    "auth.notice",
+    "auth.formerr",
+    "auth.form",
+    "auth.field.first",
+    "auth.fieldLabel.first",
+    "auth.fieldBox.first",
+    "auth.fieldMsg.first",
+    "auth.field.second",
+    "auth.pwtoggle",
+    "auth.fieldOk",
+    "auth.inline",
+    "auth.pwmeter",
+    "auth.pwmeter.track",
+    "auth.pwmeter.label",
+    "auth.pwrules",
+    "auth.pwrules.title",
+    "auth.pwrule.first",
+    "auth.alt",
+    "auth.or",
+    "auth.foot.secondary",
+    "auth.link.quiet",
+    "auth.legal"
+  ],
+  "scroll": {
+    "screen": {
+      "clientHeight": 816,
+      "scrollHeight": 816,
+      "scrolls": false,
+      "overflowY": "auto"
+    },
+    "panel": {
+      "clientHeight": 816,
+      "scrollHeight": 816,
+      "scrolls": false,
+      "overflowY": "visible"
+    },
+    "region": {
+      "clientHeight": 816,
+      "scrollHeight": 816,
+      "scrolls": false,
+      "overflowY": "visible"
+    },
+    "body": {
+      "clientHeight": 816,
+      "scrollHeight": 816,
+      "scrolls": false,
+      "overflowY": "visible"
+    }
+  },
+  "bounds": {
+    "auth": {
+      "x": 0,
+      "y": 28,
+      "width": 390,
+      "height": 816,
+      "lines": null,
+      "font": "16px \"Plus Jakarta Sans\", -apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, sans-serif",
+      "radius": "0px",
+      "pad": "0px",
+      "margin": "0px",
+      "text": "One app for the day ahead.Prayer, weather, money, travel and the small things — wherever you are.That link didn’t workA recovery link can be used once, and only"
+    },
+    "auth.region": {
+      "x": 0,
+      "y": 28,
+      "width": 390,
+      "height": 816,
+      "lines": null,
+      "font": "16px \"Plus Jakarta Sans\", -apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, sans-serif",
+      "radius": "0px",
+      "pad": "0px",
+      "margin": "0px",
+      "text": "That link didn’t workA recovery link can be used once, and only by the address it was sent to. Ask for a new one and it will arrive the same way.Request a new l"
+    },
+    "auth.panel": {
+      "x": 0,
+      "y": 28,
+      "width": 390,
+      "height": 816,
+      "lines": null,
+      "font": "16px \"Plus Jakarta Sans\", -apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, sans-serif",
+      "radius": "0px",
+      "pad": "0px 24px 24px",
+      "margin": "0px",
+      "text": "That link didn’t workA recovery link can be used once, and only by the address it was sent to. Ask for a new one and it will arrive the same way.Request a new l"
+    },
+    "auth.top": {
+      "x": 24,
+      "y": 28,
+      "width": 342,
+      "height": 60,
+      "lines": null,
+      "font": "16px \"Plus Jakarta Sans\", -apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, sans-serif",
+      "radius": "0px",
+      "pad": "16px 0px 0px",
+      "margin": "0px",
+      "text": null
+    },
+    "auth.back": {
+      "x": 14,
+      "y": 44,
+      "width": 44,
+      "height": 44,
+      "lines": null,
+      "font": "16px \"Plus Jakarta Sans\", -apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, sans-serif",
+      "radius": "14px",
+      "pad": "0px",
+      "margin": "0px 0px 0px -10px",
+      "text": null
+    },
+    "auth.visual": {
+      "x": 24,
+      "y": 112,
+      "width": 342,
+      "height": 128,
+      "lines": null,
+      "font": "16px \"Plus Jakarta Sans\", -apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, sans-serif",
+      "radius": "0px",
+      "pad": "0px",
+      "margin": "24px 0px 0px",
+      "text": null
+    },
+    "auth.seal": {
+      "x": 131,
+      "y": 112,
+      "width": 128,
+      "height": 128,
+      "lines": null,
+      "font": "16px \"Plus Jakarta Sans\", -apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, sans-serif",
+      "radius": "0px",
+      "pad": "0px",
+      "margin": "0px 107px",
+      "text": null
+    },
+    "auth.seal.disc": {
+      "x": 161,
+      "y": 142,
+      "width": 68,
+      "height": 68,
+      "lines": null,
+      "font": "16px \"Plus Jakarta Sans\", -apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, sans-serif",
+      "radius": "50%",
+      "pad": "0px",
+      "margin": "0px",
+      "text": null
+    },
+    "auth.hero": {
+      "x": 24,
+      "y": 264,
+      "width": 342,
+      "height": 116.64,
+      "lines": null,
+      "font": "16px \"Plus Jakarta Sans\", -apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, sans-serif",
+      "radius": "0px",
+      "pad": "0px",
+      "margin": "24px 0px 0px",
+      "text": "That link didn’t workA recovery link can be used once, and only by the address it was sent to. Ask for a new one and it will arrive the same way."
+    },
+    "auth.title": {
+      "x": 24,
+      "y": 264,
+      "width": 342,
+      "height": 36.89,
+      "lines": 1,
+      "font": "720 33.54px / 36.894px \"Plus Jakarta Sans\", -apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, sans-serif",
+      "radius": "0px",
+      "pad": "0px",
+      "margin": "0px",
+      "text": "That link didn’t work"
+    },
+    "auth.text": {
+      "x": 24,
+      "y": 310.89,
+      "width": 342,
+      "height": 69.75,
+      "lines": 3,
+      "font": "500 15.5px / 23.25px \"Plus Jakarta Sans\", -apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, sans-serif",
+      "radius": "0px",
+      "pad": "0px",
+      "margin": "10px 0px 0px",
+      "text": "A recovery link can be used once, and only by the address it was sent to. Ask for a new one and it will arrive the same way."
+    },
+    "auth.actions": {
+      "x": 24,
+      "y": 704,
+      "width": 342,
+      "height": 54,
+      "lines": null,
+      "font": "16px \"Plus Jakarta Sans\", -apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, sans-serif",
+      "radius": "0px",
+      "pad": "0px",
+      "margin": "24px 0px 0px",
+      "text": "Request a new link"
+    },
+    "auth.submit": {
+      "x": 24,
+      "y": 704,
+      "width": 342,
+      "height": 54,
+      "lines": 3,
+      "font": "700 15.5px / 15.5px \"Plus Jakarta Sans\", -apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, sans-serif",
+      "radius": "15px",
+      "pad": "0px 22px",
+      "margin": "0px",
+      "text": "Request a new link"
+    },
+    "auth.grow": {
+      "x": 24,
+      "y": 380.64,
+      "width": 342,
+      "height": 299.36,
+      "lines": null,
+      "font": "16px \"Plus Jakarta Sans\", -apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, sans-serif",
+      "radius": "0px",
+      "pad": "0px",
+      "margin": "0px",
+      "text": null
+    },
+    "auth.foot": {
+      "x": 24,
+      "y": 774,
+      "width": 342,
+      "height": 46,
+      "lines": null,
+      "font": "16px \"Plus Jakarta Sans\", -apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, sans-serif",
+      "radius": "0px",
+      "pad": "0px",
+      "margin": "16px 0px 0px",
+      "text": "Back to sign in"
+    },
+    "auth.link.first": {
+      "x": 24,
+      "y": 774,
+      "width": 342,
+      "height": 46,
+      "lines": 2,
+      "font": "550 14px / 18.9px \"Plus Jakarta Sans\", -apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, sans-serif",
+      "radius": "14px",
+      "pad": "0px",
+      "margin": "0px",
+      "text": "Back to sign in"
+    },
+    "auth.aside": {
+      "x": 0,
+      "y": 0,
+      "width": 0,
+      "height": 0,
+      "lines": null,
+      "font": "16px \"Plus Jakarta Sans\", -apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, sans-serif",
+      "radius": "0px",
+      "pad": "0px",
+      "margin": "0px",
+      "text": "One app for the day ahead.Prayer, weather, money, travel and the small things — wherever you are."
+    },
+    "shell.tabbar": {
+      "x": 12,
+      "y": 770,
+      "width": 366,
+      "height": 62,
+      "lines": null,
+      "font": "16px \"Plus Jakarta Sans\", -apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, sans-serif",
+      "radius": "20px",
+      "pad": "0px 4px",
+      "margin": "0px",
+      "text": "HomeToolsTrainsTodayProfile"
+    }
+  }
+}

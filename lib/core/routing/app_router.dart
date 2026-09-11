@@ -28,18 +28,29 @@
 /// rather than reading `navigationShell.currentIndex`.
 library;
 
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../app/providers/shell_provider.dart';
+import '../../features/auth/application/auth_flow_controller.dart';
+import '../../features/auth/data/fake_auth_repository.dart';
+import '../../features/auth/domain/auth_model.dart';
+import '../../features/auth/domain/auth_repository.dart';
+import '../../features/auth/presentation/auth_flow.dart';
 import '../../features/shell/presentation/fixture_records_screen.dart';
 import '../../features/shell/presentation/fixture_screens.dart';
 import '../../features/gallery/presentation/gallery_screen.dart';
 import '../../features/gallery/presentation/navigation_gallery.dart';
 import '../../features/onboarding/domain/onboarding_state.dart';
+import '../../features/onboarding/domain/profile_repository.dart';
 import '../../features/onboarding/presentation/onboarding_flow.dart';
 import '../../features/shell/presentation/fixture_tool_screen.dart';
+import '../../features/startup/application/startup_controller.dart';
+import '../../features/startup/domain/startup_state.dart';
+import '../../features/startup/presentation/splash_screen.dart';
 import '../../l10n/app_localizations.dart';
 import '../icons/lume_icons.dart';
 import '../navigation/lume_destination.dart';
@@ -52,7 +63,13 @@ import 'lume_routes.dart';
 /// different starting location, a different country — without the previous
 /// test's navigation state leaking into it.
 final Provider<GoRouter> routerProvider = Provider<GoRouter>((Ref ref) {
-  return buildLumeRouter();
+  final GoRouter router = buildLumeRouter(
+    startup: ref.watch(startupControllerProvider),
+    auth: ref.watch(authRepositoryProvider),
+    onboardingStore: ref.watch(onboardingStoreProvider),
+  );
+  ref.onDispose(router.dispose);
+  return router;
 });
 
 /// Builds the route table.
@@ -62,11 +79,42 @@ final Provider<GoRouter> routerProvider = Provider<GoRouter>((Ref ref) {
 GoRouter buildLumeRouter({
   String? initialLocation,
   GlobalKey<NavigatorState>? navigatorKey,
+  LumeStartupController? startup,
+  LumeAuthRepository? auth,
+  LumeOnboardingStore? onboardingStore,
 }) {
+  final LumeAuthRepository repository = auth ?? LumeFakeAuthRepository();
+  final LumeStartupController gate =
+      startup ??
+      LumeStartupController(
+        authRepository: repository,
+        profileRepository: LumeMemoryProfileRepository(),
+      );
+  final LumeOnboardingStore store =
+      onboardingStore ?? LumeMemoryOnboardingStore();
+
+  // The launch starts here and nowhere else. `boot()` is idempotent, so a
+  // second router in a test cannot cause a second session restoration.
+  unawaited(gate.boot());
+
   return GoRouter(
     initialLocation: initialLocation ?? LumeRoutes.start,
     navigatorKey: navigatorKey,
     debugLogDiagnostics: false,
+    // The gate re-runs whenever something it reads has actually moved.
+    refreshListenable: gate,
+    redirect: (BuildContext context, GoRouterState state) {
+      final String here = state.uri.path;
+      final String? there = LumeRouteGate.redirect(
+        state: gate.state,
+        location: here,
+      );
+      // Somebody asked for a place they cannot have yet. Hold it rather than
+      // dropping it: losing a deep link to a sign-in is the defect this whole
+      // arrangement exists to prevent.
+      if (there != null && there != here) gate.hold(here);
+      return there;
+    },
     errorBuilder: (BuildContext context, GoRouterState state) {
       final AppLocalizations l = AppLocalizations.of(context);
       return LumeMessageScreen(
@@ -80,31 +128,56 @@ GoRouter buildLumeRouter({
       // The two flows that cover the shell rather than sitting inside it.
       // §124: authentication is a flow, not a tool — it never enters the tool
       // router, the catalogue or search, and it has no navigation of its own.
+      //
+      // It covers the shell rather than sitting inside it, which is D18: the
+      // reference leaves the floating navigation bar drawn over the flow,
+      // where it covers the footer and walks straight out of two screens that
+      // declare nothing dismisses them.
+      GoRoute(
+        path: LumeRoutes.splash,
+        builder: (BuildContext context, GoRouterState state) =>
+            const LumeSplashScreen(),
+      ),
       GoRoute(
         path: LumeRoutes.auth,
-        builder: (BuildContext context, GoRouterState state) => _flow(
-          context,
-          storageId: 'auth',
-          label: AppLocalizations.of(context).navAccount,
-        ),
+        redirect: (BuildContext context, GoRouterState state) =>
+            state.uri.path == LumeRoutes.auth
+            ? LumeRoutes.authRoute(LumeAuthRoute.signIn.segment)
+            : null,
+        routes: <RouteBase>[
+          GoRoute(
+            path: ':$_authScreenParam',
+            // One page for the whole flow, keyed by name rather than by
+            // location: the controller holds the recovery token, the step and
+            // the held destination, and a new page per screen would throw all
+            // three away on the way from sign-in to sign-up.
+            pageBuilder: (BuildContext context, GoRouterState state) =>
+                NoTransitionPage<void>(
+                  key: const ValueKey<String>('auth-flow'),
+                  child: _auth(context, state),
+                ),
+          ),
+        ],
       ),
       // The whole first-run flow. "Sign in" hands over to authentication,
       // which is its own phase; everything else lands on the start route.
       GoRoute(
         path: LumeRoutes.onboarding,
-        builder: (BuildContext context, GoRouterState state) => Consumer(
-          builder: (BuildContext context, WidgetRef ref, Widget? _) =>
-              LumeOnboardingFlowLoader(
-                store: ref.read(onboardingStoreProvider),
-                onDone:
-                    (LumeOnboardingOutcome outcome, LumeProfileRecord record) =>
-                        context.go(
-                          outcome == LumeOnboardingOutcome.signIn
-                              ? LumeRoutes.auth
-                              : LumeRoutes.start,
-                        ),
-              ),
-        ),
+        builder: (BuildContext context, GoRouterState state) =>
+            LumeOnboardingFlowLoader(
+              store: store,
+              onDone:
+                  (LumeOnboardingOutcome outcome, LumeProfileRecord record) {
+                    // Onboarding is the one thing that may say onboarding is
+                    // finished. Authentication never does.
+                    gate.profileChanged(record);
+                    context.go(
+                      outcome == LumeOnboardingOutcome.signIn
+                          ? LumeRoutes.auth
+                          : (gate.takeHeld() ?? LumeRoutes.start),
+                    );
+                  },
+            ),
       ),
 
       // A bare nested destination, arriving from a push notification or a
@@ -354,18 +427,65 @@ Widget _destination(BuildContext context, LumeDestinationId id) {
   );
 }
 
-/// A flow that covers the shell: no navigation, one way out.
-Widget _flow(
-  BuildContext context, {
-  required String storageId,
-  required String label,
-}) {
-  return LumeFixtureScreen(
-    title: label,
-    storageId: storageId,
-    rows: 6,
-    onBack: () => context.go(LumeRoutes.start),
-    backLabel: AppLocalizations.of(context).actionBack,
+/// The path parameter naming which authentication screen is showing.
+const String _authScreenParam = 'screen';
+
+/// The authentication flow, wired to the gate.
+Widget _auth(BuildContext context, GoRouterState state) {
+  final String segment = state.pathParameters[_authScreenParam] ?? '';
+  final LumeAuthRoute route =
+      LumeAuthRoute.fromSegment(segment) ?? LumeAuthRoute.signIn;
+
+  return Consumer(
+    builder: (BuildContext context, WidgetRef ref, Widget? _) {
+      final LumeStartupController gate = ref.watch(startupControllerProvider);
+      final LumeAuthStatus status = gate.state.auth;
+
+      return LumeAuthFlow(
+        repository: ref.watch(authRepositoryProvider),
+        initialRoute: route,
+        status: status,
+        // A flow reached because something was held is a flow that
+        // interrupted something, and it says so: a cross, and a way to
+        // carry on as a guest.
+        modal: gate.state.held != null,
+        pendingDestination: gate.state.held,
+        onRouteChanged: (LumeAuthRoute next) {
+          if (!context.mounted) return;
+          context.replace(LumeRoutes.authRoute(next.segment));
+        },
+        onOutcome:
+            (
+              LumeAuthOutcome outcome,
+              LumeAuthStatus? status,
+              String? pending,
+            ) async {
+              switch (outcome) {
+                case LumeAuthOutcome.signedOutGuest:
+                  await gate.continueAsGuest();
+                case LumeAuthOutcome.authenticated:
+                case LumeAuthOutcome.verified:
+                  // The flow hands over the status it produced. Asking the
+                  // repository again would be a second restoration.
+                  if (status != null) gate.signedIn(status);
+                case LumeAuthOutcome.dismissed:
+                  break;
+              }
+              if (!context.mounted) return;
+
+              final bool succeeded =
+                  outcome == LumeAuthOutcome.authenticated ||
+                  outcome == LumeAuthOutcome.verified;
+              // A held destination is resumed by *succeeding*, never by
+              // walking away: somebody who chose to stay a guest is not asking
+              // to be sent to the screen that sent them here.
+              final String? held = gate.takeHeld() ?? pending;
+              context.go(
+                succeeded ? (held ?? LumeRoutes.start) : LumeRoutes.start,
+              );
+            },
+      );
+    },
   );
 }
 

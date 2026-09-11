@@ -29,7 +29,12 @@ import 'package:go_router/go_router.dart';
 import 'package:lume/core/fixtures/lume_clock.dart';
 import 'package:lume/core/layout/lume_breakpoint.dart';
 import 'package:lume/core/localization/lume_locales.dart';
+import 'package:lume/app/providers/shell_provider.dart';
 import 'package:lume/core/routing/app_router.dart';
+import 'package:lume/features/auth/data/fake_auth_repository.dart';
+import 'package:lume/features/auth/domain/auth_repository.dart';
+import 'package:lume/features/onboarding/domain/profile_repository.dart';
+import 'package:lume/features/startup/application/startup_controller.dart';
 import 'package:lume/core/theme/lume/lume_theme.dart';
 import 'package:lume/l10n/app_localizations.dart';
 
@@ -148,8 +153,35 @@ Future<GoRouter> pumpLumeRouter(
   bool animate = false,
   double textScale = 1.0,
   List<Override> overrides = const <Override>[],
+  LumeAuthRepository? auth,
+  LumeProfileRepository? profile,
+  bool signedIn = false,
+
+  /// Off for a test that wants to see the frames a slow launch draws. Settling
+  /// would run the boot to completion and there would be no splash to find.
+  bool settle = true,
 }) async {
-  final GoRouter router = buildLumeRouter(initialLocation: initialLocation);
+  // One set of objects, shared by the router's gate and by the widgets that
+  // read them through Riverpod. Two sets would be a split brain: the gate
+  // would redirect on one session while the screens drew another.
+  final LumeAuthRepository repository =
+      auth ??
+      (signedIn
+          ? (LumeFakeAuthRepository.withAccount()..seedSession(kFixtureEmail))
+          : LumeFakeAuthRepository.withAccount());
+  final LumeProfileRepository profiles =
+      profile ?? LumeMemoryProfileRepository();
+  final LumeStartupController gate = LumeStartupController(
+    authRepository: repository,
+    profileRepository: profiles,
+  );
+  addTearDown(gate.dispose);
+
+  final GoRouter router = buildLumeRouter(
+    initialLocation: initialLocation,
+    startup: gate,
+    auth: repository,
+  );
   addTearDown(router.dispose);
 
   tester.view.physicalSize = surface;
@@ -161,6 +193,9 @@ Future<GoRouter> pumpLumeRouter(
     ProviderScope(
       overrides: <Override>[
         routerProvider.overrideWithValue(router),
+        authRepositoryProvider.overrideWithValue(repository),
+        profileRepositoryProvider.overrideWithValue(profiles),
+        startupControllerProvider.overrideWithValue(gate),
         ...overrides,
       ],
       child: MaterialApp.router(
@@ -192,9 +227,12 @@ Future<GoRouter> pumpLumeRouter(
       ),
     ),
   );
-  await tester.pumpAndSettle();
+  if (settle) await tester.pumpAndSettle();
   return router;
 }
+
+/// The account [pumpLumeRouter] seeds when a test asks to be signed in.
+const String kFixtureEmail = 'amina@example.com';
 
 /// Where the router currently is.
 String locationOf(GoRouter router) =>

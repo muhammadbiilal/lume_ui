@@ -45,12 +45,10 @@ void main() {
       '/today',
       '/explore',
       '/profile',
-      '/auth',
       '/onboarding',
       '/home/notifications',
       '/today/notifications',
       '/home/search',
-      '/profile/account',
       '/home/unavailable',
       '/home/tool/ready',
       '/tools/tool/loading',
@@ -77,6 +75,31 @@ void main() {
       });
     }
 
+    testWidgets('/auth resolves to the first screen of the flow', (
+      WidgetTester tester,
+    ) async {
+      // `/auth` names the flow, not a screen. It resolves rather than 404s,
+      // because a link to "sign in" is a thing people send each other.
+      final GoRouter router = await pumpLumeRouter(
+        tester,
+        initialLocation: LumeRoutes.auth,
+      );
+      expect(locationOf(router), '/auth/signin');
+    });
+
+    testWidgets('the account surfaces resolve for somebody signed in', (
+      WidgetTester tester,
+    ) async {
+      final GoRouter router = await pumpLumeRouter(
+        tester,
+        initialLocation: '/profile/account',
+        signedIn: true,
+      );
+      expect(locationOf(router), '/profile/account');
+      expect(tester.takeException(), isNull);
+      expectNoOverflow(tester);
+    });
+
     testWidgets('a location nobody defined shows the not-found screen', (
       WidgetTester tester,
     ) async {
@@ -100,6 +123,7 @@ void main() {
       final GoRouter router = await pumpLumeRouter(
         tester,
         initialLocation: '/account',
+        signedIn: true,
       );
       expect(locationOf(router), LumeRoutes.account(LumeRoutes.profile));
     });
@@ -130,6 +154,9 @@ void main() {
         final GoRouter router = await pumpLumeRouter(
           tester,
           initialLocation: location,
+          // The account's own surfaces need an account; everything else in
+          // Lume is open to a guest, and the gate only guards these.
+          signedIn: true,
         );
         expect(locationOf(router), location);
         expect(find.text('We can’t find that'), findsNothing);

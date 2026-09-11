@@ -518,6 +518,15 @@ id-reconciliation table is an F6 deliverable. Recorded in
 | 2026-09-11 (F4A) | **D6 extended to the onboarding chrome** — the 34 circle and the 32 Skip carry 44 px targets that overhang rather than grow the row | Growing it moved the whole flow five pixels, which the bounds comparison caught |
 | 2026-09-11 (F4A) | Four line boxes corrected against the running flow — kicker 13, Skip 32, row name 18, group label 12 | A type role's own height is not the reference's `line-height: normal` |
 | 2026-09-11 (F3) | **`LumeMasterDetail` extended** into a shell that survives rotation, with `GlobalKey`s carrying the list and the detail between the two layouts | The row and the stack put them at different depths, so a rotation would otherwise reset both |
+| 2026-09-12 (F4C) | **D18 raised and resolved** — authentication covers the shell | The floating bar covers a whole footer line and walks out of two screens that declare nothing dismisses them |
+| 2026-09-12 (F4C) | **D19 raised and resolved** — a tall screen scrolls rather than compressing its header | The reference's header shrinks 60 → 48 and slides the back control 6 up when the page below it is long |
+| 2026-09-12 (F4C) | **D20 recorded** — the legal line's inline link has no padded box | Two points of height on one line of one screen |
+| 2026-09-12 (F4C) | **D21 recorded** — the seal fades and scales rather than drawing its stroke | A `stroke-dashoffset` animation is a technique, not a requirement |
+| 2026-09-12 (F4C) | **`.auth__top`'s `min-height` read as border-box** | It includes the 16 above it: a header with a control is 60 and one without is 48, and reading it the other way moved every screen 4 down |
+| 2026-09-12 (F4C) | **`max-width` in `ch` measured from the font** | An estimated `ch` wrapped `.auth__text` a line early on four screens |
+| 2026-09-12 (F4C) | **A capped block fills the width it is capped to** | A shrink-wrapped paragraph sits at its own natural width, which moves centred copy off the centre |
+| 2026-09-12 (F4C) | **`LumeMaxWidth` promoted out of the onboarding chrome** | Authentication needs the same honest intrinsic height, and two copies drift |
+| 2026-09-12 (F4C) | **The recovery token is fixed width** | Neutrality that leaks through a string length is not neutrality |
 | 2026-09-11 (F4B) | **D14 raised and resolved** — a short screen hands the lead and the search field to the list; the reference squeezes the list to zero and draws the field over the action | Measured at 852 × 393: `.locscroll` `clientHeight` 0 against `scrollHeight` 8830 |
 | 2026-09-11 (F4B) | **D15 raised and resolved** — method pills 10 apart rather than 7 | Two 44-point targets cannot sit 7 apart without overlapping |
 | 2026-09-11 (F4B) | **D16 raised and resolved** — the secondary link's target is 44 and the text does not move | The extra 8 comes out of the gaps around it |
@@ -623,6 +632,80 @@ the exchange's own zone, open on the minute, close *exclusively*, take weekends
 from that zone's calendar, and derive the floating holidays rather than listing
 them. The prototype is left as it is — it is the comparison source while the
 conversion runs, not the product.
+
+
+### D18 — authentication covers the shell
+
+**Raised and resolved in F4C.** `.onb` is `position: absolute; inset: 0;
+z-index: 65` and covers the shell. `.screen--auth` is an ordinary screen, and
+`padding-bottom: 0` removes the clearance every other screen keeps for the
+floating navigation bar. Measured on the neutral confirmation at 390 × 844:
+
+| | y | height | bottom |
+|---|---|---|---|
+| `#tabbar` | 770 | 62 | 832 |
+| `.auth__foot` | 731.88 | 88.13 | 820.01 |
+| `.auth__link` "Back to sign in" | 731.88 | 46 | 777.88 |
+| `.auth__link--quiet` | 785.88 | 34.13 | 820.01 |
+
+The last 7.88 points of "Back to sign in" and the **whole** of the quiet line
+beneath it are underneath the bar. The bar is also live, so `created` and
+`expired` — both declared `dismissible: false, back: false` — can be walked
+straight out of by tapping Home. Three screens declare that nothing dismisses
+them and the navigation dismisses them anyway.
+
+The correction: the flow covers the shell, exactly as onboarding does. The
+consequence the comparison has to allow for is that the Flutter panel is 28
+taller — the prototype's simulated status bar (P1) — so a bottom-anchored
+action sits 28 lower in absolute terms and in the same place relative to the
+panel it is in. The bounds comparison measures those elements from the bottom
+for that reason.
+
+The same capture also caught a delay notification drawn over the header,
+covering the back control: the prototype's notification timers are not stopped
+for the flow. Flutter's flow is not interrupted by the shell's timers because
+the shell is not running underneath it.
+
+### D19 — a screen that overflows scrolls rather than compressing its header
+
+**Raised and resolved in F4C.** `.auth__panel` is a flex column and
+`.auth__top` is a flex item with `flex-shrink: 1` and `min-height: 48`. On a
+screen whose content exceeds the viewport, the header **shrinks**: measured on
+the reset screen at 390 × 844, where `scrollHeight` is 892 against a
+`clientHeight` of 816.
+
+| | short screen | tall screen |
+|---|---|---|
+| `.auth__top` height | 60 | **48** |
+| `.auth__nav` y, from the panel | 16 | **10** |
+| everything below | — | **12 higher** |
+
+So the back control's position depends on how much text is further down the
+page, and the same header is two different heights on two screens of the same
+design. Flutter keeps the header at 60 and scrolls the panel, which is what
+`overflow-y: auto` was already asking for. The reset comparison records the
+12-point difference rather than asserting it.
+
+### D20 — the legal line's inline link has no padded box
+
+**Raised and resolved in F4C.** `.auth__legal button` is an inline element with
+`padding: 2px`, which grows the line box it sits in; the paragraph measures
+38.78 for two lines where two plain lines would be 34.8. A Dart `TextSpan` has
+no box to pad, so the paragraph is two points shorter and the link is in the
+same place.
+
+Recorded rather than reproduced because reproducing it would mean a
+`WidgetSpan` with its own baseline arithmetic for two points of height on one
+line of one screen.
+
+### D21 — the seal arrives by fading and scaling
+
+**Raised and resolved in F4C, and the same call F4B made for the onboarding
+seal.** The reference draws the check by animating `stroke-dasharray` and
+`stroke-dashoffset` on a glyph referenced through `<use>`. That is a CSS
+technique for "it arrives", not a design requirement, and it cannot be reached
+through an SVG asset in Flutter. The seal fades and scales in over the same
+640 ms, and under reduced motion it is simply there.
 
 
 One correction has been applied to the web prototype: the four dead

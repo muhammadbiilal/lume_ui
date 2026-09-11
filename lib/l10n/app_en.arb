@@ -1,6 +1,22 @@
 {
   "@@locale": "en",
   "@@context": "Lume",
+  "a11yBack": "Back",
+  "@a11yBack": {
+    "description": "Reference key a11y.back"
+  },
+  "a11yMainNavigation": "Main",
+  "@a11yMainNavigation": {
+    "description": "Reference: aria-label=\"Main\" on both navigations"
+  },
+  "a11ySearch": "Search this tool",
+  "@a11ySearch": {
+    "description": "Reference key a11y.search"
+  },
+  "a11yShare": "Share",
+  "@a11yShare": {
+    "description": "Reference key a11y.share"
+  },
   "actionAdd": "Add",
   "@actionAdd": {
     "description": "Reference key a.add"
@@ -97,21 +113,425 @@
   "@actionWeek": {
     "description": "Reference key a.week"
   },
-  "a11yBack": "Back",
-  "@a11yBack": {
-    "description": "Reference key a11y.back"
-  },
-  "a11ySearch": "Search this tool",
-  "@a11ySearch": {
-    "description": "Reference key a11y.search"
-  },
-  "a11yShare": "Share",
-  "@a11yShare": {
-    "description": "Reference key a11y.share"
-  },
   "appTagline": "Your day, in one place",
   "@appTagline": {
     "description": "Reference key app.tagline"
+  },
+  "authAsideText": "Prayer, weather, money, travel and the small things — wherever you are.",
+  "@authAsideText": {
+    "description": "Reference key auth.asideText"
+  },
+  "authAsideTitle": "One app for the day ahead.",
+  "@authAsideTitle": {
+    "description": "Reference key auth.asideTitle; the desktop aside"
+  },
+  "authBackToSignIn": "Back to sign in",
+  "@authBackToSignIn": {
+    "description": "Reference key auth.backToSignIn"
+  },
+  "authContinue": "Continue",
+  "@authContinue": {
+    "description": "Reference key auth.continue"
+  },
+  "authContinueAsGuest": "Continue as a guest",
+  "@authContinueAsGuest": {
+    "description": "Reference key auth.continueAsGuest"
+  },
+  "authCreateAccount": "Create account",
+  "@authCreateAccount": {
+    "description": "Reference key acct.create"
+  },
+  "authCreateOne": "Create one",
+  "@authCreateOne": {
+    "description": "Reference key auth.createOne"
+  },
+  "authCreatedText": "Your Lume account is ready.",
+  "@authCreatedText": {
+    "description": "Reference key auth.createdText"
+  },
+  "authCreatedTextNamed": "Your Lume account is ready, {name}.",
+  "@authCreatedTextNamed": {
+    "description": "Reference key auth.createdTextNamed",
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "authCreatedTitle": "You’re all set",
+  "@authCreatedTitle": {
+    "description": "Reference key auth.createdTitle"
+  },
+  "authCreatingAccount": "Creating your account…",
+  "@authCreatingAccount": {
+    "description": "Reference key auth.creating"
+  },
+  "authEmailPlaceholder": "you@example.com",
+  "@authEmailPlaceholder": {
+    "description": "Reference key auth.emailPh; a sample address, not a translated phrase"
+  },
+  "authEnterCta": "Enter Lume",
+  "@authEnterCta": {
+    "description": "Reference key auth.enterCta"
+  },
+  "authErrCodeExpired": "That code has expired. Ask for a new one.",
+  "@authErrCodeExpired": {
+    "description": "A verification code past its window; distinct from a wrong one"
+  },
+  "authErrCodeIncorrect": "That code is incorrect.",
+  "@authErrCodeIncorrect": {
+    "description": "Reference key acct.err.codeWrong"
+  },
+  "authErrCodeRequired": "Enter the code we sent you.",
+  "@authErrCodeRequired": {
+    "description": "The verification field was left empty"
+  },
+  "authErrConfirmMismatch": "These passwords don’t match.",
+  "@authErrConfirmMismatch": {
+    "description": "Reference key acct.err.confirmMismatch"
+  },
+  "authErrConfirmRequired": "Confirm your password.",
+  "@authErrConfirmRequired": {
+    "description": "Reference key acct.err.confirmRequired"
+  },
+  "authErrCredentials": "Email or password is incorrect.",
+  "@authErrCredentials": {
+    "description": "Reference key acct.err.credentials; one message for an unknown account and a wrong password alike"
+  },
+  "authErrEmailInvalid": "That doesn’t look like an email address.",
+  "@authErrEmailInvalid": {
+    "description": "Reference key acct.err.emailInvalid"
+  },
+  "authErrEmailRequired": "Enter your email address.",
+  "@authErrEmailRequired": {
+    "description": "Reference key acct.err.emailRequired"
+  },
+  "authErrEmailSame": "That’s already your email address.",
+  "@authErrEmailSame": {
+    "description": "Reference key acct.err.emailSame"
+  },
+  "authErrEmailTaken": "An account already exists for this email.",
+  "@authErrEmailTaken": {
+    "description": "Reference key acct.err.emailTaken"
+  },
+  "authErrLinkExpired": "This reset link has expired. Request a new one.",
+  "@authErrLinkExpired": {
+    "description": "Reference key acct.err.linkExpired"
+  },
+  "authErrLinkInvalid": "This reset link is no longer valid.",
+  "@authErrLinkInvalid": {
+    "description": "Reference key acct.err.linkInvalid"
+  },
+  "authErrLocked": "This account is locked. Reset your password to unlock it.",
+  "@authErrLocked": {
+    "description": "Reference key acct.err.locked"
+  },
+  "authErrNetwork": "Lume couldn’t reach the network. Nothing was lost.",
+  "@authErrNetwork": {
+    "description": "Reference key acct.err.network"
+  },
+  "authErrNothingPending": "There’s no email change waiting.",
+  "@authErrNothingPending": {
+    "description": "Reference key acct.err.nothingPending"
+  },
+  "authErrPasswordRequired": "Enter a password.",
+  "@authErrPasswordRequired": {
+    "description": "Reference key acct.err.passwordRequired"
+  },
+  "authErrPasswordWeak": "Your password doesn’t meet all the requirements yet.",
+  "@authErrPasswordWeak": {
+    "description": "Reference key acct.err.passwordWeak"
+  },
+  "authErrRateLimited": "Too many attempts. Wait a moment and try again.",
+  "@authErrRateLimited": {
+    "description": "Too many attempts too quickly"
+  },
+  "authErrSignedOut": "You’re signed out. Sign in to continue.",
+  "@authErrSignedOut": {
+    "description": "Reference key acct.err.signedOut"
+  },
+  "authErrStorage": "Lume couldn’t save to this device. Check its storage settings and try again.",
+  "@authErrStorage": {
+    "description": "Reference key acct.err.storage"
+  },
+  "authExpiredCta": "Sign in again",
+  "@authExpiredCta": {
+    "description": "Reference key auth.expiredCta"
+  },
+  "authExpiredText": "Sign in again and Lume will take you back to where you were.",
+  "@authExpiredText": {
+    "description": "Reference key auth.expiredText"
+  },
+  "authExpiredTitle": "Your session has expired",
+  "@authExpiredTitle": {
+    "description": "Reference key auth.expiredTitle"
+  },
+  "authFieldCode": "Verification code",
+  "@authFieldCode": {
+    "description": "Reference key acct.f.code"
+  },
+  "authFieldConfirm": "Confirm password",
+  "@authFieldConfirm": {
+    "description": "Reference key acct.f.confirm"
+  },
+  "authFieldEmail": "Email",
+  "@authFieldEmail": {
+    "description": "Reference key acct.f.email"
+  },
+  "authFieldName": "Name",
+  "@authFieldName": {
+    "description": "Reference key acct.f.name"
+  },
+  "authFieldNewPassword": "New password",
+  "@authFieldNewPassword": {
+    "description": "Reference key acct.f.new"
+  },
+  "authFieldPassword": "Password",
+  "@authFieldPassword": {
+    "description": "Reference key acct.f.password"
+  },
+  "authForgotAction": "Forgot password?",
+  "@authForgotAction": {
+    "description": "Reference key auth.forgot"
+  },
+  "authForgotCta": "Send reset link",
+  "@authForgotCta": {
+    "description": "Reference key auth.forgotCta"
+  },
+  "authForgotText": "Enter the email associated with your Lume account.",
+  "@authForgotText": {
+    "description": "Reference key auth.forgotText"
+  },
+  "authForgotTitle": "Forgot password?",
+  "@authForgotTitle": {
+    "description": "Reference key auth.forgotTitle"
+  },
+  "authHaveAccount": "Already have an account?",
+  "@authHaveAccount": {
+    "description": "Reference key auth.haveAccount"
+  },
+  "authHidePassword": "Hide password",
+  "@authHidePassword": {
+    "description": "Reference key acct.pw.hide"
+  },
+  "authLegal": "Creating an account means Lume keeps this information for you.",
+  "@authLegal": {
+    "description": "Reference key auth.legal"
+  },
+  "authLegalLink": "How Lume handles your data",
+  "@authLegalLink": {
+    "description": "Reference key auth.legalLink"
+  },
+  "authLocalCode": "This build has no mail server. Your code is {code}.",
+  "@authLocalCode": {
+    "description": "Shown only by a repository with no mail server behind it",
+    "placeholders": {
+      "code": {
+        "type": "String"
+      }
+    }
+  },
+  "authNameHint": "So Lume knows what to call you.",
+  "@authNameHint": {
+    "description": "Reference key auth.nameHint"
+  },
+  "authNeedAccountText": "This part of Lume belongs to your account.",
+  "@authNeedAccountText": {
+    "description": "Reference key auth.needAccountText"
+  },
+  "authNoAccount": "Don’t have an account?",
+  "@authNoAccount": {
+    "description": "Reference key auth.noAccount"
+  },
+  "authOpenLink": "Open the reset link",
+  "@authOpenLink": {
+    "description": "Reference key auth.openLink"
+  },
+  "authPasswordRuleDigit": "a number",
+  "@authPasswordRuleDigit": {
+    "description": "Reference key acct.pw.digit"
+  },
+  "authPasswordRuleLength": "at least 8 characters",
+  "@authPasswordRuleLength": {
+    "description": "Reference key acct.pw.len"
+  },
+  "authPasswordRuleLower": "a lowercase letter",
+  "@authPasswordRuleLower": {
+    "description": "Reference key acct.pw.lower"
+  },
+  "authPasswordRuleUpper": "an uppercase letter",
+  "@authPasswordRuleUpper": {
+    "description": "Reference key acct.pw.upper"
+  },
+  "authPasswordRulesTitle": "Password must contain",
+  "@authPasswordRulesTitle": {
+    "description": "Reference key acct.pw.title"
+  },
+  "authRememberPassword": "Remember your password?",
+  "@authRememberPassword": {
+    "description": "Reference key auth.rememberPw"
+  },
+  "authResend": "Send it again",
+  "@authResend": {
+    "description": "Reference key auth.resend"
+  },
+  "authResendIn": "{seconds, plural, one {You can ask again in {seconds} second} other {You can ask again in {seconds} seconds}}",
+  "@authResendIn": {
+    "description": "Reference key auth.resendIn; a live countdown",
+    "placeholders": {
+      "seconds": {
+        "type": "int"
+      }
+    }
+  },
+  "authResendNone": "Didn’t receive it?",
+  "@authResendNone": {
+    "description": "Reference key auth.resendNone"
+  },
+  "authResetCta": "Update password",
+  "@authResetCta": {
+    "description": "Reference key auth.resetCta"
+  },
+  "authResetText": "Choose something you haven’t used here before.",
+  "@authResetText": {
+    "description": "Reference key auth.resetText"
+  },
+  "authResetTitle": "Create a new password",
+  "@authResetTitle": {
+    "description": "Reference key auth.resetTitle"
+  },
+  "authSentLocal": "This build has no mail server, so the link opens here.",
+  "@authSentLocal": {
+    "description": "Reference key auth.sentLocal"
+  },
+  "authSentNote": "The link works for one hour.",
+  "@authSentNote": {
+    "description": "Reference key auth.sentNote"
+  },
+  "authSentText": "If an account exists for this email, we’ve sent instructions to reset your password.",
+  "@authSentText": {
+    "description": "Reference key auth.sentText; identical whether or not the account exists"
+  },
+  "authSentTitle": "Check your email",
+  "@authSentTitle": {
+    "description": "Reference key auth.sentTitle"
+  },
+  "authShowPassword": "Show password",
+  "@authShowPassword": {
+    "description": "Reference key acct.pw.show"
+  },
+  "authSignIn": "Sign in",
+  "@authSignIn": {
+    "description": "Reference key acct.signIn"
+  },
+  "authSignInText": "Continue to your Lume.",
+  "@authSignInText": {
+    "description": "Reference key auth.signInText"
+  },
+  "authSignInTitle": "Welcome back",
+  "@authSignInTitle": {
+    "description": "Reference key auth.signInTitle"
+  },
+  "authSignUpPasswordText": "This is what keeps your Lume yours.",
+  "@authSignUpPasswordText": {
+    "description": "Reference key auth.signUpPwText"
+  },
+  "authSignUpPasswordTitle": "Choose a password",
+  "@authSignUpPasswordTitle": {
+    "description": "Reference key auth.signUpPwTitle"
+  },
+  "authSignUpText": "Your Lume, kept safe and reachable from anywhere.",
+  "@authSignUpText": {
+    "description": "Reference key auth.signUpText"
+  },
+  "authSignUpTitle": "Create your Lume account",
+  "@authSignUpTitle": {
+    "description": "Reference key auth.signUpTitle"
+  },
+  "authSigningIn": "Signing you in…",
+  "@authSigningIn": {
+    "description": "Reference key auth.signingIn"
+  },
+  "authStepOf": "Step {n} of {total}",
+  "@authStepOf": {
+    "description": "Reference key auth.stepOf",
+    "placeholders": {
+      "n": {
+        "type": "int"
+      },
+      "total": {
+        "type": "int"
+      }
+    }
+  },
+  "authStrength0": "Enter a password",
+  "@authStrength0": {
+    "description": "Reference key acct.pw.strength0"
+  },
+  "authStrength1": "Weak",
+  "@authStrength1": {
+    "description": "Reference key acct.pw.strength1"
+  },
+  "authStrength2": "Fair",
+  "@authStrength2": {
+    "description": "Reference key acct.pw.strength2"
+  },
+  "authStrength3": "Good",
+  "@authStrength3": {
+    "description": "Reference key acct.pw.strength3"
+  },
+  "authStrength4": "Strong",
+  "@authStrength4": {
+    "description": "Reference key acct.pw.strength4"
+  },
+  "authTroubleCta": "Request a new link",
+  "@authTroubleCta": {
+    "description": "Reference key auth.troubleCta"
+  },
+  "authTroubleExpired": "Recovery links stop working after an hour, so this one has expired. Ask for a new one and it will arrive the same way.",
+  "@authTroubleExpired": {
+    "description": "Reference key auth.troubleExpired"
+  },
+  "authTroubleText": "A recovery link can be used once, and only by the address it was sent to. Ask for a new one and it will arrive the same way.",
+  "@authTroubleText": {
+    "description": "Reference key auth.troubleText"
+  },
+  "authTroubleTitle": "That link didn’t work",
+  "@authTroubleTitle": {
+    "description": "Reference key auth.troubleTitle"
+  },
+  "authUpdatedText": "You can now sign in with your new password.",
+  "@authUpdatedText": {
+    "description": "Reference key auth.updatedText"
+  },
+  "authUpdatedTitle": "Password updated",
+  "@authUpdatedTitle": {
+    "description": "Reference key auth.updatedTitle"
+  },
+  "authVerifyCta": "Verify email",
+  "@authVerifyCta": {
+    "description": "Reference key auth.verifyCta"
+  },
+  "authVerifyText": "We sent a six-digit code to",
+  "@authVerifyText": {
+    "description": "Reference key auth.verifyText; the masked address follows on its own line"
+  },
+  "authVerifyTitle": "Check your inbox",
+  "@authVerifyTitle": {
+    "description": "Reference key auth.verifyTitle"
+  },
+  "authWelcomeBack": "Welcome back, {name}",
+  "@authWelcomeBack": {
+    "description": "Reference key auth.welcomeBack",
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "authWorking": "One moment…",
+  "@authWorking": {
+    "description": "Reference key auth.working"
   },
   "commonAll": "All",
   "@commonAll": {
@@ -156,6 +576,10 @@
   "commonNow": "Now",
   "@commonNow": {
     "description": "Reference key common.now"
+  },
+  "commonOptional": "Optional",
+  "@commonOptional": {
+    "description": "Reference key a.optional; §8 marks optional fields rather than required ones"
   },
   "commonOverdue": "Overdue",
   "@commonOverdue": {
@@ -217,6 +641,178 @@
   "@commonYesterday": {
     "description": "Reference key common.yesterday"
   },
+  "igEveryday": "Everyday life",
+  "@igEveryday": {
+    "description": "Reference key ig.everyday"
+  },
+  "igFaith": "Islamic features",
+  "@igFaith": {
+    "description": "Reference key ig.faith"
+  },
+  "igHealth": "Health & wellness",
+  "@igHealth": {
+    "description": "Reference key ig.health"
+  },
+  "igMoney": "Money & finance",
+  "@igMoney": {
+    "description": "Reference key ig.money"
+  },
+  "igNews": "News & entertainment",
+  "@igNews": {
+    "description": "Reference key ig.news"
+  },
+  "igTravel": "Travel & getting around",
+  "@igTravel": {
+    "description": "Reference key ig.travel"
+  },
+  "intAlarms": "Alarms & timers",
+  "@intAlarms": {
+    "description": "Interest \"alarms\". The reference hard-codes the English label and never translates it; see D12"
+  },
+  "intBills": "Bills",
+  "@intBills": {
+    "description": "Interest \"bills\". The reference hard-codes the English label and never translates it; see D12"
+  },
+  "intCalendar": "Calendar",
+  "@intCalendar": {
+    "description": "Interest \"calendar\". The reference hard-codes the English label and never translates it; see D12"
+  },
+  "intConvert": "Converters",
+  "@intConvert": {
+    "description": "Interest \"convert\". The reference hard-codes the English label and never translates it; see D12"
+  },
+  "intCricket": "Cricket",
+  "@intCricket": {
+    "description": "Interest \"cricket\". The reference hard-codes the English label and never translates it; see D12"
+  },
+  "intDuas": "Duas & dhikr",
+  "@intDuas": {
+    "description": "Interest \"duas\". The reference hard-codes the English label and never translates it; see D12"
+  },
+  "intExpenses": "Expenses",
+  "@intExpenses": {
+    "description": "Interest \"expenses\". The reference hard-codes the English label and never translates it; see D12"
+  },
+  "intFitness": "Fitness",
+  "@intFitness": {
+    "description": "Interest \"fitness\". The reference hard-codes the English label and never translates it; see D12"
+  },
+  "intFlights": "Flights",
+  "@intFlights": {
+    "description": "Interest \"flights\". The reference hard-codes the English label and never translates it; see D12"
+  },
+  "intFuel": "Fuel",
+  "@intFuel": {
+    "description": "Interest \"fuel\". The reference hard-codes the English label and never translates it; see D12"
+  },
+  "intHabits": "Habits",
+  "@intHabits": {
+    "description": "Interest \"habits\". The reference hard-codes the English label and never translates it; see D12"
+  },
+  "intHadith": "Hadith",
+  "@intHadith": {
+    "description": "Interest \"hadith\". The reference hard-codes the English label and never translates it; see D12"
+  },
+  "intMarkets": "Markets",
+  "@intMarkets": {
+    "description": "Interest \"markets\". The reference hard-codes the English label and never translates it; see D12"
+  },
+  "intMaths": "Calculators",
+  "@intMaths": {
+    "description": "Interest \"maths\". The reference hard-codes the English label and never translates it; see D12"
+  },
+  "intMeds": "Medication",
+  "@intMeds": {
+    "description": "Interest \"meds\". The reference hard-codes the English label and never translates it; see D12"
+  },
+  "intNearby": "Nearby places",
+  "@intNearby": {
+    "description": "Interest \"nearby\". The reference hard-codes the English label and never translates it; see D12"
+  },
+  "intNews": "News",
+  "@intNews": {
+    "description": "Interest \"news\". The reference hard-codes the English label and never translates it; see D12"
+  },
+  "intNotes": "Notes",
+  "@intNotes": {
+    "description": "Interest \"notes\". The reference hard-codes the English label and never translates it; see D12"
+  },
+  "intPrayer": "Prayer times",
+  "@intPrayer": {
+    "description": "Interest \"prayer\". The reference hard-codes the English label and never translates it; see D12"
+  },
+  "intQuotes": "Daily quotes",
+  "@intQuotes": {
+    "description": "Interest \"quotes\". The reference hard-codes the English label and never translates it; see D12"
+  },
+  "intQuran": "Qur’an",
+  "@intQuran": {
+    "description": "Interest \"quran\". The reference hard-codes the English label and never translates it; see D12"
+  },
+  "intRamadan": "Ramadan",
+  "@intRamadan": {
+    "description": "Interest \"ramadan\". The reference hard-codes the English label and never translates it; see D12"
+  },
+  "intRates": "Rates & gold",
+  "@intRates": {
+    "description": "Interest \"rates\". The reference hard-codes the English label and never translates it; see D12"
+  },
+  "intReading": "Reading",
+  "@intReading": {
+    "description": "Interest \"reading\". The reference hard-codes the English label and never translates it; see D12"
+  },
+  "intSavings": "Saving & goals",
+  "@intSavings": {
+    "description": "Interest \"savings\". The reference hard-codes the English label and never translates it; see D12"
+  },
+  "intSleep": "Sleep",
+  "@intSleep": {
+    "description": "Interest \"sleep\". The reference hard-codes the English label and never translates it; see D12"
+  },
+  "intTasks": "Tasks & to-dos",
+  "@intTasks": {
+    "description": "Interest \"tasks\". The reference hard-codes the English label and never translates it; see D12"
+  },
+  "intTrains": "Trains",
+  "@intTrains": {
+    "description": "Interest \"trains\". The reference hard-codes the English label and never translates it; see D12"
+  },
+  "intWater": "Water",
+  "@intWater": {
+    "description": "Interest \"water\". The reference hard-codes the English label and never translates it; see D12"
+  },
+  "intWeather": "Weather",
+  "@intWeather": {
+    "description": "Interest \"weather\". The reference hard-codes the English label and never translates it; see D12"
+  },
+  "intZakat": "Zakat & giving",
+  "@intZakat": {
+    "description": "Interest \"zakat\". The reference hard-codes the English label and never translates it; see D12"
+  },
+  "methodEgyptian": "Egyptian",
+  "@methodEgyptian": {
+    "description": "Prayer calculation method"
+  },
+  "methodIsna": "ISNA",
+  "@methodIsna": {
+    "description": "Prayer calculation method"
+  },
+  "methodKarachi": "University of Karachi",
+  "@methodKarachi": {
+    "description": "Prayer calculation method"
+  },
+  "methodMwl": "Muslim World League",
+  "@methodMwl": {
+    "description": "Prayer calculation method"
+  },
+  "methodUmmAlQura": "Umm al-Qura",
+  "@methodUmmAlQura": {
+    "description": "Prayer calculation method"
+  },
+  "navAccount": "Account",
+  "@navAccount": {
+    "description": "Reference key acct.account"
+  },
   "navExplore": "Explore",
   "@navExplore": {
     "description": "Reference key nav.explore"
@@ -224,6 +820,10 @@
   "navHome": "Home",
   "@navHome": {
     "description": "Reference key nav.home"
+  },
+  "navNotifications": "Notifications",
+  "@navNotifications": {
+    "description": "Reference key home.notifications"
   },
   "navProfile": "Profile",
   "@navProfile": {
@@ -240,6 +840,266 @@
   "navTrains": "Trains",
   "@navTrains": {
     "description": "Reference key nav.trains"
+  },
+  "onbAllSet": "All set",
+  "@onbAllSet": {
+    "description": "Reference key onb.allSet"
+  },
+  "onbAtCap": "Up to {max} — remove one first",
+  "@onbAtCap": {
+    "description": "Refuses a tap once the cap is reached",
+    "placeholders": {
+      "max": {
+        "type": "String"
+      }
+    }
+  },
+  "onbCityText": "Used for weather, prayer times where relevant, and anything local.",
+  "@onbCityText": {
+    "description": "Reference key onb.cityText; untranslated in the prototype (D12)"
+  },
+  "onbCityTitle": "Which city are you in?",
+  "@onbCityTitle": {
+    "description": "Reference key onb.cityTitle"
+  },
+  "onbEnterLume": "Enter Lume",
+  "@onbEnterLume": {
+    "description": "The final step’s action"
+  },
+  "onbHereForText": "Pick 5 to 10. Your home screen, tools and reading are built around them — change them whenever you like.",
+  "@onbHereForText": {
+    "description": "The interests step’s supporting copy. Untranslated in the reference; see D12"
+  },
+  "onbHereForTitle": "What are you here for?",
+  "@onbHereForTitle": {
+    "description": "Reference key onb.hereForTitle"
+  },
+  "onbLocalKicker": "Make it local",
+  "@onbLocalKicker": {
+    "description": "Reference key onb.localKicker"
+  },
+  "onbMethodLabel": "Prayer calculation method",
+  "@onbMethodLabel": {
+    "description": "The faith-gated group heading on the set-up step"
+  },
+  "onbMinimum": "{count} of {min} minimum",
+  "@onbMinimum": {
+    "description": "Reference key onb.minimum, shown below the minimum",
+    "placeholders": {
+      "count": {
+        "type": "String"
+      },
+      "min": {
+        "type": "String"
+      }
+    }
+  },
+  "onbNameKicker": "One last thing",
+  "@onbNameKicker": {
+    "description": "Reference key onb.nameKicker; untranslated in the prototype (D12)"
+  },
+  "onbNameLabel": "Display name",
+  "@onbNameLabel": {
+    "description": "Reference key acct.f.displayName"
+  },
+  "onbNameNote": "Lume keeps this on your device.",
+  "@onbNameNote": {
+    "description": "Reference key onb.nameNote; untranslated in the prototype (D12)"
+  },
+  "onbNamePlaceholder": "Your name",
+  "@onbNamePlaceholder": {
+    "description": "Reference key onb.namePlaceholder"
+  },
+  "onbNameSkip": "Skip for now",
+  "@onbNameSkip": {
+    "description": "Reference key onb.nameSkip"
+  },
+  "onbNameText": "Only used to greet you. You can change it later, or skip it entirely.",
+  "@onbNameText": {
+    "description": "Reference key onb.nameText"
+  },
+  "onbNameTitle": "What should we call you?",
+  "@onbNameTitle": {
+    "description": "Reference key onb.nameTitle"
+  },
+  "onbOnDevice": "Lume keeps this on your device. Nothing is uploaded.",
+  "@onbOnDevice": {
+    "description": "Reference key onb.onDevice"
+  },
+  "onbPermLocation": "Use your location",
+  "@onbPermLocation": {
+    "description": "Reference key onb.permLocation"
+  },
+  "onbPermLocationSub": "For weather, local services and nearby places",
+  "@onbPermLocationSub": {
+    "description": "Shown when the Islamic experience is off"
+  },
+  "onbPermLocationSubFaith": "For prayer times, Qibla, weather and nearby places",
+  "@onbPermLocationSubFaith": {
+    "description": "Shown when the Islamic experience is on"
+  },
+  "onbPermNotify": "Gentle reminders",
+  "@onbPermNotify": {
+    "description": "Reference key onb.permNotify"
+  },
+  "onbPermNotifySub": "A quiet nudge for the things you asked us to watch",
+  "@onbPermNotifySub": {
+    "description": "Shown when the Islamic experience is off"
+  },
+  "onbPermNotifySubFaith": "A quiet nudge 5 minutes before each adhan",
+  "@onbPermNotifySubFaith": {
+    "description": "Shown when the Islamic experience is on"
+  },
+  "onbPlanKicker": "Plan",
+  "@onbPlanKicker": {
+    "description": "Reference key onb.planKicker"
+  },
+  "onbPlanText": "Tasks, reminders and events on one timeline — with everything that matters already in the right place.",
+  "@onbPlanText": {
+    "description": "The plan step’s supporting copy; untranslated in the prototype (D12)"
+  },
+  "onbPlanTitle": "Your day, laid out before it starts",
+  "@onbPlanTitle": {
+    "description": "Reference key onb.planTitle"
+  },
+  "onbReadyFaith": "Your next prayer is {prayer}, and today’s plan is waiting on the home screen.",
+  "@onbReadyFaith": {
+    "description": "Reference key onb.readyFaith; untranslated in the prototype (D12)",
+    "placeholders": {
+      "prayer": {
+        "type": "String"
+      }
+    }
+  },
+  "onbReadyGeneral": "Today’s plan is waiting on the home screen.",
+  "@onbReadyGeneral": {
+    "description": "Reference key onb.readyGeneral; untranslated in the prototype (D12)"
+  },
+  "onbReadyNamed": "You’re ready, {name}",
+  "@onbReadyNamed": {
+    "description": "Reference key onb.readyNamed",
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "onbReadyTitle": "You’re all set",
+  "@onbReadyTitle": {
+    "description": "Reference key onb.readyTitle — account.js wins over core.js; see ONBOARDING_INVENTORY F2"
+  },
+  "onbRevisit": "You can revisit this tour any time from Profile.",
+  "@onbRevisit": {
+    "description": "Reference key onb.revisit; untranslated in the prototype (D12)"
+  },
+  "onbSelected": "{count} of {max} selected",
+  "@onbSelected": {
+    "description": "Reference key onb.selected, shown at or above the minimum",
+    "placeholders": {
+      "count": {
+        "type": "String"
+      },
+      "max": {
+        "type": "String"
+      }
+    }
+  },
+  "onbSetupText": "Two permissions, and you can change either of them later.",
+  "@onbSetupText": {
+    "description": "Reference key onb.setupText; untranslated in the prototype (D12)"
+  },
+  "onbSetupTitle": "Set it up once",
+  "@onbSetupTitle": {
+    "description": "Reference key onb.setupTitle"
+  },
+  "onbSignInAction": "Sign in",
+  "@onbSignInAction": {
+    "description": "The accent half of the welcome step’s link"
+  },
+  "onbSignInPrompt": "Already have an account?",
+  "@onbSignInPrompt": {
+    "description": "The quiet half of the welcome step’s link"
+  },
+  "onbSkippedDefaults": "Set up with our defaults — edit them in Profile",
+  "@onbSkippedDefaults": {
+    "description": "Shown when Skip is used before any interest is chosen"
+  },
+  "onbSkippedTour": "Tour skipped — find it again in Profile",
+  "@onbSkippedTour": {
+    "description": "Shown when Skip is used after interests are already stored"
+  },
+  "onbToolsKicker": "Tools",
+  "@onbToolsKicker": {
+    "description": "Reference key onb.toolsKicker"
+  },
+  "onbToolsText": "Calculator, converters, weather, scanner, rates, trackers — sorted, so you never hunt for them.",
+  "@onbToolsText": {
+    "description": "The tools step’s supporting copy; untranslated in the prototype (D12)"
+  },
+  "onbToolsTitle": "{count}-odd tools, one or two taps away",
+  "@onbToolsTitle": {
+    "description": "The tools step’s title. The count is the whole catalogue, not the eligible subset — see ONBOARDING_INVENTORY F5",
+    "placeholders": {
+      "count": {
+        "type": "String"
+      }
+    }
+  },
+  "onbWelcomeBack": "Welcome to Lume",
+  "@onbWelcomeBack": {
+    "description": "Shown when the flow completes"
+  },
+  "onbWelcomeText": "Plans, money, travel, reading and the small tools you reach for — without the clutter.",
+  "@onbWelcomeText": {
+    "description": "Reference key onb.welcomeText; untranslated in the prototype (D12)"
+  },
+  "onbWelcomeTitle": "Everything your day needs, quietly organised.",
+  "@onbWelcomeTitle": {
+    "description": "Reference key onb.welcomeTitle"
+  },
+  "onbWhereText": "This helps us personalise local information and services. It says nothing about who you are.",
+  "@onbWhereText": {
+    "description": "Reference key onb.whereText"
+  },
+  "onbWhereTitle": "Where are you based?",
+  "@onbWhereTitle": {
+    "description": "Reference key onb.whereTitle"
+  },
+  "onbYoursKicker": "Make it yours",
+  "@onbYoursKicker": {
+    "description": "Reference key onb.yoursKicker"
+  },
+  "persAllCountries": "All countries",
+  "@persAllCountries": {
+    "description": "Reference key pers.allCountries"
+  },
+  "persIslamic": "Islamic features",
+  "@persIslamic": {
+    "description": "Reference key pers.islamic"
+  },
+  "persIslamicSub": "Prayer times, Qur’an, duas, zakat and Ramadan",
+  "@persIslamicSub": {
+    "description": "Reference key pers.islamicSub"
+  },
+  "persPopular": "Popular",
+  "@persPopular": {
+    "description": "Reference key pers.popular"
+  },
+  "persRecent": "Recent",
+  "@persRecent": {
+    "description": "Reference key pers.recent"
+  },
+  "persSearchCities": "Search cities",
+  "@persSearchCities": {
+    "description": "Reference key pers.searchCities"
+  },
+  "persSearchCountries": "Search countries",
+  "@persSearchCountries": {
+    "description": "Reference key pers.searchCountries"
+  },
+  "persUseLocation": "Use my current location",
+  "@persUseLocation": {
+    "description": "Reference key pers.useLocation"
   },
   "recConflict": "This record changed elsewhere",
   "@recConflict": {
@@ -285,6 +1145,22 @@
   "@recSaveFailedText": {
     "description": "Reference key rec.saveFailedText"
   },
+  "recordsNoSelectionText": "Choose a record to see it here.",
+  "@recordsNoSelectionText": {
+    "description": "Master-detail pane before a record is chosen"
+  },
+  "recordsNoSelectionTitle": "Nothing selected",
+  "@recordsNoSelectionTitle": {
+    "description": "Master-detail pane before a record is chosen"
+  },
+  "routeMissingText": "The link may be old, or the page may have moved.",
+  "@routeMissingText": {
+    "description": "Unrecognised location"
+  },
+  "routeMissingTitle": "We can’t find that",
+  "@routeMissingTitle": {
+    "description": "Unrecognised location"
+  },
   "searchJumpBack": "Jump back in",
   "@searchJumpBack": {
     "description": "Reference key search.jumpBack"
@@ -301,6 +1177,22 @@
   "@searchTry": {
     "description": "Reference key search.try"
   },
+  "startupLoading": "Starting Lume",
+  "@startupLoading": {
+    "description": "Announced while the launch is still deciding where to go"
+  },
+  "toolErrorText": "We couldn’t load this. Try again in a moment.",
+  "@toolErrorText": {
+    "description": "Tool host error state"
+  },
+  "toolErrorTitle": "Something went wrong",
+  "@toolErrorTitle": {
+    "description": "Tool host error state"
+  },
+  "toolLoading": "Loading",
+  "@toolLoading": {
+    "description": "Announced while a tool is still assembling"
+  },
   "toolPrivateText": "This information stays on your device, is never shown on Home and is never included in shared content.",
   "@toolPrivateText": {
     "description": "Reference key tool.private.text"
@@ -309,484 +1201,16 @@
   "@toolPrivateTitle": {
     "description": "Reference key tool.private.title"
   },
-  "toolsNothingYet": "Nothing here yet",
-  "@toolsNothingYet": {
-    "description": "Reference key tools.nothingYet"
-  },
-  "a11yMainNavigation": "Main",
-  "@a11yMainNavigation": {
-    "description": "Reference: aria-label=\"Main\" on both navigations"
-  },
-  "navNotifications": "Notifications",
-  "@navNotifications": {
-    "description": "Reference key home.notifications"
-  },
-  "navAccount": "Account",
-  "@navAccount": {
-    "description": "Reference key acct.account"
-  },
-  "toolLoading": "Loading",
-  "@toolLoading": {
-    "description": "Announced while a tool is still assembling"
-  },
-  "toolErrorTitle": "Something went wrong",
-  "@toolErrorTitle": {
-    "description": "Tool host error state"
-  },
-  "toolErrorText": "We couldn’t load this. Try again in a moment.",
-  "@toolErrorText": {
-    "description": "Tool host error state"
+  "toolUnavailableText": "That tool isn’t part of your setup.",
+  "@toolUnavailableText": {
+    "description": "Reference key tool.unavailable"
   },
   "toolUnavailableTitle": "Not part of your setup",
   "@toolUnavailableTitle": {
     "description": "Tool host unavailable state"
   },
-  "toolUnavailableText": "That tool isn’t part of your setup.",
-  "@toolUnavailableText": {
-    "description": "Reference key tool.unavailable"
-  },
-  "routeMissingTitle": "We can’t find that",
-  "@routeMissingTitle": {
-    "description": "Unrecognised location"
-  },
-  "routeMissingText": "The link may be old, or the page may have moved.",
-  "@routeMissingText": {
-    "description": "Unrecognised location"
-  },
-  "recordsNoSelectionTitle": "Nothing selected",
-  "@recordsNoSelectionTitle": {
-    "description": "Master-detail pane before a record is chosen"
-  },
-  "recordsNoSelectionText": "Choose a record to see it here.",
-  "@recordsNoSelectionText": {
-    "description": "Master-detail pane before a record is chosen"
-  },
-  "onbLocalKicker": "Make it local",
-  "@onbLocalKicker": {
-    "description": "Reference key onb.localKicker"
-  },
-  "onbWhereTitle": "Where are you based?",
-  "@onbWhereTitle": {
-    "description": "Reference key onb.whereTitle"
-  },
-  "onbWhereText": "This helps us personalise local information and services. It says nothing about who you are.",
-  "@onbWhereText": {
-    "description": "Reference key onb.whereText"
-  },
-  "onbYoursKicker": "Make it yours",
-  "@onbYoursKicker": {
-    "description": "Reference key onb.yoursKicker"
-  },
-  "onbHereForTitle": "What are you here for?",
-  "@onbHereForTitle": {
-    "description": "Reference key onb.hereForTitle"
-  },
-  "onbHereForText": "Pick 5 to 10. Your home screen, tools and reading are built around them — change them whenever you like.",
-  "@onbHereForText": {
-    "description": "The interests step’s supporting copy. Untranslated in the reference; see D12"
-  },
-  "persSearchCountries": "Search countries",
-  "@persSearchCountries": {
-    "description": "Reference key pers.searchCountries"
-  },
-  "persRecent": "Recent",
-  "@persRecent": {
-    "description": "Reference key pers.recent"
-  },
-  "persPopular": "Popular",
-  "@persPopular": {
-    "description": "Reference key pers.popular"
-  },
-  "persAllCountries": "All countries",
-  "@persAllCountries": {
-    "description": "Reference key pers.allCountries"
-  },
-  "onbMinimum": "{count} of {min} minimum",
-  "@onbMinimum": {
-    "description": "Reference key onb.minimum, shown below the minimum",
-    "placeholders": {
-      "count": {
-        "type": "String"
-      },
-      "min": {
-        "type": "String"
-      }
-    }
-  },
-  "onbSelected": "{count} of {max} selected",
-  "@onbSelected": {
-    "description": "Reference key onb.selected, shown at or above the minimum",
-    "placeholders": {
-      "count": {
-        "type": "String"
-      },
-      "max": {
-        "type": "String"
-      }
-    }
-  },
-  "onbAtCap": "Up to {max} — remove one first",
-  "@onbAtCap": {
-    "description": "Refuses a tap once the cap is reached",
-    "placeholders": {
-      "max": {
-        "type": "String"
-      }
-    }
-  },
-  "persIslamic": "Islamic features",
-  "@persIslamic": {
-    "description": "Reference key pers.islamic"
-  },
-  "persIslamicSub": "Prayer times, Qur’an, duas, zakat and Ramadan",
-  "@persIslamicSub": {
-    "description": "Reference key pers.islamicSub"
-  },
-  "igEveryday": "Everyday life",
-  "@igEveryday": {
-    "description": "Reference key ig.everyday"
-  },
-  "igMoney": "Money & finance",
-  "@igMoney": {
-    "description": "Reference key ig.money"
-  },
-  "igHealth": "Health & wellness",
-  "@igHealth": {
-    "description": "Reference key ig.health"
-  },
-  "igTravel": "Travel & getting around",
-  "@igTravel": {
-    "description": "Reference key ig.travel"
-  },
-  "igNews": "News & entertainment",
-  "@igNews": {
-    "description": "Reference key ig.news"
-  },
-  "igFaith": "Islamic features",
-  "@igFaith": {
-    "description": "Reference key ig.faith"
-  },
-  "intWeather": "Weather",
-  "@intWeather": {
-    "description": "Interest \"weather\". The reference hard-codes the English label and never translates it; see D12"
-  },
-  "intCalendar": "Calendar",
-  "@intCalendar": {
-    "description": "Interest \"calendar\". The reference hard-codes the English label and never translates it; see D12"
-  },
-  "intTasks": "Tasks & to-dos",
-  "@intTasks": {
-    "description": "Interest \"tasks\". The reference hard-codes the English label and never translates it; see D12"
-  },
-  "intNotes": "Notes",
-  "@intNotes": {
-    "description": "Interest \"notes\". The reference hard-codes the English label and never translates it; see D12"
-  },
-  "intConvert": "Converters",
-  "@intConvert": {
-    "description": "Interest \"convert\". The reference hard-codes the English label and never translates it; see D12"
-  },
-  "intMaths": "Calculators",
-  "@intMaths": {
-    "description": "Interest \"maths\". The reference hard-codes the English label and never translates it; see D12"
-  },
-  "intAlarms": "Alarms & timers",
-  "@intAlarms": {
-    "description": "Interest \"alarms\". The reference hard-codes the English label and never translates it; see D12"
-  },
-  "intExpenses": "Expenses",
-  "@intExpenses": {
-    "description": "Interest \"expenses\". The reference hard-codes the English label and never translates it; see D12"
-  },
-  "intRates": "Rates & gold",
-  "@intRates": {
-    "description": "Interest \"rates\". The reference hard-codes the English label and never translates it; see D12"
-  },
-  "intBills": "Bills",
-  "@intBills": {
-    "description": "Interest \"bills\". The reference hard-codes the English label and never translates it; see D12"
-  },
-  "intSavings": "Saving & goals",
-  "@intSavings": {
-    "description": "Interest \"savings\". The reference hard-codes the English label and never translates it; see D12"
-  },
-  "intMarkets": "Markets",
-  "@intMarkets": {
-    "description": "Interest \"markets\". The reference hard-codes the English label and never translates it; see D12"
-  },
-  "intHabits": "Habits",
-  "@intHabits": {
-    "description": "Interest \"habits\". The reference hard-codes the English label and never translates it; see D12"
-  },
-  "intWater": "Water",
-  "@intWater": {
-    "description": "Interest \"water\". The reference hard-codes the English label and never translates it; see D12"
-  },
-  "intFitness": "Fitness",
-  "@intFitness": {
-    "description": "Interest \"fitness\". The reference hard-codes the English label and never translates it; see D12"
-  },
-  "intMeds": "Medication",
-  "@intMeds": {
-    "description": "Interest \"meds\". The reference hard-codes the English label and never translates it; see D12"
-  },
-  "intSleep": "Sleep",
-  "@intSleep": {
-    "description": "Interest \"sleep\". The reference hard-codes the English label and never translates it; see D12"
-  },
-  "intTrains": "Trains",
-  "@intTrains": {
-    "description": "Interest \"trains\". The reference hard-codes the English label and never translates it; see D12"
-  },
-  "intFlights": "Flights",
-  "@intFlights": {
-    "description": "Interest \"flights\". The reference hard-codes the English label and never translates it; see D12"
-  },
-  "intNearby": "Nearby places",
-  "@intNearby": {
-    "description": "Interest \"nearby\". The reference hard-codes the English label and never translates it; see D12"
-  },
-  "intFuel": "Fuel",
-  "@intFuel": {
-    "description": "Interest \"fuel\". The reference hard-codes the English label and never translates it; see D12"
-  },
-  "intNews": "News",
-  "@intNews": {
-    "description": "Interest \"news\". The reference hard-codes the English label and never translates it; see D12"
-  },
-  "intCricket": "Cricket",
-  "@intCricket": {
-    "description": "Interest \"cricket\". The reference hard-codes the English label and never translates it; see D12"
-  },
-  "intReading": "Reading",
-  "@intReading": {
-    "description": "Interest \"reading\". The reference hard-codes the English label and never translates it; see D12"
-  },
-  "intQuotes": "Daily quotes",
-  "@intQuotes": {
-    "description": "Interest \"quotes\". The reference hard-codes the English label and never translates it; see D12"
-  },
-  "intPrayer": "Prayer times",
-  "@intPrayer": {
-    "description": "Interest \"prayer\". The reference hard-codes the English label and never translates it; see D12"
-  },
-  "intQuran": "Qur’an",
-  "@intQuran": {
-    "description": "Interest \"quran\". The reference hard-codes the English label and never translates it; see D12"
-  },
-  "intHadith": "Hadith",
-  "@intHadith": {
-    "description": "Interest \"hadith\". The reference hard-codes the English label and never translates it; see D12"
-  },
-  "intDuas": "Duas & dhikr",
-  "@intDuas": {
-    "description": "Interest \"duas\". The reference hard-codes the English label and never translates it; see D12"
-  },
-  "intZakat": "Zakat & giving",
-  "@intZakat": {
-    "description": "Interest \"zakat\". The reference hard-codes the English label and never translates it; see D12"
-  },
-  "intRamadan": "Ramadan",
-  "@intRamadan": {
-    "description": "Interest \"ramadan\". The reference hard-codes the English label and never translates it; see D12"
-  },
-  "onbWelcomeTitle": "Everything your day needs, quietly organised.",
-  "@onbWelcomeTitle": {
-    "description": "Reference key onb.welcomeTitle"
-  },
-  "onbWelcomeText": "Plans, money, travel, reading and the small tools you reach for — without the clutter.",
-  "@onbWelcomeText": {
-    "description": "Reference key onb.welcomeText; untranslated in the prototype (D12)"
-  },
-  "onbSignInPrompt": "Already have an account?",
-  "@onbSignInPrompt": {
-    "description": "The quiet half of the welcome step’s link"
-  },
-  "onbSignInAction": "Sign in",
-  "@onbSignInAction": {
-    "description": "The accent half of the welcome step’s link"
-  },
-  "onbPlanKicker": "Plan",
-  "@onbPlanKicker": {
-    "description": "Reference key onb.planKicker"
-  },
-  "onbPlanTitle": "Your day, laid out before it starts",
-  "@onbPlanTitle": {
-    "description": "Reference key onb.planTitle"
-  },
-  "onbPlanText": "Tasks, reminders and events on one timeline — with everything that matters already in the right place.",
-  "@onbPlanText": {
-    "description": "The plan step’s supporting copy; untranslated in the prototype (D12)"
-  },
-  "onbToolsKicker": "Tools",
-  "@onbToolsKicker": {
-    "description": "Reference key onb.toolsKicker"
-  },
-  "onbToolsTitle": "{count}-odd tools, one or two taps away",
-  "@onbToolsTitle": {
-    "description": "The tools step’s title. The count is the whole catalogue, not the eligible subset — see ONBOARDING_INVENTORY F5",
-    "placeholders": {
-      "count": {
-        "type": "String"
-      }
-    }
-  },
-  "onbToolsText": "Calculator, converters, weather, scanner, rates, trackers — sorted, so you never hunt for them.",
-  "@onbToolsText": {
-    "description": "The tools step’s supporting copy; untranslated in the prototype (D12)"
-  },
-  "onbCityTitle": "Which city are you in?",
-  "@onbCityTitle": {
-    "description": "Reference key onb.cityTitle"
-  },
-  "onbCityText": "Used for weather, prayer times where relevant, and anything local.",
-  "@onbCityText": {
-    "description": "Reference key onb.cityText; untranslated in the prototype (D12)"
-  },
-  "persSearchCities": "Search cities",
-  "@persSearchCities": {
-    "description": "Reference key pers.searchCities"
-  },
-  "persUseLocation": "Use my current location",
-  "@persUseLocation": {
-    "description": "Reference key pers.useLocation"
-  },
-  "onbSetupTitle": "Set it up once",
-  "@onbSetupTitle": {
-    "description": "Reference key onb.setupTitle"
-  },
-  "onbSetupText": "Two permissions, and you can change either of them later.",
-  "@onbSetupText": {
-    "description": "Reference key onb.setupText; untranslated in the prototype (D12)"
-  },
-  "onbPermLocation": "Use your location",
-  "@onbPermLocation": {
-    "description": "Reference key onb.permLocation"
-  },
-  "onbPermLocationSub": "For weather, local services and nearby places",
-  "@onbPermLocationSub": {
-    "description": "Shown when the Islamic experience is off"
-  },
-  "onbPermLocationSubFaith": "For prayer times, Qibla, weather and nearby places",
-  "@onbPermLocationSubFaith": {
-    "description": "Shown when the Islamic experience is on"
-  },
-  "onbPermNotify": "Gentle reminders",
-  "@onbPermNotify": {
-    "description": "Reference key onb.permNotify"
-  },
-  "onbPermNotifySub": "A quiet nudge for the things you asked us to watch",
-  "@onbPermNotifySub": {
-    "description": "Shown when the Islamic experience is off"
-  },
-  "onbPermNotifySubFaith": "A quiet nudge 5 minutes before each adhan",
-  "@onbPermNotifySubFaith": {
-    "description": "Shown when the Islamic experience is on"
-  },
-  "onbMethodLabel": "Prayer calculation method",
-  "@onbMethodLabel": {
-    "description": "The faith-gated group heading on the set-up step"
-  },
-  "methodKarachi": "University of Karachi",
-  "@methodKarachi": {
-    "description": "Prayer calculation method"
-  },
-  "methodMwl": "Muslim World League",
-  "@methodMwl": {
-    "description": "Prayer calculation method"
-  },
-  "methodIsna": "ISNA",
-  "@methodIsna": {
-    "description": "Prayer calculation method"
-  },
-  "methodUmmAlQura": "Umm al-Qura",
-  "@methodUmmAlQura": {
-    "description": "Prayer calculation method"
-  },
-  "methodEgyptian": "Egyptian",
-  "@methodEgyptian": {
-    "description": "Prayer calculation method"
-  },
-  "onbOnDevice": "Lume keeps this on your device. Nothing is uploaded.",
-  "@onbOnDevice": {
-    "description": "Reference key onb.onDevice"
-  },
-  "onbNameKicker": "One last thing",
-  "@onbNameKicker": {
-    "description": "Reference key onb.nameKicker; untranslated in the prototype (D12)"
-  },
-  "onbNameTitle": "What should we call you?",
-  "@onbNameTitle": {
-    "description": "Reference key onb.nameTitle"
-  },
-  "onbNameText": "Only used to greet you. You can change it later, or skip it entirely.",
-  "@onbNameText": {
-    "description": "Reference key onb.nameText"
-  },
-  "onbNamePlaceholder": "Your name",
-  "@onbNamePlaceholder": {
-    "description": "Reference key onb.namePlaceholder"
-  },
-  "onbNameLabel": "Display name",
-  "@onbNameLabel": {
-    "description": "Reference key acct.f.displayName"
-  },
-  "onbNameSkip": "Skip for now",
-  "@onbNameSkip": {
-    "description": "Reference key onb.nameSkip"
-  },
-  "onbNameNote": "Lume keeps this on your device.",
-  "@onbNameNote": {
-    "description": "Reference key onb.nameNote; untranslated in the prototype (D12)"
-  },
-  "onbAllSet": "All set",
-  "@onbAllSet": {
-    "description": "Reference key onb.allSet"
-  },
-  "onbReadyTitle": "You’re all set",
-  "@onbReadyTitle": {
-    "description": "Reference key onb.readyTitle — account.js wins over core.js; see ONBOARDING_INVENTORY F2"
-  },
-  "onbReadyNamed": "You’re ready, {name}",
-  "@onbReadyNamed": {
-    "description": "Reference key onb.readyNamed",
-    "placeholders": {
-      "name": {
-        "type": "String"
-      }
-    }
-  },
-  "onbReadyGeneral": "Today’s plan is waiting on the home screen.",
-  "@onbReadyGeneral": {
-    "description": "Reference key onb.readyGeneral; untranslated in the prototype (D12)"
-  },
-  "onbReadyFaith": "Your next prayer is {prayer}, and today’s plan is waiting on the home screen.",
-  "@onbReadyFaith": {
-    "description": "Reference key onb.readyFaith; untranslated in the prototype (D12)",
-    "placeholders": {
-      "prayer": {
-        "type": "String"
-      }
-    }
-  },
-  "onbEnterLume": "Enter Lume",
-  "@onbEnterLume": {
-    "description": "The final step’s action"
-  },
-  "onbRevisit": "You can revisit this tour any time from Profile.",
-  "@onbRevisit": {
-    "description": "Reference key onb.revisit; untranslated in the prototype (D12)"
-  },
-  "onbSkippedDefaults": "Set up with our defaults — edit them in Profile",
-  "@onbSkippedDefaults": {
-    "description": "Shown when Skip is used before any interest is chosen"
-  },
-  "onbSkippedTour": "Tour skipped — find it again in Profile",
-  "@onbSkippedTour": {
-    "description": "Shown when Skip is used after interests are already stored"
-  },
-  "onbWelcomeBack": "Welcome to Lume",
-  "@onbWelcomeBack": {
-    "description": "Shown when the flow completes"
+  "toolsNothingYet": "Nothing here yet",
+  "@toolsNothingYet": {
+    "description": "Reference key tools.nothingYet"
   }
 }

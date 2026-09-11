@@ -1,0 +1,330 @@
+{
+  "cell": "auth_signin_error_390x844_light_en",
+  "route": "signin_error",
+  "viewport": {
+    "width": 390,
+    "height": 844,
+    "innerWidth": 390
+  },
+  "id": "signin",
+  "status": false,
+  "theme": "light",
+  "lang": "en",
+  "dir": "ltr",
+  "state": {
+    "busy": false,
+    "invalid": 0,
+    "valid": 0,
+    "rules": {
+      "ok": 0,
+      "total": 0
+    },
+    "meterOn": 0,
+    "steps": {
+      "on": 0,
+      "total": 0
+    },
+    "ariaLabel": "Welcome back"
+  },
+  "missing": [
+    "auth.close",
+    "auth.stepOf",
+    "auth.visual",
+    "auth.seal",
+    "auth.seal.disc",
+    "auth.note",
+    "auth.steps",
+    "auth.steps.seg",
+    "auth.notice",
+    "auth.fieldOk",
+    "auth.pwmeter",
+    "auth.pwmeter.track",
+    "auth.pwmeter.label",
+    "auth.pwrules",
+    "auth.pwrules.title",
+    "auth.pwrule.first",
+    "auth.alt",
+    "auth.or",
+    "auth.foot.secondary",
+    "auth.link.quiet",
+    "auth.legal"
+  ],
+  "scroll": {
+    "screen": {
+      "clientHeight": 816,
+      "scrollHeight": 816,
+      "scrolls": false,
+      "overflowY": "auto"
+    },
+    "panel": {
+      "clientHeight": 816,
+      "scrollHeight": 816,
+      "scrolls": false,
+      "overflowY": "visible"
+    },
+    "region": {
+      "clientHeight": 816,
+      "scrollHeight": 816,
+      "scrolls": false,
+      "overflowY": "visible"
+    },
+    "body": {
+      "clientHeight": 816,
+      "scrollHeight": 816,
+      "scrolls": false,
+      "overflowY": "visible"
+    }
+  },
+  "bounds": {
+    "auth": {
+      "x": 0,
+      "y": 28,
+      "width": 390,
+      "height": 816,
+      "lines": null,
+      "font": "16px \"Plus Jakarta Sans\", -apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, sans-serif",
+      "radius": "0px",
+      "text": "One app for the day ahead.Prayer, weather, money, travel and the small things — wherever you are.LumeWelcome backContinue to your Lume.Email or password is inco"
+    },
+    "auth.region": {
+      "x": 0,
+      "y": 28,
+      "width": 390,
+      "height": 816,
+      "lines": null,
+      "font": "16px \"Plus Jakarta Sans\", -apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, sans-serif",
+      "radius": "0px",
+      "text": "LumeWelcome backContinue to your Lume.Email or password is incorrect.EmailPasswordForgot password?Sign inDon’t have an account?Create one"
+    },
+    "auth.panel": {
+      "x": 0,
+      "y": 28,
+      "width": 390,
+      "height": 816,
+      "lines": null,
+      "font": "16px \"Plus Jakarta Sans\", -apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, sans-serif",
+      "radius": "0px",
+      "text": "LumeWelcome backContinue to your Lume.Email or password is incorrect.EmailPasswordForgot password?Sign inDon’t have an account?Create one"
+    },
+    "auth.top": {
+      "x": 24,
+      "y": 28,
+      "width": 342,
+      "height": 60,
+      "lines": null,
+      "font": "16px \"Plus Jakarta Sans\", -apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, sans-serif",
+      "radius": "0px",
+      "text": null
+    },
+    "auth.back": {
+      "x": 14,
+      "y": 44,
+      "width": 44,
+      "height": 44,
+      "lines": null,
+      "font": "16px \"Plus Jakarta Sans\", -apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, sans-serif",
+      "radius": "14px",
+      "text": null
+    },
+    "auth.brand": {
+      "x": 24,
+      "y": 112,
+      "width": 342,
+      "height": 34,
+      "lines": null,
+      "font": "16px \"Plus Jakarta Sans\", -apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, sans-serif",
+      "radius": "0px",
+      "text": "Lume"
+    },
+    "auth.mark": {
+      "x": 24,
+      "y": 112,
+      "width": 34,
+      "height": 34,
+      "lines": null,
+      "font": "16px \"Plus Jakarta Sans\", -apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, sans-serif",
+      "radius": "11px",
+      "text": null
+    },
+    "auth.word": {
+      "x": 68,
+      "y": 118,
+      "width": 43.3,
+      "height": 22,
+      "lines": null,
+      "font": "800 17px \"Plus Jakarta Sans\", -apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, sans-serif",
+      "radius": "0px",
+      "text": "Lume"
+    },
+    "auth.hero": {
+      "x": 24,
+      "y": 170,
+      "width": 342,
+      "height": 70.14,
+      "lines": null,
+      "font": "16px \"Plus Jakarta Sans\", -apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, sans-serif",
+      "radius": "0px",
+      "text": "Welcome backContinue to your Lume."
+    },
+    "auth.title": {
+      "x": 24,
+      "y": 170,
+      "width": 342,
+      "height": 36.89,
+      "lines": 1,
+      "font": "720 33.54px / 36.894px \"Plus Jakarta Sans\", -apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, sans-serif",
+      "radius": "0px",
+      "text": "Welcome back"
+    },
+    "auth.text": {
+      "x": 24,
+      "y": 216.89,
+      "width": 342,
+      "height": 23.25,
+      "lines": 1,
+      "font": "500 15.5px / 23.25px \"Plus Jakarta Sans\", -apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, sans-serif",
+      "radius": "0px",
+      "text": "Continue to your Lume."
+    },
+    "auth.formerr": {
+      "x": 24,
+      "y": 264.14,
+      "width": 342,
+      "height": 46.13,
+      "lines": 3,
+      "font": "600 12.5px / 18.125px \"Plus Jakarta Sans\", -apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, sans-serif",
+      "radius": "14px",
+      "text": "Email or password is incorrect."
+    },
+    "auth.form": {
+      "x": 24,
+      "y": 264.14,
+      "width": 342,
+      "height": 325.91,
+      "lines": null,
+      "font": "16px \"Plus Jakarta Sans\", -apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, sans-serif",
+      "radius": "0px",
+      "text": "Email or password is incorrect.EmailPasswordForgot password?"
+    },
+    "auth.field.first": {
+      "x": 24,
+      "y": 322.27,
+      "width": 342,
+      "height": 101.89,
+      "lines": null,
+      "font": "16px \"Plus Jakarta Sans\", -apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, sans-serif",
+      "radius": "0px",
+      "text": "Email"
+    },
+    "auth.fieldLabel.first": {
+      "x": 24,
+      "y": 322.27,
+      "width": 342,
+      "height": 16.89,
+      "lines": 1,
+      "font": "650 13px / 16.9px \"Plus Jakarta Sans\", -apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, sans-serif",
+      "radius": "0px",
+      "text": "Email"
+    },
+    "auth.fieldBox.first": {
+      "x": 24,
+      "y": 347.16,
+      "width": 342,
+      "height": 52,
+      "lines": null,
+      "font": "16px \"Plus Jakarta Sans\", -apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, sans-serif",
+      "radius": "14px",
+      "text": null
+    },
+    "auth.fieldMsg.first": {
+      "x": 24,
+      "y": 407.16,
+      "width": 342,
+      "height": 17,
+      "lines": 1,
+      "font": "500 12px / 17.4px \"Plus Jakarta Sans\", -apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, sans-serif",
+      "radius": "0px",
+      "text": null
+    },
+    "auth.field.second": {
+      "x": 24,
+      "y": 436.16,
+      "width": 342,
+      "height": 101.89,
+      "lines": null,
+      "font": "16px \"Plus Jakarta Sans\", -apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, sans-serif",
+      "radius": "0px",
+      "text": "Password"
+    },
+    "auth.pwtoggle": {
+      "x": 323,
+      "y": 470.05,
+      "width": 34,
+      "height": 34,
+      "lines": null,
+      "font": "16px \"Plus Jakarta Sans\", -apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, sans-serif",
+      "radius": "10px",
+      "text": null
+    },
+    "auth.inline": {
+      "x": 237.27,
+      "y": 546.05,
+      "width": 128.73,
+      "height": 44,
+      "lines": 2,
+      "font": "700 14px / 18.9px \"Plus Jakarta Sans\", -apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, sans-serif",
+      "radius": "0px",
+      "text": "Forgot password?"
+    },
+    "auth.actions": {
+      "x": 24,
+      "y": 614.05,
+      "width": 342,
+      "height": 54,
+      "lines": null,
+      "font": "16px \"Plus Jakarta Sans\", -apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, sans-serif",
+      "radius": "0px",
+      "text": "Sign in"
+    },
+    "auth.submit": {
+      "x": 24,
+      "y": 614.05,
+      "width": 342,
+      "height": 54,
+      "lines": 3,
+      "font": "700 15.5px / 15.5px \"Plus Jakarta Sans\", -apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, sans-serif",
+      "radius": "15px",
+      "text": "Sign in"
+    },
+    "auth.foot": {
+      "x": 24,
+      "y": 684.05,
+      "width": 342,
+      "height": 46,
+      "lines": null,
+      "font": "16px \"Plus Jakarta Sans\", -apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, sans-serif",
+      "radius": "0px",
+      "text": "Don’t have an account?Create one"
+    },
+    "auth.link.first": {
+      "x": 24,
+      "y": 684.05,
+      "width": 342,
+      "height": 46,
+      "lines": 2,
+      "font": "550 14px / 18.9px \"Plus Jakarta Sans\", -apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, sans-serif",
+      "radius": "14px",
+      "text": "Don’t have an account?Create one"
+    },
+    "auth.aside": {
+      "x": 0,
+      "y": 0,
+      "width": 0,
+      "height": 0,
+      "lines": null,
+      "font": "16px \"Plus Jakarta Sans\", -apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, sans-serif",
+      "radius": "0px",
+      "text": "One app for the day ahead.Prayer, weather, money, travel and the small things — wherever you are."
+    }
+  }
+}

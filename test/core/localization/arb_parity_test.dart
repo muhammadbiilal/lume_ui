@@ -81,6 +81,23 @@ void main() {
       );
     });
 
+    test('every authentication string is really translated', () {
+      // The suite's ratio check tolerates a few proper nouns across the whole
+      // file. Authentication is 104 strings added at once, so it is checked on
+      // its own: one exception, named, and nothing else.
+      const Set<String> allowed = <String>{
+        // A sample address is a technical token, not a phrase.
+        'authEmailPlaceholder',
+      };
+      for (final Map<String, dynamic> other in <Map<String, dynamic>>[ur, ar]) {
+        for (final String key in en.keys) {
+          if (!key.startsWith('auth')) continue;
+          if (allowed.contains(key)) continue;
+          expect(other[key], isNot(en[key]), reason: '$key is still English');
+        }
+      }
+    });
+
     test('the generator reports nothing untranslated', () {
       // `l10n.yaml` writes this on every `flutter gen-l10n`. An empty object is
       // the contract; anything else is a key some language is missing.

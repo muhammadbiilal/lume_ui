@@ -1,0 +1,384 @@
+{
+  "cell": "auth_signup2_typed_390x844_light_en",
+  "route": "signup2_typed",
+  "viewport": {
+    "width": 390,
+    "height": 844,
+    "innerWidth": 390
+  },
+  "id": "signup",
+  "status": false,
+  "theme": "light",
+  "lang": "en",
+  "dir": "ltr",
+  "state": {
+    "busy": false,
+    "invalid": 0,
+    "valid": 0,
+    "rules": {
+      "ok": 3,
+      "total": 4
+    },
+    "meterOn": 2,
+    "steps": {
+      "on": 2,
+      "total": 2
+    },
+    "ariaLabel": "Choose a password"
+  },
+  "missing": [
+    "auth.close",
+    "auth.visual",
+    "auth.seal",
+    "auth.seal.disc",
+    "auth.note",
+    "auth.notice",
+    "auth.formerr",
+    "auth.fieldOk",
+    "auth.inline",
+    "auth.alt",
+    "auth.or",
+    "auth.foot",
+    "auth.foot.secondary",
+    "auth.link.first",
+    "auth.link.quiet"
+  ],
+  "scroll": {
+    "screen": {
+      "clientHeight": 816,
+      "scrollHeight": 816,
+      "scrolls": false,
+      "overflowY": "auto"
+    },
+    "panel": {
+      "clientHeight": 816,
+      "scrollHeight": 816,
+      "scrolls": false,
+      "overflowY": "visible"
+    },
+    "region": {
+      "clientHeight": 816,
+      "scrollHeight": 816,
+      "scrolls": false,
+      "overflowY": "visible"
+    },
+    "body": {
+      "clientHeight": 816,
+      "scrollHeight": 816,
+      "scrolls": false,
+      "overflowY": "visible"
+    }
+  },
+  "bounds": {
+    "auth": {
+      "x": 0,
+      "y": 28,
+      "width": 390,
+      "height": 816,
+      "lines": null,
+      "font": "16px \"Plus Jakarta Sans\", -apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, sans-serif",
+      "radius": "0px",
+      "text": "One app for the day ahead.Prayer, weather, money, travel and the small things — wherever you are.Step 2 of 2LumeChoose a passwordThis is what keeps your Lume yo"
+    },
+    "auth.region": {
+      "x": 0,
+      "y": 28,
+      "width": 390,
+      "height": 816,
+      "lines": null,
+      "font": "16px \"Plus Jakarta Sans\", -apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, sans-serif",
+      "radius": "0px",
+      "text": "Step 2 of 2LumeChoose a passwordThis is what keeps your Lume yours.PasswordFairPassword must containat least 8 charactersan uppercase lettera lowercase lettera "
+    },
+    "auth.panel": {
+      "x": 0,
+      "y": 28,
+      "width": 390,
+      "height": 816,
+      "lines": null,
+      "font": "16px \"Plus Jakarta Sans\", -apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, sans-serif",
+      "radius": "0px",
+      "text": "Step 2 of 2LumeChoose a passwordThis is what keeps your Lume yours.PasswordFairPassword must containat least 8 charactersan uppercase lettera lowercase lettera "
+    },
+    "auth.top": {
+      "x": 24,
+      "y": 28,
+      "width": 342,
+      "height": 60,
+      "lines": null,
+      "font": "16px \"Plus Jakarta Sans\", -apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, sans-serif",
+      "radius": "0px",
+      "text": "Step 2 of 2"
+    },
+    "auth.back": {
+      "x": 14,
+      "y": 44,
+      "width": 44,
+      "height": 44,
+      "lines": null,
+      "font": "16px \"Plus Jakarta Sans\", -apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, sans-serif",
+      "radius": "14px",
+      "text": null
+    },
+    "auth.stepOf": {
+      "x": 301.36,
+      "y": 56.94,
+      "width": 64.64,
+      "height": 18.13,
+      "lines": 1,
+      "font": "500 12.5px / 18.125px \"Plus Jakarta Sans\", -apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, sans-serif",
+      "radius": "0px",
+      "text": "Step 2 of 2"
+    },
+    "auth.brand": {
+      "x": 24,
+      "y": 112,
+      "width": 342,
+      "height": 34,
+      "lines": null,
+      "font": "16px \"Plus Jakarta Sans\", -apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, sans-serif",
+      "radius": "0px",
+      "text": "Lume"
+    },
+    "auth.mark": {
+      "x": 24,
+      "y": 112,
+      "width": 34,
+      "height": 34,
+      "lines": null,
+      "font": "16px \"Plus Jakarta Sans\", -apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, sans-serif",
+      "radius": "11px",
+      "text": null
+    },
+    "auth.word": {
+      "x": 68,
+      "y": 118,
+      "width": 43.3,
+      "height": 22,
+      "lines": null,
+      "font": "800 17px \"Plus Jakarta Sans\", -apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, sans-serif",
+      "radius": "0px",
+      "text": "Lume"
+    },
+    "auth.hero": {
+      "x": 24,
+      "y": 170,
+      "width": 342,
+      "height": 70.14,
+      "lines": null,
+      "font": "16px \"Plus Jakarta Sans\", -apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, sans-serif",
+      "radius": "0px",
+      "text": "Choose a passwordThis is what keeps your Lume yours."
+    },
+    "auth.title": {
+      "x": 24,
+      "y": 170,
+      "width": 342,
+      "height": 36.89,
+      "lines": 1,
+      "font": "720 33.54px / 36.894px \"Plus Jakarta Sans\", -apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, sans-serif",
+      "radius": "0px",
+      "text": "Choose a password"
+    },
+    "auth.text": {
+      "x": 24,
+      "y": 216.89,
+      "width": 342,
+      "height": 23.25,
+      "lines": 1,
+      "font": "500 15.5px / 23.25px \"Plus Jakarta Sans\", -apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, sans-serif",
+      "radius": "0px",
+      "text": "This is what keeps your Lume yours."
+    },
+    "auth.steps": {
+      "x": 24,
+      "y": 256.14,
+      "width": 150,
+      "height": 4,
+      "lines": null,
+      "font": "16px \"Plus Jakarta Sans\", -apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, sans-serif",
+      "radius": "0px",
+      "text": null
+    },
+    "auth.steps.seg": {
+      "x": 24,
+      "y": 256.14,
+      "width": 72,
+      "height": 4,
+      "lines": null,
+      "font": "16px \"Plus Jakarta Sans\", -apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, sans-serif",
+      "radius": "999px",
+      "text": null
+    },
+    "auth.form": {
+      "x": 24,
+      "y": 284.14,
+      "width": 342,
+      "height": 377.78,
+      "lines": null,
+      "font": "16px \"Plus Jakarta Sans\", -apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, sans-serif",
+      "radius": "0px",
+      "text": "PasswordFairPassword must containat least 8 charactersan uppercase lettera lowercase lettera numberConfirm password"
+    },
+    "auth.field.first": {
+      "x": 24,
+      "y": 284.14,
+      "width": 342,
+      "height": 101.89,
+      "lines": null,
+      "font": "16px \"Plus Jakarta Sans\", -apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, sans-serif",
+      "radius": "0px",
+      "text": "Password"
+    },
+    "auth.fieldLabel.first": {
+      "x": 24,
+      "y": 284.14,
+      "width": 342,
+      "height": 16.89,
+      "lines": 1,
+      "font": "650 13px / 16.9px \"Plus Jakarta Sans\", -apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, sans-serif",
+      "radius": "0px",
+      "text": "Password"
+    },
+    "auth.fieldBox.first": {
+      "x": 24,
+      "y": 309.03,
+      "width": 342,
+      "height": 52,
+      "lines": null,
+      "font": "16px \"Plus Jakarta Sans\", -apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, sans-serif",
+      "radius": "14px",
+      "text": null
+    },
+    "auth.fieldMsg.first": {
+      "x": 24,
+      "y": 369.03,
+      "width": 342,
+      "height": 17,
+      "lines": 1,
+      "font": "500 12px / 17.4px \"Plus Jakarta Sans\", -apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, sans-serif",
+      "radius": "0px",
+      "text": null
+    },
+    "auth.field.second": {
+      "x": 24,
+      "y": 560.03,
+      "width": 342,
+      "height": 101.89,
+      "lines": null,
+      "font": "16px \"Plus Jakarta Sans\", -apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, sans-serif",
+      "radius": "0px",
+      "text": "Confirm password"
+    },
+    "auth.pwtoggle": {
+      "x": 323,
+      "y": 318.03,
+      "width": 34,
+      "height": 34,
+      "lines": null,
+      "font": "16px \"Plus Jakarta Sans\", -apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, sans-serif",
+      "radius": "10px",
+      "text": null
+    },
+    "auth.pwmeter": {
+      "x": 24,
+      "y": 400.03,
+      "width": 342,
+      "height": 13,
+      "lines": null,
+      "font": "16px \"Plus Jakarta Sans\", -apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, sans-serif",
+      "radius": "0px",
+      "text": "Fair"
+    },
+    "auth.pwmeter.track": {
+      "x": 24,
+      "y": 404.53,
+      "width": 312.97,
+      "height": 4,
+      "lines": null,
+      "font": "16px \"Plus Jakarta Sans\", -apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, sans-serif",
+      "radius": "0px",
+      "text": null
+    },
+    "auth.pwmeter.label": {
+      "x": 346.97,
+      "y": 400.03,
+      "width": 19.03,
+      "height": 13,
+      "lines": null,
+      "font": "700 11px \"Plus Jakarta Sans\", -apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, sans-serif",
+      "radius": "0px",
+      "text": "Fair"
+    },
+    "auth.pwrules": {
+      "x": 24,
+      "y": 427.03,
+      "width": 342,
+      "height": 121,
+      "lines": null,
+      "font": "16px \"Plus Jakarta Sans\", -apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, sans-serif",
+      "radius": "12px",
+      "text": "Password must containat least 8 charactersan uppercase lettera lowercase lettera number"
+    },
+    "auth.pwrules.title": {
+      "x": 39,
+      "y": 440.03,
+      "width": 312,
+      "height": 13,
+      "lines": null,
+      "font": "700 11px \"Plus Jakarta Sans\", -apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, sans-serif",
+      "radius": "0px",
+      "text": "Password must contain"
+    },
+    "auth.pwrule.first": {
+      "x": 39,
+      "y": 460.03,
+      "width": 312,
+      "height": 15,
+      "lines": null,
+      "font": "600 12px \"Plus Jakarta Sans\", -apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, sans-serif",
+      "radius": "0px",
+      "text": "at least 8 characters"
+    },
+    "auth.actions": {
+      "x": 24,
+      "y": 685.92,
+      "width": 342,
+      "height": 54,
+      "lines": null,
+      "font": "16px \"Plus Jakarta Sans\", -apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, sans-serif",
+      "radius": "0px",
+      "text": "Create account"
+    },
+    "auth.submit": {
+      "x": 24,
+      "y": 685.92,
+      "width": 342,
+      "height": 54,
+      "lines": 3,
+      "font": "700 15.5px / 15.5px \"Plus Jakarta Sans\", -apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, sans-serif",
+      "radius": "15px",
+      "text": "Create account"
+    },
+    "auth.legal": {
+      "x": 24,
+      "y": 763.92,
+      "width": 342,
+      "height": 38.78,
+      "lines": 2,
+      "font": "500 12px / 17.4px \"Plus Jakarta Sans\", -apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, sans-serif",
+      "radius": "0px",
+      "text": "Creating an account means Lume keeps this information for you. How Lume handles your data"
+    },
+    "auth.aside": {
+      "x": 0,
+      "y": 0,
+      "width": 0,
+      "height": 0,
+      "lines": null,
+      "font": "16px \"Plus Jakarta Sans\", -apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, sans-serif",
+      "radius": "0px",
+      "text": "One app for the day ahead.Prayer, weather, money, travel and the small things — wherever you are."
+    }
+  }
+}

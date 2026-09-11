@@ -60,7 +60,18 @@ abstract final class LumeRoutes {
   /// Authentication. A flow rather than a tool: it never enters the tool
   /// router, the catalogue or search, and it covers the shell rather than
   /// sitting inside it.
+  ///
+  /// Ten screens hang off it, one per segment, so each is a real location a
+  /// link can name and a test can go to. `/auth` on its own resolves to
+  /// sign-in.
   static const String auth = '/auth';
+
+  /// One authentication screen. `segment` comes from `LumeAuthRoute.segment`,
+  /// which is the only place the spellings are written.
+  static String authRoute(String segment) => '$auth/$segment';
+
+  /// The splash, which is what shows while the launch is still deciding.
+  static const String splash = '/splash';
 
   /// The first-run flow, which covers the shell until it is finished.
   static const String onboarding = '/onboarding';

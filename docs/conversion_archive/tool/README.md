@@ -11,6 +11,9 @@
 |---|---|
 | `capture_web.mjs` | Serves a scratch copy of the prototype, drives Chrome over CDP, and writes a PNG plus a JSON sidecar of measured facts |
 | `compare.mjs` | Puts a web capture and a Flutter capture side by side, diffs them, and reports the measurable differences |
+| `measure_components.mjs` | Reads a component's own box out of a fixture page |
+| `measure_onboarding.mjs` | Drives the onboarding flow to a step and reports every element's bounds |
+| `measure_auth.mjs` | Drives the authentication flow to a named *state* — `signin`, `signin_error`, `signin_busy`, `signup2`, `sent`, `reset`, `updated`, `created`, `expired`, `trouble`, `verify` — and reports bounds, and a PNG with `--shot 1` |
 
 The Flutter side of the capture is a widget test — `test/helpers/capture.dart`
 — so both sides run through the same code paths their real callers use.
