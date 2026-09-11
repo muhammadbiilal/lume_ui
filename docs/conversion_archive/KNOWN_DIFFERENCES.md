@@ -1,5 +1,11 @@
 # Known differences, contradictions and corrections
 
+> **Temporary conversion evidence. Not part of the final Flutter maintenance
+> specification.** This document describes the browser prototype that Lume is
+> being converted *from*, and is removed or relabelled as historical at Phase F9.
+> The authoritative documents for the Flutter application are `claude.md`, `README.md`
+> and the rewritten `LUME_*` specifications.
+
 Three separate things live here, and they are kept apart on purpose:
 
 - **§1 Permitted native differences** — where Flutter is allowed not to

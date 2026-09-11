@@ -1,5 +1,11 @@
 # Dayroz architecture mapping
 
+> **Temporary conversion evidence. Not part of the final Flutter maintenance
+> specification.** This document describes the browser prototype that Lume is
+> being converted *from*, and is removed or relabelled as historical at Phase F9.
+> The authoritative documents for the Flutter application are `claude.md`, `README.md`
+> and the rewritten `LUME_*` specifications.
+
 Read-only inspection of `D:\dayroz\` on 2026-09-11, carried out so the Lume
 Flutter reference is organised the way the production app is and can later move
 into it without a second restructuring.
@@ -202,7 +208,7 @@ drive the same widget; there is no mock screen to be discarded later.
 
 ## 7. Expected migration path
 
-1. `flutter_reference/lib/core/theme/lume/` and `core/layout/` are diffed
+1. `lib/core/theme/lume/` and `core/layout/` are diffed
    against Dayroz's existing files; differences are resolved in the reference's
    favour where the web proves it, and reported.
 2. `core/widgets/lume/` moves across, superseding the 13 files already there.

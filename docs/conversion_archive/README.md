@@ -1,0 +1,74 @@
+# Lume → Flutter conversion
+
+> **Temporary conversion evidence. Not part of the final Flutter maintenance
+> specification.** This document describes the browser prototype that Lume is
+> being converted *from*, and is removed or relabelled as historical at Phase F9.
+> The authoritative documents for the Flutter application are `claude.md`, `README.md`
+> and the rewritten `LUME_*` specifications.
+
+This folder is the working record of converting the Lume browser prototype into
+the native Flutter application that **becomes this repository**. It is evidence
+gathered during the conversion, not product documentation.
+
+The end state is a Flutter-only root, structurally compatible with the Dayroz
+production app. The web prototype is a **temporary conversion input**: it is the
+design, it is authoritative while the conversion runs, and it is removed in a
+dedicated cleanup commit at Phase F9 once Flutter parity is proven and protected
+by Flutter's own tests. See
+[F0_FINAL_ARCHITECTURE.md](F0_FINAL_ARCHITECTURE.md) for the target tree, the
+retention plan and the removal manifest.
+
+While the conversion runs, every Flutter screen is measured against the rendered
+web screen, not against a description of it.
+
+## The documents
+
+| Doc | What it answers |
+|---|---|
+| [WEB_TO_FLUTTER_MAPPING.md](WEB_TO_FLUTTER_MAPPING.md) | Every web concept — token, class, layout, route, state — and its Flutter equivalent |
+| [DAYROZ_ARCHITECTURE_MAPPING.md](DAYROZ_ARCHITECTURE_MAPPING.md) | How the reference is organised so it can move into Dayroz, and what will need an adapter |
+| [COMPONENT_MATRIX.md](COMPONENT_MATRIX.md) | Every shared component, its states, and its conversion status |
+| [SCREEN_MATRIX.md](SCREEN_MATRIX.md) | Every screen and all 85 tools, with archetype, gating and conversion status |
+| [VISUAL_VERIFICATION.md](VISUAL_VERIFICATION.md) | The capture pipeline, the viewport matrix and how a screen is proved |
+| [KNOWN_DIFFERENCES.md](KNOWN_DIFFERENCES.md) | Permitted native differences, contradictions found in the sources, and corrections made |
+| [BASELINE_F0.md](BASELINE_F0.md) | The measured state of the web prototype before any Flutter work |
+| [F0_FINAL_ARCHITECTURE.md](F0_FINAL_ARCHITECTURE.md) | **The corrected plan** — target root tree, web retention and removal, documentation rewrite |
+| [TEMPORARY_WEB_REFERENCE_NOTES.md](TEMPORARY_WEB_REFERENCE_NOTES.md) | How to drive and measure the web prototype while it is still here |
+
+## Source-of-truth order
+
+When two sources disagree, the higher one wins and the lower one gets corrected
+in place with the reason recorded in [KNOWN_DIFFERENCES.md](KNOWN_DIFFERENCES.md).
+
+1. The rendered Lume web interface
+2. Screen and tool JavaScript
+3. Screen- and tool-specific CSS
+4. Shared components and CSS
+5. Design tokens
+6. `responsive.css` and `rtl.css`
+7. The Lume test suite
+8. `LUME_COMPLETE_DESIGN_SPECIFICATION.md`, `LUME_FEATURES_AND_SCREEN_CAPABILITIES.md`,
+   `LUME_SCREEN_BASED_REFACTORING_PLAN.md`, and the two `.docx` guides
+9. Older notes and assumptions
+
+Dayroz decides **how the Dart is organised**. Lume decides **what the interface
+is**. Where Dayroz's existing visual widgets differ from Lume, Lume wins and the
+Dayroz widget is not copied.
+
+## Phases
+
+| Phase | Scope | State |
+|---|---|---|
+| F0 | Dual-source audit, final root architecture, retention and removal plan | **complete — awaiting approval** |
+| F1 | Flutter project **at the root**; fonts, tokens, themes, responsive, l10n, fixtures, test harness | not started |
+| F2 | Shared widget system and component gallery | not started |
+| F3 | Shell, routes, bottom bar, rail, sidebar, tool host, master-detail | not started |
+| F4 | Onboarding and authentication | not started |
+| F5 | Global screens | not started |
+| F6 | Tool screens, in archetype batches | not started |
+| F7 | CRUD across every record family | not started |
+| F8 | Flutter-native documentation rewrite | not started |
+| F9 | Remove the web implementation | not started |
+| F10 | Final Flutter acceptance | not started |
+
+Each phase stops for approval. Nothing continues automatically.

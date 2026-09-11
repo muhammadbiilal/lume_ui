@@ -1,5 +1,11 @@
 # Component matrix
 
+> **Temporary conversion evidence. Not part of the final Flutter maintenance
+> specification.** This document describes the browser prototype that Lume is
+> being converted *from*, and is removed or relabelled as historical at Phase F9.
+> The authoritative documents for the Flutter application are `claude.md`, `README.md`
+> and the rewritten `LUME_*` specifications.
+
 Every shared Lume component, where it comes from, the states it has to carry,
 and its conversion status. Status: `not started` · `built` · `measured` ·
 `signed off`. A component is `measured` when its rendered bounds, typography

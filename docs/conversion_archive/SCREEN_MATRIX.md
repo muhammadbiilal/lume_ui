@@ -1,5 +1,11 @@
 # Screen matrix
 
+> **Temporary conversion evidence. Not part of the final Flutter maintenance
+> specification.** This document describes the browser prototype that Lume is
+> being converted *from*, and is removed or relabelled as historical at Phase F9.
+> The authoritative documents for the Flutter application are `claude.md`, `README.md`
+> and the rewritten `LUME_*` specifications.
+
 Every destination the Flutter reference has to contain, with its source module
 and conversion status. Status values: `not started` · `in progress` ·
 `built` · `compared` · `signed off`. A screen is not `signed off` until its

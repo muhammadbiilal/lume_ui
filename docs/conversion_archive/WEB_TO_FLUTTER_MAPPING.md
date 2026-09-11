@@ -1,5 +1,11 @@
 # Web → Flutter mapping
 
+> **Temporary conversion evidence. Not part of the final Flutter maintenance
+> specification.** This document describes the browser prototype that Lume is
+> being converted *from*, and is removed or relabelled as historical at Phase F9.
+> The authoritative documents for the Flutter application are `claude.md`, `README.md`
+> and the rewritten `LUME_*` specifications.
+
 Every Lume web concept and the Flutter construct that reproduces it. This is
 the translation table the conversion works from; where a number appears here it
 came out of the stylesheet or the module, not out of a description of it.

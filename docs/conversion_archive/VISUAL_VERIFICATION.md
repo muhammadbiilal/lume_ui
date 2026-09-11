@@ -1,5 +1,11 @@
 # Visual verification
 
+> **Temporary conversion evidence. Not part of the final Flutter maintenance
+> specification.** This document describes the browser prototype that Lume is
+> being converted *from*, and is removed or relabelled as historical at Phase F9.
+> The authoritative documents for the Flutter application are `claude.md`, `README.md`
+> and the rewritten `LUME_*` specifications.
+
 How a Flutter screen is proved to match the Lume web screen. A screen is not
 complete because its tests pass; it is complete when the two captures agree at
 every viewport in the matrix and every remaining difference is recorded.
@@ -92,7 +98,7 @@ any capture:
 
 ## 5. Tooling
 
-Three tools under `flutter_reference/tool/`, and the reference repository is
+Three tools under `tool/`, and the reference repository is
 never written to by any of them — the web is copied to a scratch directory and
 driven there.
 
@@ -175,7 +181,7 @@ For every screen, at every required cell:
 10. **Every remaining difference recorded**, and either corrected or added to
     [KNOWN_DIFFERENCES.md](KNOWN_DIFFERENCES.md) with approval.
 
-Artifacts live under `flutter_reference/shots/<screen>/<cell>/` as
+Artifacts live under `docs/conversion_archive/shots/<screen>/<cell>/` as
 `web.png`, `flutter.png`, `side.png`, `diff.png`, `report.md`.
 
 ## 7. Tolerances

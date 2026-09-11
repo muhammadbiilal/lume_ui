@@ -141,30 +141,26 @@ emitting a bundle that half-works, and `architecture.js` walks the same
 graph over a real HTTP server so a specifier that resolves only in the test
 cannot pass.
 
-## The Flutter reference
+## Being converted to Flutter
 
-`flutter_reference/` holds a native Flutter translation of this interface — the
-authoritative mobile and tablet UI reference, written so its presentation layer
-can later move into the Dayroz production app. It is not a WebView, a mockup or
-a redesign; it is this prototype re-authored as widgets and measured against it.
+**Everything above describes a temporary conversion input.** Lume is being
+re-authored as a native Flutter mobile and tablet application, and this
+repository becomes that Flutter project. The HTML, CSS, JavaScript, Node
+scripts and the ten JavaScript suites are kept only while they are needed to
+determine and verify what the Flutter interface must be. They are removed in a
+dedicated cleanup commit once Flutter parity is proven and protected by
+Flutter's own tests, after which this README is rewritten to describe the
+Flutter project.
 
-**This prototype stays authoritative.** Nothing in `flutter_reference/` edits
-it, and the capture tooling copies it to a scratch directory rather than driving
-it in place. Where the two disagree, the rendered web interface wins and the
-difference is recorded.
+While the conversion runs, this prototype is the design and stays authoritative:
+where it and a document disagree, the rendered interface wins. No new product
+behaviour is built here.
 
-The conversion is documented in `docs/flutter_conversion/`:
-
-| Doc | What it answers |
-| --- | --- |
-| `README.md` | The source-of-truth order, the phases, and where each document fits |
-| `BASELINE_F0.md` | What was measured here before any Flutter work began |
-| `WEB_TO_FLUTTER_MAPPING.md` | Every token, class, layout, route and state, and its Flutter equivalent |
-| `DAYROZ_ARCHITECTURE_MAPPING.md` | How the reference is organised for integration, and what will need an adapter |
-| `COMPONENT_MATRIX.md` | Every shared component, its states and its status |
-| `SCREEN_MATRIX.md` | Ten screens, nine onboarding steps, thirty-one account and auth routes, eighty-five tools |
-| `VISUAL_VERIFICATION.md` | The capture pipeline, the viewport matrix and how a screen is proved |
-| `KNOWN_DIFFERENCES.md` | Permitted native differences, contradictions found in the sources, and the corrections made |
+The working record lives in `docs/conversion_archive/`, every file of which is
+marked temporary and none of which is product documentation. Start with
+`F0_FINAL_ARCHITECTURE.md` for the target structure, the retention plan and the
+removal manifest, and `TEMPORARY_WEB_REFERENCE_NOTES.md` for what each web file
+is still needed for and until when.
 
 ## Not yet production
 

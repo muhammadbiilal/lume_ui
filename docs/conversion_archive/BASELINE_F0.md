@@ -1,5 +1,11 @@
 # Phase F0 — measured baseline
 
+> **Temporary conversion evidence. Not part of the final Flutter maintenance
+> specification.** This document describes the browser prototype that Lume is
+> being converted *from*, and is removed or relabelled as historical at Phase F9.
+> The authoritative documents for the Flutter application are `claude.md`, `README.md`
+> and the rewritten `LUME_*` specifications.
+
 Everything below was measured on the repository as it stands, before any
 Flutter work. It is the number the conversion is checked against later.
 
