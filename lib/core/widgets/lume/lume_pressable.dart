@@ -1,4 +1,5 @@
-/// Press feedback, once, for everything that can be pressed.
+/// Press feedback, focus, keyboard and screen-reader activation, once, for
+/// everything that can be pressed.
 ///
 /// `base.css` is one rule:
 ///
@@ -16,14 +17,24 @@
 /// The 2.8 % dip is small on purpose. It reads as a press on a 44-pixel row
 /// without making a full-width button look like it is being sucked into the
 /// screen.
+///
+/// **Four ways in, not one.** A `GestureDetector` alone answers a finger and
+/// nothing else: Enter and Space do nothing, and a screen reader's activate
+/// gesture does nothing, because neither produces a pointer event. So this
+/// wraps a [FocusableActionDetector] for the keyboard and passes `onTap` into
+/// [Semantics] for assistive technology. A control that looks focusable and
+/// cannot be activated from the keyboard is worse than one that is visibly
+/// inert.
 library;
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 import '../../theme/lume/lume_motion.dart';
 import '../../theme/lume/lume_space.dart';
 
-/// Wraps a surface in Lume's press feedback, focus ring and semantics.
+/// Wraps a surface in Lume's press feedback, focus ring, keyboard activation
+/// and semantics.
 class LumePressable extends StatefulWidget {
   const LumePressable({
     super.key,
@@ -38,6 +49,8 @@ class LumePressable extends StatefulWidget {
     this.focusRadius,
     this.minSize = LumeSpace.tap,
     this.excludeSemantics = false,
+    this.autofocus = false,
+    this.focusNode,
   });
 
   final Widget child;
@@ -68,7 +81,12 @@ class LumePressable extends StatefulWidget {
   /// §9's floor. A pressable smaller than this is a miss waiting to happen.
   final double minSize;
 
+  /// Set when an ancestor already supplies the semantics — it stops the node
+  /// being announced twice.
   final bool excludeSemantics;
+
+  final bool autofocus;
+  final FocusNode? focusNode;
 
   @override
   State<LumePressable> createState() => _LumePressableState();
@@ -80,6 +98,11 @@ class _LumePressableState extends State<LumePressable> {
 
   bool get _live =>
       widget.enabled && (widget.onTap != null || widget.onLongPress != null);
+
+  void _activate() {
+    if (!_live) return;
+    widget.onTap?.call();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -134,11 +157,40 @@ class _LumePressableState extends State<LumePressable> {
 
     if (!_live) {
       if (widget.excludeSemantics) return ExcludeSemantics(child: result);
-      return result;
+      // An inert surface still reports its disabled state when it was given
+      // one to report — a button that cannot be pressed is not the same thing
+      // as a paragraph.
+      if (widget.onTap == null && widget.onLongPress == null) return result;
+      return Semantics(
+        container: true,
+        button: widget.button,
+        enabled: false,
+        label: widget.semanticLabel,
+        child: result,
+      );
     }
 
-    result = Focus(
-      onFocusChange: (bool has) => setState(() => _focused = has),
+    result = FocusableActionDetector(
+      focusNode: widget.focusNode,
+      autofocus: widget.autofocus,
+      enabled: _live,
+      onShowFocusHighlight: (bool has) {
+        if (_focused != has) setState(() => _focused = has);
+      },
+      // Enter and Space, which a GestureDetector never sees.
+      shortcuts: const <ShortcutActivator, Intent>{
+        SingleActivator(LogicalKeyboardKey.enter): ActivateIntent(),
+        SingleActivator(LogicalKeyboardKey.space): ActivateIntent(),
+        SingleActivator(LogicalKeyboardKey.numpadEnter): ActivateIntent(),
+      },
+      actions: <Type, Action<Intent>>{
+        ActivateIntent: CallbackAction<ActivateIntent>(
+          onInvoke: (ActivateIntent intent) {
+            _activate();
+            return null;
+          },
+        ),
+      },
       child: GestureDetector(
         behavior: HitTestBehavior.opaque,
         onTapDown: (_) => setState(() => _down = true),
@@ -150,6 +202,12 @@ class _LumePressableState extends State<LumePressable> {
       ),
     );
 
+    if (widget.excludeSemantics) {
+      // The ancestor owns the label and the role, but the *action* still has
+      // to live on a node assistive technology can activate, so it stays here.
+      return Semantics(onTap: _activate, excludeSemantics: true, child: result);
+    }
+
     return Semantics(
       container: true,
       button: widget.button,
@@ -157,6 +215,9 @@ class _LumePressableState extends State<LumePressable> {
       selected: widget.selected,
       enabled: widget.enabled,
       label: widget.semanticLabel,
+      // Without this a screen reader can find the control and not press it.
+      onTap: _activate,
+      onLongPress: widget.onLongPress,
       child: result,
     );
   }

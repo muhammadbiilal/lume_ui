@@ -591,8 +591,28 @@ class LumeSearchField extends StatelessWidget {
 
 /// `.stepper` — decrement, value, increment.
 ///
-/// Measured: 32 tall, 3 px inset, pill, `tintNeutral` track, 26 px round
-/// buttons on `card`, tabular value at 13 / 700.
+/// Measured: the pill is 92 × 32, its buttons 26 × 26, 3 px inset, 4 px gaps,
+/// tabular value at 13 / 700.
+///
+/// **The visible control is exactly that. The touch targets are not.**
+/// 26 × 26 is far under §9's 44 × 44 floor, and the reference has the same
+/// problem — this is an accessibility correction, not a redesign. Each button
+/// gets a real 44 × 44 target laid over the pill and extending 6 px past each
+/// end; the pill, the circles, their size, their colour and their positions are
+/// unchanged to the pixel.
+///
+/// ```text
+///  0        44          60         104     the widget's own box, 104 × 44
+///  ├── decrement ──┤    ├── increment ──┤  two 44 × 44 targets, 16 px apart
+///      ╭───────────────────────────╮
+///   6  │ (–)   26   value   26  (+) │  6   the pill, 92 × 32, centred
+///      ╰───────────────────────────╯
+/// ```
+///
+/// The targets cannot overlap: the gap between them is the value column plus
+/// both inner gaps, and the value has a 26 px floor. They stay inside the
+/// widget's own bounds, so nothing is clipped and nothing hangs into a
+/// neighbour.
 class LumeStepper extends StatelessWidget {
   const LumeStepper({
     super.key,
@@ -615,7 +635,18 @@ class LumeStepper extends StatelessWidget {
   final String? decrementLabel;
   final String? incrementLabel;
 
+  /// The visible pill. Measured.
   static const double height = 32;
+
+  /// The visible button. Measured.
+  static const double buttonSize = 26;
+
+  /// The interactive target, per §9.
+  static const double targetSize = LumeSpace.tap;
+
+  /// How far each target reaches past the pill: (44 − 26) / 2 − 3 inset = 6.
+  /// Chosen so a target's centre lands exactly on its circle's centre.
+  static const double overhang = 6;
 
   @override
   Widget build(BuildContext context) {
@@ -625,58 +656,84 @@ class LumeStepper extends StatelessWidget {
       container: true,
       label: label,
       value: value,
-      // A 44 px band around the 32 px pill, so the two 26 px buttons are
-      // reachable without the pill growing. The reference's own stepper is a
-      // 26 px target — under its own §9 floor — and this recovers the height
-      // half of that without changing what is drawn.
-      child: Container(
-        height: LumeSpace.tap,
-        alignment: Alignment.center,
-        child: Container(
-          height: height,
-          padding: const EdgeInsets.all(3),
-          decoration: BoxDecoration(
-            color: lume.tintNeutral,
-            borderRadius: LumeRadius.full,
-          ),
-          child: Row(
-            mainAxisSize: MainAxisSize.min,
-            children: <Widget>[
-              _StepButton(
+      child: SizedBox(
+        height: targetSize,
+        child: Stack(
+          alignment: Alignment.center,
+          children: <Widget>[
+            // The pill, unchanged, inset by the overhang so the targets have
+            // somewhere to reach.
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: overhang),
+              child: Container(
+                height: height,
+                padding: const EdgeInsets.all(3),
+                decoration: BoxDecoration(
+                  color: lume.tintNeutral,
+                  borderRadius: LumeRadius.full,
+                ),
+                child: Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: <Widget>[
+                    // The circles are drawn by the targets above, so these are
+                    // the space they occupy and nothing else.
+                    const SizedBox(width: buttonSize, height: buttonSize),
+                    const SizedBox(width: 4),
+                    ConstrainedBox(
+                      constraints: const BoxConstraints(minWidth: buttonSize),
+                      child: Text(
+                        value,
+                        textAlign: TextAlign.center,
+                        style:
+                            LumeType.numeric(
+                              LumeType.fit(context, context.lumeType.meta),
+                            ).copyWith(
+                              color: lume.text,
+                              fontSize: 13,
+                              fontWeight: FontWeight.w700,
+                            ),
+                      ),
+                    ),
+                    const SizedBox(width: 4),
+                    const SizedBox(width: buttonSize, height: buttonSize),
+                  ],
+                ),
+              ),
+            ),
+            PositionedDirectional(
+              start: 0,
+              top: 0,
+              bottom: 0,
+              width: targetSize,
+              child: _StepButton(
                 icon: LumeIcons.minus,
                 label: '${decrementLabel ?? 'Decrease'} $label',
                 onTap: onDecrement,
               ),
-              const SizedBox(width: 4),
-              ConstrainedBox(
-                constraints: const BoxConstraints(minWidth: 28),
-                child: Text(
-                  value,
-                  textAlign: TextAlign.center,
-                  style:
-                      LumeType.numeric(
-                        LumeType.fit(context, context.lumeType.meta),
-                      ).copyWith(
-                        color: lume.text,
-                        fontSize: 13,
-                        fontWeight: FontWeight.w700,
-                      ),
-                ),
-              ),
-              const SizedBox(width: 4),
-              _StepButton(
+            ),
+            PositionedDirectional(
+              end: 0,
+              top: 0,
+              bottom: 0,
+              width: targetSize,
+              child: _StepButton(
                 icon: LumeIcons.plus,
                 label: '${incrementLabel ?? 'Increase'} $label',
                 onTap: onIncrement,
               ),
-            ],
-          ),
+            ),
+          ],
         ),
       ),
     );
   }
 }
 
+/// A 44 × 44 target holding a 26 × 26 circle at its centre.
+///
+/// The circle is what moves under a press and what carries focus; the
+/// surrounding 9 px of target is transparent and does nothing but catch
+/// thumbs.
 class _StepButton extends StatelessWidget {
   const _StepButton({required this.icon, required this.label, this.onTap});
 
@@ -687,25 +744,29 @@ class _StepButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final LumeColors lume = context.lume;
+    final bool enabled = onTap != null;
+
     return Semantics(
       button: true,
-      enabled: onTap != null,
+      enabled: enabled,
       label: label,
       child: LumePressable(
         onTap: onTap,
-        enabled: onTap != null,
+        enabled: enabled,
         borderRadius: LumeRadius.full,
-        minSize: 26,
+        minSize: LumeStepper.targetSize,
         excludeSemantics: true,
-        child: Container(
-          width: 26,
-          height: 26,
-          alignment: Alignment.center,
-          decoration: BoxDecoration(color: lume.card, shape: BoxShape.circle),
-          child: LumeIcon(
-            icon,
-            size: LumeSpace.iconSm,
-            color: onTap == null ? lume.text3 : lume.text2,
+        child: Center(
+          child: Container(
+            width: LumeStepper.buttonSize,
+            height: LumeStepper.buttonSize,
+            alignment: Alignment.center,
+            decoration: BoxDecoration(color: lume.card, shape: BoxShape.circle),
+            child: LumeIcon(
+              icon,
+              size: LumeSpace.iconSm,
+              color: enabled ? lume.text2 : lume.text3,
+            ),
           ),
         ),
       ),

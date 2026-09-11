@@ -161,9 +161,35 @@ action still *draws* at 36 and the stepper's buttons still draw at 26; both now
 and after the fix differ only where the notice's actions stopped wrapping, which
 was a separate bug.
 
-One residual: the stepper's buttons are 44 tall but 32 wide, because 44 wide
-would push the pill out to 96 and change the design. Recorded rather than
-silently accepted; raised as Q8.
+**The stepper was corrected properly in F3** rather than left at 44 × 32. Each
+button now has a real 44 × 44 target, laid over the pill and reaching 6 px past
+each end so the target's centre lands exactly on its circle's centre:
+
+```text
+ 0        44          60         104     the widget's box, 104 × 44
+ ├── decrement ──┤    ├── increment ──┤  two 44 × 44 targets, 16 px apart
+     ╭───────────────────────────╮
+  6  │ (–)   26   value   26  (+) │  6   the pill, 92 × 32, unchanged
+     ╰───────────────────────────╯
+```
+
+The targets cannot overlap — the gap between them is the value column plus both
+inner gaps, and the value has a 26 px floor — and they stay inside the widget's
+own bounds, so nothing is clipped and nothing reaches into a neighbour.
+
+What changed visibly: **nothing, and one thing that was already wrong.** The
+pill is now 92 × 32, which is the measured width; the previous implementation
+had a 28 px value column where the measurement says 26, so it was 94. The two
+`selection` goldens moved by 0.44 % of their pixels, all of it inside the
+stepper, and the new image is the one that matches the reference.
+
+`test/core/widgets/stepper_target_test.dart` holds all of it: the pill's
+measured size, each circle's size, each target centred on its own circle,
+44 × 44 on both axes, no overlap (including at a single-digit value), staying
+inside bounds, activation by pointer, by a thumb landing outside the circle, by
+Enter, by Space and by a screen reader's tap action, disabled semantics that
+still announce and still refuse, and all of it again at 200 % text, at 359 px,
+in RTL, and beside another control.
 
 ### D7 — a collapsed disclosure does not render its body
 
@@ -336,7 +362,7 @@ id-reconciliation table is an F6 deliverable. Recorded in
 | # | Question | Blocks | Recommendation |
 |---|---|---|---|
 | Q6 | **Should Urdu be set in Nastaliq rather than Naskh?** The reference ships only Noto Naskh Arabic, so Naskh is what the design asks for and what F1 implemented. But Urdu is conventionally Nastaliq, and Dayroz separately bundles `NotoNastaliqUrdu-Medium.ttf` — which is the production app judging Naskh wrong for Urdu | F4 onboarding sign-off in Urdu | Keep **Naskh**, because the reference is the source of truth and bundling a face the design has not asked for is the conversion inventing a design decision. Raise it as a *design* question against the reference instead. Decide before Urdu screens are signed off, since it changes how every Urdu screen looks |
-| Q8 | **The stepper's buttons are 44 tall but 32 wide.** Making them 44 wide would widen the pill from 64 to 96 and change the control's proportions. Accept the residual, or change the design? | F6, where steppers are actually used | **Accept**, and record it. The height is the axis a thumb misses on in a vertical list, and it is recovered. Changing the pill would be the conversion redesigning a control it was asked to reproduce — better raised against the reference |
+| ~~Q8~~ | ~~**The stepper's buttons are 44 tall but 32 wide.** Making them 44 wide would widen the pill from 64 to 96 and change the control's proportions. Accept the residual, or change the design? | F6, where steppers are actually used | **Accept**, and record it. The height is the axis a thumb misses on in a vertical list, and it is recovered. Changing the pill would be the conversion redesigning a control it was asked to reproduce — better raised against the reference~~ · **Superseded.** Rejected, and corrected properly in F3 — see D6 |
 
 ## 4. Change log
 
@@ -356,6 +382,9 @@ id-reconciliation table is an F6 deliverable. Recorded in
 | 2026-09-11 (F2) | **D6 raised and resolved** — `.cnotice__act` (36) and `.stepper__btn` (26) are under §9's own 44 px floor | Found by the touch-target sweep across every interactive component |
 | 2026-09-11 (F2) | **D7 raised** — a collapsed disclosure must not render its body | Found when `AnimatedCrossFade` kept hidden content in the semantics tree |
 | 2026-09-11 (F2) | Seven measurement findings recorded in [COMPONENT_MATRIX.md §2](COMPONENT_MATRIX.md#2-what-the-measurement-caught-that-reading-would-not) | Each is a value a stylesheet read gets wrong |
+| 2026-09-11 (F3) | **Q8 rejected; D6 completed.** The stepper's targets are 44 × 44, non-overlapping, in-bounds, and centred on their circles | A 44 × 32 target was accepted too easily the first time |
+| 2026-09-11 (F3) | **`LumePressable` gained keyboard and screen-reader activation.** It was pointer-only: Enter, Space and an assistive tap all did nothing | Found while proving the stepper's four activation paths |
+| 2026-09-11 (F3) | Stepper pill corrected from 94 to the measured 92 px | The value column was 28 where the measurement says 26 |
 
 One correction has been applied to the web prototype: the four dead
 `.onb-country` lines, deleted in F1 under the evidence gate in C1. Nothing else
