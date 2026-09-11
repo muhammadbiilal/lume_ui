@@ -85,6 +85,13 @@ for (const m of src.matchAll(/ints:\s*\[([^\]]*)\]/g)) {
 
 const unreachable = ids.filter((id) => !referenced.has(id));
 
+/* ---- how many features the catalogue holds ---------------------------- */
+/* The tools slide quotes `C.FEATURES.length` — the whole catalogue, not the
+   subset this user can see. Counted here so the copy cannot drift from it. */
+const FEATURE_ROW = new RegExp("\{ id: '[a-z0-9]+',[^\n]*act:", 'g');
+const featureCount = [...src.matchAll(FEATURE_ROW)].length;
+if (featureCount < 50) throw new Error('feature count looks wrong: ' + featureCount);
+
 /* ---- FAITH_INTERESTS, which the switch uses to clear ------------------- */
 const faithMatch = /var FAITH_INTERESTS = \[([^\]]*)\]/.exec(src);
 if (!faithMatch) throw new Error('FAITH_INTERESTS not found');
@@ -109,6 +116,7 @@ writeFileSync(
       interestCount: ids.length,
       minimum: 5,
       maximum: 10,
+      featureCount,
       faithInterests,
       defaults,
       // Every interest some feature declares. `liveItems` offers an ordinary
@@ -125,6 +133,7 @@ writeFileSync(
 
 process.stdout.write(
   `wrote ${groups.length} groups, ${ids.length} interests ` +
-    `(${unreachable.length} unreachable: ${unreachable.join(', ') || 'none'}) ` +
+    `(${unreachable.length} unreachable: ${unreachable.join(', ') || 'none'}), ` +
+    `${featureCount} features ` +
     `to assets/data/interests.json\n`,
 );

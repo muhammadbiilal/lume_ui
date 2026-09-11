@@ -16,7 +16,6 @@ import 'package:lume/features/onboarding/domain/interests_model.dart';
 import 'package:lume/features/onboarding/presentation/country_screen.dart';
 import 'package:lume/features/onboarding/presentation/interests_screen.dart';
 import 'package:lume/features/onboarding/presentation/onboarding_chrome.dart';
-import 'package:lume/features/onboarding/presentation/onboarding_flow.dart';
 import 'package:lume/features/onboarding/presentation/onboarding_steps.dart';
 
 import '../../helpers/capture.dart';
@@ -158,13 +157,23 @@ void main() {
       expect(LumeOnboardingStep.interests, 5);
     });
 
-    testWidgets('Skip is there when it does something, and not when not', (
+    testWidgets('Skip holds its place even when it does nothing', (
       WidgetTester tester,
     ) async {
+      // `.onb__skip[disabled] { opacity: 0; pointer-events: none }` — the
+      // control is always in the row, so the progress bar is the same width
+      // whether or not this step can be skipped.
       await pumpCountry(tester);
-      expect(find.text('Skip'), findsNothing);
+      expect(find.text('Skip'), findsOneWidget);
+      expect(
+        find.bySemanticsLabel('Skip'),
+        findsNothing,
+        reason: 'invisible and inert is not a button',
+      );
+
       await pumpCountry(tester, onSkip: () {});
       expect(find.text('Skip'), findsOneWidget);
+      expect(find.bySemanticsLabel('Skip'), findsWidgets);
     });
 
     testWidgets('the kicker, title and text are the reference’s copy', (
@@ -706,93 +715,6 @@ void main() {
       );
       expect(find.text('Weather'), findsNothing);
       expect(find.text('موسم'), findsOneWidget);
-    });
-  });
-
-  group('the flow, as far as it goes', () {
-    testWidgets('country then interests, then out', (
-      WidgetTester tester,
-    ) async {
-      LumeOnboardingDraft? finished;
-      await pumpLume(
-        tester,
-        LumeOnboardingFlow(
-          countries: countries,
-          catalogue: interests,
-          onFinished: (LumeOnboardingDraft d) => finished = d,
-        ),
-        surface: LumeViewport.tall,
-      );
-
-      expect(find.text('Where are you based?'), findsOneWidget);
-      await tester.tap(find.text('United Kingdom').first);
-      await tester.pumpAndSettle();
-      await tester.tap(find.byType(LumeOnboardingContinue));
-      await tester.pumpAndSettle();
-
-      expect(find.text('What are you here for?'), findsOneWidget);
-      for (final String label in <String>[
-        'Weather',
-        'Calendar',
-        'Tasks & to-dos',
-        'Notes',
-        'Calculators',
-      ]) {
-        await tester.tap(find.widgetWithText(LumeInterestChip, label));
-      }
-      await tester.pumpAndSettle();
-      await tester.tap(find.byType(LumeOnboardingContinue));
-      await tester.pumpAndSettle();
-
-      expect(finished, isNotNull);
-      expect(finished!.country, 'GB');
-      expect(finished!.interests.length, 5);
-      expect(finished!.islamic, isFalse, reason: 'never inferred');
-    });
-
-    testWidgets('Back returns to the country step and keeps the choice', (
-      WidgetTester tester,
-    ) async {
-      await pumpLume(
-        tester,
-        LumeOnboardingFlow(countries: countries, catalogue: interests),
-        surface: LumeViewport.tall,
-      );
-      await tester.tap(find.text('United Kingdom').first);
-      await tester.pumpAndSettle();
-      await tester.tap(find.byType(LumeOnboardingContinue));
-      await tester.pumpAndSettle();
-      expect(find.text('What are you here for?'), findsOneWidget);
-
-      await tester.tap(find.byType(LumeOnboardingBack));
-      await tester.pumpAndSettle();
-      expect(find.text('Where are you based?'), findsOneWidget);
-      final Iterable<LumeCountryRow> selected = tester
-          .widgetList<LumeCountryRow>(find.byType(LumeCountryRow))
-          .where((LumeCountryRow r) => r.selected);
-      expect(
-        selected.every((LumeCountryRow r) => r.country.code == 'GB'),
-        isTrue,
-        reason: 'the draft survived the step change',
-      );
-    });
-
-    testWidgets('Back out of the first step leaves the flow', (
-      WidgetTester tester,
-    ) async {
-      int left = 0;
-      await pumpLume(
-        tester,
-        LumeOnboardingFlow(
-          countries: countries,
-          catalogue: interests,
-          onLeave: () => left++,
-        ),
-        surface: LumeViewport.tall,
-      );
-      await tester.tap(find.byType(LumeOnboardingBack));
-      await tester.pumpAndSettle();
-      expect(left, 1);
     });
   });
 

@@ -14,14 +14,53 @@
   "lang": "en",
   "dir": "ltr",
   "missing": [
+    "onb.art",
+    "onb.brand",
+    "onb.mark",
+    "onb.wordmark",
+    "onb.link",
+    "onb.namefield",
+    "locaction",
     "picker.bar",
     "picker.count",
     "picker.clear",
     "pickgroup.first",
     "pickgroup.label.first",
     "pick.first",
-    "pickgroup.faith"
+    "pickgroup.faith",
+    "onb.rows",
+    "onb.row.first",
+    "onb.row.title",
+    "onb.row.sub",
+    "onb.methodLabel",
+    "onb.choice",
+    "onb.choice.first",
+    "onb.note",
+    "onb.field",
+    "onb.fieldLabel",
+    "onb.fieldBox",
+    "onb.seal"
   ],
+  "scroll": {
+    "step": {
+      "clientHeight": 764,
+      "scrollHeight": 764,
+      "scrolls": false,
+      "overflowY": "auto"
+    },
+    "locscroll": {
+      "clientHeight": 465,
+      "scrollHeight": 8830,
+      "scrolls": true,
+      "overflowY": "auto"
+    },
+    "shell": {
+      "clientHeight": 844,
+      "scrollHeight": 844,
+      "scrolls": false,
+      "overflowY": "hidden"
+    }
+  },
   "bounds": {
     "onb.top": {
       "x": 0,
@@ -29,7 +68,7 @@
       "width": 390,
       "height": 80,
       "lines": null,
-      "text": null
+      "text": "Skip"
     },
     "onb.nav": {
       "x": 20,
@@ -53,7 +92,7 @@
       "width": 24.11,
       "height": 3,
       "lines": null,
-      "text": ""
+      "text": null
     },
     "onb.skip": {
       "x": 335.11,
@@ -69,7 +108,7 @@
       "width": 390,
       "height": 764,
       "lines": null,
-      "text": null
+      "text": "Make it local\n          Where are you based?\n          This helps us personalise local information and services. It says"
     },
     "onb.kicker": {
       "x": 20,
@@ -101,7 +140,7 @@
       "width": 350,
       "height": 68,
       "lines": null,
-      "text": null
+      "text": "Continue"
     },
     "onb.continue": {
       "x": 20,
@@ -109,7 +148,7 @@
       "width": 350,
       "height": 46,
       "lines": null,
-      "text": null
+      "text": "Continue"
     },
     "locpicker": {
       "x": 20,
@@ -117,7 +156,7 @@
       "width": 350,
       "height": 518.58,
       "lines": null,
-      "text": null
+      "text": "PopularPKPakistanPKRINIndiaINRUSUnited StatesUSDGBUnited KingdomGBPAEUnited Arab EmiratesAEDSASaudi ArabiaSARCACanadaCAD"
     },
     "locsearch": {
       "x": 40,
@@ -133,7 +172,7 @@
       "width": 350,
       "height": 464.58,
       "lines": null,
-      "text": null
+      "text": "PopularPKPakistanPKRINIndiaINRUSUnited StatesUSDGBUnited KingdomGBPAEUnited Arab EmiratesAEDSASaudi ArabiaSARCACanadaCAD"
     },
     "locgroup.first": {
       "x": 22,
@@ -149,7 +188,7 @@
       "width": 350,
       "height": 821,
       "lines": null,
-      "text": null
+      "text": "PKPakistanPKRINIndiaINRUSUnited StatesUSDGBUnited KingdomGBPAEUnited Arab EmiratesAEDSASaudi ArabiaSARCACanadaCADAUAustr"
     },
     "locrow.first": {
       "x": 21,
@@ -157,7 +196,15 @@
       "width": 348,
       "height": 41,
       "lines": null,
-      "text": null
+      "text": "PKPakistanPKR"
+    },
+    "onb.skipStep": {
+      "x": 0,
+      "y": 0,
+      "width": 0,
+      "height": 0,
+      "lines": null,
+      "text": "Skip for now"
     }
   }
 }

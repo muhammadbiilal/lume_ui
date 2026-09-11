@@ -626,6 +626,10 @@
       "language": "ca",
       "timezone": "Europe/Andorra",
       "popular": false,
+      "regions": null,
+      "cities": [
+        "Andorra la Vella"
+      ],
       "names": {
         "en": "Andorra",
         "ur": "انڈورا",
@@ -638,6 +642,16 @@
       "language": "ar",
       "timezone": "Asia/Dubai",
       "popular": true,
+      "regions": null,
+      "cities": [
+        "Dubai",
+        "Abu Dhabi",
+        "Sharjah",
+        "Ajman",
+        "Al Ain",
+        "Ras Al Khaimah",
+        "Fujairah"
+      ],
       "names": {
         "en": "United Arab Emirates",
         "ur": "متحدہ عرب امارات",
@@ -650,6 +664,13 @@
       "language": "fa",
       "timezone": "Asia/Kabul",
       "popular": false,
+      "regions": null,
+      "cities": [
+        "Kabul",
+        "Kandahar",
+        "Herat",
+        "Mazar-i-Sharif"
+      ],
       "names": {
         "en": "Afghanistan",
         "ur": "افغانستان",
@@ -662,6 +683,10 @@
       "language": "en",
       "timezone": "America/Antigua",
       "popular": false,
+      "regions": null,
+      "cities": [
+        "St John’s"
+      ],
       "names": {
         "en": "Antigua & Barbuda",
         "ur": "انٹیگوا اور باربودا",
@@ -674,6 +699,11 @@
       "language": "sq",
       "timezone": "Europe/Tirane",
       "popular": false,
+      "regions": null,
+      "cities": [
+        "Tirana",
+        "Durrës"
+      ],
       "names": {
         "en": "Albania",
         "ur": "البانیہ",
@@ -686,6 +716,11 @@
       "language": "hy",
       "timezone": "Asia/Yerevan",
       "popular": false,
+      "regions": null,
+      "cities": [
+        "Yerevan",
+        "Gyumri"
+      ],
       "names": {
         "en": "Armenia",
         "ur": "آرمینیا",
@@ -698,6 +733,11 @@
       "language": "pt",
       "timezone": "Africa/Luanda",
       "popular": false,
+      "regions": null,
+      "cities": [
+        "Luanda",
+        "Huambo"
+      ],
       "names": {
         "en": "Angola",
         "ur": "انگولا",
@@ -710,6 +750,13 @@
       "language": "es",
       "timezone": "America/Argentina/Buenos_Aires",
       "popular": false,
+      "regions": null,
+      "cities": [
+        "Buenos Aires",
+        "Córdoba",
+        "Rosario",
+        "Mendoza"
+      ],
       "names": {
         "en": "Argentina",
         "ur": "ارجنٹینا",
@@ -722,6 +769,13 @@
       "language": "de",
       "timezone": "Europe/Vienna",
       "popular": false,
+      "regions": null,
+      "cities": [
+        "Vienna",
+        "Graz",
+        "Linz",
+        "Salzburg"
+      ],
       "names": {
         "en": "Austria",
         "ur": "آسٹریا",
@@ -734,6 +788,46 @@
       "language": "en",
       "timezone": "Australia/Sydney",
       "popular": true,
+      "regions": {
+        "New South Wales": [
+          "Sydney",
+          "Newcastle"
+        ],
+        "Victoria": [
+          "Melbourne",
+          "Geelong"
+        ],
+        "Queensland": [
+          "Brisbane",
+          "Gold Coast",
+          "Cairns"
+        ],
+        "Western Australia": [
+          "Perth"
+        ],
+        "South Australia": [
+          "Adelaide"
+        ],
+        "Australian Capital Territory": [
+          "Canberra"
+        ],
+        "Tasmania": [
+          "Hobart"
+        ]
+      },
+      "cities": [
+        "Sydney",
+        "Newcastle",
+        "Melbourne",
+        "Geelong",
+        "Brisbane",
+        "Gold Coast",
+        "Cairns",
+        "Perth",
+        "Adelaide",
+        "Canberra",
+        "Hobart"
+      ],
       "names": {
         "en": "Australia",
         "ur": "آسٹریلیا",
@@ -746,6 +840,11 @@
       "language": "az",
       "timezone": "Asia/Baku",
       "popular": false,
+      "regions": null,
+      "cities": [
+        "Baku",
+        "Ganja"
+      ],
       "names": {
         "en": "Azerbaijan",
         "ur": "آذربائیجان",
@@ -758,6 +857,12 @@
       "language": "bs",
       "timezone": "Europe/Sarajevo",
       "popular": false,
+      "regions": null,
+      "cities": [
+        "Sarajevo",
+        "Banja Luka",
+        "Mostar"
+      ],
       "names": {
         "en": "Bosnia & Herzegovina",
         "ur": "بوسنیا اور ہرزیگووینا",
@@ -770,6 +875,10 @@
       "language": "en",
       "timezone": "America/Barbados",
       "popular": false,
+      "regions": null,
+      "cities": [
+        "Bridgetown"
+      ],
       "names": {
         "en": "Barbados",
         "ur": "بارباڈوس",
@@ -782,6 +891,14 @@
       "language": "bn",
       "timezone": "Asia/Dhaka",
       "popular": true,
+      "regions": null,
+      "cities": [
+        "Dhaka",
+        "Chattogram",
+        "Khulna",
+        "Sylhet",
+        "Rajshahi"
+      ],
       "names": {
         "en": "Bangladesh",
         "ur": "بنگلہ دیش",
@@ -794,6 +911,13 @@
       "language": "nl",
       "timezone": "Europe/Brussels",
       "popular": false,
+      "regions": null,
+      "cities": [
+        "Brussels",
+        "Antwerp",
+        "Ghent",
+        "Bruges"
+      ],
       "names": {
         "en": "Belgium",
         "ur": "بیلجیم",
@@ -806,6 +930,11 @@
       "language": "fr",
       "timezone": "Africa/Ouagadougou",
       "popular": false,
+      "regions": null,
+      "cities": [
+        "Ouagadougou",
+        "Bobo-Dioulasso"
+      ],
       "names": {
         "en": "Burkina Faso",
         "ur": "برکینا فاسو",
@@ -818,6 +947,12 @@
       "language": "bg",
       "timezone": "Europe/Sofia",
       "popular": false,
+      "regions": null,
+      "cities": [
+        "Sofia",
+        "Plovdiv",
+        "Varna"
+      ],
       "names": {
         "en": "Bulgaria",
         "ur": "بلغاریہ",
@@ -830,6 +965,12 @@
       "language": "ar",
       "timezone": "Asia/Bahrain",
       "popular": false,
+      "regions": null,
+      "cities": [
+        "Manama",
+        "Riffa",
+        "Muharraq"
+      ],
       "names": {
         "en": "Bahrain",
         "ur": "بحرین",
@@ -842,6 +983,11 @@
       "language": "fr",
       "timezone": "Africa/Bujumbura",
       "popular": false,
+      "regions": null,
+      "cities": [
+        "Gitega",
+        "Bujumbura"
+      ],
       "names": {
         "en": "Burundi",
         "ur": "برونڈی",
@@ -854,6 +1000,11 @@
       "language": "fr",
       "timezone": "Africa/Porto-Novo",
       "popular": false,
+      "regions": null,
+      "cities": [
+        "Cotonou",
+        "Porto-Novo"
+      ],
       "names": {
         "en": "Benin",
         "ur": "بینن",
@@ -866,6 +1017,10 @@
       "language": "ms",
       "timezone": "Asia/Brunei",
       "popular": false,
+      "regions": null,
+      "cities": [
+        "Bandar Seri Begawan"
+      ],
       "names": {
         "en": "Brunei",
         "ur": "برونائی",
@@ -878,6 +1033,12 @@
       "language": "es",
       "timezone": "America/La_Paz",
       "popular": false,
+      "regions": null,
+      "cities": [
+        "La Paz",
+        "Santa Cruz",
+        "Cochabamba"
+      ],
       "names": {
         "en": "Bolivia",
         "ur": "بولیویا",
@@ -890,6 +1051,17 @@
       "language": "pt",
       "timezone": "America/Sao_Paulo",
       "popular": false,
+      "regions": null,
+      "cities": [
+        "São Paulo",
+        "Rio de Janeiro",
+        "Brasília",
+        "Salvador",
+        "Fortaleza",
+        "Belo Horizonte",
+        "Curitiba",
+        "Recife"
+      ],
       "names": {
         "en": "Brazil",
         "ur": "برازیل",
@@ -902,6 +1074,10 @@
       "language": "en",
       "timezone": "America/Nassau",
       "popular": false,
+      "regions": null,
+      "cities": [
+        "Nassau"
+      ],
       "names": {
         "en": "Bahamas",
         "ur": "بہاماس",
@@ -914,6 +1090,10 @@
       "language": "dz",
       "timezone": "Asia/Thimphu",
       "popular": false,
+      "regions": null,
+      "cities": [
+        "Thimphu"
+      ],
       "names": {
         "en": "Bhutan",
         "ur": "بھوٹان",
@@ -926,6 +1106,10 @@
       "language": "en",
       "timezone": "Africa/Gaborone",
       "popular": false,
+      "regions": null,
+      "cities": [
+        "Gaborone"
+      ],
       "names": {
         "en": "Botswana",
         "ur": "بوتسوانا",
@@ -938,6 +1122,11 @@
       "language": "be",
       "timezone": "Europe/Minsk",
       "popular": false,
+      "regions": null,
+      "cities": [
+        "Minsk",
+        "Gomel"
+      ],
       "names": {
         "en": "Belarus",
         "ur": "بیلاروس",
@@ -950,6 +1139,11 @@
       "language": "en",
       "timezone": "America/Belize",
       "popular": false,
+      "regions": null,
+      "cities": [
+        "Belize City",
+        "Belmopan"
+      ],
       "names": {
         "en": "Belize",
         "ur": "بیلائز",
@@ -962,6 +1156,48 @@
       "language": "en",
       "timezone": "America/Toronto",
       "popular": true,
+      "regions": {
+        "Ontario": [
+          "Toronto",
+          "Ottawa",
+          "Mississauga",
+          "Hamilton"
+        ],
+        "Quebec": [
+          "Montreal",
+          "Quebec City"
+        ],
+        "British Columbia": [
+          "Vancouver",
+          "Surrey",
+          "Victoria"
+        ],
+        "Alberta": [
+          "Calgary",
+          "Edmonton"
+        ],
+        "Manitoba": [
+          "Winnipeg"
+        ],
+        "Nova Scotia": [
+          "Halifax"
+        ]
+      },
+      "cities": [
+        "Toronto",
+        "Ottawa",
+        "Mississauga",
+        "Hamilton",
+        "Montreal",
+        "Quebec City",
+        "Vancouver",
+        "Surrey",
+        "Victoria",
+        "Calgary",
+        "Edmonton",
+        "Winnipeg",
+        "Halifax"
+      ],
       "names": {
         "en": "Canada",
         "ur": "کینیڈا",
@@ -974,6 +1210,11 @@
       "language": "fr",
       "timezone": "Africa/Kinshasa",
       "popular": false,
+      "regions": null,
+      "cities": [
+        "Kinshasa",
+        "Lubumbashi"
+      ],
       "names": {
         "en": "Congo - Kinshasa",
         "ur": "کانگو - کنشاسا",
@@ -986,6 +1227,10 @@
       "language": "fr",
       "timezone": "Africa/Bangui",
       "popular": false,
+      "regions": null,
+      "cities": [
+        "Bangui"
+      ],
       "names": {
         "en": "Central African Republic",
         "ur": "وسط افریقی جمہوریہ",
@@ -998,6 +1243,11 @@
       "language": "fr",
       "timezone": "Africa/Brazzaville",
       "popular": false,
+      "regions": null,
+      "cities": [
+        "Brazzaville",
+        "Pointe-Noire"
+      ],
       "names": {
         "en": "Congo - Brazzaville",
         "ur": "کانگو - برازاویلے",
@@ -1010,6 +1260,14 @@
       "language": "de",
       "timezone": "Europe/Zurich",
       "popular": false,
+      "regions": null,
+      "cities": [
+        "Zurich",
+        "Geneva",
+        "Basel",
+        "Bern",
+        "Lausanne"
+      ],
       "names": {
         "en": "Switzerland",
         "ur": "سوئٹزر لینڈ",
@@ -1022,6 +1280,11 @@
       "language": "fr",
       "timezone": "Africa/Abidjan",
       "popular": false,
+      "regions": null,
+      "cities": [
+        "Abidjan",
+        "Yamoussoukro"
+      ],
       "names": {
         "en": "Côte d’Ivoire",
         "ur": "کوٹ ڈی آئیوری",
@@ -1034,6 +1297,12 @@
       "language": "es",
       "timezone": "America/Santiago",
       "popular": false,
+      "regions": null,
+      "cities": [
+        "Santiago",
+        "Valparaíso",
+        "Concepción"
+      ],
       "names": {
         "en": "Chile",
         "ur": "چلی",
@@ -1046,6 +1315,11 @@
       "language": "fr",
       "timezone": "Africa/Douala",
       "popular": false,
+      "regions": null,
+      "cities": [
+        "Douala",
+        "Yaoundé"
+      ],
       "names": {
         "en": "Cameroon",
         "ur": "کیمرون",
@@ -1058,6 +1332,17 @@
       "language": "zh",
       "timezone": "Asia/Shanghai",
       "popular": false,
+      "regions": null,
+      "cities": [
+        "Shanghai",
+        "Beijing",
+        "Guangzhou",
+        "Shenzhen",
+        "Chengdu",
+        "Hangzhou",
+        "Wuhan",
+        "Xi’an"
+      ],
       "names": {
         "en": "China",
         "ur": "چین",
@@ -1070,6 +1355,13 @@
       "language": "es",
       "timezone": "America/Bogota",
       "popular": false,
+      "regions": null,
+      "cities": [
+        "Bogotá",
+        "Medellín",
+        "Cali",
+        "Barranquilla"
+      ],
       "names": {
         "en": "Colombia",
         "ur": "کولمبیا",
@@ -1082,6 +1374,10 @@
       "language": "es",
       "timezone": "America/Costa_Rica",
       "popular": false,
+      "regions": null,
+      "cities": [
+        "San José"
+      ],
       "names": {
         "en": "Costa Rica",
         "ur": "کوسٹا ریکا",
@@ -1094,6 +1390,11 @@
       "language": "es",
       "timezone": "America/Havana",
       "popular": false,
+      "regions": null,
+      "cities": [
+        "Havana",
+        "Santiago de Cuba"
+      ],
       "names": {
         "en": "Cuba",
         "ur": "کیوبا",
@@ -1106,6 +1407,10 @@
       "language": "pt",
       "timezone": "Atlantic/Cape_Verde",
       "popular": false,
+      "regions": null,
+      "cities": [
+        "Praia"
+      ],
       "names": {
         "en": "Cape Verde",
         "ur": "کیپ ورڈی",
@@ -1118,6 +1423,11 @@
       "language": "el",
       "timezone": "Asia/Nicosia",
       "popular": false,
+      "regions": null,
+      "cities": [
+        "Nicosia",
+        "Limassol"
+      ],
       "names": {
         "en": "Cyprus",
         "ur": "قبرص",
@@ -1130,6 +1440,12 @@
       "language": "cs",
       "timezone": "Europe/Prague",
       "popular": false,
+      "regions": null,
+      "cities": [
+        "Prague",
+        "Brno",
+        "Ostrava"
+      ],
       "names": {
         "en": "Czechia",
         "ur": "چیکیا",
@@ -1142,6 +1458,17 @@
       "language": "de",
       "timezone": "Europe/Berlin",
       "popular": true,
+      "regions": null,
+      "cities": [
+        "Berlin",
+        "Munich",
+        "Hamburg",
+        "Frankfurt",
+        "Cologne",
+        "Stuttgart",
+        "Düsseldorf",
+        "Leipzig"
+      ],
       "names": {
         "en": "Germany",
         "ur": "جرمنی",
@@ -1154,6 +1481,10 @@
       "language": "fr",
       "timezone": "Africa/Djibouti",
       "popular": false,
+      "regions": null,
+      "cities": [
+        "Djibouti"
+      ],
       "names": {
         "en": "Djibouti",
         "ur": "جبوتی",
@@ -1166,6 +1497,12 @@
       "language": "da",
       "timezone": "Europe/Copenhagen",
       "popular": false,
+      "regions": null,
+      "cities": [
+        "Copenhagen",
+        "Aarhus",
+        "Odense"
+      ],
       "names": {
         "en": "Denmark",
         "ur": "ڈنمارک",
@@ -1178,6 +1515,10 @@
       "language": "en",
       "timezone": "America/Dominica",
       "popular": false,
+      "regions": null,
+      "cities": [
+        "Roseau"
+      ],
       "names": {
         "en": "Dominica",
         "ur": "ڈومنیکا",
@@ -1190,6 +1531,11 @@
       "language": "es",
       "timezone": "America/Santo_Domingo",
       "popular": false,
+      "regions": null,
+      "cities": [
+        "Santo Domingo",
+        "Santiago"
+      ],
       "names": {
         "en": "Dominican Republic",
         "ur": "جمہوریہ ڈومينيکن",
@@ -1202,6 +1548,12 @@
       "language": "ar",
       "timezone": "Africa/Algiers",
       "popular": false,
+      "regions": null,
+      "cities": [
+        "Algiers",
+        "Oran",
+        "Constantine"
+      ],
       "names": {
         "en": "Algeria",
         "ur": "الجیریا",
@@ -1214,6 +1566,11 @@
       "language": "es",
       "timezone": "America/Guayaquil",
       "popular": false,
+      "regions": null,
+      "cities": [
+        "Quito",
+        "Guayaquil"
+      ],
       "names": {
         "en": "Ecuador",
         "ur": "ایکواڈور",
@@ -1226,6 +1583,11 @@
       "language": "et",
       "timezone": "Europe/Tallinn",
       "popular": false,
+      "regions": null,
+      "cities": [
+        "Tallinn",
+        "Tartu"
+      ],
       "names": {
         "en": "Estonia",
         "ur": "اسٹونیا",
@@ -1238,6 +1600,14 @@
       "language": "ar",
       "timezone": "Africa/Cairo",
       "popular": true,
+      "regions": null,
+      "cities": [
+        "Cairo",
+        "Alexandria",
+        "Giza",
+        "Luxor",
+        "Aswan"
+      ],
       "names": {
         "en": "Egypt",
         "ur": "مصر",
@@ -1250,6 +1620,10 @@
       "language": "ti",
       "timezone": "Africa/Asmara",
       "popular": false,
+      "regions": null,
+      "cities": [
+        "Asmara"
+      ],
       "names": {
         "en": "Eritrea",
         "ur": "اریٹیریا",
@@ -1262,6 +1636,15 @@
       "language": "es",
       "timezone": "Europe/Madrid",
       "popular": false,
+      "regions": null,
+      "cities": [
+        "Madrid",
+        "Barcelona",
+        "Valencia",
+        "Seville",
+        "Bilbao",
+        "Málaga"
+      ],
       "names": {
         "en": "Spain",
         "ur": "ہسپانیہ",
@@ -1274,6 +1657,11 @@
       "language": "am",
       "timezone": "Africa/Addis_Ababa",
       "popular": false,
+      "regions": null,
+      "cities": [
+        "Addis Ababa",
+        "Dire Dawa"
+      ],
       "names": {
         "en": "Ethiopia",
         "ur": "ایتھوپیا",
@@ -1286,6 +1674,12 @@
       "language": "fi",
       "timezone": "Europe/Helsinki",
       "popular": false,
+      "regions": null,
+      "cities": [
+        "Helsinki",
+        "Espoo",
+        "Tampere"
+      ],
       "names": {
         "en": "Finland",
         "ur": "فن لینڈ",
@@ -1298,6 +1692,10 @@
       "language": "en",
       "timezone": "Pacific/Fiji",
       "popular": false,
+      "regions": null,
+      "cities": [
+        "Suva"
+      ],
       "names": {
         "en": "Fiji",
         "ur": "فجی",
@@ -1310,6 +1708,10 @@
       "language": "en",
       "timezone": "Pacific/Pohnpei",
       "popular": false,
+      "regions": null,
+      "cities": [
+        "Palikir"
+      ],
       "names": {
         "en": "Micronesia",
         "ur": "مائکرونیشیا",
@@ -1322,6 +1724,17 @@
       "language": "fr",
       "timezone": "Europe/Paris",
       "popular": true,
+      "regions": null,
+      "cities": [
+        "Paris",
+        "Marseille",
+        "Lyon",
+        "Toulouse",
+        "Nice",
+        "Nantes",
+        "Bordeaux",
+        "Lille"
+      ],
       "names": {
         "en": "France",
         "ur": "فرانس",
@@ -1334,6 +1747,10 @@
       "language": "fr",
       "timezone": "Africa/Libreville",
       "popular": false,
+      "regions": null,
+      "cities": [
+        "Libreville"
+      ],
       "names": {
         "en": "Gabon",
         "ur": "گیبون",
@@ -1346,6 +1763,46 @@
       "language": "en",
       "timezone": "Europe/London",
       "popular": true,
+      "regions": {
+        "England": [
+          "London",
+          "Manchester",
+          "Birmingham",
+          "Leeds",
+          "Liverpool",
+          "Bristol",
+          "Sheffield",
+          "Newcastle"
+        ],
+        "Scotland": [
+          "Glasgow",
+          "Edinburgh",
+          "Aberdeen"
+        ],
+        "Wales": [
+          "Cardiff",
+          "Swansea"
+        ],
+        "Northern Ireland": [
+          "Belfast"
+        ]
+      },
+      "cities": [
+        "London",
+        "Manchester",
+        "Birmingham",
+        "Leeds",
+        "Liverpool",
+        "Bristol",
+        "Sheffield",
+        "Newcastle",
+        "Glasgow",
+        "Edinburgh",
+        "Aberdeen",
+        "Cardiff",
+        "Swansea",
+        "Belfast"
+      ],
       "names": {
         "en": "United Kingdom",
         "ur": "سلطنت متحدہ",
@@ -1358,6 +1815,10 @@
       "language": "en",
       "timezone": "America/Grenada",
       "popular": false,
+      "regions": null,
+      "cities": [
+        "St George’s"
+      ],
       "names": {
         "en": "Grenada",
         "ur": "گریناڈا",
@@ -1370,6 +1831,11 @@
       "language": "ka",
       "timezone": "Asia/Tbilisi",
       "popular": false,
+      "regions": null,
+      "cities": [
+        "Tbilisi",
+        "Batumi"
+      ],
       "names": {
         "en": "Georgia",
         "ur": "جارجیا",
@@ -1382,6 +1848,12 @@
       "language": "en",
       "timezone": "Africa/Accra",
       "popular": false,
+      "regions": null,
+      "cities": [
+        "Accra",
+        "Kumasi",
+        "Tamale"
+      ],
       "names": {
         "en": "Ghana",
         "ur": "گھانا",
@@ -1394,6 +1866,10 @@
       "language": "en",
       "timezone": "Africa/Banjul",
       "popular": false,
+      "regions": null,
+      "cities": [
+        "Banjul"
+      ],
       "names": {
         "en": "Gambia",
         "ur": "گیمبیا",
@@ -1406,6 +1882,10 @@
       "language": "fr",
       "timezone": "Africa/Conakry",
       "popular": false,
+      "regions": null,
+      "cities": [
+        "Conakry"
+      ],
       "names": {
         "en": "Guinea",
         "ur": "گنی",
@@ -1418,6 +1898,10 @@
       "language": "es",
       "timezone": "Africa/Malabo",
       "popular": false,
+      "regions": null,
+      "cities": [
+        "Malabo"
+      ],
       "names": {
         "en": "Equatorial Guinea",
         "ur": "استوائی گیانا",
@@ -1430,6 +1914,12 @@
       "language": "el",
       "timezone": "Europe/Athens",
       "popular": false,
+      "regions": null,
+      "cities": [
+        "Athens",
+        "Thessaloniki",
+        "Patras"
+      ],
       "names": {
         "en": "Greece",
         "ur": "یونان",
@@ -1442,6 +1932,10 @@
       "language": "es",
       "timezone": "America/Guatemala",
       "popular": false,
+      "regions": null,
+      "cities": [
+        "Guatemala City"
+      ],
       "names": {
         "en": "Guatemala",
         "ur": "گواٹے مالا",
@@ -1454,6 +1948,10 @@
       "language": "pt",
       "timezone": "Africa/Bissau",
       "popular": false,
+      "regions": null,
+      "cities": [
+        "Bissau"
+      ],
       "names": {
         "en": "Guinea-Bissau",
         "ur": "گنی بساؤ",
@@ -1466,6 +1964,10 @@
       "language": "en",
       "timezone": "America/Guyana",
       "popular": false,
+      "regions": null,
+      "cities": [
+        "Georgetown"
+      ],
       "names": {
         "en": "Guyana",
         "ur": "گیانا",
@@ -1478,6 +1980,11 @@
       "language": "es",
       "timezone": "America/Tegucigalpa",
       "popular": false,
+      "regions": null,
+      "cities": [
+        "Tegucigalpa",
+        "San Pedro Sula"
+      ],
       "names": {
         "en": "Honduras",
         "ur": "ہونڈاروس",
@@ -1490,6 +1997,12 @@
       "language": "hr",
       "timezone": "Europe/Zagreb",
       "popular": false,
+      "regions": null,
+      "cities": [
+        "Zagreb",
+        "Split",
+        "Rijeka"
+      ],
       "names": {
         "en": "Croatia",
         "ur": "کروشیا",
@@ -1502,6 +2015,10 @@
       "language": "fr",
       "timezone": "America/Port-au-Prince",
       "popular": false,
+      "regions": null,
+      "cities": [
+        "Port-au-Prince"
+      ],
       "names": {
         "en": "Haiti",
         "ur": "ہیٹی",
@@ -1514,6 +2031,11 @@
       "language": "hu",
       "timezone": "Europe/Budapest",
       "popular": false,
+      "regions": null,
+      "cities": [
+        "Budapest",
+        "Debrecen"
+      ],
       "names": {
         "en": "Hungary",
         "ur": "ہنگری",
@@ -1526,6 +2048,17 @@
       "language": "id",
       "timezone": "Asia/Jakarta",
       "popular": true,
+      "regions": null,
+      "cities": [
+        "Jakarta",
+        "Surabaya",
+        "Bandung",
+        "Medan",
+        "Semarang",
+        "Makassar",
+        "Palembang",
+        "Yogyakarta"
+      ],
       "names": {
         "en": "Indonesia",
         "ur": "انڈونیشیا",
@@ -1538,6 +2071,13 @@
       "language": "en",
       "timezone": "Europe/Dublin",
       "popular": false,
+      "regions": null,
+      "cities": [
+        "Dublin",
+        "Cork",
+        "Galway",
+        "Limerick"
+      ],
       "names": {
         "en": "Ireland",
         "ur": "آئرلینڈ",
@@ -1550,6 +2090,12 @@
       "language": "he",
       "timezone": "Asia/Jerusalem",
       "popular": false,
+      "regions": null,
+      "cities": [
+        "Jerusalem",
+        "Tel Aviv",
+        "Haifa"
+      ],
       "names": {
         "en": "Israel",
         "ur": "اسرائیل",
@@ -1562,6 +2108,74 @@
       "language": "hi",
       "timezone": "Asia/Kolkata",
       "popular": true,
+      "regions": {
+        "Maharashtra": [
+          "Mumbai",
+          "Pune",
+          "Nagpur"
+        ],
+        "Delhi": [
+          "New Delhi",
+          "Delhi"
+        ],
+        "Karnataka": [
+          "Bengaluru",
+          "Mysuru"
+        ],
+        "Tamil Nadu": [
+          "Chennai",
+          "Coimbatore"
+        ],
+        "Telangana": [
+          "Hyderabad"
+        ],
+        "West Bengal": [
+          "Kolkata"
+        ],
+        "Gujarat": [
+          "Ahmedabad",
+          "Surat"
+        ],
+        "Uttar Pradesh": [
+          "Lucknow",
+          "Kanpur",
+          "Varanasi"
+        ],
+        "Rajasthan": [
+          "Jaipur"
+        ],
+        "Kerala": [
+          "Kochi",
+          "Thiruvananthapuram"
+        ],
+        "Punjab": [
+          "Amritsar",
+          "Ludhiana"
+        ]
+      },
+      "cities": [
+        "Mumbai",
+        "Pune",
+        "Nagpur",
+        "New Delhi",
+        "Delhi",
+        "Bengaluru",
+        "Mysuru",
+        "Chennai",
+        "Coimbatore",
+        "Hyderabad",
+        "Kolkata",
+        "Ahmedabad",
+        "Surat",
+        "Lucknow",
+        "Kanpur",
+        "Varanasi",
+        "Jaipur",
+        "Kochi",
+        "Thiruvananthapuram",
+        "Amritsar",
+        "Ludhiana"
+      ],
       "names": {
         "en": "India",
         "ur": "بھارت",
@@ -1574,6 +2188,15 @@
       "language": "ar",
       "timezone": "Asia/Baghdad",
       "popular": false,
+      "regions": null,
+      "cities": [
+        "Baghdad",
+        "Basra",
+        "Mosul",
+        "Erbil",
+        "Najaf",
+        "Karbala"
+      ],
       "names": {
         "en": "Iraq",
         "ur": "عراق",
@@ -1586,6 +2209,14 @@
       "language": "fa",
       "timezone": "Asia/Tehran",
       "popular": false,
+      "regions": null,
+      "cities": [
+        "Tehran",
+        "Mashhad",
+        "Isfahan",
+        "Shiraz",
+        "Tabriz"
+      ],
       "names": {
         "en": "Iran",
         "ur": "ایران",
@@ -1598,6 +2229,10 @@
       "language": "is",
       "timezone": "Atlantic/Reykjavik",
       "popular": false,
+      "regions": null,
+      "cities": [
+        "Reykjavík"
+      ],
       "names": {
         "en": "Iceland",
         "ur": "آئس لینڈ",
@@ -1610,6 +2245,16 @@
       "language": "it",
       "timezone": "Europe/Rome",
       "popular": false,
+      "regions": null,
+      "cities": [
+        "Rome",
+        "Milan",
+        "Naples",
+        "Turin",
+        "Florence",
+        "Bologna",
+        "Venice"
+      ],
       "names": {
         "en": "Italy",
         "ur": "اٹلی",
@@ -1622,6 +2267,11 @@
       "language": "en",
       "timezone": "America/Jamaica",
       "popular": false,
+      "regions": null,
+      "cities": [
+        "Kingston",
+        "Montego Bay"
+      ],
       "names": {
         "en": "Jamaica",
         "ur": "جمائیکا",
@@ -1634,6 +2284,12 @@
       "language": "ar",
       "timezone": "Asia/Amman",
       "popular": false,
+      "regions": null,
+      "cities": [
+        "Amman",
+        "Zarqa",
+        "Irbid"
+      ],
       "names": {
         "en": "Jordan",
         "ur": "اردن",
@@ -1646,6 +2302,17 @@
       "language": "ja",
       "timezone": "Asia/Tokyo",
       "popular": false,
+      "regions": null,
+      "cities": [
+        "Tokyo",
+        "Osaka",
+        "Yokohama",
+        "Nagoya",
+        "Sapporo",
+        "Fukuoka",
+        "Kyoto",
+        "Kobe"
+      ],
       "names": {
         "en": "Japan",
         "ur": "جاپان",
@@ -1658,6 +2325,13 @@
       "language": "sw",
       "timezone": "Africa/Nairobi",
       "popular": false,
+      "regions": null,
+      "cities": [
+        "Nairobi",
+        "Mombasa",
+        "Kisumu",
+        "Nakuru"
+      ],
       "names": {
         "en": "Kenya",
         "ur": "کینیا",
@@ -1670,6 +2344,11 @@
       "language": "ky",
       "timezone": "Asia/Bishkek",
       "popular": false,
+      "regions": null,
+      "cities": [
+        "Bishkek",
+        "Osh"
+      ],
       "names": {
         "en": "Kyrgyzstan",
         "ur": "کرغزستان",
@@ -1682,6 +2361,11 @@
       "language": "km",
       "timezone": "Asia/Phnom_Penh",
       "popular": false,
+      "regions": null,
+      "cities": [
+        "Phnom Penh",
+        "Siem Reap"
+      ],
       "names": {
         "en": "Cambodia",
         "ur": "کمبوڈیا",
@@ -1694,6 +2378,10 @@
       "language": "en",
       "timezone": "Pacific/Tarawa",
       "popular": false,
+      "regions": null,
+      "cities": [
+        "Tarawa"
+      ],
       "names": {
         "en": "Kiribati",
         "ur": "کریباتی",
@@ -1706,6 +2394,10 @@
       "language": "ar",
       "timezone": "Indian/Comoro",
       "popular": false,
+      "regions": null,
+      "cities": [
+        "Moroni"
+      ],
       "names": {
         "en": "Comoros",
         "ur": "کوموروس",
@@ -1718,6 +2410,10 @@
       "language": "en",
       "timezone": "America/St_Kitts",
       "popular": false,
+      "regions": null,
+      "cities": [
+        "Basseterre"
+      ],
       "names": {
         "en": "St. Kitts & Nevis",
         "ur": "سینٹ کٹس اور نیویس",
@@ -1730,6 +2426,13 @@
       "language": "ko",
       "timezone": "Asia/Seoul",
       "popular": false,
+      "regions": null,
+      "cities": [
+        "Seoul",
+        "Busan",
+        "Incheon",
+        "Daegu"
+      ],
       "names": {
         "en": "South Korea",
         "ur": "جنوبی کوریا",
@@ -1742,6 +2445,12 @@
       "language": "ar",
       "timezone": "Asia/Kuwait",
       "popular": true,
+      "regions": null,
+      "cities": [
+        "Kuwait City",
+        "Hawalli",
+        "Salmiya"
+      ],
       "names": {
         "en": "Kuwait",
         "ur": "کویت",
@@ -1754,6 +2463,12 @@
       "language": "kk",
       "timezone": "Asia/Almaty",
       "popular": false,
+      "regions": null,
+      "cities": [
+        "Almaty",
+        "Astana",
+        "Shymkent"
+      ],
       "names": {
         "en": "Kazakhstan",
         "ur": "قزاخستان",
@@ -1766,6 +2481,10 @@
       "language": "lo",
       "timezone": "Asia/Vientiane",
       "popular": false,
+      "regions": null,
+      "cities": [
+        "Vientiane"
+      ],
       "names": {
         "en": "Laos",
         "ur": "لاؤس",
@@ -1778,6 +2497,12 @@
       "language": "ar",
       "timezone": "Asia/Beirut",
       "popular": false,
+      "regions": null,
+      "cities": [
+        "Beirut",
+        "Tripoli",
+        "Sidon"
+      ],
       "names": {
         "en": "Lebanon",
         "ur": "لبنان",
@@ -1790,6 +2515,10 @@
       "language": "en",
       "timezone": "America/St_Lucia",
       "popular": false,
+      "regions": null,
+      "cities": [
+        "Castries"
+      ],
       "names": {
         "en": "St. Lucia",
         "ur": "سینٹ لوسیا",
@@ -1802,6 +2531,10 @@
       "language": "de",
       "timezone": "Europe/Vaduz",
       "popular": false,
+      "regions": null,
+      "cities": [
+        "Vaduz"
+      ],
       "names": {
         "en": "Liechtenstein",
         "ur": "لیشٹنسٹائن",
@@ -1814,6 +2547,13 @@
       "language": "si",
       "timezone": "Asia/Colombo",
       "popular": false,
+      "regions": null,
+      "cities": [
+        "Colombo",
+        "Kandy",
+        "Galle",
+        "Jaffna"
+      ],
       "names": {
         "en": "Sri Lanka",
         "ur": "سری لنکا",
@@ -1826,6 +2566,10 @@
       "language": "en",
       "timezone": "Africa/Monrovia",
       "popular": false,
+      "regions": null,
+      "cities": [
+        "Monrovia"
+      ],
       "names": {
         "en": "Liberia",
         "ur": "لائبیریا",
@@ -1838,6 +2582,10 @@
       "language": "en",
       "timezone": "Africa/Maseru",
       "popular": false,
+      "regions": null,
+      "cities": [
+        "Maseru"
+      ],
       "names": {
         "en": "Lesotho",
         "ur": "لیسوتھو",
@@ -1850,6 +2598,11 @@
       "language": "lt",
       "timezone": "Europe/Vilnius",
       "popular": false,
+      "regions": null,
+      "cities": [
+        "Vilnius",
+        "Kaunas"
+      ],
       "names": {
         "en": "Lithuania",
         "ur": "لیتھونیا",
@@ -1862,6 +2615,10 @@
       "language": "fr",
       "timezone": "Europe/Luxembourg",
       "popular": false,
+      "regions": null,
+      "cities": [
+        "Luxembourg"
+      ],
       "names": {
         "en": "Luxembourg",
         "ur": "لکسمبرگ",
@@ -1874,6 +2631,11 @@
       "language": "lv",
       "timezone": "Europe/Riga",
       "popular": false,
+      "regions": null,
+      "cities": [
+        "Riga",
+        "Daugavpils"
+      ],
       "names": {
         "en": "Latvia",
         "ur": "لٹویا",
@@ -1886,6 +2648,11 @@
       "language": "ar",
       "timezone": "Africa/Tripoli",
       "popular": false,
+      "regions": null,
+      "cities": [
+        "Tripoli",
+        "Benghazi"
+      ],
       "names": {
         "en": "Libya",
         "ur": "لیبیا",
@@ -1898,6 +2665,15 @@
       "language": "ar",
       "timezone": "Africa/Casablanca",
       "popular": false,
+      "regions": null,
+      "cities": [
+        "Casablanca",
+        "Rabat",
+        "Marrakesh",
+        "Fez",
+        "Tangier",
+        "Agadir"
+      ],
       "names": {
         "en": "Morocco",
         "ur": "مراکش",
@@ -1910,6 +2686,10 @@
       "language": "fr",
       "timezone": "Europe/Monaco",
       "popular": false,
+      "regions": null,
+      "cities": [
+        "Monaco"
+      ],
       "names": {
         "en": "Monaco",
         "ur": "موناکو",
@@ -1922,6 +2702,10 @@
       "language": "ro",
       "timezone": "Europe/Chisinau",
       "popular": false,
+      "regions": null,
+      "cities": [
+        "Chișinău"
+      ],
       "names": {
         "en": "Moldova",
         "ur": "مالدووا",
@@ -1934,6 +2718,10 @@
       "language": "sr",
       "timezone": "Europe/Podgorica",
       "popular": false,
+      "regions": null,
+      "cities": [
+        "Podgorica"
+      ],
       "names": {
         "en": "Montenegro",
         "ur": "مونٹے نیگرو",
@@ -1946,6 +2734,10 @@
       "language": "fr",
       "timezone": "Indian/Antananarivo",
       "popular": false,
+      "regions": null,
+      "cities": [
+        "Antananarivo"
+      ],
       "names": {
         "en": "Madagascar",
         "ur": "مڈغاسکر",
@@ -1958,6 +2750,10 @@
       "language": "en",
       "timezone": "Pacific/Majuro",
       "popular": false,
+      "regions": null,
+      "cities": [
+        "Majuro"
+      ],
       "names": {
         "en": "Marshall Islands",
         "ur": "مارشل آئلینڈز",
@@ -1970,6 +2766,10 @@
       "language": "mk",
       "timezone": "Europe/Skopje",
       "popular": false,
+      "regions": null,
+      "cities": [
+        "Skopje"
+      ],
       "names": {
         "en": "North Macedonia",
         "ur": "شمالی مقدونیہ",
@@ -1982,6 +2782,10 @@
       "language": "fr",
       "timezone": "Africa/Bamako",
       "popular": false,
+      "regions": null,
+      "cities": [
+        "Bamako"
+      ],
       "names": {
         "en": "Mali",
         "ur": "مالی",
@@ -1994,6 +2798,12 @@
       "language": "my",
       "timezone": "Asia/Yangon",
       "popular": false,
+      "regions": null,
+      "cities": [
+        "Yangon",
+        "Mandalay",
+        "Naypyidaw"
+      ],
       "names": {
         "en": "Myanmar (Burma)",
         "ur": "میانمار (برما)",
@@ -2006,6 +2816,10 @@
       "language": "mn",
       "timezone": "Asia/Ulaanbaatar",
       "popular": false,
+      "regions": null,
+      "cities": [
+        "Ulaanbaatar"
+      ],
       "names": {
         "en": "Mongolia",
         "ur": "منگولیا",
@@ -2018,6 +2832,10 @@
       "language": "ar",
       "timezone": "Africa/Nouakchott",
       "popular": false,
+      "regions": null,
+      "cities": [
+        "Nouakchott"
+      ],
       "names": {
         "en": "Mauritania",
         "ur": "موریطانیہ",
@@ -2030,6 +2848,10 @@
       "language": "mt",
       "timezone": "Europe/Malta",
       "popular": false,
+      "regions": null,
+      "cities": [
+        "Valletta"
+      ],
       "names": {
         "en": "Malta",
         "ur": "مالٹا",
@@ -2042,6 +2864,10 @@
       "language": "en",
       "timezone": "Indian/Mauritius",
       "popular": false,
+      "regions": null,
+      "cities": [
+        "Port Louis"
+      ],
       "names": {
         "en": "Mauritius",
         "ur": "ماریشس",
@@ -2054,6 +2880,10 @@
       "language": "dv",
       "timezone": "Indian/Maldives",
       "popular": false,
+      "regions": null,
+      "cities": [
+        "Malé"
+      ],
       "names": {
         "en": "Maldives",
         "ur": "مالدیپ",
@@ -2066,6 +2896,11 @@
       "language": "en",
       "timezone": "Africa/Blantyre",
       "popular": false,
+      "regions": null,
+      "cities": [
+        "Lilongwe",
+        "Blantyre"
+      ],
       "names": {
         "en": "Malawi",
         "ur": "ملاوی",
@@ -2078,6 +2913,15 @@
       "language": "es",
       "timezone": "America/Mexico_City",
       "popular": false,
+      "regions": null,
+      "cities": [
+        "Mexico City",
+        "Guadalajara",
+        "Monterrey",
+        "Puebla",
+        "Tijuana",
+        "Cancún"
+      ],
       "names": {
         "en": "Mexico",
         "ur": "میکسیکو",
@@ -2090,6 +2934,15 @@
       "language": "ms",
       "timezone": "Asia/Kuala_Lumpur",
       "popular": true,
+      "regions": null,
+      "cities": [
+        "Kuala Lumpur",
+        "George Town",
+        "Johor Bahru",
+        "Ipoh",
+        "Kuching",
+        "Shah Alam"
+      ],
       "names": {
         "en": "Malaysia",
         "ur": "ملائشیا",
@@ -2102,6 +2955,11 @@
       "language": "pt",
       "timezone": "Africa/Maputo",
       "popular": false,
+      "regions": null,
+      "cities": [
+        "Maputo",
+        "Beira"
+      ],
       "names": {
         "en": "Mozambique",
         "ur": "موزمبیق",
@@ -2114,6 +2972,10 @@
       "language": "en",
       "timezone": "Africa/Windhoek",
       "popular": false,
+      "regions": null,
+      "cities": [
+        "Windhoek"
+      ],
       "names": {
         "en": "Namibia",
         "ur": "نامیبیا",
@@ -2126,6 +2988,10 @@
       "language": "fr",
       "timezone": "Africa/Niamey",
       "popular": false,
+      "regions": null,
+      "cities": [
+        "Niamey"
+      ],
       "names": {
         "en": "Niger",
         "ur": "نائجر",
@@ -2138,6 +3004,16 @@
       "language": "en",
       "timezone": "Africa/Lagos",
       "popular": true,
+      "regions": null,
+      "cities": [
+        "Lagos",
+        "Abuja",
+        "Kano",
+        "Ibadan",
+        "Port Harcourt",
+        "Benin City",
+        "Kaduna"
+      ],
       "names": {
         "en": "Nigeria",
         "ur": "نائجیریا",
@@ -2150,6 +3026,10 @@
       "language": "es",
       "timezone": "America/Managua",
       "popular": false,
+      "regions": null,
+      "cities": [
+        "Managua"
+      ],
       "names": {
         "en": "Nicaragua",
         "ur": "نکاراگووا",
@@ -2162,6 +3042,14 @@
       "language": "nl",
       "timezone": "Europe/Amsterdam",
       "popular": false,
+      "regions": null,
+      "cities": [
+        "Amsterdam",
+        "Rotterdam",
+        "The Hague",
+        "Utrecht",
+        "Eindhoven"
+      ],
       "names": {
         "en": "Netherlands",
         "ur": "نیدر لینڈز",
@@ -2174,6 +3062,12 @@
       "language": "no",
       "timezone": "Europe/Oslo",
       "popular": false,
+      "regions": null,
+      "cities": [
+        "Oslo",
+        "Bergen",
+        "Trondheim"
+      ],
       "names": {
         "en": "Norway",
         "ur": "ناروے",
@@ -2186,6 +3080,11 @@
       "language": "ne",
       "timezone": "Asia/Kathmandu",
       "popular": false,
+      "regions": null,
+      "cities": [
+        "Kathmandu",
+        "Pokhara"
+      ],
       "names": {
         "en": "Nepal",
         "ur": "نیپال",
@@ -2198,6 +3097,10 @@
       "language": "en",
       "timezone": "Pacific/Nauru",
       "popular": false,
+      "regions": null,
+      "cities": [
+        "Yaren"
+      ],
       "names": {
         "en": "Nauru",
         "ur": "نؤرو",
@@ -2210,6 +3113,12 @@
       "language": "en",
       "timezone": "Pacific/Auckland",
       "popular": false,
+      "regions": null,
+      "cities": [
+        "Auckland",
+        "Wellington",
+        "Christchurch"
+      ],
       "names": {
         "en": "New Zealand",
         "ur": "نیوزی لینڈ",
@@ -2222,6 +3131,12 @@
       "language": "ar",
       "timezone": "Asia/Muscat",
       "popular": false,
+      "regions": null,
+      "cities": [
+        "Muscat",
+        "Salalah",
+        "Sohar"
+      ],
       "names": {
         "en": "Oman",
         "ur": "عمان",
@@ -2234,6 +3149,10 @@
       "language": "es",
       "timezone": "America/Panama",
       "popular": false,
+      "regions": null,
+      "cities": [
+        "Panama City"
+      ],
       "names": {
         "en": "Panama",
         "ur": "پانامہ",
@@ -2246,6 +3165,12 @@
       "language": "es",
       "timezone": "America/Lima",
       "popular": false,
+      "regions": null,
+      "cities": [
+        "Lima",
+        "Arequipa",
+        "Trujillo"
+      ],
       "names": {
         "en": "Peru",
         "ur": "پیرو",
@@ -2258,6 +3183,10 @@
       "language": "en",
       "timezone": "Pacific/Port_Moresby",
       "popular": false,
+      "regions": null,
+      "cities": [
+        "Port Moresby"
+      ],
       "names": {
         "en": "Papua New Guinea",
         "ur": "پاپوآ نیو گنی",
@@ -2270,6 +3199,14 @@
       "language": "fil",
       "timezone": "Asia/Manila",
       "popular": false,
+      "regions": null,
+      "cities": [
+        "Manila",
+        "Quezon City",
+        "Cebu",
+        "Davao",
+        "Makati"
+      ],
       "names": {
         "en": "Philippines",
         "ur": "فلپائن",
@@ -2282,6 +3219,66 @@
       "language": "en",
       "timezone": "Asia/Karachi",
       "popular": true,
+      "regions": {
+        "Islamabad Capital Territory": [
+          "Islamabad"
+        ],
+        "Punjab": [
+          "Lahore",
+          "Faisalabad",
+          "Rawalpindi",
+          "Multan",
+          "Gujranwala",
+          "Sialkot",
+          "Bahawalpur"
+        ],
+        "Sindh": [
+          "Karachi",
+          "Hyderabad",
+          "Sukkur",
+          "Larkana"
+        ],
+        "Khyber Pakhtunkhwa": [
+          "Peshawar",
+          "Mardan",
+          "Abbottabad",
+          "Swat"
+        ],
+        "Balochistan": [
+          "Quetta",
+          "Gwadar"
+        ],
+        "Gilgit-Baltistan": [
+          "Gilgit",
+          "Skardu"
+        ],
+        "Azad Kashmir": [
+          "Muzaffarabad"
+        ]
+      },
+      "cities": [
+        "Islamabad",
+        "Lahore",
+        "Faisalabad",
+        "Rawalpindi",
+        "Multan",
+        "Gujranwala",
+        "Sialkot",
+        "Bahawalpur",
+        "Karachi",
+        "Hyderabad",
+        "Sukkur",
+        "Larkana",
+        "Peshawar",
+        "Mardan",
+        "Abbottabad",
+        "Swat",
+        "Quetta",
+        "Gwadar",
+        "Gilgit",
+        "Skardu",
+        "Muzaffarabad"
+      ],
       "names": {
         "en": "Pakistan",
         "ur": "پاکستان",
@@ -2294,6 +3291,15 @@
       "language": "pl",
       "timezone": "Europe/Warsaw",
       "popular": false,
+      "regions": null,
+      "cities": [
+        "Warsaw",
+        "Kraków",
+        "Łódź",
+        "Wrocław",
+        "Poznań",
+        "Gdańsk"
+      ],
       "names": {
         "en": "Poland",
         "ur": "پولینڈ",
@@ -2306,6 +3312,13 @@
       "language": "ar",
       "timezone": "Asia/Hebron",
       "popular": false,
+      "regions": null,
+      "cities": [
+        "Gaza",
+        "Ramallah",
+        "Hebron",
+        "Nablus"
+      ],
       "names": {
         "en": "Palestinian Territories",
         "ur": "فلسطینی خطے",
@@ -2318,6 +3331,13 @@
       "language": "pt",
       "timezone": "Europe/Lisbon",
       "popular": false,
+      "regions": null,
+      "cities": [
+        "Lisbon",
+        "Porto",
+        "Braga",
+        "Faro"
+      ],
       "names": {
         "en": "Portugal",
         "ur": "پرتگال",
@@ -2330,6 +3350,10 @@
       "language": "en",
       "timezone": "Pacific/Palau",
       "popular": false,
+      "regions": null,
+      "cities": [
+        "Ngerulmud"
+      ],
       "names": {
         "en": "Palau",
         "ur": "پلاؤ",
@@ -2342,6 +3366,10 @@
       "language": "es",
       "timezone": "America/Asuncion",
       "popular": false,
+      "regions": null,
+      "cities": [
+        "Asunción"
+      ],
       "names": {
         "en": "Paraguay",
         "ur": "پیراگوئے",
@@ -2354,6 +3382,12 @@
       "language": "ar",
       "timezone": "Asia/Qatar",
       "popular": true,
+      "regions": null,
+      "cities": [
+        "Doha",
+        "Al Rayyan",
+        "Al Wakrah"
+      ],
       "names": {
         "en": "Qatar",
         "ur": "قطر",
@@ -2366,6 +3400,12 @@
       "language": "ro",
       "timezone": "Europe/Bucharest",
       "popular": false,
+      "regions": null,
+      "cities": [
+        "Bucharest",
+        "Cluj-Napoca",
+        "Timișoara"
+      ],
       "names": {
         "en": "Romania",
         "ur": "رومانیہ",
@@ -2378,6 +3418,11 @@
       "language": "sr",
       "timezone": "Europe/Belgrade",
       "popular": false,
+      "regions": null,
+      "cities": [
+        "Belgrade",
+        "Novi Sad"
+      ],
       "names": {
         "en": "Serbia",
         "ur": "سربیا",
@@ -2390,6 +3435,14 @@
       "language": "ru",
       "timezone": "Europe/Moscow",
       "popular": false,
+      "regions": null,
+      "cities": [
+        "Moscow",
+        "Saint Petersburg",
+        "Novosibirsk",
+        "Kazan",
+        "Yekaterinburg"
+      ],
       "names": {
         "en": "Russia",
         "ur": "روس",
@@ -2402,6 +3455,10 @@
       "language": "rw",
       "timezone": "Africa/Kigali",
       "popular": false,
+      "regions": null,
+      "cities": [
+        "Kigali"
+      ],
       "names": {
         "en": "Rwanda",
         "ur": "روانڈا",
@@ -2414,6 +3471,17 @@
       "language": "ar",
       "timezone": "Asia/Riyadh",
       "popular": true,
+      "regions": null,
+      "cities": [
+        "Riyadh",
+        "Jeddah",
+        "Makkah",
+        "Madinah",
+        "Dammam",
+        "Khobar",
+        "Taif",
+        "Abha"
+      ],
       "names": {
         "en": "Saudi Arabia",
         "ur": "سعودی عرب",
@@ -2426,6 +3494,10 @@
       "language": "en",
       "timezone": "Pacific/Guadalcanal",
       "popular": false,
+      "regions": null,
+      "cities": [
+        "Honiara"
+      ],
       "names": {
         "en": "Solomon Islands",
         "ur": "سولومن آئلینڈز",
@@ -2438,6 +3510,10 @@
       "language": "en",
       "timezone": "Indian/Mahe",
       "popular": false,
+      "regions": null,
+      "cities": [
+        "Victoria"
+      ],
       "names": {
         "en": "Seychelles",
         "ur": "سشلیز",
@@ -2450,6 +3526,11 @@
       "language": "ar",
       "timezone": "Africa/Khartoum",
       "popular": false,
+      "regions": null,
+      "cities": [
+        "Khartoum",
+        "Omdurman"
+      ],
       "names": {
         "en": "Sudan",
         "ur": "سوڈان",
@@ -2462,6 +3543,13 @@
       "language": "sv",
       "timezone": "Europe/Stockholm",
       "popular": false,
+      "regions": null,
+      "cities": [
+        "Stockholm",
+        "Gothenburg",
+        "Malmö",
+        "Uppsala"
+      ],
       "names": {
         "en": "Sweden",
         "ur": "سویڈن",
@@ -2474,6 +3562,10 @@
       "language": "en",
       "timezone": "Asia/Singapore",
       "popular": true,
+      "regions": null,
+      "cities": [
+        "Singapore"
+      ],
       "names": {
         "en": "Singapore",
         "ur": "سنگاپور",
@@ -2486,6 +3578,11 @@
       "language": "sl",
       "timezone": "Europe/Ljubljana",
       "popular": false,
+      "regions": null,
+      "cities": [
+        "Ljubljana",
+        "Maribor"
+      ],
       "names": {
         "en": "Slovenia",
         "ur": "سلووینیا",
@@ -2498,6 +3595,11 @@
       "language": "sk",
       "timezone": "Europe/Bratislava",
       "popular": false,
+      "regions": null,
+      "cities": [
+        "Bratislava",
+        "Košice"
+      ],
       "names": {
         "en": "Slovakia",
         "ur": "سلوواکیہ",
@@ -2510,6 +3612,10 @@
       "language": "en",
       "timezone": "Africa/Freetown",
       "popular": false,
+      "regions": null,
+      "cities": [
+        "Freetown"
+      ],
       "names": {
         "en": "Sierra Leone",
         "ur": "سیرالیون",
@@ -2522,6 +3628,10 @@
       "language": "it",
       "timezone": "Europe/San_Marino",
       "popular": false,
+      "regions": null,
+      "cities": [
+        "San Marino"
+      ],
       "names": {
         "en": "San Marino",
         "ur": "سان مارینو",
@@ -2534,6 +3644,12 @@
       "language": "fr",
       "timezone": "Africa/Dakar",
       "popular": false,
+      "regions": null,
+      "cities": [
+        "Dakar",
+        "Touba",
+        "Thiès"
+      ],
       "names": {
         "en": "Senegal",
         "ur": "سینیگل",
@@ -2546,6 +3662,11 @@
       "language": "so",
       "timezone": "Africa/Mogadishu",
       "popular": false,
+      "regions": null,
+      "cities": [
+        "Mogadishu",
+        "Hargeisa"
+      ],
       "names": {
         "en": "Somalia",
         "ur": "صومالیہ",
@@ -2558,6 +3679,10 @@
       "language": "nl",
       "timezone": "America/Paramaribo",
       "popular": false,
+      "regions": null,
+      "cities": [
+        "Paramaribo"
+      ],
       "names": {
         "en": "Suriname",
         "ur": "سورینام",
@@ -2570,6 +3695,10 @@
       "language": "en",
       "timezone": "Africa/Juba",
       "popular": false,
+      "regions": null,
+      "cities": [
+        "Juba"
+      ],
       "names": {
         "en": "South Sudan",
         "ur": "جنوبی سوڈان",
@@ -2582,6 +3711,10 @@
       "language": "pt",
       "timezone": "Africa/Sao_Tome",
       "popular": false,
+      "regions": null,
+      "cities": [
+        "São Tomé"
+      ],
       "names": {
         "en": "São Tomé & Príncipe",
         "ur": "ساؤ ٹومے اور پرنسپے",
@@ -2594,6 +3727,10 @@
       "language": "es",
       "timezone": "America/El_Salvador",
       "popular": false,
+      "regions": null,
+      "cities": [
+        "San Salvador"
+      ],
       "names": {
         "en": "El Salvador",
         "ur": "ال سلواڈور",
@@ -2606,6 +3743,12 @@
       "language": "ar",
       "timezone": "Asia/Damascus",
       "popular": false,
+      "regions": null,
+      "cities": [
+        "Damascus",
+        "Aleppo",
+        "Homs"
+      ],
       "names": {
         "en": "Syria",
         "ur": "شام",
@@ -2618,6 +3761,10 @@
       "language": "en",
       "timezone": "Africa/Mbabane",
       "popular": false,
+      "regions": null,
+      "cities": [
+        "Mbabane"
+      ],
       "names": {
         "en": "Eswatini",
         "ur": "سواتنی",
@@ -2630,6 +3777,10 @@
       "language": "fr",
       "timezone": "Africa/Ndjamena",
       "popular": false,
+      "regions": null,
+      "cities": [
+        "N’Djamena"
+      ],
       "names": {
         "en": "Chad",
         "ur": "چاڈ",
@@ -2642,6 +3793,10 @@
       "language": "fr",
       "timezone": "Africa/Lome",
       "popular": false,
+      "regions": null,
+      "cities": [
+        "Lomé"
+      ],
       "names": {
         "en": "Togo",
         "ur": "ٹوگو",
@@ -2654,6 +3809,13 @@
       "language": "th",
       "timezone": "Asia/Bangkok",
       "popular": false,
+      "regions": null,
+      "cities": [
+        "Bangkok",
+        "Chiang Mai",
+        "Phuket",
+        "Pattaya"
+      ],
       "names": {
         "en": "Thailand",
         "ur": "تھائی لینڈ",
@@ -2666,6 +3828,10 @@
       "language": "tg",
       "timezone": "Asia/Dushanbe",
       "popular": false,
+      "regions": null,
+      "cities": [
+        "Dushanbe"
+      ],
       "names": {
         "en": "Tajikistan",
         "ur": "تاجکستان",
@@ -2678,6 +3844,10 @@
       "language": "pt",
       "timezone": "Asia/Dili",
       "popular": false,
+      "regions": null,
+      "cities": [
+        "Dili"
+      ],
       "names": {
         "en": "Timor-Leste",
         "ur": "تیمور لیسٹ",
@@ -2690,6 +3860,10 @@
       "language": "tk",
       "timezone": "Asia/Ashgabat",
       "popular": false,
+      "regions": null,
+      "cities": [
+        "Ashgabat"
+      ],
       "names": {
         "en": "Turkmenistan",
         "ur": "ترکمانستان",
@@ -2702,6 +3876,12 @@
       "language": "ar",
       "timezone": "Africa/Tunis",
       "popular": false,
+      "regions": null,
+      "cities": [
+        "Tunis",
+        "Sfax",
+        "Sousse"
+      ],
       "names": {
         "en": "Tunisia",
         "ur": "تونس",
@@ -2714,6 +3894,10 @@
       "language": "en",
       "timezone": "Pacific/Tongatapu",
       "popular": false,
+      "regions": null,
+      "cities": [
+        "Nukuʻalofa"
+      ],
       "names": {
         "en": "Tonga",
         "ur": "ٹونگا",
@@ -2726,6 +3910,16 @@
       "language": "tr",
       "timezone": "Europe/Istanbul",
       "popular": true,
+      "regions": null,
+      "cities": [
+        "Istanbul",
+        "Ankara",
+        "Izmir",
+        "Bursa",
+        "Antalya",
+        "Adana",
+        "Konya"
+      ],
       "names": {
         "en": "Türkiye",
         "ur": "ترکیہ",
@@ -2738,6 +3932,10 @@
       "language": "en",
       "timezone": "America/Port_of_Spain",
       "popular": false,
+      "regions": null,
+      "cities": [
+        "Port of Spain"
+      ],
       "names": {
         "en": "Trinidad & Tobago",
         "ur": "ترینیداد اور ٹوباگو",
@@ -2750,6 +3948,10 @@
       "language": "en",
       "timezone": "Pacific/Funafuti",
       "popular": false,
+      "regions": null,
+      "cities": [
+        "Funafuti"
+      ],
       "names": {
         "en": "Tuvalu",
         "ur": "ٹووالو",
@@ -2762,6 +3964,12 @@
       "language": "zh",
       "timezone": "Asia/Taipei",
       "popular": false,
+      "regions": null,
+      "cities": [
+        "Taipei",
+        "Kaohsiung",
+        "Taichung"
+      ],
       "names": {
         "en": "Taiwan",
         "ur": "تائیوان",
@@ -2774,6 +3982,13 @@
       "language": "sw",
       "timezone": "Africa/Dar_es_Salaam",
       "popular": false,
+      "regions": null,
+      "cities": [
+        "Dar es Salaam",
+        "Dodoma",
+        "Arusha",
+        "Zanzibar City"
+      ],
       "names": {
         "en": "Tanzania",
         "ur": "تنزانیہ",
@@ -2786,6 +4001,13 @@
       "language": "uk",
       "timezone": "Europe/Kyiv",
       "popular": false,
+      "regions": null,
+      "cities": [
+        "Kyiv",
+        "Kharkiv",
+        "Odesa",
+        "Lviv"
+      ],
       "names": {
         "en": "Ukraine",
         "ur": "یوکرین",
@@ -2798,6 +4020,11 @@
       "language": "en",
       "timezone": "Africa/Kampala",
       "popular": false,
+      "regions": null,
+      "cities": [
+        "Kampala",
+        "Gulu"
+      ],
       "names": {
         "en": "Uganda",
         "ur": "یوگنڈا",
@@ -2810,6 +4037,90 @@
       "language": "en",
       "timezone": "America/New_York",
       "popular": true,
+      "regions": {
+        "California": [
+          "Los Angeles",
+          "San Francisco",
+          "San Diego",
+          "San Jose"
+        ],
+        "New York": [
+          "New York",
+          "Buffalo"
+        ],
+        "Texas": [
+          "Houston",
+          "Dallas",
+          "Austin",
+          "San Antonio"
+        ],
+        "Florida": [
+          "Miami",
+          "Orlando",
+          "Tampa"
+        ],
+        "Illinois": [
+          "Chicago"
+        ],
+        "Washington": [
+          "Seattle"
+        ],
+        "Massachusetts": [
+          "Boston"
+        ],
+        "Georgia": [
+          "Atlanta"
+        ],
+        "Michigan": [
+          "Detroit",
+          "Dearborn"
+        ],
+        "Pennsylvania": [
+          "Philadelphia"
+        ],
+        "Arizona": [
+          "Phoenix"
+        ],
+        "Nevada": [
+          "Las Vegas"
+        ],
+        "New Jersey": [
+          "Newark",
+          "Jersey City"
+        ],
+        "Virginia": [
+          "Arlington",
+          "Richmond"
+        ]
+      },
+      "cities": [
+        "Los Angeles",
+        "San Francisco",
+        "San Diego",
+        "San Jose",
+        "New York",
+        "Buffalo",
+        "Houston",
+        "Dallas",
+        "Austin",
+        "San Antonio",
+        "Miami",
+        "Orlando",
+        "Tampa",
+        "Chicago",
+        "Seattle",
+        "Boston",
+        "Atlanta",
+        "Detroit",
+        "Dearborn",
+        "Philadelphia",
+        "Phoenix",
+        "Las Vegas",
+        "Newark",
+        "Jersey City",
+        "Arlington",
+        "Richmond"
+      ],
       "names": {
         "en": "United States",
         "ur": "ریاست ہائے متحدہ امریکہ",
@@ -2822,6 +4133,10 @@
       "language": "es",
       "timezone": "America/Montevideo",
       "popular": false,
+      "regions": null,
+      "cities": [
+        "Montevideo"
+      ],
       "names": {
         "en": "Uruguay",
         "ur": "یوروگوئے",
@@ -2834,6 +4149,12 @@
       "language": "uz",
       "timezone": "Asia/Tashkent",
       "popular": false,
+      "regions": null,
+      "cities": [
+        "Tashkent",
+        "Samarkand",
+        "Bukhara"
+      ],
       "names": {
         "en": "Uzbekistan",
         "ur": "ازبکستان",
@@ -2846,6 +4167,10 @@
       "language": "en",
       "timezone": "America/St_Vincent",
       "popular": false,
+      "regions": null,
+      "cities": [
+        "Kingstown"
+      ],
       "names": {
         "en": "St. Vincent & Grenadines",
         "ur": "سینٹ ونسنٹ اور گرینیڈائنز",
@@ -2858,6 +4183,11 @@
       "language": "es",
       "timezone": "America/Caracas",
       "popular": false,
+      "regions": null,
+      "cities": [
+        "Caracas",
+        "Maracaibo"
+      ],
       "names": {
         "en": "Venezuela",
         "ur": "وینزوئیلا",
@@ -2870,6 +4200,13 @@
       "language": "vi",
       "timezone": "Asia/Ho_Chi_Minh",
       "popular": false,
+      "regions": null,
+      "cities": [
+        "Ho Chi Minh City",
+        "Hanoi",
+        "Da Nang",
+        "Hai Phong"
+      ],
       "names": {
         "en": "Vietnam",
         "ur": "ویتنام",
@@ -2882,6 +4219,10 @@
       "language": "fr",
       "timezone": "Pacific/Efate",
       "popular": false,
+      "regions": null,
+      "cities": [
+        "Port Vila"
+      ],
       "names": {
         "en": "Vanuatu",
         "ur": "وینوآٹو",
@@ -2894,6 +4235,10 @@
       "language": "en",
       "timezone": "Pacific/Apia",
       "popular": false,
+      "regions": null,
+      "cities": [
+        "Apia"
+      ],
       "names": {
         "en": "Samoa",
         "ur": "ساموآ",
@@ -2906,6 +4251,12 @@
       "language": "ar",
       "timezone": "Asia/Aden",
       "popular": false,
+      "regions": null,
+      "cities": [
+        "Sanaa",
+        "Aden",
+        "Taiz"
+      ],
       "names": {
         "en": "Yemen",
         "ur": "یمن",
@@ -2918,6 +4269,14 @@
       "language": "en",
       "timezone": "Africa/Johannesburg",
       "popular": true,
+      "regions": null,
+      "cities": [
+        "Johannesburg",
+        "Cape Town",
+        "Durban",
+        "Pretoria",
+        "Gqeberha"
+      ],
       "names": {
         "en": "South Africa",
         "ur": "جنوبی افریقہ",
@@ -2930,6 +4289,11 @@
       "language": "en",
       "timezone": "Africa/Lusaka",
       "popular": false,
+      "regions": null,
+      "cities": [
+        "Lusaka",
+        "Kitwe"
+      ],
       "names": {
         "en": "Zambia",
         "ur": "زامبیا",
@@ -2942,6 +4306,11 @@
       "language": "en",
       "timezone": "Africa/Harare",
       "popular": false,
+      "regions": null,
+      "cities": [
+        "Harare",
+        "Bulawayo"
+      ],
       "names": {
         "en": "Zimbabwe",
         "ur": "زمبابوے",

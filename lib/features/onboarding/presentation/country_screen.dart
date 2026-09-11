@@ -82,8 +82,10 @@ class LumeCountryPickerView extends StatelessWidget {
     required this.onQueryChanged,
     required this.searchPlaceholder,
     required this.noResultsText,
+    this.header,
     this.searchController,
     this.scrollController,
+    this.pinHead = true,
   });
 
   final LumeCountryPickerModel model;
@@ -96,73 +98,125 @@ class LumeCountryPickerView extends StatelessWidget {
   /// `search.nothing`.
   final String noResultsText;
 
+  /// The step's lead, handed over when it is scrolling with the list rather
+  /// than pinned above it. See [pinHead].
+  final Widget? header;
+
   final TextEditingController? searchController;
   final ScrollController? scrollController;
 
+  /// Whether the search field stays put while the list moves under it.
+  ///
+  /// True is `.locpicker`: a flex column with the field at the top and
+  /// `.locscroll` scrolling beneath it. That needs a step tall enough to hold
+  /// a lead, a field and a list at once.
+  ///
+  /// A phone held sideways is not. The prototype squeezes `.locscroll` to
+  /// **zero** there — measured at 852×393: `clientHeight: 0`, `scrollHeight:
+  /// 8830` — and the search field, which cannot shrink, is drawn over the
+  /// Continue button. The list is unreachable and the action is covered.
+  ///
+  /// False is the correction: everything above the footer becomes one scroller
+  /// in the order the markup already has it — lead, field, list. Nothing is
+  /// covered and nothing is zero. Recorded as D14.
+  final bool pinHead;
+
   @override
   Widget build(BuildContext context) {
+    final Widget search = Padding(
+      padding: const EdgeInsets.symmetric(
+        horizontal: LumeLocPickerMetrics.searchInset,
+      ),
+      child: LumeSearchField(
+        small: true,
+        placeholder: searchPlaceholder,
+        semanticLabel: searchPlaceholder,
+        controller: searchController,
+        value: searchController == null ? model.query : null,
+        onChanged: onQueryChanged,
+        onClear: model.isSearching
+            ? () {
+                searchController?.clear();
+                onQueryChanged('');
+              }
+            : null,
+      ),
+    );
+
+    final Widget head = Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: <Widget>[
+        ?header,
+        const SizedBox(height: LumeLocPickerMetrics.pickerTop),
+        search,
+        const SizedBox(height: LumeLocPickerMetrics.scrollTop),
+      ],
+    );
+
+    if (!pinHead) {
+      return _List(
+        model: model,
+        onSelect: onSelect,
+        controller: scrollController,
+        head: head,
+        empty: model.hasResults ? null : noResultsText,
+      );
+    }
+
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: <Widget>[
-        const SizedBox(height: LumeLocPickerMetrics.pickerTop),
-        Padding(
-          padding: const EdgeInsets.symmetric(
-            horizontal: LumeLocPickerMetrics.searchInset,
-          ),
-          child: LumeSearchField(
-            small: true,
-            placeholder: searchPlaceholder,
-            semanticLabel: searchPlaceholder,
-            controller: searchController,
-            value: searchController == null ? model.query : null,
-            onChanged: onQueryChanged,
-            onClear: model.isSearching
-                ? () {
-                    searchController?.clear();
-                    onQueryChanged('');
-                  }
-                : null,
-          ),
-        ),
-        const SizedBox(height: LumeLocPickerMetrics.scrollTop),
-        Expanded(
-          child: model.hasResults
-              ? _List(
-                  model: model,
-                  onSelect: onSelect,
-                  controller: scrollController,
-                )
-              : _Empty(text: noResultsText),
-        ),
+        head,
+        Expanded(child: _body()),
       ],
     );
   }
+
+  Widget _body() => model.hasResults
+      ? _List(model: model, onSelect: onSelect, controller: scrollController)
+      : LumeLocationEmpty(text: noResultsText);
 }
 
+/// The sections, lazily. [head] rides along as the first item when the step is
+/// too short to pin one above the list.
 class _List extends StatelessWidget {
   const _List({
     required this.model,
     required this.onSelect,
     required this.controller,
+    this.head,
+    this.empty,
   });
 
   final LumeCountryPickerModel model;
   final ValueChanged<String> onSelect;
   final ScrollController? controller;
+  final Widget? head;
+  final String? empty;
 
   @override
   Widget build(BuildContext context) {
+    final int lead = head == null ? 0 : 1;
+    final int body = empty == null ? model.sections.length : 1;
+
     return ListView.builder(
       controller: controller,
       primary: false,
       padding: EdgeInsets.zero,
-      itemCount: model.sections.length,
-      itemBuilder: (BuildContext context, int i) => _Section(
-        section: model.sections[i],
-        first: i == 0,
-        selected: model.selected,
-        onSelect: onSelect,
-      ),
+      itemCount: lead + body,
+      itemBuilder: (BuildContext context, int i) {
+        if (i < lead) return head!;
+        final int at = i - lead;
+        if (empty != null) {
+          return LumeLocationEmpty(text: empty!, scrolls: false);
+        }
+        return _Section(
+          section: model.sections[at],
+          first: at == 0,
+          selected: model.selected,
+          onSelect: onSelect,
+        );
+      },
     );
   }
 }
@@ -199,6 +253,8 @@ class _Section extends StatelessWidget {
             ),
             child: Text(
               section.title!.toUpperCase(),
+              // The glyphs are capitals; the announcement is not.
+              semanticsLabel: section.title,
               style: LumeType.tracked(
                 LumeType.fit(context, context.lumeType.label),
                 0.07,
@@ -232,20 +288,38 @@ class _Section extends StatelessWidget {
   }
 }
 
-/// `.locrow` — code, name, currency.
-class LumeCountryRow extends StatelessWidget {
-  const LumeCountryRow({
+/// `.locrow` — the row both location steps are built from.
+///
+/// A country row leads with its code and trails with its currency; a city row
+/// leads with nothing and trails with its region. Same box, same padding, same
+/// divider, same tint — so the two lists cannot drift apart, which they did in
+/// the prototype's own history.
+class LumeLocationRow extends StatelessWidget {
+  const LumeLocationRow({
     super.key,
-    required this.country,
+    required this.name,
     required this.selected,
     required this.onTap,
+    this.code,
+    this.meta,
     this.divider = true,
+    this.semanticLabel,
   });
 
-  final LumeCountry country;
+  /// `.locrow__name` — the row's subject.
+  final String name;
+
+  /// `.locrow__code` — a Latin identifier, direction-isolated. `null` on a
+  /// city row, which has none.
+  final String? code;
+
+  /// `.locrow__meta` — a currency on a country row, a region on a city row.
+  final String? meta;
+
   final bool selected;
   final VoidCallback onTap;
   final bool divider;
+  final String? semanticLabel;
 
   @override
   Widget build(BuildContext context) {
@@ -254,7 +328,7 @@ class LumeCountryRow extends StatelessWidget {
     return Semantics(
       button: true,
       selected: selected,
-      label: '${country.name}, ${country.currency}',
+      label: semanticLabel ?? (meta == null ? name : '$name, $meta'),
       child: LumePressable(
         onTap: onTap,
         excludeSemantics: true,
@@ -262,10 +336,10 @@ class LumeCountryRow extends StatelessWidget {
         // 41, which is the row the prototype draws, and three under §9's own
         // floor. Unlike the stepper's 26 and Skip's 32 there is nowhere to
         // overhang — the rows are adjacent, so a taller target would either
-        // overlap its neighbour's or change the list's rhythm, which is the
-        // thing this phase is measuring. Raised as Q9 rather than decided
-        // here: the target is 350 points wide, so the miss the floor guards
-        // against is not the miss on offer.
+        // overlap its neighbour's or change the list's rhythm. Approved as a
+        // screen-specific exception at F4A: the target is 350 points wide, so
+        // the miss the floor guards against is not the one on offer. It is not
+        // a licence for narrow controls.
         minSize: LumeLocPickerMetrics.rowMinHeight,
         child: Container(
           constraints: const BoxConstraints(
@@ -288,35 +362,34 @@ class LumeCountryRow extends StatelessWidget {
           ),
           child: Row(
             children: <Widget>[
-              // The code is a Latin two-letter identifier and stays Latin and
-              // left-to-right in an Urdu page — the same isolation `rtl.css`
-              // gives `.locrow__code`.
-              ConstrainedBox(
-                constraints: const BoxConstraints(
-                  minWidth: LumeLocPickerMetrics.codeMinWidth,
-                ),
-                child: LumeLtr(
-                  child: Text(
-                    country.code,
-                    style:
-                        LumeType.tracked(
-                          LumeType.fit(context, context.lumeType.label),
-                          0.04,
-                        ).copyWith(
-                          fontSize: 10,
-                          fontWeight: FontWeight.w800,
-                          // `.locrow__code` is 12 tall: 10 px on a normal line
-                          // box.
-                          height: 12 / 10,
-                          color: selected ? lume.accent : lume.text3,
-                        ),
+              if (code != null) ...<Widget>[
+                ConstrainedBox(
+                  constraints: const BoxConstraints(
+                    minWidth: LumeLocPickerMetrics.codeMinWidth,
+                  ),
+                  child: LumeLtr(
+                    child: Text(
+                      code!,
+                      style:
+                          LumeType.tracked(
+                            LumeType.fit(context, context.lumeType.label),
+                            0.04,
+                          ).copyWith(
+                            fontSize: 10,
+                            fontWeight: FontWeight.w800,
+                            // `.locrow__code` is 12 tall: 10 px on a normal
+                            // line box.
+                            height: 12 / 10,
+                            color: selected ? lume.accent : lume.text3,
+                          ),
+                    ),
                   ),
                 ),
-              ),
-              const SizedBox(width: LumeLocPickerMetrics.rowGap),
+                const SizedBox(width: LumeLocPickerMetrics.rowGap),
+              ],
               Expanded(
                 child: Text(
-                  country.name,
+                  name,
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
                   style:
@@ -336,10 +409,10 @@ class LumeCountryRow extends StatelessWidget {
                       ),
                 ),
               ),
-              const SizedBox(width: LumeLocPickerMetrics.rowGap),
-              LumeLtr(
-                child: Text(
-                  country.currency,
+              if (meta != null) ...<Widget>[
+                const SizedBox(width: LumeLocPickerMetrics.rowGap),
+                Text(
+                  meta!,
                   style: LumeType.fit(context, context.lumeType.meta).copyWith(
                     fontSize: 11,
                     fontWeight: FontWeight.w600,
@@ -348,7 +421,7 @@ class LumeCountryRow extends StatelessWidget {
                     color: lume.text3,
                   ),
                 ),
-              ),
+              ],
             ],
           ),
         ),
@@ -357,35 +430,70 @@ class LumeCountryRow extends StatelessWidget {
   }
 }
 
-/// `.locempty` — a search that matched nothing.
-class _Empty extends StatelessWidget {
-  const _Empty({required this.text});
+/// `.locrow` on the country step — code, name, currency.
+class LumeCountryRow extends StatelessWidget {
+  const LumeCountryRow({
+    super.key,
+    required this.country,
+    required this.selected,
+    required this.onTap,
+    this.divider = true,
+  });
+
+  final LumeCountry country;
+  final bool selected;
+  final VoidCallback onTap;
+  final bool divider;
+
+  @override
+  Widget build(BuildContext context) => LumeLocationRow(
+    // The code is a Latin two-letter identifier and stays Latin and
+    // left-to-right in an Urdu page — the same isolation `rtl.css` gives
+    // `.locrow__code`. The currency is isolated for the same reason.
+    code: country.code,
+    name: country.name,
+    meta: country.currency,
+    selected: selected,
+    divider: divider,
+    onTap: onTap,
+    semanticLabel: '${country.name}, ${country.currency}',
+  );
+}
+
+/// `.locempty` — a search that matched nothing. Shared by both location steps.
+class LumeLocationEmpty extends StatelessWidget {
+  const LumeLocationEmpty({super.key, required this.text, this.scrolls = true});
 
   final String text;
+
+  /// Whether it carries its own scroller. It needs one when it stands in for
+  /// the list inside a fixed box, and must not have one when it is an item in
+  /// a list that is already scrolling.
+  final bool scrolls;
 
   @override
   Widget build(BuildContext context) {
     final LumeColors lume = context.lume;
 
-    return SingleChildScrollView(
-      child: Padding(
-        padding: const EdgeInsets.symmetric(
-          vertical: LumeLocPickerMetrics.emptyPaddingY,
-          horizontal: LumeLocPickerMetrics.emptyPaddingX,
-        ),
-        child: Semantics(
-          liveRegion: true,
-          child: Text(
-            text,
-            textAlign: TextAlign.center,
-            style: LumeType.fit(context, context.lumeType.body).copyWith(
-              fontSize: 13,
-              fontWeight: FontWeight.w500,
-              color: lume.text3,
-            ),
+    final Widget body = Padding(
+      padding: const EdgeInsets.symmetric(
+        vertical: LumeLocPickerMetrics.emptyPaddingY,
+        horizontal: LumeLocPickerMetrics.emptyPaddingX,
+      ),
+      child: Semantics(
+        liveRegion: true,
+        child: Text(
+          text,
+          textAlign: TextAlign.center,
+          style: LumeType.fit(context, context.lumeType.body).copyWith(
+            fontSize: 13,
+            fontWeight: FontWeight.w500,
+            color: lume.text3,
           ),
         ),
       ),
     );
+
+    return scrolls ? SingleChildScrollView(child: body) : body;
   }
 }

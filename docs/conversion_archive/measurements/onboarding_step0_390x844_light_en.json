@@ -1,0 +1,190 @@
+{
+  "cell": "onboarding_step0_390x844_light_en",
+  "viewport": {
+    "width": 390,
+    "height": 844,
+    "innerWidth": 390
+  },
+  "step": 0,
+  "progress": {
+    "done": 1,
+    "total": 9
+  },
+  "theme": "light",
+  "lang": "en",
+  "dir": "ltr",
+  "missing": [
+    "onb.namefield",
+    "onb.kicker",
+    "locpicker",
+    "locsearch",
+    "locscroll",
+    "locgroup.first",
+    "loclist.first",
+    "locrow.first",
+    "locaction",
+    "picker.bar",
+    "picker.count",
+    "picker.clear",
+    "pickgroup.first",
+    "pickgroup.label.first",
+    "pick.first",
+    "pickgroup.faith",
+    "onb.rows",
+    "onb.row.first",
+    "onb.row.title",
+    "onb.row.sub",
+    "onb.methodLabel",
+    "onb.choice",
+    "onb.choice.first",
+    "onb.note",
+    "onb.field",
+    "onb.fieldLabel",
+    "onb.fieldBox",
+    "onb.seal"
+  ],
+  "scroll": {
+    "step": {
+      "clientHeight": 764,
+      "scrollHeight": 764,
+      "scrolls": false,
+      "overflowY": "auto"
+    },
+    "shell": {
+      "clientHeight": 844,
+      "scrollHeight": 844,
+      "scrolls": false,
+      "overflowY": "hidden"
+    }
+  },
+  "bounds": {
+    "onb.top": {
+      "x": 0,
+      "y": 0,
+      "width": 390,
+      "height": 80,
+      "lines": null,
+      "text": "Skip"
+    },
+    "onb.nav": {
+      "x": 23.4,
+      "y": 49.4,
+      "width": 27.2,
+      "height": 27.2,
+      "lines": null,
+      "text": null
+    },
+    "onb.progress": {
+      "x": 66,
+      "y": 61.5,
+      "width": 257.11,
+      "height": 3,
+      "lines": null,
+      "text": null
+    },
+    "onb.seg.first": {
+      "x": 66,
+      "y": 61.5,
+      "width": 24.11,
+      "height": 3,
+      "lines": null,
+      "text": null
+    },
+    "onb.skip": {
+      "x": 335.11,
+      "y": 47,
+      "width": 34.89,
+      "height": 32,
+      "lines": null,
+      "text": "Skip"
+    },
+    "onb.step": {
+      "x": 0,
+      "y": 80,
+      "width": 390,
+      "height": 764,
+      "lines": null,
+      "text": "LumeYour day, in one place\n        \n\n        Everything your day needs, quietly organised.\n        Plans, money, travel,"
+    },
+    "onb.art": {
+      "x": 20,
+      "y": 80,
+      "width": 350,
+      "height": 445.91,
+      "lines": null,
+      "text": null
+    },
+    "onb.brand": {
+      "x": 20,
+      "y": 525.91,
+      "width": 350,
+      "height": 46,
+      "lines": null,
+      "text": "LumeYour day, in one place"
+    },
+    "onb.mark": {
+      "x": 20,
+      "y": 525.91,
+      "width": 46,
+      "height": 46,
+      "lines": null,
+      "text": null
+    },
+    "onb.wordmark": {
+      "x": 77,
+      "y": 529.41,
+      "width": 110.14,
+      "height": 39,
+      "lines": null,
+      "text": "LumeYour day, in one place"
+    },
+    "onb.link": {
+      "x": 20,
+      "y": 786,
+      "width": 350,
+      "height": 36,
+      "lines": null,
+      "text": "Already have an account? Sign in"
+    },
+    "onb.title": {
+      "x": 20,
+      "y": 591.91,
+      "width": 350,
+      "height": 62.72,
+      "lines": 2,
+      "text": "Everything your day needs, quietly organised."
+    },
+    "onb.text": {
+      "x": 20,
+      "y": 664.63,
+      "width": 304.08,
+      "height": 43.38,
+      "lines": 2,
+      "text": "Plans, money, travel, reading and the small tools you reach for — without the clutter."
+    },
+    "onb.foot": {
+      "x": 20,
+      "y": 708,
+      "width": 350,
+      "height": 114,
+      "lines": null,
+      "text": "Get started \n          Already have an account? Sign in"
+    },
+    "onb.continue": {
+      "x": 20,
+      "y": 730,
+      "width": 350,
+      "height": 46,
+      "lines": null,
+      "text": "Get started"
+    },
+    "onb.skipStep": {
+      "x": 0,
+      "y": 0,
+      "width": 0,
+      "height": 0,
+      "lines": null,
+      "text": "Skip for now"
+    }
+  }
+}

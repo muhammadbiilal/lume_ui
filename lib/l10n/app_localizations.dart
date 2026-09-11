@@ -951,6 +951,282 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Ramadan'**
   String get intRamadan;
+
+  /// Reference key onb.welcomeTitle
+  ///
+  /// In en, this message translates to:
+  /// **'Everything your day needs, quietly organised.'**
+  String get onbWelcomeTitle;
+
+  /// Reference key onb.welcomeText; untranslated in the prototype (D12)
+  ///
+  /// In en, this message translates to:
+  /// **'Plans, money, travel, reading and the small tools you reach for — without the clutter.'**
+  String get onbWelcomeText;
+
+  /// The quiet half of the welcome step’s link
+  ///
+  /// In en, this message translates to:
+  /// **'Already have an account?'**
+  String get onbSignInPrompt;
+
+  /// The accent half of the welcome step’s link
+  ///
+  /// In en, this message translates to:
+  /// **'Sign in'**
+  String get onbSignInAction;
+
+  /// Reference key onb.planKicker
+  ///
+  /// In en, this message translates to:
+  /// **'Plan'**
+  String get onbPlanKicker;
+
+  /// Reference key onb.planTitle
+  ///
+  /// In en, this message translates to:
+  /// **'Your day, laid out before it starts'**
+  String get onbPlanTitle;
+
+  /// The plan step’s supporting copy; untranslated in the prototype (D12)
+  ///
+  /// In en, this message translates to:
+  /// **'Tasks, reminders and events on one timeline — with everything that matters already in the right place.'**
+  String get onbPlanText;
+
+  /// Reference key onb.toolsKicker
+  ///
+  /// In en, this message translates to:
+  /// **'Tools'**
+  String get onbToolsKicker;
+
+  /// The tools step’s title. The count is the whole catalogue, not the eligible subset — see ONBOARDING_INVENTORY F5
+  ///
+  /// In en, this message translates to:
+  /// **'{count}-odd tools, one or two taps away'**
+  String onbToolsTitle(String count);
+
+  /// The tools step’s supporting copy; untranslated in the prototype (D12)
+  ///
+  /// In en, this message translates to:
+  /// **'Calculator, converters, weather, scanner, rates, trackers — sorted, so you never hunt for them.'**
+  String get onbToolsText;
+
+  /// Reference key onb.cityTitle
+  ///
+  /// In en, this message translates to:
+  /// **'Which city are you in?'**
+  String get onbCityTitle;
+
+  /// Reference key onb.cityText; untranslated in the prototype (D12)
+  ///
+  /// In en, this message translates to:
+  /// **'Used for weather, prayer times where relevant, and anything local.'**
+  String get onbCityText;
+
+  /// Reference key pers.searchCities
+  ///
+  /// In en, this message translates to:
+  /// **'Search cities'**
+  String get persSearchCities;
+
+  /// Reference key pers.useLocation
+  ///
+  /// In en, this message translates to:
+  /// **'Use my current location'**
+  String get persUseLocation;
+
+  /// Reference key onb.setupTitle
+  ///
+  /// In en, this message translates to:
+  /// **'Set it up once'**
+  String get onbSetupTitle;
+
+  /// Reference key onb.setupText; untranslated in the prototype (D12)
+  ///
+  /// In en, this message translates to:
+  /// **'Two permissions, and you can change either of them later.'**
+  String get onbSetupText;
+
+  /// Reference key onb.permLocation
+  ///
+  /// In en, this message translates to:
+  /// **'Use your location'**
+  String get onbPermLocation;
+
+  /// Shown when the Islamic experience is off
+  ///
+  /// In en, this message translates to:
+  /// **'For weather, local services and nearby places'**
+  String get onbPermLocationSub;
+
+  /// Shown when the Islamic experience is on
+  ///
+  /// In en, this message translates to:
+  /// **'For prayer times, Qibla, weather and nearby places'**
+  String get onbPermLocationSubFaith;
+
+  /// Reference key onb.permNotify
+  ///
+  /// In en, this message translates to:
+  /// **'Gentle reminders'**
+  String get onbPermNotify;
+
+  /// Shown when the Islamic experience is off
+  ///
+  /// In en, this message translates to:
+  /// **'A quiet nudge for the things you asked us to watch'**
+  String get onbPermNotifySub;
+
+  /// Shown when the Islamic experience is on
+  ///
+  /// In en, this message translates to:
+  /// **'A quiet nudge 5 minutes before each adhan'**
+  String get onbPermNotifySubFaith;
+
+  /// The faith-gated group heading on the set-up step
+  ///
+  /// In en, this message translates to:
+  /// **'Prayer calculation method'**
+  String get onbMethodLabel;
+
+  /// Prayer calculation method
+  ///
+  /// In en, this message translates to:
+  /// **'University of Karachi'**
+  String get methodKarachi;
+
+  /// Prayer calculation method
+  ///
+  /// In en, this message translates to:
+  /// **'Muslim World League'**
+  String get methodMwl;
+
+  /// Prayer calculation method
+  ///
+  /// In en, this message translates to:
+  /// **'ISNA'**
+  String get methodIsna;
+
+  /// Prayer calculation method
+  ///
+  /// In en, this message translates to:
+  /// **'Umm al-Qura'**
+  String get methodUmmAlQura;
+
+  /// Prayer calculation method
+  ///
+  /// In en, this message translates to:
+  /// **'Egyptian'**
+  String get methodEgyptian;
+
+  /// Reference key onb.onDevice
+  ///
+  /// In en, this message translates to:
+  /// **'Lume keeps this on your device. Nothing is uploaded.'**
+  String get onbOnDevice;
+
+  /// Reference key onb.nameKicker; untranslated in the prototype (D12)
+  ///
+  /// In en, this message translates to:
+  /// **'One last thing'**
+  String get onbNameKicker;
+
+  /// Reference key onb.nameTitle
+  ///
+  /// In en, this message translates to:
+  /// **'What should we call you?'**
+  String get onbNameTitle;
+
+  /// Reference key onb.nameText
+  ///
+  /// In en, this message translates to:
+  /// **'Only used to greet you. You can change it later, or skip it entirely.'**
+  String get onbNameText;
+
+  /// Reference key onb.namePlaceholder
+  ///
+  /// In en, this message translates to:
+  /// **'Your name'**
+  String get onbNamePlaceholder;
+
+  /// Reference key acct.f.displayName
+  ///
+  /// In en, this message translates to:
+  /// **'Display name'**
+  String get onbNameLabel;
+
+  /// Reference key onb.nameSkip
+  ///
+  /// In en, this message translates to:
+  /// **'Skip for now'**
+  String get onbNameSkip;
+
+  /// Reference key onb.nameNote; untranslated in the prototype (D12)
+  ///
+  /// In en, this message translates to:
+  /// **'Lume keeps this on your device.'**
+  String get onbNameNote;
+
+  /// Reference key onb.allSet
+  ///
+  /// In en, this message translates to:
+  /// **'All set'**
+  String get onbAllSet;
+
+  /// Reference key onb.readyTitle — account.js wins over core.js; see ONBOARDING_INVENTORY F2
+  ///
+  /// In en, this message translates to:
+  /// **'You’re all set'**
+  String get onbReadyTitle;
+
+  /// Reference key onb.readyNamed
+  ///
+  /// In en, this message translates to:
+  /// **'You’re ready, {name}'**
+  String onbReadyNamed(String name);
+
+  /// Reference key onb.readyGeneral; untranslated in the prototype (D12)
+  ///
+  /// In en, this message translates to:
+  /// **'Today’s plan is waiting on the home screen.'**
+  String get onbReadyGeneral;
+
+  /// Reference key onb.readyFaith; untranslated in the prototype (D12)
+  ///
+  /// In en, this message translates to:
+  /// **'Your next prayer is {prayer}, and today’s plan is waiting on the home screen.'**
+  String onbReadyFaith(String prayer);
+
+  /// The final step’s action
+  ///
+  /// In en, this message translates to:
+  /// **'Enter Lume'**
+  String get onbEnterLume;
+
+  /// Reference key onb.revisit; untranslated in the prototype (D12)
+  ///
+  /// In en, this message translates to:
+  /// **'You can revisit this tour any time from Profile.'**
+  String get onbRevisit;
+
+  /// Shown when Skip is used before any interest is chosen
+  ///
+  /// In en, this message translates to:
+  /// **'Set up with our defaults — edit them in Profile'**
+  String get onbSkippedDefaults;
+
+  /// Shown when Skip is used after interests are already stored
+  ///
+  /// In en, this message translates to:
+  /// **'Tour skipped — find it again in Profile'**
+  String get onbSkippedTour;
+
+  /// Shown when the flow completes
+  ///
+  /// In en, this message translates to:
+  /// **'Welcome to Lume'**
+  String get onbWelcomeBack;
 }
 
 class _AppLocalizationsDelegate

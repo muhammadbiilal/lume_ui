@@ -589,5 +589,204 @@
   "intRamadan": "Ramadan",
   "@intRamadan": {
     "description": "Interest \"ramadan\". The reference hard-codes the English label and never translates it; see D12"
+  },
+  "onbWelcomeTitle": "Everything your day needs, quietly organised.",
+  "@onbWelcomeTitle": {
+    "description": "Reference key onb.welcomeTitle"
+  },
+  "onbWelcomeText": "Plans, money, travel, reading and the small tools you reach for — without the clutter.",
+  "@onbWelcomeText": {
+    "description": "Reference key onb.welcomeText; untranslated in the prototype (D12)"
+  },
+  "onbSignInPrompt": "Already have an account?",
+  "@onbSignInPrompt": {
+    "description": "The quiet half of the welcome step’s link"
+  },
+  "onbSignInAction": "Sign in",
+  "@onbSignInAction": {
+    "description": "The accent half of the welcome step’s link"
+  },
+  "onbPlanKicker": "Plan",
+  "@onbPlanKicker": {
+    "description": "Reference key onb.planKicker"
+  },
+  "onbPlanTitle": "Your day, laid out before it starts",
+  "@onbPlanTitle": {
+    "description": "Reference key onb.planTitle"
+  },
+  "onbPlanText": "Tasks, reminders and events on one timeline — with everything that matters already in the right place.",
+  "@onbPlanText": {
+    "description": "The plan step’s supporting copy; untranslated in the prototype (D12)"
+  },
+  "onbToolsKicker": "Tools",
+  "@onbToolsKicker": {
+    "description": "Reference key onb.toolsKicker"
+  },
+  "onbToolsTitle": "{count}-odd tools, one or two taps away",
+  "@onbToolsTitle": {
+    "description": "The tools step’s title. The count is the whole catalogue, not the eligible subset — see ONBOARDING_INVENTORY F5",
+    "placeholders": {
+      "count": {
+        "type": "String"
+      }
+    }
+  },
+  "onbToolsText": "Calculator, converters, weather, scanner, rates, trackers — sorted, so you never hunt for them.",
+  "@onbToolsText": {
+    "description": "The tools step’s supporting copy; untranslated in the prototype (D12)"
+  },
+  "onbCityTitle": "Which city are you in?",
+  "@onbCityTitle": {
+    "description": "Reference key onb.cityTitle"
+  },
+  "onbCityText": "Used for weather, prayer times where relevant, and anything local.",
+  "@onbCityText": {
+    "description": "Reference key onb.cityText; untranslated in the prototype (D12)"
+  },
+  "persSearchCities": "Search cities",
+  "@persSearchCities": {
+    "description": "Reference key pers.searchCities"
+  },
+  "persUseLocation": "Use my current location",
+  "@persUseLocation": {
+    "description": "Reference key pers.useLocation"
+  },
+  "onbSetupTitle": "Set it up once",
+  "@onbSetupTitle": {
+    "description": "Reference key onb.setupTitle"
+  },
+  "onbSetupText": "Two permissions, and you can change either of them later.",
+  "@onbSetupText": {
+    "description": "Reference key onb.setupText; untranslated in the prototype (D12)"
+  },
+  "onbPermLocation": "Use your location",
+  "@onbPermLocation": {
+    "description": "Reference key onb.permLocation"
+  },
+  "onbPermLocationSub": "For weather, local services and nearby places",
+  "@onbPermLocationSub": {
+    "description": "Shown when the Islamic experience is off"
+  },
+  "onbPermLocationSubFaith": "For prayer times, Qibla, weather and nearby places",
+  "@onbPermLocationSubFaith": {
+    "description": "Shown when the Islamic experience is on"
+  },
+  "onbPermNotify": "Gentle reminders",
+  "@onbPermNotify": {
+    "description": "Reference key onb.permNotify"
+  },
+  "onbPermNotifySub": "A quiet nudge for the things you asked us to watch",
+  "@onbPermNotifySub": {
+    "description": "Shown when the Islamic experience is off"
+  },
+  "onbPermNotifySubFaith": "A quiet nudge 5 minutes before each adhan",
+  "@onbPermNotifySubFaith": {
+    "description": "Shown when the Islamic experience is on"
+  },
+  "onbMethodLabel": "Prayer calculation method",
+  "@onbMethodLabel": {
+    "description": "The faith-gated group heading on the set-up step"
+  },
+  "methodKarachi": "University of Karachi",
+  "@methodKarachi": {
+    "description": "Prayer calculation method"
+  },
+  "methodMwl": "Muslim World League",
+  "@methodMwl": {
+    "description": "Prayer calculation method"
+  },
+  "methodIsna": "ISNA",
+  "@methodIsna": {
+    "description": "Prayer calculation method"
+  },
+  "methodUmmAlQura": "Umm al-Qura",
+  "@methodUmmAlQura": {
+    "description": "Prayer calculation method"
+  },
+  "methodEgyptian": "Egyptian",
+  "@methodEgyptian": {
+    "description": "Prayer calculation method"
+  },
+  "onbOnDevice": "Lume keeps this on your device. Nothing is uploaded.",
+  "@onbOnDevice": {
+    "description": "Reference key onb.onDevice"
+  },
+  "onbNameKicker": "One last thing",
+  "@onbNameKicker": {
+    "description": "Reference key onb.nameKicker; untranslated in the prototype (D12)"
+  },
+  "onbNameTitle": "What should we call you?",
+  "@onbNameTitle": {
+    "description": "Reference key onb.nameTitle"
+  },
+  "onbNameText": "Only used to greet you. You can change it later, or skip it entirely.",
+  "@onbNameText": {
+    "description": "Reference key onb.nameText"
+  },
+  "onbNamePlaceholder": "Your name",
+  "@onbNamePlaceholder": {
+    "description": "Reference key onb.namePlaceholder"
+  },
+  "onbNameLabel": "Display name",
+  "@onbNameLabel": {
+    "description": "Reference key acct.f.displayName"
+  },
+  "onbNameSkip": "Skip for now",
+  "@onbNameSkip": {
+    "description": "Reference key onb.nameSkip"
+  },
+  "onbNameNote": "Lume keeps this on your device.",
+  "@onbNameNote": {
+    "description": "Reference key onb.nameNote; untranslated in the prototype (D12)"
+  },
+  "onbAllSet": "All set",
+  "@onbAllSet": {
+    "description": "Reference key onb.allSet"
+  },
+  "onbReadyTitle": "You’re all set",
+  "@onbReadyTitle": {
+    "description": "Reference key onb.readyTitle — account.js wins over core.js; see ONBOARDING_INVENTORY F2"
+  },
+  "onbReadyNamed": "You’re ready, {name}",
+  "@onbReadyNamed": {
+    "description": "Reference key onb.readyNamed",
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "onbReadyGeneral": "Today’s plan is waiting on the home screen.",
+  "@onbReadyGeneral": {
+    "description": "Reference key onb.readyGeneral; untranslated in the prototype (D12)"
+  },
+  "onbReadyFaith": "Your next prayer is {prayer}, and today’s plan is waiting on the home screen.",
+  "@onbReadyFaith": {
+    "description": "Reference key onb.readyFaith; untranslated in the prototype (D12)",
+    "placeholders": {
+      "prayer": {
+        "type": "String"
+      }
+    }
+  },
+  "onbEnterLume": "Enter Lume",
+  "@onbEnterLume": {
+    "description": "The final step’s action"
+  },
+  "onbRevisit": "You can revisit this tour any time from Profile.",
+  "@onbRevisit": {
+    "description": "Reference key onb.revisit; untranslated in the prototype (D12)"
+  },
+  "onbSkippedDefaults": "Set up with our defaults — edit them in Profile",
+  "@onbSkippedDefaults": {
+    "description": "Shown when Skip is used before any interest is chosen"
+  },
+  "onbSkippedTour": "Tour skipped — find it again in Profile",
+  "@onbSkippedTour": {
+    "description": "Shown when Skip is used after interests are already stored"
+  },
+  "onbWelcomeBack": "Welcome to Lume",
+  "@onbWelcomeBack": {
+    "description": "Shown when the flow completes"
   }
 }

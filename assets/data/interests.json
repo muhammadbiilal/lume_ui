@@ -5,6 +5,7 @@
   "interestCount": 31,
   "minimum": 5,
   "maximum": 10,
+  "featureCount": 85,
   "faithInterests": [
     "prayer",
     "quran",

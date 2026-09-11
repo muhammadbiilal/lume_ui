@@ -37,6 +37,7 @@ import '../../features/shell/presentation/fixture_records_screen.dart';
 import '../../features/shell/presentation/fixture_screens.dart';
 import '../../features/gallery/presentation/gallery_screen.dart';
 import '../../features/gallery/presentation/navigation_gallery.dart';
+import '../../features/onboarding/domain/onboarding_state.dart';
 import '../../features/onboarding/presentation/onboarding_flow.dart';
 import '../../features/shell/presentation/fixture_tool_screen.dart';
 import '../../l10n/app_localizations.dart';
@@ -87,16 +88,23 @@ GoRouter buildLumeRouter({
           label: AppLocalizations.of(context).navAccount,
         ),
       ),
-      // The two converted steps, reachable. The other seven are F4B; the flow
-      // host is where they will be added.
+      // The whole first-run flow. "Sign in" hands over to authentication,
+      // which is its own phase; everything else lands on the start route.
       GoRoute(
         path: LumeRoutes.onboarding,
-        builder: (BuildContext context, GoRouterState state) =>
-            LumeOnboardingFlowLoader(
-              onLeave: () => context.go(LumeRoutes.start),
-              onFinished: (LumeOnboardingDraft draft) =>
-                  context.go(LumeRoutes.start),
-            ),
+        builder: (BuildContext context, GoRouterState state) => Consumer(
+          builder: (BuildContext context, WidgetRef ref, Widget? _) =>
+              LumeOnboardingFlowLoader(
+                store: ref.read(onboardingStoreProvider),
+                onDone:
+                    (LumeOnboardingOutcome outcome, LumeProfileRecord record) =>
+                        context.go(
+                          outcome == LumeOnboardingOutcome.signIn
+                              ? LumeRoutes.auth
+                              : LumeRoutes.start,
+                        ),
+              ),
+        ),
       ),
 
       // A bare nested destination, arriving from a push notification or a

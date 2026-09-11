@@ -14,6 +14,96 @@ in the same units. Tolerance is 1 logical pixel.
 
 | Element | Property | Web | Flutter | Δ | Note |
 |---|---|---|---|---|---|
+| `onb.nav` | y | 49.40 | 49.40 | = |  |
+| `onb.nav` | x | 23.40 | 23.40 | = |  |
+| `onb.nav` | width | 27.20 | 27.20 | = |  |
+| `onb.nav` | height | 27.20 | 27.20 | = |  |
+| `onb.skip` | y | 47.00 | 47.00 | = |  |
+| `onb.skip` | x | 335.11 | 335.69 | 0.58 |  |
+| `onb.skip` | width | 34.89 | 34.31 | -0.58 |  |
+| `onb.skip` | height | 32.00 | 32.00 | = |  |
+| `onb.progress` | y | 61.50 | 61.50 | = |  |
+| `onb.progress` | x | 66.00 | 66.00 | = |  |
+| `onb.progress` | width | 257.11 | 257.69 | 0.58 |  |
+| `onb.progress` | height | 3.00 | 3.00 | = |  |
+| `onb.art` | y | 80.00 | 80.00 | = |  |
+| `onb.art` | x | 20.00 | 20.00 | = |  |
+| `onb.art` | width | 350.00 | 350.00 | = |  |
+| `onb.art` | height | 445.91 | 446.00 | 0.09 |  |
+| `onb.brand` | y | 525.91 | 526.00 | 0.09 | `.onb__brand`, whose 20 margin is inside the widget |
+| `onb.brand` | x | 20.00 | 20.00 | = | `.onb__brand`, whose 20 margin is inside the widget |
+| `onb.brand` | width | 350.00 | 350.00 | = | `.onb__brand`, whose 20 margin is inside the widget |
+| `onb.title` | y | 591.91 | 592.00 | 0.09 | `text-wrap: balance` |
+| `onb.title` | x | 20.00 | 20.00 | = | `text-wrap: balance` |
+| `onb.title` | width | 350.00 | 350.00 | = | `text-wrap: balance` |
+| `onb.title` | height | 62.72 | 62.00 | -0.72 | `text-wrap: balance` |
+| `onb.text` | y | 664.63 | 664.00 | -0.63 |  |
+| `onb.text` | x | 20.00 | 20.00 | = |  |
+| `onb.text` | width | 304.08 | 304.08 | = |  |
+| `onb.text` | height | 43.38 | 44.00 | 0.62 |  |
+| `onb.continue` | y | 730.00 | 730.00 | = |  |
+| `onb.continue` | x | 20.00 | 20.00 | = |  |
+| `onb.continue` | width | 350.00 | 350.00 | = |  |
+| `onb.continue` | height | 46.00 | 46.00 | = |  |
+| `onb.link` | x | 20.00 | 20.00 | = | the sign-in link — D16 |
+| `onb.link` | width | 350.00 | 350.00 | = | the sign-in link — D16 |
+| `onb.title` | lines | 2 | 2 | = | balanced |
+| `onb.nav` | y | 46.00 | 46.00 | = |  |
+| `onb.nav` | x | 20.00 | 20.00 | = |  |
+| `onb.nav` | width | 34.00 | 34.00 | = |  |
+| `onb.nav` | height | 34.00 | 34.00 | = |  |
+| `onb.skip` | y | 47.00 | 47.00 | = |  |
+| `onb.skip` | x | 335.11 | 335.69 | 0.58 |  |
+| `onb.skip` | width | 34.89 | 34.31 | -0.58 |  |
+| `onb.skip` | height | 32.00 | 32.00 | = |  |
+| `onb.progress` | y | 61.50 | 61.50 | = |  |
+| `onb.progress` | x | 66.00 | 66.00 | = |  |
+| `onb.progress` | width | 257.11 | 257.69 | 0.58 |  |
+| `onb.progress` | height | 3.00 | 3.00 | = |  |
+| `onb.art` | y | 80.00 | 80.00 | = |  |
+| `onb.art` | x | 20.00 | 20.00 | = |  |
+| `onb.art` | width | 350.00 | 350.00 | = |  |
+| `onb.art` | height | 513.22 | 513.00 | -0.22 |  |
+| `onb.title` | y | 616.22 | 616.00 | -0.22 |  |
+| `onb.title` | x | 20.00 | 20.00 | = |  |
+| `onb.title` | width | 350.00 | 350.00 | = |  |
+| `onb.title` | height | 62.72 | 62.00 | -0.72 |  |
+| `onb.text` | y | 688.94 | 688.00 | -0.94 |  |
+| `onb.text` | x | 20.00 | 20.00 | = |  |
+| `onb.text` | width | 304.08 | 304.08 | = |  |
+| `onb.text` | height | 65.06 | 66.00 | 0.94 |  |
+| `onb.continue` | y | 776.00 | 776.00 | = |  |
+| `onb.continue` | x | 20.00 | 20.00 | = |  |
+| `onb.continue` | width | 350.00 | 350.00 | = |  |
+| `onb.continue` | height | 46.00 | 46.00 | = |  |
+| `onb.nav` | y | 46.00 | 46.00 | = |  |
+| `onb.nav` | x | 20.00 | 20.00 | = |  |
+| `onb.nav` | width | 34.00 | 34.00 | = |  |
+| `onb.nav` | height | 34.00 | 34.00 | = |  |
+| `onb.skip` | y | 47.00 | 47.00 | = |  |
+| `onb.skip` | x | 335.11 | 335.69 | 0.58 |  |
+| `onb.skip` | width | 34.89 | 34.31 | -0.58 |  |
+| `onb.skip` | height | 32.00 | 32.00 | = |  |
+| `onb.progress` | y | 61.50 | 61.50 | = |  |
+| `onb.progress` | x | 66.00 | 66.00 | = |  |
+| `onb.progress` | width | 257.11 | 257.69 | 0.58 |  |
+| `onb.progress` | height | 3.00 | 3.00 | = |  |
+| `onb.art` | y | 80.00 | 80.00 | = |  |
+| `onb.art` | x | 20.00 | 20.00 | = |  |
+| `onb.art` | width | 350.00 | 350.00 | = |  |
+| `onb.art` | height | 513.22 | 513.00 | -0.22 |  |
+| `onb.title` | y | 616.22 | 616.00 | -0.22 |  |
+| `onb.title` | x | 20.00 | 20.00 | = |  |
+| `onb.title` | width | 350.00 | 350.00 | = |  |
+| `onb.title` | height | 62.72 | 62.00 | -0.72 |  |
+| `onb.text` | y | 688.94 | 688.00 | -0.94 |  |
+| `onb.text` | x | 20.00 | 20.00 | = |  |
+| `onb.text` | width | 304.08 | 304.08 | = |  |
+| `onb.text` | height | 65.06 | 66.00 | 0.94 |  |
+| `onb.continue` | y | 776.00 | 776.00 | = |  |
+| `onb.continue` | x | 20.00 | 20.00 | = |  |
+| `onb.continue` | width | 350.00 | 350.00 | = |  |
+| `onb.continue` | height | 46.00 | 46.00 | = |  |
 | `onb.nav` | y | 46.00 | 46.00 | = |  |
 | `onb.nav` | x | 20.00 | 20.00 | = |  |
 | `onb.nav` | width | 34.00 | 34.00 | = |  |
@@ -56,6 +146,46 @@ in the same units. Tolerance is 1 logical pixel.
 | `onb.nav` | x | 20.00 | 20.00 | = |  |
 | `onb.nav` | width | 34.00 | 34.00 | = |  |
 | `onb.nav` | height | 34.00 | 34.00 | = |  |
+| `onb.skip` | y | 47.00 | 47.00 | = |  |
+| `onb.skip` | x | 335.11 | 335.69 | 0.58 |  |
+| `onb.skip` | width | 34.89 | 34.31 | -0.58 |  |
+| `onb.skip` | height | 32.00 | 32.00 | = |  |
+| `onb.progress` | y | 61.50 | 61.50 | = |  |
+| `onb.progress` | x | 66.00 | 66.00 | = |  |
+| `onb.progress` | width | 257.11 | 257.69 | 0.58 |  |
+| `onb.progress` | height | 3.00 | 3.00 | = |  |
+| `onb.kicker` | y | 90.00 | 90.00 | = | the country name, not a fixed word |
+| `onb.kicker` | x | 20.00 | 20.00 | = | the country name, not a fixed word |
+| `onb.kicker` | width | 350.00 | 350.00 | = | the country name, not a fixed word |
+| `onb.kicker` | height | 13.00 | 13.00 | = | the country name, not a fixed word |
+| `onb.title` | y | 113.00 | 113.00 | = |  |
+| `onb.title` | x | 20.00 | 20.00 | = |  |
+| `onb.title` | width | 350.00 | 350.00 | = |  |
+| `onb.title` | height | 31.36 | 31.00 | -0.36 |  |
+| `onb.text` | y | 154.36 | 154.00 | -0.36 |  |
+| `onb.text` | x | 20.00 | 20.00 | = |  |
+| `onb.text` | width | 304.08 | 304.08 | = |  |
+| `onb.text` | height | 43.38 | 44.00 | 0.62 |  |
+| `locsearch` | y | 213.73 | 214.00 | 0.27 |  |
+| `locsearch` | x | 40.00 | 40.00 | = |  |
+| `locsearch` | width | 310.00 | 310.00 | = |  |
+| `locsearch` | height | 44.00 | 44.00 | = |  |
+| `onb.continue` | y | 772.00 | 772.00 | = |  |
+| `onb.continue` | x | 20.00 | 20.00 | = |  |
+| `onb.continue` | width | 350.00 | 350.00 | = |  |
+| `onb.continue` | height | 46.00 | 46.00 | = |  |
+| `onb.nav` | y | 46.00 | 46.00 | = |  |
+| `onb.nav` | x | 20.00 | 20.00 | = |  |
+| `onb.nav` | width | 34.00 | 34.00 | = |  |
+| `onb.nav` | height | 34.00 | 34.00 | = |  |
+| `onb.skip` | y | 47.00 | 47.00 | = |  |
+| `onb.skip` | x | 335.11 | 335.69 | 0.58 |  |
+| `onb.skip` | width | 34.89 | 34.31 | -0.58 |  |
+| `onb.skip` | height | 32.00 | 32.00 | = |  |
+| `onb.progress` | y | 61.50 | 61.50 | = |  |
+| `onb.progress` | x | 66.00 | 66.00 | = |  |
+| `onb.progress` | width | 257.11 | 257.69 | 0.58 |  |
+| `onb.progress` | height | 3.00 | 3.00 | = |  |
 | `onb.kicker` | y | 94.00 | 94.00 | = |  |
 | `onb.kicker` | x | 20.00 | 20.00 | = |  |
 | `onb.kicker` | width | 350.00 | 350.00 | = |  |
@@ -76,15 +206,143 @@ in the same units. Tolerance is 1 logical pixel.
 | `pickgroup.label.first` | x | 20.00 | 20.00 | = |  |
 | `pickgroup.label.first` | width | 350.00 | 350.00 | = |  |
 | `pickgroup.label.first` | height | 12.00 | 12.00 | = |  |
-| `pick.first` | y | 296.42 | 297.00 | 0.58 | the chip’s own width follows its label’s metrics |
-| `pick.first` | x | 20.00 | 20.00 | = | the chip’s own width follows its label’s metrics |
-| `pick.first` | height | 40.00 | 40.00 | = | the chip’s own width follows its label’s metrics |
+| `pick.first` | y | 296.42 | 297.00 | 0.58 | the chip width follows its label metrics |
+| `pick.first` | x | 20.00 | 20.00 | = | the chip width follows its label metrics |
+| `pick.first` | height | 40.00 | 40.00 | = | the chip width follows its label metrics |
 | `onb.continue` | y | 772.00 | 772.00 | = |  |
 | `onb.continue` | x | 20.00 | 20.00 | = |  |
 | `onb.continue` | width | 350.00 | 350.00 | = |  |
 | `onb.continue` | height | 46.00 | 46.00 | = |  |
+| `onb.nav` | y | 46.00 | 46.00 | = |  |
+| `onb.nav` | x | 20.00 | 20.00 | = |  |
+| `onb.nav` | width | 34.00 | 34.00 | = |  |
+| `onb.nav` | height | 34.00 | 34.00 | = |  |
+| `onb.skip` | y | 47.00 | 47.00 | = |  |
+| `onb.skip` | x | 335.11 | 335.69 | 0.58 |  |
+| `onb.skip` | width | 34.89 | 34.31 | -0.58 |  |
+| `onb.skip` | height | 32.00 | 32.00 | = |  |
+| `onb.progress` | y | 61.50 | 61.50 | = |  |
+| `onb.progress` | x | 66.00 | 66.00 | = |  |
+| `onb.progress` | width | 257.11 | 257.69 | 0.58 |  |
+| `onb.progress` | height | 3.00 | 3.00 | = |  |
+| `onb.art` | y | 80.00 | 80.00 | = |  |
+| `onb.art` | x | 20.00 | 20.00 | = |  |
+| `onb.art` | width | 350.00 | 350.00 | = |  |
+| `onb.art` | height | 118.08 | 118.08 | = |  |
+| `onb.title` | y | 198.08 | 198.08 | = |  |
+| `onb.title` | x | 20.00 | 20.00 | = |  |
+| `onb.title` | width | 350.00 | 350.00 | = |  |
+| `onb.title` | height | 31.36 | 31.00 | -0.36 |  |
+| `onb.text` | y | 239.44 | 239.08 | -0.36 |  |
+| `onb.text` | x | 20.00 | 20.00 | = |  |
+| `onb.text` | width | 304.08 | 304.08 | = |  |
+| `onb.text` | height | 43.38 | 44.00 | 0.62 |  |
+| `onb.rows` | y | 286.81 | 287.08 | 0.27 | two rounded line boxes — P7 |
+| `onb.rows` | x | 20.00 | 20.00 | = | two rounded line boxes — P7 |
+| `onb.rows` | width | 350.00 | 350.00 | = | two rounded line boxes — P7 |
+| `onb.rows` | height | 171.56 | 170.00 | -1.56 | two rounded line boxes — P7 |
+| `onb.row.first` | y | 286.81 | 287.08 | 0.27 |  |
+| `onb.row.first` | x | 20.00 | 20.00 | = |  |
+| `onb.row.first` | width | 350.00 | 350.00 | = |  |
+| `onb.row.first` | height | 80.78 | 80.00 | -0.78 |  |
+| `onb.row.title` | y | 301.81 | 302.08 | 0.27 |  |
+| `onb.row.title` | x | 87.00 | 87.00 | = |  |
+| `onb.row.title` | height | 18.00 | 18.00 | = |  |
+| `onb.row.sub` | y | 321.81 | 322.08 | 0.27 |  |
+| `onb.row.sub` | x | 87.00 | 87.00 | = |  |
+| `onb.row.sub` | width | 212.00 | 212.00 | = |  |
+| `onb.row.sub` | height | 30.78 | 30.00 | -0.78 |  |
+| `onb.continue` | y | 749.50 | 750.00 | 0.50 |  |
+| `onb.continue` | x | 20.00 | 20.00 | = |  |
+| `onb.continue` | width | 350.00 | 350.00 | = |  |
+| `onb.continue` | height | 46.00 | 46.00 | = |  |
+| `onb.note` | y | 805.50 | 806.00 | 0.50 |  |
+| `onb.note` | x | 20.00 | 20.00 | = |  |
+| `onb.note` | width | 350.00 | 350.00 | = |  |
+| `onb.note` | height | 16.50 | 16.00 | -0.50 |  |
+| `onb.row.sub` | y | 321.81 | 322.08 | 0.27 | the subtitle changes with the preference |
+| `onb.row.sub` | x | 87.00 | 87.00 | = | the subtitle changes with the preference |
+| `onb.row.sub` | width | 212.00 | 212.00 | = | the subtitle changes with the preference |
+| `onb.row.sub` | height | 30.78 | 30.00 | -0.78 | the subtitle changes with the preference |
+| `onb.methodLabel` | y | 476.38 | 475.08 | -1.30 | `.group-label`, uppercased in CSS; P7 above it |
+| `onb.methodLabel` | x | 20.00 | 20.00 | = | `.group-label`, uppercased in CSS; P7 above it |
+| `onb.methodLabel` | width | 350.00 | 350.00 | = | `.group-label`, uppercased in CSS; P7 above it |
+| `onb.methodLabel` | height | 13.00 | 13.00 | = | `.group-label`, uppercased in CSS; P7 above it |
+| `onb.choice` | y | 498.38 | 497.08 | -1.30 | D15 — 44 px targets widen the run gap |
+| `onb.choice` | x | 20.00 | 20.00 | = | D15 — 44 px targets widen the run gap |
+| `onb.choice` | width | 350.00 | 350.00 | = | D15 — 44 px targets widen the run gap |
+| `onb.nav` | y | 46.00 | 46.00 | = |  |
+| `onb.nav` | x | 20.00 | 20.00 | = |  |
+| `onb.nav` | width | 34.00 | 34.00 | = |  |
+| `onb.nav` | height | 34.00 | 34.00 | = |  |
+| `onb.skip` | y | 47.00 | 47.00 | = |  |
+| `onb.skip` | x | 335.11 | 335.69 | 0.58 |  |
+| `onb.skip` | width | 34.89 | 34.31 | -0.58 |  |
+| `onb.skip` | height | 32.00 | 32.00 | = |  |
+| `onb.progress` | y | 61.50 | 61.50 | = |  |
+| `onb.progress` | x | 66.00 | 66.00 | = |  |
+| `onb.progress` | width | 257.11 | 257.69 | 0.58 |  |
+| `onb.progress` | height | 3.00 | 3.00 | = |  |
+| `onb.art` | y | 80.00 | 80.00 | = |  |
+| `onb.art` | x | 20.00 | 20.00 | = |  |
+| `onb.art` | width | 350.00 | 350.00 | = |  |
+| `onb.art` | height | 123.00 | 123.01 | 0.01 |  |
+| `onb.kicker` | y | 203.00 | 203.01 | 0.01 |  |
+| `onb.kicker` | x | 20.00 | 20.00 | = |  |
+| `onb.kicker` | width | 350.00 | 350.00 | = |  |
+| `onb.kicker` | height | 13.00 | 13.00 | = |  |
+| `onb.title` | y | 226.00 | 226.01 | 0.01 |  |
+| `onb.title` | x | 20.00 | 20.00 | = |  |
+| `onb.title` | width | 350.00 | 350.00 | = |  |
+| `onb.title` | height | 31.36 | 31.00 | -0.36 |  |
+| `onb.text` | y | 267.36 | 267.01 | -0.35 |  |
+| `onb.text` | x | 20.00 | 20.00 | = |  |
+| `onb.text` | width | 304.08 | 304.08 | = |  |
+| `onb.text` | height | 43.38 | 44.00 | 0.62 |  |
+| `onb.field` | y | 332.73 | 333.01 | 0.28 |  |
+| `onb.field` | x | 20.00 | 20.00 | = |  |
+| `onb.field` | width | 350.00 | 350.00 | = |  |
+| `onb.field` | height | 72.00 | 72.00 | = |  |
+| `onb.continue` | y | 703.50 | 704.00 | 0.50 |  |
+| `onb.continue` | x | 20.00 | 20.00 | = |  |
+| `onb.continue` | width | 350.00 | 350.00 | = |  |
+| `onb.continue` | height | 46.00 | 46.00 | = |  |
+| `onb.skipStep` | x | 20.00 | 20.00 | = | Skip for now — D16 |
+| `onb.skipStep` | width | 350.00 | 350.00 | = | Skip for now — D16 |
+| `onb.note` | y | 805.50 | 806.00 | 0.50 |  |
+| `onb.note` | x | 20.00 | 20.00 | = |  |
+| `onb.note` | width | 350.00 | 350.00 | = |  |
+| `onb.note` | height | 16.50 | 16.00 | -0.50 |  |
+| `onb.nav` | y | 46.00 | 46.00 | = |  |
+| `onb.nav` | x | 20.00 | 20.00 | = |  |
+| `onb.nav` | width | 34.00 | 34.00 | = |  |
+| `onb.nav` | height | 34.00 | 34.00 | = |  |
+| `onb.skip` | y | 47.00 | 47.00 | = |  |
+| `onb.skip` | x | 335.11 | 335.69 | 0.58 |  |
+| `onb.skip` | width | 34.89 | 34.31 | -0.58 |  |
+| `onb.skip` | height | 32.00 | 32.00 | = |  |
+| `onb.progress` | y | 61.50 | 61.50 | = |  |
+| `onb.progress` | x | 66.00 | 66.00 | = |  |
+| `onb.progress` | width | 257.11 | 257.69 | 0.58 |  |
+| `onb.progress` | height | 3.00 | 3.00 | = |  |
+| `onb.art` | y | 80.00 | 80.00 | = |  |
+| `onb.art` | x | 20.00 | 20.00 | = |  |
+| `onb.art` | width | 350.00 | 350.00 | = |  |
+| `onb.art` | height | 561.45 | 562.00 | 0.55 |  |
+| `onb.kicker` | y | 641.45 | 642.00 | 0.55 |  |
+| `onb.kicker` | x | 20.00 | 20.00 | = |  |
+| `onb.kicker` | width | 350.00 | 350.00 | = |  |
+| `onb.kicker` | height | 13.00 | 13.00 | = |  |
+| `onb.continue` | y | 749.50 | 750.00 | 0.50 |  |
+| `onb.continue` | x | 20.00 | 20.00 | = |  |
+| `onb.continue` | width | 350.00 | 350.00 | = |  |
+| `onb.continue` | height | 46.00 | 46.00 | = |  |
+| `onb.note` | y | 805.50 | 806.00 | 0.50 |  |
+| `onb.note` | x | 20.00 | 20.00 | = |  |
+| `onb.note` | width | 350.00 | 350.00 | = |  |
+| `onb.note` | height | 16.50 | 16.00 | -0.50 |  |
 
-69 values compared.
+327 values compared.
 
 Not compared: the simulated status bar, the stage and the device frame — see
 [KNOWN_DIFFERENCES.md](KNOWN_DIFFERENCES.md) P1, P5 and D11.

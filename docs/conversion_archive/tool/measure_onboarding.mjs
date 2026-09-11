@@ -39,6 +39,9 @@ const THEME = args.theme || 'light';
 const LANG = args.lang || 'en';
 const DIR = args.dir || (LANG === 'en' ? 'ltr' : 'rtl');
 const STEP = Number(args.step ?? 3);
+/* Whether to turn the Islamic experience on at the interests step, which is
+   what makes the method block exist two steps later. */
+const FAITH = args.faith === '1' || args.faith === 'true';
 const PORT = Number(args.port || 8177);
 const CDP_PORT = Number(args.cdpPort || 9355);
 
@@ -53,18 +56,25 @@ const TARGETS = {
   'onb.seg.first': '.onb__seg',
   'onb.skip': '.onb__skip',
   'onb.step': '.onb-step.is-active',
+  'onb.art': '.onb-step.is-active .onb__art',
+  'onb.brand': '.onb-step.is-active .onb__brand',
+  'onb.mark': '.onb-step.is-active .onb__mark',
+  'onb.wordmark': '.onb-step.is-active .onb__wordmark',
+  'onb.link': '.onb-step.is-active .onb__link',
+  'onb.namefield': '.onb-step.is-active .onb__namefield',
   'onb.kicker': '.onb-step.is-active .onb__kicker',
   'onb.title': '.onb-step.is-active .onb__title',
   'onb.text': '.onb-step.is-active .onb__text',
   'onb.foot': '.onb-step.is-active .onb__foot',
   'onb.continue': '.onb-step.is-active .onb__foot .btn',
   // country
-  'locpicker': '#onbCountry.locpicker',
-  'locsearch': '#onbCountry .search--sm',
-  'locscroll': '#onbCountry .locscroll',
-  'locgroup.first': '#onbCountry .locgroup',
-  'loclist.first': '#onbCountry .loclist',
-  'locrow.first': '#onbCountry .locrow',
+  'locpicker': '.onb-step.is-active .locpicker',
+  'locsearch': '.onb-step.is-active .search--sm',
+  'locscroll': '.onb-step.is-active .locscroll',
+  'locgroup.first': '.onb-step.is-active .locgroup',
+  'loclist.first': '.onb-step.is-active .loclist',
+  'locrow.first': '.onb-step.is-active .locrow',
+  'locaction': '.onb-step.is-active .locrow--action',
   // interests
   'picker.bar': '#screen-onb .picker__bar, .onb-step.is-active .picker__bar',
   'picker.count': '.onb-step.is-active .picker__count',
@@ -73,6 +83,22 @@ const TARGETS = {
   'pickgroup.label.first': '.onb-step.is-active .pickgroup__label',
   'pick.first': '.onb-step.is-active .pick',
   'pickgroup.faith': '.onb-step.is-active .pickgroup--faith',
+  // set up
+  'onb.rows': '.onb-step.is-active .onb-rows',
+  'onb.row.first': '.onb-step.is-active .onb-row',
+  'onb.row.title': '.onb-step.is-active .onb-row__title',
+  'onb.row.sub': '.onb-step.is-active .onb-row__sub',
+  'onb.methodLabel': '.onb-step.is-active .group-label',
+  'onb.choice': '.onb-step.is-active .onb-choice',
+  'onb.choice.first': '.onb-step.is-active .onb-choice button',
+  'onb.note': '.onb-step.is-active .onb__note',
+  // name
+  'onb.field': '.onb-step.is-active .field',
+  'onb.fieldLabel': '.onb-step.is-active .field__label',
+  'onb.fieldBox': '.onb-step.is-active .field__box',
+  'onb.skipStep': '#onbNameSkip',
+  // done
+  'onb.seal': '.onb-step.is-active .onb__seal',
 };
 
 const DRIVER = `
@@ -95,7 +121,22 @@ const DRIVER = `
         setTimeout(done, 400);
         return;
       }
-      var next = active.querySelector('[data-onb-next]');
+      /* The interests step will not advance until five are chosen, and the
+         button re-disables itself on every render, so choosing has to happen
+         before clicking rather than instead of it. */
+      var picks = active.querySelectorAll('.pick');
+      if (picks.length) {
+        if (${FAITH ? 'true' : 'false'}) {
+          var ft = active.querySelector('[data-faithtoggle]');
+          if (ft && ft.getAttribute('aria-pressed') !== 'true') ft.click();
+        }
+        var on = active.querySelectorAll('.pick.is-on').length;
+        for (var i = 0; i < picks.length && on < 5; i++) {
+          if (!picks[i].classList.contains('is-on')) { picks[i].click(); on++; }
+        }
+      }
+      /* Steps 5 and 7 gate their own buttons and do not carry the hook. */
+      var next = active.querySelector('[data-onb-next], #onbPickNext, #onbNameNext');
       if (next) { next.removeAttribute('disabled'); next.click(); }
     }, 50);
   }
@@ -272,10 +313,30 @@ async function main() {
           width: Math.round(r.width * 100) / 100,
           height: Math.round(r.height * 100) / 100,
           lines: lines,
-          text: el.children.length ? null : el.textContent.trim()
+          /* The whole element's text, children included: a heading that
+             wraps a count in a span still has a sentence in it, and the
+             comparison needs to read it. */
+          text: (el.textContent || '').trim().slice(0, 120) || null
         };
       });
-      return { bounds: out, missing: missing,
+      /* Whether a box is scrolling, and by how much. A short viewport is
+         answered by an overflow rule somewhere, and which box takes the
+         scroll is the whole question - a box measurement alone cannot say. */
+      var scroll = {};
+      [['step', '.onb-step.is-active'],
+       ['locscroll', '.onb-step.is-active .locscroll'],
+       ['pickscroll', '.onb-step.is-active .pickscroll'],
+       ['shell', '.onb']].forEach(function (pair) {
+        var el = document.querySelector(pair[1]);
+        if (!el) return;
+        scroll[pair[0]] = {
+          clientHeight: el.clientHeight,
+          scrollHeight: el.scrollHeight,
+          scrolls: el.scrollHeight > el.clientHeight + 0.5,
+          overflowY: getComputedStyle(el).overflowY
+        };
+      });
+      return { bounds: out, missing: missing, scroll: scroll,
                step: Number((document.querySelector('.onb-step.is-active') || {}).dataset ?
                  document.querySelector('.onb-step.is-active').dataset.step : -1),
                segsDone: document.querySelectorAll('.onb__seg.is-done').length,
@@ -283,7 +344,9 @@ async function main() {
     })()`);
 
     mkdirSync(OUT, { recursive: true });
-    const cell = `onboarding_step${STEP}_${WIDTH}x${HEIGHT}_${THEME}_${LANG}`;
+    const cell =
+      `onboarding_step${STEP}_${WIDTH}x${HEIGHT}_${THEME}_${LANG}` +
+      (FAITH ? '_faith' : '');
     writeFileSync(
       join(OUT, `${cell}.json`),
       JSON.stringify(
@@ -296,6 +359,7 @@ async function main() {
           lang: LANG,
           dir: DIR,
           missing: result.missing,
+          scroll: result.scroll,
           bounds: result.bounds,
         },
         null,

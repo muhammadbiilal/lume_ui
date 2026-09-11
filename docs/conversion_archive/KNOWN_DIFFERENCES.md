@@ -518,6 +518,112 @@ id-reconciliation table is an F6 deliverable. Recorded in
 | 2026-09-11 (F4A) | **D6 extended to the onboarding chrome** — the 34 circle and the 32 Skip carry 44 px targets that overhang rather than grow the row | Growing it moved the whole flow five pixels, which the bounds comparison caught |
 | 2026-09-11 (F4A) | Four line boxes corrected against the running flow — kicker 13, Skip 32, row name 18, group label 12 | A type role's own height is not the reference's `line-height: normal` |
 | 2026-09-11 (F3) | **`LumeMasterDetail` extended** into a shell that survives rotation, with `GlobalKey`s carrying the list and the detail between the two layouts | The row and the stack put them at different depths, so a rotation would otherwise reset both |
+| 2026-09-11 (F4B) | **D14 raised and resolved** — a short screen hands the lead and the search field to the list; the reference squeezes the list to zero and draws the field over the action | Measured at 852 × 393: `.locscroll` `clientHeight` 0 against `scrollHeight` 8830 |
+| 2026-09-11 (F4B) | **D15 raised and resolved** — method pills 10 apart rather than 7 | Two 44-point targets cannot sit 7 apart without overlapping |
+| 2026-09-11 (F4B) | **D16 raised and resolved** — the secondary link's target is 44 and the text does not move | The extra 8 comes out of the gaps around it |
+| 2026-09-11 (F4B) | **D17 raised and resolved** — the calculation method is read and written | The reference's pills neither read the profile nor write it |
+| 2026-09-11 (F4B) | **`.switch` corrected from 44 × 26 to the measured 42 × 25** | Two points of width is the difference between a permission row's body being 212 and 210 |
+| 2026-09-11 (F4B) | **`text-wrap: balance` reproduced** as `LumeBalancedText` | Every onboarding heading broke at a different word from the reference's |
+| 2026-09-11 (F4B) | **`.field__label` found uppercase**; the name step uses `.field`, not `.cfield` | The two labelled fields differ in every measurement |
+| 2026-09-11 (F4B) | **`.field__box:focus-within` added to `LumeToolField`** | It had no focus state at all, which §9 and §60 both require |
+| 2026-09-11 (F4B) | **Skip reserved on the last step** rather than removed | `.onb__skip[disabled]` is `opacity: 0`; removing it would let the progress bar jump 47 points at the finish |
+| 2026-09-11 (F4B) | **The onboarding step yields to the keyboard** | There is no `Scaffold` under the flow, so nothing was shrinking |
+| 2026-09-11 (F4B) | **Asset tables load without `compute`** | `loadString` hands anything over 50 KB to an isolate, which never finishes inside a widget test — the flow rendered an empty box for ever |
+| 2026-09-11 (F4B) | Line-box rounding recorded as a P7 consequence — Skia rounds a line box to whole pixels where Blink keeps 1/64ths | Two two-line subtitles come to 1.56 short of the reference's pair |
+
+### D14 — a short screen scrolls the whole list step, head and all
+
+**Raised and resolved in F4B.** `.locpicker` is a flex column with the search
+field at the top and `.locscroll` flexing beneath it, which needs a step tall
+enough to hold a lead, a field and a list at once. A phone held sideways is not.
+
+Measured at 852 × 393, on the country step:
+
+| | measured |
+|---|---|
+| `.onb-step` | `clientHeight` 263, `scrollHeight` 263 — it does **not** scroll |
+| `.locscroll` | `clientHeight` **0**, `scrollHeight` 8830 — squeezed to nothing |
+| `.search--sm` | y 260.42, height 38 |
+| `.onb__foot` | y 278 |
+
+The field is drawn **over** the Continue button and the list has no height at
+all. Both steps are unusable at that cell, and the same is true of the city
+step, where `.locscroll` measures 0 against a 1087-point list.
+
+The correction: below the compact-height floor, the lead and the search field
+are handed to the list and everything above the footer scrolls as one piece, in
+the order the markup already has it. Nothing is covered, nothing is zero, and
+the footer stays where it is. Above the floor, nothing changes.
+
+The same cell also makes `.onb__art` overflow its own stage — the illustration
+is 268 tall inside a 200-tall grid item and is drawn over the brand. Flutter
+keeps the drawing inside the stage and lets the step scroll, which is the same
+answer without the overlap.
+
+### D15 — method pills sit ten apart rather than seven
+
+**Raised and resolved in F4B.** `.onb-choice button` is 34 tall and the block
+wraps with a 7 px gap between runs; measured at 390, the five pills fall into
+two runs and the block is 75 tall.
+
+§9's floor makes each target 44, so each already reaches 5 past its pill. A
+7-point run gap on top of that would make neighbouring targets **overlap**,
+which is worse than a gap three points wider than the reference's. The runs
+therefore sit 0 apart as boxes and 10 apart as pills, and the block is 88 rather
+than 75. Every pill's own geometry — 34 tall, 13 of side padding, 12 / 600 /
+−.015em — is unchanged.
+
+### D16 — the secondary link's box is 44 where the reference draws 36
+
+**Raised and resolved in F4B.** `.onb__link` is 13 px of text in 10 of padding,
+measured 36 tall on steps 0 and 7. The floor makes the target 44.
+
+The extra 8 comes out of the 10-point gaps on either side of it and, where the
+link is last, out of the step's own 22 of bottom padding. So the **text** is
+exactly where the reference puts it, the gap is still 6, and nothing overlaps.
+Only the box differs, and a box is not a thing anyone sees.
+
+### D17 — the calculation method the user picks is the method that is stored
+
+**Raised and resolved in F4B.** The reference's method block is decorative. Its
+click handler moves `is-active` between the five buttons and writes nothing:
+
+```js
+var method = $('#onbMethod');
+if (method) {
+  method.addEventListener('click', function (e) {
+    var b = e.target.closest('button');
+    if (!b) return;
+    $$('button', method).forEach(function (x) { x.classList.remove('is-active'); });
+    b.classList.add('is-active');
+  });
+}
+```
+
+Nothing reads the stored preference either: the markup marks *University of
+Karachi* active while `app-store.js` defaults the profile to `MWL`, so the step
+shows one answer and the app holds another.
+
+Reproducing that would mean shipping a control that lies. The Flutter step
+opens on the stored method and writes the one the user chooses, which is what
+§36 requires of a personalisation setting and what "Set it up once" promises.
+
+### The market session defect, and what Flutter will do instead
+
+Found in F4A and recorded here because the correction belongs to a later phase.
+`marketSession` in `context.js` decides whether the NASDAQ is open using the
+**device's** clock rather than the exchange's, treats the closing minute as
+open, and compares against a hard-coded `MARKET_HOLIDAYS` table containing
+floating dates — Thanksgiving among them — that are correct for one year only.
+
+A device in Karachi therefore reads the New York session from Karachi time.
+
+The Flutter implementation is authoritative and must: resolve the session in
+the exchange's own zone, open on the minute, close *exclusively*, take weekends
+from that zone's calendar, and derive the floating holidays rather than listing
+them. The prototype is left as it is — it is the comparison source while the
+conversion runs, not the product.
+
 
 One correction has been applied to the web prototype: the four dead
 `.onb-country` lines, deleted in F1 under the evidence gate in C1. Nothing else

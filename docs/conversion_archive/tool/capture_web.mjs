@@ -44,6 +44,9 @@ const DPR = Number(args.dpr || 1);
 const THEME = args.theme || 'light';
 const LANG = args.lang || 'en';
 const STEP = args.step === undefined ? null : Number(args.step);
+/* Turn the Islamic experience on at the interests step. The steps after it
+   are a different composition when it is on, and both need capturing. */
+const FAITH = args.faith === '1' || args.faith === 'true';
 const PORT = Number(args.port || 8155);
 const CDP_PORT = Number(args.cdpPort || 9333);
 
@@ -104,7 +107,22 @@ const DRIVER = `
         setTimeout(done, 400);
         return;
       }
-      var next = active.querySelector('[data-onb-next]');
+      /* The interests step will not advance until five are chosen, it
+         re-disables its button on every render, and neither it nor the name
+         step carries the shared hook — so choose first, then press the
+         button each step actually has. */
+      var picks = active.querySelectorAll('.pick');
+      if (picks.length) {
+        if (${FAITH ? 'true' : 'false'}) {
+          var ft = active.querySelector('[data-faithtoggle]');
+          if (ft && ft.getAttribute('aria-pressed') !== 'true') ft.click();
+        }
+        var on = active.querySelectorAll('.pick.is-on').length;
+        for (var i = 0; i < picks.length && on < 5; i++) {
+          if (!picks[i].classList.contains('is-on')) { picks[i].click(); on++; }
+        }
+      }
+      var next = active.querySelector('[data-onb-next], #onbPickNext, #onbNameNext');
       if (next) { next.removeAttribute('disabled'); next.click(); }
     }, 50);
   }

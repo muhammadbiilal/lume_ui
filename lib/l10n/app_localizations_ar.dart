@@ -447,4 +447,154 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get intRamadan => 'رمضان';
+
+  @override
+  String get onbWelcomeTitle => 'كل ما يحتاجه يومك، منظَّم بهدوء.';
+
+  @override
+  String get onbWelcomeText =>
+      'الخطط والمال والسفر والقراءة والأدوات الصغيرة التي تلجأ إليها — دون فوضى.';
+
+  @override
+  String get onbSignInPrompt => 'هل لديك حساب بالفعل؟';
+
+  @override
+  String get onbSignInAction => 'تسجيل الدخول';
+
+  @override
+  String get onbPlanKicker => 'خطط';
+
+  @override
+  String get onbPlanTitle => 'يومك، مرتَّب قبل أن يبدأ';
+
+  @override
+  String get onbPlanText =>
+      'المهام والتذكيرات والأحداث على خط زمني واحد — وكل ما يهم في مكانه بالفعل.';
+
+  @override
+  String get onbToolsKicker => 'أدوات';
+
+  @override
+  String onbToolsTitle(String count) {
+    return 'نحو $count أداة، على بُعد نقرة أو نقرتين';
+  }
+
+  @override
+  String get onbToolsText =>
+      'حاسبة ومحوّلات وطقس وماسح وأسعار ومتتبعات — مرتّبة، فلا تبحث عنها.';
+
+  @override
+  String get onbCityTitle => 'في أي مدينة أنت؟';
+
+  @override
+  String get onbCityText =>
+      'يُستخدم للطقس، ومواقيت الصلاة حيثما كان ذلك مناسبًا، ولكل ما هو محلي.';
+
+  @override
+  String get persSearchCities => 'ابحث عن مدينة';
+
+  @override
+  String get persUseLocation => 'استخدم موقعي الحالي';
+
+  @override
+  String get onbSetupTitle => 'اضبطه مرة واحدة';
+
+  @override
+  String get onbSetupText => 'إذنان، ويمكنك تغيير أي منهما لاحقًا.';
+
+  @override
+  String get onbPermLocation => 'استخدام موقعك';
+
+  @override
+  String get onbPermLocationSub => 'للطقس والخدمات المحلية والأماكن القريبة';
+
+  @override
+  String get onbPermLocationSubFaith =>
+      'لمواقيت الصلاة والقبلة والطقس والأماكن القريبة';
+
+  @override
+  String get onbPermNotify => 'تذكيرات لطيفة';
+
+  @override
+  String get onbPermNotifySub => 'تنبيه هادئ للأشياء التي طلبت منا متابعتها';
+
+  @override
+  String get onbPermNotifySubFaith => 'تنبيه هادئ قبل كل أذان بخمس دقائق';
+
+  @override
+  String get onbMethodLabel => 'طريقة حساب مواقيت الصلاة';
+
+  @override
+  String get methodKarachi => 'جامعة كراتشي';
+
+  @override
+  String get methodMwl => 'رابطة العالم الإسلامي';
+
+  @override
+  String get methodIsna => 'ISNA';
+
+  @override
+  String get methodUmmAlQura => 'أم القرى';
+
+  @override
+  String get methodEgyptian => 'المصرية';
+
+  @override
+  String get onbOnDevice => 'يحتفظ Lume بهذا على جهازك. لا يُرفع شيء.';
+
+  @override
+  String get onbNameKicker => 'أمر أخير';
+
+  @override
+  String get onbNameTitle => 'بماذا نناديك؟';
+
+  @override
+  String get onbNameText => 'للتحية فقط. يمكنك تغييره لاحقًا أو تخطيه.';
+
+  @override
+  String get onbNamePlaceholder => 'اسمك';
+
+  @override
+  String get onbNameLabel => 'الاسم المعروض';
+
+  @override
+  String get onbNameSkip => 'تخطي الآن';
+
+  @override
+  String get onbNameNote => 'يحتفظ Lume بهذا على جهازك.';
+
+  @override
+  String get onbAllSet => 'كل شيء جاهز';
+
+  @override
+  String get onbReadyTitle => 'كل شيء جاهز';
+
+  @override
+  String onbReadyNamed(String name) {
+    return 'أنت جاهز، $name';
+  }
+
+  @override
+  String get onbReadyGeneral => 'خطة اليوم في انتظارك على الشاشة الرئيسية.';
+
+  @override
+  String onbReadyFaith(String prayer) {
+    return 'صلاتك القادمة هي $prayer، وخطة اليوم في انتظارك على الشاشة الرئيسية.';
+  }
+
+  @override
+  String get onbEnterLume => 'ادخل إلى Lume';
+
+  @override
+  String get onbRevisit => 'يمكنك إعادة هذه الجولة في أي وقت من الملف الشخصي.';
+
+  @override
+  String get onbSkippedDefaults =>
+      'تم الإعداد بالإعدادات الافتراضية — عدّلها من الملف الشخصي';
+
+  @override
+  String get onbSkippedTour => 'تم تخطي الجولة — تجدها مجددًا في الملف الشخصي';
+
+  @override
+  String get onbWelcomeBack => 'مرحبًا بك في Lume';
 }

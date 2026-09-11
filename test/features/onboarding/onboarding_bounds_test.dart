@@ -5,6 +5,10 @@
 /// `measurements/onboarding_step*_390x844_light_en.json` — bounds read from the
 /// running flow with `getBoundingClientRect`.
 ///
+/// All nine steps, each driven through `LumeOnboardingFlow` so the thing
+/// measured is the composition the application shows rather than a step widget
+/// mounted on its own.
+///
 /// This is the test that catches the differences a box measurement cannot: a
 /// missing ten points of lead padding, a paragraph that wraps to four lines
 /// instead of three, a footer that sits eighteen above its button in one engine
@@ -20,12 +24,16 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:lume/core/widgets/lume/lume_field.dart';
+import 'package:lume/core/widgets/lume/lume_text.dart';
 import 'package:lume/features/onboarding/data/country_fixture.dart';
 import 'package:lume/features/onboarding/data/interests_fixture.dart';
 import 'package:lume/features/onboarding/presentation/country_screen.dart';
 import 'package:lume/features/onboarding/presentation/interests_screen.dart';
+import 'package:lume/features/onboarding/domain/onboarding_state.dart';
+import 'package:lume/features/onboarding/presentation/onboarding_art.dart';
 import 'package:lume/features/onboarding/presentation/onboarding_chrome.dart';
-import 'package:lume/features/onboarding/presentation/onboarding_steps.dart';
+import 'package:lume/features/onboarding/presentation/onboarding_flow.dart';
+import 'package:lume/features/onboarding/presentation/onboarding_parts.dart';
 
 import '../../helpers/capture.dart';
 import '../../helpers/load_fonts.dart';
@@ -60,6 +68,15 @@ void main() {
 
   final List<String> rows = <String>[];
 
+  /// Differences found in the test that is running, emptied after each one.
+  final List<String> misses = <String>[];
+
+  tearDown(() {
+    final List<String> found = List<String>.of(misses);
+    misses.clear();
+    expect(found, isEmpty, reason: 'element bounds differ from the prototype');
+  });
+
   /// Compares one element's geometry and records the row.
   void compare(
     WidgetTester tester,
@@ -70,6 +87,7 @@ void main() {
     bool checkX = true,
     bool checkWidth = true,
     bool checkHeight = true,
+    double tolerance = kTolerance,
     String note = '',
   }) {
     final Map<String, dynamic>? b = bounds[name] as Map<String, dynamic>?;
@@ -81,12 +99,16 @@ void main() {
     final Rect r = tester.getRect(finder.first);
 
     void check(String what, double wanted, double got) {
-      expect(
-        got,
-        closeTo(wanted, kTolerance),
-        reason:
-            '$name $what — the prototype puts it at $wanted, Flutter at $got',
-      );
+      // Collected rather than thrown, so one run reports every difference
+      // instead of stopping at the first. `tearDown` turns the list into the
+      // failure.
+      if ((got - wanted).abs() > tolerance) {
+        misses.add(
+          '$name $what — the prototype puts it at '
+          '${wanted.toStringAsFixed(2)}, Flutter at ${got.toStringAsFixed(2)} '
+          '(${(got - wanted).toStringAsFixed(2)})',
+        );
+      }
       rows.add(
         '| `$name` | $what | '
         '${wanted.toStringAsFixed(2)} | ${got.toStringAsFixed(2)} | '
@@ -101,7 +123,146 @@ void main() {
     if (checkHeight) check('height', (b['height'] as num).toDouble(), r.height);
   }
 
-  group('the country step sits where the prototype puts it', () {
+  /// The flow at one step, on the primary cell.
+  Future<void> pumpStep(
+    WidgetTester tester,
+    int step, {
+    bool islamic = false,
+    String name = '',
+  }) => pumpLume(
+    tester,
+    LumeOnboardingFlow(
+      countries: countries,
+      catalogue: interests,
+      store: LumeMemoryOnboardingStore(
+        LumeProfileRecord(islamic: islamic, displayName: name),
+      ),
+      initialStep: step,
+    ),
+    surface: const Size(390, 844),
+  );
+
+  /// The heading's own block. `.onb__title` fills the 350-wide column; the
+  /// balanced `Text` inside it is narrower by design, so the block is what the
+  /// prototype's element corresponds to.
+  Finder titled(String text) => find.ancestor(
+    of: find.text(text),
+    matching: find.byType(LumeBalancedText),
+  );
+
+  /// The chrome every step shares. Skip is compared even on the last step:
+  /// `.onb__skip[disabled]` is `opacity: 0`, so the prototype still reserves
+  /// its width and the progress bar is the same 257.11 throughout.
+  void chrome(WidgetTester tester, Map<String, dynamic> b) {
+    compare(tester, b, 'onb.nav', find.byKey(LumeOnboardingKeys.backCircle));
+    compare(tester, b, 'onb.skip', find.byKey(LumeOnboardingKeys.skipLabel));
+    compare(tester, b, 'onb.progress', find.byType(LumeOnboardingProgress));
+  }
+
+  group('step 0 — welcome', () {
+    final Map<String, dynamic>? measured = web(0);
+
+    testWidgets('brand, stage, copy and the two actions', (
+      WidgetTester tester,
+    ) async {
+      if (measured == null) {
+        markTestSkipped('run tool/measure_onboarding.mjs --step 0 first');
+        return;
+      }
+      final Map<String, dynamic> b = measured['bounds'] as Map<String, dynamic>;
+      await pumpStep(tester, LumeOnboardingStep.welcome);
+
+      chrome(tester, b);
+      compare(tester, b, 'onb.art', find.byType(LumeOnboardingArt));
+      compare(
+        tester,
+        b,
+        'onb.brand',
+        find.byType(LumeOnboardingBrand),
+        // The 20 below the brand is `margin-bottom` in CSS and padding inside
+        // the widget, so the widget's box is 20 taller for the same layout.
+        checkHeight: false,
+        note: '`.onb__brand`, whose 20 margin is inside the widget',
+      );
+      compare(
+        tester,
+        b,
+        'onb.title',
+        titled('Everything your day needs, quietly organised.'),
+        note: '`text-wrap: balance`',
+      );
+      compare(
+        tester,
+        b,
+        'onb.text',
+        find.textContaining('without the clutter'),
+      );
+      compare(tester, b, 'onb.continue', find.byType(LumeOnboardingContinue));
+      compare(
+        tester,
+        b,
+        'onb.link',
+        find.byType(LumeOnboardingLink),
+        // 36 drawn, 44 targeted: the box is 8 taller and starts 4 higher, and
+        // the text inside it is exactly where the prototype puts it. D16.
+        checkY: false,
+        checkHeight: false,
+        note: 'the sign-in link — D16',
+      );
+    });
+
+    testWidgets('the balanced title wraps to the prototype two lines', (
+      WidgetTester tester,
+    ) async {
+      if (measured == null) return;
+      final Map<String, dynamic> b = measured['bounds'] as Map<String, dynamic>;
+      await pumpStep(tester, LumeOnboardingStep.welcome);
+      final int webLines =
+          (b['onb.title'] as Map<String, dynamic>)['lines'] as int;
+      final int lines = lineCountOf(
+        tester,
+        find.text('Everything your day needs, quietly organised.'),
+      );
+      expect(lines, webLines);
+      rows.add('| `onb.title` | lines | $webLines | $lines | = | balanced |');
+    });
+  });
+
+  group('steps 1 and 2 — the two value slides', () {
+    for (final (int step, String title, String tail) in <(int, String, String)>[
+      (
+        LumeOnboardingStep.plan,
+        'Your day, laid out before it starts',
+        'already in the right place',
+      ),
+      (
+        LumeOnboardingStep.tools,
+        '85-odd tools, one or two taps away',
+        'so you never hunt for them',
+      ),
+    ]) {
+      testWidgets('step $step — stage, kicker, title, text', (
+        WidgetTester tester,
+      ) async {
+        final Map<String, dynamic>? measured = web(step);
+        if (measured == null) {
+          markTestSkipped('run tool/measure_onboarding.mjs --step $step first');
+          return;
+        }
+        final Map<String, dynamic> b =
+            measured['bounds'] as Map<String, dynamic>;
+        await pumpStep(tester, step);
+
+        chrome(tester, b);
+        compare(tester, b, 'onb.art', find.byType(LumeOnboardingArt));
+        compare(tester, b, 'onb.title', titled(title));
+        compare(tester, b, 'onb.text', find.textContaining(tail));
+        compare(tester, b, 'onb.continue', find.byType(LumeOnboardingContinue));
+      });
+    }
+  });
+
+  group('step 3 — the country step sits where the prototype puts it', () {
     final Map<String, dynamic>? measured = web(3);
 
     testWidgets('chrome, lead and list', (WidgetTester tester) async {
@@ -110,24 +271,11 @@ void main() {
         return;
       }
       final Map<String, dynamic> b = measured['bounds'] as Map<String, dynamic>;
+      await pumpStep(tester, LumeOnboardingStep.country);
 
-      await pumpLume(
-        tester,
-        CountryStep(
-          countries: countries,
-          onBack: () {},
-          onSkip: () {},
-          onContinue: (_) {},
-        ),
-        surface: const Size(390, 844),
-      );
-
-      // The visible circle, not its 44 px target — the two differ on purpose.
-      compare(tester, b, 'onb.nav', find.byKey(LumeOnboardingKeys.backCircle));
-      compare(tester, b, 'onb.skip', find.byKey(LumeOnboardingKeys.skipLabel));
-      compare(tester, b, 'onb.progress', find.byType(LumeOnboardingProgress));
+      chrome(tester, b);
       compare(tester, b, 'onb.kicker', find.text('MAKE IT LOCAL'));
-      compare(tester, b, 'onb.title', find.text('Where are you based?'));
+      compare(tester, b, 'onb.title', titled('Where are you based?'));
       compare(
         tester,
         b,
@@ -164,11 +312,7 @@ void main() {
     ) async {
       if (measured == null) return;
       final Map<String, dynamic> b = measured['bounds'] as Map<String, dynamic>;
-      await pumpLume(
-        tester,
-        CountryStep(countries: countries, onBack: () {}, onSkip: () {}),
-        surface: const Size(390, 844),
-      );
+      await pumpStep(tester, LumeOnboardingStep.country);
       final int webLines =
           (b['onb.text'] as Map<String, dynamic>)['lines'] as int;
       expect(webLines, 3, reason: 'the prototype wraps it to three');
@@ -182,7 +326,33 @@ void main() {
     });
   });
 
-  group('the interests step sits where the prototype puts it', () {
+  group('step 4 — the city step', () {
+    final Map<String, dynamic>? measured = web(4);
+
+    testWidgets('chrome, lead, search and list', (WidgetTester tester) async {
+      if (measured == null) {
+        markTestSkipped('run tool/measure_onboarding.mjs --step 4 first');
+        return;
+      }
+      final Map<String, dynamic> b = measured['bounds'] as Map<String, dynamic>;
+      await pumpStep(tester, LumeOnboardingStep.city);
+
+      chrome(tester, b);
+      compare(
+        tester,
+        b,
+        'onb.kicker',
+        find.text('PAKISTAN'),
+        note: 'the country name, not a fixed word',
+      );
+      compare(tester, b, 'onb.title', titled('Which city are you in?'));
+      compare(tester, b, 'onb.text', find.textContaining('anything local'));
+      compare(tester, b, 'locsearch', find.byType(LumeSearchField));
+      compare(tester, b, 'onb.continue', find.byType(LumeOnboardingContinue));
+    });
+  });
+
+  group('step 5 — the interests step sits where the prototype puts it', () {
     final Map<String, dynamic>? measured = web(5);
 
     testWidgets('chrome, lead, bar and chips', (WidgetTester tester) async {
@@ -191,21 +361,11 @@ void main() {
         return;
       }
       final Map<String, dynamic> b = measured['bounds'] as Map<String, dynamic>;
+      await pumpStep(tester, LumeOnboardingStep.interests);
 
-      await pumpLume(
-        tester,
-        InterestsStep(
-          catalogue: interests,
-          onBack: () {},
-          onSkip: () {},
-          onContinue: (Set<String> s, bool i) {},
-        ),
-        surface: const Size(390, 844),
-      );
-
-      compare(tester, b, 'onb.nav', find.byKey(LumeOnboardingKeys.backCircle));
+      chrome(tester, b);
       compare(tester, b, 'onb.kicker', find.text('MAKE IT YOURS'));
-      compare(tester, b, 'onb.title', find.text('What are you here for?'));
+      compare(tester, b, 'onb.title', titled('What are you here for?'));
       compare(tester, b, 'onb.text', find.textContaining('Pick 5 to 10'));
       compare(tester, b, 'picker.count', find.text('0 of 5 minimum'));
       compare(tester, b, 'pickgroup.label.first', find.text('EVERYDAY LIFE'));
@@ -214,7 +374,7 @@ void main() {
         b,
         'pick.first',
         find.byType(LumeInterestChip),
-        note: 'the chip’s own width follows its label’s metrics',
+        note: 'the chip width follows its label metrics',
         checkWidth: false,
       );
       compare(tester, b, 'onb.continue', find.byType(LumeOnboardingContinue));
@@ -239,6 +399,181 @@ void main() {
           LumeOnboardingStep.country + 1,
         );
       }
+    });
+  });
+
+  group('step 6 — set it up once', () {
+    testWidgets('stage, copy, permission rows and the note', (
+      WidgetTester tester,
+    ) async {
+      final Map<String, dynamic>? measured = web(6);
+      if (measured == null) {
+        markTestSkipped('run tool/measure_onboarding.mjs --step 6 first');
+        return;
+      }
+      final Map<String, dynamic> b = measured['bounds'] as Map<String, dynamic>;
+      await pumpStep(tester, LumeOnboardingStep.setUp);
+
+      chrome(tester, b);
+      compare(tester, b, 'onb.art', find.byType(LumeOnboardingArt));
+      compare(tester, b, 'onb.title', titled('Set it up once'));
+      compare(tester, b, 'onb.text', find.textContaining('Two permissions'));
+      compare(
+        tester,
+        b,
+        'onb.rows',
+        find.byKey(LumeOnboardingKeys.rows),
+        // Two rows of two-line subtitles. Skia rounds a line box to whole
+        // pixels where Blink keeps 1/64ths, so 15.390625 becomes 15 and the
+        // pair is 1.56 short. P7, compounded — not a spacing difference.
+        tolerance: 2,
+        note: 'two rounded line boxes — P7',
+      );
+      compare(
+        tester,
+        b,
+        'onb.row.first',
+        find.byType(LumeOnboardingToggleRow).first,
+      );
+      compare(
+        tester,
+        b,
+        'onb.row.title',
+        find.text('Use your location'),
+        // `.onb-row__title` is `display: block` and fills the row's body; a
+        // `Text` shrinks to its glyphs. Same origin, different width.
+        checkWidth: false,
+      );
+      compare(
+        tester,
+        b,
+        'onb.row.sub',
+        find.textContaining('local services and nearby places'),
+      );
+      compare(tester, b, 'onb.continue', find.byType(LumeOnboardingContinue));
+      compare(tester, b, 'onb.note', find.byType(LumeOnboardingNote));
+    });
+
+    testWidgets('the method block, once the experience is on', (
+      WidgetTester tester,
+    ) async {
+      final File f = File(
+        'docs/conversion_archive/measurements/'
+        'onboarding_step6_390x844_light_en_faith.json',
+      );
+      if (!f.existsSync()) {
+        markTestSkipped('run measure_onboarding.mjs --step 6 --faith 1 first');
+        return;
+      }
+      final Map<String, dynamic> b =
+          (jsonDecode(f.readAsStringSync()) as Map<String, dynamic>)['bounds']
+              as Map<String, dynamic>;
+      await pumpStep(tester, LumeOnboardingStep.setUp, islamic: true);
+
+      compare(
+        tester,
+        b,
+        'onb.row.sub',
+        find.textContaining('For prayer times, Qibla'),
+        note: 'the subtitle changes with the preference',
+      );
+      compare(
+        tester,
+        b,
+        'onb.methodLabel',
+        find.text('PRAYER CALCULATION METHOD'),
+        // Sits below the same two rounded subtitles — see `onb.rows`.
+        tolerance: 2,
+        note: '`.group-label`, uppercased in CSS; P7 above it',
+      );
+      compare(
+        tester,
+        b,
+        'onb.choice',
+        find.descendant(
+          of: find.byType(LumeOnboardingChoice),
+          matching: find.byType(Wrap),
+        ),
+        // 34-point pills in 44-point targets: the runs sit 10 apart rather
+        // than 7, so the block is taller. See D15. Its position carries the
+        // same P7 rounding as the rows above it.
+        checkHeight: false,
+        tolerance: 2,
+        note: 'D15 — 44 px targets widen the run gap',
+      );
+    });
+  });
+
+  group('step 7 — what should we call you', () {
+    final Map<String, dynamic>? measured = web(7);
+
+    testWidgets('stage, copy, field and the two actions', (
+      WidgetTester tester,
+    ) async {
+      if (measured == null) {
+        markTestSkipped('run tool/measure_onboarding.mjs --step 7 first');
+        return;
+      }
+      final Map<String, dynamic> b = measured['bounds'] as Map<String, dynamic>;
+      await pumpStep(tester, LumeOnboardingStep.name);
+
+      chrome(tester, b);
+      compare(tester, b, 'onb.art', find.byType(LumeOnboardingArt));
+      compare(tester, b, 'onb.kicker', find.text('ONE LAST THING'));
+      compare(tester, b, 'onb.title', titled('What should we call you?'));
+      compare(tester, b, 'onb.text', find.textContaining('skip it entirely'));
+      compare(tester, b, 'onb.field', find.byType(LumeToolField));
+      compare(tester, b, 'onb.continue', find.byType(LumeOnboardingContinue));
+      compare(
+        tester,
+        b,
+        'onb.skipStep',
+        find.byType(LumeOnboardingLink),
+        checkY: false,
+        checkHeight: false,
+        note: 'Skip for now — D16',
+      );
+      compare(tester, b, 'onb.note', find.byType(LumeOnboardingNote));
+    });
+  });
+
+  group('step 8 — done', () {
+    final Map<String, dynamic>? measured = web(8);
+
+    testWidgets('the seal, the copy and the finish', (
+      WidgetTester tester,
+    ) async {
+      if (measured == null) {
+        markTestSkipped('run tool/measure_onboarding.mjs --step 8 first');
+        return;
+      }
+      final Map<String, dynamic> b = measured['bounds'] as Map<String, dynamic>;
+      await pumpStep(tester, LumeOnboardingStep.done);
+
+      chrome(tester, b);
+      compare(tester, b, 'onb.art', find.byType(LumeOnboardingArt));
+      compare(tester, b, 'onb.kicker', find.text('ALL SET'));
+      compare(tester, b, 'onb.continue', find.byType(LumeOnboardingContinue));
+      compare(tester, b, 'onb.note', find.byType(LumeOnboardingNote));
+    });
+
+    testWidgets('Skip keeps its width even where it cannot be pressed', (
+      WidgetTester tester,
+    ) async {
+      if (measured == null) return;
+      await pumpStep(tester, LumeOnboardingStep.done);
+      // `.onb__skip[disabled] { opacity: 0 }` — the control is invisible and
+      // inert, and still holds the top row's shape, which is why the progress
+      // bar is 257.11 on every step rather than growing on the last.
+      expect(
+        tester.getSize(find.byKey(LumeOnboardingKeys.skipLabel)).width,
+        closeTo(
+          ((measured['bounds'] as Map<String, dynamic>)['onb.skip']
+                  as Map<String, dynamic>)['width']
+              as num,
+          kTolerance,
+        ),
+      );
     });
   });
 

@@ -453,4 +453,159 @@ class AppLocalizationsUr extends AppLocalizations {
 
   @override
   String get intRamadan => 'رمضان';
+
+  @override
+  String get onbWelcomeTitle => 'آپ کے دن کی ہر ضرورت، خاموشی سے منظم۔';
+
+  @override
+  String get onbWelcomeText =>
+      'منصوبے، پیسہ، سفر، مطالعہ اور وہ چھوٹے ٹولز جن تک آپ پہنچتے ہیں — بغیر بھرم کے۔';
+
+  @override
+  String get onbSignInPrompt => 'پہلے سے اکاؤنٹ ہے؟';
+
+  @override
+  String get onbSignInAction => 'سائن ان';
+
+  @override
+  String get onbPlanKicker => 'منصوبہ';
+
+  @override
+  String get onbPlanTitle => 'آپ کا دن، شروع ہونے سے پہلے ترتیب میں';
+
+  @override
+  String get onbPlanText =>
+      'کام، یاد دہانیاں اور تقریبات ایک ہی ٹائم لائن پر — اور جو اہم ہے وہ پہلے ہی اپنی جگہ پر۔';
+
+  @override
+  String get onbToolsKicker => 'ٹولز';
+
+  @override
+  String onbToolsTitle(String count) {
+    return 'تقریباً $count ٹولز، ایک دو ٹیپ کی دوری پر';
+  }
+
+  @override
+  String get onbToolsText =>
+      'کیلکولیٹر، کنورٹر، موسم، اسکینر، ریٹ، ٹریکر — ترتیب میں، تاکہ ڈھونڈنا نہ پڑے۔';
+
+  @override
+  String get onbCityTitle => 'آپ کس شہر میں ہیں؟';
+
+  @override
+  String get onbCityText =>
+      'موسم، جہاں متعلقہ ہو نماز کے اوقات، اور مقامی چیزوں کے لیے۔';
+
+  @override
+  String get persSearchCities => 'شہر تلاش کریں';
+
+  @override
+  String get persUseLocation => 'میرا موجودہ مقام استعمال کریں';
+
+  @override
+  String get onbSetupTitle => 'ایک بار ترتیب دیں';
+
+  @override
+  String get onbSetupText => 'دو اجازتیں، اور دونوں بعد میں بدلی جا سکتی ہیں۔';
+
+  @override
+  String get onbPermLocation => 'اپنا مقام استعمال کریں';
+
+  @override
+  String get onbPermLocationSub => 'موسم، مقامی خدمات اور قریبی مقامات کے لیے';
+
+  @override
+  String get onbPermLocationSubFaith =>
+      'نماز کے اوقات، قبلہ، موسم اور قریبی مقامات کے لیے';
+
+  @override
+  String get onbPermNotify => 'نرم یاد دہانیاں';
+
+  @override
+  String get onbPermNotifySub =>
+      'جن چیزوں پر نظر رکھنے کو کہا، ان کے لیے ہلکی سی یاد دہانی';
+
+  @override
+  String get onbPermNotifySubFaith =>
+      'ہر اذان سے پانچ منٹ پہلے ہلکی سی یاد دہانی';
+
+  @override
+  String get onbMethodLabel => 'نماز کے حساب کا طریقہ';
+
+  @override
+  String get methodKarachi => 'جامعہ کراچی';
+
+  @override
+  String get methodMwl => 'رابطہ عالم اسلامی';
+
+  @override
+  String get methodIsna => 'ISNA';
+
+  @override
+  String get methodUmmAlQura => 'ام القریٰ';
+
+  @override
+  String get methodEgyptian => 'مصری';
+
+  @override
+  String get onbOnDevice =>
+      'لومے یہ سب آپ کی ڈیوائس پر رکھتا ہے۔ کچھ اپ لوڈ نہیں ہوتا۔';
+
+  @override
+  String get onbNameKicker => 'ایک آخری بات';
+
+  @override
+  String get onbNameTitle => 'ہم آپ کو کیا کہہ کر پکاریں؟';
+
+  @override
+  String get onbNameText =>
+      'صرف سلام کے لیے۔ آپ بعد میں بدل سکتے ہیں یا چھوڑ سکتے ہیں۔';
+
+  @override
+  String get onbNamePlaceholder => 'آپ کا نام';
+
+  @override
+  String get onbNameLabel => 'ظاہر ہونے والا نام';
+
+  @override
+  String get onbNameSkip => 'ابھی چھوڑ دیں';
+
+  @override
+  String get onbNameNote => 'لومے یہ آپ کی ڈیوائس پر رکھتا ہے۔';
+
+  @override
+  String get onbAllSet => 'سب تیار';
+
+  @override
+  String get onbReadyTitle => 'سب تیار ہے';
+
+  @override
+  String onbReadyNamed(String name) {
+    return 'آپ تیار ہیں، $name';
+  }
+
+  @override
+  String get onbReadyGeneral => 'آج کا منصوبہ ہوم اسکرین پر منتظر ہے۔';
+
+  @override
+  String onbReadyFaith(String prayer) {
+    return 'آپ کی اگلی نماز $prayer ہے، اور آج کا منصوبہ ہوم اسکرین پر منتظر ہے۔';
+  }
+
+  @override
+  String get onbEnterLume => 'لومے میں داخل ہوں';
+
+  @override
+  String get onbRevisit =>
+      'آپ یہ ٹور پروفائل سے کسی بھی وقت دوبارہ دیکھ سکتے ہیں۔';
+
+  @override
+  String get onbSkippedDefaults =>
+      'ہمارے ڈیفالٹ کے ساتھ ترتیب — پروفائل میں بدلیں';
+
+  @override
+  String get onbSkippedTour => 'ٹور چھوڑ دیا — پروفائل میں دوبارہ ملے گا';
+
+  @override
+  String get onbWelcomeBack => 'لومے میں خوش آمدید';
 }

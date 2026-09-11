@@ -1,0 +1,61 @@
+{
+  "source": "assets/js/screens/onboarding.screen.js",
+  "generator": "docs/conversion_archive/tool/gen_onboarding_art.mjs",
+  "sentinels": {
+    "--accent": "#FF0001",
+    "--accent-400": "#FF0002",
+    "--accent-600": "#FF0003",
+    "--accent-700": "#FF0004",
+    "--violet": "#FF0005",
+    "--sky": "#FF0006",
+    "--card": "#FF0007",
+    "--card-2": "#FF0008",
+    "--border": "#FF0009",
+    "--text": "#FF000A",
+    "--text-2": "#FF000B",
+    "--text-3": "#FF000C",
+    "--tint-accent": "#FF000D",
+    "--tint-neutral": "#FF000E",
+    "--bg": "#FF000F",
+    "--amber": "#FF0010",
+    "--rose": "#FF0011"
+  },
+  "steps": [
+    {
+      "step": 0,
+      "file": "step_0.svg"
+    },
+    {
+      "step": 1,
+      "file": "step_1.svg"
+    },
+    {
+      "step": 2,
+      "file": "step_2.svg"
+    },
+    {
+      "step": 3,
+      "file": null
+    },
+    {
+      "step": 4,
+      "file": null
+    },
+    {
+      "step": 5,
+      "file": null
+    },
+    {
+      "step": 6,
+      "file": "step_6.svg"
+    },
+    {
+      "step": 7,
+      "file": "step_7.svg"
+    },
+    {
+      "step": 8,
+      "file": "step_8.svg"
+    }
+  ]
+}

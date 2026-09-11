@@ -20,17 +20,25 @@ two it holds for the welcome slide.
 
 ## 1. The nine steps
 
-| # | Step | F4A |
-|---|---|---|
-| 0 | Welcome | |
-| 1 | Plan | |
-| 2 | Tools | |
-| 3 | **Where are you based?** | ✔ |
-| 4 | Which city are you in? | |
-| 5 | **What are you here for?** | ✔ |
-| 6 | Set up | |
-| 7 | One last thing (name) | |
-| 8 | All set | |
+| # | Step | F4A | F4B |
+|---|---|---|---|
+| 0 | Welcome | | ✔ |
+| 1 | Plan | | ✔ |
+| 2 | Tools | | ✔ |
+| 3 | **Where are you based?** | ✔ | |
+| 4 | Which city are you in? | | ✔ |
+| 5 | **What are you here for?** | ✔ | |
+| 6 | Set up | | ✔ |
+| 7 | One last thing (name) | | ✔ |
+| 8 | All set | | ✔ |
+
+F4B completes the flow: the remaining seven steps, the nine-step machine around
+them, persistence and the Islamic-content migration. Each step's measured
+composition is in [ONBOARDING_INVENTORY.md](ONBOARDING_INVENTORY.md); the
+element-by-element comparison is in [ONBOARDING_PARITY.md](ONBOARDING_PARITY.md);
+the four differences it raised are D14–D17 in
+[KNOWN_DIFFERENCES.md](KNOWN_DIFFERENCES.md). The maintenance document for the
+finished flow is [docs/LUME_ONBOARDING.md](../LUME_ONBOARDING.md).
 
 Nine steps is why the progress bar has nine segments. `LumeOnboardingStep` names
 all nine so a step never writes its own index, and the two built here assert

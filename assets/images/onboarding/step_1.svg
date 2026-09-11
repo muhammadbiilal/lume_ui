@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 292 244" fill="none" aria-hidden="true">
+            <circle cx="146" cy="120" r="98" fill="#FF0001" opacity=".06"/>
+            <rect x="54" y="34" width="184" height="176" rx="30" fill="#FF0007" stroke="#FF0009"/>
+            <rect x="76" y="60" width="80" height="10" rx="5" fill="#FF000A" opacity=".14"/>
+            <rect x="76" y="82" width="46" height="8" rx="4" fill="#FF000A" opacity=".08"/>
+            <g>
+              <rect x="76" y="106" width="140" height="34" rx="12" fill="#FF000D"/>
+              <circle cx="96" cy="123" r="8" fill="#FF0001" opacity=".28"/>
+              <path d="m92 123 3 3 6-6.4" stroke="#FF0001" stroke-width="2.4" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+              <rect x="112" y="119" width="70" height="8" rx="4" fill="#FF0001" opacity=".26"/>
+            </g>
+            <g>
+              <rect x="76" y="148" width="140" height="34" rx="12" fill="#FF000E"/>
+              <circle cx="96" cy="165" r="8" fill="none" stroke="#FF000C" stroke-width="2"/>
+              <rect x="112" y="161" width="54" height="8" rx="4" fill="#FF000A" opacity=".12"/>
+            </g>
+            <path d="m30 84 2.8 6.8 6.8 2.8-6.8 2.8-2.8 6.8-2.8-6.8-6.8-2.8 6.8-2.8z" fill="#FF0001" opacity=".45"/>
+            <circle cx="262" cy="152" r="5" fill="#FF0005" opacity=".4"/>
+          </svg>

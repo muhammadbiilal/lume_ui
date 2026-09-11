@@ -268,6 +268,8 @@ class _Group extends StatelessWidget {
       children: <Widget>[
         Text(
           group.label.toUpperCase(),
+          // The glyphs are capitals; the announcement is not.
+          semanticsLabel: group.label,
           style:
               LumeType.tracked(
                 LumeType.fit(context, context.lumeType.label),

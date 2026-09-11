@@ -1,13 +1,25 @@
-/// The two reference steps, wired: chrome, view model, controller, strings.
+/// The five steps that collect something: country, city, interests, the two
+/// permissions, and the name.
 ///
-/// Each step owns three things and no more — the controller, the localisations,
-/// and what Continue does. The composition is [LumeOnboardingScaffold]'s, the
-/// rules are the model's, and the rendering is the view's. Swapping the fixture
-/// adapter for a Dayroz provider changes the two `build` bodies here and
-/// nothing else.
+/// Each owns three things and no more — its controller, its localisations, and
+/// what Continue does. The composition is [LumeOnboardingScaffold]'s, the rules
+/// are the model's, and the rendering is the view's. Swapping a fixture adapter
+/// for a Dayroz provider changes a `build` body here and nothing else.
+///
+/// The four that only tell you something are in `onboarding_slides.dart`.
 library;
 
 import 'package:flutter/material.dart';
+
+import '../../../core/icons/lume_icons.dart';
+import '../../../core/layout/lume_breakpoint.dart';
+import '../../../core/theme/lume/lume_space.dart';
+import '../../../core/widgets/lume/lume_field.dart';
+import '../domain/city_picker_model.dart';
+import '../domain/onboarding_state.dart';
+import 'city_screen.dart';
+import 'onboarding_art.dart';
+import 'onboarding_parts.dart';
 
 import '../../../core/widgets/lume/lume_overlay.dart';
 import '../../../l10n/app_localizations.dart';
@@ -19,21 +31,9 @@ import 'country_screen.dart';
 import 'interests_screen.dart';
 import 'onboarding_chrome.dart';
 
-/// Which of the nine steps each of these is, so the progress bar is right.
-///
-/// The flow is Welcome · Plan · Tools · **Country** · City · **Interests** ·
-/// Set up · Name · All set. F4A builds the two marked; the rest are F4B.
-abstract final class LumeOnboardingStep {
-  static const int welcome = 0;
-  static const int plan = 1;
-  static const int tools = 2;
-  static const int country = 3;
-  static const int city = 4;
-  static const int interests = 5;
-  static const int setUp = 6;
-  static const int name = 7;
-  static const int allSet = 8;
-}
+/// The step indices live in the domain, next to the state machine that uses
+/// them, and are re-exported here so a step widget has one import.
+export '../domain/onboarding_steps_ids.dart';
 
 /// Step 4 — "Where are you based?"
 class CountryStep extends StatefulWidget {
@@ -112,6 +112,16 @@ class _CountryStepState extends State<CountryStep> {
       allOrder: widget.countries.orderFor(language),
     );
 
+    // A surface too short to pin a lead and a search field above a list hands
+    // both to the list instead, and everything above the footer scrolls as one
+    // piece. `LumeCountryPickerView.pinHead` carries the measurement.
+    final bool foldLead = context.isCompactHeight;
+    final Widget lead = LumeOnboardingLead(
+      kicker: l.onbLocalKicker,
+      title: l.onbWhereTitle,
+      text: l.onbWhereText,
+    );
+
     return LumeOnboardingScaffold(
       step: LumeOnboardingStep.country,
       onBack: widget.onBack,
@@ -119,11 +129,7 @@ class _CountryStepState extends State<CountryStep> {
       backLabel: l.actionBack,
       skipLabel: l.actionSkip,
       stickyFoot: true,
-      lead: LumeOnboardingLead(
-        kicker: l.onbLocalKicker,
-        title: l.onbWhereTitle,
-        text: l.onbWhereText,
-      ),
+      lead: foldLead ? null : lead,
       action: LumeOnboardingContinue(
         label: l.actionContinue,
         onPressed: model.canContinue
@@ -132,6 +138,8 @@ class _CountryStepState extends State<CountryStep> {
       ),
       child: LumeCountryPickerView(
         model: model,
+        pinHead: !foldLead,
+        header: foldLead ? lead : null,
         searchController: _search,
         searchPlaceholder: l.persSearchCountries,
         noResultsText: l.searchNothing,
@@ -342,3 +350,362 @@ String interestGroupLabel(AppLocalizations l, String id) => switch (id) {
   'faith' => l.igFaith,
   _ => id,
 };
+
+/// Step 4 — Which city are you in?
+class CityStep extends StatefulWidget {
+  const CityStep({
+    super.key,
+    required this.countries,
+    required this.country,
+    required this.initialCity,
+    this.initialRegion,
+    this.onContinue,
+    this.onBack,
+    this.onSkip,
+    this.onUseLocation,
+    this.controller,
+  });
+
+  final LumeCountryFixture countries;
+
+  /// The country chosen on the previous step. The kicker is its localised
+  /// name, and its cities are the list.
+  final String country;
+
+  final String initialCity;
+  final String? initialRegion;
+
+  /// Given the city and its region.
+  final void Function(String city, String? region)? onContinue;
+  final VoidCallback? onBack;
+  final VoidCallback? onSkip;
+
+  /// `null` leaves the offer visible and inert. A real permission request is
+  /// the platform's, at the moment it is needed.
+  final VoidCallback? onUseLocation;
+
+  final LumeCityPickerController? controller;
+
+  @override
+  State<CityStep> createState() => _CityStepState();
+}
+
+class _CityStepState extends State<CityStep> {
+  late final LumeCityPickerController _controller =
+      widget.controller ??
+      LumeCityPickerController(
+        selected: widget.initialCity,
+        region: widget.initialRegion,
+      );
+  final TextEditingController _search = TextEditingController();
+
+  @override
+  void initState() {
+    super.initState();
+    _controller.addListener(_changed);
+  }
+
+  @override
+  void dispose() {
+    _controller.removeListener(_changed);
+    if (widget.controller == null) _controller.dispose();
+    _search.dispose();
+    super.dispose();
+  }
+
+  void _changed() {
+    if (mounted) setState(() {});
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final AppLocalizations l = AppLocalizations.of(context);
+    final String language = Localizations.localeOf(context).languageCode;
+    final LumePlaces places = widget.countries.placesOf(widget.country);
+
+    final LumeCityPickerModel model = LumeCityPicker.build(
+      regions: places.regions,
+      cities: places.cities,
+      selected: _controller.selected,
+      query: _controller.query,
+      countryName: widget.countries
+          .forLanguage(language)
+          .firstWhere(
+            (LumeCountry c) => c.code == widget.country,
+            orElse: () => LumeCountry(
+              code: widget.country,
+              name: widget.country,
+              currency: '',
+            ),
+          )
+          .name,
+    );
+
+    // A surface too short to pin a lead and a search field above a list hands
+    // both to the list instead. See `LumeCountryPickerView.pinHead`.
+    final bool foldLead = context.isCompactHeight;
+    final Widget lead = LumeOnboardingLead(
+      // The kicker is the country's name, not a fixed word — which is how the
+      // step says "still you, still here" without a sentence.
+      kicker: model.countryName,
+      title: l.onbCityTitle,
+      text: l.onbCityText,
+    );
+
+    return LumeOnboardingScaffold(
+      step: LumeOnboardingStep.city,
+      onBack: widget.onBack,
+      onSkip: widget.onSkip,
+      backLabel: l.actionBack,
+      skipLabel: l.actionSkip,
+      stickyFoot: true,
+      lead: foldLead ? null : lead,
+      action: LumeOnboardingContinue(
+        label: l.actionContinue,
+        onPressed: () =>
+            widget.onContinue?.call(_controller.selected, _controller.region),
+      ),
+      child: LumeCityPickerView(
+        model: model,
+        pinHead: !foldLead,
+        header: foldLead ? lead : null,
+        searchController: _search,
+        searchPlaceholder: l.persSearchCities,
+        noResultsText: l.searchNothing,
+        useLocationLabel: l.persUseLocation,
+        onUseLocation: widget.onUseLocation,
+        onSelect: _controller.choose,
+        onQueryChanged: (String q) => _controller.query = q,
+      ),
+    );
+  }
+}
+
+/// Step 6 — Set it up once.
+class SetUpStep extends StatelessWidget {
+  const SetUpStep({
+    super.key,
+    required this.draft,
+    required this.onChanged,
+    this.onContinue,
+    this.onBack,
+    this.onSkip,
+  });
+
+  /// Holds the two permission intents and the prayer method.
+  final LumeOnboardingDraft draft;
+  final ValueChanged<LumeOnboardingDraft> onChanged;
+
+  final VoidCallback? onContinue;
+  final VoidCallback? onBack;
+  final VoidCallback? onSkip;
+
+  @override
+  Widget build(BuildContext context) {
+    final AppLocalizations l = AppLocalizations.of(context);
+
+    return LumeOnboardingScaffold(
+      step: LumeOnboardingStep.setUp,
+      onBack: onBack,
+      onSkip: onSkip,
+      backLabel: l.actionBack,
+      skipLabel: l.actionSkip,
+      action: LumeOnboardingContinue(
+        label: l.actionLooksGood,
+        onPressed: onContinue,
+      ),
+      secondaryAction: <Widget>[LumeOnboardingNote(text: l.onbOnDevice)],
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: <Widget>[
+          // `flex: 0 0 auto; min-height: 0` — this stage does not grow, so it
+          // stays inside the step's own column rather than taking the slot.
+          const LumeOnboardingArt.compact(
+            artwork: LumeOnboardingArtwork.setUp,
+            maxWidth: 242,
+            padding: EdgeInsets.only(top: 2, bottom: 10),
+          ),
+          LumeOnboardingLead(
+            title: l.onbSetupTitle,
+            text: l.onbSetupText,
+            topPadding: 0,
+          ),
+          const SizedBox(height: LumeOnboardingPartMetrics.rowsTop),
+          Column(
+            key: LumeOnboardingKeys.rows,
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            mainAxisSize: MainAxisSize.min,
+            children: <Widget>[
+              LumeOnboardingToggleRow(
+                icon: LumeIcons.pin,
+                title: l.onbPermLocation,
+                // Both subtitles change with the faith preference chosen two
+                // steps earlier.
+                subtitle: draft.islamic
+                    ? l.onbPermLocationSubFaith
+                    : l.onbPermLocationSub,
+                value: draft.wantsLocation,
+                onChanged: (bool v) =>
+                    onChanged(draft.copyWith(wantsLocation: v)),
+              ),
+              const SizedBox(height: LumeOnboardingPartMetrics.rowsGap),
+              LumeOnboardingToggleRow(
+                icon: LumeIcons.bellRing,
+                title: l.onbPermNotify,
+                subtitle: draft.islamic
+                    ? l.onbPermNotifySubFaith
+                    : l.onbPermNotifySub,
+                value: draft.wantsReminders,
+                onChanged: (bool v) =>
+                    onChanged(draft.copyWith(wantsReminders: v)),
+              ),
+            ],
+          ),
+          // §64 again, on a slide: the method block does not exist for someone
+          // who did not ask for the Islamic experience. Not hidden — absent.
+          if (draft.islamic)
+            LumeOnboardingChoice(
+              label: l.onbMethodLabel,
+              options: <LumeChoiceOption>[
+                for (final LumeChoiceOptionData o
+                    in LumePrayerMethod.optionsFor(l))
+                  LumeChoiceOption(id: o.id, label: o.label),
+              ],
+              value: draft.method,
+              onChanged: (String id) => onChanged(draft.copyWith(method: id)),
+            ),
+        ],
+      ),
+    );
+  }
+}
+
+/// Step 7 — What should we call you?
+class NameStep extends StatefulWidget {
+  const NameStep({
+    super.key,
+    this.initialName = '',
+    this.onContinue,
+    this.onSkipStep,
+    this.onBack,
+    this.onSkip,
+  });
+
+  /// Prefilled from whatever Lume already holds — the account's name for a
+  /// signed-in user, the device's for a guest.
+  final String initialName;
+
+  /// Given the trimmed name. Called only when it differs from [initialName]:
+  /// an untouched field is not an instruction to erase anything.
+  final ValueChanged<String>? onContinue;
+
+  /// The step's own "Skip for now": advance **without writing**. §124.4 —
+  /// skipping is a first-class outcome, not a deletion.
+  final VoidCallback? onSkipStep;
+
+  final VoidCallback? onBack;
+  final VoidCallback? onSkip;
+
+  @override
+  State<NameStep> createState() => _NameStepState();
+}
+
+class _NameStepState extends State<NameStep> {
+  late final TextEditingController _field = TextEditingController(
+    text: widget.initialName,
+  );
+
+  /// `maxlength="40"`, the same cap `commitName` applies — enforced where the
+  /// user can see it rather than only where it is saved.
+  void _capLength() {
+    if (_field.text.length <= LumeOnboardingState.nameMaxLength) return;
+    final String capped = _field.text.substring(
+      0,
+      LumeOnboardingState.nameMaxLength,
+    );
+    _field.value = TextEditingValue(
+      text: capped,
+      selection: TextSelection.collapsed(offset: capped.length),
+    );
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    _field.addListener(_capLength);
+  }
+
+  @override
+  void dispose() {
+    _field.removeListener(_capLength);
+    _field.dispose();
+    super.dispose();
+  }
+
+  void _continue() {
+    final String typed = _field.text.trim();
+    if (typed != widget.initialName.trim()) {
+      widget.onContinue?.call(typed);
+    } else {
+      widget.onSkipStep?.call();
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final AppLocalizations l = AppLocalizations.of(context);
+
+    return LumeOnboardingScaffold(
+      step: LumeOnboardingStep.name,
+      onBack: widget.onBack,
+      onSkip: widget.onSkip,
+      backLabel: l.actionBack,
+      skipLabel: l.actionSkip,
+      action: LumeOnboardingContinue(
+        label: l.actionContinue,
+        onPressed: _continue,
+      ),
+      // `.onb__foot` is a grid with one gap, so the link and the note are two
+      // of its rows rather than a column nested in one.
+      secondaryAction: <Widget>[
+        LumeOnboardingLink(label: l.onbNameSkip, onPressed: widget.onSkipStep),
+        LumeOnboardingNote(text: l.onbNameNote),
+      ],
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: <Widget>[
+          const LumeOnboardingArt.compact(
+            artwork: LumeOnboardingArtwork.name,
+            maxWidth: 250,
+            padding: EdgeInsets.only(top: 6, bottom: 4),
+          ),
+          LumeOnboardingLead(
+            kicker: l.onbNameKicker,
+            title: l.onbNameTitle,
+            text: l.onbNameText,
+            topPadding: 0,
+          ),
+          const SizedBox(height: LumeOnboardingPartMetrics.nameFieldTop),
+          // `<label class="field field--wide">` — a `.field`, not a `.cfield`,
+          // with `.onb__namefield`'s own box: `padding: 14px 16px;
+          // border-radius: var(--r-md)`.
+          LumeToolField(
+            label: l.onbNameLabel,
+            placeholder: l.onbNamePlaceholder,
+            controller: _field,
+            wide: true,
+            boxPadding: const EdgeInsets.symmetric(
+              horizontal: 16,
+              vertical: 14,
+            ),
+            boxRadius: LumeRadius.brMd,
+            // `.onb__namefield .field__box input { font-size: 16px }`, on a
+            // 23-point line box — which is what makes the box 53 rather than
+            // the 42 a tool field draws.
+            inputStyle: const TextStyle(fontSize: 16, height: 23 / 16),
+          ),
+        ],
+      ),
+    );
+  }
+}

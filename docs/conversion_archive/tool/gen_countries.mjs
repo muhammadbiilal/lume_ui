@@ -36,6 +36,20 @@ const rowsBlock = src.slice(src.indexOf('var ROWS'), src.indexOf('var REGIONS'))
 const rows = [...rowsBlock.matchAll(/'([A-Z]{2}\|[^']*)'/g)].map((m) => m[1]);
 if (rows.length === 0) throw new Error('no country rows found in geo.js');
 
+/* The region → cities table, for the city step. `citiesOf` flattens it when a
+   country has one and falls back to the row's own comma list when it does
+   not, and `regionOf` walks it to label a city. Both travel with the data. */
+const regionsBlock = src.slice(src.indexOf('var REGIONS'), src.indexOf('var POPULAR'));
+const REGIONS = {};
+const REGION_BLOCK = /([A-Z]{2}): \{([\s\S]*?)\n    \}/g;
+for (const m of regionsBlock.matchAll(REGION_BLOCK)) {
+  const out = {};
+  for (const r of m[2].matchAll(/'([^']+)':\s*\[([^\]]*)\]/g)) {
+    out[r[1]] = [...r[2].matchAll(/'([^']+)'/g)].map((c) => c[1]);
+  }
+  if (Object.keys(out).length) REGIONS[m[1]] = out;
+}
+
 const popularMatch = /var POPULAR = \[([^\]]*)\]/.exec(src);
 if (!popularMatch) throw new Error('POPULAR not found in geo.js');
 const popular = [...popularMatch[1].matchAll(/'([A-Z]{2})'/g)].map((m) => m[1]);
@@ -56,12 +70,21 @@ const countries = rows
       // a bare "XK" in the list, which is worse than falling back to English.
       names[lang] = name === code && lang !== 'en' ? display.en.of(code) : name;
     }
+    const regions = REGIONS[code] || null;
+    /* `citiesOf`: the region table flattened when there is one, the row's own
+       list when there is not. Duplicates across regions are dropped, the way
+       the prototype drops them. */
+    const cities = regions
+      ? [...new Set(Object.values(regions).flat())]
+      : (p[4] ? p[4].split(',') : []);
     return {
       code,
       currency: p[1],
       language: p[2],
       timezone: p[3],
       popular: popular.includes(code),
+      regions,
+      cities,
       names,
     };
   })

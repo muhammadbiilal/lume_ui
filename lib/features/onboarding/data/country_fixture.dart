@@ -19,9 +19,20 @@ import 'package:flutter/services.dart' show rootBundle;
 
 import '../domain/country_picker_model.dart';
 
+/// A country's cities, and its region table where it has one.
+typedef LumePlaces = ({
+  List<String> cities,
+  Map<String, List<String>>? regions,
+});
+
 /// Loads and caches the bundled country table.
 class LumeCountryFixture {
-  LumeCountryFixture._(this._byLanguage, this.popularOrder, this._order);
+  LumeCountryFixture._(
+    this._byLanguage,
+    this.popularOrder,
+    this._order,
+    this._places,
+  );
 
   final Map<String, List<LumeCountry>> _byLanguage;
 
@@ -38,6 +49,13 @@ class LumeCountryFixture {
   /// here as a list of codes.
   final Map<String, List<String>> _order;
 
+  /// Each country's cities, and its region table where it has one.
+  ///
+  /// Six of the 194 carry regions; the rest carry a flat city list. Both
+  /// come from `data/geo.js`, with the region tables flattened the way
+  /// `citiesOf` flattens them.
+  final Map<String, LumePlaces> _places;
+
   static const String assetPath = 'assets/data/countries.json';
 
   /// The languages the generated table carries names for.
@@ -50,7 +68,14 @@ class LumeCountryFixture {
     final LumeCountryFixture? cached = _cache;
     if (cached != null) return cached;
 
-    final String raw = await rootBundle.loadString(assetPath);
+    // `loadString` hands anything over 50 KB to `compute`, and an isolate does
+    // not finish inside a widget test's fake clock — the table never arrived
+    // and the flow rendered an empty box for ever. `load` plus a decode on
+    // this isolate costs well under a millisecond for 80 KB and is the same
+    // work, in a place that can be tested.
+    final String raw = utf8.decode(
+      (await rootBundle.load(assetPath)).buffer.asUint8List(),
+    );
     final LumeCountryFixture parsed = parse(raw);
     _cache = parsed;
     return parsed;
@@ -70,6 +95,20 @@ class LumeCountryFixture {
         e.key: (e.value as List<dynamic>).cast<String>(),
     };
 
+    final Map<String, LumePlaces> places = <String, LumePlaces>{
+      for (final dynamic e in json['countries'] as List<dynamic>)
+        (e as Map<String, dynamic>)['code'] as String: (
+          cities: (e['cities'] as List<dynamic>).cast<String>(),
+          regions: e['regions'] == null
+              ? null
+              : <String, List<String>>{
+                  for (final MapEntry<String, dynamic> r
+                      in (e['regions'] as Map<String, dynamic>).entries)
+                    r.key: (r.value as List<dynamic>).cast<String>(),
+                },
+        ),
+    };
+
     final Map<String, List<LumeCountry>> byLanguage =
         <String, List<LumeCountry>>{};
     for (final String lang in languages) {
@@ -78,7 +117,7 @@ class LumeCountryFixture {
           _country(entry as Map<String, dynamic>, lang),
       ];
     }
-    return LumeCountryFixture._(byLanguage, popular, order);
+    return LumeCountryFixture._(byLanguage, popular, order, places);
   }
 
   static LumeCountry _country(Map<String, dynamic> e, String lang) {
@@ -103,6 +142,11 @@ class LumeCountryFixture {
   List<String> orderFor(String languageCode) =>
       _order[languageCode] ?? _order['en']!;
 
+  /// A country's cities and regions. Empty for a code that is not in the
+  /// table, which cannot happen through the picker but can through a link.
+  LumePlaces placesOf(String code) =>
+      _places[code] ?? (cities: const <String>[], regions: null);
+
   int get count => _byLanguage['en']!.length;
 
   /// Clears the process cache. Tests that parse their own table use this so
@@ -126,4 +170,8 @@ abstract final class LumeCountryFixtureState {
 
   /// A returning user, for the state the screen must also render.
   static const List<String> someRecent = <String>['GB', 'AE', 'US'];
+
+  /// `app-store.js` defaults the whole location, not only the country.
+  static const String defaultRegion = 'Islamabad Capital Territory';
+  static const String defaultCity = 'Islamabad';
 }

@@ -36,7 +36,7 @@ import 'lume_pressable.dart';
 enum LumeFieldKind { text, multiline, number, money, date, time, email, phone }
 
 /// `.field` — the dense tool input. Label above, box below, optional hint.
-class LumeToolField extends StatelessWidget {
+class LumeToolField extends StatefulWidget {
   const LumeToolField({
     super.key,
     required this.label,
@@ -48,6 +48,9 @@ class LumeToolField extends StatelessWidget {
     this.prefix,
     this.suffix,
     this.kind = LumeFieldKind.text,
+    this.boxPadding,
+    this.boxRadius,
+    this.inputStyle,
     this.enabled = true,
     this.wide = false,
   });
@@ -67,6 +70,17 @@ class LumeToolField extends StatelessWidget {
   final String? suffix;
 
   final LumeFieldKind kind;
+
+  /// A screen's own override of the box — the onboarding name step asks for
+  /// `padding: 14px 16px; border-radius: var(--r-md)` where `.field__box` is
+  /// `10px 12px` at `r-xs`. `null` takes the component's own.
+  final EdgeInsets? boxPadding;
+  final BorderRadius? boxRadius;
+
+  /// Merged over `.field__box input`'s own 14 / 700. The onboarding name step
+  /// sets 16, which is also what keeps iOS from zooming on focus.
+  final TextStyle? inputStyle;
+
   final bool enabled;
 
   /// `.field--wide` — spans both columns of a two-column grid.
@@ -76,6 +90,17 @@ class LumeToolField extends StatelessWidget {
   static const double boxHeight = 42;
 
   @override
+  State<LumeToolField> createState() => _LumeToolFieldState();
+}
+
+class _LumeToolFieldState extends State<LumeToolField> {
+  /// `.field__box:focus-within` — the ring belongs to the box, and it is the
+  /// *input inside it* that takes focus. `Focus` with `canRequestFocus: false`
+  /// is that relationship: it never takes focus itself and hears when a
+  /// descendant does.
+  bool _within = false;
+
+  @override
   Widget build(BuildContext context) {
     final LumeColors lume = context.lume;
 
@@ -83,57 +108,90 @@ class LumeToolField extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       mainAxisSize: MainAxisSize.min,
       children: <Widget>[
-        // Measured: 11 / 800 / .02em / uppercase / muted.
+        // Measured: 11 / 800 / .02em / uppercase / muted. Uppercased for the
+        // eye and announced as written, so a screen reader does not spell it.
         Text(
-          LumeType.overline(context, label),
-          style: LumeType.tracked(
-            LumeType.fit(
-              context,
-              context.lumeType.metaSmall,
-            ).copyWith(fontWeight: FontWeight.w700),
-            0.02,
-          ).copyWith(color: lume.text3),
-        ),
-        const SizedBox(height: 5),
-        Container(
-          constraints: const BoxConstraints(minHeight: boxHeight),
-          padding: const EdgeInsets.symmetric(horizontal: 12),
-          decoration: BoxDecoration(
-            color: lume.card2,
-            borderRadius: LumeRadius.brXs,
-            border: Border.all(color: lume.border, width: LumeSpace.border),
-          ),
-          child: Row(
-            children: <Widget>[
-              if (prefix != null) ...<Widget>[
-                _Affix(prefix!),
-                const SizedBox(width: 6),
-              ],
-              Expanded(
-                child: _RawInput(
-                  controller: controller,
-                  value: value,
-                  onChanged: onChanged,
-                  placeholder: placeholder,
-                  kind: kind,
-                  enabled: enabled,
-                  style: LumeType.fit(
-                    context,
-                    context.lumeType.bodyStrong,
-                  ).copyWith(color: lume.text),
-                ),
+          LumeType.overline(context, widget.label),
+          semanticsLabel: widget.label,
+          style:
+              LumeType.tracked(
+                LumeType.fit(
+                  context,
+                  context.lumeType.metaSmall,
+                ).copyWith(fontWeight: FontWeight.w700),
+                0.02,
+              ).copyWith(
+                // Measured 13 tall: 11 px on a normal line box. The role's own 16
+                // would add three to every field in the app.
+                height: 13 / 11,
+                color: lume.text3,
               ),
-              if (suffix != null) ...<Widget>[
-                const SizedBox(width: 6),
-                _Affix(suffix!),
+        ),
+        // `.field { gap: 6px }`.
+        const SizedBox(height: 6),
+        Focus(
+          canRequestFocus: false,
+          skipTraversal: true,
+          onFocusChange: (bool has) {
+            if (_within != has) setState(() => _within = has);
+          },
+          child: AnimatedContainer(
+            duration: LumeMotion.duration(context, LumeMotion.fast),
+            curve: LumeMotion.ease,
+            constraints: const BoxConstraints(
+              minHeight: LumeToolField.boxHeight,
+            ),
+            padding:
+                widget.boxPadding ?? const EdgeInsets.symmetric(horizontal: 12),
+            decoration: BoxDecoration(
+              color: lume.card2,
+              borderRadius: widget.boxRadius ?? LumeRadius.brXs,
+              border: Border.all(
+                // `border-color: color-mix(in srgb, accent 50%, border)`.
+                color: _within
+                    ? Color.lerp(lume.border, lume.accent, 0.5)!
+                    : lume.border,
+                width: LumeSpace.border,
+              ),
+              // `box-shadow: 0 0 0 3px var(--tint-accent)`.
+              boxShadow: _within
+                  ? <BoxShadow>[
+                      BoxShadow(color: lume.tintAccent, spreadRadius: 3),
+                    ]
+                  : null,
+            ),
+            child: Row(
+              children: <Widget>[
+                if (widget.prefix != null) ...<Widget>[
+                  _Affix(widget.prefix!),
+                  const SizedBox(width: 6),
+                ],
+                Expanded(
+                  child: _RawInput(
+                    controller: widget.controller,
+                    value: widget.value,
+                    onChanged: widget.onChanged,
+                    placeholder: widget.placeholder,
+                    kind: widget.kind,
+                    enabled: widget.enabled,
+                    style: LumeType.fit(
+                      context,
+                      context.lumeType.bodyStrong,
+                    ).copyWith(color: lume.text).merge(widget.inputStyle),
+                  ),
+                ),
+                if (widget.suffix != null) ...<Widget>[
+                  const SizedBox(width: 6),
+                  _Affix(widget.suffix!),
+                ],
               ],
-            ],
+            ),
           ),
         ),
-        if (hint != null) ...<Widget>[
+        if (widget.hint != null) ...<Widget>[
           const SizedBox(height: 4),
           Text(
-            hint!,
+            widget.hint!,
             style: LumeType.fit(
               context,
               context.lumeType.metaSmall,
@@ -934,8 +992,12 @@ class LumeSwitch extends StatelessWidget {
   final ValueChanged<bool>? onChanged;
   final String? semanticLabel;
 
-  static const double width = 44;
-  static const double height = 26;
+  /// `.switch { width: 42px; height: 25px; padding: 3px }` with a 19 px knob
+  /// that travels 17. Measured from the stylesheet rather than rounded to a
+  /// friendlier pair: two points is the difference between a permission row's
+  /// body being 212 wide and 210, and it compounds down a column.
+  static const double width = 42;
+  static const double height = 25;
 
   @override
   Widget build(BuildContext context) {

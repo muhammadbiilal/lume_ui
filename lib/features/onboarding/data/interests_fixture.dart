@@ -39,6 +39,7 @@ class LumeInterestsFixture {
     required this.defaults,
     required this.minimum,
     required this.maximum,
+    required this.featureCount,
   });
 
   /// Group id → the interest ids in it, in catalogue order.
@@ -61,6 +62,10 @@ class LumeInterestsFixture {
   final int minimum;
   final int maximum;
 
+  /// `C.FEATURES.length` — what the tools slide quotes. The **whole**
+  /// catalogue, not the subset this user can see; see ONBOARDING_INVENTORY F5.
+  final int featureCount;
+
   static const String assetPath = 'assets/data/interests.json';
 
   static LumeInterestsFixture? _cache;
@@ -69,7 +74,7 @@ class LumeInterestsFixture {
     final LumeInterestsFixture? cached = _cache;
     if (cached != null) return cached;
     final LumeInterestsFixture parsed = parse(
-      await rootBundle.loadString(assetPath),
+      utf8.decode((await rootBundle.load(assetPath)).buffer.asUint8List()),
     );
     _cache = parsed;
     return parsed;
@@ -106,6 +111,7 @@ class LumeInterestsFixture {
       defaults: (json['defaults'] as List<dynamic>).cast<String>(),
       minimum: json['minimum'] as int,
       maximum: json['maximum'] as int,
+      featureCount: json['featureCount'] as int,
     );
   }
 

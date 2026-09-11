@@ -1,0 +1,217 @@
+{
+  "cell": "onboarding_step4_390x844_light_en",
+  "viewport": {
+    "width": 390,
+    "height": 844,
+    "innerWidth": 390
+  },
+  "step": 4,
+  "progress": {
+    "done": 5,
+    "total": 9
+  },
+  "theme": "light",
+  "lang": "en",
+  "dir": "ltr",
+  "missing": [
+    "onb.art",
+    "onb.brand",
+    "onb.mark",
+    "onb.wordmark",
+    "onb.link",
+    "onb.namefield",
+    "picker.bar",
+    "picker.count",
+    "picker.clear",
+    "pickgroup.first",
+    "pickgroup.label.first",
+    "pick.first",
+    "pickgroup.faith",
+    "onb.rows",
+    "onb.row.first",
+    "onb.row.title",
+    "onb.row.sub",
+    "onb.methodLabel",
+    "onb.choice",
+    "onb.choice.first",
+    "onb.note",
+    "onb.field",
+    "onb.fieldLabel",
+    "onb.fieldBox",
+    "onb.seal"
+  ],
+  "scroll": {
+    "step": {
+      "clientHeight": 764,
+      "scrollHeight": 764,
+      "scrolls": false,
+      "overflowY": "auto"
+    },
+    "locscroll": {
+      "clientHeight": 426,
+      "scrollHeight": 1087,
+      "scrolls": true,
+      "overflowY": "auto"
+    },
+    "shell": {
+      "clientHeight": 844,
+      "scrollHeight": 844,
+      "scrolls": false,
+      "overflowY": "hidden"
+    }
+  },
+  "bounds": {
+    "onb.top": {
+      "x": 0,
+      "y": 0,
+      "width": 390,
+      "height": 80,
+      "lines": null,
+      "text": "Skip"
+    },
+    "onb.nav": {
+      "x": 20,
+      "y": 46,
+      "width": 34,
+      "height": 34,
+      "lines": null,
+      "text": null
+    },
+    "onb.progress": {
+      "x": 66,
+      "y": 61.5,
+      "width": 257.11,
+      "height": 3,
+      "lines": null,
+      "text": null
+    },
+    "onb.seg.first": {
+      "x": 66,
+      "y": 61.5,
+      "width": 24.11,
+      "height": 3,
+      "lines": null,
+      "text": null
+    },
+    "onb.skip": {
+      "x": 335.11,
+      "y": 47,
+      "width": 34.89,
+      "height": 32,
+      "lines": null,
+      "text": "Skip"
+    },
+    "onb.step": {
+      "x": 0,
+      "y": 80,
+      "width": 390,
+      "height": 764,
+      "lines": null,
+      "text": "Pakistan\n          Which city are you in?\n          Used for weather, prayer times where relevant, and anything local.\n "
+    },
+    "onb.kicker": {
+      "x": 20,
+      "y": 90,
+      "width": 350,
+      "height": 13,
+      "lines": null,
+      "text": "Pakistan"
+    },
+    "onb.title": {
+      "x": 20,
+      "y": 113,
+      "width": 350,
+      "height": 31.36,
+      "lines": 1,
+      "text": "Which city are you in?"
+    },
+    "onb.text": {
+      "x": 20,
+      "y": 154.36,
+      "width": 304.08,
+      "height": 43.38,
+      "lines": 2,
+      "text": "Used for weather, prayer times where relevant, and anything local."
+    },
+    "onb.foot": {
+      "x": 20,
+      "y": 754,
+      "width": 350,
+      "height": 68,
+      "lines": null,
+      "text": "Continue"
+    },
+    "onb.continue": {
+      "x": 20,
+      "y": 772,
+      "width": 350,
+      "height": 46,
+      "lines": null,
+      "text": "Continue"
+    },
+    "locpicker": {
+      "x": 20,
+      "y": 213.73,
+      "width": 350,
+      "height": 540.27,
+      "lines": null,
+      "text": "Use my current locationIslamabad Capital TerritoryIslamabadIslamabad Capital TerritoryPunjabLahorePunjabFaisalabadPunjab"
+    },
+    "locsearch": {
+      "x": 40,
+      "y": 213.73,
+      "width": 310,
+      "height": 44,
+      "lines": null,
+      "text": null
+    },
+    "locscroll": {
+      "x": 20,
+      "y": 327.73,
+      "width": 350,
+      "height": 426.27,
+      "lines": null,
+      "text": "Islamabad Capital TerritoryIslamabadIslamabad Capital TerritoryPunjabLahorePunjabFaisalabadPunjabRawalpindiPunjabMultanP"
+    },
+    "locgroup.first": {
+      "x": 22,
+      "y": 329.73,
+      "width": 346,
+      "height": 12,
+      "lines": null,
+      "text": "Islamabad Capital Territory"
+    },
+    "loclist.first": {
+      "x": 20,
+      "y": 348.73,
+      "width": 350,
+      "height": 42,
+      "lines": null,
+      "text": "IslamabadIslamabad Capital Territory"
+    },
+    "locrow.first": {
+      "x": 20,
+      "y": 267.73,
+      "width": 350,
+      "height": 50,
+      "lines": null,
+      "text": "Use my current location"
+    },
+    "locaction": {
+      "x": 20,
+      "y": 267.73,
+      "width": 350,
+      "height": 50,
+      "lines": null,
+      "text": "Use my current location"
+    },
+    "onb.skipStep": {
+      "x": 0,
+      "y": 0,
+      "width": 0,
+      "height": 0,
+      "lines": null,
+      "text": "Skip for now"
+    }
+  }
+}

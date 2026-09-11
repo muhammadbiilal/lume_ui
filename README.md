@@ -156,6 +156,10 @@ While the conversion runs, this prototype is the design and stays authoritative:
 where it and a document disagree, the rendered interface wins. No new product
 behaviour is built here.
 
+Flutter work that is finished carries its own maintenance document, outside the
+archive and written for the application rather than for the conversion:
+[`docs/LUME_ONBOARDING.md`](docs/LUME_ONBOARDING.md) is the first of them.
+
 The working record lives in `docs/conversion_archive/`, every file of which is
 marked temporary and none of which is product documentation. Start with
 `F0_FINAL_ARCHITECTURE.md` for the target structure, the retention plan and the

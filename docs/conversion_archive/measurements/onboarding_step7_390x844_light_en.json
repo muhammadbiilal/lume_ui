@@ -1,0 +1,211 @@
+{
+  "cell": "onboarding_step7_390x844_light_en",
+  "viewport": {
+    "width": 390,
+    "height": 844,
+    "innerWidth": 390
+  },
+  "step": 7,
+  "progress": {
+    "done": 8,
+    "total": 9
+  },
+  "theme": "light",
+  "lang": "en",
+  "dir": "ltr",
+  "missing": [
+    "onb.brand",
+    "onb.mark",
+    "onb.wordmark",
+    "locpicker",
+    "locsearch",
+    "locscroll",
+    "locgroup.first",
+    "loclist.first",
+    "locrow.first",
+    "locaction",
+    "picker.bar",
+    "picker.count",
+    "picker.clear",
+    "pickgroup.first",
+    "pickgroup.label.first",
+    "pick.first",
+    "pickgroup.faith",
+    "onb.rows",
+    "onb.row.first",
+    "onb.row.title",
+    "onb.row.sub",
+    "onb.methodLabel",
+    "onb.choice",
+    "onb.choice.first",
+    "onb.seal"
+  ],
+  "scroll": {
+    "step": {
+      "clientHeight": 764,
+      "scrollHeight": 764,
+      "scrolls": false,
+      "overflowY": "auto"
+    },
+    "shell": {
+      "clientHeight": 844,
+      "scrollHeight": 844,
+      "scrolls": false,
+      "overflowY": "hidden"
+    }
+  },
+  "bounds": {
+    "onb.top": {
+      "x": 0,
+      "y": 0,
+      "width": 390,
+      "height": 80,
+      "lines": null,
+      "text": "Skip"
+    },
+    "onb.nav": {
+      "x": 20,
+      "y": 46,
+      "width": 34,
+      "height": 34,
+      "lines": null,
+      "text": null
+    },
+    "onb.progress": {
+      "x": 66,
+      "y": 61.5,
+      "width": 257.11,
+      "height": 3,
+      "lines": null,
+      "text": null
+    },
+    "onb.seg.first": {
+      "x": 66,
+      "y": 61.5,
+      "width": 24.11,
+      "height": 3,
+      "lines": null,
+      "text": null
+    },
+    "onb.skip": {
+      "x": 335.11,
+      "y": 47,
+      "width": 34.89,
+      "height": 32,
+      "lines": null,
+      "text": "Skip"
+    },
+    "onb.step": {
+      "x": 0,
+      "y": 80,
+      "width": 390,
+      "height": 764,
+      "lines": null,
+      "text": "One last thing\n        What should we call you?\n        Only used to greet you. You can change it later, or skip it enti"
+    },
+    "onb.art": {
+      "x": 20,
+      "y": 80,
+      "width": 350,
+      "height": 123,
+      "lines": null,
+      "text": null
+    },
+    "onb.link": {
+      "x": 20,
+      "y": 759.5,
+      "width": 350,
+      "height": 36,
+      "lines": null,
+      "text": "Skip for now"
+    },
+    "onb.namefield": {
+      "x": 20,
+      "y": 332.73,
+      "width": 350,
+      "height": 72,
+      "lines": null,
+      "text": "Display name"
+    },
+    "onb.kicker": {
+      "x": 20,
+      "y": 203,
+      "width": 350,
+      "height": 13,
+      "lines": null,
+      "text": "One last thing"
+    },
+    "onb.title": {
+      "x": 20,
+      "y": 226,
+      "width": 350,
+      "height": 31.36,
+      "lines": 1,
+      "text": "What should we call you?"
+    },
+    "onb.text": {
+      "x": 20,
+      "y": 267.36,
+      "width": 304.08,
+      "height": 43.38,
+      "lines": 2,
+      "text": "Only used to greet you. You can change it later, or skip it entirely."
+    },
+    "onb.foot": {
+      "x": 20,
+      "y": 681.5,
+      "width": 350,
+      "height": 140.5,
+      "lines": null,
+      "text": "Continue\n            \n          \n          Skip for now\n          Lume keeps this on your device."
+    },
+    "onb.continue": {
+      "x": 20,
+      "y": 703.5,
+      "width": 350,
+      "height": 46,
+      "lines": null,
+      "text": "Continue"
+    },
+    "onb.note": {
+      "x": 20,
+      "y": 805.5,
+      "width": 350,
+      "height": 16.5,
+      "lines": 1,
+      "text": "Lume keeps this on your device."
+    },
+    "onb.field": {
+      "x": 20,
+      "y": 332.73,
+      "width": 350,
+      "height": 72,
+      "lines": null,
+      "text": "Display name"
+    },
+    "onb.fieldLabel": {
+      "x": 20,
+      "y": 332.73,
+      "width": 350,
+      "height": 13,
+      "lines": null,
+      "text": "Display name"
+    },
+    "onb.fieldBox": {
+      "x": 20,
+      "y": 351.73,
+      "width": 350,
+      "height": 53,
+      "lines": null,
+      "text": null
+    },
+    "onb.skipStep": {
+      "x": 20,
+      "y": 759.5,
+      "width": 350,
+      "height": 36,
+      "lines": null,
+      "text": "Skip for now"
+    }
+  }
+}

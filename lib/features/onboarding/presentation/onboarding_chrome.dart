@@ -31,6 +31,7 @@ library;
 import 'dart:math' as math;
 
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 
 import '../../../core/icons/lume_icon.dart';
 import '../../../core/icons/lume_icons.dart';
@@ -42,6 +43,7 @@ import '../../../core/theme/lume/lume_theme.dart';
 import '../../../core/theme/lume/lume_type.dart';
 import '../../../core/widgets/lume/lume_button.dart';
 import '../../../core/widgets/lume/lume_pressable.dart';
+import '../../../core/widgets/lume/lume_text.dart';
 
 /// The measured constants, in one place so a step never writes a literal.
 abstract final class LumeOnboardingMetrics {
@@ -118,6 +120,9 @@ abstract final class LumeOnboardingKeys {
 
   /// The visible Skip label, not its 44 px target.
   static const Key skipLabel = Key('onb.skip.label');
+
+  /// `.onb-rows` — the set-up step's two permission rows and the gap between.
+  static const Key rows = Key('onb.rows');
 }
 
 /// One onboarding step, framed.
@@ -132,8 +137,9 @@ class LumeOnboardingScaffold extends StatelessWidget {
     this.backLabel,
     this.skipLabel,
     this.lead,
+    this.art,
     this.stickyFoot = false,
-    this.secondaryAction,
+    this.secondaryAction = const <Widget>[],
   });
 
   /// Which of the nine steps this is, zero-based. Drives the progress bar and
@@ -160,16 +166,31 @@ class LumeOnboardingScaffold extends StatelessWidget {
   /// step and stays put above a list on the two picker steps.
   final Widget? lead;
 
+  /// `.onb__art` — the illustration stage.
+  ///
+  /// A slot rather than something a step puts in its own column, because the
+  /// stage is `flex: 1 1 auto`: it absorbs whatever the copy and the footer
+  /// leave. A flex child has to be a *direct* child of the flex that bounds
+  /// it, so the scaffold takes it and the step does not.
+  final Widget? art;
+
   /// The two list steps keep the action in reach while their content scrolls.
   final bool stickyFoot;
 
   /// A second line under the action — "Already have an account?".
-  final Widget? secondaryAction;
+  /// `.onb__foot`'s further rows — a link, a note, or both.
+  final List<Widget> secondaryAction;
 
   @override
   Widget build(BuildContext context) {
     final LumeColors lume = context.lume;
     final EdgeInsets safe = MediaQuery.paddingOf(context);
+
+    // The browser resizes its viewport when the keyboard opens, so `.onb`
+    // shrinks and the footer stays above it. There is no `Scaffold` here to do
+    // that — the flow covers the shell and brings its own ground — so the step
+    // region ends where the keyboard begins, and the footer rides up with it.
+    final double keyboard = MediaQuery.viewInsetsOf(context).bottom;
     final double gutter = context.isCompact
         ? LumeSpace.pageCompact
         : LumeSpace.pageMedium;
@@ -199,14 +220,17 @@ class LumeOnboardingScaffold extends StatelessWidget {
               left: 0,
               right: 0,
               top: topHeight,
-              bottom: 0,
+              bottom: keyboard,
               child: _Step(
                 gutter: gutter,
+                // A raised keyboard covers the gesture bar, so the safe-area
+                // inset it stands for is no longer there to respect.
                 bottom: math.max(
                   LumeOnboardingMetrics.stepBottomMin,
-                  safe.bottom,
+                  keyboard > 0 ? 0 : safe.bottom,
                 ),
                 lead: lead,
+                art: art,
                 stickyFoot: stickyFoot,
                 action: action,
                 secondaryAction: secondaryAction,
@@ -402,40 +426,50 @@ class LumeOnboardingSkip extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    if (onPressed == null || label == null) {
-      return const SizedBox.shrink();
-    }
+    if (label == null) return const SizedBox.shrink();
     final LumeColors lume = context.lume;
+
+    // `.onb__skip[disabled] { opacity: 0; pointer-events: none }` — the last
+    // step has nothing to skip to, and the control still holds the top row's
+    // shape. Removing it instead would let the progress bar grow by 47 points
+    // on the one step where the bar is finally full, which reads as the bar
+    // jumping at the finish.
+    if (onPressed == null) {
+      return ExcludeSemantics(
+        child: IgnorePointer(child: Opacity(opacity: 0, child: _label(lume))),
+      );
+    }
 
     return LumePressable(
       onTap: onPressed,
       semanticLabel: label,
       borderRadius: LumeRadius.brXs,
       minSize: LumeSpace.tap,
-      child: Center(
-        widthFactor: 1,
-        child: Padding(
-          key: LumeOnboardingKeys.skipLabel,
-          padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 4),
-          child: Text(
-            label!,
-            style:
-                LumeType.tracked(
-                  LumeType.fit(context, context.lumeType.bodyStrong),
-                  -0.02,
-                ).copyWith(
-                  fontSize: 13,
-                  // `.onb__skip` measures 32 tall against 8 of padding each way,
-                  // so its line box is 16. The body role's own height would make
-                  // it 36 and drop the label two pixels.
-                  height: 16 / 13,
-                  color: lume.text3,
-                ),
-          ),
-        ),
-      ),
+      child: Center(widthFactor: 1, child: _label(lume)),
     );
   }
+
+  Widget _label(LumeColors lume) => Builder(
+    builder: (BuildContext context) => Padding(
+      key: LumeOnboardingKeys.skipLabel,
+      padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 4),
+      child: Text(
+        label!,
+        style:
+            LumeType.tracked(
+              LumeType.fit(context, context.lumeType.bodyStrong),
+              -0.02,
+            ).copyWith(
+              fontSize: 13,
+              // `.onb__skip` measures 32 tall against 8 of padding each way,
+              // so its line box is 16. The body role's own height would make
+              // it 36 and drop the label two pixels.
+              height: 16 / 13,
+              color: lume.text3,
+            ),
+      ),
+    ),
+  );
 }
 
 /// `.onb__progress` — nine segments, filled up to and including the current one.
@@ -522,6 +556,7 @@ class _Step extends StatelessWidget {
     required this.gutter,
     required this.bottom,
     required this.lead,
+    required this.art,
     required this.stickyFoot,
     required this.action,
     required this.secondaryAction,
@@ -529,11 +564,18 @@ class _Step extends StatelessWidget {
   });
 
   final double gutter;
+
+  /// `.onb-step`'s bottom padding, already reduced by whatever the footer's
+  /// secondary action overhangs — see `LumeOnboardingFoot.overhangOf`.
   final double bottom;
+
   final Widget? lead;
+  final Widget? art;
   final bool stickyFoot;
   final Widget action;
-  final Widget? secondaryAction;
+
+  /// `.onb__foot`'s further rows — a link, a note, or both.
+  final List<Widget> secondaryAction;
   final Widget child;
 
   @override
@@ -543,16 +585,27 @@ class _Step extends StatelessWidget {
       secondary: secondaryAction,
       child: action,
     );
+    final double footBottom =
+        bottom - LumeOnboardingFoot.trailingOverhang(secondaryAction);
 
     // A list step keeps its footer in reach while the list scrolls, so the
     // list scrolls and the footer does not. A short step scrolls as one piece
     // and pushes the footer to the bottom.
     if (stickyFoot) {
+      // On a surface too short to pin a lead over a list — a landscape phone —
+      // the lead has already been folded into the list by the step itself, and
+      // `lead` arrives null. `.onb-step`'s own `overflow-y: auto` does the
+      // same thing by simply letting everything scroll.
       return Padding(
-        padding: EdgeInsets.only(left: gutter, right: gutter, bottom: bottom),
+        padding: EdgeInsets.only(
+          left: gutter,
+          right: gutter,
+          bottom: footBottom,
+        ),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: <Widget>[
+            if (art != null) Flexible(child: art!),
             ?lead,
             Expanded(child: child),
             foot,
@@ -561,27 +614,52 @@ class _Step extends StatelessWidget {
       );
     }
 
-    return LayoutBuilder(
-      builder: (BuildContext context, BoxConstraints constraints) {
-        return SingleChildScrollView(
-          padding: EdgeInsets.only(left: gutter, right: gutter, bottom: bottom),
-          child: ConstrainedBox(
-            constraints: BoxConstraints(
-              minHeight: constraints.maxHeight - bottom,
-            ),
+    // `.onb-step` is a flex column that also scrolls: its children can grow
+    // into the space it has *and* the whole thing scrolls when they need more.
+    //
+    // `SliverFillRemaining(hasScrollBody: false)` is that, exactly: it hands
+    // the column *at least* the viewport's height with a bounded constraint,
+    // so `Flexible` and `Spacer` work, and lets it be taller, in which case it
+    // scrolls. The `IntrinsicHeight` recipe does the same job but measures the
+    // column twice, and its intrinsic answer disagreed with the laid-out one
+    // by 0.08 of a pixel on a landscape phone — an overflow with no visible
+    // cause, which is the worst kind.
+    return CustomScrollView(
+      slivers: <Widget>[
+        SliverPadding(
+          // Sides only. `SliverFillRemaining` fills the viewport *before* the
+          // sliver's own bottom padding is added, so padding there does not
+          // hold the footer up — it pushes it off the bottom and makes the
+          // page scroll instead. The step's bottom padding belongs under the
+          // footer, inside the column.
+          padding: EdgeInsets.only(left: gutter, right: gutter),
+          sliver: SliverFillRemaining(
+            hasScrollBody: false,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: <Widget>[
+                // `flex: 1 1 auto` — the stage takes what the copy and the
+                // footer leave, and it has to be a direct child of this column
+                // to do it.
+                if (art != null) Flexible(child: art!),
                 ?lead,
                 child,
-                // `.onb__foot { margin-top: auto }`.
-                const Spacer(),
-                foot,
+                // `.onb__foot { margin-top: auto }` — but only when there is
+                // no stage above it. CSS resolves flexible lengths before auto
+                // margins, so a growing stage leaves the footer's margin
+                // nothing to take; and two flex children here would make the
+                // column claim twice the stage's height as its intrinsic,
+                // which is enough to push the footer off a phone.
+                if (art == null) const Spacer(),
+                Padding(
+                  padding: EdgeInsets.only(bottom: footBottom),
+                  child: foot,
+                ),
               ],
             ),
           ),
-        );
-      },
+        ),
+      ],
     );
   }
 }
@@ -593,6 +671,7 @@ class LumeOnboardingLead extends StatelessWidget {
     required this.title,
     this.kicker,
     this.text,
+    this.emphasis,
     this.topPadding = LumeOnboardingMetrics.leadTopList,
   });
 
@@ -600,9 +679,36 @@ class LumeOnboardingLead extends StatelessWidget {
   final String? kicker;
   final String? text;
 
+  /// A run inside [text] the reference wraps in `<b>` — the completion step's
+  /// prayer name. Set in bold where it occurs; ignored when it does not, so a
+  /// translation that drops the substitution degrades to plain text rather
+  /// than to a hole.
+  final String? emphasis;
+
   /// `.onb__lead { padding-top }`. The interests step uses 14 where the two
   /// list steps use 10.
   final double topPadding;
+
+  /// The supporting sentence, with [emphasis] in bold where the reference
+  /// puts a `<b>`.
+  Widget _leadText(String body, TextStyle style) {
+    final String? run = emphasis;
+    final int at = run == null || run.isEmpty ? -1 : body.indexOf(run);
+    if (at < 0) return Text(body, style: style);
+    return Text.rich(
+      TextSpan(
+        children: <InlineSpan>[
+          TextSpan(text: body.substring(0, at)),
+          TextSpan(
+            text: run,
+            style: const TextStyle(fontWeight: FontWeight.w700),
+          ),
+          TextSpan(text: body.substring(at + run!.length)),
+        ],
+      ),
+      style: style,
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -620,6 +726,8 @@ class LumeOnboardingLead extends StatelessWidget {
         if (kicker != null) ...<Widget>[
           Text(
             kicker!.toUpperCase(),
+            // The glyphs are capitals; the announcement is not.
+            semanticsLabel: kicker,
             style:
                 LumeType.tracked(
                   LumeType.fit(context, context.lumeType.label),
@@ -638,18 +746,21 @@ class LumeOnboardingLead extends StatelessWidget {
         ],
         Semantics(
           header: true,
-          child: Text(
-            title,
-            style:
-                LumeType.tracked(
-                  LumeType.fit(context, context.lumeType.display),
-                  -0.04,
-                ).copyWith(
-                  fontSize: 28,
-                  fontWeight: FontWeight.w800,
-                  height: 1.12,
-                  color: lume.text,
-                ),
+          // `.onb__title { text-wrap: balance }`.
+          child: LumeBalancedText(
+            child: Text(
+              title,
+              style:
+                  LumeType.tracked(
+                    LumeType.fit(context, context.lumeType.display),
+                    -0.04,
+                  ).copyWith(
+                    fontSize: 28,
+                    fontWeight: FontWeight.w800,
+                    height: 1.12,
+                    color: lume.text,
+                  ),
+            ),
           ),
         ),
         if (text != null) ...<Widget>[
@@ -661,7 +772,7 @@ class LumeOnboardingLead extends StatelessWidget {
               context.lumeType.body,
             ).copyWith(fontSize: 14, fontWeight: FontWeight.w500, height: 1.55),
             builder: (BuildContext context, TextStyle style) =>
-                Text(text!, style: style.copyWith(color: lume.text2)),
+                _leadText(text!, style.copyWith(color: lume.text2)),
           ),
         ],
       ],
@@ -704,14 +815,102 @@ class LumeTextMeasure extends StatelessWidget {
   Widget build(BuildContext context) {
     return Align(
       alignment: AlignmentDirectional.centerStart,
-      child: ConstrainedBox(
-        constraints: BoxConstraints(
-          maxWidth: chWidth(context, style) * characters,
-        ),
+      child: _Capped(
+        maxWidth: chWidth(context, style) * characters,
         child: builder(context, style),
       ),
     );
   }
+}
+
+/// A `max-width` that the *intrinsic* height honours too.
+///
+/// `ConstrainedBox` caps the width it lays the child out with, but when it is
+/// asked how tall the child would be at a given width it forwards that width
+/// untouched. So a paragraph capped at 304 reports the height it would have at
+/// 812 — one line instead of two — and anything that sizes itself from that
+/// answer comes up short. `SliverFillRemaining(hasScrollBody: false)` is such
+/// a thing, and the shortfall arrived as a fraction-of-a-pixel overflow with
+/// no visible cause.
+class _Capped extends SingleChildRenderObjectWidget {
+  const _Capped({required this.maxWidth, required Widget super.child});
+
+  final double maxWidth;
+
+  @override
+  _RenderCapped createRenderObject(BuildContext context) =>
+      _RenderCapped(maxWidth);
+
+  @override
+  void updateRenderObject(BuildContext context, _RenderCapped renderObject) {
+    renderObject.maxWidth = maxWidth;
+  }
+}
+
+class _RenderCapped extends RenderProxyBox {
+  _RenderCapped(this._maxWidth);
+
+  double _maxWidth;
+  double get maxWidth => _maxWidth;
+  set maxWidth(double value) {
+    if (value == _maxWidth) return;
+    _maxWidth = value;
+    markNeedsLayout();
+  }
+
+  double _cap(double width) =>
+      width.isFinite ? math.min(width, _maxWidth) : _maxWidth;
+
+  @override
+  double computeMinIntrinsicHeight(double width) =>
+      super.computeMinIntrinsicHeight(_cap(width));
+
+  @override
+  double computeMaxIntrinsicHeight(double width) =>
+      super.computeMaxIntrinsicHeight(_cap(width));
+
+  @override
+  double computeMinIntrinsicWidth(double height) =>
+      math.min(super.computeMinIntrinsicWidth(height), _maxWidth);
+
+  @override
+  double computeMaxIntrinsicWidth(double height) =>
+      math.min(super.computeMaxIntrinsicWidth(height), _maxWidth);
+
+  @override
+  Size computeDryLayout(BoxConstraints constraints) {
+    final RenderBox? child = this.child;
+    if (child == null) return constraints.smallest;
+    return constraints.constrain(
+      child.getDryLayout(
+        BoxConstraints(maxWidth: _maxWidth).enforce(constraints),
+      ),
+    );
+  }
+
+  @override
+  void performLayout() {
+    final RenderBox? child = this.child;
+    if (child == null) {
+      size = constraints.smallest;
+      return;
+    }
+    child.layout(
+      BoxConstraints(maxWidth: _maxWidth).enforce(constraints),
+      parentUsesSize: true,
+    );
+    size = constraints.constrain(child.size);
+  }
+}
+
+/// A footer row whose touch target is taller than the box it draws.
+///
+/// The chrome cannot name the parts that follow the action — they are the
+/// steps' own — so a row that overhangs declares how far, and the footer takes
+/// it out of the gaps rather than out of the reference's spacing.
+abstract interface class LumeFootRow {
+  /// Half the difference between the target and the drawn box.
+  double get overhang;
 }
 
 /// `.onb__foot` — the action region.
@@ -720,12 +919,31 @@ class LumeOnboardingFoot extends StatelessWidget {
     super.key,
     required this.child,
     this.sticky = false,
-    this.secondary,
+    this.secondary = const <Widget>[],
   });
 
   final Widget child;
   final bool sticky;
-  final Widget? secondary;
+
+  /// What follows the action, in order. `.onb__foot` is a grid with a 10 px
+  /// gap, so a step with a link *and* a note has three rows of it rather than
+  /// a column nested inside one.
+  final List<Widget> secondary;
+
+  /// How far a footer row reaches past the box the prototype draws for it.
+  ///
+  /// `.onb__link` is 36 tall — 13 px of text in 10 of padding — and §9 wants
+  /// 44. The extra 8 comes out of the gaps on either side of it, so the target
+  /// clears the floor while the *text* stays exactly where the prototype puts
+  /// it, and nothing overlaps: a 10 px gap becomes 6.
+  static double overhangOf(Widget row) {
+    final Object widget = row;
+    return widget is LumeFootRow ? widget.overhang : 0;
+  }
+
+  /// What the last row overhangs, which the step takes off its own padding.
+  static double trailingOverhang(List<Widget> secondary) =>
+      secondary.isEmpty ? 0 : overhangOf(secondary.last);
 
   @override
   Widget build(BuildContext context) {
@@ -743,9 +961,14 @@ class LumeOnboardingFoot extends StatelessWidget {
         mainAxisSize: MainAxisSize.min,
         children: <Widget>[
           child,
-          if (secondary != null) ...<Widget>[
-            const SizedBox(height: LumeOnboardingMetrics.footGap),
-            secondary!,
+          for (int i = 0; i < secondary.length; i++) ...<Widget>[
+            SizedBox(
+              height:
+                  LumeOnboardingMetrics.footGap -
+                  overhangOf(i == 0 ? child : secondary[i - 1]) -
+                  overhangOf(secondary[i]),
+            ),
+            secondary[i],
           ],
         ],
       ),

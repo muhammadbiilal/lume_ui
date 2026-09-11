@@ -1,0 +1,169 @@
+{
+  "cell": "onboarding_step1_390x844_light_en",
+  "viewport": {
+    "width": 390,
+    "height": 844,
+    "innerWidth": 390
+  },
+  "step": 1,
+  "progress": {
+    "done": 2,
+    "total": 9
+  },
+  "theme": "light",
+  "lang": "en",
+  "dir": "ltr",
+  "missing": [
+    "onb.brand",
+    "onb.mark",
+    "onb.wordmark",
+    "onb.link",
+    "onb.namefield",
+    "locpicker",
+    "locsearch",
+    "locscroll",
+    "locgroup.first",
+    "loclist.first",
+    "locrow.first",
+    "locaction",
+    "picker.bar",
+    "picker.count",
+    "picker.clear",
+    "pickgroup.first",
+    "pickgroup.label.first",
+    "pick.first",
+    "pickgroup.faith",
+    "onb.rows",
+    "onb.row.first",
+    "onb.row.title",
+    "onb.row.sub",
+    "onb.methodLabel",
+    "onb.choice",
+    "onb.choice.first",
+    "onb.note",
+    "onb.field",
+    "onb.fieldLabel",
+    "onb.fieldBox",
+    "onb.seal"
+  ],
+  "scroll": {
+    "step": {
+      "clientHeight": 764,
+      "scrollHeight": 764,
+      "scrolls": false,
+      "overflowY": "auto"
+    },
+    "shell": {
+      "clientHeight": 844,
+      "scrollHeight": 844,
+      "scrolls": false,
+      "overflowY": "hidden"
+    }
+  },
+  "bounds": {
+    "onb.top": {
+      "x": 0,
+      "y": 0,
+      "width": 390,
+      "height": 80,
+      "lines": null,
+      "text": "Skip"
+    },
+    "onb.nav": {
+      "x": 20,
+      "y": 46,
+      "width": 34,
+      "height": 34,
+      "lines": null,
+      "text": null
+    },
+    "onb.progress": {
+      "x": 66,
+      "y": 61.5,
+      "width": 257.11,
+      "height": 3,
+      "lines": null,
+      "text": null
+    },
+    "onb.seg.first": {
+      "x": 66,
+      "y": 61.5,
+      "width": 24.11,
+      "height": 3,
+      "lines": null,
+      "text": null
+    },
+    "onb.skip": {
+      "x": 335.11,
+      "y": 47,
+      "width": 34.89,
+      "height": 32,
+      "lines": null,
+      "text": "Skip"
+    },
+    "onb.step": {
+      "x": 0,
+      "y": 80,
+      "width": 390,
+      "height": 764,
+      "lines": null,
+      "text": "Plan\n        Your day, laid out before it starts\n        Tasks, reminders and events on one timeline — with everything t"
+    },
+    "onb.art": {
+      "x": 20,
+      "y": 80,
+      "width": 350,
+      "height": 513.22,
+      "lines": null,
+      "text": null
+    },
+    "onb.kicker": {
+      "x": 20,
+      "y": 593.22,
+      "width": 350,
+      "height": 13,
+      "lines": null,
+      "text": "Plan"
+    },
+    "onb.title": {
+      "x": 20,
+      "y": 616.22,
+      "width": 350,
+      "height": 62.72,
+      "lines": 2,
+      "text": "Your day, laid out before it starts"
+    },
+    "onb.text": {
+      "x": 20,
+      "y": 688.94,
+      "width": 304.08,
+      "height": 65.06,
+      "lines": 3,
+      "text": "Tasks, reminders and events on one timeline — with everything that matters already in the right place."
+    },
+    "onb.foot": {
+      "x": 20,
+      "y": 754,
+      "width": 350,
+      "height": 68,
+      "lines": null,
+      "text": "Continue"
+    },
+    "onb.continue": {
+      "x": 20,
+      "y": 776,
+      "width": 350,
+      "height": 46,
+      "lines": null,
+      "text": "Continue"
+    },
+    "onb.skipStep": {
+      "x": 0,
+      "y": 0,
+      "width": 0,
+      "height": 0,
+      "lines": null,
+      "text": "Skip for now"
+    }
+  }
+}

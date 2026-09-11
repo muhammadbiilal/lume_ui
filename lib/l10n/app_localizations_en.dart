@@ -450,4 +450,160 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get intRamadan => 'Ramadan';
+
+  @override
+  String get onbWelcomeTitle => 'Everything your day needs, quietly organised.';
+
+  @override
+  String get onbWelcomeText =>
+      'Plans, money, travel, reading and the small tools you reach for — without the clutter.';
+
+  @override
+  String get onbSignInPrompt => 'Already have an account?';
+
+  @override
+  String get onbSignInAction => 'Sign in';
+
+  @override
+  String get onbPlanKicker => 'Plan';
+
+  @override
+  String get onbPlanTitle => 'Your day, laid out before it starts';
+
+  @override
+  String get onbPlanText =>
+      'Tasks, reminders and events on one timeline — with everything that matters already in the right place.';
+
+  @override
+  String get onbToolsKicker => 'Tools';
+
+  @override
+  String onbToolsTitle(String count) {
+    return '$count-odd tools, one or two taps away';
+  }
+
+  @override
+  String get onbToolsText =>
+      'Calculator, converters, weather, scanner, rates, trackers — sorted, so you never hunt for them.';
+
+  @override
+  String get onbCityTitle => 'Which city are you in?';
+
+  @override
+  String get onbCityText =>
+      'Used for weather, prayer times where relevant, and anything local.';
+
+  @override
+  String get persSearchCities => 'Search cities';
+
+  @override
+  String get persUseLocation => 'Use my current location';
+
+  @override
+  String get onbSetupTitle => 'Set it up once';
+
+  @override
+  String get onbSetupText =>
+      'Two permissions, and you can change either of them later.';
+
+  @override
+  String get onbPermLocation => 'Use your location';
+
+  @override
+  String get onbPermLocationSub =>
+      'For weather, local services and nearby places';
+
+  @override
+  String get onbPermLocationSubFaith =>
+      'For prayer times, Qibla, weather and nearby places';
+
+  @override
+  String get onbPermNotify => 'Gentle reminders';
+
+  @override
+  String get onbPermNotifySub =>
+      'A quiet nudge for the things you asked us to watch';
+
+  @override
+  String get onbPermNotifySubFaith =>
+      'A quiet nudge 5 minutes before each adhan';
+
+  @override
+  String get onbMethodLabel => 'Prayer calculation method';
+
+  @override
+  String get methodKarachi => 'University of Karachi';
+
+  @override
+  String get methodMwl => 'Muslim World League';
+
+  @override
+  String get methodIsna => 'ISNA';
+
+  @override
+  String get methodUmmAlQura => 'Umm al-Qura';
+
+  @override
+  String get methodEgyptian => 'Egyptian';
+
+  @override
+  String get onbOnDevice =>
+      'Lume keeps this on your device. Nothing is uploaded.';
+
+  @override
+  String get onbNameKicker => 'One last thing';
+
+  @override
+  String get onbNameTitle => 'What should we call you?';
+
+  @override
+  String get onbNameText =>
+      'Only used to greet you. You can change it later, or skip it entirely.';
+
+  @override
+  String get onbNamePlaceholder => 'Your name';
+
+  @override
+  String get onbNameLabel => 'Display name';
+
+  @override
+  String get onbNameSkip => 'Skip for now';
+
+  @override
+  String get onbNameNote => 'Lume keeps this on your device.';
+
+  @override
+  String get onbAllSet => 'All set';
+
+  @override
+  String get onbReadyTitle => 'You’re all set';
+
+  @override
+  String onbReadyNamed(String name) {
+    return 'You’re ready, $name';
+  }
+
+  @override
+  String get onbReadyGeneral => 'Today’s plan is waiting on the home screen.';
+
+  @override
+  String onbReadyFaith(String prayer) {
+    return 'Your next prayer is $prayer, and today’s plan is waiting on the home screen.';
+  }
+
+  @override
+  String get onbEnterLume => 'Enter Lume';
+
+  @override
+  String get onbRevisit => 'You can revisit this tour any time from Profile.';
+
+  @override
+  String get onbSkippedDefaults =>
+      'Set up with our defaults — edit them in Profile';
+
+  @override
+  String get onbSkippedTour => 'Tour skipped — find it again in Profile';
+
+  @override
+  String get onbWelcomeBack => 'Welcome to Lume';
 }

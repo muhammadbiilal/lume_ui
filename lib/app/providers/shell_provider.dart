@@ -11,6 +11,7 @@ library;
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../core/navigation/lume_destination.dart';
+import '../../features/onboarding/domain/onboarding_state.dart';
 
 /// The user's country, as an ISO 3166-1 alpha-2 code.
 ///
@@ -33,3 +34,11 @@ final StateProvider<Set<LumeDestinationId>> destinationDotsProvider =
     StateProvider<Set<LumeDestinationId>>(
       (Ref ref) => const <LumeDestinationId>{},
     );
+
+/// Where onboarding's record lives.
+///
+/// In memory for now: this repository is the interface, and persistence is a
+/// Dayroz provider's job at integration. Overriding this one provider is all
+/// that swap takes — the flow, the steps and the state machine never see it.
+final Provider<LumeOnboardingStore> onboardingStoreProvider =
+    Provider<LumeOnboardingStore>((Ref ref) => LumeMemoryOnboardingStore());

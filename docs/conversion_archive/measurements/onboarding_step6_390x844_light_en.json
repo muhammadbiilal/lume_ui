@@ -1,0 +1,218 @@
+{
+  "cell": "onboarding_step6_390x844_light_en",
+  "viewport": {
+    "width": 390,
+    "height": 844,
+    "innerWidth": 390
+  },
+  "step": 6,
+  "progress": {
+    "done": 7,
+    "total": 9
+  },
+  "theme": "light",
+  "lang": "en",
+  "dir": "ltr",
+  "missing": [
+    "onb.brand",
+    "onb.mark",
+    "onb.wordmark",
+    "onb.link",
+    "onb.namefield",
+    "onb.kicker",
+    "locpicker",
+    "locsearch",
+    "locscroll",
+    "locgroup.first",
+    "loclist.first",
+    "locrow.first",
+    "locaction",
+    "picker.bar",
+    "picker.count",
+    "picker.clear",
+    "pickgroup.first",
+    "pickgroup.label.first",
+    "pick.first",
+    "pickgroup.faith",
+    "onb.field",
+    "onb.fieldLabel",
+    "onb.fieldBox",
+    "onb.seal"
+  ],
+  "scroll": {
+    "step": {
+      "clientHeight": 764,
+      "scrollHeight": 764,
+      "scrolls": false,
+      "overflowY": "auto"
+    },
+    "shell": {
+      "clientHeight": 844,
+      "scrollHeight": 844,
+      "scrolls": false,
+      "overflowY": "hidden"
+    }
+  },
+  "bounds": {
+    "onb.top": {
+      "x": 0,
+      "y": 0,
+      "width": 390,
+      "height": 80,
+      "lines": null,
+      "text": "Skip"
+    },
+    "onb.nav": {
+      "x": 20,
+      "y": 46,
+      "width": 34,
+      "height": 34,
+      "lines": null,
+      "text": null
+    },
+    "onb.progress": {
+      "x": 66,
+      "y": 61.5,
+      "width": 257.11,
+      "height": 3,
+      "lines": null,
+      "text": null
+    },
+    "onb.seg.first": {
+      "x": 66,
+      "y": 61.5,
+      "width": 24.11,
+      "height": 3,
+      "lines": null,
+      "text": null
+    },
+    "onb.skip": {
+      "x": 335.11,
+      "y": 47,
+      "width": 34.89,
+      "height": 32,
+      "lines": null,
+      "text": "Skip"
+    },
+    "onb.step": {
+      "x": 0,
+      "y": 80,
+      "width": 390,
+      "height": 764,
+      "lines": null,
+      "text": "Set it up once\n        Two permissions, and you can change either of them later.\n\n        \n          \n            \n     "
+    },
+    "onb.art": {
+      "x": 20,
+      "y": 80,
+      "width": 350,
+      "height": 118.08,
+      "lines": null,
+      "text": null
+    },
+    "onb.title": {
+      "x": 20,
+      "y": 198.08,
+      "width": 350,
+      "height": 31.36,
+      "lines": 1,
+      "text": "Set it up once"
+    },
+    "onb.text": {
+      "x": 20,
+      "y": 239.44,
+      "width": 304.08,
+      "height": 43.38,
+      "lines": 2,
+      "text": "Two permissions, and you can change either of them later."
+    },
+    "onb.foot": {
+      "x": 20,
+      "y": 727.5,
+      "width": 350,
+      "height": 94.5,
+      "lines": null,
+      "text": "Looks good \n          Lume keeps this on your device. Nothing is uploaded."
+    },
+    "onb.continue": {
+      "x": 20,
+      "y": 749.5,
+      "width": 350,
+      "height": 46,
+      "lines": null,
+      "text": "Looks good"
+    },
+    "onb.rows": {
+      "x": 20,
+      "y": 286.81,
+      "width": 350,
+      "height": 171.56,
+      "lines": null,
+      "text": "Use your location\n              For weather, local services and nearby places\n            \n            \n          \n     "
+    },
+    "onb.row.first": {
+      "x": 20,
+      "y": 286.81,
+      "width": 350,
+      "height": 80.78,
+      "lines": null,
+      "text": "Use your location\n              For weather, local services and nearby places"
+    },
+    "onb.row.title": {
+      "x": 87,
+      "y": 301.81,
+      "width": 212,
+      "height": 18,
+      "lines": null,
+      "text": "Use your location"
+    },
+    "onb.row.sub": {
+      "x": 87,
+      "y": 321.81,
+      "width": 212,
+      "height": 30.78,
+      "lines": 2,
+      "text": "For weather, local services and nearby places"
+    },
+    "onb.methodLabel": {
+      "x": 0,
+      "y": 0,
+      "width": 0,
+      "height": 0,
+      "lines": null,
+      "text": "Prayer calculation method"
+    },
+    "onb.choice": {
+      "x": 0,
+      "y": 0,
+      "width": 0,
+      "height": 0,
+      "lines": null,
+      "text": "University of Karachi\n            Muslim World League\n            ISNA\n            Umm al-Qura\n            Egyptian"
+    },
+    "onb.choice.first": {
+      "x": 0,
+      "y": 0,
+      "width": 0,
+      "height": 0,
+      "lines": null,
+      "text": "University of Karachi"
+    },
+    "onb.note": {
+      "x": 20,
+      "y": 805.5,
+      "width": 350,
+      "height": 16.5,
+      "lines": 1,
+      "text": "Lume keeps this on your device. Nothing is uploaded."
+    },
+    "onb.skipStep": {
+      "x": 0,
+      "y": 0,
+      "width": 0,
+      "height": 0,
+      "lines": null,
+      "text": "Skip for now"
+    }
+  }
+}
