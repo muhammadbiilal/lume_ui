@@ -66,12 +66,20 @@ the header control do the same thing, through `LumeBackIntercept`.
 | Everything collected | `LumeOnboardingFlowState._draft` | the flow |
 | The interest selection | `LumeOnboardingFlowState._interests` | the flow |
 | The search text on steps 3 and 4 | the step's own controller | the step |
-| What is saved | `LumeOnboardingStore` | the install |
+| What is saved | `LumeOnboardingStore` | the session |
+| The durable record | `LumeProfileRepository` | the install |
 
 A step never writes to the store. It reports upward, the flow folds the report
 into the draft, and the flow decides when a draft becomes a record. That is why
 walking back to the city step and forward again finds the same five interests
 still chosen: they were never in the step to begin with.
+
+Two storage contracts, deliberately separate. `LumeProfileRepository` is the
+durable one Dayroz implements — asynchronous, because reading real storage is,
+and because the startup gate has to be able to *wait* for it rather than guess
+while it loads. `LumeOnboardingStore` is the flow's synchronous handle on a
+record already loaded, so no step ever awaits I/O mid-flow;
+`LumeRepositoryOnboardingStore` is the bridge between them.
 
 ---
 
@@ -93,17 +101,53 @@ name field is not an instruction to erase the name that was already there.
 
 ### Migration
 
-An installation from before the Islamic preference existed has no answer for
-it. `LumeOnboardingState.migrateIslamicDefault` runs once, before the flow
-reads anything:
+`islamic` is nullable in the stored record, and an absent value means at least
+three different things: nobody has been asked yet, somebody was asked by a
+build that had nowhere to put the answer, or a partial record was written. They
+do not share an answer, so the cohort is read from **installation metadata** —
+`LumeInstallationInfo`, which the storage layer states explicitly — and never
+from the profile's own fields.
 
-* `islamic == null` becomes `false`. **Absence is not consent** — §3 says never
-  infer religion, and a missing value is a missing value, not a yes.
-* The migration is recorded in `LumeProfileRecord.migrations`, so it runs once
-  and can be told apart from a user who chose `false`.
+`LumeIslamicDefaultMigration.apply` runs once at startup, before anything reads
+a preference:
+
+| Installation | stored value | result |
+|---|---|---|
+| fresh — nothing has ever been stored | absent | **off**, the product default |
+| existing | `true` | **`true`**, preserved |
+| existing | `false` | **`false`**, preserved |
+| pre-preference, upgrading | absent | **on** — the build they are upgrading from showed Islamic content to everyone, and nothing they use should vanish unasked |
+| existing | absent | **off** — the schema says the field should be there, so this is a partial record rather than a cohort |
+| the storage layer cannot say | anything | **nothing is written, and no marker** — the decision is postponed, not made badly |
+| the marker is already present | anything | **nothing happens, ever again** |
+
+* **Never inferred.** Not from country, city, region, language, locale, name,
+  or which tools were selected. §3 forbids inferring religion, and a list of
+  chosen interests is an inference like any other. The previous rule read a
+  faith interest as consent; it no longer does, and a test pins each cohort's
+  answer to be identical whatever the interest list holds.
+* **Grandfathering is behaviour preservation, not a statement about the user.**
+  An upgrading user keeps the experience they already had and can turn it off
+  with one switch. The alternative — content someone uses daily disappearing on
+  upgrade, having asked for nothing — is the worse failure.
+* **Once.** The decision and its marker
+  (`LumeIslamicDefaultMigration.marker`) are written in a single record, and
+  `LumeProfileRepository.writeProfile` is required to be atomic for exactly
+  that reason. Running the migration again returns the record untouched.
+* **Never over a user's own change.** An explicit value is checked before the
+  cohort, so a half-written upgrade converges on what the user said rather than
+  on a default.
+* **Changing country or language changes nothing here.** The faith preference
+  is a separate dimension and is moved only by the interests step's switch, by
+  choosing an Islamic interest, or by the setting.
 * Turning the experience off later **hides** Islamic content. It does not
-  delete anything: bookmarks, reading positions and tracked prayers survive, and
-  come back if it is turned on again (§37).
+  delete anything: bookmarks, reading positions and tracked prayers survive,
+  and come back if it is turned on again (§37).
+
+The logic is in `lib/features/onboarding/domain/islamic_migration.dart` — a
+pure function plus a `LumeProfileMigrator` that runs it against the repository.
+No widget calls it, and the onboarding flow is handed a record that has already
+been through it.
 
 ---
 
@@ -188,8 +232,11 @@ that change what a user sees:
 * `test/features/onboarding/onboarding_flow_test.dart` — the nine-step machine,
   every skip, every back, and a layout check for each step at five surfaces in
   three languages, in dark, at 200 per cent and with the keyboard up.
-* `test/features/onboarding/onboarding_state_test.dart` — the draft, the record,
-  the migration and `shouldShow`.
+* `test/features/onboarding/onboarding_state_test.dart` — the draft, the record
+  and `shouldShow`.
+* `test/features/onboarding/islamic_migration_test.dart` — every row of the
+  migration policy, repeated runs, both halves of an interrupted write, and
+  malformed legacy state.
 * `test/features/onboarding/onboarding_bounds_test.dart` — 327 element
   positions, each within a logical pixel of the design source.
 * `test/goldens/onboarding_flow_golden_test.dart` — all nine steps at eight
@@ -201,6 +248,14 @@ that change what a user sees:
 
 The flow is complete and routed at `/onboarding`, and every outcome is written
 through `LumeOnboardingStore`. The **first-run gate** — sending a new install
-to `/onboarding` on launch — waits for a store that survives a restart;
-`LumeOnboardingState.shouldShow` is the predicate it will call, and it is
-already specified and tested. Until then the flow is reached by route.
+to `/onboarding` on launch — waits for a store that survives a restart.
+`LumeOnboardingState.shouldShow` is the single predicate it will call, and it
+is already specified and tested.
+
+Every `LumeProfileRepository` in this repository reports `isDurable == false`,
+and that is the honest answer: `LumeMemoryProfileRepository` holds the record
+for the life of the process and reports a *fresh* installation, because a
+process that starts with nothing genuinely is one. Nothing here should be read
+as first-run behaviour working. The runtime adapter — durable storage, a real
+install marker, a real schema stamp — is Dayroz's to supply, and the suite in
+`islamic_migration_test.dart` is the contract it has to satisfy.

@@ -11,7 +11,9 @@ library;
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../core/navigation/lume_destination.dart';
+import '../../features/onboarding/domain/islamic_migration.dart';
 import '../../features/onboarding/domain/onboarding_state.dart';
+import '../../features/onboarding/domain/profile_repository.dart';
 
 /// The user's country, as an ISO 3166-1 alpha-2 code.
 ///
@@ -42,3 +44,20 @@ final StateProvider<Set<LumeDestinationId>> destinationDotsProvider =
 /// that swap takes — the flow, the steps and the state machine never see it.
 final Provider<LumeOnboardingStore> onboardingStoreProvider =
     Provider<LumeOnboardingStore>((Ref ref) => LumeMemoryOnboardingStore());
+
+/// The durable profile contract, as this build can supply it.
+///
+/// [LumeMemoryProfileRepository.isDurable] is `false` and it reports a fresh
+/// installation, which is the truth about a process that starts with nothing.
+/// Dayroz overrides this provider with an implementation that survives a
+/// restart and can name the cohort it is looking at; until then the first-run
+/// gate stays unbuilt rather than built on a store that forgets.
+final Provider<LumeProfileRepository> profileRepositoryProvider =
+    Provider<LumeProfileRepository>((Ref ref) => LumeMemoryProfileRepository());
+
+/// Runs the one-shot profile migrations at startup, before anything reads a
+/// preference.
+final Provider<LumeProfileMigrator> profileMigratorProvider =
+    Provider<LumeProfileMigrator>(
+      (Ref ref) => LumeProfileMigrator(ref.watch(profileRepositoryProvider)),
+    );

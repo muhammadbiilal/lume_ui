@@ -120,13 +120,13 @@ class LumeOnboardingFlowState extends State<LumeOnboardingFlow> {
   @override
   void initState() {
     super.initState();
-    // The migration runs before anything is read, so the flow never sees a
-    // record in the shape it is migrating away from.
-    final LumeProfileRecord migrated =
-        LumeOnboardingState.migrateIslamicDefault(widget.store.read());
-    widget.store.write(migrated);
-    _draft = LumeOnboardingState.draftFrom(migrated);
-    _nameOnEntry = migrated.displayName;
+    // Whatever the store hands over has already been through
+    // `LumeProfileMigrator` at startup. Deciding a migration needs installation
+    // metadata, which is a repository's to know and a widget's to stay out of;
+    // this one reads a record and nothing else.
+    final LumeProfileRecord record = widget.store.read();
+    _draft = LumeOnboardingState.draftFrom(record);
+    _nameOnEntry = record.displayName;
   }
 
   @override

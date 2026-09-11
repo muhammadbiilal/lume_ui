@@ -20,7 +20,9 @@
 /// * A partially-made choice is not a preference. The draft is committed at
 ///   the points the prototype commits it, and not before.
 /// * A migration runs once, and says so in a marker, so a user who has turned
-///   something off does not find it back on next launch.
+///   something off does not find it back on next launch. The migration itself
+///   lives in `islamic_migration.dart`, because deciding a cohort needs
+///   installation metadata this file has no business reading.
 library;
 
 import 'package:flutter/foundation.dart';
@@ -268,9 +270,6 @@ abstract final class LumeOnboardingState {
     'ramadan',
   };
 
-  /// The marker the one-shot Islamic migration writes.
-  static const String islamicMigration = 'islamic-default-2026-09';
-
   /// A draft seeded from the stored record, which is what reopening the flow
   /// does — `onbStart` re-reads the profile rather than keeping the last run's.
   static LumeOnboardingDraft draftFrom(LumeProfileRecord r) =>
@@ -279,8 +278,9 @@ abstract final class LumeOnboardingState {
         region: r.region,
         city: r.city,
         interests: r.interests.toSet(),
-        // A record that never expressed a preference is off in the draft, and
-        // stays "never expressed" in the record until something sets it.
+        // By the time the flow opens, `LumeIslamicDefaultMigration` has given
+        // every cohort an answer. `null` survives only where the storage layer
+        // could not name the cohort, and off is the safe reading of that.
         islamic: r.islamic ?? false,
         displayName: r.displayName,
         method: r.method,
@@ -321,6 +321,10 @@ abstract final class LumeOnboardingState {
   /// **`islamic: false`** — the one place the flow writes a faith value
   /// without being asked, and it writes the neutral one. A user who has
   /// already chosen keeps what they chose.
+  ///
+  /// "Already chosen" includes a value the migration decided: an upgrading
+  /// user who was grandfathered on and then skips the flow keeps the
+  /// experience they already had. Skipping a question is not answering it.
   static LumeProfileRecord skip(
     LumeProfileRecord record,
     LumeOnboardingDraft draft,
@@ -328,51 +332,11 @@ abstract final class LumeOnboardingState {
     if (draft.interests.isEmpty && record.interests.isEmpty) {
       return record.copyWith(
         interests: defaultInterests,
-        islamic: false,
+        islamic: record.islamic ?? false,
         onboarded: true,
       );
     }
     return record.copyWith(onboarded: true);
-  }
-
-  /// The one-shot Islamic-content migration.
-  ///
-  /// Three populations, three answers:
-  ///
-  /// * **A fresh install** has no record to migrate. `islamic` stays `null`
-  ///   until the flow sets it, and everything downstream reads `null` as off.
-  /// * **An existing user with a saved value** keeps it, whichever way it
-  ///   points. This is the case the marker exists to protect: without it, a
-  ///   user who turned the experience off would find it back on.
-  /// * **An existing user with no saved value** is grandfathered from what
-  ///   they already chose — if any stored interest is in the faith group they
-  ///   plainly asked for it, so it becomes `true`; otherwise `false`. Country
-  ///   and language are not consulted.
-  ///
-  /// Runs once. The marker is written whether or not anything changed, so the
-  /// decision is made exactly one time.
-  static LumeProfileRecord migrateIslamicDefault(LumeProfileRecord record) {
-    if (record.migrations.contains(islamicMigration)) return record;
-
-    final Set<String> migrations = <String>{
-      ...record.migrations,
-      islamicMigration,
-    };
-
-    // Never onboarded and nothing stored: a fresh install. Mark it and leave
-    // the value unexpressed.
-    if (!record.onboarded && record.interests.isEmpty) {
-      return record.copyWith(migrations: migrations);
-    }
-
-    if (record.islamic != null) {
-      return record.copyWith(migrations: migrations);
-    }
-
-    return record.copyWith(
-      islamic: record.interests.any(faithInterests.contains),
-      migrations: migrations,
-    );
   }
 
   /// Turning the Islamic experience off removes the faith interests and
