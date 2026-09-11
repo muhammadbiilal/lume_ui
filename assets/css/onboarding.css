@@ -299,11 +299,3 @@
   padding-bottom: 4px;
   background: linear-gradient(to bottom, transparent, var(--bg) 34%);
 }
-
-/* ---------- Country cards ----------------------------------- */
-
-.onb-country { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
-
-@media (max-width: 359px) {
-  .onb-country { grid-template-columns: repeat(2, 1fr); }
-}
