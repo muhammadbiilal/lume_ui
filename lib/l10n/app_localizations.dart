@@ -567,6 +567,78 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Nothing here yet'**
   String get toolsNothingYet;
+
+  /// Reference: aria-label="Main" on both navigations
+  ///
+  /// In en, this message translates to:
+  /// **'Main'**
+  String get a11yMainNavigation;
+
+  /// Reference key home.notifications
+  ///
+  /// In en, this message translates to:
+  /// **'Notifications'**
+  String get navNotifications;
+
+  /// Reference key acct.account
+  ///
+  /// In en, this message translates to:
+  /// **'Account'**
+  String get navAccount;
+
+  /// Announced while a tool is still assembling
+  ///
+  /// In en, this message translates to:
+  /// **'Loading'**
+  String get toolLoading;
+
+  /// Tool host error state
+  ///
+  /// In en, this message translates to:
+  /// **'Something went wrong'**
+  String get toolErrorTitle;
+
+  /// Tool host error state
+  ///
+  /// In en, this message translates to:
+  /// **'We couldn’t load this. Try again in a moment.'**
+  String get toolErrorText;
+
+  /// Tool host unavailable state
+  ///
+  /// In en, this message translates to:
+  /// **'Not part of your setup'**
+  String get toolUnavailableTitle;
+
+  /// Reference key tool.unavailable
+  ///
+  /// In en, this message translates to:
+  /// **'That tool isn’t part of your setup.'**
+  String get toolUnavailableText;
+
+  /// Unrecognised location
+  ///
+  /// In en, this message translates to:
+  /// **'We can’t find that'**
+  String get routeMissingTitle;
+
+  /// Unrecognised location
+  ///
+  /// In en, this message translates to:
+  /// **'The link may be old, or the page may have moved.'**
+  String get routeMissingText;
+
+  /// Master-detail pane before a record is chosen
+  ///
+  /// In en, this message translates to:
+  /// **'Nothing selected'**
+  String get recordsNoSelectionTitle;
+
+  /// Master-detail pane before a record is chosen
+  ///
+  /// In en, this message translates to:
+  /// **'Choose a record to see it here.'**
+  String get recordsNoSelectionText;
 }
 
 class _AppLocalizationsDelegate

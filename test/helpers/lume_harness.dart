@@ -25,9 +25,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:go_router/go_router.dart';
 import 'package:lume/core/fixtures/lume_clock.dart';
 import 'package:lume/core/layout/lume_breakpoint.dart';
 import 'package:lume/core/localization/lume_locales.dart';
+import 'package:lume/core/routing/app_router.dart';
 import 'package:lume/core/theme/lume/lume_theme.dart';
 import 'package:lume/l10n/app_localizations.dart';
 
@@ -129,6 +131,74 @@ Future<void> pumpLume(
   );
   await tester.pump();
 }
+
+/// Pump the real router inside the same environment.
+///
+/// [pumpLume] hosts one widget; this hosts the whole navigator, so a test can
+/// assert what happens *between* screens — a branch keeping its stack, Back
+/// landing where the user came from, a tab set changing under a live
+/// navigation. The router is built per call, so no test inherits another's
+/// history.
+Future<GoRouter> pumpLumeRouter(
+  WidgetTester tester, {
+  String? initialLocation,
+  Size surface = LumeViewport.phone,
+  ThemeMode theme = ThemeMode.light,
+  Locale locale = const Locale('en'),
+  bool animate = false,
+  double textScale = 1.0,
+  List<Override> overrides = const <Override>[],
+}) async {
+  final GoRouter router = buildLumeRouter(initialLocation: initialLocation);
+  addTearDown(router.dispose);
+
+  tester.view.physicalSize = surface;
+  tester.view.devicePixelRatio = 1.0;
+  addTearDown(tester.view.reset);
+
+  await tester.pumpWidget(const SizedBox.shrink());
+  await tester.pumpWidget(
+    ProviderScope(
+      overrides: <Override>[
+        routerProvider.overrideWithValue(router),
+        ...overrides,
+      ],
+      child: MaterialApp.router(
+        debugShowCheckedModeBanner: false,
+        theme: LumeTheme.light(),
+        darkTheme: LumeTheme.dark(),
+        themeMode: theme,
+        locale: locale,
+        supportedLocales: LumeLocales.supported,
+        localizationsDelegates: const <LocalizationsDelegate<dynamic>>[
+          AppLocalizations.delegate,
+          GlobalMaterialLocalizations.delegate,
+          GlobalWidgetsLocalizations.delegate,
+          GlobalCupertinoLocalizations.delegate,
+        ],
+        routerConfig: router,
+        builder: (BuildContext context, Widget? navigator) => MediaQuery(
+          data: MediaQuery.of(context).copyWith(
+            textScaler: TextScaler.linear(textScale),
+            disableAnimations: !animate,
+          ),
+          child: LumeClockScope(
+            clock: LumeClock.fixed(kFixtureInstant),
+            child: LumeBreakpointScope(
+              child: navigator ?? const SizedBox.shrink(),
+            ),
+          ),
+        ),
+      ),
+    ),
+  );
+  await tester.pumpAndSettle();
+  return router;
+}
+
+/// Where the router currently is.
+String locationOf(GoRouter router) =>
+    router.routerDelegate.currentConfiguration.uri.path;
 
 /// The `BuildContext` of a pumped subject, for asserting what the environment
 /// resolved to.

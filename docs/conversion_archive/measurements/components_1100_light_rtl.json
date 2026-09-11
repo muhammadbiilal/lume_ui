@@ -1,13 +1,13 @@
 {
-  "cell": "components_700_light_ltr",
+  "cell": "components_1100_light_rtl",
   "viewport": {
-    "width": 700,
+    "width": 1100,
     "height": 900,
-    "innerWidth": 700
+    "innerWidth": 1100
   },
   "theme": "light",
-  "dir": "ltr",
-  "lang": "en",
+  "dir": "rtl",
+  "lang": "ur",
   "count": 175,
   "missing": [],
   "components": {
@@ -15,22 +15,22 @@
       "selector": ".toolbar",
       "tag": "header",
       "rect": {
-        "width": 518,
-        "height": 62
+        "width": 742,
+        "height": 73.59
       },
       "style": {
         "display": "flex",
         "position": "sticky",
         "boxSizing": "border-box",
-        "width": "518px",
-        "height": "62px",
+        "width": "742px",
+        "height": "73.5938px",
         "minHeight": "0px",
         "minWidth": "0px",
-        "maxWidth": "808px",
+        "maxWidth": "824px",
         "paddingTop": "10px",
-        "paddingRight": "24px",
+        "paddingRight": "32px",
         "paddingBottom": "12px",
-        "paddingLeft": "24px",
+        "paddingLeft": "32px",
         "marginTop": "0px",
         "marginRight": "0px",
         "marginBottom": "0px",
@@ -47,7 +47,7 @@
         "fontFamily": "\"Plus Jakarta Sans\", -apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, sans-serif",
         "fontSize": "16px",
         "fontWeight": "400",
-        "lineHeight": "normal",
+        "lineHeight": "25.6px",
         "letterSpacing": "normal",
         "textAlign": "start",
         "textTransform": "none",
@@ -72,7 +72,7 @@
         "overflow": "visible",
         "overflowX": "visible",
         "overflowY": "visible",
-        "direction": "ltr",
+        "direction": "rtl",
         "transform": "none"
       },
       "text": null,
@@ -86,15 +86,15 @@
       "selector": ".toolbar__title",
       "tag": "h1",
       "rect": {
-        "width": 412,
-        "height": 25
+        "width": 620,
+        "height": 32
       },
       "style": {
         "display": "block",
         "position": "static",
         "boxSizing": "border-box",
-        "width": "412px",
-        "height": "25px",
+        "width": "620px",
+        "height": "32px",
         "minHeight": "0px",
         "minWidth": "0px",
         "maxWidth": "none",
@@ -118,7 +118,7 @@
         "fontFamily": "\"Plus Jakarta Sans\", -apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, sans-serif",
         "fontSize": "20px",
         "fontWeight": "800",
-        "lineHeight": "normal",
+        "lineHeight": "32px",
         "letterSpacing": "-0.68px",
         "textAlign": "start",
         "textTransform": "none",
@@ -143,7 +143,7 @@
         "overflow": "hidden",
         "overflowX": "hidden",
         "overflowY": "hidden",
-        "direction": "ltr",
+        "direction": "rtl",
         "transform": "none"
       },
       "text": "Currency",
@@ -157,15 +157,15 @@
       "selector": ".toolbar__sub",
       "tag": "p",
       "rect": {
-        "width": 412,
-        "height": 13
+        "width": 620,
+        "height": 17.59
       },
       "style": {
         "display": "block",
         "position": "static",
         "boxSizing": "border-box",
-        "width": "412px",
-        "height": "13px",
+        "width": "620px",
+        "height": "17.5938px",
         "minHeight": "0px",
         "minWidth": "0px",
         "maxWidth": "none",
@@ -189,7 +189,7 @@
         "fontFamily": "\"Plus Jakarta Sans\", -apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, sans-serif",
         "fontSize": "11px",
         "fontWeight": "500",
-        "lineHeight": "normal",
+        "lineHeight": "17.6px",
         "letterSpacing": "normal",
         "textAlign": "start",
         "textTransform": "none",
@@ -214,7 +214,7 @@
         "overflow": "hidden",
         "overflowX": "hidden",
         "overflowY": "hidden",
-        "direction": "ltr",
+        "direction": "rtl",
         "transform": "none"
       },
       "text": "Live rates",
@@ -260,7 +260,7 @@
         "fontFamily": "\"Plus Jakarta Sans\", -apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, sans-serif",
         "fontSize": "16px",
         "fontWeight": "400",
-        "lineHeight": "normal",
+        "lineHeight": "25.6px",
         "letterSpacing": "normal",
         "textAlign": "center",
         "textTransform": "none",
@@ -285,7 +285,7 @@
         "overflow": "visible",
         "overflowX": "visible",
         "overflowY": "visible",
-        "direction": "ltr",
+        "direction": "rtl",
         "transform": "none"
       },
       "text": null,
@@ -356,7 +356,7 @@
         "overflow": "visible",
         "overflowX": "visible",
         "overflowY": "visible",
-        "direction": "ltr",
+        "direction": "rtl",
         "transform": "none"
       },
       "text": "Save",
@@ -370,22 +370,22 @@
       "selector": ".ctxbar",
       "tag": "div",
       "rect": {
-        "width": 518,
+        "width": 742,
         "height": 22
       },
       "style": {
         "display": "flex",
         "position": "static",
         "boxSizing": "border-box",
-        "width": "518px",
+        "width": "742px",
         "height": "22px",
         "minHeight": "0px",
         "minWidth": "0px",
         "maxWidth": "none",
         "paddingTop": "0px",
-        "paddingRight": "24px",
+        "paddingRight": "32px",
         "paddingBottom": "4px",
-        "paddingLeft": "24px",
+        "paddingLeft": "32px",
         "marginTop": "0px",
         "marginRight": "0px",
         "marginBottom": "0px",
@@ -402,7 +402,7 @@
         "fontFamily": "\"Plus Jakarta Sans\", -apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, sans-serif",
         "fontSize": "11px",
         "fontWeight": "600",
-        "lineHeight": "normal",
+        "lineHeight": "17.6px",
         "letterSpacing": "normal",
         "textAlign": "start",
         "textTransform": "none",
@@ -427,7 +427,7 @@
         "overflow": "visible",
         "overflowX": "visible",
         "overflowY": "visible",
-        "direction": "ltr",
+        "direction": "rtl",
         "transform": "none"
       },
       "text": null,
@@ -442,14 +442,14 @@
       "tag": "span",
       "rect": {
         "width": 55.25,
-        "height": 13
+        "height": 17.59
       },
       "style": {
         "display": "flex",
         "position": "static",
         "boxSizing": "border-box",
         "width": "55.25px",
-        "height": "13px",
+        "height": "17.5938px",
         "minHeight": "auto",
         "minWidth": "auto",
         "maxWidth": "none",
@@ -473,7 +473,7 @@
         "fontFamily": "\"Plus Jakarta Sans\", -apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, sans-serif",
         "fontSize": "11px",
         "fontWeight": "600",
-        "lineHeight": "normal",
+        "lineHeight": "17.6px",
         "letterSpacing": "normal",
         "textAlign": "start",
         "textTransform": "none",
@@ -498,7 +498,7 @@
         "overflow": "visible",
         "overflowX": "visible",
         "overflowY": "visible",
-        "direction": "ltr",
+        "direction": "rtl",
         "transform": "none"
       },
       "text": "Islamabad",
@@ -512,22 +512,22 @@
       "selector": ".sect",
       "tag": "section",
       "rect": {
-        "width": 518,
-        "height": 52
+        "width": 742,
+        "height": 61.59
       },
       "style": {
         "display": "block",
         "position": "static",
         "boxSizing": "border-box",
-        "width": "518px",
-        "height": "52px",
+        "width": "742px",
+        "height": "61.5938px",
         "minHeight": "0px",
         "minWidth": "0px",
-        "maxWidth": "808px",
+        "maxWidth": "824px",
         "paddingTop": "0px",
-        "paddingRight": "24px",
+        "paddingRight": "32px",
         "paddingBottom": "0px",
-        "paddingLeft": "24px",
+        "paddingLeft": "32px",
         "marginTop": "24px",
         "marginRight": "0px",
         "marginBottom": "0px",
@@ -544,7 +544,7 @@
         "fontFamily": "\"Plus Jakarta Sans\", -apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, sans-serif",
         "fontSize": "16px",
         "fontWeight": "400",
-        "lineHeight": "normal",
+        "lineHeight": "25.6px",
         "letterSpacing": "normal",
         "textAlign": "start",
         "textTransform": "none",
@@ -569,7 +569,7 @@
         "overflow": "visible",
         "overflowX": "visible",
         "overflowY": "visible",
-        "direction": "ltr",
+        "direction": "rtl",
         "transform": "none"
       },
       "text": null,
@@ -584,14 +584,14 @@
       "tag": "h2",
       "rect": {
         "width": 39.38,
-        "height": 19
+        "height": 24
       },
       "style": {
         "display": "block",
         "position": "static",
         "boxSizing": "border-box",
         "width": "39.375px",
-        "height": "19px",
+        "height": "24px",
         "minHeight": "0px",
         "minWidth": "0px",
         "maxWidth": "none",
@@ -615,7 +615,7 @@
         "fontFamily": "\"Plus Jakarta Sans\", -apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, sans-serif",
         "fontSize": "15px",
         "fontWeight": "700",
-        "lineHeight": "normal",
+        "lineHeight": "24px",
         "letterSpacing": "-0.42px",
         "textAlign": "start",
         "textTransform": "none",
@@ -640,7 +640,7 @@
         "overflow": "visible",
         "overflowX": "visible",
         "overflowY": "visible",
-        "direction": "ltr",
+        "direction": "rtl",
         "transform": "none"
       },
       "text": "Rates",
@@ -655,14 +655,14 @@
       "tag": "p",
       "rect": {
         "width": 31.94,
-        "height": 13
+        "height": 17.59
       },
       "style": {
         "display": "block",
         "position": "static",
         "boxSizing": "border-box",
         "width": "31.9375px",
-        "height": "13px",
+        "height": "17.5938px",
         "minHeight": "0px",
         "minWidth": "0px",
         "maxWidth": "none",
@@ -686,7 +686,7 @@
         "fontFamily": "\"Plus Jakarta Sans\", -apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, sans-serif",
         "fontSize": "11px",
         "fontWeight": "500",
-        "lineHeight": "normal",
+        "lineHeight": "17.6px",
         "letterSpacing": "normal",
         "textAlign": "start",
         "textTransform": "none",
@@ -711,7 +711,7 @@
         "overflow": "visible",
         "overflowX": "visible",
         "overflowY": "visible",
-        "direction": "ltr",
+        "direction": "rtl",
         "transform": "none"
       },
       "text": "Today",
@@ -726,14 +726,14 @@
       "tag": "button",
       "rect": {
         "width": 30.59,
-        "height": 15
+        "height": 19.19
       },
       "style": {
         "display": "flex",
         "position": "static",
         "boxSizing": "border-box",
         "width": "30.5938px",
-        "height": "15px",
+        "height": "19.1875px",
         "minHeight": "auto",
         "minWidth": "auto",
         "maxWidth": "none",
@@ -757,7 +757,7 @@
         "fontFamily": "\"Plus Jakarta Sans\", -apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, sans-serif",
         "fontSize": "12px",
         "fontWeight": "700",
-        "lineHeight": "normal",
+        "lineHeight": "19.2px",
         "letterSpacing": "normal",
         "textAlign": "center",
         "textTransform": "none",
@@ -782,7 +782,7 @@
         "overflow": "visible",
         "overflowX": "visible",
         "overflowY": "visible",
-        "direction": "ltr",
+        "direction": "rtl",
         "transform": "none"
       },
       "text": null,
@@ -828,7 +828,7 @@
         "fontFamily": "\"Plus Jakarta Sans\", -apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, sans-serif",
         "fontSize": "14px",
         "fontWeight": "700",
-        "lineHeight": "normal",
+        "lineHeight": "22.4px",
         "letterSpacing": "-0.308px",
         "textAlign": "center",
         "textTransform": "none",
@@ -853,7 +853,7 @@
         "overflow": "visible",
         "overflowX": "visible",
         "overflowY": "visible",
-        "direction": "ltr",
+        "direction": "rtl",
         "transform": "none"
       },
       "text": "Continue",
@@ -899,7 +899,7 @@
         "fontFamily": "\"Plus Jakarta Sans\", -apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, sans-serif",
         "fontSize": "14px",
         "fontWeight": "700",
-        "lineHeight": "normal",
+        "lineHeight": "22.4px",
         "letterSpacing": "-0.308px",
         "textAlign": "center",
         "textTransform": "none",
@@ -924,7 +924,7 @@
         "overflow": "visible",
         "overflowX": "visible",
         "overflowY": "visible",
-        "direction": "ltr",
+        "direction": "rtl",
         "transform": "none"
       },
       "text": "Cancel",
@@ -938,14 +938,14 @@
       "selector": ".btn",
       "tag": "button",
       "rect": {
-        "width": 518,
+        "width": 742,
         "height": 46
       },
       "style": {
         "display": "inline-flex",
         "position": "static",
         "boxSizing": "border-box",
-        "width": "518px",
+        "width": "742px",
         "height": "46px",
         "minHeight": "0px",
         "minWidth": "0px",
@@ -970,7 +970,7 @@
         "fontFamily": "\"Plus Jakarta Sans\", -apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, sans-serif",
         "fontSize": "14px",
         "fontWeight": "700",
-        "lineHeight": "normal",
+        "lineHeight": "22.4px",
         "letterSpacing": "-0.308px",
         "textAlign": "center",
         "textTransform": "none",
@@ -995,7 +995,7 @@
         "overflow": "visible",
         "overflowX": "visible",
         "overflowY": "visible",
-        "direction": "ltr",
+        "direction": "rtl",
         "transform": "none"
       },
       "text": "Continue",
@@ -1041,7 +1041,7 @@
         "fontFamily": "\"Plus Jakarta Sans\", -apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, sans-serif",
         "fontSize": "12px",
         "fontWeight": "700",
-        "lineHeight": "normal",
+        "lineHeight": "19.2px",
         "letterSpacing": "-0.264px",
         "textAlign": "center",
         "textTransform": "none",
@@ -1066,7 +1066,7 @@
         "overflow": "visible",
         "overflowX": "visible",
         "overflowY": "visible",
-        "direction": "ltr",
+        "direction": "rtl",
         "transform": "none"
       },
       "text": "Edit",
@@ -1080,14 +1080,14 @@
       "selector": ".btnrow",
       "tag": "div",
       "rect": {
-        "width": 518,
+        "width": 742,
         "height": 46
       },
       "style": {
         "display": "flex",
         "position": "static",
         "boxSizing": "border-box",
-        "width": "518px",
+        "width": "742px",
         "height": "46px",
         "minHeight": "0px",
         "minWidth": "0px",
@@ -1112,7 +1112,7 @@
         "fontFamily": "\"Plus Jakarta Sans\", -apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, sans-serif",
         "fontSize": "16px",
         "fontWeight": "400",
-        "lineHeight": "normal",
+        "lineHeight": "25.6px",
         "letterSpacing": "normal",
         "textAlign": "start",
         "textTransform": "none",
@@ -1137,7 +1137,7 @@
         "overflow": "visible",
         "overflowX": "visible",
         "overflowY": "visible",
-        "direction": "ltr",
+        "direction": "rtl",
         "transform": "none"
       },
       "text": null,
@@ -1183,7 +1183,7 @@
         "fontFamily": "\"Plus Jakarta Sans\", -apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, sans-serif",
         "fontSize": "13px",
         "fontWeight": "700",
-        "lineHeight": "normal",
+        "lineHeight": "20.8px",
         "letterSpacing": "normal",
         "textAlign": "center",
         "textTransform": "none",
@@ -1208,7 +1208,7 @@
         "overflow": "visible",
         "overflowX": "visible",
         "overflowY": "visible",
-        "direction": "ltr",
+        "direction": "rtl",
         "transform": "none"
       },
       "text": null,
@@ -1222,14 +1222,14 @@
       "selector": ".search",
       "tag": "label",
       "rect": {
-        "width": 470,
+        "width": 678,
         "height": 44
       },
       "style": {
         "display": "flex",
         "position": "static",
         "boxSizing": "border-box",
-        "width": "470px",
+        "width": "678px",
         "height": "44px",
         "minHeight": "auto",
         "minWidth": "auto",
@@ -1239,9 +1239,9 @@
         "paddingBottom": "0px",
         "paddingLeft": "14px",
         "marginTop": "0px",
-        "marginRight": "24px",
+        "marginRight": "32px",
         "marginBottom": "0px",
-        "marginLeft": "24px",
+        "marginLeft": "32px",
         "gap": "9px",
         "rowGap": "9px",
         "columnGap": "9px",
@@ -1254,7 +1254,7 @@
         "fontFamily": "\"Plus Jakarta Sans\", -apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, sans-serif",
         "fontSize": "16px",
         "fontWeight": "400",
-        "lineHeight": "normal",
+        "lineHeight": "25.6px",
         "letterSpacing": "normal",
         "textAlign": "start",
         "textTransform": "none",
@@ -1279,7 +1279,7 @@
         "overflow": "visible",
         "overflowX": "visible",
         "overflowY": "visible",
-        "direction": "ltr",
+        "direction": "rtl",
         "transform": "none"
       },
       "text": null,
@@ -1293,14 +1293,14 @@
       "selector": ".tsearch",
       "tag": "div",
       "rect": {
-        "width": 518,
+        "width": 742,
         "height": 44
       },
       "style": {
         "display": "flex",
         "position": "static",
         "boxSizing": "border-box",
-        "width": "518px",
+        "width": "742px",
         "height": "44px",
         "minHeight": "0px",
         "minWidth": "0px",
@@ -1325,7 +1325,7 @@
         "fontFamily": "\"Plus Jakarta Sans\", -apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, sans-serif",
         "fontSize": "16px",
         "fontWeight": "400",
-        "lineHeight": "normal",
+        "lineHeight": "25.6px",
         "letterSpacing": "normal",
         "textAlign": "start",
         "textTransform": "none",
@@ -1350,7 +1350,7 @@
         "overflow": "visible",
         "overflowX": "visible",
         "overflowY": "visible",
-        "direction": "ltr",
+        "direction": "rtl",
         "transform": "none"
       },
       "text": null,
@@ -1364,15 +1364,15 @@
       "selector": ".field",
       "tag": "label",
       "rect": {
-        "width": 518,
-        "height": 61
+        "width": 742,
+        "height": 69.98
       },
       "style": {
         "display": "flex",
         "position": "static",
         "boxSizing": "border-box",
-        "width": "518px",
-        "height": "61px",
+        "width": "742px",
+        "height": "69.9844px",
         "minHeight": "0px",
         "minWidth": "0px",
         "maxWidth": "none",
@@ -1396,7 +1396,7 @@
         "fontFamily": "\"Plus Jakarta Sans\", -apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, sans-serif",
         "fontSize": "16px",
         "fontWeight": "400",
-        "lineHeight": "normal",
+        "lineHeight": "25.6px",
         "letterSpacing": "normal",
         "textAlign": "start",
         "textTransform": "none",
@@ -1421,7 +1421,7 @@
         "overflow": "visible",
         "overflowX": "visible",
         "overflowY": "visible",
-        "direction": "ltr",
+        "direction": "rtl",
         "transform": "none"
       },
       "text": null,
@@ -1435,15 +1435,15 @@
       "selector": ".field__label",
       "tag": "span",
       "rect": {
-        "width": 518,
-        "height": 13
+        "width": 742,
+        "height": 17.59
       },
       "style": {
         "display": "block",
         "position": "static",
         "boxSizing": "border-box",
-        "width": "518px",
-        "height": "13px",
+        "width": "742px",
+        "height": "17.5938px",
         "minHeight": "auto",
         "minWidth": "auto",
         "maxWidth": "none",
@@ -1467,7 +1467,7 @@
         "fontFamily": "\"Plus Jakarta Sans\", -apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, sans-serif",
         "fontSize": "11px",
         "fontWeight": "700",
-        "lineHeight": "normal",
+        "lineHeight": "17.6px",
         "letterSpacing": "0.22px",
         "textAlign": "start",
         "textTransform": "uppercase",
@@ -1492,7 +1492,7 @@
         "overflow": "visible",
         "overflowX": "visible",
         "overflowY": "visible",
-        "direction": "ltr",
+        "direction": "rtl",
         "transform": "none"
       },
       "text": "Amount",
@@ -1506,15 +1506,15 @@
       "selector": ".field__box",
       "tag": "span",
       "rect": {
-        "width": 518,
-        "height": 42
+        "width": 742,
+        "height": 46.39
       },
       "style": {
         "display": "flex",
         "position": "static",
         "boxSizing": "border-box",
-        "width": "518px",
-        "height": "42px",
+        "width": "742px",
+        "height": "46.3906px",
         "minHeight": "auto",
         "minWidth": "auto",
         "maxWidth": "none",
@@ -1538,7 +1538,7 @@
         "fontFamily": "\"Plus Jakarta Sans\", -apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, sans-serif",
         "fontSize": "16px",
         "fontWeight": "400",
-        "lineHeight": "normal",
+        "lineHeight": "25.6px",
         "letterSpacing": "normal",
         "textAlign": "start",
         "textTransform": "none",
@@ -1563,7 +1563,7 @@
         "overflow": "visible",
         "overflowX": "visible",
         "overflowY": "visible",
-        "direction": "ltr",
+        "direction": "rtl",
         "transform": "none"
       },
       "text": null,
@@ -1577,14 +1577,14 @@
       "selector": ".field__hint",
       "tag": "span",
       "rect": {
-        "width": 518,
+        "width": 742,
         "height": 14
       },
       "style": {
         "display": "block",
         "position": "static",
         "boxSizing": "border-box",
-        "width": "518px",
+        "width": "742px",
         "height": "14px",
         "minHeight": "auto",
         "minWidth": "auto",
@@ -1634,7 +1634,7 @@
         "overflow": "visible",
         "overflowX": "visible",
         "overflowY": "visible",
-        "direction": "ltr",
+        "direction": "rtl",
         "transform": "none"
       },
       "text": "Optional",
@@ -1649,14 +1649,14 @@
       "tag": "i",
       "rect": {
         "width": 21.55,
-        "height": 13
+        "height": 17.59
       },
       "style": {
         "display": "block",
         "position": "static",
         "boxSizing": "border-box",
         "width": "21.5469px",
-        "height": "13px",
+        "height": "17.5938px",
         "minHeight": "auto",
         "minWidth": "auto",
         "maxWidth": "none",
@@ -1680,7 +1680,7 @@
         "fontFamily": "\"Plus Jakarta Sans\", -apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, sans-serif",
         "fontSize": "11px",
         "fontWeight": "700",
-        "lineHeight": "normal",
+        "lineHeight": "17.6px",
         "letterSpacing": "-0.11px",
         "textAlign": "start",
         "textTransform": "none",
@@ -1705,7 +1705,7 @@
         "overflow": "visible",
         "overflowX": "visible",
         "overflowY": "visible",
-        "direction": "ltr",
+        "direction": "rtl",
         "transform": "none"
       },
       "text": "PKR",
@@ -1719,14 +1719,14 @@
       "selector": ".field__box--select",
       "tag": "span",
       "rect": {
-        "width": 518,
+        "width": 742,
         "height": 38
       },
       "style": {
         "display": "flex",
         "position": "static",
         "boxSizing": "border-box",
-        "width": "518px",
+        "width": "742px",
         "height": "38px",
         "minHeight": "auto",
         "minWidth": "auto",
@@ -1751,7 +1751,7 @@
         "fontFamily": "\"Plus Jakarta Sans\", -apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, sans-serif",
         "fontSize": "16px",
         "fontWeight": "400",
-        "lineHeight": "normal",
+        "lineHeight": "25.6px",
         "letterSpacing": "normal",
         "textAlign": "start",
         "textTransform": "none",
@@ -1776,7 +1776,7 @@
         "overflow": "visible",
         "overflowX": "visible",
         "overflowY": "visible",
-        "direction": "ltr",
+        "direction": "rtl",
         "transform": "none"
       },
       "text": null,
@@ -1790,15 +1790,15 @@
       "selector": ".fgrid",
       "tag": "div",
       "rect": {
-        "width": 518,
-        "height": 61
+        "width": 742,
+        "height": 69.98
       },
       "style": {
         "display": "grid",
         "position": "static",
         "boxSizing": "border-box",
-        "width": "518px",
-        "height": "61px",
+        "width": "742px",
+        "height": "69.9844px",
         "minHeight": "0px",
         "minWidth": "0px",
         "maxWidth": "none",
@@ -1818,11 +1818,11 @@
         "justifyContent": "normal",
         "flexWrap": "nowrap",
         "flex": "0 1 auto",
-        "gridTemplateColumns": "253px 253px",
+        "gridTemplateColumns": "365px 365px",
         "fontFamily": "\"Plus Jakarta Sans\", -apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, sans-serif",
         "fontSize": "16px",
         "fontWeight": "400",
-        "lineHeight": "normal",
+        "lineHeight": "25.6px",
         "letterSpacing": "normal",
         "textAlign": "start",
         "textTransform": "none",
@@ -1847,7 +1847,7 @@
         "overflow": "visible",
         "overflowX": "visible",
         "overflowY": "visible",
-        "direction": "ltr",
+        "direction": "rtl",
         "transform": "none"
       },
       "text": null,
@@ -1893,7 +1893,7 @@
         "fontFamily": "\"Plus Jakarta Sans\", -apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, sans-serif",
         "fontSize": "16px",
         "fontWeight": "400",
-        "lineHeight": "normal",
+        "lineHeight": "25.6px",
         "letterSpacing": "normal",
         "textAlign": "start",
         "textTransform": "none",
@@ -1918,7 +1918,7 @@
         "overflow": "visible",
         "overflowX": "visible",
         "overflowY": "visible",
-        "direction": "ltr",
+        "direction": "rtl",
         "transform": "none"
       },
       "text": null,
@@ -1964,7 +1964,7 @@
         "fontFamily": "\"Plus Jakarta Sans\", -apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, sans-serif",
         "fontSize": "16px",
         "fontWeight": "400",
-        "lineHeight": "normal",
+        "lineHeight": "25.6px",
         "letterSpacing": "normal",
         "textAlign": "center",
         "textTransform": "none",
@@ -1989,7 +1989,7 @@
         "overflow": "visible",
         "overflowX": "visible",
         "overflowY": "visible",
-        "direction": "ltr",
+        "direction": "rtl",
         "transform": "none"
       },
       "text": null,
@@ -2004,14 +2004,14 @@
       "tag": "span",
       "rect": {
         "width": 26,
-        "height": 16
+        "height": 20.8
       },
       "style": {
         "display": "block",
         "position": "static",
         "boxSizing": "border-box",
         "width": "26px",
-        "height": "16px",
+        "height": "20.7969px",
         "minHeight": "auto",
         "minWidth": "26px",
         "maxWidth": "none",
@@ -2035,7 +2035,7 @@
         "fontFamily": "\"Plus Jakarta Sans\", -apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, sans-serif",
         "fontSize": "13px",
         "fontWeight": "700",
-        "lineHeight": "normal",
+        "lineHeight": "20.8px",
         "letterSpacing": "normal",
         "textAlign": "center",
         "textTransform": "none",
@@ -2075,14 +2075,14 @@
       "tag": "button",
       "rect": {
         "width": 39.66,
-        "height": 31
+        "height": 35.19
       },
       "style": {
         "display": "inline-flex",
         "position": "static",
         "boxSizing": "border-box",
         "width": "39.6562px",
-        "height": "31px",
+        "height": "35.1875px",
         "minHeight": "0px",
         "minWidth": "0px",
         "maxWidth": "none",
@@ -2106,7 +2106,7 @@
         "fontFamily": "\"Plus Jakarta Sans\", -apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, sans-serif",
         "fontSize": "12px",
         "fontWeight": "600",
-        "lineHeight": "normal",
+        "lineHeight": "19.2px",
         "letterSpacing": "-0.18px",
         "textAlign": "center",
         "textTransform": "none",
@@ -2131,7 +2131,7 @@
         "overflow": "visible",
         "overflowX": "visible",
         "overflowY": "visible",
-        "direction": "ltr",
+        "direction": "rtl",
         "transform": "none"
       },
       "text": "All",
@@ -2146,14 +2146,14 @@
       "tag": "button",
       "rect": {
         "width": 39.66,
-        "height": 31
+        "height": 35.19
       },
       "style": {
         "display": "inline-flex",
         "position": "static",
         "boxSizing": "border-box",
         "width": "39.6562px",
-        "height": "31px",
+        "height": "35.1875px",
         "minHeight": "0px",
         "minWidth": "0px",
         "maxWidth": "none",
@@ -2177,7 +2177,7 @@
         "fontFamily": "\"Plus Jakarta Sans\", -apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, sans-serif",
         "fontSize": "12px",
         "fontWeight": "600",
-        "lineHeight": "normal",
+        "lineHeight": "19.2px",
         "letterSpacing": "-0.18px",
         "textAlign": "center",
         "textTransform": "none",
@@ -2202,7 +2202,7 @@
         "overflow": "visible",
         "overflowX": "visible",
         "overflowY": "visible",
-        "direction": "ltr",
+        "direction": "rtl",
         "transform": "none"
       },
       "text": "All",
@@ -2217,14 +2217,14 @@
       "tag": "i",
       "rect": {
         "width": 19.64,
-        "height": 14
+        "height": 18
       },
       "style": {
         "display": "block",
         "position": "static",
         "boxSizing": "border-box",
         "width": "19.6406px",
-        "height": "14px",
+        "height": "18px",
         "minHeight": "auto",
         "minWidth": "auto",
         "maxWidth": "none",
@@ -2248,7 +2248,7 @@
         "fontFamily": "\"Plus Jakarta Sans\", -apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, sans-serif",
         "fontSize": "10px",
         "fontWeight": "700",
-        "lineHeight": "normal",
+        "lineHeight": "16px",
         "letterSpacing": "-0.18px",
         "textAlign": "center",
         "textTransform": "none",
@@ -2273,7 +2273,7 @@
         "overflow": "visible",
         "overflowX": "visible",
         "overflowY": "visible",
-        "direction": "ltr",
+        "direction": "rtl",
         "transform": "none"
       },
       "text": "12",
@@ -2287,15 +2287,15 @@
       "selector": ".filterbar",
       "tag": "div",
       "rect": {
-        "width": 518,
-        "height": 33
+        "width": 742,
+        "height": 37.19
       },
       "style": {
         "display": "flex",
         "position": "static",
         "boxSizing": "border-box",
-        "width": "518px",
-        "height": "33px",
+        "width": "742px",
+        "height": "37.1875px",
         "minHeight": "0px",
         "minWidth": "0px",
         "maxWidth": "none",
@@ -2319,7 +2319,7 @@
         "fontFamily": "\"Plus Jakarta Sans\", -apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, sans-serif",
         "fontSize": "16px",
         "fontWeight": "400",
-        "lineHeight": "normal",
+        "lineHeight": "25.6px",
         "letterSpacing": "normal",
         "textAlign": "start",
         "textTransform": "none",
@@ -2344,7 +2344,7 @@
         "overflow": "visible",
         "overflowX": "visible",
         "overflowY": "visible",
-        "direction": "ltr",
+        "direction": "rtl",
         "transform": "none"
       },
       "text": null,
@@ -2358,15 +2358,15 @@
       "selector": ".segmented",
       "tag": "div",
       "rect": {
-        "width": 518,
-        "height": 37
+        "width": 742,
+        "height": 41.19
       },
       "style": {
         "display": "flex",
         "position": "static",
         "boxSizing": "border-box",
-        "width": "518px",
-        "height": "37px",
+        "width": "742px",
+        "height": "41.1875px",
         "minHeight": "0px",
         "minWidth": "0px",
         "maxWidth": "none",
@@ -2390,7 +2390,7 @@
         "fontFamily": "\"Plus Jakarta Sans\", -apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, sans-serif",
         "fontSize": "16px",
         "fontWeight": "400",
-        "lineHeight": "normal",
+        "lineHeight": "25.6px",
         "letterSpacing": "normal",
         "textAlign": "start",
         "textTransform": "none",
@@ -2415,7 +2415,7 @@
         "overflow": "visible",
         "overflowX": "visible",
         "overflowY": "visible",
-        "direction": "ltr",
+        "direction": "rtl",
         "transform": "none"
       },
       "text": null,
@@ -2429,15 +2429,15 @@
       "selector": ".seg",
       "tag": "button",
       "rect": {
-        "width": 512,
-        "height": 31
+        "width": 736,
+        "height": 35.19
       },
       "style": {
         "display": "block",
         "position": "static",
         "boxSizing": "border-box",
-        "width": "512px",
-        "height": "31px",
+        "width": "736px",
+        "height": "35.1875px",
         "minHeight": "auto",
         "minWidth": "auto",
         "maxWidth": "none",
@@ -2461,7 +2461,7 @@
         "fontFamily": "\"Plus Jakarta Sans\", -apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, sans-serif",
         "fontSize": "12px",
         "fontWeight": "700",
-        "lineHeight": "normal",
+        "lineHeight": "19.2px",
         "letterSpacing": "-0.24px",
         "textAlign": "center",
         "textTransform": "none",
@@ -2486,7 +2486,7 @@
         "overflow": "visible",
         "overflowX": "visible",
         "overflowY": "visible",
-        "direction": "ltr",
+        "direction": "rtl",
         "transform": "none"
       },
       "text": "Day",
@@ -2500,15 +2500,15 @@
       "selector": ".seg",
       "tag": "button",
       "rect": {
-        "width": 512,
-        "height": 31
+        "width": 736,
+        "height": 35.19
       },
       "style": {
         "display": "block",
         "position": "static",
         "boxSizing": "border-box",
-        "width": "512px",
-        "height": "31px",
+        "width": "736px",
+        "height": "35.1875px",
         "minHeight": "auto",
         "minWidth": "auto",
         "maxWidth": "none",
@@ -2532,7 +2532,7 @@
         "fontFamily": "\"Plus Jakarta Sans\", -apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, sans-serif",
         "fontSize": "12px",
         "fontWeight": "700",
-        "lineHeight": "normal",
+        "lineHeight": "19.2px",
         "letterSpacing": "-0.24px",
         "textAlign": "center",
         "textTransform": "none",
@@ -2557,7 +2557,7 @@
         "overflow": "visible",
         "overflowX": "visible",
         "overflowY": "visible",
-        "direction": "ltr",
+        "direction": "rtl",
         "transform": "none"
       },
       "text": "Day",
@@ -2571,22 +2571,22 @@
       "selector": ".ttabs",
       "tag": "div",
       "rect": {
-        "width": 518,
-        "height": 40
+        "width": 742,
+        "height": 44.8
       },
       "style": {
         "display": "flex",
         "position": "static",
         "boxSizing": "border-box",
-        "width": "518px",
-        "height": "40px",
+        "width": "742px",
+        "height": "44.7969px",
         "minHeight": "0px",
         "minWidth": "0px",
         "maxWidth": "none",
         "paddingTop": "0px",
-        "paddingRight": "24px",
+        "paddingRight": "32px",
         "paddingBottom": "2px",
-        "paddingLeft": "24px",
+        "paddingLeft": "32px",
         "marginTop": "0px",
         "marginRight": "0px",
         "marginBottom": "0px",
@@ -2603,7 +2603,7 @@
         "fontFamily": "\"Plus Jakarta Sans\", -apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, sans-serif",
         "fontSize": "16px",
         "fontWeight": "400",
-        "lineHeight": "normal",
+        "lineHeight": "25.6px",
         "letterSpacing": "normal",
         "textAlign": "start",
         "textTransform": "none",
@@ -2628,7 +2628,7 @@
         "overflow": "auto",
         "overflowX": "auto",
         "overflowY": "auto",
-        "direction": "ltr",
+        "direction": "rtl",
         "transform": "none"
       },
       "text": null,
@@ -2643,14 +2643,14 @@
       "tag": "button",
       "rect": {
         "width": 38.88,
-        "height": 37
+        "height": 41.8
       },
       "style": {
         "display": "flex",
         "position": "relative",
         "boxSizing": "border-box",
         "width": "38.875px",
-        "height": "37px",
+        "height": "41.7969px",
         "minHeight": "auto",
         "minWidth": "auto",
         "maxWidth": "none",
@@ -2674,7 +2674,7 @@
         "fontFamily": "\"Plus Jakarta Sans\", -apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, sans-serif",
         "fontSize": "13px",
         "fontWeight": "700",
-        "lineHeight": "normal",
+        "lineHeight": "20.8px",
         "letterSpacing": "-0.312px",
         "textAlign": "center",
         "textTransform": "none",
@@ -2699,7 +2699,7 @@
         "overflow": "visible",
         "overflowX": "visible",
         "overflowY": "visible",
-        "direction": "ltr",
+        "direction": "rtl",
         "transform": "none"
       },
       "text": "All",
@@ -2714,14 +2714,14 @@
       "tag": "button",
       "rect": {
         "width": 38.88,
-        "height": 37
+        "height": 41.8
       },
       "style": {
         "display": "flex",
         "position": "relative",
         "boxSizing": "border-box",
         "width": "38.875px",
-        "height": "37px",
+        "height": "41.7969px",
         "minHeight": "auto",
         "minWidth": "auto",
         "maxWidth": "none",
@@ -2745,7 +2745,7 @@
         "fontFamily": "\"Plus Jakarta Sans\", -apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, sans-serif",
         "fontSize": "13px",
         "fontWeight": "700",
-        "lineHeight": "normal",
+        "lineHeight": "20.8px",
         "letterSpacing": "-0.312px",
         "textAlign": "center",
         "textTransform": "none",
@@ -2770,7 +2770,7 @@
         "overflow": "visible",
         "overflowX": "visible",
         "overflowY": "visible",
-        "direction": "ltr",
+        "direction": "rtl",
         "transform": "none"
       },
       "text": "All",
@@ -2784,15 +2784,15 @@
       "selector": ".sortbar",
       "tag": "div",
       "rect": {
-        "width": 518,
-        "height": 23
+        "width": 742,
+        "height": 27.59
       },
       "style": {
         "display": "flex",
         "position": "static",
         "boxSizing": "border-box",
-        "width": "518px",
-        "height": "23px",
+        "width": "742px",
+        "height": "27.5938px",
         "minHeight": "0px",
         "minWidth": "0px",
         "maxWidth": "none",
@@ -2816,7 +2816,7 @@
         "fontFamily": "\"Plus Jakarta Sans\", -apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, sans-serif",
         "fontSize": "11px",
         "fontWeight": "400",
-        "lineHeight": "normal",
+        "lineHeight": "17.6px",
         "letterSpacing": "normal",
         "textAlign": "start",
         "textTransform": "none",
@@ -2841,7 +2841,7 @@
         "overflow": "auto",
         "overflowX": "auto",
         "overflowY": "auto",
-        "direction": "ltr",
+        "direction": "rtl",
         "transform": "none"
       },
       "text": null,
@@ -2856,14 +2856,14 @@
       "tag": "span",
       "rect": {
         "width": 41.13,
-        "height": 13
+        "height": 17.59
       },
       "style": {
         "display": "flex",
         "position": "static",
         "boxSizing": "border-box",
         "width": "41.125px",
-        "height": "13px",
+        "height": "17.5938px",
         "minHeight": "auto",
         "minWidth": "auto",
         "maxWidth": "none",
@@ -2887,7 +2887,7 @@
         "fontFamily": "\"Plus Jakarta Sans\", -apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, sans-serif",
         "fontSize": "11px",
         "fontWeight": "700",
-        "lineHeight": "normal",
+        "lineHeight": "17.6px",
         "letterSpacing": "normal",
         "textAlign": "start",
         "textTransform": "none",
@@ -2912,7 +2912,7 @@
         "overflow": "visible",
         "overflowX": "visible",
         "overflowY": "visible",
-        "direction": "ltr",
+        "direction": "rtl",
         "transform": "none"
       },
       "text": null,
@@ -2927,14 +2927,14 @@
       "tag": "button",
       "rect": {
         "width": 51.34,
-        "height": 23
+        "height": 27.59
       },
       "style": {
         "display": "flex",
         "position": "static",
         "boxSizing": "border-box",
         "width": "51.3438px",
-        "height": "23px",
+        "height": "27.5938px",
         "minHeight": "auto",
         "minWidth": "auto",
         "maxWidth": "none",
@@ -2958,7 +2958,7 @@
         "fontFamily": "\"Plus Jakarta Sans\", -apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, sans-serif",
         "fontSize": "11px",
         "fontWeight": "600",
-        "lineHeight": "normal",
+        "lineHeight": "17.6px",
         "letterSpacing": "normal",
         "textAlign": "center",
         "textTransform": "none",
@@ -2983,7 +2983,7 @@
         "overflow": "visible",
         "overflowX": "visible",
         "overflowY": "visible",
-        "direction": "ltr",
+        "direction": "rtl",
         "transform": "none"
       },
       "text": "Name",
@@ -2998,14 +2998,14 @@
       "tag": "button",
       "rect": {
         "width": 42.14,
-        "height": 23
+        "height": 27.59
       },
       "style": {
         "display": "flex",
         "position": "static",
         "boxSizing": "border-box",
         "width": "42.1406px",
-        "height": "23px",
+        "height": "27.5938px",
         "minHeight": "auto",
         "minWidth": "auto",
         "maxWidth": "none",
@@ -3029,7 +3029,7 @@
         "fontFamily": "\"Plus Jakarta Sans\", -apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, sans-serif",
         "fontSize": "11px",
         "fontWeight": "600",
-        "lineHeight": "normal",
+        "lineHeight": "17.6px",
         "letterSpacing": "normal",
         "textAlign": "center",
         "textTransform": "none",
@@ -3054,7 +3054,7 @@
         "overflow": "visible",
         "overflowX": "visible",
         "overflowY": "visible",
-        "direction": "ltr",
+        "direction": "rtl",
         "transform": "none"
       },
       "text": null,
@@ -3068,15 +3068,15 @@
       "selector": ".kard",
       "tag": "div",
       "rect": {
-        "width": 518,
-        "height": 55
+        "width": 742,
+        "height": 59.59
       },
       "style": {
         "display": "block",
         "position": "static",
         "boxSizing": "border-box",
-        "width": "518px",
-        "height": "55px",
+        "width": "742px",
+        "height": "59.5938px",
         "minHeight": "0px",
         "minWidth": "0px",
         "maxWidth": "none",
@@ -3100,7 +3100,7 @@
         "fontFamily": "\"Plus Jakarta Sans\", -apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, sans-serif",
         "fontSize": "16px",
         "fontWeight": "400",
-        "lineHeight": "normal",
+        "lineHeight": "25.6px",
         "letterSpacing": "normal",
         "textAlign": "start",
         "textTransform": "none",
@@ -3125,7 +3125,7 @@
         "overflow": "hidden",
         "overflowX": "hidden",
         "overflowY": "hidden",
-        "direction": "ltr",
+        "direction": "rtl",
         "transform": "none"
       },
       "text": null,
@@ -3139,15 +3139,15 @@
       "selector": ".summary",
       "tag": "div",
       "rect": {
-        "width": 518,
-        "height": 185.08
+        "width": 742,
+        "height": 198.67
       },
       "style": {
         "display": "block",
         "position": "relative",
         "boxSizing": "border-box",
-        "width": "518px",
-        "height": "185.078px",
+        "width": "742px",
+        "height": "198.672px",
         "minHeight": "0px",
         "minWidth": "0px",
         "maxWidth": "none",
@@ -3171,7 +3171,7 @@
         "fontFamily": "\"Plus Jakarta Sans\", -apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, sans-serif",
         "fontSize": "16px",
         "fontWeight": "400",
-        "lineHeight": "normal",
+        "lineHeight": "25.6px",
         "letterSpacing": "normal",
         "textAlign": "start",
         "textTransform": "none",
@@ -3196,7 +3196,7 @@
         "overflow": "hidden",
         "overflowX": "hidden",
         "overflowY": "hidden",
-        "direction": "ltr",
+        "direction": "rtl",
         "transform": "none"
       },
       "text": null,
@@ -3210,15 +3210,15 @@
       "selector": ".summary__kicker",
       "tag": "p",
       "rect": {
-        "width": 476,
-        "height": 13
+        "width": 700,
+        "height": 17.59
       },
       "style": {
         "display": "block",
         "position": "static",
         "boxSizing": "border-box",
-        "width": "476px",
-        "height": "13px",
+        "width": "700px",
+        "height": "17.5938px",
         "minHeight": "0px",
         "minWidth": "0px",
         "maxWidth": "none",
@@ -3242,7 +3242,7 @@
         "fontFamily": "\"Plus Jakarta Sans\", -apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, sans-serif",
         "fontSize": "11px",
         "fontWeight": "700",
-        "lineHeight": "normal",
+        "lineHeight": "17.6px",
         "letterSpacing": "0.55px",
         "textAlign": "start",
         "textTransform": "uppercase",
@@ -3267,7 +3267,7 @@
         "overflow": "visible",
         "overflowX": "visible",
         "overflowY": "visible",
-        "direction": "ltr",
+        "direction": "rtl",
         "transform": "none"
       },
       "text": "B",
@@ -3281,14 +3281,14 @@
       "selector": ".summary__value",
       "tag": "p",
       "rect": {
-        "width": 476,
+        "width": 700,
         "height": 35.69
       },
       "style": {
         "display": "flex",
         "position": "static",
         "boxSizing": "border-box",
-        "width": "476px",
+        "width": "700px",
         "height": "35.6875px",
         "minHeight": "0px",
         "minWidth": "0px",
@@ -3423,14 +3423,14 @@
       "selector": ".summary__caption",
       "tag": "p",
       "rect": {
-        "width": 476,
+        "width": 700,
         "height": 17.39
       },
       "style": {
         "display": "block",
         "position": "static",
         "boxSizing": "border-box",
-        "width": "476px",
+        "width": "700px",
         "height": "17.3906px",
         "minHeight": "0px",
         "minWidth": "0px",
@@ -3480,7 +3480,7 @@
         "overflow": "visible",
         "overflowX": "visible",
         "overflowY": "visible",
-        "direction": "ltr",
+        "direction": "rtl",
         "transform": "none"
       },
       "text": "x",
@@ -3494,15 +3494,15 @@
       "selector": ".summary__stat",
       "tag": "div",
       "rect": {
-        "width": 152,
-        "height": 33
+        "width": 226.66,
+        "height": 42
       },
       "style": {
         "display": "block",
         "position": "static",
         "boxSizing": "border-box",
-        "width": "152px",
-        "height": "33px",
+        "width": "226.656px",
+        "height": "42px",
         "minHeight": "auto",
         "minWidth": "0px",
         "maxWidth": "none",
@@ -3526,7 +3526,7 @@
         "fontFamily": "\"Plus Jakarta Sans\", -apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, sans-serif",
         "fontSize": "16px",
         "fontWeight": "400",
-        "lineHeight": "normal",
+        "lineHeight": "25.6px",
         "letterSpacing": "normal",
         "textAlign": "start",
         "textTransform": "none",
@@ -3551,7 +3551,7 @@
         "overflow": "visible",
         "overflowX": "visible",
         "overflowY": "visible",
-        "direction": "ltr",
+        "direction": "rtl",
         "transform": "none"
       },
       "text": null,
@@ -3565,15 +3565,15 @@
       "selector": ".metric",
       "tag": "div",
       "rect": {
-        "width": 518,
-        "height": 84
+        "width": 742,
+        "height": 93
       },
       "style": {
         "display": "flex",
         "position": "static",
         "boxSizing": "border-box",
-        "width": "518px",
-        "height": "84px",
+        "width": "742px",
+        "height": "93px",
         "minHeight": "0px",
         "minWidth": "0px",
         "maxWidth": "none",
@@ -3597,7 +3597,7 @@
         "fontFamily": "\"Plus Jakarta Sans\", -apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, sans-serif",
         "fontSize": "16px",
         "fontWeight": "400",
-        "lineHeight": "normal",
+        "lineHeight": "25.6px",
         "letterSpacing": "normal",
         "textAlign": "start",
         "textTransform": "none",
@@ -3622,7 +3622,7 @@
         "overflow": "visible",
         "overflowX": "visible",
         "overflowY": "visible",
-        "direction": "ltr",
+        "direction": "rtl",
         "transform": "none"
       },
       "text": null,
@@ -3636,15 +3636,15 @@
       "selector": ".metric__value",
       "tag": "span",
       "rect": {
-        "width": 492,
-        "height": 19
+        "width": 716,
+        "height": 24
       },
       "style": {
         "display": "block",
         "position": "static",
         "boxSizing": "border-box",
-        "width": "492px",
-        "height": "19px",
+        "width": "716px",
+        "height": "24px",
         "minHeight": "auto",
         "minWidth": "auto",
         "maxWidth": "none",
@@ -3668,7 +3668,7 @@
         "fontFamily": "\"Plus Jakarta Sans\", -apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, sans-serif",
         "fontSize": "15px",
         "fontWeight": "800",
-        "lineHeight": "normal",
+        "lineHeight": "24px",
         "letterSpacing": "-0.54px",
         "textAlign": "start",
         "textTransform": "none",
@@ -3707,15 +3707,15 @@
       "selector": ".metric__label",
       "tag": "span",
       "rect": {
-        "width": 492,
-        "height": 12
+        "width": 716,
+        "height": 16
       },
       "style": {
         "display": "block",
         "position": "static",
         "boxSizing": "border-box",
-        "width": "492px",
-        "height": "12px",
+        "width": "716px",
+        "height": "16px",
         "minHeight": "auto",
         "minWidth": "auto",
         "maxWidth": "none",
@@ -3739,7 +3739,7 @@
         "fontFamily": "\"Plus Jakarta Sans\", -apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, sans-serif",
         "fontSize": "10px",
         "fontWeight": "600",
-        "lineHeight": "normal",
+        "lineHeight": "16px",
         "letterSpacing": "normal",
         "textAlign": "start",
         "textTransform": "none",
@@ -3764,7 +3764,7 @@
         "overflow": "visible",
         "overflowX": "visible",
         "overflowY": "visible",
-        "direction": "ltr",
+        "direction": "rtl",
         "transform": "none"
       },
       "text": "Tasks",
@@ -3778,15 +3778,15 @@
       "selector": ".metrics",
       "tag": "div",
       "rect": {
-        "width": 518,
-        "height": 61
+        "width": 742,
+        "height": 70
       },
       "style": {
         "display": "grid",
         "position": "static",
         "boxSizing": "border-box",
-        "width": "518px",
-        "height": "61px",
+        "width": "742px",
+        "height": "70px",
         "minHeight": "0px",
         "minWidth": "0px",
         "maxWidth": "none",
@@ -3806,11 +3806,11 @@
         "justifyContent": "normal",
         "flexWrap": "nowrap",
         "flex": "0 1 auto",
-        "gridTemplateColumns": "254px 254px",
+        "gridTemplateColumns": "366px 366px",
         "fontFamily": "\"Plus Jakarta Sans\", -apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, sans-serif",
         "fontSize": "16px",
         "fontWeight": "400",
-        "lineHeight": "normal",
+        "lineHeight": "25.6px",
         "letterSpacing": "normal",
         "textAlign": "start",
         "textTransform": "none",
@@ -3835,7 +3835,7 @@
         "overflow": "visible",
         "overflowX": "visible",
         "overflowY": "visible",
-        "direction": "ltr",
+        "direction": "rtl",
         "transform": "none"
       },
       "text": null,
@@ -3850,14 +3850,14 @@
       "tag": "span",
       "rect": {
         "width": 40.81,
-        "height": 13
+        "height": 17.59
       },
       "style": {
         "display": "inline-flex",
         "position": "static",
         "boxSizing": "border-box",
         "width": "40.8125px",
-        "height": "13px",
+        "height": "17.5938px",
         "minHeight": "0px",
         "minWidth": "0px",
         "maxWidth": "none",
@@ -3881,7 +3881,7 @@
         "fontFamily": "\"Plus Jakarta Sans\", -apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, sans-serif",
         "fontSize": "11px",
         "fontWeight": "700",
-        "lineHeight": "normal",
+        "lineHeight": "17.6px",
         "letterSpacing": "-0.11px",
         "textAlign": "start",
         "textTransform": "none",
@@ -3921,14 +3921,14 @@
       "tag": "span",
       "rect": {
         "width": 40.81,
-        "height": 13
+        "height": 17.59
       },
       "style": {
         "display": "inline-flex",
         "position": "static",
         "boxSizing": "border-box",
         "width": "40.8125px",
-        "height": "13px",
+        "height": "17.5938px",
         "minHeight": "0px",
         "minWidth": "0px",
         "maxWidth": "none",
@@ -3952,7 +3952,7 @@
         "fontFamily": "\"Plus Jakarta Sans\", -apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, sans-serif",
         "fontSize": "11px",
         "fontWeight": "700",
-        "lineHeight": "normal",
+        "lineHeight": "17.6px",
         "letterSpacing": "-0.11px",
         "textAlign": "start",
         "textTransform": "none",
@@ -3991,15 +3991,15 @@
       "selector": ".rrow",
       "tag": "div",
       "rect": {
-        "width": 516,
-        "height": 72
+        "width": 740,
+        "height": 84.98
       },
       "style": {
         "display": "flex",
         "position": "static",
         "boxSizing": "border-box",
-        "width": "516px",
-        "height": "72px",
+        "width": "740px",
+        "height": "84.9844px",
         "minHeight": "0px",
         "minWidth": "0px",
         "maxWidth": "none",
@@ -4023,7 +4023,7 @@
         "fontFamily": "\"Plus Jakarta Sans\", -apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, sans-serif",
         "fontSize": "16px",
         "fontWeight": "400",
-        "lineHeight": "normal",
+        "lineHeight": "25.6px",
         "letterSpacing": "normal",
         "textAlign": "start",
         "textTransform": "none",
@@ -4048,7 +4048,7 @@
         "overflow": "visible",
         "overflowX": "visible",
         "overflowY": "visible",
-        "direction": "ltr",
+        "direction": "rtl",
         "transform": "none"
       },
       "text": null,
@@ -4063,14 +4063,14 @@
       "tag": "span",
       "rect": {
         "width": 28.47,
-        "height": 18
+        "height": 22.39
       },
       "style": {
         "display": "block",
         "position": "static",
         "boxSizing": "border-box",
         "width": "28.4688px",
-        "height": "18px",
+        "height": "22.3906px",
         "minHeight": "auto",
         "minWidth": "auto",
         "maxWidth": "none",
@@ -4094,7 +4094,7 @@
         "fontFamily": "\"Plus Jakarta Sans\", -apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, sans-serif",
         "fontSize": "14px",
         "fontWeight": "700",
-        "lineHeight": "normal",
+        "lineHeight": "22.4px",
         "letterSpacing": "-0.336px",
         "textAlign": "start",
         "textTransform": "none",
@@ -4119,7 +4119,7 @@
         "overflow": "hidden",
         "overflowX": "hidden",
         "overflowY": "hidden",
-        "direction": "ltr",
+        "direction": "rtl",
         "transform": "none"
       },
       "text": "USD",
@@ -4133,15 +4133,15 @@
       "selector": ".rrow__sub",
       "tag": "span",
       "rect": {
-        "width": 484,
-        "height": 13
+        "width": 708,
+        "height": 17.59
       },
       "style": {
         "display": "block",
         "position": "static",
         "boxSizing": "border-box",
-        "width": "484px",
-        "height": "13px",
+        "width": "708px",
+        "height": "17.5938px",
         "minHeight": "auto",
         "minWidth": "auto",
         "maxWidth": "none",
@@ -4165,7 +4165,7 @@
         "fontFamily": "\"Plus Jakarta Sans\", -apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, sans-serif",
         "fontSize": "11px",
         "fontWeight": "500",
-        "lineHeight": "normal",
+        "lineHeight": "17.6px",
         "letterSpacing": "normal",
         "textAlign": "start",
         "textTransform": "none",
@@ -4190,7 +4190,7 @@
         "overflow": "hidden",
         "overflowX": "hidden",
         "overflowY": "hidden",
-        "direction": "ltr",
+        "direction": "rtl",
         "transform": "none"
       },
       "text": "US Dollar",
@@ -4204,15 +4204,15 @@
       "selector": ".rrow__meta",
       "tag": "span",
       "rect": {
-        "width": 484,
-        "height": 12
+        "width": 708,
+        "height": 16
       },
       "style": {
         "display": "flex",
         "position": "static",
         "boxSizing": "border-box",
-        "width": "484px",
-        "height": "12px",
+        "width": "708px",
+        "height": "16px",
         "minHeight": "auto",
         "minWidth": "auto",
         "maxWidth": "none",
@@ -4236,7 +4236,7 @@
         "fontFamily": "\"Plus Jakarta Sans\", -apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, sans-serif",
         "fontSize": "10px",
         "fontWeight": "500",
-        "lineHeight": "normal",
+        "lineHeight": "16px",
         "letterSpacing": "normal",
         "textAlign": "start",
         "textTransform": "none",
@@ -4261,7 +4261,7 @@
         "overflow": "visible",
         "overflowX": "visible",
         "overflowY": "visible",
-        "direction": "ltr",
+        "direction": "rtl",
         "transform": "none"
       },
       "text": null,
@@ -4276,14 +4276,14 @@
       "tag": "span",
       "rect": {
         "width": 44.78,
-        "height": 18
+        "height": 22.39
       },
       "style": {
         "display": "block",
         "position": "static",
         "boxSizing": "border-box",
         "width": "44.7812px",
-        "height": "18px",
+        "height": "22.3906px",
         "minHeight": "auto",
         "minWidth": "auto",
         "maxWidth": "none",
@@ -4307,7 +4307,7 @@
         "fontFamily": "\"Plus Jakarta Sans\", -apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, sans-serif",
         "fontSize": "14px",
         "fontWeight": "700",
-        "lineHeight": "normal",
+        "lineHeight": "22.4px",
         "letterSpacing": "-0.42px",
         "textAlign": "end",
         "textTransform": "none",
@@ -4378,7 +4378,7 @@
         "fontFamily": "\"Plus Jakarta Sans\", -apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, sans-serif",
         "fontSize": "16px",
         "fontWeight": "400",
-        "lineHeight": "normal",
+        "lineHeight": "25.6px",
         "letterSpacing": "normal",
         "textAlign": "start",
         "textTransform": "none",
@@ -4403,7 +4403,7 @@
         "overflow": "visible",
         "overflowX": "visible",
         "overflowY": "visible",
-        "direction": "ltr",
+        "direction": "rtl",
         "transform": "none"
       },
       "text": null,
@@ -4417,15 +4417,15 @@
       "selector": ".rows",
       "tag": "div",
       "rect": {
-        "width": 518,
-        "height": 87
+        "width": 742,
+        "height": 95.78
       },
       "style": {
         "display": "block",
         "position": "static",
         "boxSizing": "border-box",
-        "width": "518px",
-        "height": "87px",
+        "width": "742px",
+        "height": "95.7812px",
         "minHeight": "0px",
         "minWidth": "0px",
         "maxWidth": "none",
@@ -4449,7 +4449,7 @@
         "fontFamily": "\"Plus Jakarta Sans\", -apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, sans-serif",
         "fontSize": "16px",
         "fontWeight": "400",
-        "lineHeight": "normal",
+        "lineHeight": "25.6px",
         "letterSpacing": "normal",
         "textAlign": "start",
         "textTransform": "none",
@@ -4474,7 +4474,7 @@
         "overflow": "hidden",
         "overflowX": "hidden",
         "overflowY": "hidden",
-        "direction": "ltr",
+        "direction": "rtl",
         "transform": "none"
       },
       "text": null,
@@ -4488,15 +4488,15 @@
       "selector": ".crow",
       "tag": "div",
       "rect": {
-        "width": 518,
-        "height": 40
+        "width": 742,
+        "height": 44.8
       },
       "style": {
         "display": "flex",
         "position": "static",
         "boxSizing": "border-box",
-        "width": "518px",
-        "height": "40px",
+        "width": "742px",
+        "height": "44.7969px",
         "minHeight": "0px",
         "minWidth": "0px",
         "maxWidth": "none",
@@ -4520,7 +4520,7 @@
         "fontFamily": "\"Plus Jakarta Sans\", -apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, sans-serif",
         "fontSize": "16px",
         "fontWeight": "400",
-        "lineHeight": "normal",
+        "lineHeight": "25.6px",
         "letterSpacing": "normal",
         "textAlign": "start",
         "textTransform": "none",
@@ -4545,7 +4545,7 @@
         "overflow": "visible",
         "overflowX": "visible",
         "overflowY": "visible",
-        "direction": "ltr",
+        "direction": "rtl",
         "transform": "none"
       },
       "text": null,
@@ -4559,15 +4559,15 @@
       "selector": ".crow__label",
       "tag": "span",
       "rect": {
-        "width": 486,
-        "height": 16
+        "width": 710,
+        "height": 20.8
       },
       "style": {
         "display": "block",
         "position": "static",
         "boxSizing": "border-box",
-        "width": "486px",
-        "height": "16px",
+        "width": "710px",
+        "height": "20.7969px",
         "minHeight": "auto",
         "minWidth": "0px",
         "maxWidth": "none",
@@ -4591,7 +4591,7 @@
         "fontFamily": "\"Plus Jakarta Sans\", -apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, sans-serif",
         "fontSize": "13px",
         "fontWeight": "600",
-        "lineHeight": "normal",
+        "lineHeight": "20.8px",
         "letterSpacing": "-0.286px",
         "textAlign": "start",
         "textTransform": "none",
@@ -4616,7 +4616,7 @@
         "overflow": "visible",
         "overflowX": "visible",
         "overflowY": "visible",
-        "direction": "ltr",
+        "direction": "rtl",
         "transform": "none"
       },
       "text": "Fajr",
@@ -4631,14 +4631,14 @@
       "tag": "span",
       "rect": {
         "width": 32.14,
-        "height": 15
+        "height": 19.19
       },
       "style": {
         "display": "block",
         "position": "static",
         "boxSizing": "border-box",
         "width": "32.1406px",
-        "height": "15px",
+        "height": "19.1875px",
         "minHeight": "auto",
         "minWidth": "auto",
         "maxWidth": "none",
@@ -4662,7 +4662,7 @@
         "fontFamily": "\"Plus Jakarta Sans\", -apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, sans-serif",
         "fontSize": "12px",
         "fontWeight": "700",
-        "lineHeight": "normal",
+        "lineHeight": "19.2px",
         "letterSpacing": "-0.24px",
         "textAlign": "start",
         "textTransform": "none",
@@ -4701,15 +4701,15 @@
       "selector": ".xrow",
       "tag": "details",
       "rect": {
-        "width": 518,
-        "height": 45
+        "width": 742,
+        "height": 49.59
       },
       "style": {
         "display": "block",
         "position": "static",
         "boxSizing": "border-box",
-        "width": "518px",
-        "height": "45px",
+        "width": "742px",
+        "height": "49.5938px",
         "minHeight": "0px",
         "minWidth": "0px",
         "maxWidth": "none",
@@ -4733,7 +4733,7 @@
         "fontFamily": "\"Plus Jakarta Sans\", -apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, sans-serif",
         "fontSize": "16px",
         "fontWeight": "400",
-        "lineHeight": "normal",
+        "lineHeight": "25.6px",
         "letterSpacing": "normal",
         "textAlign": "start",
         "textTransform": "none",
@@ -4758,7 +4758,7 @@
         "overflow": "visible",
         "overflowX": "visible",
         "overflowY": "visible",
-        "direction": "ltr",
+        "direction": "rtl",
         "transform": "none"
       },
       "text": null,
@@ -4772,15 +4772,15 @@
       "selector": ".xrow__head",
       "tag": "summary",
       "rect": {
-        "width": 518,
-        "height": 45
+        "width": 742,
+        "height": 49.59
       },
       "style": {
         "display": "flex",
         "position": "static",
         "boxSizing": "border-box",
-        "width": "518px",
-        "height": "45px",
+        "width": "742px",
+        "height": "49.5938px",
         "minHeight": "0px",
         "minWidth": "0px",
         "maxWidth": "none",
@@ -4804,7 +4804,7 @@
         "fontFamily": "\"Plus Jakarta Sans\", -apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, sans-serif",
         "fontSize": "16px",
         "fontWeight": "400",
-        "lineHeight": "normal",
+        "lineHeight": "25.6px",
         "letterSpacing": "normal",
         "textAlign": "start",
         "textTransform": "none",
@@ -4829,7 +4829,7 @@
         "overflow": "visible",
         "overflowX": "visible",
         "overflowY": "visible",
-        "direction": "ltr",
+        "direction": "rtl",
         "transform": "none"
       },
       "text": null,
@@ -4843,15 +4843,15 @@
       "selector": ".dtable",
       "tag": "table",
       "rect": {
-        "width": 516,
-        "height": 70
+        "width": 740,
+        "height": 78.19
       },
       "style": {
         "display": "table",
         "position": "static",
         "boxSizing": "border-box",
-        "width": "516px",
-        "height": "70px",
+        "width": "740px",
+        "height": "78.1875px",
         "minHeight": "0px",
         "minWidth": "0px",
         "maxWidth": "none",
@@ -4875,7 +4875,7 @@
         "fontFamily": "\"Plus Jakarta Sans\", -apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, sans-serif",
         "fontSize": "16px",
         "fontWeight": "400",
-        "lineHeight": "normal",
+        "lineHeight": "25.6px",
         "letterSpacing": "normal",
         "textAlign": "start",
         "textTransform": "none",
@@ -4900,7 +4900,7 @@
         "overflow": "visible",
         "overflowX": "visible",
         "overflowY": "visible",
-        "direction": "ltr",
+        "direction": "rtl",
         "transform": "none"
       },
       "text": null,
@@ -4914,15 +4914,15 @@
       "selector": ".tablewrap",
       "tag": "div",
       "rect": {
-        "width": 518,
-        "height": 72
+        "width": 742,
+        "height": 80.19
       },
       "style": {
         "display": "block",
         "position": "static",
         "boxSizing": "border-box",
-        "width": "518px",
-        "height": "72px",
+        "width": "742px",
+        "height": "80.1875px",
         "minHeight": "0px",
         "minWidth": "0px",
         "maxWidth": "none",
@@ -4946,7 +4946,7 @@
         "fontFamily": "\"Plus Jakarta Sans\", -apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, sans-serif",
         "fontSize": "16px",
         "fontWeight": "400",
-        "lineHeight": "normal",
+        "lineHeight": "25.6px",
         "letterSpacing": "normal",
         "textAlign": "start",
         "textTransform": "none",
@@ -4971,7 +4971,7 @@
         "overflow": "auto",
         "overflowX": "auto",
         "overflowY": "auto",
-        "direction": "ltr",
+        "direction": "rtl",
         "transform": "none"
       },
       "text": null,
@@ -4985,15 +4985,15 @@
       "selector": ".notecard",
       "tag": "div",
       "rect": {
-        "width": 518,
-        "height": 67
+        "width": 742,
+        "height": 71.8
       },
       "style": {
         "display": "flex",
         "position": "static",
         "boxSizing": "border-box",
-        "width": "518px",
-        "height": "67px",
+        "width": "742px",
+        "height": "71.7969px",
         "minHeight": "0px",
         "minWidth": "0px",
         "maxWidth": "none",
@@ -5017,7 +5017,7 @@
         "fontFamily": "\"Plus Jakarta Sans\", -apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, sans-serif",
         "fontSize": "16px",
         "fontWeight": "400",
-        "lineHeight": "normal",
+        "lineHeight": "25.6px",
         "letterSpacing": "normal",
         "textAlign": "start",
         "textTransform": "none",
@@ -5042,7 +5042,7 @@
         "overflow": "visible",
         "overflowX": "visible",
         "overflowY": "visible",
-        "direction": "ltr",
+        "direction": "rtl",
         "transform": "none"
       },
       "text": null,
@@ -5057,14 +5057,14 @@
       "tag": "div",
       "rect": {
         "width": 168,
-        "height": 152.63
+        "height": 156.63
       },
       "style": {
         "display": "block",
         "position": "static",
         "boxSizing": "border-box",
         "width": "168px",
-        "height": "152.625px",
+        "height": "156.625px",
         "minHeight": "0px",
         "minWidth": "0px",
         "maxWidth": "none",
@@ -5088,7 +5088,7 @@
         "fontFamily": "\"Plus Jakarta Sans\", -apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, sans-serif",
         "fontSize": "16px",
         "fontWeight": "400",
-        "lineHeight": "normal",
+        "lineHeight": "25.6px",
         "letterSpacing": "normal",
         "textAlign": "start",
         "textTransform": "none",
@@ -5113,7 +5113,7 @@
         "overflow": "hidden",
         "overflowX": "hidden",
         "overflowY": "hidden",
-        "direction": "ltr",
+        "direction": "rtl",
         "transform": "none"
       },
       "text": null,
@@ -5127,26 +5127,26 @@
       "selector": ".hstrip",
       "tag": "div",
       "rect": {
-        "width": 566,
+        "width": 806,
         "height": 144.63
       },
       "style": {
         "display": "flex",
         "position": "static",
         "boxSizing": "border-box",
-        "width": "566px",
+        "width": "806px",
         "height": "144.625px",
         "minHeight": "0px",
         "minWidth": "0px",
         "maxWidth": "none",
         "paddingTop": "0px",
-        "paddingRight": "24px",
+        "paddingRight": "32px",
         "paddingBottom": "4px",
-        "paddingLeft": "24px",
+        "paddingLeft": "32px",
         "marginTop": "0px",
-        "marginRight": "-24px",
+        "marginRight": "-32px",
         "marginBottom": "0px",
-        "marginLeft": "-24px",
+        "marginLeft": "-32px",
         "gap": "11px",
         "rowGap": "11px",
         "columnGap": "11px",
@@ -5159,7 +5159,7 @@
         "fontFamily": "\"Plus Jakarta Sans\", -apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, sans-serif",
         "fontSize": "16px",
         "fontWeight": "400",
-        "lineHeight": "normal",
+        "lineHeight": "25.6px",
         "letterSpacing": "normal",
         "textAlign": "start",
         "textTransform": "none",
@@ -5184,7 +5184,7 @@
         "overflow": "auto",
         "overflowX": "auto",
         "overflowY": "auto",
-        "direction": "ltr",
+        "direction": "rtl",
         "transform": "none"
       },
       "text": null,
@@ -5198,14 +5198,14 @@
       "selector": ".related",
       "tag": "div",
       "rect": {
-        "width": 518,
+        "width": 742,
         "height": 81.5
       },
       "style": {
         "display": "flex",
         "position": "static",
         "boxSizing": "border-box",
-        "width": "518px",
+        "width": "742px",
         "height": "81.5px",
         "minHeight": "0px",
         "minWidth": "0px",
@@ -5230,7 +5230,7 @@
         "fontFamily": "\"Plus Jakarta Sans\", -apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, sans-serif",
         "fontSize": "16px",
         "fontWeight": "400",
-        "lineHeight": "normal",
+        "lineHeight": "25.6px",
         "letterSpacing": "normal",
         "textAlign": "start",
         "textTransform": "none",
@@ -5255,7 +5255,7 @@
         "overflow": "auto",
         "overflowX": "auto",
         "overflowY": "auto",
-        "direction": "ltr",
+        "direction": "rtl",
         "transform": "none"
       },
       "text": null,
@@ -5301,7 +5301,7 @@
         "fontFamily": "\"Plus Jakarta Sans\", -apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, sans-serif",
         "fontSize": "16px",
         "fontWeight": "400",
-        "lineHeight": "normal",
+        "lineHeight": "25.6px",
         "letterSpacing": "normal",
         "textAlign": "center",
         "textTransform": "none",
@@ -5326,7 +5326,7 @@
         "overflow": "visible",
         "overflowX": "visible",
         "overflowY": "visible",
-        "direction": "ltr",
+        "direction": "rtl",
         "transform": "none"
       },
       "text": null,
@@ -5340,15 +5340,15 @@
       "selector": ".tline",
       "tag": "ol",
       "rect": {
-        "width": 518,
-        "height": 69
+        "width": 742,
+        "height": 81.19
       },
       "style": {
         "display": "block",
         "position": "static",
         "boxSizing": "border-box",
-        "width": "518px",
-        "height": "69px",
+        "width": "742px",
+        "height": "81.1875px",
         "minHeight": "0px",
         "minWidth": "0px",
         "maxWidth": "none",
@@ -5372,7 +5372,7 @@
         "fontFamily": "\"Plus Jakarta Sans\", -apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, sans-serif",
         "fontSize": "16px",
         "fontWeight": "400",
-        "lineHeight": "normal",
+        "lineHeight": "25.6px",
         "letterSpacing": "normal",
         "textAlign": "start",
         "textTransform": "none",
@@ -5397,7 +5397,7 @@
         "overflow": "visible",
         "overflowX": "visible",
         "overflowY": "visible",
-        "direction": "ltr",
+        "direction": "rtl",
         "transform": "none"
       },
       "text": null,
@@ -5411,15 +5411,15 @@
       "selector": ".tline__item",
       "tag": "li",
       "rect": {
-        "width": 518,
-        "height": 20
+        "width": 742,
+        "height": 22.8
       },
       "style": {
         "display": "flex",
         "position": "static",
         "boxSizing": "border-box",
-        "width": "518px",
-        "height": "20px",
+        "width": "742px",
+        "height": "22.7969px",
         "minHeight": "0px",
         "minWidth": "0px",
         "maxWidth": "none",
@@ -5443,7 +5443,7 @@
         "fontFamily": "\"Plus Jakarta Sans\", -apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, sans-serif",
         "fontSize": "16px",
         "fontWeight": "400",
-        "lineHeight": "normal",
+        "lineHeight": "25.6px",
         "letterSpacing": "normal",
         "textAlign": "start",
         "textTransform": "none",
@@ -5468,7 +5468,7 @@
         "overflow": "visible",
         "overflowX": "visible",
         "overflowY": "visible",
-        "direction": "ltr",
+        "direction": "rtl",
         "transform": "none"
       },
       "text": null,
@@ -5483,14 +5483,14 @@
       "tag": "span",
       "rect": {
         "width": 52,
-        "height": 14
+        "height": 18.59
       },
       "style": {
         "display": "block",
         "position": "static",
         "boxSizing": "border-box",
         "width": "52px",
-        "height": "14px",
+        "height": "18.5938px",
         "minHeight": "auto",
         "minWidth": "auto",
         "maxWidth": "none",
@@ -5514,7 +5514,7 @@
         "fontFamily": "\"Plus Jakarta Sans\", -apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, sans-serif",
         "fontSize": "11px",
         "fontWeight": "700",
-        "lineHeight": "normal",
+        "lineHeight": "17.6px",
         "letterSpacing": "normal",
         "textAlign": "end",
         "textTransform": "none",
@@ -5553,15 +5553,15 @@
       "selector": ".tline__title",
       "tag": "span",
       "rect": {
-        "width": 428,
-        "height": 16
+        "width": 652,
+        "height": 20.8
       },
       "style": {
         "display": "block",
         "position": "static",
         "boxSizing": "border-box",
-        "width": "428px",
-        "height": "16px",
+        "width": "652px",
+        "height": "20.7969px",
         "minHeight": "0px",
         "minWidth": "0px",
         "maxWidth": "none",
@@ -5585,7 +5585,7 @@
         "fontFamily": "\"Plus Jakarta Sans\", -apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, sans-serif",
         "fontSize": "13px",
         "fontWeight": "700",
-        "lineHeight": "normal",
+        "lineHeight": "20.8px",
         "letterSpacing": "-0.312px",
         "textAlign": "start",
         "textTransform": "none",
@@ -5610,7 +5610,7 @@
         "overflow": "visible",
         "overflowX": "visible",
         "overflowY": "visible",
-        "direction": "ltr",
+        "direction": "rtl",
         "transform": "none"
       },
       "text": "Depart",
@@ -5656,7 +5656,7 @@
         "fontFamily": "\"Plus Jakarta Sans\", -apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, sans-serif",
         "fontSize": "16px",
         "fontWeight": "400",
-        "lineHeight": "normal",
+        "lineHeight": "25.6px",
         "letterSpacing": "normal",
         "textAlign": "start",
         "textTransform": "none",
@@ -5681,7 +5681,7 @@
         "overflow": "visible",
         "overflowX": "visible",
         "overflowY": "visible",
-        "direction": "ltr",
+        "direction": "rtl",
         "transform": "none"
       },
       "text": "",
@@ -5695,14 +5695,14 @@
       "selector": ".journey",
       "tag": "div",
       "rect": {
-        "width": 518,
+        "width": 742,
         "height": 54
       },
       "style": {
         "display": "flex",
         "position": "static",
         "boxSizing": "border-box",
-        "width": "518px",
+        "width": "742px",
         "height": "54px",
         "minHeight": "0px",
         "minWidth": "0px",
@@ -5727,7 +5727,7 @@
         "fontFamily": "\"Plus Jakarta Sans\", -apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, sans-serif",
         "fontSize": "16px",
         "fontWeight": "400",
-        "lineHeight": "normal",
+        "lineHeight": "25.6px",
         "letterSpacing": "normal",
         "textAlign": "start",
         "textTransform": "none",
@@ -5752,7 +5752,7 @@
         "overflow": "visible",
         "overflowX": "visible",
         "overflowY": "visible",
-        "direction": "ltr",
+        "direction": "rtl",
         "transform": "none"
       },
       "text": null,
@@ -5766,14 +5766,14 @@
       "selector": ".pbar",
       "tag": "div",
       "rect": {
-        "width": 518,
+        "width": 742,
         "height": 6
       },
       "style": {
         "display": "block",
         "position": "static",
         "boxSizing": "border-box",
-        "width": "518px",
+        "width": "742px",
         "height": "6px",
         "minHeight": "0px",
         "minWidth": "0px",
@@ -5798,7 +5798,7 @@
         "fontFamily": "\"Plus Jakarta Sans\", -apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, sans-serif",
         "fontSize": "16px",
         "fontWeight": "400",
-        "lineHeight": "normal",
+        "lineHeight": "25.6px",
         "letterSpacing": "normal",
         "textAlign": "start",
         "textTransform": "none",
@@ -5823,7 +5823,7 @@
         "overflow": "hidden",
         "overflowX": "hidden",
         "overflowY": "hidden",
-        "direction": "ltr",
+        "direction": "rtl",
         "transform": "none"
       },
       "text": null,
@@ -5869,7 +5869,7 @@
         "fontFamily": "\"Plus Jakarta Sans\", -apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, sans-serif",
         "fontSize": "16px",
         "fontWeight": "400",
-        "lineHeight": "normal",
+        "lineHeight": "25.6px",
         "letterSpacing": "normal",
         "textAlign": "start",
         "textTransform": "none",
@@ -5894,7 +5894,7 @@
         "overflow": "visible",
         "overflowX": "visible",
         "overflowY": "visible",
-        "direction": "ltr",
+        "direction": "rtl",
         "transform": "none"
       },
       "text": "",
@@ -5940,7 +5940,7 @@
         "fontFamily": "\"Plus Jakarta Sans\", -apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, sans-serif",
         "fontSize": "16px",
         "fontWeight": "400",
-        "lineHeight": "normal",
+        "lineHeight": "25.6px",
         "letterSpacing": "normal",
         "textAlign": "start",
         "textTransform": "none",
@@ -5965,7 +5965,7 @@
         "overflow": "visible",
         "overflowX": "visible",
         "overflowY": "visible",
-        "direction": "ltr",
+        "direction": "rtl",
         "transform": "none"
       },
       "text": null,
@@ -5979,15 +5979,15 @@
       "selector": ".meter",
       "tag": "div",
       "rect": {
-        "width": 518,
-        "height": 28
+        "width": 742,
+        "height": 32.19
       },
       "style": {
         "display": "block",
         "position": "static",
         "boxSizing": "border-box",
-        "width": "518px",
-        "height": "28px",
+        "width": "742px",
+        "height": "32.1875px",
         "minHeight": "0px",
         "minWidth": "0px",
         "maxWidth": "none",
@@ -6011,7 +6011,7 @@
         "fontFamily": "\"Plus Jakarta Sans\", -apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, sans-serif",
         "fontSize": "16px",
         "fontWeight": "400",
-        "lineHeight": "normal",
+        "lineHeight": "25.6px",
         "letterSpacing": "normal",
         "textAlign": "start",
         "textTransform": "none",
@@ -6036,7 +6036,7 @@
         "overflow": "visible",
         "overflowX": "visible",
         "overflowY": "visible",
-        "direction": "ltr",
+        "direction": "rtl",
         "transform": "none"
       },
       "text": null,
@@ -6051,14 +6051,14 @@
       "tag": "span",
       "rect": {
         "width": 33.56,
-        "height": 15
+        "height": 19.19
       },
       "style": {
         "display": "block",
         "position": "static",
         "boxSizing": "border-box",
         "width": "33.5625px",
-        "height": "15px",
+        "height": "19.1875px",
         "minHeight": "auto",
         "minWidth": "auto",
         "maxWidth": "none",
@@ -6082,7 +6082,7 @@
         "fontFamily": "\"Plus Jakarta Sans\", -apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, sans-serif",
         "fontSize": "12px",
         "fontWeight": "600",
-        "lineHeight": "normal",
+        "lineHeight": "19.2px",
         "letterSpacing": "-0.264px",
         "textAlign": "start",
         "textTransform": "none",
@@ -6107,7 +6107,7 @@
         "overflow": "visible",
         "overflowX": "visible",
         "overflowY": "visible",
-        "direction": "ltr",
+        "direction": "rtl",
         "transform": "none"
       },
       "text": "Water",
@@ -6121,15 +6121,15 @@
       "selector": ".meter__value",
       "tag": "span",
       "rect": {
-        "width": 38.42,
-        "height": 15
+        "width": 38.44,
+        "height": 19.19
       },
       "style": {
         "display": "block",
         "position": "static",
         "boxSizing": "border-box",
-        "width": "38.4219px",
-        "height": "15px",
+        "width": "38.4375px",
+        "height": "19.1875px",
         "minHeight": "auto",
         "minWidth": "auto",
         "maxWidth": "none",
@@ -6153,7 +6153,7 @@
         "fontFamily": "\"Plus Jakarta Sans\", -apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, sans-serif",
         "fontSize": "12px",
         "fontWeight": "700",
-        "lineHeight": "normal",
+        "lineHeight": "19.2px",
         "letterSpacing": "normal",
         "textAlign": "start",
         "textTransform": "none",
@@ -6178,7 +6178,7 @@
         "overflow": "visible",
         "overflowX": "visible",
         "overflowY": "visible",
-        "direction": "ltr",
+        "direction": "rtl",
         "transform": "none"
       },
       "text": "6 of 10",
@@ -6193,14 +6193,14 @@
       "tag": "span",
       "rect": {
         "width": 39.56,
-        "height": 16
+        "height": 20
       },
       "style": {
         "display": "inline-flex",
         "position": "static",
         "boxSizing": "border-box",
         "width": "39.5625px",
-        "height": "16px",
+        "height": "20px",
         "minHeight": "0px",
         "minWidth": "0px",
         "maxWidth": "none",
@@ -6224,7 +6224,7 @@
         "fontFamily": "\"Plus Jakarta Sans\", -apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, sans-serif",
         "fontSize": "10px",
         "fontWeight": "700",
-        "lineHeight": "normal",
+        "lineHeight": "16px",
         "letterSpacing": "0.05px",
         "textAlign": "start",
         "textTransform": "none",
@@ -6249,7 +6249,7 @@
         "overflow": "visible",
         "overflowX": "visible",
         "overflowY": "visible",
-        "direction": "ltr",
+        "direction": "rtl",
         "transform": "none"
       },
       "text": "Draft",
@@ -6264,14 +6264,14 @@
       "tag": "span",
       "rect": {
         "width": 44.55,
-        "height": 16
+        "height": 20
       },
       "style": {
         "display": "inline-flex",
         "position": "static",
         "boxSizing": "border-box",
         "width": "44.5469px",
-        "height": "16px",
+        "height": "20px",
         "minHeight": "0px",
         "minWidth": "0px",
         "maxWidth": "none",
@@ -6295,7 +6295,7 @@
         "fontFamily": "\"Plus Jakarta Sans\", -apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, sans-serif",
         "fontSize": "10px",
         "fontWeight": "700",
-        "lineHeight": "normal",
+        "lineHeight": "16px",
         "letterSpacing": "0.05px",
         "textAlign": "start",
         "textTransform": "none",
@@ -6320,7 +6320,7 @@
         "overflow": "visible",
         "overflowX": "visible",
         "overflowY": "visible",
-        "direction": "ltr",
+        "direction": "rtl",
         "transform": "none"
       },
       "text": null,
@@ -6335,14 +6335,14 @@
       "tag": "span",
       "rect": {
         "width": 47.7,
-        "height": 16
+        "height": 20
       },
       "style": {
         "display": "inline-flex",
         "position": "static",
         "boxSizing": "border-box",
         "width": "47.7031px",
-        "height": "16px",
+        "height": "20px",
         "minHeight": "0px",
         "minWidth": "0px",
         "maxWidth": "none",
@@ -6366,7 +6366,7 @@
         "fontFamily": "\"Plus Jakarta Sans\", -apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, sans-serif",
         "fontSize": "10px",
         "fontWeight": "700",
-        "lineHeight": "normal",
+        "lineHeight": "16px",
         "letterSpacing": "0.05px",
         "textAlign": "start",
         "textTransform": "none",
@@ -6391,7 +6391,7 @@
         "overflow": "visible",
         "overflowX": "visible",
         "overflowY": "visible",
-        "direction": "ltr",
+        "direction": "rtl",
         "transform": "none"
       },
       "text": null,
@@ -6406,14 +6406,14 @@
       "tag": "span",
       "rect": {
         "width": 41.75,
-        "height": 16
+        "height": 20
       },
       "style": {
         "display": "inline-flex",
         "position": "static",
         "boxSizing": "border-box",
         "width": "41.75px",
-        "height": "16px",
+        "height": "20px",
         "minHeight": "0px",
         "minWidth": "0px",
         "maxWidth": "none",
@@ -6437,7 +6437,7 @@
         "fontFamily": "\"Plus Jakarta Sans\", -apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, sans-serif",
         "fontSize": "10px",
         "fontWeight": "700",
-        "lineHeight": "normal",
+        "lineHeight": "16px",
         "letterSpacing": "0.05px",
         "textAlign": "start",
         "textTransform": "none",
@@ -6462,7 +6462,7 @@
         "overflow": "visible",
         "overflowX": "visible",
         "overflowY": "visible",
-        "direction": "ltr",
+        "direction": "rtl",
         "transform": "none"
       },
       "text": null,
@@ -6477,14 +6477,14 @@
       "tag": "span",
       "rect": {
         "width": 49.06,
-        "height": 16
+        "height": 20
       },
       "style": {
         "display": "inline-flex",
         "position": "static",
         "boxSizing": "border-box",
         "width": "49.0625px",
-        "height": "16px",
+        "height": "20px",
         "minHeight": "0px",
         "minWidth": "0px",
         "maxWidth": "none",
@@ -6508,7 +6508,7 @@
         "fontFamily": "\"Plus Jakarta Sans\", -apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, sans-serif",
         "fontSize": "10px",
         "fontWeight": "700",
-        "lineHeight": "normal",
+        "lineHeight": "16px",
         "letterSpacing": "0.05px",
         "textAlign": "start",
         "textTransform": "none",
@@ -6533,7 +6533,7 @@
         "overflow": "visible",
         "overflowX": "visible",
         "overflowY": "visible",
-        "direction": "ltr",
+        "direction": "rtl",
         "transform": "none"
       },
       "text": null,
@@ -6548,14 +6548,14 @@
       "tag": "span",
       "rect": {
         "width": 45.84,
-        "height": 16
+        "height": 20
       },
       "style": {
         "display": "inline-flex",
         "position": "static",
         "boxSizing": "border-box",
         "width": "45.8438px",
-        "height": "16px",
+        "height": "20px",
         "minHeight": "0px",
         "minWidth": "0px",
         "maxWidth": "none",
@@ -6579,7 +6579,7 @@
         "fontFamily": "\"Plus Jakarta Sans\", -apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, sans-serif",
         "fontSize": "10px",
         "fontWeight": "700",
-        "lineHeight": "normal",
+        "lineHeight": "16px",
         "letterSpacing": "0.05px",
         "textAlign": "start",
         "textTransform": "none",
@@ -6604,7 +6604,7 @@
         "overflow": "visible",
         "overflowX": "visible",
         "overflowY": "visible",
-        "direction": "ltr",
+        "direction": "rtl",
         "transform": "none"
       },
       "text": null,
@@ -6619,14 +6619,14 @@
       "tag": "span",
       "rect": {
         "width": 33.59,
-        "height": 13
+        "height": 17.59
       },
       "style": {
         "display": "inline-flex",
         "position": "static",
         "boxSizing": "border-box",
         "width": "33.5938px",
-        "height": "13px",
+        "height": "17.5938px",
         "minHeight": "0px",
         "minWidth": "0px",
         "maxWidth": "none",
@@ -6650,7 +6650,7 @@
         "fontFamily": "\"Plus Jakarta Sans\", -apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, sans-serif",
         "fontSize": "11px",
         "fontWeight": "700",
-        "lineHeight": "normal",
+        "lineHeight": "17.6px",
         "letterSpacing": "normal",
         "textAlign": "start",
         "textTransform": "none",
@@ -6675,7 +6675,7 @@
         "overflow": "visible",
         "overflowX": "visible",
         "overflowY": "visible",
-        "direction": "ltr",
+        "direction": "rtl",
         "transform": "none"
       },
       "text": null,
@@ -6690,14 +6690,14 @@
       "tag": "span",
       "rect": {
         "width": 54.13,
-        "height": 13
+        "height": 17.59
       },
       "style": {
         "display": "inline-flex",
         "position": "static",
         "boxSizing": "border-box",
         "width": "54.125px",
-        "height": "13px",
+        "height": "17.5938px",
         "minHeight": "0px",
         "minWidth": "0px",
         "maxWidth": "none",
@@ -6721,7 +6721,7 @@
         "fontFamily": "\"Plus Jakarta Sans\", -apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, sans-serif",
         "fontSize": "11px",
         "fontWeight": "700",
-        "lineHeight": "normal",
+        "lineHeight": "17.6px",
         "letterSpacing": "normal",
         "textAlign": "start",
         "textTransform": "none",
@@ -6746,7 +6746,7 @@
         "overflow": "visible",
         "overflowX": "visible",
         "overflowY": "visible",
-        "direction": "ltr",
+        "direction": "rtl",
         "transform": "none"
       },
       "text": null,
@@ -6761,14 +6761,14 @@
       "tag": "span",
       "rect": {
         "width": 56.48,
-        "height": 13
+        "height": 17.59
       },
       "style": {
         "display": "inline-flex",
         "position": "static",
         "boxSizing": "border-box",
         "width": "56.4844px",
-        "height": "13px",
+        "height": "17.5938px",
         "minHeight": "0px",
         "minWidth": "0px",
         "maxWidth": "none",
@@ -6792,7 +6792,7 @@
         "fontFamily": "\"Plus Jakarta Sans\", -apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, sans-serif",
         "fontSize": "11px",
         "fontWeight": "700",
-        "lineHeight": "normal",
+        "lineHeight": "17.6px",
         "letterSpacing": "normal",
         "textAlign": "start",
         "textTransform": "none",
@@ -6817,7 +6817,7 @@
         "overflow": "visible",
         "overflowX": "visible",
         "overflowY": "visible",
-        "direction": "ltr",
+        "direction": "rtl",
         "transform": "none"
       },
       "text": null,
@@ -6831,15 +6831,15 @@
       "selector": ".srcline",
       "tag": "p",
       "rect": {
-        "width": 518,
-        "height": 12
+        "width": 742,
+        "height": 16
       },
       "style": {
         "display": "flex",
         "position": "static",
         "boxSizing": "border-box",
-        "width": "518px",
-        "height": "12px",
+        "width": "742px",
+        "height": "16px",
         "minHeight": "0px",
         "minWidth": "0px",
         "maxWidth": "none",
@@ -6863,7 +6863,7 @@
         "fontFamily": "\"Plus Jakarta Sans\", -apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, sans-serif",
         "fontSize": "10px",
         "fontWeight": "500",
-        "lineHeight": "normal",
+        "lineHeight": "16px",
         "letterSpacing": "normal",
         "textAlign": "start",
         "textTransform": "none",
@@ -6888,7 +6888,7 @@
         "overflow": "visible",
         "overflowX": "visible",
         "overflowY": "visible",
-        "direction": "ltr",
+        "direction": "rtl",
         "transform": "none"
       },
       "text": null,
@@ -6902,15 +6902,15 @@
       "selector": ".state--empty",
       "tag": "div",
       "rect": {
-        "width": 518,
-        "height": 232
+        "width": 742,
+        "height": 236.39
       },
       "style": {
         "display": "flex",
         "position": "static",
         "boxSizing": "border-box",
-        "width": "518px",
-        "height": "232px",
+        "width": "742px",
+        "height": "236.391px",
         "minHeight": "0px",
         "minWidth": "0px",
         "maxWidth": "none",
@@ -6934,7 +6934,7 @@
         "fontFamily": "\"Plus Jakarta Sans\", -apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, sans-serif",
         "fontSize": "16px",
         "fontWeight": "400",
-        "lineHeight": "normal",
+        "lineHeight": "25.6px",
         "letterSpacing": "normal",
         "textAlign": "center",
         "textTransform": "none",
@@ -6959,7 +6959,7 @@
         "overflow": "visible",
         "overflowX": "visible",
         "overflowY": "visible",
-        "direction": "ltr",
+        "direction": "rtl",
         "transform": "none"
       },
       "text": null,
@@ -6974,14 +6974,14 @@
       "tag": "p",
       "rect": {
         "width": 75.31,
-        "height": 18
+        "height": 22.39
       },
       "style": {
         "display": "block",
         "position": "static",
         "boxSizing": "border-box",
         "width": "75.3125px",
-        "height": "18px",
+        "height": "22.3906px",
         "minHeight": "auto",
         "minWidth": "auto",
         "maxWidth": "none",
@@ -7005,7 +7005,7 @@
         "fontFamily": "\"Plus Jakarta Sans\", -apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, sans-serif",
         "fontSize": "14px",
         "fontWeight": "700",
-        "lineHeight": "normal",
+        "lineHeight": "22.4px",
         "letterSpacing": "-0.364px",
         "textAlign": "center",
         "textTransform": "none",
@@ -7030,7 +7030,7 @@
         "overflow": "visible",
         "overflowX": "visible",
         "overflowY": "visible",
-        "direction": "ltr",
+        "direction": "rtl",
         "transform": "none"
       },
       "text": "Nothing yet",
@@ -7101,7 +7101,7 @@
         "overflow": "visible",
         "overflowX": "visible",
         "overflowY": "visible",
-        "direction": "ltr",
+        "direction": "rtl",
         "transform": "none"
       },
       "text": "Add one",
@@ -7115,15 +7115,15 @@
       "selector": ".state--error",
       "tag": "div",
       "rect": {
-        "width": 518,
-        "height": 232
+        "width": 742,
+        "height": 236.39
       },
       "style": {
         "display": "flex",
         "position": "static",
         "boxSizing": "border-box",
-        "width": "518px",
-        "height": "232px",
+        "width": "742px",
+        "height": "236.391px",
         "minHeight": "0px",
         "minWidth": "0px",
         "maxWidth": "none",
@@ -7147,7 +7147,7 @@
         "fontFamily": "\"Plus Jakarta Sans\", -apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, sans-serif",
         "fontSize": "16px",
         "fontWeight": "400",
-        "lineHeight": "normal",
+        "lineHeight": "25.6px",
         "letterSpacing": "normal",
         "textAlign": "center",
         "textTransform": "none",
@@ -7172,7 +7172,7 @@
         "overflow": "visible",
         "overflowX": "visible",
         "overflowY": "visible",
-        "direction": "ltr",
+        "direction": "rtl",
         "transform": "none"
       },
       "text": null,
@@ -7186,15 +7186,15 @@
       "selector": ".obanner",
       "tag": "div",
       "rect": {
-        "width": 518,
-        "height": 55
+        "width": 742,
+        "height": 63.78
       },
       "style": {
         "display": "flex",
         "position": "static",
         "boxSizing": "border-box",
-        "width": "518px",
-        "height": "55px",
+        "width": "742px",
+        "height": "63.7812px",
         "minHeight": "0px",
         "minWidth": "0px",
         "maxWidth": "none",
@@ -7218,7 +7218,7 @@
         "fontFamily": "\"Plus Jakarta Sans\", -apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, sans-serif",
         "fontSize": "16px",
         "fontWeight": "400",
-        "lineHeight": "normal",
+        "lineHeight": "25.6px",
         "letterSpacing": "normal",
         "textAlign": "start",
         "textTransform": "none",
@@ -7243,7 +7243,7 @@
         "overflow": "visible",
         "overflowX": "visible",
         "overflowY": "visible",
-        "direction": "ltr",
+        "direction": "rtl",
         "transform": "none"
       },
       "text": null,
@@ -7257,14 +7257,14 @@
       "selector": ".sk--row",
       "tag": "div",
       "rect": {
-        "width": 518,
+        "width": 742,
         "height": 58
       },
       "style": {
         "display": "block",
         "position": "static",
         "boxSizing": "border-box",
-        "width": "518px",
+        "width": "742px",
         "height": "58px",
         "minHeight": "auto",
         "minWidth": "auto",
@@ -7289,7 +7289,7 @@
         "fontFamily": "\"Plus Jakarta Sans\", -apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, sans-serif",
         "fontSize": "16px",
         "fontWeight": "400",
-        "lineHeight": "normal",
+        "lineHeight": "25.6px",
         "letterSpacing": "normal",
         "textAlign": "start",
         "textTransform": "none",
@@ -7314,7 +7314,7 @@
         "overflow": "visible",
         "overflowX": "visible",
         "overflowY": "visible",
-        "direction": "ltr",
+        "direction": "rtl",
         "transform": "none"
       },
       "text": "",
@@ -7328,14 +7328,14 @@
       "selector": ".sk--card",
       "tag": "div",
       "rect": {
-        "width": 518,
+        "width": 742,
         "height": 118
       },
       "style": {
         "display": "block",
         "position": "static",
         "boxSizing": "border-box",
-        "width": "518px",
+        "width": "742px",
         "height": "118px",
         "minHeight": "auto",
         "minWidth": "auto",
@@ -7360,7 +7360,7 @@
         "fontFamily": "\"Plus Jakarta Sans\", -apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, sans-serif",
         "fontSize": "16px",
         "fontWeight": "400",
-        "lineHeight": "normal",
+        "lineHeight": "25.6px",
         "letterSpacing": "normal",
         "textAlign": "start",
         "textTransform": "none",
@@ -7385,7 +7385,7 @@
         "overflow": "visible",
         "overflowX": "visible",
         "overflowY": "visible",
-        "direction": "ltr",
+        "direction": "rtl",
         "transform": "none"
       },
       "text": "",
@@ -7399,14 +7399,14 @@
       "selector": ".sk--metric",
       "tag": "div",
       "rect": {
-        "width": 518,
+        "width": 742,
         "height": 76
       },
       "style": {
         "display": "block",
         "position": "static",
         "boxSizing": "border-box",
-        "width": "518px",
+        "width": "742px",
         "height": "76px",
         "minHeight": "auto",
         "minWidth": "auto",
@@ -7431,7 +7431,7 @@
         "fontFamily": "\"Plus Jakarta Sans\", -apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, sans-serif",
         "fontSize": "16px",
         "fontWeight": "400",
-        "lineHeight": "normal",
+        "lineHeight": "25.6px",
         "letterSpacing": "normal",
         "textAlign": "start",
         "textTransform": "none",
@@ -7456,7 +7456,7 @@
         "overflow": "visible",
         "overflowX": "visible",
         "overflowY": "visible",
-        "direction": "ltr",
+        "direction": "rtl",
         "transform": "none"
       },
       "text": "",
@@ -7470,14 +7470,14 @@
       "selector": ".sk--chart",
       "tag": "div",
       "rect": {
-        "width": 518,
+        "width": 742,
         "height": 132
       },
       "style": {
         "display": "block",
         "position": "static",
         "boxSizing": "border-box",
-        "width": "518px",
+        "width": "742px",
         "height": "132px",
         "minHeight": "auto",
         "minWidth": "auto",
@@ -7502,7 +7502,7 @@
         "fontFamily": "\"Plus Jakarta Sans\", -apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, sans-serif",
         "fontSize": "16px",
         "fontWeight": "400",
-        "lineHeight": "normal",
+        "lineHeight": "25.6px",
         "letterSpacing": "normal",
         "textAlign": "start",
         "textTransform": "none",
@@ -7527,7 +7527,7 @@
         "overflow": "visible",
         "overflowX": "visible",
         "overflowY": "visible",
-        "direction": "ltr",
+        "direction": "rtl",
         "transform": "none"
       },
       "text": "",
@@ -7541,14 +7541,14 @@
       "selector": ".skgroup",
       "tag": "div",
       "rect": {
-        "width": 518,
+        "width": 742,
         "height": 194
       },
       "style": {
         "display": "grid",
         "position": "static",
         "boxSizing": "border-box",
-        "width": "518px",
+        "width": "742px",
         "height": "194px",
         "minHeight": "0px",
         "minWidth": "0px",
@@ -7569,11 +7569,11 @@
         "justifyContent": "normal",
         "flexWrap": "nowrap",
         "flex": "0 1 auto",
-        "gridTemplateColumns": "518px",
+        "gridTemplateColumns": "742px",
         "fontFamily": "\"Plus Jakarta Sans\", -apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, sans-serif",
         "fontSize": "16px",
         "fontWeight": "400",
-        "lineHeight": "normal",
+        "lineHeight": "25.6px",
         "letterSpacing": "normal",
         "textAlign": "start",
         "textTransform": "none",
@@ -7598,7 +7598,7 @@
         "overflow": "visible",
         "overflowX": "visible",
         "overflowY": "visible",
-        "direction": "ltr",
+        "direction": "rtl",
         "transform": "none"
       },
       "text": null,
@@ -7612,14 +7612,14 @@
       "selector": ".rrec",
       "tag": "button",
       "rect": {
-        "width": 518,
+        "width": 742,
         "height": 84
       },
       "style": {
         "display": "flex",
         "position": "static",
         "boxSizing": "border-box",
-        "width": "518px",
+        "width": "742px",
         "height": "84px",
         "minHeight": "44px",
         "minWidth": "auto",
@@ -7644,7 +7644,7 @@
         "fontFamily": "\"Plus Jakarta Sans\", -apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, sans-serif",
         "fontSize": "16px",
         "fontWeight": "400",
-        "lineHeight": "normal",
+        "lineHeight": "25.6px",
         "letterSpacing": "normal",
         "textAlign": "start",
         "textTransform": "none",
@@ -7669,7 +7669,7 @@
         "overflow": "visible",
         "overflowX": "visible",
         "overflowY": "visible",
-        "direction": "ltr",
+        "direction": "rtl",
         "transform": "none"
       },
       "text": null,
@@ -7683,14 +7683,14 @@
       "selector": ".rrec",
       "tag": "button",
       "rect": {
-        "width": 518,
+        "width": 742,
         "height": 66
       },
       "style": {
         "display": "flex",
         "position": "static",
         "boxSizing": "border-box",
-        "width": "518px",
+        "width": "742px",
         "height": "66px",
         "minHeight": "44px",
         "minWidth": "auto",
@@ -7715,7 +7715,7 @@
         "fontFamily": "\"Plus Jakarta Sans\", -apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, sans-serif",
         "fontSize": "16px",
         "fontWeight": "400",
-        "lineHeight": "normal",
+        "lineHeight": "25.6px",
         "letterSpacing": "normal",
         "textAlign": "start",
         "textTransform": "none",
@@ -7740,7 +7740,7 @@
         "overflow": "visible",
         "overflowX": "visible",
         "overflowY": "visible",
-        "direction": "ltr",
+        "direction": "rtl",
         "transform": "none"
       },
       "text": null,
@@ -7754,14 +7754,14 @@
       "selector": ".rrec",
       "tag": "div",
       "rect": {
-        "width": 518,
+        "width": 742,
         "height": 66
       },
       "style": {
         "display": "flex",
         "position": "static",
         "boxSizing": "border-box",
-        "width": "518px",
+        "width": "742px",
         "height": "66px",
         "minHeight": "44px",
         "minWidth": "auto",
@@ -7786,7 +7786,7 @@
         "fontFamily": "\"Plus Jakarta Sans\", -apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, sans-serif",
         "fontSize": "16px",
         "fontWeight": "400",
-        "lineHeight": "normal",
+        "lineHeight": "25.6px",
         "letterSpacing": "normal",
         "textAlign": "start",
         "textTransform": "none",
@@ -7811,7 +7811,7 @@
         "overflow": "visible",
         "overflowX": "visible",
         "overflowY": "visible",
-        "direction": "ltr",
+        "direction": "rtl",
         "transform": "none"
       },
       "text": null,
@@ -7882,7 +7882,7 @@
         "overflow": "hidden",
         "overflowX": "hidden",
         "overflowY": "hidden",
-        "direction": "ltr",
+        "direction": "rtl",
         "transform": "none"
       },
       "text": "G",
@@ -7896,14 +7896,14 @@
       "selector": ".rrec__sub",
       "tag": "span",
       "rect": {
-        "width": 426,
+        "width": 650,
         "height": 16
       },
       "style": {
         "display": "block",
         "position": "static",
         "boxSizing": "border-box",
-        "width": "426px",
+        "width": "650px",
         "height": "16px",
         "minHeight": "auto",
         "minWidth": "auto",
@@ -7953,7 +7953,7 @@
         "overflow": "hidden",
         "overflowX": "hidden",
         "overflowY": "hidden",
-        "direction": "ltr",
+        "direction": "rtl",
         "transform": "none"
       },
       "text": "Food",
@@ -7967,14 +7967,14 @@
       "selector": ".rrec__meta",
       "tag": "span",
       "rect": {
-        "width": 426,
+        "width": 650,
         "height": 16
       },
       "style": {
         "display": "flex",
         "position": "static",
         "boxSizing": "border-box",
-        "width": "426px",
+        "width": "650px",
         "height": "16px",
         "minHeight": "auto",
         "minWidth": "auto",
@@ -8024,7 +8024,7 @@
         "overflow": "visible",
         "overflowX": "visible",
         "overflowY": "visible",
-        "direction": "ltr",
+        "direction": "rtl",
         "transform": "none"
       },
       "text": null,
@@ -8166,7 +8166,7 @@
         "overflow": "visible",
         "overflowX": "visible",
         "overflowY": "visible",
-        "direction": "ltr",
+        "direction": "rtl",
         "transform": "none"
       },
       "text": "G",
@@ -8212,7 +8212,7 @@
         "fontFamily": "\"Plus Jakarta Sans\", -apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, sans-serif",
         "fontSize": "16px",
         "fontWeight": "400",
-        "lineHeight": "normal",
+        "lineHeight": "25.6px",
         "letterSpacing": "normal",
         "textAlign": "start",
         "textTransform": "none",
@@ -8237,7 +8237,7 @@
         "overflow": "visible",
         "overflowX": "visible",
         "overflowY": "visible",
-        "direction": "ltr",
+        "direction": "rtl",
         "transform": "none"
       },
       "text": null,
@@ -8251,14 +8251,14 @@
       "selector": ".rrecs",
       "tag": "div",
       "rect": {
-        "width": 518,
+        "width": 742,
         "height": 142
       },
       "style": {
         "display": "grid",
         "position": "static",
         "boxSizing": "border-box",
-        "width": "518px",
+        "width": "742px",
         "height": "142px",
         "minHeight": "0px",
         "minWidth": "0px",
@@ -8279,11 +8279,11 @@
         "justifyContent": "normal",
         "flexWrap": "nowrap",
         "flex": "0 1 auto",
-        "gridTemplateColumns": "518px",
+        "gridTemplateColumns": "742px",
         "fontFamily": "\"Plus Jakarta Sans\", -apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, sans-serif",
         "fontSize": "16px",
         "fontWeight": "400",
-        "lineHeight": "normal",
+        "lineHeight": "25.6px",
         "letterSpacing": "normal",
         "textAlign": "start",
         "textTransform": "none",
@@ -8308,7 +8308,7 @@
         "overflow": "visible",
         "overflowX": "visible",
         "overflowY": "visible",
-        "direction": "ltr",
+        "direction": "rtl",
         "transform": "none"
       },
       "text": null,
@@ -8322,7 +8322,7 @@
       "selector": ".crud__count",
       "tag": "span",
       "rect": {
-        "width": 63.45,
+        "width": 63.47,
         "height": 13
       },
       "style": {
@@ -8379,7 +8379,7 @@
         "overflow": "visible",
         "overflowX": "visible",
         "overflowY": "visible",
-        "direction": "ltr",
+        "direction": "rtl",
         "transform": "none"
       },
       "text": "12 expenses",
@@ -8450,7 +8450,7 @@
         "overflow": "visible",
         "overflowX": "visible",
         "overflowY": "visible",
-        "direction": "ltr",
+        "direction": "rtl",
         "transform": "none"
       },
       "text": null,
@@ -8521,7 +8521,7 @@
         "overflow": "visible",
         "overflowX": "visible",
         "overflowY": "visible",
-        "direction": "ltr",
+        "direction": "rtl",
         "transform": "none"
       },
       "text": null,
@@ -8535,14 +8535,14 @@
       "selector": ".cchips",
       "tag": "div",
       "rect": {
-        "width": 518,
+        "width": 742,
         "height": 40
       },
       "style": {
         "display": "flex",
         "position": "static",
         "boxSizing": "border-box",
-        "width": "518px",
+        "width": "742px",
         "height": "40px",
         "minHeight": "0px",
         "minWidth": "0px",
@@ -8567,7 +8567,7 @@
         "fontFamily": "\"Plus Jakarta Sans\", -apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, sans-serif",
         "fontSize": "16px",
         "fontWeight": "400",
-        "lineHeight": "normal",
+        "lineHeight": "25.6px",
         "letterSpacing": "normal",
         "textAlign": "start",
         "textTransform": "none",
@@ -8592,7 +8592,7 @@
         "overflow": "auto",
         "overflowX": "auto",
         "overflowY": "auto",
-        "direction": "ltr",
+        "direction": "rtl",
         "transform": "none"
       },
       "text": null,
@@ -8606,14 +8606,14 @@
       "selector": ".chero",
       "tag": "div",
       "rect": {
-        "width": 518,
+        "width": 742,
         "height": 158
       },
       "style": {
         "display": "block",
         "position": "static",
         "boxSizing": "border-box",
-        "width": "518px",
+        "width": "742px",
         "height": "158px",
         "minHeight": "0px",
         "minWidth": "0px",
@@ -8638,7 +8638,7 @@
         "fontFamily": "\"Plus Jakarta Sans\", -apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, sans-serif",
         "fontSize": "16px",
         "fontWeight": "400",
-        "lineHeight": "normal",
+        "lineHeight": "25.6px",
         "letterSpacing": "normal",
         "textAlign": "start",
         "textTransform": "none",
@@ -8663,7 +8663,7 @@
         "overflow": "hidden",
         "overflowX": "hidden",
         "overflowY": "hidden",
-        "direction": "ltr",
+        "direction": "rtl",
         "transform": "none"
       },
       "text": null,
@@ -8677,14 +8677,14 @@
       "selector": ".chero__kicker",
       "tag": "p",
       "rect": {
-        "width": 474,
+        "width": 698,
         "height": 16
       },
       "style": {
         "display": "block",
         "position": "static",
         "boxSizing": "border-box",
-        "width": "474px",
+        "width": "698px",
         "height": "16px",
         "minHeight": "0px",
         "minWidth": "0px",
@@ -8734,7 +8734,7 @@
         "overflow": "visible",
         "overflowX": "visible",
         "overflowY": "visible",
-        "direction": "ltr",
+        "direction": "rtl",
         "transform": "none"
       },
       "text": "E",
@@ -8748,14 +8748,14 @@
       "selector": ".chero__value",
       "tag": "p",
       "rect": {
-        "width": 474,
+        "width": 698,
         "height": 32
       },
       "style": {
         "display": "block",
         "position": "static",
         "boxSizing": "border-box",
-        "width": "474px",
+        "width": "698px",
         "height": "32px",
         "minHeight": "0px",
         "minWidth": "0px",
@@ -8819,14 +8819,14 @@
       "selector": ".chero__title",
       "tag": "p",
       "rect": {
-        "width": 474,
+        "width": 698,
         "height": 22
       },
       "style": {
         "display": "block",
         "position": "static",
         "boxSizing": "border-box",
-        "width": "474px",
+        "width": "698px",
         "height": "22px",
         "minHeight": "0px",
         "minWidth": "0px",
@@ -8876,7 +8876,7 @@
         "overflow": "visible",
         "overflowX": "visible",
         "overflowY": "visible",
-        "direction": "ltr",
+        "direction": "rtl",
         "transform": "none"
       },
       "text": "G",
@@ -8890,14 +8890,14 @@
       "selector": ".chero__caption",
       "tag": "p",
       "rect": {
-        "width": 474,
+        "width": 698,
         "height": 16
       },
       "style": {
         "display": "block",
         "position": "static",
         "boxSizing": "border-box",
-        "width": "474px",
+        "width": "698px",
         "height": "16px",
         "minHeight": "0px",
         "minWidth": "0px",
@@ -8947,7 +8947,7 @@
         "overflow": "visible",
         "overflowX": "visible",
         "overflowY": "visible",
-        "direction": "ltr",
+        "direction": "rtl",
         "transform": "none"
       },
       "text": "Today",
@@ -8961,14 +8961,14 @@
       "selector": ".cfacts",
       "tag": "div",
       "rect": {
-        "width": 518,
+        "width": 742,
         "height": 115
       },
       "style": {
         "display": "block",
         "position": "static",
         "boxSizing": "border-box",
-        "width": "518px",
+        "width": "742px",
         "height": "115px",
         "minHeight": "0px",
         "minWidth": "0px",
@@ -8993,7 +8993,7 @@
         "fontFamily": "\"Plus Jakarta Sans\", -apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, sans-serif",
         "fontSize": "16px",
         "fontWeight": "400",
-        "lineHeight": "normal",
+        "lineHeight": "25.6px",
         "letterSpacing": "normal",
         "textAlign": "start",
         "textTransform": "none",
@@ -9018,7 +9018,7 @@
         "overflow": "visible",
         "overflowX": "visible",
         "overflowY": "visible",
-        "direction": "ltr",
+        "direction": "rtl",
         "transform": "none"
       },
       "text": null,
@@ -9032,14 +9032,14 @@
       "selector": ".cfact",
       "tag": "div",
       "rect": {
-        "width": 484,
+        "width": 708,
         "height": 52
       },
       "style": {
         "display": "flex",
         "position": "static",
         "boxSizing": "border-box",
-        "width": "484px",
+        "width": "708px",
         "height": "52px",
         "minHeight": "0px",
         "minWidth": "0px",
@@ -9064,7 +9064,7 @@
         "fontFamily": "\"Plus Jakarta Sans\", -apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, sans-serif",
         "fontSize": "16px",
         "fontWeight": "400",
-        "lineHeight": "normal",
+        "lineHeight": "25.6px",
         "letterSpacing": "normal",
         "textAlign": "start",
         "textTransform": "none",
@@ -9089,7 +9089,7 @@
         "overflow": "visible",
         "overflowX": "visible",
         "overflowY": "visible",
-        "direction": "ltr",
+        "direction": "rtl",
         "transform": "none"
       },
       "text": null,
@@ -9160,7 +9160,7 @@
         "overflow": "visible",
         "overflowX": "visible",
         "overflowY": "visible",
-        "direction": "ltr",
+        "direction": "rtl",
         "transform": "none"
       },
       "text": "Category",
@@ -9231,7 +9231,7 @@
         "overflow": "visible",
         "overflowX": "visible",
         "overflowY": "visible",
-        "direction": "ltr",
+        "direction": "rtl",
         "transform": "none"
       },
       "text": "Food",
@@ -9245,14 +9245,14 @@
       "selector": ".cacts",
       "tag": "div",
       "rect": {
-        "width": 518,
+        "width": 742,
         "height": 114
       },
       "style": {
         "display": "grid",
         "position": "static",
         "boxSizing": "border-box",
-        "width": "518px",
+        "width": "742px",
         "height": "114px",
         "minHeight": "0px",
         "minWidth": "0px",
@@ -9273,11 +9273,11 @@
         "justifyContent": "normal",
         "flexWrap": "nowrap",
         "flex": "0 1 auto",
-        "gridTemplateColumns": "518px",
+        "gridTemplateColumns": "742px",
         "fontFamily": "\"Plus Jakarta Sans\", -apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, sans-serif",
         "fontSize": "16px",
         "fontWeight": "400",
-        "lineHeight": "normal",
+        "lineHeight": "25.6px",
         "letterSpacing": "normal",
         "textAlign": "start",
         "textTransform": "none",
@@ -9302,7 +9302,7 @@
         "overflow": "visible",
         "overflowX": "visible",
         "overflowY": "visible",
-        "direction": "ltr",
+        "direction": "rtl",
         "transform": "none"
       },
       "text": null,
@@ -9316,14 +9316,14 @@
       "selector": ".cact--edit",
       "tag": "button",
       "rect": {
-        "width": 518,
+        "width": 742,
         "height": 52
       },
       "style": {
         "display": "flex",
         "position": "static",
         "boxSizing": "border-box",
-        "width": "518px",
+        "width": "742px",
         "height": "52px",
         "minHeight": "52px",
         "minWidth": "auto",
@@ -9373,7 +9373,7 @@
         "overflow": "visible",
         "overflowX": "visible",
         "overflowY": "visible",
-        "direction": "ltr",
+        "direction": "rtl",
         "transform": "none"
       },
       "text": null,
@@ -9387,14 +9387,14 @@
       "selector": ".cact--danger",
       "tag": "button",
       "rect": {
-        "width": 518,
+        "width": 742,
         "height": 52
       },
       "style": {
         "display": "flex",
         "position": "static",
         "boxSizing": "border-box",
-        "width": "518px",
+        "width": "742px",
         "height": "52px",
         "minHeight": "52px",
         "minWidth": "auto",
@@ -9444,7 +9444,7 @@
         "overflow": "visible",
         "overflowX": "visible",
         "overflowY": "visible",
-        "direction": "ltr",
+        "direction": "rtl",
         "transform": "none"
       },
       "text": "Do it",
@@ -9458,14 +9458,14 @@
       "selector": ".cfield",
       "tag": "div",
       "rect": {
-        "width": 518,
+        "width": 742,
         "height": 71
       },
       "style": {
         "display": "flex",
         "position": "static",
         "boxSizing": "border-box",
-        "width": "518px",
+        "width": "742px",
         "height": "71px",
         "minHeight": "0px",
         "minWidth": "0px",
@@ -9490,7 +9490,7 @@
         "fontFamily": "\"Plus Jakarta Sans\", -apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, sans-serif",
         "fontSize": "16px",
         "fontWeight": "400",
-        "lineHeight": "normal",
+        "lineHeight": "25.6px",
         "letterSpacing": "normal",
         "textAlign": "start",
         "textTransform": "none",
@@ -9515,7 +9515,7 @@
         "overflow": "visible",
         "overflowX": "visible",
         "overflowY": "visible",
-        "direction": "ltr",
+        "direction": "rtl",
         "transform": "none"
       },
       "text": null,
@@ -9529,14 +9529,14 @@
       "selector": ".cfield__label",
       "tag": "label",
       "rect": {
-        "width": 518,
+        "width": 742,
         "height": 16
       },
       "style": {
         "display": "flex",
         "position": "static",
         "boxSizing": "border-box",
-        "width": "518px",
+        "width": "742px",
         "height": "16px",
         "minHeight": "auto",
         "minWidth": "auto",
@@ -9586,7 +9586,7 @@
         "overflow": "visible",
         "overflowX": "visible",
         "overflowY": "visible",
-        "direction": "ltr",
+        "direction": "rtl",
         "transform": "none"
       },
       "text": "Title",
@@ -9600,14 +9600,14 @@
       "selector": ".cfield__box",
       "tag": "span",
       "rect": {
-        "width": 518,
+        "width": 742,
         "height": 48
       },
       "style": {
         "display": "flex",
         "position": "static",
         "boxSizing": "border-box",
-        "width": "518px",
+        "width": "742px",
         "height": "48px",
         "minHeight": "48px",
         "minWidth": "auto",
@@ -9632,7 +9632,7 @@
         "fontFamily": "\"Plus Jakarta Sans\", -apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, sans-serif",
         "fontSize": "16px",
         "fontWeight": "400",
-        "lineHeight": "normal",
+        "lineHeight": "25.6px",
         "letterSpacing": "normal",
         "textAlign": "start",
         "textTransform": "none",
@@ -9657,7 +9657,7 @@
         "overflow": "visible",
         "overflowX": "visible",
         "overflowY": "visible",
-        "direction": "ltr",
+        "direction": "rtl",
         "transform": "none"
       },
       "text": null,
@@ -9671,14 +9671,14 @@
       "selector": ".cfield__box",
       "tag": "span",
       "rect": {
-        "width": 518,
+        "width": 742,
         "height": 48
       },
       "style": {
         "display": "flex",
         "position": "static",
         "boxSizing": "border-box",
-        "width": "518px",
+        "width": "742px",
         "height": "48px",
         "minHeight": "48px",
         "minWidth": "auto",
@@ -9703,7 +9703,7 @@
         "fontFamily": "\"Plus Jakarta Sans\", -apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, sans-serif",
         "fontSize": "16px",
         "fontWeight": "400",
-        "lineHeight": "normal",
+        "lineHeight": "25.6px",
         "letterSpacing": "normal",
         "textAlign": "start",
         "textTransform": "none",
@@ -9728,7 +9728,7 @@
         "overflow": "visible",
         "overflowX": "visible",
         "overflowY": "visible",
-        "direction": "ltr",
+        "direction": "rtl",
         "transform": "none"
       },
       "text": null,
@@ -9742,14 +9742,14 @@
       "selector": ".cfield__err",
       "tag": "p",
       "rect": {
-        "width": 518,
+        "width": 742,
         "height": 16
       },
       "style": {
         "display": "flex",
         "position": "static",
         "boxSizing": "border-box",
-        "width": "518px",
+        "width": "742px",
         "height": "16px",
         "minHeight": "auto",
         "minWidth": "auto",
@@ -9799,7 +9799,7 @@
         "overflow": "visible",
         "overflowX": "visible",
         "overflowY": "visible",
-        "direction": "ltr",
+        "direction": "rtl",
         "transform": "none"
       },
       "text": null,
@@ -9813,14 +9813,14 @@
       "selector": ".cfield__hint",
       "tag": "p",
       "rect": {
-        "width": 518,
+        "width": 742,
         "height": 16
       },
       "style": {
         "display": "block",
         "position": "static",
         "boxSizing": "border-box",
-        "width": "518px",
+        "width": "742px",
         "height": "16px",
         "minHeight": "auto",
         "minWidth": "auto",
@@ -9870,7 +9870,7 @@
         "overflow": "visible",
         "overflowX": "visible",
         "overflowY": "visible",
-        "direction": "ltr",
+        "direction": "rtl",
         "transform": "none"
       },
       "text": "Optional",
@@ -9941,7 +9941,7 @@
         "overflow": "visible",
         "overflowX": "visible",
         "overflowY": "visible",
-        "direction": "ltr",
+        "direction": "rtl",
         "transform": "none"
       },
       "text": "Optional",
@@ -9955,14 +9955,14 @@
       "selector": ".cfield__box textarea",
       "tag": "textarea",
       "rect": {
-        "width": 488,
+        "width": 712,
         "height": 89.06
       },
       "style": {
         "display": "block",
         "position": "static",
         "boxSizing": "border-box",
-        "width": "488px",
+        "width": "712px",
         "height": "89.0625px",
         "minHeight": "76px",
         "minWidth": "0px",
@@ -10012,7 +10012,7 @@
         "overflow": "auto",
         "overflowX": "auto",
         "overflowY": "auto",
-        "direction": "ltr",
+        "direction": "rtl",
         "transform": "none"
       },
       "text": "",
@@ -10058,7 +10058,7 @@
         "fontFamily": "\"Plus Jakarta Sans\", -apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, sans-serif",
         "fontSize": "16px",
         "fontWeight": "400",
-        "lineHeight": "normal",
+        "lineHeight": "25.6px",
         "letterSpacing": "normal",
         "textAlign": "start",
         "textTransform": "none",
@@ -10083,7 +10083,7 @@
         "overflow": "visible",
         "overflowX": "visible",
         "overflowY": "visible",
-        "direction": "ltr",
+        "direction": "rtl",
         "transform": "none"
       },
       "text": null,
@@ -10097,14 +10097,14 @@
       "selector": ".cfield__select",
       "tag": "span",
       "rect": {
-        "width": 488,
+        "width": 712,
         "height": 46
       },
       "style": {
         "display": "flex",
         "position": "static",
         "boxSizing": "border-box",
-        "width": "488px",
+        "width": "712px",
         "height": "46px",
         "minHeight": "auto",
         "minWidth": "0px",
@@ -10129,7 +10129,7 @@
         "fontFamily": "\"Plus Jakarta Sans\", -apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, sans-serif",
         "fontSize": "16px",
         "fontWeight": "400",
-        "lineHeight": "normal",
+        "lineHeight": "25.6px",
         "letterSpacing": "normal",
         "textAlign": "start",
         "textTransform": "none",
@@ -10154,7 +10154,7 @@
         "overflow": "visible",
         "overflowX": "visible",
         "overflowY": "visible",
-        "direction": "ltr",
+        "direction": "rtl",
         "transform": "none"
       },
       "text": null,
@@ -10168,14 +10168,14 @@
       "selector": ".cattach",
       "tag": "button",
       "rect": {
-        "width": 518,
+        "width": 742,
         "height": 64
       },
       "style": {
         "display": "flex",
         "position": "static",
         "boxSizing": "border-box",
-        "width": "518px",
+        "width": "742px",
         "height": "64px",
         "minHeight": "64px",
         "minWidth": "auto",
@@ -10225,7 +10225,7 @@
         "overflow": "visible",
         "overflowX": "visible",
         "overflowY": "visible",
-        "direction": "ltr",
+        "direction": "rtl",
         "transform": "none"
       },
       "text": null,
@@ -10239,14 +10239,14 @@
       "selector": ".cform",
       "tag": "div",
       "rect": {
-        "width": 518,
+        "width": 742,
         "height": 71
       },
       "style": {
         "display": "grid",
         "position": "static",
         "boxSizing": "border-box",
-        "width": "518px",
+        "width": "742px",
         "height": "71px",
         "minHeight": "0px",
         "minWidth": "0px",
@@ -10267,11 +10267,11 @@
         "justifyContent": "normal",
         "flexWrap": "nowrap",
         "flex": "0 1 auto",
-        "gridTemplateColumns": "518px",
+        "gridTemplateColumns": "742px",
         "fontFamily": "\"Plus Jakarta Sans\", -apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, sans-serif",
         "fontSize": "16px",
         "fontWeight": "400",
-        "lineHeight": "normal",
+        "lineHeight": "25.6px",
         "letterSpacing": "normal",
         "textAlign": "start",
         "textTransform": "none",
@@ -10296,7 +10296,7 @@
         "overflow": "visible",
         "overflowX": "visible",
         "overflowY": "visible",
-        "direction": "ltr",
+        "direction": "rtl",
         "transform": "none"
       },
       "text": null,
@@ -10310,18 +10310,18 @@
       "selector": ".cformcard",
       "tag": "div",
       "rect": {
-        "width": 518,
+        "width": 742,
         "height": 121
       },
       "style": {
         "display": "block",
         "position": "static",
         "boxSizing": "border-box",
-        "width": "518px",
+        "width": "742px",
         "height": "121px",
         "minHeight": "0px",
         "minWidth": "0px",
-        "maxWidth": "none",
+        "maxWidth": "760px",
         "paddingTop": "24px",
         "paddingRight": "24px",
         "paddingBottom": "24px",
@@ -10342,7 +10342,7 @@
         "fontFamily": "\"Plus Jakarta Sans\", -apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, sans-serif",
         "fontSize": "16px",
         "fontWeight": "400",
-        "lineHeight": "normal",
+        "lineHeight": "25.6px",
         "letterSpacing": "normal",
         "textAlign": "start",
         "textTransform": "none",
@@ -10367,7 +10367,7 @@
         "overflow": "visible",
         "overflowX": "visible",
         "overflowY": "visible",
-        "direction": "ltr",
+        "direction": "rtl",
         "transform": "none"
       },
       "text": null,
@@ -10381,14 +10381,14 @@
       "selector": ".csubmit",
       "tag": "div",
       "rect": {
-        "width": 518,
+        "width": 742,
         "height": 102
       },
       "style": {
         "display": "grid",
         "position": "static",
         "boxSizing": "border-box",
-        "width": "518px",
+        "width": "742px",
         "height": "102px",
         "minHeight": "0px",
         "minWidth": "0px",
@@ -10409,11 +10409,11 @@
         "justifyContent": "normal",
         "flexWrap": "nowrap",
         "flex": "0 1 auto",
-        "gridTemplateColumns": "518px",
+        "gridTemplateColumns": "742px",
         "fontFamily": "\"Plus Jakarta Sans\", -apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, sans-serif",
         "fontSize": "16px",
         "fontWeight": "400",
-        "lineHeight": "normal",
+        "lineHeight": "25.6px",
         "letterSpacing": "normal",
         "textAlign": "start",
         "textTransform": "none",
@@ -10438,7 +10438,7 @@
         "overflow": "visible",
         "overflowX": "visible",
         "overflowY": "visible",
-        "direction": "ltr",
+        "direction": "rtl",
         "transform": "none"
       },
       "text": null,
@@ -10452,14 +10452,14 @@
       "selector": ".csubmit .btn",
       "tag": "button",
       "rect": {
-        "width": 518,
+        "width": 742,
         "height": 46
       },
       "style": {
         "display": "flex",
         "position": "static",
         "boxSizing": "border-box",
-        "width": "518px",
+        "width": "742px",
         "height": "46px",
         "minHeight": "auto",
         "minWidth": "auto",
@@ -10484,7 +10484,7 @@
         "fontFamily": "\"Plus Jakarta Sans\", -apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, sans-serif",
         "fontSize": "14px",
         "fontWeight": "700",
-        "lineHeight": "normal",
+        "lineHeight": "22.4px",
         "letterSpacing": "-0.308px",
         "textAlign": "center",
         "textTransform": "none",
@@ -10509,7 +10509,7 @@
         "overflow": "visible",
         "overflowX": "visible",
         "overflowY": "visible",
-        "direction": "ltr",
+        "direction": "rtl",
         "transform": "none"
       },
       "text": null,
@@ -10523,14 +10523,14 @@
       "selector": ".cnotice--error",
       "tag": "div",
       "rect": {
-        "width": 518,
+        "width": 742,
         "height": 66
       },
       "style": {
         "display": "flex",
         "position": "static",
         "boxSizing": "border-box",
-        "width": "518px",
+        "width": "742px",
         "height": "66px",
         "minHeight": "0px",
         "minWidth": "0px",
@@ -10555,7 +10555,7 @@
         "fontFamily": "\"Plus Jakarta Sans\", -apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, sans-serif",
         "fontSize": "16px",
         "fontWeight": "400",
-        "lineHeight": "normal",
+        "lineHeight": "25.6px",
         "letterSpacing": "normal",
         "textAlign": "start",
         "textTransform": "none",
@@ -10580,7 +10580,7 @@
         "overflow": "visible",
         "overflowX": "visible",
         "overflowY": "visible",
-        "direction": "ltr",
+        "direction": "rtl",
         "transform": "none"
       },
       "text": null,
@@ -10594,14 +10594,14 @@
       "selector": ".cnotice--warn",
       "tag": "div",
       "rect": {
-        "width": 518,
+        "width": 742,
         "height": 66
       },
       "style": {
         "display": "flex",
         "position": "static",
         "boxSizing": "border-box",
-        "width": "518px",
+        "width": "742px",
         "height": "66px",
         "minHeight": "0px",
         "minWidth": "0px",
@@ -10626,7 +10626,7 @@
         "fontFamily": "\"Plus Jakarta Sans\", -apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, sans-serif",
         "fontSize": "16px",
         "fontWeight": "400",
-        "lineHeight": "normal",
+        "lineHeight": "25.6px",
         "letterSpacing": "normal",
         "textAlign": "start",
         "textTransform": "none",
@@ -10651,7 +10651,7 @@
         "overflow": "visible",
         "overflowX": "visible",
         "overflowY": "visible",
-        "direction": "ltr",
+        "direction": "rtl",
         "transform": "none"
       },
       "text": null,
@@ -10665,14 +10665,14 @@
       "selector": ".cnotice--offline",
       "tag": "div",
       "rect": {
-        "width": 518,
+        "width": 742,
         "height": 65
       },
       "style": {
         "display": "flex",
         "position": "static",
         "boxSizing": "border-box",
-        "width": "518px",
+        "width": "742px",
         "height": "65px",
         "minHeight": "0px",
         "minWidth": "0px",
@@ -10697,7 +10697,7 @@
         "fontFamily": "\"Plus Jakarta Sans\", -apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, sans-serif",
         "fontSize": "16px",
         "fontWeight": "400",
-        "lineHeight": "normal",
+        "lineHeight": "25.6px",
         "letterSpacing": "normal",
         "textAlign": "start",
         "textTransform": "none",
@@ -10722,7 +10722,7 @@
         "overflow": "visible",
         "overflowX": "visible",
         "overflowY": "visible",
-        "direction": "ltr",
+        "direction": "rtl",
         "transform": "none"
       },
       "text": null,
@@ -10793,7 +10793,7 @@
         "overflow": "visible",
         "overflowX": "visible",
         "overflowY": "visible",
-        "direction": "ltr",
+        "direction": "rtl",
         "transform": "none"
       },
       "text": "Do it",
@@ -10807,14 +10807,14 @@
       "selector": ".csks",
       "tag": "div",
       "rect": {
-        "width": 518,
+        "width": 742,
         "height": 218
       },
       "style": {
         "display": "grid",
         "position": "static",
         "boxSizing": "border-box",
-        "width": "518px",
+        "width": "742px",
         "height": "218px",
         "minHeight": "0px",
         "minWidth": "0px",
@@ -10835,11 +10835,11 @@
         "justifyContent": "normal",
         "flexWrap": "nowrap",
         "flex": "0 1 auto",
-        "gridTemplateColumns": "518px",
+        "gridTemplateColumns": "742px",
         "fontFamily": "\"Plus Jakarta Sans\", -apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, sans-serif",
         "fontSize": "16px",
         "fontWeight": "400",
-        "lineHeight": "normal",
+        "lineHeight": "25.6px",
         "letterSpacing": "normal",
         "textAlign": "start",
         "textTransform": "none",
@@ -10864,7 +10864,7 @@
         "overflow": "visible",
         "overflowX": "visible",
         "overflowY": "visible",
-        "direction": "ltr",
+        "direction": "rtl",
         "transform": "none"
       },
       "text": null,
@@ -10878,14 +10878,14 @@
       "selector": ".csk",
       "tag": "div",
       "rect": {
-        "width": 518,
+        "width": 742,
         "height": 66
       },
       "style": {
         "display": "flex",
         "position": "static",
         "boxSizing": "border-box",
-        "width": "518px",
+        "width": "742px",
         "height": "66px",
         "minHeight": "auto",
         "minWidth": "auto",
@@ -10910,7 +10910,7 @@
         "fontFamily": "\"Plus Jakarta Sans\", -apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, sans-serif",
         "fontSize": "16px",
         "fontWeight": "400",
-        "lineHeight": "normal",
+        "lineHeight": "25.6px",
         "letterSpacing": "normal",
         "textAlign": "start",
         "textTransform": "none",
@@ -10935,7 +10935,7 @@
         "overflow": "visible",
         "overflowX": "visible",
         "overflowY": "visible",
-        "direction": "ltr",
+        "direction": "rtl",
         "transform": "none"
       },
       "text": null,
@@ -10949,14 +10949,14 @@
       "selector": ".cstate",
       "tag": "div",
       "rect": {
-        "width": 518,
+        "width": 742,
         "height": 324
       },
       "style": {
         "display": "flex",
         "position": "static",
         "boxSizing": "border-box",
-        "width": "518px",
+        "width": "742px",
         "height": "324px",
         "minHeight": "0px",
         "minWidth": "0px",
@@ -10981,7 +10981,7 @@
         "fontFamily": "\"Plus Jakarta Sans\", -apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, sans-serif",
         "fontSize": "16px",
         "fontWeight": "400",
-        "lineHeight": "normal",
+        "lineHeight": "25.6px",
         "letterSpacing": "normal",
         "textAlign": "center",
         "textTransform": "none",
@@ -11006,7 +11006,7 @@
         "overflow": "visible",
         "overflowX": "visible",
         "overflowY": "visible",
-        "direction": "ltr",
+        "direction": "rtl",
         "transform": "none"
       },
       "text": null,
@@ -11077,7 +11077,7 @@
         "overflow": "visible",
         "overflowX": "visible",
         "overflowY": "visible",
-        "direction": "ltr",
+        "direction": "rtl",
         "transform": "none"
       },
       "text": "Nothing yet",
@@ -11148,7 +11148,7 @@
         "overflow": "visible",
         "overflowX": "visible",
         "overflowY": "visible",
-        "direction": "ltr",
+        "direction": "rtl",
         "transform": "none"
       },
       "text": "Add one",
@@ -11162,14 +11162,14 @@
       "selector": ".cstate--error",
       "tag": "div",
       "rect": {
-        "width": 518,
+        "width": 742,
         "height": 324
       },
       "style": {
         "display": "flex",
         "position": "static",
         "boxSizing": "border-box",
-        "width": "518px",
+        "width": "742px",
         "height": "324px",
         "minHeight": "0px",
         "minWidth": "0px",
@@ -11194,7 +11194,7 @@
         "fontFamily": "\"Plus Jakarta Sans\", -apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, sans-serif",
         "fontSize": "16px",
         "fontWeight": "400",
-        "lineHeight": "normal",
+        "lineHeight": "25.6px",
         "letterSpacing": "normal",
         "textAlign": "center",
         "textTransform": "none",
@@ -11219,7 +11219,7 @@
         "overflow": "visible",
         "overflowX": "visible",
         "overflowY": "visible",
-        "direction": "ltr",
+        "direction": "rtl",
         "transform": "none"
       },
       "text": null,
@@ -11233,14 +11233,14 @@
       "selector": ".cstate--quiet",
       "tag": "div",
       "rect": {
-        "width": 518,
+        "width": 742,
         "height": 184
       },
       "style": {
         "display": "flex",
         "position": "static",
         "boxSizing": "border-box",
-        "width": "518px",
+        "width": "742px",
         "height": "184px",
         "minHeight": "0px",
         "minWidth": "0px",
@@ -11265,7 +11265,7 @@
         "fontFamily": "\"Plus Jakarta Sans\", -apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, sans-serif",
         "fontSize": "16px",
         "fontWeight": "400",
-        "lineHeight": "normal",
+        "lineHeight": "25.6px",
         "letterSpacing": "normal",
         "textAlign": "center",
         "textTransform": "none",
@@ -11290,7 +11290,7 @@
         "overflow": "visible",
         "overflowX": "visible",
         "overflowY": "visible",
-        "direction": "ltr",
+        "direction": "rtl",
         "transform": "none"
       },
       "text": null,
@@ -11304,14 +11304,14 @@
       "selector": ".cstate--pane",
       "tag": "div",
       "rect": {
-        "width": 518,
+        "width": 742,
         "height": 320
       },
       "style": {
         "display": "flex",
         "position": "static",
         "boxSizing": "border-box",
-        "width": "518px",
+        "width": "742px",
         "height": "320px",
         "minHeight": "320px",
         "minWidth": "0px",
@@ -11336,7 +11336,7 @@
         "fontFamily": "\"Plus Jakarta Sans\", -apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, sans-serif",
         "fontSize": "16px",
         "fontWeight": "400",
-        "lineHeight": "normal",
+        "lineHeight": "25.6px",
         "letterSpacing": "normal",
         "textAlign": "center",
         "textTransform": "none",
@@ -11361,7 +11361,7 @@
         "overflow": "visible",
         "overflowX": "visible",
         "overflowY": "visible",
-        "direction": "ltr",
+        "direction": "rtl",
         "transform": "none"
       },
       "text": null,
@@ -11375,15 +11375,15 @@
       "selector": ".panes",
       "tag": "div",
       "rect": {
-        "width": 518,
-        "height": 21
+        "width": 742,
+        "height": 25.59
       },
       "style": {
-        "display": "block",
+        "display": "grid",
         "position": "static",
         "boxSizing": "border-box",
-        "width": "518px",
-        "height": "21px",
+        "width": "742px",
+        "height": "25.5938px",
         "minHeight": "0px",
         "minWidth": "0px",
         "maxWidth": "none",
@@ -11395,19 +11395,19 @@
         "marginRight": "0px",
         "marginBottom": "0px",
         "marginLeft": "0px",
-        "gap": "normal",
-        "rowGap": "normal",
-        "columnGap": "normal",
+        "gap": "20px",
+        "rowGap": "20px",
+        "columnGap": "20px",
         "flexDirection": "row",
-        "alignItems": "normal",
+        "alignItems": "start",
         "justifyContent": "normal",
         "flexWrap": "nowrap",
         "flex": "0 1 auto",
-        "gridTemplateColumns": "none",
+        "gridTemplateColumns": "380px 342px",
         "fontFamily": "\"Plus Jakarta Sans\", -apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, sans-serif",
         "fontSize": "16px",
         "fontWeight": "400",
-        "lineHeight": "normal",
+        "lineHeight": "25.6px",
         "letterSpacing": "normal",
         "textAlign": "start",
         "textTransform": "none",
@@ -11432,7 +11432,7 @@
         "overflow": "visible",
         "overflowX": "visible",
         "overflowY": "visible",
-        "direction": "ltr",
+        "direction": "rtl",
         "transform": "none"
       },
       "text": null,
@@ -11446,14 +11446,14 @@
       "selector": ".crud__id",
       "tag": "p",
       "rect": {
-        "width": 518,
+        "width": 742,
         "height": 16
       },
       "style": {
         "display": "block",
         "position": "static",
         "boxSizing": "border-box",
-        "width": "518px",
+        "width": "742px",
         "height": "16px",
         "minHeight": "0px",
         "minWidth": "0px",
@@ -11503,7 +11503,7 @@
         "overflow": "visible",
         "overflowX": "visible",
         "overflowY": "visible",
-        "direction": "ltr",
+        "direction": "rtl",
         "transform": "none"
       },
       "text": "#1024",
@@ -11549,7 +11549,7 @@
         "fontFamily": "\"Plus Jakarta Sans\", -apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, sans-serif",
         "fontSize": "16px",
         "fontWeight": "400",
-        "lineHeight": "normal",
+        "lineHeight": "25.6px",
         "letterSpacing": "normal",
         "textAlign": "start",
         "textTransform": "none",
@@ -11574,7 +11574,7 @@
         "overflow": "visible",
         "overflowX": "visible",
         "overflowY": "visible",
-        "direction": "ltr",
+        "direction": "rtl",
         "transform": "none"
       },
       "text": null,
@@ -11620,7 +11620,7 @@
         "fontFamily": "\"Plus Jakarta Sans\", -apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, sans-serif",
         "fontSize": "16px",
         "fontWeight": "400",
-        "lineHeight": "normal",
+        "lineHeight": "25.6px",
         "letterSpacing": "normal",
         "textAlign": "center",
         "textTransform": "none",
@@ -11645,7 +11645,7 @@
         "overflow": "visible",
         "overflowX": "visible",
         "overflowY": "visible",
-        "direction": "ltr",
+        "direction": "rtl",
         "transform": "none"
       },
       "text": null,
@@ -11691,7 +11691,7 @@
         "fontFamily": "\"Plus Jakarta Sans\", -apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, sans-serif",
         "fontSize": "16px",
         "fontWeight": "400",
-        "lineHeight": "normal",
+        "lineHeight": "25.6px",
         "letterSpacing": "normal",
         "textAlign": "center",
         "textTransform": "none",
@@ -11716,7 +11716,7 @@
         "overflow": "visible",
         "overflowX": "visible",
         "overflowY": "visible",
-        "direction": "ltr",
+        "direction": "rtl",
         "transform": "none"
       },
       "text": null,
@@ -11762,7 +11762,7 @@
         "fontFamily": "\"Plus Jakarta Sans\", -apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, sans-serif",
         "fontSize": "10px",
         "fontWeight": "700",
-        "lineHeight": "normal",
+        "lineHeight": "16px",
         "letterSpacing": "-0.05px",
         "textAlign": "center",
         "textTransform": "none",
@@ -11787,7 +11787,7 @@
         "overflow": "visible",
         "overflowX": "visible",
         "overflowY": "visible",
-        "direction": "ltr",
+        "direction": "rtl",
         "transform": "none"
       },
       "text": "Home",
@@ -11833,7 +11833,7 @@
         "fontFamily": "\"Plus Jakarta Sans\", -apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, sans-serif",
         "fontSize": "16px",
         "fontWeight": "400",
-        "lineHeight": "normal",
+        "lineHeight": "25.6px",
         "letterSpacing": "normal",
         "textAlign": "start",
         "textTransform": "none",
@@ -11858,7 +11858,7 @@
         "overflow": "visible",
         "overflowX": "visible",
         "overflowY": "visible",
-        "direction": "ltr",
+        "direction": "rtl",
         "transform": "none"
       },
       "text": "",
@@ -11872,15 +11872,15 @@
       "selector": ".navside",
       "tag": "nav",
       "rect": {
-        "width": 518,
-        "height": 351
+        "width": 742,
+        "height": 336
       },
       "style": {
         "display": "flex",
         "position": "static",
         "boxSizing": "border-box",
-        "width": "518px",
-        "height": "351px",
+        "width": "742px",
+        "height": "336px",
         "minHeight": "0px",
         "minWidth": "0px",
         "maxWidth": "none",
@@ -11904,7 +11904,7 @@
         "fontFamily": "\"Plus Jakarta Sans\", -apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, sans-serif",
         "fontSize": "16px",
         "fontWeight": "400",
-        "lineHeight": "normal",
+        "lineHeight": "25.6px",
         "letterSpacing": "normal",
         "textAlign": "start",
         "textTransform": "none",
@@ -11916,9 +11916,9 @@
         "backgroundImage": "none",
         "opacity": "1",
         "borderTopWidth": "0px",
-        "borderRightWidth": "1px",
+        "borderRightWidth": "0px",
         "borderBottomWidth": "0px",
-        "borderLeftWidth": "0px",
+        "borderLeftWidth": "1px",
         "borderTopColor": "rgb(16, 17, 19)",
         "borderBottomColor": "rgb(16, 17, 19)",
         "borderTopLeftRadius": "0px",
@@ -11929,7 +11929,7 @@
         "overflow": "auto",
         "overflowX": "auto",
         "overflowY": "auto",
-        "direction": "ltr",
+        "direction": "rtl",
         "transform": "none"
       },
       "text": null,
@@ -11943,17 +11943,17 @@
       "selector": ".navside__brand",
       "tag": "span",
       "rect": {
-        "width": 0,
-        "height": 0
+        "width": 717,
+        "height": 56
       },
       "style": {
-        "display": "none",
+        "display": "block",
         "position": "static",
         "boxSizing": "border-box",
-        "width": "auto",
-        "height": "auto",
-        "minHeight": "0px",
-        "minWidth": "0px",
+        "width": "717px",
+        "height": "56px",
+        "minHeight": "auto",
+        "minWidth": "auto",
         "maxWidth": "none",
         "paddingTop": "4px",
         "paddingRight": "12px",
@@ -12000,7 +12000,7 @@
         "overflow": "visible",
         "overflowX": "visible",
         "overflowY": "visible",
-        "direction": "ltr",
+        "direction": "rtl",
         "transform": "none"
       },
       "text": "Lume",
@@ -12014,40 +12014,40 @@
       "selector": ".navtab",
       "tag": "button",
       "rect": {
-        "width": 493,
-        "height": 59
+        "width": 717,
+        "height": 44
       },
       "style": {
         "display": "flex",
         "position": "relative",
         "boxSizing": "border-box",
-        "width": "493px",
-        "height": "59px",
+        "width": "717px",
+        "height": "44px",
         "minHeight": "44px",
         "minWidth": "auto",
         "maxWidth": "none",
         "paddingTop": "10px",
-        "paddingRight": "4px",
+        "paddingRight": "12px",
         "paddingBottom": "10px",
-        "paddingLeft": "4px",
+        "paddingLeft": "12px",
         "marginTop": "0px",
         "marginRight": "0px",
         "marginBottom": "0px",
         "marginLeft": "0px",
-        "gap": "5px",
-        "rowGap": "5px",
-        "columnGap": "5px",
-        "flexDirection": "column",
+        "gap": "12px",
+        "rowGap": "12px",
+        "columnGap": "12px",
+        "flexDirection": "row",
         "alignItems": "center",
         "justifyContent": "normal",
         "flexWrap": "nowrap",
         "flex": "0 1 auto",
         "gridTemplateColumns": "none",
         "fontFamily": "\"Plus Jakarta Sans\", -apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, sans-serif",
-        "fontSize": "10px",
+        "fontSize": "15px",
         "fontWeight": "700",
-        "lineHeight": "14px",
-        "letterSpacing": "-0.2px",
+        "lineHeight": "20px",
+        "letterSpacing": "-0.3px",
         "textAlign": "start",
         "textTransform": "none",
         "textDecorationLine": "none",
@@ -12071,7 +12071,7 @@
         "overflow": "visible",
         "overflowX": "visible",
         "overflowY": "visible",
-        "direction": "ltr",
+        "direction": "rtl",
         "transform": "none"
       },
       "text": null,
@@ -12085,40 +12085,40 @@
       "selector": ".navtab.is-active",
       "tag": "button",
       "rect": {
-        "width": 493,
-        "height": 59
+        "width": 717,
+        "height": 44
       },
       "style": {
         "display": "flex",
         "position": "relative",
         "boxSizing": "border-box",
-        "width": "493px",
-        "height": "59px",
+        "width": "717px",
+        "height": "44px",
         "minHeight": "44px",
         "minWidth": "auto",
         "maxWidth": "none",
         "paddingTop": "10px",
-        "paddingRight": "4px",
+        "paddingRight": "12px",
         "paddingBottom": "10px",
-        "paddingLeft": "4px",
+        "paddingLeft": "12px",
         "marginTop": "0px",
         "marginRight": "0px",
         "marginBottom": "0px",
         "marginLeft": "0px",
-        "gap": "5px",
-        "rowGap": "5px",
-        "columnGap": "5px",
-        "flexDirection": "column",
+        "gap": "12px",
+        "rowGap": "12px",
+        "columnGap": "12px",
+        "flexDirection": "row",
         "alignItems": "center",
         "justifyContent": "normal",
         "flexWrap": "nowrap",
         "flex": "0 1 auto",
         "gridTemplateColumns": "none",
         "fontFamily": "\"Plus Jakarta Sans\", -apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, sans-serif",
-        "fontSize": "10px",
+        "fontSize": "15px",
         "fontWeight": "700",
-        "lineHeight": "14px",
-        "letterSpacing": "-0.2px",
+        "lineHeight": "20px",
+        "letterSpacing": "-0.3px",
         "textAlign": "start",
         "textTransform": "none",
         "textDecorationLine": "none",
@@ -12142,7 +12142,7 @@
         "overflow": "visible",
         "overflowX": "visible",
         "overflowY": "visible",
-        "direction": "ltr",
+        "direction": "rtl",
         "transform": "none"
       },
       "text": null,
@@ -12156,15 +12156,15 @@
       "selector": ".navtab__label",
       "tag": "span",
       "rect": {
-        "width": 28.42,
-        "height": 14
+        "width": 42.63,
+        "height": 20
       },
       "style": {
         "display": "block",
         "position": "static",
         "boxSizing": "border-box",
-        "width": "28.4219px",
-        "height": "14px",
+        "width": "42.625px",
+        "height": "20px",
         "minHeight": "auto",
         "minWidth": "auto",
         "maxWidth": "none",
@@ -12186,11 +12186,11 @@
         "flex": "0 1 auto",
         "gridTemplateColumns": "none",
         "fontFamily": "\"Plus Jakarta Sans\", -apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, sans-serif",
-        "fontSize": "10px",
+        "fontSize": "15px",
         "fontWeight": "700",
-        "lineHeight": "14px",
-        "letterSpacing": "-0.2px",
-        "textAlign": "center",
+        "lineHeight": "20px",
+        "letterSpacing": "-0.3px",
+        "textAlign": "start",
         "textTransform": "none",
         "textDecorationLine": "none",
         "whiteSpace": "normal",
@@ -12213,7 +12213,7 @@
         "overflow": "visible",
         "overflowX": "visible",
         "overflowY": "visible",
-        "direction": "ltr",
+        "direction": "rtl",
         "transform": "none"
       },
       "text": "Home",
@@ -12227,22 +12227,22 @@
       "selector": ".statusbar",
       "tag": "div",
       "rect": {
-        "width": 518,
-        "height": 42
+        "width": 742,
+        "height": 45.8
       },
       "style": {
         "display": "flex",
         "position": "relative",
         "boxSizing": "border-box",
-        "width": "518px",
-        "height": "42px",
+        "width": "742px",
+        "height": "45.7969px",
         "minHeight": "0px",
         "minWidth": "0px",
         "maxWidth": "none",
         "paddingTop": "12px",
-        "paddingRight": "24px",
+        "paddingRight": "32px",
         "paddingBottom": "12px",
-        "paddingLeft": "24px",
+        "paddingLeft": "32px",
         "marginTop": "0px",
         "marginRight": "0px",
         "marginBottom": "0px",
@@ -12259,7 +12259,7 @@
         "fontFamily": "\"Plus Jakarta Sans\", -apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, sans-serif",
         "fontSize": "13px",
         "fontWeight": "700",
-        "lineHeight": "normal",
+        "lineHeight": "20.8px",
         "letterSpacing": "-0.13px",
         "textAlign": "start",
         "textTransform": "none",
@@ -12284,7 +12284,7 @@
         "overflow": "visible",
         "overflowX": "visible",
         "overflowY": "visible",
-        "direction": "ltr",
+        "direction": "rtl",
         "transform": "none"
       },
       "text": null,
@@ -12355,7 +12355,7 @@
         "overflow": "visible",
         "overflowX": "visible",
         "overflowY": "visible",
-        "direction": "ltr",
+        "direction": "rtl",
         "transform": "none"
       },
       "text": null,
@@ -12369,15 +12369,15 @@
       "selector": ".screen",
       "tag": "section",
       "rect": {
-        "width": 566,
-        "height": 22186.22
+        "width": 806,
+        "height": 22586.81
       },
       "style": {
         "display": "block",
         "position": "absolute",
         "boxSizing": "border-box",
-        "width": "566px",
-        "height": "22186.2px",
+        "width": "806px",
+        "height": "22586.8px",
         "minHeight": "0px",
         "minWidth": "0px",
         "maxWidth": "none",
@@ -12401,7 +12401,7 @@
         "fontFamily": "\"Plus Jakarta Sans\", -apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, sans-serif",
         "fontSize": "16px",
         "fontWeight": "400",
-        "lineHeight": "normal",
+        "lineHeight": "25.6px",
         "letterSpacing": "normal",
         "textAlign": "start",
         "textTransform": "none",
@@ -12426,7 +12426,7 @@
         "overflow": "hidden auto",
         "overflowX": "hidden",
         "overflowY": "auto",
-        "direction": "ltr",
+        "direction": "rtl",
         "transform": "matrix(1, 0, 0, 1, 0, 0)"
       },
       "text": null,

@@ -249,4 +249,41 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get toolsNothingYet => 'Nothing here yet';
+
+  @override
+  String get a11yMainNavigation => 'Main';
+
+  @override
+  String get navNotifications => 'Notifications';
+
+  @override
+  String get navAccount => 'Account';
+
+  @override
+  String get toolLoading => 'Loading';
+
+  @override
+  String get toolErrorTitle => 'Something went wrong';
+
+  @override
+  String get toolErrorText => 'We couldn’t load this. Try again in a moment.';
+
+  @override
+  String get toolUnavailableTitle => 'Not part of your setup';
+
+  @override
+  String get toolUnavailableText => 'That tool isn’t part of your setup.';
+
+  @override
+  String get routeMissingTitle => 'We can’t find that';
+
+  @override
+  String get routeMissingText =>
+      'The link may be old, or the page may have moved.';
+
+  @override
+  String get recordsNoSelectionTitle => 'Nothing selected';
+
+  @override
+  String get recordsNoSelectionText => 'Choose a record to see it here.';
 }

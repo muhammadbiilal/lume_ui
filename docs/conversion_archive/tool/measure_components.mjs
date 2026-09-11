@@ -172,9 +172,20 @@ async function main() {
     }
     if (!ready) throw new Error('the fixture never reported ready');
 
-    // Theme and direction are attributes on the root, exactly as the shell
-    // sets them — not a separate stylesheet, so the cascade is unchanged.
+    // Theme, direction and width class are attributes on the root, exactly as
+    // the shell sets them — not a separate stylesheet, so the cascade is
+    // unchanged.
+    //
+    // `data-bp` matters more than it looks: the rail and the sidebar are
+    // `display: none` until it says medium or expanded, and a measurement
+    // taken without it reports a zero-height element with the *compact*
+    // styles. `breakpoint.js` is not running in the fixture, so the measurer
+    // stamps what breakpoint.js would have — from the shell width, which is
+    // the viewport here because the fixture has no stage padding of its own.
     await cdp.evaluate(`(function () {
+      var w = ${WIDTH};
+      document.documentElement.dataset.bp =
+        w >= 840 ? 'expanded' : w >= 600 ? 'medium' : 'compact';
       document.documentElement.dataset.theme = ${JSON.stringify(THEME)};
       document.documentElement.lang = ${JSON.stringify(LANG)};
       document.documentElement.dir = ${JSON.stringify(DIR)};

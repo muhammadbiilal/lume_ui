@@ -247,4 +247,40 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get toolsNothingYet => 'لا شيء هنا بعد';
+
+  @override
+  String get a11yMainNavigation => 'الرئيسية';
+
+  @override
+  String get navNotifications => 'الإشعارات';
+
+  @override
+  String get navAccount => 'الحساب';
+
+  @override
+  String get toolLoading => 'جارٍ التحميل';
+
+  @override
+  String get toolErrorTitle => 'حدث خطأ ما';
+
+  @override
+  String get toolErrorText => 'تعذّر تحميل هذا. حاول مرة أخرى بعد قليل.';
+
+  @override
+  String get toolUnavailableTitle => 'ليست ضمن إعداداتك';
+
+  @override
+  String get toolUnavailableText => 'هذه الأداة ليست ضمن إعداداتك.';
+
+  @override
+  String get routeMissingTitle => 'تعذّر العثور على ذلك';
+
+  @override
+  String get routeMissingText => 'قد يكون الرابط قديمًا أو أن الصفحة قد نُقلت.';
+
+  @override
+  String get recordsNoSelectionTitle => 'لم يتم اختيار شيء';
+
+  @override
+  String get recordsNoSelectionText => 'اختر سجلاً لعرضه هنا.';
 }

@@ -328,27 +328,45 @@ an `isWide` flag. Individual screens do not compute this.
 One destination set, three presentations, one selection. The router selects a
 destination; it does not keep three bars in step.
 
+Built at F3. Where the row below differs from what F0 planned, F3's version is
+the one in the code and the reason is given — the full contract is in
+[NAVIGATION_CONTRACT.md](NAVIGATION_CONTRACT.md).
+
 | Web | Flutter |
 |---|---|
-| `createRouter` + `activate(name)` | `GoRouter` with `StatefulShellRoute.indexedStack` |
-| `tabOrder()` — personalised, 5 max | A provider returning the ordered destination list |
-| `.tab` bottom bar + `#tabPill` | `LumeBottomBar` with an animated selection pill |
-| `.navtab` rail (medium) | `LumeNavRail`, stacked icon over `--t-tab` label |
-| `.navtab` sidebar (expanded) | `LumeNavSidebar`, row with `--t-cardtitle` label + wordmark |
-| `lifecycle.mount/render/enter/leave/unmount` | `StatefulWidget` lifecycle + `AutomaticKeepAliveClientMixin` inside the shell's `IndexedStack` |
+| `createRouter` + `activate(name)` | `GoRouter` with `StatefulShellRoute.indexedStack`, in `core/routing/app_router.dart` |
+| `tabOrder()` — personalised, 5 max | `LumeDestinations.orderFor(country)`, read through `countryCodeProvider` |
+| `TAB_META` | `LumeDestinations.icons` — the single definition every surface renders |
+| `.tab` bottom bar + `#tabPill` | `LumeBottomBar`, with an `AnimatedPositionedDirectional` pill |
+| `.navtab` rail (medium) | `LumeNavigationRail(expanded: false)` — stacked icon over `--t-tab` label |
+| `.navtab` sidebar (expanded) | `LumeNavigationRail(expanded: true)` — row, `--t-cardtitle` label, wordmark |
+| `lifecycle.mount/render/enter/leave/unmount` | `StatefulWidget` lifecycle inside the branch's own navigator |
 | `AbortController` signal | `dispose()` cancelling controllers, timers and subscriptions |
-| `NON_TAB_DESTINATIONS` | Routes outside the shell branch set |
-| `router.refreshTabs()` after a country change | Re-reading the destination provider; a destination that is no longer a tab goes home |
-| `#exploreBack` | A back affordance shown when Explore is reached as a non-tab |
+| `NON_TAB_DESTINATIONS` | Sub-routes of **every** branch, so Back returns to the branch they were opened from — see D8 |
+| `notifReturnTab` | The branch stack. Nothing to remember, and it survives the centre being open on two branches |
+| `router.refreshTabs()` after a country change | Re-reading `countryCodeProvider`; branch indices are fixed, so no stack moves |
+| `#exploreBack` | Explore is a branch root everywhere; in Pakistan it is reachable and unselected, and its own toolbar carries the way back |
+
+Two F0 plans were revised when the shell was built:
+
+- **The rail and the sidebar are one widget**, not `LumeNavRail` and
+  `LumeNavSidebar`. They are one element in the reference — `.navside`, with the
+  stylesheet deciding whether the label sits beside the glyph or under it — and
+  splitting them would be the conversion inventing a distinction the design does
+  not make.
+- **Non-tab destinations live inside the branch set**, not outside it. Outside,
+  they would drop the whole `StatefulShellRoute` and every branch's stack with
+  it; inside, each rides the branch it was opened from. See D8.
 
 | Country | Destinations |
 |---|---|
 | Pakistan | Home · Tools · Trains · Today · Profile |
 | Everywhere else | Home · Tools · Today · Explore · Profile |
 
-Screen state must survive a destination change and a width-class change.
-`IndexedStack` inside the shell branch gives that for free; a `PageStorageKey`
-on every scrollable gives scroll restoration.
+Screen state must survive a destination change and a width-class change. The
+`indexedStack` branches give the first for free; a `PageStorageKey` on every
+scrollable gives scroll restoration; and in master-detail, `GlobalKey`s carry the
+list and the detail across the rotation that moves them between two layouts.
 
 ---
 

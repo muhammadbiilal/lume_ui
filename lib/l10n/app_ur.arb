@@ -77,5 +77,17 @@
   "searchTry": "یہ تلاش کر کے دیکھیں",
   "toolPrivateText": "یہ معلومات آپ کے آلے پر رہتی ہیں اور کبھی شیئر نہیں کی جاتیں۔",
   "toolPrivateTitle": "صرف آپ کے لیے",
-  "toolsNothingYet": "ابھی یہاں کچھ نہیں"
+  "toolsNothingYet": "ابھی یہاں کچھ نہیں",
+  "a11yMainNavigation": "مرکزی",
+  "navNotifications": "اطلاعات",
+  "navAccount": "اکاؤنٹ",
+  "toolLoading": "لوڈ ہو رہا ہے",
+  "toolErrorTitle": "کچھ غلط ہو گیا",
+  "toolErrorText": "ہم اسے لوڈ نہیں کر سکے۔ ایک لمحے بعد دوبارہ کوشش کریں۔",
+  "toolUnavailableTitle": "آپ کے سیٹ اپ کا حصہ نہیں",
+  "toolUnavailableText": "یہ ٹول آپ کے سیٹ اپ کا حصہ نہیں ہے۔",
+  "routeMissingTitle": "ہمیں وہ نہیں مل رہا",
+  "routeMissingText": "لنک پرانا ہو سکتا ہے، یا صفحہ منتقل ہو گیا ہو۔",
+  "recordsNoSelectionTitle": "کچھ منتخب نہیں",
+  "recordsNoSelectionText": "یہاں دیکھنے کے لیے کوئی ریکارڈ منتخب کریں۔"
 }

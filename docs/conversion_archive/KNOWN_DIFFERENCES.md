@@ -54,10 +54,19 @@ That strip is application chrome and **is** reproduced.
 `min(100dvh - 48px, 980px)`. Below 600 px it caps the app at 560 px wide and
 centres it.
 
-**None of this is reproduced.** It exists so a prototype viewed on a monitor
-reads as a device; in Flutter the app *is* the device. The stage, the frame, the
-560 px cap and the 980 px height clamp are dropped. Everything *inside* the
-frame is the real layout and is reproduced exactly.
+**The costume is not reproduced.** It exists so a prototype viewed on a monitor
+reads as a device; in Flutter the app *is* the device. The stage padding, the
+radial ground, the rounded frame, the border, the shadow and the 980 px height
+clamp are dropped. Everything *inside* the frame is the real layout and is
+reproduced exactly.
+
+**The two width caps are kept** (corrected at F3, when the shell was built). A
+cap is a measure rather than a costume: `max-width: 1366px`, and `560px` below
+600. `LumeShell.capFor` applies them and `LumeBreakpointScope` measures inside
+the result, so on a very wide window the shell is 1366 and centred rather than
+stretched to an unreadable measure the design has never described. The two never
+argue — the 560 cap is gated on a *window* under 600, where the shell is compact
+anyway.
 
 This means a web capture at 1100 px and a Flutter capture at 1100 px will differ
 by the frame and its surround. The comparison tool therefore measures the
@@ -214,6 +223,71 @@ line holding two numeric runs reorders them: `1,240.50  16:41` renders as
 `16:41 1,240.50` in an Urdu page. The digits are right; their *sequence* is not,
 so a price and a time silently swap places. `LumeNumerals` / `LumeLtr` supply
 both the direction and the isolation.
+
+### D8 — nested destinations ride a branch stack
+
+**Raised and resolved in F3.** The reference has no navigation stack, so a
+destination that is not a tab remembers where it came from in a variable:
+
+> The centre is a destination rather than a tab, so it remembers where the user
+> was and its back control returns them there.
+> — `assets/js/shell.js`, and `var notifReturnTab = 'home'`
+
+The Flutter shell reaches the same outcome with a stack: the notification
+centre, search, account, a tool and a tool's records are sub-routes of whichever
+branch they were opened from, so `/home/notifications` and `/today/notifications`
+are the same screen on two stacks and Back lands where the user actually was.
+
+This is not a re-interpretation of the behaviour — it is the same behaviour with
+one fewer thing to keep in step. A single variable cannot survive the centre
+being open on two branches at once, and the reference cannot reach that state
+because it has only one screen container. Flutter can, and a stack answers it.
+
+The bare `/notifications`, `/search` and `/account` still resolve, for a push
+notification or an external link, and redirect onto the branch the reference's
+own fallback names.
+
+### D9 — the floating bar hides while the keyboard is up
+
+**Raised and resolved in F3.** `.tabbar` is `position: absolute` inside a
+`100dvh` shell, and `dvh` does not track the keyboard — it tracks browser
+chrome. So in the browser the bar ends up *behind* the keyboard: present in the
+layout, invisible to the user.
+
+Hiding it is the same outcome drawn honestly. The alternative, Material's
+default, is to shrink the shell and park the bar on top of the keyboard, which
+the reference never does and which puts five destinations between the user and
+the field they are typing into.
+
+The shell also refuses to let the keyboard change its width class. A 1024-point
+tablet with a 600-point keyboard has 424 points left — under D1's compact-height
+floor — so measuring after the keyboard would take the sidebar away
+mid-sentence. `resizeToAvoidBottomInset` is therefore off and the outlet absorbs
+the inset as bottom padding instead, which is where a form needs it.
+
+### D10 — a master-detail selection is not written into the location
+
+**Raised and resolved in F3.** The CRUD guide requires that selecting a record
+at expanded width updates the pane and does not push a route, so the list keeps
+its scroll, its filters and its sort. A location per selection is exactly the
+rebuild that rule forbids.
+
+So the selection lives in the collection screen's state. A deep link to a record
+(`…/records/7`) lands as the *opening* selection and the location then stays
+put. Nothing is lost: the reference has no locations at all, and no behaviour
+described anywhere depends on one.
+
+A consequence worth stating: at compact, the first Back clears the selection and
+the second leaves the collection. The record is over the list, not after it.
+
+### D11 — the tablet status strip drops the device glyphs
+
+**Raised and resolved in F3**, and a narrowing of the P1 consequence already
+recorded above. At medium and expanded the strip is application chrome and is
+reproduced — the `card` ground, the bottom border, the 12 px block padding, the
+brand mark and the clock. The signal, wifi and battery glyphs beside them are a
+*drawing of a device*, and on a device the device draws them. They are dropped;
+nothing else in the strip is.
 
 ---
 
@@ -385,6 +459,12 @@ id-reconciliation table is an F6 deliverable. Recorded in
 | 2026-09-11 (F3) | **Q8 rejected; D6 completed.** The stepper's targets are 44 × 44, non-overlapping, in-bounds, and centred on their circles | A 44 × 32 target was accepted too easily the first time |
 | 2026-09-11 (F3) | **`LumePressable` gained keyboard and screen-reader activation.** It was pointer-only: Enter, Space and an assistive tap all did nothing | Found while proving the stepper's four activation paths |
 | 2026-09-11 (F3) | Stepper pill corrected from 94 to the measured 92 px | The value column was 28 where the measurement says 26 |
+| 2026-09-11 (F3) | **D8 raised and resolved** — nested destinations ride a branch stack rather than a remembered return tab | A single variable cannot hold the centre being open on two branches |
+| 2026-09-11 (F3) | **D9 raised and resolved** — the floating bar hides while the keyboard is up, and the keyboard does not change the width class | `100dvh` does not track the keyboard, so the reference's bar ends up behind it |
+| 2026-09-11 (F3) | **D10 raised and resolved** — a master-detail selection stays out of the location | A route per selection is the rebuild the CRUD guide forbids |
+| 2026-09-11 (F3) | **D11 raised and resolved** — the tablet status strip keeps the wordmark and the clock, drops the device glyphs | The strip is application chrome; the glyphs are a drawing of a device |
+| 2026-09-11 (F3) | **Correction:** the shell's two width caps (1366, and 560 below 600) are **kept**, not dropped | F0 recorded them with the device frame; a cap is a measure, not a costume |
+| 2026-09-11 (F3) | **`LumeMasterDetail` extended** into a shell that survives rotation, with `GlobalKey`s carrying the list and the detail between the two layouts | The row and the stack put them at different depths, so a rotation would otherwise reset both |
 
 One correction has been applied to the web prototype: the four dead
 `.onb-country` lines, deleted in F1 under the evidence gate in C1. Nothing else

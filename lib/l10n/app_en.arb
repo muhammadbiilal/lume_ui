@@ -312,5 +312,53 @@
   "toolsNothingYet": "Nothing here yet",
   "@toolsNothingYet": {
     "description": "Reference key tools.nothingYet"
+  },
+  "a11yMainNavigation": "Main",
+  "@a11yMainNavigation": {
+    "description": "Reference: aria-label=\"Main\" on both navigations"
+  },
+  "navNotifications": "Notifications",
+  "@navNotifications": {
+    "description": "Reference key home.notifications"
+  },
+  "navAccount": "Account",
+  "@navAccount": {
+    "description": "Reference key acct.account"
+  },
+  "toolLoading": "Loading",
+  "@toolLoading": {
+    "description": "Announced while a tool is still assembling"
+  },
+  "toolErrorTitle": "Something went wrong",
+  "@toolErrorTitle": {
+    "description": "Tool host error state"
+  },
+  "toolErrorText": "We couldn’t load this. Try again in a moment.",
+  "@toolErrorText": {
+    "description": "Tool host error state"
+  },
+  "toolUnavailableTitle": "Not part of your setup",
+  "@toolUnavailableTitle": {
+    "description": "Tool host unavailable state"
+  },
+  "toolUnavailableText": "That tool isn’t part of your setup.",
+  "@toolUnavailableText": {
+    "description": "Reference key tool.unavailable"
+  },
+  "routeMissingTitle": "We can’t find that",
+  "@routeMissingTitle": {
+    "description": "Unrecognised location"
+  },
+  "routeMissingText": "The link may be old, or the page may have moved.",
+  "@routeMissingText": {
+    "description": "Unrecognised location"
+  },
+  "recordsNoSelectionTitle": "Nothing selected",
+  "@recordsNoSelectionTitle": {
+    "description": "Master-detail pane before a record is chosen"
+  },
+  "recordsNoSelectionText": "Choose a record to see it here.",
+  "@recordsNoSelectionText": {
+    "description": "Master-detail pane before a record is chosen"
   }
 }

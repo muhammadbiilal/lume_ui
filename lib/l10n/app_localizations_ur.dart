@@ -250,4 +250,43 @@ class AppLocalizationsUr extends AppLocalizations {
 
   @override
   String get toolsNothingYet => 'ابھی یہاں کچھ نہیں';
+
+  @override
+  String get a11yMainNavigation => 'مرکزی';
+
+  @override
+  String get navNotifications => 'اطلاعات';
+
+  @override
+  String get navAccount => 'اکاؤنٹ';
+
+  @override
+  String get toolLoading => 'لوڈ ہو رہا ہے';
+
+  @override
+  String get toolErrorTitle => 'کچھ غلط ہو گیا';
+
+  @override
+  String get toolErrorText =>
+      'ہم اسے لوڈ نہیں کر سکے۔ ایک لمحے بعد دوبارہ کوشش کریں۔';
+
+  @override
+  String get toolUnavailableTitle => 'آپ کے سیٹ اپ کا حصہ نہیں';
+
+  @override
+  String get toolUnavailableText => 'یہ ٹول آپ کے سیٹ اپ کا حصہ نہیں ہے۔';
+
+  @override
+  String get routeMissingTitle => 'ہمیں وہ نہیں مل رہا';
+
+  @override
+  String get routeMissingText =>
+      'لنک پرانا ہو سکتا ہے، یا صفحہ منتقل ہو گیا ہو۔';
+
+  @override
+  String get recordsNoSelectionTitle => 'کچھ منتخب نہیں';
+
+  @override
+  String get recordsNoSelectionText =>
+      'یہاں دیکھنے کے لیے کوئی ریکارڈ منتخب کریں۔';
 }

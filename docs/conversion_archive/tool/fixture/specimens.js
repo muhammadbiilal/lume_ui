@@ -17,6 +17,45 @@ const rows = (list) => UI.rows(list);
 const recs = (list) => K.recordRows(list);
 const act = { act: 'noop', label: 'Do it' };
 
+/* The navigation markup the shell emits, reproduced verbatim from
+   `renderTabBar()` so the measurement is of the real thing. */
+const DESTS = [
+  ['home', 'i-home', 'Home'],
+  ['tools', 'i-grid', 'Tools'],
+  ['today', 'i-sun', 'Today'],
+  ['explore', 'i-compass', 'Explore'],
+  ['profile', 'i-user', 'Profile'],
+];
+const ico = (n) =>
+  '<svg class="ico" viewBox="0 0 24 24"><use href="#' + n + '"/></svg>';
+const tabs = (activeIndex) =>
+  '<span class="tabbar__pill" id="tabPill"></span>' +
+  DESTS.map(([id, icon, label], i) =>
+    '<button class="tab' + (i === activeIndex ? ' is-active' : '') +
+    '" data-tab="' + id + '" role="tab" aria-selected="' +
+    (i === activeIndex) + '">' + ico(icon) +
+    '<span class="tab__label">' + label + '</span></button>').join('');
+const navtabs = (activeIndex) =>
+  '<span class="navside__brand">Lume</span>' +
+  DESTS.map(([id, icon, label], i) =>
+    '<button class="navtab' + (i === activeIndex ? ' is-active' : '') +
+    '" data-tab="' + id + '" role="tab" aria-selected="' +
+    (i === activeIndex) + '">' + ico(icon) +
+    '<span class="navtab__label">' + label + '</span></button>').join('');
+
+const NAV = {
+  bar: '<nav class="tabbar" role="tablist" aria-label="Main">' + tabs(-1) + '</nav>',
+  barActive: '<nav class="tabbar" role="tablist" aria-label="Main">' + tabs(0) + '</nav>',
+  side: '<nav class="navside" role="tablist" aria-label="Main">' + navtabs(-1) + '</nav>',
+  sideActive: '<nav class="navside" role="tablist" aria-label="Main">' + navtabs(0) + '</nav>',
+  status:
+    '<div class="statusbar">' +
+      '<span class="statusbar__brand" aria-hidden="true">' + ico('i-lume') + 'Lume</span>' +
+      '<span class="num statusbar__clock">16:41</span>' +
+      '<span class="statusbar__icons">' + ico('i-signal') + ico('i-wifi') + ico('i-battery') + '</span>' +
+    '</div>',
+};
+
 /** name -> { html, sel } — `sel` is the element that gets measured. */
 export const SPECIMENS = {
   // ---- Navigation and chrome -------------------------------------------
@@ -427,4 +466,22 @@ export const SPECIMENS = {
   },
   'panes': { html: K.panes({ list: '<p>l</p>', detail: '<p>d</p>' }), sel: '.panes' },
   'crud.id': { html: K.recordId('#1024'), sel: '.crud__id' },
+  // ---- Navigation (F3) ---------------------------------------------------
+  // The shell builds these from tabOrder(); reproduced here as markup so a
+  // specimen exists without booting the whole application. Same classes, same
+  // structure, same stylesheet — so the same computed values.
+  'tabbar': { html: NAV.bar, sel: '.tabbar' },
+  'tab': { html: NAV.bar, sel: '.tab' },
+  'tab.active': { html: NAV.barActive, sel: '.tab.is-active' },
+  'tab.label': { html: NAV.bar, sel: '.tab__label' },
+  'tabbar.pill': { html: NAV.bar, sel: '.tabbar__pill' },
+  'navside': { html: NAV.side, sel: '.navside' },
+  'navside.brand': { html: NAV.side, sel: '.navside__brand' },
+  'navtab': { html: NAV.side, sel: '.navtab' },
+  'navtab.active': { html: NAV.sideActive, sel: '.navtab.is-active' },
+  'navtab.label': { html: NAV.side, sel: '.navtab__label' },
+  'statusbar': { html: NAV.status, sel: '.statusbar' },
+  'statusbar.brand': { html: NAV.status, sel: '.statusbar__brand' },
+  'screen': { html: '<section class="screen is-active"><p>x</p></section>', sel: '.screen' },
 };
+

@@ -32,10 +32,16 @@ Registered in `assets/js/screens/index.js`, in the order they occupy the outlet.
 | 7 | Account | `screens/account.screen.js` | 159 | `css/account.css` | not started |
 | 8 | Auth | `screens/auth.screen.js` | 259 | `css/auth.css` | not started |
 | 9 | Notifications | `screens/notifications.screen.js` | 210 | `css/screens/notifications.css` | not started |
-| 10 | Tool host | `screens/tool.screen.js` | 1097 | `css/tools/shared.css` | not started |
+| 10 | Tool host | `screens/tool.screen.js` | 1097 | `css/tools/shared.css` | **frame complete (F3)** — the 85 tools it hosts are F6 |
 
 Shared across all ten: `css/screens/shared.css`, `css/components.css`,
 `css/crud.css`, `css/responsive.css`, `css/rtl.css`.
+
+**F3 built what surrounds all ten, not the ten.** The shell, the three
+navigation presentations, the route map, the tool-host frame and the
+master-detail shell are complete and tested; every screen above has a route and
+a fixture sitting in it until its own phase. The contracts they must satisfy are
+in [NAVIGATION_CONTRACT.md](NAVIGATION_CONTRACT.md).
 
 ### Navigation destinations
 

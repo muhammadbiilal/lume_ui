@@ -1,9 +1,9 @@
 {
-  "cell": "components_700_light_ltr",
+  "cell": "components_852_light_ltr",
   "viewport": {
-    "width": 700,
-    "height": 900,
-    "innerWidth": 700
+    "width": 852,
+    "height": 393,
+    "innerWidth": 852
   },
   "theme": "light",
   "dir": "ltr",
@@ -15,22 +15,22 @@
       "selector": ".toolbar",
       "tag": "header",
       "rect": {
-        "width": 518,
+        "width": 494,
         "height": 62
       },
       "style": {
         "display": "flex",
         "position": "sticky",
         "boxSizing": "border-box",
-        "width": "518px",
+        "width": "494px",
         "height": "62px",
         "minHeight": "0px",
         "minWidth": "0px",
-        "maxWidth": "808px",
+        "maxWidth": "824px",
         "paddingTop": "10px",
-        "paddingRight": "24px",
+        "paddingRight": "32px",
         "paddingBottom": "12px",
-        "paddingLeft": "24px",
+        "paddingLeft": "32px",
         "marginTop": "0px",
         "marginRight": "0px",
         "marginBottom": "0px",
@@ -86,14 +86,14 @@
       "selector": ".toolbar__title",
       "tag": "h1",
       "rect": {
-        "width": 412,
+        "width": 372,
         "height": 25
       },
       "style": {
         "display": "block",
         "position": "static",
         "boxSizing": "border-box",
-        "width": "412px",
+        "width": "372px",
         "height": "25px",
         "minHeight": "0px",
         "minWidth": "0px",
@@ -157,14 +157,14 @@
       "selector": ".toolbar__sub",
       "tag": "p",
       "rect": {
-        "width": 412,
+        "width": 372,
         "height": 13
       },
       "style": {
         "display": "block",
         "position": "static",
         "boxSizing": "border-box",
-        "width": "412px",
+        "width": "372px",
         "height": "13px",
         "minHeight": "0px",
         "minWidth": "0px",
@@ -370,22 +370,22 @@
       "selector": ".ctxbar",
       "tag": "div",
       "rect": {
-        "width": 518,
+        "width": 494,
         "height": 22
       },
       "style": {
         "display": "flex",
         "position": "static",
         "boxSizing": "border-box",
-        "width": "518px",
+        "width": "494px",
         "height": "22px",
         "minHeight": "0px",
         "minWidth": "0px",
         "maxWidth": "none",
         "paddingTop": "0px",
-        "paddingRight": "24px",
+        "paddingRight": "32px",
         "paddingBottom": "4px",
-        "paddingLeft": "24px",
+        "paddingLeft": "32px",
         "marginTop": "0px",
         "marginRight": "0px",
         "marginBottom": "0px",
@@ -512,22 +512,22 @@
       "selector": ".sect",
       "tag": "section",
       "rect": {
-        "width": 518,
+        "width": 494,
         "height": 52
       },
       "style": {
         "display": "block",
         "position": "static",
         "boxSizing": "border-box",
-        "width": "518px",
+        "width": "494px",
         "height": "52px",
         "minHeight": "0px",
         "minWidth": "0px",
-        "maxWidth": "808px",
+        "maxWidth": "824px",
         "paddingTop": "0px",
-        "paddingRight": "24px",
+        "paddingRight": "32px",
         "paddingBottom": "0px",
-        "paddingLeft": "24px",
+        "paddingLeft": "32px",
         "marginTop": "24px",
         "marginRight": "0px",
         "marginBottom": "0px",
@@ -938,14 +938,14 @@
       "selector": ".btn",
       "tag": "button",
       "rect": {
-        "width": 518,
+        "width": 494,
         "height": 46
       },
       "style": {
         "display": "inline-flex",
         "position": "static",
         "boxSizing": "border-box",
-        "width": "518px",
+        "width": "494px",
         "height": "46px",
         "minHeight": "0px",
         "minWidth": "0px",
@@ -1080,14 +1080,14 @@
       "selector": ".btnrow",
       "tag": "div",
       "rect": {
-        "width": 518,
+        "width": 494,
         "height": 46
       },
       "style": {
         "display": "flex",
         "position": "static",
         "boxSizing": "border-box",
-        "width": "518px",
+        "width": "494px",
         "height": "46px",
         "minHeight": "0px",
         "minWidth": "0px",
@@ -1222,14 +1222,14 @@
       "selector": ".search",
       "tag": "label",
       "rect": {
-        "width": 470,
+        "width": 430,
         "height": 44
       },
       "style": {
         "display": "flex",
         "position": "static",
         "boxSizing": "border-box",
-        "width": "470px",
+        "width": "430px",
         "height": "44px",
         "minHeight": "auto",
         "minWidth": "auto",
@@ -1239,9 +1239,9 @@
         "paddingBottom": "0px",
         "paddingLeft": "14px",
         "marginTop": "0px",
-        "marginRight": "24px",
+        "marginRight": "32px",
         "marginBottom": "0px",
-        "marginLeft": "24px",
+        "marginLeft": "32px",
         "gap": "9px",
         "rowGap": "9px",
         "columnGap": "9px",
@@ -1293,14 +1293,14 @@
       "selector": ".tsearch",
       "tag": "div",
       "rect": {
-        "width": 518,
+        "width": 494,
         "height": 44
       },
       "style": {
         "display": "flex",
         "position": "static",
         "boxSizing": "border-box",
-        "width": "518px",
+        "width": "494px",
         "height": "44px",
         "minHeight": "0px",
         "minWidth": "0px",
@@ -1364,14 +1364,14 @@
       "selector": ".field",
       "tag": "label",
       "rect": {
-        "width": 518,
+        "width": 494,
         "height": 61
       },
       "style": {
         "display": "flex",
         "position": "static",
         "boxSizing": "border-box",
-        "width": "518px",
+        "width": "494px",
         "height": "61px",
         "minHeight": "0px",
         "minWidth": "0px",
@@ -1435,14 +1435,14 @@
       "selector": ".field__label",
       "tag": "span",
       "rect": {
-        "width": 518,
+        "width": 494,
         "height": 13
       },
       "style": {
         "display": "block",
         "position": "static",
         "boxSizing": "border-box",
-        "width": "518px",
+        "width": "494px",
         "height": "13px",
         "minHeight": "auto",
         "minWidth": "auto",
@@ -1506,14 +1506,14 @@
       "selector": ".field__box",
       "tag": "span",
       "rect": {
-        "width": 518,
+        "width": 494,
         "height": 42
       },
       "style": {
         "display": "flex",
         "position": "static",
         "boxSizing": "border-box",
-        "width": "518px",
+        "width": "494px",
         "height": "42px",
         "minHeight": "auto",
         "minWidth": "auto",
@@ -1577,14 +1577,14 @@
       "selector": ".field__hint",
       "tag": "span",
       "rect": {
-        "width": 518,
+        "width": 494,
         "height": 14
       },
       "style": {
         "display": "block",
         "position": "static",
         "boxSizing": "border-box",
-        "width": "518px",
+        "width": "494px",
         "height": "14px",
         "minHeight": "auto",
         "minWidth": "auto",
@@ -1719,14 +1719,14 @@
       "selector": ".field__box--select",
       "tag": "span",
       "rect": {
-        "width": 518,
+        "width": 494,
         "height": 38
       },
       "style": {
         "display": "flex",
         "position": "static",
         "boxSizing": "border-box",
-        "width": "518px",
+        "width": "494px",
         "height": "38px",
         "minHeight": "auto",
         "minWidth": "auto",
@@ -1790,14 +1790,14 @@
       "selector": ".fgrid",
       "tag": "div",
       "rect": {
-        "width": 518,
+        "width": 494,
         "height": 61
       },
       "style": {
         "display": "grid",
         "position": "static",
         "boxSizing": "border-box",
-        "width": "518px",
+        "width": "494px",
         "height": "61px",
         "minHeight": "0px",
         "minWidth": "0px",
@@ -1818,7 +1818,7 @@
         "justifyContent": "normal",
         "flexWrap": "nowrap",
         "flex": "0 1 auto",
-        "gridTemplateColumns": "253px 253px",
+        "gridTemplateColumns": "241px 241px",
         "fontFamily": "\"Plus Jakarta Sans\", -apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, sans-serif",
         "fontSize": "16px",
         "fontWeight": "400",
@@ -2287,14 +2287,14 @@
       "selector": ".filterbar",
       "tag": "div",
       "rect": {
-        "width": 518,
+        "width": 494,
         "height": 33
       },
       "style": {
         "display": "flex",
         "position": "static",
         "boxSizing": "border-box",
-        "width": "518px",
+        "width": "494px",
         "height": "33px",
         "minHeight": "0px",
         "minWidth": "0px",
@@ -2358,14 +2358,14 @@
       "selector": ".segmented",
       "tag": "div",
       "rect": {
-        "width": 518,
+        "width": 494,
         "height": 37
       },
       "style": {
         "display": "flex",
         "position": "static",
         "boxSizing": "border-box",
-        "width": "518px",
+        "width": "494px",
         "height": "37px",
         "minHeight": "0px",
         "minWidth": "0px",
@@ -2429,14 +2429,14 @@
       "selector": ".seg",
       "tag": "button",
       "rect": {
-        "width": 512,
+        "width": 488,
         "height": 31
       },
       "style": {
         "display": "block",
         "position": "static",
         "boxSizing": "border-box",
-        "width": "512px",
+        "width": "488px",
         "height": "31px",
         "minHeight": "auto",
         "minWidth": "auto",
@@ -2500,14 +2500,14 @@
       "selector": ".seg",
       "tag": "button",
       "rect": {
-        "width": 512,
+        "width": 488,
         "height": 31
       },
       "style": {
         "display": "block",
         "position": "static",
         "boxSizing": "border-box",
-        "width": "512px",
+        "width": "488px",
         "height": "31px",
         "minHeight": "auto",
         "minWidth": "auto",
@@ -2571,22 +2571,22 @@
       "selector": ".ttabs",
       "tag": "div",
       "rect": {
-        "width": 518,
+        "width": 494,
         "height": 40
       },
       "style": {
         "display": "flex",
         "position": "static",
         "boxSizing": "border-box",
-        "width": "518px",
+        "width": "494px",
         "height": "40px",
         "minHeight": "0px",
         "minWidth": "0px",
         "maxWidth": "none",
         "paddingTop": "0px",
-        "paddingRight": "24px",
+        "paddingRight": "32px",
         "paddingBottom": "2px",
-        "paddingLeft": "24px",
+        "paddingLeft": "32px",
         "marginTop": "0px",
         "marginRight": "0px",
         "marginBottom": "0px",
@@ -2784,14 +2784,14 @@
       "selector": ".sortbar",
       "tag": "div",
       "rect": {
-        "width": 518,
+        "width": 494,
         "height": 23
       },
       "style": {
         "display": "flex",
         "position": "static",
         "boxSizing": "border-box",
-        "width": "518px",
+        "width": "494px",
         "height": "23px",
         "minHeight": "0px",
         "minWidth": "0px",
@@ -3068,14 +3068,14 @@
       "selector": ".kard",
       "tag": "div",
       "rect": {
-        "width": 518,
+        "width": 494,
         "height": 55
       },
       "style": {
         "display": "block",
         "position": "static",
         "boxSizing": "border-box",
-        "width": "518px",
+        "width": "494px",
         "height": "55px",
         "minHeight": "0px",
         "minWidth": "0px",
@@ -3139,14 +3139,14 @@
       "selector": ".summary",
       "tag": "div",
       "rect": {
-        "width": 518,
+        "width": 494,
         "height": 185.08
       },
       "style": {
         "display": "block",
         "position": "relative",
         "boxSizing": "border-box",
-        "width": "518px",
+        "width": "494px",
         "height": "185.078px",
         "minHeight": "0px",
         "minWidth": "0px",
@@ -3210,14 +3210,14 @@
       "selector": ".summary__kicker",
       "tag": "p",
       "rect": {
-        "width": 476,
+        "width": 452,
         "height": 13
       },
       "style": {
         "display": "block",
         "position": "static",
         "boxSizing": "border-box",
-        "width": "476px",
+        "width": "452px",
         "height": "13px",
         "minHeight": "0px",
         "minWidth": "0px",
@@ -3281,14 +3281,14 @@
       "selector": ".summary__value",
       "tag": "p",
       "rect": {
-        "width": 476,
+        "width": 452,
         "height": 35.69
       },
       "style": {
         "display": "flex",
         "position": "static",
         "boxSizing": "border-box",
-        "width": "476px",
+        "width": "452px",
         "height": "35.6875px",
         "minHeight": "0px",
         "minWidth": "0px",
@@ -3423,14 +3423,14 @@
       "selector": ".summary__caption",
       "tag": "p",
       "rect": {
-        "width": 476,
+        "width": 452,
         "height": 17.39
       },
       "style": {
         "display": "block",
         "position": "static",
         "boxSizing": "border-box",
-        "width": "476px",
+        "width": "452px",
         "height": "17.3906px",
         "minHeight": "0px",
         "minWidth": "0px",
@@ -3494,14 +3494,14 @@
       "selector": ".summary__stat",
       "tag": "div",
       "rect": {
-        "width": 152,
+        "width": 144,
         "height": 33
       },
       "style": {
         "display": "block",
         "position": "static",
         "boxSizing": "border-box",
-        "width": "152px",
+        "width": "144px",
         "height": "33px",
         "minHeight": "auto",
         "minWidth": "0px",
@@ -3565,14 +3565,14 @@
       "selector": ".metric",
       "tag": "div",
       "rect": {
-        "width": 518,
+        "width": 494,
         "height": 84
       },
       "style": {
         "display": "flex",
         "position": "static",
         "boxSizing": "border-box",
-        "width": "518px",
+        "width": "494px",
         "height": "84px",
         "minHeight": "0px",
         "minWidth": "0px",
@@ -3636,14 +3636,14 @@
       "selector": ".metric__value",
       "tag": "span",
       "rect": {
-        "width": 492,
+        "width": 468,
         "height": 19
       },
       "style": {
         "display": "block",
         "position": "static",
         "boxSizing": "border-box",
-        "width": "492px",
+        "width": "468px",
         "height": "19px",
         "minHeight": "auto",
         "minWidth": "auto",
@@ -3707,14 +3707,14 @@
       "selector": ".metric__label",
       "tag": "span",
       "rect": {
-        "width": 492,
+        "width": 468,
         "height": 12
       },
       "style": {
         "display": "block",
         "position": "static",
         "boxSizing": "border-box",
-        "width": "492px",
+        "width": "468px",
         "height": "12px",
         "minHeight": "auto",
         "minWidth": "auto",
@@ -3778,14 +3778,14 @@
       "selector": ".metrics",
       "tag": "div",
       "rect": {
-        "width": 518,
+        "width": 494,
         "height": 61
       },
       "style": {
         "display": "grid",
         "position": "static",
         "boxSizing": "border-box",
-        "width": "518px",
+        "width": "494px",
         "height": "61px",
         "minHeight": "0px",
         "minWidth": "0px",
@@ -3806,7 +3806,7 @@
         "justifyContent": "normal",
         "flexWrap": "nowrap",
         "flex": "0 1 auto",
-        "gridTemplateColumns": "254px 254px",
+        "gridTemplateColumns": "242px 242px",
         "fontFamily": "\"Plus Jakarta Sans\", -apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, sans-serif",
         "fontSize": "16px",
         "fontWeight": "400",
@@ -3991,14 +3991,14 @@
       "selector": ".rrow",
       "tag": "div",
       "rect": {
-        "width": 516,
+        "width": 492,
         "height": 72
       },
       "style": {
         "display": "flex",
         "position": "static",
         "boxSizing": "border-box",
-        "width": "516px",
+        "width": "492px",
         "height": "72px",
         "minHeight": "0px",
         "minWidth": "0px",
@@ -4133,14 +4133,14 @@
       "selector": ".rrow__sub",
       "tag": "span",
       "rect": {
-        "width": 484,
+        "width": 460,
         "height": 13
       },
       "style": {
         "display": "block",
         "position": "static",
         "boxSizing": "border-box",
-        "width": "484px",
+        "width": "460px",
         "height": "13px",
         "minHeight": "auto",
         "minWidth": "auto",
@@ -4204,14 +4204,14 @@
       "selector": ".rrow__meta",
       "tag": "span",
       "rect": {
-        "width": 484,
+        "width": 460,
         "height": 12
       },
       "style": {
         "display": "flex",
         "position": "static",
         "boxSizing": "border-box",
-        "width": "484px",
+        "width": "460px",
         "height": "12px",
         "minHeight": "auto",
         "minWidth": "auto",
@@ -4417,14 +4417,14 @@
       "selector": ".rows",
       "tag": "div",
       "rect": {
-        "width": 518,
+        "width": 494,
         "height": 87
       },
       "style": {
         "display": "block",
         "position": "static",
         "boxSizing": "border-box",
-        "width": "518px",
+        "width": "494px",
         "height": "87px",
         "minHeight": "0px",
         "minWidth": "0px",
@@ -4488,14 +4488,14 @@
       "selector": ".crow",
       "tag": "div",
       "rect": {
-        "width": 518,
+        "width": 494,
         "height": 40
       },
       "style": {
         "display": "flex",
         "position": "static",
         "boxSizing": "border-box",
-        "width": "518px",
+        "width": "494px",
         "height": "40px",
         "minHeight": "0px",
         "minWidth": "0px",
@@ -4559,14 +4559,14 @@
       "selector": ".crow__label",
       "tag": "span",
       "rect": {
-        "width": 486,
+        "width": 462,
         "height": 16
       },
       "style": {
         "display": "block",
         "position": "static",
         "boxSizing": "border-box",
-        "width": "486px",
+        "width": "462px",
         "height": "16px",
         "minHeight": "auto",
         "minWidth": "0px",
@@ -4701,14 +4701,14 @@
       "selector": ".xrow",
       "tag": "details",
       "rect": {
-        "width": 518,
+        "width": 494,
         "height": 45
       },
       "style": {
         "display": "block",
         "position": "static",
         "boxSizing": "border-box",
-        "width": "518px",
+        "width": "494px",
         "height": "45px",
         "minHeight": "0px",
         "minWidth": "0px",
@@ -4772,14 +4772,14 @@
       "selector": ".xrow__head",
       "tag": "summary",
       "rect": {
-        "width": 518,
+        "width": 494,
         "height": 45
       },
       "style": {
         "display": "flex",
         "position": "static",
         "boxSizing": "border-box",
-        "width": "518px",
+        "width": "494px",
         "height": "45px",
         "minHeight": "0px",
         "minWidth": "0px",
@@ -4843,14 +4843,14 @@
       "selector": ".dtable",
       "tag": "table",
       "rect": {
-        "width": 516,
+        "width": 492,
         "height": 70
       },
       "style": {
         "display": "table",
         "position": "static",
         "boxSizing": "border-box",
-        "width": "516px",
+        "width": "492px",
         "height": "70px",
         "minHeight": "0px",
         "minWidth": "0px",
@@ -4914,14 +4914,14 @@
       "selector": ".tablewrap",
       "tag": "div",
       "rect": {
-        "width": 518,
+        "width": 494,
         "height": 72
       },
       "style": {
         "display": "block",
         "position": "static",
         "boxSizing": "border-box",
-        "width": "518px",
+        "width": "494px",
         "height": "72px",
         "minHeight": "0px",
         "minWidth": "0px",
@@ -4985,14 +4985,14 @@
       "selector": ".notecard",
       "tag": "div",
       "rect": {
-        "width": 518,
+        "width": 494,
         "height": 67
       },
       "style": {
         "display": "flex",
         "position": "static",
         "boxSizing": "border-box",
-        "width": "518px",
+        "width": "494px",
         "height": "67px",
         "minHeight": "0px",
         "minWidth": "0px",
@@ -5127,26 +5127,26 @@
       "selector": ".hstrip",
       "tag": "div",
       "rect": {
-        "width": 566,
+        "width": 558,
         "height": 144.63
       },
       "style": {
         "display": "flex",
         "position": "static",
         "boxSizing": "border-box",
-        "width": "566px",
+        "width": "558px",
         "height": "144.625px",
         "minHeight": "0px",
         "minWidth": "0px",
         "maxWidth": "none",
         "paddingTop": "0px",
-        "paddingRight": "24px",
+        "paddingRight": "32px",
         "paddingBottom": "4px",
-        "paddingLeft": "24px",
+        "paddingLeft": "32px",
         "marginTop": "0px",
-        "marginRight": "-24px",
+        "marginRight": "-32px",
         "marginBottom": "0px",
-        "marginLeft": "-24px",
+        "marginLeft": "-32px",
         "gap": "11px",
         "rowGap": "11px",
         "columnGap": "11px",
@@ -5198,14 +5198,14 @@
       "selector": ".related",
       "tag": "div",
       "rect": {
-        "width": 518,
+        "width": 494,
         "height": 81.5
       },
       "style": {
         "display": "flex",
         "position": "static",
         "boxSizing": "border-box",
-        "width": "518px",
+        "width": "494px",
         "height": "81.5px",
         "minHeight": "0px",
         "minWidth": "0px",
@@ -5340,14 +5340,14 @@
       "selector": ".tline",
       "tag": "ol",
       "rect": {
-        "width": 518,
+        "width": 494,
         "height": 69
       },
       "style": {
         "display": "block",
         "position": "static",
         "boxSizing": "border-box",
-        "width": "518px",
+        "width": "494px",
         "height": "69px",
         "minHeight": "0px",
         "minWidth": "0px",
@@ -5411,14 +5411,14 @@
       "selector": ".tline__item",
       "tag": "li",
       "rect": {
-        "width": 518,
+        "width": 494,
         "height": 20
       },
       "style": {
         "display": "flex",
         "position": "static",
         "boxSizing": "border-box",
-        "width": "518px",
+        "width": "494px",
         "height": "20px",
         "minHeight": "0px",
         "minWidth": "0px",
@@ -5553,14 +5553,14 @@
       "selector": ".tline__title",
       "tag": "span",
       "rect": {
-        "width": 428,
+        "width": 404,
         "height": 16
       },
       "style": {
         "display": "block",
         "position": "static",
         "boxSizing": "border-box",
-        "width": "428px",
+        "width": "404px",
         "height": "16px",
         "minHeight": "0px",
         "minWidth": "0px",
@@ -5695,14 +5695,14 @@
       "selector": ".journey",
       "tag": "div",
       "rect": {
-        "width": 518,
+        "width": 494,
         "height": 54
       },
       "style": {
         "display": "flex",
         "position": "static",
         "boxSizing": "border-box",
-        "width": "518px",
+        "width": "494px",
         "height": "54px",
         "minHeight": "0px",
         "minWidth": "0px",
@@ -5766,14 +5766,14 @@
       "selector": ".pbar",
       "tag": "div",
       "rect": {
-        "width": 518,
+        "width": 494,
         "height": 6
       },
       "style": {
         "display": "block",
         "position": "static",
         "boxSizing": "border-box",
-        "width": "518px",
+        "width": "494px",
         "height": "6px",
         "minHeight": "0px",
         "minWidth": "0px",
@@ -5979,14 +5979,14 @@
       "selector": ".meter",
       "tag": "div",
       "rect": {
-        "width": 518,
+        "width": 494,
         "height": 28
       },
       "style": {
         "display": "block",
         "position": "static",
         "boxSizing": "border-box",
-        "width": "518px",
+        "width": "494px",
         "height": "28px",
         "minHeight": "0px",
         "minWidth": "0px",
@@ -6831,14 +6831,14 @@
       "selector": ".srcline",
       "tag": "p",
       "rect": {
-        "width": 518,
+        "width": 494,
         "height": 12
       },
       "style": {
         "display": "flex",
         "position": "static",
         "boxSizing": "border-box",
-        "width": "518px",
+        "width": "494px",
         "height": "12px",
         "minHeight": "0px",
         "minWidth": "0px",
@@ -6902,14 +6902,14 @@
       "selector": ".state--empty",
       "tag": "div",
       "rect": {
-        "width": 518,
+        "width": 494,
         "height": 232
       },
       "style": {
         "display": "flex",
         "position": "static",
         "boxSizing": "border-box",
-        "width": "518px",
+        "width": "494px",
         "height": "232px",
         "minHeight": "0px",
         "minWidth": "0px",
@@ -7115,14 +7115,14 @@
       "selector": ".state--error",
       "tag": "div",
       "rect": {
-        "width": 518,
+        "width": 494,
         "height": 232
       },
       "style": {
         "display": "flex",
         "position": "static",
         "boxSizing": "border-box",
-        "width": "518px",
+        "width": "494px",
         "height": "232px",
         "minHeight": "0px",
         "minWidth": "0px",
@@ -7186,14 +7186,14 @@
       "selector": ".obanner",
       "tag": "div",
       "rect": {
-        "width": 518,
+        "width": 494,
         "height": 55
       },
       "style": {
         "display": "flex",
         "position": "static",
         "boxSizing": "border-box",
-        "width": "518px",
+        "width": "494px",
         "height": "55px",
         "minHeight": "0px",
         "minWidth": "0px",
@@ -7257,14 +7257,14 @@
       "selector": ".sk--row",
       "tag": "div",
       "rect": {
-        "width": 518,
+        "width": 494,
         "height": 58
       },
       "style": {
         "display": "block",
         "position": "static",
         "boxSizing": "border-box",
-        "width": "518px",
+        "width": "494px",
         "height": "58px",
         "minHeight": "auto",
         "minWidth": "auto",
@@ -7328,14 +7328,14 @@
       "selector": ".sk--card",
       "tag": "div",
       "rect": {
-        "width": 518,
+        "width": 494,
         "height": 118
       },
       "style": {
         "display": "block",
         "position": "static",
         "boxSizing": "border-box",
-        "width": "518px",
+        "width": "494px",
         "height": "118px",
         "minHeight": "auto",
         "minWidth": "auto",
@@ -7399,14 +7399,14 @@
       "selector": ".sk--metric",
       "tag": "div",
       "rect": {
-        "width": 518,
+        "width": 494,
         "height": 76
       },
       "style": {
         "display": "block",
         "position": "static",
         "boxSizing": "border-box",
-        "width": "518px",
+        "width": "494px",
         "height": "76px",
         "minHeight": "auto",
         "minWidth": "auto",
@@ -7470,14 +7470,14 @@
       "selector": ".sk--chart",
       "tag": "div",
       "rect": {
-        "width": 518,
+        "width": 494,
         "height": 132
       },
       "style": {
         "display": "block",
         "position": "static",
         "boxSizing": "border-box",
-        "width": "518px",
+        "width": "494px",
         "height": "132px",
         "minHeight": "auto",
         "minWidth": "auto",
@@ -7541,14 +7541,14 @@
       "selector": ".skgroup",
       "tag": "div",
       "rect": {
-        "width": 518,
+        "width": 494,
         "height": 194
       },
       "style": {
         "display": "grid",
         "position": "static",
         "boxSizing": "border-box",
-        "width": "518px",
+        "width": "494px",
         "height": "194px",
         "minHeight": "0px",
         "minWidth": "0px",
@@ -7569,7 +7569,7 @@
         "justifyContent": "normal",
         "flexWrap": "nowrap",
         "flex": "0 1 auto",
-        "gridTemplateColumns": "518px",
+        "gridTemplateColumns": "494px",
         "fontFamily": "\"Plus Jakarta Sans\", -apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, sans-serif",
         "fontSize": "16px",
         "fontWeight": "400",
@@ -7612,14 +7612,14 @@
       "selector": ".rrec",
       "tag": "button",
       "rect": {
-        "width": 518,
+        "width": 494,
         "height": 84
       },
       "style": {
         "display": "flex",
         "position": "static",
         "boxSizing": "border-box",
-        "width": "518px",
+        "width": "494px",
         "height": "84px",
         "minHeight": "44px",
         "minWidth": "auto",
@@ -7683,14 +7683,14 @@
       "selector": ".rrec",
       "tag": "button",
       "rect": {
-        "width": 518,
+        "width": 494,
         "height": 66
       },
       "style": {
         "display": "flex",
         "position": "static",
         "boxSizing": "border-box",
-        "width": "518px",
+        "width": "494px",
         "height": "66px",
         "minHeight": "44px",
         "minWidth": "auto",
@@ -7754,14 +7754,14 @@
       "selector": ".rrec",
       "tag": "div",
       "rect": {
-        "width": 518,
+        "width": 494,
         "height": 66
       },
       "style": {
         "display": "flex",
         "position": "static",
         "boxSizing": "border-box",
-        "width": "518px",
+        "width": "494px",
         "height": "66px",
         "minHeight": "44px",
         "minWidth": "auto",
@@ -7896,14 +7896,14 @@
       "selector": ".rrec__sub",
       "tag": "span",
       "rect": {
-        "width": 426,
+        "width": 402,
         "height": 16
       },
       "style": {
         "display": "block",
         "position": "static",
         "boxSizing": "border-box",
-        "width": "426px",
+        "width": "402px",
         "height": "16px",
         "minHeight": "auto",
         "minWidth": "auto",
@@ -7967,14 +7967,14 @@
       "selector": ".rrec__meta",
       "tag": "span",
       "rect": {
-        "width": 426,
+        "width": 402,
         "height": 16
       },
       "style": {
         "display": "flex",
         "position": "static",
         "boxSizing": "border-box",
-        "width": "426px",
+        "width": "402px",
         "height": "16px",
         "minHeight": "auto",
         "minWidth": "auto",
@@ -8251,14 +8251,14 @@
       "selector": ".rrecs",
       "tag": "div",
       "rect": {
-        "width": 518,
+        "width": 494,
         "height": 142
       },
       "style": {
         "display": "grid",
         "position": "static",
         "boxSizing": "border-box",
-        "width": "518px",
+        "width": "494px",
         "height": "142px",
         "minHeight": "0px",
         "minWidth": "0px",
@@ -8279,7 +8279,7 @@
         "justifyContent": "normal",
         "flexWrap": "nowrap",
         "flex": "0 1 auto",
-        "gridTemplateColumns": "518px",
+        "gridTemplateColumns": "494px",
         "fontFamily": "\"Plus Jakarta Sans\", -apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, sans-serif",
         "fontSize": "16px",
         "fontWeight": "400",
@@ -8535,14 +8535,14 @@
       "selector": ".cchips",
       "tag": "div",
       "rect": {
-        "width": 518,
+        "width": 494,
         "height": 40
       },
       "style": {
         "display": "flex",
         "position": "static",
         "boxSizing": "border-box",
-        "width": "518px",
+        "width": "494px",
         "height": "40px",
         "minHeight": "0px",
         "minWidth": "0px",
@@ -8606,14 +8606,14 @@
       "selector": ".chero",
       "tag": "div",
       "rect": {
-        "width": 518,
+        "width": 494,
         "height": 158
       },
       "style": {
         "display": "block",
         "position": "static",
         "boxSizing": "border-box",
-        "width": "518px",
+        "width": "494px",
         "height": "158px",
         "minHeight": "0px",
         "minWidth": "0px",
@@ -8677,14 +8677,14 @@
       "selector": ".chero__kicker",
       "tag": "p",
       "rect": {
-        "width": 474,
+        "width": 450,
         "height": 16
       },
       "style": {
         "display": "block",
         "position": "static",
         "boxSizing": "border-box",
-        "width": "474px",
+        "width": "450px",
         "height": "16px",
         "minHeight": "0px",
         "minWidth": "0px",
@@ -8748,14 +8748,14 @@
       "selector": ".chero__value",
       "tag": "p",
       "rect": {
-        "width": 474,
+        "width": 450,
         "height": 32
       },
       "style": {
         "display": "block",
         "position": "static",
         "boxSizing": "border-box",
-        "width": "474px",
+        "width": "450px",
         "height": "32px",
         "minHeight": "0px",
         "minWidth": "0px",
@@ -8819,14 +8819,14 @@
       "selector": ".chero__title",
       "tag": "p",
       "rect": {
-        "width": 474,
+        "width": 450,
         "height": 22
       },
       "style": {
         "display": "block",
         "position": "static",
         "boxSizing": "border-box",
-        "width": "474px",
+        "width": "450px",
         "height": "22px",
         "minHeight": "0px",
         "minWidth": "0px",
@@ -8890,14 +8890,14 @@
       "selector": ".chero__caption",
       "tag": "p",
       "rect": {
-        "width": 474,
+        "width": 450,
         "height": 16
       },
       "style": {
         "display": "block",
         "position": "static",
         "boxSizing": "border-box",
-        "width": "474px",
+        "width": "450px",
         "height": "16px",
         "minHeight": "0px",
         "minWidth": "0px",
@@ -8961,14 +8961,14 @@
       "selector": ".cfacts",
       "tag": "div",
       "rect": {
-        "width": 518,
+        "width": 494,
         "height": 115
       },
       "style": {
         "display": "block",
         "position": "static",
         "boxSizing": "border-box",
-        "width": "518px",
+        "width": "494px",
         "height": "115px",
         "minHeight": "0px",
         "minWidth": "0px",
@@ -9032,14 +9032,14 @@
       "selector": ".cfact",
       "tag": "div",
       "rect": {
-        "width": 484,
+        "width": 460,
         "height": 52
       },
       "style": {
         "display": "flex",
         "position": "static",
         "boxSizing": "border-box",
-        "width": "484px",
+        "width": "460px",
         "height": "52px",
         "minHeight": "0px",
         "minWidth": "0px",
@@ -9245,14 +9245,14 @@
       "selector": ".cacts",
       "tag": "div",
       "rect": {
-        "width": 518,
+        "width": 494,
         "height": 114
       },
       "style": {
         "display": "grid",
         "position": "static",
         "boxSizing": "border-box",
-        "width": "518px",
+        "width": "494px",
         "height": "114px",
         "minHeight": "0px",
         "minWidth": "0px",
@@ -9273,7 +9273,7 @@
         "justifyContent": "normal",
         "flexWrap": "nowrap",
         "flex": "0 1 auto",
-        "gridTemplateColumns": "518px",
+        "gridTemplateColumns": "494px",
         "fontFamily": "\"Plus Jakarta Sans\", -apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, sans-serif",
         "fontSize": "16px",
         "fontWeight": "400",
@@ -9316,14 +9316,14 @@
       "selector": ".cact--edit",
       "tag": "button",
       "rect": {
-        "width": 518,
+        "width": 494,
         "height": 52
       },
       "style": {
         "display": "flex",
         "position": "static",
         "boxSizing": "border-box",
-        "width": "518px",
+        "width": "494px",
         "height": "52px",
         "minHeight": "52px",
         "minWidth": "auto",
@@ -9387,14 +9387,14 @@
       "selector": ".cact--danger",
       "tag": "button",
       "rect": {
-        "width": 518,
+        "width": 494,
         "height": 52
       },
       "style": {
         "display": "flex",
         "position": "static",
         "boxSizing": "border-box",
-        "width": "518px",
+        "width": "494px",
         "height": "52px",
         "minHeight": "52px",
         "minWidth": "auto",
@@ -9458,14 +9458,14 @@
       "selector": ".cfield",
       "tag": "div",
       "rect": {
-        "width": 518,
+        "width": 494,
         "height": 71
       },
       "style": {
         "display": "flex",
         "position": "static",
         "boxSizing": "border-box",
-        "width": "518px",
+        "width": "494px",
         "height": "71px",
         "minHeight": "0px",
         "minWidth": "0px",
@@ -9529,14 +9529,14 @@
       "selector": ".cfield__label",
       "tag": "label",
       "rect": {
-        "width": 518,
+        "width": 494,
         "height": 16
       },
       "style": {
         "display": "flex",
         "position": "static",
         "boxSizing": "border-box",
-        "width": "518px",
+        "width": "494px",
         "height": "16px",
         "minHeight": "auto",
         "minWidth": "auto",
@@ -9600,14 +9600,14 @@
       "selector": ".cfield__box",
       "tag": "span",
       "rect": {
-        "width": 518,
+        "width": 494,
         "height": 48
       },
       "style": {
         "display": "flex",
         "position": "static",
         "boxSizing": "border-box",
-        "width": "518px",
+        "width": "494px",
         "height": "48px",
         "minHeight": "48px",
         "minWidth": "auto",
@@ -9671,14 +9671,14 @@
       "selector": ".cfield__box",
       "tag": "span",
       "rect": {
-        "width": 518,
+        "width": 494,
         "height": 48
       },
       "style": {
         "display": "flex",
         "position": "static",
         "boxSizing": "border-box",
-        "width": "518px",
+        "width": "494px",
         "height": "48px",
         "minHeight": "48px",
         "minWidth": "auto",
@@ -9742,14 +9742,14 @@
       "selector": ".cfield__err",
       "tag": "p",
       "rect": {
-        "width": 518,
+        "width": 494,
         "height": 16
       },
       "style": {
         "display": "flex",
         "position": "static",
         "boxSizing": "border-box",
-        "width": "518px",
+        "width": "494px",
         "height": "16px",
         "minHeight": "auto",
         "minWidth": "auto",
@@ -9813,14 +9813,14 @@
       "selector": ".cfield__hint",
       "tag": "p",
       "rect": {
-        "width": 518,
+        "width": 494,
         "height": 16
       },
       "style": {
         "display": "block",
         "position": "static",
         "boxSizing": "border-box",
-        "width": "518px",
+        "width": "494px",
         "height": "16px",
         "minHeight": "auto",
         "minWidth": "auto",
@@ -9955,14 +9955,14 @@
       "selector": ".cfield__box textarea",
       "tag": "textarea",
       "rect": {
-        "width": 488,
+        "width": 464,
         "height": 89.06
       },
       "style": {
         "display": "block",
         "position": "static",
         "boxSizing": "border-box",
-        "width": "488px",
+        "width": "464px",
         "height": "89.0625px",
         "minHeight": "76px",
         "minWidth": "0px",
@@ -10097,14 +10097,14 @@
       "selector": ".cfield__select",
       "tag": "span",
       "rect": {
-        "width": 488,
+        "width": 464,
         "height": 46
       },
       "style": {
         "display": "flex",
         "position": "static",
         "boxSizing": "border-box",
-        "width": "488px",
+        "width": "464px",
         "height": "46px",
         "minHeight": "auto",
         "minWidth": "0px",
@@ -10168,14 +10168,14 @@
       "selector": ".cattach",
       "tag": "button",
       "rect": {
-        "width": 518,
+        "width": 494,
         "height": 64
       },
       "style": {
         "display": "flex",
         "position": "static",
         "boxSizing": "border-box",
-        "width": "518px",
+        "width": "494px",
         "height": "64px",
         "minHeight": "64px",
         "minWidth": "auto",
@@ -10239,14 +10239,14 @@
       "selector": ".cform",
       "tag": "div",
       "rect": {
-        "width": 518,
+        "width": 494,
         "height": 71
       },
       "style": {
         "display": "grid",
         "position": "static",
         "boxSizing": "border-box",
-        "width": "518px",
+        "width": "494px",
         "height": "71px",
         "minHeight": "0px",
         "minWidth": "0px",
@@ -10267,7 +10267,7 @@
         "justifyContent": "normal",
         "flexWrap": "nowrap",
         "flex": "0 1 auto",
-        "gridTemplateColumns": "518px",
+        "gridTemplateColumns": "494px",
         "fontFamily": "\"Plus Jakarta Sans\", -apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, sans-serif",
         "fontSize": "16px",
         "fontWeight": "400",
@@ -10310,18 +10310,18 @@
       "selector": ".cformcard",
       "tag": "div",
       "rect": {
-        "width": 518,
+        "width": 494,
         "height": 121
       },
       "style": {
         "display": "block",
         "position": "static",
         "boxSizing": "border-box",
-        "width": "518px",
+        "width": "494px",
         "height": "121px",
         "minHeight": "0px",
         "minWidth": "0px",
-        "maxWidth": "none",
+        "maxWidth": "760px",
         "paddingTop": "24px",
         "paddingRight": "24px",
         "paddingBottom": "24px",
@@ -10381,14 +10381,14 @@
       "selector": ".csubmit",
       "tag": "div",
       "rect": {
-        "width": 518,
+        "width": 494,
         "height": 102
       },
       "style": {
         "display": "grid",
         "position": "static",
         "boxSizing": "border-box",
-        "width": "518px",
+        "width": "494px",
         "height": "102px",
         "minHeight": "0px",
         "minWidth": "0px",
@@ -10409,7 +10409,7 @@
         "justifyContent": "normal",
         "flexWrap": "nowrap",
         "flex": "0 1 auto",
-        "gridTemplateColumns": "518px",
+        "gridTemplateColumns": "494px",
         "fontFamily": "\"Plus Jakarta Sans\", -apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, sans-serif",
         "fontSize": "16px",
         "fontWeight": "400",
@@ -10452,14 +10452,14 @@
       "selector": ".csubmit .btn",
       "tag": "button",
       "rect": {
-        "width": 518,
+        "width": 494,
         "height": 46
       },
       "style": {
         "display": "flex",
         "position": "static",
         "boxSizing": "border-box",
-        "width": "518px",
+        "width": "494px",
         "height": "46px",
         "minHeight": "auto",
         "minWidth": "auto",
@@ -10523,14 +10523,14 @@
       "selector": ".cnotice--error",
       "tag": "div",
       "rect": {
-        "width": 518,
+        "width": 494,
         "height": 66
       },
       "style": {
         "display": "flex",
         "position": "static",
         "boxSizing": "border-box",
-        "width": "518px",
+        "width": "494px",
         "height": "66px",
         "minHeight": "0px",
         "minWidth": "0px",
@@ -10594,14 +10594,14 @@
       "selector": ".cnotice--warn",
       "tag": "div",
       "rect": {
-        "width": 518,
+        "width": 494,
         "height": 66
       },
       "style": {
         "display": "flex",
         "position": "static",
         "boxSizing": "border-box",
-        "width": "518px",
+        "width": "494px",
         "height": "66px",
         "minHeight": "0px",
         "minWidth": "0px",
@@ -10665,14 +10665,14 @@
       "selector": ".cnotice--offline",
       "tag": "div",
       "rect": {
-        "width": 518,
+        "width": 494,
         "height": 65
       },
       "style": {
         "display": "flex",
         "position": "static",
         "boxSizing": "border-box",
-        "width": "518px",
+        "width": "494px",
         "height": "65px",
         "minHeight": "0px",
         "minWidth": "0px",
@@ -10807,14 +10807,14 @@
       "selector": ".csks",
       "tag": "div",
       "rect": {
-        "width": 518,
+        "width": 494,
         "height": 218
       },
       "style": {
         "display": "grid",
         "position": "static",
         "boxSizing": "border-box",
-        "width": "518px",
+        "width": "494px",
         "height": "218px",
         "minHeight": "0px",
         "minWidth": "0px",
@@ -10835,7 +10835,7 @@
         "justifyContent": "normal",
         "flexWrap": "nowrap",
         "flex": "0 1 auto",
-        "gridTemplateColumns": "518px",
+        "gridTemplateColumns": "494px",
         "fontFamily": "\"Plus Jakarta Sans\", -apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, sans-serif",
         "fontSize": "16px",
         "fontWeight": "400",
@@ -10878,14 +10878,14 @@
       "selector": ".csk",
       "tag": "div",
       "rect": {
-        "width": 518,
+        "width": 494,
         "height": 66
       },
       "style": {
         "display": "flex",
         "position": "static",
         "boxSizing": "border-box",
-        "width": "518px",
+        "width": "494px",
         "height": "66px",
         "minHeight": "auto",
         "minWidth": "auto",
@@ -10949,14 +10949,14 @@
       "selector": ".cstate",
       "tag": "div",
       "rect": {
-        "width": 518,
+        "width": 494,
         "height": 324
       },
       "style": {
         "display": "flex",
         "position": "static",
         "boxSizing": "border-box",
-        "width": "518px",
+        "width": "494px",
         "height": "324px",
         "minHeight": "0px",
         "minWidth": "0px",
@@ -11162,14 +11162,14 @@
       "selector": ".cstate--error",
       "tag": "div",
       "rect": {
-        "width": 518,
+        "width": 494,
         "height": 324
       },
       "style": {
         "display": "flex",
         "position": "static",
         "boxSizing": "border-box",
-        "width": "518px",
+        "width": "494px",
         "height": "324px",
         "minHeight": "0px",
         "minWidth": "0px",
@@ -11233,14 +11233,14 @@
       "selector": ".cstate--quiet",
       "tag": "div",
       "rect": {
-        "width": 518,
+        "width": 494,
         "height": 184
       },
       "style": {
         "display": "flex",
         "position": "static",
         "boxSizing": "border-box",
-        "width": "518px",
+        "width": "494px",
         "height": "184px",
         "minHeight": "0px",
         "minWidth": "0px",
@@ -11304,14 +11304,14 @@
       "selector": ".cstate--pane",
       "tag": "div",
       "rect": {
-        "width": 518,
+        "width": 494,
         "height": 320
       },
       "style": {
         "display": "flex",
         "position": "static",
         "boxSizing": "border-box",
-        "width": "518px",
+        "width": "494px",
         "height": "320px",
         "minHeight": "320px",
         "minWidth": "0px",
@@ -11375,14 +11375,14 @@
       "selector": ".panes",
       "tag": "div",
       "rect": {
-        "width": 518,
+        "width": 494,
         "height": 21
       },
       "style": {
-        "display": "block",
+        "display": "grid",
         "position": "static",
         "boxSizing": "border-box",
-        "width": "518px",
+        "width": "494px",
         "height": "21px",
         "minHeight": "0px",
         "minWidth": "0px",
@@ -11395,15 +11395,15 @@
         "marginRight": "0px",
         "marginBottom": "0px",
         "marginLeft": "0px",
-        "gap": "normal",
-        "rowGap": "normal",
-        "columnGap": "normal",
+        "gap": "20px",
+        "rowGap": "20px",
+        "columnGap": "20px",
         "flexDirection": "row",
-        "alignItems": "normal",
+        "alignItems": "start",
         "justifyContent": "normal",
         "flexWrap": "nowrap",
         "flex": "0 1 auto",
-        "gridTemplateColumns": "none",
+        "gridTemplateColumns": "380px 94px",
         "fontFamily": "\"Plus Jakarta Sans\", -apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, sans-serif",
         "fontSize": "16px",
         "fontWeight": "400",
@@ -11446,14 +11446,14 @@
       "selector": ".crud__id",
       "tag": "p",
       "rect": {
-        "width": 518,
+        "width": 494,
         "height": 16
       },
       "style": {
         "display": "block",
         "position": "static",
         "boxSizing": "border-box",
-        "width": "518px",
+        "width": "494px",
         "height": "16px",
         "minHeight": "0px",
         "minWidth": "0px",
@@ -11872,15 +11872,15 @@
       "selector": ".navside",
       "tag": "nav",
       "rect": {
-        "width": 518,
-        "height": 351
+        "width": 494,
+        "height": 336
       },
       "style": {
         "display": "flex",
         "position": "static",
         "boxSizing": "border-box",
-        "width": "518px",
-        "height": "351px",
+        "width": "494px",
+        "height": "336px",
         "minHeight": "0px",
         "minWidth": "0px",
         "maxWidth": "none",
@@ -11943,17 +11943,17 @@
       "selector": ".navside__brand",
       "tag": "span",
       "rect": {
-        "width": 0,
-        "height": 0
+        "width": 469,
+        "height": 56
       },
       "style": {
-        "display": "none",
+        "display": "block",
         "position": "static",
         "boxSizing": "border-box",
-        "width": "auto",
-        "height": "auto",
-        "minHeight": "0px",
-        "minWidth": "0px",
+        "width": "469px",
+        "height": "56px",
+        "minHeight": "auto",
+        "minWidth": "auto",
         "maxWidth": "none",
         "paddingTop": "4px",
         "paddingRight": "12px",
@@ -12014,40 +12014,40 @@
       "selector": ".navtab",
       "tag": "button",
       "rect": {
-        "width": 493,
-        "height": 59
+        "width": 469,
+        "height": 44
       },
       "style": {
         "display": "flex",
         "position": "relative",
         "boxSizing": "border-box",
-        "width": "493px",
-        "height": "59px",
+        "width": "469px",
+        "height": "44px",
         "minHeight": "44px",
         "minWidth": "auto",
         "maxWidth": "none",
         "paddingTop": "10px",
-        "paddingRight": "4px",
+        "paddingRight": "12px",
         "paddingBottom": "10px",
-        "paddingLeft": "4px",
+        "paddingLeft": "12px",
         "marginTop": "0px",
         "marginRight": "0px",
         "marginBottom": "0px",
         "marginLeft": "0px",
-        "gap": "5px",
-        "rowGap": "5px",
-        "columnGap": "5px",
-        "flexDirection": "column",
+        "gap": "12px",
+        "rowGap": "12px",
+        "columnGap": "12px",
+        "flexDirection": "row",
         "alignItems": "center",
         "justifyContent": "normal",
         "flexWrap": "nowrap",
         "flex": "0 1 auto",
         "gridTemplateColumns": "none",
         "fontFamily": "\"Plus Jakarta Sans\", -apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, sans-serif",
-        "fontSize": "10px",
+        "fontSize": "15px",
         "fontWeight": "700",
-        "lineHeight": "14px",
-        "letterSpacing": "-0.2px",
+        "lineHeight": "20px",
+        "letterSpacing": "-0.3px",
         "textAlign": "start",
         "textTransform": "none",
         "textDecorationLine": "none",
@@ -12085,40 +12085,40 @@
       "selector": ".navtab.is-active",
       "tag": "button",
       "rect": {
-        "width": 493,
-        "height": 59
+        "width": 469,
+        "height": 44
       },
       "style": {
         "display": "flex",
         "position": "relative",
         "boxSizing": "border-box",
-        "width": "493px",
-        "height": "59px",
+        "width": "469px",
+        "height": "44px",
         "minHeight": "44px",
         "minWidth": "auto",
         "maxWidth": "none",
         "paddingTop": "10px",
-        "paddingRight": "4px",
+        "paddingRight": "12px",
         "paddingBottom": "10px",
-        "paddingLeft": "4px",
+        "paddingLeft": "12px",
         "marginTop": "0px",
         "marginRight": "0px",
         "marginBottom": "0px",
         "marginLeft": "0px",
-        "gap": "5px",
-        "rowGap": "5px",
-        "columnGap": "5px",
-        "flexDirection": "column",
+        "gap": "12px",
+        "rowGap": "12px",
+        "columnGap": "12px",
+        "flexDirection": "row",
         "alignItems": "center",
         "justifyContent": "normal",
         "flexWrap": "nowrap",
         "flex": "0 1 auto",
         "gridTemplateColumns": "none",
         "fontFamily": "\"Plus Jakarta Sans\", -apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, sans-serif",
-        "fontSize": "10px",
+        "fontSize": "15px",
         "fontWeight": "700",
-        "lineHeight": "14px",
-        "letterSpacing": "-0.2px",
+        "lineHeight": "20px",
+        "letterSpacing": "-0.3px",
         "textAlign": "start",
         "textTransform": "none",
         "textDecorationLine": "none",
@@ -12156,15 +12156,15 @@
       "selector": ".navtab__label",
       "tag": "span",
       "rect": {
-        "width": 28.42,
-        "height": 14
+        "width": 42.63,
+        "height": 20
       },
       "style": {
         "display": "block",
         "position": "static",
         "boxSizing": "border-box",
-        "width": "28.4219px",
-        "height": "14px",
+        "width": "42.625px",
+        "height": "20px",
         "minHeight": "auto",
         "minWidth": "auto",
         "maxWidth": "none",
@@ -12186,11 +12186,11 @@
         "flex": "0 1 auto",
         "gridTemplateColumns": "none",
         "fontFamily": "\"Plus Jakarta Sans\", -apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, sans-serif",
-        "fontSize": "10px",
+        "fontSize": "15px",
         "fontWeight": "700",
-        "lineHeight": "14px",
-        "letterSpacing": "-0.2px",
-        "textAlign": "center",
+        "lineHeight": "20px",
+        "letterSpacing": "-0.3px",
+        "textAlign": "start",
         "textTransform": "none",
         "textDecorationLine": "none",
         "whiteSpace": "normal",
@@ -12227,22 +12227,22 @@
       "selector": ".statusbar",
       "tag": "div",
       "rect": {
-        "width": 518,
+        "width": 494,
         "height": 42
       },
       "style": {
         "display": "flex",
         "position": "relative",
         "boxSizing": "border-box",
-        "width": "518px",
+        "width": "494px",
         "height": "42px",
         "minHeight": "0px",
         "minWidth": "0px",
         "maxWidth": "none",
         "paddingTop": "12px",
-        "paddingRight": "24px",
+        "paddingRight": "32px",
         "paddingBottom": "12px",
-        "paddingLeft": "24px",
+        "paddingLeft": "32px",
         "marginTop": "0px",
         "marginRight": "0px",
         "marginBottom": "0px",
@@ -12369,15 +12369,15 @@
       "selector": ".screen",
       "tag": "section",
       "rect": {
-        "width": 566,
-        "height": 22186.22
+        "width": 558,
+        "height": 22111.22
       },
       "style": {
         "display": "block",
         "position": "absolute",
         "boxSizing": "border-box",
-        "width": "566px",
-        "height": "22186.2px",
+        "width": "558px",
+        "height": "22111.2px",
         "minHeight": "0px",
         "minWidth": "0px",
         "maxWidth": "none",
