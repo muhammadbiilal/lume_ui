@@ -299,6 +299,7 @@ class LumePageHead extends StatelessWidget {
     required this.title,
     this.subtitle,
     this.action,
+    this.leading,
   });
 
   final String title;
@@ -306,6 +307,14 @@ class LumePageHead extends StatelessWidget {
 
   /// A single 38-point control at the trailing edge.
   final Widget? action;
+
+  /// A single 38-point control at the leading edge.
+  ///
+  /// `.page-head__bar` is a three-part row and only Explore fills the first
+  /// part: it is reachable in a market where it is not a tab, so it carries
+  /// its own way back. Every other destination leaves this `null` and the row
+  /// is the two-part one it has always been.
+  final Widget? leading;
 
   @override
   Widget build(BuildContext context) {
@@ -317,6 +326,10 @@ class LumePageHead extends StatelessWidget {
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
+            if (leading != null) ...<Widget>[
+              leading!,
+              const SizedBox(width: LumeSpace.x3),
+            ],
             Expanded(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -337,10 +350,16 @@ class LumePageHead extends StatelessWidget {
                       padding: const EdgeInsets.only(top: 4),
                       child: LumeNumerals(
                         subtitle!,
-                        style: LumeType.fit(context, context.lumeType.meta)
-                            .copyWith(
+                        // `.page-head__sub { font-size: 13px }` and no line
+                        // height, so the line is the font's own — 16, not the
+                        // reading height a role carries.
+                        style:
+                            LumeType.natural(
+                              context,
+                              context.lumeType.meta,
+                              size: 13,
+                            ).copyWith(
                               color: lume.text3,
-                              fontSize: 13,
                               fontWeight: FontWeight.w500,
                             ),
                       ),
@@ -374,6 +393,7 @@ class LumePageSection extends StatelessWidget {
     this.link,
     this.onLinkTap,
     this.linkIcon = LumeIcons.chevR,
+    this.trailing,
     this.topGap = LumeDestinationMetrics.sectionGap,
     this.headingLevel = true,
   });
@@ -389,6 +409,11 @@ class LumePageSection extends StatelessWidget {
   /// `.section__link svg` — a chevron by default, a refresh glyph where the
   /// action re-fetches rather than navigates.
   final String linkIcon;
+
+  /// Something other than a link at the end of the head — Explore's market
+  /// tag is one. Ignored when [link] is given; a head carries one or the
+  /// other, as every head in the reference does.
+  final Widget? trailing;
 
   /// `.section { margin-top: 24 }`, overridden inline on three sections.
   final double topGap;
@@ -416,6 +441,7 @@ class LumePageSection extends StatelessWidget {
                 link: link,
                 onLinkTap: onLinkTap,
                 linkIcon: linkIcon,
+                trailing: trailing,
                 headingLevel: headingLevel,
               ),
             ),
@@ -438,6 +464,7 @@ class LumeSectionHeading extends StatelessWidget {
     this.link,
     this.onLinkTap,
     this.linkIcon = LumeIcons.chevR,
+    this.trailing,
     this.headingLevel = true,
   });
 
@@ -446,6 +473,11 @@ class LumeSectionHeading extends StatelessWidget {
   final String? link;
   final VoidCallback? onLinkTap;
   final String linkIcon;
+
+  /// Something other than a link at the end of the head. A head carries one
+  /// or the other, as every head in the reference does.
+  final Widget? trailing;
+
   final bool headingLevel;
 
   /// `.section__title` — 17/700/−0.028em.
@@ -491,6 +523,10 @@ class LumeSectionHeading extends StatelessWidget {
             ],
           ),
         ),
+        if (link == null && trailing != null) ...<Widget>[
+          const SizedBox(width: LumeSpace.x3),
+          trailing!,
+        ],
         if (link != null) ...<Widget>[
           const SizedBox(width: LumeSpace.x3),
           // `.section__link { padding: 4px 2px }` — a 12/700 accent label and

@@ -30,12 +30,19 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:lume/core/widgets/lume/lume_destination.dart';
 import 'package:lume/core/widgets/lume/lume_destination_cards.dart';
 import 'package:lume/core/widgets/lume/lume_hero.dart';
+import 'package:lume/core/widgets/lume/lume_agenda.dart';
+import 'package:lume/core/widgets/lume/lume_day.dart';
+import 'package:lume/core/widgets/lume/lume_explore.dart';
+import 'package:lume/core/widgets/lume/lume_surface.dart';
+import 'package:lume/features/explore/presentation/explore_screen.dart';
 import 'package:lume/features/home/presentation/home_screen.dart';
+import 'package:lume/features/today/presentation/today_screen.dart';
 import 'package:lume/features/tools/presentation/tools_screen.dart';
 
 import '../../helpers/load_fonts.dart';
 import '../../helpers/lume_harness.dart';
 import 'destination_harness.dart';
+import 'today_explore_harness.dart';
 
 const String reportPath = 'docs/conversion_archive/DESTINATION_PARITY.md';
 
@@ -110,6 +117,12 @@ void main() {
     final Map<String, dynamic>? b = bounds[name] as Map<String, dynamic>?;
     if (b == null) {
       rows.add('| `$name` | — | — | — | — | not measured |');
+      return;
+    }
+    // A `display: none` element measures 0 × 0 at the origin. That is the
+    // prototype saying "not here", not a position to compare against.
+    if ((b['width'] as num) == 0 && (b['height'] as num) == 0) {
+      rows.add('| `$name` | — | — | — | — | hidden in the prototype |');
       return;
     }
     expect(finder, findsWidgets, reason: '$name is not on screen');
@@ -582,9 +595,239 @@ void main() {
     });
   });
 
+  // ------------------------------------------------------------------ Today
+
+  Finder inKey(String key, Finder what) =>
+      find.descendant(of: find.byKey(ValueKey<String>(key)), matching: what);
+
+  group('Today is where the prototype puts it', () {
+    testWidgets('the head, the ring, the statistics and the reflection', (
+      WidgetTester tester,
+    ) async {
+      final Map<String, dynamic>? c = cell('today_muslim_pk');
+      if (c == null) return;
+      final Map<String, dynamic> b = c['bounds'] as Map<String, dynamic>;
+      rows.add('\n### Today · Muslim, Pakistan — the upper half\n');
+      rows.add('| element | axis | prototype | Flutter | Δ | note |');
+      rows.add('|---|---|---|---|---|---|');
+
+      await pumpToday(tester, LumeUsers.muslimPk, surface: kTall);
+
+      compare(
+        tester,
+        b,
+        'pagehead',
+        inKey(LumeTodayScreen.headKey, find.byType(LumePageHead)),
+      );
+      compare(
+        tester,
+        b,
+        'pagehead.add',
+        inKey(LumeTodayScreen.headKey, find.byType(LumeHeaderButton)),
+      );
+      compare(
+        tester,
+        b,
+        'ring.card',
+        inKey(LumeTodayScreen.ringKey, find.byType(LumeRingCard)),
+      );
+      compare(tester, b, 'ring', find.byType(LumeDayRing));
+      compare(
+        tester,
+        b,
+        'stats',
+        inKey(LumeTodayScreen.statsKey, find.byType(LumeStatRowGrid)),
+        checkX: false,
+        checkWidth: false,
+        note:
+            'the prototype measures the full-bleed section, Flutter the '
+            'padded grid inside it',
+      );
+      compare(tester, b, 'stat', find.byType(LumeStatCard).first);
+      compare(
+        tester,
+        b,
+        'quote',
+        inKey(LumeTodayScreen.reflectionKey, find.byType(LumeQuoteCard)),
+      );
+      compare(
+        tester,
+        b,
+        'quote.arabic',
+        find
+            .descendant(
+              of: find.byType(LumeQuoteCard),
+              matching: find.byType(Text),
+            )
+            .first,
+        checkX: false,
+        checkWidth: false,
+        note:
+            'the prototype measures the paragraph box, Flutter the painted '
+            'line inside its full-width row',
+      );
+    });
+
+    testWidgets('the agenda, the tasks, the habits and the locked door', (
+      WidgetTester tester,
+    ) async {
+      final Map<String, dynamic>? c = cell('today_muslim_pk');
+      if (c == null) return;
+      final Map<String, dynamic> b = c['bounds'] as Map<String, dynamic>;
+      rows.add('\n### Today · Muslim, Pakistan — the lower half\n');
+      rows.add('| element | axis | prototype | Flutter | Δ | note |');
+      rows.add('|---|---|---|---|---|---|');
+
+      await pumpToday(tester, LumeUsers.muslimPk, surface: kTall);
+
+      compare(
+        tester,
+        b,
+        'tl.item',
+        find.byType(LumeAgendaRow).first,
+        tolerance: kDrift,
+        note: kDriftNote,
+      );
+      compare(
+        tester,
+        b,
+        'task',
+        find.byType(LumeTaskRow).first,
+        tolerance: kDrift,
+        note: kDriftNote,
+      );
+      compare(
+        tester,
+        b,
+        'habits',
+        find.byType(LumeHabitCard),
+        tolerance: kDrift,
+        note: kDriftNote,
+      );
+      compare(
+        tester,
+        b,
+        'habit',
+        find.byType(LumeHabitRow).first,
+        tolerance: kDrift,
+        note: kDriftNote,
+      );
+      compare(
+        tester,
+        b,
+        'private',
+        find.byType(LumePrivateCard),
+        tolerance: kDrift,
+        note: kDriftNote,
+      );
+    });
+  });
+
+  // ---------------------------------------------------------------- Explore
+
+  group('Explore is where the prototype puts it', () {
+    testWidgets('the head, the feature, the weather and the local services', (
+      WidgetTester tester,
+    ) async {
+      final Map<String, dynamic>? c = cell('explore_muslim_pk');
+      if (c == null) return;
+      final Map<String, dynamic> b = c['bounds'] as Map<String, dynamic>;
+      rows.add('\n### Explore · Muslim, Pakistan — the upper half\n');
+      rows.add('| element | axis | prototype | Flutter | Δ | note |');
+      rows.add('|---|---|---|---|---|---|');
+
+      await pumpExplore(tester, LumeUsers.muslimPk, surface: kTall);
+
+      compare(
+        tester,
+        b,
+        'pagehead',
+        inKey(LumeExploreScreen.headKey, find.byType(LumePageHead)),
+      );
+      compare(
+        tester,
+        b,
+        'pagehead.search',
+        inKey(LumeExploreScreen.headKey, find.byType(LumeHeaderButton)).last,
+      );
+      compare(
+        tester,
+        b,
+        'feature',
+        inKey(LumeExploreScreen.featuredKey, find.byType(LumeFeatureCard)),
+      );
+      compare(
+        tester,
+        b,
+        'weather',
+        inKey(LumeExploreScreen.weatherKey, find.byType(LumeWeatherCard)),
+      );
+      // `#aroundWrap` is the `.section` itself, and a section's gap is a
+      // margin — outside its border box. The Flutter section carries the gap
+      // inside its own subtree, so the heading and the list are compared
+      // rather than the wrapper.
+      compare(
+        tester,
+        b,
+        'around.title',
+        inKey(LumeExploreScreen.aroundKey, find.text('Around you')),
+        checkWidth: false,
+        note: 'the prototype measures the shrink-wrapped head block',
+      );
+      compare(
+        tester,
+        b,
+        'around.list',
+        inKey(LumeExploreScreen.aroundKey, find.byType(LumeCard)),
+      );
+      compare(
+        tester,
+        b,
+        'around.row',
+        inKey(LumeExploreScreen.aroundKey, find.byType(LumeListRow)).first,
+        checkX: false,
+        checkWidth: false,
+        note: 'the prototype measures inside the list card\'s 1-point border',
+      );
+    });
+
+    testWidgets('the reads, the collections and what is nearby', (
+      WidgetTester tester,
+    ) async {
+      final Map<String, dynamic>? c = cell('explore_muslim_pk');
+      if (c == null) return;
+      final Map<String, dynamic> b = c['bounds'] as Map<String, dynamic>;
+      rows.add('\n### Explore · Muslim, Pakistan — the lower half\n');
+      rows.add('| element | axis | prototype | Flutter | Δ | note |');
+      rows.add('|---|---|---|---|---|---|');
+
+      await pumpExplore(tester, LumeUsers.muslimPk, surface: kTall);
+
+      compare(
+        tester,
+        b,
+        'article',
+        inKey(LumeExploreScreen.newsKey, find.byType(LumeArticleRow)).first,
+        tolerance: kDrift,
+        note: kDriftNote,
+      );
+      compare(
+        tester,
+        b,
+        'nearby.row',
+        inKey(LumeExploreScreen.nearbyKey, find.byType(LumeListRow)).first,
+        tolerance: kDrift,
+        note: kDriftNote,
+      );
+      // Cricket is hidden for this reader, and the prototype measures it as
+      // 0 × 0. Recorded by `compare`, asserted by the composition test.
+      compare(tester, b, 'score', find.byType(LumeScoreCard));
+    });
+  });
+
   tearDownAll(() {
     File(reportPath).writeAsStringSync('''
-# Home and the Tools hub, measured
+# The four destinations, measured
 
 > **Temporary conversion evidence.** Generated by
 > `test/features/destinations/destination_bounds_test.dart`, which is what

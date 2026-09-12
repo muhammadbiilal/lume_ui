@@ -257,12 +257,13 @@ void main() {
     testWidgets('a tab switch does not reset the other tab\'s screen', (
       WidgetTester tester,
     ) async {
-      await pumpLumeRouter(tester, initialLocation: LumeRoutes.today);
+      await pumpLumeRouter(tester, initialLocation: LumeRoutes.trains);
 
-      // Today's fixture counts its own taps. Three taps is state that only
-      // survives if Today's branch is preserved rather than rebuilt — Home and
-      // the Tools hub are the product now, so the counter lives on a branch
-      // that is still a fixture.
+      // The fixture screen counts its own taps. Three taps is state that only
+      // survives if the branch is preserved rather than rebuilt — so the
+      // counter has to live on a branch that is *still* a fixture. Home, the
+      // Tools hub, Today and Explore are the product now; Trains and Profile
+      // are what is left, and they are F5C's and F5D's.
       String countOn(String storageId) => tester
           .widget<Text>(
             find.byKey(ValueKey<String>('fixture-count:$storageId')),
@@ -270,21 +271,21 @@ void main() {
           .data!;
 
       for (int i = 0; i < 3; i++) {
-        await tester.tap(find.widgetWithText(LumeButton, 'Today'));
+        await tester.tap(find.widgetWithText(LumeButton, 'Trains'));
       }
       await tester.pumpAndSettle();
-      expect(countOn('today'), '3');
+      expect(countOn('trains'), '3');
 
       await tester.tap(find.text('Profile').last);
       await tester.pumpAndSettle();
       expect(countOn('profile'), '0');
 
-      await tester.tap(find.text('Today').last);
+      await tester.tap(find.text('Trains').last);
       await tester.pumpAndSettle();
       expect(
-        countOn('today'),
+        countOn('trains'),
         '3',
-        reason: 'Today came back to the count it left with',
+        reason: 'Trains came back to the count it left with',
       );
     });
 

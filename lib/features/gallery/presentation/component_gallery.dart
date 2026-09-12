@@ -26,6 +26,15 @@ import '../../../core/theme/lume/lume_space.dart';
 import '../../../core/theme/lume/lume_theme.dart';
 import '../../../core/theme/lume/lume_type.dart';
 import '../../../core/widgets/lume/lume.dart';
+// The destination furniture is not on the barrel: `lume_table.dart` and
+// `lume_destination.dart` both define a `LumeHorizontalStrip`, so the two
+// layers are imported by name rather than merged.
+import '../../../core/widgets/lume/lume_agenda.dart';
+import '../../../core/widgets/lume/lume_day.dart';
+import '../../../core/widgets/lume/lume_explore.dart';
+import '../../explore/domain/explore_model.dart';
+import '../../explore/presentation/explore_art.dart';
+import '../../today/presentation/today_art.dart';
 
 /// Asserted by the gallery test. A production route must never resolve here.
 const bool kGalleryIsDevelopmentOnly = true;
@@ -81,6 +90,8 @@ class _ComponentGalleryState extends ConsumerState<ComponentGallery> {
                     _measure(_crud()),
                     _measure(_progress()),
                     _measure(_dataDisplay()),
+                    _measure(_today()),
+                    _measure(_explore()),
                     _measure(_chrome()),
                   ],
                 ),
@@ -95,6 +106,338 @@ class _ComponentGalleryState extends ConsumerState<ComponentGallery> {
   Widget _measure(Widget child) => LumeMeasure(child: child);
 
   // ---- Groups -----------------------------------------------------------
+
+  // ---- Today and Explore -------------------------------------------------
+
+  Widget _today() => _Group(
+    title: 'Today',
+    note:
+        'The day as a plan: a ring, three figures, a timeline, a list, a strip '
+        'of habits and a locked door.',
+    children: <Widget>[
+      _Case(
+        'Ring: empty, part way, done',
+        Row(
+          children: <Widget>[
+            for (final (double, String) cell in <(double, String)>[
+              (0.0, '0%'),
+              (0.7, '70%'),
+              (1.0, '100%'),
+            ])
+              Padding(
+                padding: const EdgeInsetsDirectional.only(end: LumeSpace.x3),
+                child: LumeDayRing(
+                  fraction: cell.$1,
+                  label: cell.$2,
+                  unit: 'of day',
+                ),
+              ),
+          ],
+        ),
+      ),
+      const _Case(
+        'Ring card',
+        LumeRingCard(
+          ring: LumeDayRing(fraction: 0.7, label: '70%', unit: 'of day'),
+          title: 'On track',
+          text: '3 of 5 tasks done, 2 meetings left',
+        ),
+      ),
+      const _Case(
+        'Statistics',
+        LumeStatRowGrid(
+          children: <Widget>[
+            LumeStatCard(
+              icon: LumeIcons.flame,
+              value: '12',
+              unit: ' days',
+              label: 'Prayer streak',
+            ),
+            LumeStatCard(
+              icon: LumeIcons.book,
+              value: '18',
+              unit: ' min',
+              label: 'Read today',
+            ),
+            LumeStatCard(
+              icon: LumeIcons.checkCircle,
+              value: '3',
+              unit: '/5',
+              label: 'Tasks done',
+            ),
+          ],
+        ),
+      ),
+      _Case(
+        'Agenda: done, now, upcoming, last',
+        Column(
+          mainAxisSize: MainAxisSize.min,
+          children: <Widget>[
+            LumeAgendaRow(
+              time: '12:07',
+              title: 'Dhuhr',
+              meta: 'Prayed',
+              icon: LumeIcons.checkCircle,
+              tone: LumeAgendaTone.done,
+              onTap: () {},
+            ),
+            const LumeAgendaRow(
+              time: '3:41 pm',
+              title: 'Design review',
+              meta: '45 min',
+              icon: LumeIcons.users,
+              tone: LumeAgendaTone.now,
+            ),
+            LumeAgendaRow(
+              time: '6:27 pm',
+              title: 'Maghrib',
+              meta: 'Adhan on',
+              icon: LumeIcons.moon,
+              tone: LumeAgendaTone.upcoming,
+              onTap: () {},
+              isLast: true,
+            ),
+          ],
+        ),
+      ),
+      _Case(
+        'Tasks: ticked, not ticked, no time of its own',
+        LumeCard(
+          padded: false,
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: <Widget>[
+              LumeTaskRow(
+                label: 'Pay the electricity bill',
+                done: true,
+                time: '5:00 pm',
+                onToggle: () {},
+              ),
+              LumeTaskRow(
+                label: 'Reply to Amir',
+                done: _done,
+                time: '2:30 pm',
+                onToggle: () => setState(() => _done = !_done),
+              ),
+              LumeTaskRow(
+                label: 'Read Al-Kahf',
+                done: false,
+                time: 'Evening',
+                onToggle: () {},
+                isLast: true,
+              ),
+            ],
+          ),
+        ),
+      ),
+      const _Case(
+        'Habits',
+        LumeHabitCard(
+          children: <Widget>[
+            LumeHabitRow(
+              name: 'Fajr',
+              days: <bool>[true, true, false, true, true, true, true],
+              streak: '5',
+              todayIndex: 6,
+              semanticLabel: 'Fajr, 6 of the last 7 days, 5 day streak',
+            ),
+            LumeHabitRow(
+              name: 'Water',
+              days: <bool>[false, true, true, false, true, false, false],
+              streak: '0',
+              todayIndex: 6,
+              semanticLabel: 'Water, 3 of the last 7 days, no streak',
+            ),
+          ],
+        ),
+      ),
+      _Case(
+        'Private',
+        LumePrivateCard(
+          title: 'Health, documents and money',
+          text:
+              'Records, medication and expenses stay locked until you open '
+              'them.',
+          onTap: () {},
+        ),
+      ),
+    ],
+  );
+
+  Widget _explore() => _Group(
+    title: 'Explore',
+    note:
+        'What is around the reader. Every figure here is a fixture, and none '
+        'of it is labelled live.',
+    children: <Widget>[
+      _Case(
+        'Quote: with an ayah, and without',
+        Column(
+          children: <Widget>[
+            LumeQuoteCard(
+              arabic: 'وَمَن يَتَّقِ اللَّهَ',
+              text: 'And whoever fears Allah, He will make for him a way out.',
+              attribution: 'At-Talaq 65:2',
+              actions: <Widget>[
+                LumeGhostButton(
+                  icon: LumeIcons.bookmark,
+                  semanticLabel: 'Bookmark',
+                  onPressed: () {},
+                ),
+                LumeGhostButton(
+                  icon: LumeIcons.share,
+                  semanticLabel: 'Share',
+                  onPressed: () {},
+                ),
+              ],
+            ),
+            const SizedBox(height: LumeSpace.x3),
+            const LumeQuoteCard(
+              text: 'Small steps, taken daily, are still a road.',
+              attribution: 'Lume',
+            ),
+          ],
+        ),
+      ),
+      _Case(
+        'Featured: the two collections',
+        Column(
+          children: <Widget>[
+            LumeFeatureCard(
+              tag: 'Featured',
+              title: 'Duas for every day',
+              text: 'Morning, evening and the small moments in between.',
+              meta: const <String>['40 duas', 'With audio', '12 min'],
+              art: const LumeFeaturedArt(id: LumeFeatureId.duas),
+              onTap: () {},
+            ),
+            const SizedBox(height: LumeSpace.x3),
+            LumeFeatureCard(
+              tag: 'Featured',
+              title: 'A calmer week',
+              text: 'Seven small habits, three minutes each.',
+              meta: const <String>['7 days', '3 min each', 'Free'],
+              art: const LumeFeaturedArt(id: LumeFeatureId.calmWeek),
+              onTap: () {},
+            ),
+          ],
+        ),
+      ),
+      const _Case(
+        'Weather',
+        LumeWeatherCard(
+          icon: LumeIcons.sun,
+          temperature: '34',
+          degreeSign: '°',
+          description: 'Hazy sun, humid, feels 38°',
+          stats: <LumeWeatherStat>[
+            LumeWeatherStat(
+              icon: LumeIcons.droplet,
+              value: '8%',
+              semanticLabel: 'Rain 8 per cent',
+            ),
+            LumeWeatherStat(
+              icon: LumeIcons.wind,
+              value: '11 km/h',
+              semanticLabel: 'Wind 11 kilometres an hour',
+            ),
+            LumeWeatherStat(
+              icon: LumeIcons.moon,
+              value: '6:27 pm',
+              semanticLabel: 'Sunset 6:27 pm',
+            ),
+          ],
+        ),
+      ),
+      _Case(
+        'List rows: with a value, without one, and last',
+        LumeCard(
+          padded: false,
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: <Widget>[
+              LumeListRow(
+                icon: LumeIcons.fuel,
+                title: 'Fuel Prices',
+                subtitle: 'Petrol, Hi-Octane, Diesel',
+                value: 'Rs 264.61',
+                onTap: () {},
+              ),
+              LumeListRow(
+                icon: LumeIcons.train,
+                title: 'Trains',
+                subtitle: 'Green Line Express, on time',
+                onTap: () {},
+              ),
+              LumeListRow(
+                icon: LumeIcons.shield,
+                title: 'Emergency',
+                subtitle: 'Rescue 1122',
+                value: '1122',
+                onTap: () {},
+                isLast: true,
+              ),
+            ],
+          ),
+        ),
+      ),
+      _Case(
+        'Articles: the three tones',
+        LumeCard(
+          padded: false,
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: <Widget>[
+              for (final LumeArticleTone tone in LumeArticleTone.values)
+                LumeArticleRow(
+                  category: 'Business',
+                  title: 'What the new fuel prices mean',
+                  meta: '2 h ago',
+                  art: LumeArticleArt(tone: tone),
+                  onTap: () {},
+                  isLast: tone == LumeArticleTone.values.last,
+                ),
+            ],
+          ),
+        ),
+      ),
+      _Case(
+        'Score',
+        LumeScoreCard(
+          homeTeam: 'PAK',
+          homeRuns: '287',
+          homeWickets: '/4',
+          homeOvers: '78.2 ov',
+          awayTeam: 'ENG',
+          awayRuns: '374',
+          awayOvers: '112.5 ov',
+          note: 'Pakistan trail by 87 runs',
+          versus: 'vs',
+          onTap: () {},
+        ),
+      ),
+      const _Case(
+        'Collection art, and the sticker',
+        Row(
+          children: <Widget>[
+            SizedBox(
+              width: 74,
+              height: 74,
+              child: LumeCollectionArt(id: 'nightSurahs'),
+            ),
+            SizedBox(width: LumeSpace.x3),
+            SizedBox(
+              width: 74,
+              height: 74,
+              child: LumeCollectionArt(id: 'focus'),
+            ),
+            SizedBox(width: LumeSpace.x3),
+            LumeTodaySticker(),
+          ],
+        ),
+      ),
+    ],
+  );
 
   Widget _actions() => _Group(
     title: 'Actions',

@@ -233,7 +233,10 @@ class LumeType extends ThemeExtension<LumeType> {
     14 => 18,
     15 => 19,
     17 => 22,
-    20 => 26,
+    // Measured twice on Today — `.ring__value` and `.stat__value`, both
+    // 20/800 with `line-height: normal` — and both render 25. The 26 that
+    // stood here matched nothing in the measurements.
+    20 => 25,
     24 => 30,
     28 => 35,
     _ => size * 1.26,

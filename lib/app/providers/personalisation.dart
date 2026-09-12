@@ -21,7 +21,11 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../features/catalogue/data/feature_catalogue.dart';
 import '../../features/catalogue/domain/eligibility.dart';
 import '../../features/home/data/home_fixtures.dart';
+import '../../features/explore/data/explore_fixtures.dart';
+import '../../features/explore/domain/explore_repository.dart';
 import '../../features/home/domain/home_repository.dart';
+import '../../features/today/data/today_fixtures.dart';
+import '../../features/today/domain/today_repository.dart';
 import '../../features/onboarding/domain/onboarding_state.dart';
 import '../../features/startup/application/startup_controller.dart';
 import 'shell_provider.dart';
@@ -60,6 +64,24 @@ final Provider<LumeHomeRepository> homeDataRepositoryProvider =
 /// on every arrival — so there is nothing to subscribe to. The list is
 /// filtered again on the way *out* (`LumeEligibility.recentFeatures`), because
 /// a feature that has since been hidden must not resurface through history.
+/// Today's day, from a deterministic fixture.
+///
+/// A real one aggregates the reader's own tasks, calendar, prayers, habits
+/// and bills — see [LumeTodayRepository]. Nothing here persists.
+final Provider<LumeTodayRepository> todayRepositoryProvider =
+    Provider<LumeTodayRepository>(
+      (Ref ref) =>
+          LumeFakeTodayRepository(eligibility: ref.watch(eligibilityProvider)),
+    );
+
+/// Explore's context, from a deterministic fixture.
+final Provider<LumeExploreRepository> exploreRepositoryProvider =
+    Provider<LumeExploreRepository>(
+      (Ref ref) => LumeFakeExploreRepository(
+        eligibility: ref.watch(eligibilityProvider),
+      ),
+    );
+
 final Provider<LumeRecentTools> recentToolsProvider = Provider<LumeRecentTools>(
   (Ref ref) => LumeRecentTools(ref.watch(startupControllerProvider)),
 );

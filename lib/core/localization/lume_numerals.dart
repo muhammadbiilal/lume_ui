@@ -52,9 +52,28 @@ class LumeNumerals extends StatelessWidget {
     this.maxLines,
     this.overflow,
     this.semanticsLabel,
-  });
+  }) : children = null;
+
+  /// A numeric run with its own unit inside it, in a smaller face.
+  ///
+  /// `.stat__value span` and `.weather__temp sup` are both this: one figure,
+  /// one typographic voice for the number and another for what it counts.
+  /// Two `Text`s side by side would let the baselines drift and would break
+  /// the run into two bidi runs, which is the thing this file exists to
+  /// prevent.
+  const LumeNumerals.rich({
+    super.key,
+    required this.children,
+    this.style,
+    this.maxLines,
+    this.overflow,
+    this.semanticsLabel,
+  }) : text = '';
 
   final String text;
+
+  /// The spans, for [LumeNumerals.rich]. `null` for the plain form.
+  final List<InlineSpan>? children;
   final TextStyle? style;
   final int? maxLines;
   final TextOverflow? overflow;
@@ -65,15 +84,24 @@ class LumeNumerals extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => LumeLtr(
-    child: Text(
-      text,
-      style: style,
-      maxLines: maxLines,
-      overflow: overflow,
-      semanticsLabel: semanticsLabel,
-      // Start, not left: inside the isolated LTR subtree, start *is* left, and
-      // saying so keeps the widget honest if it is ever nested differently.
-      textAlign: TextAlign.start,
-    ),
+    child: children == null
+        ? Text(
+            text,
+            style: style,
+            maxLines: maxLines,
+            overflow: overflow,
+            semanticsLabel: semanticsLabel,
+            // Start, not left: inside the isolated LTR subtree, start *is*
+            // left, and saying so keeps the widget honest if it is ever
+            // nested differently.
+            textAlign: TextAlign.start,
+          )
+        : Text.rich(
+            TextSpan(style: style, children: children),
+            maxLines: maxLines,
+            overflow: overflow,
+            semanticsLabel: semanticsLabel,
+            textAlign: TextAlign.start,
+          ),
   );
 }

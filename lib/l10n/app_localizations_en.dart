@@ -93,6 +93,44 @@ class AppLocalizationsEn extends AppLocalizations {
   String get actionWeek => 'Week';
 
   @override
+  String get agendaAdhanOn => 'Adhan · reminder on';
+
+  @override
+  String get agendaGroceries => 'Pick up groceries';
+
+  @override
+  String get agendaGroceriesMeta => 'On the way home';
+
+  @override
+  String get agendaOutage => 'Outage';
+
+  @override
+  String agendaOutageMeta(String area, int hours) {
+    String _temp0 = intl.Intl.pluralLogic(
+      hours,
+      locale: localeName,
+      other: '${hours}h',
+      one: '1h',
+    );
+    return '$area · $_temp0';
+  }
+
+  @override
+  String get agendaPrayed => 'Prayed';
+
+  @override
+  String get agendaReview => 'Design review';
+
+  @override
+  String get agendaReviewMeta => '45 min · Meeting room 2';
+
+  @override
+  String get agendaStandup => 'Team standup';
+
+  @override
+  String get agendaStandupMeta => '15 min · Video call';
+
+  @override
   String get anniversaryKind => 'Anniversary';
 
   @override
@@ -461,6 +499,38 @@ class AppLocalizationsEn extends AppLocalizations {
   String get birthdayKind => 'Birthday';
 
   @override
+  String get collectionBudget => 'Budget basics';
+
+  @override
+  String collectionBudgetMeta(int n) {
+    return '$n lessons';
+  }
+
+  @override
+  String get collectionFocus => 'Focus sounds';
+
+  @override
+  String collectionFocusMeta(int n) {
+    return '$n tracks';
+  }
+
+  @override
+  String get collectionGratitude => 'Gratitude prompts';
+
+  @override
+  String collectionGratitudeMeta(int n) {
+    return '$n days';
+  }
+
+  @override
+  String get collectionNightSurahs => 'Night surahs';
+
+  @override
+  String collectionNightSurahsMeta(int surahs, int minutes) {
+    return '$surahs surahs · $minutes min';
+  }
+
+  @override
   String get commonAll => 'All';
 
   @override
@@ -568,6 +638,87 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String docsRenewSoon(String name) {
     return 'Renew your $name';
+  }
+
+  @override
+  String get exploreAround => 'Around you';
+
+  @override
+  String get exploreAroundSub => 'Local services, kept current';
+
+  @override
+  String get exploreBackToHome => 'Back to home';
+
+  @override
+  String get exploreCollections => 'Collections';
+
+  @override
+  String get exploreCollectionsSub => 'Curated for a quiet moment';
+
+  @override
+  String get exploreCricket => 'Cricket';
+
+  @override
+  String get exploreCricketSub => 'Live · 2nd Test, day 2';
+
+  @override
+  String get exploreFeatured => 'Featured collection';
+
+  @override
+  String get exploreNearby => 'Nearby';
+
+  @override
+  String get exploreNearbySub => 'Within walking distance';
+
+  @override
+  String exploreRainLabel(String value) {
+    return 'Rain $value';
+  }
+
+  @override
+  String get exploreReads => 'Today’s reads';
+
+  @override
+  String get exploreReadsSub => 'Balanced, no doomscroll';
+
+  @override
+  String get exploreScorecard => 'Scorecard';
+
+  @override
+  String get exploreSubGlobal => 'Weather, reading and what’s around you';
+
+  @override
+  String get exploreSubLocal => 'Local services, scores and reading';
+
+  @override
+  String exploreSunsetLabel(String value) {
+    return 'Sunset $value';
+  }
+
+  @override
+  String get exploreWeather => 'Weather';
+
+  @override
+  String exploreWeatherDesc(String condition, String feels) {
+    return '$condition · $feels';
+  }
+
+  @override
+  String exploreWeatherSub(String city, int n) {
+    return '$city · updated $n min ago';
+  }
+
+  @override
+  String get exploreWeatherToast => 'Weather refreshed';
+
+  @override
+  String exploreWindLabel(String value) {
+    return 'Wind $value';
+  }
+
+  @override
+  String exploreWindValue(String value, String unit) {
+    return '$value $unit';
   }
 
   @override
@@ -826,6 +977,46 @@ class AppLocalizationsEn extends AppLocalizations {
   String get featureZakat => 'Zakat Calculator';
 
   @override
+  String featuredCalmDays(int n) {
+    return '$n days';
+  }
+
+  @override
+  String featuredCalmEach(int n) {
+    return '$n min each';
+  }
+
+  @override
+  String get featuredCalmText =>
+      'Small routines for planning, spending and winding down — one for each day.';
+
+  @override
+  String get featuredCalmTitle => 'A calmer week, in seven steps';
+
+  @override
+  String get featuredDuasAudio => 'Audio included';
+
+  @override
+  String featuredDuasCount(int n) {
+    return '$n duas';
+  }
+
+  @override
+  String get featuredDuasText =>
+      'Short supplications for the commute, the queue and the quiet minute before sleep.';
+
+  @override
+  String get featuredDuasTitle => 'Forty duas for ordinary days';
+
+  @override
+  String get featuredFree => 'Free';
+
+  @override
+  String featuredMinutes(int n) {
+    return '$n min';
+  }
+
+  @override
   String get fuelPetrol => 'Petrol';
 
   @override
@@ -850,6 +1041,18 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get greetWindDown => 'Winding down';
+
+  @override
+  String get habitFajr => 'Fajr on time';
+
+  @override
+  String get habitQuran => 'Qur’an daily';
+
+  @override
+  String get habitSteps => 'Walk 6k steps';
+
+  @override
+  String get habitWater => '8 glasses';
 
   @override
   String get heroHighlights => 'Highlights';
@@ -1147,6 +1350,81 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get navTrains => 'Trains';
+
+  @override
+  String get nearbyChaiShai => 'Chai Shai';
+
+  @override
+  String nearbyChaiShaiSub(String time) {
+    return 'Quiet café · open till $time';
+  }
+
+  @override
+  String get nearbyHillPark => 'Hill Park';
+
+  @override
+  String get nearbyHillParkSub => 'Good for a sunset walk';
+
+  @override
+  String nearbyKilometres(String n) {
+    return '$n km';
+  }
+
+  @override
+  String nearbyMetres(int n) {
+    return '$n m';
+  }
+
+  @override
+  String get nearbyTooba => 'Masjid-e-Tooba';
+
+  @override
+  String nearbyToobaSub(String time) {
+    return 'Jamaat for Asr at $time';
+  }
+
+  @override
+  String get newsCatBusiness => 'Business';
+
+  @override
+  String get newsCatKarachi => 'Karachi';
+
+  @override
+  String get newsCatMoney => 'Money';
+
+  @override
+  String get newsCatProductivity => 'Productivity';
+
+  @override
+  String get newsCatSport => 'Sport';
+
+  @override
+  String get newsCatWellbeing => 'Wellbeing';
+
+  @override
+  String get newsLoadshed =>
+      'K-Electric announces revised loadshedding schedule for September';
+
+  @override
+  String newsReadTime(int n) {
+    return '$n min read';
+  }
+
+  @override
+  String get newsReset => 'The two-minute reset that beats a coffee break';
+
+  @override
+  String get newsRupee =>
+      'Rupee holds steady as remittances climb for a third month';
+
+  @override
+  String get newsSavings => 'A plain-English guide to your first savings goal';
+
+  @override
+  String get newsShortList => 'Why a shorter to-do list finishes more work';
+
+  @override
+  String get newsSquad => 'Pakistan name squad for the home Test series';
 
   @override
   String get onbAllSet => 'All set';
@@ -1447,6 +1725,22 @@ class AppLocalizationsEn extends AppLocalizations {
   String get routeMissingTitle => 'We can’t find that';
 
   @override
+  String get scoreAllOut => 'all out';
+
+  @override
+  String scoreOvers(String n) {
+    return '$n ov';
+  }
+
+  @override
+  String scoreTrail(String team, int runs, String player, int score) {
+    return '$team trail by $runs runs · $player $score*';
+  }
+
+  @override
+  String get scoreVersus => 'vs';
+
+  @override
   String get searchJumpBack => 'Jump back in';
 
   @override
@@ -1545,6 +1839,133 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get surahAlKahf => 'Al-Kahf';
+
+  @override
+  String get taskAlKahf => 'Read two pages of Al-Kahf';
+
+  @override
+  String get taskCallHome => 'Call home';
+
+  @override
+  String get taskElectricity => 'Pay the electricity bill';
+
+  @override
+  String get taskElectricityPk => 'Pay the K-Electric bill';
+
+  @override
+  String get taskEmail => 'Reply to Sara’s email';
+
+  @override
+  String get taskEvening => 'Evening';
+
+  @override
+  String get taskSummary => 'Finish the Q3 summary';
+
+  @override
+  String get todayAddToast => 'New task added';
+
+  @override
+  String get todayAgendaGeneral => 'Events and reminders, in order';
+
+  @override
+  String get todayAgendaMuslim => 'Prayers and events, in order';
+
+  @override
+  String get todayAyah => 'Ayah of the day';
+
+  @override
+  String todayAyahCitation(String surah, String verse) {
+    return '$surah $verse';
+  }
+
+  @override
+  String todayAyahReference(String surah, String verse) {
+    return '$surah · $verse';
+  }
+
+  @override
+  String get todayDailyStreak => 'Daily streak';
+
+  @override
+  String todayHabitSummary(String name, int done, int streak) {
+    return '$name, $done of 7 days, $streak day streak';
+  }
+
+  @override
+  String get todayHabits => 'Habits';
+
+  @override
+  String get todayHabitsSub => 'Last seven days';
+
+  @override
+  String get todayOfDay => 'of day';
+
+  @override
+  String get todayOnTrack => 'You’re on track';
+
+  @override
+  String get todayPrayerStreak => 'Prayer streak';
+
+  @override
+  String get todayPrivate => 'Private';
+
+  @override
+  String get todayPrivateSub => 'Only on this device, only for you';
+
+  @override
+  String get todayPrivateText =>
+      'Records, medication and expenses stay locked until you open them.';
+
+  @override
+  String get todayPrivateTitle => 'Health, documents & money';
+
+  @override
+  String get todayPrivateToast => 'Unlock to see private records';
+
+  @override
+  String get todayReadToday => 'Read today';
+
+  @override
+  String todayRingSummary(int done, int total, int meetings) {
+    String _temp0 = intl.Intl.pluralLogic(
+      meetings,
+      locale: localeName,
+      other: '$meetings meetings left this afternoon.',
+      one: 'One meeting left this afternoon.',
+      zero: 'Nothing else scheduled.',
+    );
+    return '$done of $total tasks done. $_temp0';
+  }
+
+  @override
+  String get todaySteps => 'Steps today';
+
+  @override
+  String get todayTaskDone => 'Nice — one less thing';
+
+  @override
+  String get todayTaskUndone => 'Back on the list';
+
+  @override
+  String get todayTasks => 'Tasks';
+
+  @override
+  String get todayTasksDone => 'Tasks done';
+
+  @override
+  String get todayTasksSub => 'Tap to tick one off';
+
+  @override
+  String get todayThought => 'Today’s thought';
+
+  @override
+  String get todayThoughtSub => 'A minute of perspective';
+
+  @override
+  String get todayWeekToast => 'Switched to week view';
+
+  @override
+  String get todayYourDay => 'Your day';
 
   @override
   String get toolCategoryDaily => 'Daily Life';
@@ -1948,7 +2369,30 @@ class AppLocalizationsEn extends AppLocalizations {
   String get toolsTitle => 'Tools';
 
   @override
+  String get unitDays => 'days';
+
+  @override
+  String get unitKmh => 'km/h';
+
+  @override
+  String get unitMinutes => 'min';
+
+  @override
+  String get unitMph => 'mph';
+
+  @override
+  String unitOfTotal(int total) {
+    return '/$total';
+  }
+
+  @override
+  String get unitThousand => 'k';
+
+  @override
   String get weatherClear => 'Clear';
+
+  @override
+  String get weatherClearVeryWarm => 'Clear · very warm';
 
   @override
   String get weatherCloudBuilding => 'Cloud building';
@@ -1960,9 +2404,15 @@ class AppLocalizationsEn extends AppLocalizations {
   String get weatherHazySun => 'Hazy sun';
 
   @override
+  String get weatherHazySunHumid => 'Hazy sun · humid';
+
+  @override
   String weatherHighLow(String high, String low) {
     return '$high / $low';
   }
+
+  @override
+  String get weatherHumidLightHaze => 'Humid · light haze';
 
   @override
   String get weatherLightCloud => 'Light cloud';

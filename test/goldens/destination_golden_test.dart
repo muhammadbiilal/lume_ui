@@ -23,9 +23,15 @@ import 'package:lume/features/home/data/home_fixtures.dart';
 import 'package:lume/features/catalogue/domain/eligibility.dart';
 import 'package:lume/features/home/domain/home_repository.dart';
 import 'package:lume/features/tools/domain/tools_filter.dart';
+import 'package:lume/core/navigation/lume_destination.dart';
+import 'package:lume/features/explore/data/explore_fixtures.dart';
+import 'package:lume/features/explore/domain/explore_repository.dart';
+import 'package:lume/features/explore/presentation/explore_screen.dart';
+import 'package:lume/features/today/presentation/today_screen.dart';
 import 'package:lume/features/tools/presentation/tools_screen.dart';
 
 import '../features/destinations/destination_harness.dart';
+import '../features/destinations/today_explore_harness.dart';
 import '../helpers/capture.dart';
 import '../helpers/load_fonts.dart';
 import '../helpers/lume_harness.dart';
@@ -328,5 +334,241 @@ void main() {
         kCells.first,
       );
     });
+  });
+  group('Today', () {
+    Future<Widget> screen(LumeUserContext user) async => LumeTodayScreen(
+      user: user,
+      data: await composeToday(user),
+      actions: LumeRecordedDay().today,
+    );
+
+    for (final Cell cell in kCells) {
+      testWidgets('Muslim, Pakistan, ${cell.$1}', (WidgetTester tester) async {
+        await shoot(
+          tester,
+          await screen(LumeUsers.muslimPk),
+          'today_muslim_pk',
+          cell,
+        );
+      });
+    }
+
+    // The three other primary states, at the reference cell. Each changes what
+    // the day *contains* rather than how it is drawn: no prayers and a thought
+    // instead of an ayah, a different city's timetable, a market with no
+    // outage.
+    for (final String state in <String>[
+      'default_pk',
+      'muslim_gb',
+      'default_us',
+      'prefs_off_pk',
+    ]) {
+      testWidgets('$state, the reference cell', (WidgetTester tester) async {
+        await shoot(
+          tester,
+          await screen(LumeUsers.all[state]!),
+          'today_$state',
+          kCells.first,
+        );
+      });
+    }
+
+    testWidgets('still arriving, the reference cell', (
+      WidgetTester tester,
+    ) async {
+      await shoot(
+        tester,
+        LumeTodayScreen(
+          user: LumeUsers.muslimPk,
+          actions: LumeRecordedDay().today,
+        ),
+        'today_loading',
+        kCells.first,
+      );
+    });
+
+    testWidgets('and when it could not be composed at all', (
+      WidgetTester tester,
+    ) async {
+      await shoot(
+        tester,
+        LumeTodayScreen(
+          user: LumeUsers.muslimPk,
+          actions: LumeRecordedDay().today,
+          failed: true,
+          onRetry: () async {},
+        ),
+        'today_failed',
+        kCells.first,
+      );
+    });
+  });
+
+  group('Today, scrolled past what a viewport golden reaches', () {
+    // Tasks, habits and the private card sit below 844 points on the reference
+    // cell, so every cell above stops short of them.
+    for (final (String name, String state, double offset) shot
+        in <(String, String, double)>[
+          ('today_muslim_pk_lower', 'muslim_pk', 1200),
+          ('today_default_pk_lower', 'default_pk', 900),
+        ]) {
+      testWidgets('${shot.$1}, the reference cell', (
+        WidgetTester tester,
+      ) async {
+        final LumeUserContext user = LumeUsers.all[shot.$2]!;
+        await pumpLume(
+          tester,
+          LumeTodayScreen(
+            user: user,
+            data: await composeToday(user),
+            actions: LumeRecordedDay().today,
+          ),
+          surface: kCells.first.$2,
+        );
+        tester
+            .state<ScrollableState>(find.byType(Scrollable).first)
+            .position
+            .jumpTo(shot.$3);
+        await tester.pumpAndSettle();
+
+        await expectLater(
+          find.byType(MaterialApp),
+          matchesGoldenFile('images/${shot.$1}_390x844_light_en.png'),
+        );
+      });
+    }
+  });
+
+  group('Explore', () {
+    Future<Widget> screen(LumeUserContext user) async => LumeExploreScreen(
+      user: user,
+      eligibility: kEligibility,
+      snapshot: await composeExplore(user),
+      actions: LumeRecordedDay().explore,
+      // Pakistan has no Explore tab, so the capture carries the way back the
+      // reference draws there. Every other market's does not.
+      onBack:
+          LumeDestinations.orderFor(
+            user.country,
+          ).contains(LumeDestinationId.explore)
+          ? null
+          : () {},
+    );
+
+    for (final Cell cell in kCells) {
+      testWidgets('Muslim, Pakistan, ${cell.$1}', (WidgetTester tester) async {
+        await shoot(
+          tester,
+          await screen(LumeUsers.muslimPk),
+          'explore_muslim_pk',
+          cell,
+        );
+      });
+    }
+
+    for (final String state in <String>[
+      'default_pk',
+      'muslim_gb',
+      'default_us',
+      'prefs_off_pk',
+    ]) {
+      testWidgets('$state, the reference cell', (WidgetTester tester) async {
+        await shoot(
+          tester,
+          await screen(LumeUsers.all[state]!),
+          'explore_$state',
+          kCells.first,
+        );
+      });
+    }
+
+    testWidgets('still arriving, the reference cell', (
+      WidgetTester tester,
+    ) async {
+      await shoot(
+        tester,
+        LumeExploreScreen(
+          user: LumeUsers.muslimPk,
+          eligibility: kEligibility,
+          actions: LumeRecordedDay().explore,
+        ),
+        'explore_loading',
+        kCells.first,
+      );
+    });
+
+    testWidgets('two sources that could not answer', (
+      WidgetTester tester,
+    ) async {
+      await shoot(
+        tester,
+        LumeExploreScreen(
+          user: LumeUsers.muslimPk,
+          eligibility: kEligibility,
+          snapshot: await composeExplore(
+            LumeUsers.muslimPk,
+            repository: LumeFakeExploreRepository(
+              eligibility: kEligibility,
+              failing: const <LumeExploreSource>{
+                LumeExploreSource.around,
+                LumeExploreSource.news,
+              },
+            ),
+          ),
+          actions: LumeRecordedDay().explore,
+        ),
+        'explore_partial',
+        kCells.first,
+      );
+    });
+
+    testWidgets('and when none of it could', (WidgetTester tester) async {
+      await shoot(
+        tester,
+        LumeExploreScreen(
+          user: LumeUsers.muslimPk,
+          eligibility: kEligibility,
+          actions: LumeRecordedDay().explore,
+          failed: true,
+          onRetry: () async {},
+        ),
+        'explore_failed',
+        kCells.first,
+      );
+    });
+  });
+
+  group('Explore, scrolled past what a viewport golden reaches', () {
+    for (final (String name, String state, double offset) shot
+        in <(String, String, double)>[
+          ('explore_muslim_pk_lower', 'muslim_pk', 1250),
+          ('explore_muslim_gb_lower', 'muslim_gb', 1050),
+        ]) {
+      testWidgets('${shot.$1}, the reference cell', (
+        WidgetTester tester,
+      ) async {
+        final LumeUserContext user = LumeUsers.all[shot.$2]!;
+        await pumpLume(
+          tester,
+          LumeExploreScreen(
+            user: user,
+            eligibility: kEligibility,
+            snapshot: await composeExplore(user),
+            actions: LumeRecordedDay().explore,
+          ),
+          surface: kCells.first.$2,
+        );
+        tester
+            .state<ScrollableState>(find.byType(Scrollable).first)
+            .position
+            .jumpTo(shot.$3);
+        await tester.pumpAndSettle();
+
+        await expectLater(
+          find.byType(MaterialApp),
+          matchesGoldenFile('images/${shot.$1}_390x844_light_en.png'),
+        );
+      });
+    }
   });
 }

@@ -54,9 +54,12 @@ class LumeCard extends StatelessWidget {
         boxShadow: context.lumeShadows.sm,
       ),
       child: Padding(
-        padding: padded
-            ? const EdgeInsets.all(LumeSpace.padCard)
-            : EdgeInsets.zero,
+        // The border is part of the box: a `.kard` with a 1-point border and
+        // six 61-point rows measures 367, not 365. `DecoratedBox` paints the
+        // border without reserving room for it, so the inset is added here.
+        padding:
+            (padded ? const EdgeInsets.all(LumeSpace.padCard) : EdgeInsets.zero)
+                .add(const EdgeInsets.all(LumeSpace.border)),
         child: child,
       ),
     );

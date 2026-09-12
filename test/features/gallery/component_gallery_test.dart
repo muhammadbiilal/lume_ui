@@ -8,6 +8,9 @@ library;
 
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:lume/core/theme/lume/lume_type.dart';
+import 'package:lume/core/widgets/lume/lume_day.dart';
+import 'package:lume/core/widgets/lume/lume_explore.dart';
 import 'package:lume/features/gallery/presentation/component_gallery.dart';
 
 import '../../helpers/capture.dart';
@@ -78,6 +81,78 @@ void main() {
         textScale: 2.0,
         surface: LumeViewport.narrow,
       );
+      expectNoOverflow(tester);
+    });
+  });
+
+  group('the destination furniture, which is at the far end of it', () {
+    // The gallery is a `ListView`, so a group at the bottom is never built
+    // until something scrolls to it. "The gallery lays out clean" therefore
+    // says nothing at all about the last group unless the test goes there,
+    // which is what this does.
+    Future<void> scrollToExplore(WidgetTester tester) async {
+      await tester.scrollUntilVisible(
+        find.text(
+          LumeType.overline(
+            tester.element(find.byType(ComponentGallery)),
+            'Explore',
+          ),
+        ),
+        600,
+        scrollable: find.byType(Scrollable).first,
+        maxScrolls: 200,
+      );
+    }
+
+    for (final (String, Size) cell in <(String, Size)>[
+      ('narrow 359', LumeViewport.narrow),
+      ('phone 390', LumeViewport.phone),
+      ('medium 700', LumeViewport.medium),
+      ('expanded 1100', LumeViewport.expanded),
+    ]) {
+      testWidgets('lays out at ${cell.$1}', (WidgetTester tester) async {
+        await pumpLume(tester, const ComponentGallery(), surface: cell.$2);
+        await scrollToExplore(tester);
+        expectNoOverflow(tester);
+        expect(find.byType(LumeDayRing), findsWidgets);
+        expect(find.byType(LumeWeatherCard), findsOneWidget);
+      });
+    }
+
+    for (final String code in <String>['ur', 'ar']) {
+      testWidgets('and in $code, right to left', (WidgetTester tester) async {
+        await pumpLume(
+          tester,
+          const ComponentGallery(),
+          locale: Locale(code),
+          surface: LumeViewport.phone,
+        );
+        await scrollToExplore(tester);
+        expectNoOverflow(tester);
+      });
+    }
+
+    testWidgets('and at 200 per cent on the narrowest phone', (
+      WidgetTester tester,
+    ) async {
+      await pumpLume(
+        tester,
+        const ComponentGallery(),
+        surface: LumeViewport.narrow,
+        textScale: 2.0,
+      );
+      await scrollToExplore(tester);
+      expectNoOverflow(tester);
+    });
+
+    testWidgets('and in the dark', (WidgetTester tester) async {
+      await pumpLume(
+        tester,
+        const ComponentGallery(),
+        theme: ThemeMode.dark,
+        surface: LumeViewport.phone,
+      );
+      await scrollToExplore(tester);
       expectNoOverflow(tester);
     });
   });

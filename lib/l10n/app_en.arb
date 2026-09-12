@@ -1,6 +1,4 @@
 {
-  "@@locale": "en",
-  "@@context": "Lume",
   "a11yBack": "Back",
   "@a11yBack": {
     "description": "Reference key a11y.back"
@@ -112,6 +110,54 @@
   "actionWeek": "Week",
   "@actionWeek": {
     "description": "Reference key a.week"
+  },
+  "agendaAdhanOn": "Adhan · reminder on",
+  "@agendaAdhanOn": {
+    "description": "Reference: a prayer still to come"
+  },
+  "agendaGroceries": "Pick up groceries",
+  "@agendaGroceries": {
+    "description": "Reference: an agenda errand"
+  },
+  "agendaGroceriesMeta": "On the way home",
+  "@agendaGroceriesMeta": {
+    "description": "Reference: an agenda errand’s detail"
+  },
+  "agendaOutage": "Outage",
+  "@agendaOutage": {
+    "description": "Reference: the loadshedding entry in the agenda"
+  },
+  "agendaOutageMeta": "{area} · {hours, plural, =1{1h} other{{hours}h}}",
+  "@agendaOutageMeta": {
+    "description": "Reference: the outage entry’s area and length",
+    "placeholders": {
+      "area": {
+        "type": "String"
+      },
+      "hours": {
+        "type": "int"
+      }
+    }
+  },
+  "agendaPrayed": "Prayed",
+  "@agendaPrayed": {
+    "description": "Reference: a prayer that has passed"
+  },
+  "agendaReview": "Design review",
+  "@agendaReview": {
+    "description": "Reference: an agenda event"
+  },
+  "agendaReviewMeta": "45 min · Meeting room 2",
+  "@agendaReviewMeta": {
+    "description": "Reference: an agenda event’s detail"
+  },
+  "agendaStandup": "Team standup",
+  "@agendaStandup": {
+    "description": "Reference: an agenda event"
+  },
+  "agendaStandupMeta": "15 min · Video call",
+  "@agendaStandupMeta": {
+    "description": "Reference: an agenda event’s detail"
   },
   "anniversaryKind": "Anniversary",
   "@anniversaryKind": {
@@ -572,6 +618,61 @@
   "@birthdayKind": {
     "description": "The kind line on a birthday row"
   },
+  "collectionBudget": "Budget basics",
+  "@collectionBudget": {
+    "description": "Reference: a collection card"
+  },
+  "collectionBudgetMeta": "{n} lessons",
+  "@collectionBudgetMeta": {
+    "description": "Reference: a collection card’s detail",
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
+  "collectionFocus": "Focus sounds",
+  "@collectionFocus": {
+    "description": "Reference: a collection card"
+  },
+  "collectionFocusMeta": "{n} tracks",
+  "@collectionFocusMeta": {
+    "description": "Reference: a collection card’s detail",
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
+  "collectionGratitude": "Gratitude prompts",
+  "@collectionGratitude": {
+    "description": "Reference: a collection card"
+  },
+  "collectionGratitudeMeta": "{n} days",
+  "@collectionGratitudeMeta": {
+    "description": "Reference: a collection card’s detail",
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
+  "collectionNightSurahs": "Night surahs",
+  "@collectionNightSurahs": {
+    "description": "Reference: a collection card"
+  },
+  "collectionNightSurahsMeta": "{surahs} surahs · {minutes} min",
+  "@collectionNightSurahsMeta": {
+    "description": "Reference: a collection card’s detail",
+    "placeholders": {
+      "surahs": {
+        "type": "int"
+      },
+      "minutes": {
+        "type": "int"
+      }
+    }
+  },
   "commonAll": "All",
   "@commonAll": {
     "description": "Reference key common.all"
@@ -688,6 +789,7 @@
   "@commonYesterday": {
     "description": "Reference key common.yesterday"
   },
+  "@@context": "Lume",
   "cricketScore": "{team} {runs}/{wickets}",
   "@cricketScore": {
     "description": "Reference: the cricket Discover card’s title. The side is a three-letter code",
@@ -725,6 +827,137 @@
     "description": "Reference key docs.renewSoon",
     "placeholders": {
       "name": {
+        "type": "String"
+      }
+    }
+  },
+  "exploreAround": "Around you",
+  "@exploreAround": {
+    "description": "Reference: the local services section"
+  },
+  "exploreAroundSub": "Local services, kept current",
+  "@exploreAroundSub": {
+    "description": "Reference: under “Around you”"
+  },
+  "exploreBackToHome": "Back to home",
+  "@exploreBackToHome": {
+    "description": "The way back out of Explore in a market where it is not a tab. Reference: explore.screen.js #exploreBack aria-label."
+  },
+  "exploreCollections": "Collections",
+  "@exploreCollections": {
+    "description": "Reference: the collections section"
+  },
+  "exploreCollectionsSub": "Curated for a quiet moment",
+  "@exploreCollectionsSub": {
+    "description": "Reference: under “Collections”"
+  },
+  "exploreCricket": "Cricket",
+  "@exploreCricket": {
+    "description": "Reference: the live sport section"
+  },
+  "exploreCricketSub": "Live · 2nd Test, day 2",
+  "@exploreCricketSub": {
+    "description": "Reference: under “Cricket”. A live claim the prototype writes as a literal (E3)"
+  },
+  "exploreFeatured": "Featured collection",
+  "@exploreFeatured": {
+    "description": "Reference: the tag on the featured card"
+  },
+  "exploreNearby": "Nearby",
+  "@exploreNearby": {
+    "description": "Reference: the nearby section"
+  },
+  "exploreNearbySub": "Within walking distance",
+  "@exploreNearbySub": {
+    "description": "Reference: under “Nearby”"
+  },
+  "exploreRainLabel": "Rain {value}",
+  "@exploreRainLabel": {
+    "description": "The weather card’s rain figure, read aloud",
+    "placeholders": {
+      "value": {
+        "type": "String"
+      }
+    }
+  },
+  "exploreReads": "Today’s reads",
+  "@exploreReads": {
+    "description": "Reference: the news section"
+  },
+  "exploreReadsSub": "Balanced, no doomscroll",
+  "@exploreReadsSub": {
+    "description": "Reference: under “Today’s reads”"
+  },
+  "exploreScorecard": "Scorecard",
+  "@exploreScorecard": {
+    "description": "Reference: the link on the cricket section"
+  },
+  "exploreSubGlobal": "Weather, reading and what’s around you",
+  "@exploreSubGlobal": {
+    "description": "Reference: under “Explore” elsewhere"
+  },
+  "exploreSubLocal": "Local services, scores and reading",
+  "@exploreSubLocal": {
+    "description": "Reference: under “Explore” in a market with localised services"
+  },
+  "exploreSunsetLabel": "Sunset {value}",
+  "@exploreSunsetLabel": {
+    "description": "The weather card’s sunset, read aloud",
+    "placeholders": {
+      "value": {
+        "type": "String"
+      }
+    }
+  },
+  "exploreWeather": "Weather",
+  "@exploreWeather": {
+    "description": "Reference: the weather section"
+  },
+  "exploreWeatherDesc": "{condition} · {feels}",
+  "@exploreWeatherDesc": {
+    "description": "Reference: the weather card’s line — the condition and the feels-like",
+    "placeholders": {
+      "condition": {
+        "type": "String"
+      },
+      "feels": {
+        "type": "String"
+      }
+    }
+  },
+  "exploreWeatherSub": "{city} · updated {n} min ago",
+  "@exploreWeatherSub": {
+    "description": "Reference: under “Weather”. The prototype writes the number as a literal and it never changes (E1)",
+    "placeholders": {
+      "city": {
+        "type": "String"
+      },
+      "n": {
+        "type": "int"
+      }
+    }
+  },
+  "exploreWeatherToast": "Weather refreshed",
+  "@exploreWeatherToast": {
+    "description": "Reference: the toast behind the Refresh link"
+  },
+  "exploreWindLabel": "Wind {value}",
+  "@exploreWindLabel": {
+    "description": "The weather card’s wind figure, read aloud",
+    "placeholders": {
+      "value": {
+        "type": "String"
+      }
+    }
+  },
+  "exploreWindValue": "{value} {unit}",
+  "@exploreWindValue": {
+    "description": "Reference: a wind speed and its unit",
+    "placeholders": {
+      "value": {
+        "type": "String"
+      },
+      "unit": {
         "type": "String"
       }
     }
@@ -1069,6 +1302,66 @@
   "@featureZakat": {
     "description": "Reference key f.zakat; the catalogue is the source of the English"
   },
+  "featuredCalmDays": "{n} days",
+  "@featuredCalmDays": {
+    "description": "Reference: the featured card’s first fact",
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
+  "featuredCalmEach": "{n} min each",
+  "@featuredCalmEach": {
+    "description": "Reference: the featured card’s second fact",
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
+  "featuredCalmText": "Small routines for planning, spending and winding down — one for each day.",
+  "@featuredCalmText": {
+    "description": "Reference: the featured card’s body"
+  },
+  "featuredCalmTitle": "A calmer week, in seven steps",
+  "@featuredCalmTitle": {
+    "description": "Reference: the featured card for everyone else"
+  },
+  "featuredDuasAudio": "Audio included",
+  "@featuredDuasAudio": {
+    "description": "Reference: the featured card’s second fact"
+  },
+  "featuredDuasCount": "{n} duas",
+  "@featuredDuasCount": {
+    "description": "Reference: the featured card’s first fact",
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
+  "featuredDuasText": "Short supplications for the commute, the queue and the quiet minute before sleep.",
+  "@featuredDuasText": {
+    "description": "Reference: the featured card’s body"
+  },
+  "featuredDuasTitle": "Forty duas for ordinary days",
+  "@featuredDuasTitle": {
+    "description": "Reference: the featured card with the Islamic experience on"
+  },
+  "featuredFree": "Free",
+  "@featuredFree": {
+    "description": "Reference: the featured card’s third fact"
+  },
+  "featuredMinutes": "{n} min",
+  "@featuredMinutes": {
+    "description": "Reference: a duration on a card",
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
   "fuelPetrol": "Petrol",
   "@fuelPetrol": {
     "description": "Reference key fuel.g.petrol"
@@ -1108,6 +1401,22 @@
   "greetWindDown": "Winding down",
   "@greetWindDown": {
     "description": "Reference key greet.winddown"
+  },
+  "habitFajr": "Fajr on time",
+  "@habitFajr": {
+    "description": "Reference: a habit"
+  },
+  "habitQuran": "Qur’an daily",
+  "@habitQuran": {
+    "description": "Reference: a habit"
+  },
+  "habitSteps": "Walk 6k steps",
+  "@habitSteps": {
+    "description": "Reference: a habit"
+  },
+  "habitWater": "8 glasses",
+  "@habitWater": {
+    "description": "Reference: a habit"
   },
   "heroHighlights": "Highlights",
   "@heroHighlights": {
@@ -1459,6 +1768,7 @@
       }
     }
   },
+  "@@locale": "en",
   "marketPk": "Pakistan",
   "@marketPk": {
     "description": "The market a national pump price applies to. Only the markets whose regulator publishes one need a key"
@@ -1535,6 +1845,115 @@
   "navTrains": "Trains",
   "@navTrains": {
     "description": "Reference key nav.trains"
+  },
+  "nearbyChaiShai": "Chai Shai",
+  "@nearbyChaiShai": {
+    "description": "Reference: a nearby place"
+  },
+  "nearbyChaiShaiSub": "Quiet café · open till {time}",
+  "@nearbyChaiShaiSub": {
+    "description": "Reference: a nearby place’s detail",
+    "placeholders": {
+      "time": {
+        "type": "String"
+      }
+    }
+  },
+  "nearbyHillPark": "Hill Park",
+  "@nearbyHillPark": {
+    "description": "Reference: a nearby place"
+  },
+  "nearbyHillParkSub": "Good for a sunset walk",
+  "@nearbyHillParkSub": {
+    "description": "Reference: a nearby place’s detail"
+  },
+  "nearbyKilometres": "{n} km",
+  "@nearbyKilometres": {
+    "description": "Reference: a distance over a kilometre",
+    "placeholders": {
+      "n": {
+        "type": "String"
+      }
+    }
+  },
+  "nearbyMetres": "{n} m",
+  "@nearbyMetres": {
+    "description": "Reference: a distance under a kilometre",
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
+  "nearbyTooba": "Masjid-e-Tooba",
+  "@nearbyTooba": {
+    "description": "Reference: a nearby place. Fixed Karachi content shown in every market (E2)"
+  },
+  "nearbyToobaSub": "Jamaat for Asr at {time}",
+  "@nearbyToobaSub": {
+    "description": "Reference: a nearby place’s detail",
+    "placeholders": {
+      "time": {
+        "type": "String"
+      }
+    }
+  },
+  "newsCatBusiness": "Business",
+  "@newsCatBusiness": {
+    "description": "Reference: a news category"
+  },
+  "newsCatKarachi": "Karachi",
+  "@newsCatKarachi": {
+    "description": "Reference: a news category"
+  },
+  "newsCatMoney": "Money",
+  "@newsCatMoney": {
+    "description": "Reference: a news category"
+  },
+  "newsCatProductivity": "Productivity",
+  "@newsCatProductivity": {
+    "description": "Reference: a news category"
+  },
+  "newsCatSport": "Sport",
+  "@newsCatSport": {
+    "description": "Reference: a news category"
+  },
+  "newsCatWellbeing": "Wellbeing",
+  "@newsCatWellbeing": {
+    "description": "Reference: a news category"
+  },
+  "newsLoadshed": "K-Electric announces revised loadshedding schedule for September",
+  "@newsLoadshed": {
+    "description": "Reference: a Pakistan headline"
+  },
+  "newsReadTime": "{n} min read",
+  "@newsReadTime": {
+    "description": "Reference: a story’s reading time",
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
+  "newsReset": "The two-minute reset that beats a coffee break",
+  "@newsReset": {
+    "description": "Reference: a global headline"
+  },
+  "newsRupee": "Rupee holds steady as remittances climb for a third month",
+  "@newsRupee": {
+    "description": "Reference: a Pakistan headline"
+  },
+  "newsSavings": "A plain-English guide to your first savings goal",
+  "@newsSavings": {
+    "description": "Reference: a global headline"
+  },
+  "newsShortList": "Why a shorter to-do list finishes more work",
+  "@newsShortList": {
+    "description": "Reference: a global headline"
+  },
+  "newsSquad": "Pakistan name squad for the home Test series",
+  "@newsSquad": {
+    "description": "Reference: a Pakistan headline"
   },
   "onbAllSet": "All set",
   "@onbAllSet": {
@@ -1929,6 +2348,41 @@
   "@routeMissingTitle": {
     "description": "Unrecognised location"
   },
+  "scoreAllOut": "all out",
+  "@scoreAllOut": {
+    "description": "Reference: a side that has lost every wicket"
+  },
+  "scoreOvers": "{n} ov",
+  "@scoreOvers": {
+    "description": "Reference: how many overs a side has faced",
+    "placeholders": {
+      "n": {
+        "type": "String"
+      }
+    }
+  },
+  "scoreTrail": "{team} trail by {runs} runs · {player} {score}*",
+  "@scoreTrail": {
+    "description": "Reference: the note under the score",
+    "placeholders": {
+      "team": {
+        "type": "String"
+      },
+      "runs": {
+        "type": "int"
+      },
+      "player": {
+        "type": "String"
+      },
+      "score": {
+        "type": "int"
+      }
+    }
+  },
+  "scoreVersus": "vs",
+  "@scoreVersus": {
+    "description": "Reference: between the two sides"
+  },
   "searchJumpBack": "Jump back in",
   "@searchJumpBack": {
     "description": "Reference key search.jumpBack"
@@ -2073,6 +2527,192 @@
   "surahAlKahf": "Al-Kahf",
   "@surahAlKahf": {
     "description": "The surah the reading fixture is open at"
+  },
+  "taskAlKahf": "Read two pages of Al-Kahf",
+  "@taskAlKahf": {
+    "description": "Reference: a task, with the Islamic experience on"
+  },
+  "taskCallHome": "Call home",
+  "@taskCallHome": {
+    "description": "Reference: a task"
+  },
+  "taskElectricity": "Pay the electricity bill",
+  "@taskElectricity": {
+    "description": "Reference: the same task elsewhere"
+  },
+  "taskElectricityPk": "Pay the K-Electric bill",
+  "@taskElectricityPk": {
+    "description": "Reference: a task, in Pakistan"
+  },
+  "taskEmail": "Reply to Sara’s email",
+  "@taskEmail": {
+    "description": "Reference: a task"
+  },
+  "taskEvening": "Evening",
+  "@taskEvening": {
+    "description": "Reference: a task with no clock time"
+  },
+  "taskSummary": "Finish the Q3 summary",
+  "@taskSummary": {
+    "description": "Reference: a task"
+  },
+  "todayAddToast": "New task added",
+  "@todayAddToast": {
+    "description": "Reference: the toast behind the Add control"
+  },
+  "todayAgendaGeneral": "Events and reminders, in order",
+  "@todayAgendaGeneral": {
+    "description": "Reference: the agenda subtitle otherwise"
+  },
+  "todayAgendaMuslim": "Prayers and events, in order",
+  "@todayAgendaMuslim": {
+    "description": "Reference: the agenda subtitle with the Islamic experience on"
+  },
+  "todayAyah": "Ayah of the day",
+  "@todayAyah": {
+    "description": "Reference: the faith-swapped reflection section"
+  },
+  "todayAyahCitation": "{surah} {verse}",
+  "@todayAyahCitation": {
+    "description": "The same citation at the foot of the card, which the reference writes without the dot. Reference: today.screen.js quote__by.",
+    "placeholders": {
+      "surah": {
+        "type": "String"
+      },
+      "verse": {
+        "type": "String"
+      }
+    }
+  },
+  "todayAyahReference": "{surah} · {verse}",
+  "@todayAyahReference": {
+    "description": "The citation under \"Ayah of the day\". Reference: today.screen.js section__sub.",
+    "placeholders": {
+      "surah": {
+        "type": "String"
+      },
+      "verse": {
+        "type": "String"
+      }
+    }
+  },
+  "todayDailyStreak": "Daily streak",
+  "@todayDailyStreak": {
+    "description": "Reference: a Today statistic"
+  },
+  "todayHabitSummary": "{name}, {done} of 7 days, {streak} day streak",
+  "@todayHabitSummary": {
+    "description": "A habit row read aloud: a line of coloured squares says nothing to a screen reader",
+    "placeholders": {
+      "name": {
+        "type": "String"
+      },
+      "done": {
+        "type": "int"
+      },
+      "streak": {
+        "type": "int"
+      }
+    }
+  },
+  "todayHabits": "Habits",
+  "@todayHabits": {
+    "description": "Reference: the habit section"
+  },
+  "todayHabitsSub": "Last seven days",
+  "@todayHabitsSub": {
+    "description": "Reference: under “Habits”"
+  },
+  "todayOfDay": "of day",
+  "@todayOfDay": {
+    "description": "Reference: under the day ring"
+  },
+  "todayOnTrack": "You’re on track",
+  "@todayOnTrack": {
+    "description": "Reference: the ring card’s title"
+  },
+  "todayPrayerStreak": "Prayer streak",
+  "@todayPrayerStreak": {
+    "description": "Reference: a Today statistic"
+  },
+  "todayPrivate": "Private",
+  "@todayPrivate": {
+    "description": "Reference: the private section"
+  },
+  "todayPrivateSub": "Only on this device, only for you",
+  "@todayPrivateSub": {
+    "description": "Reference: under “Private”"
+  },
+  "todayPrivateText": "Records, medication and expenses stay locked until you open them.",
+  "@todayPrivateText": {
+    "description": "Reference: the locked card’s body"
+  },
+  "todayPrivateTitle": "Health, documents & money",
+  "@todayPrivateTitle": {
+    "description": "Reference: the locked card’s title"
+  },
+  "todayPrivateToast": "Unlock to see private records",
+  "@todayPrivateToast": {
+    "description": "Reference: the toast behind the private card"
+  },
+  "todayReadToday": "Read today",
+  "@todayReadToday": {
+    "description": "Reference: a Today statistic"
+  },
+  "todayRingSummary": "{done} of {total} tasks done. {meetings, plural, =0{Nothing else scheduled.} =1{One meeting left this afternoon.} other{{meetings} meetings left this afternoon.}}",
+  "@todayRingSummary": {
+    "description": "Reference: the ring card’s line. The prototype writes it as static English and never updates it (T1)",
+    "placeholders": {
+      "done": {
+        "type": "int"
+      },
+      "total": {
+        "type": "int"
+      },
+      "meetings": {
+        "type": "int"
+      }
+    }
+  },
+  "todaySteps": "Steps today",
+  "@todaySteps": {
+    "description": "Reference: a Today statistic"
+  },
+  "todayTaskDone": "Nice — one less thing",
+  "@todayTaskDone": {
+    "description": "Reference: the toast after ticking a task"
+  },
+  "todayTaskUndone": "Back on the list",
+  "@todayTaskUndone": {
+    "description": "Reference: the toast after un-ticking a task"
+  },
+  "todayTasks": "Tasks",
+  "@todayTasks": {
+    "description": "Reference: the task section"
+  },
+  "todayTasksDone": "Tasks done",
+  "@todayTasksDone": {
+    "description": "Reference: a Today statistic"
+  },
+  "todayTasksSub": "Tap to tick one off",
+  "@todayTasksSub": {
+    "description": "Reference: under “Tasks”"
+  },
+  "todayThought": "Today’s thought",
+  "@todayThought": {
+    "description": "Reference: the reflection section for everyone else"
+  },
+  "todayThoughtSub": "A minute of perspective",
+  "@todayThoughtSub": {
+    "description": "Reference: under “Today’s thought”"
+  },
+  "todayWeekToast": "Switched to week view",
+  "@todayWeekToast": {
+    "description": "Reference: the toast behind the Week link"
+  },
+  "todayYourDay": "Your day",
+  "@todayYourDay": {
+    "description": "Reference: the agenda section"
   },
   "toolCategoryDaily": "Daily Life",
   "@toolCategoryDaily": {
@@ -2591,9 +3231,42 @@
   "@toolsTitle": {
     "description": "Reference key tools.title"
   },
+  "unitDays": "days",
+  "@unitDays": {
+    "description": "Reference: a statistic’s unit"
+  },
+  "unitKmh": "km/h",
+  "@unitKmh": {
+    "description": "Reference: a wind speed unit"
+  },
+  "unitMinutes": "min",
+  "@unitMinutes": {
+    "description": "Reference: a statistic’s unit"
+  },
+  "unitMph": "mph",
+  "@unitMph": {
+    "description": "Reference: a wind speed unit"
+  },
+  "unitOfTotal": "/{total}",
+  "@unitOfTotal": {
+    "description": "Reference: the denominator of a ratio statistic",
+    "placeholders": {
+      "total": {
+        "type": "int"
+      }
+    }
+  },
+  "unitThousand": "k",
+  "@unitThousand": {
+    "description": "Reference: a statistic’s unit"
+  },
   "weatherClear": "Clear",
   "@weatherClear": {
     "description": "A weather condition. The prototype stores these as English sentences in the catalogue and never translates them"
+  },
+  "weatherClearVeryWarm": "Clear · very warm",
+  "@weatherClearVeryWarm": {
+    "description": "Reference: WEATHER_BY_COUNTRY.AE"
   },
   "weatherCloudBuilding": "Cloud building",
   "@weatherCloudBuilding": {
@@ -2607,6 +3280,10 @@
   "@weatherHazySun": {
     "description": "A weather condition. The prototype stores these as English sentences in the catalogue and never translates them"
   },
+  "weatherHazySunHumid": "Hazy sun · humid",
+  "@weatherHazySunHumid": {
+    "description": "Reference: WEATHER_BY_COUNTRY.PK"
+  },
   "weatherHighLow": "{high} / {low}",
   "@weatherHighLow": {
     "description": "Reference: the livecard sub line",
@@ -2618,6 +3295,10 @@
         "type": "String"
       }
     }
+  },
+  "weatherHumidLightHaze": "Humid · light haze",
+  "@weatherHumidLightHaze": {
+    "description": "Reference: WEATHER_BY_COUNTRY.IN"
   },
   "weatherLightCloud": "Light cloud",
   "@weatherLightCloud": {

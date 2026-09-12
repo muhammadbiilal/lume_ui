@@ -195,7 +195,11 @@ class _LumeToolsScreenState extends State<LumeToolsScreen> {
                 title: l.toolsRecent,
                 subtitle: l.toolsRecentSub,
                 child: LumeHorizontalStrip(
-                  padding: const EdgeInsets.only(bottom: 6),
+                  // `.hscroll { padding: 2px 20px 6px }` — the 2 at the top is
+                  // room for a pressed card's shadow, and dropping it moved
+                  // every section below the recents strip 2 points up the
+                  // page. `LumeDestinationMetrics.stripPadding` is that rule.
+                  padding: LumeDestinationMetrics.stripPadding,
                   children: <Widget>[
                     for (final LumeFeature f in view.recents)
                       LumeRecentPill(

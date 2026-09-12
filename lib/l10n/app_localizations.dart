@@ -268,6 +268,66 @@ abstract class AppLocalizations {
   /// **'Week'**
   String get actionWeek;
 
+  /// Reference: a prayer still to come
+  ///
+  /// In en, this message translates to:
+  /// **'Adhan · reminder on'**
+  String get agendaAdhanOn;
+
+  /// Reference: an agenda errand
+  ///
+  /// In en, this message translates to:
+  /// **'Pick up groceries'**
+  String get agendaGroceries;
+
+  /// Reference: an agenda errand’s detail
+  ///
+  /// In en, this message translates to:
+  /// **'On the way home'**
+  String get agendaGroceriesMeta;
+
+  /// Reference: the loadshedding entry in the agenda
+  ///
+  /// In en, this message translates to:
+  /// **'Outage'**
+  String get agendaOutage;
+
+  /// Reference: the outage entry’s area and length
+  ///
+  /// In en, this message translates to:
+  /// **'{area} · {hours, plural, =1{1h} other{{hours}h}}'**
+  String agendaOutageMeta(String area, int hours);
+
+  /// Reference: a prayer that has passed
+  ///
+  /// In en, this message translates to:
+  /// **'Prayed'**
+  String get agendaPrayed;
+
+  /// Reference: an agenda event
+  ///
+  /// In en, this message translates to:
+  /// **'Design review'**
+  String get agendaReview;
+
+  /// Reference: an agenda event’s detail
+  ///
+  /// In en, this message translates to:
+  /// **'45 min · Meeting room 2'**
+  String get agendaReviewMeta;
+
+  /// Reference: an agenda event
+  ///
+  /// In en, this message translates to:
+  /// **'Team standup'**
+  String get agendaStandup;
+
+  /// Reference: an agenda event’s detail
+  ///
+  /// In en, this message translates to:
+  /// **'15 min · Video call'**
+  String get agendaStandupMeta;
+
   /// The kind line on an anniversary row
   ///
   /// In en, this message translates to:
@@ -892,6 +952,54 @@ abstract class AppLocalizations {
   /// **'Birthday'**
   String get birthdayKind;
 
+  /// Reference: a collection card
+  ///
+  /// In en, this message translates to:
+  /// **'Budget basics'**
+  String get collectionBudget;
+
+  /// Reference: a collection card’s detail
+  ///
+  /// In en, this message translates to:
+  /// **'{n} lessons'**
+  String collectionBudgetMeta(int n);
+
+  /// Reference: a collection card
+  ///
+  /// In en, this message translates to:
+  /// **'Focus sounds'**
+  String get collectionFocus;
+
+  /// Reference: a collection card’s detail
+  ///
+  /// In en, this message translates to:
+  /// **'{n} tracks'**
+  String collectionFocusMeta(int n);
+
+  /// Reference: a collection card
+  ///
+  /// In en, this message translates to:
+  /// **'Gratitude prompts'**
+  String get collectionGratitude;
+
+  /// Reference: a collection card’s detail
+  ///
+  /// In en, this message translates to:
+  /// **'{n} days'**
+  String collectionGratitudeMeta(int n);
+
+  /// Reference: a collection card
+  ///
+  /// In en, this message translates to:
+  /// **'Night surahs'**
+  String get collectionNightSurahs;
+
+  /// Reference: a collection card’s detail
+  ///
+  /// In en, this message translates to:
+  /// **'{surahs} surahs · {minutes} min'**
+  String collectionNightSurahsMeta(int surahs, int minutes);
+
   /// Reference key common.all
   ///
   /// In en, this message translates to:
@@ -1095,6 +1203,144 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Renew your {name}'**
   String docsRenewSoon(String name);
+
+  /// Reference: the local services section
+  ///
+  /// In en, this message translates to:
+  /// **'Around you'**
+  String get exploreAround;
+
+  /// Reference: under “Around you”
+  ///
+  /// In en, this message translates to:
+  /// **'Local services, kept current'**
+  String get exploreAroundSub;
+
+  /// The way back out of Explore in a market where it is not a tab. Reference: explore.screen.js #exploreBack aria-label.
+  ///
+  /// In en, this message translates to:
+  /// **'Back to home'**
+  String get exploreBackToHome;
+
+  /// Reference: the collections section
+  ///
+  /// In en, this message translates to:
+  /// **'Collections'**
+  String get exploreCollections;
+
+  /// Reference: under “Collections”
+  ///
+  /// In en, this message translates to:
+  /// **'Curated for a quiet moment'**
+  String get exploreCollectionsSub;
+
+  /// Reference: the live sport section
+  ///
+  /// In en, this message translates to:
+  /// **'Cricket'**
+  String get exploreCricket;
+
+  /// Reference: under “Cricket”. A live claim the prototype writes as a literal (E3)
+  ///
+  /// In en, this message translates to:
+  /// **'Live · 2nd Test, day 2'**
+  String get exploreCricketSub;
+
+  /// Reference: the tag on the featured card
+  ///
+  /// In en, this message translates to:
+  /// **'Featured collection'**
+  String get exploreFeatured;
+
+  /// Reference: the nearby section
+  ///
+  /// In en, this message translates to:
+  /// **'Nearby'**
+  String get exploreNearby;
+
+  /// Reference: under “Nearby”
+  ///
+  /// In en, this message translates to:
+  /// **'Within walking distance'**
+  String get exploreNearbySub;
+
+  /// The weather card’s rain figure, read aloud
+  ///
+  /// In en, this message translates to:
+  /// **'Rain {value}'**
+  String exploreRainLabel(String value);
+
+  /// Reference: the news section
+  ///
+  /// In en, this message translates to:
+  /// **'Today’s reads'**
+  String get exploreReads;
+
+  /// Reference: under “Today’s reads”
+  ///
+  /// In en, this message translates to:
+  /// **'Balanced, no doomscroll'**
+  String get exploreReadsSub;
+
+  /// Reference: the link on the cricket section
+  ///
+  /// In en, this message translates to:
+  /// **'Scorecard'**
+  String get exploreScorecard;
+
+  /// Reference: under “Explore” elsewhere
+  ///
+  /// In en, this message translates to:
+  /// **'Weather, reading and what’s around you'**
+  String get exploreSubGlobal;
+
+  /// Reference: under “Explore” in a market with localised services
+  ///
+  /// In en, this message translates to:
+  /// **'Local services, scores and reading'**
+  String get exploreSubLocal;
+
+  /// The weather card’s sunset, read aloud
+  ///
+  /// In en, this message translates to:
+  /// **'Sunset {value}'**
+  String exploreSunsetLabel(String value);
+
+  /// Reference: the weather section
+  ///
+  /// In en, this message translates to:
+  /// **'Weather'**
+  String get exploreWeather;
+
+  /// Reference: the weather card’s line — the condition and the feels-like
+  ///
+  /// In en, this message translates to:
+  /// **'{condition} · {feels}'**
+  String exploreWeatherDesc(String condition, String feels);
+
+  /// Reference: under “Weather”. The prototype writes the number as a literal and it never changes (E1)
+  ///
+  /// In en, this message translates to:
+  /// **'{city} · updated {n} min ago'**
+  String exploreWeatherSub(String city, int n);
+
+  /// Reference: the toast behind the Refresh link
+  ///
+  /// In en, this message translates to:
+  /// **'Weather refreshed'**
+  String get exploreWeatherToast;
+
+  /// The weather card’s wind figure, read aloud
+  ///
+  /// In en, this message translates to:
+  /// **'Wind {value}'**
+  String exploreWindLabel(String value);
+
+  /// Reference: a wind speed and its unit
+  ///
+  /// In en, this message translates to:
+  /// **'{value} {unit}'**
+  String exploreWindValue(String value, String unit);
 
   /// Reference key f.age; the catalogue is the source of the English
   ///
@@ -1606,6 +1852,66 @@ abstract class AppLocalizations {
   /// **'Zakat Calculator'**
   String get featureZakat;
 
+  /// Reference: the featured card’s first fact
+  ///
+  /// In en, this message translates to:
+  /// **'{n} days'**
+  String featuredCalmDays(int n);
+
+  /// Reference: the featured card’s second fact
+  ///
+  /// In en, this message translates to:
+  /// **'{n} min each'**
+  String featuredCalmEach(int n);
+
+  /// Reference: the featured card’s body
+  ///
+  /// In en, this message translates to:
+  /// **'Small routines for planning, spending and winding down — one for each day.'**
+  String get featuredCalmText;
+
+  /// Reference: the featured card for everyone else
+  ///
+  /// In en, this message translates to:
+  /// **'A calmer week, in seven steps'**
+  String get featuredCalmTitle;
+
+  /// Reference: the featured card’s second fact
+  ///
+  /// In en, this message translates to:
+  /// **'Audio included'**
+  String get featuredDuasAudio;
+
+  /// Reference: the featured card’s first fact
+  ///
+  /// In en, this message translates to:
+  /// **'{n} duas'**
+  String featuredDuasCount(int n);
+
+  /// Reference: the featured card’s body
+  ///
+  /// In en, this message translates to:
+  /// **'Short supplications for the commute, the queue and the quiet minute before sleep.'**
+  String get featuredDuasText;
+
+  /// Reference: the featured card with the Islamic experience on
+  ///
+  /// In en, this message translates to:
+  /// **'Forty duas for ordinary days'**
+  String get featuredDuasTitle;
+
+  /// Reference: the featured card’s third fact
+  ///
+  /// In en, this message translates to:
+  /// **'Free'**
+  String get featuredFree;
+
+  /// Reference: a duration on a card
+  ///
+  /// In en, this message translates to:
+  /// **'{n} min'**
+  String featuredMinutes(int n);
+
   /// Reference key fuel.g.petrol
   ///
   /// In en, this message translates to:
@@ -1653,6 +1959,30 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Winding down'**
   String get greetWindDown;
+
+  /// Reference: a habit
+  ///
+  /// In en, this message translates to:
+  /// **'Fajr on time'**
+  String get habitFajr;
+
+  /// Reference: a habit
+  ///
+  /// In en, this message translates to:
+  /// **'Qur’an daily'**
+  String get habitQuran;
+
+  /// Reference: a habit
+  ///
+  /// In en, this message translates to:
+  /// **'Walk 6k steps'**
+  String get habitSteps;
+
+  /// Reference: a habit
+  ///
+  /// In en, this message translates to:
+  /// **'8 glasses'**
+  String get habitWater;
 
   /// Reference: aria-label="Highlights" on the carousel
   ///
@@ -2169,6 +2499,132 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Trains'**
   String get navTrains;
+
+  /// Reference: a nearby place
+  ///
+  /// In en, this message translates to:
+  /// **'Chai Shai'**
+  String get nearbyChaiShai;
+
+  /// Reference: a nearby place’s detail
+  ///
+  /// In en, this message translates to:
+  /// **'Quiet café · open till {time}'**
+  String nearbyChaiShaiSub(String time);
+
+  /// Reference: a nearby place
+  ///
+  /// In en, this message translates to:
+  /// **'Hill Park'**
+  String get nearbyHillPark;
+
+  /// Reference: a nearby place’s detail
+  ///
+  /// In en, this message translates to:
+  /// **'Good for a sunset walk'**
+  String get nearbyHillParkSub;
+
+  /// Reference: a distance over a kilometre
+  ///
+  /// In en, this message translates to:
+  /// **'{n} km'**
+  String nearbyKilometres(String n);
+
+  /// Reference: a distance under a kilometre
+  ///
+  /// In en, this message translates to:
+  /// **'{n} m'**
+  String nearbyMetres(int n);
+
+  /// Reference: a nearby place. Fixed Karachi content shown in every market (E2)
+  ///
+  /// In en, this message translates to:
+  /// **'Masjid-e-Tooba'**
+  String get nearbyTooba;
+
+  /// Reference: a nearby place’s detail
+  ///
+  /// In en, this message translates to:
+  /// **'Jamaat for Asr at {time}'**
+  String nearbyToobaSub(String time);
+
+  /// Reference: a news category
+  ///
+  /// In en, this message translates to:
+  /// **'Business'**
+  String get newsCatBusiness;
+
+  /// Reference: a news category
+  ///
+  /// In en, this message translates to:
+  /// **'Karachi'**
+  String get newsCatKarachi;
+
+  /// Reference: a news category
+  ///
+  /// In en, this message translates to:
+  /// **'Money'**
+  String get newsCatMoney;
+
+  /// Reference: a news category
+  ///
+  /// In en, this message translates to:
+  /// **'Productivity'**
+  String get newsCatProductivity;
+
+  /// Reference: a news category
+  ///
+  /// In en, this message translates to:
+  /// **'Sport'**
+  String get newsCatSport;
+
+  /// Reference: a news category
+  ///
+  /// In en, this message translates to:
+  /// **'Wellbeing'**
+  String get newsCatWellbeing;
+
+  /// Reference: a Pakistan headline
+  ///
+  /// In en, this message translates to:
+  /// **'K-Electric announces revised loadshedding schedule for September'**
+  String get newsLoadshed;
+
+  /// Reference: a story’s reading time
+  ///
+  /// In en, this message translates to:
+  /// **'{n} min read'**
+  String newsReadTime(int n);
+
+  /// Reference: a global headline
+  ///
+  /// In en, this message translates to:
+  /// **'The two-minute reset that beats a coffee break'**
+  String get newsReset;
+
+  /// Reference: a Pakistan headline
+  ///
+  /// In en, this message translates to:
+  /// **'Rupee holds steady as remittances climb for a third month'**
+  String get newsRupee;
+
+  /// Reference: a global headline
+  ///
+  /// In en, this message translates to:
+  /// **'A plain-English guide to your first savings goal'**
+  String get newsSavings;
+
+  /// Reference: a global headline
+  ///
+  /// In en, this message translates to:
+  /// **'Why a shorter to-do list finishes more work'**
+  String get newsShortList;
+
+  /// Reference: a Pakistan headline
+  ///
+  /// In en, this message translates to:
+  /// **'Pakistan name squad for the home Test series'**
+  String get newsSquad;
 
   /// Reference key onb.allSet
   ///
@@ -2698,6 +3154,30 @@ abstract class AppLocalizations {
   /// **'We can’t find that'**
   String get routeMissingTitle;
 
+  /// Reference: a side that has lost every wicket
+  ///
+  /// In en, this message translates to:
+  /// **'all out'**
+  String get scoreAllOut;
+
+  /// Reference: how many overs a side has faced
+  ///
+  /// In en, this message translates to:
+  /// **'{n} ov'**
+  String scoreOvers(String n);
+
+  /// Reference: the note under the score
+  ///
+  /// In en, this message translates to:
+  /// **'{team} trail by {runs} runs · {player} {score}*'**
+  String scoreTrail(String team, int runs, String player, int score);
+
+  /// Reference: between the two sides
+  ///
+  /// In en, this message translates to:
+  /// **'vs'**
+  String get scoreVersus;
+
   /// Reference key search.jumpBack
   ///
   /// In en, this message translates to:
@@ -2883,6 +3363,228 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Al-Kahf'**
   String get surahAlKahf;
+
+  /// Reference: a task, with the Islamic experience on
+  ///
+  /// In en, this message translates to:
+  /// **'Read two pages of Al-Kahf'**
+  String get taskAlKahf;
+
+  /// Reference: a task
+  ///
+  /// In en, this message translates to:
+  /// **'Call home'**
+  String get taskCallHome;
+
+  /// Reference: the same task elsewhere
+  ///
+  /// In en, this message translates to:
+  /// **'Pay the electricity bill'**
+  String get taskElectricity;
+
+  /// Reference: a task, in Pakistan
+  ///
+  /// In en, this message translates to:
+  /// **'Pay the K-Electric bill'**
+  String get taskElectricityPk;
+
+  /// Reference: a task
+  ///
+  /// In en, this message translates to:
+  /// **'Reply to Sara’s email'**
+  String get taskEmail;
+
+  /// Reference: a task with no clock time
+  ///
+  /// In en, this message translates to:
+  /// **'Evening'**
+  String get taskEvening;
+
+  /// Reference: a task
+  ///
+  /// In en, this message translates to:
+  /// **'Finish the Q3 summary'**
+  String get taskSummary;
+
+  /// Reference: the toast behind the Add control
+  ///
+  /// In en, this message translates to:
+  /// **'New task added'**
+  String get todayAddToast;
+
+  /// Reference: the agenda subtitle otherwise
+  ///
+  /// In en, this message translates to:
+  /// **'Events and reminders, in order'**
+  String get todayAgendaGeneral;
+
+  /// Reference: the agenda subtitle with the Islamic experience on
+  ///
+  /// In en, this message translates to:
+  /// **'Prayers and events, in order'**
+  String get todayAgendaMuslim;
+
+  /// Reference: the faith-swapped reflection section
+  ///
+  /// In en, this message translates to:
+  /// **'Ayah of the day'**
+  String get todayAyah;
+
+  /// The same citation at the foot of the card, which the reference writes without the dot. Reference: today.screen.js quote__by.
+  ///
+  /// In en, this message translates to:
+  /// **'{surah} {verse}'**
+  String todayAyahCitation(String surah, String verse);
+
+  /// The citation under "Ayah of the day". Reference: today.screen.js section__sub.
+  ///
+  /// In en, this message translates to:
+  /// **'{surah} · {verse}'**
+  String todayAyahReference(String surah, String verse);
+
+  /// Reference: a Today statistic
+  ///
+  /// In en, this message translates to:
+  /// **'Daily streak'**
+  String get todayDailyStreak;
+
+  /// A habit row read aloud: a line of coloured squares says nothing to a screen reader
+  ///
+  /// In en, this message translates to:
+  /// **'{name}, {done} of 7 days, {streak} day streak'**
+  String todayHabitSummary(String name, int done, int streak);
+
+  /// Reference: the habit section
+  ///
+  /// In en, this message translates to:
+  /// **'Habits'**
+  String get todayHabits;
+
+  /// Reference: under “Habits”
+  ///
+  /// In en, this message translates to:
+  /// **'Last seven days'**
+  String get todayHabitsSub;
+
+  /// Reference: under the day ring
+  ///
+  /// In en, this message translates to:
+  /// **'of day'**
+  String get todayOfDay;
+
+  /// Reference: the ring card’s title
+  ///
+  /// In en, this message translates to:
+  /// **'You’re on track'**
+  String get todayOnTrack;
+
+  /// Reference: a Today statistic
+  ///
+  /// In en, this message translates to:
+  /// **'Prayer streak'**
+  String get todayPrayerStreak;
+
+  /// Reference: the private section
+  ///
+  /// In en, this message translates to:
+  /// **'Private'**
+  String get todayPrivate;
+
+  /// Reference: under “Private”
+  ///
+  /// In en, this message translates to:
+  /// **'Only on this device, only for you'**
+  String get todayPrivateSub;
+
+  /// Reference: the locked card’s body
+  ///
+  /// In en, this message translates to:
+  /// **'Records, medication and expenses stay locked until you open them.'**
+  String get todayPrivateText;
+
+  /// Reference: the locked card’s title
+  ///
+  /// In en, this message translates to:
+  /// **'Health, documents & money'**
+  String get todayPrivateTitle;
+
+  /// Reference: the toast behind the private card
+  ///
+  /// In en, this message translates to:
+  /// **'Unlock to see private records'**
+  String get todayPrivateToast;
+
+  /// Reference: a Today statistic
+  ///
+  /// In en, this message translates to:
+  /// **'Read today'**
+  String get todayReadToday;
+
+  /// Reference: the ring card’s line. The prototype writes it as static English and never updates it (T1)
+  ///
+  /// In en, this message translates to:
+  /// **'{done} of {total} tasks done. {meetings, plural, =0{Nothing else scheduled.} =1{One meeting left this afternoon.} other{{meetings} meetings left this afternoon.}}'**
+  String todayRingSummary(int done, int total, int meetings);
+
+  /// Reference: a Today statistic
+  ///
+  /// In en, this message translates to:
+  /// **'Steps today'**
+  String get todaySteps;
+
+  /// Reference: the toast after ticking a task
+  ///
+  /// In en, this message translates to:
+  /// **'Nice — one less thing'**
+  String get todayTaskDone;
+
+  /// Reference: the toast after un-ticking a task
+  ///
+  /// In en, this message translates to:
+  /// **'Back on the list'**
+  String get todayTaskUndone;
+
+  /// Reference: the task section
+  ///
+  /// In en, this message translates to:
+  /// **'Tasks'**
+  String get todayTasks;
+
+  /// Reference: a Today statistic
+  ///
+  /// In en, this message translates to:
+  /// **'Tasks done'**
+  String get todayTasksDone;
+
+  /// Reference: under “Tasks”
+  ///
+  /// In en, this message translates to:
+  /// **'Tap to tick one off'**
+  String get todayTasksSub;
+
+  /// Reference: the reflection section for everyone else
+  ///
+  /// In en, this message translates to:
+  /// **'Today’s thought'**
+  String get todayThought;
+
+  /// Reference: under “Today’s thought”
+  ///
+  /// In en, this message translates to:
+  /// **'A minute of perspective'**
+  String get todayThoughtSub;
+
+  /// Reference: the toast behind the Week link
+  ///
+  /// In en, this message translates to:
+  /// **'Switched to week view'**
+  String get todayWeekToast;
+
+  /// Reference: the agenda section
+  ///
+  /// In en, this message translates to:
+  /// **'Your day'**
+  String get todayYourDay;
 
   /// Reference key cat.daily
   ///
@@ -3622,11 +4324,53 @@ abstract class AppLocalizations {
   /// **'Tools'**
   String get toolsTitle;
 
+  /// Reference: a statistic’s unit
+  ///
+  /// In en, this message translates to:
+  /// **'days'**
+  String get unitDays;
+
+  /// Reference: a wind speed unit
+  ///
+  /// In en, this message translates to:
+  /// **'km/h'**
+  String get unitKmh;
+
+  /// Reference: a statistic’s unit
+  ///
+  /// In en, this message translates to:
+  /// **'min'**
+  String get unitMinutes;
+
+  /// Reference: a wind speed unit
+  ///
+  /// In en, this message translates to:
+  /// **'mph'**
+  String get unitMph;
+
+  /// Reference: the denominator of a ratio statistic
+  ///
+  /// In en, this message translates to:
+  /// **'/{total}'**
+  String unitOfTotal(int total);
+
+  /// Reference: a statistic’s unit
+  ///
+  /// In en, this message translates to:
+  /// **'k'**
+  String get unitThousand;
+
   /// A weather condition. The prototype stores these as English sentences in the catalogue and never translates them
   ///
   /// In en, this message translates to:
   /// **'Clear'**
   String get weatherClear;
+
+  /// Reference: WEATHER_BY_COUNTRY.AE
+  ///
+  /// In en, this message translates to:
+  /// **'Clear · very warm'**
+  String get weatherClearVeryWarm;
 
   /// A weather condition. The prototype stores these as English sentences in the catalogue and never translates them
   ///
@@ -3646,11 +4390,23 @@ abstract class AppLocalizations {
   /// **'Hazy sun'**
   String get weatherHazySun;
 
+  /// Reference: WEATHER_BY_COUNTRY.PK
+  ///
+  /// In en, this message translates to:
+  /// **'Hazy sun · humid'**
+  String get weatherHazySunHumid;
+
   /// Reference: the livecard sub line
   ///
   /// In en, this message translates to:
   /// **'{high} / {low}'**
   String weatherHighLow(String high, String low);
+
+  /// Reference: WEATHER_BY_COUNTRY.IN
+  ///
+  /// In en, this message translates to:
+  /// **'Humid · light haze'**
+  String get weatherHumidLightHaze;
 
   /// A weather condition. The prototype stores these as English sentences in the catalogue and never translates them
   ///

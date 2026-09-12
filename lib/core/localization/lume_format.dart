@@ -170,6 +170,14 @@ class LumeFormatting {
   /// "7 September" — a date with its month written out.
   String dateLong(DateTime d) => intl.DateFormat.MMMMd(_dateTag).format(d);
 
+  /// "Monday, 7 September" — the weekday too, and no year.
+  ///
+  /// Today's date line. The reference asks for
+  /// `{weekday: 'long', day: 'numeric', month: 'long'}`, which is CLDR's
+  /// `MMMMEEEEd` skeleton; the comma is the locale's, so `en_PK` keeps it and
+  /// `en_GB` does not.
+  String dateFull(DateTime d) => intl.DateFormat.MMMMEEEEd(_dateTag).format(d);
+
   /// "14 Sep".
   String dateMedium(DateTime d) => intl.DateFormat.MMMd(_dateTag).format(d);
 
@@ -262,6 +270,14 @@ class LumeFormatting {
 
   String speed(int kph) =>
       units == LumeUnits.imperial ? '${(kph * 0.621).round()}' : '$kph';
+
+  /// The number a temperature shows, without its degree sign.
+  ///
+  /// For a figure the design sets in two faces — `.weather__temp` puts the
+  /// sign in a raised `<sup>` — so the conversion has to happen before the
+  /// two halves are drawn separately.
+  int degreesValue(int celsius) =>
+      units == LumeUnits.imperial ? (celsius * 9 / 5 + 32).round() : celsius;
 
   /// A duration in whole hours, for a schedule slot.
   static int wholeHours(Duration d) => d.inMinutes ~/ 60;

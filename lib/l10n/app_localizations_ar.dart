@@ -93,6 +93,46 @@ class AppLocalizationsAr extends AppLocalizations {
   String get actionWeek => 'أسبوع';
 
   @override
+  String get agendaAdhanOn => 'الأذان · التذكير مفعّل';
+
+  @override
+  String get agendaGroceries => 'شراء البقالة';
+
+  @override
+  String get agendaGroceriesMeta => 'في الطريق إلى المنزل';
+
+  @override
+  String get agendaOutage => 'انقطاع';
+
+  @override
+  String agendaOutageMeta(String area, int hours) {
+    String _temp0 = intl.Intl.pluralLogic(
+      hours,
+      locale: localeName,
+      other: '$hours ساعة',
+      few: '$hours ساعات',
+      two: 'ساعتان',
+      one: 'ساعة',
+    );
+    return '$area · $_temp0';
+  }
+
+  @override
+  String get agendaPrayed => 'صُلّيت';
+
+  @override
+  String get agendaReview => 'مراجعة التصميم';
+
+  @override
+  String get agendaReviewMeta => '45 دقيقة · غرفة الاجتماعات 2';
+
+  @override
+  String get agendaStandup => 'اجتماع الفريق';
+
+  @override
+  String get agendaStandupMeta => '15 دقيقة · مكالمة فيديو';
+
+  @override
   String get anniversaryKind => 'ذكرى سنوية';
 
   @override
@@ -470,6 +510,38 @@ class AppLocalizationsAr extends AppLocalizations {
   String get birthdayKind => 'عيد ميلاد';
 
   @override
+  String get collectionBudget => 'أساسيات الميزانية';
+
+  @override
+  String collectionBudgetMeta(int n) {
+    return '$n دروس';
+  }
+
+  @override
+  String get collectionFocus => 'أصوات التركيز';
+
+  @override
+  String collectionFocusMeta(int n) {
+    return '$n مقاطع';
+  }
+
+  @override
+  String get collectionGratitude => 'محفّزات الامتنان';
+
+  @override
+  String collectionGratitudeMeta(int n) {
+    return '$n يومًا';
+  }
+
+  @override
+  String get collectionNightSurahs => 'سور الليل';
+
+  @override
+  String collectionNightSurahsMeta(int surahs, int minutes) {
+    return '$surahs سور · $minutes دقيقة';
+  }
+
+  @override
   String get commonAll => 'الكل';
 
   @override
@@ -577,6 +649,87 @@ class AppLocalizationsAr extends AppLocalizations {
   @override
   String docsRenewSoon(String name) {
     return 'جدّد $name';
+  }
+
+  @override
+  String get exploreAround => 'حولك';
+
+  @override
+  String get exploreAroundSub => 'خدمات محلية محدَّثة';
+
+  @override
+  String get exploreBackToHome => 'العودة إلى الرئيسية';
+
+  @override
+  String get exploreCollections => 'المجموعات';
+
+  @override
+  String get exploreCollectionsSub => 'مختارة للحظة هدوء';
+
+  @override
+  String get exploreCricket => 'الكريكيت';
+
+  @override
+  String get exploreCricketSub => 'مباشر · الاختبار الثاني، اليوم 2';
+
+  @override
+  String get exploreFeatured => 'مجموعة مميزة';
+
+  @override
+  String get exploreNearby => 'قريب منك';
+
+  @override
+  String get exploreNearbySub => 'على مسافة مشي';
+
+  @override
+  String exploreRainLabel(String value) {
+    return 'المطر $value';
+  }
+
+  @override
+  String get exploreReads => 'قراءات اليوم';
+
+  @override
+  String get exploreReadsSub => 'متوازنة وبلا ضجيج';
+
+  @override
+  String get exploreScorecard => 'بطاقة النتائج';
+
+  @override
+  String get exploreSubGlobal => 'الطقس والقراءة وما حولك';
+
+  @override
+  String get exploreSubLocal => 'الخدمات المحلية والنتائج والقراءة';
+
+  @override
+  String exploreSunsetLabel(String value) {
+    return 'الغروب $value';
+  }
+
+  @override
+  String get exploreWeather => 'الطقس';
+
+  @override
+  String exploreWeatherDesc(String condition, String feels) {
+    return '$condition · $feels';
+  }
+
+  @override
+  String exploreWeatherSub(String city, int n) {
+    return '$city · حُدِّث قبل $n دقيقة';
+  }
+
+  @override
+  String get exploreWeatherToast => 'تم تحديث الطقس';
+
+  @override
+  String exploreWindLabel(String value) {
+    return 'الرياح $value';
+  }
+
+  @override
+  String exploreWindValue(String value, String unit) {
+    return '$value $unit';
   }
 
   @override
@@ -835,6 +988,46 @@ class AppLocalizationsAr extends AppLocalizations {
   String get featureZakat => 'حاسبة الزكاة';
 
   @override
+  String featuredCalmDays(int n) {
+    return '$n أيام';
+  }
+
+  @override
+  String featuredCalmEach(int n) {
+    return '$n دقائق لكل خطوة';
+  }
+
+  @override
+  String get featuredCalmText =>
+      'روتين صغير للتخطيط والإنفاق والاسترخاء — واحد لكل يوم.';
+
+  @override
+  String get featuredCalmTitle => 'أسبوع أهدأ، في سبع خطوات';
+
+  @override
+  String get featuredDuasAudio => 'مع تسجيل صوتي';
+
+  @override
+  String featuredDuasCount(int n) {
+    return '$n دعاء';
+  }
+
+  @override
+  String get featuredDuasText =>
+      'أدعية قصيرة للطريق وللانتظار وللدقيقة الهادئة قبل النوم.';
+
+  @override
+  String get featuredDuasTitle => 'أربعون دعاءً لأيامك العادية';
+
+  @override
+  String get featuredFree => 'مجانًا';
+
+  @override
+  String featuredMinutes(int n) {
+    return '$n دقيقة';
+  }
+
+  @override
   String get fuelPetrol => 'بنزين';
 
   @override
@@ -859,6 +1052,18 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get greetWindDown => 'نهاية اليوم';
+
+  @override
+  String get habitFajr => 'الفجر في وقته';
+
+  @override
+  String get habitQuran => 'القرآن يوميًا';
+
+  @override
+  String get habitSteps => 'المشي 6 آلاف خطوة';
+
+  @override
+  String get habitWater => '8 أكواب';
 
   @override
   String get heroHighlights => 'أبرز الأمور';
@@ -1162,6 +1367,80 @@ class AppLocalizationsAr extends AppLocalizations {
   String get navTrains => 'القطارات';
 
   @override
+  String get nearbyChaiShai => 'تشاي شاي';
+
+  @override
+  String nearbyChaiShaiSub(String time) {
+    return 'مقهى هادئ · مفتوح حتى $time';
+  }
+
+  @override
+  String get nearbyHillPark => 'حديقة هيل';
+
+  @override
+  String get nearbyHillParkSub => 'مناسبة لنزهة عند الغروب';
+
+  @override
+  String nearbyKilometres(String n) {
+    return '$n كم';
+  }
+
+  @override
+  String nearbyMetres(int n) {
+    return '$n م';
+  }
+
+  @override
+  String get nearbyTooba => 'مسجد طوبى';
+
+  @override
+  String nearbyToobaSub(String time) {
+    return 'جماعة العصر عند $time';
+  }
+
+  @override
+  String get newsCatBusiness => 'أعمال';
+
+  @override
+  String get newsCatKarachi => 'كراتشي';
+
+  @override
+  String get newsCatMoney => 'مال';
+
+  @override
+  String get newsCatProductivity => 'إنتاجية';
+
+  @override
+  String get newsCatSport => 'رياضة';
+
+  @override
+  String get newsCatWellbeing => 'صحة ورفاهية';
+
+  @override
+  String get newsLoadshed =>
+      'كي إلكتريك تعلن جدول انقطاع الكهرباء المعدّل لشهر سبتمبر';
+
+  @override
+  String newsReadTime(int n) {
+    return 'قراءة $n دقائق';
+  }
+
+  @override
+  String get newsReset => 'استراحة الدقيقتين التي تتفوّق على فنجان القهوة';
+
+  @override
+  String get newsRupee => 'الروبية تستقر مع ارتفاع التحويلات للشهر الثالث';
+
+  @override
+  String get newsSavings => 'دليل مبسّط لأول هدف ادخاري لك';
+
+  @override
+  String get newsShortList => 'لماذا تُنجز القائمة الأقصر عملًا أكثر';
+
+  @override
+  String get newsSquad => 'باكستان تعلن تشكيلتها لسلسلة الاختبار على أرضها';
+
+  @override
   String get onbAllSet => 'كل شيء جاهز';
 
   @override
@@ -1451,6 +1730,22 @@ class AppLocalizationsAr extends AppLocalizations {
   String get routeMissingTitle => 'تعذّر العثور على ذلك';
 
   @override
+  String get scoreAllOut => 'خرجوا جميعًا';
+
+  @override
+  String scoreOvers(String n) {
+    return '$n أوفر';
+  }
+
+  @override
+  String scoreTrail(String team, int runs, String player, int score) {
+    return '$team متأخرون بـ $runs أشواط · $player $score*';
+  }
+
+  @override
+  String get scoreVersus => 'ضد';
+
+  @override
   String get searchJumpBack => 'عد إلى';
 
   @override
@@ -1548,6 +1843,133 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get surahAlKahf => 'الكهف';
+
+  @override
+  String get taskAlKahf => 'اقرأ صفحتين من سورة الكهف';
+
+  @override
+  String get taskCallHome => 'اتصل بالأهل';
+
+  @override
+  String get taskElectricity => 'ادفع فاتورة الكهرباء';
+
+  @override
+  String get taskElectricityPk => 'ادفع فاتورة كي إلكتريك';
+
+  @override
+  String get taskEmail => 'ردّ على بريد سارة';
+
+  @override
+  String get taskEvening => 'مساءً';
+
+  @override
+  String get taskSummary => 'أنهِ ملخّص الربع الثالث';
+
+  @override
+  String get todayAddToast => 'تمت إضافة مهمة جديدة';
+
+  @override
+  String get todayAgendaGeneral => 'المواعيد والتذكيرات بالترتيب';
+
+  @override
+  String get todayAgendaMuslim => 'الصلوات والمواعيد بالترتيب';
+
+  @override
+  String get todayAyah => 'آية اليوم';
+
+  @override
+  String todayAyahCitation(String surah, String verse) {
+    return '$surah $verse';
+  }
+
+  @override
+  String todayAyahReference(String surah, String verse) {
+    return '$surah · $verse';
+  }
+
+  @override
+  String get todayDailyStreak => 'التتابع اليومي';
+
+  @override
+  String todayHabitSummary(String name, int done, int streak) {
+    return '$name، $done من 7 أيام، تتابع $streak أيام';
+  }
+
+  @override
+  String get todayHabits => 'العادات';
+
+  @override
+  String get todayHabitsSub => 'آخر سبعة أيام';
+
+  @override
+  String get todayOfDay => 'من اليوم';
+
+  @override
+  String get todayOnTrack => 'أنت على المسار الصحيح';
+
+  @override
+  String get todayPrayerStreak => 'تتابع الصلاة';
+
+  @override
+  String get todayPrivate => 'خاص';
+
+  @override
+  String get todayPrivateSub => 'على هذا الجهاز فقط، ولك وحدك';
+
+  @override
+  String get todayPrivateText =>
+      'تبقى السجلات والأدوية والمصروفات مقفلة حتى تفتحها بنفسك.';
+
+  @override
+  String get todayPrivateTitle => 'الصحة والوثائق والمال';
+
+  @override
+  String get todayPrivateToast => 'افتح القفل لعرض السجلات الخاصة';
+
+  @override
+  String get todayReadToday => 'القراءة اليوم';
+
+  @override
+  String todayRingSummary(int done, int total, int meetings) {
+    String _temp0 = intl.Intl.pluralLogic(
+      meetings,
+      locale: localeName,
+      other: 'بقيت $meetings اجتماعات بعد الظهر.',
+      one: 'بقي اجتماع واحد بعد الظهر.',
+      zero: 'لا شيء آخر مجدول.',
+    );
+    return '$done من $total مهام منجزة. $_temp0';
+  }
+
+  @override
+  String get todaySteps => 'خطوات اليوم';
+
+  @override
+  String get todayTaskDone => 'أحسنت — مهمة أقل';
+
+  @override
+  String get todayTaskUndone => 'عادت إلى القائمة';
+
+  @override
+  String get todayTasks => 'المهام';
+
+  @override
+  String get todayTasksDone => 'المهام المنجزة';
+
+  @override
+  String get todayTasksSub => 'اضغط لإنجاز مهمة';
+
+  @override
+  String get todayThought => 'فكرة اليوم';
+
+  @override
+  String get todayThoughtSub => 'دقيقة للتأمل';
+
+  @override
+  String get todayWeekToast => 'تم التبديل إلى عرض الأسبوع';
+
+  @override
+  String get todayYourDay => 'يومك';
 
   @override
   String get toolCategoryDaily => 'الحياة اليومية';
@@ -1956,7 +2378,30 @@ class AppLocalizationsAr extends AppLocalizations {
   String get toolsTitle => 'الأدوات';
 
   @override
+  String get unitDays => 'يوم';
+
+  @override
+  String get unitKmh => 'كم/س';
+
+  @override
+  String get unitMinutes => 'دقيقة';
+
+  @override
+  String get unitMph => 'ميل/س';
+
+  @override
+  String unitOfTotal(int total) {
+    return '/$total';
+  }
+
+  @override
+  String get unitThousand => 'ألف';
+
+  @override
   String get weatherClear => 'صافٍ';
+
+  @override
+  String get weatherClearVeryWarm => 'صحو · حار جدًا';
 
   @override
   String get weatherCloudBuilding => 'تزايد الغيوم';
@@ -1968,9 +2413,15 @@ class AppLocalizationsAr extends AppLocalizations {
   String get weatherHazySun => 'شمس مغبرّة';
 
   @override
+  String get weatherHazySunHumid => 'شمس ضبابية · رطوبة';
+
+  @override
   String weatherHighLow(String high, String low) {
     return '$high / $low';
   }
+
+  @override
+  String get weatherHumidLightHaze => 'رطوبة · ضباب خفيف';
 
   @override
   String get weatherLightCloud => 'غيوم خفيفة';

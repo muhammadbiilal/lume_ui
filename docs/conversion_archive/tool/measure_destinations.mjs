@@ -193,6 +193,120 @@ const HOME_TARGETS = {
   'shell.tabbar': '#tabbar',
 };
 
+const TODAY_TARGETS = {
+  'screen': '#screen-today',
+  'pagehead': '#screen-today .page-head',
+  'pagehead.title': '#screen-today .page-head__title',
+  'pagehead.sub': '#todaySub',
+  'pagehead.add': '#screen-today .page-head .iconbtn',
+  'ring.card': '#screen-today .ring-card',
+  'ring': '#screen-today .ring',
+  'ring.value': '#dayRingValue',
+  'ring.unit': '#screen-today .ring__unit',
+  'ring.title': '#screen-today .ring-card__title',
+  'ring.text': '#dayRingText',
+  'stats': '#todayStats',
+  'stat': '#todayStats .stat',
+  'stat.icon': '#todayStats .stat__icon',
+  'stat.value': '#todayStats .stat__value',
+  'stat.label': '#todayStats .stat__label',
+  'quote.section': '#screen-today .section:has(.quote):not([hidden])',
+  'quote.title': '#screen-today .section:has(.quote):not([hidden]) .section__title',
+  'quote.sub': '#screen-today .section:has(.quote):not([hidden]) .section__sub',
+  'quote': '#screen-today .section:not([hidden]) > .row-gap > .quote',
+  'quote.mark': '#screen-today .section:not([hidden]) > .row-gap > .quote .quote__mark',
+  'quote.arabic': '#screen-today .section:not([hidden]) > .row-gap > .quote .arabic',
+  'quote.text': '#screen-today .section:not([hidden]) > .row-gap > .quote .quote__text',
+  'quote.by': '#screen-today .section:not([hidden]) > .row-gap > .quote .quote__by',
+  'agenda.title': '#screen-today .section:has(#agenda) .section__title',
+  'agenda.sub': '#agendaSub',
+  'agenda.link': '#screen-today .section:has(#agenda) .section__link',
+  'timeline': '#agenda',
+  'tl.item': '#agenda .tl-item',
+  'tl.time': '#agenda .tl-item .tl-time',
+  'tl.node': '#agenda .tl-item .tl-node',
+  'tl.card': '#agenda .tl-item .tl-card',
+  'tl.title': '#agenda .tl-item .tl-card__title',
+  'tl.meta': '#agenda .tl-item .tl-card__meta',
+  'tasks.title': '#screen-today .section:has(#taskList) .section__title',
+  'tasks.link': '#screen-today .section:has(#taskList) .section__link',
+  'tasks.list': '#taskList',
+  'task': '#taskList .task',
+  'task.box': '#taskList .task .task__box',
+  'task.label': '#taskList .task .task__label:not([hidden])',
+  'task.time': '#taskList .task .task__time',
+  'habits.title': '#screen-today .section:has(.habits) .section__title',
+  'habits': '#screen-today .habits',
+  'habit': '#screen-today .habit:not([hidden])',
+  'habit.name': '#screen-today .habit:not([hidden]) .habit__name',
+  'habit.days': '#screen-today .habit:not([hidden]) .habit__days',
+  'habit.day': '#screen-today .habit:not([hidden]) .habit__day',
+  'habit.streak': '#screen-today .habit:not([hidden]) .habit__streak',
+  'private.title': '#screen-today .section:has(.private-card) .section__title',
+  'private': '#screen-today .private-card',
+  'private.icon': '#screen-today .private-card__icon',
+  'private.cardtitle': '#screen-today .private-card__title',
+  'private.text': '#screen-today .private-card__text',
+  'shell.tabbar': '#tabbar',
+};
+
+const EXPLORE_TARGETS = {
+  'screen': '#screen-explore',
+  'pagehead': '#screen-explore .page-head',
+  'pagehead.title': '#screen-explore .page-head__title',
+  'pagehead.sub': '#exploreSub',
+  'pagehead.search': '#screen-explore .page-head .iconbtn[data-sheet="search"]',
+  'feature': '#screen-explore .section:not([hidden]) .feature',
+  'feature.tag': '#screen-explore .section:not([hidden]) .feature__tag',
+  'feature.title': '#screen-explore .section:not([hidden]) .feature__title',
+  'feature.text': '#screen-explore .section:not([hidden]) .feature__text',
+  'feature.meta': '#screen-explore .section:not([hidden]) .feature__meta',
+  'weather.title': '#screen-explore .section:has(.weather) .section__title',
+  'weather.sub': '#weatherSub',
+  'weather.link': '#screen-explore .section:has(.weather) .section__link',
+  'weather': '#screen-explore .weather',
+  'weather.icon': '#screen-explore .weather__icon',
+  'weather.temp': '#weatherTemp',
+  'weather.desc': '#weatherDesc',
+  'weather.grid': '#screen-explore .weather__grid',
+  'weather.stat': '#screen-explore .weather__stat',
+  'around.wrap': '#aroundWrap',
+  'around.title': '#aroundWrap .section__title',
+  'around.sub': '#aroundWrap .section__sub',
+  'around.tag': '#aroundTag',
+  'around.list': '#aroundList',
+  'around.row': '#aroundList .list-row',
+  'around.row.icon': '#aroundList .list-row__icon',
+  'around.row.title': '#aroundList .list-row__title',
+  'around.row.sub': '#aroundList .list-row__sub',
+  'around.row.value': '#aroundList .list-row__value',
+  'cricket.title': '#screen-explore .section:has(.score) .section__title',
+  'cricket.sub': '#screen-explore .section:has(.score) .section__sub',
+  'cricket.link': '#screen-explore .section:has(.score) .section__link',
+  'score': '#screen-explore .score',
+  'score.flag': '#screen-explore .score__flag',
+  'score.runs': '#screen-explore .score__runs',
+  'score.overs': '#screen-explore .score__overs',
+  'score.vs': '#screen-explore .score__vs',
+  'score.note': '#screen-explore .score__note',
+  'news.title': '#screen-explore .section:has(#newsList) .section__title',
+  'news.link': '#screen-explore .section:has(#newsList) .section__link',
+  'news.list': '#newsList',
+  'article': '#newsList .article',
+  'article.art': '#newsList .article__art',
+  'article.cat': '#newsList .article__cat',
+  'article.title': '#newsList .article__title',
+  'article.meta': '#newsList .article__meta',
+  'collections.title': '#screen-explore .section:has(.hscroll) .section__title',
+  'collections.hscroll': '#screen-explore .hscroll',
+  'collections.card': '#screen-explore .hscroll .minicard:not([hidden])',
+  'nearby.title': '#screen-explore .section:last-child .section__title',
+  'nearby.row': '#screen-explore .section:last-child .list-row',
+  'nearby.row.title': '#screen-explore .section:last-child .list-row__title',
+  'nearby.row.value': '#screen-explore .section:last-child .list-row__value',
+  'shell.tabbar': '#tabbar',
+};
+
 const TOOLS_TARGETS = {
   'screen': '#screen-tools',
   'pagehead': '#screen-tools .page-head',
@@ -399,7 +513,13 @@ class Cdp {
 async function main() {
   const profile = STATES[STATE];
   if (!profile) throw new Error('no state named ' + STATE);
-  const targets = SCREEN === 'tools' ? TOOLS_TARGETS : HOME_TARGETS;
+  const targets = SCREEN === 'tools'
+    ? TOOLS_TARGETS
+    : SCREEN === 'today'
+      ? TODAY_TARGETS
+      : SCREEN === 'explore'
+        ? EXPLORE_TARGETS
+        : HOME_TARGETS;
 
   const work = stage(DRIVER(profile, SCREEN, AFTER[args.after] || ''));
   const server = spawn(process.execPath, ['scripts/serve.js'], {
@@ -589,6 +709,158 @@ async function main() {
             };
           });
       }
+      function sectionsOf(id) {
+        return Array.prototype.map.call(
+          document.querySelectorAll('#' + id + ' > *'),
+          function (el) {
+            var r = el.getBoundingClientRect();
+            return {
+              tag: el.tagName.toLowerCase(),
+              cls: el.className,
+              id: el.id || null,
+              faith: el.dataset.faith || null,
+              int: el.dataset.int || null,
+              hidden: el.hidden || el.classList.contains('is-hidden'),
+              title: (el.querySelector('.section__title, .page-head__title') || {}).textContent || null,
+              y: Math.round(r.y * 100) / 100,
+              height: Math.round(r.height * 100) / 100
+            };
+          });
+      }
+
+      if (activeId === 'screen-today') {
+        composition.sections = sectionsOf('screen-today');
+        composition.dateLine = (document.querySelector('#todaySub') || {}).textContent;
+        composition.ring = {
+          value: (document.querySelector('#dayRingValue') || {}).textContent,
+          text: (document.querySelector('#dayRingText') || {}).textContent
+        };
+        composition.stats = Array.prototype.map.call(
+          document.querySelectorAll('#todayStats .stat'),
+          function (el) {
+            return {
+              value: (el.querySelector('.stat__value') || {}).textContent,
+              label: (el.querySelector('.stat__label') || {}).textContent
+            };
+          });
+        composition.agenda = Array.prototype.map.call(
+          document.querySelectorAll('#agenda .tl-item'),
+          function (el) {
+            return {
+              time: (el.querySelector('.tl-time') || {}).textContent,
+              title: (el.querySelector('.tl-card__title') || {}).textContent,
+              meta: (el.querySelector('.tl-card__meta') || {}).textContent,
+              state: el.classList.contains('is-now')
+                ? 'now'
+                : el.classList.contains('is-done') ? 'done' : 'upcoming',
+              act: (el.querySelector('.tl-card') || {dataset: {}}).dataset.act || null
+            };
+          });
+        composition.tasks = Array.prototype.map.call(
+          document.querySelectorAll('#taskList .task'),
+          function (el) {
+            var label = Array.prototype.filter.call(
+              el.querySelectorAll('.task__label'),
+              function (x) { return !x.hidden; })[0];
+            return {
+              label: label ? label.textContent : null,
+              time: (el.querySelector('.task__time') || {}).textContent,
+              done: el.classList.contains('is-done'),
+              faith: el.dataset.faith || null,
+              hidden: el.hidden
+            };
+          });
+        composition.habits = Array.prototype.filter.call(
+          document.querySelectorAll('#screen-today .habit'),
+          function (el) { return !el.hidden; })
+          .map(function (el) {
+            return {
+              name: (el.querySelector('.habit__name') || {}).textContent,
+              days: Array.prototype.map.call(
+                el.querySelectorAll('.habit__day'),
+                function (d) {
+                  return (d.classList.contains('is-on') ? 'on' : 'off') +
+                    (d.classList.contains('is-today') ? '+today' : '');
+                }),
+              streak: (el.querySelector('.habit__streak') || {}).textContent
+            };
+          });
+        composition.quote = Array.prototype.filter.call(
+          document.querySelectorAll('#screen-today .section'),
+          function (el) { return !el.hidden && el.querySelector('.quote'); })
+          .map(function (el) {
+            return {
+              title: (el.querySelector('.section__title') || {}).textContent,
+              sub: (el.querySelector('.section__sub') || {}).textContent,
+              arabic: (el.querySelector('.arabic') || {}).textContent || null,
+              text: (el.querySelector('.quote__text') || {}).textContent,
+              by: (el.querySelector('.quote__by') || {}).textContent
+            };
+          });
+      }
+
+      if (activeId === 'screen-explore') {
+        composition.sections = sectionsOf('screen-explore');
+        composition.sub = (document.querySelector('#exploreSub') || {}).textContent;
+        composition.feature = Array.prototype.filter.call(
+          document.querySelectorAll('#screen-explore .section'),
+          function (el) { return !el.hidden && el.querySelector('.feature'); })
+          .map(function (el) {
+            return {
+              tag: (el.querySelector('.feature__tag') || {}).textContent,
+              title: (el.querySelector('.feature__title') || {}).textContent,
+              text: (el.querySelector('.feature__text') || {}).textContent,
+              meta: (el.querySelector('.feature__meta') || {}).textContent
+            };
+          });
+        composition.weather = {
+          sub: (document.querySelector('#weatherSub') || {}).textContent,
+          temp: (document.querySelector('#weatherTemp') || {}).textContent,
+          desc: (document.querySelector('#weatherDesc') || {}).textContent,
+          stats: texts('#screen-explore .weather__stat')
+        };
+        composition.aroundHidden = (document.querySelector('#aroundWrap') || {}).hidden;
+        composition.aroundTag = (document.querySelector('#aroundTag') || {}).textContent;
+        composition.around = Array.prototype.map.call(
+          document.querySelectorAll('#aroundList .list-row'),
+          function (el) {
+            return {
+              fid: el.dataset.fid,
+              title: (el.querySelector('.list-row__title') || {}).textContent,
+              sub: (el.querySelector('.list-row__sub') || {}).textContent,
+              value: (el.querySelector('.list-row__value') || {}).textContent || null
+            };
+          });
+        composition.news = Array.prototype.map.call(
+          document.querySelectorAll('#newsList .article'),
+          function (el) {
+            return {
+              cat: (el.querySelector('.article__cat') || {}).textContent,
+              title: (el.querySelector('.article__title') || {}).textContent,
+              meta: (el.querySelector('.article__meta') || {}).textContent
+            };
+          });
+        composition.collections = Array.prototype.filter.call(
+          document.querySelectorAll('#screen-explore .hscroll .minicard'),
+          function (el) { return !el.hidden; })
+          .map(function (el) {
+            return {
+              title: (el.querySelector('.minicard__title') || {}).textContent,
+              meta: (el.querySelector('.minicard__meta') || {}).textContent
+            };
+          });
+        composition.nearby = Array.prototype.filter.call(
+          document.querySelectorAll('#screen-explore .section:last-child .list-row'),
+          function (el) { return !el.hidden; })
+          .map(function (el) {
+            return {
+              title: (el.querySelector('.list-row__title') || {}).textContent,
+              sub: (el.querySelector('.list-row__sub') || {}).textContent,
+              value: (el.querySelector('.list-row__value') || {}).textContent
+            };
+          });
+      }
+
       if (activeId === 'screen-tools') {
         composition.chips = ids('#toolChips .chip', 'filter');
         composition.chipLabels = texts('#toolChips .chip');

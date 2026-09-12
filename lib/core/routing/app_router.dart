@@ -47,7 +47,9 @@ import '../../features/catalogue/presentation/feature_strings.dart';
 import '../../features/shell/presentation/fixture_records_screen.dart';
 import '../../features/shell/presentation/fixture_screens.dart';
 import '../../features/gallery/presentation/gallery_screen.dart';
+import '../../features/explore/presentation/explore_host.dart';
 import '../../features/home/presentation/home_host.dart';
+import '../../features/today/presentation/today_host.dart';
 import '../../features/tools/presentation/tools_host.dart';
 import '../../features/gallery/presentation/navigation_gallery.dart';
 import '../../features/onboarding/domain/onboarding_state.dart';
@@ -384,9 +386,11 @@ Widget _destination(BuildContext context, LumeDestinationId id) {
       return LumeHomeHost(branch: root);
     case LumeDestinationId.tools:
       return LumeToolsHost(branch: root);
-    case LumeDestinationId.trains:
     case LumeDestinationId.today:
+      return LumeTodayHost(branch: root);
     case LumeDestinationId.explore:
+      return LumeExploreHost(branch: root);
+    case LumeDestinationId.trains:
     case LumeDestinationId.profile:
       break;
   }

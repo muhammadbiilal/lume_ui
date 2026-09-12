@@ -258,6 +258,11 @@ abstract final class LumeFeatureStrings {
   static String weatherCondition(AppLocalizations l, String key) =>
       switch (key) {
         'hazySun' => l.weatherHazySun,
+        // The whole phrase a market's own entry carries, which Explore shows
+        // and the shorter surfaces do not.
+        'hazySunHumid' => l.weatherHazySunHumid,
+        'humidLightHaze' => l.weatherHumidLightHaze,
+        'clearVeryWarm' => l.weatherClearVeryWarm,
         'mostlyClear' => l.weatherMostlyClear,
         'cloudBuilding' => l.weatherCloudBuilding,
         'clear' => l.weatherClear,
