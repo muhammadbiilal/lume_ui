@@ -140,7 +140,10 @@ Rules while both exist:
 2. Every web file carries its temporary status in
    [TEMPORARY_WEB_REFERENCE_NOTES.md](TEMPORARY_WEB_REFERENCE_NOTES.md), and
    `README.md` says so from F1 onward.
-3. `npm test` must stay 10 suites / 697 assertions / 0 failures. A capture run
+3. `npm test` must stay 10 suites / 0 failures, and its assertion count must
+   never *fall*. It was 697 here; two later commits pinned clock-dependent
+   tests and took it to 715, which is the count from F4 onward. Count it
+   with `docs/conversion_archive/tool/count_web_assertions.mjs`. A capture run
    against a modified prototype is void.
 4. Chrome/CDP capture is conversion tooling under `docs/conversion_archive/`,
    never a Flutter development dependency.
@@ -174,7 +177,7 @@ Removal manifest — the files that go:
 | `index.html` | 25 KB shell + 112-symbol icon sprite. **Icons must be extracted to `assets/icons/` in F1 before this can be deleted** |
 | `assets/css/` | 19 stylesheets, 7,449 lines |
 | `assets/js/` | 152 modules, ~26,400 lines |
-| `tests/` | 11 JavaScript suites, 4,688 lines, 697 assertions |
+| `tests/` | 11 JavaScript suites, 4,688 lines, 697 assertions (715 from F4 — see the gate above) |
 | `scripts/` | `serve.js`, `build.js`, `bundler.js` |
 | `package.json`, `package-lock.json` | npm manifest; `jsdom` dev dependency |
 | `node_modules/` | already gitignored |
@@ -254,7 +257,7 @@ Everything in the removal manifest in §4.
 | R1 | **`flutter create` overwrites `README.md` or `.gitignore`** | High | Run `flutter create` into a scratch directory and copy in only `android/`, `ios/`, `.metadata` and the platform scaffolding. `README.md`, `.gitignore`, `claude.md` and the `LUME_*` documents are merged by hand |
 | R2 | **`assets/` shared between two systems** | Medium | Flutter bundles only declared subfolders; `assets/css` and `assets/js` are never packaged. Verified by inspecting the built asset manifest in F1 |
 | R3 | **`build/` shared** | Low | Both gitignored. `npm run build` is not run during conversion; if it is, `flutter clean` follows |
-| R4 | **The web suite is the only parity oracle until Flutter's tests exist** | High | The web suite must stay green at 697 assertions for the whole conversion; a run against a modified prototype is void. Flutter tests are written per phase, not deferred to F9 |
+| R4 | **The web suite is the only parity oracle until Flutter's tests exist** | High | The web suite must stay green for the whole conversion and its count must never fall — 697 at F0, 715 from F4; a run against a modified prototype is void. Flutter tests are written per phase, not deferred to F9 |
 | R5 | **Icon loss** — 112 symbols live only inside `index.html` | High | Extracted to `assets/icons/` in F1, before `index.html` is deletable. The removal gate checks this explicitly |
 | R6 | **Demonstration data loss** — geography, seeds and tool data live in `assets/js/data/` | High | Ported to `assets/data/` and Dart fixtures during F1–F7; the removal gate checks it |
 | R7 | **Deleting too early strands unfinished screens** | High | Single removal commit at F9, gated on seven conditions, never incremental |

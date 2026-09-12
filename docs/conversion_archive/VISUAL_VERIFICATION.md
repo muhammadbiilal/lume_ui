@@ -243,7 +243,10 @@ The web is the comparison source and must not drift. Before every capture run
 the harness confirms:
 
 ```bash
-npm test    # must be 10/10 suites, 697 assertions, 0 failures
+npm test    # must be 10/10 suites, 715 assertions, 0 failures
+# and `node docs/conversion_archive/tool/count_web_assertions.mjs` is what
+# counts them — the suites print two different `ok` shapes, so a grep that
+# assumes one silently loses a suite
 git status  # the prototype must be unmodified
 ```
 

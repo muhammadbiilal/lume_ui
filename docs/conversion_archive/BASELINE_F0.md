@@ -31,6 +31,11 @@ npm test
 
 All ten suites pass. **697 assertions, 0 failures, 10/10 suites green.**
 
+> The 697 is this baseline's number and stays as the record of it. Two later
+> commits pinned clock-dependent tests and added assertions, so the count from
+> F4 onward is **715** — see the canonical count in
+> [TEMPORARY_WEB_REFERENCE_NOTES.md](TEMPORARY_WEB_REFERENCE_NOTES.md).
+
 | Suite | Assertions | Result |
 |---|---:|---|
 | `tests/architecture.js` | 45 | ALL ARCHITECTURE CHECKS PASSED |

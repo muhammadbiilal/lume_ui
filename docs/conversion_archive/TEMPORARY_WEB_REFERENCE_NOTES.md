@@ -49,7 +49,7 @@ be**. It is a conversion input, not part of the product.
 | `assets/js/data/geo.js`, `tool-data.js`, `solar.js` | **194 countries**, demonstration data | F1 — ported to `assets/data/` and Dart fixtures |
 | `assets/js/i18n/` | 2,587 en / 730 ur / 726 ar strings | F1 — ported to ARB |
 | `assets/js/screens/`, `assets/js/tools/`, `assets/js/ui/` | Screen, tool and component composition | F2–F7 |
-| `tests/` | 10 suites, **697 assertions** — the parity oracle | F9 |
+| `tests/` | 10 suites, **715 assertions** — the parity oracle | F9 |
 | `scripts/serve.js` | Serves the prototype for capture | F9 |
 | `package.json`, `node_modules/` | `jsdom`, for the web suite only | F9 |
 
@@ -58,7 +58,8 @@ be**. It is a conversion input, not part of the product.
 ```bash
 npm install
 npm run serve          # http://localhost:8080 — needed for capture
-npm test               # must stay 10 suites / 697 assertions / 0 failures
+npm test               # must stay 10 suites / 715 assertions / 0 failures
+node docs/conversion_archive/tool/count_web_assertions.mjs  # the count
 ```
 
 The app is ES modules, so a browser refuses to load it from `file://`. Serve it.
@@ -103,3 +104,44 @@ gate checks both:
 1. The **112 icons**, which exist only inside `index.html`.
 2. The **geography, seed and demonstration data**, which exist only in
    `assets/js/data/`.
+
+---
+
+## The canonical web assertion count
+
+**715 assertions, 10 suites, 0 failures.** Counted by
+`docs/conversion_archive/tool/count_web_assertions.mjs`, which is the
+definition rather than a convenience:
+
+```
+  architecture    45        notify          35
+  verify          12        account        190
+  interact        59        auth            95
+  controls        25        design          92
+  regress         72        crud            90
+                            total          715
+```
+
+**How it is counted, and why that needs saying.** The suites do not all print
+an assertion the same way: nine write `  ok   <text>` and `tests/verify.js`
+writes `  ok: <text>`. A pattern matching `ok` followed by whitespace drops
+`verify.js` whole — twelve assertions — which is how an F5A report came to say
+703. Nothing had been deleted, skipped or lost. The script matches
+`/^\s+ok(\s|:)/`, prints per suite as well as in total, and fails the run if
+any suite exits non-zero or prints nothing.
+
+**The history, at commit level.** Every change is a named commit that added
+assertions while pinning a clock-dependent test; nothing has ever been
+removed:
+
+| commit | total |
+|---|---|
+| `78edced` — the F0 baseline state | 697 |
+| `0bec96c` — *Pin the market-hours test to a clock instead of the wall* | 709 |
+| `9c83023` — *Pin the prayer-tracker test too, and make it run every time* | **715** |
+| every commit since, including HEAD | **715** — `tests/` and `package.json` are byte-identical |
+
+Deterministic: 715 under `TZ=UTC`, `America/New_York` and `Asia/Karachi`, and
+identical across three consecutive runs. No assertion is conditional on time,
+zone, locale or environment.
+
