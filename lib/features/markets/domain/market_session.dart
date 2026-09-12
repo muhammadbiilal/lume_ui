@@ -27,7 +27,7 @@ library;
 
 import 'package:flutter/foundation.dart';
 
-import '../../../core/time/lume_time_zone.dart';
+import '../../../core/time/lume_zone.dart';
 import 'market_calendar.dart';
 
 /// Minutes past midnight, in the exchange's own wall clock.
@@ -123,7 +123,11 @@ class LumeExchangeHours {
     required this.calendar,
   });
 
-  final LumeTimeZone zone;
+  /// The interface, not the conversion's rule table. This class has never
+  /// seen a daylight-saving rule and must not: a maintained zone database
+  /// drops in here with no change above it.
+  final LumeZone zone;
+
   final LumeTradingHours hours;
   final LumeMarketCalendar calendar;
 

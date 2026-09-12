@@ -20,7 +20,7 @@ library;
 
 import 'package:flutter/foundation.dart';
 
-import '../../../core/time/lume_time_zone.dart';
+import '../../../core/time/lume_zone.dart';
 
 /// A day an exchange is shut, as the rule that decides it rather than a date.
 @immutable
@@ -73,8 +73,7 @@ class LumeFloatingHoliday extends LumeHoliday {
   final int ordinal;
 
   @override
-  DateTime dateIn(int year) =>
-      LumeTimeZone.nthWeekdayOf(year, month, weekday, ordinal);
+  DateTime dateIn(int year) => LumeWeekday.nth(year, month, weekday, ordinal);
 }
 
 /// A fixed number of days from Easter Sunday. Good Friday is −2; Easter Monday

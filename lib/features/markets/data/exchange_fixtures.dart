@@ -22,6 +22,9 @@ library;
 
 import 'package:flutter/foundation.dart';
 
+// The one file that names the conversion's rule table. `LumeExchangeHours`
+// takes a `LumeZone`, so a maintained zone database replaces these six
+// constants and nothing else moves. See `lume_zone.dart`.
 import '../../../core/time/lume_time_zone.dart';
 import '../domain/market_calendar.dart';
 import '../domain/market_session.dart';

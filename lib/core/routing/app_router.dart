@@ -41,6 +41,9 @@ import '../../features/auth/data/fake_auth_repository.dart';
 import '../../features/auth/domain/auth_model.dart';
 import '../../features/auth/domain/auth_repository.dart';
 import '../../features/auth/presentation/auth_flow.dart';
+import '../../features/catalogue/domain/eligibility.dart';
+import '../../features/catalogue/domain/lume_feature.dart';
+import '../../features/catalogue/presentation/feature_strings.dart';
 import '../../features/shell/presentation/fixture_records_screen.dart';
 import '../../features/shell/presentation/fixture_screens.dart';
 import '../../features/gallery/presentation/gallery_screen.dart';
@@ -293,18 +296,8 @@ List<RouteBase> _nestedRoutes(LumeDestinationId branch) {
     ),
     GoRoute(
       path: '${LumeRoutes.toolSegment}/:${LumeRoutes.toolIdParam}',
-      builder: (BuildContext context, GoRouterState state) {
-        final String toolId = state.pathParameters[LumeRoutes.toolIdParam]!;
-        return FixtureToolScreen(
-          toolId: toolId,
-          onBack: () => context.go(root),
-          // A related tool *replaces* rather than stacks, so a chain of them
-          // cannot grow a back stack the user has to press through.
-          onOpenRelated: (String id) =>
-              context.replace(LumeRoutes.tool(root, id)),
-          onOpenRecords: () => context.go(LumeRoutes.records(root, toolId)),
-        );
-      },
+      builder: (BuildContext context, GoRouterState state) =>
+          _tool(context, state, root),
       routes: <RouteBase>[
         // Four siblings rather than a nest. `records/:recordId` is not a page
         // *on top of* the collection: it is the collection, opened on a
@@ -442,6 +435,52 @@ Widget _destination(BuildContext context, LumeDestinationId id) {
         ),
       ],
     ],
+  );
+}
+
+/// A tool screen, behind the catalogue's own gate.
+///
+/// §64 lists deep links among the surfaces a hidden feature must not be
+/// reachable through, and a route is the one surface with no tile to hide.
+/// So the route puts the catalogue the same question the hub puts before it
+/// draws a tile — the *same* [LumeEligibility], reading the *same* profile —
+/// and a faith-gated, country-gated or switched-off tool is refused by the
+/// frame rather than rendered because somebody typed its id.
+///
+/// An id the catalogue does not know falls through to the fixture rule, which
+/// refuses it too. Both refusals look identical from outside, on purpose:
+/// "you may not have this" and "there is no such thing" must not be
+/// distinguishable, or the refusal itself becomes the leak.
+Widget _tool(BuildContext context, GoRouterState state, String root) {
+  final String toolId = state.pathParameters[LumeRoutes.toolIdParam]!;
+
+  return Consumer(
+    builder: (BuildContext context, WidgetRef ref, Widget? _) {
+      final LumeEligibility eligibility = ref.watch(eligibilityProvider);
+      return LumeProfileScope(
+        builder: (BuildContext context, LumeUserContext user) {
+          final LumeFeature? feature = eligibility.byId(toolId);
+          return FixtureToolScreen(
+            toolId: toolId,
+            catalogueEligible: feature == null
+                ? null
+                : eligibility.isVisible(feature, user),
+            catalogueName: feature == null
+                ? null
+                : LumeFeatureStrings.name(
+                    AppLocalizations.of(context),
+                    feature.id,
+                  ),
+            onBack: () => context.go(root),
+            // A related tool *replaces* rather than stacks, so a chain of them
+            // cannot grow a back stack the user has to press through.
+            onOpenRelated: (String id) =>
+                context.replace(LumeRoutes.tool(root, id)),
+            onOpenRecords: () => context.go(LumeRoutes.records(root, toolId)),
+          );
+        },
+      );
+    },
   );
 }
 

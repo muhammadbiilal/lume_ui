@@ -19,6 +19,7 @@ import 'package:lume/features/home/domain/home_model.dart';
 import 'package:lume/features/home/domain/home_repository.dart';
 import 'package:lume/features/home/presentation/home_screen.dart';
 import 'package:lume/features/onboarding/domain/onboarding_state.dart';
+import 'package:lume/features/tools/domain/tools_filter.dart';
 import 'package:lume/features/tools/presentation/tools_screen.dart';
 
 import '../../helpers/lume_harness.dart';
@@ -241,10 +242,12 @@ Widget toolsScreenFor(
   LumeUserContext user, {
   LumeRecordedActions? actions,
   Map<String, int> attention = const <String, int>{'bills': 1, 'documents': 2},
+  LumeToolsFilter filter = LumeToolsFilter.forYou,
 }) => LumeToolsScreen(
   eligibility: kEligibility,
   user: user,
   attention: attention,
+  initialFilter: filter,
   actions: (actions ?? LumeRecordedActions()).toolsActions,
 );
 
@@ -253,13 +256,15 @@ Future<void> pumpTools(
   WidgetTester tester,
   LumeUserContext user, {
   LumeRecordedActions? actions,
+  Map<String, int> attention = const <String, int>{'bills': 1, 'documents': 2},
+  LumeToolsFilter filter = LumeToolsFilter.forYou,
   Size surface = LumeViewport.phone,
   ThemeMode theme = ThemeMode.light,
   Locale locale = const Locale('en'),
   double textScale = 1.0,
 }) => pumpLume(
   tester,
-  toolsScreenFor(user, actions: actions),
+  toolsScreenFor(user, actions: actions, attention: attention, filter: filter),
   surface: surface,
   theme: theme,
   locale: locale,

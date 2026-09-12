@@ -44,12 +44,29 @@ class FixtureToolScreen extends StatelessWidget {
   const FixtureToolScreen({
     super.key,
     required this.toolId,
+    this.catalogueEligible,
+    this.catalogueName,
     this.onBack,
     this.onOpenRelated,
     this.onOpenRecords,
   });
 
   final String toolId;
+
+  /// What [LumeEligibility] said about this id, when the id *is* a catalogue
+  /// feature. `null` means it is not one — a fixture tool, or nothing at all —
+  /// and the fixture rule below decides instead.
+  ///
+  /// §64: "If a feature is hidden, it should not be accessible indirectly."
+  /// A deep link is the indirect route, so the route asks the same question
+  /// the hub asks before it draws a tile, and hands the answer here.
+  final bool? catalogueEligible;
+
+  /// The catalogue's name for this id, where it has one. A tool the user *is*
+  /// allowed still has no screen at this phase, and it should say which tool
+  /// it is rather than wearing the unavailable title.
+  final String? catalogueName;
+
   final VoidCallback? onBack;
   final ValueChanged<String>? onOpenRelated;
   final VoidCallback? onOpenRecords;
@@ -73,15 +90,25 @@ class FixtureToolScreen extends StatelessWidget {
     // have, and §64 says the answer is the same either way: the gate refuses,
     // and the body is never built.
     return LumeToolFrame(
-      title: tool == null ? l.toolUnavailableTitle : _title(l, tool),
+      title: switch ((tool, catalogueName)) {
+        (final LumeFixtureTool t?, _) => _title(l, t),
+        // Named only when the user may have it. A refusal that names the tool
+        // has confirmed the tool exists, which is the disclosure §64 is about.
+        (_, final String name?) when catalogueEligible ?? false => name,
+        _ => l.toolUnavailableTitle,
+      },
       subtitle: tool == null ? null : toolId,
       onBack: onBack,
       strings: strings,
-      eligible: tool != null && tool != LumeFixtureTool.gated,
+      eligible:
+          catalogueEligible ?? (tool != null && tool != LumeFixtureTool.gated),
       status: switch (tool) {
         LumeFixtureTool.loading => LumeToolStatus.loading,
         LumeFixtureTool.failed => LumeToolStatus.error,
         LumeFixtureTool.elsewhere => LumeToolStatus.unavailable,
+        // A catalogue tool this user may have, which simply has no screen
+        // yet. Not a refusal — there is nothing here to refuse.
+        null when catalogueEligible ?? false => LumeToolStatus.unavailable,
         _ => LumeToolStatus.ready,
       },
       onRetry: () {},
