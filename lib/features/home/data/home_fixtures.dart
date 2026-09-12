@@ -37,6 +37,7 @@ typedef _Climate = ({
   int temp,
   int feels,
   String condition,
+  String discoverCondition,
   int rain,
   int wind,
   String icon,
@@ -55,6 +56,7 @@ const Map<String, _Climate> _climate = <String, _Climate>{
     temp: 34,
     feels: 38,
     condition: 'hazySun',
+    discoverCondition: 'hazy',
     rain: 8,
     wind: 14,
     icon: LumeIcons.sun,
@@ -71,6 +73,7 @@ const Map<String, _Climate> _climate = <String, _Climate>{
     temp: 33,
     feels: 37,
     condition: 'hazySun',
+    discoverCondition: 'hazy',
     rain: 25,
     wind: 12,
     icon: LumeIcons.sun,
@@ -87,6 +90,7 @@ const Map<String, _Climate> _climate = <String, _Climate>{
     temp: 21,
     feels: 19,
     condition: 'mostlyClear',
+    discoverCondition: 'mostlyClear',
     rain: 12,
     wind: 8,
     icon: LumeIcons.cloudSun,
@@ -103,6 +107,7 @@ const Map<String, _Climate> _climate = <String, _Climate>{
     temp: 24,
     feels: 24,
     condition: 'lightCloud',
+    discoverCondition: 'lightCloud',
     rain: 20,
     wind: 10,
     icon: LumeIcons.cloudSun,
@@ -119,6 +124,7 @@ const Map<String, _Climate> _climate = <String, _Climate>{
     temp: 39,
     feels: 44,
     condition: 'clear',
+    discoverCondition: 'clear',
     rain: 0,
     wind: 11,
     icon: LumeIcons.sun,
@@ -135,6 +141,7 @@ const Map<String, _Climate> _climate = <String, _Climate>{
     temp: 40,
     feels: 42,
     condition: 'clear',
+    discoverCondition: 'clear',
     rain: 0,
     wind: 9,
     icon: LumeIcons.sun,
@@ -153,6 +160,7 @@ const _Climate _defaultClimate = (
   temp: 18,
   feels: 17,
   condition: 'overcast',
+  discoverCondition: 'overcast',
   rain: 35,
   wind: 12,
   icon: LumeIcons.cloudSun,
@@ -213,6 +221,7 @@ class LumeFakeHomeRepository implements LumeHomeRepository {
         temperatureC: c.temp,
         feelsLikeC: c.feels,
         conditionKey: c.condition,
+        discoverConditionKey: c.discoverCondition,
         rainPercent: c.rain,
         windKph: c.wind,
         icon: c.icon,
@@ -230,6 +239,38 @@ class LumeFakeHomeRepository implements LumeHomeRepository {
         ),
       ),
     );
+  }
+
+  /// What the header badge says, per state, measured rather than guessed.
+  ///
+  /// The reference's badge is `NOTIFY.unreadCount()`, which counts the
+  /// notification *sources* that survive a profile: `build()` walks sixteen
+  /// declared sources and `allowed(src)` drops each one whose tool the user
+  /// cannot see — the same eligibility gate the catalogue asks — and then the
+  /// ones their category and type preferences switch off.
+  ///
+  /// So it is not a number to invent. These are the counts the running
+  /// prototype produces at the pinned instant, read off
+  /// `docs/conversion_archive/tool/probe_notifications.mjs`, with the sources
+  /// that account for each step:
+  ///
+  /// | state | count | what changed |
+  /// |---|---|---|
+  /// | Pakistan | 13 | — |
+  /// | Pakistan, the switches off | 12 | `markets.move` ("KSE-100 moved +0.82%") |
+  /// | abroad | 10 | also `loadshed.next` and `trains.delay`, whose tools are `countries: ['PK']` |
+  ///
+  /// The full engine is §48's work. Until it arrives the reference fixture
+  /// still has to carry the reference's value, because a badge that says 13
+  /// in London when Lume says 10 is a parity failure whether or not the
+  /// machinery behind it is built yet.
+  static int unreadFor(LumeUserContext user) {
+    // Loadshedding and Trains are Pakistan-only, so their two sources cannot
+    // fire anywhere else, and the market source follows the country's own
+    // exchange.
+    if (user.country != 'PK') return 10;
+    // `markets.move` is the one the content switches reach.
+    return user.prefs.finance ? 13 : 12;
   }
 
   /// The city's timetable for a day. One definition, so the strip, the hero,
@@ -274,12 +315,7 @@ class LumeFakeHomeRepository implements LumeHomeRepository {
       fetchedAt: now,
       sources: state,
       content: LumeHomeContent(
-        // Two digits, because that is what the reference's notification
-        // engine produces at the pinned instant — 13 in Pakistan, 12 with the
-        // content switches off, 10 abroad. Deriving the number is §48's work,
-        // not a destination's; this fixture carries the reference's primary
-        // cell so the badge is measured against the shape it really renders.
-        notificationCount: empty ? 0 : 13,
+        notificationCount: empty ? 0 : unreadFor(user),
 
         weather: failing.contains(LumeHomeSection.live)
             ? null
@@ -287,6 +323,7 @@ class LumeFakeHomeRepository implements LumeHomeRepository {
                 temperatureC: c.temp,
                 feelsLikeC: c.feels,
                 conditionKey: c.condition,
+                discoverConditionKey: c.discoverCondition,
                 rainPercent: c.rain,
                 windKph: c.wind,
                 icon: c.icon,

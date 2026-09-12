@@ -23,6 +23,7 @@ class LumeWeatherNow {
     required this.temperatureC,
     required this.feelsLikeC,
     required this.conditionKey,
+    required this.discoverConditionKey,
     required this.rainPercent,
     required this.windKph,
     required this.icon,
@@ -33,10 +34,20 @@ class LumeWeatherNow {
   final int temperatureC;
   final int feelsLikeC;
 
-  /// A key into the condition vocabulary — `weather.c.hazySun`. The reference
-  /// stores an English sentence in the catalogue and shows it untranslated in
-  /// every language.
+  /// A key into the condition vocabulary — `weather.c.hazySun`. This is the
+  /// *raw* condition, the one `WEATHER_BY_COUNTRY` carries and the live row
+  /// says: for Pakistan, `'Hazy sun · humid'`. The reference stores an English
+  /// sentence in the catalogue and shows it untranslated in every language.
   final String conditionKey;
+
+  /// The shorter phrase the **Discover card** says — `hazy` for Pakistan.
+  ///
+  /// A key of its own rather than something derived from [conditionKey],
+  /// because which phrase a surface uses is a composition decision, not a
+  /// formatting one. Lume's live row reads "Mostly clear · Rain 64%" while its
+  /// Discover card reads "34° and hazy" in the same state, deliberately;
+  /// nothing here forces the two to agree.
+  final String discoverConditionKey;
 
   final int rainPercent;
   final int windKph;
@@ -229,8 +240,6 @@ class LumeReadingProgress {
   final int ayah;
   final int ayahCount;
   final int minutesLeft;
-
-  double get fraction => ayahCount == 0 ? 0 : ayah / ayahCount;
 }
 
 /// What is left of today's list.
@@ -249,8 +258,6 @@ class LumeTaskSummary {
   /// A task the user wrote. Not a key — it is their text.
   final String nextTitle;
   final DateTime nextAt;
-
-  double get fraction => total == 0 ? 0 : (total - remaining) / total;
 }
 
 /// `tool-data.js` → `fuelFor(country)`. The lead grade only; the tool screen

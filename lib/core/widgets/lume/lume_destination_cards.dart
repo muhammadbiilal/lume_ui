@@ -348,7 +348,15 @@ class LumeToolTile extends StatelessWidget {
 /// The three compete for one corner and `toolCard` settles it by overwriting:
 /// the count is written first, then the lock replaces it for a sensitive tool
 /// and the pin replaces it for a local one. Privacy, then locality, then the
-/// number — declared here rather than left to whichever branch runs last.
+/// number — declared rather than left to whichever branch runs last, and
+/// resolved by [LumeCatalogueTile.markerFor].
+///
+/// **[local] is drawn by nothing at present**, and that is deliberate rather
+/// than an oversight: the reference's pin branch tests `f.loc`, no catalogue
+/// entry declares it, and the rendered hub shows no pin anywhere (D28). The
+/// value and its painting stay because the contract is the source's and the
+/// precedence has to remain expressible; what changed is that no rendered
+/// screen selects it.
 enum LumeTileMarker { none, private, count, local }
 
 /// `.cat-tool` — a catalogue tile in the Tools hub.
@@ -386,6 +394,32 @@ class LumeCatalogueTile extends StatelessWidget {
 
   /// `.cat-tool { min-height: 92px }`.
   static const double minHeight = 92;
+
+  /// `toolCard`'s precedence, as a function.
+  ///
+  /// ```js
+  /// if (n) badge += '<span class="cat-tool__count" …>';
+  /// if (f.sens) badge = '<span class="cat-tool__flag" …>';
+  /// else if (f.loc) badge = '<span class="cat-tool__pin" …>';
+  /// ```
+  ///
+  /// It *assigns*, so each later branch destroys what the earlier one wrote:
+  /// privacy, then locality, then the number. Only the first overwrite is
+  /// observable in the reference — `documents` is both countable and
+  /// sensitive and shows its lock — and [local] is currently unreachable from
+  /// any rendered screen (D28). The contract is kept whole anyway, and
+  /// verified with synthetic inputs, so the day a catalogue field makes it
+  /// reachable the order is already the source's.
+  static LumeTileMarker markerFor({
+    required bool sensitive,
+    required bool local,
+    required int count,
+  }) {
+    if (sensitive) return LumeTileMarker.private;
+    if (local) return LumeTileMarker.local;
+    if (count > 0) return LumeTileMarker.count;
+    return LumeTileMarker.none;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -718,30 +752,31 @@ class LumeLiveRow extends StatelessWidget {
   }
 }
 
-/// `.progress-card` — art and two lines.
+/// `.progress-card` — art, a title and a line of meta. **No bar.**
 ///
-/// **The bar is not drawn, because the reference does not draw one.** `.bar`
-/// is emitted (`home.screen.js:772` and `:796`, `data-fill="38"` / `"40"`),
-/// `animateBars` does write its fill's width, and every visual property is
-/// specified — 5 tall, pill, neutral track, a jade gradient. None of it
-/// reaches the screen: `.bar` is a `<span>` that `components.css` leaves out
-/// of the rule block that blockifies `.bar__fill`, so it stays a non-replaced
-/// inline box, `height` does not apply to it, and it measures 0 × 0 with its
-/// fill 74.47 × 0. The card's body measures 196 × 34 — title, 2, meta — which
-/// is the height with no bar in it and no room made for one.
+/// The name is the prototype's and it is a misnomer there too. `.bar` is
+/// emitted inside the card (`home.screen.js:772` and `:796`, with
+/// `data-fill="38"` / `"40"`) and never reaches the screen: it is a `<span>`
+/// that `components.css` leaves out of the rule block blockifying
+/// `.bar__fill`, so it stays a non-replaced inline box, `height` does not
+/// apply to it, and it measures 0 × 0 with its fill 74.47 × 0. The card is
+/// built with no room for one either — `.progress-card__body` measures
+/// 196 × 34, which is title + 2 + meta exactly.
 ///
-/// So this renders what the reference renders. Whether Lume *intends* the bar
-/// is a separate question and an open one: the evidence is in
-/// `docs/conversion_archive/KNOWN_DIFFERENCES.md` (C15 / D26) and it is
-/// awaiting a decision. The [progress] value stays plumbed through so that
-/// decision costs one widget, not a re-fit of the card.
+/// **Settled: dead markup in the prototype, and not a difference here.** Those
+/// two lines are the only `class="bar"` in `assets/js/`; no stylesheet, test
+/// or specification asks for a visible one. The card this draws is the card
+/// Lume draws. A progress bar may arrive as a product decision later; it is
+/// not part of the reference, so no value is plumbed toward one.
+///
+/// **This is not `LumeProgressBar`.** That is `.pbar` — `display: block`,
+/// 6 tall, a real component that really renders — and it is untouched.
 class LumeProgressCard extends StatelessWidget {
   const LumeProgressCard({
     super.key,
     required this.icon,
     required this.title,
     required this.meta,
-    required this.progress,
     this.actionIcon = LumeIcons.arrowR,
     this.onTap,
     this.semanticLabel,
@@ -750,9 +785,6 @@ class LumeProgressCard extends StatelessWidget {
   final String icon;
   final String title;
   final String meta;
-
-  /// 0–1. Carried, not drawn — see the class comment (C15 / D26).
-  final double progress;
 
   final String actionIcon;
   final VoidCallback? onTap;

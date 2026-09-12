@@ -660,7 +660,6 @@ class LumeHomeScreen extends StatelessWidget {
         progress.ayahCount,
         progress.minutesLeft,
       ),
-      progress: progress.fraction,
       actionIcon: LumeIcons.play,
       onTap: () => actions.openTarget(card.target),
     ),
@@ -684,7 +683,6 @@ class LumeHomeScreen extends StatelessWidget {
       icon: LumeIcons.checkSquare,
       title: l.homeTasksLeft(tasks.remaining),
       meta: l.homeTasksNext(tasks.nextTitle, f.time(tasks.nextAt)),
-      progress: tasks.fraction,
       onTap: () => actions.openTarget(card.target),
     ),
   };
@@ -842,7 +840,7 @@ class LumeHomeScreen extends StatelessWidget {
       LumeDiscoverId.weather => (
         l.homeWeatherAnd(
           f.temperature(c.weather?.temperatureC ?? 0),
-          _condition(l, c.weather?.conditionKey ?? 'clear').toLowerCase(),
+          _displayCondition(l, c.weather?.discoverConditionKey ?? 'clear'),
         ),
         l.homeFeelsLike(f.temperature(c.weather?.feelsLikeC ?? 0)),
       ),
@@ -884,6 +882,23 @@ class LumeHomeScreen extends StatelessWidget {
 
   static String _prayerName(AppLocalizations l, String key) =>
       LumeFeatureStrings.prayerName(l, key);
+
+  /// The phrase the **Discover card** uses, which is shorter than the live
+  /// row's and is chosen per surface rather than derived from it.
+  ///
+  /// `home.screen.js:837` writes "34° and hazy" into fixed markup while
+  /// `WEATHER_BY_COUNTRY.PK` carries `'Hazy sun · humid'`. The card's phrase
+  /// is its own, so it is its own key, and the ARBs already had `weatherHazy`
+  /// waiting for it in all three languages.
+  ///
+  /// Anything without a short form of its own falls back to the full
+  /// condition, lower-cased to sit inside "{temp} and {condition}" — which is
+  /// a no-op in Urdu and Arabic, where the script has no case.
+  static String _displayCondition(AppLocalizations l, String key) =>
+      switch (key) {
+        'hazy' => l.weatherHazy,
+        _ => _condition(l, key).toLowerCase(),
+      };
 
   static String _condition(AppLocalizations l, String key) =>
       LumeFeatureStrings.weatherCondition(l, key);

@@ -379,7 +379,7 @@ void main() {
       expect(actions.destinations, isEmpty);
     });
 
-    testWidgets('a sensitive tool wears a lock, a local one wears a dot', (
+    testWidgets('a sensitive tool wears a lock, a countable one its number', (
       WidgetTester tester,
     ) async {
       await pumpTools(
@@ -395,9 +395,13 @@ void main() {
       );
 
       expect(tileOf('documents').marker, LumeTileMarker.private);
-      expect(tileOf('loadshed').marker, LumeTileMarker.local);
       expect(tileOf('bills').marker, LumeTileMarker.count);
       expect(tileOf('calculator').marker, LumeTileMarker.none);
+      // Country-restricted, and bare — the reference's pin branch reads a
+      // field the catalogue does not carry, so no tile wears one (D28).
+      // `local_marker_test.dart` is where that is proven and the precedence
+      // contract kept.
+      expect(tileOf('loadshed').marker, LumeTileMarker.none);
     });
 
     testWidgets('privacy outranks a count on the same corner', (

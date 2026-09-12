@@ -308,22 +308,30 @@ class _LumeToolsScreenState extends State<LumeToolsScreen> {
   ) {
     final int count = widget.attention[t.id] ?? 0;
 
-    // One corner, three possible markers, in the order `toolCard` declares:
-    // it writes the count, then *overwrites* it with the lock if the tool is
-    // sensitive and with the pin if it is a local service. So privacy first,
-    // then locality, then the number.
+    // One corner, three possible markers, resolved by the source's own
+    // precedence (see `LumeCatalogueTile.markerFor`).
     //
-    // Only the first of those two overwrites is observable in the reference —
-    // `documents` is both countable and sensitive, and shows its lock — while
-    // nothing in the catalogue is both countable and country-restricted. The
-    // order is the source's anyway, so the day something is, both sides agree.
-    final (LumeTileMarker marker, String? label) = t.sensitive
-        ? (LumeTileMarker.private, l.toolPrivate)
-        : t.isCountryRestricted
-        ? (LumeTileMarker.local, l.toolLocalService)
-        : count > 0
-        ? (LumeTileMarker.count, l.toolNeedsAttention(count))
-        : (LumeTileMarker.none, null);
+    // **Nothing is a local service here.** The reference's pin branch reads
+    // `f.loc`; `grep "loc:" catalogue.js` returns nothing, and a live probe of
+    // `#toolCats .cat-tool__pin` returns `{ found: 0 }` — the rendered hub has
+    // no pin on any tile in any state. `countries` carries the same meaning
+    // and is what the country gate reads, but no source history records a
+    // rename, and drawing a marker the reference draws nowhere is not a
+    // privacy, accuracy or accessibility repair. So the input stays and the
+    // hub has nothing to put in it (D28).
+    const bool localService = false;
+
+    final LumeTileMarker marker = LumeCatalogueTile.markerFor(
+      sensitive: t.sensitive,
+      local: localService,
+      count: count,
+    );
+    final String? label = switch (marker) {
+      LumeTileMarker.none => null,
+      LumeTileMarker.private => l.toolPrivate,
+      LumeTileMarker.local => l.toolLocalService,
+      LumeTileMarker.count => l.toolNeedsAttention(count),
+    };
 
     return LumeCatalogueTile(
       key: ValueKey<String>('tools.tile.${t.id}'),

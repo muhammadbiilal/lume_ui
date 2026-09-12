@@ -380,7 +380,7 @@ void main() {
       await tester.tap(find.byKey(const ValueKey<String>('tools.chip.all')));
       await tester.pumpAndSettle();
       expect(find.bySemanticsLabel(RegExp('Private')), findsWidgets);
-      expect(find.bySemanticsLabel(RegExp('Local service')), findsWidgets);
+      expect(find.bySemanticsLabel(RegExp('needs? attention')), findsWidgets);
       handle.dispose();
     });
 

@@ -188,6 +188,7 @@ class LumeHomeController extends ChangeNotifier {
     temperatureC: 0,
     feelsLikeC: 0,
     conditionKey: 'clear',
+    discoverConditionKey: 'clear',
     rainPercent: 0,
     windKph: 0,
     icon: 'cloud-sun',
