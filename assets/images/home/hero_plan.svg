@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 190" preserveAspectRatio="xMidYMid slice">
+              <defs>
+                <linearGradient id="g-plan" x1="0" y1="0" x2="1" y2="1">
+                  <stop offset="0" stop-color="#0E8C7E"/><stop offset="1" stop-color="#25B7A2"/>
+                </linearGradient>
+              </defs>
+              <rect width="320" height="190" fill="url(#g-plan)"/>
+              <circle cx="278" cy="26" r="66" fill="#fff" opacity=".08"/>
+              <circle cx="300" cy="168" r="44" fill="#04322C" opacity=".16"/>
+              <g transform="translate(206 42)">
+                <rect x="0" y="0" width="82" height="98" rx="18" fill="#fff" opacity=".95"/>
+                <rect x="14" y="18" width="54" height="7" rx="3.5" fill="#0E8C7E" opacity=".22"/>
+                <rect x="14" y="34" width="40" height="7" rx="3.5" fill="#0E8C7E" opacity=".16"/>
+                <rect x="14" y="50" width="48" height="7" rx="3.5" fill="#0E8C7E" opacity=".16"/>
+                <circle cx="24" cy="76" r="9" fill="#0E8C7E" opacity=".18"/>
+                <path d="m20 76 3 3 6-6.4" stroke="#0E8C7E" stroke-width="2.4" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+                <rect x="40" y="72" width="28" height="7" rx="3.5" fill="#0E8C7E" opacity=".2"/>
+              </g>
+              <g opacity=".9">
+                <path d="m180 30 2.4 6 6 2.4-6 2.4-2.4 6-2.4-6-6-2.4 6-2.4z" fill="#fff" opacity=".65"/>
+                <circle cx="196" cy="150" r="5" fill="#fff" opacity=".3"/>
+              </g>
+            </svg>

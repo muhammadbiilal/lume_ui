@@ -464,6 +464,76 @@ id-reconciliation table is an F6 deliverable. Recorded in
 
 ---
 
+
+### C11 — the market session is wrong four ways
+
+**Found and corrected in F5A.** `marketSession()` in `tools/context.js:734`:
+
+```js
+var now = new Date();
+var h = now.getHours() + now.getMinutes() / 60;          // the DEVICE's clock
+var open = h >= o && h <= cl                             // close is INCLUSIVE
+           && now.getDay() > 0 && now.getDay() < 6;      // one weekend for all
+```
+
+1. **The device's timezone, not the exchange's.** `ex.tz` is stored and never
+   read. A phone in London says the Karachi exchange opens at 09:32 London
+   time.
+2. **An inclusive close.** At exactly 15:30 the Pakistan Stock Exchange reads
+   as open.
+3. **No holidays at all.** `MARKET_HOLIDAYS` and `isMarketHoliday()` are both
+   defined in `tool-data.js:264` and neither is called from here. And the one
+   floating entry — US Thanksgiving — is pinned to 28 November, which is the
+   wrong Thursday in about six years in seven.
+4. **One weekend for every market.** Monday-to-Friday is hard-coded, and the
+   Saudi Exchange trades Sunday to Thursday.
+
+Corrected in `lib/features/markets/`, with the clock injected and every
+boundary tested: a minute before the open, the opening minute, a minute after,
+a minute before the close, the close, a minute after, the weekend, a fixed
+holiday, a floating one, Easter, a device in another zone, and both halves of
+the daylight-saving year.
+
+### C12 — Home's Discover strip leaks content the user switched off
+
+**Found and corrected in F5A.** See D30.
+
+### C13 — the "local service" marker never renders
+
+**Found and corrected in F5A.** See D28.
+
+### C14 — a tile marker overwrites a count instead of ranking against it
+
+**Found and corrected in F5A.** See D28.
+
+### C15 — the progress bar never renders
+
+**Found and corrected in F5A.** See D26.
+
+### C16 — the notification badge is a dot given a number
+
+**Found and corrected in F5A.** See D27.
+
+### C17 — the outage card names a slot that has already ended
+
+**Found and corrected in F5A.** See D23.
+
+### C18 — search indexes the name the reader cannot see
+
+**Found and corrected in F5A.** `data-hay` is
+`(f.n + ' ' + f.kw).toLowerCase()` — the *English* name from the catalogue — so
+an Urdu reader cannot find a tool by the name on its tile. Flutter indexes the
+localised name, the English name and the keywords, because somebody who learned
+a tool's English name should not lose it by switching language.
+
+### C19 — the quick-action strip cancels its own padding
+
+**Found and corrected in F5A.** See D24.
+
+### C20 — a live card overflows its column
+
+**Found and corrected in F5A.** See D25.
+
 ## 3. Open questions
 
 ### Resolved in F1
@@ -507,6 +577,20 @@ id-reconciliation table is an F6 deliverable. Recorded in
 | 2026-09-11 (F3) | Stepper pill corrected from 94 to the measured 92 px | The value column was 28 where the measurement says 26 |
 | 2026-09-11 (F3) | **D8 raised and resolved** — nested destinations ride a branch stack rather than a remembered return tab | A single variable cannot hold the centre being open on two branches |
 | 2026-09-11 (F3) | **D9 raised and resolved** — the floating bar hides while the keyboard is up, and the keyboard does not change the width class | `100dvh` does not track the keyboard, so the reference's bar ends up behind it |
+| 2026-09-12 (F5A) | **C11 / D29 raised and resolved** — the market session read the device's clock, closed inclusively, ignored the holiday table it ships and gave every exchange the same week | Found by asking what "is the market open" means on a phone in another country |
+| 2026-09-12 (F5A) | **C12 / D30 raised and resolved** — Home's Discover strip is gated by attribute, so a switched-off content type still appeared | Measured: the `prefs_off_pk` capture still lists a cricket score |
+| 2026-09-12 (F5A) | **C13, C14 / D28 raised and resolved** — the "local service" marker tests a renamed field and never renders; a marker overwrites a count rather than ranking against it | Measured: `.cat-tool__pin` absent in every captured state |
+| 2026-09-12 (F5A) | **C15 / D26 raised and resolved** — the progress bar is a `<span>` with no `display` and collapses to nothing | Measured 0 × 0, with its fill 78.39 × 0 |
+| 2026-09-12 (F5A) | **C16 / D27 raised and resolved** — the notification badge is a 7-point dot given `'99+'` | Measured: the control reports the text "13" |
+| 2026-09-12 (F5A) | **C17 / D23 raised and resolved** — the outage card names a slot that ended 41 minutes earlier, in a clock format the user did not choose | Found by freezing the page's clock and reading the schedule beside the card |
+| 2026-09-12 (F5A) | **C18 raised and resolved** — search indexes the English name, so an Urdu reader cannot find a tool by the name on the tile | Found while building the localised haystack |
+| 2026-09-12 (F5A) | **C19 / D24 raised and resolved** — `.qactions` cancels its own padding with a negative margin | Measured: the strip at x −20 with width 430, the first pill at x 0 |
+| 2026-09-12 (F5A) | **C20 / D25 raised and resolved** — a live card overflows its column by 22.31 | Measured: x 20 plus width 372.31 in a 390 viewport |
+| 2026-09-12 (F5A) | **D22 raised and resolved** — the status line under every tool is English in all three languages | 85 keys added, in three languages, behind one resolver |
+| 2026-09-12 (F5A) | **P2 raised** — the greeting's emoji has no face in a test capture | Found in the first Home golden |
+| 2026-09-12 (F5A) | **`LumeDelta` corrected** — it read `accent-700` and `rose-ink`; the rendered `.delta--up` is rgb(23, 145, 111) and `.delta--down` rgb(198, 72, 92), which are their own tokens | Found when the live row needed them |
+| 2026-09-12 (F5A) | **`LumeCompactRow` corrected** — its subtitle sat beside the label; `.crow__label i` is a block and sits under it | Found when "Coming up" came out twelve points too tall |
+| 2026-09-12 (F5A) | **`LumeType.natural` added** — most of the prototype's small text leaves `line-height: normal`, which is the font's own line and not the `--t-*` token's | Found when five section heads drifted 44 points down a page |
 | 2026-09-11 (F3) | **D10 raised and resolved** — a master-detail selection stays out of the location | A route per selection is the rebuild the CRUD guide forbids |
 | 2026-09-11 (F3) | **D11 raised and resolved** — the tablet status strip keeps the wordmark and the clock, drops the device glyphs | The strip is application chrome; the glyphs are a drawing of a device |
 | 2026-09-11 (F3) | **Correction:** the shell's two width caps (1366, and 560 below 600) are **kept**, not dropped | F0 recorded them with the device frame; a cap is a measure, not a costume |
@@ -706,6 +790,103 @@ seal.** The reference draws the check by animating `stroke-dasharray` and
 technique for "it arrives", not a design requirement, and it cannot be reached
 through an SVG asset in Flutter. The seal fades and scales in over the same
 640 ms, and under reduced motion it is simply there.
+
+### D22 — the tile status line is translated
+
+**Raised and resolved in F5A.** `f.m` — "Standard", "12 saved", "Asr 15:53" —
+is a catalogue string, and no dictionary overrides it, so every one of the
+eighty-five tiles reads English in Urdu and in Arabic. §10 makes localisation a
+first-class requirement and §11 forbids hard-coding user-facing strings, so the
+line is a **key** here and the ARBs carry all three languages.
+
+The architecture matters as much as the translation: a status line is a
+property of the tool's own data, not of the registry. `LumeToolStatuses`
+carries the two the device can answer without opening anything — the next
+prayer and the weather — and Home and the hub read the same resolver so they
+cannot name two different prayers. The rest arrive with their tools at F6.
+
+### D23 — the Discover strip is 16 points taller
+
+**Raised in F5A, and a consequence of C17.** The prototype's outage card is
+fixed markup reading "Next outage 14:00" while the schedule it comes from ends
+that slot at 16:00 — so at 16:41 it named an outage that was already over, in a
+24-hour format the user had not chosen. Derived, the card reads "Next outage
+7:00 PM", which takes two lines in a 126-point card and makes the strip 16
+taller.
+
+Recorded rather than avoided: a card that names a time in the past is worse
+than a strip that is sixteen points taller.
+
+### D24 — the quick-action strip starts at the gutter
+
+**Raised in F5A.** `.qactions` sets `padding: 0 var(--pad)` *and*
+`margin: 0 calc(var(--pad) * -1)`, and its `.section` parent has no padding of
+its own — so the negative margin cancels the padding exactly and the first pill
+sits flush against the screen edge while every other element on Home is at 20.
+Measured: `.qactions` at x −20 with width 430, the first `.qaction` at x 0.
+
+The intent is plain — a scroller that bleeds so a pill can scroll to the edge,
+with its content inset to the gutter — and the container was already full-bleed
+before the margin was added. Flutter keeps the bleeding scroller and starts the
+content at 20, which is what every other strip on the screen does.
+
+### D25 — a live card fills its column
+
+**Raised in F5A.** `#liveNow .livecard` measures 372.31 wide at x 20 in a 390
+viewport: 2.31 points off the right-hand edge, in a grid column that is 350.
+Flutter's card is 350. The width is recorded rather than asserted in the bounds
+comparison.
+
+### D26 — the progress bar is drawn
+
+**Raised in F5A.** `.bar` is a `<span>` and the stylesheet never gives it a
+`display`, so it stays inline and collapses: measured 0 × 0, with its fill
+78.39 × 0. Everything else about it is specified — 5 tall, pill-shaped, a
+neutral track, a jade gradient fill, animated over 1.1 s by `animateBars` — and
+none of it renders.
+
+Drawn here. The card's height is unchanged, because the 54-point artwork beside
+it is what sets it.
+
+### D27 — the notification badge is a pill with a number in it
+
+**Raised in F5A.** §100.1 asks for *"one badge, in the app header, formatted
+compactly"*, and the prototype computes exactly that — `n > 99 ? '99+' : n` —
+then draws it into a 7-point dot with no room for a glyph, so the number spills
+out beside the header. The `'99+'` is what settles it: nobody formats a dot
+that way.
+
+### D28 — the "local service" dot is drawn
+
+**Raised in F5A.** `toolCard()` tests `f.loc`, a field the catalogue renamed to
+`countries`, so the marker never renders anywhere. The same branch also
+*overwrites* a count rather than taking precedence over it, so a tool with both
+loses the count silently.
+
+Flutter draws the dot, and declares the precedence: a sensitive tool's lock
+wins over a count, because a lock is a promise and the count can wait for the
+tool itself.
+
+### D29 — the market session is correct
+
+**Raised in F5A.** Four defects in six lines, each with its own test at each of
+its boundaries. See `docs/LUME_DESTINATIONS.md` §5 and C11 below.
+
+### D30 — the Discover strip honours the content switches
+
+**Raised in F5A.** The strip is gated by `data-loc` and `data-faith` only, so a
+user who switched cricket off in Personalisation still saw a cricket score on
+Home. Measured: the `prefs_off_pk` capture still lists `PAK 214/4`. §64 says a
+hidden feature must not be reachable indirectly, and the strip asks
+`LumeEligibility` here like every other surface.
+
+### P2 — the greeting's emoji has no face in a test capture
+
+**Raised in F5A.** `flutter_test` loads only the fonts the application
+declares, and Lume declares Plus Jakarta Sans and Noto Naskh Arabic. Neither
+has `👋`, so the greeting's emoji renders as a box in a golden and in a
+capture. On a device the platform's emoji face draws it. A capture artefact,
+not a product difference, and not worth bundling a 10 MB emoji font to hide.
 
 
 One correction has been applied to the web prototype: the four dead

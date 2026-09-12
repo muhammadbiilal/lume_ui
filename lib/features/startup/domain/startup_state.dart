@@ -85,13 +85,17 @@ class LumeStartupState {
       other is LumeStartupState &&
       other.phase == phase &&
       other.auth == auth &&
-      other.profile.onboarded == profile.onboarded &&
+      // The whole record, not only `onboarded`. The gate is the one place the
+      // profile lives, and every destination reads it through the same
+      // listener — so a change of country, of the faith preference or of the
+      // recents list has to reach them, and comparing one field would swallow
+      // all three.
+      other.profile == profile &&
       other.profileIsDurable == profileIsDurable &&
       other.held == held;
 
   @override
-  int get hashCode =>
-      Object.hash(phase, auth, profile.onboarded, profileIsDurable, held);
+  int get hashCode => Object.hash(phase, auth, profile, profileIsDurable, held);
 }
 
 /// The single routing decision.

@@ -268,6 +268,12 @@ abstract class AppLocalizations {
   /// **'Week'**
   String get actionWeek;
 
+  /// The kind line on an anniversary row
+  ///
+  /// In en, this message translates to:
+  /// **'Anniversary'**
+  String get anniversaryKind;
+
   /// Reference key app.tagline
   ///
   /// In en, this message translates to:
@@ -856,6 +862,36 @@ abstract class AppLocalizations {
   /// **'One moment…'**
   String get authWorking;
 
+  /// Reference: a bill row in Coming up
+  ///
+  /// In en, this message translates to:
+  /// **'{n, plural, =1{due in 1 day} other{due in {n} days}}'**
+  String billsDueIn(int n);
+
+  /// Reference key bills.dueThisMonth
+  ///
+  /// In en, this message translates to:
+  /// **'Due this month'**
+  String get billsDueThisMonth;
+
+  /// Reference key bills.overdue.title, pluralised
+  ///
+  /// In en, this message translates to:
+  /// **'{n, plural, =1{1 bill needs attention} other{{n} bills need attention}}'**
+  String billsNeedAttention(int n);
+
+  /// Reference key bills.overdueBy
+  ///
+  /// In en, this message translates to:
+  /// **'{n, plural, =1{1 day overdue} other{{n} days overdue}}'**
+  String billsOverdueBy(int n);
+
+  /// The kind line on a birthday row
+  ///
+  /// In en, this message translates to:
+  /// **'Birthday'**
+  String get birthdayKind;
+
   /// Reference key common.all
   ///
   /// In en, this message translates to:
@@ -922,6 +958,12 @@ abstract class AppLocalizations {
   /// **'Now'**
   String get commonNow;
 
+  /// Shown on a section whose figures came from the cache
+  ///
+  /// In en, this message translates to:
+  /// **'Offline'**
+  String get commonOffline;
+
   /// Reference key a.optional; §8 marks optional fields rather than required ones
   ///
   /// In en, this message translates to:
@@ -963,6 +1005,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Sort'**
   String get commonSort;
+
+  /// Shown on a section whose figures are older than they should be
+  ///
+  /// In en, this message translates to:
+  /// **'Not current'**
+  String get commonStale;
 
   /// Reference key common.status
   ///
@@ -1017,6 +1065,768 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Yesterday'**
   String get commonYesterday;
+
+  /// Reference: the cricket Discover card’s title. The side is a three-letter code
+  ///
+  /// In en, this message translates to:
+  /// **'{team} {runs}/{wickets}'**
+  String cricketScore(String team, int runs, int wickets);
+
+  /// Reference: the cricket Discover card’s meta
+  ///
+  /// In en, this message translates to:
+  /// **'2nd Test · Day {n}'**
+  String cricketSecondTest(int n);
+
+  /// Reference: the duas Discover card’s meta
+  ///
+  /// In en, this message translates to:
+  /// **'For ordinary days'**
+  String get discoverDuasMeta;
+
+  /// Reference: the duas Discover card
+  ///
+  /// In en, this message translates to:
+  /// **'Forty duas'**
+  String get discoverDuasTitle;
+
+  /// Reference key docs.renewSoon
+  ///
+  /// In en, this message translates to:
+  /// **'Renew your {name}'**
+  String docsRenewSoon(String name);
+
+  /// Reference key f.age; the catalogue is the source of the English
+  ///
+  /// In en, this message translates to:
+  /// **'Age Calculator'**
+  String get featureAge;
+
+  /// Reference key f.alarms; the catalogue is the source of the English
+  ///
+  /// In en, this message translates to:
+  /// **'Alarms'**
+  String get featureAlarms;
+
+  /// Reference key f.aqi; the catalogue is the source of the English
+  ///
+  /// In en, this message translates to:
+  /// **'Air Quality'**
+  String get featureAqi;
+
+  /// Reference key f.ayah; the catalogue is the source of the English
+  ///
+  /// In en, this message translates to:
+  /// **'Ayah of the Day'**
+  String get featureAyah;
+
+  /// Reference key f.babybudget; the catalogue is the source of the English
+  ///
+  /// In en, this message translates to:
+  /// **'Baby Budget'**
+  String get featureBabybudget;
+
+  /// Reference key f.bills; the catalogue is the source of the English
+  ///
+  /// In en, this message translates to:
+  /// **'Bills'**
+  String get featureBills;
+
+  /// Reference key f.birthdays; the catalogue is the source of the English
+  ///
+  /// In en, this message translates to:
+  /// **'Birthdays'**
+  String get featureBirthdays;
+
+  /// Reference key f.bmi; the catalogue is the source of the English
+  ///
+  /// In en, this message translates to:
+  /// **'BMI Calculator'**
+  String get featureBmi;
+
+  /// Reference key f.calculator; the catalogue is the source of the English
+  ///
+  /// In en, this message translates to:
+  /// **'Calculator'**
+  String get featureCalculator;
+
+  /// Reference key f.calendar; the catalogue is the source of the English
+  ///
+  /// In en, this message translates to:
+  /// **'Calendar'**
+  String get featureCalendar;
+
+  /// Reference key f.committee; the catalogue is the source of the English
+  ///
+  /// In en, this message translates to:
+  /// **'Committee'**
+  String get featureCommittee;
+
+  /// Reference key f.compound; the catalogue is the source of the English
+  ///
+  /// In en, this message translates to:
+  /// **'Compound Interest'**
+  String get featureCompound;
+
+  /// Reference key f.converter; the catalogue is the source of the English
+  ///
+  /// In en, this message translates to:
+  /// **'Unit Converter'**
+  String get featureConverter;
+
+  /// Reference key f.cricket; the catalogue is the source of the English
+  ///
+  /// In en, this message translates to:
+  /// **'Cricket'**
+  String get featureCricket;
+
+  /// Reference key f.currency; the catalogue is the source of the English
+  ///
+  /// In en, this message translates to:
+  /// **'Currency'**
+  String get featureCurrency;
+
+  /// Reference key f.cycle; the catalogue is the source of the English
+  ///
+  /// In en, this message translates to:
+  /// **'Cycle Tracker'**
+  String get featureCycle;
+
+  /// Reference key f.datecalc; the catalogue is the source of the English
+  ///
+  /// In en, this message translates to:
+  /// **'Date Calculator'**
+  String get featureDatecalc;
+
+  /// Reference key f.docscan; the catalogue is the source of the English
+  ///
+  /// In en, this message translates to:
+  /// **'Document Scanner'**
+  String get featureDocscan;
+
+  /// Reference key f.documents; the catalogue is the source of the English
+  ///
+  /// In en, this message translates to:
+  /// **'Documents'**
+  String get featureDocuments;
+
+  /// Reference key f.duas; the catalogue is the source of the English
+  ///
+  /// In en, this message translates to:
+  /// **'Daily Duas'**
+  String get featureDuas;
+
+  /// Reference key f.emergency; the catalogue is the source of the English
+  ///
+  /// In en, this message translates to:
+  /// **'Emergency'**
+  String get featureEmergency;
+
+  /// Reference key f.events; the catalogue is the source of the English
+  ///
+  /// In en, this message translates to:
+  /// **'Events'**
+  String get featureEvents;
+
+  /// Reference key f.expenses; the catalogue is the source of the English
+  ///
+  /// In en, this message translates to:
+  /// **'Expenses'**
+  String get featureExpenses;
+
+  /// Reference key f.faraid; the catalogue is the source of the English
+  ///
+  /// In en, this message translates to:
+  /// **'Faraid'**
+  String get featureFaraid;
+
+  /// Reference key f.fasting; the catalogue is the source of the English
+  ///
+  /// In en, this message translates to:
+  /// **'Fasting Tracker'**
+  String get featureFasting;
+
+  /// Reference key f.flights; the catalogue is the source of the English
+  ///
+  /// In en, this message translates to:
+  /// **'Flights'**
+  String get featureFlights;
+
+  /// Reference key f.focus; the catalogue is the source of the English
+  ///
+  /// In en, this message translates to:
+  /// **'Focus Timer'**
+  String get featureFocus;
+
+  /// Reference key f.fuel; the catalogue is the source of the English
+  ///
+  /// In en, this message translates to:
+  /// **'Fuel Prices'**
+  String get featureFuel;
+
+  /// Reference key f.fuelcost; the catalogue is the source of the English
+  ///
+  /// In en, this message translates to:
+  /// **'Fuel Cost'**
+  String get featureFuelcost;
+
+  /// Reference key f.goals; the catalogue is the source of the English
+  ///
+  /// In en, this message translates to:
+  /// **'Savings Goals'**
+  String get featureGoals;
+
+  /// Reference key f.goldrates; the catalogue is the source of the English
+  ///
+  /// In en, this message translates to:
+  /// **'Currency & Gold'**
+  String get featureGoldrates;
+
+  /// Reference key f.habits; the catalogue is the source of the English
+  ///
+  /// In en, this message translates to:
+  /// **'Habits'**
+  String get featureHabits;
+
+  /// Reference key f.hadith; the catalogue is the source of the English
+  ///
+  /// In en, this message translates to:
+  /// **'Hadith'**
+  String get featureHadith;
+
+  /// Reference key f.health; the catalogue is the source of the English
+  ///
+  /// In en, this message translates to:
+  /// **'Health Records'**
+  String get featureHealth;
+
+  /// Reference key f.hijri; the catalogue is the source of the English
+  ///
+  /// In en, this message translates to:
+  /// **'Islamic Calendar'**
+  String get featureHijri;
+
+  /// Reference key f.holidays; the catalogue is the source of the English
+  ///
+  /// In en, this message translates to:
+  /// **'Public Holidays'**
+  String get featureHolidays;
+
+  /// Reference key f.installments; the catalogue is the source of the English
+  ///
+  /// In en, this message translates to:
+  /// **'Installments'**
+  String get featureInstallments;
+
+  /// Reference key f.learning; the catalogue is the source of the English
+  ///
+  /// In en, this message translates to:
+  /// **'Learning & Growth'**
+  String get featureLearning;
+
+  /// Reference key f.ledger; the catalogue is the source of the English
+  ///
+  /// In en, this message translates to:
+  /// **'Lending Ledger'**
+  String get featureLedger;
+
+  /// Reference key f.loadshed; the catalogue is the source of the English
+  ///
+  /// In en, this message translates to:
+  /// **'Loadshedding'**
+  String get featureLoadshed;
+
+  /// Reference key f.loan; the catalogue is the source of the English
+  ///
+  /// In en, this message translates to:
+  /// **'Loan / EMI'**
+  String get featureLoan;
+
+  /// Reference key f.markets; the catalogue is the source of the English
+  ///
+  /// In en, this message translates to:
+  /// **'Markets'**
+  String get featureMarkets;
+
+  /// Reference key f.mealplan; the catalogue is the source of the English
+  ///
+  /// In en, this message translates to:
+  /// **'Meal Planner'**
+  String get featureMealplan;
+
+  /// Reference key f.mediasaver; the catalogue is the source of the English
+  ///
+  /// In en, this message translates to:
+  /// **'Media Saver'**
+  String get featureMediasaver;
+
+  /// Reference key f.meds; the catalogue is the source of the English
+  ///
+  /// In en, this message translates to:
+  /// **'Medication'**
+  String get featureMeds;
+
+  /// Reference key f.mosques; the catalogue is the source of the English
+  ///
+  /// In en, this message translates to:
+  /// **'Nearby Mosques'**
+  String get featureMosques;
+
+  /// Reference key f.names99; the catalogue is the source of the English
+  ///
+  /// In en, this message translates to:
+  /// **'99 Names'**
+  String get featureNames99;
+
+  /// Reference key f.natsavings; the catalogue is the source of the English
+  ///
+  /// In en, this message translates to:
+  /// **'National Savings'**
+  String get featureNatsavings;
+
+  /// Reference key f.news; the catalogue is the source of the English
+  ///
+  /// In en, this message translates to:
+  /// **'News'**
+  String get featureNews;
+
+  /// Reference key f.notes; the catalogue is the source of the English
+  ///
+  /// In en, this message translates to:
+  /// **'Notes'**
+  String get featureNotes;
+
+  /// Reference key f.packages; the catalogue is the source of the English
+  ///
+  /// In en, this message translates to:
+  /// **'Mobile Packages'**
+  String get featurePackages;
+
+  /// Reference key f.parcel; the catalogue is the source of the English
+  ///
+  /// In en, this message translates to:
+  /// **'Parcel Tracker'**
+  String get featureParcel;
+
+  /// Reference key f.passport; the catalogue is the source of the English
+  ///
+  /// In en, this message translates to:
+  /// **'Passport Photos'**
+  String get featurePassport;
+
+  /// Reference key f.play; the catalogue is the source of the English
+  ///
+  /// In en, this message translates to:
+  /// **'Play'**
+  String get featurePlay;
+
+  /// Reference key f.prayer; the catalogue is the source of the English
+  ///
+  /// In en, this message translates to:
+  /// **'Prayer Times'**
+  String get featurePrayer;
+
+  /// Reference key f.praytrack; the catalogue is the source of the English
+  ///
+  /// In en, this message translates to:
+  /// **'Prayer Tracker'**
+  String get featurePraytrack;
+
+  /// Reference key f.pregnancy; the catalogue is the source of the English
+  ///
+  /// In en, this message translates to:
+  /// **'Pregnancy'**
+  String get featurePregnancy;
+
+  /// Reference key f.prizebonds; the catalogue is the source of the English
+  ///
+  /// In en, this message translates to:
+  /// **'Prize Bonds'**
+  String get featurePrizebonds;
+
+  /// Reference key f.qibla; the catalogue is the source of the English
+  ///
+  /// In en, this message translates to:
+  /// **'Qibla Compass'**
+  String get featureQibla;
+
+  /// Reference key f.qr; the catalogue is the source of the English
+  ///
+  /// In en, this message translates to:
+  /// **'QR Scanner'**
+  String get featureQr;
+
+  /// Reference key f.quran; the catalogue is the source of the English
+  ///
+  /// In en, this message translates to:
+  /// **'Al-Qur’an'**
+  String get featureQuran;
+
+  /// Reference key f.quransearch; the catalogue is the source of the English
+  ///
+  /// In en, this message translates to:
+  /// **'Search the Qur’an'**
+  String get featureQuransearch;
+
+  /// Reference key f.ramadan; the catalogue is the source of the English
+  ///
+  /// In en, this message translates to:
+  /// **'Ramadan'**
+  String get featureRamadan;
+
+  /// Reference key f.recipes; the catalogue is the source of the English
+  ///
+  /// In en, this message translates to:
+  /// **'Recipes'**
+  String get featureRecipes;
+
+  /// Reference key f.reminders; the catalogue is the source of the English
+  ///
+  /// In en, this message translates to:
+  /// **'Reminders'**
+  String get featureReminders;
+
+  /// Reference key f.shopping; the catalogue is the source of the English
+  ///
+  /// In en, this message translates to:
+  /// **'Shopping List'**
+  String get featureShopping;
+
+  /// Reference key f.speedtest; the catalogue is the source of the English
+  ///
+  /// In en, this message translates to:
+  /// **'Speed Test'**
+  String get featureSpeedtest;
+
+  /// Reference key f.stopwatch; the catalogue is the source of the English
+  ///
+  /// In en, this message translates to:
+  /// **'Stopwatch'**
+  String get featureStopwatch;
+
+  /// Reference key f.streak; the catalogue is the source of the English
+  ///
+  /// In en, this message translates to:
+  /// **'Daily Streak'**
+  String get featureStreak;
+
+  /// Reference key f.subs; the catalogue is the source of the English
+  ///
+  /// In en, this message translates to:
+  /// **'Subscriptions'**
+  String get featureSubs;
+
+  /// Reference key f.sunmoon; the catalogue is the source of the English
+  ///
+  /// In en, this message translates to:
+  /// **'Sun & Moon'**
+  String get featureSunmoon;
+
+  /// Reference key f.taraweeh; the catalogue is the source of the English
+  ///
+  /// In en, this message translates to:
+  /// **'Taraweeh'**
+  String get featureTaraweeh;
+
+  /// Reference key f.tasbih; the catalogue is the source of the English
+  ///
+  /// In en, this message translates to:
+  /// **'Tasbih'**
+  String get featureTasbih;
+
+  /// Reference key f.tax; the catalogue is the source of the English
+  ///
+  /// In en, this message translates to:
+  /// **'Tax Calculator'**
+  String get featureTax;
+
+  /// Reference key f.timer; the catalogue is the source of the English
+  ///
+  /// In en, this message translates to:
+  /// **'Timer'**
+  String get featureTimer;
+
+  /// Reference key f.tipsplit; the catalogue is the source of the English
+  ///
+  /// In en, this message translates to:
+  /// **'Tip & Split'**
+  String get featureTipsplit;
+
+  /// Reference key f.todos; the catalogue is the source of the English
+  ///
+  /// In en, this message translates to:
+  /// **'To-dos'**
+  String get featureTodos;
+
+  /// Reference key f.trains; the catalogue is the source of the English
+  ///
+  /// In en, this message translates to:
+  /// **'Trains'**
+  String get featureTrains;
+
+  /// Reference key f.vaccines; the catalogue is the source of the English
+  ///
+  /// In en, this message translates to:
+  /// **'Vaccinations'**
+  String get featureVaccines;
+
+  /// Reference key f.vehicle; the catalogue is the source of the English
+  ///
+  /// In en, this message translates to:
+  /// **'Vehicle & Fines'**
+  String get featureVehicle;
+
+  /// Reference key f.wastatus; the catalogue is the source of the English
+  ///
+  /// In en, this message translates to:
+  /// **'WhatsApp Status'**
+  String get featureWastatus;
+
+  /// Reference key f.water; the catalogue is the source of the English
+  ///
+  /// In en, this message translates to:
+  /// **'Water'**
+  String get featureWater;
+
+  /// Reference key f.weather; the catalogue is the source of the English
+  ///
+  /// In en, this message translates to:
+  /// **'Weather'**
+  String get featureWeather;
+
+  /// Reference key f.worldclock; the catalogue is the source of the English
+  ///
+  /// In en, this message translates to:
+  /// **'World Clock'**
+  String get featureWorldclock;
+
+  /// Reference key f.zakat; the catalogue is the source of the English
+  ///
+  /// In en, this message translates to:
+  /// **'Zakat Calculator'**
+  String get featureZakat;
+
+  /// Reference key fuel.g.petrol
+  ///
+  /// In en, this message translates to:
+  /// **'Petrol'**
+  String get fuelPetrol;
+
+  /// The Pakistani fuel regulator. A proper noun, transliterated rather than translated
+  ///
+  /// In en, this message translates to:
+  /// **'OGRA'**
+  String get fuelSourceOgra;
+
+  /// Reference key greet.afternoon
+  ///
+  /// In en, this message translates to:
+  /// **'Good afternoon'**
+  String get greetAfternoon;
+
+  /// Reference key greet.evening
+  ///
+  /// In en, this message translates to:
+  /// **'Good evening'**
+  String get greetEvening;
+
+  /// Reference key greet.late
+  ///
+  /// In en, this message translates to:
+  /// **'Still up'**
+  String get greetLate;
+
+  /// Reference key greet.morning
+  ///
+  /// In en, this message translates to:
+  /// **'Good morning'**
+  String get greetMorning;
+
+  /// Reference key greet.named
+  ///
+  /// In en, this message translates to:
+  /// **'{greeting}, {name}'**
+  String greetNamed(String greeting, String name);
+
+  /// Reference key greet.winddown
+  ///
+  /// In en, this message translates to:
+  /// **'Winding down'**
+  String get greetWindDown;
+
+  /// Reference: aria-label="Highlights" on the carousel
+  ///
+  /// In en, this message translates to:
+  /// **'Highlights'**
+  String get heroHighlights;
+
+  /// Reference key home.ayahProgress
+  ///
+  /// In en, this message translates to:
+  /// **'Ayah {n} of {total} · about {min} min left'**
+  String homeAyahProgress(int n, int total, int min);
+
+  /// Reference key home.continueSurah
+  ///
+  /// In en, this message translates to:
+  /// **'Continue {surah}'**
+  String homeContinueSurah(String surah);
+
+  /// Reference key home.discover
+  ///
+  /// In en, this message translates to:
+  /// **'Discover'**
+  String get homeDiscover;
+
+  /// Reference key home.discoverSub
+  ///
+  /// In en, this message translates to:
+  /// **'Because you check these often'**
+  String get homeDiscoverSub;
+
+  /// Reference: the fuel row’s meta line
+  ///
+  /// In en, this message translates to:
+  /// **'Effective {date} · {source}'**
+  String homeEffective(String date, String source);
+
+  /// Reference: the weather Discover card
+  ///
+  /// In en, this message translates to:
+  /// **'Feels like {temp}'**
+  String homeFeelsLike(String temp);
+
+  /// Reference key home.glance
+  ///
+  /// In en, this message translates to:
+  /// **'At a glance'**
+  String get homeGlance;
+
+  /// Reference key home.glanceGeneral
+  ///
+  /// In en, this message translates to:
+  /// **'What matters in the next few hours'**
+  String get homeGlanceGeneral;
+
+  /// Reference key home.glanceMuslim
+  ///
+  /// In en, this message translates to:
+  /// **'Prayer, reading and what’s next'**
+  String get homeGlanceMuslim;
+
+  /// Reference key home.liveNow
+  ///
+  /// In en, this message translates to:
+  /// **'Right now'**
+  String get homeLiveNow;
+
+  /// Reference key home.liveNowSub
+  ///
+  /// In en, this message translates to:
+  /// **'As of {time}'**
+  String homeLiveNowSub(String time);
+
+  /// Reference: the loadshedding Discover card
+  ///
+  /// In en, this message translates to:
+  /// **'Next outage {time}'**
+  String homeNextOutage(String time);
+
+  /// Reference key home.nextPrayer
+  ///
+  /// In en, this message translates to:
+  /// **'Next prayer'**
+  String get homeNextPrayer;
+
+  /// Reference key home.nextUp
+  ///
+  /// In en, this message translates to:
+  /// **'next up'**
+  String get homeNextUp;
+
+  /// Reference: the loadshedding Discover card’s meta
+  ///
+  /// In en, this message translates to:
+  /// **'{area} · {hours, plural, =1{1 hour} other{{hours} hours}}'**
+  String homeOutageArea(String area, int hours);
+
+  /// Reference key home.quickDefault
+  ///
+  /// In en, this message translates to:
+  /// **'The eight you reach for most'**
+  String get homeQuickDefault;
+
+  /// Reference key home.quickFromInterests
+  ///
+  /// In en, this message translates to:
+  /// **'Picked from your interests'**
+  String get homeQuickFromInterests;
+
+  /// Reference key home.quickTools
+  ///
+  /// In en, this message translates to:
+  /// **'Quick tools'**
+  String get homeQuickTools;
+
+  /// Reference key home.rightNow
+  ///
+  /// In en, this message translates to:
+  /// **'Right now'**
+  String get homeRightNow;
+
+  /// Reference key home.searchEverything
+  ///
+  /// In en, this message translates to:
+  /// **'Search everything'**
+  String get homeSearchEverything;
+
+  /// Reference key home.tasksLeft, pluralised
+  ///
+  /// In en, this message translates to:
+  /// **'{n, plural, =0{Nothing left today} =1{1 task left today} other{{n} tasks left today}}'**
+  String homeTasksLeft(int n);
+
+  /// Reference key home.tasksNext
+  ///
+  /// In en, this message translates to:
+  /// **'Next: {task} · {time}'**
+  String homeTasksNext(String task, String time);
+
+  /// Reference key home.toGo
+  ///
+  /// In en, this message translates to:
+  /// **'to go'**
+  String get homeToGo;
+
+  /// Reference key home.tomorrowIn
+  ///
+  /// In en, this message translates to:
+  /// **'Tomorrow in {city}'**
+  String homeTomorrowIn(String city);
+
+  /// Reference key home.upcoming
+  ///
+  /// In en, this message translates to:
+  /// **'Coming up'**
+  String get homeUpcoming;
+
+  /// Reference key home.upcomingSub
+  ///
+  /// In en, this message translates to:
+  /// **'The next few days'**
+  String get homeUpcomingSub;
+
+  /// Reference: the weather Discover card’s title
+  ///
+  /// In en, this message translates to:
+  /// **'{temp} and {condition}'**
+  String homeWeatherAnd(String temp, String condition);
+
+  /// Reference key a11y.yourProfile
+  ///
+  /// In en, this message translates to:
+  /// **'Your profile'**
+  String get homeYourProfile;
 
   /// Reference key ig.everyday
   ///
@@ -1239,6 +2049,48 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Zakat & giving'**
   String get intZakat;
+
+  /// Reference key loadshed.currentlyOff
+  ///
+  /// In en, this message translates to:
+  /// **'Power is off'**
+  String get loadshedOff;
+
+  /// Reference key loadshed.until
+  ///
+  /// In en, this message translates to:
+  /// **'until {time}'**
+  String loadshedUntil(String time);
+
+  /// The market a national pump price applies to. Only the markets whose regulator publishes one need a key
+  ///
+  /// In en, this message translates to:
+  /// **'Pakistan'**
+  String get marketPk;
+
+  /// Reference key markets.closed
+  ///
+  /// In en, this message translates to:
+  /// **'Market closed'**
+  String get marketsClosed;
+
+  /// A market shut by a holiday rather than by the clock
+  ///
+  /// In en, this message translates to:
+  /// **'Closed for {holiday}'**
+  String marketsHoliday(String holiday);
+
+  /// Reference key markets.open
+  ///
+  /// In en, this message translates to:
+  /// **'Market open'**
+  String get marketsOpen;
+
+  /// A market outside its trading week
+  ///
+  /// In en, this message translates to:
+  /// **'Closed for the weekend'**
+  String get marketsWeekend;
 
   /// Prayer calculation method
   ///
@@ -1606,6 +2458,18 @@ abstract class AppLocalizations {
   /// **'Make it yours'**
   String get onbYoursKicker;
 
+  /// Reference: the parcel Discover card’s meta
+  ///
+  /// In en, this message translates to:
+  /// **'{carrier} · arrives today'**
+  String parcelArrivesToday(String carrier);
+
+  /// Reference: the parcel Discover card
+  ///
+  /// In en, this message translates to:
+  /// **'Out for delivery'**
+  String get parcelOutForDelivery;
+
   /// Reference key pers.allCountries
   ///
   /// In en, this message translates to:
@@ -1653,6 +2517,96 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Use my current location'**
   String get persUseLocation;
+
+  /// Reference key prayer.asr
+  ///
+  /// In en, this message translates to:
+  /// **'Asr'**
+  String get prayerAsr;
+
+  /// Reference key prayer.dhuhr
+  ///
+  /// In en, this message translates to:
+  /// **'Dhuhr'**
+  String get prayerDhuhr;
+
+  /// Reference key prayer.fajr
+  ///
+  /// In en, this message translates to:
+  /// **'Fajr'**
+  String get prayerFajr;
+
+  /// Reference key prayer.isha
+  ///
+  /// In en, this message translates to:
+  /// **'Isha'**
+  String get prayerIsha;
+
+  /// Reference key prayer.maghrib
+  ///
+  /// In en, this message translates to:
+  /// **'Maghrib'**
+  String get prayerMaghrib;
+
+  /// Reference key qa.docscan
+  ///
+  /// In en, this message translates to:
+  /// **'Scan doc'**
+  String get qaDocscan;
+
+  /// Reference key qa.expense
+  ///
+  /// In en, this message translates to:
+  /// **'Add expense'**
+  String get qaExpense;
+
+  /// Reference key qa.note
+  ///
+  /// In en, this message translates to:
+  /// **'New note'**
+  String get qaNote;
+
+  /// Reference key qa.parcel
+  ///
+  /// In en, this message translates to:
+  /// **'Track parcel'**
+  String get qaParcel;
+
+  /// Reference key qa.scan
+  ///
+  /// In en, this message translates to:
+  /// **'Scan QR'**
+  String get qaScan;
+
+  /// Reference key qa.shop
+  ///
+  /// In en, this message translates to:
+  /// **'Shopping'**
+  String get qaShop;
+
+  /// Reference key qa.tasbih
+  ///
+  /// In en, this message translates to:
+  /// **'Tasbih'**
+  String get qaTasbih;
+
+  /// Reference key qa.task
+  ///
+  /// In en, this message translates to:
+  /// **'Add task'**
+  String get qaTask;
+
+  /// Reference key qa.timer
+  ///
+  /// In en, this message translates to:
+  /// **'Start timer'**
+  String get qaTimer;
+
+  /// Reference key qa.water
+  ///
+  /// In en, this message translates to:
+  /// **'Log water'**
+  String get qaWater;
 
   /// Reference key rec.conflict
   ///
@@ -1768,11 +2722,239 @@ abstract class AppLocalizations {
   /// **'Try searching for'**
   String get searchTry;
 
+  /// Reference key slide.money.cta
+  ///
+  /// In en, this message translates to:
+  /// **'See money'**
+  String get slideMoneyCta;
+
+  /// Reference key slide.money.k
+  ///
+  /// In en, this message translates to:
+  /// **'Money'**
+  String get slideMoneyKicker;
+
+  /// Reference key slide.money.x
+  ///
+  /// In en, this message translates to:
+  /// **'Rates, bills and expenses in one place.'**
+  String get slideMoneyText;
+
+  /// Reference key slide.money.t
+  ///
+  /// In en, this message translates to:
+  /// **'Stay on top of your money'**
+  String get slideMoneyTitle;
+
+  /// Reference: aria-label on each carousel dot
+  ///
+  /// In en, this message translates to:
+  /// **'Slide {n} of {total}'**
+  String slideOf(int n, int total);
+
+  /// Reference key slide.plan.cta
+  ///
+  /// In en, this message translates to:
+  /// **'Open today'**
+  String get slidePlanCta;
+
+  /// Reference key slide.plan.k
+  ///
+  /// In en, this message translates to:
+  /// **'Today'**
+  String get slidePlanKicker;
+
+  /// Reference key slide.plan.x
+  ///
+  /// In en, this message translates to:
+  /// **'Tasks, reminders and events on one timeline.'**
+  String get slidePlanText;
+
+  /// Reference key slide.plan.t
+  ///
+  /// In en, this message translates to:
+  /// **'Plan your day before it starts'**
+  String get slidePlanTitle;
+
+  /// Reference key slide.prayer.cta
+  ///
+  /// In en, this message translates to:
+  /// **'Prayer times'**
+  String get slidePrayerCta;
+
+  /// Reference key slide.prayer.k
+  ///
+  /// In en, this message translates to:
+  /// **'Your next prayer'**
+  String get slidePrayerKicker;
+
+  /// Reference key slide.prayer.x
+  ///
+  /// In en, this message translates to:
+  /// **'Adhan at {time} · {city}'**
+  String slidePrayerLine(String time, String city);
+
+  /// Reference key slide.read.cta
+  ///
+  /// In en, this message translates to:
+  /// **'Continue'**
+  String get slideReadCta;
+
+  /// Reference key slide.read.k
+  ///
+  /// In en, this message translates to:
+  /// **'Read'**
+  String get slideReadKicker;
+
+  /// Reference key slide.read.x
+  ///
+  /// In en, this message translates to:
+  /// **'You’re 42 ayahs into Al-Kahf. Two minutes is enough.'**
+  String get slideReadText;
+
+  /// Reference key slide.read.t
+  ///
+  /// In en, this message translates to:
+  /// **'Read something meaningful'**
+  String get slideReadTitle;
+
+  /// Reference key slide.tools.cta
+  ///
+  /// In en, this message translates to:
+  /// **'Browse tools'**
+  String get slideToolsCta;
+
+  /// Reference key slide.tools.k
+  ///
+  /// In en, this message translates to:
+  /// **'Tools'**
+  String get slideToolsKicker;
+
+  /// Reference key slide.tools.x
+  ///
+  /// In en, this message translates to:
+  /// **'Calculator, converters, scanner and more.'**
+  String get slideToolsText;
+
+  /// Reference key slide.tools.t
+  ///
+  /// In en, this message translates to:
+  /// **'Useful tools, all in one place'**
+  String get slideToolsTitle;
+
+  /// Reference key slide.trains.cta
+  ///
+  /// In en, this message translates to:
+  /// **'Find a train'**
+  String get slideTrainsCta;
+
+  /// Reference key slide.trains.k
+  ///
+  /// In en, this message translates to:
+  /// **'Travel'**
+  String get slideTrainsKicker;
+
+  /// Reference key slide.trains.x
+  ///
+  /// In en, this message translates to:
+  /// **'Live running status, fares and seats.'**
+  String get slideTrainsText;
+
+  /// Reference key slide.trains.t
+  ///
+  /// In en, this message translates to:
+  /// **'Trains, without the guesswork'**
+  String get slideTrainsTitle;
+
   /// Announced while the launch is still deciding where to go
   ///
   /// In en, this message translates to:
   /// **'Starting Lume'**
   String get startupLoading;
+
+  /// Reference key subs.renews
+  ///
+  /// In en, this message translates to:
+  /// **'renews {date}'**
+  String subsRenews(String date);
+
+  /// The surah the reading fixture is open at
+  ///
+  /// In en, this message translates to:
+  /// **'Al-Kahf'**
+  String get surahAlKahf;
+
+  /// Reference key cat.daily
+  ///
+  /// In en, this message translates to:
+  /// **'Daily Life'**
+  String get toolCategoryDaily;
+
+  /// Reference key cat.everyday
+  ///
+  /// In en, this message translates to:
+  /// **'Everyday'**
+  String get toolCategoryEveryday;
+
+  /// Reference key cat.islamic
+  ///
+  /// In en, this message translates to:
+  /// **'Islamic'**
+  String get toolCategoryIslamic;
+
+  /// Reference key cat.money
+  ///
+  /// In en, this message translates to:
+  /// **'Money'**
+  String get toolCategoryMoney;
+
+  /// Reference key cat.personal
+  ///
+  /// In en, this message translates to:
+  /// **'Personal'**
+  String get toolCategoryPersonal;
+
+  /// Reference key cat.planning
+  ///
+  /// In en, this message translates to:
+  /// **'Planning'**
+  String get toolCategoryPlanning;
+
+  /// Reference key cat.dailySub
+  ///
+  /// In en, this message translates to:
+  /// **'What’s happening around you'**
+  String get toolCategorySubDaily;
+
+  /// Reference key cat.everydaySub
+  ///
+  /// In en, this message translates to:
+  /// **'The ones you reach for daily'**
+  String get toolCategorySubEveryday;
+
+  /// Reference key cat.islamicSub
+  ///
+  /// In en, this message translates to:
+  /// **'Prayer, Qur’an and giving'**
+  String get toolCategorySubIslamic;
+
+  /// Reference key cat.moneySub
+  ///
+  /// In en, this message translates to:
+  /// **'Rates, bills and budgets'**
+  String get toolCategorySubMoney;
+
+  /// Reference key cat.personalSub
+  ///
+  /// In en, this message translates to:
+  /// **'Private to you, on this device'**
+  String get toolCategorySubPersonal;
+
+  /// Reference key cat.planningSub
+  ///
+  /// In en, this message translates to:
+  /// **'Your time and your lists'**
+  String get toolCategorySubPlanning;
 
   /// Tool host error state
   ///
@@ -1792,6 +2974,24 @@ abstract class AppLocalizations {
   /// **'Loading'**
   String get toolLoading;
 
+  /// Reference: aria-label on a country-restricted tool’s marker
+  ///
+  /// In en, this message translates to:
+  /// **'Local service'**
+  String get toolLocalService;
+
+  /// Reference key n.needsAttention
+  ///
+  /// In en, this message translates to:
+  /// **'{n, plural, =1{1 needs attention} other{{n} need attention}}'**
+  String toolNeedsAttention(int n);
+
+  /// Reference: aria-label on a sensitive tool’s lock marker
+  ///
+  /// In en, this message translates to:
+  /// **'Private'**
+  String get toolPrivate;
+
   /// Reference key tool.private.text
   ///
   /// In en, this message translates to:
@@ -1803,6 +3003,522 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Private to you'**
   String get toolPrivateTitle;
+
+  /// The status line on the age tile. The prototype keeps it in the catalogue and renders it untranslated in every language (D22)
+  ///
+  /// In en, this message translates to:
+  /// **'Exact days'**
+  String get toolStatusAge;
+
+  /// The status line on the alarms tile. The prototype keeps it in the catalogue and renders it untranslated in every language (D22)
+  ///
+  /// In en, this message translates to:
+  /// **'2 set'**
+  String get toolStatusAlarms;
+
+  /// The status line on the aqi tile. The prototype keeps it in the catalogue and renders it untranslated in every language (D22)
+  ///
+  /// In en, this message translates to:
+  /// **'AQI'**
+  String get toolStatusAqi;
+
+  /// The status line on the ayah tile. The prototype keeps it in the catalogue and renders it untranslated in every language (D22)
+  ///
+  /// In en, this message translates to:
+  /// **'Ar-Ra’d 28'**
+  String get toolStatusAyah;
+
+  /// The status line on the babybudget tile. The prototype keeps it in the catalogue and renders it untranslated in every language (D22)
+  ///
+  /// In en, this message translates to:
+  /// **'Plan costs'**
+  String get toolStatusBabybudget;
+
+  /// The status line on the bills tile. The prototype keeps it in the catalogue and renders it untranslated in every language (D22)
+  ///
+  /// In en, this message translates to:
+  /// **'2 due'**
+  String get toolStatusBills;
+
+  /// The status line on the birthdays tile. The prototype keeps it in the catalogue and renders it untranslated in every language (D22)
+  ///
+  /// In en, this message translates to:
+  /// **'Ayesha in 4d'**
+  String get toolStatusBirthdays;
+
+  /// The status line on the bmi tile. The prototype keeps it in the catalogue and renders it untranslated in every language (D22)
+  ///
+  /// In en, this message translates to:
+  /// **'Track weight'**
+  String get toolStatusBmi;
+
+  /// The status line on the calculator tile. The prototype keeps it in the catalogue and renders it untranslated in every language (D22)
+  ///
+  /// In en, this message translates to:
+  /// **'Standard'**
+  String get toolStatusCalculator;
+
+  /// The status line on the calendar tile. The prototype keeps it in the catalogue and renders it untranslated in every language (D22)
+  ///
+  /// In en, this message translates to:
+  /// **'3 events'**
+  String get toolStatusCalendar;
+
+  /// The status line on the committee tile. The prototype keeps it in the catalogue and renders it untranslated in every language (D22)
+  ///
+  /// In en, this message translates to:
+  /// **'Month 4 of 10'**
+  String get toolStatusCommittee;
+
+  /// The status line on the compound tile. The prototype keeps it in the catalogue and renders it untranslated in every language (D22)
+  ///
+  /// In en, this message translates to:
+  /// **'Project growth'**
+  String get toolStatusCompound;
+
+  /// The status line on the converter tile. The prototype keeps it in the catalogue and renders it untranslated in every language (D22)
+  ///
+  /// In en, this message translates to:
+  /// **'32 units'**
+  String get toolStatusConverter;
+
+  /// The status line on the cricket tile. The prototype keeps it in the catalogue and renders it untranslated in every language (D22)
+  ///
+  /// In en, this message translates to:
+  /// **'PAK 214/4'**
+  String get toolStatusCricket;
+
+  /// The status line on the currency tile. The prototype keeps it in the catalogue and renders it untranslated in every language (D22)
+  ///
+  /// In en, this message translates to:
+  /// **'Live rates'**
+  String get toolStatusCurrency;
+
+  /// The status line on the cycle tile. The prototype keeps it in the catalogue and renders it untranslated in every language (D22)
+  ///
+  /// In en, this message translates to:
+  /// **'Private'**
+  String get toolStatusCycle;
+
+  /// The status line on the datecalc tile. The prototype keeps it in the catalogue and renders it untranslated in every language (D22)
+  ///
+  /// In en, this message translates to:
+  /// **'Add · diff'**
+  String get toolStatusDatecalc;
+
+  /// The status line on the docscan tile. The prototype keeps it in the catalogue and renders it untranslated in every language (D22)
+  ///
+  /// In en, this message translates to:
+  /// **'PDF ready'**
+  String get toolStatusDocscan;
+
+  /// The status line on the documents tile. The prototype keeps it in the catalogue and renders it untranslated in every language (D22)
+  ///
+  /// In en, this message translates to:
+  /// **'Locked'**
+  String get toolStatusDocuments;
+
+  /// The status line on the duas tile. The prototype keeps it in the catalogue and renders it untranslated in every language (D22)
+  ///
+  /// In en, this message translates to:
+  /// **'42 saved'**
+  String get toolStatusDuas;
+
+  /// The status line on the emergency tile. The prototype keeps it in the catalogue and renders it untranslated in every language (D22)
+  ///
+  /// In en, this message translates to:
+  /// **'15 · 1122'**
+  String get toolStatusEmergency;
+
+  /// The status line on the events tile. The prototype keeps it in the catalogue and renders it untranslated in every language (D22)
+  ///
+  /// In en, this message translates to:
+  /// **'Next 14:00'**
+  String get toolStatusEvents;
+
+  /// The status line on the expenses tile. The prototype keeps it in the catalogue and renders it untranslated in every language (D22)
+  ///
+  /// In en, this message translates to:
+  /// **'This month'**
+  String get toolStatusExpenses;
+
+  /// The status line on the faraid tile. The prototype keeps it in the catalogue and renders it untranslated in every language (D22)
+  ///
+  /// In en, this message translates to:
+  /// **'Inheritance'**
+  String get toolStatusFaraid;
+
+  /// The status line on the fasting tile. The prototype keeps it in the catalogue and renders it untranslated in every language (D22)
+  ///
+  /// In en, this message translates to:
+  /// **'3 kept'**
+  String get toolStatusFasting;
+
+  /// The status line on the flights tile. The prototype keeps it in the catalogue and renders it untranslated in every language (D22)
+  ///
+  /// In en, this message translates to:
+  /// **'Track live'**
+  String get toolStatusFlights;
+
+  /// The status line on the focus tile. The prototype keeps it in the catalogue and renders it untranslated in every language (D22)
+  ///
+  /// In en, this message translates to:
+  /// **'25 min'**
+  String get toolStatusFocus;
+
+  /// The status line on the fuel tile. The prototype keeps it in the catalogue and renders it untranslated in every language (D22)
+  ///
+  /// In en, this message translates to:
+  /// **'Pump prices'**
+  String get toolStatusFuel;
+
+  /// The status line on the fuelcost tile. The prototype keeps it in the catalogue and renders it untranslated in every language (D22)
+  ///
+  /// In en, this message translates to:
+  /// **'Trip cost'**
+  String get toolStatusFuelcost;
+
+  /// The status line on the goals tile. The prototype keeps it in the catalogue and renders it untranslated in every language (D22)
+  ///
+  /// In en, this message translates to:
+  /// **'2 active'**
+  String get toolStatusGoals;
+
+  /// The status line on the goldrates tile. The prototype keeps it in the catalogue and renders it untranslated in every language (D22)
+  ///
+  /// In en, this message translates to:
+  /// **'Gold & FX'**
+  String get toolStatusGoldrates;
+
+  /// The status line on the habits tile. The prototype keeps it in the catalogue and renders it untranslated in every language (D22)
+  ///
+  /// In en, this message translates to:
+  /// **'12-day streak'**
+  String get toolStatusHabits;
+
+  /// The status line on the hadith tile. The prototype keeps it in the catalogue and renders it untranslated in every language (D22)
+  ///
+  /// In en, this message translates to:
+  /// **'Daily'**
+  String get toolStatusHadith;
+
+  /// The status line on the health tile. The prototype keeps it in the catalogue and renders it untranslated in every language (D22)
+  ///
+  /// In en, this message translates to:
+  /// **'Private'**
+  String get toolStatusHealth;
+
+  /// The status line on the hijri tile. The prototype keeps it in the catalogue and renders it untranslated in every language (D22)
+  ///
+  /// In en, this message translates to:
+  /// **'15 Rabi’ I'**
+  String get toolStatusHijri;
+
+  /// The status line on the holidays tile. The prototype keeps it in the catalogue and renders it untranslated in every language (D22)
+  ///
+  /// In en, this message translates to:
+  /// **'This year'**
+  String get toolStatusHolidays;
+
+  /// The status line on the installments tile. The prototype keeps it in the catalogue and renders it untranslated in every language (D22)
+  ///
+  /// In en, this message translates to:
+  /// **'3 running'**
+  String get toolStatusInstallments;
+
+  /// The status line on the learning tile. The prototype keeps it in the catalogue and renders it untranslated in every language (D22)
+  ///
+  /// In en, this message translates to:
+  /// **'3 courses'**
+  String get toolStatusLearning;
+
+  /// The status line on the ledger tile. The prototype keeps it in the catalogue and renders it untranslated in every language (D22)
+  ///
+  /// In en, this message translates to:
+  /// **'3 people'**
+  String get toolStatusLedger;
+
+  /// The status line on the loadshed tile. The prototype keeps it in the catalogue and renders it untranslated in every language (D22)
+  ///
+  /// In en, this message translates to:
+  /// **'14:00–16:00'**
+  String get toolStatusLoadshed;
+
+  /// The status line on the loan tile. The prototype keeps it in the catalogue and renders it untranslated in every language (D22)
+  ///
+  /// In en, this message translates to:
+  /// **'Instalments'**
+  String get toolStatusLoan;
+
+  /// The status line on the markets tile. The prototype keeps it in the catalogue and renders it untranslated in every language (D22)
+  ///
+  /// In en, this message translates to:
+  /// **'KSE-100 ▲ 0.8%'**
+  String get toolStatusMarkets;
+
+  /// The status line on the mealplan tile. The prototype keeps it in the catalogue and renders it untranslated in every language (D22)
+  ///
+  /// In en, this message translates to:
+  /// **'This week'**
+  String get toolStatusMealplan;
+
+  /// The status line on the mediasaver tile. The prototype keeps it in the catalogue and renders it untranslated in every language (D22)
+  ///
+  /// In en, this message translates to:
+  /// **'Save posts'**
+  String get toolStatusMediasaver;
+
+  /// The status line on the meds tile. The prototype keeps it in the catalogue and renders it untranslated in every language (D22)
+  ///
+  /// In en, this message translates to:
+  /// **'Private'**
+  String get toolStatusMeds;
+
+  /// The status line on the mosques tile. The prototype keeps it in the catalogue and renders it untranslated in every language (D22)
+  ///
+  /// In en, this message translates to:
+  /// **'3 within 1 km'**
+  String get toolStatusMosques;
+
+  /// The status line on the names99 tile. The prototype keeps it in the catalogue and renders it untranslated in every language (D22)
+  ///
+  /// In en, this message translates to:
+  /// **'Asma ul Husna'**
+  String get toolStatusNames99;
+
+  /// The status line on the natsavings tile. The prototype keeps it in the catalogue and renders it untranslated in every language (D22)
+  ///
+  /// In en, this message translates to:
+  /// **'Profit rates'**
+  String get toolStatusNatsavings;
+
+  /// The status line on the news tile. The prototype keeps it in the catalogue and renders it untranslated in every language (D22)
+  ///
+  /// In en, this message translates to:
+  /// **'12 new'**
+  String get toolStatusNews;
+
+  /// The status line on the notes tile. The prototype keeps it in the catalogue and renders it untranslated in every language (D22)
+  ///
+  /// In en, this message translates to:
+  /// **'12 saved'**
+  String get toolStatusNotes;
+
+  /// The status line on the packages tile. The prototype keeps it in the catalogue and renders it untranslated in every language (D22)
+  ///
+  /// In en, this message translates to:
+  /// **'Jazz · Zong'**
+  String get toolStatusPackages;
+
+  /// The status line on the parcel tile. The prototype keeps it in the catalogue and renders it untranslated in every language (D22)
+  ///
+  /// In en, this message translates to:
+  /// **'1 in transit'**
+  String get toolStatusParcel;
+
+  /// The status line on the passport tile. The prototype keeps it in the catalogue and renders it untranslated in every language (D22)
+  ///
+  /// In en, this message translates to:
+  /// **'NADRA sizes'**
+  String get toolStatusPassport;
+
+  /// The status line on the play tile. The prototype keeps it in the catalogue and renders it untranslated in every language (D22)
+  ///
+  /// In en, this message translates to:
+  /// **'Puzzles'**
+  String get toolStatusPlay;
+
+  /// The status line on the prayer tile. The prototype keeps it in the catalogue and renders it untranslated in every language (D22)
+  ///
+  /// In en, this message translates to:
+  /// **'Asr 15:53'**
+  String get toolStatusPrayer;
+
+  /// The status line on the praytrack tile. The prototype keeps it in the catalogue and renders it untranslated in every language (D22)
+  ///
+  /// In en, this message translates to:
+  /// **'12-day streak'**
+  String get toolStatusPraytrack;
+
+  /// The status line on the pregnancy tile. The prototype keeps it in the catalogue and renders it untranslated in every language (D22)
+  ///
+  /// In en, this message translates to:
+  /// **'Private'**
+  String get toolStatusPregnancy;
+
+  /// The status line on the prizebonds tile. The prototype keeps it in the catalogue and renders it untranslated in every language (D22)
+  ///
+  /// In en, this message translates to:
+  /// **'Draw 15 Sep'**
+  String get toolStatusPrizebonds;
+
+  /// The status line on the qibla tile. The prototype keeps it in the catalogue and renders it untranslated in every language (D22)
+  ///
+  /// In en, this message translates to:
+  /// **'267° W'**
+  String get toolStatusQibla;
+
+  /// The status line on the qr tile. The prototype keeps it in the catalogue and renders it untranslated in every language (D22)
+  ///
+  /// In en, this message translates to:
+  /// **'Scan & pay'**
+  String get toolStatusQr;
+
+  /// The status line on the quran tile. The prototype keeps it in the catalogue and renders it untranslated in every language (D22)
+  ///
+  /// In en, this message translates to:
+  /// **'Al-Kahf 42'**
+  String get toolStatusQuran;
+
+  /// The status line on the quransearch tile. The prototype keeps it in the catalogue and renders it untranslated in every language (D22)
+  ///
+  /// In en, this message translates to:
+  /// **'By word'**
+  String get toolStatusQuransearch;
+
+  /// The status line on the ramadan tile. The prototype keeps it in the catalogue and renders it untranslated in every language (D22)
+  ///
+  /// In en, this message translates to:
+  /// **'In 172 days'**
+  String get toolStatusRamadan;
+
+  /// The status line on the recipes tile. The prototype keeps it in the catalogue and renders it untranslated in every language (D22)
+  ///
+  /// In en, this message translates to:
+  /// **'24 saved'**
+  String get toolStatusRecipes;
+
+  /// The status line on the reminders tile. The prototype keeps it in the catalogue and renders it untranslated in every language (D22)
+  ///
+  /// In en, this message translates to:
+  /// **'4 today'**
+  String get toolStatusReminders;
+
+  /// The status line on the shopping tile. The prototype keeps it in the catalogue and renders it untranslated in every language (D22)
+  ///
+  /// In en, this message translates to:
+  /// **'6 items'**
+  String get toolStatusShopping;
+
+  /// The status line on the speedtest tile. The prototype keeps it in the catalogue and renders it untranslated in every language (D22)
+  ///
+  /// In en, this message translates to:
+  /// **'Test now'**
+  String get toolStatusSpeedtest;
+
+  /// The status line on the stopwatch tile. The prototype keeps it in the catalogue and renders it untranslated in every language (D22)
+  ///
+  /// In en, this message translates to:
+  /// **'Laps'**
+  String get toolStatusStopwatch;
+
+  /// The status line on the streak tile. The prototype keeps it in the catalogue and renders it untranslated in every language (D22)
+  ///
+  /// In en, this message translates to:
+  /// **'12 days'**
+  String get toolStatusStreak;
+
+  /// The status line on the subs tile. The prototype keeps it in the catalogue and renders it untranslated in every language (D22)
+  ///
+  /// In en, this message translates to:
+  /// **'6 active'**
+  String get toolStatusSubs;
+
+  /// The status line on the sunmoon tile. The prototype keeps it in the catalogue and renders it untranslated in every language (D22)
+  ///
+  /// In en, this message translates to:
+  /// **'Sunrise · sunset'**
+  String get toolStatusSunmoon;
+
+  /// The status line on the taraweeh tile. The prototype keeps it in the catalogue and renders it untranslated in every language (D22)
+  ///
+  /// In en, this message translates to:
+  /// **'Ramadan'**
+  String get toolStatusTaraweeh;
+
+  /// The status line on the tasbih tile. The prototype keeps it in the catalogue and renders it untranslated in every language (D22)
+  ///
+  /// In en, this message translates to:
+  /// **'Counter'**
+  String get toolStatusTasbih;
+
+  /// The status line on the tax tile. The prototype keeps it in the catalogue and renders it untranslated in every language (D22)
+  ///
+  /// In en, this message translates to:
+  /// **'FBR 2025-26'**
+  String get toolStatusTax;
+
+  /// The status line on the timer tile. The prototype keeps it in the catalogue and renders it untranslated in every language (D22)
+  ///
+  /// In en, this message translates to:
+  /// **'Presets'**
+  String get toolStatusTimer;
+
+  /// The status line on the tipsplit tile. The prototype keeps it in the catalogue and renders it untranslated in every language (D22)
+  ///
+  /// In en, this message translates to:
+  /// **'Split a bill'**
+  String get toolStatusTipsplit;
+
+  /// The status line on the todos tile. The prototype keeps it in the catalogue and renders it untranslated in every language (D22)
+  ///
+  /// In en, this message translates to:
+  /// **'2 of 5 done'**
+  String get toolStatusTodos;
+
+  /// The status line on the trains tile. The prototype keeps it in the catalogue and renders it untranslated in every language (D22)
+  ///
+  /// In en, this message translates to:
+  /// **'Green Line'**
+  String get toolStatusTrains;
+
+  /// The status line on the vaccines tile. The prototype keeps it in the catalogue and renders it untranslated in every language (D22)
+  ///
+  /// In en, this message translates to:
+  /// **'Private'**
+  String get toolStatusVaccines;
+
+  /// The status line on the vehicle tile. The prototype keeps it in the catalogue and renders it untranslated in every language (D22)
+  ///
+  /// In en, this message translates to:
+  /// **'Check challan'**
+  String get toolStatusVehicle;
+
+  /// The status line on the wastatus tile. The prototype keeps it in the catalogue and renders it untranslated in every language (D22)
+  ///
+  /// In en, this message translates to:
+  /// **'Android'**
+  String get toolStatusWastatus;
+
+  /// The status line on the water tile. The prototype keeps it in the catalogue and renders it untranslated in every language (D22)
+  ///
+  /// In en, this message translates to:
+  /// **'5 / 8'**
+  String get toolStatusWater;
+
+  /// The status line on the weather tile. The prototype keeps it in the catalogue and renders it untranslated in every language (D22)
+  ///
+  /// In en, this message translates to:
+  /// **'34° Clear'**
+  String get toolStatusWeather;
+
+  /// The status line on the worldclock tile. The prototype keeps it in the catalogue and renders it untranslated in every language (D22)
+  ///
+  /// In en, this message translates to:
+  /// **'8 cities'**
+  String get toolStatusWorldclock;
+
+  /// The status line on the zakat tile. The prototype keeps it in the catalogue and renders it untranslated in every language (D22)
+  ///
+  /// In en, this message translates to:
+  /// **'Nisab check'**
+  String get toolStatusZakat;
+
+  /// The honest unavailable state for a tool this market has not launched
+  ///
+  /// In en, this message translates to:
+  /// **'Not available in {country} yet'**
+  String toolUnavailableHere(String country);
 
   /// Reference key tool.unavailable
   ///
@@ -1816,11 +3532,149 @@ abstract class AppLocalizations {
   /// **'Not part of your setup'**
   String get toolUnavailableTitle;
 
+  /// Reference key tools.forYou
+  ///
+  /// In en, this message translates to:
+  /// **'For you'**
+  String get toolsForYou;
+
+  /// Reference key tools.noMatch
+  ///
+  /// In en, this message translates to:
+  /// **'No tools match'**
+  String get toolsNoMatch;
+
+  /// Reference key tools.noMatchSub
+  ///
+  /// In en, this message translates to:
+  /// **'Try a different word — or browse a category above.'**
+  String get toolsNoMatchSub;
+
   /// Reference key tools.nothingYet
   ///
   /// In en, this message translates to:
   /// **'Nothing here yet'**
   String get toolsNothingYet;
+
+  /// Reference key tools.nothingYetSub
+  ///
+  /// In en, this message translates to:
+  /// **'Add a few more interests, or browse the full list under All.'**
+  String get toolsNothingYetSub;
+
+  /// Reference: aria-label on the hub’s header control
+  ///
+  /// In en, this message translates to:
+  /// **'Personalise'**
+  String get toolsPersonalise;
+
+  /// Reference key tools.recent
+  ///
+  /// In en, this message translates to:
+  /// **'Recently used'**
+  String get toolsRecent;
+
+  /// Reference key tools.recentSub
+  ///
+  /// In en, this message translates to:
+  /// **'Straight back to where you were'**
+  String get toolsRecentSub;
+
+  /// Announced after a search so the result count is spoken
+  ///
+  /// In en, this message translates to:
+  /// **'{n, plural, =0{No tools} =1{1 tool} other{{n} tools}}'**
+  String toolsResultCount(int n);
+
+  /// The example in the hub’s placeholder everywhere else
+  ///
+  /// In en, this message translates to:
+  /// **'currency'**
+  String get toolsSearchExample;
+
+  /// The example in the hub’s placeholder for a market with fuel prices
+  ///
+  /// In en, this message translates to:
+  /// **'petrol'**
+  String get toolsSearchExamplePk;
+
+  /// Reference key tools.searchPlaceholder
+  ///
+  /// In en, this message translates to:
+  /// **'Search tools — try “{example}”'**
+  String toolsSearchHint(String example);
+
+  /// Reference: aria-label on the hub’s search field
+  ///
+  /// In en, this message translates to:
+  /// **'Search tools'**
+  String get toolsSearchLabel;
+
+  /// Reference key tools.sub
+  ///
+  /// In en, this message translates to:
+  /// **'{n, plural, =1{1 utility, neatly sorted} other{{n} utilities, neatly sorted}}'**
+  String toolsSub(int n);
+
+  /// Reference key tools.title
+  ///
+  /// In en, this message translates to:
+  /// **'Tools'**
+  String get toolsTitle;
+
+  /// A weather condition. The prototype stores these as English sentences in the catalogue and never translates them
+  ///
+  /// In en, this message translates to:
+  /// **'Clear'**
+  String get weatherClear;
+
+  /// A weather condition. The prototype stores these as English sentences in the catalogue and never translates them
+  ///
+  /// In en, this message translates to:
+  /// **'Cloud building'**
+  String get weatherCloudBuilding;
+
+  /// A weather condition. The prototype stores these as English sentences in the catalogue and never translates them
+  ///
+  /// In en, this message translates to:
+  /// **'hazy'**
+  String get weatherHazy;
+
+  /// A weather condition. The prototype stores these as English sentences in the catalogue and never translates them
+  ///
+  /// In en, this message translates to:
+  /// **'Hazy sun'**
+  String get weatherHazySun;
+
+  /// Reference: the livecard sub line
+  ///
+  /// In en, this message translates to:
+  /// **'{high} / {low}'**
+  String weatherHighLow(String high, String low);
+
+  /// A weather condition. The prototype stores these as English sentences in the catalogue and never translates them
+  ///
+  /// In en, this message translates to:
+  /// **'Light cloud'**
+  String get weatherLightCloud;
+
+  /// A weather condition. The prototype stores these as English sentences in the catalogue and never translates them
+  ///
+  /// In en, this message translates to:
+  /// **'Mostly clear'**
+  String get weatherMostlyClear;
+
+  /// A weather condition. The prototype stores these as English sentences in the catalogue and never translates them
+  ///
+  /// In en, this message translates to:
+  /// **'Overcast'**
+  String get weatherOvercast;
+
+  /// Reference key weather.rain
+  ///
+  /// In en, this message translates to:
+  /// **'Rain'**
+  String get weatherRain;
 }
 
 class _AppLocalizationsDelegate

@@ -170,6 +170,9 @@ class LumeProfileRecord {
     this.method = LumePrayerMethod.defaultId,
     this.wantsLocation = true,
     this.wantsReminders = true,
+    this.prefs = LumeContentPrefs.on,
+    this.recents = const <String>[],
+    this.favourites = const <String>[],
     this.onboarded = false,
     this.migrations = const <String>{},
   });
@@ -189,6 +192,20 @@ class LumeProfileRecord {
   final bool wantsLocation;
   final bool wantsReminders;
 
+  /// The four content switches Personalisation offers. `app-store.js` keeps
+  /// them on `profile.prefs`, and `eligibility.js` reads them as a third gate
+  /// beside faith and country — so they live on the record, not on a screen.
+  final LumeContentPrefs prefs;
+
+  /// Feature ids in most-recent-first order. Written by *opening* a tool, and
+  /// filtered again on the way out: a feature that has since been hidden must
+  /// not resurface through history.
+  final List<String> recents;
+
+  /// Feature ids the user pinned. Read before recents when Home fills its
+  /// quick-tool grid.
+  final List<String> favourites;
+
   /// `lume-onboarded`.
   final bool onboarded;
 
@@ -207,6 +224,9 @@ class LumeProfileRecord {
     String? method,
     bool? wantsLocation,
     bool? wantsReminders,
+    LumeContentPrefs? prefs,
+    List<String>? recents,
+    List<String>? favourites,
     bool? onboarded,
     Set<String>? migrations,
   }) => LumeProfileRecord(
@@ -219,9 +239,105 @@ class LumeProfileRecord {
     method: method ?? this.method,
     wantsLocation: wantsLocation ?? this.wantsLocation,
     wantsReminders: wantsReminders ?? this.wantsReminders,
+    prefs: prefs ?? this.prefs,
+    recents: recents ?? this.recents,
+    favourites: favourites ?? this.favourites,
     onboarded: onboarded ?? this.onboarded,
     migrations: migrations ?? this.migrations,
   );
+
+  @override
+  bool operator ==(Object other) =>
+      other is LumeProfileRecord &&
+      other.country == country &&
+      other.region == region &&
+      other.city == city &&
+      listEquals(other.interests, interests) &&
+      other.islamic == islamic &&
+      other.displayName == displayName &&
+      other.method == method &&
+      other.wantsLocation == wantsLocation &&
+      other.wantsReminders == wantsReminders &&
+      other.prefs == prefs &&
+      listEquals(other.recents, recents) &&
+      listEquals(other.favourites, favourites) &&
+      other.onboarded == onboarded &&
+      setEquals(other.migrations, migrations);
+
+  @override
+  int get hashCode => Object.hash(
+    country,
+    region,
+    city,
+    Object.hashAll(interests),
+    islamic,
+    displayName,
+    method,
+    wantsLocation,
+    wantsReminders,
+    prefs,
+    Object.hashAll(recents),
+    Object.hashAll(favourites),
+    onboarded,
+    Object.hashAllUnordered(migrations),
+  );
+
+  /// Note a tool as just used. Most-recent-first, no duplicates, and capped —
+  /// `noteRecent` keeps eight and Home and the hub both read a prefix of it.
+  LumeProfileRecord noteRecent(String id, {int keep = 8}) => copyWith(
+    recents: <String>[
+      id,
+      ...recents.where((String other) => other != id),
+    ].take(keep).toList(),
+  );
+}
+
+/// The four content switches, each one a preference the user set rather than
+/// anything inferred.
+///
+/// `PREF_GATED` in `eligibility.js` maps four features onto three of them;
+/// `recos` governs recommendations rather than a feature, and is carried so
+/// the record is the whole of `profile.prefs` rather than the part this phase
+/// happens to read.
+@immutable
+class LumeContentPrefs {
+  const LumeContentPrefs({
+    this.news = true,
+    this.cricket = true,
+    this.finance = true,
+    this.recommendations = true,
+  });
+
+  /// What a fresh profile has: everything on, as `defaults()` does.
+  static const LumeContentPrefs on = LumeContentPrefs();
+
+  final bool news;
+  final bool cricket;
+  final bool finance;
+  final bool recommendations;
+
+  LumeContentPrefs copyWith({
+    bool? news,
+    bool? cricket,
+    bool? finance,
+    bool? recommendations,
+  }) => LumeContentPrefs(
+    news: news ?? this.news,
+    cricket: cricket ?? this.cricket,
+    finance: finance ?? this.finance,
+    recommendations: recommendations ?? this.recommendations,
+  );
+
+  @override
+  bool operator ==(Object other) =>
+      other is LumeContentPrefs &&
+      other.news == news &&
+      other.cricket == cricket &&
+      other.finance == finance &&
+      other.recommendations == recommendations;
+
+  @override
+  int get hashCode => Object.hash(news, cricket, finance, recommendations);
 }
 
 /// Where the record lives. Implemented in memory here; by Dayroz later.

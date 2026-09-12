@@ -93,6 +93,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get actionWeek => 'Week';
 
   @override
+  String get anniversaryKind => 'Anniversary';
+
+  @override
   String get appTagline => 'Your day, in one place';
 
   @override
@@ -419,6 +422,45 @@ class AppLocalizationsEn extends AppLocalizations {
   String get authWorking => 'One moment…';
 
   @override
+  String billsDueIn(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: 'due in $n days',
+      one: 'due in 1 day',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get billsDueThisMonth => 'Due this month';
+
+  @override
+  String billsNeedAttention(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n bills need attention',
+      one: '1 bill needs attention',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String billsOverdueBy(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n days overdue',
+      one: '1 day overdue',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get birthdayKind => 'Birthday';
+
+  @override
   String get commonAll => 'All';
 
   @override
@@ -454,6 +496,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get commonNow => 'Now';
 
   @override
+  String get commonOffline => 'Offline';
+
+  @override
   String get commonOptional => 'Optional';
 
   @override
@@ -473,6 +518,9 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get commonSort => 'Sort';
+
+  @override
+  String get commonStale => 'Not current';
 
   @override
   String get commonStatus => 'Status';
@@ -500,6 +548,430 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get commonYesterday => 'Yesterday';
+
+  @override
+  String cricketScore(String team, int runs, int wickets) {
+    return '$team $runs/$wickets';
+  }
+
+  @override
+  String cricketSecondTest(int n) {
+    return '2nd Test · Day $n';
+  }
+
+  @override
+  String get discoverDuasMeta => 'For ordinary days';
+
+  @override
+  String get discoverDuasTitle => 'Forty duas';
+
+  @override
+  String docsRenewSoon(String name) {
+    return 'Renew your $name';
+  }
+
+  @override
+  String get featureAge => 'Age Calculator';
+
+  @override
+  String get featureAlarms => 'Alarms';
+
+  @override
+  String get featureAqi => 'Air Quality';
+
+  @override
+  String get featureAyah => 'Ayah of the Day';
+
+  @override
+  String get featureBabybudget => 'Baby Budget';
+
+  @override
+  String get featureBills => 'Bills';
+
+  @override
+  String get featureBirthdays => 'Birthdays';
+
+  @override
+  String get featureBmi => 'BMI Calculator';
+
+  @override
+  String get featureCalculator => 'Calculator';
+
+  @override
+  String get featureCalendar => 'Calendar';
+
+  @override
+  String get featureCommittee => 'Committee';
+
+  @override
+  String get featureCompound => 'Compound Interest';
+
+  @override
+  String get featureConverter => 'Unit Converter';
+
+  @override
+  String get featureCricket => 'Cricket';
+
+  @override
+  String get featureCurrency => 'Currency';
+
+  @override
+  String get featureCycle => 'Cycle Tracker';
+
+  @override
+  String get featureDatecalc => 'Date Calculator';
+
+  @override
+  String get featureDocscan => 'Document Scanner';
+
+  @override
+  String get featureDocuments => 'Documents';
+
+  @override
+  String get featureDuas => 'Daily Duas';
+
+  @override
+  String get featureEmergency => 'Emergency';
+
+  @override
+  String get featureEvents => 'Events';
+
+  @override
+  String get featureExpenses => 'Expenses';
+
+  @override
+  String get featureFaraid => 'Faraid';
+
+  @override
+  String get featureFasting => 'Fasting Tracker';
+
+  @override
+  String get featureFlights => 'Flights';
+
+  @override
+  String get featureFocus => 'Focus Timer';
+
+  @override
+  String get featureFuel => 'Fuel Prices';
+
+  @override
+  String get featureFuelcost => 'Fuel Cost';
+
+  @override
+  String get featureGoals => 'Savings Goals';
+
+  @override
+  String get featureGoldrates => 'Currency & Gold';
+
+  @override
+  String get featureHabits => 'Habits';
+
+  @override
+  String get featureHadith => 'Hadith';
+
+  @override
+  String get featureHealth => 'Health Records';
+
+  @override
+  String get featureHijri => 'Islamic Calendar';
+
+  @override
+  String get featureHolidays => 'Public Holidays';
+
+  @override
+  String get featureInstallments => 'Installments';
+
+  @override
+  String get featureLearning => 'Learning & Growth';
+
+  @override
+  String get featureLedger => 'Lending Ledger';
+
+  @override
+  String get featureLoadshed => 'Loadshedding';
+
+  @override
+  String get featureLoan => 'Loan / EMI';
+
+  @override
+  String get featureMarkets => 'Markets';
+
+  @override
+  String get featureMealplan => 'Meal Planner';
+
+  @override
+  String get featureMediasaver => 'Media Saver';
+
+  @override
+  String get featureMeds => 'Medication';
+
+  @override
+  String get featureMosques => 'Nearby Mosques';
+
+  @override
+  String get featureNames99 => '99 Names';
+
+  @override
+  String get featureNatsavings => 'National Savings';
+
+  @override
+  String get featureNews => 'News';
+
+  @override
+  String get featureNotes => 'Notes';
+
+  @override
+  String get featurePackages => 'Mobile Packages';
+
+  @override
+  String get featureParcel => 'Parcel Tracker';
+
+  @override
+  String get featurePassport => 'Passport Photos';
+
+  @override
+  String get featurePlay => 'Play';
+
+  @override
+  String get featurePrayer => 'Prayer Times';
+
+  @override
+  String get featurePraytrack => 'Prayer Tracker';
+
+  @override
+  String get featurePregnancy => 'Pregnancy';
+
+  @override
+  String get featurePrizebonds => 'Prize Bonds';
+
+  @override
+  String get featureQibla => 'Qibla Compass';
+
+  @override
+  String get featureQr => 'QR Scanner';
+
+  @override
+  String get featureQuran => 'Al-Qur’an';
+
+  @override
+  String get featureQuransearch => 'Search the Qur’an';
+
+  @override
+  String get featureRamadan => 'Ramadan';
+
+  @override
+  String get featureRecipes => 'Recipes';
+
+  @override
+  String get featureReminders => 'Reminders';
+
+  @override
+  String get featureShopping => 'Shopping List';
+
+  @override
+  String get featureSpeedtest => 'Speed Test';
+
+  @override
+  String get featureStopwatch => 'Stopwatch';
+
+  @override
+  String get featureStreak => 'Daily Streak';
+
+  @override
+  String get featureSubs => 'Subscriptions';
+
+  @override
+  String get featureSunmoon => 'Sun & Moon';
+
+  @override
+  String get featureTaraweeh => 'Taraweeh';
+
+  @override
+  String get featureTasbih => 'Tasbih';
+
+  @override
+  String get featureTax => 'Tax Calculator';
+
+  @override
+  String get featureTimer => 'Timer';
+
+  @override
+  String get featureTipsplit => 'Tip & Split';
+
+  @override
+  String get featureTodos => 'To-dos';
+
+  @override
+  String get featureTrains => 'Trains';
+
+  @override
+  String get featureVaccines => 'Vaccinations';
+
+  @override
+  String get featureVehicle => 'Vehicle & Fines';
+
+  @override
+  String get featureWastatus => 'WhatsApp Status';
+
+  @override
+  String get featureWater => 'Water';
+
+  @override
+  String get featureWeather => 'Weather';
+
+  @override
+  String get featureWorldclock => 'World Clock';
+
+  @override
+  String get featureZakat => 'Zakat Calculator';
+
+  @override
+  String get fuelPetrol => 'Petrol';
+
+  @override
+  String get fuelSourceOgra => 'OGRA';
+
+  @override
+  String get greetAfternoon => 'Good afternoon';
+
+  @override
+  String get greetEvening => 'Good evening';
+
+  @override
+  String get greetLate => 'Still up';
+
+  @override
+  String get greetMorning => 'Good morning';
+
+  @override
+  String greetNamed(String greeting, String name) {
+    return '$greeting, $name';
+  }
+
+  @override
+  String get greetWindDown => 'Winding down';
+
+  @override
+  String get heroHighlights => 'Highlights';
+
+  @override
+  String homeAyahProgress(int n, int total, int min) {
+    return 'Ayah $n of $total · about $min min left';
+  }
+
+  @override
+  String homeContinueSurah(String surah) {
+    return 'Continue $surah';
+  }
+
+  @override
+  String get homeDiscover => 'Discover';
+
+  @override
+  String get homeDiscoverSub => 'Because you check these often';
+
+  @override
+  String homeEffective(String date, String source) {
+    return 'Effective $date · $source';
+  }
+
+  @override
+  String homeFeelsLike(String temp) {
+    return 'Feels like $temp';
+  }
+
+  @override
+  String get homeGlance => 'At a glance';
+
+  @override
+  String get homeGlanceGeneral => 'What matters in the next few hours';
+
+  @override
+  String get homeGlanceMuslim => 'Prayer, reading and what’s next';
+
+  @override
+  String get homeLiveNow => 'Right now';
+
+  @override
+  String homeLiveNowSub(String time) {
+    return 'As of $time';
+  }
+
+  @override
+  String homeNextOutage(String time) {
+    return 'Next outage $time';
+  }
+
+  @override
+  String get homeNextPrayer => 'Next prayer';
+
+  @override
+  String get homeNextUp => 'next up';
+
+  @override
+  String homeOutageArea(String area, int hours) {
+    String _temp0 = intl.Intl.pluralLogic(
+      hours,
+      locale: localeName,
+      other: '$hours hours',
+      one: '1 hour',
+    );
+    return '$area · $_temp0';
+  }
+
+  @override
+  String get homeQuickDefault => 'The eight you reach for most';
+
+  @override
+  String get homeQuickFromInterests => 'Picked from your interests';
+
+  @override
+  String get homeQuickTools => 'Quick tools';
+
+  @override
+  String get homeRightNow => 'Right now';
+
+  @override
+  String get homeSearchEverything => 'Search everything';
+
+  @override
+  String homeTasksLeft(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n tasks left today',
+      one: '1 task left today',
+      zero: 'Nothing left today',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String homeTasksNext(String task, String time) {
+    return 'Next: $task · $time';
+  }
+
+  @override
+  String get homeToGo => 'to go';
+
+  @override
+  String homeTomorrowIn(String city) {
+    return 'Tomorrow in $city';
+  }
+
+  @override
+  String get homeUpcoming => 'Coming up';
+
+  @override
+  String get homeUpcomingSub => 'The next few days';
+
+  @override
+  String homeWeatherAnd(String temp, String condition) {
+    return '$temp and $condition';
+  }
+
+  @override
+  String get homeYourProfile => 'Your profile';
 
   @override
   String get igEveryday => 'Everyday life';
@@ -611,6 +1083,31 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get intZakat => 'Zakat & giving';
+
+  @override
+  String get loadshedOff => 'Power is off';
+
+  @override
+  String loadshedUntil(String time) {
+    return 'until $time';
+  }
+
+  @override
+  String get marketPk => 'Pakistan';
+
+  @override
+  String get marketsClosed => 'Market closed';
+
+  @override
+  String marketsHoliday(String holiday) {
+    return 'Closed for $holiday';
+  }
+
+  @override
+  String get marketsOpen => 'Market open';
+
+  @override
+  String get marketsWeekend => 'Closed for the weekend';
 
   @override
   String get methodEgyptian => 'Egyptian';
@@ -822,6 +1319,14 @@ class AppLocalizationsEn extends AppLocalizations {
   String get onbYoursKicker => 'Make it yours';
 
   @override
+  String parcelArrivesToday(String carrier) {
+    return '$carrier · arrives today';
+  }
+
+  @override
+  String get parcelOutForDelivery => 'Out for delivery';
+
+  @override
   String get persAllCountries => 'All countries';
 
   @override
@@ -844,6 +1349,51 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get persUseLocation => 'Use my current location';
+
+  @override
+  String get prayerAsr => 'Asr';
+
+  @override
+  String get prayerDhuhr => 'Dhuhr';
+
+  @override
+  String get prayerFajr => 'Fajr';
+
+  @override
+  String get prayerIsha => 'Isha';
+
+  @override
+  String get prayerMaghrib => 'Maghrib';
+
+  @override
+  String get qaDocscan => 'Scan doc';
+
+  @override
+  String get qaExpense => 'Add expense';
+
+  @override
+  String get qaNote => 'New note';
+
+  @override
+  String get qaParcel => 'Track parcel';
+
+  @override
+  String get qaScan => 'Scan QR';
+
+  @override
+  String get qaShop => 'Shopping';
+
+  @override
+  String get qaTasbih => 'Tasbih';
+
+  @override
+  String get qaTask => 'Add task';
+
+  @override
+  String get qaTimer => 'Start timer';
+
+  @override
+  String get qaWater => 'Log water';
 
   @override
   String get recConflict => 'This record changed elsewhere';
@@ -909,7 +1459,128 @@ class AppLocalizationsEn extends AppLocalizations {
   String get searchTry => 'Try searching for';
 
   @override
+  String get slideMoneyCta => 'See money';
+
+  @override
+  String get slideMoneyKicker => 'Money';
+
+  @override
+  String get slideMoneyText => 'Rates, bills and expenses in one place.';
+
+  @override
+  String get slideMoneyTitle => 'Stay on top of your money';
+
+  @override
+  String slideOf(int n, int total) {
+    return 'Slide $n of $total';
+  }
+
+  @override
+  String get slidePlanCta => 'Open today';
+
+  @override
+  String get slidePlanKicker => 'Today';
+
+  @override
+  String get slidePlanText => 'Tasks, reminders and events on one timeline.';
+
+  @override
+  String get slidePlanTitle => 'Plan your day before it starts';
+
+  @override
+  String get slidePrayerCta => 'Prayer times';
+
+  @override
+  String get slidePrayerKicker => 'Your next prayer';
+
+  @override
+  String slidePrayerLine(String time, String city) {
+    return 'Adhan at $time · $city';
+  }
+
+  @override
+  String get slideReadCta => 'Continue';
+
+  @override
+  String get slideReadKicker => 'Read';
+
+  @override
+  String get slideReadText =>
+      'You’re 42 ayahs into Al-Kahf. Two minutes is enough.';
+
+  @override
+  String get slideReadTitle => 'Read something meaningful';
+
+  @override
+  String get slideToolsCta => 'Browse tools';
+
+  @override
+  String get slideToolsKicker => 'Tools';
+
+  @override
+  String get slideToolsText => 'Calculator, converters, scanner and more.';
+
+  @override
+  String get slideToolsTitle => 'Useful tools, all in one place';
+
+  @override
+  String get slideTrainsCta => 'Find a train';
+
+  @override
+  String get slideTrainsKicker => 'Travel';
+
+  @override
+  String get slideTrainsText => 'Live running status, fares and seats.';
+
+  @override
+  String get slideTrainsTitle => 'Trains, without the guesswork';
+
+  @override
   String get startupLoading => 'Starting Lume';
+
+  @override
+  String subsRenews(String date) {
+    return 'renews $date';
+  }
+
+  @override
+  String get surahAlKahf => 'Al-Kahf';
+
+  @override
+  String get toolCategoryDaily => 'Daily Life';
+
+  @override
+  String get toolCategoryEveryday => 'Everyday';
+
+  @override
+  String get toolCategoryIslamic => 'Islamic';
+
+  @override
+  String get toolCategoryMoney => 'Money';
+
+  @override
+  String get toolCategoryPersonal => 'Personal';
+
+  @override
+  String get toolCategoryPlanning => 'Planning';
+
+  @override
+  String get toolCategorySubDaily => 'What’s happening around you';
+
+  @override
+  String get toolCategorySubEveryday => 'The ones you reach for daily';
+
+  @override
+  String get toolCategorySubIslamic => 'Prayer, Qur’an and giving';
+
+  @override
+  String get toolCategorySubMoney => 'Rates, bills and budgets';
+
+  @override
+  String get toolCategorySubPersonal => 'Private to you, on this device';
+
+  @override
+  String get toolCategorySubPlanning => 'Your time and your lists';
 
   @override
   String get toolErrorText => 'We couldn’t load this. Try again in a moment.';
@@ -921,11 +1592,288 @@ class AppLocalizationsEn extends AppLocalizations {
   String get toolLoading => 'Loading';
 
   @override
+  String get toolLocalService => 'Local service';
+
+  @override
+  String toolNeedsAttention(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n need attention',
+      one: '1 needs attention',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get toolPrivate => 'Private';
+
+  @override
   String get toolPrivateText =>
       'This information stays on your device, is never shown on Home and is never included in shared content.';
 
   @override
   String get toolPrivateTitle => 'Private to you';
+
+  @override
+  String get toolStatusAge => 'Exact days';
+
+  @override
+  String get toolStatusAlarms => '2 set';
+
+  @override
+  String get toolStatusAqi => 'AQI';
+
+  @override
+  String get toolStatusAyah => 'Ar-Ra’d 28';
+
+  @override
+  String get toolStatusBabybudget => 'Plan costs';
+
+  @override
+  String get toolStatusBills => '2 due';
+
+  @override
+  String get toolStatusBirthdays => 'Ayesha in 4d';
+
+  @override
+  String get toolStatusBmi => 'Track weight';
+
+  @override
+  String get toolStatusCalculator => 'Standard';
+
+  @override
+  String get toolStatusCalendar => '3 events';
+
+  @override
+  String get toolStatusCommittee => 'Month 4 of 10';
+
+  @override
+  String get toolStatusCompound => 'Project growth';
+
+  @override
+  String get toolStatusConverter => '32 units';
+
+  @override
+  String get toolStatusCricket => 'PAK 214/4';
+
+  @override
+  String get toolStatusCurrency => 'Live rates';
+
+  @override
+  String get toolStatusCycle => 'Private';
+
+  @override
+  String get toolStatusDatecalc => 'Add · diff';
+
+  @override
+  String get toolStatusDocscan => 'PDF ready';
+
+  @override
+  String get toolStatusDocuments => 'Locked';
+
+  @override
+  String get toolStatusDuas => '42 saved';
+
+  @override
+  String get toolStatusEmergency => '15 · 1122';
+
+  @override
+  String get toolStatusEvents => 'Next 14:00';
+
+  @override
+  String get toolStatusExpenses => 'This month';
+
+  @override
+  String get toolStatusFaraid => 'Inheritance';
+
+  @override
+  String get toolStatusFasting => '3 kept';
+
+  @override
+  String get toolStatusFlights => 'Track live';
+
+  @override
+  String get toolStatusFocus => '25 min';
+
+  @override
+  String get toolStatusFuel => 'Pump prices';
+
+  @override
+  String get toolStatusFuelcost => 'Trip cost';
+
+  @override
+  String get toolStatusGoals => '2 active';
+
+  @override
+  String get toolStatusGoldrates => 'Gold & FX';
+
+  @override
+  String get toolStatusHabits => '12-day streak';
+
+  @override
+  String get toolStatusHadith => 'Daily';
+
+  @override
+  String get toolStatusHealth => 'Private';
+
+  @override
+  String get toolStatusHijri => '15 Rabi’ I';
+
+  @override
+  String get toolStatusHolidays => 'This year';
+
+  @override
+  String get toolStatusInstallments => '3 running';
+
+  @override
+  String get toolStatusLearning => '3 courses';
+
+  @override
+  String get toolStatusLedger => '3 people';
+
+  @override
+  String get toolStatusLoadshed => '14:00–16:00';
+
+  @override
+  String get toolStatusLoan => 'Instalments';
+
+  @override
+  String get toolStatusMarkets => 'KSE-100 ▲ 0.8%';
+
+  @override
+  String get toolStatusMealplan => 'This week';
+
+  @override
+  String get toolStatusMediasaver => 'Save posts';
+
+  @override
+  String get toolStatusMeds => 'Private';
+
+  @override
+  String get toolStatusMosques => '3 within 1 km';
+
+  @override
+  String get toolStatusNames99 => 'Asma ul Husna';
+
+  @override
+  String get toolStatusNatsavings => 'Profit rates';
+
+  @override
+  String get toolStatusNews => '12 new';
+
+  @override
+  String get toolStatusNotes => '12 saved';
+
+  @override
+  String get toolStatusPackages => 'Jazz · Zong';
+
+  @override
+  String get toolStatusParcel => '1 in transit';
+
+  @override
+  String get toolStatusPassport => 'NADRA sizes';
+
+  @override
+  String get toolStatusPlay => 'Puzzles';
+
+  @override
+  String get toolStatusPrayer => 'Asr 15:53';
+
+  @override
+  String get toolStatusPraytrack => '12-day streak';
+
+  @override
+  String get toolStatusPregnancy => 'Private';
+
+  @override
+  String get toolStatusPrizebonds => 'Draw 15 Sep';
+
+  @override
+  String get toolStatusQibla => '267° W';
+
+  @override
+  String get toolStatusQr => 'Scan & pay';
+
+  @override
+  String get toolStatusQuran => 'Al-Kahf 42';
+
+  @override
+  String get toolStatusQuransearch => 'By word';
+
+  @override
+  String get toolStatusRamadan => 'In 172 days';
+
+  @override
+  String get toolStatusRecipes => '24 saved';
+
+  @override
+  String get toolStatusReminders => '4 today';
+
+  @override
+  String get toolStatusShopping => '6 items';
+
+  @override
+  String get toolStatusSpeedtest => 'Test now';
+
+  @override
+  String get toolStatusStopwatch => 'Laps';
+
+  @override
+  String get toolStatusStreak => '12 days';
+
+  @override
+  String get toolStatusSubs => '6 active';
+
+  @override
+  String get toolStatusSunmoon => 'Sunrise · sunset';
+
+  @override
+  String get toolStatusTaraweeh => 'Ramadan';
+
+  @override
+  String get toolStatusTasbih => 'Counter';
+
+  @override
+  String get toolStatusTax => 'FBR 2025-26';
+
+  @override
+  String get toolStatusTimer => 'Presets';
+
+  @override
+  String get toolStatusTipsplit => 'Split a bill';
+
+  @override
+  String get toolStatusTodos => '2 of 5 done';
+
+  @override
+  String get toolStatusTrains => 'Green Line';
+
+  @override
+  String get toolStatusVaccines => 'Private';
+
+  @override
+  String get toolStatusVehicle => 'Check challan';
+
+  @override
+  String get toolStatusWastatus => 'Android';
+
+  @override
+  String get toolStatusWater => '5 / 8';
+
+  @override
+  String get toolStatusWeather => '34° Clear';
+
+  @override
+  String get toolStatusWorldclock => '8 cities';
+
+  @override
+  String get toolStatusZakat => 'Nisab check';
+
+  @override
+  String toolUnavailableHere(String country) {
+    return 'Not available in $country yet';
+  }
 
   @override
   String get toolUnavailableText => 'That tool isn’t part of your setup.';
@@ -934,5 +1882,97 @@ class AppLocalizationsEn extends AppLocalizations {
   String get toolUnavailableTitle => 'Not part of your setup';
 
   @override
+  String get toolsForYou => 'For you';
+
+  @override
+  String get toolsNoMatch => 'No tools match';
+
+  @override
+  String get toolsNoMatchSub =>
+      'Try a different word — or browse a category above.';
+
+  @override
   String get toolsNothingYet => 'Nothing here yet';
+
+  @override
+  String get toolsNothingYetSub =>
+      'Add a few more interests, or browse the full list under All.';
+
+  @override
+  String get toolsPersonalise => 'Personalise';
+
+  @override
+  String get toolsRecent => 'Recently used';
+
+  @override
+  String get toolsRecentSub => 'Straight back to where you were';
+
+  @override
+  String toolsResultCount(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n tools',
+      one: '1 tool',
+      zero: 'No tools',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get toolsSearchExample => 'currency';
+
+  @override
+  String get toolsSearchExamplePk => 'petrol';
+
+  @override
+  String toolsSearchHint(String example) {
+    return 'Search tools — try “$example”';
+  }
+
+  @override
+  String get toolsSearchLabel => 'Search tools';
+
+  @override
+  String toolsSub(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n utilities, neatly sorted',
+      one: '1 utility, neatly sorted',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get toolsTitle => 'Tools';
+
+  @override
+  String get weatherClear => 'Clear';
+
+  @override
+  String get weatherCloudBuilding => 'Cloud building';
+
+  @override
+  String get weatherHazy => 'hazy';
+
+  @override
+  String get weatherHazySun => 'Hazy sun';
+
+  @override
+  String weatherHighLow(String high, String low) {
+    return '$high / $low';
+  }
+
+  @override
+  String get weatherLightCloud => 'Light cloud';
+
+  @override
+  String get weatherMostlyClear => 'Mostly clear';
+
+  @override
+  String get weatherOvercast => 'Overcast';
+
+  @override
+  String get weatherRain => 'Rain';
 }

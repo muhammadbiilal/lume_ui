@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 190" preserveAspectRatio="xMidYMid slice">
+              <defs>
+                <linearGradient id="g-read" x1="0" y1="0" x2="1" y2="1">
+                  <stop offset="0" stop-color="#4A3F9E"/><stop offset="1" stop-color="#6E62E5"/>
+                </linearGradient>
+                <linearGradient id="g-page" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="0" stop-color="#fff" stop-opacity=".98"/><stop offset="1" stop-color="#fff" stop-opacity=".84"/>
+                </linearGradient>
+              </defs>
+              <rect width="320" height="190" fill="url(#g-read)"/>
+              <circle cx="286" cy="30" r="60" fill="#fff" opacity=".08"/>
+              <g transform="translate(198 52)">
+                <path d="M2 12C14 4 32 4 44 12v70c-12-8-30-8-42 0z" fill="url(#g-page)"/>
+                <path d="M86 12C74 4 56 4 44 12v70c12-8 30-8 42 0z" fill="url(#g-page)" opacity=".9"/>
+                <path d="M12 26h22M12 38h20M12 50h24M54 26h22M54 38h20M54 50h24" stroke="#4A3F9E" stroke-opacity=".28" stroke-width="2.6" stroke-linecap="round"/>
+              </g>
+              <path d="m186 40 2 5 5 2-5 2-2 5-2-5-5-2 5-2z" fill="#fff" opacity=".6"/>
+              <circle cx="176" cy="140" r="4" fill="#fff" opacity=".3"/>
+            </svg>

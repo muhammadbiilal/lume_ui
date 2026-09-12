@@ -113,6 +113,10 @@
   "@actionWeek": {
     "description": "Reference key a.week"
   },
+  "anniversaryKind": "Anniversary",
+  "@anniversaryKind": {
+    "description": "The kind line on an anniversary row"
+  },
   "appTagline": "Your day, in one place",
   "@appTagline": {
     "description": "Reference key app.tagline"
@@ -533,6 +537,41 @@
   "@authWorking": {
     "description": "Reference key auth.working"
   },
+  "billsDueIn": "{n, plural, =1{due in 1 day} other{due in {n} days}}",
+  "@billsDueIn": {
+    "description": "Reference: a bill row in Coming up",
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
+  "billsDueThisMonth": "Due this month",
+  "@billsDueThisMonth": {
+    "description": "Reference key bills.dueThisMonth"
+  },
+  "billsNeedAttention": "{n, plural, =1{1 bill needs attention} other{{n} bills need attention}}",
+  "@billsNeedAttention": {
+    "description": "Reference key bills.overdue.title, pluralised",
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
+  "billsOverdueBy": "{n, plural, =1{1 day overdue} other{{n} days overdue}}",
+  "@billsOverdueBy": {
+    "description": "Reference key bills.overdueBy",
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
+  "birthdayKind": "Birthday",
+  "@birthdayKind": {
+    "description": "The kind line on a birthday row"
+  },
   "commonAll": "All",
   "@commonAll": {
     "description": "Reference key common.all"
@@ -577,6 +616,10 @@
   "@commonNow": {
     "description": "Reference key common.now"
   },
+  "commonOffline": "Offline",
+  "@commonOffline": {
+    "description": "Shown on a section whose figures came from the cache"
+  },
   "commonOptional": "Optional",
   "@commonOptional": {
     "description": "Reference key a.optional; §8 marks optional fields rather than required ones"
@@ -604,6 +647,10 @@
   "commonSort": "Sort",
   "@commonSort": {
     "description": "Reference key common.sort"
+  },
+  "commonStale": "Not current",
+  "@commonStale": {
+    "description": "Shown on a section whose figures are older than they should be"
   },
   "commonStatus": "Status",
   "@commonStatus": {
@@ -640,6 +687,616 @@
   "commonYesterday": "Yesterday",
   "@commonYesterday": {
     "description": "Reference key common.yesterday"
+  },
+  "cricketScore": "{team} {runs}/{wickets}",
+  "@cricketScore": {
+    "description": "Reference: the cricket Discover card’s title. The side is a three-letter code",
+    "placeholders": {
+      "team": {
+        "type": "String"
+      },
+      "runs": {
+        "type": "int"
+      },
+      "wickets": {
+        "type": "int"
+      }
+    }
+  },
+  "cricketSecondTest": "2nd Test · Day {n}",
+  "@cricketSecondTest": {
+    "description": "Reference: the cricket Discover card’s meta",
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
+  "discoverDuasMeta": "For ordinary days",
+  "@discoverDuasMeta": {
+    "description": "Reference: the duas Discover card’s meta"
+  },
+  "discoverDuasTitle": "Forty duas",
+  "@discoverDuasTitle": {
+    "description": "Reference: the duas Discover card"
+  },
+  "docsRenewSoon": "Renew your {name}",
+  "@docsRenewSoon": {
+    "description": "Reference key docs.renewSoon",
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "featureAge": "Age Calculator",
+  "@featureAge": {
+    "description": "Reference key f.age; the catalogue is the source of the English"
+  },
+  "featureAlarms": "Alarms",
+  "@featureAlarms": {
+    "description": "Reference key f.alarms; the catalogue is the source of the English"
+  },
+  "featureAqi": "Air Quality",
+  "@featureAqi": {
+    "description": "Reference key f.aqi; the catalogue is the source of the English"
+  },
+  "featureAyah": "Ayah of the Day",
+  "@featureAyah": {
+    "description": "Reference key f.ayah; the catalogue is the source of the English"
+  },
+  "featureBabybudget": "Baby Budget",
+  "@featureBabybudget": {
+    "description": "Reference key f.babybudget; the catalogue is the source of the English"
+  },
+  "featureBills": "Bills",
+  "@featureBills": {
+    "description": "Reference key f.bills; the catalogue is the source of the English"
+  },
+  "featureBirthdays": "Birthdays",
+  "@featureBirthdays": {
+    "description": "Reference key f.birthdays; the catalogue is the source of the English"
+  },
+  "featureBmi": "BMI Calculator",
+  "@featureBmi": {
+    "description": "Reference key f.bmi; the catalogue is the source of the English"
+  },
+  "featureCalculator": "Calculator",
+  "@featureCalculator": {
+    "description": "Reference key f.calculator; the catalogue is the source of the English"
+  },
+  "featureCalendar": "Calendar",
+  "@featureCalendar": {
+    "description": "Reference key f.calendar; the catalogue is the source of the English"
+  },
+  "featureCommittee": "Committee",
+  "@featureCommittee": {
+    "description": "Reference key f.committee; the catalogue is the source of the English"
+  },
+  "featureCompound": "Compound Interest",
+  "@featureCompound": {
+    "description": "Reference key f.compound; the catalogue is the source of the English"
+  },
+  "featureConverter": "Unit Converter",
+  "@featureConverter": {
+    "description": "Reference key f.converter; the catalogue is the source of the English"
+  },
+  "featureCricket": "Cricket",
+  "@featureCricket": {
+    "description": "Reference key f.cricket; the catalogue is the source of the English"
+  },
+  "featureCurrency": "Currency",
+  "@featureCurrency": {
+    "description": "Reference key f.currency; the catalogue is the source of the English"
+  },
+  "featureCycle": "Cycle Tracker",
+  "@featureCycle": {
+    "description": "Reference key f.cycle; the catalogue is the source of the English"
+  },
+  "featureDatecalc": "Date Calculator",
+  "@featureDatecalc": {
+    "description": "Reference key f.datecalc; the catalogue is the source of the English"
+  },
+  "featureDocscan": "Document Scanner",
+  "@featureDocscan": {
+    "description": "Reference key f.docscan; the catalogue is the source of the English"
+  },
+  "featureDocuments": "Documents",
+  "@featureDocuments": {
+    "description": "Reference key f.documents; the catalogue is the source of the English"
+  },
+  "featureDuas": "Daily Duas",
+  "@featureDuas": {
+    "description": "Reference key f.duas; the catalogue is the source of the English"
+  },
+  "featureEmergency": "Emergency",
+  "@featureEmergency": {
+    "description": "Reference key f.emergency; the catalogue is the source of the English"
+  },
+  "featureEvents": "Events",
+  "@featureEvents": {
+    "description": "Reference key f.events; the catalogue is the source of the English"
+  },
+  "featureExpenses": "Expenses",
+  "@featureExpenses": {
+    "description": "Reference key f.expenses; the catalogue is the source of the English"
+  },
+  "featureFaraid": "Faraid",
+  "@featureFaraid": {
+    "description": "Reference key f.faraid; the catalogue is the source of the English"
+  },
+  "featureFasting": "Fasting Tracker",
+  "@featureFasting": {
+    "description": "Reference key f.fasting; the catalogue is the source of the English"
+  },
+  "featureFlights": "Flights",
+  "@featureFlights": {
+    "description": "Reference key f.flights; the catalogue is the source of the English"
+  },
+  "featureFocus": "Focus Timer",
+  "@featureFocus": {
+    "description": "Reference key f.focus; the catalogue is the source of the English"
+  },
+  "featureFuel": "Fuel Prices",
+  "@featureFuel": {
+    "description": "Reference key f.fuel; the catalogue is the source of the English"
+  },
+  "featureFuelcost": "Fuel Cost",
+  "@featureFuelcost": {
+    "description": "Reference key f.fuelcost; the catalogue is the source of the English"
+  },
+  "featureGoals": "Savings Goals",
+  "@featureGoals": {
+    "description": "Reference key f.goals; the catalogue is the source of the English"
+  },
+  "featureGoldrates": "Currency & Gold",
+  "@featureGoldrates": {
+    "description": "Reference key f.goldrates; the catalogue is the source of the English"
+  },
+  "featureHabits": "Habits",
+  "@featureHabits": {
+    "description": "Reference key f.habits; the catalogue is the source of the English"
+  },
+  "featureHadith": "Hadith",
+  "@featureHadith": {
+    "description": "Reference key f.hadith; the catalogue is the source of the English"
+  },
+  "featureHealth": "Health Records",
+  "@featureHealth": {
+    "description": "Reference key f.health; the catalogue is the source of the English"
+  },
+  "featureHijri": "Islamic Calendar",
+  "@featureHijri": {
+    "description": "Reference key f.hijri; the catalogue is the source of the English"
+  },
+  "featureHolidays": "Public Holidays",
+  "@featureHolidays": {
+    "description": "Reference key f.holidays; the catalogue is the source of the English"
+  },
+  "featureInstallments": "Installments",
+  "@featureInstallments": {
+    "description": "Reference key f.installments; the catalogue is the source of the English"
+  },
+  "featureLearning": "Learning & Growth",
+  "@featureLearning": {
+    "description": "Reference key f.learning; the catalogue is the source of the English"
+  },
+  "featureLedger": "Lending Ledger",
+  "@featureLedger": {
+    "description": "Reference key f.ledger; the catalogue is the source of the English"
+  },
+  "featureLoadshed": "Loadshedding",
+  "@featureLoadshed": {
+    "description": "Reference key f.loadshed; the catalogue is the source of the English"
+  },
+  "featureLoan": "Loan / EMI",
+  "@featureLoan": {
+    "description": "Reference key f.loan; the catalogue is the source of the English"
+  },
+  "featureMarkets": "Markets",
+  "@featureMarkets": {
+    "description": "Reference key f.markets; the catalogue is the source of the English"
+  },
+  "featureMealplan": "Meal Planner",
+  "@featureMealplan": {
+    "description": "Reference key f.mealplan; the catalogue is the source of the English"
+  },
+  "featureMediasaver": "Media Saver",
+  "@featureMediasaver": {
+    "description": "Reference key f.mediasaver; the catalogue is the source of the English"
+  },
+  "featureMeds": "Medication",
+  "@featureMeds": {
+    "description": "Reference key f.meds; the catalogue is the source of the English"
+  },
+  "featureMosques": "Nearby Mosques",
+  "@featureMosques": {
+    "description": "Reference key f.mosques; the catalogue is the source of the English"
+  },
+  "featureNames99": "99 Names",
+  "@featureNames99": {
+    "description": "Reference key f.names99; the catalogue is the source of the English"
+  },
+  "featureNatsavings": "National Savings",
+  "@featureNatsavings": {
+    "description": "Reference key f.natsavings; the catalogue is the source of the English"
+  },
+  "featureNews": "News",
+  "@featureNews": {
+    "description": "Reference key f.news; the catalogue is the source of the English"
+  },
+  "featureNotes": "Notes",
+  "@featureNotes": {
+    "description": "Reference key f.notes; the catalogue is the source of the English"
+  },
+  "featurePackages": "Mobile Packages",
+  "@featurePackages": {
+    "description": "Reference key f.packages; the catalogue is the source of the English"
+  },
+  "featureParcel": "Parcel Tracker",
+  "@featureParcel": {
+    "description": "Reference key f.parcel; the catalogue is the source of the English"
+  },
+  "featurePassport": "Passport Photos",
+  "@featurePassport": {
+    "description": "Reference key f.passport; the catalogue is the source of the English"
+  },
+  "featurePlay": "Play",
+  "@featurePlay": {
+    "description": "Reference key f.play; the catalogue is the source of the English"
+  },
+  "featurePrayer": "Prayer Times",
+  "@featurePrayer": {
+    "description": "Reference key f.prayer; the catalogue is the source of the English"
+  },
+  "featurePraytrack": "Prayer Tracker",
+  "@featurePraytrack": {
+    "description": "Reference key f.praytrack; the catalogue is the source of the English"
+  },
+  "featurePregnancy": "Pregnancy",
+  "@featurePregnancy": {
+    "description": "Reference key f.pregnancy; the catalogue is the source of the English"
+  },
+  "featurePrizebonds": "Prize Bonds",
+  "@featurePrizebonds": {
+    "description": "Reference key f.prizebonds; the catalogue is the source of the English"
+  },
+  "featureQibla": "Qibla Compass",
+  "@featureQibla": {
+    "description": "Reference key f.qibla; the catalogue is the source of the English"
+  },
+  "featureQr": "QR Scanner",
+  "@featureQr": {
+    "description": "Reference key f.qr; the catalogue is the source of the English"
+  },
+  "featureQuran": "Al-Qur’an",
+  "@featureQuran": {
+    "description": "Reference key f.quran; the catalogue is the source of the English"
+  },
+  "featureQuransearch": "Search the Qur’an",
+  "@featureQuransearch": {
+    "description": "Reference key f.quransearch; the catalogue is the source of the English"
+  },
+  "featureRamadan": "Ramadan",
+  "@featureRamadan": {
+    "description": "Reference key f.ramadan; the catalogue is the source of the English"
+  },
+  "featureRecipes": "Recipes",
+  "@featureRecipes": {
+    "description": "Reference key f.recipes; the catalogue is the source of the English"
+  },
+  "featureReminders": "Reminders",
+  "@featureReminders": {
+    "description": "Reference key f.reminders; the catalogue is the source of the English"
+  },
+  "featureShopping": "Shopping List",
+  "@featureShopping": {
+    "description": "Reference key f.shopping; the catalogue is the source of the English"
+  },
+  "featureSpeedtest": "Speed Test",
+  "@featureSpeedtest": {
+    "description": "Reference key f.speedtest; the catalogue is the source of the English"
+  },
+  "featureStopwatch": "Stopwatch",
+  "@featureStopwatch": {
+    "description": "Reference key f.stopwatch; the catalogue is the source of the English"
+  },
+  "featureStreak": "Daily Streak",
+  "@featureStreak": {
+    "description": "Reference key f.streak; the catalogue is the source of the English"
+  },
+  "featureSubs": "Subscriptions",
+  "@featureSubs": {
+    "description": "Reference key f.subs; the catalogue is the source of the English"
+  },
+  "featureSunmoon": "Sun & Moon",
+  "@featureSunmoon": {
+    "description": "Reference key f.sunmoon; the catalogue is the source of the English"
+  },
+  "featureTaraweeh": "Taraweeh",
+  "@featureTaraweeh": {
+    "description": "Reference key f.taraweeh; the catalogue is the source of the English"
+  },
+  "featureTasbih": "Tasbih",
+  "@featureTasbih": {
+    "description": "Reference key f.tasbih; the catalogue is the source of the English"
+  },
+  "featureTax": "Tax Calculator",
+  "@featureTax": {
+    "description": "Reference key f.tax; the catalogue is the source of the English"
+  },
+  "featureTimer": "Timer",
+  "@featureTimer": {
+    "description": "Reference key f.timer; the catalogue is the source of the English"
+  },
+  "featureTipsplit": "Tip & Split",
+  "@featureTipsplit": {
+    "description": "Reference key f.tipsplit; the catalogue is the source of the English"
+  },
+  "featureTodos": "To-dos",
+  "@featureTodos": {
+    "description": "Reference key f.todos; the catalogue is the source of the English"
+  },
+  "featureTrains": "Trains",
+  "@featureTrains": {
+    "description": "Reference key f.trains; the catalogue is the source of the English"
+  },
+  "featureVaccines": "Vaccinations",
+  "@featureVaccines": {
+    "description": "Reference key f.vaccines; the catalogue is the source of the English"
+  },
+  "featureVehicle": "Vehicle & Fines",
+  "@featureVehicle": {
+    "description": "Reference key f.vehicle; the catalogue is the source of the English"
+  },
+  "featureWastatus": "WhatsApp Status",
+  "@featureWastatus": {
+    "description": "Reference key f.wastatus; the catalogue is the source of the English"
+  },
+  "featureWater": "Water",
+  "@featureWater": {
+    "description": "Reference key f.water; the catalogue is the source of the English"
+  },
+  "featureWeather": "Weather",
+  "@featureWeather": {
+    "description": "Reference key f.weather; the catalogue is the source of the English"
+  },
+  "featureWorldclock": "World Clock",
+  "@featureWorldclock": {
+    "description": "Reference key f.worldclock; the catalogue is the source of the English"
+  },
+  "featureZakat": "Zakat Calculator",
+  "@featureZakat": {
+    "description": "Reference key f.zakat; the catalogue is the source of the English"
+  },
+  "fuelPetrol": "Petrol",
+  "@fuelPetrol": {
+    "description": "Reference key fuel.g.petrol"
+  },
+  "fuelSourceOgra": "OGRA",
+  "@fuelSourceOgra": {
+    "description": "The Pakistani fuel regulator. A proper noun, transliterated rather than translated"
+  },
+  "greetAfternoon": "Good afternoon",
+  "@greetAfternoon": {
+    "description": "Reference key greet.afternoon"
+  },
+  "greetEvening": "Good evening",
+  "@greetEvening": {
+    "description": "Reference key greet.evening"
+  },
+  "greetLate": "Still up",
+  "@greetLate": {
+    "description": "Reference key greet.late"
+  },
+  "greetMorning": "Good morning",
+  "@greetMorning": {
+    "description": "Reference key greet.morning"
+  },
+  "greetNamed": "{greeting}, {name}",
+  "@greetNamed": {
+    "description": "Reference key greet.named",
+    "placeholders": {
+      "greeting": {
+        "type": "String"
+      },
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "greetWindDown": "Winding down",
+  "@greetWindDown": {
+    "description": "Reference key greet.winddown"
+  },
+  "heroHighlights": "Highlights",
+  "@heroHighlights": {
+    "description": "Reference: aria-label=\"Highlights\" on the carousel"
+  },
+  "homeAyahProgress": "Ayah {n} of {total} · about {min} min left",
+  "@homeAyahProgress": {
+    "description": "Reference key home.ayahProgress",
+    "placeholders": {
+      "n": {
+        "type": "int"
+      },
+      "total": {
+        "type": "int"
+      },
+      "min": {
+        "type": "int"
+      }
+    }
+  },
+  "homeContinueSurah": "Continue {surah}",
+  "@homeContinueSurah": {
+    "description": "Reference key home.continueSurah",
+    "placeholders": {
+      "surah": {
+        "type": "String"
+      }
+    }
+  },
+  "homeDiscover": "Discover",
+  "@homeDiscover": {
+    "description": "Reference key home.discover"
+  },
+  "homeDiscoverSub": "Because you check these often",
+  "@homeDiscoverSub": {
+    "description": "Reference key home.discoverSub"
+  },
+  "homeEffective": "Effective {date} · {source}",
+  "@homeEffective": {
+    "description": "Reference: the fuel row’s meta line",
+    "placeholders": {
+      "date": {
+        "type": "String"
+      },
+      "source": {
+        "type": "String"
+      }
+    }
+  },
+  "homeFeelsLike": "Feels like {temp}",
+  "@homeFeelsLike": {
+    "description": "Reference: the weather Discover card",
+    "placeholders": {
+      "temp": {
+        "type": "String"
+      }
+    }
+  },
+  "homeGlance": "At a glance",
+  "@homeGlance": {
+    "description": "Reference key home.glance"
+  },
+  "homeGlanceGeneral": "What matters in the next few hours",
+  "@homeGlanceGeneral": {
+    "description": "Reference key home.glanceGeneral"
+  },
+  "homeGlanceMuslim": "Prayer, reading and what’s next",
+  "@homeGlanceMuslim": {
+    "description": "Reference key home.glanceMuslim"
+  },
+  "homeLiveNow": "Right now",
+  "@homeLiveNow": {
+    "description": "Reference key home.liveNow"
+  },
+  "homeLiveNowSub": "As of {time}",
+  "@homeLiveNowSub": {
+    "description": "Reference key home.liveNowSub",
+    "placeholders": {
+      "time": {
+        "type": "String"
+      }
+    }
+  },
+  "homeNextOutage": "Next outage {time}",
+  "@homeNextOutage": {
+    "description": "Reference: the loadshedding Discover card",
+    "placeholders": {
+      "time": {
+        "type": "String"
+      }
+    }
+  },
+  "homeNextPrayer": "Next prayer",
+  "@homeNextPrayer": {
+    "description": "Reference key home.nextPrayer"
+  },
+  "homeNextUp": "next up",
+  "@homeNextUp": {
+    "description": "Reference key home.nextUp"
+  },
+  "homeOutageArea": "{area} · {hours, plural, =1{1 hour} other{{hours} hours}}",
+  "@homeOutageArea": {
+    "description": "Reference: the loadshedding Discover card’s meta",
+    "placeholders": {
+      "area": {
+        "type": "String"
+      },
+      "hours": {
+        "type": "int"
+      }
+    }
+  },
+  "homeQuickDefault": "The eight you reach for most",
+  "@homeQuickDefault": {
+    "description": "Reference key home.quickDefault"
+  },
+  "homeQuickFromInterests": "Picked from your interests",
+  "@homeQuickFromInterests": {
+    "description": "Reference key home.quickFromInterests"
+  },
+  "homeQuickTools": "Quick tools",
+  "@homeQuickTools": {
+    "description": "Reference key home.quickTools"
+  },
+  "homeRightNow": "Right now",
+  "@homeRightNow": {
+    "description": "Reference key home.rightNow"
+  },
+  "homeSearchEverything": "Search everything",
+  "@homeSearchEverything": {
+    "description": "Reference key home.searchEverything"
+  },
+  "homeTasksLeft": "{n, plural, =0{Nothing left today} =1{1 task left today} other{{n} tasks left today}}",
+  "@homeTasksLeft": {
+    "description": "Reference key home.tasksLeft, pluralised",
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
+  "homeTasksNext": "Next: {task} · {time}",
+  "@homeTasksNext": {
+    "description": "Reference key home.tasksNext",
+    "placeholders": {
+      "task": {
+        "type": "String"
+      },
+      "time": {
+        "type": "String"
+      }
+    }
+  },
+  "homeToGo": "to go",
+  "@homeToGo": {
+    "description": "Reference key home.toGo"
+  },
+  "homeTomorrowIn": "Tomorrow in {city}",
+  "@homeTomorrowIn": {
+    "description": "Reference key home.tomorrowIn",
+    "placeholders": {
+      "city": {
+        "type": "String"
+      }
+    }
+  },
+  "homeUpcoming": "Coming up",
+  "@homeUpcoming": {
+    "description": "Reference key home.upcoming"
+  },
+  "homeUpcomingSub": "The next few days",
+  "@homeUpcomingSub": {
+    "description": "Reference key home.upcomingSub"
+  },
+  "homeWeatherAnd": "{temp} and {condition}",
+  "@homeWeatherAnd": {
+    "description": "Reference: the weather Discover card’s title",
+    "placeholders": {
+      "temp": {
+        "type": "String"
+      },
+      "condition": {
+        "type": "String"
+      }
+    }
+  },
+  "homeYourProfile": "Your profile",
+  "@homeYourProfile": {
+    "description": "Reference key a11y.yourProfile"
   },
   "igEveryday": "Everyday life",
   "@igEveryday": {
@@ -788,6 +1445,44 @@
   "intZakat": "Zakat & giving",
   "@intZakat": {
     "description": "Interest \"zakat\". The reference hard-codes the English label and never translates it; see D12"
+  },
+  "loadshedOff": "Power is off",
+  "@loadshedOff": {
+    "description": "Reference key loadshed.currentlyOff"
+  },
+  "loadshedUntil": "until {time}",
+  "@loadshedUntil": {
+    "description": "Reference key loadshed.until",
+    "placeholders": {
+      "time": {
+        "type": "String"
+      }
+    }
+  },
+  "marketPk": "Pakistan",
+  "@marketPk": {
+    "description": "The market a national pump price applies to. Only the markets whose regulator publishes one need a key"
+  },
+  "marketsClosed": "Market closed",
+  "@marketsClosed": {
+    "description": "Reference key markets.closed"
+  },
+  "marketsHoliday": "Closed for {holiday}",
+  "@marketsHoliday": {
+    "description": "A market shut by a holiday rather than by the clock",
+    "placeholders": {
+      "holiday": {
+        "type": "String"
+      }
+    }
+  },
+  "marketsOpen": "Market open",
+  "@marketsOpen": {
+    "description": "Reference key markets.open"
+  },
+  "marketsWeekend": "Closed for the weekend",
+  "@marketsWeekend": {
+    "description": "A market outside its trading week"
   },
   "methodEgyptian": "Egyptian",
   "@methodEgyptian": {
@@ -1069,6 +1764,19 @@
   "@onbYoursKicker": {
     "description": "Reference key onb.yoursKicker"
   },
+  "parcelArrivesToday": "{carrier} · arrives today",
+  "@parcelArrivesToday": {
+    "description": "Reference: the parcel Discover card’s meta",
+    "placeholders": {
+      "carrier": {
+        "type": "String"
+      }
+    }
+  },
+  "parcelOutForDelivery": "Out for delivery",
+  "@parcelOutForDelivery": {
+    "description": "Reference: the parcel Discover card"
+  },
   "persAllCountries": "All countries",
   "@persAllCountries": {
     "description": "Reference key pers.allCountries"
@@ -1100,6 +1808,66 @@
   "persUseLocation": "Use my current location",
   "@persUseLocation": {
     "description": "Reference key pers.useLocation"
+  },
+  "prayerAsr": "Asr",
+  "@prayerAsr": {
+    "description": "Reference key prayer.asr"
+  },
+  "prayerDhuhr": "Dhuhr",
+  "@prayerDhuhr": {
+    "description": "Reference key prayer.dhuhr"
+  },
+  "prayerFajr": "Fajr",
+  "@prayerFajr": {
+    "description": "Reference key prayer.fajr"
+  },
+  "prayerIsha": "Isha",
+  "@prayerIsha": {
+    "description": "Reference key prayer.isha"
+  },
+  "prayerMaghrib": "Maghrib",
+  "@prayerMaghrib": {
+    "description": "Reference key prayer.maghrib"
+  },
+  "qaDocscan": "Scan doc",
+  "@qaDocscan": {
+    "description": "Reference key qa.docscan"
+  },
+  "qaExpense": "Add expense",
+  "@qaExpense": {
+    "description": "Reference key qa.expense"
+  },
+  "qaNote": "New note",
+  "@qaNote": {
+    "description": "Reference key qa.note"
+  },
+  "qaParcel": "Track parcel",
+  "@qaParcel": {
+    "description": "Reference key qa.parcel"
+  },
+  "qaScan": "Scan QR",
+  "@qaScan": {
+    "description": "Reference key qa.scan"
+  },
+  "qaShop": "Shopping",
+  "@qaShop": {
+    "description": "Reference key qa.shop"
+  },
+  "qaTasbih": "Tasbih",
+  "@qaTasbih": {
+    "description": "Reference key qa.tasbih"
+  },
+  "qaTask": "Add task",
+  "@qaTask": {
+    "description": "Reference key qa.task"
+  },
+  "qaTimer": "Start timer",
+  "@qaTimer": {
+    "description": "Reference key qa.timer"
+  },
+  "qaWater": "Log water",
+  "@qaWater": {
+    "description": "Reference key qa.water"
   },
   "recConflict": "This record changed elsewhere",
   "@recConflict": {
@@ -1177,9 +1945,182 @@
   "@searchTry": {
     "description": "Reference key search.try"
   },
+  "slideMoneyCta": "See money",
+  "@slideMoneyCta": {
+    "description": "Reference key slide.money.cta"
+  },
+  "slideMoneyKicker": "Money",
+  "@slideMoneyKicker": {
+    "description": "Reference key slide.money.k"
+  },
+  "slideMoneyText": "Rates, bills and expenses in one place.",
+  "@slideMoneyText": {
+    "description": "Reference key slide.money.x"
+  },
+  "slideMoneyTitle": "Stay on top of your money",
+  "@slideMoneyTitle": {
+    "description": "Reference key slide.money.t"
+  },
+  "slideOf": "Slide {n} of {total}",
+  "@slideOf": {
+    "description": "Reference: aria-label on each carousel dot",
+    "placeholders": {
+      "n": {
+        "type": "int"
+      },
+      "total": {
+        "type": "int"
+      }
+    }
+  },
+  "slidePlanCta": "Open today",
+  "@slidePlanCta": {
+    "description": "Reference key slide.plan.cta"
+  },
+  "slidePlanKicker": "Today",
+  "@slidePlanKicker": {
+    "description": "Reference key slide.plan.k"
+  },
+  "slidePlanText": "Tasks, reminders and events on one timeline.",
+  "@slidePlanText": {
+    "description": "Reference key slide.plan.x"
+  },
+  "slidePlanTitle": "Plan your day before it starts",
+  "@slidePlanTitle": {
+    "description": "Reference key slide.plan.t"
+  },
+  "slidePrayerCta": "Prayer times",
+  "@slidePrayerCta": {
+    "description": "Reference key slide.prayer.cta"
+  },
+  "slidePrayerKicker": "Your next prayer",
+  "@slidePrayerKicker": {
+    "description": "Reference key slide.prayer.k"
+  },
+  "slidePrayerLine": "Adhan at {time} · {city}",
+  "@slidePrayerLine": {
+    "description": "Reference key slide.prayer.x",
+    "placeholders": {
+      "time": {
+        "type": "String"
+      },
+      "city": {
+        "type": "String"
+      }
+    }
+  },
+  "slideReadCta": "Continue",
+  "@slideReadCta": {
+    "description": "Reference key slide.read.cta"
+  },
+  "slideReadKicker": "Read",
+  "@slideReadKicker": {
+    "description": "Reference key slide.read.k"
+  },
+  "slideReadText": "You’re 42 ayahs into Al-Kahf. Two minutes is enough.",
+  "@slideReadText": {
+    "description": "Reference key slide.read.x"
+  },
+  "slideReadTitle": "Read something meaningful",
+  "@slideReadTitle": {
+    "description": "Reference key slide.read.t"
+  },
+  "slideToolsCta": "Browse tools",
+  "@slideToolsCta": {
+    "description": "Reference key slide.tools.cta"
+  },
+  "slideToolsKicker": "Tools",
+  "@slideToolsKicker": {
+    "description": "Reference key slide.tools.k"
+  },
+  "slideToolsText": "Calculator, converters, scanner and more.",
+  "@slideToolsText": {
+    "description": "Reference key slide.tools.x"
+  },
+  "slideToolsTitle": "Useful tools, all in one place",
+  "@slideToolsTitle": {
+    "description": "Reference key slide.tools.t"
+  },
+  "slideTrainsCta": "Find a train",
+  "@slideTrainsCta": {
+    "description": "Reference key slide.trains.cta"
+  },
+  "slideTrainsKicker": "Travel",
+  "@slideTrainsKicker": {
+    "description": "Reference key slide.trains.k"
+  },
+  "slideTrainsText": "Live running status, fares and seats.",
+  "@slideTrainsText": {
+    "description": "Reference key slide.trains.x"
+  },
+  "slideTrainsTitle": "Trains, without the guesswork",
+  "@slideTrainsTitle": {
+    "description": "Reference key slide.trains.t"
+  },
   "startupLoading": "Starting Lume",
   "@startupLoading": {
     "description": "Announced while the launch is still deciding where to go"
+  },
+  "subsRenews": "renews {date}",
+  "@subsRenews": {
+    "description": "Reference key subs.renews",
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "surahAlKahf": "Al-Kahf",
+  "@surahAlKahf": {
+    "description": "The surah the reading fixture is open at"
+  },
+  "toolCategoryDaily": "Daily Life",
+  "@toolCategoryDaily": {
+    "description": "Reference key cat.daily"
+  },
+  "toolCategoryEveryday": "Everyday",
+  "@toolCategoryEveryday": {
+    "description": "Reference key cat.everyday"
+  },
+  "toolCategoryIslamic": "Islamic",
+  "@toolCategoryIslamic": {
+    "description": "Reference key cat.islamic"
+  },
+  "toolCategoryMoney": "Money",
+  "@toolCategoryMoney": {
+    "description": "Reference key cat.money"
+  },
+  "toolCategoryPersonal": "Personal",
+  "@toolCategoryPersonal": {
+    "description": "Reference key cat.personal"
+  },
+  "toolCategoryPlanning": "Planning",
+  "@toolCategoryPlanning": {
+    "description": "Reference key cat.planning"
+  },
+  "toolCategorySubDaily": "What’s happening around you",
+  "@toolCategorySubDaily": {
+    "description": "Reference key cat.dailySub"
+  },
+  "toolCategorySubEveryday": "The ones you reach for daily",
+  "@toolCategorySubEveryday": {
+    "description": "Reference key cat.everydaySub"
+  },
+  "toolCategorySubIslamic": "Prayer, Qur’an and giving",
+  "@toolCategorySubIslamic": {
+    "description": "Reference key cat.islamicSub"
+  },
+  "toolCategorySubMoney": "Rates, bills and budgets",
+  "@toolCategorySubMoney": {
+    "description": "Reference key cat.moneySub"
+  },
+  "toolCategorySubPersonal": "Private to you, on this device",
+  "@toolCategorySubPersonal": {
+    "description": "Reference key cat.personalSub"
+  },
+  "toolCategorySubPlanning": "Your time and your lists",
+  "@toolCategorySubPlanning": {
+    "description": "Reference key cat.planningSub"
   },
   "toolErrorText": "We couldn’t load this. Try again in a moment.",
   "@toolErrorText": {
@@ -1193,6 +2134,23 @@
   "@toolLoading": {
     "description": "Announced while a tool is still assembling"
   },
+  "toolLocalService": "Local service",
+  "@toolLocalService": {
+    "description": "Reference: aria-label on a country-restricted tool’s marker"
+  },
+  "toolNeedsAttention": "{n, plural, =1{1 needs attention} other{{n} need attention}}",
+  "@toolNeedsAttention": {
+    "description": "Reference key n.needsAttention",
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
+  "toolPrivate": "Private",
+  "@toolPrivate": {
+    "description": "Reference: aria-label on a sensitive tool’s lock marker"
+  },
   "toolPrivateText": "This information stays on your device, is never shown on Home and is never included in shared content.",
   "@toolPrivateText": {
     "description": "Reference key tool.private.text"
@@ -1200,6 +2158,355 @@
   "toolPrivateTitle": "Private to you",
   "@toolPrivateTitle": {
     "description": "Reference key tool.private.title"
+  },
+  "toolStatusAge": "Exact days",
+  "@toolStatusAge": {
+    "description": "The status line on the age tile. The prototype keeps it in the catalogue and renders it untranslated in every language (D22)"
+  },
+  "toolStatusAlarms": "2 set",
+  "@toolStatusAlarms": {
+    "description": "The status line on the alarms tile. The prototype keeps it in the catalogue and renders it untranslated in every language (D22)"
+  },
+  "toolStatusAqi": "AQI",
+  "@toolStatusAqi": {
+    "description": "The status line on the aqi tile. The prototype keeps it in the catalogue and renders it untranslated in every language (D22)"
+  },
+  "toolStatusAyah": "Ar-Ra’d 28",
+  "@toolStatusAyah": {
+    "description": "The status line on the ayah tile. The prototype keeps it in the catalogue and renders it untranslated in every language (D22)"
+  },
+  "toolStatusBabybudget": "Plan costs",
+  "@toolStatusBabybudget": {
+    "description": "The status line on the babybudget tile. The prototype keeps it in the catalogue and renders it untranslated in every language (D22)"
+  },
+  "toolStatusBills": "2 due",
+  "@toolStatusBills": {
+    "description": "The status line on the bills tile. The prototype keeps it in the catalogue and renders it untranslated in every language (D22)"
+  },
+  "toolStatusBirthdays": "Ayesha in 4d",
+  "@toolStatusBirthdays": {
+    "description": "The status line on the birthdays tile. The prototype keeps it in the catalogue and renders it untranslated in every language (D22)"
+  },
+  "toolStatusBmi": "Track weight",
+  "@toolStatusBmi": {
+    "description": "The status line on the bmi tile. The prototype keeps it in the catalogue and renders it untranslated in every language (D22)"
+  },
+  "toolStatusCalculator": "Standard",
+  "@toolStatusCalculator": {
+    "description": "The status line on the calculator tile. The prototype keeps it in the catalogue and renders it untranslated in every language (D22)"
+  },
+  "toolStatusCalendar": "3 events",
+  "@toolStatusCalendar": {
+    "description": "The status line on the calendar tile. The prototype keeps it in the catalogue and renders it untranslated in every language (D22)"
+  },
+  "toolStatusCommittee": "Month 4 of 10",
+  "@toolStatusCommittee": {
+    "description": "The status line on the committee tile. The prototype keeps it in the catalogue and renders it untranslated in every language (D22)"
+  },
+  "toolStatusCompound": "Project growth",
+  "@toolStatusCompound": {
+    "description": "The status line on the compound tile. The prototype keeps it in the catalogue and renders it untranslated in every language (D22)"
+  },
+  "toolStatusConverter": "32 units",
+  "@toolStatusConverter": {
+    "description": "The status line on the converter tile. The prototype keeps it in the catalogue and renders it untranslated in every language (D22)"
+  },
+  "toolStatusCricket": "PAK 214/4",
+  "@toolStatusCricket": {
+    "description": "The status line on the cricket tile. The prototype keeps it in the catalogue and renders it untranslated in every language (D22)"
+  },
+  "toolStatusCurrency": "Live rates",
+  "@toolStatusCurrency": {
+    "description": "The status line on the currency tile. The prototype keeps it in the catalogue and renders it untranslated in every language (D22)"
+  },
+  "toolStatusCycle": "Private",
+  "@toolStatusCycle": {
+    "description": "The status line on the cycle tile. The prototype keeps it in the catalogue and renders it untranslated in every language (D22)"
+  },
+  "toolStatusDatecalc": "Add · diff",
+  "@toolStatusDatecalc": {
+    "description": "The status line on the datecalc tile. The prototype keeps it in the catalogue and renders it untranslated in every language (D22)"
+  },
+  "toolStatusDocscan": "PDF ready",
+  "@toolStatusDocscan": {
+    "description": "The status line on the docscan tile. The prototype keeps it in the catalogue and renders it untranslated in every language (D22)"
+  },
+  "toolStatusDocuments": "Locked",
+  "@toolStatusDocuments": {
+    "description": "The status line on the documents tile. The prototype keeps it in the catalogue and renders it untranslated in every language (D22)"
+  },
+  "toolStatusDuas": "42 saved",
+  "@toolStatusDuas": {
+    "description": "The status line on the duas tile. The prototype keeps it in the catalogue and renders it untranslated in every language (D22)"
+  },
+  "toolStatusEmergency": "15 · 1122",
+  "@toolStatusEmergency": {
+    "description": "The status line on the emergency tile. The prototype keeps it in the catalogue and renders it untranslated in every language (D22)"
+  },
+  "toolStatusEvents": "Next 14:00",
+  "@toolStatusEvents": {
+    "description": "The status line on the events tile. The prototype keeps it in the catalogue and renders it untranslated in every language (D22)"
+  },
+  "toolStatusExpenses": "This month",
+  "@toolStatusExpenses": {
+    "description": "The status line on the expenses tile. The prototype keeps it in the catalogue and renders it untranslated in every language (D22)"
+  },
+  "toolStatusFaraid": "Inheritance",
+  "@toolStatusFaraid": {
+    "description": "The status line on the faraid tile. The prototype keeps it in the catalogue and renders it untranslated in every language (D22)"
+  },
+  "toolStatusFasting": "3 kept",
+  "@toolStatusFasting": {
+    "description": "The status line on the fasting tile. The prototype keeps it in the catalogue and renders it untranslated in every language (D22)"
+  },
+  "toolStatusFlights": "Track live",
+  "@toolStatusFlights": {
+    "description": "The status line on the flights tile. The prototype keeps it in the catalogue and renders it untranslated in every language (D22)"
+  },
+  "toolStatusFocus": "25 min",
+  "@toolStatusFocus": {
+    "description": "The status line on the focus tile. The prototype keeps it in the catalogue and renders it untranslated in every language (D22)"
+  },
+  "toolStatusFuel": "Pump prices",
+  "@toolStatusFuel": {
+    "description": "The status line on the fuel tile. The prototype keeps it in the catalogue and renders it untranslated in every language (D22)"
+  },
+  "toolStatusFuelcost": "Trip cost",
+  "@toolStatusFuelcost": {
+    "description": "The status line on the fuelcost tile. The prototype keeps it in the catalogue and renders it untranslated in every language (D22)"
+  },
+  "toolStatusGoals": "2 active",
+  "@toolStatusGoals": {
+    "description": "The status line on the goals tile. The prototype keeps it in the catalogue and renders it untranslated in every language (D22)"
+  },
+  "toolStatusGoldrates": "Gold & FX",
+  "@toolStatusGoldrates": {
+    "description": "The status line on the goldrates tile. The prototype keeps it in the catalogue and renders it untranslated in every language (D22)"
+  },
+  "toolStatusHabits": "12-day streak",
+  "@toolStatusHabits": {
+    "description": "The status line on the habits tile. The prototype keeps it in the catalogue and renders it untranslated in every language (D22)"
+  },
+  "toolStatusHadith": "Daily",
+  "@toolStatusHadith": {
+    "description": "The status line on the hadith tile. The prototype keeps it in the catalogue and renders it untranslated in every language (D22)"
+  },
+  "toolStatusHealth": "Private",
+  "@toolStatusHealth": {
+    "description": "The status line on the health tile. The prototype keeps it in the catalogue and renders it untranslated in every language (D22)"
+  },
+  "toolStatusHijri": "15 Rabi’ I",
+  "@toolStatusHijri": {
+    "description": "The status line on the hijri tile. The prototype keeps it in the catalogue and renders it untranslated in every language (D22)"
+  },
+  "toolStatusHolidays": "This year",
+  "@toolStatusHolidays": {
+    "description": "The status line on the holidays tile. The prototype keeps it in the catalogue and renders it untranslated in every language (D22)"
+  },
+  "toolStatusInstallments": "3 running",
+  "@toolStatusInstallments": {
+    "description": "The status line on the installments tile. The prototype keeps it in the catalogue and renders it untranslated in every language (D22)"
+  },
+  "toolStatusLearning": "3 courses",
+  "@toolStatusLearning": {
+    "description": "The status line on the learning tile. The prototype keeps it in the catalogue and renders it untranslated in every language (D22)"
+  },
+  "toolStatusLedger": "3 people",
+  "@toolStatusLedger": {
+    "description": "The status line on the ledger tile. The prototype keeps it in the catalogue and renders it untranslated in every language (D22)"
+  },
+  "toolStatusLoadshed": "14:00–16:00",
+  "@toolStatusLoadshed": {
+    "description": "The status line on the loadshed tile. The prototype keeps it in the catalogue and renders it untranslated in every language (D22)"
+  },
+  "toolStatusLoan": "Instalments",
+  "@toolStatusLoan": {
+    "description": "The status line on the loan tile. The prototype keeps it in the catalogue and renders it untranslated in every language (D22)"
+  },
+  "toolStatusMarkets": "KSE-100 ▲ 0.8%",
+  "@toolStatusMarkets": {
+    "description": "The status line on the markets tile. The prototype keeps it in the catalogue and renders it untranslated in every language (D22)"
+  },
+  "toolStatusMealplan": "This week",
+  "@toolStatusMealplan": {
+    "description": "The status line on the mealplan tile. The prototype keeps it in the catalogue and renders it untranslated in every language (D22)"
+  },
+  "toolStatusMediasaver": "Save posts",
+  "@toolStatusMediasaver": {
+    "description": "The status line on the mediasaver tile. The prototype keeps it in the catalogue and renders it untranslated in every language (D22)"
+  },
+  "toolStatusMeds": "Private",
+  "@toolStatusMeds": {
+    "description": "The status line on the meds tile. The prototype keeps it in the catalogue and renders it untranslated in every language (D22)"
+  },
+  "toolStatusMosques": "3 within 1 km",
+  "@toolStatusMosques": {
+    "description": "The status line on the mosques tile. The prototype keeps it in the catalogue and renders it untranslated in every language (D22)"
+  },
+  "toolStatusNames99": "Asma ul Husna",
+  "@toolStatusNames99": {
+    "description": "The status line on the names99 tile. The prototype keeps it in the catalogue and renders it untranslated in every language (D22)"
+  },
+  "toolStatusNatsavings": "Profit rates",
+  "@toolStatusNatsavings": {
+    "description": "The status line on the natsavings tile. The prototype keeps it in the catalogue and renders it untranslated in every language (D22)"
+  },
+  "toolStatusNews": "12 new",
+  "@toolStatusNews": {
+    "description": "The status line on the news tile. The prototype keeps it in the catalogue and renders it untranslated in every language (D22)"
+  },
+  "toolStatusNotes": "12 saved",
+  "@toolStatusNotes": {
+    "description": "The status line on the notes tile. The prototype keeps it in the catalogue and renders it untranslated in every language (D22)"
+  },
+  "toolStatusPackages": "Jazz · Zong",
+  "@toolStatusPackages": {
+    "description": "The status line on the packages tile. The prototype keeps it in the catalogue and renders it untranslated in every language (D22)"
+  },
+  "toolStatusParcel": "1 in transit",
+  "@toolStatusParcel": {
+    "description": "The status line on the parcel tile. The prototype keeps it in the catalogue and renders it untranslated in every language (D22)"
+  },
+  "toolStatusPassport": "NADRA sizes",
+  "@toolStatusPassport": {
+    "description": "The status line on the passport tile. The prototype keeps it in the catalogue and renders it untranslated in every language (D22)"
+  },
+  "toolStatusPlay": "Puzzles",
+  "@toolStatusPlay": {
+    "description": "The status line on the play tile. The prototype keeps it in the catalogue and renders it untranslated in every language (D22)"
+  },
+  "toolStatusPrayer": "Asr 15:53",
+  "@toolStatusPrayer": {
+    "description": "The status line on the prayer tile. The prototype keeps it in the catalogue and renders it untranslated in every language (D22)"
+  },
+  "toolStatusPraytrack": "12-day streak",
+  "@toolStatusPraytrack": {
+    "description": "The status line on the praytrack tile. The prototype keeps it in the catalogue and renders it untranslated in every language (D22)"
+  },
+  "toolStatusPregnancy": "Private",
+  "@toolStatusPregnancy": {
+    "description": "The status line on the pregnancy tile. The prototype keeps it in the catalogue and renders it untranslated in every language (D22)"
+  },
+  "toolStatusPrizebonds": "Draw 15 Sep",
+  "@toolStatusPrizebonds": {
+    "description": "The status line on the prizebonds tile. The prototype keeps it in the catalogue and renders it untranslated in every language (D22)"
+  },
+  "toolStatusQibla": "267° W",
+  "@toolStatusQibla": {
+    "description": "The status line on the qibla tile. The prototype keeps it in the catalogue and renders it untranslated in every language (D22)"
+  },
+  "toolStatusQr": "Scan & pay",
+  "@toolStatusQr": {
+    "description": "The status line on the qr tile. The prototype keeps it in the catalogue and renders it untranslated in every language (D22)"
+  },
+  "toolStatusQuran": "Al-Kahf 42",
+  "@toolStatusQuran": {
+    "description": "The status line on the quran tile. The prototype keeps it in the catalogue and renders it untranslated in every language (D22)"
+  },
+  "toolStatusQuransearch": "By word",
+  "@toolStatusQuransearch": {
+    "description": "The status line on the quransearch tile. The prototype keeps it in the catalogue and renders it untranslated in every language (D22)"
+  },
+  "toolStatusRamadan": "In 172 days",
+  "@toolStatusRamadan": {
+    "description": "The status line on the ramadan tile. The prototype keeps it in the catalogue and renders it untranslated in every language (D22)"
+  },
+  "toolStatusRecipes": "24 saved",
+  "@toolStatusRecipes": {
+    "description": "The status line on the recipes tile. The prototype keeps it in the catalogue and renders it untranslated in every language (D22)"
+  },
+  "toolStatusReminders": "4 today",
+  "@toolStatusReminders": {
+    "description": "The status line on the reminders tile. The prototype keeps it in the catalogue and renders it untranslated in every language (D22)"
+  },
+  "toolStatusShopping": "6 items",
+  "@toolStatusShopping": {
+    "description": "The status line on the shopping tile. The prototype keeps it in the catalogue and renders it untranslated in every language (D22)"
+  },
+  "toolStatusSpeedtest": "Test now",
+  "@toolStatusSpeedtest": {
+    "description": "The status line on the speedtest tile. The prototype keeps it in the catalogue and renders it untranslated in every language (D22)"
+  },
+  "toolStatusStopwatch": "Laps",
+  "@toolStatusStopwatch": {
+    "description": "The status line on the stopwatch tile. The prototype keeps it in the catalogue and renders it untranslated in every language (D22)"
+  },
+  "toolStatusStreak": "12 days",
+  "@toolStatusStreak": {
+    "description": "The status line on the streak tile. The prototype keeps it in the catalogue and renders it untranslated in every language (D22)"
+  },
+  "toolStatusSubs": "6 active",
+  "@toolStatusSubs": {
+    "description": "The status line on the subs tile. The prototype keeps it in the catalogue and renders it untranslated in every language (D22)"
+  },
+  "toolStatusSunmoon": "Sunrise · sunset",
+  "@toolStatusSunmoon": {
+    "description": "The status line on the sunmoon tile. The prototype keeps it in the catalogue and renders it untranslated in every language (D22)"
+  },
+  "toolStatusTaraweeh": "Ramadan",
+  "@toolStatusTaraweeh": {
+    "description": "The status line on the taraweeh tile. The prototype keeps it in the catalogue and renders it untranslated in every language (D22)"
+  },
+  "toolStatusTasbih": "Counter",
+  "@toolStatusTasbih": {
+    "description": "The status line on the tasbih tile. The prototype keeps it in the catalogue and renders it untranslated in every language (D22)"
+  },
+  "toolStatusTax": "FBR 2025-26",
+  "@toolStatusTax": {
+    "description": "The status line on the tax tile. The prototype keeps it in the catalogue and renders it untranslated in every language (D22)"
+  },
+  "toolStatusTimer": "Presets",
+  "@toolStatusTimer": {
+    "description": "The status line on the timer tile. The prototype keeps it in the catalogue and renders it untranslated in every language (D22)"
+  },
+  "toolStatusTipsplit": "Split a bill",
+  "@toolStatusTipsplit": {
+    "description": "The status line on the tipsplit tile. The prototype keeps it in the catalogue and renders it untranslated in every language (D22)"
+  },
+  "toolStatusTodos": "2 of 5 done",
+  "@toolStatusTodos": {
+    "description": "The status line on the todos tile. The prototype keeps it in the catalogue and renders it untranslated in every language (D22)"
+  },
+  "toolStatusTrains": "Green Line",
+  "@toolStatusTrains": {
+    "description": "The status line on the trains tile. The prototype keeps it in the catalogue and renders it untranslated in every language (D22)"
+  },
+  "toolStatusVaccines": "Private",
+  "@toolStatusVaccines": {
+    "description": "The status line on the vaccines tile. The prototype keeps it in the catalogue and renders it untranslated in every language (D22)"
+  },
+  "toolStatusVehicle": "Check challan",
+  "@toolStatusVehicle": {
+    "description": "The status line on the vehicle tile. The prototype keeps it in the catalogue and renders it untranslated in every language (D22)"
+  },
+  "toolStatusWastatus": "Android",
+  "@toolStatusWastatus": {
+    "description": "The status line on the wastatus tile. The prototype keeps it in the catalogue and renders it untranslated in every language (D22)"
+  },
+  "toolStatusWater": "5 / 8",
+  "@toolStatusWater": {
+    "description": "The status line on the water tile. The prototype keeps it in the catalogue and renders it untranslated in every language (D22)"
+  },
+  "toolStatusWeather": "34° Clear",
+  "@toolStatusWeather": {
+    "description": "The status line on the weather tile. The prototype keeps it in the catalogue and renders it untranslated in every language (D22)"
+  },
+  "toolStatusWorldclock": "8 cities",
+  "@toolStatusWorldclock": {
+    "description": "The status line on the worldclock tile. The prototype keeps it in the catalogue and renders it untranslated in every language (D22)"
+  },
+  "toolStatusZakat": "Nisab check",
+  "@toolStatusZakat": {
+    "description": "The status line on the zakat tile. The prototype keeps it in the catalogue and renders it untranslated in every language (D22)"
+  },
+  "toolUnavailableHere": "Not available in {country} yet",
+  "@toolUnavailableHere": {
+    "description": "The honest unavailable state for a tool this market has not launched",
+    "placeholders": {
+      "country": {
+        "type": "String"
+      }
+    }
   },
   "toolUnavailableText": "That tool isn’t part of your setup.",
   "@toolUnavailableText": {
@@ -1209,8 +2516,123 @@
   "@toolUnavailableTitle": {
     "description": "Tool host unavailable state"
   },
+  "toolsForYou": "For you",
+  "@toolsForYou": {
+    "description": "Reference key tools.forYou"
+  },
+  "toolsNoMatch": "No tools match",
+  "@toolsNoMatch": {
+    "description": "Reference key tools.noMatch"
+  },
+  "toolsNoMatchSub": "Try a different word — or browse a category above.",
+  "@toolsNoMatchSub": {
+    "description": "Reference key tools.noMatchSub"
+  },
   "toolsNothingYet": "Nothing here yet",
   "@toolsNothingYet": {
     "description": "Reference key tools.nothingYet"
+  },
+  "toolsNothingYetSub": "Add a few more interests, or browse the full list under All.",
+  "@toolsNothingYetSub": {
+    "description": "Reference key tools.nothingYetSub"
+  },
+  "toolsPersonalise": "Personalise",
+  "@toolsPersonalise": {
+    "description": "Reference: aria-label on the hub’s header control"
+  },
+  "toolsRecent": "Recently used",
+  "@toolsRecent": {
+    "description": "Reference key tools.recent"
+  },
+  "toolsRecentSub": "Straight back to where you were",
+  "@toolsRecentSub": {
+    "description": "Reference key tools.recentSub"
+  },
+  "toolsResultCount": "{n, plural, =0{No tools} =1{1 tool} other{{n} tools}}",
+  "@toolsResultCount": {
+    "description": "Announced after a search so the result count is spoken",
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
+  "toolsSearchExample": "currency",
+  "@toolsSearchExample": {
+    "description": "The example in the hub’s placeholder everywhere else"
+  },
+  "toolsSearchExamplePk": "petrol",
+  "@toolsSearchExamplePk": {
+    "description": "The example in the hub’s placeholder for a market with fuel prices"
+  },
+  "toolsSearchHint": "Search tools — try “{example}”",
+  "@toolsSearchHint": {
+    "description": "Reference key tools.searchPlaceholder",
+    "placeholders": {
+      "example": {
+        "type": "String"
+      }
+    }
+  },
+  "toolsSearchLabel": "Search tools",
+  "@toolsSearchLabel": {
+    "description": "Reference: aria-label on the hub’s search field"
+  },
+  "toolsSub": "{n, plural, =1{1 utility, neatly sorted} other{{n} utilities, neatly sorted}}",
+  "@toolsSub": {
+    "description": "Reference key tools.sub",
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
+  "toolsTitle": "Tools",
+  "@toolsTitle": {
+    "description": "Reference key tools.title"
+  },
+  "weatherClear": "Clear",
+  "@weatherClear": {
+    "description": "A weather condition. The prototype stores these as English sentences in the catalogue and never translates them"
+  },
+  "weatherCloudBuilding": "Cloud building",
+  "@weatherCloudBuilding": {
+    "description": "A weather condition. The prototype stores these as English sentences in the catalogue and never translates them"
+  },
+  "weatherHazy": "hazy",
+  "@weatherHazy": {
+    "description": "A weather condition. The prototype stores these as English sentences in the catalogue and never translates them"
+  },
+  "weatherHazySun": "Hazy sun",
+  "@weatherHazySun": {
+    "description": "A weather condition. The prototype stores these as English sentences in the catalogue and never translates them"
+  },
+  "weatherHighLow": "{high} / {low}",
+  "@weatherHighLow": {
+    "description": "Reference: the livecard sub line",
+    "placeholders": {
+      "high": {
+        "type": "String"
+      },
+      "low": {
+        "type": "String"
+      }
+    }
+  },
+  "weatherLightCloud": "Light cloud",
+  "@weatherLightCloud": {
+    "description": "A weather condition. The prototype stores these as English sentences in the catalogue and never translates them"
+  },
+  "weatherMostlyClear": "Mostly clear",
+  "@weatherMostlyClear": {
+    "description": "A weather condition. The prototype stores these as English sentences in the catalogue and never translates them"
+  },
+  "weatherOvercast": "Overcast",
+  "@weatherOvercast": {
+    "description": "A weather condition. The prototype stores these as English sentences in the catalogue and never translates them"
+  },
+  "weatherRain": "Rain",
+  "@weatherRain": {
+    "description": "Reference key weather.rain"
   }
 }

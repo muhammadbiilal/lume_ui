@@ -93,6 +93,9 @@ class AppLocalizationsAr extends AppLocalizations {
   String get actionWeek => 'أسبوع';
 
   @override
+  String get anniversaryKind => 'ذكرى سنوية';
+
+  @override
   String get appTagline => 'يومك في مكان واحد';
 
   @override
@@ -422,6 +425,51 @@ class AppLocalizationsAr extends AppLocalizations {
   String get authWorking => 'لحظة واحدة…';
 
   @override
+  String billsDueIn(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: 'مستحق خلال $n يومًا',
+      few: 'مستحق خلال $n أيام',
+      two: 'مستحق خلال يومين',
+      one: 'مستحق خلال يوم',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get billsDueThisMonth => 'مستحق هذا الشهر';
+
+  @override
+  String billsNeedAttention(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n فاتورة تحتاج انتباهك',
+      few: '$n فواتير تحتاج انتباهك',
+      two: 'فاتورتان تحتاجان انتباهك',
+      one: 'فاتورة واحدة تحتاج انتباهك',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String billsOverdueBy(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: 'متأخر $n يومًا',
+      few: 'متأخر $n أيام',
+      two: 'متأخر يومين',
+      one: 'متأخر يومًا',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get birthdayKind => 'عيد ميلاد';
+
+  @override
   String get commonAll => 'الكل';
 
   @override
@@ -457,6 +505,9 @@ class AppLocalizationsAr extends AppLocalizations {
   String get commonNow => 'الآن';
 
   @override
+  String get commonOffline => 'غير متصل';
+
+  @override
   String get commonOptional => 'اختياري';
 
   @override
@@ -476,6 +527,9 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get commonSort => 'ترتيب';
+
+  @override
+  String get commonStale => 'غير محدَّث';
 
   @override
   String get commonStatus => 'الحالة';
@@ -503,6 +557,434 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get commonYesterday => 'أمس';
+
+  @override
+  String cricketScore(String team, int runs, int wickets) {
+    return '$team $runs/$wickets';
+  }
+
+  @override
+  String cricketSecondTest(int n) {
+    return 'الاختبار الثاني · اليوم $n';
+  }
+
+  @override
+  String get discoverDuasMeta => 'لأيامك العادية';
+
+  @override
+  String get discoverDuasTitle => 'أربعون دعاءً';
+
+  @override
+  String docsRenewSoon(String name) {
+    return 'جدّد $name';
+  }
+
+  @override
+  String get featureAge => 'حاسبة العمر';
+
+  @override
+  String get featureAlarms => 'المنبهات';
+
+  @override
+  String get featureAqi => 'جودة الهواء';
+
+  @override
+  String get featureAyah => 'آية اليوم';
+
+  @override
+  String get featureBabybudget => 'ميزانية الطفل';
+
+  @override
+  String get featureBills => 'الفواتير';
+
+  @override
+  String get featureBirthdays => 'أعياد الميلاد';
+
+  @override
+  String get featureBmi => 'حاسبة كتلة الجسم';
+
+  @override
+  String get featureCalculator => 'الآلة الحاسبة';
+
+  @override
+  String get featureCalendar => 'التقويم';
+
+  @override
+  String get featureCommittee => 'الجمعية';
+
+  @override
+  String get featureCompound => 'الفائدة المركّبة';
+
+  @override
+  String get featureConverter => 'محوّل الوحدات';
+
+  @override
+  String get featureCricket => 'الكريكيت';
+
+  @override
+  String get featureCurrency => 'العملات';
+
+  @override
+  String get featureCycle => 'متابعة الدورة';
+
+  @override
+  String get featureDatecalc => 'حاسبة التواريخ';
+
+  @override
+  String get featureDocscan => 'ماسح المستندات';
+
+  @override
+  String get featureDocuments => 'المستندات';
+
+  @override
+  String get featureDuas => 'الأدعية';
+
+  @override
+  String get featureEmergency => 'الطوارئ';
+
+  @override
+  String get featureEvents => 'المواعيد';
+
+  @override
+  String get featureExpenses => 'المصروفات';
+
+  @override
+  String get featureFaraid => 'الفرائض';
+
+  @override
+  String get featureFasting => 'متابعة الصيام';
+
+  @override
+  String get featureFlights => 'الرحلات';
+
+  @override
+  String get featureFocus => 'مؤقّت التركيز';
+
+  @override
+  String get featureFuel => 'أسعار الوقود';
+
+  @override
+  String get featureFuelcost => 'تكلفة الرحلة';
+
+  @override
+  String get featureGoals => 'أهداف الادخار';
+
+  @override
+  String get featureGoldrates => 'العملات والذهب';
+
+  @override
+  String get featureHabits => 'العادات';
+
+  @override
+  String get featureHadith => 'الحديث';
+
+  @override
+  String get featureHealth => 'السجلات الصحية';
+
+  @override
+  String get featureHijri => 'التقويم الهجري';
+
+  @override
+  String get featureHolidays => 'العطل الرسمية';
+
+  @override
+  String get featureInstallments => 'الأقساط';
+
+  @override
+  String get featureLearning => 'التعلّم';
+
+  @override
+  String get featureLedger => 'دفتر الديون';
+
+  @override
+  String get featureLoadshed => 'انقطاع الكهرباء';
+
+  @override
+  String get featureLoan => 'القرض والأقساط';
+
+  @override
+  String get featureMarkets => 'الأسواق';
+
+  @override
+  String get featureMealplan => 'خطة الوجبات';
+
+  @override
+  String get featureMediasaver => 'حافظ الوسائط';
+
+  @override
+  String get featureMeds => 'الأدوية';
+
+  @override
+  String get featureMosques => 'المساجد القريبة';
+
+  @override
+  String get featureNames99 => 'أسماء الله الحسنى';
+
+  @override
+  String get featureNatsavings => 'الادخار الوطني';
+
+  @override
+  String get featureNews => 'الأخبار';
+
+  @override
+  String get featureNotes => 'الملاحظات';
+
+  @override
+  String get featurePackages => 'باقات الجوال';
+
+  @override
+  String get featureParcel => 'تتبّع الطرود';
+
+  @override
+  String get featurePassport => 'صور جواز السفر';
+
+  @override
+  String get featurePlay => 'ألعاب';
+
+  @override
+  String get featurePrayer => 'مواقيت الصلاة';
+
+  @override
+  String get featurePraytrack => 'متابعة الصلاة';
+
+  @override
+  String get featurePregnancy => 'الحمل';
+
+  @override
+  String get featurePrizebonds => 'سندات الجوائز';
+
+  @override
+  String get featureQibla => 'اتجاه القبلة';
+
+  @override
+  String get featureQr => 'ماسح QR';
+
+  @override
+  String get featureQuran => 'القرآن الكريم';
+
+  @override
+  String get featureQuransearch => 'البحث في القرآن';
+
+  @override
+  String get featureRamadan => 'رمضان';
+
+  @override
+  String get featureRecipes => 'الوصفات';
+
+  @override
+  String get featureReminders => 'التذكيرات';
+
+  @override
+  String get featureShopping => 'قائمة التسوق';
+
+  @override
+  String get featureSpeedtest => 'اختبار السرعة';
+
+  @override
+  String get featureStopwatch => 'ساعة الإيقاف';
+
+  @override
+  String get featureStreak => 'التتابع اليومي';
+
+  @override
+  String get featureSubs => 'الاشتراكات';
+
+  @override
+  String get featureSunmoon => 'الشمس والقمر';
+
+  @override
+  String get featureTaraweeh => 'التراويح';
+
+  @override
+  String get featureTasbih => 'المسبحة';
+
+  @override
+  String get featureTax => 'حاسبة الضريبة';
+
+  @override
+  String get featureTimer => 'المؤقّت';
+
+  @override
+  String get featureTipsplit => 'تقسيم الفاتورة';
+
+  @override
+  String get featureTodos => 'المهام';
+
+  @override
+  String get featureTrains => 'القطارات';
+
+  @override
+  String get featureVaccines => 'التطعيمات';
+
+  @override
+  String get featureVehicle => 'المركبات والمخالفات';
+
+  @override
+  String get featureWastatus => 'حالات واتساب';
+
+  @override
+  String get featureWater => 'الماء';
+
+  @override
+  String get featureWeather => 'الطقس';
+
+  @override
+  String get featureWorldclock => 'الساعة العالمية';
+
+  @override
+  String get featureZakat => 'حاسبة الزكاة';
+
+  @override
+  String get fuelPetrol => 'بنزين';
+
+  @override
+  String get fuelSourceOgra => 'أوغرا';
+
+  @override
+  String get greetAfternoon => 'مساء الخير';
+
+  @override
+  String get greetEvening => 'مساء الخير';
+
+  @override
+  String get greetLate => 'ما زلت مستيقظًا';
+
+  @override
+  String get greetMorning => 'صباح الخير';
+
+  @override
+  String greetNamed(String greeting, String name) {
+    return '$greeting، $name';
+  }
+
+  @override
+  String get greetWindDown => 'نهاية اليوم';
+
+  @override
+  String get heroHighlights => 'أبرز الأمور';
+
+  @override
+  String homeAyahProgress(int n, int total, int min) {
+    return 'الآية $n من $total · يتبقّى نحو $min دقيقة';
+  }
+
+  @override
+  String homeContinueSurah(String surah) {
+    return 'تابع $surah';
+  }
+
+  @override
+  String get homeDiscover => 'اكتشف';
+
+  @override
+  String get homeDiscoverSub => 'لأنك تتابع هذه كثيرًا';
+
+  @override
+  String homeEffective(String date, String source) {
+    return 'سارٍ من $date · $source';
+  }
+
+  @override
+  String homeFeelsLike(String temp) {
+    return 'الإحساس $temp';
+  }
+
+  @override
+  String get homeGlance => 'لمحة سريعة';
+
+  @override
+  String get homeGlanceGeneral => 'ما يهمّ في الساعات القليلة القادمة';
+
+  @override
+  String get homeGlanceMuslim => 'الصلاة والقراءة وما هو قادم';
+
+  @override
+  String get homeLiveNow => 'الآن';
+
+  @override
+  String homeLiveNowSub(String time) {
+    return 'حتى $time';
+  }
+
+  @override
+  String homeNextOutage(String time) {
+    return 'الانقطاع القادم $time';
+  }
+
+  @override
+  String get homeNextPrayer => 'الصلاة القادمة';
+
+  @override
+  String get homeNextUp => 'التالي';
+
+  @override
+  String homeOutageArea(String area, int hours) {
+    String _temp0 = intl.Intl.pluralLogic(
+      hours,
+      locale: localeName,
+      other: '$hours ساعة',
+      few: '$hours ساعات',
+      two: 'ساعتان',
+      one: 'ساعة',
+    );
+    return '$area · $_temp0';
+  }
+
+  @override
+  String get homeQuickDefault => 'الثمانية الأكثر استخدامًا';
+
+  @override
+  String get homeQuickFromInterests => 'مختارة حسب اهتماماتك';
+
+  @override
+  String get homeQuickTools => 'أدوات سريعة';
+
+  @override
+  String get homeRightNow => 'الآن';
+
+  @override
+  String get homeSearchEverything => 'ابحث في كل شيء';
+
+  @override
+  String homeTasksLeft(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: 'بقيت $n مهمة اليوم',
+      few: 'بقيت $n مهام اليوم',
+      two: 'بقيت مهمتان اليوم',
+      one: 'بقيت مهمة واحدة اليوم',
+      zero: 'لم يتبقّ شيء اليوم',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String homeTasksNext(String task, String time) {
+    return 'التالي: $task · $time';
+  }
+
+  @override
+  String get homeToGo => 'متبقٍ';
+
+  @override
+  String homeTomorrowIn(String city) {
+    return 'غدًا في $city';
+  }
+
+  @override
+  String get homeUpcoming => 'قادم';
+
+  @override
+  String get homeUpcomingSub => 'الأيام القليلة القادمة';
+
+  @override
+  String homeWeatherAnd(String temp, String condition) {
+    return '$temp و$condition';
+  }
+
+  @override
+  String get homeYourProfile => 'حسابك';
 
   @override
   String get igEveryday => 'الحياة اليومية';
@@ -614,6 +1096,31 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get intZakat => 'الزكاة والصدقة';
+
+  @override
+  String get loadshedOff => 'الكهرباء مقطوعة';
+
+  @override
+  String loadshedUntil(String time) {
+    return 'حتى $time';
+  }
+
+  @override
+  String get marketPk => 'باكستان';
+
+  @override
+  String get marketsClosed => 'السوق مغلق';
+
+  @override
+  String marketsHoliday(String holiday) {
+    return 'مغلق بمناسبة $holiday';
+  }
+
+  @override
+  String get marketsOpen => 'السوق مفتوح';
+
+  @override
+  String get marketsWeekend => 'مغلق لعطلة نهاية الأسبوع';
 
   @override
   String get methodEgyptian => 'المصرية';
@@ -819,6 +1326,14 @@ class AppLocalizationsAr extends AppLocalizations {
   String get onbYoursKicker => 'اجعله لك';
 
   @override
+  String parcelArrivesToday(String carrier) {
+    return '$carrier · يصل اليوم';
+  }
+
+  @override
+  String get parcelOutForDelivery => 'خرج للتسليم';
+
+  @override
   String get persAllCountries => 'كل الدول';
 
   @override
@@ -841,6 +1356,51 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get persUseLocation => 'استخدم موقعي الحالي';
+
+  @override
+  String get prayerAsr => 'العصر';
+
+  @override
+  String get prayerDhuhr => 'الظهر';
+
+  @override
+  String get prayerFajr => 'الفجر';
+
+  @override
+  String get prayerIsha => 'العشاء';
+
+  @override
+  String get prayerMaghrib => 'المغرب';
+
+  @override
+  String get qaDocscan => 'امسح مستندًا';
+
+  @override
+  String get qaExpense => 'أضف مصروفًا';
+
+  @override
+  String get qaNote => 'ملاحظة جديدة';
+
+  @override
+  String get qaParcel => 'تتبّع الطرد';
+
+  @override
+  String get qaScan => 'امسح رمز QR';
+
+  @override
+  String get qaShop => 'التسوّق';
+
+  @override
+  String get qaTasbih => 'تسبيح';
+
+  @override
+  String get qaTask => 'أضف مهمة';
+
+  @override
+  String get qaTimer => 'ابدأ المؤقّت';
+
+  @override
+  String get qaWater => 'سجّل الماء';
 
   @override
   String get recConflict => 'تغيّر هذا السجل في مكان آخر';
@@ -903,7 +1463,127 @@ class AppLocalizationsAr extends AppLocalizations {
   String get searchTry => 'جرّب البحث عن';
 
   @override
+  String get slideMoneyCta => 'عرض المال';
+
+  @override
+  String get slideMoneyKicker => 'المال';
+
+  @override
+  String get slideMoneyText => 'الأسعار والفواتير والمصروفات في مكان واحد.';
+
+  @override
+  String get slideMoneyTitle => 'تابع أموالك أولًا بأول';
+
+  @override
+  String slideOf(int n, int total) {
+    return 'الشريحة $n من $total';
+  }
+
+  @override
+  String get slidePlanCta => 'افتح اليوم';
+
+  @override
+  String get slidePlanKicker => 'اليوم';
+
+  @override
+  String get slidePlanText => 'المهام والتذكيرات والمواعيد على خط زمني واحد.';
+
+  @override
+  String get slidePlanTitle => 'خطّط ليومك قبل أن يبدأ';
+
+  @override
+  String get slidePrayerCta => 'مواقيت الصلاة';
+
+  @override
+  String get slidePrayerKicker => 'صلاتك القادمة';
+
+  @override
+  String slidePrayerLine(String time, String city) {
+    return 'الأذان $time · $city';
+  }
+
+  @override
+  String get slideReadCta => 'متابعة';
+
+  @override
+  String get slideReadKicker => 'القراءة';
+
+  @override
+  String get slideReadText => 'بلغت الآية 42 من سورة الكهف. دقيقتان تكفيان.';
+
+  @override
+  String get slideReadTitle => 'اقرأ شيئًا ذا معنى';
+
+  @override
+  String get slideToolsCta => 'تصفّح الأدوات';
+
+  @override
+  String get slideToolsKicker => 'الأدوات';
+
+  @override
+  String get slideToolsText => 'حاسبة ومحوّلات وماسح وغيرها.';
+
+  @override
+  String get slideToolsTitle => 'أدوات مفيدة، كلّها في مكان واحد';
+
+  @override
+  String get slideTrainsCta => 'ابحث عن قطار';
+
+  @override
+  String get slideTrainsKicker => 'السفر';
+
+  @override
+  String get slideTrainsText => 'حالة التشغيل المباشرة والأجرة والمقاعد.';
+
+  @override
+  String get slideTrainsTitle => 'القطارات، بلا تخمين';
+
+  @override
   String get startupLoading => 'جارٍ بدء Lume';
+
+  @override
+  String subsRenews(String date) {
+    return 'يتجدّد $date';
+  }
+
+  @override
+  String get surahAlKahf => 'الكهف';
+
+  @override
+  String get toolCategoryDaily => 'الحياة اليومية';
+
+  @override
+  String get toolCategoryEveryday => 'يومي';
+
+  @override
+  String get toolCategoryIslamic => 'إسلامي';
+
+  @override
+  String get toolCategoryMoney => 'المال';
+
+  @override
+  String get toolCategoryPersonal => 'شخصي';
+
+  @override
+  String get toolCategoryPlanning => 'التخطيط';
+
+  @override
+  String get toolCategorySubDaily => 'ما يجري حولك';
+
+  @override
+  String get toolCategorySubEveryday => 'ما تستخدمه كل يوم';
+
+  @override
+  String get toolCategorySubIslamic => 'الصلاة والقرآن والزكاة';
+
+  @override
+  String get toolCategorySubMoney => 'الأسعار والفواتير والميزانية';
+
+  @override
+  String get toolCategorySubPersonal => 'خاص بك، على هذا الجهاز';
+
+  @override
+  String get toolCategorySubPlanning => 'وقتك وقوائمك';
 
   @override
   String get toolErrorText => 'تعذّر تحميل هذا. حاول مرة أخرى بعد قليل.';
@@ -915,11 +1595,290 @@ class AppLocalizationsAr extends AppLocalizations {
   String get toolLoading => 'جارٍ التحميل';
 
   @override
+  String get toolLocalService => 'خدمة محلية';
+
+  @override
+  String toolNeedsAttention(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n يحتاج انتباهك',
+      few: '$n تحتاج انتباهك',
+      two: 'اثنان يحتاجان انتباهك',
+      one: 'واحد يحتاج انتباهك',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get toolPrivate => 'خاص';
+
+  @override
   String get toolPrivateText =>
       'تبقى هذه المعلومات على جهازك ولا تُشارك أبدًا.';
 
   @override
   String get toolPrivateTitle => 'خاص بك';
+
+  @override
+  String get toolStatusAge => 'بالأيام بدقة';
+
+  @override
+  String get toolStatusAlarms => '2 مضبوطة';
+
+  @override
+  String get toolStatusAqi => 'مؤشر الهواء';
+
+  @override
+  String get toolStatusAyah => 'الرعد 28';
+
+  @override
+  String get toolStatusBabybudget => 'خطّط التكاليف';
+
+  @override
+  String get toolStatusBills => '2 مستحقة';
+
+  @override
+  String get toolStatusBirthdays => 'عائشة خلال 4 أيام';
+
+  @override
+  String get toolStatusBmi => 'تتبّع الوزن';
+
+  @override
+  String get toolStatusCalculator => 'عادية';
+
+  @override
+  String get toolStatusCalendar => '3 أحداث';
+
+  @override
+  String get toolStatusCommittee => 'الشهر 4 من 10';
+
+  @override
+  String get toolStatusCompound => 'توقّع النمو';
+
+  @override
+  String get toolStatusConverter => '32 وحدة';
+
+  @override
+  String get toolStatusCricket => 'PAK 214/4';
+
+  @override
+  String get toolStatusCurrency => 'أسعار مباشرة';
+
+  @override
+  String get toolStatusCycle => 'خاص';
+
+  @override
+  String get toolStatusDatecalc => 'إضافة · فرق';
+
+  @override
+  String get toolStatusDocscan => 'PDF جاهز';
+
+  @override
+  String get toolStatusDocuments => 'مقفلة';
+
+  @override
+  String get toolStatusDuas => '42 محفوظًا';
+
+  @override
+  String get toolStatusEmergency => '15 · 1122';
+
+  @override
+  String get toolStatusEvents => 'التالي 14:00';
+
+  @override
+  String get toolStatusExpenses => 'هذا الشهر';
+
+  @override
+  String get toolStatusFaraid => 'الميراث';
+
+  @override
+  String get toolStatusFasting => '3 صيامات';
+
+  @override
+  String get toolStatusFlights => 'تتبّع مباشر';
+
+  @override
+  String get toolStatusFocus => '25 دقيقة';
+
+  @override
+  String get toolStatusFuel => 'أسعار المحطات';
+
+  @override
+  String get toolStatusFuelcost => 'تكلفة الرحلة';
+
+  @override
+  String get toolStatusGoals => '2 نشطة';
+
+  @override
+  String get toolStatusGoldrates => 'الذهب والعملات';
+
+  @override
+  String get toolStatusHabits => 'سلسلة 12 يومًا';
+
+  @override
+  String get toolStatusHadith => 'يوميًا';
+
+  @override
+  String get toolStatusHealth => 'خاص';
+
+  @override
+  String get toolStatusHijri => '15 ربيع الأول';
+
+  @override
+  String get toolStatusHolidays => 'هذا العام';
+
+  @override
+  String get toolStatusInstallments => '3 جارية';
+
+  @override
+  String get toolStatusLearning => '3 دورات';
+
+  @override
+  String get toolStatusLedger => '3 أشخاص';
+
+  @override
+  String get toolStatusLoadshed => '14:00–16:00';
+
+  @override
+  String get toolStatusLoan => 'أقساط';
+
+  @override
+  String get toolStatusMarkets => 'KSE-100 ▲ 0.8%';
+
+  @override
+  String get toolStatusMealplan => 'هذا الأسبوع';
+
+  @override
+  String get toolStatusMediasaver => 'حفظ المنشورات';
+
+  @override
+  String get toolStatusMeds => 'خاص';
+
+  @override
+  String get toolStatusMosques => '3 ضمن 1 كم';
+
+  @override
+  String get toolStatusNames99 => 'أسماء الله الحسنى';
+
+  @override
+  String get toolStatusNatsavings => 'معدلات الربح';
+
+  @override
+  String get toolStatusNews => '12 جديدًا';
+
+  @override
+  String get toolStatusNotes => '12 محفوظة';
+
+  @override
+  String get toolStatusPackages => 'Jazz · Zong';
+
+  @override
+  String get toolStatusParcel => '1 في الطريق';
+
+  @override
+  String get toolStatusPassport => 'مقاسات نادرا';
+
+  @override
+  String get toolStatusPlay => 'ألغاز';
+
+  @override
+  String get toolStatusPrayer => 'العصر 15:53';
+
+  @override
+  String get toolStatusPraytrack => 'سلسلة 12 يومًا';
+
+  @override
+  String get toolStatusPregnancy => 'خاص';
+
+  @override
+  String get toolStatusPrizebonds => 'السحب 15 سبتمبر';
+
+  @override
+  String get toolStatusQibla => '267° غربًا';
+
+  @override
+  String get toolStatusQr => 'مسح ودفع';
+
+  @override
+  String get toolStatusQuran => 'الكهف 42';
+
+  @override
+  String get toolStatusQuransearch => 'بالكلمة';
+
+  @override
+  String get toolStatusRamadan => 'خلال 172 يومًا';
+
+  @override
+  String get toolStatusRecipes => '24 محفوظة';
+
+  @override
+  String get toolStatusReminders => '4 اليوم';
+
+  @override
+  String get toolStatusShopping => '6 عناصر';
+
+  @override
+  String get toolStatusSpeedtest => 'اختبر الآن';
+
+  @override
+  String get toolStatusStopwatch => 'لفّات';
+
+  @override
+  String get toolStatusStreak => '12 يومًا';
+
+  @override
+  String get toolStatusSubs => '6 نشطة';
+
+  @override
+  String get toolStatusSunmoon => 'الشروق · الغروب';
+
+  @override
+  String get toolStatusTaraweeh => 'رمضان';
+
+  @override
+  String get toolStatusTasbih => 'عدّاد';
+
+  @override
+  String get toolStatusTax => 'FBR 2025-26';
+
+  @override
+  String get toolStatusTimer => 'إعدادات جاهزة';
+
+  @override
+  String get toolStatusTipsplit => 'تقسيم الفاتورة';
+
+  @override
+  String get toolStatusTodos => '2 من 5 منجزة';
+
+  @override
+  String get toolStatusTrains => 'الخط الأخضر';
+
+  @override
+  String get toolStatusVaccines => 'خاص';
+
+  @override
+  String get toolStatusVehicle => 'التحقق من المخالفات';
+
+  @override
+  String get toolStatusWastatus => 'أندرويد';
+
+  @override
+  String get toolStatusWater => '5 / 8';
+
+  @override
+  String get toolStatusWeather => '34° صافٍ';
+
+  @override
+  String get toolStatusWorldclock => '8 مدن';
+
+  @override
+  String get toolStatusZakat => 'حساب النصاب';
+
+  @override
+  String toolUnavailableHere(String country) {
+    return 'غير متاح في $country بعد';
+  }
 
   @override
   String get toolUnavailableText => 'هذه الأداة ليست ضمن إعداداتك.';
@@ -928,5 +1887,100 @@ class AppLocalizationsAr extends AppLocalizations {
   String get toolUnavailableTitle => 'ليست ضمن إعداداتك';
 
   @override
+  String get toolsForYou => 'لك';
+
+  @override
+  String get toolsNoMatch => 'لا توجد أدوات مطابقة';
+
+  @override
+  String get toolsNoMatchSub => 'جرّب كلمة أخرى — أو تصفّح فئة من الأعلى.';
+
+  @override
   String get toolsNothingYet => 'لا شيء هنا بعد';
+
+  @override
+  String get toolsNothingYetSub =>
+      'أضف بعض الاهتمامات، أو تصفّح القائمة كاملة ضمن “الكل”.';
+
+  @override
+  String get toolsPersonalise => 'تخصيص';
+
+  @override
+  String get toolsRecent => 'المستخدمة مؤخرًا';
+
+  @override
+  String get toolsRecentSub => 'عُد مباشرة إلى حيث كنت';
+
+  @override
+  String toolsResultCount(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n أداة',
+      few: '$n أدوات',
+      two: 'أداتان',
+      one: 'أداة واحدة',
+      zero: 'لا أدوات',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get toolsSearchExample => 'العملات';
+
+  @override
+  String get toolsSearchExamplePk => 'بنزين';
+
+  @override
+  String toolsSearchHint(String example) {
+    return 'ابحث في الأدوات — جرّب “$example”';
+  }
+
+  @override
+  String get toolsSearchLabel => 'ابحث في الأدوات';
+
+  @override
+  String toolsSub(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n أداة، مرتّبة',
+      few: '$n أدوات، مرتّبة',
+      two: 'أداتان، مرتّبتان',
+      one: 'أداة واحدة، مرتّبة',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get toolsTitle => 'الأدوات';
+
+  @override
+  String get weatherClear => 'صافٍ';
+
+  @override
+  String get weatherCloudBuilding => 'تزايد الغيوم';
+
+  @override
+  String get weatherHazy => 'مغبرّ';
+
+  @override
+  String get weatherHazySun => 'شمس مغبرّة';
+
+  @override
+  String weatherHighLow(String high, String low) {
+    return '$high / $low';
+  }
+
+  @override
+  String get weatherLightCloud => 'غيوم خفيفة';
+
+  @override
+  String get weatherMostlyClear => 'صافٍ غالبًا';
+
+  @override
+  String get weatherOvercast => 'غائم';
+
+  @override
+  String get weatherRain => 'المطر';
 }

@@ -34,6 +34,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
+import '../../app/providers/personalisation.dart';
 import '../../app/providers/shell_provider.dart';
 import '../../features/auth/application/auth_flow_controller.dart';
 import '../../features/auth/data/fake_auth_repository.dart';
@@ -43,6 +44,8 @@ import '../../features/auth/presentation/auth_flow.dart';
 import '../../features/shell/presentation/fixture_records_screen.dart';
 import '../../features/shell/presentation/fixture_screens.dart';
 import '../../features/gallery/presentation/gallery_screen.dart';
+import '../../features/home/presentation/home_host.dart';
+import '../../features/tools/presentation/tools_host.dart';
 import '../../features/gallery/presentation/navigation_gallery.dart';
 import '../../features/onboarding/domain/onboarding_state.dart';
 import '../../features/onboarding/domain/profile_repository.dart';
@@ -376,9 +379,24 @@ const String _gallerySegment = 'gallery';
 const String _navigationGallerySegment = 'navigation-gallery';
 
 /// A branch root.
+///
+/// Home and the Tools hub are the product; the rest are still the F3 fixture
+/// that proved the shell, and each is replaced by its own screen in turn.
 Widget _destination(BuildContext context, LumeDestinationId id) {
   final AppLocalizations l = AppLocalizations.of(context);
   final String root = id.path;
+
+  switch (id) {
+    case LumeDestinationId.home:
+      return LumeHomeHost(branch: root);
+    case LumeDestinationId.tools:
+      return LumeToolsHost(branch: root);
+    case LumeDestinationId.trains:
+    case LumeDestinationId.today:
+    case LumeDestinationId.explore:
+    case LumeDestinationId.profile:
+      break;
+  }
 
   return LumeFixtureScreen(
     title: destinationLabel(l, id),
@@ -512,7 +530,13 @@ class _ShellHost extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final AppLocalizations l = AppLocalizations.of(context);
-    final String country = ref.watch(countryCodeProvider);
+    // The tab set is personalised by country, and the country lives on the
+    // profile — one store, read through the same scope every destination
+    // reads, so switching market re-presents the bar in the same frame the
+    // setting changed without rebuilding a branch.
+    final LumeStartupController gate = ref.watch(startupControllerProvider);
+    final String country =
+        ref.watch(countryOverrideProvider) ?? gate.state.profile.country;
 
     final List<LumeDestination> destinations = LumeDestinations.build(
       countryCode: country,

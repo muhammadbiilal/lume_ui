@@ -13,7 +13,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-import 'package:lume/app/providers/shell_provider.dart';
+import 'package:lume/app/providers/personalisation.dart';
 import 'package:lume/core/navigation/lume_destination.dart';
 import 'package:lume/core/navigation/lume_navigation_surfaces.dart';
 import 'package:lume/core/navigation/lume_tool_frame.dart';
@@ -242,7 +242,7 @@ void main() {
       await pumpLumeRouter(
         tester,
         overrides: <Override>[
-          countryCodeProvider.overrideWith((Ref ref) => 'GB'),
+          countryOverrideProvider.overrideWith((Ref ref) => 'GB'),
         ],
       );
       final List<LumeDestinationId> ids = barDestinations(
@@ -257,10 +257,12 @@ void main() {
     testWidgets('a tab switch does not reset the other tab\'s screen', (
       WidgetTester tester,
     ) async {
-      await pumpLumeRouter(tester);
+      await pumpLumeRouter(tester, initialLocation: LumeRoutes.today);
 
-      // Home's fixture counts its own taps. Three taps is state that only
-      // survives if Home's branch is preserved rather than rebuilt.
+      // Today's fixture counts its own taps. Three taps is state that only
+      // survives if Today's branch is preserved rather than rebuilt — Home and
+      // the Tools hub are the product now, so the counter lives on a branch
+      // that is still a fixture.
       String countOn(String storageId) => tester
           .widget<Text>(
             find.byKey(ValueKey<String>('fixture-count:$storageId')),
@@ -268,21 +270,21 @@ void main() {
           .data!;
 
       for (int i = 0; i < 3; i++) {
-        await tester.tap(find.widgetWithText(LumeButton, 'Home'));
+        await tester.tap(find.widgetWithText(LumeButton, 'Today'));
       }
       await tester.pumpAndSettle();
-      expect(countOn('home'), '3');
+      expect(countOn('today'), '3');
+
+      await tester.tap(find.text('Profile').last);
+      await tester.pumpAndSettle();
+      expect(countOn('profile'), '0');
 
       await tester.tap(find.text('Today').last);
       await tester.pumpAndSettle();
-      expect(countOn('today'), '0');
-
-      await tester.tap(find.text('Home').last);
-      await tester.pumpAndSettle();
       expect(
-        countOn('home'),
+        countOn('today'),
         '3',
-        reason: 'Home came back to the count it left with',
+        reason: 'Today came back to the count it left with',
       );
     });
 

@@ -214,6 +214,51 @@ class LumeType extends ThemeExtension<LumeType> {
     );
   }
 
+  /// `line-height: normal`, as the browser resolves it for Plus Jakarta Sans.
+  ///
+  /// Most of the prototype's small text sets a size and leaves the line height
+  /// alone, and CSS's `normal` is the *font's* natural line — ascent, descent
+  /// and line gap — not a ratio anybody chose. The roles in [standard] carry
+  /// the `--t-*` tokens' explicit heights, which are the right thing where a
+  /// token is used and the wrong thing where the stylesheet is not using one.
+  ///
+  /// These are the measured values, read off the rendered prototype rather
+  /// than computed: a 12-point line is 15 and an 11-point one is 13, which no
+  /// single ratio produces.
+  static double naturalLine(double size) => switch (size.round()) {
+    10 => 12,
+    11 => 13,
+    12 => 15,
+    13 => 16,
+    14 => 18,
+    15 => 19,
+    17 => 22,
+    20 => 26,
+    24 => 30,
+    28 => 35,
+    _ => size * 1.26,
+  };
+
+  /// A style set at [size] on its natural line, fitted to the locale.
+  ///
+  /// The locale still wins: a script that needs 1.6 gets 1.6, because a clipped
+  /// diacritic is worse than a line that does not match the prototype.
+  static TextStyle natural(
+    BuildContext context,
+    TextStyle style, {
+    double? size,
+  }) {
+    final double s = size ?? style.fontSize ?? 14;
+    final Locale locale =
+        Localizations.maybeLocaleOf(context) ?? const Locale('en');
+    final TextStyle fitted = fit(context, style.copyWith(fontSize: s));
+    final double wanted = naturalLine(s) / s;
+    // The locale still wins upward: a script that needs 1.6 gets it, because a
+    // clipped diacritic is worse than a line that does not match.
+    final double floor = needsTallLineHeight(locale) ? tallScriptMinHeight : 0;
+    return fitted.copyWith(height: wanted > floor ? wanted : floor);
+  }
+
   /// A line height that is never tighter than the locale's script can carry.
   /// Use it when building a one-off [TextStyle] rather than taking a role.
   static double lineHeight(BuildContext context, double base) {

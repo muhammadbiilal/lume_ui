@@ -4,7 +4,7 @@
 /// properties, so the same drawing is a different set of colours in light and
 /// dark. `flutter_svg` cannot resolve a custom property, so
 /// `tool/gen_onboarding_art.mjs` lifts the geometry byte-for-byte and swaps
-/// each `var(--token)` for a sentinel colour; [_LumeArtColours] maps the
+/// each `var(--token)` for a sentinel colour; [LumeArtColours] maps the
 /// sentinels back to the live theme at paint time.
 ///
 /// The alternative — freezing one theme's hex values into the asset — would
@@ -19,6 +19,7 @@ library;
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
+import '../../../core/theme/lume/lume_art_colours.dart';
 import '../../../core/theme/lume/lume_colors.dart';
 import '../../../core/theme/lume/lume_motion.dart';
 import '../../../core/theme/lume/lume_theme.dart';
@@ -47,45 +48,6 @@ enum LumeOnboardingArtwork {
   final int step;
 
   String get asset => 'assets/images/onboarding/step_$step.svg';
-}
-
-/// Maps the generator's sentinels onto the theme.
-///
-/// A `ColorMapper` is given every colour the SVG parser meets; anything that
-/// is not a sentinel is returned untouched, so the white strokes and the
-/// literal opacities in the art survive.
-@immutable
-class _LumeArtColours extends ColorMapper {
-  const _LumeArtColours(this.lume);
-
-  final LumeColors lume;
-
-  @override
-  Color substitute(
-    String? id,
-    String elementName,
-    String attributeName,
-    Color colour,
-  ) => switch (colour.toARGB32() & 0x00FFFFFF) {
-    0xFF0001 => lume.accent,
-    0xFF0002 => lume.accent400,
-    0xFF0003 => lume.accent600,
-    0xFF0004 => lume.accent700,
-    0xFF0005 => lume.violet,
-    0xFF0006 => lume.sky,
-    0xFF0007 => lume.card,
-    0xFF0008 => lume.card2,
-    0xFF0009 => lume.border,
-    0xFF000A => lume.text,
-    0xFF000B => lume.text2,
-    0xFF000C => lume.text3,
-    0xFF000D => lume.tintAccent,
-    0xFF000E => lume.tintNeutral,
-    0xFF000F => lume.bg,
-    0xFF0010 => lume.amber,
-    0xFF0011 => lume.rose,
-    _ => colour,
-  };
 }
 
 /// One step's illustration, in its stage.
@@ -136,7 +98,7 @@ class LumeOnboardingArt extends StatelessWidget {
             child: ExcludeSemantics(
               child: SvgPicture.asset(
                 artwork.asset,
-                colorMapper: _LumeArtColours(lume),
+                colorMapper: LumeArtColours(lume),
                 // The drawing's own aspect ratio, from its viewBox. Letting it
                 // stretch would be the one thing that makes bespoke art look
                 // like clip art.

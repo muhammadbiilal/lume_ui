@@ -1,0 +1,487 @@
+{
+ "calculator": {
+  "en": "Calculator",
+  "ur": "کیلکولیٹر",
+  "ar": "الآلة الحاسبة"
+ },
+ "converter": {
+  "en": "Unit Converter",
+  "ur": "یونٹ کنورٹر",
+  "ar": "محوّل الوحدات"
+ },
+ "currency": {
+  "en": "Currency",
+  "ur": "کرنسی",
+  "ar": "العملات"
+ },
+ "stopwatch": {
+  "en": "Stopwatch",
+  "ur": "اسٹاپ واچ",
+  "ar": "ساعة الإيقاف"
+ },
+ "timer": {
+  "en": "Timer",
+  "ur": "ٹائمر",
+  "ar": "المؤقّت"
+ },
+ "age": {
+  "en": "Age Calculator",
+  "ur": "عمر کیلکولیٹر",
+  "ar": "حاسبة العمر"
+ },
+ "focus": {
+  "en": "Focus Timer",
+  "ur": null,
+  "ar": null
+ },
+ "datecalc": {
+  "en": "Date Calculator",
+  "ur": "تاریخ کیلکولیٹر",
+  "ar": "حاسبة التواريخ"
+ },
+ "calendar": {
+  "en": "Calendar",
+  "ur": "کیلنڈر",
+  "ar": "التقويم"
+ },
+ "reminders": {
+  "en": "Reminders",
+  "ur": "یاد دہانیاں",
+  "ar": "التذكيرات"
+ },
+ "notes": {
+  "en": "Notes",
+  "ur": "نوٹس",
+  "ar": "الملاحظات"
+ },
+ "todos": {
+  "en": "To-dos",
+  "ur": "کام",
+  "ar": "المهام"
+ },
+ "events": {
+  "en": "Events",
+  "ur": "مصروفیات",
+  "ar": "المواعيد"
+ },
+ "prayer": {
+  "en": "Prayer Times",
+  "ur": "نماز کے اوقات",
+  "ar": "مواقيت الصلاة"
+ },
+ "qibla": {
+  "en": "Qibla Compass",
+  "ur": "قبلہ کمپاس",
+  "ar": "اتجاه القبلة"
+ },
+ "mosques": {
+  "en": "Nearby Mosques",
+  "ur": "قریبی مساجد",
+  "ar": "المساجد القريبة"
+ },
+ "praytrack": {
+  "en": "Prayer Tracker",
+  "ur": "نماز ٹریکر",
+  "ar": "متابعة الصلاة"
+ },
+ "ramadan": {
+  "en": "Ramadan",
+  "ur": "رمضان",
+  "ar": "رمضان"
+ },
+ "fasting": {
+  "en": "Fasting Tracker",
+  "ur": "روزہ ٹریکر",
+  "ar": "متابعة الصيام"
+ },
+ "taraweeh": {
+  "en": "Taraweeh",
+  "ur": "تراویح",
+  "ar": "التراويح"
+ },
+ "ayah": {
+  "en": "Ayah of the Day",
+  "ur": "آج کی آیت",
+  "ar": "آية اليوم"
+ },
+ "quran": {
+  "en": "Al-Qur’an",
+  "ur": "القرآن",
+  "ar": "القرآن الكريم"
+ },
+ "quransearch": {
+  "en": "Search the Qur’an",
+  "ur": "قرآن میں تلاش",
+  "ar": "البحث في القرآن"
+ },
+ "hadith": {
+  "en": "Hadith",
+  "ur": "حدیث",
+  "ar": "الحديث"
+ },
+ "duas": {
+  "en": "Daily Duas",
+  "ur": "روزانہ دعائیں",
+  "ar": "الأدعية"
+ },
+ "names99": {
+  "en": "99 Names",
+  "ur": "99 نام",
+  "ar": "أسماء الله الحسنى"
+ },
+ "hijri": {
+  "en": "Islamic Calendar",
+  "ur": "اسلامی کیلنڈر",
+  "ar": "التقويم الهجري"
+ },
+ "tasbih": {
+  "en": "Tasbih",
+  "ur": "تسبیح",
+  "ar": "المسبحة"
+ },
+ "zakat": {
+  "en": "Zakat Calculator",
+  "ur": "زکوٰۃ کیلکولیٹر",
+  "ar": "حاسبة الزكاة"
+ },
+ "faraid": {
+  "en": "Faraid",
+  "ur": "فرائض",
+  "ar": "الفرائض"
+ },
+ "compound": {
+  "en": "Compound Interest",
+  "ur": null,
+  "ar": null
+ },
+ "goldrates": {
+  "en": "Currency & Gold",
+  "ur": "کرنسی اور سونا",
+  "ar": "العملات والذهب"
+ },
+ "markets": {
+  "en": "Markets",
+  "ur": "مارکیٹس",
+  "ar": "الأسواق"
+ },
+ "fuel": {
+  "en": "Fuel Prices",
+  "ur": "پٹرول کی قیمتیں",
+  "ar": "أسعار الوقود"
+ },
+ "fuelcost": {
+  "en": "Fuel Cost",
+  "ur": "سفر کا خرچ",
+  "ar": "تكلفة الرحلة"
+ },
+ "tax": {
+  "en": "Tax Calculator",
+  "ur": "ٹیکس کیلکولیٹر",
+  "ar": "حاسبة الضريبة"
+ },
+ "natsavings": {
+  "en": "National Savings",
+  "ur": "قومی بچت",
+  "ar": "الادخار الوطني"
+ },
+ "prizebonds": {
+  "en": "Prize Bonds",
+  "ur": "پرائز بانڈ",
+  "ar": "سندات الجوائز"
+ },
+ "bills": {
+  "en": "Bills",
+  "ur": "بل",
+  "ar": "الفواتير"
+ },
+ "packages": {
+  "en": "Mobile Packages",
+  "ur": "موبائل پیکجز",
+  "ar": "باقات الجوال"
+ },
+ "loan": {
+  "en": "Loan / EMI",
+  "ur": "قرض / قسط",
+  "ar": "القرض والأقساط"
+ },
+ "tipsplit": {
+  "en": "Tip & Split",
+  "ur": "بل تقسیم",
+  "ar": "تقسيم الفاتورة"
+ },
+ "ledger": {
+  "en": "Lending Ledger",
+  "ur": "ادھار کھاتہ",
+  "ar": "دفتر الديون"
+ },
+ "installments": {
+  "en": "Installments",
+  "ur": "اقساط",
+  "ar": "الأقساط"
+ },
+ "committee": {
+  "en": "Committee",
+  "ur": "کمیٹی",
+  "ar": "الجمعية"
+ },
+ "aqi": {
+  "en": "Air Quality",
+  "ur": null,
+  "ar": null
+ },
+ "sunmoon": {
+  "en": "Sun & Moon",
+  "ur": null,
+  "ar": null
+ },
+ "worldclock": {
+  "en": "World Clock",
+  "ur": null,
+  "ar": null
+ },
+ "holidays": {
+  "en": "Public Holidays",
+  "ur": null,
+  "ar": null
+ },
+ "weather": {
+  "en": "Weather",
+  "ur": "موسم",
+  "ar": "الطقس"
+ },
+ "loadshed": {
+  "en": "Loadshedding",
+  "ur": "لوڈشیڈنگ",
+  "ar": "انقطاع الكهرباء"
+ },
+ "trains": {
+  "en": "Trains",
+  "ur": "ٹرینیں",
+  "ar": "القطارات"
+ },
+ "flights": {
+  "en": "Flights",
+  "ur": "پروازیں",
+  "ar": "الرحلات"
+ },
+ "news": {
+  "en": "News",
+  "ur": "خبریں",
+  "ar": "الأخبار"
+ },
+ "cricket": {
+  "en": "Cricket",
+  "ur": "کرکٹ",
+  "ar": "الكريكيت"
+ },
+ "emergency": {
+  "en": "Emergency",
+  "ur": "ایمرجنسی",
+  "ar": "الطوارئ"
+ },
+ "qr": {
+  "en": "QR Scanner",
+  "ur": "QR اسکینر",
+  "ar": "ماسح QR"
+ },
+ "docscan": {
+  "en": "Document Scanner",
+  "ur": "دستاویز اسکینر",
+  "ar": "ماسح المستندات"
+ },
+ "passport": {
+  "en": "Passport Photos",
+  "ur": "پاسپورٹ تصاویر",
+  "ar": "صور جواز السفر"
+ },
+ "vehicle": {
+  "en": "Vehicle & Fines",
+  "ur": "گاڑی اور جرمانے",
+  "ar": "المركبات والمخالفات"
+ },
+ "mediasaver": {
+  "en": "Media Saver",
+  "ur": "میڈیا سیور",
+  "ar": "حافظ الوسائط"
+ },
+ "wastatus": {
+  "en": "WhatsApp Status",
+  "ur": "واٹس ایپ اسٹیٹس",
+  "ar": "حالات واتساب"
+ },
+ "speedtest": {
+  "en": "Speed Test",
+  "ur": "اسپیڈ ٹیسٹ",
+  "ar": "اختبار السرعة"
+ },
+ "parcel": {
+  "en": "Parcel Tracker",
+  "ur": "پارسل ٹریکر",
+  "ar": "تتبّع الطرود"
+ },
+ "shopping": {
+  "en": "Shopping List",
+  "ur": "خریداری کی فہرست",
+  "ar": "قائمة التسوق"
+ },
+ "birthdays": {
+  "en": "Birthdays",
+  "ur": "سالگرہ",
+  "ar": "أعياد الميلاد"
+ },
+ "streak": {
+  "en": "Daily Streak",
+  "ur": "روزانہ تسلسل",
+  "ar": "التتابع اليومي"
+ },
+ "recipes": {
+  "en": "Recipes",
+  "ur": "ترکیبیں",
+  "ar": "الوصفات"
+ },
+ "mealplan": {
+  "en": "Meal Planner",
+  "ur": "کھانے کا منصوبہ",
+  "ar": "خطة الوجبات"
+ },
+ "alarms": {
+  "en": "Alarms",
+  "ur": "الارم",
+  "ar": "المنبهات"
+ },
+ "learning": {
+  "en": "Learning & Growth",
+  "ur": "سیکھنا",
+  "ar": "التعلّم"
+ },
+ "documents": {
+  "en": "Documents",
+  "ur": "دستاویزات",
+  "ar": "المستندات"
+ },
+ "vaccines": {
+  "en": "Vaccinations",
+  "ur": "ویکسینیشن",
+  "ar": "التطعيمات"
+ },
+ "health": {
+  "en": "Health Records",
+  "ur": "صحت کا ریکارڈ",
+  "ar": "السجلات الصحية"
+ },
+ "play": {
+  "en": "Play",
+  "ur": "کھیل",
+  "ar": "ألعاب"
+ },
+ "babybudget": {
+  "en": "Baby Budget",
+  "ur": "بچے کا بجٹ",
+  "ar": "ميزانية الطفل"
+ },
+ "habits": {
+  "en": "Habits",
+  "ur": "عادات",
+  "ar": "العادات"
+ },
+ "water": {
+  "en": "Water",
+  "ur": "پانی",
+  "ar": "الماء"
+ },
+ "bmi": {
+  "en": "BMI Calculator",
+  "ur": "BMI کیلکولیٹر",
+  "ar": "حاسبة كتلة الجسم"
+ },
+ "cycle": {
+  "en": "Cycle Tracker",
+  "ur": "سائیکل ٹریکر",
+  "ar": "متابعة الدورة"
+ },
+ "pregnancy": {
+  "en": "Pregnancy",
+  "ur": "حمل",
+  "ar": "الحمل"
+ },
+ "expenses": {
+  "en": "Expenses",
+  "ur": "اخراجات",
+  "ar": "المصروفات"
+ },
+ "goals": {
+  "en": "Savings Goals",
+  "ur": "بچت کے اہداف",
+  "ar": "أهداف الادخار"
+ },
+ "subs": {
+  "en": "Subscriptions",
+  "ur": "سبسکرپشنز",
+  "ar": "الاشتراكات"
+ },
+ "meds": {
+  "en": "Medication",
+  "ur": "ادویات",
+  "ar": "الأدوية"
+ },
+ "cat:everyday": {
+  "en": "Everyday",
+  "ur": "روزمرہ",
+  "ar": "يومي"
+ },
+ "catsub:everyday": {
+  "en": "The ones you reach for daily",
+  "ur": "جو روز کام آتے ہیں",
+  "ar": "ما تستخدمه كل يوم"
+ },
+ "cat:planning": {
+  "en": "Planning",
+  "ur": "منصوبہ بندی",
+  "ar": "التخطيط"
+ },
+ "catsub:planning": {
+  "en": "Your time and your lists",
+  "ur": "آپ کا وقت اور فہرستیں",
+  "ar": "وقتك وقوائمك"
+ },
+ "cat:islamic": {
+  "en": "Islamic",
+  "ur": "اسلامی",
+  "ar": "إسلامي"
+ },
+ "catsub:islamic": {
+  "en": "Prayer, Qur’an and giving",
+  "ur": "نماز، قرآن اور صدقہ",
+  "ar": "الصلاة والقرآن والزكاة"
+ },
+ "cat:money": {
+  "en": "Money",
+  "ur": "پیسہ",
+  "ar": "المال"
+ },
+ "catsub:money": {
+  "en": "Rates, bills and budgets",
+  "ur": "ریٹ، بل اور بجٹ",
+  "ar": "الأسعار والفواتير والميزانية"
+ },
+ "cat:daily": {
+  "en": "Daily Life",
+  "ur": "روزمرہ زندگی",
+  "ar": "الحياة اليومية"
+ },
+ "catsub:daily": {
+  "en": "What’s happening around you",
+  "ur": "آس پاس کیا ہو رہا ہے",
+  "ar": "ما يجري حولك"
+ },
+ "cat:personal": {
+  "en": "Personal",
+  "ur": "ذاتی",
+  "ar": "شخصي"
+ },
+ "catsub:personal": {
+  "en": "Private to you, on this device",
+  "ur": "صرف آپ کے لیے، اسی ڈیوائس پر",
+  "ar": "خاص بك، على هذا الجهاز"
+ }
+}

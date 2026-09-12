@@ -1,0 +1,1123 @@
+{
+  "cell": "tools_default_pk_tools_all_390x844_light_en",
+  "screen": "tools",
+  "state": "default_pk",
+  "after": "tools_all",
+  "profile": {
+    "country": "PK",
+    "city": "Islamabad",
+    "islamic": false,
+    "interests": [
+      "weather",
+      "calendar",
+      "tasks",
+      "notes",
+      "maths",
+      "expenses",
+      "news"
+    ],
+    "favourites": [],
+    "recents": [],
+    "prefs": {
+      "news": true,
+      "cricket": true,
+      "finance": true,
+      "recos": true
+    },
+    "displayName": ""
+  },
+  "viewport": {
+    "width": 390,
+    "height": 844,
+    "innerWidth": 390
+  },
+  "theme": "light",
+  "lang": "en",
+  "dir": "ltr",
+  "tabs": [
+    "home",
+    "tools",
+    "trains",
+    "today",
+    "profile"
+  ],
+  "activeTab": "tools",
+  "scroll": {
+    "clientHeight": 816,
+    "scrollHeight": 3282,
+    "paddingBottom": "118px"
+  },
+  "missing": [
+    "recent",
+    "recent.icon",
+    "recent.label",
+    "cattool.pin"
+  ],
+  "composition": {
+    "chips": [
+      "foryou",
+      "all",
+      "everyday",
+      "planning",
+      "money",
+      "daily",
+      "personal"
+    ],
+    "chipLabels": [
+      "For you",
+      "All",
+      "Everyday",
+      "Planning",
+      "Money",
+      "Daily Life",
+      "Personal"
+    ],
+    "activeChip": "all",
+    "categories": [
+      {
+        "id": "everyday",
+        "title": "Everyday",
+        "sub": "The ones you reach for daily",
+        "count": "8",
+        "tools": [
+          {
+            "id": "calculator",
+            "label": "Calculator",
+            "meta": "Standard",
+            "pin": false,
+            "flag": false,
+            "count": null
+          },
+          {
+            "id": "converter",
+            "label": "Unit Converter",
+            "meta": "32 units",
+            "pin": false,
+            "flag": false,
+            "count": null
+          },
+          {
+            "id": "currency",
+            "label": "Currency",
+            "meta": "Live rates",
+            "pin": false,
+            "flag": false,
+            "count": null
+          },
+          {
+            "id": "stopwatch",
+            "label": "Stopwatch",
+            "meta": "Laps",
+            "pin": false,
+            "flag": false,
+            "count": null
+          },
+          {
+            "id": "timer",
+            "label": "Timer",
+            "meta": "Presets",
+            "pin": false,
+            "flag": false,
+            "count": null
+          },
+          {
+            "id": "age",
+            "label": "Age Calculator",
+            "meta": "Exact days",
+            "pin": false,
+            "flag": false,
+            "count": null
+          },
+          {
+            "id": "focus",
+            "label": "Focus Timer",
+            "meta": "25 min",
+            "pin": false,
+            "flag": false,
+            "count": null
+          },
+          {
+            "id": "datecalc",
+            "label": "Date Calculator",
+            "meta": "Add · diff",
+            "pin": false,
+            "flag": false,
+            "count": null
+          }
+        ]
+      },
+      {
+        "id": "planning",
+        "title": "Planning",
+        "sub": "Your time and your lists",
+        "count": "5",
+        "tools": [
+          {
+            "id": "calendar",
+            "label": "Calendar",
+            "meta": "3 events",
+            "pin": false,
+            "flag": false,
+            "count": null
+          },
+          {
+            "id": "reminders",
+            "label": "Reminders",
+            "meta": "4 today",
+            "pin": false,
+            "flag": false,
+            "count": null
+          },
+          {
+            "id": "notes",
+            "label": "Notes",
+            "meta": "12 saved",
+            "pin": false,
+            "flag": false,
+            "count": null
+          },
+          {
+            "id": "todos",
+            "label": "To-dos",
+            "meta": "2 of 5 done",
+            "pin": false,
+            "flag": false,
+            "count": null
+          },
+          {
+            "id": "events",
+            "label": "Events",
+            "meta": "Next 14:00",
+            "pin": false,
+            "flag": false,
+            "count": null
+          }
+        ]
+      },
+      {
+        "id": "money",
+        "title": "Money",
+        "sub": "Rates, bills and budgets",
+        "count": "15",
+        "tools": [
+          {
+            "id": "compound",
+            "label": "Compound Interest",
+            "meta": "Project growth",
+            "pin": false,
+            "flag": false,
+            "count": null
+          },
+          {
+            "id": "goldrates",
+            "label": "Currency & Gold",
+            "meta": "Gold & FX",
+            "pin": false,
+            "flag": false,
+            "count": null
+          },
+          {
+            "id": "markets",
+            "label": "Markets",
+            "meta": "KSE-100 ▲ 0.8%",
+            "pin": false,
+            "flag": false,
+            "count": null
+          },
+          {
+            "id": "fuel",
+            "label": "Fuel Prices",
+            "meta": "Pump prices",
+            "pin": false,
+            "flag": false,
+            "count": null
+          },
+          {
+            "id": "fuelcost",
+            "label": "Fuel Cost",
+            "meta": "Trip cost",
+            "pin": false,
+            "flag": false,
+            "count": null
+          },
+          {
+            "id": "tax",
+            "label": "Tax Calculator",
+            "meta": "FBR 2025-26",
+            "pin": false,
+            "flag": false,
+            "count": null
+          },
+          {
+            "id": "natsavings",
+            "label": "National Savings",
+            "meta": "Profit rates",
+            "pin": false,
+            "flag": false,
+            "count": null
+          },
+          {
+            "id": "prizebonds",
+            "label": "Prize Bonds",
+            "meta": "Draw 15 Sep",
+            "pin": false,
+            "flag": false,
+            "count": null
+          },
+          {
+            "id": "bills",
+            "label": "Bills",
+            "meta": "2 due",
+            "pin": false,
+            "flag": false,
+            "count": "1"
+          },
+          {
+            "id": "packages",
+            "label": "Mobile Packages",
+            "meta": "Jazz · Zong",
+            "pin": false,
+            "flag": false,
+            "count": null
+          },
+          {
+            "id": "loan",
+            "label": "Loan / EMI",
+            "meta": "Instalments",
+            "pin": false,
+            "flag": false,
+            "count": null
+          },
+          {
+            "id": "tipsplit",
+            "label": "Tip & Split",
+            "meta": "Split a bill",
+            "pin": false,
+            "flag": false,
+            "count": null
+          },
+          {
+            "id": "ledger",
+            "label": "Lending Ledger",
+            "meta": "Rs 8,480",
+            "pin": false,
+            "flag": false,
+            "count": null
+          },
+          {
+            "id": "installments",
+            "label": "Installments",
+            "meta": "3 running",
+            "pin": false,
+            "flag": false,
+            "count": null
+          },
+          {
+            "id": "committee",
+            "label": "Committee",
+            "meta": "Month 4 of 10",
+            "pin": false,
+            "flag": false,
+            "count": null
+          }
+        ]
+      },
+      {
+        "id": "daily",
+        "title": "Daily Life",
+        "sub": "What’s happening around you",
+        "count": "18",
+        "tools": [
+          {
+            "id": "aqi",
+            "label": "Air Quality",
+            "meta": "AQI",
+            "pin": false,
+            "flag": false,
+            "count": null
+          },
+          {
+            "id": "sunmoon",
+            "label": "Sun & Moon",
+            "meta": "Sunrise · sunset",
+            "pin": false,
+            "flag": false,
+            "count": null
+          },
+          {
+            "id": "worldclock",
+            "label": "World Clock",
+            "meta": "8 cities",
+            "pin": false,
+            "flag": false,
+            "count": null
+          },
+          {
+            "id": "holidays",
+            "label": "Public Holidays",
+            "meta": "This year",
+            "pin": false,
+            "flag": false,
+            "count": null
+          },
+          {
+            "id": "weather",
+            "label": "Weather",
+            "meta": "34° Hazy sun",
+            "pin": false,
+            "flag": false,
+            "count": null
+          },
+          {
+            "id": "loadshed",
+            "label": "Loadshedding",
+            "meta": "14:00–16:00",
+            "pin": false,
+            "flag": false,
+            "count": null
+          },
+          {
+            "id": "trains",
+            "label": "Trains",
+            "meta": "Green Line",
+            "pin": false,
+            "flag": false,
+            "count": null
+          },
+          {
+            "id": "flights",
+            "label": "Flights",
+            "meta": "Track live",
+            "pin": false,
+            "flag": false,
+            "count": null
+          },
+          {
+            "id": "news",
+            "label": "News",
+            "meta": "12 new",
+            "pin": false,
+            "flag": false,
+            "count": null
+          },
+          {
+            "id": "cricket",
+            "label": "Cricket",
+            "meta": "PAK 214/4",
+            "pin": false,
+            "flag": false,
+            "count": null
+          },
+          {
+            "id": "emergency",
+            "label": "Emergency",
+            "meta": "15 · 1122",
+            "pin": false,
+            "flag": false,
+            "count": null
+          },
+          {
+            "id": "qr",
+            "label": "QR Scanner",
+            "meta": "Scan & pay",
+            "pin": false,
+            "flag": false,
+            "count": null
+          },
+          {
+            "id": "docscan",
+            "label": "Document Scanner",
+            "meta": "PDF ready",
+            "pin": false,
+            "flag": false,
+            "count": null
+          },
+          {
+            "id": "passport",
+            "label": "Passport Photos",
+            "meta": "NADRA sizes",
+            "pin": false,
+            "flag": false,
+            "count": null
+          },
+          {
+            "id": "vehicle",
+            "label": "Vehicle & Fines",
+            "meta": "Check challan",
+            "pin": false,
+            "flag": false,
+            "count": null
+          },
+          {
+            "id": "mediasaver",
+            "label": "Media Saver",
+            "meta": "Save posts",
+            "pin": false,
+            "flag": false,
+            "count": null
+          },
+          {
+            "id": "wastatus",
+            "label": "WhatsApp Status",
+            "meta": "Android",
+            "pin": false,
+            "flag": false,
+            "count": null
+          },
+          {
+            "id": "speedtest",
+            "label": "Speed Test",
+            "meta": "Test now",
+            "pin": false,
+            "flag": false,
+            "count": null
+          }
+        ]
+      },
+      {
+        "id": "personal",
+        "title": "Personal",
+        "sub": "Private to you, on this device",
+        "count": "22",
+        "tools": [
+          {
+            "id": "parcel",
+            "label": "Parcel Tracker",
+            "meta": "1 in transit",
+            "pin": false,
+            "flag": false,
+            "count": null
+          },
+          {
+            "id": "shopping",
+            "label": "Shopping List",
+            "meta": "6 items",
+            "pin": false,
+            "flag": false,
+            "count": null
+          },
+          {
+            "id": "birthdays",
+            "label": "Birthdays",
+            "meta": "Ayesha in 4d",
+            "pin": false,
+            "flag": false,
+            "count": null
+          },
+          {
+            "id": "streak",
+            "label": "Daily Streak",
+            "meta": "12 days",
+            "pin": false,
+            "flag": false,
+            "count": null
+          },
+          {
+            "id": "recipes",
+            "label": "Recipes",
+            "meta": "24 saved",
+            "pin": false,
+            "flag": false,
+            "count": null
+          },
+          {
+            "id": "mealplan",
+            "label": "Meal Planner",
+            "meta": "This week",
+            "pin": false,
+            "flag": false,
+            "count": null
+          },
+          {
+            "id": "alarms",
+            "label": "Alarms",
+            "meta": "2 set",
+            "pin": false,
+            "flag": false,
+            "count": null
+          },
+          {
+            "id": "learning",
+            "label": "Learning & Growth",
+            "meta": "3 courses",
+            "pin": false,
+            "flag": false,
+            "count": null
+          },
+          {
+            "id": "documents",
+            "label": "Documents",
+            "meta": "Locked",
+            "pin": false,
+            "flag": true,
+            "count": null
+          },
+          {
+            "id": "vaccines",
+            "label": "Vaccinations",
+            "meta": "Private",
+            "pin": false,
+            "flag": true,
+            "count": null
+          },
+          {
+            "id": "health",
+            "label": "Health Records",
+            "meta": "Private",
+            "pin": false,
+            "flag": true,
+            "count": null
+          },
+          {
+            "id": "play",
+            "label": "Play",
+            "meta": "Puzzles",
+            "pin": false,
+            "flag": false,
+            "count": null
+          },
+          {
+            "id": "babybudget",
+            "label": "Baby Budget",
+            "meta": "Plan costs",
+            "pin": false,
+            "flag": false,
+            "count": null
+          },
+          {
+            "id": "habits",
+            "label": "Habits",
+            "meta": "12-day streak",
+            "pin": false,
+            "flag": false,
+            "count": null
+          },
+          {
+            "id": "water",
+            "label": "Water",
+            "meta": "5 / 8",
+            "pin": false,
+            "flag": false,
+            "count": null
+          },
+          {
+            "id": "bmi",
+            "label": "BMI Calculator",
+            "meta": "Track weight",
+            "pin": false,
+            "flag": false,
+            "count": null
+          },
+          {
+            "id": "cycle",
+            "label": "Cycle Tracker",
+            "meta": "Private",
+            "pin": false,
+            "flag": true,
+            "count": null
+          },
+          {
+            "id": "pregnancy",
+            "label": "Pregnancy",
+            "meta": "Private",
+            "pin": false,
+            "flag": true,
+            "count": null
+          },
+          {
+            "id": "expenses",
+            "label": "Expenses",
+            "meta": "This month",
+            "pin": false,
+            "flag": true,
+            "count": null
+          },
+          {
+            "id": "goals",
+            "label": "Savings Goals",
+            "meta": "2 active",
+            "pin": false,
+            "flag": true,
+            "count": null
+          },
+          {
+            "id": "subs",
+            "label": "Subscriptions",
+            "meta": "Rs 4,160",
+            "pin": false,
+            "flag": true,
+            "count": null
+          },
+          {
+            "id": "meds",
+            "label": "Medication",
+            "meta": "Private",
+            "pin": false,
+            "flag": true,
+            "count": null
+          }
+        ]
+      }
+    ],
+    "recents": [],
+    "emptyShown": false,
+    "sections": [
+      {
+        "tag": "div",
+        "cls": "page-head",
+        "id": null,
+        "hidden": false,
+        "y": 28,
+        "height": 67
+      },
+      {
+        "tag": "div",
+        "cls": "section",
+        "id": null,
+        "hidden": false,
+        "y": 111,
+        "height": 44
+      },
+      {
+        "tag": "div",
+        "cls": "section",
+        "id": null,
+        "hidden": false,
+        "y": 169,
+        "height": 34
+      },
+      {
+        "tag": "div",
+        "cls": "section",
+        "id": "toolRecent",
+        "hidden": true,
+        "y": 0,
+        "height": 0
+      },
+      {
+        "tag": "div",
+        "cls": "",
+        "id": "toolCats",
+        "hidden": false,
+        "y": 227,
+        "height": 2965
+      },
+      {
+        "tag": "div",
+        "cls": "empty",
+        "id": "toolEmpty",
+        "hidden": false,
+        "y": 0,
+        "height": 0
+      }
+    ]
+  },
+  "bounds": {
+    "screen": {
+      "x": 0,
+      "y": 28,
+      "width": 390,
+      "height": 816,
+      "lines": null,
+      "font": "400 16px/normal normal",
+      "color": "rgb(16, 17, 19)",
+      "background": "rgba(0, 0, 0, 0)",
+      "radius": "0px",
+      "pad": "0px 0px 118px",
+      "gap": "normal",
+      "text": "Tools\n          68 utilities, neatly sorted\n        \n        \n          \n        \n      \n    \n\n    \n      \n        \n        \n      \n    \n\n    \n       For youAll"
+    },
+    "pagehead": {
+      "x": 0,
+      "y": 28,
+      "width": 390,
+      "height": 67,
+      "lines": null,
+      "font": "400 16px/normal normal",
+      "color": "rgb(16, 17, 19)",
+      "background": "rgba(0, 0, 0, 0)",
+      "radius": "0px",
+      "pad": "12px 20px 0px",
+      "gap": "normal",
+      "text": "Tools\n          68 utilities, neatly sorted"
+    },
+    "pagehead.bar": {
+      "x": 20,
+      "y": 40,
+      "width": 350,
+      "height": 55,
+      "lines": null,
+      "font": "400 16px/normal normal",
+      "color": "rgb(16, 17, 19)",
+      "background": "rgba(0, 0, 0, 0)",
+      "radius": "0px",
+      "pad": "0px",
+      "gap": "12px",
+      "text": "Tools\n          68 utilities, neatly sorted"
+    },
+    "pagehead.title": {
+      "x": 20,
+      "y": 40,
+      "width": 150.97,
+      "height": 35,
+      "lines": null,
+      "font": "800 28px/normal -1.064px",
+      "color": "rgb(16, 17, 19)",
+      "background": "rgba(0, 0, 0, 0)",
+      "radius": "0px",
+      "pad": "0px",
+      "gap": "normal",
+      "text": "Tools"
+    },
+    "pagehead.sub": {
+      "x": 20,
+      "y": 79,
+      "width": 150.97,
+      "height": 16,
+      "lines": null,
+      "font": "500 13px/normal normal",
+      "color": "rgb(139, 141, 149)",
+      "background": "rgba(0, 0, 0, 0)",
+      "radius": "0px",
+      "pad": "0px",
+      "gap": "normal",
+      "text": "68 utilities, neatly sorted"
+    },
+    "pagehead.action": {
+      "x": 332,
+      "y": 40,
+      "width": 38,
+      "height": 38,
+      "lines": null,
+      "font": "400 16px/normal normal",
+      "color": "rgb(86, 88, 95)",
+      "background": "rgb(255, 255, 255)",
+      "radius": "12px",
+      "pad": "0px",
+      "gap": "normal",
+      "text": null
+    },
+    "search": {
+      "x": 20,
+      "y": 111,
+      "width": 350,
+      "height": 44,
+      "lines": null,
+      "font": "400 16px/normal normal",
+      "color": "rgb(139, 141, 149)",
+      "background": "rgb(255, 255, 255)",
+      "radius": "12px",
+      "pad": "0px 14px",
+      "gap": "9px",
+      "text": null
+    },
+    "search.input": {
+      "x": 61,
+      "y": 123,
+      "width": 294,
+      "height": 20,
+      "lines": null,
+      "font": "500 14px/normal -0.28px",
+      "color": "rgb(16, 17, 19)",
+      "background": "rgba(0, 0, 0, 0)",
+      "radius": "0px",
+      "pad": "1px 2px",
+      "gap": "normal",
+      "text": null
+    },
+    "chips": {
+      "x": 0,
+      "y": 169,
+      "width": 390,
+      "height": 34,
+      "lines": null,
+      "font": "400 16px/normal normal",
+      "color": "rgb(16, 17, 19)",
+      "background": "rgba(0, 0, 0, 0)",
+      "radius": "0px",
+      "pad": "0px 20px 2px",
+      "gap": "7px",
+      "text": "For youAllEverydayPlanningMoneyDaily LifePersonal"
+    },
+    "chip": {
+      "x": 20,
+      "y": 169,
+      "width": 89.44,
+      "height": 32,
+      "lines": null,
+      "font": "600 12px/normal -0.18px",
+      "color": "rgb(86, 88, 95)",
+      "background": "rgb(255, 255, 255)",
+      "radius": "999px",
+      "pad": "0px 13px",
+      "gap": "6px",
+      "text": "For you"
+    },
+    "chip.active": {
+      "x": 116.44,
+      "y": 169,
+      "width": 41.66,
+      "height": 32,
+      "lines": null,
+      "font": "600 12px/normal -0.18px",
+      "color": "rgb(246, 246, 244)",
+      "background": "rgb(16, 17, 19)",
+      "radius": "999px",
+      "pad": "0px 13px",
+      "gap": "6px",
+      "text": "All"
+    },
+    "recent.wrap": {
+      "x": 0,
+      "y": 0,
+      "width": 0,
+      "height": 0,
+      "lines": null,
+      "font": "400 16px/normal normal",
+      "color": "rgb(16, 17, 19)",
+      "background": "rgba(0, 0, 0, 0)",
+      "radius": "0px",
+      "pad": "0px",
+      "gap": "normal",
+      "text": "Recently used\n          Straight back to where you were"
+    },
+    "recent.title": {
+      "x": 0,
+      "y": 0,
+      "width": 0,
+      "height": 0,
+      "lines": null,
+      "font": "700 17px/normal -0.476px",
+      "color": "rgb(16, 17, 19)",
+      "background": "rgba(0, 0, 0, 0)",
+      "radius": "0px",
+      "pad": "0px",
+      "gap": "normal",
+      "text": "Recently used"
+    },
+    "cat": {
+      "x": 0,
+      "y": 227,
+      "width": 390,
+      "height": 368,
+      "lines": null,
+      "font": "400 16px/normal normal",
+      "color": "rgb(16, 17, 19)",
+      "background": "rgba(0, 0, 0, 0)",
+      "radius": "0px",
+      "pad": "0px",
+      "gap": "normal",
+      "text": "EverydayThe ones you reach for daily8CalculatorStandardUnit Converter32 unitsCurrencyLive ratesStopwatchLapsTimerPresetsAge CalculatorExact daysFocus Timer25 mi"
+    },
+    "cat.head": {
+      "x": 0,
+      "y": 227,
+      "width": 390,
+      "height": 33,
+      "lines": null,
+      "font": "400 16px/normal normal",
+      "color": "rgb(16, 17, 19)",
+      "background": "rgba(0, 0, 0, 0)",
+      "radius": "0px",
+      "pad": "0px 20px",
+      "gap": "9px",
+      "text": "EverydayThe ones you reach for daily8"
+    },
+    "cat.dot": {
+      "x": 20,
+      "y": 230.5,
+      "width": 26,
+      "height": 26,
+      "lines": null,
+      "font": "400 16px/normal normal",
+      "color": "rgb(86, 88, 95)",
+      "background": "rgb(241, 241, 238)",
+      "radius": "12px",
+      "pad": "0px",
+      "gap": "normal",
+      "text": null
+    },
+    "cat.title": {
+      "x": 55,
+      "y": 227,
+      "width": 299.05,
+      "height": 19,
+      "lines": null,
+      "font": "700 15px/normal -0.42px",
+      "color": "rgb(16, 17, 19)",
+      "background": "rgba(0, 0, 0, 0)",
+      "radius": "0px",
+      "pad": "0px",
+      "gap": "normal",
+      "text": "Everyday"
+    },
+    "cat.sub": {
+      "x": 55,
+      "y": 247,
+      "width": 299.05,
+      "height": 13,
+      "lines": null,
+      "font": "500 11px/normal normal",
+      "color": "rgb(139, 141, 149)",
+      "background": "rgba(0, 0, 0, 0)",
+      "radius": "0px",
+      "pad": "0px",
+      "gap": "normal",
+      "text": "The ones you reach for daily"
+    },
+    "cat.count": {
+      "x": 363.05,
+      "y": 237,
+      "width": 6.95,
+      "height": 13,
+      "lines": null,
+      "font": "600 11px/normal normal",
+      "color": "rgb(139, 141, 149)",
+      "background": "rgba(0, 0, 0, 0)",
+      "radius": "0px",
+      "pad": "0px",
+      "gap": "normal",
+      "text": "8"
+    },
+    "cat.grid": {
+      "x": 0,
+      "y": 272,
+      "width": 390,
+      "height": 323,
+      "lines": null,
+      "font": "400 16px/normal normal",
+      "color": "rgb(16, 17, 19)",
+      "background": "rgba(0, 0, 0, 0)",
+      "radius": "0px",
+      "pad": "0px 20px",
+      "gap": "10px",
+      "text": "CalculatorStandardUnit Converter32 unitsCurrencyLive ratesStopwatchLapsTimerPresetsAge CalculatorExact daysFocus Timer25 minDate CalculatorAdd · diff"
+    },
+    "cattool": {
+      "x": 20,
+      "y": 272,
+      "width": 110,
+      "height": 96,
+      "lines": null,
+      "font": "400 16px/normal normal",
+      "color": "rgb(16, 17, 19)",
+      "background": "rgb(255, 255, 255)",
+      "radius": "16px",
+      "pad": "13px 12px 14px",
+      "gap": "9px",
+      "text": "CalculatorStandard"
+    },
+    "cattool.icon": {
+      "x": 33,
+      "y": 286,
+      "width": 84,
+      "height": 20,
+      "lines": null,
+      "font": "400 16px/normal normal",
+      "color": "rgb(16, 17, 19)",
+      "background": "rgba(0, 0, 0, 0)",
+      "radius": "0px",
+      "pad": "0px",
+      "gap": "normal",
+      "text": null
+    },
+    "cattool.label": {
+      "x": 33,
+      "y": 315,
+      "width": 84,
+      "height": 15,
+      "lines": 1,
+      "font": "600 12px/15px -0.264px",
+      "color": "rgb(16, 17, 19)",
+      "background": "rgba(0, 0, 0, 0)",
+      "radius": "0px",
+      "pad": "0px",
+      "gap": "normal",
+      "text": "Calculator"
+    },
+    "cattool.meta": {
+      "x": 33,
+      "y": 341,
+      "width": 84,
+      "height": 12,
+      "lines": null,
+      "font": "500 10px/normal normal",
+      "color": "rgb(139, 141, 149)",
+      "background": "rgba(0, 0, 0, 0)",
+      "radius": "0px",
+      "pad": "0px",
+      "gap": "normal",
+      "text": "Standard"
+    },
+    "cattool.flag": {
+      "x": 349,
+      "y": 2545,
+      "width": 12,
+      "height": 12,
+      "lines": null,
+      "font": "400 16px/normal normal",
+      "color": "rgb(139, 141, 149)",
+      "background": "rgba(0, 0, 0, 0)",
+      "radius": "0px",
+      "pad": "0px",
+      "gap": "normal",
+      "text": null
+    },
+    "empty": {
+      "x": 0,
+      "y": 0,
+      "width": 0,
+      "height": 0,
+      "lines": null,
+      "font": "400 16px/normal normal",
+      "color": "rgb(16, 17, 19)",
+      "background": "rgba(0, 0, 0, 0)",
+      "radius": "0px",
+      "pad": "44px 30px",
+      "gap": "10px",
+      "text": "No tools match\n      Try a different word — or browse a category above."
+    },
+    "empty.title": {
+      "x": 0,
+      "y": 0,
+      "width": 0,
+      "height": 0,
+      "lines": null,
+      "font": "700 15px/normal -0.375px",
+      "color": "rgb(16, 17, 19)",
+      "background": "rgba(0, 0, 0, 0)",
+      "radius": "0px",
+      "pad": "0px",
+      "gap": "normal",
+      "text": "No tools match"
+    },
+    "empty.text": {
+      "x": 0,
+      "y": 0,
+      "width": 0,
+      "height": 0,
+      "lines": 0,
+      "font": "400 12px/18px normal",
+      "color": "rgb(139, 141, 149)",
+      "background": "rgba(0, 0, 0, 0)",
+      "radius": "0px",
+      "pad": "0px",
+      "gap": "normal",
+      "text": "Try a different word — or browse a category above."
+    },
+    "shell.tabbar": {
+      "x": 12,
+      "y": 770,
+      "width": 366,
+      "height": 62,
+      "lines": null,
+      "font": "400 16px/normal normal",
+      "color": "rgb(16, 17, 19)",
+      "background": "color(srgb 1 1 1 / 0.84)",
+      "radius": "20px",
+      "pad": "0px 4px",
+      "gap": "normal",
+      "text": "HomeToolsTrainsTodayProfile"
+    }
+  }
+}

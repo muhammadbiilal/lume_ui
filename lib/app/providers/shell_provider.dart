@@ -17,16 +17,6 @@ import '../../features/onboarding/domain/onboarding_state.dart';
 import '../../features/onboarding/domain/profile_repository.dart';
 import '../../features/startup/application/startup_controller.dart';
 
-/// The user's country, as an ISO 3166-1 alpha-2 code.
-///
-/// Pakistan by default, matching `app-store.js`. It decides one thing in this
-/// layer: whether Trains is a tab. It decides **nothing** about language,
-/// direction or faith — those are separate dimensions and are read from
-/// elsewhere.
-final StateProvider<String> countryCodeProvider = StateProvider<String>(
-  (Ref ref) => 'PK',
-);
-
 /// Counts on destinations. Empty until the notification engine exists.
 final StateProvider<Map<LumeDestinationId, int>> destinationBadgesProvider =
     StateProvider<Map<LumeDestinationId, int>>(

@@ -356,28 +356,29 @@ class LumeCompactRow extends StatelessWidget {
             const SizedBox(width: 12),
           ],
           Expanded(
-            child: Row(
+            // `.crow__label i { display: block; margin-top: 1px }` — the
+            // subtitle sits *under* the label, not beside it. F2 read it as an
+            // inline run, which held only because the component fixture never
+            // gave the row one.
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisSize: MainAxisSize.min,
               children: <Widget>[
-                Flexible(
-                  child: Text(
-                    label,
-                    style: LumeType.tracked(
-                      LumeType.fit(
-                        context,
-                        context.lumeType.meta,
-                      ).copyWith(fontSize: 13),
-                      -0.022,
-                    ).copyWith(color: lume.text),
-                    maxLines: 1,
-                    overflow: TextOverflow.ellipsis,
-                  ),
+                Text(
+                  label,
+                  style: LumeType.tracked(
+                    LumeType.natural(context, context.lumeType.meta, size: 13),
+                    -0.022,
+                  ).copyWith(color: lume.text),
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
                 ),
-                if (subtitle != null) ...<Widget>[
-                  const SizedBox(width: 6),
-                  Flexible(
+                if (subtitle != null)
+                  Padding(
+                    padding: const EdgeInsets.only(top: 1),
                     child: Text(
                       subtitle!,
-                      style: LumeType.fit(
+                      style: LumeType.natural(
                         context,
                         context.lumeType.metaSmall,
                       ).copyWith(color: lume.text3),
@@ -385,7 +386,6 @@ class LumeCompactRow extends StatelessWidget {
                       overflow: TextOverflow.ellipsis,
                     ),
                   ),
-                ],
               ],
             ),
           ),
@@ -395,7 +395,7 @@ class LumeCompactRow extends StatelessWidget {
               value!,
               style: LumeType.numeric(
                 LumeType.tracked(
-                  LumeType.fit(context, context.lumeType.label),
+                  LumeType.natural(context, context.lumeType.label),
                   -0.02,
                 ),
               ).copyWith(color: lume.text2),

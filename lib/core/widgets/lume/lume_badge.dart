@@ -154,9 +154,13 @@ class LumeDelta extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final LumeColors lume = context.lume;
+    // `--up` and `--down`, not the accent and the rose. Measured from the
+    // rendered `.delta--up` / `.delta--down`: rgb(23, 145, 111) and
+    // rgb(198, 72, 92). F2 read them off the brand ramp, which was two shades
+    // too dark on one and a different hue on the other.
     final Color fg = switch (direction) {
-      LumeDeltaDirection.up => lume.accent700,
-      LumeDeltaDirection.down => lume.roseInk,
+      LumeDeltaDirection.up => lume.up,
+      LumeDeltaDirection.down => lume.down,
       LumeDeltaDirection.flat => lume.text3,
     };
 

@@ -60,6 +60,8 @@ class LumeColors extends ThemeExtension<LumeColors> {
     required this.overlay,
     required this.tintAccent,
     required this.tintNeutral,
+    required this.up,
+    required this.down,
     required this.stickerOpacity,
     required this.meshOpacity,
   });
@@ -153,6 +155,17 @@ class LumeColors extends ThemeExtension<LumeColors> {
   /// The neutral surface tint — ghost buttons, icon containers.
   final Color tintNeutral;
 
+  // ---- Direction. A value that rose, and a value that fell.
+
+  /// `--up`. **Not the accent.** `tools/shared.css` declares a separate green
+  /// for a rising figure, and it is two shades lighter than `accent-700`: the
+  /// accent is a brand colour and this is a reading of the data, and a screen
+  /// full of both needs them to be distinguishable.
+  final Color up;
+
+  /// `--down`. Likewise separate from [rose], which is a surface hue.
+  final Color down;
+
   // ---- Decorative intensity. Dark mode carries less of both.
 
   final double stickerOpacity;
@@ -195,6 +208,8 @@ class LumeColors extends ThemeExtension<LumeColors> {
     overlay: Color(0x61101113),
     tintAccent: Color(0xFFE7F4F1),
     tintNeutral: Color(0xFFF1F1EE),
+    up: Color(0xFF17916F),
+    down: Color(0xFFC6485C),
     stickerOpacity: 1,
     meshOpacity: 0.55,
   );
@@ -241,9 +256,28 @@ class LumeColors extends ThemeExtension<LumeColors> {
     overlay: Color(0x99000000),
     tintAccent: Color(0xFF10312C),
     tintNeutral: Color(0xFF1C1D20),
+    up: Color(0xFF3ED8A8),
+    down: Color(0xFFF0808F),
     stickerOpacity: 0.72,
     meshOpacity: 0.35,
   );
+
+  /// `--tone-*` — a 16-18 % wash of a hue, for the disc an icon sits in.
+  ///
+  /// `tools/shared.css` builds these with `color-mix(... 16%, transparent)`,
+  /// which is an alpha, not a blend with the ground — so they are computed
+  /// rather than tabulated, and stay right when the hue moves between themes.
+  Color tone(Color hue, {double opacity = 0.16}) =>
+      hue.withValues(alpha: opacity);
+
+  /// `--tone-amber` is the one exception: 18 %.
+  Color get toneAmber => tone(amber, opacity: 0.18);
+
+  /// `--tone-green` washes a fixed leaf green rather than [up].
+  Color get toneGreen => tone(const Color(0xFF3E9B62));
+
+  /// `--tone-slate` is the neutral tint rather than a wash.
+  Color get toneSlate => tintNeutral;
 
   @override
   LumeColors copyWith({
@@ -278,6 +312,8 @@ class LumeColors extends ThemeExtension<LumeColors> {
     Color? overlay,
     Color? tintAccent,
     Color? tintNeutral,
+    Color? up,
+    Color? down,
     double? stickerOpacity,
     double? meshOpacity,
   }) {
@@ -313,6 +349,8 @@ class LumeColors extends ThemeExtension<LumeColors> {
       overlay: overlay ?? this.overlay,
       tintAccent: tintAccent ?? this.tintAccent,
       tintNeutral: tintNeutral ?? this.tintNeutral,
+      up: up ?? this.up,
+      down: down ?? this.down,
       stickerOpacity: stickerOpacity ?? this.stickerOpacity,
       meshOpacity: meshOpacity ?? this.meshOpacity,
     );
@@ -354,6 +392,8 @@ class LumeColors extends ThemeExtension<LumeColors> {
       overlay: c(overlay, other.overlay),
       tintAccent: c(tintAccent, other.tintAccent),
       tintNeutral: c(tintNeutral, other.tintNeutral),
+      up: c(up, other.up),
+      down: c(down, other.down),
       stickerOpacity: lerpDouble(stickerOpacity, other.stickerOpacity, t),
       meshOpacity: lerpDouble(meshOpacity, other.meshOpacity, t),
     );
