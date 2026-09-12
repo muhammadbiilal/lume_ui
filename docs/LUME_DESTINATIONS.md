@@ -1,7 +1,7 @@
-# Home, the Tools hub, and the foundation under them
+# Home, the Tools hub, Today, Explore, and the foundation under them
 
-The two destinations that set the pattern for the other four, and the shared
-page furniture, registry and repositories they established.
+Four of the six destinations, and the shared page furniture, registry and
+repositories they established. Trains and Profile are still fixture screens.
 
 ---
 
@@ -183,7 +183,91 @@ promise and the count can wait for the tool itself.
 
 ---
 
-## 5. Is the market open?
+## 5. Today
+
+Eight blocks in the order `today.screen.js` emits them: the page head, the day
+ring, three statistics, a reflection, **Your day**, **Tasks**, **Habits** and a
+locked door. The prayers are **not** a section of their own — they are merged
+into the agenda and sorted with the meetings, the errand and the outage, which
+is the whole idea of the screen. (The F5A inventory summary had this wrong; the
+contract was re-read from source and re-measured against the running screen.)
+
+**One aggregate, six stores.** `LumeTodayRepository` returns a whole day —
+prayer times, calendar, tasks, habits, the reflection and the outage — because
+the screen's own rule is that everything is sorted together. A screen that
+fetched six lists and merged them in `build` would have six loading states and
+no way to sort across them.
+
+**The faith swap is a swap, not a deletion.** Outside the Islamic experience
+the first two statistics become the daily streak and steps, the ayah becomes a
+thought, two habits and one task leave, and the prayer rows are absent. The
+page has the same eight blocks either way; nothing is left empty (§23).
+
+**A city without a timetable gets no prayer rows at all**, rather than another
+city's. Showing a reader in Dubai the Islamabad times would be a correctness
+failure in a religious feature, and a shorter agenda is the honest answer —
+the same rule `LumeZoneDatabase.zoneFor` follows when it returns `null`.
+
+**The private card carries no record.** It names three areas and takes no data,
+so there is nothing behind the lock that could leak into the summary (§61,
+§62). A test asserts the card renders exactly two strings.
+
+### What is reproduced rather than corrected
+
+The ring's sentence and the tasks statistic are **literals in the reference** —
+"2 of 5 tasks done. One meeting left this afternoon." is static markup and the
+statistic is `L.num(2) + '/' + L.num(5)` — and neither follows the task list.
+Reproduced by decision (T1, T2): a reader outside the Islamic experience has
+four tasks and still reads five, and ticking a task moves neither figure.
+Carried as three numbers rather than a sentence, so the copy is still
+translated and the digits are still the reader's. `kReferenceTasksDone`,
+`kReferenceTaskCount` and `kReferenceMeetingsLeft` name them, and the Dayroz
+obligation is recorded beside them.
+
+---
+
+## 6. Explore
+
+Eight blocks: the page head, a featured collection, **Weather**, **Around
+you**, **Cricket**, **Today's reads**, **Collections** and **Nearby**. The
+screen's own standard, from its source comment, is *"this screen must never
+show a market, a unit or a venue from somewhere the user is not."*
+
+**Around you is the country capability system made visible.** Nothing in it
+knows the name of a country: each row asks `LumeEligibility` whether its
+feature exists here, and the ones that do not simply do not appear. Pakistan
+gets six rows, the United Kingdom four. The section hides itself below two
+rows, because one row is not a list.
+
+**Visibility and localisation are different questions** (§20). Fuel survives a
+move to London and reads £1.34; Loadshedding and Trains do not survive it at
+all.
+
+**A way back, only where it is needed.** Explore is not a tab in Pakistan, so
+it carries its own back control there and none where it is a tab — the same
+condition the reference's router uses. `LumePageHead.leading` exists for this
+one case.
+
+**Nothing here is labelled live.** Every source reports its freshness, and a
+fixture reports `LumeSourceFreshness.fixture` — never `live`. A source that
+cannot answer says so in place of its section rather than vanishing, and the
+other seven are unaffected.
+
+### What is reproduced rather than corrected
+
+* **Nearby** is three hard-coded Karachi venues with hard-coded distances, in
+  every market. Reproduced by decision (C22): a reader in London is told a
+  Karachi mosque is 650 m away, because that is what the reference tells them.
+* **"updated 4 min ago"** is the literal `L.num(4)` with no fetch behind it.
+  Reproduced by decision (E1).
+* **The cricket card's "Live · 2nd Test, day 2"** is a literal live claim (E3).
+
+All three carry a Dayroz obligation in
+`docs/conversion_archive/TODAY_EXPLORE_CONTRACT.md` §3.
+
+---
+
+## 7. Is the market open?
 
 `lib/features/markets/` answers it, and the answer is four corrections to the
 prototype's six-line version.
@@ -253,7 +337,7 @@ three-line database with no rules satisfies the interface.
 
 ---
 
-## 6. Data
+## 8. Data
 
 Nothing connects to a backend. `LumeHomeRepository` is a contract;
 `LumeFakeHomeRepository` is a deterministic fixture carrying the prototype's
@@ -265,9 +349,17 @@ own figures, and it
 * can be told to be slow, to fail a section, to come back stale or offline, or
   to hold a user with nothing recorded.
 
+`LumeTodayRepository` and `LumeExploreRepository` are the same shape, and
+separate contracts rather than one: Today aggregates six of the user's own
+stores and Explore reads seven outside sources, and a single interface would
+have forced every caller to know about both. Explore's snapshot additionally
+reports **per-source freshness**, because "the weather is four minutes old and
+the news failed" is two facts and one loading state cannot carry them.
+
 At Dayroz integration each tool's own repository takes its field over;
-`docs/conversion_archive/HOME_SOURCE_MAP.md` pairs every field with its source
-so that is a substitution rather than a rewrite.
+`docs/conversion_archive/HOME_SOURCE_MAP.md` and
+`docs/conversion_archive/TODAY_EXPLORE_CONTRACT.md` §1.3 and §2.2 pair every
+field with its source so that is a substitution rather than a rewrite.
 
 One question is answered synchronously rather than fetched:
 `statusesFor(user, now: …)` returns the handful of tile status lines the device
@@ -276,7 +368,7 @@ tile cannot name two different prayers.
 
 ---
 
-## 7. Navigation
+## 9. Navigation
 
 * Home and the hub are branch roots, built from the same
   `LumeDestinations` definition as every other destination.
@@ -299,10 +391,16 @@ tile cannot name two different prayers.
   it re-presents the bar in the same frame and rebuilds no branch — Trains
   leaves the bar and Explore takes the slot, and every other branch keeps its
   stack, its scroll and its position.
+* **A destination that is not a tab is still a destination.** `/explore` opens
+  in Pakistan, where the bar has Trains instead; the screen then draws its own
+  way back to Home, as the reference does, and the bar selects nothing.
+* Today's **Week** and **Add** navigate nowhere. There is no Week screen and no
+  Add-task screen in the reference and none in F5B, so both report what
+  happened instead of opening a route that does not exist.
 
 ---
 
-## 8. Accessibility
+## 10. Accessibility
 
 * Every section title is a heading, so a reader can jump between them.
 * A tile announces its name and its status once — the visual composition is
@@ -320,7 +418,7 @@ tile cannot name two different prayers.
   it belongs to — the count stays in that control's accessible name, which is
   where a screen reader reads it from at every scale.
 
-**Two recorded exceptions to §9's 44-point target.**
+**Three recorded exceptions to §9's 44-point target.**
 
 * The header's three controls are 38 with 12 between them, which is the
   design's geometry; the reachable area is 50 wide inside a 59-tall bar, and
@@ -328,29 +426,40 @@ tile cannot name two different prayers.
 * A section's "see all" link is 23 tall. Padding it to 44 would add five points
   to every section head and move the whole page down; the link is a shortcut to
   a destination the tab bar already carries at full size.
+* A card's ghost action — Bookmark, Share — is 30 tall and about 35 wide. It
+  sits in a card foot that is 30 tall, so growing it to 44 makes every card
+  carrying one fourteen points taller and pushes everything below it down the
+  page. Unlike the stepper (D6) the drawn box *is* the laid-out box, so the
+  target cannot be separated from it.
 
 Both are deliberate, both are recorded here, and neither is a full-width
 primary action.
 
 ---
 
-## 9. Where the evidence is
+## 11. Where the evidence is
 
 | | |
 |---|---|
 | element positions against the prototype | `docs/conversion_archive/DESTINATION_PARITY.md` |
 | what the comparison caught | `docs/conversion_archive/DESTINATION_VISUAL.md` |
 | the six destinations' contracts | `docs/conversion_archive/DESTINATION_INVENTORY.md` |
+| Today and Explore, read from source | `docs/conversion_archive/TODAY_EXPLORE_CONTRACT.md` |
+| every value's source, Today and Explore | `docs/conversion_archive/TODAY_EXPLORE_SOURCE_MAP.md` |
 | every value's source | `docs/conversion_archive/HOME_SOURCE_MAP.md` |
 | permitted differences and corrections | `docs/conversion_archive/KNOWN_DIFFERENCES.md` |
 
 ---
 
-## 10. What is not done
+## 12. What is not done
 
-* **Today, Explore, Trains and Profile** are still the F3 fixture screen. The
-  foundation above was cut against all six contracts so they need no new
-  chrome, but they are not implemented.
+* **Trains and Profile** are still the F3 fixture screen. The foundation above
+  was cut against all six contracts so they need no new chrome, but they are
+  not implemented.
+* **Today's Week view and its Add-task flow**, and **Explore's "All" links**,
+  go nowhere. Neither exists in the reference either.
+* **Ticking a task persists nothing.** `LumeTodayDay.durable` is `false` and
+  says so; the write lives for as long as the process does (T3).
 * **A tool screen** is still the F3 fixture. Home and the hub navigate to it
   correctly; what it draws is F6.
 * **The zone database.** The interface is in place and the calculator depends

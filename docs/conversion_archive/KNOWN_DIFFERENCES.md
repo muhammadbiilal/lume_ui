@@ -557,6 +557,109 @@ location-specific display condition for this card. These constants are a
 reference fixture reproducing a prototype's bug; shipping them would show
 every user Karachi's weather.
 
+### C22 — Nearby names three Karachi venues to every reader on earth
+
+**Found in F5B. Reproduced, not repaired, by decision.**
+`explore.screen.js:376–407` writes three `.list-row`s as static markup —
+Masjid-e-Tooba · 650 m, Chai Shai · 1.1 km, Hill Park · 1.4 km — with no
+`data-loc`, no city read, no source attribution and no unavailable state. The
+section renders identically in Islamabad, London and New York.
+
+It is the one place on Explore that breaks the screen's own stated standard
+(*"this screen must never show a market, a unit or a venue from somewhere the
+user is not"*), and the distance makes the falsehood specific: a reader in
+London is told a Karachi mosque is 650 metres away.
+
+Traced, classified as a data-accuracy failure and **put to a decision rather
+than settled**. The decision was to reproduce Lume exactly, so Flutter renders
+the same three rows in every market, faith-gating the first exactly as Lume
+does.
+
+**Dayroz obligation.** Nearby must be backed by a real places source keyed to
+the user's city, with distances computed from a real location, or it must not
+ship.
+
+### C23 — Today's task counts are literals that contradict the list below them
+
+**Found in F5B. Reproduced, not repaired, by decision.** Two figures on Today
+are written down rather than counted:
+
+* the ring card's sentence, static markup reading "2 of 5 tasks done. One
+  meeting left this afternoon.", never rewritten (T1);
+* the tasks statistic, pushed as `L.num(2) + '<span>/' + L.num(5)` (T2).
+
+Neither follows the task list. A reader outside the Islamic experience has four
+tasks — Al-Kahf is faith-gated — and still reads five; ticking a task moves the
+list and not the sentence above it.
+
+An earlier F5B implementation derived both from the list. That was a
+correction, not a reproduction, and it was **not approved**: it made the
+Pakistani Muslim cell agree by coincidence and every other cell disagree with
+the reference. Put to a decision, and the decision was to reproduce Lume
+exactly. The figures are now `kReferenceTasksDone`, `kReferenceTaskCount` and
+`kReferenceMeetingsLeft`, carried as numbers so the sentence is still a
+translated template.
+
+**Dayroz obligation.** Both must be derived from the task store.
+
+### C24 — "updated 4 min ago" is a freshness claim with nothing behind it
+
+**Found in F5B. Reproduced, not repaired, by decision (E1).** Explore's weather
+head writes `L.num(4)` — the same claim in every state, never changing, with no
+fetch behind it. The values *around* it are honest: temperature, condition,
+rain, wind and sunset are all per-country and per-city. This is the one part of
+the card that lies. `kReferenceWeatherAgeMinutes` names it.
+
+**Dayroz obligation.** The weather adapter must supply a real fetch timestamp
+and the label must follow it.
+
+### C25 — the ayah is cited twice, and the two citations are different
+
+**Found in F5B by the side-by-side comparison, and corrected.**
+`today.screen.js` writes `Ar-Ra’d · 13:28` as the section subtitle and
+`Ar-Ra’d 13:28` at the foot of the card — with a separator and without. An
+earlier F5B implementation carried one finished `reference` string and used it
+in both places, so the subtitle lost its dot.
+
+Corrected by carrying the surah, the chapter and the verse as three fields and
+composing each form through its own localisable key. A single finished string
+could only ever have been right in one of the two places.
+
+### C26 — a card's border is drawn but takes no room
+
+**Found in F5B against the measured bounds, and corrected in the shared
+component.** `LumeCard` painted its 1-point border with a `DecoratedBox`, which
+paints without reserving layout space — so every card was two points shorter
+than the prototype's, and a list card holding six rows measured 365 against the
+reference's 367.
+
+Corrected by adding the border width to the card's inset. `Home`, the Tools
+hub, Today and Explore all moved, and all four now match their measured bounds;
+the goldens were regenerated and no measured-parity assertion loosened.
+
+### C27 — the page head's subtitle took a reading line, not the font's
+
+**Found in F5B, and corrected.** `.page-head__sub` sets `font-size: 13px` and
+no line height, so the line is the font's own — 16. `LumePageHead` was asking
+for the `meta` role's reading height and rendering 17, which put every page
+head one point out and masked a separate two-point error below the Tools hub's
+chips. Both are fixed; the three page heads now match to the point.
+
+### C28 — a 20-point line is 25, not 26
+
+**Found in F5B, and corrected.** `LumeType.naturalLine` carried `20 => 26`.
+Two independent measurements on Today — `.ring__value` and `.stat__value`, both
+20/800 with `line-height: normal` — render 25, and 26 appears nowhere in any
+captured measurement. Corrected to 25.
+
+### C29 — Today's ring card has a sparkle, and it was not drawn
+
+**Found in F5B by the side-by-side comparison, and corrected.**
+`today.screen.js` hangs a 46-point `<span class="sticker sticker--slow">` off
+the ring card at `top: -12px; right: -6px`. The artwork had been extracted by
+`gen_destination_art.mjs` and never placed. It is now drawn, overhanging two of
+the card's edges, taking no layout room, no touch and no semantics.
+
 ### C16 — the notification badge is a dot given a number
 
 **Found and corrected in F5A.** See D27.
@@ -608,6 +711,14 @@ D24.
 
 | Date | Change | Reason |
 |---|---|---|
+| 2026-09-13 (F5B) | **Today and Explore implemented** — eight sections each, in the order their sources emit them, against re-read source and re-measured bounds | The F5A inventory summary had Today's order wrong; the contract was rebuilt from `today.screen.js` |
+| 2026-09-13 (F5B) | **C22 raised; decision taken: reproduce.** Nearby's three Karachi venues render in every market | Traced, classified as a data-accuracy failure, and put to a decision rather than settled |
+| 2026-09-13 (F5B) | **C24 raised; decision taken: reproduce.** "updated 4 min ago" is a literal and stays one | The only dishonest value on a card whose other five are per-city |
+| 2026-09-13 (F5B) | **C23 raised; decision taken: reproduce.** The ring sentence and the tasks statistic are the reference's literals, not the list's counts | An earlier F5B implementation derived them. That was a correction, not a reproduction, and it was never approved |
+| 2026-09-13 (F5B) | **C25 raised and corrected** — the ayah's two citation forms are composed from surah, chapter and verse | The side-by-side showed the section subtitle had lost its separator |
+| 2026-09-13 (F5B) | **C29 raised and corrected** — the ring card's sparkle is drawn | The artwork had been extracted and never placed |
+| 2026-09-13 (F5B) | **C26, C27, C28 and D37 raised and corrected** — a card's border takes layout room, a page head's subtitle takes the font's line, a 20-point line is 25, and the recents strip keeps its two points | Found by adding Today and Explore to the measured-bounds comparison; two of them had been cancelling each other out inside the one-point tolerance |
+| 2026-09-13 (F5B) | **D34, D35, D36 recorded** — Explore's conditional way back, the ghost action's 30-point box, and the ring label that shrinks rather than spilling | One reproduction, one recorded target exception, one overflow exception |
 | 2026-09-11 | Document created at Phase F0 | Baseline |
 | 2026-09-11 | C1 recorded — `.onb-country` proven dead; brief §13 confirmed correct against the rendered interface | Full-tree grep found no reference in JS, HTML or tests |
 | 2026-09-11 | C2 recorded — four sub-breakpoints found in the stylesheets; brief §9's literal wording corrected, intent preserved | Six files carry `max-width: 359px`; four carry `min-width: 1180px` |
@@ -1186,6 +1297,54 @@ is 24-hour, so asking for a 12-hour clock there quietly returned "18:27". The
 pattern is now spelled out — `h:mm a` or `HH:mm` — so the choice is the user's
 and only the day-period marker comes from the locale. The reference makes the
 same choice explicitly, with `hour12: clock() === 12`.
+
+### D34 — Explore carries its own way back where it is not a tab
+
+**New in F5B.** `explore.screen.js` keeps a hidden back button in the page head
+and its router *"shows it only when no tab is selected"*, because Explore is
+reachable in Pakistan without being one of that market's five tabs.
+
+Flutter reproduces the rule rather than the mechanism: the host asks
+`LumeDestinations.orderFor(country)` whether Explore is presented, and passes
+an `onBack` only when it is not. `LumePageHead` gained a `leading` slot for
+this one case; every other destination leaves it `null` and the head is the
+two-part row it has always been.
+
+### D35 — a ghost action draws at 30, and says so
+
+**New in F5B.** `.ghostbtn` is 30 tall and about 35 wide — under §9's 44-point
+floor, like `.cnotice__act` and `.stepper__btn` before it (D6). D6's remedy was
+to separate the drawn box from the touch target; that remedy is not available
+here, because the ghost button's drawn box *is* its laid-out box and it sits in
+a card foot that is exactly its own height. Growing it to 44 makes every card
+carrying one fourteen points taller and moves every section below it.
+
+Drawn and laid out at 30, with the exception recorded in
+`docs/LUME_DESTINATIONS.md` §10 beside the header's 38 and the section link's
+23. This is the same call `LumeHeaderButton` already makes.
+
+### D36 — the day ring's label shrinks rather than spilling over the arc
+
+**New in F5B.** The ring is a fixed 82-point circle and what is written inside
+it cannot grow with the reader's text size: at 200 % the two lines are half
+again as tall as the arc is wide, and the flex overflowed by 46 points.
+
+The label now scales down to fit the arc's clear interior
+(`LumeDayMetrics.ringInner`). **At every scale the reference is rendered at,
+nothing is scaled at all** — a test asserts the label's own box still fits
+inside that interior at 1.0 and 1.3, so the figure is drawn at its measured
+size and the fallback only engages past the sizes the design covers. This is
+the overflow exception the visual-authority rule allows, not a redesign.
+
+### D37 — the recents strip lost the two points above it
+
+**New in F5B, correcting F5A.** `.hscroll` is `padding: 2px 20px 6px`; the
+Tools hub's recents strip was built with `EdgeInsets.only(bottom: 6)`, so every
+section below it sat two points too high. It was invisible while
+`LumePageHead`'s subtitle was one point too tall (C27) — the two errors half
+cancelled at each element and every row stayed inside the one-point tolerance.
+Fixing the head exposed it. Both are corrected, and the hub now matches its
+measured bounds exactly.
 
 ### P2 — the greeting's emoji has no face in a test capture
 

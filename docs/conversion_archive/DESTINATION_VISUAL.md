@@ -1,4 +1,4 @@
-# Home and the Tools hub — the visual comparison
+# Home, the Tools hub, Today and Explore — the visual comparison
 
 > **Temporary conversion evidence.** Removed with the prototype at Phase F9.
 > The product-facing description of what Flutter does is
@@ -24,6 +24,10 @@ node docs/conversion_archive/tool/measure_destinations.mjs \
   --screen home --state muslim_pk --shot 1
 node docs/conversion_archive/tool/measure_destinations.mjs \
   --screen tools --state default_pk --after tools_search --shot 1
+node docs/conversion_archive/tool/measure_destinations.mjs \
+  --screen today --state muslim_pk --shot 1
+node docs/conversion_archive/tool/measure_destinations.mjs \
+  --screen explore --state muslim_gb --shot 1
 ```
 
 Freezing the clock is not a nicety. Home reads `new Date()` in a dozen places —
@@ -56,8 +60,8 @@ geometry, and pins each as a golden.
 
 ## 2. The cells
 
-Primary: **390 × 844, English, light**, for Home in seven user states and the
-hub in six.
+Primary: **390 × 844, English, light**, for Home in seven user states, the
+hub in six, and Today and Explore in five each.
 
 | cell | what it proves |
 |---|---|
@@ -82,15 +86,25 @@ The hub's: the shortlist, everything, the Islamic experience on, the United
 Kingdom, a search with results, a search with none, and a shortlist with
 nothing in it.
 
+Today's and Explore's: Muslim in Pakistan, not Muslim in Pakistan, Muslim in
+the United Kingdom, not Muslim in the United States, and the content switches
+off — plus still loading and nothing loaded at all for both, one source failed
+for Explore, and two scrolled cells each so the sections below 844 points are
+pinned as pixels rather than only as `find.text`.
+
 ---
 
 ## 3. Why the per-pixel diff reads high
 
 | state | beyond tolerance | rasterisation |
 |---|---|---|
-| home · Muslim, Pakistan | 53.3 % | 17.6 % |
-| home · not Muslim, Pakistan | 50.9 % | 18.9 % |
-| tools · a user with a history | 39.8 % | 10.7 % |
+| home · Muslim, Pakistan | 53.2 % | 17.6 % |
+| home · not Muslim, Pakistan | 50.8 % | 18.9 % |
+| tools · a user with a history | 39.5 % | 10.6 % |
+| today · Muslim, Pakistan | 35.1 % | 20.9 % |
+| today · not Muslim, Pakistan | 39.2 % | 16.6 % |
+| explore · Muslim, Pakistan | 43.5 % | 20.3 % |
+| explore · Muslim, United Kingdom | 46.5 % | 20.1 % |
 
 **These numbers are the two capture-level differences, not a layout mismatch.**
 The prototype draws a 28-point simulated status bar above its screen (P1), so
@@ -102,12 +116,14 @@ about.
 
 A pixel diff cannot see past a uniform offset; a bounds comparison can. That is
 why the parity evidence is [DESTINATION_PARITY.md](DESTINATION_PARITY.md) —
-**179 element positions measured from each side's own screen origin** — and the
-diff images are a second opinion rather than the verdict.
+element positions measured from each side's own screen origin — and the diff
+images are a second opinion rather than the verdict.
 
 The side-by-side images are the ones to look at, and they were: Home at the
 primary cell in both faith states, Home in Arabic, Home in dark, Home at 200
-per cent, Home at 852 × 393, the hub at the primary cell, and the hub at 1100.
+per cent, Home at 852 × 393, the hub at the primary cell, the hub at 1100, and
+**all ten Today and Explore cells**. Four differences came out of that reading
+and out of nothing else — see §4.
 
 ---
 
@@ -137,6 +153,14 @@ Found by looking at the renders, not by a passing test:
 | the badge reading 13 in London where the prototype reads 10 | the badge counts the notification sources that survive a profile, so it is 13 in Pakistan, 12 with the switches off and 10 abroad — fixture data, not one number |
 | "34° and hazy sun" on the Discover card where the prototype says "34° and hazy" | the whole card is a literal — temperature included, in every market — so the fixture carries its three display values rather than reading the weather (C21) |
 | a "local service" dot on seven tiles the prototype leaves bare | the prototype's pin branch reads a field the catalogue does not carry, and drawing one anyway was not a correctness repair (D28) |
+| the ayah's section subtitle reading "Ar-Ra’d 13:28" where the prototype writes "Ar-Ra’d · 13:28" | the reference cites the same verse twice and differently; one finished string can only be right in one of the two places, so the surah, the chapter and the verse are carried separately (C25) |
+| no sparkle on Today's ring card | `today.screen.js` hangs a 46-point sticker off its top corner; the artwork had been extracted and never placed (C29) |
+| "2 of 4 tasks done" where the prototype says "2 of 5" | the ring sentence and the tasks statistic are the reference's literals and do not follow the list. Deriving them was a correction, not a reproduction (C23) |
+| the quote card 13.5 points too tall, and every section below it pushed down | a ghost action was 44 tall because the shared pressable enforces §9's floor; `.ghostbtn` is 30, and the attribution's own 11-point margin was missing (D35) |
+| a list card two points short, and every section below it two points high | `LumeCard` painted its border without reserving room for it (C26) |
+| every page head one point too tall | `.page-head__sub` has no line height, so the line is the font's — and that one point was masking a separate two in the hub (C27, D37) |
+| the day ring overflowing by 46 points at 200 % text | a fixed circle cannot hold a label that grows; it scales down inside the arc instead, and not at all at the sizes the reference is drawn at (D36) |
+| no way back out of Explore in Pakistan, where it is not a tab | the reference keeps a back control in the head and shows it when no tab is selected (D34) |
 
 ---
 
@@ -184,9 +208,20 @@ past a review.
 | D26 | the progress bar was drawn | not drawn. The prototype's `.bar` is dead, incomplete markup: emitted with valid data, invisible because it is left out of the rule block that blockifies its own fill, in a card that reserves no room for one. Flutter's card is 350 × 86, the prototype's exactly (C15) |
 | D28 | a "local service" dot was drawn on country-restricted tiles | not drawn. The pin branch reads `f.loc`, no catalogue entry declares it, and the rendered hub shows no pin anywhere. The country gate, the marker capability and the precedence contract are all kept (C13, C14) |
 
+**Reproduced by decision, against the conversion's own judgement**
+
+Traced, classified and put to a decision rather than settled. All three came
+back the same way, and all three carry a Dayroz obligation.
+
+| # | what Lume does | what Flutter does |
+|---|---|---|
+| C22 | names three Karachi venues, with distances, to every reader on earth | the same three, in every market |
+| C23 | writes "2 of 5 tasks done" and `2/5` whatever the list holds | the same two literals, in every state |
+| C24 | claims the weather was updated 4 minutes ago, always | the same claim |
+
 **Nothing is awaiting a decision.** Every difference above is either exact
-parity, an approved adaptation, or a correctness repair with its conditions
-met.
+parity, an approved adaptation, a correctness repair with its conditions met,
+or a reproduction taken by decision.
 
 Nothing else differs by more than a logical pixel outside the drift D20
 describes. There is no state in which Flutter shows a control the reference
