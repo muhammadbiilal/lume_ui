@@ -18,7 +18,6 @@ import 'package:lume/core/navigation/lume_destination.dart';
 import 'package:lume/core/navigation/lume_navigation_surfaces.dart';
 import 'package:lume/core/navigation/lume_tool_frame.dart';
 import 'package:lume/core/routing/lume_routes.dart';
-import 'package:lume/core/widgets/lume/lume_button.dart';
 import 'package:lume/core/widgets/lume/lume_summary.dart';
 import 'package:lume/features/shell/presentation/fixture_tool_screen.dart';
 
