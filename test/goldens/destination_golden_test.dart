@@ -28,10 +28,14 @@ import 'package:lume/features/explore/data/explore_fixtures.dart';
 import 'package:lume/features/explore/domain/explore_repository.dart';
 import 'package:lume/features/explore/presentation/explore_screen.dart';
 import 'package:lume/features/today/presentation/today_screen.dart';
+import 'package:lume/features/trains/data/trains_fixtures.dart';
+import 'package:lume/features/trains/domain/trains_repository.dart';
+import 'package:lume/features/trains/presentation/trains_screen.dart';
 import 'package:lume/features/tools/presentation/tools_screen.dart';
 
 import '../features/destinations/destination_harness.dart';
 import '../features/destinations/today_explore_harness.dart';
+import '../features/destinations/trains_harness.dart';
 import '../helpers/capture.dart';
 import '../helpers/load_fonts.dart';
 import '../helpers/lume_harness.dart';
@@ -570,5 +574,101 @@ void main() {
         );
       });
     }
+  });
+  group('Trains', () {
+    Future<Widget> screen(LumeUserContext user) async => LumeTrainsScreen(
+      user: user,
+      snapshot: await composeTrains(user),
+      actions: LumeRecordedRail().actions,
+    );
+
+    for (final Cell cell in kCells) {
+      testWidgets('Pakistan, ${cell.$1}', (WidgetTester tester) async {
+        await shoot(
+          tester,
+          await screen(LumeUsers.muslimPk),
+          'trains_muslim_pk',
+          cell,
+        );
+      });
+    }
+
+    testWidgets('not Muslim, Pakistan, the reference cell', (
+      WidgetTester tester,
+    ) async {
+      // The destination is country-gated, not faith-gated: the same screen.
+      await shoot(
+        tester,
+        await screen(LumeUsers.defaultPk),
+        'trains_default_pk',
+        kCells.first,
+      );
+    });
+
+    testWidgets('still arriving, the reference cell', (
+      WidgetTester tester,
+    ) async {
+      await shoot(
+        tester,
+        LumeTrainsScreen(
+          user: LumeUsers.muslimPk,
+          actions: LumeRecordedRail().actions,
+        ),
+        'trains_loading',
+        kCells.first,
+      );
+    });
+
+    testWidgets('a market without rail, the reference cell', (
+      WidgetTester tester,
+    ) async {
+      await shoot(
+        tester,
+        LumeTrainsScreen(
+          user: LumeUsers.muslimGb,
+          actions: LumeRecordedRail().actions,
+          failure: LumeTrainsFailure.unsupported,
+        ),
+        'trains_unsupported',
+        kCells.first,
+      );
+    });
+
+    testWidgets('and a feed that could not answer', (
+      WidgetTester tester,
+    ) async {
+      await shoot(
+        tester,
+        LumeTrainsScreen(
+          user: LumeUsers.muslimPk,
+          actions: LumeRecordedRail().actions,
+          failure: LumeTrainsFailure.unreachable,
+          onRetry: () async {},
+        ),
+        'trains_failed',
+        kCells.first,
+      );
+    });
+
+    testWidgets('and one source of three unavailable', (
+      WidgetTester tester,
+    ) async {
+      await shoot(
+        tester,
+        LumeTrainsScreen(
+          user: LumeUsers.muslimPk,
+          snapshot: await composeTrains(
+            LumeUsers.muslimPk,
+            repository: LumeFakeTrainsRepository(
+              eligibility: kEligibility,
+              failing: const <LumeTrainsSource>{LumeTrainsSource.tracked},
+            ),
+          ),
+          actions: LumeRecordedRail().actions,
+        ),
+        'trains_partial',
+        kCells.first,
+      );
+    });
   });
 }

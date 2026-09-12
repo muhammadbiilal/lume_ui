@@ -23,6 +23,8 @@ import '../../features/catalogue/domain/eligibility.dart';
 import '../../features/home/data/home_fixtures.dart';
 import '../../features/explore/data/explore_fixtures.dart';
 import '../../features/explore/domain/explore_repository.dart';
+import '../../features/trains/data/trains_fixtures.dart';
+import '../../features/trains/domain/trains_repository.dart';
 import '../../features/home/domain/home_repository.dart';
 import '../../features/today/data/today_fixtures.dart';
 import '../../features/today/domain/today_repository.dart';
@@ -81,6 +83,21 @@ final Provider<LumeExploreRepository> exploreRepositoryProvider =
         eligibility: ref.watch(eligibilityProvider),
       ),
     );
+
+/// Running status and the roster, from a deterministic fixture.
+///
+/// It asks the same [LumeEligibility] every other surface asks, so a market
+/// without rail is refused here as well as in the bar — the gate is one
+/// answer, not four.
+final Provider<LumeTrainsRepository> trainsRepositoryProvider =
+    Provider<LumeTrainsRepository>(
+      (Ref ref) =>
+          LumeFakeTrainsRepository(eligibility: ref.watch(eligibilityProvider)),
+    );
+
+/// The reader's kept journeys. Separate from the feed, and not durable.
+final Provider<LumeJourneyStore> journeyStoreProvider =
+    Provider<LumeJourneyStore>((Ref ref) => LumeMemoryJourneyStore());
 
 final Provider<LumeRecentTools> recentToolsProvider = Provider<LumeRecentTools>(
   (Ref ref) => LumeRecentTools(ref.watch(startupControllerProvider)),

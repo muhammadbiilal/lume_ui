@@ -3231,6 +3231,230 @@
   "@toolsTitle": {
     "description": "Reference key tools.title"
   },
+  "trainsAllDepartures": "All departures",
+  "@trainsAllDepartures": {
+    "description": "Reference: the departures All link’s data-toast."
+  },
+  "trainsChooseDestination": "Choose a destination",
+  "@trainsChooseDestination": {
+    "description": "Reference: the To field’s data-toast."
+  },
+  "trainsChooseOrigin": "Choose a departure station",
+  "@trainsChooseOrigin": {
+    "description": "Reference: the From field’s data-toast."
+  },
+  "trainsCount": "{n, plural, =1{1 train} other{{n} trains}}",
+  "@trainsCount": {
+    "description": "How many services a popular route has.",
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
+  "trainsDepartures": "Departures",
+  "@trainsDepartures": {
+    "description": "Reference key trains.departures. `i18n/core.js` declares \"Today’s departures\" and `i18n/tools.js` overrides it to \"Departures\"; the rendered screen shows the override, and the rendered screen is the authority."
+  },
+  "trainsDeparturesSub": "From {station}",
+  "@trainsDeparturesSub": {
+    "description": "Reference key trains.departuresSub.",
+    "placeholders": {
+      "station": {
+        "type": "String"
+      }
+    }
+  },
+  "trainsDuration": "{h}h {m}m",
+  "@trainsDuration": {
+    "description": "A journey length. Reference: the roster’s `dur` field, which is written in English in the data.",
+    "placeholders": {
+      "h": {
+        "type": "String"
+      },
+      "m": {
+        "type": "String"
+      }
+    }
+  },
+  "trainsFareFrom": "from {fare}",
+  "@trainsFareFrom": {
+    "description": "Reference: `.routecard__fare`, \"from ₨ 2,400\".",
+    "placeholders": {
+      "fare": {
+        "type": "String"
+      }
+    }
+  },
+  "trainsFrom": "From",
+  "@trainsFrom": {
+    "description": "Reference key trains.from."
+  },
+  "trainsHeadSub": "{operator} · live running status",
+  "@trainsHeadSub": {
+    "description": "The Trains page head. Reference: trains.screen.js .page-head__sub, which writes the operator and the phrase as one literal.",
+    "placeholders": {
+      "operator": {
+        "type": "String"
+      }
+    }
+  },
+  "trainsNow": "Now",
+  "@trainsNow": {
+    "description": "Reference key trains.now."
+  },
+  "trainsPickDate": "Pick a date",
+  "@trainsPickDate": {
+    "description": "Reference: the calendar chip’s aria-label."
+  },
+  "trainsPopular": "Popular routes",
+  "@trainsPopular": {
+    "description": "Reference key trains.popular."
+  },
+  "trainsPopularSub": "Tap to check fares and seats",
+  "@trainsPopularSub": {
+    "description": "Reference key trains.popularSub."
+  },
+  "trainsRefreshed": "Live status refreshed",
+  "@trainsRefreshed": {
+    "description": "Reference: the Refresh link’s data-toast."
+  },
+  "trainsRoute": "{from} → {to}",
+  "@trainsRoute": {
+    "description": "Reference: `.live-train__route`. The arrow follows the reading direction, which is why it is in the string rather than a glyph.",
+    "placeholders": {
+      "from": {
+        "type": "String"
+      },
+      "to": {
+        "type": "String"
+      }
+    }
+  },
+  "trainsRouteToast": "{from} → {to} · {trains} · {fare}",
+  "@trainsRouteToast": {
+    "description": "Reference: a route card’s data-toast.",
+    "placeholders": {
+      "from": {
+        "type": "String"
+      },
+      "to": {
+        "type": "String"
+      },
+      "trains": {
+        "type": "String"
+      },
+      "fare": {
+        "type": "String"
+      }
+    }
+  },
+  "trainsSaved": "Saved journeys",
+  "@trainsSaved": {
+    "description": "Reference key trains.saved."
+  },
+  "trainsSearchResult": "{n, plural, =1{1 train on this route today} other{{n} trains on this route today}}",
+  "@trainsSearchResult": {
+    "description": "Reference: the Search button’s data-toast.",
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
+  "trainsServiceLine": "{depart} → {arrive} · {duration} · {fare}",
+  "@trainsServiceLine": {
+    "description": "Reference: a departure row’s `.list-row__sub`.",
+    "placeholders": {
+      "depart": {
+        "type": "String"
+      },
+      "arrive": {
+        "type": "String"
+      },
+      "duration": {
+        "type": "String"
+      },
+      "fare": {
+        "type": "String"
+      }
+    }
+  },
+  "trainsStatusDeparted": "Departed",
+  "@trainsStatusDeparted": {
+    "description": "Reference key trains.st.departed."
+  },
+  "trainsStatusLate": "{n} min late",
+  "@trainsStatusLate": {
+    "description": "Reference key trains.st.late.",
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
+  "trainsStatusOnTime": "On time",
+  "@trainsStatusOnTime": {
+    "description": "Reference key trains.st.onTime."
+  },
+  "trainsSwap": "Swap stations",
+  "@trainsSwap": {
+    "description": "Reference: the swap control’s aria-label."
+  },
+  "trainsSwapped": "Stations swapped",
+  "@trainsSwapped": {
+    "description": "Reference: the swap control’s data-toast."
+  },
+  "trainsTo": "To",
+  "@trainsTo": {
+    "description": "Reference key trains.to."
+  },
+  "trainsToday": "Today",
+  "@trainsToday": {
+    "description": "Reference key trains.today."
+  },
+  "trainsTomorrow": "Tomorrow",
+  "@trainsTomorrow": {
+    "description": "Reference key trains.tomorrow."
+  },
+  "trainsTrackedSummary": "{name} {number}, {route}, {status}, {percent}",
+  "@trainsTrackedSummary": {
+    "description": "What a screen reader is told about the tracked card, which is a progress bar it would otherwise read as nothing.",
+    "placeholders": {
+      "name": {
+        "type": "String"
+      },
+      "number": {
+        "type": "String"
+      },
+      "route": {
+        "type": "String"
+      },
+      "status": {
+        "type": "String"
+      },
+      "percent": {
+        "type": "String"
+      }
+    }
+  },
+  "trainsTracking": "You are tracking",
+  "@trainsTracking": {
+    "description": "Reference key trains.tracking."
+  },
+  "trainsUnavailableTitle": "Trains are not in your setup",
+  "@trainsUnavailableTitle": {
+    "description": "Shown when a deep link reaches Trains in a market that has no rail service. Deliberately identical in shape to the tool refusal, so \"you may not have this\" and \"there is no such thing\" read the same."
+  },
+  "trainsUpdated": "{n, plural, =1{Updated 1 minute ago} other{Updated {n} minutes ago}}",
+  "@trainsUpdated": {
+    "description": "Reference key trains.updated.",
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
   "unitDays": "days",
   "@unitDays": {
     "description": "Reference: a statistic’s unit"

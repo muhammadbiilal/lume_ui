@@ -104,32 +104,29 @@ const int kReferenceWeatherAgeMinutes = 4;
 /// What each local service says, per market. Measured row by row.
 typedef _Service = ({String value, String subtitle});
 
-const Map<String, Map<String, _Service>> _around =
-    <String, Map<String, _Service>>{
-      'PK': <String, _Service>{
-        'fuel': (value: 'Rs 264.61', subtitle: 'Petrol · Hi-Octane · Diesel'),
-        'loadshed': (value: '19:00', subtitle: 'Islamabad · 19:00 to 20:00'),
-        'goldrates': (value: 'Rs 290,480', subtitle: 'Open market · Gold 24k'),
-        'trains': (value: '', subtitle: 'Green Line Express · On time'),
-        'emergency': (value: '1122', subtitle: 'Rescue 1122'),
-        'holidays': (value: '9 Nov', subtitle: 'Iqbal Day'),
-      },
-      'GB': <String, _Service>{
-        'fuel': (
-          value: '£1.34',
-          subtitle: 'Unleaded · Super Unleaded · Diesel',
-        ),
-        'goldrates': (value: '£811', subtitle: 'Open market · Gold 24k'),
-        'emergency': (value: '999', subtitle: 'Emergency'),
-        'holidays': (value: '25 Dec', subtitle: 'Christmas Day'),
-      },
-      'US': <String, _Service>{
-        'fuel': (value: r'$3.12', subtitle: 'Regular · Mid-grade · Premium'),
-        'goldrates': (value: r'$1,026', subtitle: 'Open market · Gold 24k'),
-        'emergency': (value: '911', subtitle: 'Emergency'),
-        'holidays': (value: '28 Nov', subtitle: 'Thanksgiving'),
-      },
-    };
+const Map<String, Map<String, _Service>>
+_around = <String, Map<String, _Service>>{
+  'PK': <String, _Service>{
+    'fuel': (value: 'Rs\u00a0264.61', subtitle: 'Petrol · Hi-Octane · Diesel'),
+    'loadshed': (value: '19:00', subtitle: 'Islamabad · 19:00 to 20:00'),
+    'goldrates': (value: 'Rs\u00a0290,480', subtitle: 'Open market · Gold 24k'),
+    'trains': (value: '', subtitle: 'Green Line Express · On time'),
+    'emergency': (value: '1122', subtitle: 'Rescue 1122'),
+    'holidays': (value: '9 Nov', subtitle: 'Iqbal Day'),
+  },
+  'GB': <String, _Service>{
+    'fuel': (value: '£1.34', subtitle: 'Unleaded · Super Unleaded · Diesel'),
+    'goldrates': (value: '£811', subtitle: 'Open market · Gold 24k'),
+    'emergency': (value: '999', subtitle: 'Emergency'),
+    'holidays': (value: '25 Dec', subtitle: 'Christmas Day'),
+  },
+  'US': <String, _Service>{
+    'fuel': (value: r'$3.12', subtitle: 'Regular · Mid-grade · Premium'),
+    'goldrates': (value: r'$1,026', subtitle: 'Open market · Gold 24k'),
+    'emergency': (value: '911', subtitle: 'Emergency'),
+    'holidays': (value: '28 Nov', subtitle: 'Thanksgiving'),
+  },
+};
 
 /// The market names the "Around you" tag shows.
 ///

@@ -701,16 +701,23 @@ D24.
 
 ### Still open
 
+**Nothing is open.** Q6 and Q9 were closed at F5C with no
+implementation change; Q8 was superseded at F3. They are kept struck through
+rather than deleted, because a decision that was taken is evidence and a
+deleted row invites the same question again.
+
 | # | Question | Blocks | Recommendation |
 |---|---|---|---|
-| Q6 | **Should Urdu be set in Nastaliq rather than Naskh?** The reference ships only Noto Naskh Arabic, so Naskh is what the design asks for and what F1 implemented. But Urdu is conventionally Nastaliq, and Dayroz separately bundles `NotoNastaliqUrdu-Medium.ttf` — which is the production app judging Naskh wrong for Urdu | F4 onboarding sign-off in Urdu | Keep **Naskh**, because the reference is the source of truth and bundling a face the design has not asked for is the conversion inventing a design decision. Raise it as a *design* question against the reference instead. Decide before Urdu screens are signed off, since it changes how every Urdu screen looks |
+| ~~Q6~~ | ~~**Should Urdu be set in Nastaliq rather than Naskh?**~~ · **Closed at F5C.** Naskh. Lume ships Noto Naskh Arabic and nothing else, so Naskh is what the design asks for and what the conversion reproduces. Nastaliq is a **Dayroz product decision**, not a conversion one: the production app may bundle `NotoNastaliqUrdu-Medium.ttf` and change how Urdu is set, and that is a change to the product rather than a correction to this reference. No implementation changes. | — | **Closed** |
 | ~~Q8~~ | ~~**The stepper's buttons are 44 tall but 32 wide.** Making them 44 wide would widen the pill from 64 to 96 and change the control's proportions. Accept the residual, or change the design? | F6, where steppers are actually used | **Accept**, and record it. The height is the axis a thumb misses on in a vertical list, and it is recovered. Changing the pill would be the conversion redesigning a control it was asked to reproduce — better raised against the reference~~ · **Superseded.** Rejected, and corrected properly in F3 — see D6 |
-| Q9 | **A country row is 41 points tall — three under §9's own 44 px floor.** Unlike the stepper's 26 × 26 (D6) and the onboarding chrome's 34 and 32, there is nowhere to overhang: the rows are adjacent, so a taller target would either overlap its neighbour's or change the list's rhythm, which is the thing this phase measures. The target is 350 points *wide*, so the miss the floor guards against — a thin control you jab past — is not the miss on offer. Reproduced at 41 and raised rather than decided | F4B, before the city step reuses the same row | Options: (a) keep 41 and record it as a permitted difference, (b) raise every row to 44 and accept a taller list than the design draws, (c) raise the floor only where a list is short enough to afford it. I recommend (a) |
+| ~~Q9~~ | ~~**A country row is 41 points tall — three under §9's own 44 px floor.**~~ · **Closed at F5C: approved as a screen-specific target exception.** The row is 350 points *wide* and full-bleed, and its neighbours are adjacent, so there is nowhere to overhang and no thin control to jab past — the miss §9's floor guards against is not the miss on offer. Reproduced at 41, and recorded rather than corrected. It is not the D35 case: there the drawn box was 35 × 30 inside a card with room around it, and separating the target cost nothing. | — | **Closed**, option (a). No implementation changes |
 
 ## 4. Change log
 
 | Date | Change | Reason |
 |---|---|---|
+| 2026-09-13 (F5C) | **Q6 closed — Naskh.** Lume ships Noto Naskh Arabic and the conversion reproduces what Lume ships; Nastaliq is a Dayroz product decision | The conversion does not bundle a face the design has not asked for |
+| 2026-09-13 (F5C) | **Q9 closed — the 41-point country row is an approved screen-specific target exception** | Full-bleed and 350 wide, with adjacent neighbours and nowhere to overhang; unlike D35 there is no spare room to separate the target into |
 | 2026-09-13 (F5B · closure) | **D35 completed and reclassified** — a card action is drawn at 35 × 30 and touched at 44 × 44, with nothing visible moved | An exception was accepted where D6's remedy applies; `LumeGhostButton` removed and `LumeCardAction` put in its place |
 | 2026-09-13 (F5B · closure) | **D36 approved and closed** — the ring label fits inside the arc at accessibility scales and is drawn at its measured size at the reference's | The four conditions are asserted, including an accessible value built from the data rather than the render |
 | 2026-09-13 (F5B · closure) | **D37 withdrawn** — it was a corrected implementation defect, not a difference, and is written out in full under C27 | A number was assigned before the finding was understood; a corrected defect must not sit on a difference list |

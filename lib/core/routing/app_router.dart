@@ -50,6 +50,7 @@ import '../../features/gallery/presentation/gallery_screen.dart';
 import '../../features/explore/presentation/explore_host.dart';
 import '../../features/home/presentation/home_host.dart';
 import '../../features/today/presentation/today_host.dart';
+import '../../features/trains/presentation/trains_host.dart';
 import '../../features/tools/presentation/tools_host.dart';
 import '../../features/gallery/presentation/navigation_gallery.dart';
 import '../../features/onboarding/domain/onboarding_state.dart';
@@ -375,9 +376,9 @@ const String _navigationGallerySegment = 'navigation-gallery';
 
 /// A branch root.
 ///
-/// Home, the Tools hub, Today and Explore are the product; Trains and Profile
-/// are still the F3 fixture that proved the shell, and each is replaced by its
-/// own screen in turn.
+/// Home, the Tools hub, Today, Explore and Trains are the product; Profile is
+/// still the F3 fixture that proved the shell, and it is replaced by its own
+/// screen in turn.
 Widget _destination(BuildContext context, LumeDestinationId id) {
   final AppLocalizations l = AppLocalizations.of(context);
   final String root = id.path;
@@ -392,6 +393,7 @@ Widget _destination(BuildContext context, LumeDestinationId id) {
     case LumeDestinationId.explore:
       return LumeExploreHost(branch: root);
     case LumeDestinationId.trains:
+      return LumeTrainsHost(branch: root);
     case LumeDestinationId.profile:
       break;
   }

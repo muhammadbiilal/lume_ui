@@ -208,7 +208,7 @@ void main() {
         LumeUsers.muslimPk,
       )).data.around;
       final LumeAroundService fuel = pk.first;
-      expect(fuel.value, 'Rs 264.61');
+      expect(fuel.value, 'Rs 264.61');
       expect(fuel.subtitle, 'Petrol · Hi-Octane · Diesel');
 
       final List<LumeAroundService> us = (await composeExplore(

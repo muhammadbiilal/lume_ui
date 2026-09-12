@@ -257,35 +257,38 @@ void main() {
     testWidgets('a tab switch does not reset the other tab\'s screen', (
       WidgetTester tester,
     ) async {
-      await pumpLumeRouter(tester, initialLocation: LumeRoutes.trains);
+      // The instrument used to be the fixture screen's tap counter, on
+      // whichever branch was still a fixture. Every branch but Profile is the
+      // product now, so the instrument is a real branch's own state instead:
+      // how far down Today is scrolled. It survives only if the branch is
+      // re-presented rather than rebuilt, and it will still be there when
+      // Profile stops being a fixture too.
+      final GoRouter router = await pumpLumeRouter(
+        tester,
+        initialLocation: LumeRoutes.today,
+        surface: LumeViewport.phone,
+      );
 
-      // The fixture screen counts its own taps. Three taps is state that only
-      // survives if the branch is preserved rather than rebuilt — so the
-      // counter has to live on a branch that is *still* a fixture. Home, the
-      // Tools hub, Today and Explore are the product now; Trains and Profile
-      // are what is left, and they are F5C's and F5D's.
-      String countOn(String storageId) => tester
-          .widget<Text>(
-            find.byKey(ValueKey<String>('fixture-count:$storageId')),
-          )
-          .data!;
+      double offset() => tester
+          .state<ScrollableState>(find.byType(Scrollable).first)
+          .position
+          .pixels;
 
-      for (int i = 0; i < 3; i++) {
-        await tester.tap(find.widgetWithText(LumeButton, 'Trains'));
-      }
+      await tester.drag(find.byType(Scrollable).first, const Offset(0, -400));
       await tester.pumpAndSettle();
-      expect(countOn('trains'), '3');
+      final double left = offset();
+      expect(left, greaterThan(0));
 
-      await tester.tap(find.text('Profile').last);
+      router.go(LumeRoutes.home);
       await tester.pumpAndSettle();
-      expect(countOn('profile'), '0');
+      expect(offset(), 0, reason: 'Home has its own offset, not Today\'s');
 
-      await tester.tap(find.text('Trains').last);
+      router.go(LumeRoutes.today);
       await tester.pumpAndSettle();
       expect(
-        countOn('trains'),
-        '3',
-        reason: 'Trains came back to the count it left with',
+        offset(),
+        moreOrLessEquals(left, epsilon: 0.5),
+        reason: 'Today came back to where it was left',
       );
     });
 

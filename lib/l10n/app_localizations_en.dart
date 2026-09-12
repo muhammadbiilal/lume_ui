@@ -2369,6 +2369,155 @@ class AppLocalizationsEn extends AppLocalizations {
   String get toolsTitle => 'Tools';
 
   @override
+  String get trainsAllDepartures => 'All departures';
+
+  @override
+  String get trainsChooseDestination => 'Choose a destination';
+
+  @override
+  String get trainsChooseOrigin => 'Choose a departure station';
+
+  @override
+  String trainsCount(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n trains',
+      one: '1 train',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get trainsDepartures => 'Departures';
+
+  @override
+  String trainsDeparturesSub(String station) {
+    return 'From $station';
+  }
+
+  @override
+  String trainsDuration(String h, String m) {
+    return '${h}h ${m}m';
+  }
+
+  @override
+  String trainsFareFrom(String fare) {
+    return 'from $fare';
+  }
+
+  @override
+  String get trainsFrom => 'From';
+
+  @override
+  String trainsHeadSub(String operator) {
+    return '$operator · live running status';
+  }
+
+  @override
+  String get trainsNow => 'Now';
+
+  @override
+  String get trainsPickDate => 'Pick a date';
+
+  @override
+  String get trainsPopular => 'Popular routes';
+
+  @override
+  String get trainsPopularSub => 'Tap to check fares and seats';
+
+  @override
+  String get trainsRefreshed => 'Live status refreshed';
+
+  @override
+  String trainsRoute(String from, String to) {
+    return '$from → $to';
+  }
+
+  @override
+  String trainsRouteToast(String from, String to, String trains, String fare) {
+    return '$from → $to · $trains · $fare';
+  }
+
+  @override
+  String get trainsSaved => 'Saved journeys';
+
+  @override
+  String trainsSearchResult(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n trains on this route today',
+      one: '1 train on this route today',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String trainsServiceLine(
+    String depart,
+    String arrive,
+    String duration,
+    String fare,
+  ) {
+    return '$depart → $arrive · $duration · $fare';
+  }
+
+  @override
+  String get trainsStatusDeparted => 'Departed';
+
+  @override
+  String trainsStatusLate(int n) {
+    return '$n min late';
+  }
+
+  @override
+  String get trainsStatusOnTime => 'On time';
+
+  @override
+  String get trainsSwap => 'Swap stations';
+
+  @override
+  String get trainsSwapped => 'Stations swapped';
+
+  @override
+  String get trainsTo => 'To';
+
+  @override
+  String get trainsToday => 'Today';
+
+  @override
+  String get trainsTomorrow => 'Tomorrow';
+
+  @override
+  String trainsTrackedSummary(
+    String name,
+    String number,
+    String route,
+    String status,
+    String percent,
+  ) {
+    return '$name $number, $route, $status, $percent';
+  }
+
+  @override
+  String get trainsTracking => 'You are tracking';
+
+  @override
+  String get trainsUnavailableTitle => 'Trains are not in your setup';
+
+  @override
+  String trainsUpdated(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: 'Updated $n minutes ago',
+      one: 'Updated 1 minute ago',
+    );
+    return '$_temp0';
+  }
+
+  @override
   String get unitDays => 'days';
 
   @override

@@ -2378,6 +2378,161 @@ class AppLocalizationsAr extends AppLocalizations {
   String get toolsTitle => 'الأدوات';
 
   @override
+  String get trainsAllDepartures => 'كل المغادرات';
+
+  @override
+  String get trainsChooseDestination => 'اختر الوجهة';
+
+  @override
+  String get trainsChooseOrigin => 'اختر محطة المغادرة';
+
+  @override
+  String trainsCount(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n قطارًا',
+      few: '$n قطارات',
+      two: 'قطاران',
+      one: 'قطار واحد',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get trainsDepartures => 'المغادرات';
+
+  @override
+  String trainsDeparturesSub(String station) {
+    return 'من $station';
+  }
+
+  @override
+  String trainsDuration(String h, String m) {
+    return '$h س $m د';
+  }
+
+  @override
+  String trainsFareFrom(String fare) {
+    return 'من $fare';
+  }
+
+  @override
+  String get trainsFrom => 'من';
+
+  @override
+  String trainsHeadSub(String operator) {
+    return '$operator · الحالة المباشرة';
+  }
+
+  @override
+  String get trainsNow => 'الآن';
+
+  @override
+  String get trainsPickDate => 'اختر تاريخًا';
+
+  @override
+  String get trainsPopular => 'المسارات الشائعة';
+
+  @override
+  String get trainsPopularSub => 'اضغط لعرض الأسعار والمقاعد';
+
+  @override
+  String get trainsRefreshed => 'تم تحديث الحالة المباشرة';
+
+  @override
+  String trainsRoute(String from, String to) {
+    return '$from ← $to';
+  }
+
+  @override
+  String trainsRouteToast(String from, String to, String trains, String fare) {
+    return '$from ← $to · $trains · $fare';
+  }
+
+  @override
+  String get trainsSaved => 'الرحلات المحفوظة';
+
+  @override
+  String trainsSearchResult(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n قطارًا على هذا المسار اليوم',
+      few: '$n قطارات على هذا المسار اليوم',
+      two: 'قطاران على هذا المسار اليوم',
+      one: 'قطار واحد على هذا المسار اليوم',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String trainsServiceLine(
+    String depart,
+    String arrive,
+    String duration,
+    String fare,
+  ) {
+    return '$depart ← $arrive · $duration · $fare';
+  }
+
+  @override
+  String get trainsStatusDeparted => 'غادر';
+
+  @override
+  String trainsStatusLate(int n) {
+    return 'متأخر $n دقيقة';
+  }
+
+  @override
+  String get trainsStatusOnTime => 'في الموعد';
+
+  @override
+  String get trainsSwap => 'تبديل المحطتين';
+
+  @override
+  String get trainsSwapped => 'تم تبديل المحطتين';
+
+  @override
+  String get trainsTo => 'إلى';
+
+  @override
+  String get trainsToday => 'اليوم';
+
+  @override
+  String get trainsTomorrow => 'غدًا';
+
+  @override
+  String trainsTrackedSummary(
+    String name,
+    String number,
+    String route,
+    String status,
+    String percent,
+  ) {
+    return '$name $number، $route، $status، $percent';
+  }
+
+  @override
+  String get trainsTracking => 'أنت تتابع';
+
+  @override
+  String get trainsUnavailableTitle => 'القطارات ليست ضمن إعداداتك';
+
+  @override
+  String trainsUpdated(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: 'تم التحديث قبل $n دقيقة',
+      few: 'تم التحديث قبل $n دقائق',
+      two: 'تم التحديث قبل دقيقتين',
+      one: 'تم التحديث قبل دقيقة',
+    );
+    return '$_temp0';
+  }
+
+  @override
   String get unitDays => 'يوم';
 
   @override

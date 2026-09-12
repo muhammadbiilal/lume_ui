@@ -110,6 +110,81 @@ const STATES = {
 };
 
 /* ---- what is measured --------------------------------------------------- */
+const TRAINS_TARGETS = {
+  'screen': '#screen-trains',
+  'pagehead': '#screen-trains .page-head',
+  'pagehead.title': '#screen-trains .page-head__title',
+  'pagehead.sub': '#screen-trains .page-head__sub',
+  'pagehead.saved': '#screen-trains .page-head .iconbtn',
+  'railsearch': '#screen-trains .railsearch',
+  'railsearch.row': '#screen-trains .railsearch__row',
+  'railfield': '#screen-trains .railfield',
+  'railfield.label': '#screen-trains .railfield__label',
+  'railfield.value': '#screen-trains .railfield__value',
+  'railswap': '#screen-trains .railswap',
+  'railsearch.foot': '#screen-trains .railsearch__foot',
+  'railchip': '#screen-trains .railchip',
+  'railchip.active': '#screen-trains .railchip.is-active',
+  'railsearch.go': '#screen-trains .railsearch__go',
+  'tracking.title': '#screen-trains .section:has(.live-train) .section__title',
+  'tracking.sub': '#screen-trains .section:has(.live-train) .section__sub',
+  'tracking.link': '#screen-trains .section:has(.live-train) .section__link',
+  'livetrain': '#screen-trains .live-train',
+  'livetrain.no': '#screen-trains .live-train__no',
+  'livetrain.name': '#screen-trains .live-train__name',
+  'livetrain.route': '#screen-trains .live-train__route',
+  'livetrain.status': '#screen-trains .live-train__head .status',
+  'livetrain.track': '#screen-trains .live-train__track',
+  'livetrain.pin': '#screen-trains .live-train__pin',
+  'livetrain.stops': '#screen-trains .live-train__stops',
+  'departures.title': '#screen-trains .section:has(#trainList) .section__title',
+  'departures.sub': '#screen-trains .section:has(#trainList) .section__sub',
+  'departures.link': '#screen-trains .section:has(#trainList) .section__link',
+  'trainlist': '#trainList',
+  'train.row': '#trainList .list-row',
+  'train.icon': '#trainList .list-row__icon',
+  'train.title': '#trainList .list-row__title',
+  'train.no': '#trainList .trainno',
+  'train.sub': '#trainList .list-row__sub',
+  'train.status': '#trainList .status',
+  'popular.title': '#screen-trains .section:has(.routecard) .section__title',
+  'popular.sub': '#screen-trains .section:has(.routecard) .section__sub',
+  'popular.hscroll': '#screen-trains .section:has(.routecard) .hscroll',
+  'routecard': '#screen-trains .routecard',
+  'routecard.pair': '#screen-trains .routecard__pair',
+  'routecard.meta': '#screen-trains .routecard__meta',
+  'routecard.fare': '#screen-trains .routecard__fare',
+  'shell.tabbar': '.tabbar',
+};
+
+const PROFILE_TARGETS = {
+  'screen': '#screen-profile',
+  'pagehead': '#screen-profile .page-head',
+  'pagehead.title': '#screen-profile .page-head__title',
+  'pagehead.sub': '#screen-profile .page-head__sub',
+  'pagehead.prefs': '#screen-profile .page-head .iconbtn',
+  'identity': '#screen-profile [data-sect="identity"]',
+  'phead': '#screen-profile .phead',
+  'phead.avatar': '#screen-profile .pavatar',
+  'phead.name': '#screen-profile .phead__name',
+  'phead.mail': '#screen-profile .phead__mail',
+  'phead.meta': '#screen-profile .phead__meta',
+  'phead.acts': '#screen-profile .phead__acts',
+  'guestwhy': '#screen-profile .guestwhy',
+  'group.lume': '#screen-profile #sect-lume',
+  'group.label': '#screen-profile .group-label',
+  'srow': '#screen-profile .list-row',
+  'srow.icon': '#screen-profile .list-row__icon',
+  'srow.title': '#screen-profile .list-row__title',
+  'srow.sub': '#screen-profile .list-row__sub',
+  'srow.value': '#screen-profile .srow__value',
+  'group.account': '#screen-profile #sect-account',
+  'group.support': '#screen-profile #sect-support',
+  'session': '#screen-profile [data-sect="session"]',
+  'version': '#screen-profile .meta',
+  'shell.tabbar': '.tabbar',
+};
+
 const HOME_TARGETS = {
   'screen': '#screen-home',
   'appbar': '.appbar',
@@ -513,13 +588,13 @@ class Cdp {
 async function main() {
   const profile = STATES[STATE];
   if (!profile) throw new Error('no state named ' + STATE);
-  const targets = SCREEN === 'tools'
-    ? TOOLS_TARGETS
-    : SCREEN === 'today'
-      ? TODAY_TARGETS
-      : SCREEN === 'explore'
-        ? EXPLORE_TARGETS
-        : HOME_TARGETS;
+  const targets = {
+    tools: TOOLS_TARGETS,
+    today: TODAY_TARGETS,
+    explore: EXPLORE_TARGETS,
+    trains: TRAINS_TARGETS,
+    profile: PROFILE_TARGETS,
+  }[SCREEN] || HOME_TARGETS;
 
   const work = stage(DRIVER(profile, SCREEN, AFTER[args.after] || ''));
   const server = spawn(process.execPath, ['scripts/serve.js'], {

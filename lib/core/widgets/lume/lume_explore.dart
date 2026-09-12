@@ -698,6 +698,9 @@ class LumeListRow extends StatelessWidget {
     required this.title,
     required this.subtitle,
     this.value,
+    this.titleTrailing,
+    this.end,
+    this.semanticLabel,
     this.onTap,
     this.isLast = false,
   });
@@ -709,6 +712,19 @@ class LumeListRow extends StatelessWidget {
   /// The figure at the end. `null` for a row that has none.
   final String? value;
 
+  /// Set inside the title, after the words — Trains' `.trainno` chip. The
+  /// title shrinks to make room rather than the chip wrapping.
+  final Widget? titleTrailing;
+
+  /// Replaces the value and the chevron together. A row whose end is a status
+  /// pill does not also lead anywhere by chevron, and the reference draws
+  /// neither beside the other.
+  final Widget? end;
+
+  /// Overrides what a screen reader hears. The default is the title, the
+  /// subtitle and the value; a row with an [end] has to say what that says.
+  final String? semanticLabel;
+
   final VoidCallback? onTap;
   final bool isLast;
 
@@ -718,7 +734,8 @@ class LumeListRow extends StatelessWidget {
 
     return LumePressable(
       onTap: onTap,
-      semanticLabel: <String>[title, subtitle, ?value].join(', '),
+      semanticLabel:
+          semanticLabel ?? <String>[title, subtitle, ?value].join(', '),
       minSize: 0,
       child: Container(
         padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 12),
@@ -751,18 +768,32 @@ class LumeListRow extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   mainAxisSize: MainAxisSize.min,
                   children: <Widget>[
-                    Text(
-                      title,
-                      maxLines: 1,
-                      overflow: TextOverflow.ellipsis,
-                      style: LumeType.tracked(
-                        LumeType.natural(
-                          context,
-                          context.lumeType.meta,
-                          size: 14,
+                    Row(
+                      children: <Widget>[
+                        Flexible(
+                          child: Text(
+                            title,
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
+                            style:
+                                LumeType.tracked(
+                                  LumeType.natural(
+                                    context,
+                                    context.lumeType.meta,
+                                    size: 14,
+                                  ),
+                                  -0.022,
+                                ).copyWith(
+                                  color: lume.text,
+                                  fontWeight: FontWeight.w700,
+                                ),
+                          ),
                         ),
-                        -0.022,
-                      ).copyWith(color: lume.text, fontWeight: FontWeight.w700),
+                        if (titleTrailing != null) ...<Widget>[
+                          const SizedBox(width: 6),
+                          titleTrailing!,
+                        ],
+                      ],
                     ),
                     const SizedBox(height: 1),
                     Text(
@@ -783,26 +814,34 @@ class LumeListRow extends StatelessWidget {
                 ),
               ),
               const SizedBox(width: 8),
-              if (value != null) ...<Widget>[
-                ConstrainedBox(
-                  constraints: const BoxConstraints(maxWidth: 110),
-                  child: LumeNumerals(
-                    value!,
-                    maxLines: 1,
-                    overflow: TextOverflow.ellipsis,
-                    style: LumeType.tracked(
-                      LumeType.natural(
-                        context,
-                        context.lumeType.meta,
-                        size: 13,
-                      ),
-                      -0.02,
-                    ).copyWith(color: lume.text2, fontWeight: FontWeight.w700),
+              if (end != null)
+                end!
+              else ...<Widget>[
+                if (value != null) ...<Widget>[
+                  ConstrainedBox(
+                    constraints: const BoxConstraints(maxWidth: 110),
+                    child: LumeNumerals(
+                      value!,
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                      style:
+                          LumeType.tracked(
+                            LumeType.natural(
+                              context,
+                              context.lumeType.meta,
+                              size: 13,
+                            ),
+                            -0.02,
+                          ).copyWith(
+                            color: lume.text2,
+                            fontWeight: FontWeight.w700,
+                          ),
+                    ),
                   ),
-                ),
-                const SizedBox(width: 8),
+                  const SizedBox(width: 8),
+                ],
+                LumeIcon(LumeIcons.chevR, size: 16, color: lume.text3),
               ],
-              LumeIcon(LumeIcons.chevR, size: 16, color: lume.text3),
             ],
           ),
         ),

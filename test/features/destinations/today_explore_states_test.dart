@@ -371,7 +371,7 @@ void main() {
       );
       expect(
         find.bySemanticsLabel(
-          RegExp('Fuel Prices, Petrol · Hi-Octane · Diesel, Rs 264.61'),
+          RegExp('Fuel Prices, Petrol · Hi-Octane · Diesel, Rs 264.61'),
         ),
         findsOneWidget,
       );

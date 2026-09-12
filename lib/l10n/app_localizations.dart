@@ -4324,6 +4324,209 @@ abstract class AppLocalizations {
   /// **'Tools'**
   String get toolsTitle;
 
+  /// Reference: the departures All link’s data-toast.
+  ///
+  /// In en, this message translates to:
+  /// **'All departures'**
+  String get trainsAllDepartures;
+
+  /// Reference: the To field’s data-toast.
+  ///
+  /// In en, this message translates to:
+  /// **'Choose a destination'**
+  String get trainsChooseDestination;
+
+  /// Reference: the From field’s data-toast.
+  ///
+  /// In en, this message translates to:
+  /// **'Choose a departure station'**
+  String get trainsChooseOrigin;
+
+  /// How many services a popular route has.
+  ///
+  /// In en, this message translates to:
+  /// **'{n, plural, =1{1 train} other{{n} trains}}'**
+  String trainsCount(int n);
+
+  /// Reference key trains.departures. `i18n/core.js` declares "Today’s departures" and `i18n/tools.js` overrides it to "Departures"; the rendered screen shows the override, and the rendered screen is the authority.
+  ///
+  /// In en, this message translates to:
+  /// **'Departures'**
+  String get trainsDepartures;
+
+  /// Reference key trains.departuresSub.
+  ///
+  /// In en, this message translates to:
+  /// **'From {station}'**
+  String trainsDeparturesSub(String station);
+
+  /// A journey length. Reference: the roster’s `dur` field, which is written in English in the data.
+  ///
+  /// In en, this message translates to:
+  /// **'{h}h {m}m'**
+  String trainsDuration(String h, String m);
+
+  /// Reference: `.routecard__fare`, "from ₨ 2,400".
+  ///
+  /// In en, this message translates to:
+  /// **'from {fare}'**
+  String trainsFareFrom(String fare);
+
+  /// Reference key trains.from.
+  ///
+  /// In en, this message translates to:
+  /// **'From'**
+  String get trainsFrom;
+
+  /// The Trains page head. Reference: trains.screen.js .page-head__sub, which writes the operator and the phrase as one literal.
+  ///
+  /// In en, this message translates to:
+  /// **'{operator} · live running status'**
+  String trainsHeadSub(String operator);
+
+  /// Reference key trains.now.
+  ///
+  /// In en, this message translates to:
+  /// **'Now'**
+  String get trainsNow;
+
+  /// Reference: the calendar chip’s aria-label.
+  ///
+  /// In en, this message translates to:
+  /// **'Pick a date'**
+  String get trainsPickDate;
+
+  /// Reference key trains.popular.
+  ///
+  /// In en, this message translates to:
+  /// **'Popular routes'**
+  String get trainsPopular;
+
+  /// Reference key trains.popularSub.
+  ///
+  /// In en, this message translates to:
+  /// **'Tap to check fares and seats'**
+  String get trainsPopularSub;
+
+  /// Reference: the Refresh link’s data-toast.
+  ///
+  /// In en, this message translates to:
+  /// **'Live status refreshed'**
+  String get trainsRefreshed;
+
+  /// Reference: `.live-train__route`. The arrow follows the reading direction, which is why it is in the string rather than a glyph.
+  ///
+  /// In en, this message translates to:
+  /// **'{from} → {to}'**
+  String trainsRoute(String from, String to);
+
+  /// Reference: a route card’s data-toast.
+  ///
+  /// In en, this message translates to:
+  /// **'{from} → {to} · {trains} · {fare}'**
+  String trainsRouteToast(String from, String to, String trains, String fare);
+
+  /// Reference key trains.saved.
+  ///
+  /// In en, this message translates to:
+  /// **'Saved journeys'**
+  String get trainsSaved;
+
+  /// Reference: the Search button’s data-toast.
+  ///
+  /// In en, this message translates to:
+  /// **'{n, plural, =1{1 train on this route today} other{{n} trains on this route today}}'**
+  String trainsSearchResult(int n);
+
+  /// Reference: a departure row’s `.list-row__sub`.
+  ///
+  /// In en, this message translates to:
+  /// **'{depart} → {arrive} · {duration} · {fare}'**
+  String trainsServiceLine(
+    String depart,
+    String arrive,
+    String duration,
+    String fare,
+  );
+
+  /// Reference key trains.st.departed.
+  ///
+  /// In en, this message translates to:
+  /// **'Departed'**
+  String get trainsStatusDeparted;
+
+  /// Reference key trains.st.late.
+  ///
+  /// In en, this message translates to:
+  /// **'{n} min late'**
+  String trainsStatusLate(int n);
+
+  /// Reference key trains.st.onTime.
+  ///
+  /// In en, this message translates to:
+  /// **'On time'**
+  String get trainsStatusOnTime;
+
+  /// Reference: the swap control’s aria-label.
+  ///
+  /// In en, this message translates to:
+  /// **'Swap stations'**
+  String get trainsSwap;
+
+  /// Reference: the swap control’s data-toast.
+  ///
+  /// In en, this message translates to:
+  /// **'Stations swapped'**
+  String get trainsSwapped;
+
+  /// Reference key trains.to.
+  ///
+  /// In en, this message translates to:
+  /// **'To'**
+  String get trainsTo;
+
+  /// Reference key trains.today.
+  ///
+  /// In en, this message translates to:
+  /// **'Today'**
+  String get trainsToday;
+
+  /// Reference key trains.tomorrow.
+  ///
+  /// In en, this message translates to:
+  /// **'Tomorrow'**
+  String get trainsTomorrow;
+
+  /// What a screen reader is told about the tracked card, which is a progress bar it would otherwise read as nothing.
+  ///
+  /// In en, this message translates to:
+  /// **'{name} {number}, {route}, {status}, {percent}'**
+  String trainsTrackedSummary(
+    String name,
+    String number,
+    String route,
+    String status,
+    String percent,
+  );
+
+  /// Reference key trains.tracking.
+  ///
+  /// In en, this message translates to:
+  /// **'You are tracking'**
+  String get trainsTracking;
+
+  /// Shown when a deep link reaches Trains in a market that has no rail service. Deliberately identical in shape to the tool refusal, so "you may not have this" and "there is no such thing" read the same.
+  ///
+  /// In en, this message translates to:
+  /// **'Trains are not in your setup'**
+  String get trainsUnavailableTitle;
+
+  /// Reference key trains.updated.
+  ///
+  /// In en, this message translates to:
+  /// **'{n, plural, =1{Updated 1 minute ago} other{Updated {n} minutes ago}}'**
+  String trainsUpdated(int n);
+
   /// Reference: a statistic’s unit
   ///
   /// In en, this message translates to:

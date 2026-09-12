@@ -237,15 +237,35 @@ class LumeFormatting {
   }
 
   /// The symbols the reference's own screens show.
+  ///
+  /// The space after a lettered symbol is **non-breaking**, which is what
+  /// CLDR puts there and what the reference renders: measured, its fuel row
+  /// is `Rs\u00a0264.61`. A breaking space lets "Rs" and the figure land on
+  /// two lines, which is a price split in half.
   static String _symbol(String code) => switch (code) {
-    'PKR' => 'Rs ',
+    'PKR' => 'Rs$_nb',
     'INR' => '₹',
     'GBP' => '£',
     'USD' => r'$',
-    'AED' => 'AED ',
-    'SAR' => 'SAR ',
-    _ => '$code ',
+    'AED' => 'AED$_nb',
+    'SAR' => 'SAR$_nb',
+    _ => '$code$_nb',
   };
+
+  static const String _nb = '\u00a0';
+
+  /// A published timetable time — `22:00`.
+  ///
+  /// **Not [time], and deliberately not the reader's clock preference.** A
+  /// railway publishes its timetable in 24-hour form and Lume prints those
+  /// strings exactly as the operator wrote them: `trains.screen.js` renders
+  /// `esc(train.dep)` straight out of the roster, so a 12-hour market still
+  /// reads 22:00. The minutes are kept as numbers so the roster can be sorted
+  /// and compared; this is only how they are written down.
+  String timetable(int minuteOfDay) {
+    String two(int v) => v < 10 ? '0$v' : '$v';
+    return '${two(minuteOfDay ~/ 60)}:${two(minuteOfDay % 60)}';
+  }
 
   /// The Pakistani rupee sign the fuel row uses — `₨`, which is the sign
   /// rather than the abbreviation.

@@ -2374,6 +2374,152 @@ class AppLocalizationsUr extends AppLocalizations {
   String get toolsTitle => 'ٹولز';
 
   @override
+  String get trainsAllDepartures => 'تمام روانگیاں';
+
+  @override
+  String get trainsChooseDestination => 'منزل منتخب کریں';
+
+  @override
+  String get trainsChooseOrigin => 'روانگی کا اسٹیشن منتخب کریں';
+
+  @override
+  String trainsCount(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n ٹرینیں',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get trainsDepartures => 'روانگی';
+
+  @override
+  String trainsDeparturesSub(String station) {
+    return '$station سے';
+  }
+
+  @override
+  String trainsDuration(String h, String m) {
+    return '$h گھنٹے $m منٹ';
+  }
+
+  @override
+  String trainsFareFrom(String fare) {
+    return '$fare سے';
+  }
+
+  @override
+  String get trainsFrom => 'کہاں سے';
+
+  @override
+  String trainsHeadSub(String operator) {
+    return '$operator · براہِ راست صورتحال';
+  }
+
+  @override
+  String get trainsNow => 'ابھی';
+
+  @override
+  String get trainsPickDate => 'تاریخ منتخب کریں';
+
+  @override
+  String get trainsPopular => 'مقبول راستے';
+
+  @override
+  String get trainsPopularSub => 'کرایہ اور نشستیں دیکھیں';
+
+  @override
+  String get trainsRefreshed => 'براہِ راست صورتحال تازہ';
+
+  @override
+  String trainsRoute(String from, String to) {
+    return '$from ← $to';
+  }
+
+  @override
+  String trainsRouteToast(String from, String to, String trains, String fare) {
+    return '$from ← $to · $trains · $fare';
+  }
+
+  @override
+  String get trainsSaved => 'محفوظ سفر';
+
+  @override
+  String trainsSearchResult(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: 'اس راستے پر آج $n ٹرینیں',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String trainsServiceLine(
+    String depart,
+    String arrive,
+    String duration,
+    String fare,
+  ) {
+    return '$depart ← $arrive · $duration · $fare';
+  }
+
+  @override
+  String get trainsStatusDeparted => 'روانہ';
+
+  @override
+  String trainsStatusLate(int n) {
+    return '$n منٹ تاخیر';
+  }
+
+  @override
+  String get trainsStatusOnTime => 'وقت پر';
+
+  @override
+  String get trainsSwap => 'اسٹیشن بدلیں';
+
+  @override
+  String get trainsSwapped => 'اسٹیشن بدل دیے گئے';
+
+  @override
+  String get trainsTo => 'کہاں تک';
+
+  @override
+  String get trainsToday => 'آج';
+
+  @override
+  String get trainsTomorrow => 'کل';
+
+  @override
+  String trainsTrackedSummary(
+    String name,
+    String number,
+    String route,
+    String status,
+    String percent,
+  ) {
+    return '$name $number، $route، $status، $percent';
+  }
+
+  @override
+  String get trainsTracking => 'آپ ٹریک کر رہے ہیں';
+
+  @override
+  String get trainsUnavailableTitle => 'ٹرینیں آپ کے سیٹ اپ میں نہیں';
+
+  @override
+  String trainsUpdated(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n منٹ پہلے اپ ڈیٹ',
+    );
+    return '$_temp0';
+  }
+
+  @override
   String get unitDays => 'دن';
 
   @override
