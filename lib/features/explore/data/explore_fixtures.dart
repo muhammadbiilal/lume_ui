@@ -269,8 +269,11 @@ abstract final class LumeExploreComposer {
           if (user.islamic || !p.faithOnly) p,
       ];
 
-  /// The weather card's reading.
-  static LumeExploreWeather weather(LumeUserContext user) {
+  /// The weather card's reading, taken [now] less its pinned age.
+  static LumeExploreWeather weather(
+    LumeUserContext user, {
+    required DateTime now,
+  }) {
     final _Weather w = _weather[user.country] ?? _defaultWeather;
     return LumeExploreWeather(
       city: user.city,
@@ -282,7 +285,9 @@ abstract final class LumeExploreComposer {
       icon: w.icon,
       // Maghrib, from the same table Today's agenda reads.
       sunsetMinute: lumeSunsetMinute(user.country) ?? 18 * 60 + 30,
-      updatedMinutesAgo: kReferenceWeatherAgeMinutes,
+      observedAt: now.subtract(
+        const Duration(minutes: kReferenceWeatherAgeMinutes),
+      ),
     );
   }
 
@@ -363,7 +368,7 @@ class LumeFakeExploreRepository implements LumeExploreRepository {
           id: user.islamic ? LumeFeatureId.duas : LumeFeatureId.calmWeek,
           target: LumeHomeTarget.tool(user.islamic ? 'duas' : 'habits'),
         ),
-        weather: LumeExploreComposer.weather(user),
+        weather: LumeExploreComposer.weather(user, now: now),
         around: around,
         score: failing.contains(LumeExploreSource.score)
             ? null
@@ -372,7 +377,9 @@ class LumeFakeExploreRepository implements LumeExploreRepository {
             ? const <LumeNewsArticle>[]
             : LumeExploreComposer.news(user),
         collections: LumeExploreComposer.collections(user),
-        nearby: LumeExploreComposer.nearby(user),
+        nearby: failing.contains(LumeExploreSource.nearby)
+            ? const <LumeNearbyPlace>[]
+            : LumeExploreComposer.nearby(user),
       ),
     );
   }

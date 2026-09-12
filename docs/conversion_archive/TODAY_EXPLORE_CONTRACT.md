@@ -215,15 +215,27 @@ the reference tells them.
 the user's city, with distances computed from a real location, or it must not
 ship. These three rows are a reference fixture reproducing a prototype's bug.
 
+**The Stage 1 boundary, added in the closure pass.** Nearby is a
+`LumeExploreSource` of its own: it reports `fixture`, never `live`, and it can
+report `unavailable`, in which case the section says so rather than naming a
+city the reader is not in. The rows reproduce Lume exactly while the source
+answers; the shape Dayroz needs is already there.
+
 ### E1 — "updated 4 min ago". **Decision: reproduce it exactly.**
 
 `L.num(4)` is a literal: the same claim in every state, never changing, with no
 fetch behind it. Reproduced verbatim, and recorded.
 
-**Dayroz obligation.** The weather adapter must supply a real fetch timestamp
+**Dayroz obligation.** The weather adapter must supply a real observation time
 and the label must follow it. The values *around* the claim are already honest
 — temperature, condition, rain, wind and sunset are all per-country and
 per-city — so this is the one part of the weather card that lies.
+
+**The Stage 1 boundary, added in the closure pass.** The claim is reproduced
+through a *timestamp*, not a number: `LumeExploreWeather.observedAt` is pinned
+four minutes before the injected clock and the screen subtracts. The sentence
+appears nowhere in the widget, a later clock reads a larger age, and a real
+observation time makes the label true with no change to the screen.
 
 ### T1 and T2 — Today's task counts. **Decision: reproduce Lume exactly.**
 
@@ -246,8 +258,16 @@ English sentence, so the copy is still translated and the digits are still the
 reader's — which is the one part of T1 that is not reproduced, because §11 does
 not allow shipping untranslated English.
 
-**Dayroz obligation.** Both must be derived from the task store, so the
-sentence above the list agrees with the list.
+**Dayroz obligation.** Both must be derived from the task store — from **one
+eligible task query**, asked once and filtered by the same eligibility the rows
+are filtered by — so the sentence above the list agrees with the list. Three
+independent reads would reproduce this defect in production.
+
+**The Stage 1 boundary, added in the closure pass.** The figures are named
+constants in `today_fixtures.dart`, not literals in a widget, and
+`stage_one_fixtures_test.dart` asserts that they do not follow the list in any
+market — so the reproduction is visible as a reproduction rather than looking
+like a count that happens to be wrong.
 
 ### T3–T5 needed no decision
 

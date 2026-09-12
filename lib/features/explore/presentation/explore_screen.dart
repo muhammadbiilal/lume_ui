@@ -19,6 +19,7 @@ library;
 
 import 'package:flutter/material.dart';
 
+import '../../../core/fixtures/lume_clock.dart';
 import '../../../core/icons/lume_icons.dart';
 import '../../../core/layout/lume_measure.dart';
 import '../../../core/localization/lume_format.dart';
@@ -153,7 +154,11 @@ class LumeExploreScreen extends StatelessWidget {
             LumeSourceFreshness.unavailable)
           SliverToBoxAdapter(child: _newsUnavailable(context, l)),
         SliverToBoxAdapter(child: _collections(context, l, f, d)),
-        SliverToBoxAdapter(child: _nearby(context, l, f, d)),
+        if (d.nearby.isNotEmpty)
+          SliverToBoxAdapter(child: _nearby(context, l, f, d))
+        else if (s.of(LumeExploreSource.nearby) ==
+            LumeSourceFreshness.unavailable)
+          SliverToBoxAdapter(child: _nearbyUnavailable(context, l)),
       ],
     );
   }
@@ -235,7 +240,12 @@ class LumeExploreScreen extends StatelessWidget {
       key: const ValueKey<String>(weatherKey),
       child: LumePageSection(
         title: l.exploreWeather,
-        subtitle: l.exploreWeatherSub(w.city, w.updatedMinutesAgo),
+        // Computed from the reading's own timestamp against the injected
+        // clock, so the sentence is never written down anywhere (C24).
+        subtitle: l.exploreWeatherSub(
+          w.city,
+          w.minutesAgoAt(LumeClockScope.of(context).now()),
+        ),
         link: l.actionRefresh,
         linkIcon: LumeIcons.refresh,
         onLinkTap: actions.refreshWeather,
@@ -422,6 +432,35 @@ class LumeExploreScreen extends StatelessWidget {
       ),
     ),
   );
+
+  /// Nearby, when the places source cannot answer.
+  ///
+  /// The reference has no such state — its three rows are static markup with
+  /// no source at all (C22). This exists because the repository contract they
+  /// arrive through has one, and a places source that cannot locate the reader
+  /// must be able to say so rather than fall back to somebody else's city.
+  Widget _nearbyUnavailable(BuildContext context, AppLocalizations l) =>
+      KeyedSubtree(
+        key: const ValueKey<String>(nearbyKey),
+        child: LumePageSection(
+          title: l.exploreNearby,
+          subtitle: l.exploreNearbySub,
+          child: LumeMeasure(
+            child: LumeNotice(
+              kind: LumeNoticeKind.offline,
+              title: l.toolUnavailableTitle,
+              text: l.toolErrorText,
+              actions: <Widget>[
+                if (onRetry != null)
+                  LumeNoticeAction(
+                    label: l.actionTryAgain,
+                    onPressed: () => onRetry!(),
+                  ),
+              ],
+            ),
+          ),
+        ),
+      );
 
   Widget _newsUnavailable(BuildContext context, AppLocalizations l) =>
       KeyedSubtree(

@@ -375,8 +375,9 @@ const String _navigationGallerySegment = 'navigation-gallery';
 
 /// A branch root.
 ///
-/// Home and the Tools hub are the product; the rest are still the F3 fixture
-/// that proved the shell, and each is replaced by its own screen in turn.
+/// Home, the Tools hub, Today and Explore are the product; Trains and Profile
+/// are still the F3 fixture that proved the shell, and each is replaced by its
+/// own screen in turn.
 Widget _destination(BuildContext context, LumeDestinationId id) {
   final AppLocalizations l = AppLocalizations.of(context);
   final String root = id.path;

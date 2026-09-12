@@ -221,8 +221,11 @@ Reproduced by decision (T1, T2): a reader outside the Islamic experience has
 four tasks and still reads five, and ticking a task moves neither figure.
 Carried as three numbers rather than a sentence, so the copy is still
 translated and the digits are still the reader's. `kReferenceTasksDone`,
-`kReferenceTaskCount` and `kReferenceMeetingsLeft` name them, and the Dayroz
-obligation is recorded beside them.
+`kReferenceTaskCount` and `kReferenceMeetingsLeft` name them, in the fixture
+rather than in a widget, and the Dayroz obligation is recorded beside them:
+**the ring's sentence, the statistic and the task rows must all be derived from
+one eligible task query**, so production values cannot contradict one another
+the way the reference's do.
 
 ---
 
@@ -249,9 +252,17 @@ condition the reference's router uses. `LumePageHead.leading` exists for this
 one case.
 
 **Nothing here is labelled live.** Every source reports its freshness, and a
-fixture reports `LumeSourceFreshness.fixture` — never `live`. A source that
-cannot answer says so in place of its section rather than vanishing, and the
-other seven are unaffected.
+fixture reports `LumeSourceFreshness.fixture` — never `live`, never `cached`.
+A source that cannot answer says so in place of its section rather than
+vanishing, and the other seven are unaffected. Nearby is one of those sources,
+not a decoration: it can fail, and when it does the section says so rather than
+falling back to a city the reader is not in.
+
+**The weather's age is computed, not written down.** The reading carries an
+`observedAt`, the fixture pins it four minutes before the injected clock, and
+the screen subtracts. "updated 4 min ago" is the reference's claim (C24) but it
+is not a sentence anywhere in the widget — a real observation time from Dayroz
+makes the label true with no change to the screen.
 
 ### What is reproduced rather than corrected
 
@@ -418,7 +429,7 @@ tile cannot name two different prayers.
   it belongs to — the count stays in that control's accessible name, which is
   where a screen reader reads it from at every scale.
 
-**Three recorded exceptions to §9's 44-point target.**
+**Two recorded exceptions to §9's 44-point target.**
 
 * The header's three controls are 38 with 12 between them, which is the
   design's geometry; the reachable area is 50 wide inside a 59-tall bar, and
@@ -426,14 +437,18 @@ tile cannot name two different prayers.
 * A section's "see all" link is 23 tall. Padding it to 44 would add five points
   to every section head and move the whole page down; the link is a shortcut to
   a destination the tab bar already carries at full size.
-* A card's ghost action — Bookmark, Share — is 30 tall and about 35 wide. It
-  sits in a card foot that is 30 tall, so growing it to 44 makes every card
-  carrying one fourteen points taller and pushes everything below it down the
-  page. Unlike the stepper (D6) the drawn box *is* the laid-out box, so the
-  target cannot be separated from it.
 
-Both are deliberate, both are recorded here, and neither is a full-width
-primary action.
+A third was recorded and then **corrected rather than accepted**: a card's
+ghost action — Bookmark, Share — is drawn 35 × 30, under the floor on both
+axes. It is now *drawn* at exactly that and *touched* across 44 × 44, by
+putting the glyph inside a 44-point pressable in the card's own stack and
+leaving a 35 × 30 spacer in the foot's row. The spare nine points on each
+target go outward, away from its neighbour, so the two touch at the four-point
+gap and never cross it. The card's height, the glyph positions and the pitch
+between them are the reference's, to the point. See D35.
+
+Both remaining exceptions are deliberate, both are recorded here, and neither
+is a full-width primary action.
 
 ---
 

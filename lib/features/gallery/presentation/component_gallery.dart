@@ -278,13 +278,14 @@ class _ComponentGalleryState extends ConsumerState<ComponentGallery> {
               arabic: 'وَمَن يَتَّقِ اللَّهَ',
               text: 'And whoever fears Allah, He will make for him a way out.',
               attribution: 'At-Talaq 65:2',
-              actions: <Widget>[
-                LumeGhostButton(
+              actions: <LumeCardAction>[
+                LumeCardAction(
                   icon: LumeIcons.bookmark,
                   semanticLabel: 'Bookmark',
+                  selected: true,
                   onPressed: () {},
                 ),
-                LumeGhostButton(
+                LumeCardAction(
                   icon: LumeIcons.share,
                   semanticLabel: 'Share',
                   onPressed: () {},

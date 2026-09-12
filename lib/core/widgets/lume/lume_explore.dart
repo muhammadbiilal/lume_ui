@@ -30,19 +30,87 @@ import '../../theme/lume/lume_theme.dart';
 import '../../theme/lume/lume_type.dart';
 import 'lume_pressable.dart';
 
+/// One of a card foot's ghost actions — Bookmark, Share.
+///
+/// Data rather than a widget, because the card places the painted control and
+/// its touch target in two different places in its tree: a 35 × 30 spacer sits
+/// in the foot's row so the layout is the reference's, and the glyph is drawn
+/// inside a 44 × 44 target in the card's own stack. A caller handing in a
+/// finished widget could not be split that way.
+@immutable
+class LumeCardAction {
+  const LumeCardAction({
+    required this.icon,
+    required this.semanticLabel,
+    this.onPressed,
+    this.selected = false,
+  });
+
+  final String icon;
+
+  /// The accessible name. Not optional.
+  final String semanticLabel;
+
+  final VoidCallback? onPressed;
+
+  /// `.ghostbtn.is-on` — accented, and the glyph filled.
+  final bool selected;
+
+  /// `.ghostbtn { height: 30px; padding: 0 10px }` with a 15-point glyph.
+  static const double boxWidth = 35;
+  static const double boxHeight = 30;
+
+  /// `.ghostbtn svg { width: 15px; height: 15px }`.
+  static const double glyphSize = 15;
+
+  /// `.card__actions { gap: 4px }`.
+  static const double gap = 4;
+
+  /// §9's floor, which the painted box is under on both axes.
+  static const double target = LumeSpace.tap;
+}
+
 /// `.quote` — a card with a mark in its corner, a line worth reading, and who
 /// it is from.
 ///
 /// The Arabic is optional because the section is faith-*swapped* rather than
 /// faith-gated: a Muslim reader gets an ayah with its original, everyone else
 /// gets a thought with only a translation's worth of text.
+///
+/// ### Where the foot's actions really are
+///
+/// `.ghostbtn` is 35 × 30 — under §9's 44-point floor on both axes — and it
+/// sits in a card foot that is exactly its own height, so growing the control
+/// makes every card carrying one fourteen points taller. D6's remedy applies:
+/// **separate the painted box from the target.**
+///
+/// The foot's row holds a 35 × 30 spacer per action, at the reference's
+/// coordinates, which is what keeps the row 30 tall and the card its measured
+/// height. The glyph itself is drawn inside a 44 × 44 [LumePressable] in the
+/// card's own stack, laid exactly over that spacer and extended *outward* —
+/// away from its neighbour — into the card's padding on the trailing side and
+/// into the empty run before the actions on the leading side. The two targets
+/// touch and do not overlap:
+///
+/// ```text
+///  ← leading                                        trailing →
+///        ┌─────────────────┐     ┌─────────────────┐
+///        │  ╭───────────╮  │     │  ╭───────────╮  │
+///        │  │ box 35×30 │ 9│  4  │ 9│ box 35×30 │  │
+///        │  ╰───────────╯  │     │  ╰───────────╯  │
+///        └─────────────────┘     └─────────────────┘
+///           target 1: 44            target 0: 44    ↑ 18 of card padding
+/// ```
+///
+/// Two is the most that fits: a third would have to overlap its neighbour by
+/// five points, because the pitch between controls is 39 and the target is 44.
 class LumeQuoteCard extends StatelessWidget {
   const LumeQuoteCard({
     super.key,
     required this.text,
     required this.attribution,
     this.arabic,
-    this.actions = const <Widget>[],
+    this.actions = const <LumeCardAction>[],
   });
 
   /// The reading, in the reader's language.
@@ -55,15 +123,39 @@ class LumeQuoteCard extends StatelessWidget {
   /// right-to-left whatever the interface is doing.
   final String? arabic;
 
-  /// Bookmark and share.
-  final List<Widget> actions;
+  /// Bookmark and share, in the order the reference draws them.
+  final List<LumeCardAction> actions;
+
+  /// `.quote { padding: 20px 18px 16px }`.
+  static const EdgeInsets padding = EdgeInsets.fromLTRB(18, 20, 18, 16);
+
+  /// How far a target reaches past its painted box, away from its neighbour.
+  static const double outward = LumeCardAction.target - LumeCardAction.boxWidth;
+
+  /// The trailing inset of the target over the action [fromEnd] places from
+  /// the trailing edge, measured from the card's inner edge. 0 is the
+  /// trailing-most action, whose spare points go into the card's padding.
+  static double targetEnd(int fromEnd) => fromEnd == 0
+      ? padding.right - outward
+      : padding.right +
+            fromEnd * (LumeCardAction.boxWidth + LumeCardAction.gap);
+
+  /// The bottom inset of every target, measured from the card's inner edge.
+  static const double targetBottom =
+      16 - (LumeCardAction.target - LumeCardAction.boxHeight) / 2;
 
   @override
   Widget build(BuildContext context) {
     final LumeColors lume = context.lume;
+    // A third target cannot avoid overlapping its neighbour: the pitch between
+    // controls is 39 and the target is 44. Asserted here rather than in the
+    // constructor, which is const and cannot read a list's length.
+    assert(
+      actions.length <= 2,
+      'a card foot takes at most two actions — see the diagram above',
+    );
 
     return Container(
-      padding: const EdgeInsets.fromLTRB(18, 20, 18, 16),
       decoration: BoxDecoration(
         borderRadius: LumeRadius.brLg,
         border: Border.all(color: lume.border, width: LumeSpace.border),
@@ -80,109 +172,177 @@ class LumeQuoteCard extends StatelessWidget {
           stops: const <double>[0, 0.6],
         ),
       ),
+      // The stack wraps the padding rather than sitting inside it, so the
+      // mark's offsets are the stylesheet's own and a target can reach into
+      // the card's padding without being clipped out of the hit test.
       child: Stack(
         children: <Widget>[
           // `.quote__mark { top: 12px; right: 16px; opacity: .16 }` — under
           // the text, which is why `.quote__text` is `position: relative`.
           PositionedDirectional(
-            top: -8,
-            end: -2,
-            child: Opacity(
-              opacity: 0.16,
-              child: LumeIcon(LumeIcons.quote, size: 42, color: lume.accent),
+            top: 12,
+            end: 16,
+            child: ExcludeSemantics(
+              child: Opacity(
+                opacity: 0.16,
+                child: LumeIcon(LumeIcons.quote, size: 42, color: lume.accent),
+              ),
             ),
           ),
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            mainAxisSize: MainAxisSize.min,
-            children: <Widget>[
-              if (arabic != null) ...<Widget>[
-                Directionality(
-                  textDirection: TextDirection.rtl,
-                  child: SizedBox(
-                    width: double.infinity,
-                    child: Text(
-                      arabic!,
-                      textAlign: TextAlign.right,
-                      style: LumeType.arabic(size: 20, weight: FontWeight.w500)
-                          .copyWith(
-                            color: lume.text,
-                            // `line-height: 2.1` — Naskh needs the room, and the
-                            // reference gives it rather than taking the reading
-                            // height the rest of the product uses.
-                            height: 2.1,
-                            letterSpacing: 0,
+          Padding(
+            padding: padding,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisSize: MainAxisSize.min,
+              children: <Widget>[
+                if (arabic != null) ...<Widget>[
+                  Directionality(
+                    textDirection: TextDirection.rtl,
+                    child: SizedBox(
+                      width: double.infinity,
+                      child: Text(
+                        arabic!,
+                        textAlign: TextAlign.right,
+                        style:
+                            LumeType.arabic(
+                              size: 20,
+                              weight: FontWeight.w500,
+                            ).copyWith(
+                              color: lume.text,
+                              // `line-height: 2.1` — Naskh needs the room, and
+                              // the reference gives it rather than taking the
+                              // reading height the rest of the product uses.
+                              height: 2.1,
+                              letterSpacing: 0,
+                            ),
+                      ),
+                    ),
+                  ),
+                  const SizedBox(height: 10),
+                ],
+                Text(
+                  text,
+                  style:
+                      LumeType.tracked(
+                        LumeType.fit(context, context.lumeType.cardTitle),
+                        -0.02,
+                      ).copyWith(
+                        color: lume.text,
+                        fontSize: 15,
+                        fontWeight: FontWeight.w600,
+                        height: LumeType.lineHeight(context, 1.55),
+                      ),
+                ),
+                // `.card__foot { margin-top: 14px; padding-top: 12px;
+                //  border-top: 1px solid var(--border) }`
+                Container(
+                  margin: const EdgeInsets.only(top: 14),
+                  padding: const EdgeInsets.only(top: 12),
+                  decoration: BoxDecoration(
+                    border: Border(
+                      top: BorderSide(
+                        color: lume.border,
+                        width: LumeSpace.border,
+                      ),
+                    ),
+                  ),
+                  child: Row(
+                    children: <Widget>[
+                      Expanded(
+                        // `.quote__by { margin-top: 11px }`. The foot centres
+                        // its children, so the margin is part of what is
+                        // centred: a 26-point margin box in a 30-point line
+                        // leaves 2 above it, and the words sit 13 down.
+                        child: Padding(
+                          padding: const EdgeInsets.only(top: 11),
+                          child: Text(
+                            attribution,
+                            style:
+                                LumeType.natural(
+                                  context,
+                                  context.lumeType.meta,
+                                  size: 12,
+                                ).copyWith(
+                                  color: lume.text3,
+                                  fontWeight: FontWeight.w600,
+                                ),
                           ),
-                    ),
-                  ),
-                ),
-                const SizedBox(height: 10),
-              ],
-              Text(
-                text,
-                style:
-                    LumeType.tracked(
-                      LumeType.fit(context, context.lumeType.cardTitle),
-                      -0.02,
-                    ).copyWith(
-                      color: lume.text,
-                      fontSize: 15,
-                      fontWeight: FontWeight.w600,
-                      height: LumeType.lineHeight(context, 1.55),
-                    ),
-              ),
-              // `.card__foot { margin-top: 14px; padding-top: 12px;
-              //  border-top: 1px solid var(--border) }`
-              Container(
-                margin: const EdgeInsets.only(top: 14),
-                padding: const EdgeInsets.only(top: 12),
-                decoration: BoxDecoration(
-                  border: Border(
-                    top: BorderSide(
-                      color: lume.border,
-                      width: LumeSpace.border,
-                    ),
-                  ),
-                ),
-                child: Row(
-                  children: <Widget>[
-                    Expanded(
-                      // `.quote__by { margin-top: 11px }`. The foot centres
-                      // its children, so the margin is part of what is
-                      // centred: a 26-point margin box in a 30-point line
-                      // leaves 2 above it, and the words sit 13 down.
-                      child: Padding(
-                        padding: const EdgeInsets.only(top: 11),
-                        child: Text(
-                          attribution,
-                          style:
-                              LumeType.natural(
-                                context,
-                                context.lumeType.meta,
-                                size: 12,
-                              ).copyWith(
-                                color: lume.text3,
-                                fontWeight: FontWeight.w600,
-                              ),
                         ),
                       ),
-                    ),
-                    if (actions.isNotEmpty)
-                      Row(
-                        mainAxisSize: MainAxisSize.min,
-                        children: <Widget>[
-                          for (int i = 0; i < actions.length; i++) ...<Widget>[
-                            if (i > 0) const SizedBox(width: 4),
-                            actions[i],
-                          ],
-                        ],
-                      ),
-                  ],
+                      // The room the painted glyphs occupy. The glyphs
+                      // themselves are drawn inside their targets, above.
+                      for (int i = 0; i < actions.length; i++) ...<Widget>[
+                        if (i > 0) const SizedBox(width: LumeCardAction.gap),
+                        const SizedBox(
+                          width: LumeCardAction.boxWidth,
+                          height: LumeCardAction.boxHeight,
+                        ),
+                      ],
+                    ],
+                  ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
+          for (int i = 0; i < actions.length; i++)
+            PositionedDirectional(
+              end: targetEnd(actions.length - 1 - i),
+              bottom: targetBottom,
+              child: _ActionTarget(
+                action: actions[i],
+                fromEnd: actions.length - 1 - i,
+              ),
+            ),
         ],
+      ),
+    );
+  }
+}
+
+/// A card action: a 44 × 44 target with the reference's 35 × 30 glyph box
+/// inside it, pushed to whichever end keeps the target clear of its neighbour.
+class _ActionTarget extends StatelessWidget {
+  const _ActionTarget({required this.action, required this.fromEnd});
+
+  final LumeCardAction action;
+
+  /// 0 is the trailing-most action, whose spare nine points go outward into
+  /// the card's padding; every other action's go inward, away from it.
+  final int fromEnd;
+
+  @override
+  Widget build(BuildContext context) {
+    final LumeColors lume = context.lume;
+    return LumePressable(
+      onTap: action.onPressed,
+      semanticLabel: action.semanticLabel,
+      // Said out loud only when it is true: "share" is not a thing that can be
+      // deselected, and announcing "not selected" for it would be noise.
+      selected: action.selected ? true : null,
+      borderRadius: LumeRadius.brXs,
+      // The box is already §9's floor; asking for it again would do nothing.
+      minSize: 0,
+      child: SizedBox(
+        width: LumeCardAction.target,
+        height: LumeCardAction.target,
+        child: Align(
+          // The glyph box sits against the edge nearest its neighbour, so the
+          // spare nine points fall on the outward side.
+          alignment: fromEnd == 0
+              ? AlignmentDirectional.centerStart
+              : AlignmentDirectional.centerEnd,
+          child: SizedBox(
+            width: LumeCardAction.boxWidth,
+            height: LumeCardAction.boxHeight,
+            child: Center(
+              child: LumeIcon(
+                action.icon,
+                size: LumeCardAction.glyphSize,
+                color: action.selected ? lume.accent : lume.text2,
+              ),
+            ),
+          ),
+        ),
       ),
     );
   }

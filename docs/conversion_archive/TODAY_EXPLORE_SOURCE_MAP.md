@@ -49,6 +49,16 @@ The narrative contract these tables belong to is
 `LumeTodayDay` with `durable: false`. The list moves; the ring's sentence and
 the statistic do not, because they are the reference's literals (C23).
 
+**The Dayroz obligation, stated once.** The ring's sentence, the tasks
+statistic and the task rows must be derived from **one eligible task query** —
+the same query, asked once, filtered by the same eligibility the rows are
+filtered by. Three independent reads would reproduce the reference's defect in
+production: a count that disagrees with the list beneath it. Until that query
+exists, `kReferenceTasksDone`, `kReferenceTaskCount` and
+`kReferenceMeetingsLeft` hold the reference's figures in the fixture, and
+`stage_one_fixtures_test.dart` asserts they are not derived, so nobody can
+mistake the reproduction for working software.
+
 ---
 
 ## Explore
@@ -62,20 +72,21 @@ the statistic do not, because they are the reference's literals (C23).
 | `explore.screen.js` | `.desc` | `LumeExploreWeather.conditionKey` | `_weather`, a whole phrase per market | `LumeWeatherCard.description` | the weather adapter |
 | `explore.screen.js` | rain, wind | `rainPercent`, `windKph` | `_weather`, per market | `LumeWeatherStat` | the weather adapter |
 | `explore.screen.js` | sunset | `LumeExploreWeather.sunsetMinute` | `_sunsetByCountry`, the prayer calculation's | `LumeWeatherStat` | the same solar calculation |
-| `explore.screen.js` | `L.num(4)` | `kReferenceWeatherAgeMinutes` | literal (E1, C24) | the weather section head | **a real fetch timestamp** |
+| `explore.screen.js` | `L.num(4)` | `LumeExploreWeather.observedAt` | `now - kReferenceWeatherAgeMinutes` (E1, C24) | the weather section head, via `minutesAgoAt(clock.now())` | **a real observation time.** The label is already computed from a timestamp, so this is a change of value, not of screen |
 | `explore.screen.js` | six `LOCAL_SERVICES` | `LumeAroundService` | `_around`, per market, gated by `LumeEligibility` | `LumeListRow` | each tool's own repository |
 | `explore.screen.js` | `.score`, `data-int="cricket"` | `LumeExploreScore` | literal (E3) | `LumeScoreCard` | a live cricket feed |
 | `explore.screen.js` | `NEWS.PK` / `NEWS.GLOBAL` | `LumeNewsArticle` | `_newsPk`, `_newsGlobal` | `LumeArticleRow` | the News service, per country |
 | `explore.screen.js` | `renderNews` art | `LumeArticleTone` | painted from three colours | `LumeArticleArt` | — (the rule, not the files) |
 | `explore.screen.js` | four `.minicard`s | `LumeCollectionCard` | `_collections`, first faith-gated | `LumeMiniCard` | an editorial collections service |
-| `explore.screen.js` | three `.list-row`s | `LumeNearbyPlace` | `_nearby` — Karachi, everywhere (E2, C22) | `LumeListRow` | **a real places source keyed to the city** |
+| `explore.screen.js` | three `.list-row`s | `LumeNearbyPlace` | `_nearby` — Karachi, everywhere (E2, C22) | `LumeListRow`, or a notice when the source is `unavailable` | **a real places source keyed to the city.** The section-level unavailable state already exists, so a source that cannot locate the reader can say nothing rather than fall back |
 
 **What "freshness" means here.** `LumeExploreSnapshot.freshness` carries one
-`LumeSourceFreshness` per `LumeExploreSource`. The fixture reports `fixture`
-for every source it answers and `unavailable` for every source it is told to
-fail; it never reports `live` or `cached`, because it is neither. A section
-whose source is `unavailable` draws a notice in its place rather than
-disappearing, and the other seven are unaffected.
+`LumeSourceFreshness` per `LumeExploreSource` — weather, around, score, news,
+collections and **nearby**. The fixture reports `fixture` for every source it
+answers and `unavailable` for every source it is told to fail; it never reports
+`live` or `cached`, because it is neither, and a test asserts that it cannot.
+A section whose source is `unavailable` draws a notice in its place rather than
+disappearing, and the other sections are unaffected.
 
 ---
 

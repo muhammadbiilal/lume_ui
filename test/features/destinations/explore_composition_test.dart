@@ -147,7 +147,18 @@ void main() {
         LumeUsers.defaultUs,
       ]) {
         final LumeExploreSnapshot s = await composeExplore(user);
-        expect(s.data.weather.updatedMinutesAgo, kReferenceWeatherAgeMinutes);
+        // A timestamp, not a number: the fixture pins the reading four
+        // minutes before the clock, and the screen subtracts.
+        expect(
+          s.data.weather.observedAt,
+          kPinned.subtract(
+            const Duration(minutes: kReferenceWeatherAgeMinutes),
+          ),
+        );
+        expect(
+          s.data.weather.minutesAgoAt(kPinned),
+          kReferenceWeatherAgeMinutes,
+        );
       }
       await pumpExplore(
         tester,
@@ -223,11 +234,11 @@ void main() {
       WidgetTester tester,
     ) async {
       // `wrap.hidden = rows.length < 2` — the reference's own rule.
-      const LumeExploreData one = LumeExploreData(
+      final LumeExploreData one = LumeExploreData(
         countryCode: 'ZZ',
         countryName: 'ZZ',
         localised: false,
-        featured: LumeFeaturedCollection(
+        featured: const LumeFeaturedCollection(
           id: LumeFeatureId.calmWeek,
           target: LumeHomeTargetStub.none,
         ),
@@ -240,9 +251,11 @@ void main() {
           windKph: 0,
           icon: '',
           sunsetMinute: 0,
-          updatedMinutesAgo: 4,
+          // A timestamp keeps this out of const, which is fine: the
+          // shape is what the assertion is about.
+          observedAt: DateTime(2026),
         ),
-        around: <LumeAroundService>[
+        around: const <LumeAroundService>[
           LumeAroundService(featureId: 'fuel', icon: '', subtitle: 'x'),
         ],
         score: null,

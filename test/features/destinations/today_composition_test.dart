@@ -20,6 +20,7 @@ import 'package:lume/features/catalogue/domain/eligibility.dart';
 import 'package:lume/features/today/data/today_fixtures.dart';
 import 'package:lume/features/today/domain/today_model.dart';
 import 'package:lume/features/today/domain/today_repository.dart';
+import 'package:lume/core/widgets/lume/lume_explore.dart';
 import 'package:lume/features/today/presentation/today_art.dart';
 import 'package:lume/features/today/presentation/today_screen.dart';
 
@@ -637,6 +638,35 @@ void main() {
         findsNothing,
         reason: 'the exclusion wraps the sticker rather than sitting in it',
       );
+    });
+
+    testWidgets('and the reflection carries touchable actions on the real '
+        'page, not only in isolation', (WidgetTester tester) async {
+      // The 44-point targets live in the quote card's own stack (D35). An
+      // ancestor that clipped — a sliver, the measure, the page's scroller —
+      // would take the extra points back without changing a pixel, so the
+      // claim is checked where the card actually is.
+      await pumpToday(
+        tester,
+        LumeUsers.muslimPk,
+        surface: const Size(390, 4000),
+      );
+      final Rect bookmark = tester.getRect(find.bySemanticsLabel('Bookmark'));
+      expect(bookmark.width, greaterThanOrEqualTo(44));
+      expect(bookmark.height, greaterThanOrEqualTo(44));
+
+      final Rect share = tester.getRect(find.bySemanticsLabel('Share'));
+      expect(bookmark.overlaps(share), isFalse);
+      expect(
+        tester.getRect(find.byType(LumeQuoteCard)).contains(bookmark.topLeft),
+        isTrue,
+      );
+
+      // A tap at the very bottom of the target — seven points below the row
+      // the reference draws — still lands on the control.
+      await tester.tapAt(Offset(bookmark.center.dx, bookmark.bottom - 0.5));
+      await tester.pump();
+      expect(tester.takeException(), isNull);
     });
 
     testWidgets('and the ayah is cited twice, in the two forms the reference '

@@ -156,9 +156,9 @@ Found by looking at the renders, not by a passing test:
 | the ayah's section subtitle reading "Ar-Ra’d 13:28" where the prototype writes "Ar-Ra’d · 13:28" | the reference cites the same verse twice and differently; one finished string can only be right in one of the two places, so the surah, the chapter and the verse are carried separately (C25) |
 | no sparkle on Today's ring card | `today.screen.js` hangs a 46-point sticker off its top corner; the artwork had been extracted and never placed (C29) |
 | "2 of 4 tasks done" where the prototype says "2 of 5" | the ring sentence and the tasks statistic are the reference's literals and do not follow the list. Deriving them was a correction, not a reproduction (C23) |
-| the quote card 13.5 points too tall, and every section below it pushed down | a ghost action was 44 tall because the shared pressable enforces §9's floor; `.ghostbtn` is 30, and the attribution's own 11-point margin was missing (D35) |
+| the quote card 13.5 points too tall, and every section below it pushed down | a ghost action was laid out at 44 because the shared pressable enforces §9's floor; `.ghostbtn` is 30, and the attribution's own 11-point margin was missing. The control is now drawn at 35 × 30 and touched at 44 × 44 (D35) |
 | a list card two points short, and every section below it two points high | `LumeCard` painted its border without reserving room for it (C26) |
-| every page head one point too tall | `.page-head__sub` has no line height, so the line is the font's — and that one point was masking a separate two in the hub (C27, D37) |
+| every page head one point too tall, and every section below the hub's chips two points too high | `.page-head__sub` has no line height, so the line is the font's; the hub's recents strip had dropped `.hscroll`'s two points of top padding. Each was inside the one-point tolerance while the other was there (C27) |
 | the day ring overflowing by 46 points at 200 % text | a fixed circle cannot hold a label that grows; it scales down inside the arc instead, and not at all at the sizes the reference is drawn at (D36) |
 | no way back out of Explore in Pakistan, where it is not a tab | the reference keeps a back control in the head and shows it when no tab is selected (D34) |
 
@@ -185,6 +185,7 @@ past a review.
 
 | # | difference | size |
 |---|---|---|
+| D34 | Explore carries its own way back where it is not a tab | the reference keeps the same control and shows it on the same condition; Flutter asks the destination registry rather than the router |
 | D22 | the tile status line is translated | the prototype renders it in English in all three languages |
 | D23 | the Discover strip is 15.75 points taller | the outage card names a real time in the user's own clock; "Next outage 7:00 pm" is 127.93 wide in a 124-point region, so it takes two lines, and `.hscroll` stretches every card with it (C17) |
 | D31 | dates and clocks are world English | `intl` has no `en_PK`; this restores what the prototype renders |
@@ -192,8 +193,14 @@ past a review.
 
 **Correctness, privacy or accessibility repair**
 
+An *invisible-target* repair changes what can be touched and nothing that can
+be seen: the drawn control keeps the reference's coordinates to the point, and
+the goldens move only where anti-aliasing does.
+
 | # | difference | size |
 |---|---|---|
+| D35 | a card action is touched across 44 × 44 | the prototype's `.ghostbtn` is 35 × 30 on both axes, under §9's floor. **Nothing drawn moved**: the card is still 350 × 193.5 and the goldens moved by 0.003 % of their pixels, none beyond the rasterisation tolerance |
+| D36 | the day ring's label fits inside the arc at accessibility text scales | the prototype's flex overflows by 46 points at 200 %. At the scales the reference is drawn at, nothing is scaled at all |
 | D25 | a live card is 350 wide | the prototype's is 372.31 and overflows its column by 22.31, and the screen by 2.31 (C20) |
 | D27 | the notification badge is a pill with a number in it | the prototype's is a 7-point dot whose digits render outside it, across the bell (C16) |
 | D28 | the "local service" marker is drawn | the prototype's branch tests a field the catalogue does not carry, and the pin renders nowhere (C13) |

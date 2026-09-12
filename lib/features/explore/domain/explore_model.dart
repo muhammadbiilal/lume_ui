@@ -42,10 +42,14 @@ class LumeFeaturedCollection {
 /// calculation the prayer times use, so the two cannot disagree about when
 /// the sun goes down.
 ///
-/// [updatedMinutesAgo] is the exception and is **not** honest. The reference
-/// writes `L.num(4)` into the subtitle — the same claim in every state,
-/// forever, with no fetch behind it (E1). Reproduced by decision; Dayroz's
-/// weather adapter must replace it with a real fetch timestamp.
+/// [observedAt] is the exception, and it is the *shape* that is honest rather
+/// than the value. The reference writes `L.num(4)` straight into the subtitle
+/// — the same claim in every state, forever, with no fetch behind it (E1).
+/// Reproduced by decision, but as a **timestamp**: the fixture pins it four
+/// minutes before the injected clock and the screen subtracts, so the label is
+/// computed rather than written down. Dayroz supplies a real observation time
+/// here and the sentence follows it with no change to the widget — or supplies
+/// none, and the claim is dropped.
 @immutable
 class LumeExploreWeather {
   const LumeExploreWeather({
@@ -57,7 +61,7 @@ class LumeExploreWeather {
     required this.windKph,
     required this.icon,
     required this.sunsetMinute,
-    required this.updatedMinutesAgo,
+    required this.observedAt,
   });
 
   final String city;
@@ -75,8 +79,14 @@ class LumeExploreWeather {
   /// Minutes past local midnight.
   final int sunsetMinute;
 
-  /// A claim with nothing behind it. See the class comment.
-  final int updatedMinutesAgo;
+  /// When the reading was taken. See the class comment.
+  final DateTime observedAt;
+
+  /// How old the reading is against [now], never negative.
+  int minutesAgoAt(DateTime now) {
+    final int minutes = now.difference(observedAt).inMinutes;
+    return minutes < 0 ? 0 : minutes;
+  }
 
   @override
   bool operator ==(Object other) =>
@@ -89,7 +99,7 @@ class LumeExploreWeather {
       other.windKph == windKph &&
       other.icon == icon &&
       other.sunsetMinute == sunsetMinute &&
-      other.updatedMinutesAgo == updatedMinutesAgo;
+      other.observedAt == observedAt;
 
   @override
   int get hashCode => Object.hash(
@@ -101,7 +111,7 @@ class LumeExploreWeather {
     windKph,
     icon,
     sunsetMinute,
-    updatedMinutesAgo,
+    observedAt,
   );
 }
 

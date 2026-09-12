@@ -30,7 +30,6 @@ import '../../../core/layout/lume_measure.dart';
 import '../../../core/localization/lume_format.dart';
 import '../../../core/theme/lume/lume_space.dart';
 import '../../../core/widgets/lume/lume_agenda.dart';
-import '../../../core/widgets/lume/lume_button.dart';
 import '../../../core/widgets/lume/lume_day.dart';
 import '../../../core/widgets/lume/lume_destination.dart';
 import '../../../core/widgets/lume/lume_explore.dart';
@@ -316,13 +315,13 @@ class LumeTodayScreen extends StatelessWidget {
               ),
               LumeThoughtReflection(:final String attribution) => attribution,
             },
-            actions: <Widget>[
-              LumeGhostButton(
+            actions: <LumeCardAction>[
+              LumeCardAction(
                 icon: LumeIcons.bookmark,
                 semanticLabel: l.actionBookmark,
                 onPressed: () {},
               ),
-              LumeGhostButton(
+              LumeCardAction(
                 icon: LumeIcons.share,
                 semanticLabel: l.actionShare,
                 onPressed: () {},

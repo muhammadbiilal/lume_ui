@@ -711,6 +711,11 @@ D24.
 
 | Date | Change | Reason |
 |---|---|---|
+| 2026-09-13 (F5B · closure) | **D35 completed and reclassified** — a card action is drawn at 35 × 30 and touched at 44 × 44, with nothing visible moved | An exception was accepted where D6's remedy applies; `LumeGhostButton` removed and `LumeCardAction` put in its place |
+| 2026-09-13 (F5B · closure) | **D36 approved and closed** — the ring label fits inside the arc at accessibility scales and is drawn at its measured size at the reference's | The four conditions are asserted, including an accessible value built from the data rather than the render |
+| 2026-09-13 (F5B · closure) | **D37 withdrawn** — it was a corrected implementation defect, not a difference, and is written out in full under C27 | A number was assigned before the finding was understood; a corrected defect must not sit on a difference list |
+| 2026-09-13 (F5B · closure) | **C24 given a real shape** — "updated 4 min ago" is computed from a pinned observation timestamp against the injected clock, not carried as the number 4 | Dayroz supplies a real observation time and the sentence follows it with no change to the widget |
+| 2026-09-13 (F5B · closure) | **C22 given a section-level unavailable state** — Nearby is a source that can fail, and says so rather than naming a city the reader is not in | The reproduction stays; the shape Dayroz needs is now in place |
 | 2026-09-13 (F5B) | **Today and Explore implemented** — eight sections each, in the order their sources emit them, against re-read source and re-measured bounds | The F5A inventory summary had Today's order wrong; the contract was rebuilt from `today.screen.js` |
 | 2026-09-13 (F5B) | **C22 raised; decision taken: reproduce.** Nearby's three Karachi venues render in every market | Traced, classified as a data-accuracy failure, and put to a decision rather than settled |
 | 2026-09-13 (F5B) | **C24 raised; decision taken: reproduce.** "updated 4 min ago" is a literal and stays one | The only dishonest value on a card whose other five are per-city |
@@ -1310,22 +1315,73 @@ an `onBack` only when it is not. `LumePageHead` gained a `leading` slot for
 this one case; every other destination leaves it `null` and the head is the
 two-part row it has always been.
 
-### D35 — a ghost action draws at 30, and says so
+### D35 — a card action's target is 44 × 44 and its drawing is not
 
-**New in F5B.** `.ghostbtn` is 30 tall and about 35 wide — under §9's 44-point
-floor, like `.cnotice__act` and `.stepper__btn` before it (D6). D6's remedy was
-to separate the drawn box from the touch target; that remedy is not available
-here, because the ghost button's drawn box *is* its laid-out box and it sits in
-a card foot that is exactly its own height. Growing it to 44 makes every card
-carrying one fourteen points taller and moves every section below it.
+**New in F5B; completed in the F5B closure pass. An invisible-target
+adaptation, not an accessibility exception.**
 
-Drawn and laid out at 30, with the exception recorded in
-`docs/LUME_DESTINATIONS.md` §10 beside the header's 38 and the section link's
-23. This is the same call `LumeHeaderButton` already makes.
+`.ghostbtn` is 35 × 30 — under §9's 44-point floor on *both* axes, like
+`.cnotice__act` and `.stepper__btn` before it (D6) — and it sits in a card foot
+that is exactly its own height. The first F5B implementation left the target at
+the drawn size and recorded an exception, because the obvious repair (asking
+`LumePressable` for its 44-point floor) made every card carrying one fourteen
+points taller and pushed every section below it down the page.
+
+That was the wrong trade, and it has been replaced with D6's own remedy:
+**separate the painted box from the target.**
+
+| | drawn | target |
+|---|---|---|
+| `.ghostbtn` in Lume | 35 × 30 | 35 × 30 |
+| Flutter, before | 35 × 30 | 35 × 30 |
+| Flutter, now | **35 × 30, unchanged** | **44 × 44** |
+
+The foot's row holds a 35 × 30 spacer per action, so the row is still 30 tall
+and `.quote` is still 350 × 193.5. The glyph is drawn inside a 44 × 44
+`LumePressable` in the card's own stack, laid exactly over that spacer and
+extended **outward, away from its neighbour** — nine points into the card's
+18-point padding on the trailing side, nine into the empty run before the
+actions on the leading side:
+
+```text
+ ← leading                                        trailing →
+       ┌─────────────────┐     ┌─────────────────┐
+       │  ╭───────────╮  │     │  ╭───────────╮  │
+       │  │ box 35×30 │ 9│  4  │ 9│ box 35×30 │  │
+       │  ╰───────────╯  │     │  ╰───────────╯  │
+       └─────────────────┘     └─────────────────┘
+          target 1: 44            target 0: 44    ↑ 18 of card padding
+```
+
+**Why the targets are asymmetric.** The pitch between the two controls is 39 —
+35 of box and 4 of gap — so two 44-point targets *centred* on their glyphs
+would overlap by five points and a thumb aimed at Share would sometimes
+bookmark. Pushing each one's spare nine points outward gives two targets that
+touch at the four-point gap and never cross it. It is also why a third action
+is refused by an assertion rather than silently given an overlapping target.
+
+**What did not change.** The card's height, the glyph positions, the pitch, the
+attribution's baseline, the divider, the quote mark. The Today goldens moved by
+0.003 % of their pixels — anti-aliasing on the glyph edges — with no pixel
+beyond the rasterisation tolerance, and the side-by-side against the prototype
+scores identically before and after (35.121 %).
+
+**What it costs.** `LumeGhostButton` is gone: it was a control whose drawn box
+*was* its target, which is the shape this replaces. `LumeQuoteCard.actions`
+takes `LumeCardAction` data rather than finished widgets, because the card has
+to place the painted half and the interactive half in two different parts of
+its tree.
+
+Nineteen assertions in `test/core/widgets/card_action_target_test.dart`: the
+drawn size, the target size, the card's height, the 39-point pitch, no overlap,
+nothing outside the card, a tap at each of the four edges, taps just outside,
+the run between them, the attribution beside them, one semantics node per
+action, selected state, Tab, Enter, Space, a focus ring that moves nothing,
+right-to-left, 200 % text, and a phone lying down.
 
 ### D36 — the day ring's label shrinks rather than spilling over the arc
 
-**New in F5B.** The ring is a fixed 82-point circle and what is written inside
+**New in F5B. Approved and closed in the F5B closure pass.** The ring is a fixed 82-point circle and what is written inside
 it cannot grow with the reader's text size: at 200 % the two lines are half
 again as tall as the arc is wide, and the flex overflowed by 46 points.
 
@@ -1336,15 +1392,41 @@ inside that interior at 1.0 and 1.3, so the figure is drawn at its measured
 size and the fallback only engages past the sizes the design covers. This is
 the overflow exception the visual-authority rule allows, not a redesign.
 
-### D37 — the recents strip lost the two points above it
+**Approved, with the four conditions met.** At the reference's text scales the
+label is drawn at its measured size and placement; at accessibility scales it
+is fitted inside the ring rather than clipped; the ring itself is never resized
+to accommodate text, so the arc is the reference's 82 points at every scale;
+and the accessible value is built from the data rather than from the render, so
+a screen reader reads "70% of day" in full whether or not the painted label
+was scaled. Asserted in `today_explore_states_test.dart` at 1.0, 1.3 and 2.0.
+**Closed.**
 
-**New in F5B, correcting F5A.** `.hscroll` is `padding: 2px 20px 6px`; the
-Tools hub's recents strip was built with `EdgeInsets.only(bottom: 6)`, so every
-section below it sat two points too high. It was invisible while
-`LumePageHead`'s subtitle was one point too tall (C27) — the two errors half
-cancelled at each element and every row stayed inside the one-point tolerance.
-Fixing the head exposed it. Both are corrected, and the hub now matches its
-measured bounds exactly.
+### ~~D37~~ — withdrawn. Recorded as part of C27.
+
+**Raised and withdrawn inside F5B.** D37 was given a number before it was
+understood; it is not a difference at all, and a corrected defect must not be
+left on a difference list. It is written out in full here because the F5B
+report referenced the number without ever saying what it was.
+
+**Not to be confused with C28**, which is the other measurement finding of the
+same pass: `LumeType.naturalLine` carried `20 => 26` where two independent
+measurements on Today — `.ring__value` and `.stat__value`, both 20/800 with
+`line-height: normal` — render **25**. Flutter now uses the measured 25. That
+too is restored parity, recorded in §2 as a correction, and it is not on any
+difference list either.
+
+| | |
+|---|---|
+| **What Lume renders** | `.hscroll { padding: 2px 20px 6px }` — the Tools hub's "Recently used" scroller carries two points of clearance above its cards and six below, so a pressed card's shadow has somewhere to go. Measured on `tools_named_pk`: `chips` ends at 203, `recent.wrap` starts at 227, and the first tile sits at **281**. |
+| **What Flutter rendered** | The recents call site passed `EdgeInsets.only(bottom: 6)` instead of the metric, dropping the two points above. The first tile sat at **279**. |
+| **The numeric difference** | Exactly **2.00 points**, on every element from the recents strip to the bottom of the page: `recent` 251 against 253, `cat` 327 against 329, `cat.title` 327 against 329, `cat.sub` 347 against 349, `cattool` 372 against 374. |
+| **Source rule** | `.hscroll` in `assets/css/components.css`. |
+| **Flutter widget** | `LumeHorizontalStrip.padding`, whose default is `LumeDestinationMetrics.stripPadding` = `EdgeInsets.fromLTRB(0, 2, 0, 6)` — the rule, already written down. The hub's recents section overrode it by hand. |
+| **Why it differed** | A hand-written inset at one call site where a named metric existed. Nothing about Flutter, nothing about the design. |
+| **Why it went unseen** | It was cancelling C27. `LumePageHead`'s subtitle was one point too tall, which pushed everything below the head one point *down*; the strip pulled everything below it two points *up*. Each element therefore landed within the one-point tolerance and the bounds comparison passed. Fixing the head alone exposed it — which is the argument for a tolerance tight enough that two errors cannot hide inside it. |
+| **Classification** | **Exact parity, restored.** Not rounding, not an adaptation, not unresolved: an implementation defect, corrected. |
+| **Affected** | The Tools hub only. It is the product's one recents strip; Home's Discover strip and the quick-action strip use the other two constructors and were always correct. |
+| **Evidence** | `destination_bounds_test.dart`, "Tools · a user with a history": `recent`, `cat`, `cat.title`, `cat.sub` and `cattool` all read Δ `=` in `DESTINATION_PARITY.md`. The fifteen Tools goldens were regenerated and the side-by-side re-read. |
 
 ### P2 — the greeting's emoji has no face in a test capture
 

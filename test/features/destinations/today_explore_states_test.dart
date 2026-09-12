@@ -127,6 +127,37 @@ void main() {
         expect(labelBox(tester).width, LumeDayMetrics.ringInner);
       }
     });
+
+    testWidgets('and the ring says the whole share out loud, whatever the '
+        'painted label is doing', (WidgetTester tester) async {
+      // D36's condition: the accessible value comes from the data, not from
+      // the render, so a label that has been scaled down to fit the arc still
+      // reads in full. Asserted at the two scales where the painted label is
+      // drawn at its measured size and at the one where it is not.
+      final SemanticsHandle handle = tester.ensureSemantics();
+      for (final double scale in <double>[1.0, 2.0]) {
+        await pumpToday(
+          tester,
+          LumeUsers.muslimPk,
+          surface: const Size(390, 6000),
+          textScale: scale,
+        );
+        expect(
+          find.bySemanticsLabel('70% of day'),
+          findsOneWidget,
+          reason: 'at $scale',
+        );
+        // And the arc alone never carries it: the painter is decoration.
+        expect(
+          find.descendant(
+            of: find.byType(LumeDayRing),
+            matching: find.byType(CustomPaint),
+          ),
+          findsWidgets,
+        );
+      }
+      handle.dispose();
+    });
   });
 
   group('Explore draws', () {
