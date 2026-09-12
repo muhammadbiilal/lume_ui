@@ -2400,6 +2400,17 @@ class AppLocalizationsAr extends AppLocalizations {
   }
 
   @override
+  String trainsDayOn(String date) {
+    return 'مغادرات $date';
+  }
+
+  @override
+  String get trainsDayToday => 'مغادرات اليوم';
+
+  @override
+  String get trainsDayTomorrow => 'مغادرات الغد';
+
+  @override
   String get trainsDepartures => 'المغادرات';
 
   @override
@@ -2432,6 +2443,9 @@ class AppLocalizationsAr extends AppLocalizations {
   String get trainsPickDate => 'اختر تاريخًا';
 
   @override
+  String get trainsPickedDate => 'اختر تاريخ المغادرة';
+
+  @override
   String get trainsPopular => 'المسارات الشائعة';
 
   @override
@@ -2444,6 +2458,12 @@ class AppLocalizationsAr extends AppLocalizations {
   String trainsRoute(String from, String to) {
     return '$from ← $to';
   }
+
+  @override
+  String get trainsRouteInvalidText => 'تحتاج الرحلة إلى نقطة مغادرة ووجهة.';
+
+  @override
+  String get trainsRouteInvalidTitle => 'اختر محطتين مختلفتين';
 
   @override
   String trainsRouteToast(String from, String to, String trains, String fare) {
@@ -2492,6 +2512,11 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get trainsSwapped => 'تم تبديل المحطتين';
+
+  @override
+  String trainsSwappedTo(String origin, String destination) {
+    return 'تم تبديل المحطتين: من $origin إلى $destination';
+  }
 
   @override
   String get trainsTo => 'إلى';

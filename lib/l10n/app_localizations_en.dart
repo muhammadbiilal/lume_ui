@@ -2389,6 +2389,17 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
+  String trainsDayOn(String date) {
+    return 'Departures for $date';
+  }
+
+  @override
+  String get trainsDayToday => 'Departures for today';
+
+  @override
+  String get trainsDayTomorrow => 'Departures for tomorrow';
+
+  @override
   String get trainsDepartures => 'Departures';
 
   @override
@@ -2421,6 +2432,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get trainsPickDate => 'Pick a date';
 
   @override
+  String get trainsPickedDate => 'Pick a departure date';
+
+  @override
   String get trainsPopular => 'Popular routes';
 
   @override
@@ -2433,6 +2447,13 @@ class AppLocalizationsEn extends AppLocalizations {
   String trainsRoute(String from, String to) {
     return '$from → $to';
   }
+
+  @override
+  String get trainsRouteInvalidText =>
+      'A journey needs somewhere to leave from and somewhere to go.';
+
+  @override
+  String get trainsRouteInvalidTitle => 'Choose two different stations';
 
   @override
   String trainsRouteToast(String from, String to, String trains, String fare) {
@@ -2479,6 +2500,11 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get trainsSwapped => 'Stations swapped';
+
+  @override
+  String trainsSwappedTo(String origin, String destination) {
+    return 'Stations swapped: $origin to $destination';
+  }
 
   @override
   String get trainsTo => 'To';

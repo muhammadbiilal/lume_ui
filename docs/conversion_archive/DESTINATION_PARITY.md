@@ -13,7 +13,7 @@ A text heading's **width** is recorded rather than asserted: the prototype's
 `.section__head > div` shrink-wraps to its longest line and the Flutter heading
 fills its column. Both start at the same x and render on the same baselines.
 
-**315 values compared, tolerance 1 logical pixel.**
+**323 values compared, tolerance 1 logical pixel.**
 
 
 ### Home · not Muslim, Pakistan
@@ -371,6 +371,14 @@ fills its column. Both start at the same x and render on the same baselines.
 | `railchip` | x | 36.00 | 36.00 | = |  |
 | `railchip` | width | 61.19 | 61.18 | -0.01 |  |
 | `railchip` | height | 33.00 | 33.00 | = |  |
+| `railsearch.foot` | y | 217.00 | 217.00 | = |  |
+| `railsearch.foot` | x | 36.00 | 36.00 | = |  |
+| `railsearch.foot` | width | 318.00 | 318.00 | = |  |
+| `railsearch.foot` | height | 46.00 | 46.00 | = |  |
+| `railsearch.go` | y | 217.00 | 217.00 | = |  |
+| `railsearch.go` | x | 259.36 | 259.36 | = |  |
+| `railsearch.go` | width | 94.64 | 94.64 | = |  |
+| `railsearch.go` | height | 46.00 | 46.00 | = |  |
 | `livetrain` | y | 354.00 | 354.00 | = | cumulative line-box rounding (D20) |
 | `livetrain` | x | 20.00 | 20.00 | = | cumulative line-box rounding (D20) |
 | `livetrain` | width | 350.00 | 350.00 | = | cumulative line-box rounding (D20) |

@@ -7,6 +7,7 @@
 library;
 
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:lume/core/widgets/lume/lume_explore.dart';
 import 'package:lume/core/widgets/lume/lume_rail.dart';
@@ -43,6 +44,45 @@ void main() {
         expect(find.byType(LumeListRow), findsNWidgets(5));
       });
     }
+
+    // C32. At 359 the prototype does not shrink anything: the chips keep
+    // their 61.19 and the Search button is pushed to x 337.75 — out of the
+    // 287-wide content box, into the card's own 15 points of padding, and
+    // stopping 0.25 short of the padding box the card clips at. Measured on
+    // `trains_muslim_pk_359x844_light_en.json`.
+    testWidgets('and at 359 the foot overflows rather than shrinking', (
+      WidgetTester tester,
+    ) async {
+      await pumpTrains(
+        tester,
+        LumeUsers.muslimPk,
+        surface: const Size(359, 4000),
+      );
+
+      final Rect chip = tester.getRect(find.byType(LumeRailChip).first);
+      expect(chip.width, closeTo(61.19, 1.0));
+
+      final Rect go = tester.getRect(find.byKey(LumeRailSearchCard.goKey));
+      expect(go.left, closeTo(243.11, 1.0));
+      expect(go.width, closeTo(94.64, 1.0));
+
+      // Out of the foot, still inside the card.
+      final Rect foot = tester.getRect(find.byKey(LumeRailSearchCard.footKey));
+      final Rect card = tester.getRect(find.byType(LumeRailSearchCard));
+      expect(go.right, greaterThan(foot.right));
+      expect(go.right, lessThan(card.right));
+
+      // The label is whole. `min-width: auto`, not an equal share.
+      expect(find.text('Tomorrow'), findsOneWidget);
+      final RenderParagraph p = tester.renderObject<RenderParagraph>(
+        find.text('Tomorrow'),
+      );
+      expect(p.didExceedMaxLines, isFalse);
+      expect(
+        p.size.width,
+        closeTo(p.getMaxIntrinsicWidth(double.infinity), 0.5),
+      );
+    });
 
     testWidgets('in Urdu, in Arabic and at 200 per cent', (
       WidgetTester tester,

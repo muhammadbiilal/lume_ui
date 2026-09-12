@@ -864,6 +864,17 @@ void main() {
       compare(tester, b, 'railfield', find.byType(LumeRailField).first);
       compare(tester, b, 'railswap', find.byType(LumeRailSwap));
       compare(tester, b, 'railchip', find.byType(LumeRailChip).first);
+      // The foot and the Search button together pin the rule the prototype
+      // actually follows: `min-width: auto` keeps every item at its content
+      // size, and `margin-left: auto` puts the button on the trailing edge.
+      // Measuring only the first chip let a shrink regression hide.
+      compare(
+        tester,
+        b,
+        'railsearch.foot',
+        find.byKey(LumeRailSearchCard.footKey),
+      );
+      compare(tester, b, 'railsearch.go', find.byKey(LumeRailSearchCard.goKey));
       // `.live-train` is the `.card.card--pad` article, not the content
       // inside it.
       compare(

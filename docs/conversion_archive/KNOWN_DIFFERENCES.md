@@ -687,6 +687,95 @@ D24.
 
 **Found and corrected in F5A.** See D25.
 
+### C30 — "From Karachi Cantt" heads a list that is not from Karachi Cantt
+
+**Found in F5C. Reproduced, not repaired, by decision (R1).**
+`tools/trains.js` builds the departures section's subtitle from the origin
+field — it reads "From Karachi Cantt", and follows the field when the field
+changes — while the list under it is the module's whole five-service roster,
+emitted in declaration order. Four of the five call at Karachi Cantt; the
+Shalimar Express is a Lahore departure, and it appears under the Karachi
+heading unchanged. Searching, swapping the ends and choosing a different day
+all leave the same five rows in the same order.
+
+The heading is therefore a claim the list does not support, and it is the same
+class of finding as C22 and C23: a caption written against data that was never
+filtered.
+
+**Preserved deliberately.** `LumeTrainsComposer.departures` takes the origin
+and the service date and returns the roster regardless of both, and
+`trains_query_test.dart` asserts that it does — the test is written so that
+filtering the roster would fail it, which makes the preservation visible
+instead of accidental. The heading still follows the query, because that is
+what the reference does.
+
+**Dayroz obligation.** Departures must be a real query against a real
+timetable: filtered by origin, resolved for the selected service date, and
+ordered by departure time. Until it is, the heading is the honest half and the
+list is the half that has to change.
+
+### C31 — two currency notations on one screen
+
+**Found in F5C. Reproduced, not repaired, by decision (R4).** Trains prints
+money two ways, five rows apart:
+
+| Where | Source | Renders |
+|---|---|---|
+| `.routecard` fare | `tools/trains.js` route table | `₨ 2,400` — the rupee **sign**, U+20A8 |
+| `.train__meta` fare | the same module's service rows | `Rs 8,900` — the letters, with a non-breaking space |
+
+Both are Pakistani rupees, both on the same card stack, both from the same
+file. Neither goes through the prototype's own money formatter.
+
+**Preserved deliberately.** Flutter renders `₨` on route cards and `Rs` +
+NBSP in departures, from two fixture fields rather than one, and
+`trains_composition_test.dart` reads both strings back. Collapsing them to one
+notation would have been a product decision made silently on a screen the
+brief asked to be reproduced.
+
+**Dayroz obligation.** One notation, chosen once, resolved through the
+locale's own currency rules — CLDR gives `Rs` + NBSP for `en-PK`, and `₨`
+for nothing — and applied to every fare on the screen. The choice belongs to
+product and localisation together, not to whichever table the fare came from.
+
+### C32 — `.railsearch__foot` does not shrink, it overflows
+
+**Found in F5C. Reproduced.** The foot is a flex row holding the day chips and
+the Search button, and every item in it keeps its content width: `min-width:
+auto` is the default for a flex item, and nothing in `tools.css` overrides it.
+Measured on `trains_muslim_pk`, the chips are **61.19** wide at 390 *and* at
+359, and at 359 the Search button is pushed to x **243.11** with a width of
+**94.64** — a right edge of 337.75 against a content box that ends at 323. The
+card's `overflow: hidden` trims the remainder.
+
+This is recorded because the obvious Flutter translation is wrong in a way
+that looks right. `Flexible` divides free space by flex factor whether or not
+the child needs it, so a row of `Flexible` chips allots each an equal share and
+ellipsises the longer label — "Tomorrow" rendered as "Tom…" at 390, a width
+where the reference has 16 points to spare. CSS `flex-shrink` only engages on
+overflow; Flutter's `Flexible` engages always.
+
+Flutter lays the foot out at `max(natural, available)` and clips what does not
+fit, which reproduces both halves: the button holds the trailing edge at 390
+(`margin-left: auto`) and is trimmed at 359. `destination_bounds_test.dart`
+now measures `railsearch.foot` and `railsearch.go` as well as the first chip,
+so the same mistake cannot pass again — measuring one chip was what let it
+through.
+
+### C33 — the Search button's tracking was not applied
+
+**Found and corrected in F5C.** `.btn { letter-spacing: -.022em }` reaches
+`.railsearch__go` like every other button; the prototype reports the computed
+value as `-0.286px` on its 13-point label. Flutter built the label from
+`LumeType.natural` without `LumeType.tracked`, so all six characters were set
+loose and the button measured **96.36** against the reference's **94.64** —
+1.72 points, which is exactly six times 0.286.
+
+**Exact parity, restored.** An implementation defect, not a difference. It went
+unseen because the button had never been measured: the Trains bounds comparison
+checked the card, the fields, the swap and the first chip, and stopped there.
+It is on the list with C32 because the same omission hid both.
+
 ## 3. Open questions
 
 ### Resolved in F1
@@ -716,6 +805,9 @@ deleted row invites the same question again.
 
 | Date | Change | Reason |
 |---|---|---|
+| 2026-09-13 (F5C) | **D38 and D39 recorded — the swap swaps and the day chips choose a day** | Two approved functional corrections; the reference ships a toast with no effect and three buttons with no handler |
+| 2026-09-13 (F5C) | **C30 and C31 raised; decision taken: reproduce.** The departures heading names an origin the roster is not filtered by; two currency notations sit five rows apart | Both are captions written against unfiltered data; both carry a Dayroz obligation rather than a silent repair |
+| 2026-09-13 (F5C) | **C32 and C33 raised; C33 corrected** — the search foot's items overflow rather than shrink, and the Search button had lost `.btn`'s tracking | A row of `Flexible` chips ellipsised "Tomorrow" at a width with 16 points to spare; the button had never been measured |
 | 2026-09-13 (F5C) | **Q6 closed — Naskh.** Lume ships Noto Naskh Arabic and the conversion reproduces what Lume ships; Nastaliq is a Dayroz product decision | The conversion does not bundle a face the design has not asked for |
 | 2026-09-13 (F5C) | **Q9 closed — the 41-point country row is an approved screen-specific target exception** | Full-bleed and 350 wide, with adjacent neighbours and nowhere to overhang; unlike D35 there is no spare room to separate the target into |
 | 2026-09-13 (F5B · closure) | **D35 completed and reclassified** — a card action is drawn at 35 × 30 and touched at 44 × 44, with nothing visible moved | An exception was accepted where D6's remedy applies; `LumeGhostButton` removed and `LumeCardAction` put in its place |
@@ -1407,6 +1499,78 @@ and the accessible value is built from the data rather than from the render, so
 a screen reader reads "70% of day" in full whether or not the painted label
 was scaled. Asserted in `today_explore_states_test.dart` at 1.0, 1.3 and 2.0.
 **Closed.**
+
+### D38 — the swap swaps
+
+**New in F5C. An approved functional correction to a prototype defect (R2).**
+`.railsearch__swap` in the reference toasts "Stations swapped" and swaps
+nothing: the two fields hold their values, the query keeps its ends, and the
+departures list does not move. The sentence is true of nothing that happened.
+
+Flutter exchanges the two ends atomically — one `LumeJourneyQuery.swapped()`
+builds the next query from the current one, so there is no moment where a
+field has been written and its partner has not — asks the repository for the
+new query, and writes the result. The announcement is built from the snapshot
+that came back rather than from the query that was sent, so the sentence a
+reader hears describes what is on screen.
+
+The order matters more than it looks. Nothing visible is written until an
+answer arrives, which makes **rollback the absence of a write**: a refused or
+failed swap leaves the fields reading the snapshot that is still there, with
+no second write to undo and no window in which the screen contradicts itself.
+A swap that produces a route that is not a journey — one end missing, or the
+same station twice — is refused before the repository is asked, and the
+refusal is drawn on the departures section rather than over the page.
+
+While a query is outstanding every control that would start another one is
+inert, so a second tap is not a second request, and each request carries a
+number: a late answer to a superseded question is dropped rather than painted.
+
+Nothing about the geometry changed. The control is the reference's 34-point
+circle in the reference's position, and `railswap` reads delta `=` on both
+axes.
+
+**Evidence.** `trains_query_test.dart` — exchange, double-swap restore,
+same-station refusal, missing end, the busy state, failure and rollback,
+keyboard activation, the screen-reader announcement's ordering, LTR and RTL,
+state restoration, and a count proving no duplicate repository call.
+Golden: `trains_swapped_390x844_light_en.png`.
+
+### D39 — the day chips choose a day
+
+**New in F5C. An approved functional correction to a prototype defect (R3).**
+The reference's three `.railchip`s are `<button>`s with no handler. "Today" is
+marked `.is-active` in the markup and stays marked; "Tomorrow" and the
+calendar chip do nothing at all. Lume ships three controls that cannot be
+operated.
+
+Flutter makes them a single selection. Exactly one chip is selected at a time,
+the chosen day is resolved to a real date against the **injected clock** — so a
+screen left open past midnight answers for the new day, not the one it was
+opened on — and the date travels to the repository as part of the query rather
+than being displayed and discarded. The calendar chip opens the platform date
+picker, which is P2 furniture: the reference's chip is labelled "Pick a date"
+and has nothing behind it.
+
+The results section carries its own loading, empty and failed states, so a day
+with no service says so where the list is, and the rest of the screen — the
+tracked service, the popular routes — is not disturbed by a question about
+departures.
+
+**The fixtures are honest about what they are.** One timetable answers every
+selectable day, because the prototype ships one; what is real and explicit is
+the *date identity* — each query carries the resolved `serviceDate`, the
+repository receives it, and `LumeFakeTrainsRepository.emptyOn` can declare a
+day with no service. No fixture claims to be live data, and C30 records that
+the roster is not filtered.
+
+**Evidence.** `trains_query_test.dart` — the initial day, each chip
+selectable, only one selected, the date the repository receives, an empty day,
+a failed day, rapid switching with stale-response protection, midnight
+rollover across an injected clock, LTR and RTL, the `selected` semantics flag,
+keyboard focus, and restoration. Golden:
+`trains_tomorrow_390x844_light_en.png`; the refusal state is
+`trains_invalid_390x844_light_en.png`.
 
 ### ~~D37~~ — withdrawn. Recorded as part of C27.
 

@@ -3252,6 +3252,23 @@
       }
     }
   },
+  "trainsDayOn": "Departures for {date}",
+  "@trainsDayOn": {
+    "description": "Announced after a date is picked from the calendar chip (R3).",
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "trainsDayToday": "Departures for today",
+  "@trainsDayToday": {
+    "description": "Announced after the day chips change the day (R3)."
+  },
+  "trainsDayTomorrow": "Departures for tomorrow",
+  "@trainsDayTomorrow": {
+    "description": "Announced after the day chips change the day (R3)."
+  },
   "trainsDepartures": "Departures",
   "@trainsDepartures": {
     "description": "Reference key trains.departures. `i18n/core.js` declares \"Today’s departures\" and `i18n/tools.js` overrides it to \"Departures\"; the rendered screen shows the override, and the rendered screen is the authority."
@@ -3307,6 +3324,10 @@
   "@trainsPickDate": {
     "description": "Reference: the calendar chip’s aria-label."
   },
+  "trainsPickedDate": "Pick a departure date",
+  "@trainsPickedDate": {
+    "description": "The platform date picker’s title. The picker itself is OS furniture, like the keyboard — the reference’s chip is labelled \"Pick a date\" and has nothing behind it (R3)."
+  },
   "trainsPopular": "Popular routes",
   "@trainsPopular": {
     "description": "Reference key trains.popular."
@@ -3330,6 +3351,14 @@
         "type": "String"
       }
     }
+  },
+  "trainsRouteInvalidText": "A journey needs somewhere to leave from and somewhere to go.",
+  "@trainsRouteInvalidText": {
+    "description": "The explanation under trainsRouteInvalidTitle."
+  },
+  "trainsRouteInvalidTitle": "Choose two different stations",
+  "@trainsRouteInvalidTitle": {
+    "description": "Shown on the departures section when the route asked for is not one — a missing end, or the same station twice (R2)."
   },
   "trainsRouteToast": "{from} → {to} · {trains} · {fare}",
   "@trainsRouteToast": {
@@ -3404,6 +3433,18 @@
   "trainsSwapped": "Stations swapped",
   "@trainsSwapped": {
     "description": "Reference: the swap control’s data-toast."
+  },
+  "trainsSwappedTo": "Stations swapped: {origin} to {destination}",
+  "@trainsSwappedTo": {
+    "description": "Announced after a swap has actually happened (R2). The reference says only \"Stations swapped\" and swaps nothing; this says what changed, and says it after the change.",
+    "placeholders": {
+      "origin": {
+        "type": "String"
+      },
+      "destination": {
+        "type": "String"
+      }
+    }
   },
   "trainsTo": "To",
   "@trainsTo": {

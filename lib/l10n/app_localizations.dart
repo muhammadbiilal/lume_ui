@@ -4348,6 +4348,24 @@ abstract class AppLocalizations {
   /// **'{n, plural, =1{1 train} other{{n} trains}}'**
   String trainsCount(int n);
 
+  /// Announced after a date is picked from the calendar chip (R3).
+  ///
+  /// In en, this message translates to:
+  /// **'Departures for {date}'**
+  String trainsDayOn(String date);
+
+  /// Announced after the day chips change the day (R3).
+  ///
+  /// In en, this message translates to:
+  /// **'Departures for today'**
+  String get trainsDayToday;
+
+  /// Announced after the day chips change the day (R3).
+  ///
+  /// In en, this message translates to:
+  /// **'Departures for tomorrow'**
+  String get trainsDayTomorrow;
+
   /// Reference key trains.departures. `i18n/core.js` declares "Today’s departures" and `i18n/tools.js` overrides it to "Departures"; the rendered screen shows the override, and the rendered screen is the authority.
   ///
   /// In en, this message translates to:
@@ -4396,6 +4414,12 @@ abstract class AppLocalizations {
   /// **'Pick a date'**
   String get trainsPickDate;
 
+  /// The platform date picker’s title. The picker itself is OS furniture, like the keyboard — the reference’s chip is labelled "Pick a date" and has nothing behind it (R3).
+  ///
+  /// In en, this message translates to:
+  /// **'Pick a departure date'**
+  String get trainsPickedDate;
+
   /// Reference key trains.popular.
   ///
   /// In en, this message translates to:
@@ -4419,6 +4443,18 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'{from} → {to}'**
   String trainsRoute(String from, String to);
+
+  /// The explanation under trainsRouteInvalidTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'A journey needs somewhere to leave from and somewhere to go.'**
+  String get trainsRouteInvalidText;
+
+  /// Shown on the departures section when the route asked for is not one — a missing end, or the same station twice (R2).
+  ///
+  /// In en, this message translates to:
+  /// **'Choose two different stations'**
+  String get trainsRouteInvalidTitle;
 
   /// Reference: a route card’s data-toast.
   ///
@@ -4478,6 +4514,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Stations swapped'**
   String get trainsSwapped;
+
+  /// Announced after a swap has actually happened (R2). The reference says only "Stations swapped" and swaps nothing; this says what changed, and says it after the change.
+  ///
+  /// In en, this message translates to:
+  /// **'Stations swapped: {origin} to {destination}'**
+  String trainsSwappedTo(String origin, String destination);
 
   /// Reference key trains.to.
   ///

@@ -2393,6 +2393,17 @@ class AppLocalizationsUr extends AppLocalizations {
   }
 
   @override
+  String trainsDayOn(String date) {
+    return '$date کی روانگیاں';
+  }
+
+  @override
+  String get trainsDayToday => 'آج کی روانگیاں';
+
+  @override
+  String get trainsDayTomorrow => 'کل کی روانگیاں';
+
+  @override
   String get trainsDepartures => 'روانگی';
 
   @override
@@ -2425,6 +2436,9 @@ class AppLocalizationsUr extends AppLocalizations {
   String get trainsPickDate => 'تاریخ منتخب کریں';
 
   @override
+  String get trainsPickedDate => 'روانگی کی تاریخ منتخب کریں';
+
+  @override
   String get trainsPopular => 'مقبول راستے';
 
   @override
@@ -2437,6 +2451,13 @@ class AppLocalizationsUr extends AppLocalizations {
   String trainsRoute(String from, String to) {
     return '$from ← $to';
   }
+
+  @override
+  String get trainsRouteInvalidText =>
+      'سفر کے لیے روانگی اور منزل دونوں درکار ہیں۔';
+
+  @override
+  String get trainsRouteInvalidTitle => 'دو مختلف اسٹیشن منتخب کریں';
 
   @override
   String trainsRouteToast(String from, String to, String trains, String fare) {
@@ -2482,6 +2503,11 @@ class AppLocalizationsUr extends AppLocalizations {
 
   @override
   String get trainsSwapped => 'اسٹیشن بدل دیے گئے';
+
+  @override
+  String trainsSwappedTo(String origin, String destination) {
+    return 'اسٹیشن بدل دیے گئے: $origin سے $destination';
+  }
 
   @override
   String get trainsTo => 'کہاں تک';

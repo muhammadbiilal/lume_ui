@@ -75,6 +75,11 @@ enum LumeTrainsFailure {
 
   /// This market has no rail service in the product.
   unsupported,
+
+  /// The journey asked for is not one: a missing end, or the same station
+  /// twice. Refused before anything is fetched, and said on the search card
+  /// rather than over the whole page.
+  invalidRoute,
 }
 
 /// Thrown by a repository, caught by a host, never seen by a widget.

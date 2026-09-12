@@ -354,7 +354,9 @@ class LumeRailChip extends StatelessWidget {
     return LumePressable(
       onTap: onTap,
       semanticLabel: semanticLabel,
-      selected: selected ? true : null,
+      // Both ways round, not only when it is true: these are a single
+      // selection, and "not selected" is as much a fact as "selected" (R3).
+      selected: selected,
       borderRadius: LumeRadius.full,
       minSize: 0,
       child: Container(
@@ -374,20 +376,17 @@ class LumeRailChip extends StatelessWidget {
               if (icon != null)
                 LumeIcon(icon!, size: LumeRailMetrics.chipGlyph, color: fg),
               if (label != null)
-                // `.railsearch__foot` is a flex with no wrap, so at a narrow
-                // width its children shrink rather than pushing the Search
-                // button off the card. The label gives first.
-                Flexible(
-                  child: Text(
-                    label!,
-                    maxLines: 1,
-                    overflow: TextOverflow.ellipsis,
-                    style: LumeType.natural(
-                      context,
-                      context.lumeType.meta,
-                      size: 12,
-                    ).copyWith(color: fg, fontWeight: FontWeight.w600),
-                  ),
+                // Whole, never ellipsised: `min-width: auto` holds a flex
+                // item at its content size, and the reference's chips keep
+                // their widths at every cell it is drawn at.
+                Text(
+                  label!,
+                  maxLines: 1,
+                  style: LumeType.natural(
+                    context,
+                    context.lumeType.meta,
+                    size: 12,
+                  ).copyWith(color: fg, fontWeight: FontWeight.w600),
                 ),
             ],
           ),
@@ -399,6 +398,14 @@ class LumeRailChip extends StatelessWidget {
 
 /// `.railsearch` — the origin, the destination, the day and the search.
 class LumeRailSearchCard extends StatelessWidget {
+  /// `.railsearch__foot`, so a test can measure the row the chips and the
+  /// Search button share.
+  static const Key footKey = Key('railsearch.foot');
+
+  /// `.railsearch__go`, whose trailing edge is the whole point of the foot's
+  /// `margin-left: auto`.
+  static const Key goKey = Key('railsearch.go');
+
   const LumeRailSearchCard({
     super.key,
     required this.origin,
@@ -484,25 +491,75 @@ class LumeRailSearchCard extends StatelessWidget {
                   ),
                 ),
                 const SizedBox(height: LumeRailMetrics.footTop),
-                Row(
-                  children: <Widget>[
-                    Flexible(
-                      child: Row(
-                        mainAxisSize: MainAxisSize.min,
-                        children: <Widget>[
-                          for (int i = 0; i < chips.length; i++) ...<Widget>[
-                            if (i > 0)
-                              const SizedBox(width: LumeRailMetrics.footGap),
-                            Flexible(child: chips[i]),
-                          ],
-                        ],
-                      ),
-                    ),
-                    // `margin-left: auto` — the Search button keeps the
-                    // trailing edge whatever the chips do.
-                    const SizedBox(width: LumeRailMetrics.footGap),
-                    _SearchButton(label: searchLabel, onTap: onSearch),
-                  ],
+                // `.railsearch__foot` is a flex whose items do not shrink:
+                // `min-width: auto` is every flex item's default and nothing
+                // overrides it. Measured at 359, the chips keep their 61.19
+                // and the Search button is pushed to 337.75 — past the
+                // content box, which ends at 323, and into the card's own
+                // 15 points of padding, which it very nearly fills.
+                //
+                // So the row is laid out at `max(natural, available)`:
+                // `IntrinsicWidth` finds the natural total, the minimum holds
+                // it to the box when there is room — which is what lets the
+                // `Spacer` (`margin-left: auto`) put the button on the
+                // trailing edge at 390 — and `OverflowBox` lets it out of the
+                // box when there is not. Nothing is clipped here: the card is
+                // `overflow: hidden` and clips the remainder itself, exactly
+                // where the prototype does.
+                //
+                // The obvious translation is wrong in a way that looks right.
+                // `Flexible` divides free space by flex factor whether or not
+                // the child needs it, so a row of `Flexible` chips gives each
+                // an equal share and ellipsises the longer label. CSS
+                // `flex-shrink` engages only on overflow. See C32.
+                SizedBox(
+                  key: footKey,
+                  // The Search button is the tallest item, and `align-items:
+                  // center` holds the chips against it.
+                  height: LumeRailMetrics.goHeight,
+                  child: LayoutBuilder(
+                    builder: (BuildContext context, BoxConstraints c) =>
+                        OverflowBox(
+                          maxWidth: double.infinity,
+                          alignment: AlignmentDirectional.centerStart,
+                          child: ConstrainedBox(
+                            constraints: BoxConstraints(minWidth: c.maxWidth),
+                            child: IntrinsicWidth(
+                              child: Row(
+                                children: <Widget>[
+                                  for (
+                                    int i = 0;
+                                    i < chips.length;
+                                    i++
+                                  ) ...<Widget>[
+                                    if (i > 0)
+                                      const SizedBox(
+                                        width: LumeRailMetrics.footGap,
+                                      ),
+                                    chips[i],
+                                  ],
+                                  // `gap: 7px` applies between every pair of
+                                  // items; `margin-left: auto` is extra on
+                                  // top of it. When there is no free space
+                                  // the auto margin is nothing and the gap
+                                  // still stands, which is why the button
+                                  // starts at 243.11 and not at the last
+                                  // chip's right edge.
+                                  const SizedBox(
+                                    width: LumeRailMetrics.footGap,
+                                  ),
+                                  const Spacer(),
+                                  _SearchButton(
+                                    key: goKey,
+                                    label: searchLabel,
+                                    onTap: onSearch,
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
+                        ),
+                  ),
                 ),
               ],
             ),
@@ -552,7 +609,7 @@ class LumeRailSwap extends StatelessWidget {
 
 /// `.railsearch__go` — `.btn.btn--accent` at a smaller size.
 class _SearchButton extends StatelessWidget {
-  const _SearchButton({required this.label, this.onTap});
+  const _SearchButton({super.key, required this.label, this.onTap});
 
   final String label;
   final VoidCallback? onTap;
@@ -583,10 +640,12 @@ class _SearchButton extends StatelessWidget {
               const SizedBox(width: 7),
               Text(
                 label,
-                style: LumeType.natural(
-                  context,
-                  context.lumeType.label,
-                  size: 13,
+                // `.btn { letter-spacing: -.022em }` — 13px of it is the
+                // -0.286px the prototype reports, and all six of them are
+                // the difference between a 94.64 button and a 96.36 one.
+                style: LumeType.tracked(
+                  LumeType.natural(context, context.lumeType.label, size: 13),
+                  -0.022,
                 ).copyWith(color: lume.onAccent, fontWeight: FontWeight.w700),
               ),
             ],

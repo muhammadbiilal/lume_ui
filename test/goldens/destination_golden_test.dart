@@ -29,6 +29,7 @@ import 'package:lume/features/explore/domain/explore_repository.dart';
 import 'package:lume/features/explore/presentation/explore_screen.dart';
 import 'package:lume/features/today/presentation/today_screen.dart';
 import 'package:lume/features/trains/data/trains_fixtures.dart';
+import 'package:lume/features/trains/domain/trains_model.dart';
 import 'package:lume/features/trains/domain/trains_repository.dart';
 import 'package:lume/features/trains/presentation/trains_screen.dart';
 import 'package:lume/features/tools/presentation/tools_screen.dart';
@@ -646,6 +647,81 @@ void main() {
           onRetry: () async {},
         ),
         'trains_failed',
+        kCells.first,
+      );
+    });
+
+    testWidgets('the journey turned around, the reference cell', (
+      WidgetTester tester,
+    ) async {
+      // R2: an interactive state, pinned as pixels. The card is the same
+      // card; the two stations have exchanged.
+      final LumeFakeTrainsRepository repo = LumeFakeTrainsRepository(
+        eligibility: kEligibility,
+      );
+      final LumeTrainsSnapshot first = await repo.load(
+        LumeUsers.muslimPk,
+        now: kPinned,
+      );
+      await shoot(
+        tester,
+        LumeTrainsScreen(
+          user: LumeUsers.muslimPk,
+          snapshot: await repo.search(
+            LumeUsers.muslimPk,
+            now: kPinned,
+            query: first.data.query.swapped(),
+          ),
+          actions: LumeRecordedRail().actions,
+        ),
+        'trains_swapped',
+        kCells.first,
+      );
+    });
+
+    testWidgets('tomorrow’s departures, the reference cell', (
+      WidgetTester tester,
+    ) async {
+      // R3: the other selectable day. One timetable answers both, and the
+      // selected chip is what moved.
+      final LumeFakeTrainsRepository repo = LumeFakeTrainsRepository(
+        eligibility: kEligibility,
+      );
+      final LumeTrainsSnapshot first = await repo.load(
+        LumeUsers.muslimPk,
+        now: kPinned,
+      );
+      await shoot(
+        tester,
+        LumeTrainsScreen(
+          user: LumeUsers.muslimPk,
+          snapshot: await repo.search(
+            LumeUsers.muslimPk,
+            now: kPinned,
+            query: first.data.query.withDay(
+              LumeJourneyDay.tomorrow,
+              on: kPinned.add(const Duration(days: 1)),
+            ),
+          ),
+          actions: LumeRecordedRail().actions,
+        ),
+        'trains_tomorrow',
+        kCells.first,
+      );
+    });
+
+    testWidgets('a route that is not a journey, the reference cell', (
+      WidgetTester tester,
+    ) async {
+      await shoot(
+        tester,
+        LumeTrainsScreen(
+          user: LumeUsers.muslimPk,
+          snapshot: await composeTrains(LumeUsers.muslimPk),
+          status: LumeQueryStatus.invalid,
+          actions: LumeRecordedRail().actions,
+        ),
+        'trains_invalid',
         kCells.first,
       );
     });

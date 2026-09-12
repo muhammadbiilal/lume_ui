@@ -216,12 +216,35 @@ class LumeJourneyQuery {
   /// Set only when [day] is [LumeJourneyDay.other].
   final DateTime? date;
 
+  /// The same journey, turned around.
+  ///
+  /// The day and the date come with it: swapping a route does not change
+  /// *when* the reader is travelling, and R2 says so explicitly.
   LumeJourneyQuery swapped() => LumeJourneyQuery(
     origin: destination,
     destination: origin,
     day: day,
     date: date,
   );
+
+  /// Both ends named.
+  bool get hasBothEnds =>
+      origin.trim().isNotEmpty && destination.trim().isNotEmpty;
+
+  /// A journey from a station to itself is not a journey.
+  bool get isSameStation =>
+      origin.trim().toLowerCase() == destination.trim().toLowerCase();
+
+  /// Whether this is a question a timetable can answer.
+  bool get isAskable => hasBothEnds && !isSameStation;
+
+  LumeJourneyQuery withDay(LumeJourneyDay next, {DateTime? on}) =>
+      LumeJourneyQuery(
+        origin: origin,
+        destination: destination,
+        day: next,
+        date: on,
+      );
 
   @override
   bool operator ==(Object other) =>
@@ -259,6 +282,7 @@ class LumeTrainsData {
   const LumeTrainsData({
     required this.operatorName,
     required this.query,
+    required this.serviceDate,
     required this.tracked,
     required this.departuresFrom,
     required this.departures,
@@ -270,6 +294,15 @@ class LumeTrainsData {
   final String operatorName;
 
   final LumeJourneyQuery query;
+
+  /// Which day the departures are for.
+  ///
+  /// **Explicit, not implied.** R3 lets the fixture reuse one timetable for
+  /// every selectable day — the prototype has no alternate-day data — but the
+  /// *identity* of the answer has to be real: a list shown under "Tomorrow"
+  /// must be able to say which date it is, so a real feed can replace the rows
+  /// without the screen having to learn anything new.
+  final DateTime serviceDate;
 
   /// `null` when the reader is following nothing, or when the status source
   /// could not answer.

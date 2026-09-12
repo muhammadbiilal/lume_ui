@@ -63,6 +63,25 @@ class LumeTrainsActions {
   final void Function(LumePopularRoute route) openRoute;
 }
 
+/// How the last query went.
+///
+/// Section-local on purpose (R3): a day that could not be fetched is a fact
+/// about the departures list, not about the page, and the tracked service and
+/// the route cards have nothing to do with it.
+enum LumeQueryStatus {
+  /// Showing what came back.
+  settled,
+
+  /// A search, a swap or a day change is in flight.
+  busy,
+
+  /// The journey asked for is not one — a missing end, or one station twice.
+  invalid,
+
+  /// It was a fair question and the answer did not arrive.
+  failed,
+}
+
 /// The screen.
 class LumeTrainsScreen extends StatelessWidget {
   const LumeTrainsScreen({
@@ -72,6 +91,7 @@ class LumeTrainsScreen extends StatelessWidget {
     this.snapshot,
     this.failure,
     this.onRetry,
+    this.status = LumeQueryStatus.settled,
   });
 
   final LumeUserContext user;
@@ -84,6 +104,14 @@ class LumeTrainsScreen extends StatelessWidget {
   final LumeTrainsFailure? failure;
 
   final Future<void> Function()? onRetry;
+
+  /// What the route search is doing. See [LumeQueryStatus].
+  final LumeQueryStatus status;
+
+  /// Whether a query is in flight, and every control that would start another
+  /// one is therefore inert. R2 and R3: *"prevent duplicate taps while a
+  /// repository refresh is pending."*
+  bool get isBusy => status == LumeQueryStatus.busy;
 
   /// Keys the tests and the bounds comparison address elements by.
   static const String headKey = 'trains.head';
@@ -153,7 +181,9 @@ class LumeTrainsScreen extends StatelessWidget {
         else if (s.of(LumeTrainsSource.tracked) ==
             LumeTrainsFreshness.unavailable)
           SliverToBoxAdapter(child: _trackedUnavailable(context, l)),
-        if (d.departures.isNotEmpty)
+        if (status != LumeQueryStatus.settled)
+          SliverToBoxAdapter(child: _departuresQuery(context, l, d))
+        else if (d.departures.isNotEmpty)
           SliverToBoxAdapter(child: _departures(context, l, f, d))
         else
           SliverToBoxAdapter(child: _departuresEmpty(context, l, s, d)),
@@ -195,42 +225,48 @@ class LumeTrainsScreen extends StatelessWidget {
                 label: l.trainsFrom,
                 value: d.query.origin,
                 semanticLabel: '${l.trainsFrom}, ${d.query.origin}',
-                onTap: actions.chooseOrigin,
+                onTap: isBusy ? null : actions.chooseOrigin,
               ),
               destination: LumeRailField(
                 key: const ValueKey<String>('trains.destination'),
                 label: l.trainsTo,
                 value: d.query.destination,
                 semanticLabel: '${l.trainsTo}, ${d.query.destination}',
-                onTap: actions.chooseDestination,
+                onTap: isBusy ? null : actions.chooseDestination,
               ),
               swapLabel: l.trainsSwap,
-              onSwap: actions.swap,
+              onSwap: isBusy ? null : actions.swap,
               chips: <LumeRailChip>[
                 LumeRailChip(
                   key: const ValueKey<String>('trains.day.today'),
                   label: l.trainsToday,
                   semanticLabel: l.trainsToday,
                   selected: d.query.day == LumeJourneyDay.today,
-                  onTap: () => actions.chooseDay(LumeJourneyDay.today),
+                  onTap: isBusy
+                      ? null
+                      : () => actions.chooseDay(LumeJourneyDay.today),
                 ),
                 LumeRailChip(
                   key: const ValueKey<String>('trains.day.tomorrow'),
                   label: l.trainsTomorrow,
                   semanticLabel: l.trainsTomorrow,
                   selected: d.query.day == LumeJourneyDay.tomorrow,
-                  onTap: () => actions.chooseDay(LumeJourneyDay.tomorrow),
+                  onTap: isBusy
+                      ? null
+                      : () => actions.chooseDay(LumeJourneyDay.tomorrow),
                 ),
                 LumeRailChip(
                   key: const ValueKey<String>('trains.day.other'),
                   icon: LumeIcons.calendar,
                   semanticLabel: l.trainsPickDate,
                   selected: d.query.day == LumeJourneyDay.other,
-                  onTap: () => actions.chooseDay(LumeJourneyDay.other),
+                  onTap: isBusy
+                      ? null
+                      : () => actions.chooseDay(LumeJourneyDay.other),
                 ),
               ],
               searchLabel: l.actionSearch,
-              onSearch: actions.search,
+              onSearch: isBusy ? null : actions.search,
             ),
           ),
         ),
@@ -375,6 +411,54 @@ class LumeTrainsScreen extends StatelessWidget {
       onTap: () => actions.openService(s),
     );
   }
+
+  /// The departures while a query is in flight, or after one that failed.
+  ///
+  /// Section-local: the tracked service above and the route cards below are
+  /// unaffected by a day that could not be fetched.
+  Widget _departuresQuery(
+    BuildContext context,
+    AppLocalizations l,
+    LumeTrainsData d,
+  ) => KeyedSubtree(
+    key: const ValueKey<String>(departuresKey),
+    child: LumePageSection(
+      title: l.trainsDepartures,
+      subtitle: l.trainsDeparturesSub(d.departuresFrom),
+      child: LumeMeasure(
+        child: switch (status) {
+          LumeQueryStatus.busy => const Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisSize: MainAxisSize.min,
+            children: <Widget>[
+              LumeSkeleton(kind: LumeSkeletonKind.row),
+              SizedBox(height: LumeSpace.gapCard),
+              LumeSkeleton(kind: LumeSkeletonKind.row),
+              SizedBox(height: LumeSpace.gapCard),
+              LumeSkeleton(kind: LumeSkeletonKind.row),
+            ],
+          ),
+          LumeQueryStatus.invalid => LumeNotice(
+            kind: LumeNoticeKind.warning,
+            title: l.trainsRouteInvalidTitle,
+            text: l.trainsRouteInvalidText,
+          ),
+          _ => LumeNotice(
+            kind: LumeNoticeKind.error,
+            title: l.toolErrorTitle,
+            text: l.toolErrorText,
+            actions: <Widget>[
+              if (onRetry != null)
+                LumeNoticeAction(
+                  label: l.actionTryAgain,
+                  onPressed: () => onRetry!(),
+                ),
+            ],
+          ),
+        },
+      ),
+    ),
+  );
 
   Widget _departuresEmpty(
     BuildContext context,

@@ -147,15 +147,48 @@ const Map<String, String> _operators = <String, String>{
 
 /// Composes Trains. Pure, so the composition can be asserted without a frame.
 abstract final class LumeTrainsComposer {
+  /// Which date a query is asking about, against the injected clock.
+  ///
+  /// Midnight rollover falls out of this rather than being handled: "today" is
+  /// whatever day `now` is on, so a reader who leaves the screen open past
+  /// midnight and taps Today gets the new day.
+  static DateTime dateFor(LumeJourneyQuery query, {required DateTime now}) {
+    final DateTime today = DateTime(now.year, now.month, now.day);
+    return switch (query.day) {
+      LumeJourneyDay.today => today,
+      LumeJourneyDay.tomorrow => today.add(const Duration(days: 1)),
+      LumeJourneyDay.other =>
+        query.date == null
+            ? today
+            : DateTime(query.date!.year, query.date!.month, query.date!.day),
+    };
+  }
+
   /// What "Today's departures" lists.
   ///
-  /// **The whole roster, in declaration order — not the origin's services.**
-  /// The heading reads "From Karachi Cantt" and four of the five rows depart
-  /// there; `27DN` leaves Lahore and is listed anyway, because
-  /// `renderRoster` maps the roster without filtering it. Reproduced, and
-  /// recorded as R1: filtering would drop a row the reference draws, which is
-  /// a visible departure and not this conversion's to take.
-  static List<LumeTrainService> departures(String origin) => _roster;
+  /// **The whole roster, in declaration order — not the origin's services,
+  /// and not the day's.**
+  ///
+  /// R1, reproduced for Stage 1. The heading reads "From Karachi Cantt" and
+  /// four of the five rows depart there; `27DN` leaves Lahore and is listed
+  /// anyway, because `renderRoster` maps the roster without filtering it.
+  /// Filtering would drop a row the reference draws, which is a visible
+  /// departure and not this conversion's to take.
+  ///
+  /// The date is taken and ignored for the same reason: the prototype has no
+  /// alternate-day data, so every selectable day answers with this timetable.
+  /// The *answer* still carries the date it is for — see
+  /// [LumeTrainsData.serviceDate] — so a real feed replaces the rows without
+  /// the screen learning anything new.
+  ///
+  /// **Dayroz obligation.** Whether this list is the operator's whole roster,
+  /// the searched route's services, or the origin station's departures is a
+  /// product question with three different answers, and the heading has to
+  /// agree with whichever one is chosen.
+  static List<LumeTrainService> departures(
+    String origin, {
+    required DateTime on,
+  }) => _roster;
 
   static List<LumePopularRoute> routes() => _routes;
 
@@ -181,7 +214,10 @@ class LumeFakeTrainsRepository implements LumeTrainsRepository {
     this.pending = false,
     this.fails = false,
     this.failing = const <LumeTrainsSource>{},
-  });
+    this.emptyOn = const <DateTime>{},
+    List<Duration>? searchDelays,
+    this.failSearches = 0,
+  }) : _searchDelays = List<Duration>.of(searchDelays ?? const <Duration>[]);
 
   /// A load that never returns, for the loading state.
   factory LumeFakeTrainsRepository.slow({
@@ -197,6 +233,22 @@ class LumeFakeTrainsRepository implements LumeTrainsRepository {
 
   /// Sources that could not answer on their own.
   final Set<LumeTrainsSource> failing;
+
+  /// Days with no service.
+  ///
+  /// R3 lets one timetable answer every selectable day, so an *empty* day has
+  /// to be asked for explicitly. Compared by calendar date, not by instant.
+  final Set<DateTime> emptyOn;
+
+  /// How long each search takes, consumed in order.
+  ///
+  /// A test that wants a late answer to a superseded question needs the first
+  /// search slower than the second, which is the whole of the stale-response
+  /// problem.
+  final List<Duration> _searchDelays;
+
+  /// How many of the next searches refuse. Counted down.
+  int failSearches;
 
   int loads = 0;
   int searches = 0;
@@ -220,8 +272,23 @@ class LumeFakeTrainsRepository implements LumeTrainsRepository {
     required LumeJourneyQuery query,
   }) async {
     searches++;
+    // Refused before anything is composed: a journey with one end, or with
+    // the same station twice, is not a question a timetable can answer.
+    if (!query.isAskable) {
+      throw const LumeTrainsException(LumeTrainsFailure.invalidRoute);
+    }
+    if (_searchDelays.isNotEmpty) {
+      await Future<void>.delayed(_searchDelays.removeAt(0));
+    }
+    if (failSearches > 0) {
+      failSearches--;
+      throw const LumeTrainsException(LumeTrainsFailure.unreachable);
+    }
+    final LumeTrainsSnapshot out = await _compose(user, now: now, query: query);
+    // Kept only once it has been answered, so a refused search does not
+    // become the query a later reload repeats.
     _query = query;
-    return _compose(user, now: now, query: query);
+    return out;
   }
 
   Future<LumeTrainsSnapshot> _compose(
@@ -247,6 +314,8 @@ class LumeFakeTrainsRepository implements LumeTrainsRepository {
           destination: kDefaultDestination,
         );
 
+    final DateTime on = LumeTrainsComposer.dateFor(q, now: now);
+
     return LumeTrainsSnapshot(
       fetchedAt: now,
       freshness: <LumeTrainsSource, LumeTrainsFreshness>{
@@ -259,13 +328,16 @@ class LumeFakeTrainsRepository implements LumeTrainsRepository {
       data: LumeTrainsData(
         operatorName: LumeTrainsComposer.operatorFor(user.country),
         query: q,
+        serviceDate: on,
         tracked: failing.contains(LumeTrainsSource.tracked)
             ? null
             : LumeTrainsComposer.tracked(now: now),
         departuresFrom: q.origin,
-        departures: failing.contains(LumeTrainsSource.departures)
+        departures:
+            failing.contains(LumeTrainsSource.departures) ||
+                emptyOn.any((DateTime d) => _sameDay(d, on))
             ? const <LumeTrainService>[]
-            : LumeTrainsComposer.departures(q.origin),
+            : LumeTrainsComposer.departures(q.origin, on: on),
         routes: failing.contains(LumeTrainsSource.routes)
             ? const <LumePopularRoute>[]
             : LumeTrainsComposer.routes(),
@@ -273,6 +345,9 @@ class LumeFakeTrainsRepository implements LumeTrainsRepository {
     );
   }
 }
+
+bool _sameDay(DateTime a, DateTime b) =>
+    a.year == b.year && a.month == b.month && a.day == b.day;
 
 /// Saved journeys, for as long as the process lives.
 class LumeMemoryJourneyStore implements LumeJourneyStore {
