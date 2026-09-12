@@ -308,15 +308,21 @@ class _LumeToolsScreenState extends State<LumeToolsScreen> {
   ) {
     final int count = widget.attention[t.id] ?? 0;
 
-    // One corner, three possible markers, so the precedence is declared.
-    // Privacy wins over a number: a lock is a promise, and a count is
-    // information that can wait for the tool itself.
+    // One corner, three possible markers, in the order `toolCard` declares:
+    // it writes the count, then *overwrites* it with the lock if the tool is
+    // sensitive and with the pin if it is a local service. So privacy first,
+    // then locality, then the number.
+    //
+    // Only the first of those two overwrites is observable in the reference —
+    // `documents` is both countable and sensitive, and shows its lock — while
+    // nothing in the catalogue is both countable and country-restricted. The
+    // order is the source's anyway, so the day something is, both sides agree.
     final (LumeTileMarker marker, String? label) = t.sensitive
         ? (LumeTileMarker.private, l.toolPrivate)
-        : count > 0
-        ? (LumeTileMarker.count, l.toolNeedsAttention(count))
         : t.isCountryRestricted
         ? (LumeTileMarker.local, l.toolLocalService)
+        : count > 0
+        ? (LumeTileMarker.count, l.toolNeedsAttention(count))
         : (LumeTileMarker.none, null);
 
     return LumeCatalogueTile(

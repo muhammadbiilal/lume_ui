@@ -65,6 +65,50 @@ class LumeFormatting {
 
   String get _tag => '${locale.languageCode}_$countryCode';
 
+  /// The locale `intl` will actually format *dates* with.
+  ///
+  /// `intl` ships a subset of CLDR, and falls back from a tag it does not
+  /// have straight to the bare language — whose English *is* American
+  /// English. So `en_PK`, which it does not have, was writing a Karachi
+  /// reader's date as "Mon, Sep 7" and their clock as "6:27 PM".
+  ///
+  /// CLDR does not inherit that way. Every English locale outside the United
+  /// States and its territories inherits `en-001`, world English, which
+  /// writes "Mon, 7 Sept" and "6:27 pm" — and that is what the reference
+  /// renders, because a browser carries the whole of CLDR. `intl` has no
+  /// `en_001`, so the nearest shipped locale on that branch stands in for it.
+  ///
+  /// Numbers keep [_tag]: grouping and separators are a *different* CLDR
+  /// dimension, and borrowing a stand-in for them would import its digit
+  /// grouping along with its month names.
+  String get _dateTag => dateLocale(locale.languageCode, countryCode);
+
+  /// CLDR's `en-001` in the form `intl` actually has: same order, same
+  /// month abbreviations, same lower-case day period.
+  static const String worldEnglish = 'en_IN';
+
+  /// The English locales that follow the United States rather than the world.
+  static const Set<String> americanEnglish = <String>{
+    'US',
+    'AS',
+    'GU',
+    'MH',
+    'MP',
+    'PR',
+    'UM',
+    'VI',
+  };
+
+  /// See [_dateTag]. Exposed so a test can assert the resolution itself.
+  static String dateLocale(String language, String country) {
+    final String exact = '${language}_$country';
+    if (intl.DateFormat.localeExists(exact)) return exact;
+    if (language == 'en' && !americanEnglish.contains(country)) {
+      return worldEnglish;
+    }
+    return intl.DateFormat.localeExists(language) ? language : 'en';
+  }
+
   /// The markets that measure in feet and Fahrenheit. Everywhere else is
   /// metric, which is the automatic default rather than a guess.
   static LumeUnits _unitsFor(String country) =>
@@ -121,13 +165,13 @@ class LumeFormatting {
   /// day:'numeric', month:'short'}`, which is a month *name*. `MEd` is the
   /// numeric skeleton and renders "Mon, 9/7" — a date that reads as 9 July in
   /// half the world.
-  String dateShort(DateTime d) => intl.DateFormat.MMMEd(_tag).format(d);
+  String dateShort(DateTime d) => intl.DateFormat.MMMEd(_dateTag).format(d);
 
   /// "7 September" — a date with its month written out.
-  String dateLong(DateTime d) => intl.DateFormat.MMMMd(_tag).format(d);
+  String dateLong(DateTime d) => intl.DateFormat.MMMMd(_dateTag).format(d);
 
   /// "14 Sep".
-  String dateMedium(DateTime d) => intl.DateFormat.MMMd(_tag).format(d);
+  String dateMedium(DateTime d) => intl.DateFormat.MMMd(_dateTag).format(d);
 
   /// The clock, in the user's preference.
   ///
@@ -135,12 +179,15 @@ class LumeFormatting {
   /// Sans has no glyph for U+202F, so it rendered as nothing at all and the
   /// time read "6:27PM"; it is normalised to an ordinary space, which the face
   /// does have and which no layout depends on being unbreakable here.
-  String time(DateTime d) =>
-      (hour12
-              ? intl.DateFormat.jm(_tag).format(d)
-              : intl.DateFormat.Hm(_tag).format(d))
-          .replaceAll(' ', ' ')
-          .replaceAll(' ', ' ');
+  ///
+  /// The pattern is spelled out rather than taken from the `jm` skeleton,
+  /// because a skeleton carries the locale's *own* hour cycle: `jm` in
+  /// `en_GB` is 24-hour, so asking for a 12-hour clock there quietly returned
+  /// one that was not. The day period still comes from the locale.
+  String time(DateTime d) => intl.DateFormat(
+    hour12 ? 'h:mm a' : 'HH:mm',
+    _dateTag,
+  ).format(d).replaceAll(' ', ' ').replaceAll(' ', ' ');
 
   /// A countdown as `h:mm:ss` — the hero's live pill.
   static String countdown(Duration d) {

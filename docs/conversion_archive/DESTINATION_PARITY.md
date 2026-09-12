@@ -13,7 +13,7 @@ A text heading's **width** is recorded rather than asserted: the prototype's
 `.section__head > div` shrink-wraps to its longest line and the Flutter heading
 fills its column. Both start at the same x and render on the same baselines.
 
-**179 values compared, tolerance 1 logical pixel.**
+**191 values compared, tolerance 1 logical pixel.**
 
 
 ### Home · not Muslim, Pakistan
@@ -52,9 +52,13 @@ fills its column. Both start at the same x and render on the same baselines.
 | `hero.dots` | x | 0.00 | 0.00 | = |  |
 | `hero.dots` | width | 390.00 | 390.00 | = |  |
 | `hero.dots` | height | 5.00 | 5.00 | = |  |
-| `qaction` | y | 396.00 | 395.00 | -1.00 | the strip cancels its own padding with a negative margin (C19) |
-| `qaction` | width | 130.20 | 130.19 | -0.01 | the strip cancels its own padding with a negative margin (C19) |
-| `qaction` | height | 44.00 | 44.00 | = | the strip cancels its own padding with a negative margin (C19) |
+| `qactions` | y | 396.00 | 395.00 | -1.00 | the prototype port is one gutter wider each side and the page clips it; this one is clipped at the page edge instead, and the pills land identically |
+| `qactions` | width | 430.00 | 390.00 | -40.00 | the prototype port is one gutter wider each side and the page clips it; this one is clipped at the page edge instead, and the pills land identically |
+| `qactions` | height | 46.00 | 46.00 | = | the prototype port is one gutter wider each side and the page clips it; this one is clipped at the page edge instead, and the pills land identically |
+| `qaction` | y | 396.00 | 395.00 | -1.00 |  |
+| `qaction` | x | 0.00 | 0.00 | = |  |
+| `qaction` | width | 130.20 | 130.19 | -0.01 |  |
+| `qaction` | height | 44.00 | 44.00 | = |  |
 | `quick.title` | y | 466.00 | 465.00 | -1.00 |  |
 | `quick.title` | x | 20.00 | 20.00 | = |  |
 | `quick.title` | width | 149.56 | 89.35 | -60.21 | recorded |
@@ -85,6 +89,14 @@ fills its column. Both start at the same x and render on the same baselines.
 | `glance.title` | x | 20.00 | 20.00 | = | cumulative line-box rounding (D20) |
 | `glance.title` | width | 195.48 | 85.34 | -110.14 | cumulative line-box rounding (D20) |
 | `glance.title` | height | 22.00 | 22.00 | = | cumulative line-box rounding (D20) |
+| `progress` | y | 1236.75 | 1236.00 | -0.75 | cumulative line-box rounding (D20) |
+| `progress` | x | 20.00 | 20.00 | = | cumulative line-box rounding (D20) |
+| `progress` | width | 350.00 | 350.00 | = | cumulative line-box rounding (D20) |
+| `progress` | height | 86.00 | 86.00 | = | cumulative line-box rounding (D20) |
+| `progress.title` | y | 1262.75 | 1262.00 | -0.75 | cumulative line-box rounding (D20) |
+| `progress.title` | x | 105.00 | 105.00 | = | cumulative line-box rounding (D20) |
+| `progress.title` | width | 196.00 | 118.46 | -77.54 | cumulative line-box rounding (D20) |
+| `progress.title` | height | 19.00 | 19.00 | = | cumulative line-box rounding (D20) |
 | `upcoming.title` | y | 1346.75 | 1346.00 | -0.75 | cumulative line-box rounding (D20) |
 | `upcoming.title` | x | 20.00 | 20.00 | = | cumulative line-box rounding (D20) |
 | `upcoming.title` | width | 101.36 | 85.48 | -15.88 | cumulative line-box rounding (D20) |
@@ -96,13 +108,13 @@ fills its column. Both start at the same x and render on the same baselines.
 | `discover.link` | y | 1645.75 | 1645.00 | -0.75 | the prototype measures the padded control, this the text box |
 | `discover.link` | width | 63.59 | 44.58 | -19.01 | the prototype measures the padded control, this the text box |
 | `discover.link` | height | 23.00 | 16.00 | -7.00 | the prototype measures the padded control, this the text box |
-| `hscroll` | y | 1695.75 | 1693.00 | -2.75 | the outage card is derived, not fixed (C17) |
-| `hscroll` | width | 390.00 | 390.00 | = | the outage card is derived, not fixed (C17) |
-| `hscroll` | height | 148.25 | 164.00 | 15.75 | the outage card is derived, not fixed (C17) |
-| `minicard` | y | 1697.75 | 1703.00 | 5.25 | the outage card is derived, not fixed (C17) |
-| `minicard` | x | 20.00 | 20.00 | = | the outage card is derived, not fixed (C17) |
-| `minicard` | width | 148.00 | 148.00 | = | the outage card is derived, not fixed (C17) |
-| `minicard` | height | 140.25 | 140.00 | -0.25 | the outage card is derived, not fixed (C17) |
+| `hscroll` | y | 1695.75 | 1693.00 | -2.75 | the outage card is derived, not fixed, and one line taller for it (C17 / D23) |
+| `hscroll` | width | 390.00 | 390.00 | = | the outage card is derived, not fixed, and one line taller for it (C17 / D23) |
+| `hscroll` | height | 148.25 | 164.00 | 15.75 | the outage card is derived, not fixed, and one line taller for it (C17 / D23) |
+| `minicard` | y | 1697.75 | 1695.00 | -2.75 | the outage card is derived, not fixed, and one line taller for it (C17 / D23) |
+| `minicard` | x | 20.00 | 20.00 | = | the outage card is derived, not fixed, and one line taller for it (C17 / D23) |
+| `minicard` | width | 148.00 | 148.00 | = | the outage card is derived, not fixed, and one line taller for it (C17 / D23) |
+| `minicard` | height | 140.25 | 156.00 | 15.75 | the outage card is derived, not fixed, and one line taller for it (C17 / D23) |
 
 ### Home · Muslim, Pakistan
 

@@ -185,7 +185,11 @@ void main() {
       ('359 wide', const Size(359, 3000)),
       ('360 wide', const Size(360, 3000)),
       ('390 wide', const Size(390, 3000)),
+      // The two breakpoint edges themselves: 599 is compact, 600 is medium;
+      // 839 is medium, 840 is expanded.
+      ('600 wide', const Size(600, 3000)),
       ('700 wide', const Size(700, 3000)),
+      ('840 wide', const Size(840, 3000)),
       ('1100 wide', const Size(1100, 3000)),
       ('a phone on its side', const Size(852, 2000)),
     ]) {
@@ -336,7 +340,7 @@ void main() {
       await pumpHome(tester, LumeUsers.muslimPk, surface: LumeViewport.tall);
 
       expect(find.bySemanticsLabel('Home'), findsWidgets);
-      expect(find.bySemanticsLabel('Notifications, 3'), findsOneWidget);
+      expect(find.bySemanticsLabel('Notifications, 13'), findsOneWidget);
       expect(find.bySemanticsLabel('Search everything'), findsOneWidget);
       expect(find.bySemanticsLabel('Your profile'), findsOneWidget);
 

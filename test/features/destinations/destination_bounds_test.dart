@@ -56,7 +56,14 @@ const String kDriftNote = 'cumulative line-box rounding (D20)';
 /// the user's own clock preference, and "Next outage 7:00 PM" takes two lines
 /// where the prototype's hard-coded "14:00" took one. The prototype's card
 /// also named a slot that had already ended (C17).
-const String kOutageNote = 'the outage card is derived, not fixed (C17)';
+/// D23. The outage card names the next slot in the user's own clock, and
+/// "Next outage 7:00 pm" is 127.93 wide against a 124-point text region, so
+/// the title takes a second line. `.hscroll` is a stretch flex, so every card
+/// in the strip takes that height with it. Measured, bounded and tested in
+/// `discover_outage_test.dart`.
+const String kOutageNote =
+    'the outage card is derived, not fixed, and one line taller for it '
+    '(C17 / D23)';
 
 /// Tall enough that the whole page is laid out, so an element below the fold
 /// can be measured. The width — which is what the composition depends on — is
@@ -193,13 +200,26 @@ void main() {
     compare(
       tester,
       b,
+      'qactions',
+      inSection(
+        LumeHomeScreen.quickActionsKey,
+        find.byType(LumeHorizontalStrip),
+      ),
+      checkX: false,
+      checkWidth: false,
+      note:
+          'the prototype port is one gutter wider each side and the page '
+          'clips it; this one is clipped at the page edge instead, and the '
+          'pills land identically',
+    );
+    compare(
+      tester,
+      b,
       'qaction',
       inSection(
         LumeHomeScreen.quickActionsKey,
         find.byType(LumeQuickActionPill),
       ).first,
-      checkX: false,
-      note: 'the strip cancels its own padding with a negative margin (C19)',
     );
     compare(
       tester,
@@ -267,6 +287,35 @@ void main() {
       tolerance: kDrift,
       note: kDriftNote,
     );
+    // D26's evidence, asserted rather than described: with no bar drawn, the
+    // card and its two lines land exactly where the reference's do. The
+    // reference's own `.progress-card__body` measures 196 x 34 — title, 2,
+    // meta — which is the height of a body with no bar in it.
+    compare(
+      tester,
+      b,
+      'progress',
+      inSection(LumeHomeScreen.glanceKey, find.byType(LumeProgressCard)).first,
+      tolerance: kDrift,
+      note: kDriftNote,
+    );
+    compare(
+      tester,
+      b,
+      'progress.title',
+      find
+          .descendant(
+            of: inSection(
+              LumeHomeScreen.glanceKey,
+              find.byType(LumeProgressCard),
+            ).first,
+            matching: find.byType(Text),
+          )
+          .first,
+      checkWidth: false,
+      tolerance: kDrift,
+      note: kDriftNote,
+    );
     compare(
       tester,
       b,
@@ -312,6 +361,7 @@ void main() {
       b,
       'minicard',
       inSection(LumeHomeScreen.discoverKey, find.byType(LumeMiniCard)).first,
+      checkHeight: false,
       tolerance: 8,
       note: kOutageNote,
     );

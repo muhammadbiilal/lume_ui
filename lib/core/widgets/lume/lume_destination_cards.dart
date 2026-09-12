@@ -345,10 +345,10 @@ class LumeToolTile extends StatelessWidget {
 
 /// Which marker a catalogue tile wears in its corner.
 ///
-/// The three compete for one corner, so the precedence is declared rather than
-/// left to whichever branch runs last. Privacy wins: a sensitive tool shows
-/// its lock even when it also has a count, because the lock is a promise and
-/// the count is information.
+/// The three compete for one corner and `toolCard` settles it by overwriting:
+/// the count is written first, then the lock replaces it for a sensitive tool
+/// and the pin replaces it for a local one. Privacy, then locality, then the
+/// number — declared here rather than left to whichever branch runs last.
 enum LumeTileMarker { none, private, count, local }
 
 /// `.cat-tool` — a catalogue tile in the Tools hub.
@@ -718,14 +718,23 @@ class LumeLiveRow extends StatelessWidget {
   }
 }
 
-/// `.progress-card` — art, two lines and a bar.
+/// `.progress-card` — art and two lines.
 ///
-/// **The bar is drawn.** `.bar` is a `<span>` that the prototype never gives a
-/// `display`, so it stays inline and collapses to nothing: measured 0 × 0 with
-/// its fill 78.39 × 0. Everything about it is specified — 5 tall, pill,
-/// neutral track, a jade gradient fill, animated over 1.1 s by `animateBars` —
-/// and none of it renders. Drawn here (C15); the card's height is unchanged,
-/// because the 54-point artwork is what sets it.
+/// **The bar is not drawn, because the reference does not draw one.** `.bar`
+/// is emitted (`home.screen.js:772` and `:796`, `data-fill="38"` / `"40"`),
+/// `animateBars` does write its fill's width, and every visual property is
+/// specified — 5 tall, pill, neutral track, a jade gradient. None of it
+/// reaches the screen: `.bar` is a `<span>` that `components.css` leaves out
+/// of the rule block that blockifies `.bar__fill`, so it stays a non-replaced
+/// inline box, `height` does not apply to it, and it measures 0 × 0 with its
+/// fill 74.47 × 0. The card's body measures 196 × 34 — title, 2, meta — which
+/// is the height with no bar in it and no room made for one.
+///
+/// So this renders what the reference renders. Whether Lume *intends* the bar
+/// is a separate question and an open one: the evidence is in
+/// `docs/conversion_archive/KNOWN_DIFFERENCES.md` (C15 / D26) and it is
+/// awaiting a decision. The [progress] value stays plumbed through so that
+/// decision costs one widget, not a re-fit of the card.
 class LumeProgressCard extends StatelessWidget {
   const LumeProgressCard({
     super.key,
@@ -742,7 +751,7 @@ class LumeProgressCard extends StatelessWidget {
   final String title;
   final String meta;
 
-  /// 0–1.
+  /// 0–1. Carried, not drawn — see the class comment (C15 / D26).
   final double progress;
 
   final String actionIcon;
@@ -808,8 +817,6 @@ class LumeProgressCard extends StatelessWidget {
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
                     ),
-                    const SizedBox(height: 9),
-                    _Bar(value: progress),
                   ],
                 ),
               ),
@@ -838,43 +845,6 @@ class LumeProgressCard extends StatelessWidget {
               ),
             ],
           ),
-        ),
-      ),
-    );
-  }
-}
-
-/// `.bar` — a 5-point track with a jade gradient fill.
-class _Bar extends StatelessWidget {
-  const _Bar({required this.value});
-
-  final double value;
-
-  @override
-  Widget build(BuildContext context) {
-    final LumeColors lume = context.lume;
-    return ClipRRect(
-      borderRadius: BorderRadius.circular(999),
-      child: SizedBox(
-        height: 5,
-        child: Stack(
-          children: <Widget>[
-            Positioned.fill(child: ColoredBox(color: lume.tintNeutral)),
-            FractionallySizedBox(
-              alignment: AlignmentDirectional.centerStart,
-              widthFactor: value.clamp(0.0, 1.0),
-              child: DecoratedBox(
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(999),
-                  gradient: LinearGradient(
-                    begin: AlignmentDirectional.centerStart,
-                    end: AlignmentDirectional.centerEnd,
-                    colors: <Color>[lume.accent400, lume.accent],
-                  ),
-                ),
-              ),
-            ),
-          ],
         ),
       ),
     );

@@ -274,7 +274,12 @@ class LumeFakeHomeRepository implements LumeHomeRepository {
       fetchedAt: now,
       sources: state,
       content: LumeHomeContent(
-        notificationCount: empty ? 0 : 3,
+        // Two digits, because that is what the reference's notification
+        // engine produces at the pinned instant — 13 in Pakistan, 12 with the
+        // content switches off, 10 abroad. Deriving the number is §48's work,
+        // not a destination's; this fixture carries the reference's primary
+        // cell so the badge is measured against the shape it really renders.
+        notificationCount: empty ? 0 : 13,
 
         weather: failing.contains(LumeHomeSection.live)
             ? null

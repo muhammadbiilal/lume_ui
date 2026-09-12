@@ -25,6 +25,8 @@
 /// to be one thing.
 library;
 
+import 'dart:math' as math;
+
 import 'package:flutter/material.dart';
 
 import '../../icons/lume_icon.dart';
@@ -68,7 +70,10 @@ abstract final class LumeDestinationMetrics {
   static const double stripGap = 12;
   static const EdgeInsets stripPadding = EdgeInsets.fromLTRB(0, 2, 0, 6);
 
-  /// `.qactions { gap: 8px; padding: 0 var(--pad) 2px }`.
+  /// `.qactions { gap: 8px; padding: 0 var(--pad) 2px;
+  /// margin: 0 calc(var(--pad) * -1) }` — the margin cancels the padding, so
+  /// the first pill starts at the section's own edge rather than one gutter
+  /// in. See [LumeHorizontalStrip].
   static const double actionStripGap = 8;
 
   /// `.chips { gap: 7px; padding: 0 var(--pad) 2px }`.
@@ -532,26 +537,44 @@ class LumeSectionHeading extends StatelessWidget {
 /// `.hscroll`, `.qactions`, `.chips` — a row that scrolls sideways and bleeds
 /// into the page gutters.
 ///
-/// One widget for all three because they differ only in their gap and their
-/// bottom padding, and giving each its own would guarantee they drift apart.
+/// One widget for all three because they differ only in their gap, their
+/// bottom padding and whether they bleed, and giving each its own would
+/// guarantee they drift apart.
+///
+/// Two geometries, both measured:
+///
+/// | | port | first item |
+/// |---|---|---|
+/// | `.hscroll`, `.chips` | the section's box | one gutter in |
+/// | `.qactions` | one gutter wider, each side | the section's own edge |
+///
+/// `.qactions` adds `margin: 0 calc(var(--pad) * -1)` to the padding the other
+/// two share, which cancels its own gutter: the first pill sits against the
+/// page edge and a scrolled pill passes out through the margin rather than
+/// stopping at it. At 390 the reference measures the strip at x −20 by 430 and
+/// its first pill at x 0, where a chip starts at 20; at 1100 it measures
+/// x 237 by 870 against a section of 269 by 806. It is a full-bleed strip, and
+/// it is deliberate.
 class LumeHorizontalStrip extends StatelessWidget {
   const LumeHorizontalStrip({
     super.key,
     required this.children,
     this.gap = LumeDestinationMetrics.stripGap,
     this.padding = LumeDestinationMetrics.stripPadding,
+    this.bleed = false,
     this.semanticLabel,
     this.controller,
   });
 
-  /// `.qactions` — 8 px gaps, 2 px of bottom padding.
+  /// `.qactions` — 8 px gaps, 2 px of bottom padding, full bleed.
   const LumeHorizontalStrip.actions({
     super.key,
     required this.children,
     this.semanticLabel,
     this.controller,
   }) : gap = LumeDestinationMetrics.actionStripGap,
-       padding = const EdgeInsets.only(bottom: 2);
+       padding = const EdgeInsets.only(bottom: 2),
+       bleed = true;
 
   /// `.chips` — 7 px gaps, 2 px of bottom padding.
   const LumeHorizontalStrip.chips({
@@ -560,34 +583,75 @@ class LumeHorizontalStrip extends StatelessWidget {
     this.semanticLabel,
     this.controller,
   }) : gap = LumeDestinationMetrics.chipStripGap,
-       padding = const EdgeInsets.only(bottom: 2);
+       padding = const EdgeInsets.only(bottom: 2),
+       bleed = false;
 
   final List<Widget> children;
   final double gap;
   final EdgeInsets padding;
+
+  /// Whether the strip cancels its own gutter, as `.qactions` does.
+  final bool bleed;
+
   final String? semanticLabel;
   final ScrollController? controller;
 
   @override
   Widget build(BuildContext context) {
-    final double gutter = LumeLayout.pageGutter(context.measureClass);
+    final LumeWidthClass measure = context.measureClass;
+    final double gutter = LumeLayout.pageGutter(measure);
 
-    final Widget list = SingleChildScrollView(
-      controller: controller,
-      scrollDirection: Axis.horizontal,
-      padding: EdgeInsetsDirectional.only(start: gutter, end: gutter),
-      child: Row(
-        mainAxisSize: MainAxisSize.min,
-        children: <Widget>[
-          for (int i = 0; i < children.length; i++) ...<Widget>[
-            if (i > 0) SizedBox(width: gap),
-            children[i],
-          ],
-        ],
-      ),
+    final Widget strip = LayoutBuilder(
+      builder: (BuildContext context, BoxConstraints c) {
+        // The strip supplies its own gutters, so it is not inside a
+        // `LumeMeasure` — but it still belongs to the measure, and the
+        // reference caps it with every other section. Without this the first
+        // item lands at the window's edge instead of the content column's.
+        final double section = measure == LumeWidthClass.compact
+            ? c.maxWidth
+            : math.min(c.maxWidth, LumeLayout.contentCap(measure));
+
+        // The negative margin, in the only form that cannot scroll the page
+        // sideways: the port grows into the room beside the section, and no
+        // further. At a phone width there is none, and the page edge clips
+        // exactly what the reference's overflow does.
+        final double spill = bleed
+            ? math.min(gutter, math.max(0, (c.maxWidth - section) / 2))
+            : 0;
+        final double inset = bleed ? spill : gutter;
+
+        return SizedBox(
+          width: section + spill * 2,
+          child: SingleChildScrollView(
+            controller: controller,
+            scrollDirection: Axis.horizontal,
+            padding: EdgeInsetsDirectional.only(start: inset, end: inset),
+            // `align-items` is `stretch` on all three flexes, so a card that
+            // takes two lines raises every card beside it rather than leaving
+            // a ragged row of different heights. A Row centres by default,
+            // and a horizontal scroller has no height to stretch into until
+            // the tallest child has named one.
+            child: IntrinsicHeight(
+              child: Row(
+                mainAxisSize: MainAxisSize.min,
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: <Widget>[
+                  for (int i = 0; i < children.length; i++) ...<Widget>[
+                    if (i > 0) SizedBox(width: gap),
+                    children[i],
+                  ],
+                ],
+              ),
+            ),
+          ),
+        );
+      },
     );
 
-    final Widget padded = Padding(padding: padding, child: list);
+    final Widget padded = Padding(
+      padding: padding,
+      child: Center(child: strip),
+    );
     if (semanticLabel == null) return padded;
     return Semantics(container: true, label: semanticLabel, child: padded);
   }
@@ -596,10 +660,19 @@ class LumeHorizontalStrip extends StatelessWidget {
 /// `.iconbtn` — a 38-point control in the header.
 ///
 /// Carries a count when it has one. §100.1 asks for *"one badge, in the app
-/// header, formatted compactly"*, and the reference computes exactly that
-/// (`n > 99 ? '99+' : n`) and then draws it into a 7-point dot with no room
-/// for a glyph, so the number spills out beside the header. Recorded as C16;
-/// here the badge is a pill the number fits in.
+/// header, formatted compactly"*, and `renderNotifBadge` computes exactly that
+/// (`n > 99 ? '99+' : n`) — then writes it into `.iconbtn__badge`, which is a
+/// 7 × 7 disc with `overflow: visible` and no room for a glyph. The digits
+/// render outside the disc, in the button's own inherited text, across the
+/// bell: the reference's header reads "13" in near-black over the icon (C16).
+/// Repaired here, and the repair is the only change — the marker keeps the
+/// reference's centre, its accent fill and its two-point card ring, and
+/// becomes the smallest pill the number fits in.
+///
+/// A count that cannot fit without swallowing the control — which is what a
+/// large text scale does to a 38-point button — falls back to the reference's
+/// plain dot. Nothing is lost: the count is in the control's accessible name
+/// either way, which is where a screen reader was reading it from already.
 class LumeHeaderButton extends StatelessWidget {
   const LumeHeaderButton({
     super.key,
@@ -621,6 +694,30 @@ class LumeHeaderButton extends StatelessWidget {
   final bool showDot;
 
   static String formatCount(int n) => n > 99 ? '99+' : '$n';
+
+  /// `.iconbtn__badge { top: 7px; right: 8px; width: 7px; height: 7px }` —
+  /// the disc's centre is 10.5 down and 11.5 in from the trailing edge. A
+  /// pill keeps that centre and grows around it.
+  static const Offset badgeCentre = Offset(11.5, 10.5);
+
+  /// `.iconbtn__badge` — the marker with no number in it.
+  static const double dotSize = 7;
+
+  /// `box-shadow: 0 0 0 2px var(--card)` — outside the shape, as the
+  /// reference's is, so the ring never eats into the fill.
+  static const double badgeRing = 2;
+
+  static const double badgeFontSize = 9;
+
+  /// The smallest the pill goes. The reference's marker is round, and a
+  /// one-digit count keeps it round rather than shrinking to the glyph.
+  static const double badgeMinSize = 14;
+
+  /// How far past the control's edge the badge may sit before the number is
+  /// dropped for the dot. `.appbar .iconbtn + .iconbtn` leaves 10 points
+  /// between the header's controls; four keeps the badge clear of its
+  /// neighbour, and clear of the bar's own 13.5 above the row.
+  static const double badgeOverhang = 4;
 
   @override
   Widget build(BuildContext context) {
@@ -652,52 +749,95 @@ class LumeHeaderButton extends StatelessWidget {
               ),
               child: Center(child: LumeIcon(icon, size: 18, color: lume.text2)),
             ),
-            if (hasBadge)
-              PositionedDirectional(
-                top: count > 0 ? 3 : 7,
-                end: count > 0 ? 2 : 8,
-                child: ExcludeSemantics(
-                  child: count > 0
-                      ? Container(
-                          // The badge grows with the text, because a count is
-                          // information and shrinking it to fit a 16-point
-                          // disc is how the number ends up clipped.
-                          constraints: BoxConstraints(
-                            minWidth: MediaQuery.textScalerOf(
-                              context,
-                            ).scale(16).clamp(16, 26),
-                            minHeight: MediaQuery.textScalerOf(
-                              context,
-                            ).scale(16).clamp(16, 26),
-                          ),
-                          padding: const EdgeInsets.symmetric(horizontal: 4),
-                          decoration: BoxDecoration(
-                            color: lume.accent,
-                            borderRadius: BorderRadius.circular(999),
-                            border: Border.all(color: lume.card, width: 2),
-                          ),
-                          alignment: Alignment.center,
-                          child: LumeNumerals(
-                            formatCount(count),
-                            style: LumeType.numeric(
-                              LumeType.fit(context, context.lumeType.tab),
-                            ).copyWith(color: lume.onAccent, fontSize: 9),
-                          ),
-                        )
-                      : Container(
-                          width: 7,
-                          height: 7,
-                          decoration: BoxDecoration(
-                            shape: BoxShape.circle,
-                            color: lume.accent,
-                            border: Border.all(color: lume.card, width: 2),
-                          ),
-                        ),
-                ),
-              ),
+            if (hasBadge) _HeaderBadge(count: count),
           ],
         ),
       ),
+    );
+  }
+}
+
+/// `.iconbtn__badge` — the unread marker, with or without its number.
+///
+/// Measures the number before drawing it, so the pill is the smallest one the
+/// text fits in and the decision to fall back to a dot is made on the width
+/// the text actually takes rather than on a guess about the text scale.
+class _HeaderBadge extends StatelessWidget {
+  const _HeaderBadge({required this.count});
+
+  final int count;
+
+  @override
+  Widget build(BuildContext context) {
+    final LumeColors lume = context.lume;
+    const Offset centre = LumeHeaderButton.badgeCentre;
+    const double ring = LumeHeaderButton.badgeRing;
+
+    Widget shape(double w, double h, {Widget? child}) => PositionedDirectional(
+      top: centre.dy - h / 2,
+      end: centre.dx - w / 2,
+      // The count is already in the control's own name; read out again here
+      // it would be announced twice.
+      child: ExcludeSemantics(
+        child: Container(
+          width: w,
+          height: h,
+          alignment: Alignment.center,
+          decoration: BoxDecoration(
+            color: lume.accent,
+            borderRadius: BorderRadius.circular(999),
+            // The reference's ring is a spread shadow, so it sits outside the
+            // shape. A border would sit inside it and eat into the fill.
+            boxShadow: <BoxShadow>[
+              BoxShadow(color: lume.card, spreadRadius: ring),
+            ],
+          ),
+          child: child,
+        ),
+      ),
+    );
+
+    if (count <= 0) {
+      return shape(LumeHeaderButton.dotSize, LumeHeaderButton.dotSize);
+    }
+
+    final String text = LumeHeaderButton.formatCount(count);
+    final TextStyle style = LumeType.numeric(
+      LumeType.fit(context, context.lumeType.tab),
+    ).copyWith(color: lume.onAccent, fontSize: LumeHeaderButton.badgeFontSize);
+
+    final TextPainter painter = TextPainter(
+      text: TextSpan(text: text, style: style),
+      textDirection: TextDirection.ltr,
+      textScaler: MediaQuery.textScalerOf(context),
+    )..layout();
+    final double textWidth = painter.width;
+    final double textHeight = painter.height;
+    painter.dispose();
+
+    // Four points each side of the digits, one above and below the line box,
+    // and never smaller or narrower than the marker itself — one digit stays
+    // a disc, two become a pill.
+    final double height = math.max(
+      LumeHeaderButton.badgeMinSize,
+      textHeight + 2,
+    );
+    final double width = math.max(textWidth + 8, height);
+
+    // The badge grows around a fixed centre, so what runs out is the room
+    // between that centre and the control's edge. Past it the pill stops
+    // being a badge on the control and becomes a lid over it.
+    const Offset anchor = LumeHeaderButton.badgeCentre;
+    const double allowed = LumeHeaderButton.badgeOverhang;
+    if (width / 2 + ring - anchor.dx > allowed ||
+        height / 2 + ring - anchor.dy > allowed) {
+      return shape(LumeHeaderButton.dotSize, LumeHeaderButton.dotSize);
+    }
+
+    return shape(
+      width,
+      height,
+      child: LumeNumerals(text, style: style, maxLines: 1),
     );
   }
 }
