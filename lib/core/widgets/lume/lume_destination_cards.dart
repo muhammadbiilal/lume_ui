@@ -1291,6 +1291,66 @@ class LumeChoiceChip extends StatelessWidget {
   }
 }
 
+/// `.empty` — the Tools hub's empty state.
+///
+/// **Not `LumeCollectionState`.** That is `.cstate`, a record collection's
+/// state: a 19-point title, 14-point body and a 28-point glyph. This is a
+/// 15-point title, a 12-point body on an 18 line, and an 88 x 66 drawing —
+/// measured side by side rather than assumed to be one thing.
+class LumeEmptyState extends StatelessWidget {
+  const LumeEmptyState({
+    super.key,
+    required this.title,
+    required this.text,
+    required this.art,
+  });
+
+  final String title;
+  final String text;
+
+  /// The 88 x 66 drawing above the words.
+  final Widget art;
+
+  @override
+  Widget build(BuildContext context) {
+    final LumeColors lume = context.lume;
+
+    return Semantics(
+      container: true,
+      child: Padding(
+        padding: const EdgeInsets.symmetric(vertical: 44, horizontal: 30),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: <Widget>[
+            ExcludeSemantics(
+              child: SizedBox(width: 88, height: 66, child: art),
+            ),
+            const SizedBox(height: 10),
+            Text(
+              title,
+              textAlign: TextAlign.center,
+              style: LumeType.tracked(
+                LumeType.natural(context, context.lumeType.cardTitle),
+                -0.025,
+              ).copyWith(color: lume.text),
+            ),
+            const SizedBox(height: 10),
+            Text(
+              text,
+              textAlign: TextAlign.center,
+              style: LumeType.fit(context, context.lumeType.label).copyWith(
+                color: lume.text3,
+                fontWeight: FontWeight.w400,
+                height: LumeType.lineHeight(context, 1.5),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
 /// `.cat__head` — a category heading in the Tools hub.
 class LumeCategoryHeading extends StatelessWidget {
   const LumeCategoryHeading({

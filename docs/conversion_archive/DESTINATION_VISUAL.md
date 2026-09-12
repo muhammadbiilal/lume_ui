@@ -129,6 +129,7 @@ Found by looking at the renders, not by a passing test:
 | the row of tiles clipped by 18 points | `GridView` gives every cell one aspect ratio; a CSS grid gives every *row* its own height |
 | the hero slide overflowing by 18 at one width and 2 in Urdu | the title takes two lines at most, and a script set on a 1.6 line needs a taller slide rather than a clipped one |
 | a card pushed off the screen at 200 % text | the market pill and the figure at the end of a row could not shrink |
+| the hub's empty state drawn as a record collection's — a 19-point title, a 28-point glyph, no illustration | `.empty` is its own component: a 15-point title, a 12-point body on an 18 line, and an 88 × 66 dashed magnifier |
 | the notification badge clipped at 200 % | a count is information; the badge grows with it |
 
 ---

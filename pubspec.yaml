@@ -42,6 +42,7 @@ flutter:
     - assets/images/
     - assets/images/onboarding/
     - assets/images/home/
+    - assets/images/tools/
     - assets/data/
 
   # Bundled, not fetched. The web prototype pulls Plus Jakarta Sans and Noto

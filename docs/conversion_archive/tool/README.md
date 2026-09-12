@@ -15,7 +15,7 @@
 | `measure_onboarding.mjs` | Drives the onboarding flow to a step and reports every element's bounds |
 | `measure_destinations.mjs` | Writes a whole profile to `lume-profile`, **freezes the page's clock**, drives the shell to Home or the Tools hub, and reports bounds *and the composition* — which slides the carousel kept, which eight tools filled the grid, which live cards survived, which categories rendered. `--state` names a user, `--after` a chip or a query, `--scroll` a position, `--shot 1` writes the PNG |
 | `gen_catalogue.mjs` | Turns `catalogue.js` + `tool-specs.js` into `lib/features/catalogue/data/feature_catalogue.dart` — 85 features and 6 categories, with the names and status lines left to the ARBs |
-| `gen_home_art.mjs` | Lifts Home's thirteen drawings — six hero slides, two context strips, five Discover cards — into `assets/images/home`, with theme variables replaced by sentinels |
+| `gen_destination_art.mjs` | Lifts the fourteen destination drawings — six hero slides, two context strips, five Discover cards and the hub's empty state — into `assets/images/{home,tools}`, with theme variables replaced by sentinels |
 | `measure_auth.mjs` | Drives the authentication flow to a named *state* — `signin`, `signin_error`, `signin_busy`, `signup2`, `sent`, `reset`, `updated`, `created`, `expired`, `trouble`, `verify` — and reports bounds, and a PNG with `--shot 1` |
 
 The Flutter side of the capture is a widget test — `test/helpers/capture.dart`

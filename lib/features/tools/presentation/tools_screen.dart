@@ -31,13 +31,13 @@ import '../../../core/theme/lume/lume_space.dart';
 import '../../../core/widgets/lume/lume_destination.dart';
 import '../../../core/widgets/lume/lume_destination_cards.dart';
 import '../../../core/widgets/lume/lume_field.dart';
-import '../../../core/widgets/lume/lume_state.dart';
 import '../../../l10n/app_localizations.dart';
 import '../../catalogue/domain/eligibility.dart';
 import '../../catalogue/domain/lume_feature.dart';
 import '../../catalogue/presentation/feature_strings.dart';
 import '../../home/domain/home_repository.dart';
 import '../domain/tools_filter.dart';
+import 'tools_art.dart';
 
 /// What the hub does when something is tapped.
 @immutable
@@ -232,10 +232,8 @@ class _LumeToolsScreenState extends State<LumeToolsScreen> {
               key: const ValueKey<String>(LumeToolsScreen.emptyKey),
               child: Padding(
                 padding: const EdgeInsets.only(top: LumeSpace.x6),
-                child: LumeCollectionState(
-                  kind: view.empty == LumeToolsEmpty.noMatch
-                      ? LumeCollectionStateKind.noResults
-                      : LumeCollectionStateKind.empty,
+                child: LumeEmptyState(
+                  art: const LumeToolsEmptyArt(),
                   title: view.empty == LumeToolsEmpty.noMatch
                       ? l.toolsNoMatch
                       : l.toolsNothingYet,

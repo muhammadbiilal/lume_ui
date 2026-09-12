@@ -49,6 +49,7 @@ class LumeArtColours extends ColorMapper {
     0xFF000F => lume.bg,
     0xFF0010 => lume.amber,
     0xFF0011 => lume.rose,
+    0xFF0012 => lume.border2,
     _ => colour,
   };
 
