@@ -525,6 +525,38 @@ data is valid and `animateBars` runs, but the card reserves no room for a bar
 and nothing in the tests or the specifications asks for a visible one. Flutter
 renders the card the prototype renders. Full evidence in D26.
 
+### C21 — the Discover weather card is a literal, and contradicts the weather
+
+**Found in the F5A closure pass. Reproduced, not repaired.**
+`home.screen.js:834–839` writes the whole card as fixed markup:
+
+```html
+<span class="minicard__title">34° and hazy</span>
+<span class="minicard__meta">Feels like 38°</span>
+```
+
+with no `data-loc` gate, so it renders unchanged in every market. Measured in
+all nine captured states — Pakistan, the United Kingdom and the United States
+included — the card says the same thing every time, while the live row a
+section above reads the real `WEATHER_BY_COUNTRY` entry and disagrees with it
+everywhere but Pakistan. A reader in London is shown 34° and hazy over a row
+that says 21° and mostly clear.
+
+It is also not a measurement: the literal never passes through `L.temp()`, so
+the reference shows `34°` in New York rather than the 93° a Fahrenheit market
+would convert it to.
+
+Flutter renders the same card, from three display fields of its own
+(`discoverTemperature`, `discoverFeelsLike`, `discoverConditionKey`), fixed
+once in `_referenceDiscover` so the defect lives in one place. The raw
+condition stays on the model and keeps feeding the live row, which is the half
+that is not broken.
+
+**Dayroz obligation.** The production weather adapter must supply a real
+location-specific display condition for this card. These constants are a
+reference fixture reproducing a prototype's bug; shipping them would show
+every user Karachi's weather.
+
 ### C16 — the notification badge is a dot given a number
 
 **Found and corrected in F5A.** See D27.
@@ -623,7 +655,8 @@ D24.
 | 2026-09-12 (F5A · closure) | **D26 closed.** The invisible `.bar` is recorded as dead prototype markup rather than an unresolved difference; `LumeProgressCard.progress` and the two `fraction` getters removed as unused plumbing | Nothing consumed them once the bar was gone; `LumeProgressBar` (`.pbar`) is a different, live component and is untouched |
 | 2026-09-12 (F5A · closure) | **D28 closed the other way.** The local-service marker is not drawn; the country gate, the marker capability and the precedence contract are kept | Semantic similarity is not proof of intent, and a missing dot is not a correctness repair |
 | 2026-09-12 (F5A · closure) | **The unread count made state-specific** — 13 in Pakistan, 12 with the switches off, 10 abroad, as fixture data | Traced with `probe_notifications.mjs`: the badge counts the notification sources that survive a profile |
-| 2026-09-12 (F5A · closure) | **D33 raised and resolved** — the Discover weather card reads "34° and hazy", modelled as its own display-condition key | The reference gives three surfaces three phrases for one city's weather, deliberately |
+| 2026-09-12 (F5A · closure) | **D33 raised** — the Discover weather card read "34° and hazy sun" where Lume reads "34° and hazy" | The card's phrase is its own, not the live row's condition lower-cased |
+| 2026-09-12 (F5A · final) | **D33 withdrawn; C21 recorded instead.** The whole card is a literal with no country gate, so the fixture reproduces all three of its values in every state — London included — rather than deriving a truthier one | A fixture that "fixed" it matched neither Lume nor the forecast. Dayroz's weather adapter must supply the real display condition |
 | 2026-09-11 (F3) | **D10 raised and resolved** — a master-detail selection stays out of the location | A route per selection is the rebuild the CRUD guide forbids |
 | 2026-09-11 (F3) | **D11 raised and resolved** — the tablet status strip keeps the wordmark and the clock, drops the device glyphs | The strip is application chrome; the glyphs are a drawing of a device |
 | 2026-09-11 (F3) | **Correction:** the shell's two width caps (1366, and 560 below 600) are **kept**, not dropped | F0 recorded them with the device frame; a cap is a measure, not a costume |
@@ -1153,30 +1186,6 @@ is 24-hour, so asking for a 12-hour clock there quietly returned "18:27". The
 pattern is now spelled out — `h:mm a` or `HH:mm` — so the choice is the user's
 and only the day-period marker comes from the locale. The reference makes the
 same choice explicitly, with `hour12: clock() === 12`.
-
-### D33 — the Discover weather card says "34° and hazy"
-
-**Raised and resolved in the F5A closure pass.** `home.screen.js:837` writes
-`34° and hazy` into fixed markup — in *every* state, including the UK and US
-captures, because the markup never varies — while `WEATHER_BY_COUNTRY.PK`
-carries `'Hazy sun · humid'` and the live row reads "Mostly clear · Rain 64%".
-Three phrases for one city's weather, on three surfaces.
-
-Flutter was deriving the Discover card's phrase from the live row's condition
-and rendering "34° and hazy sun". Corrected by modelling the card's phrase as
-its own field — `LumeWeatherNow.discoverConditionKey` — rather than a
-transformation of `conditionKey`, because which phrase a surface uses is a
-composition decision and not a formatting one. The richer raw condition stays
-on the model and keeps feeding the live row.
-
-The visible wording now matches the reference in the Pakistan state it was
-written for. Elsewhere Flutter derives honestly — "21° and mostly clear" in
-London — where the reference's literal still says "hazy". Recorded here rather
-than propagated: copying a literal into states it was never true for would be
-reproducing a bug, not a composition.
-
-Unlike the reference's literal, the phrase is a key, so the card is translated
-in Urdu and Arabic (the same ground as D22).
 
 ### P2 — the greeting's emoji has no face in a test capture
 

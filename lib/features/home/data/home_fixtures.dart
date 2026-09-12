@@ -37,7 +37,6 @@ typedef _Climate = ({
   int temp,
   int feels,
   String condition,
-  String discoverCondition,
   int rain,
   int wind,
   String icon,
@@ -51,12 +50,30 @@ typedef _Climate = ({
   int tomorrowRain,
 });
 
+/// What Lume's Discover weather card displays — in every market.
+///
+/// `home.screen.js:834–839` writes the whole card as a literal, with no
+/// `data-loc` gate: "34° and hazy" over "Feels like 38°" whether the reader is
+/// in Karachi, London or New York. The live row a section above reads the real
+/// `WEATHER_BY_COUNTRY` entry and disagrees with it everywhere but Pakistan.
+///
+/// One constant rather than a value copied into all seven climates, so the
+/// defect is visible in one place instead of looking like seven decisions.
+/// Recorded as C21; Dayroz's weather adapter must replace it with a real
+/// location-specific display condition.
+typedef _DiscoverWeather = ({int temp, int feels, String condition});
+
+const _DiscoverWeather _referenceDiscover = (
+  temp: 34,
+  feels: 38,
+  condition: 'hazy',
+);
+
 const Map<String, _Climate> _climate = <String, _Climate>{
   'PK': (
     temp: 34,
     feels: 38,
     condition: 'hazySun',
-    discoverCondition: 'hazy',
     rain: 8,
     wind: 14,
     icon: LumeIcons.sun,
@@ -73,7 +90,6 @@ const Map<String, _Climate> _climate = <String, _Climate>{
     temp: 33,
     feels: 37,
     condition: 'hazySun',
-    discoverCondition: 'hazy',
     rain: 25,
     wind: 12,
     icon: LumeIcons.sun,
@@ -90,7 +106,6 @@ const Map<String, _Climate> _climate = <String, _Climate>{
     temp: 21,
     feels: 19,
     condition: 'mostlyClear',
-    discoverCondition: 'mostlyClear',
     rain: 12,
     wind: 8,
     icon: LumeIcons.cloudSun,
@@ -107,7 +122,6 @@ const Map<String, _Climate> _climate = <String, _Climate>{
     temp: 24,
     feels: 24,
     condition: 'lightCloud',
-    discoverCondition: 'lightCloud',
     rain: 20,
     wind: 10,
     icon: LumeIcons.cloudSun,
@@ -124,7 +138,6 @@ const Map<String, _Climate> _climate = <String, _Climate>{
     temp: 39,
     feels: 44,
     condition: 'clear',
-    discoverCondition: 'clear',
     rain: 0,
     wind: 11,
     icon: LumeIcons.sun,
@@ -141,7 +154,6 @@ const Map<String, _Climate> _climate = <String, _Climate>{
     temp: 40,
     feels: 42,
     condition: 'clear',
-    discoverCondition: 'clear',
     rain: 0,
     wind: 9,
     icon: LumeIcons.sun,
@@ -160,7 +172,6 @@ const _Climate _defaultClimate = (
   temp: 18,
   feels: 17,
   condition: 'overcast',
-  discoverCondition: 'overcast',
   rain: 35,
   wind: 12,
   icon: LumeIcons.cloudSun,
@@ -221,7 +232,9 @@ class LumeFakeHomeRepository implements LumeHomeRepository {
         temperatureC: c.temp,
         feelsLikeC: c.feels,
         conditionKey: c.condition,
-        discoverConditionKey: c.discoverCondition,
+        discoverTemperature: _referenceDiscover.temp,
+        discoverFeelsLike: _referenceDiscover.feels,
+        discoverConditionKey: _referenceDiscover.condition,
         rainPercent: c.rain,
         windKph: c.wind,
         icon: c.icon,
@@ -323,7 +336,9 @@ class LumeFakeHomeRepository implements LumeHomeRepository {
                 temperatureC: c.temp,
                 feelsLikeC: c.feels,
                 conditionKey: c.condition,
-                discoverConditionKey: c.discoverCondition,
+                discoverTemperature: _referenceDiscover.temp,
+                discoverFeelsLike: _referenceDiscover.feels,
+                discoverConditionKey: _referenceDiscover.condition,
                 rainPercent: c.rain,
                 windKph: c.wind,
                 icon: c.icon,

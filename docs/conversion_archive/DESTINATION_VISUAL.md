@@ -135,7 +135,7 @@ Found by looking at the renders, not by a passing test:
 | the strips at the window's edge rather than the content column's, at 700 and 1100 | a strip supplies its own gutters, so it sits outside `LumeMeasure` — and was never given the cap every other section has |
 | the notification badge covering the bell at 200 % | past four points of overhang a pill stops being a badge; the count falls back to the reference's dot and stays in the accessible name |
 | the badge reading 13 in London where the prototype reads 10 | the badge counts the notification sources that survive a profile, so it is 13 in Pakistan, 12 with the switches off and 10 abroad — fixture data, not one number |
-| "34° and hazy sun" on the Discover card where the prototype says "34° and hazy" | the card's phrase is its own, not the live row's condition lower-cased (D33) |
+| "34° and hazy sun" on the Discover card where the prototype says "34° and hazy" | the whole card is a literal — temperature included, in every market — so the fixture carries its three display values rather than reading the weather (C21) |
 | a "local service" dot on seven tiles the prototype leaves bare | the prototype's pin branch reads a field the catalogue does not carry, and drawing one anyway was not a correctness repair (D28) |
 
 ---
@@ -162,7 +162,6 @@ past a review.
 | # | difference | size |
 |---|---|---|
 | D22 | the tile status line is translated | the prototype renders it in English in all three languages |
-| D33 | the Discover weather card is derived | the prototype's is a fixed literal that reads "34° and hazy" in London too; Flutter matches the wording in the Pakistan state it was written for and derives honestly elsewhere |
 | D23 | the Discover strip is 15.75 points taller | the outage card names a real time in the user's own clock; "Next outage 7:00 pm" is 127.93 wide in a 124-point region, so it takes two lines, and `.hscroll` stretches every card with it (C17) |
 | D31 | dates and clocks are world English | `intl` has no `en_PK`; this restores what the prototype renders |
 | D32 | a 12-hour clock is 12-hour in every locale | `DateFormat.jm` carried `en_GB`'s own hour cycle |

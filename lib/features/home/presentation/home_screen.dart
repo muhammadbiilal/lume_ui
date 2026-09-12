@@ -837,12 +837,14 @@ class LumeHomeScreen extends StatelessWidget {
         l.cricketScore(c.cricket!.team, c.cricket!.runs, c.cricket!.wickets),
         l.cricketSecondTest(c.cricket!.day),
       ),
+      // Every value on this card is the card's own. The reference reads no
+      // weather here at all — see `LumeWeatherNow.discoverTemperatureC`.
       LumeDiscoverId.weather => (
         l.homeWeatherAnd(
-          f.temperature(c.weather?.temperatureC ?? 0),
+          f.degreesAsWritten(c.weather?.discoverTemperature ?? 0),
           _displayCondition(l, c.weather?.discoverConditionKey ?? 'clear'),
         ),
-        l.homeFeelsLike(f.temperature(c.weather?.feelsLikeC ?? 0)),
+        l.homeFeelsLike(f.degreesAsWritten(c.weather?.discoverFeelsLike ?? 0)),
       ),
       LumeDiscoverId.outage => _outageText(l, f, c),
       LumeDiscoverId.duas => (l.discoverDuasTitle, l.discoverDuasMeta),

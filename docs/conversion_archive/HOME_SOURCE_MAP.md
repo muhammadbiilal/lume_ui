@@ -74,19 +74,24 @@ making a composition decision it was not asked to make.
 
 | what | Lume | Flutter field | rendered by |
 |---|---|---|---|
-| the raw condition | `WEATHER_BY_COUNTRY.PK[2]` — `'Hazy sun · humid'` | `LumeWeatherNow.conditionKey` (`hazySun`) | the live row, the "Right now" card, the Weather tile |
-| the Discover card's shorter phrase | `home.screen.js:837`, a fixed literal — `34° and hazy` | `LumeWeatherNow.discoverConditionKey` (`hazy`) | the Discover minicard only |
-| the localized copy | none — the literal is English in every language | `AppLocalizations.weatherHazy` → `homeWeatherAnd(temp, condition)` | ⤴ |
+| the raw condition | `WEATHER_BY_COUNTRY[c]` — `'Hazy sun · humid'` for PK | `LumeWeatherNow.conditionKey`, `temperatureC`, `feelsLikeC` | the live row, the "Right now" card, the Weather tile |
+| the Discover card's display values | `home.screen.js:834–839`, a literal with no country gate — `34° and hazy` over `Feels like 38°` | `discoverTemperature`, `discoverFeelsLike`, `discoverConditionKey`, fixed once in `_referenceDiscover` | the Discover minicard only |
+| the localized copy | none — the literal is English in every language | `weatherHazy` → `homeWeatherAnd(temp, condition)`, `homeFeelsLike(feels)` | ⤴ |
 
-The reference's live row reads "Mostly clear · Rain 64%" in the same state, so
-three surfaces genuinely say three different things about one city's weather.
-`discoverConditionKey` is a key rather than a transformation of
-`conditionKey` for exactly that reason: which phrase a surface uses is
-composition, not formatting.
+**The raw values and the display values are different data, and on this card
+the reference does not read the weather at all.** Its live row says "Mostly
+clear · Rain 64%" for the same city while the card says "hazy"; in London the
+row says 21° and the card still says 34°. Recorded as C21 and reproduced
+exactly — a fixture that derived something truthier would match neither Lume
+nor the forecast.
 
-A country with no short form of its own falls back to the full condition,
-lower-cased into "{temp} and {condition}". The reference cannot do this — its
-literal says "hazy" in London too, because the markup never varies.
+The display temperature is formatted with `degreesAsWritten`, not
+`temperature`: it is copy rather than a reading, and the reference prints `34°`
+in New York rather than converting it to 93°.
+
+**Dayroz obligation.** The production weather adapter must supply a real
+location-specific display condition for this card. These constants reproduce a
+prototype defect and must not ship.
 
 ### The badge: a count of surviving sources, not a number
 

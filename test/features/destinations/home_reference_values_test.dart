@@ -26,12 +26,21 @@
 ///
 /// ## The weather card
 ///
-/// `home.screen.js:837` writes `34° and hazy` into fixed markup — in *every*
-/// state, including the UK and US captures, because the markup never varies —
-/// while `WEATHER_BY_COUNTRY.PK` carries `'Hazy sun · humid'` and the live row
-/// reads "Mostly clear · Rain 64%". Three different phrases for one city's
-/// weather, on three surfaces, on purpose. So the card gets a display key of
-/// its own rather than a transformation of the live row's.
+/// `home.screen.js:834–839` writes the whole card as a literal — "34° and
+/// hazy" over "Feels like 38°" — with no `data-loc` gate, so it renders
+/// unchanged in every market while the live row above it reads the real
+/// `WEATHER_BY_COUNTRY` entry and disagrees everywhere but Pakistan.
+///
+/// That is a defect in the prototype's presentation (C21) and it is
+/// **reproduced, not repaired**. A first pass derived the card's phrase from
+/// the live row's condition and rendered "34° and hazy sun"; a second set only
+/// the condition and rendered "21° and hazy" in London — matching neither Lume
+/// nor the weather. A reference fixture renders what Lume renders.
+///
+/// So all three of the card's values are its own fields, fixed once in
+/// `_referenceDiscover`, and the sentence is still built from localizable keys
+/// rather than hard-coded. Dayroz's weather adapter must replace those
+/// constants with a real location-specific display condition.
 library;
 
 import 'package:flutter/material.dart';
@@ -150,11 +159,22 @@ void main() {
       addTearDown(c.dispose);
       final LumeHomeData d = c.state.data!;
       expect(d.content.weather!.conditionKey, 'hazySun');
+      expect(d.content.weather!.temperatureC, 34);
+      // The card's own three, which in Pakistan happen to agree with the
+      // weather and nowhere else do.
       expect(d.content.weather!.discoverConditionKey, 'hazy');
+      expect(d.content.weather!.discoverTemperature, 34);
+      expect(d.content.weather!.discoverFeelsLike, 38);
     });
 
-    testWidgets('in Urdu and in Arabic', (WidgetTester tester) async {
+    testWidgets('in English, Urdu and Arabic: one line, one card height', (
+      WidgetTester tester,
+    ) async {
+      final Map<String, ({int lines, double card})> seen =
+          <String, ({int lines, double card})>{};
+
       for (final Locale locale in <Locale>[
+        const Locale('en'),
         const Locale('ur'),
         const Locale('ar'),
       ]) {
@@ -165,12 +185,49 @@ void main() {
           locale: locale,
         );
         expect(tester.takeException(), isNull, reason: '$locale');
+
+        final Finder card = find.byKey(
+          const ValueKey<String>('home.discover.weather'),
+        );
         // The phrase is a key in all three languages, so the card is
-        // translated where the reference's literal is not.
+        // translated where the reference's literal is English everywhere.
+        expect(card, findsOneWidget, reason: '$locale');
+
+        final RenderParagraph title = tester.renderObject<RenderParagraph>(
+          find.descendant(of: card, matching: find.byType(Text)).first,
+        );
         expect(
-          find.byKey(const ValueKey<String>('home.discover.weather')),
-          findsOneWidget,
-          reason: '$locale',
+          title.didExceedMaxLines,
+          isFalse,
+          reason: '$locale truncated the title',
+        );
+        final Size size = tester.getSize(card);
+        expect(size.width, closeTo(148, 0.5), reason: '$locale');
+        // `RenderParagraph` does not expose its line metrics, so the same
+        // span is laid out again in the same 124-point region the card gives
+        // it — 148 less two borders and two 11-point paddings.
+        final TextPainter painter = TextPainter(
+          text: title.text,
+          textDirection: title.textDirection,
+          textScaler: title.textScaler,
+          maxLines: title.maxLines,
+        )..layout(maxWidth: 124);
+        final int lines = painter.computeLineMetrics().length;
+        painter.dispose();
+
+        seen['$locale'] = (lines: lines, card: size.height);
+      }
+
+      // Counted, not inferred from the height: a tall script sets on a taller
+      // line — 23 points against English's 16.25 — so a height ceiling would
+      // read Urdu's single line as two.
+      for (final MapEntry<String, ({int lines, double card})> e
+          in seen.entries) {
+        expect(e.value.lines, 1, reason: '${e.key} took more than one line');
+        expect(
+          e.value.card,
+          greaterThan(120),
+          reason: '${e.key} collapsed the card',
         );
       }
     });
@@ -210,17 +267,52 @@ void main() {
       expect(size.height, heights.single);
     });
 
-    testWidgets('and a country with no short form of its own keeps the full '
-        'condition', (WidgetTester tester) async {
-      // The reference's literal says "hazy" everywhere, including London,
-      // because the markup never varies. Only Pakistan's phrase is evidence
-      // of anything; elsewhere the card derives honestly.
+    testWidgets('including in London, where Lume says the same wrong thing', (
+      WidgetTester tester,
+    ) async {
+      // The whole card is a literal with no country gate, so a reader in
+      // London is shown Karachi's weather. Reproduced deliberately: a
+      // reference fixture that "fixed" this would match neither Lume nor the
+      // forecast. C21, and an obligation on Dayroz's adapter.
+      for (final String state in <String>[
+        'muslim_gb',
+        'default_us',
+        'prefs_off_pk',
+        'named_pk',
+        'default_pk',
+        'no_interests_pk',
+      ]) {
+        await pumpHome(
+          tester,
+          LumeUsers.all[state]!,
+          surface: const Size(390, 8000),
+        );
+        expect(
+          find.byKey(const ValueKey<String>('home.discover.weather')),
+          findsOneWidget,
+          reason: state,
+        );
+        expect(find.text('34° and hazy'), findsOneWidget, reason: state);
+        expect(find.text('Feels like 38°'), findsOneWidget, reason: state);
+      }
+    });
+
+    testWidgets('while the live row still reads the real country entry', (
+      WidgetTester tester,
+    ) async {
+      // The half that is *not* reproduced-as-broken: the row above reads
+      // London's own weather, as the reference's does.
       await pumpHome(
         tester,
         LumeUsers.muslimGb,
         surface: const Size(390, 6000),
       );
-      expect(find.text('21° and mostly clear'), findsOneWidget);
+      expect(find.text('21°'), findsWidgets);
+      expect(
+        find.text('34° and hazy'),
+        findsOneWidget,
+        reason: 'the card and the row disagree, exactly as Lume has them',
+      );
     });
   });
 }

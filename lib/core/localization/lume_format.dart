@@ -251,6 +251,15 @@ class LumeFormatting {
       ? '${(celsius * 9 / 5 + 32).round()}°'
       : '$celsius°';
 
+  /// A number of degrees exactly as written, with no unit conversion.
+  ///
+  /// For a figure that is *copy* rather than a measurement — the Discover
+  /// weather card's, which `home.screen.js` prints as the literal `34°` in
+  /// every market and never passes through `L.temp()`. Converting it would
+  /// apply a unit system to a string that was never a reading: the reference
+  /// shows 34° in New York, not 93°.
+  String degreesAsWritten(int degrees) => '$degrees°';
+
   String speed(int kph) =>
       units == LumeUnits.imperial ? '${(kph * 0.621).round()}' : '$kph';
 

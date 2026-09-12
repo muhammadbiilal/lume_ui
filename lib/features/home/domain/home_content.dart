@@ -23,6 +23,8 @@ class LumeWeatherNow {
     required this.temperatureC,
     required this.feelsLikeC,
     required this.conditionKey,
+    required this.discoverTemperature,
+    required this.discoverFeelsLike,
     required this.discoverConditionKey,
     required this.rainPercent,
     required this.windKph,
@@ -40,13 +42,35 @@ class LumeWeatherNow {
   /// sentence in the catalogue and shows it untranslated in every language.
   final String conditionKey;
 
-  /// The shorter phrase the **Discover card** says — `hazy` for Pakistan.
+  /// What the **Discover card** displays, which is not what the weather says.
   ///
-  /// A key of its own rather than something derived from [conditionKey],
-  /// because which phrase a surface uses is a composition decision, not a
-  /// formatting one. Lume's live row reads "Mostly clear · Rain 64%" while its
-  /// Discover card reads "34° and hazy" in the same state, deliberately;
-  /// nothing here forces the two to agree.
+  /// Three fields rather than a reuse of [temperatureC], [feelsLikeC] and
+  /// [conditionKey], because on this surface the reference does not read the
+  /// weather at all. `home.screen.js:834–839` is a literal:
+  ///
+  /// ```html
+  /// <span class="minicard__title">34° and hazy</span>
+  /// <span class="minicard__meta">Feels like 38°</span>
+  /// ```
+  ///
+  /// with no `data-loc` gate, so it renders in every market. A reader in
+  /// London is shown 34° and hazy while the live row above it, reading the
+  /// same country's real entry, says 21° and mostly clear.
+  ///
+  /// **That is a defect in the prototype's presentation, and it is reproduced
+  /// here rather than repaired.** A reference fixture's job is to render what
+  /// Lume renders; deriving something truthier would leave Flutter matching
+  /// neither Lume nor the weather. Recorded as C21, and as an obligation on
+  /// Dayroz's weather adapter, which must supply a real location-specific
+  /// display condition for this card rather than inheriting these constants.
+  ///
+  /// No `C` suffix on the two numbers, and they are formatted with
+  /// [LumeFormatting.degreesAsWritten] rather than [LumeFormatting.temperature]
+  /// — because they are not a reading in Celsius waiting to be converted. The
+  /// reference prints `34°` in New York too; running a literal through a unit
+  /// system would make Flutter say 93° where Lume says 34°.
+  final int discoverTemperature;
+  final int discoverFeelsLike;
   final String discoverConditionKey;
 
   final int rainPercent;

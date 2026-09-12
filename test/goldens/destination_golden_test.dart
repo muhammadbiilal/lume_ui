@@ -20,6 +20,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:lume/features/home/application/home_controller.dart';
 import 'package:lume/features/home/data/home_fixtures.dart';
+import 'package:lume/features/catalogue/domain/eligibility.dart';
 import 'package:lume/features/home/domain/home_repository.dart';
 import 'package:lume/features/tools/domain/tools_filter.dart';
 import 'package:lume/features/tools/presentation/tools_screen.dart';
@@ -27,6 +28,7 @@ import 'package:lume/features/tools/presentation/tools_screen.dart';
 import '../features/destinations/destination_harness.dart';
 import '../helpers/capture.dart';
 import '../helpers/load_fonts.dart';
+import '../helpers/lume_harness.dart';
 
 const String kOut = '$kShotsDir/destinations';
 
@@ -112,6 +114,45 @@ void main() {
           homeScreenFor(c, LumeUsers.all[state]!),
           'home_$state',
           kCells.first,
+        );
+      });
+    }
+  });
+
+  group('Home, scrolled to the strips no viewport golden reaches', () {
+    // Discover sits about 1,700 points down a 844-point screen, so every cell
+    // above stops short of it — and Discover is where D23's localized outage
+    // time and D33's reproduced weather literal both live. Two cells that
+    // scroll to it, so those are pinned as pixels and not only as `find.text`.
+    for (final (String name, String state, double offset) shot
+        in <(String, String, double)>[
+          ('home_muslim_pk_discover', 'muslim_pk', 1450),
+          ('home_muslim_gb_discover', 'muslim_gb', 1450),
+        ]) {
+      testWidgets('${shot.$1} · the reference cell', (
+        WidgetTester tester,
+      ) async {
+        final LumeUserContext user = LumeUsers.all[shot.$2]!;
+        final LumeHomeController c = await composeHome(user);
+        addTearDown(c.dispose);
+
+        await pumpLume(
+          tester,
+          homeScreenFor(c, user),
+          surface: kCells.first.$2,
+        );
+        // Jumped rather than dragged: a fling settles wherever physics puts
+        // it, and a golden needs the same offset every run. The page's own
+        // scrollable is the first in the tree; the strips' come after it.
+        tester
+            .state<ScrollableState>(find.byType(Scrollable).first)
+            .position
+            .jumpTo(shot.$3);
+        await tester.pumpAndSettle();
+
+        await expectLater(
+          find.byType(MaterialApp),
+          matchesGoldenFile('images/${shot.$1}_390x844_light_en.png'),
         );
       });
     }
