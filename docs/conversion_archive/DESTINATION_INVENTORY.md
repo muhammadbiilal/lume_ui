@@ -100,7 +100,7 @@ a staggered section entrance.
 
 **Known prototype defects.** C12 (the Discover strip is gated by attribute, not
 by eligibility, so a switched-off content type still appears), C15 (the
-progress bar never renders), C16 (the notification badge is a 7-point dot given
+progress bar is emitted with valid data and never reaches the screen), C16 (the notification badge is a 7-point dot given
 a number), C17 (the outage card names a slot that has already ended, in a clock
 format the user did not choose), C19 (the quick-action strip cancels its own
 padding), C20 (a live card overflows its column by 22.31). The market session
@@ -242,12 +242,12 @@ recorded in [KNOWN_DIFFERENCES.md](KNOWN_DIFFERENCES.md) with the correction.
 |---|---|---|
 | C11 | the market session reads the device's clock, closes inclusively, never consults the holiday table it ships, and gives every exchange a Monday–Friday week | `tools/context.js:734`; `MARKET_HOLIDAYS` and `isMarketHoliday` are defined in `tool-data.js:264` and called from nowhere |
 | C12 | the Discover strip is gated by `data-loc`/`data-faith` only, so a user who switched cricket off still sees a cricket score | measured: `prefs_off_pk` still lists `PAK 214/4` |
-| C13 | the "local service" dot tests `f.loc`, a field the catalogue renamed to `countries` | measured: `.cat-tool__pin` absent in every state |
+| C13 | the "local service" dot tests `f.loc`; no catalogue entry declares it, and `countries` is the field carrying the same meaning | live probe: `#toolCats .cat-tool__pin` → `{ found: 0 }` |
 | C14 | a marker *overwrites* a count rather than taking precedence over it | `tools.screen.js:69` — `badge = …` rather than a branch |
-| C15 | the progress bar never renders: `.bar` is a `<span>` with no `display` | measured 0 × 0, with its fill 78.39 × 0 |
+| C15 | the progress bar never renders: `.bar` is a `<span>` left out of the rule block that blockifies `.bar__fill`, so `height` does not apply to it | measured 0 × 0, with its fill 74.47 × 0, `offsetWidth` 196 |
 | C16 | the notification badge is a 7-point dot given `n > 99 ? '99+' : n` | measured: `.iconbtn` reports the text "13" |
 | C17 | the Discover outage card is fixed markup reading "Next outage 14:00" while the schedule it comes from ends that slot at 16:00 | `LOADSHED` in `tool-data.js:882`, captured at 16:41 |
 | C18 | search indexes the English name, so an Urdu reader cannot find a tool by what the tile says | `data-hay = (f.n + ' ' + f.kw).toLowerCase()` |
-| C19 | `.qactions` cancels its own padding with a negative margin, so the first pill sits flush against the screen edge while the rest of the page is at 20 | measured: `.qactions` x −20 w 430, first `.qaction` x 0 |
+| C19 | `.qactions` cancels its own padding with a negative margin, so the first pill sits flush against the screen edge while the rest of the page is at 20 — an intentional full-bleed pattern, reproduced | measured: `.qactions` x −20 w 430, first `.qaction` x 0; at 1100, x 237 w 870 against a section of 269 by 806 |
 | C20 | a live card overflows its column: 20 + 372.31 = 392.31 in a 390 viewport | measured `#liveNow .livecard` |
 | D22 | the status line under every tool is English in all three languages | `f.m` is a catalogue string and no dictionary overrides it |

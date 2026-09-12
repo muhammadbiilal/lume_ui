@@ -190,7 +190,7 @@ prototype's six-line version.
 
 | | prototype | here |
 |---|---|---|
-| clock | the **device's** | the exchange's, from `LumeTimeZone` |
+| clock | the **device's** | the exchange's, through `LumeZone` |
 | close | inclusive — 15:30 reads as open | exclusive |
 | holidays | a table it ships and never reads | consulted, and the floating ones derived |
 | week | Monday–Friday for every exchange | the exchange's own |
@@ -210,15 +210,46 @@ and both halves of the daylight-saving year.
 prototype's pinned date is right in about one year in seven; in 2026 it trades
 through Thanksgiving and shuts on an ordinary Saturday.
 
-### The zone table is a declared rule set
+### The zone is an interface, and the table behind it is not production code
 
-`LumeTimeZone` states each zone's standard offset and, where it has one, which
-daylight-saving family it follows. That covers every zone the fixtures name, it
-is deterministic and it needs no package — and it is honest about its limits: a
-zone whose rules changed historically, or a jurisdiction that abolishes the
-change next year, is wrong here and right in a platform database. The contract
-is `LumeTimeZones.byId`; at Dayroz integration the table is replaced behind it
-and nothing above changes. **That swap is pending.**
+`lume_zone.dart` declares the whole of what the product asks of a timezone:
+
+```dart
+abstract interface class LumeZone {
+  String get id;
+  Duration offsetAt(DateTime instant);
+  DateTime wallClockAt(DateTime instant);
+}
+
+abstract interface class LumeZoneDatabase {
+  LumeZone? zoneFor(String id);
+  Iterable<String> get ids;
+}
+```
+
+Two methods and one lookup. `LumeExchangeHours` takes a `LumeZone` and has
+never seen a daylight-saving rule.
+
+`LumeTimeZone` is one implementation: six zones, two rule families, no package,
+chosen so the fixtures are deterministic and the tests run the same in Karachi
+and in Auckland. **It is reference infrastructure and it is not fit to be a
+production timezone authority.** It has no history, so a date before the rule
+it encodes is wrong. It has no future beyond today's legislation, so a
+jurisdiction that moves or abolishes its change makes it wrong without telling
+anyone. It knows six zones and there are hundreds. It cannot express a zone
+being renamed, split or redefined, all of which happen.
+
+**Copying this table into Dayroz would be a decision, not a port, and this
+phase has not made it.** What Dayroz installs is a maintained IANA database —
+the `timezone` package, or the platform's own — behind `LumeZoneDatabase`.
+`LumeRuleTableZones` is the single binding that hands the conversion's table to
+something that asked for a database, and `exchange_fixtures.dart` is the only
+file under `lib/` that names the table at all.
+
+`market_zone_boundary_test.dart` holds the seam shut: the calculator answers
+correctly for a `+05:45` zone declared inside the test file, its source
+contains none of `lume_time_zone`, `LumeTimeZones` or `LumeDstRule`, and a
+three-line database with no rules satisfies the interface.
 
 ---
 
@@ -257,6 +288,13 @@ tile cannot name two different prayers.
 * Opening a tool writes it to recents, and the hub re-reads them on every
   arrival; the list is filtered again on the way out, so a feature that has
   since been hidden cannot resurface through history.
+* **A tool route asks the catalogue before it draws anything.** A deep link is
+  the one surface with no tile to hide, so `/branch/tool/:id` resolves the id
+  against the same `LumeEligibility` reading the same profile, and hands the
+  verdict to the frame. A tool the user may not have and an id that does not
+  exist produce an identical refusal — same title, same subtitle, same copy —
+  because "you may not have this" and "there is no such thing" must not be
+  distinguishable, or the refusal is itself the disclosure (§64).
 * The tab set is personalised by country, which lives on the profile. Changing
   it re-presents the bar in the same frame and rebuilds no branch — Trains
   leaves the bar and Explore takes the slot, and every other branch keeps its
@@ -275,9 +313,11 @@ tile cannot name two different prayers.
 * A chip announces that it is selected.
 * Numerals are isolated so a time or an amount does not reorder in an RTL
   sentence.
-* At 200 % text the hero grows rather than clipping its own words, the
-  notification badge grows with its number, and every card's figure ellipsises
-  rather than pushing the card off the screen.
+* At 200 % text the hero grows rather than clipping its own words, every card's
+  figure ellipsises rather than pushing the card off the screen, and the
+  notification badge falls back to a plain dot rather than covering the control
+  it belongs to — the count stays in that control's accessible name, which is
+  where a screen reader reads it from at every scale.
 
 **Two recorded exceptions to §9's 44-point target.**
 
@@ -312,8 +352,15 @@ primary action.
   chrome, but they are not implemented.
 * **A tool screen** is still the F3 fixture. Home and the hub navigate to it
   correctly; what it draws is F6.
-* **The zone table** is a declared rule set rather than the platform's
-  database. See §5.
+* **The zone database.** The interface is in place and the calculator depends
+  on nothing else; what sits behind it is a six-zone rule table that is not
+  production-grade. See §5.
+* **The progress card's bar.** The prototype emits one, with valid data and a
+  script that animates it, and it never reaches the screen — `.bar` is left out
+  of the rule block that makes its own fill a block, so its declared height
+  does not apply. Flutter renders what the prototype renders, which is no bar.
+  Whether Lume intends one is an open question with the evidence written up in
+  `KNOWN_DIFFERENCES.md` (D26).
 * **A tool's own status line** — four of them would be live in the prototype
   and two are here (the prayer and the weather). The money figures follow the
   market's budget and arrive with their tools at F6.
