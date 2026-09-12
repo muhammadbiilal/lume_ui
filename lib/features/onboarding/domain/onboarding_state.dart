@@ -157,6 +157,29 @@ class LumeOnboardingDraft {
   );
 }
 
+/// A preference that has not been set, and follows the market instead.
+///
+/// `'auto'` in `app-store.js`. It is a *value*, not the absence of one: a
+/// reader who has chosen automatic has made a choice, and a later change of
+/// country is meant to move with them.
+abstract final class LumePreference {
+  static const String auto = 'auto';
+}
+
+/// `profile.units`.
+enum LumeUnitsPreference {
+  /// Follow the market.
+  auto,
+  metric,
+  imperial;
+
+  static LumeUnitsPreference parse(String? v) => switch (v) {
+    'metric' => LumeUnitsPreference.metric,
+    'imperial' => LumeUnitsPreference.imperial,
+    _ => LumeUnitsPreference.auto,
+  };
+}
+
 /// The personalisation record onboarding reads and writes.
 @immutable
 class LumeProfileRecord {
@@ -175,6 +198,12 @@ class LumeProfileRecord {
     this.favourites = const <String>[],
     this.onboarded = false,
     this.migrations = const <String>{},
+    this.units = LumeUnitsPreference.auto,
+    this.currency = LumePreference.auto,
+    this.clock = LumePreference.auto,
+    this.timeZone,
+    this.photo = '',
+    this.accountEmail,
   });
 
   final String country;
@@ -213,6 +242,35 @@ class LumeProfileRecord {
   /// adding a second one later cannot re-run the first.
   final Set<String> migrations;
 
+  /// `profile.units` — automatic, metric or imperial.
+  ///
+  /// The five below are the rest of what `app-store.js` keeps on the profile,
+  /// and they live here for the reason §7 gives: **one canonical preference
+  /// model**. A settings screen that kept its own copy would be a second
+  /// answer to the same question, and the two would disagree the moment one
+  /// of them failed to save.
+  final LumeUnitsPreference units;
+
+  /// `profile.currency` — [LumePreference.auto], or an ISO code.
+  final String currency;
+
+  /// `profile.clock` — [LumePreference.auto], `'12'` or `'24'`.
+  final String clock;
+
+  /// `profile.tz` — an IANA zone, or `null` to follow the region.
+  final String? timeZone;
+
+  /// A data URI or a path. Empty means "none", which is not the same as a
+  /// photo that failed to load.
+  final String photo;
+
+  /// Which account this device is signed in as, if any.
+  ///
+  /// Kept on the profile rather than derived from the session, because §37
+  /// says signing out must not delete personal data — the preferences outlive
+  /// the session, and this is the link between them.
+  final String? accountEmail;
+
   LumeProfileRecord copyWith({
     String? country,
     String? region,
@@ -229,6 +287,14 @@ class LumeProfileRecord {
     List<String>? favourites,
     bool? onboarded,
     Set<String>? migrations,
+    LumeUnitsPreference? units,
+    String? currency,
+    String? clock,
+    String? timeZone,
+    bool clearTimeZone = false,
+    String? photo,
+    String? accountEmail,
+    bool clearAccountEmail = false,
   }) => LumeProfileRecord(
     country: country ?? this.country,
     region: region ?? this.region,
@@ -244,6 +310,14 @@ class LumeProfileRecord {
     favourites: favourites ?? this.favourites,
     onboarded: onboarded ?? this.onboarded,
     migrations: migrations ?? this.migrations,
+    units: units ?? this.units,
+    currency: currency ?? this.currency,
+    clock: clock ?? this.clock,
+    timeZone: clearTimeZone ? null : (timeZone ?? this.timeZone),
+    photo: photo ?? this.photo,
+    accountEmail: clearAccountEmail
+        ? null
+        : (accountEmail ?? this.accountEmail),
   );
 
   @override
@@ -262,7 +336,13 @@ class LumeProfileRecord {
       listEquals(other.recents, recents) &&
       listEquals(other.favourites, favourites) &&
       other.onboarded == onboarded &&
-      setEquals(other.migrations, migrations);
+      setEquals(other.migrations, migrations) &&
+      other.units == units &&
+      other.currency == currency &&
+      other.clock == clock &&
+      other.timeZone == timeZone &&
+      other.photo == photo &&
+      other.accountEmail == accountEmail;
 
   @override
   int get hashCode => Object.hash(
@@ -280,6 +360,12 @@ class LumeProfileRecord {
     Object.hashAll(favourites),
     onboarded,
     Object.hashAllUnordered(migrations),
+    units,
+    currency,
+    clock,
+    timeZone,
+    photo,
+    accountEmail,
   );
 
   /// Note a tool as just used. Most-recent-first, no duplicates, and capped —
