@@ -47,7 +47,7 @@ as an argument and never reads a clock.
 
 | Lume source | Lume field | Flutter model | Flutter repository | UI consumer |
 |---|---|---|---|---|
-| `catalogue.js` | `weatherFor(country, tz)` | `LumeWeatherNow` | `LumeFakeHomeRepository` | the strip, the live row, Discover |
+| `catalogue.js` | `WEATHER_BY_COUNTRY[c]` | `LumeWeatherNow` | `LumeFakeHomeRepository` | the strip, the live row, Discover — **three phrases, see below** |
 | `tool-data.js` | `daily(base, seed)` | `LumeDayForecast` | ⤴ | the live row's high/low |
 | `services/prayer.js` | `prayerState()` | `LumePrayerTimetable` | ⤴ | the strip, the hero, Coming up, the tile |
 | `tool-data.js` | `EXCHANGES[code]` | `LumeExchange` | `LumeExchanges` | the market live card |
@@ -63,7 +63,45 @@ as an argument and never reads a clock.
 | `tool-data.js` | `fuelFor(country)` | `LumeFuelPrice` | ⤴ | At a glance |
 | `tool-data.js` | `CRICKET` | `LumeCricketScore` | ⤴ | Discover |
 | `tool-data.js` | `PARCELS[]` | `LumeParcelStatus` | ⤴ | Discover |
-| `services/notifications.js` | `unreadCount()` | `notificationCount` | ⤴ | the header's badge |
+| `services/notifications.js` | `NOTIFY.unreadCount()` | `notificationCount` | `LumeFakeHomeRepository.unreadFor` | the header's badge |
+
+
+### Weather: three levels of detail, three fields
+
+The one thing on Home that is *not* one value rendered three ways. Lume gives
+each surface its own phrase, and flattening them would be the conversion
+making a composition decision it was not asked to make.
+
+| what | Lume | Flutter field | rendered by |
+|---|---|---|---|
+| the raw condition | `WEATHER_BY_COUNTRY.PK[2]` — `'Hazy sun · humid'` | `LumeWeatherNow.conditionKey` (`hazySun`) | the live row, the "Right now" card, the Weather tile |
+| the Discover card's shorter phrase | `home.screen.js:837`, a fixed literal — `34° and hazy` | `LumeWeatherNow.discoverConditionKey` (`hazy`) | the Discover minicard only |
+| the localized copy | none — the literal is English in every language | `AppLocalizations.weatherHazy` → `homeWeatherAnd(temp, condition)` | ⤴ |
+
+The reference's live row reads "Mostly clear · Rain 64%" in the same state, so
+three surfaces genuinely say three different things about one city's weather.
+`discoverConditionKey` is a key rather than a transformation of
+`conditionKey` for exactly that reason: which phrase a surface uses is
+composition, not formatting.
+
+A country with no short form of its own falls back to the full condition,
+lower-cased into "{temp} and {condition}". The reference cannot do this — its
+literal says "hazy" in London too, because the markup never varies.
+
+### The badge: a count of surviving sources, not a number
+
+`NOTIFY.unreadCount()` is `build()` filtered by `!read && !expired`, and
+`build()` drops every source whose *tool* the user cannot see (`allowed(src)`
+asks the catalogue's own gate) and then the ones their preferences switch off.
+So the badge is a function of the profile, and the fixture carries it per
+state rather than flat. Measured with
+`docs/conversion_archive/tool/probe_notifications.mjs`:
+
+| state | badge | what dropped |
+|---|---|---|
+| `default_pk`, `muslim_pk`, `named_pk`, `no_interests_pk` | 13 | — |
+| `prefs_off_pk` | 12 | `markets.move` |
+| `muslim_gb`, `default_us` | 10 | also `loadshed.next` and `trains.delay`, whose tools are `countries: ['PK']` |
 
 ## Home's selections
 

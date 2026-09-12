@@ -307,8 +307,9 @@ tile cannot name two different prayers.
 * Every section title is a heading, so a reader can jump between them.
 * A tile announces its name and its status once — the visual composition is
   excluded and the container carries the label.
-* A marker announces what it means: "Private", "Local service", "2 need
-  attention".
+* A marker announces what it means: "Private", "2 need attention". (There is
+  no "Local service" marker — the prototype draws none, and Flutter does not
+  invent one. See `KNOWN_DIFFERENCES.md` D28.)
 * The hub announces how many tools are showing after a search.
 * A chip announces that it is selected.
 * Numerals are isolated so a time or an amount does not reorder in an RTL
@@ -355,12 +356,10 @@ primary action.
 * **The zone database.** The interface is in place and the calculator depends
   on nothing else; what sits behind it is a six-zone rule table that is not
   production-grade. See §5.
-* **The progress card's bar.** The prototype emits one, with valid data and a
-  script that animates it, and it never reaches the screen — `.bar` is left out
-  of the rule block that makes its own fill a block, so its declared height
-  does not apply. Flutter renders what the prototype renders, which is no bar.
-  Whether Lume intends one is an open question with the evidence written up in
-  `KNOWN_DIFFERENCES.md` (D26).
+* **The notification engine.** The badge's number is fixture data carrying the
+  reference's value per state — 13 in Pakistan, 12 with the content switches
+  off, 10 abroad, which is a count of the notification sources a profile
+  leaves standing. Deriving it from sixteen live sources is §48's work.
 * **A tool's own status line** — four of them would be live in the prototype
   and two are here (the prayer and the weather). The money figures follow the
   market's budget and arrive with their tools at F6.

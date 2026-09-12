@@ -500,25 +500,30 @@ the daylight-saving year.
 
 ### C13 — the "local service" marker never renders
 
-**Found in F5A; the marker is drawn in Flutter.** `tools.screen.js:73` tests
-`f.loc` and no catalogue entry declares it. A live probe of
-`#toolCats .cat-tool__pin` returns `{ found: 0 }`. See D28 for the equivalence
-proof and the regression test.
+**Found in F5A. Flutter does not draw one either.** `tools.screen.js:73` tests
+`f.loc` and no catalogue entry declares it; a live probe of
+`#toolCats .cat-tool__pin` returns `{ found: 0 }`. Either the branch is stale
+or the catalogue is missing a field — the prototype cannot say which, so the
+rendered result stands and the question is recorded for Dayroz integration.
+See D28.
 
 ### C14 — a tile marker overwrites a count instead of ranking against it
 
-**Found in F5A; the order is reproduced, not the overwrite's consequence.**
+**Found in F5A; the order is reproduced, not the overwrite's mechanism.**
 `toolCard` assigns rather than ranks, so the lock and the pin each destroy a
-count. Flutter declares the same order — privacy, locality, the number — and
-only one marker is ever drawn. See D28.
+count. `LumeCatalogueTile.markerFor` declares the same order — privacy, then
+locality, then the number — and draws exactly one marker. Only the first step
+is observable in the reference (`documents` is countable *and* sensitive, and
+shows its lock); the rest is held by a unit test on synthetic inputs. See D28.
 
 ### C15 — the progress bar never renders
 
-**Found in F5A. Flutter does not draw one either, and the decision is open.**
-`.bar` is a `<span>` that `components.css` leaves out of the rule block that
-blockifies `.bar__fill`, so `height` does not apply to it: measured 0 x 0, with
-its fill 74.47 x 0. The data is valid, `animateBars` runs, and nothing is
-hidden or clipped. Full evidence and the pending question in D26.
+**Found in F5A, and settled: dead, incomplete markup.** `.bar` is a `<span>`
+that `components.css` leaves out of the rule block blockifying `.bar__fill`, so
+`height` does not apply to it: measured 0 × 0, with its fill 74.47 × 0. The
+data is valid and `animateBars` runs, but the card reserves no room for a bar
+and nothing in the tests or the specifications asks for a visible one. Flutter
+renders the card the prototype renders. Full evidence in D26.
 
 ### C16 — the notification badge is a dot given a number
 
@@ -614,6 +619,11 @@ D24.
 | 2026-09-12 (F5A · correction) | **The timezone adapter boundary added** — `LumeZone` / `LumeZoneDatabase`, with the rule table confined to one binding | The handmade table is reference infrastructure, not a production timezone authority |
 | 2026-09-12 (F5A · correction) | **P2 settled on a device** — the greeting's emoji renders in full colour on Android from the platform fallback | `adb screencap` of the packaged debug application on a Pixel 6 Pro, Android 16 |
 | 2026-09-12 (F5A · correction) | **The unread fixture set to 13** — the reference's engine produces 13 in Pakistan, 12 with the switches off, 10 abroad; Flutter was showing a flat 3 | Measured from `appbar.bell` across nine captured states |
+| 2026-09-12 (F5A · closure) | **The 715 → 703 web count explained.** Nothing was lost: `tests/verify.js` prints `ok:` where the other nine print `ok␣`, and the count in the correction report used a pattern that required the space | `tests/` and `package.json` are byte-identical since `9c83023`, which predates F5A |
+| 2026-09-12 (F5A · closure) | **D26 closed.** The invisible `.bar` is recorded as dead prototype markup rather than an unresolved difference; `LumeProgressCard.progress` and the two `fraction` getters removed as unused plumbing | Nothing consumed them once the bar was gone; `LumeProgressBar` (`.pbar`) is a different, live component and is untouched |
+| 2026-09-12 (F5A · closure) | **D28 closed the other way.** The local-service marker is not drawn; the country gate, the marker capability and the precedence contract are kept | Semantic similarity is not proof of intent, and a missing dot is not a correctness repair |
+| 2026-09-12 (F5A · closure) | **The unread count made state-specific** — 13 in Pakistan, 12 with the switches off, 10 abroad, as fixture data | Traced with `probe_notifications.mjs`: the badge counts the notification sources that survive a profile |
+| 2026-09-12 (F5A · closure) | **D33 raised and resolved** — the Discover weather card reads "34° and hazy", modelled as its own display-condition key | The reference gives three surfaces three phrases for one city's weather, deliberately |
 | 2026-09-11 (F3) | **D10 raised and resolved** — a master-detail selection stays out of the location | A route per selection is the rebuild the CRUD guide forbids |
 | 2026-09-11 (F3) | **D11 raised and resolved** — the tablet status strip keeps the wordmark and the clock, drops the device glyphs | The strip is application chrome; the glyphs are a drawing of a device |
 | 2026-09-11 (F3) | **Correction:** the shell's two width caps (1366, and 560 below 600) are **kept**, not dropped | F0 recorded them with the device frame; a cap is a measure, not a costume |
@@ -916,13 +926,12 @@ removed. `live_card_test.dart` checks the card against its column at **359,
 including 200 % in both RTL languages. Recorded here as an approved overflow
 correction.
 
-### D26 — the progress bar is *not* drawn, and a decision is pending
+### D26 — there is no progress bar, on either side. **Closed.**
 
-**Raised in F5A, drawn without approval, and removed.**
+**Raised in F5A, drawn without approval, reverted, and now settled: the web
+element is dead markup, and Flutter's card is not a difference.**
 
-The first implementation drew the bar. That was not approved, and the rendered
-reference does not draw one, so Flutter does not either. The evidence, which is
-what the decision now rests on:
+The evidence, which is what the decision rests on:
 
 * **It is emitted.** `home.screen.js:772` and `:796`, both inside
   `.progress-card`, with `data-fill="38"` and `data-fill="40"`. Those are the
@@ -943,20 +952,29 @@ what the decision now rests on:
   becomes nothing: `rect` 0 × 0, `offsetHeight` 0, `clientHeight` 0 — while
   `offsetWidth` is 196. `.bar__fill` *is* in `components.css`'s "Block-level
   spans" rule block; `.bar` is not.
-* **No test or specification mentions it.** `.bar`, `data-fill` and
-  `animateBars` appear nowhere in `tests/*.js` or the design specifications.
-* **The card is built with no room for it.** `.progress-card__body` measures
-  196 × **34** — title 19, gap 2, meta 13. A bar in flow would make it 43. The
-  measured card is 86 tall, set by its 54-point artwork.
+* **The card reserves no room for one.** `.progress-card__body` measures
+  196 × **34** — title 19, gap 2, meta 13. A bar in flow would make it 43.
+* **Nothing asks for a visible one.** `.bar`, `data-fill` and `animateBars`
+  appear nowhere in `tests/*.js` or the design specifications, and `.bar`
+  appears nowhere else in the prototype either.
 
-**Classification: emitted, with valid data, and invisible solely because `.bar`
-was omitted from the rule block that blockifies `.bar__fill`.** That is an
-implementation defect rather than an intentional omission — but the rule is
-that a proven defect still needs a decision before Flutter departs from what is
-rendered. So Flutter renders what Lume renders, the bounds comparison confirms
-the card matches at 350 × 86 with its title at x 105, the `progress` value
-stays plumbed through `LumeProgressCard`, and **this is the open question**:
-draw the bar, or keep the reference's card as it stands?
+**Classification: dead, incomplete prototype markup.** Not an intentional
+composition that Flutter is departing from, and not a difference — Flutter
+renders the card Lume renders. The bounds comparison confirms it at 350 × 86
+with its title at x 105, matching the reference exactly.
+
+**The plumbing went with it.** `LumeProgressCard.progress` had no consumer
+once the bar was gone, and neither did the two `fraction` getters that fed it;
+both are removed rather than left looking wired. They are one-line derived
+values that Today's ring card can restate when it needs one.
+
+**`LumeProgressBar` is untouched.** That is `.pbar` — `display: block`, 6 tall,
+its fill a real block — a different component that really renders, used by the
+gallery and covered by F2's component tests. Removing a dead `.bar` is not a
+reason to touch a live `.pbar`.
+
+A progress bar may arrive later as a product decision. It is not part of the
+current Flutter reference, and nothing is plumbed toward one.
 
 ### D27 — the notification badge is a pill with a number in it
 
@@ -996,59 +1014,53 @@ accessible name, which is where a screen reader was reading it from anyway.
 1.0/1.15/1.3/1.6/2.0, in English and Arabic, and asserts that no badge is ever
 clipped or outside the control's reach.
 
-### D28 — the "local service" marker is drawn
+### D28 — the "local service" marker is **not** drawn. **Closed.**
 
-**Raised in F5A. Conditionally approved, and the equivalence is proven.**
+**Raised in F5A, drawn on a conditional approval, and removed.**
 
 `tools.screen.js:73` draws `.cat-tool__pin` when `f.loc` is truthy, and
 `grep "loc:" assets/js/data/catalogue.js` returns nothing. A live probe of
 `#toolCats .cat-tool__pin` returns `{ found: 0 }`: the reference renders no pin
-anywhere, in any state.
+anywhere, in any state, for any profile.
 
-**`loc` is a live word in the reference, with one meaning.** `shell.js:229–239`
-gates `[data-loc]` by `want.split(',').indexOf(profile.country) !== -1`, with
-`'global'` as the sentinel for "everywhere". `search.js:46` drops an
-`EXTRA_INDEX` entry when `x.loc && x.loc !== getProfile().country`. Both read it
-as *the markets this belongs to*, tested by membership of the user's country.
+**The case for drawing it, which was made and is not enough.** `loc` is a live
+word in the reference with one meaning: `shell.js:229–239` gates `[data-loc]`
+by `want.split(',').indexOf(profile.country) !== -1` with `'global'` as the
+sentinel, and `search.js:46` drops an `EXTRA_INDEX` entry when
+`x.loc && x.loc !== getProfile().country`. The catalogue's own field table
+defines `countries` as *"markets this feature has actually launched in; absent
+means global"*, and `core/eligibility.js:39` tests it identically. Same
+definition, same membership test, same sentinel.
 
-**The catalogue carries the same concept under another name.** Its own field
-table says:
+**Why that does not carry.** No source history records a rename —
+`catalogue.js` never had a `loc` field to lose, so the screen and the catalogue
+simply speak two vocabularies and the branch reads the wrong one. The
+production catalogue never exposes `loc`. The rendered screen shows no marker.
+And a missing decorative dot is not a security, privacy, data-accuracy or
+accessibility failure, which is the only kind of reason that licenses a visual
+departure. Semantic similarity is not proof of intent, and the rendered
+interface is the authority.
 
-> `countries` — markets this feature has actually launched in; absent means
-> global. A PK entry says "localised for Pakistan so far", not "this category
-> is Pakistan-only".
+**What was kept.**
 
-and `core/eligibility.js:39` tests it identically:
-`if (f.countries && f.countries.indexOf(ctx.country) === -1) return false;`
+* **The country gate, unchanged.** It reads `countries` and always did; the
+  marker never fed it. `local_marker_test.dart` opens with that half — the
+  seven restricted ids, the gate hiding exactly those abroad, absent still
+  meaning global — so removing the pin cannot have weakened gating without
+  failing a test.
+* **The marker capability.** `LumeTileMarker.local` and its painting stay:
+  another rendered screen may need it, and the precedence contract has to
+  remain expressible.
+* **The precedence contract**, as `LumeCatalogueTile.markerFor` — privacy,
+  then locality, then the number, which is the order `toolCard` produces by
+  overwriting. Verified on synthetic inputs at unit level. No production
+  fixture is manufactured to make the pin appear; the rendered fixtures stay
+  faithful to states Lume can actually reach.
 
-Same definition, same membership test, same sentinel for "global" (absent
-rather than the string), and "Local service" — the pin's own `aria-label` — is
-what §31's 🇵🇰 marker calls exactly this set of features.
-
-**The honest caveat, stated rather than buried:** the source records no rename.
-`catalogue.js` never had a `loc` field to lose; the screen and the catalogue
-speak two vocabularies for one idea, and the branch reads the wrong one. The
-equivalence is proven from the definitions and the tests, not from a commit.
-The other candidate, `reqCity` ("needs a city to mean anything"), is the wrong
-one: it is carried by Weather, Air Quality, Prayer Times and Qibla, which are
-global features that localise their content.
-
-**Precedence.** `toolCard` writes the count, then *overwrites* it with the lock
-for a sensitive tool and with the pin for a local one — so the declared order is
-privacy, then locality, then the number, and Flutter now matches it. Only the
-first overwrite is observable in the reference: `documents` is both countable
-and sensitive and shows its lock, while nothing in the catalogue is both
-countable and country-restricted.
-
-**The regression test.** `local_marker_test.dart` asserts that the catalogue
-still carries the field for all seven local services, that the *same* field
-feeds the country gate (so a rename breaks both halves together rather than
-disconnecting the marker silently), that absent still means global, that the
-marker draws on Tax Calculator and not on Calculator, that its label reaches a
-screen reader, and that the precedence holds.
-
-**The visual difference is explicit: Flutter draws a marker the reference draws
-nowhere.**
+**Recorded for Dayroz integration:** `tools.screen.js:73` reads a field the
+catalogue does not carry. Either the branch is stale or the catalogue is
+missing a field; the prototype cannot say which, and the conversion is not the
+place to decide. Worth resolving when the catalogue is next authored.
 
 ### D29 — the market session is correct, behind a replaceable zone
 
@@ -1141,6 +1153,30 @@ is 24-hour, so asking for a 12-hour clock there quietly returned "18:27". The
 pattern is now spelled out — `h:mm a` or `HH:mm` — so the choice is the user's
 and only the day-period marker comes from the locale. The reference makes the
 same choice explicitly, with `hour12: clock() === 12`.
+
+### D33 — the Discover weather card says "34° and hazy"
+
+**Raised and resolved in the F5A closure pass.** `home.screen.js:837` writes
+`34° and hazy` into fixed markup — in *every* state, including the UK and US
+captures, because the markup never varies — while `WEATHER_BY_COUNTRY.PK`
+carries `'Hazy sun · humid'` and the live row reads "Mostly clear · Rain 64%".
+Three phrases for one city's weather, on three surfaces.
+
+Flutter was deriving the Discover card's phrase from the live row's condition
+and rendering "34° and hazy sun". Corrected by modelling the card's phrase as
+its own field — `LumeWeatherNow.discoverConditionKey` — rather than a
+transformation of `conditionKey`, because which phrase a surface uses is a
+composition decision and not a formatting one. The richer raw condition stays
+on the model and keeps feeding the live row.
+
+The visible wording now matches the reference in the Pakistan state it was
+written for. Elsewhere Flutter derives honestly — "21° and mostly clear" in
+London — where the reference's literal still says "hazy". Recorded here rather
+than propagated: copying a literal into states it was never true for would be
+reproducing a bug, not a composition.
+
+Unlike the reference's literal, the phrase is a key, so the card is translated
+in Urdu and Arabic (the same ground as D22).
 
 ### P2 — the greeting's emoji has no face in a test capture
 

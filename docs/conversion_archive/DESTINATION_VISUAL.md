@@ -134,6 +134,9 @@ Found by looking at the renders, not by a passing test:
 | a Discover strip of 140-point cards around one 156 | `.hscroll` is a stretch flex, and a `Row` centres — one two-line card has to raise every card beside it |
 | the strips at the window's edge rather than the content column's, at 700 and 1100 | a strip supplies its own gutters, so it sits outside `LumeMeasure` — and was never given the cap every other section has |
 | the notification badge covering the bell at 200 % | past four points of overhang a pill stops being a badge; the count falls back to the reference's dot and stays in the accessible name |
+| the badge reading 13 in London where the prototype reads 10 | the badge counts the notification sources that survive a profile, so it is 13 in Pakistan, 12 with the switches off and 10 abroad — fixture data, not one number |
+| "34° and hazy sun" on the Discover card where the prototype says "34° and hazy" | the card's phrase is its own, not the live row's condition lower-cased (D33) |
+| a "local service" dot on seven tiles the prototype leaves bare | the prototype's pin branch reads a field the catalogue does not carry, and drawing one anyway was not a correctness repair (D28) |
 
 ---
 
@@ -159,6 +162,7 @@ past a review.
 | # | difference | size |
 |---|---|---|
 | D22 | the tile status line is translated | the prototype renders it in English in all three languages |
+| D33 | the Discover weather card is derived | the prototype's is a fixed literal that reads "34° and hazy" in London too; Flutter matches the wording in the Pakistan state it was written for and derives honestly elsewhere |
 | D23 | the Discover strip is 15.75 points taller | the outage card names a real time in the user's own clock; "Next outage 7:00 pm" is 127.93 wide in a 124-point region, so it takes two lines, and `.hscroll` stretches every card with it (C17) |
 | D31 | dates and clocks are world English | `intl` has no `en_PK`; this restores what the prototype renders |
 | D32 | a 12-hour clock is 12-hour in every locale | `DateFormat.jm` carried `en_GB`'s own hour cycle |
@@ -173,19 +177,17 @@ past a review.
 | D29 | the market's session is correct | four defects, listed in `docs/LUME_DESTINATIONS.md` §5 (C11) |
 | D30 | every entry surface asks the same eligibility question | the prototype gates Discover by attribute, and its tool route asks nothing at all (C12) |
 
-**Reverted — the prototype is reproduced**
+**Reverted — the prototype is reproduced, and these are no longer differences**
 
 | # | what was wrong | what it is now |
 |---|---|---|
 | D24 | the strip was started at the gutter and the negative margin called a defect | full bleed, first pill at x 0, asserted in the bounds comparison (C19) |
-| D26 | the progress bar was drawn | not drawn — see below |
+| D26 | the progress bar was drawn | not drawn. The prototype's `.bar` is dead, incomplete markup: emitted with valid data, invisible because it is left out of the rule block that blockifies its own fill, in a card that reserves no room for one. Flutter's card is 350 × 86, the prototype's exactly (C15) |
+| D28 | a "local service" dot was drawn on country-restricted tiles | not drawn. The pin branch reads `f.loc`, no catalogue entry declares it, and the rendered hub shows no pin anywhere. The country gate, the marker capability and the precedence contract are all kept (C13, C14) |
 
-**Unresolved, awaiting a decision**
-
-| # | question |
-|---|---|
-| D26 | The bar is emitted with valid data and `animateBars` runs; it is invisible only because `.bar` is left out of the rule block that blockifies `.bar__fill`. Draw it, or keep the card the prototype renders? The evidence is in [KNOWN_DIFFERENCES.md](KNOWN_DIFFERENCES.md#d26). |
-| D28 | The equivalence between `f.loc` and `countries` is proven from their definitions and their tests, but the source records no rename — the screen and the catalogue simply speak two vocabularies. Stated plainly so the judgement is visible. |
+**Nothing is awaiting a decision.** Every difference above is either exact
+parity, an approved adaptation, or a correctness repair with its conditions
+met.
 
 Nothing else differs by more than a logical pixel outside the drift D20
 describes. There is no state in which Flutter shows a control the reference
