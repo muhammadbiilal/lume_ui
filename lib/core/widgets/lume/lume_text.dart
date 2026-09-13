@@ -128,9 +128,33 @@ class _RenderBalanced extends RenderProxyBox {
     }
 
     final double full = constraints.maxWidth;
-    final double greedy = child
-        .getDryLayout(BoxConstraints(maxWidth: full))
-        .height;
+
+    // A clamped paragraph cannot report its line count: past its last line it
+    // stops growing, so every narrower width looks as tall as the greedy one
+    // and the search collapses to the longest word. Home's hero title is such
+    // a paragraph (C60). Its lines are counted on an unclamped copy instead —
+    // balance first, clamp after, which is the order CSS applies them in.
+    final TextPainter? unclamped = _unclampedPainter(child);
+    double heightAt(double width) {
+      if (unclamped == null) {
+        return child.getDryLayout(BoxConstraints(maxWidth: width)).height;
+      }
+      unclamped.layout(maxWidth: width);
+      return unclamped.height;
+    }
+
+    final double greedy = heightAt(full);
+
+    // Text that overflows its clamp even at full width is not balanced: a
+    // narrower box would change which words the ellipsis leaves on screen.
+    // Compared with the search's own tolerance: the unclamped painter and the
+    // clamped paragraph measure the same lines to a fraction apart, and a
+    // fraction is not a line the ellipsis hid.
+    final bool overflowsClamp =
+        unclamped != null &&
+        greedy >
+            child.getDryLayout(BoxConstraints(maxWidth: full)).height +
+                _epsilon;
 
     // One line already: nothing to balance, and the search would only find the
     // text's own width, which is what a single line is anyway.
@@ -138,16 +162,16 @@ class _RenderBalanced extends RenderProxyBox {
     if (lo > full) lo = full;
 
     double hi = full;
-    while (hi - lo > _epsilon) {
+    while (!overflowsClamp && hi - lo > _epsilon) {
       final double mid = lo + (hi - lo) / 2;
-      final double h = child.getDryLayout(BoxConstraints(maxWidth: mid)).height;
       // Taller means the line count went up, so `mid` was too narrow.
-      if (h > greedy) {
+      if (heightAt(mid) > greedy) {
         lo = mid;
       } else {
         hi = mid;
       }
     }
+    unclamped?.dispose();
 
     // The child is laid out at the balanced width even when the block was
     // given a tight one — the *box* keeps the full width, and the narrowed
@@ -158,6 +182,22 @@ class _RenderBalanced extends RenderProxyBox {
     );
     size = constraints.constrain(Size(full, child.size.height));
     _offsetChild(size.width - child.size.width);
+  }
+
+  /// The child's own text laid out without its line clamp, or `null` when the
+  /// child is not a clamped paragraph and can be asked directly.
+  static TextPainter? _unclampedPainter(RenderBox child) {
+    if (child is! RenderParagraph || child.maxLines == null) return null;
+    return TextPainter(
+      text: child.text,
+      textAlign: child.textAlign,
+      textDirection: child.textDirection,
+      textScaler: child.textScaler,
+      locale: child.locale,
+      strutStyle: child.strutStyle,
+      textWidthBasis: child.textWidthBasis,
+      textHeightBehavior: child.textHeightBehavior,
+    );
   }
 
   void _offsetChild(double slack) {

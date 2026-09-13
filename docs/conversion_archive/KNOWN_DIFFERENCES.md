@@ -1272,18 +1272,33 @@ The account's own Notifications route (F5C) draws the same five sections
 without the two stepper rows; that asymmetry is recorded here and left to
 F5C's owner. **Evidence:** `notification_overlays_test.dart`.
 
-### C60 — Home's hero title collapses in every capture (open)
+### C60 — Home's hero title collapsed in every capture (closed)
 
-**Found in F5D, in the side-by-sides behind the sheets. Not corrected here.**
-The reference sets "Plan your day before it starts" in two full lines 235.55
-wide. Flutter draws **"Plan / your …"**: `LumeBalancedText` narrows its box
-until the line count changes, but the title is clamped to two lines with an
-ellipsis, so the count never changes and the box collapses. It is in the
-committed F5B Home goldens.
+**Found in F5D, in the side-by-sides behind the sheets. Approved and
+corrected after F5D.** The reference sets "Plan your day before it starts" in
+two full lines 235.55 wide. Flutter drew **"Plan / your …"**:
+`LumeBalancedText` narrows its box until the line count changes, and a `Text`
+clamped to two lines with an ellipsis never reports a third, so the search
+narrowed to the longest word.
 
-Home belongs to F5B, whose goldens were approved as they stand, so F5D records
-it rather than rewriting them. **Proposed:** balance against the unclamped line
-count, then clamp.
+**Corrected in `LumeBalancedText` itself**, so onboarding and authentication
+keep the behaviour already proven there. A clamped paragraph's lines are
+counted on an unclamped copy of the same text — balance first, clamp after,
+which is the order CSS applies them in. Text that overflows its clamp even at
+full width is left unbalanced, because a narrower box would change which
+words the ellipsis leaves on screen. The string is unchanged; semantics carry
+the whole title at every scale.
+
+**Evidence.** The Home side-by-side at 390 × 844 now reads "Plan your day /
+before it starts" on both sides. `lume_balanced_text_test.dart`: a clamped
+heading balances exactly as an unclamped one; one that overflows its clamp
+keeps the full width; Home's hero paints two 26.88-point lines; at 200 % the
+full title is still announced. `destination_bounds_test.dart`,
+`onboarding_bounds_test.dart` and the authentication suite are unchanged, so
+nothing else on Home, onboarding or sign-in moved. Regenerated: the eight
+Home goldens whose hero shows that title, and the cross-cutting cells drawn
+over Home; the Muslim-state Homes, whose prayer title fits one line, are
+byte-identical.
 
 ## 3. Open questions
 
