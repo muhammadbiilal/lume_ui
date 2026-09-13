@@ -1,7 +1,7 @@
 # The account routes: visual evidence audit
 
-Twenty-one routes, four captures each, and every measured difference
-classified. This is conversion evidence and lives in the archive; the product
+Twenty-one routes, four committed goldens each, and every measured
+difference classified. This is conversion evidence and lives in the archive; the product
 documentation is [`../LUME_ACCOUNT.md`](../LUME_ACCOUNT.md).
 
 The numbers below come from
@@ -17,14 +17,14 @@ of values match" and hide which four did not.
 | kind | where | what it can show |
 |---|---|---|
 | measured bounds | `ACCOUNT_PARITY.md` | that a block is the size and in the place the prototype puts it |
-| golden captures | `test/goldens/images/account_*.png` | that the pixels have not moved since somebody last looked |
+| committed goldens | `test/goldens/images/account_*.png` | that the pixels have not moved since somebody last looked |
 | behavioural tests | `test/features/account/*_test.dart` | what the screen *means* |
 
 The third is the acceptance evidence. The first two are regression evidence,
 and neither can tell a correct screen from a consistently wrong one: a golden
 of a route with a mislabelled row is a golden that will pass forever.
 
-### The captures
+### The committed goldens
 
 | cell | routes | what it is for |
 |---|---|---|
@@ -33,9 +33,12 @@ of a route with a mislabelled row is a golden that will pass forever.
 | `390x844_light_ar` | 21 | right to left, Arabic |
 | `390x844_light_en_x2` | 21 | 200 % type |
 
-Eighty-five account captures. `account_locale_test.dart` asserts that none of
+Eighty-five committed goldens for the account section — 21 routes × 4
+cells, plus the guest refusal. `account_locale_test.dart` asserts that none of
 the twenty-one overflows in any of those conditions, plus at 359 points and
-as a guest; the captures are what that assertion looks like.
+as a guest; the goldens are what that assertion looks like.
+[`GOLDEN_INVENTORY.md`](GOLDEN_INVENTORY.md) is the whole suite's
+breakdown, and the words for each kind of image in it.
 
 ---
 

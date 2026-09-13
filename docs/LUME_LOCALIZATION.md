@@ -195,7 +195,7 @@ name and the product's name.
 
 ## 7. Screenshots
 
-`test/goldens/images/` holds the compared captures. The account section is
+`test/goldens/images/` holds the committed goldens. The account section is
 shot at four cells for each of its twenty-one routes:
 
 | cell | what it is for |
@@ -205,9 +205,13 @@ shot at four cells for each of its twenty-one routes:
 | `390x844_light_ar` | right to left, Arabic |
 | `390x844_light_en_x2` | 200% type |
 
-Eighty-four account captures, plus the refusal a guest meets on a protected
-route — which is a screen in its own right rather than an absence — for
-eighty-five; four hundred and sixty-two in the suite. They
+Eighty-four committed goldens for the account routes, plus the refusal a guest
+meets on a protected route — which is a screen in its own right rather than an
+absence — for eighty-five; four hundred and sixty-two committed goldens in the
+suite, against six hundred and sixty golden test cases. The two are different
+things and
+[`conversion_archive/GOLDEN_INVENTORY.md`](conversion_archive/GOLDEN_INVENTORY.md)
+says which is which. They
 are regression evidence, not acceptance evidence: a golden says the pixels
 have not moved since the last time somebody looked, and the tests above say
 what the pixels are supposed to mean.
