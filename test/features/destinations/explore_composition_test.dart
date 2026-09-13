@@ -65,13 +65,13 @@ void main() {
     test('reads the market\'s own entry', () async {
       final LumeExploreWeather pk = (await composeExplore(
         LumeUsers.muslimPk,
-      )).data.weather;
+      )).data.weather!;
       final LumeExploreWeather gb = (await composeExplore(
         LumeUsers.muslimGb,
-      )).data.weather;
+      )).data.weather!;
       final LumeExploreWeather us = (await composeExplore(
         LumeUsers.defaultUs,
-      )).data.weather;
+      )).data.weather!;
 
       // Measured: Islamabad 34/38, London 21/19, New York 24/24.
       expect((pk.temperatureC, pk.feelsLikeC, pk.city), (34, 38, 'Islamabad'));
@@ -150,13 +150,13 @@ void main() {
         // A timestamp, not a number: the fixture pins the reading four
         // minutes before the clock, and the screen subtracts.
         expect(
-          s.data.weather.observedAt,
+          s.data.weather!.observedAt,
           kPinned.subtract(
             const Duration(minutes: kReferenceWeatherAgeMinutes),
           ),
         );
         expect(
-          s.data.weather.minutesAgoAt(kPinned),
+          s.data.weather!.minutesAgoAt(kPinned),
           kReferenceWeatherAgeMinutes,
         );
       }

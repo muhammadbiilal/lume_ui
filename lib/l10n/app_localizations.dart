@@ -6765,6 +6765,102 @@ abstract class AppLocalizations {
   /// **'Cloud building'**
   String get weatherCloudBuilding;
 
+  /// Reference: WEATHER_BY_COUNTRY / WEATHER_BY_ZONE condition phrase.
+  ///
+  /// In en, this message translates to:
+  /// **'Breezy'**
+  String get weatherBreezy;
+
+  /// Reference: WEATHER_BY_COUNTRY / WEATHER_BY_ZONE condition phrase.
+  ///
+  /// In en, this message translates to:
+  /// **'Bright and breezy'**
+  String get weatherBrightAndBreezy;
+
+  /// Reference: WEATHER_BY_COUNTRY / WEATHER_BY_ZONE condition phrase.
+  ///
+  /// In en, this message translates to:
+  /// **'Changeable'**
+  String get weatherChangeable;
+
+  /// Reference: WEATHER_BY_COUNTRY / WEATHER_BY_ZONE condition phrase.
+  ///
+  /// In en, this message translates to:
+  /// **'Clear and dry'**
+  String get weatherClearAndDry;
+
+  /// Reference: WEATHER_BY_COUNTRY / WEATHER_BY_ZONE condition phrase.
+  ///
+  /// In en, this message translates to:
+  /// **'Cloudy'**
+  String get weatherCloudy;
+
+  /// Reference: WEATHER_BY_COUNTRY / WEATHER_BY_ZONE condition phrase.
+  ///
+  /// In en, this message translates to:
+  /// **'Fresh'**
+  String get weatherFresh;
+
+  /// Reference: WEATHER_BY_COUNTRY / WEATHER_BY_ZONE condition phrase.
+  ///
+  /// In en, this message translates to:
+  /// **'Humid'**
+  String get weatherHumid;
+
+  /// Reference: WEATHER_BY_COUNTRY / WEATHER_BY_ZONE condition phrase.
+  ///
+  /// In en, this message translates to:
+  /// **'Humid · afternoon storms'**
+  String get weatherHumidAfternoonStorms;
+
+  /// Reference: WEATHER_BY_COUNTRY / WEATHER_BY_ZONE condition phrase.
+  ///
+  /// In en, this message translates to:
+  /// **'Humid · cloud building'**
+  String get weatherHumidCloudBuilding;
+
+  /// Reference: WEATHER_BY_COUNTRY / WEATHER_BY_ZONE condition phrase.
+  ///
+  /// In en, this message translates to:
+  /// **'Humid · passing showers'**
+  String get weatherHumidPassingShowers;
+
+  /// Reference: WEATHER_BY_COUNTRY / WEATHER_BY_ZONE condition phrase.
+  ///
+  /// In en, this message translates to:
+  /// **'Humid · showers later'**
+  String get weatherHumidShowersLater;
+
+  /// Reference: WEATHER_BY_COUNTRY / WEATHER_BY_ZONE condition phrase.
+  ///
+  /// In en, this message translates to:
+  /// **'Mild and clear'**
+  String get weatherMildAndClear;
+
+  /// Reference: WEATHER_BY_COUNTRY / WEATHER_BY_ZONE condition phrase.
+  ///
+  /// In en, this message translates to:
+  /// **'Sunny spells'**
+  String get weatherSunnySpells;
+
+  /// Reference: WEATHER_BY_COUNTRY / WEATHER_BY_ZONE condition phrase.
+  ///
+  /// In en, this message translates to:
+  /// **'Warm'**
+  String get weatherWarm;
+
+  /// Reference: WEATHER_BY_COUNTRY / WEATHER_BY_ZONE condition phrase.
+  ///
+  /// In en, this message translates to:
+  /// **'Warm and dry'**
+  String get weatherWarmAndDry;
+
+  /// Reference: WEATHER_BY_COUNTRY / WEATHER_BY_ZONE condition phrase.
+  ///
+  /// In en, this message translates to:
+  /// **'Warm and humid'**
+  String get weatherWarmAndHumid;
+
   /// A weather condition. The prototype stores these as English sentences in the catalogue and never translates them
   ///
   /// In en, this message translates to:

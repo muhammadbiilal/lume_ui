@@ -140,7 +140,10 @@ class LumeExploreScreen extends StatelessWidget {
       slivers: <Widget>[
         SliverToBoxAdapter(child: _head(context, l, d)),
         SliverToBoxAdapter(child: _featured(context, l, d)),
-        SliverToBoxAdapter(child: _weather(context, l, f, d, s)),
+        // A market the weather source cannot answer for draws no card. The
+        // reference defines no unavailable weather state, so none is invented.
+        if (d.weather != null)
+          SliverToBoxAdapter(child: _weather(context, l, f, d, s)),
         if (d.showAround)
           SliverToBoxAdapter(child: _around(context, l, d))
         else if (s.of(LumeExploreSource.around) ==
@@ -235,7 +238,7 @@ class LumeExploreScreen extends StatelessWidget {
     LumeExploreData d,
     LumeExploreSnapshot s,
   ) {
-    final LumeExploreWeather w = d.weather;
+    final LumeExploreWeather w = d.weather!;
     return KeyedSubtree(
       key: const ValueKey<String>(weatherKey),
       child: LumePageSection(

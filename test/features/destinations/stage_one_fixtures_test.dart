@@ -109,7 +109,7 @@ void main() {
     test('the reading is pinned four minutes before the clock', () async {
       final LumeExploreSnapshot s = await composeExplore(LumeUsers.muslimPk);
       expect(
-        s.data.weather.observedAt,
+        s.data.weather!.observedAt,
         kPinned.subtract(const Duration(minutes: kReferenceWeatherAgeMinutes)),
       );
     });
@@ -120,15 +120,17 @@ void main() {
       // at a later moment, says something else. Dayroz supplies a real
       // observation time and this keeps working.
       final LumeExploreSnapshot s = await composeExplore(LumeUsers.muslimPk);
-      expect(s.data.weather.minutesAgoAt(kPinned), 4);
+      expect(s.data.weather!.minutesAgoAt(kPinned), 4);
       expect(
-        s.data.weather.minutesAgoAt(kPinned.add(const Duration(minutes: 20))),
+        s.data.weather!.minutesAgoAt(kPinned.add(const Duration(minutes: 20))),
         24,
       );
       // Never negative: a reading from the future is a bug upstream, not a
       // sentence about the future.
       expect(
-        s.data.weather.minutesAgoAt(kPinned.subtract(const Duration(hours: 1))),
+        s.data.weather!.minutesAgoAt(
+          kPinned.subtract(const Duration(hours: 1)),
+        ),
         0,
       );
 

@@ -49,7 +49,7 @@ class LumeFormatting {
     return LumeFormatting(
       locale: locale,
       countryCode: countryCode,
-      units: units ?? _unitsFor(countryCode),
+      units: units ?? unitsFor(countryCode),
       hour12: hour12 ?? _hour12For(countryCode),
       currencyCode: currencyCode,
     );
@@ -111,7 +111,10 @@ class LumeFormatting {
 
   /// The markets that measure in feet and Fahrenheit. Everywhere else is
   /// metric, which is the automatic default rather than a guess.
-  static LumeUnits _unitsFor(String country) =>
+  /// The units a market measures in, when the reader has not said otherwise.
+  /// Public so a formatter built outside the widget tree — a notification
+  /// body, composed in a repository — converts exactly as a screen does.
+  static LumeUnits unitsFor(String country) =>
       const <String>{'US', 'LR', 'MM'}.contains(country)
       ? LumeUnits.imperial
       : LumeUnits.metric;

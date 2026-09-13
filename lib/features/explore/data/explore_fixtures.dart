@@ -12,87 +12,13 @@ library;
 
 import 'dart:async';
 
+import '../../../core/fixtures/lume_reference_weather.dart';
 import '../../../core/icons/lume_icons.dart';
 import '../../catalogue/domain/eligibility.dart';
 import '../../home/domain/home_model.dart';
 import '../../today/data/today_fixtures.dart';
 import '../domain/explore_model.dart';
 import '../domain/explore_repository.dart';
-
-/// The weather a market reads, measured from `WEATHER_BY_COUNTRY`.
-///
-/// The condition is the market's *whole phrase* — Pakistan's entry is
-/// `'Hazy sun · humid'`, not `'Hazy sun'` — because that is what Explore's
-/// card shows. Home's live row reads a shorter one from a different field;
-/// three surfaces, three levels of detail, as C21 records.
-typedef _Weather = ({
-  int temp,
-  int feels,
-  String condition,
-  int rain,
-  int wind,
-  String icon,
-});
-
-const Map<String, _Weather> _weather = <String, _Weather>{
-  'PK': (
-    temp: 34,
-    feels: 38,
-    condition: 'hazySunHumid',
-    rain: 8,
-    wind: 14,
-    icon: LumeIcons.sun,
-  ),
-  'GB': (
-    temp: 21,
-    feels: 19,
-    condition: 'mostlyClear',
-    rain: 12,
-    wind: 8,
-    icon: LumeIcons.cloudSun,
-  ),
-  'US': (
-    temp: 24,
-    feels: 24,
-    condition: 'lightCloud',
-    rain: 20,
-    wind: 10,
-    icon: LumeIcons.cloudSun,
-  ),
-  'IN': (
-    temp: 33,
-    feels: 37,
-    condition: 'humidLightHaze',
-    rain: 25,
-    wind: 12,
-    icon: LumeIcons.sun,
-  ),
-  'AE': (
-    temp: 39,
-    feels: 44,
-    condition: 'clearVeryWarm',
-    rain: 0,
-    wind: 11,
-    icon: LumeIcons.sun,
-  ),
-  'SA': (
-    temp: 40,
-    feels: 42,
-    condition: 'clear',
-    rain: 0,
-    wind: 9,
-    icon: LumeIcons.sun,
-  ),
-};
-
-const _Weather _defaultWeather = (
-  temp: 18,
-  feels: 17,
-  condition: 'overcast',
-  rain: 40,
-  wind: 11,
-  icon: LumeIcons.cloudSun,
-);
 
 /// **The literal.** `explore.screen.js` writes `L.num(4)` into the weather
 /// subtitle: "updated 4 min ago", the same claim in every market, forever,
@@ -266,22 +192,31 @@ abstract final class LumeExploreComposer {
           if (user.islamic || !p.faithOnly) p,
       ];
 
-  /// The weather card's reading, taken [now] less its pinned age.
-  static LumeExploreWeather weather(
+  /// The weather card's reading, taken [now] less its pinned age — or `null`
+  /// where this build cannot answer for the market.
+  ///
+  /// The reading is `WEATHER_BY_COUNTRY`'s, through the one shared port of the
+  /// reference's weather (`lume_reference_weather.dart`), and the card's third
+  /// figure is sunset, which is Maghrib from the prayer table. A market
+  /// missing either is unavailable: the card is not drawn, rather than drawn
+  /// with another market's sky or a sunset at a made-up half past six.
+  static LumeExploreWeather? weather(
     LumeUserContext user, {
     required DateTime now,
   }) {
-    final _Weather w = _weather[user.country] ?? _defaultWeather;
+    final LumeReferenceClimate? c = lumeReferenceClimate(user.country);
+    final int? sunset = lumeSunsetMinute(user.country);
+    if (c == null || sunset == null) return null;
     return LumeExploreWeather(
       city: user.city,
-      temperatureC: w.temp,
-      feelsLikeC: w.feels,
-      conditionKey: w.condition,
-      rainPercent: w.rain,
-      windKph: w.wind,
-      icon: w.icon,
-      // Maghrib, from the same table Today's agenda reads.
-      sunsetMinute: lumeSunsetMinute(user.country) ?? 18 * 60 + 30,
+      temperatureC: c.temperatureC,
+      feelsLikeC: c.feelsLikeC,
+      // The whole phrase — Explore's card is the one surface that shows it.
+      conditionKey: c.conditionKey,
+      rainPercent: c.rainPercent,
+      windKph: c.windKph,
+      icon: c.icon,
+      sunsetMinute: sunset,
       observedAt: now.subtract(
         const Duration(minutes: kReferenceWeatherAgeMinutes),
       ),
@@ -348,11 +283,20 @@ class LumeFakeExploreRepository implements LumeExploreRepository {
         ? const <LumeAroundService>[]
         : LumeExploreComposer.around(user: user, eligibility: eligibility);
 
+    final LumeExploreWeather? weather = LumeExploreComposer.weather(
+      user,
+      now: now,
+    );
+
     return LumeExploreSnapshot(
       fetchedAt: now,
       freshness: <LumeExploreSource, LumeSourceFreshness>{
         for (final LumeExploreSource s in LumeExploreSource.values)
-          s: failing.contains(s)
+          s:
+              failing.contains(s) ||
+                  // A market the fixture cannot answer for is unavailable
+                  // through the contract, not filled in.
+                  (s == LumeExploreSource.weather && weather == null)
               ? LumeSourceFreshness.unavailable
               // Never `live`: this is a fixture and says so.
               : LumeSourceFreshness.fixture,
@@ -365,7 +309,7 @@ class LumeFakeExploreRepository implements LumeExploreRepository {
           id: user.islamic ? LumeFeatureId.duas : LumeFeatureId.calmWeek,
           target: LumeHomeTarget.tool(user.islamic ? 'duas' : 'habits'),
         ),
-        weather: LumeExploreComposer.weather(user, now: now),
+        weather: weather,
         around: around,
         score: failing.contains(LumeExploreSource.score)
             ? null

@@ -21,34 +21,12 @@ library;
 
 import 'dart:async';
 
+import '../../../core/fixtures/lume_reference_weather.dart';
 import '../../../core/icons/lume_icons.dart';
 import '../../catalogue/domain/eligibility.dart';
 import '../../markets/data/exchange_fixtures.dart';
 import '../domain/home_content.dart';
 import '../domain/home_repository.dart';
-
-/// The weather a market gets.
-///
-/// The prototype carries twenty countries and a climate fallback read off the
-/// IANA zone; the conditions are English sentences it never translates. Here
-/// they are keys, and the vocabulary is the seven the fixtures need — a
-/// deliberate narrowing, recorded rather than hidden.
-typedef _Climate = ({
-  int temp,
-  int feels,
-  String condition,
-  int rain,
-  int wind,
-  String icon,
-  int high,
-  int low,
-  String todayCondition,
-  int todayRain,
-  int tomorrowHigh,
-  int tomorrowLow,
-  String tomorrowCondition,
-  int tomorrowRain,
-});
 
 /// What Lume's Discover weather card displays — in every market.
 ///
@@ -69,121 +47,37 @@ const _DiscoverWeather _referenceDiscover = (
   condition: 'hazy',
 );
 
-const Map<String, _Climate> _climate = <String, _Climate>{
-  'PK': (
-    temp: 34,
-    feels: 38,
-    condition: 'hazySun',
-    rain: 8,
-    wind: 14,
-    icon: LumeIcons.sun,
-    high: 34,
-    low: 23,
-    todayCondition: 'mostlyClear',
-    todayRain: 64,
-    tomorrowHigh: 36,
-    tomorrowLow: 25,
-    tomorrowCondition: 'cloudBuilding',
-    tomorrowRain: 1,
-  ),
-  'IN': (
-    temp: 33,
-    feels: 37,
-    condition: 'hazySun',
-    rain: 25,
-    wind: 12,
-    icon: LumeIcons.sun,
-    high: 34,
-    low: 24,
-    todayCondition: 'mostlyClear',
-    todayRain: 40,
-    tomorrowHigh: 35,
-    tomorrowLow: 25,
-    tomorrowCondition: 'cloudBuilding',
-    tomorrowRain: 55,
-  ),
-  'GB': (
-    temp: 21,
-    feels: 19,
-    condition: 'mostlyClear',
-    rain: 12,
-    wind: 8,
-    icon: LumeIcons.cloudSun,
-    high: 22,
-    low: 13,
-    todayCondition: 'mostlyClear',
-    todayRain: 20,
-    tomorrowHigh: 20,
-    tomorrowLow: 12,
-    tomorrowCondition: 'overcast',
-    tomorrowRain: 55,
-  ),
-  'US': (
-    temp: 24,
-    feels: 24,
-    condition: 'lightCloud',
-    rain: 20,
-    wind: 10,
-    icon: LumeIcons.cloudSun,
-    high: 26,
-    low: 17,
-    todayCondition: 'lightCloud',
-    todayRain: 25,
-    tomorrowHigh: 25,
-    tomorrowLow: 16,
-    tomorrowCondition: 'mostlyClear',
-    tomorrowRain: 10,
-  ),
-  'AE': (
-    temp: 39,
-    feels: 44,
-    condition: 'clear',
-    rain: 0,
-    wind: 11,
-    icon: LumeIcons.sun,
-    high: 40,
-    low: 30,
-    todayCondition: 'clear',
-    todayRain: 0,
-    tomorrowHigh: 41,
-    tomorrowLow: 31,
-    tomorrowCondition: 'clear',
-    tomorrowRain: 0,
-  ),
-  'SA': (
-    temp: 40,
-    feels: 42,
-    condition: 'clear',
-    rain: 0,
-    wind: 9,
-    icon: LumeIcons.sun,
-    high: 42,
-    low: 29,
-    todayCondition: 'clear',
-    todayRain: 0,
-    tomorrowHigh: 42,
-    tomorrowLow: 30,
-    tomorrowCondition: 'clear',
-    tomorrowRain: 0,
-  ),
-};
-
-const _Climate _defaultClimate = (
-  temp: 18,
-  feels: 17,
-  condition: 'overcast',
-  rain: 35,
-  wind: 12,
-  icon: LumeIcons.cloudSun,
-  high: 19,
-  low: 11,
-  todayCondition: 'overcast',
-  todayRain: 35,
-  tomorrowHigh: 20,
-  tomorrowLow: 12,
-  tomorrowCondition: 'lightCloud',
-  tomorrowRain: 25,
-);
+/// The weather Home reads for a market — the reference's own, through the one
+/// shared port (`lume_reference_weather.dart`) — or `null` where the
+/// reference defines none this build can reach.
+///
+/// The live row shows the phrase's first clause (`desc.split(' · ')[0]`), and
+/// the forecasts are `daily()`'s first two days. Until this port every market
+/// but Pakistan carried days nobody had generated, and Pakistan's tomorrow
+/// read a low of 25 where the reference renders 27 (C61).
+LumeWeatherNow? _weatherFor(LumeUserContext user) {
+  final LumeReferenceClimate? c = lumeReferenceClimate(user.country);
+  if (c == null) return null;
+  LumeDayForecast day(LumeReferenceDay d) => LumeDayForecast(
+    highC: d.highC,
+    lowC: d.lowC,
+    conditionKey: d.conditionKey,
+    rainPercent: d.rainPercent,
+  );
+  return LumeWeatherNow(
+    temperatureC: c.temperatureC,
+    feelsLikeC: c.feelsLikeC,
+    conditionKey: c.shortConditionKey,
+    discoverTemperature: _referenceDiscover.temp,
+    discoverFeelsLike: _referenceDiscover.feels,
+    discoverConditionKey: _referenceDiscover.condition,
+    rainPercent: c.rainPercent,
+    windKph: c.windKph,
+    icon: c.icon,
+    today: day(c.today),
+    tomorrow: day(c.tomorrow),
+  );
+}
 
 /// The fixture.
 class LumeFakeHomeRepository implements LumeHomeRepository {
@@ -224,33 +118,10 @@ class LumeFakeHomeRepository implements LumeHomeRepository {
 
   @override
   LumeToolStatuses statusesFor(LumeUserContext user, {required DateTime now}) {
-    final _Climate c = _climate[user.country] ?? _defaultClimate;
     final DateTime day = DateTime(now.year, now.month, now.day);
     return LumeToolStatuses(
       prayer: user.islamic ? _timetable(day).nextAt(now) : null,
-      weather: LumeWeatherNow(
-        temperatureC: c.temp,
-        feelsLikeC: c.feels,
-        conditionKey: c.condition,
-        discoverTemperature: _referenceDiscover.temp,
-        discoverFeelsLike: _referenceDiscover.feels,
-        discoverConditionKey: _referenceDiscover.condition,
-        rainPercent: c.rain,
-        windKph: c.wind,
-        icon: c.icon,
-        today: LumeDayForecast(
-          highC: c.high,
-          lowC: c.low,
-          conditionKey: c.todayCondition,
-          rainPercent: c.todayRain,
-        ),
-        tomorrow: LumeDayForecast(
-          highC: c.tomorrowHigh,
-          lowC: c.tomorrowLow,
-          conditionKey: c.tomorrowCondition,
-          rainPercent: c.tomorrowRain,
-        ),
-      ),
+      weather: _weatherFor(user),
     );
   }
 
@@ -310,7 +181,6 @@ class LumeFakeHomeRepository implements LumeHomeRepository {
     if (pending) return Completer<LumeHomeSnapshot>().future;
     if (delay > Duration.zero) await Future<void>.delayed(delay);
 
-    final _Climate c = _climate[user.country] ?? _defaultClimate;
     final bool pakistan = user.country == 'PK';
     final LumeExchange? exchange = LumeExchanges.forCountry(user.country);
 
@@ -332,29 +202,7 @@ class LumeFakeHomeRepository implements LumeHomeRepository {
 
         weather: failing.contains(LumeHomeSection.live)
             ? null
-            : LumeWeatherNow(
-                temperatureC: c.temp,
-                feelsLikeC: c.feels,
-                conditionKey: c.condition,
-                discoverTemperature: _referenceDiscover.temp,
-                discoverFeelsLike: _referenceDiscover.feels,
-                discoverConditionKey: _referenceDiscover.condition,
-                rainPercent: c.rain,
-                windKph: c.wind,
-                icon: c.icon,
-                today: LumeDayForecast(
-                  highC: c.high,
-                  lowC: c.low,
-                  conditionKey: c.todayCondition,
-                  rainPercent: c.todayRain,
-                ),
-                tomorrow: LumeDayForecast(
-                  highC: c.tomorrowHigh,
-                  lowC: c.tomorrowLow,
-                  conditionKey: c.tomorrowCondition,
-                  rainPercent: c.tomorrowRain,
-                ),
-              ),
+            : _weatherFor(user),
 
         // The timetable is the city's, and the clock it is compared against is
         // the user's own — not an exchange's, and not the device's.

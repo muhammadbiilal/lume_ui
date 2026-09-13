@@ -3809,6 +3809,54 @@ class AppLocalizationsEn extends AppLocalizations {
   String get weatherCloudBuilding => 'Cloud building';
 
   @override
+  String get weatherBreezy => 'Breezy';
+
+  @override
+  String get weatherBrightAndBreezy => 'Bright and breezy';
+
+  @override
+  String get weatherChangeable => 'Changeable';
+
+  @override
+  String get weatherClearAndDry => 'Clear and dry';
+
+  @override
+  String get weatherCloudy => 'Cloudy';
+
+  @override
+  String get weatherFresh => 'Fresh';
+
+  @override
+  String get weatherHumid => 'Humid';
+
+  @override
+  String get weatherHumidAfternoonStorms => 'Humid · afternoon storms';
+
+  @override
+  String get weatherHumidCloudBuilding => 'Humid · cloud building';
+
+  @override
+  String get weatherHumidPassingShowers => 'Humid · passing showers';
+
+  @override
+  String get weatherHumidShowersLater => 'Humid · showers later';
+
+  @override
+  String get weatherMildAndClear => 'Mild and clear';
+
+  @override
+  String get weatherSunnySpells => 'Sunny spells';
+
+  @override
+  String get weatherWarm => 'Warm';
+
+  @override
+  String get weatherWarmAndDry => 'Warm and dry';
+
+  @override
+  String get weatherWarmAndHumid => 'Warm and humid';
+
+  @override
   String get weatherHazy => 'hazy';
 
   @override

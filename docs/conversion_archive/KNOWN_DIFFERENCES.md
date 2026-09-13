@@ -1308,6 +1308,38 @@ Home goldens whose hero shows that title, and the cross-cutting cells drawn
 over Home; the Muslim-state Homes, whose prayer title fits one line, are
 byte-identical.
 
+### C61 — weather that nobody had generated
+
+**Found and corrected in the F5D closure audit.** Home, Explore and the
+notification feed each carried their own weather table, and three of the
+tables made weather up:
+
+* Home's today and tomorrow were typed by hand for five of its six markets —
+  the UK's tomorrow "overcast, 20° / 12°, 55 %", New York's today 26° / 17° —
+  and Pakistan's tomorrow read a low of 25 where the reference renders 27.
+  India's live row said "Hazy sun" where its own phrase begins "Humid".
+  Every other market got an invented overcast climate with invented days.
+* Explore gave every market outside six Germany's reading, and gave India,
+  the UAE and Saudi Arabia a sunset at 18:30 that no calculation produced.
+* The notification feed gave every market but Pakistan, London and New York
+  Pakistan's tomorrow.
+
+**Corrected by porting rather than transcribing.** `lume_reference_weather.dart`
+is the reference's `WEATHER_BY_COUNTRY`, `WEATHER_BY_ZONE`, `weatherFor` and
+`daily()` — its Park–Miller generator seeded by the country code — and all
+three surfaces read it. The reference itself was run in Node to produce the
+expected values, and `lume_reference_weather_test.dart` asserts all twenty
+markets exactly. A market the reference does not define, or that this build
+cannot derive, is `null` through the contract: no live row, no Explore card,
+no forecast row. Nothing is drawn in its place, because the reference has no
+such state. Sixteen condition phrases the tables had narrowed away are ARB keys
+in all three languages.
+
+**Classification and the full market-to-source map:**
+`WEATHER_SOURCE_MAP.md`. **Dayroz obligation:** replace the port with the
+weather adapter, keeping provenance, observation time and sunset in the same
+nullable contracts.
+
 ## 3. Open questions
 
 ### Resolved in F1

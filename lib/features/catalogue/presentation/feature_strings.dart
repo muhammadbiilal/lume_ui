@@ -268,6 +268,24 @@ abstract final class LumeFeatureStrings {
         'clear' => l.weatherClear,
         'lightCloud' => l.weatherLightCloud,
         'overcast' => l.weatherOvercast,
+        // The rest of `WEATHER_BY_COUNTRY` and `WEATHER_BY_ZONE`, so every
+        // market the reference writes down reads its own phrase.
+        'cloudy' => l.weatherCloudy,
+        'brightAndBreezy' => l.weatherBrightAndBreezy,
+        'sunnySpells' => l.weatherSunnySpells,
+        'humid' => l.weatherHumid,
+        'humidShowersLater' => l.weatherHumidShowersLater,
+        'humidAfternoonStorms' => l.weatherHumidAfternoonStorms,
+        'humidCloudBuilding' => l.weatherHumidCloudBuilding,
+        'humidPassingShowers' => l.weatherHumidPassingShowers,
+        'clearAndDry' => l.weatherClearAndDry,
+        'mildAndClear' => l.weatherMildAndClear,
+        'warmAndDry' => l.weatherWarmAndDry,
+        'warm' => l.weatherWarm,
+        'changeable' => l.weatherChangeable,
+        'breezy' => l.weatherBreezy,
+        'warmAndHumid' => l.weatherWarmAndHumid,
+        'fresh' => l.weatherFresh,
         _ => key,
       };
 

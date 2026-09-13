@@ -3824,6 +3824,54 @@ class AppLocalizationsAr extends AppLocalizations {
   String get weatherCloudBuilding => 'تزايد الغيوم';
 
   @override
+  String get weatherBreezy => 'نسيم لطيف';
+
+  @override
+  String get weatherBrightAndBreezy => 'مشرق مع نسيم';
+
+  @override
+  String get weatherChangeable => 'متقلّب';
+
+  @override
+  String get weatherClearAndDry => 'صافٍ وجاف';
+
+  @override
+  String get weatherCloudy => 'غائم';
+
+  @override
+  String get weatherFresh => 'منعش';
+
+  @override
+  String get weatherHumid => 'رطب';
+
+  @override
+  String get weatherHumidAfternoonStorms => 'رطب · عواصف بعد الظهر';
+
+  @override
+  String get weatherHumidCloudBuilding => 'رطب · تتكوّن السحب';
+
+  @override
+  String get weatherHumidPassingShowers => 'رطب · زخّات عابرة';
+
+  @override
+  String get weatherHumidShowersLater => 'رطب · زخّات لاحقًا';
+
+  @override
+  String get weatherMildAndClear => 'معتدل وصافٍ';
+
+  @override
+  String get weatherSunnySpells => 'فترات مشمسة';
+
+  @override
+  String get weatherWarm => 'دافئ';
+
+  @override
+  String get weatherWarmAndDry => 'دافئ وجاف';
+
+  @override
+  String get weatherWarmAndHumid => 'دافئ ورطب';
+
+  @override
   String get weatherHazy => 'مغبرّ';
 
   @override

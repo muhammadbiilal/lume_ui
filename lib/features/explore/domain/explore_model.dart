@@ -326,7 +326,12 @@ class LumeExploreData {
   final bool localised;
 
   final LumeFeaturedCollection featured;
-  final LumeExploreWeather weather;
+
+  /// `null` where the fixture cannot answer for the market — no entry in the
+  /// reference's weather, or no sunset to put on the card. The snapshot says
+  /// so through [LumeSourceFreshness.unavailable]; the screen draws no card
+  /// rather than someone else's weather.
+  final LumeExploreWeather? weather;
 
   /// Already filtered by eligibility and by whether each service could
   /// answer.

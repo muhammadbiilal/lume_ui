@@ -5203,6 +5203,70 @@
   "@weatherCloudBuilding": {
     "description": "A weather condition. The prototype stores these as English sentences in the catalogue and never translates them"
   },
+  "weatherBreezy": "Breezy",
+  "@weatherBreezy": {
+    "description": "Reference: WEATHER_BY_COUNTRY / WEATHER_BY_ZONE condition phrase."
+  },
+  "weatherBrightAndBreezy": "Bright and breezy",
+  "@weatherBrightAndBreezy": {
+    "description": "Reference: WEATHER_BY_COUNTRY / WEATHER_BY_ZONE condition phrase."
+  },
+  "weatherChangeable": "Changeable",
+  "@weatherChangeable": {
+    "description": "Reference: WEATHER_BY_COUNTRY / WEATHER_BY_ZONE condition phrase."
+  },
+  "weatherClearAndDry": "Clear and dry",
+  "@weatherClearAndDry": {
+    "description": "Reference: WEATHER_BY_COUNTRY / WEATHER_BY_ZONE condition phrase."
+  },
+  "weatherCloudy": "Cloudy",
+  "@weatherCloudy": {
+    "description": "Reference: WEATHER_BY_COUNTRY / WEATHER_BY_ZONE condition phrase."
+  },
+  "weatherFresh": "Fresh",
+  "@weatherFresh": {
+    "description": "Reference: WEATHER_BY_COUNTRY / WEATHER_BY_ZONE condition phrase."
+  },
+  "weatherHumid": "Humid",
+  "@weatherHumid": {
+    "description": "Reference: WEATHER_BY_COUNTRY / WEATHER_BY_ZONE condition phrase."
+  },
+  "weatherHumidAfternoonStorms": "Humid · afternoon storms",
+  "@weatherHumidAfternoonStorms": {
+    "description": "Reference: WEATHER_BY_COUNTRY / WEATHER_BY_ZONE condition phrase."
+  },
+  "weatherHumidCloudBuilding": "Humid · cloud building",
+  "@weatherHumidCloudBuilding": {
+    "description": "Reference: WEATHER_BY_COUNTRY / WEATHER_BY_ZONE condition phrase."
+  },
+  "weatherHumidPassingShowers": "Humid · passing showers",
+  "@weatherHumidPassingShowers": {
+    "description": "Reference: WEATHER_BY_COUNTRY / WEATHER_BY_ZONE condition phrase."
+  },
+  "weatherHumidShowersLater": "Humid · showers later",
+  "@weatherHumidShowersLater": {
+    "description": "Reference: WEATHER_BY_COUNTRY / WEATHER_BY_ZONE condition phrase."
+  },
+  "weatherMildAndClear": "Mild and clear",
+  "@weatherMildAndClear": {
+    "description": "Reference: WEATHER_BY_COUNTRY / WEATHER_BY_ZONE condition phrase."
+  },
+  "weatherSunnySpells": "Sunny spells",
+  "@weatherSunnySpells": {
+    "description": "Reference: WEATHER_BY_COUNTRY / WEATHER_BY_ZONE condition phrase."
+  },
+  "weatherWarm": "Warm",
+  "@weatherWarm": {
+    "description": "Reference: WEATHER_BY_COUNTRY / WEATHER_BY_ZONE condition phrase."
+  },
+  "weatherWarmAndDry": "Warm and dry",
+  "@weatherWarmAndDry": {
+    "description": "Reference: WEATHER_BY_COUNTRY / WEATHER_BY_ZONE condition phrase."
+  },
+  "weatherWarmAndHumid": "Warm and humid",
+  "@weatherWarmAndHumid": {
+    "description": "Reference: WEATHER_BY_COUNTRY / WEATHER_BY_ZONE condition phrase."
+  },
   "weatherHazy": "hazy",
   "@weatherHazy": {
     "description": "A weather condition. The prototype stores these as English sentences in the catalogue and never translates them"

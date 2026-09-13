@@ -3812,6 +3812,54 @@ class AppLocalizationsUr extends AppLocalizations {
   String get weatherCloudBuilding => 'بادل بن رہے ہیں';
 
   @override
+  String get weatherBreezy => 'نسیم دار';
+
+  @override
+  String get weatherBrightAndBreezy => 'روشن اور ہوا دار';
+
+  @override
+  String get weatherChangeable => 'بدلتا ہوا';
+
+  @override
+  String get weatherClearAndDry => 'صاف اور خشک';
+
+  @override
+  String get weatherCloudy => 'ابر آلود';
+
+  @override
+  String get weatherFresh => 'خوشگوار';
+
+  @override
+  String get weatherHumid => 'مرطوب';
+
+  @override
+  String get weatherHumidAfternoonStorms => 'مرطوب · سہ پہر کو طوفان';
+
+  @override
+  String get weatherHumidCloudBuilding => 'مرطوب · بادل بن رہے ہیں';
+
+  @override
+  String get weatherHumidPassingShowers => 'مرطوب · گزرتی بوچھاڑ';
+
+  @override
+  String get weatherHumidShowersLater => 'مرطوب · بعد میں بوچھاڑ';
+
+  @override
+  String get weatherMildAndClear => 'معتدل اور صاف';
+
+  @override
+  String get weatherSunnySpells => 'وقفے وقفے سے دھوپ';
+
+  @override
+  String get weatherWarm => 'گرم';
+
+  @override
+  String get weatherWarmAndDry => 'گرم اور خشک';
+
+  @override
+  String get weatherWarmAndHumid => 'گرم اور مرطوب';
+
+  @override
   String get weatherHazy => 'دھندلا';
 
   @override

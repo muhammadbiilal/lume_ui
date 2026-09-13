@@ -26,6 +26,10 @@
 /// alert. They are absent here for the same reason.
 library;
 
+import 'package:flutter/widgets.dart' show Locale;
+
+import '../../../core/fixtures/lume_reference_weather.dart';
+import '../../../core/localization/lume_format.dart';
 import '../../../l10n/app_localizations.dart';
 import '../../account/domain/notification_prefs.dart';
 import '../../catalogue/domain/eligibility.dart';
@@ -146,20 +150,26 @@ LumeLeadIndex? _moved(LumeUserContext u) {
   return ix;
 }
 
-/// Tomorrow's forecast, as the reference renders it in each market's own
-/// units — read off the running prototype with `probe_notifications.mjs`
-/// (`muslim_pk`, `muslim_gb`, `default_us`). Fixture-only.
+/// Tomorrow's forecast body, from the one port of the reference's weather.
 ///
-/// A market the probe has no state for reads Pakistan's, and says nothing
-/// about its own sky; the Dayroz obligation is the weather tool's live
-/// forecast.
-typedef LumeForecast = ({String hi, String lo, String rain});
-
-const Map<String, LumeForecast> kTomorrowForecasts = <String, LumeForecast>{
-  'PK': (hi: '36°', lo: '27°', rain: '1'),
-  'GB': (hi: '25°', lo: '17°', rain: '10'),
-  'US': (hi: '84°', lo: '68°', rain: '50'),
-};
+/// `daily(base, seed)[1]` in the reference's own generator, formatted in the
+/// market's units — so Islamabad reads 36° / 27°, London 25° / 17° and New
+/// York 84° / 68°, which is what `probe_notifications.mjs` read off the
+/// running prototype. A market the reference's weather does not define builds
+/// no forecast row at all, rather than another market's (C61).
+String _forecastBody(AppLocalizations l, LumeUserContext u) {
+  final LumeReferenceDay d = lumeReferenceClimate(u.country)!.tomorrow;
+  final LumeFormatting f = LumeFormatting(
+    locale: const Locale('en'),
+    countryCode: u.country,
+    units: LumeFormatting.unitsFor(u.country),
+  );
+  return l.nForecastBody(
+    f.temperature(d.highC),
+    f.temperature(d.lowC),
+    '${d.rainPercent}',
+  );
+}
 
 String _signedPct(double pct) =>
     '${pct >= 0 ? '+' : ''}${pct.toStringAsFixed(2)}%';
@@ -238,11 +248,8 @@ final List<LumeNotificationSample> kNotificationSamples =
         // Tomorrow's forecast is seeded by country in the reference
         // (`D.daily(base.temp, country)`) and formatted in the reader's units,
         // so each market reads its own — New York in Fahrenheit.
-        body: (AppLocalizations l, LumeUserContext u) {
-          final LumeForecast f =
-              kTomorrowForecasts[u.country] ?? kTomorrowForecasts['PK']!;
-          return l.nForecastBody(f.hi, f.lo, f.rain);
-        },
+        builds: (LumeUserContext u) => lumeReferenceClimate(u.country) != null,
+        body: _forecastBody,
         agoMinutes: 300,
         priority: LumeNotificationPriority.low,
         expiresMinutes: 900,
