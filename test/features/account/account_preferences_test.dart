@@ -14,9 +14,15 @@
 library;
 
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:lume/app/providers/locale_provider.dart';
+import 'package:lume/app/providers/theme_provider.dart';
+import 'package:lume/features/onboarding/presentation/country_screen.dart';
+import 'package:lume/core/widgets/lume/lume_overlay.dart';
 import 'package:lume/core/widgets/lume/lume_settings.dart';
 import 'package:lume/features/account/domain/account_model.dart';
+import 'package:lume/features/account/presentation/account_host.dart';
 import 'package:lume/features/onboarding/domain/onboarding_state.dart';
 import 'package:lume/features/startup/application/startup_controller.dart';
 
@@ -48,6 +54,15 @@ void main() {
     await tester.tap(rowTitled(title), warnIfMissed: false);
     await tester.pumpAndSettle();
   }
+
+  /// The scope the host is living in.
+  ///
+  /// Two of the seven write to a provider rather than to the profile record —
+  /// the language and the appearance — and the application root reads those
+  /// same two providers to build its `MaterialApp`. So reading them here is
+  /// reading what the whole app would render with, not a test-only channel.
+  ProviderContainer scopeOf(WidgetTester tester) =>
+      ProviderScope.containerOf(tester.element(find.byType(LumeAccountHost)));
 
   // --------------------------------------------------------------- prefs
 
@@ -159,6 +174,52 @@ void main() {
       expect(chosen(tester), <String>['العربية']);
       expect(gate.state.profile.islamic, isFalse);
       expect(gate.state.profile.country, 'US');
+    });
+
+    testWidgets('choosing one changes the language the app reads in', (
+      WidgetTester tester,
+    ) async {
+      await pumpAccountHost(
+        tester,
+        route: LumeAccountRoute.language,
+        gate: await bootedGate(),
+        surface: kTall,
+      );
+      expect(scopeOf(tester).read(localeProvider), isNull);
+
+      await choose(tester, 'اردو');
+
+      // `null` was "follow the device". It is a choice now, and it is the
+      // one that was tapped.
+      expect(scopeOf(tester).read(localeProvider), const Locale('ur'));
+    });
+
+    testWidgets('and changing it resets nothing the reader owns', (
+      WidgetTester tester,
+    ) async {
+      // §37: changing language changes what things are called, and nothing
+      // else. Not the country, not the city, not what they saved.
+      final LumeStartupController gate = await bootedGate(
+        profile: const LumeProfileRecord(
+          country: 'GB',
+          city: 'London',
+          islamic: true,
+          favourites: <String>['calculator'],
+        ),
+      );
+      await pumpAccountHost(
+        tester,
+        route: LumeAccountRoute.language,
+        gate: gate,
+        surface: kTall,
+      );
+      await choose(tester, 'العربية');
+
+      expect(scopeOf(tester).read(localeProvider), const Locale('ar'));
+      expect(gate.state.profile.country, 'GB');
+      expect(gate.state.profile.city, 'London');
+      expect(gate.state.profile.islamic, isTrue);
+      expect(gate.state.profile.favourites, <String>['calculator']);
     });
   });
 
@@ -376,18 +437,53 @@ void main() {
         gate: await bootedGate(),
         surface: kTall,
       );
+      final List<String> titles = <String>[
+        for (final LumeOptionRow row in tester.widgetList<LumeOptionRow>(
+          find.byType(LumeOptionRow),
+        ))
+          row.title,
+      ];
+      expect(titles, <String>['Follow the system', 'Light', 'Dark']);
       expect(chosen(tester), <String>['Follow the system']);
+    });
 
+    testWidgets('choosing dark writes dark, and the mark moves with it', (
+      WidgetTester tester,
+    ) async {
       await pumpAccountHost(
         tester,
         route: LumeAccountRoute.appearance,
         gate: await bootedGate(),
-        theme: ThemeMode.dark,
         surface: kTall,
       );
-      // The harness's theme *is* the mode in force, and the screen reads it
-      // rather than keeping its own.
-      expect(find.byType(LumeOptionRow), findsNWidgets(3));
+      expect(scopeOf(tester).read(themeModeProvider), ThemeMode.system);
+
+      await choose(tester, 'Dark');
+
+      // The provider the application root builds its `MaterialApp` from —
+      // so this is the mode the whole product is now in, not a mode this
+      // screen remembers.
+      expect(scopeOf(tester).read(themeModeProvider), ThemeMode.dark);
+      expect(chosen(tester), <String>['Dark']);
+    });
+
+    testWidgets('and back to following the system', (
+      WidgetTester tester,
+    ) async {
+      await pumpAccountHost(
+        tester,
+        route: LumeAccountRoute.appearance,
+        gate: await bootedGate(),
+        surface: kTall,
+      );
+      await choose(tester, 'Light');
+      expect(scopeOf(tester).read(themeModeProvider), ThemeMode.light);
+
+      await choose(tester, 'Follow the system');
+      expect(scopeOf(tester).read(themeModeProvider), ThemeMode.system);
+      // Exactly one, always: "follow the system" is a choice, not the
+      // absence of one.
+      expect(chosen(tester), hasLength(1));
     });
   });
 
@@ -475,6 +571,31 @@ void main() {
         surface: kTall,
       );
       expect(find.text('ZZ'), findsWidgets);
+    });
+
+    testWidgets('it changes nothing itself — it opens the thing that does', (
+      WidgetTester tester,
+    ) async {
+      final LumeStartupController gate = await bootedGate();
+      await pumpAccountHost(
+        tester,
+        route: LumeAccountRoute.region,
+        gate: gate,
+        surface: kTall,
+      );
+      // Country, city and region move together or not at all, so this route
+      // has no chooser of its own: all three rows and the button open the
+      // one editor that can change them consistently.
+      await tester.tap(find.text('Change country or city'));
+      await tester.pumpAndSettle();
+
+      // Country first, then the cities in it — the same two steps
+      // onboarding walks, because there is only one location editor.
+      expect(find.byType(LumeSheet), findsOneWidget);
+      expect(find.byType(LumeCountryPickerView), findsOneWidget);
+      // And nothing was written on the way there.
+      expect(gate.state.profile.country, 'PK');
+      expect(gate.state.profile.city, 'Islamabad');
     });
   });
 
