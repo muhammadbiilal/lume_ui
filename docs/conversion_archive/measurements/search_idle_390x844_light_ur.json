@@ -1,0 +1,493 @@
+{
+  "cell": "search_idle_390x844_light_ur",
+  "screen": "home",
+  "state": "default_pk",
+  "account": "guest",
+  "route": null,
+  "after": "search_idle",
+  "profile": {
+    "country": "PK",
+    "city": "Islamabad",
+    "islamic": false,
+    "interests": [
+      "weather",
+      "calendar",
+      "tasks",
+      "notes",
+      "maths",
+      "expenses",
+      "news"
+    ],
+    "favourites": [],
+    "recents": [],
+    "prefs": {
+      "news": true,
+      "cricket": true,
+      "finance": true,
+      "recos": true
+    },
+    "displayName": ""
+  },
+  "viewport": {
+    "width": 390,
+    "height": 844,
+    "innerWidth": 390
+  },
+  "scrollTop": 0,
+  "theme": "light",
+  "lang": "ur",
+  "dir": "rtl",
+  "tabs": [
+    "home",
+    "tools",
+    "trains",
+    "today",
+    "profile"
+  ],
+  "activeTab": "home",
+  "scroll": {
+    "clientHeight": 811,
+    "scrollHeight": 2093,
+    "paddingBottom": "118px"
+  },
+  "missing": [
+    "results",
+    "result",
+    "result.icon",
+    "result.title",
+    "result.sub",
+    "result.end",
+    "empty",
+    "empty.title"
+  ],
+  "composition": {
+    "hero": [
+      "tools",
+      "money",
+      "trains",
+      "plan"
+    ],
+    "quickTools": [
+      "aqi",
+      "datecalc",
+      "reminders",
+      "notes",
+      "calculator",
+      "tax",
+      "news",
+      "sunmoon"
+    ],
+    "quickToolLabels": [
+      "Air Quality",
+      "Date Calculator",
+      "Reminders",
+      "Notes",
+      "Calculator",
+      "Tax Calculator",
+      "News",
+      "Sun & Moon"
+    ],
+    "quickToolValues": [
+      "AQI",
+      "Add · diff",
+      "4 today",
+      "12 saved",
+      "Standard",
+      "FBR 2025-26",
+      "12 new",
+      "Sunrise · sunset"
+    ],
+    "quickActions": [
+      "expenses",
+      "todos",
+      "qr",
+      "notes",
+      "water"
+    ],
+    "quickActionLabels": [
+      "Add expense",
+      "Add task",
+      "Scan QR",
+      "New note",
+      "Log water"
+    ],
+    "live": [
+      "weather",
+      "markets",
+      "bills"
+    ],
+    "liveTitles": [
+      "Islamabad",
+      "KSE-100",
+      "1 bill needs attention"
+    ],
+    "liveMetas": [
+      "Mostly clear · Rain 64%",
+      "Pakistan Stock Exchange · Market closed",
+      "Due this month · Rs 37,400"
+    ],
+    "liveValues": [
+      "34°",
+      "154,230",
+      "Rs 7,920"
+    ],
+    "upcoming": [
+      "Electricitydue in 4 days",
+      "Internet5 days overdue",
+      "Netflixrenews 14 Sep",
+      "AyeshaBirthday · in 4 days"
+    ],
+    "upcomingValues": [
+      "Rs 20,900",
+      "Rs 7,920",
+      "14 Sep",
+      "11 Sept"
+    ],
+    "discover": [
+      {
+        "title": "PAK 214/4",
+        "meta": "2nd Test · Day 2"
+      },
+      {
+        "title": "34° and hazy",
+        "meta": "Feels like 38°"
+      },
+      {
+        "title": "Next outage 14:00",
+        "meta": "Gulshan · 2 hours"
+      },
+      {
+        "title": "Out for delivery",
+        "meta": "TCS · arrives today"
+      }
+    ],
+    "glance": [
+      {
+        "cls": "card card--pad stat-row",
+        "faith": null,
+        "loc": "PK",
+        "text": "Petrol Paki tan\n            Effective 1 September · OGRA\n          \n          \n            ₨ 264.61\n            +2.14"
+      },
+      {
+        "cls": "card card--pad progress-card",
+        "faith": null,
+        "loc": null,
+        "text": "3 ta k  left today\n            Next: fini h the Q3  ummary · 15:00"
+      }
+    ],
+    "sections": [
+      {
+        "tag": "header",
+        "cls": "appbar",
+        "id": null,
+        "hidden": false,
+        "y": 32.8,
+        "height": 68.19
+      },
+      {
+        "tag": "div",
+        "cls": "section",
+        "id": null,
+        "hidden": false,
+        "y": 114.98,
+        "height": 72.19
+      },
+      {
+        "tag": "div",
+        "cls": "hero",
+        "id": null,
+        "hidden": false,
+        "y": 201.17,
+        "height": 219
+      },
+      {
+        "tag": "div",
+        "cls": "section",
+        "id": "quickActionsWrap",
+        "hidden": false,
+        "y": 444.17,
+        "height": 46
+      },
+      {
+        "tag": "div",
+        "cls": "section",
+        "id": null,
+        "hidden": false,
+        "y": 514.17,
+        "height": 304.13
+      },
+      {
+        "tag": "div",
+        "cls": "section",
+        "id": "liveWrap",
+        "hidden": false,
+        "y": 842.3,
+        "height": 319.33
+      },
+      {
+        "tag": "div",
+        "cls": "section",
+        "id": null,
+        "hidden": false,
+        "y": 1185.63,
+        "height": 240.97
+      },
+      {
+        "tag": "div",
+        "cls": "section",
+        "id": "upcomingWrap",
+        "hidden": false,
+        "y": 1450.59,
+        "height": 319.94
+      },
+      {
+        "tag": "div",
+        "cls": "section",
+        "id": null,
+        "hidden": false,
+        "y": 1794.53,
+        "height": 213.63
+      }
+    ]
+  },
+  "bounds": {
+    "screen": {
+      "x": 0,
+      "y": 32.8,
+      "width": 390,
+      "height": 811.2,
+      "lines": 32,
+      "font": "400 16px/25.6px normal",
+      "color": "rgb(16, 17, 19)",
+      "background": "rgba(0, 0, 0, 0)",
+      "radius": "0px",
+      "pad": "0px 0px 118px",
+      "gap": "normal",
+      "text": "Good afternoon 👋\n        \n          Mon, 7 Sept\n          \n          \n          Islamabad\n        \n      \n      \n        \n      \n      \n        \n        13\n   "
+    },
+    "scrim": {
+      "x": 0,
+      "y": 0,
+      "width": 390,
+      "height": 844,
+      "lines": 33,
+      "font": "400 16px/25.6px normal",
+      "color": "rgb(16, 17, 19)",
+      "background": "rgba(16, 17, 19, 0.38)",
+      "radius": "0px",
+      "pad": "0px",
+      "gap": "normal",
+      "text": null
+    },
+    "shell.tabbar": {
+      "x": 12,
+      "y": 770,
+      "width": 366,
+      "height": 62,
+      "lines": 2,
+      "font": "400 16px/25.6px normal",
+      "color": "rgb(16, 17, 19)",
+      "background": "color(srgb 1 1 1 / 0.84)",
+      "radius": "20px",
+      "pad": "0px 4px",
+      "gap": "normal",
+      "text": "HomeToolsTrainsTodayProfile"
+    },
+    "sheet": {
+      "x": 0,
+      "y": 380.86,
+      "width": 390,
+      "height": 463.14,
+      "lines": 18,
+      "font": "400 16px/25.6px normal",
+      "color": "rgb(16, 17, 19)",
+      "background": "rgb(255, 255, 255)",
+      "radius": "26px 26px 0px 0px",
+      "pad": "0px 0px 18px",
+      "gap": "normal",
+      "text": "Try searching for\n        petroltrainsbillscurrencycalculatorweather\n        Jump back in\n        CalculatorStandardWeather34° Hazy sunCalendar3 events\n      \n "
+    },
+    "sheet.grab": {
+      "x": 177,
+      "y": 390.86,
+      "width": 36,
+      "height": 4,
+      "lines": 0,
+      "font": "400 16px/25.6px normal",
+      "color": "rgb(16, 17, 19)",
+      "background": "rgba(16, 17, 19, 0.12)",
+      "radius": "999px",
+      "pad": "0px",
+      "gap": "normal",
+      "text": null
+    },
+    "sheet.head": {
+      "x": 1,
+      "y": 394.86,
+      "width": 388,
+      "height": 68,
+      "lines": 3,
+      "font": "400 16px/25.6px normal",
+      "color": "rgb(16, 17, 19)",
+      "background": "rgba(0, 0, 0, 0)",
+      "radius": "0px",
+      "pad": "14px 18px 10px",
+      "gap": "12px",
+      "text": null
+    },
+    "sheet.body": {
+      "x": 1,
+      "y": 462.86,
+      "width": 388,
+      "height": 363.14,
+      "lines": 14,
+      "font": "400 16px/25.6px normal",
+      "color": "rgb(16, 17, 19)",
+      "background": "rgba(0, 0, 0, 0)",
+      "radius": "0px",
+      "pad": "0px 18px 8px",
+      "gap": "normal",
+      "text": "Try searching for\n        petroltrainsbillscurrencycalculatorweather\n        Jump back in\n        CalculatorStandardWeather34° Hazy sunCalendar3 events\n      \n "
+    },
+    "search": {
+      "x": 19,
+      "y": 408.86,
+      "width": 352,
+      "height": 44,
+      "lines": 2,
+      "font": "400 16px/25.6px normal",
+      "color": "rgb(139, 141, 149)",
+      "background": "rgb(255, 255, 255)",
+      "radius": "12px",
+      "pad": "0px 14px",
+      "gap": "9px",
+      "text": null
+    },
+    "search.input": {
+      "x": 34,
+      "y": 418.66,
+      "width": 296,
+      "height": 24.39,
+      "lines": 1,
+      "font": "500 14px/22.4px -0.28px",
+      "color": "rgb(16, 17, 19)",
+      "background": "rgba(0, 0, 0, 0)",
+      "radius": "0px",
+      "pad": "1px 2px",
+      "gap": "normal",
+      "text": null
+    },
+    "idle": {
+      "x": 19,
+      "y": 466.86,
+      "width": 352,
+      "height": 351.14,
+      "lines": 14,
+      "font": "400 16px/25.6px normal",
+      "color": "rgb(16, 17, 19)",
+      "background": "rgba(0, 0, 0, 0)",
+      "radius": "0px",
+      "pad": "0px",
+      "gap": "normal",
+      "text": "Try searching for\n        petroltrainsbillscurrencycalculatorweather\n        Jump back in\n        CalculatorStandardWeather34° Hazy sunCalendar3 events"
+    },
+    "idle.try": {
+      "x": 19,
+      "y": 466.86,
+      "width": 352,
+      "height": 17.59,
+      "lines": 1,
+      "font": "700 11px/17.6px 0.77px",
+      "color": "rgb(139, 141, 149)",
+      "background": "rgba(0, 0, 0, 0)",
+      "radius": "0px",
+      "pad": "0px",
+      "gap": "normal",
+      "text": "Try searching for"
+    },
+    "idle.jump": {
+      "x": 19,
+      "y": 586.45,
+      "width": 352,
+      "height": 17.59,
+      "lines": 1,
+      "font": "700 11px/17.6px 0.77px",
+      "color": "rgb(139, 141, 149)",
+      "background": "rgba(0, 0, 0, 0)",
+      "radius": "0px",
+      "pad": "0px",
+      "gap": "normal",
+      "text": "Jump back in"
+    },
+    "chips": {
+      "x": 19,
+      "y": 493.45,
+      "width": 352,
+      "height": 73,
+      "lines": 3,
+      "font": "400 16px/25.6px normal",
+      "color": "rgb(16, 17, 19)",
+      "background": "rgba(0, 0, 0, 0)",
+      "radius": "0px",
+      "pad": "0px 20px 2px",
+      "gap": "7px",
+      "text": "petroltrainsbillscurrencycalculatorweather"
+    },
+    "chip": {
+      "x": 288.7,
+      "y": 493.45,
+      "width": 62.3,
+      "height": 32,
+      "lines": 2,
+      "font": "600 12px/19.2px -0.18px",
+      "color": "rgb(86, 88, 95)",
+      "background": "rgb(255, 255, 255)",
+      "radius": "999px",
+      "pad": "0px 13px",
+      "gap": "6px",
+      "text": "petrol"
+    },
+    "recents": {
+      "x": 19,
+      "y": 613.05,
+      "width": 352,
+      "height": 204.95,
+      "lines": 8,
+      "font": "400 16px/25.6px normal",
+      "color": "rgb(16, 17, 19)",
+      "background": "rgb(255, 255, 255)",
+      "radius": "20px",
+      "pad": "0px",
+      "gap": "normal",
+      "text": "CalculatorStandardWeather34° Hazy sunCalendar3 events"
+    },
+    "recent": {
+      "x": 20,
+      "y": 614.05,
+      "width": 350,
+      "height": 67.98,
+      "lines": 3,
+      "font": "400 16px/25.6px normal",
+      "color": "rgb(16, 17, 19)",
+      "background": "rgba(0, 0, 0, 0)",
+      "radius": "0px",
+      "pad": "13px 15px",
+      "gap": "13px",
+      "text": "CalculatorStandard"
+    },
+    "recent.icon": {
+      "x": 321,
+      "y": 630.53,
+      "width": 34,
+      "height": 34,
+      "lines": 1,
+      "font": "400 16px/25.6px normal",
+      "color": "rgb(86, 88, 95)",
+      "background": "rgb(241, 241, 238)",
+      "radius": "12px",
+      "pad": "0px",
+      "gap": "normal",
+      "text": null
+    }
+  }
+}

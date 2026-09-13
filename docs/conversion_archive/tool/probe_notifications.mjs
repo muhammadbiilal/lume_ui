@@ -30,6 +30,14 @@ const REF = resolve(args.ref || process.cwd());
 const CHROME =
   args.chrome || 'C:/Program Files/Google/Chrome/Application/chrome.exe';
 const STATE = args.state || 'muslim_pk';
+/* The reading language. Row titles and bodies go through `t()`, so an Urdu
+   capture renders whatever the Urdu dictionary has — including English, where
+   it has nothing. That is what this is asked to find out. */
+const LANG = args.lang || 'en';
+/* Seed the reader's notification preferences. With sensitive previews on, a
+   sensitive row shows its public body — the values a fixture must carry
+   rather than invent. */
+const SENSITIVE = args.sensitive === '1' || args.sensitive === 'true';
 const PORT = Number(args.port || 8185);
 const CDP_PORT = Number(args.cdpPort || 9363);
 
@@ -59,10 +67,11 @@ if (!chosen) {
 const PROFILE = {
   displayName: '', photo: '',
   region: 'Islamabad Capital Territory',
-  lang: 'en', units: 'auto', currency: 'auto', clock: 'auto', method: 'MWL',
+  lang: LANG, units: 'auto', currency: 'auto', clock: 'auto', method: 'MWL',
   interests: chosen.islamic ? [...DEFAULTS, ...ISLAMIC] : DEFAULTS,
   prefs: { news: true, cricket: true, finance: true, recos: true },
   recents: [], favourites: [], market: null, recentCountries: [],
+  notify: { sensitivePreview: SENSITIVE },
   ...chosen,
 };
 
@@ -89,6 +98,7 @@ const DRIVER = `
   try {
     localStorage.setItem('lume-onboarded', '1');
     localStorage.setItem('lume-profile', ${JSON.stringify(JSON.stringify(PROFILE))});
+    localStorage.setItem('lume-lang', ${JSON.stringify(LANG)});
   } catch (e) {}
   function wait(ms) { return new Promise(function (r) { setTimeout(r, ms); }); }
   function tab(id) {
@@ -218,13 +228,45 @@ async function main() {
       var unread = rows.filter(function (r) {
         return r.className.indexOf('is-unread') !== -1;
       });
+      function text(r, sel) {
+        var e = r.querySelector(sel);
+        return e ? e.textContent.trim() : null;
+      }
+      function has(r, cls) { return r.className.indexOf(cls) !== -1; }
+      /* The whole rendered row — what a Flutter fixture has to reproduce, read
+         off the page rather than reconstructed from fifteen tool contexts. */
+      function full(r) {
+        var badge = r.querySelector('.nrow__titleline .badge, .nrow__titleline [class*="badge"]');
+        return {
+          id: r.getAttribute('data-notif'),
+          title: title(r),
+          body: text(r, '.nrow__text'),
+          meta: text(r, '.nrow__meta'),
+          category: category(r),
+          badge: badge ? badge.textContent.trim() : null,
+          action: text(r, '.nrow__act'),
+          dismiss: !!r.querySelector('.nrow__dismiss'),
+          unread: has(r, 'is-unread'),
+          actioned: has(r, 'is-actioned'),
+          expired: has(r, 'is-expired'),
+          dot: !!r.querySelector('.nrow__dot'),
+        };
+      }
+      var head = document.querySelector('#notifHeader');
       return {
+        lang: document.documentElement.getAttribute('lang'),
+        dir: document.documentElement.getAttribute('dir'),
         badge: window.__badge,
         rows: rows.length,
         unread: unread.length,
-        entries: unread.map(function (r) {
-          return { title: title(r), category: category(r) };
-        }),
+        header: head ? head.textContent.replace(/\\s+/g, ' ').trim() : null,
+        tabs: Array.prototype.map.call(
+          document.querySelectorAll('#screen-notifications .ttab'),
+          function (t) { return t.textContent.replace(/\\s+/g, ' ').trim(); }),
+        chips: Array.prototype.map.call(
+          document.querySelectorAll('#screen-notifications .filterbar .chip, #screen-notifications .fchip'),
+          function (c) { return c.textContent.replace(/\\s+/g, ' ').trim(); }),
+        entries: rows.map(full),
       };
     })()`);
 

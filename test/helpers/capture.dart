@@ -179,3 +179,87 @@ int lineCountOf(WidgetTester tester, Finder finder) {
       .toSet()
       .length;
 }
+
+/// Capture the whole running app at [location], through the real router.
+///
+/// [captureLume] pumps one widget, which is right for a component and wrong
+/// for anything the router composes — global search is a sheet on the root
+/// navigator over a destination, with a scrim over the navigation bar, and
+/// none of that exists outside the router. This pumps [pumpLumeRouter] and
+/// reads the root view's own layer, so the image is everything on screen.
+///
+/// Writes `<name>_<w>x<h>_<theme>_<lang><suffix>.flutter.png` and its sidecar
+/// under `outDir/<name>/`, the names `compare.mjs` pairs with the web side.
+Future<Map<String, Object?>> captureLumeRoute(
+  WidgetTester tester, {
+  required String location,
+  required String name,
+  Size surface = LumeViewport.phone,
+  ThemeMode theme = ThemeMode.light,
+  Locale locale = const Locale('en'),
+  double textScale = 1.0,
+  String outDir = kShotsDir,
+  String suffix = '',
+  List<Override> overrides = const <Override>[],
+  Future<void> Function(WidgetTester tester)? after,
+}) async {
+  await tester.runAsync(loadLumeFonts);
+
+  await pumpLumeRouter(
+    tester,
+    initialLocation: location,
+    surface: surface,
+    theme: theme,
+    locale: locale,
+    textScale: textScale,
+    overrides: overrides,
+  );
+  await tester.pumpAndSettle();
+  if (after != null) {
+    await after(tester);
+    await tester.pumpAndSettle();
+  }
+
+  final RenderView view = tester.binding.renderViews.first;
+  final OffsetLayer layer = view.debugLayer! as OffsetLayer;
+
+  late final ui.Image image;
+  late final ByteData png;
+  await tester.runAsync(() async {
+    image = await layer.toImage(Offset.zero & surface);
+    png = (await image.toByteData(format: ui.ImageByteFormat.png))!;
+  });
+
+  final String themeName = theme == ThemeMode.dark ? 'dark' : 'light';
+  final String cell =
+      '${name}_${surface.width.round()}x${surface.height.round()}'
+      '_${themeName}_${locale.languageCode}$suffix';
+
+  final Directory dir = Directory('$outDir/$name');
+  dir.createSync(recursive: true);
+  File(
+    '${dir.path}/$cell.flutter.png',
+  ).writeAsBytesSync(png.buffer.asUint8List());
+
+  final Map<String, Object?> sidecar = <String, Object?>{
+    'requested': <String, Object?>{
+      'width': surface.width,
+      'height': surface.height,
+      'dpr': 1,
+      'theme': themeName,
+      'lang': locale.languageCode,
+      'textScale': textScale,
+      'location': location,
+    },
+    'measured': <String, Object?>{
+      'imageWidth': image.width,
+      'imageHeight': image.height,
+    },
+  };
+  File('${dir.path}/$cell.flutter.json').writeAsStringSync(
+    '${const JsonEncoder.withIndent('  ').convert(sidecar)}\n',
+  );
+
+  image.dispose();
+  return sidecar;
+}

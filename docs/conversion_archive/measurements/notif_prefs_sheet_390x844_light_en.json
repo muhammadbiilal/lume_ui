@@ -1,0 +1,400 @@
+{
+  "cell": "notif_prefs_sheet_390x844_light_en",
+  "screen": "home",
+  "state": "default_pk",
+  "account": "guest",
+  "route": null,
+  "after": "notifprefs",
+  "profile": {
+    "country": "PK",
+    "city": "Islamabad",
+    "islamic": false,
+    "interests": [
+      "weather",
+      "calendar",
+      "tasks",
+      "notes",
+      "maths",
+      "expenses",
+      "news"
+    ],
+    "favourites": [],
+    "recents": [],
+    "prefs": {
+      "news": true,
+      "cricket": true,
+      "finance": true,
+      "recos": true
+    },
+    "displayName": ""
+  },
+  "viewport": {
+    "width": 390,
+    "height": 844,
+    "innerWidth": 390
+  },
+  "scrollTop": 0,
+  "theme": "light",
+  "lang": "en",
+  "dir": "ltr",
+  "tabs": [
+    "home",
+    "tools",
+    "trains",
+    "today",
+    "profile"
+  ],
+  "activeTab": "home",
+  "scroll": {
+    "clientHeight": 816,
+    "scrollHeight": 1962,
+    "paddingBottom": "118px"
+  },
+  "missing": [],
+  "composition": {
+    "hero": [
+      "plan",
+      "trains",
+      "money",
+      "tools"
+    ],
+    "quickTools": [
+      "aqi",
+      "datecalc",
+      "reminders",
+      "notes",
+      "calculator",
+      "tax",
+      "news",
+      "sunmoon"
+    ],
+    "quickToolLabels": [
+      "Air Quality",
+      "Date Calculator",
+      "Reminders",
+      "Notes",
+      "Calculator",
+      "Tax Calculator",
+      "News",
+      "Sun & Moon"
+    ],
+    "quickToolValues": [
+      "AQI",
+      "Add · diff",
+      "4 today",
+      "12 saved",
+      "Standard",
+      "FBR 2025-26",
+      "12 new",
+      "Sunrise · sunset"
+    ],
+    "quickActions": [
+      "expenses",
+      "todos",
+      "qr",
+      "notes",
+      "water"
+    ],
+    "quickActionLabels": [
+      "Add expense",
+      "Add task",
+      "Scan QR",
+      "New note",
+      "Log water"
+    ],
+    "live": [
+      "weather",
+      "markets",
+      "bills"
+    ],
+    "liveTitles": [
+      "Islamabad",
+      "KSE-100",
+      "1 bill needs attention"
+    ],
+    "liveMetas": [
+      "Mostly clear · Rain 64%",
+      "Pakistan Stock Exchange · Market closed",
+      "Due this month · Rs 37,400"
+    ],
+    "liveValues": [
+      "34°",
+      "154,230",
+      "Rs 7,920"
+    ],
+    "upcoming": [
+      "Electricitydue in 4 days",
+      "Internet5 days overdue",
+      "Netflixrenews 14 Sep",
+      "AyeshaBirthday · in 4 days"
+    ],
+    "upcomingValues": [
+      "Rs 20,900",
+      "Rs 7,920",
+      "14 Sep",
+      "11 Sept"
+    ],
+    "discover": [
+      {
+        "title": "PAK 214/4",
+        "meta": "2nd Test · Day 2"
+      },
+      {
+        "title": "34° and hazy",
+        "meta": "Feels like 38°"
+      },
+      {
+        "title": "Next outage 14:00",
+        "meta": "Gulshan · 2 hours"
+      },
+      {
+        "title": "Out for delivery",
+        "meta": "TCS · arrives today"
+      }
+    ],
+    "glance": [
+      {
+        "cls": "card card--pad stat-row",
+        "faith": null,
+        "loc": "PK",
+        "text": "Petrol Paki tan\n            Effective 1 September · OGRA\n          \n          \n            ₨ 264.61\n            +2.14"
+      },
+      {
+        "cls": "card card--pad progress-card",
+        "faith": null,
+        "loc": null,
+        "text": "3 ta k  left today\n            Next: fini h the Q3  ummary · 15:00"
+      }
+    ],
+    "sections": [
+      {
+        "tag": "header",
+        "cls": "appbar",
+        "id": null,
+        "hidden": false,
+        "y": 28,
+        "height": 59
+      },
+      {
+        "tag": "div",
+        "cls": "section",
+        "id": null,
+        "hidden": false,
+        "y": 101,
+        "height": 66
+      },
+      {
+        "tag": "div",
+        "cls": "hero",
+        "id": null,
+        "hidden": false,
+        "y": 181,
+        "height": 219
+      },
+      {
+        "tag": "div",
+        "cls": "section",
+        "id": "quickActionsWrap",
+        "hidden": false,
+        "y": 424,
+        "height": 46
+      },
+      {
+        "tag": "div",
+        "cls": "section",
+        "id": null,
+        "hidden": false,
+        "y": 494,
+        "height": 286.75
+      },
+      {
+        "tag": "div",
+        "cls": "section",
+        "id": "liveWrap",
+        "hidden": false,
+        "y": 804.75,
+        "height": 294
+      },
+      {
+        "tag": "div",
+        "cls": "section",
+        "id": null,
+        "hidden": false,
+        "y": 1122.75,
+        "height": 228
+      },
+      {
+        "tag": "div",
+        "cls": "section",
+        "id": "upcomingWrap",
+        "hidden": false,
+        "y": 1374.75,
+        "height": 273
+      },
+      {
+        "tag": "div",
+        "cls": "section",
+        "id": null,
+        "hidden": false,
+        "y": 1671.75,
+        "height": 200.25
+      }
+    ]
+  },
+  "bounds": {
+    "screen": {
+      "x": 0,
+      "y": 28,
+      "width": 390,
+      "height": 816,
+      "lines": null,
+      "font": "400 16px/normal normal",
+      "color": "rgb(16, 17, 19)",
+      "background": "rgba(0, 0, 0, 0)",
+      "radius": "0px",
+      "pad": "0px 0px 118px",
+      "gap": "normal",
+      "text": "Good afternoon 👋\n        \n          Mon, 7 Sept\n          \n          \n          Islamabad\n        \n      \n      \n        \n      \n      \n        \n        13\n   "
+    },
+    "scrim": {
+      "x": 0,
+      "y": 0,
+      "width": 390,
+      "height": 844,
+      "lines": null,
+      "font": "400 16px/normal normal",
+      "color": "rgb(16, 17, 19)",
+      "background": "rgba(16, 17, 19, 0.38)",
+      "radius": "0px",
+      "pad": "0px",
+      "gap": "normal",
+      "text": null
+    },
+    "sheet": {
+      "x": 0,
+      "y": 67.53,
+      "width": 390,
+      "height": 776.47,
+      "lines": null,
+      "font": "400 16px/normal normal",
+      "color": "rgb(16, 17, 19)",
+      "background": "rgb(255, 255, 255)",
+      "radius": "26px 26px 0px 0px",
+      "pad": "0px 0px 18px",
+      "gap": "normal",
+      "text": "Notification settings\n        What Lume may tell you, and when\n      \n      \n    \n    GeneralPush notificationsNot asked yetIn-app notificationsBanners and the "
+    },
+    "sheet.grab": {
+      "x": 177,
+      "y": 77.53,
+      "width": 36,
+      "height": 4,
+      "lines": null,
+      "font": "400 16px/normal normal",
+      "color": "rgb(16, 17, 19)",
+      "background": "rgba(16, 17, 19, 0.12)",
+      "radius": "999px",
+      "pad": "0px",
+      "gap": "normal",
+      "text": null
+    },
+    "sheet.head": {
+      "x": 1,
+      "y": 81.53,
+      "width": 388,
+      "height": 63,
+      "lines": null,
+      "font": "400 16px/normal normal",
+      "color": "rgb(16, 17, 19)",
+      "background": "rgba(0, 0, 0, 0)",
+      "radius": "0px",
+      "pad": "14px 18px 10px",
+      "gap": "12px",
+      "text": "Notification settings\n        What Lume may tell you, and when"
+    },
+    "sheet.title": {
+      "x": 19,
+      "y": 95.53,
+      "width": 194.73,
+      "height": 22,
+      "lines": null,
+      "font": "800 17px/normal -0.51px",
+      "color": "rgb(16, 17, 19)",
+      "background": "rgba(0, 0, 0, 0)",
+      "radius": "0px",
+      "pad": "0px",
+      "gap": "normal",
+      "text": "Notification settings"
+    },
+    "sheet.body": {
+      "x": 1,
+      "y": 144.53,
+      "width": 388,
+      "height": 681.47,
+      "lines": null,
+      "font": "400 16px/normal normal",
+      "color": "rgb(16, 17, 19)",
+      "background": "rgba(0, 0, 0, 0)",
+      "radius": "0px",
+      "pad": "0px 18px 8px",
+      "gap": "normal",
+      "text": "GeneralPush notificationsNot asked yetIn-app notificationsBanners and the notification centreSoundVibrationBadge countShow the unread count on the bellCategorie"
+    },
+    "sheet.btn": {
+      "x": 19,
+      "y": 2636.53,
+      "width": 352,
+      "height": 46,
+      "lines": null,
+      "font": "700 14px/normal -0.308px",
+      "color": "rgb(16, 17, 19)",
+      "background": "rgb(241, 241, 238)",
+      "radius": "12px",
+      "pad": "0px 20px",
+      "gap": "7px",
+      "text": "Restore dismissed"
+    },
+    "sheet.row": {
+      "x": 20,
+      "y": 176.53,
+      "width": 350,
+      "height": 59,
+      "lines": null,
+      "font": "400 16px/normal normal",
+      "color": "rgb(16, 17, 19)",
+      "background": "rgba(0, 0, 0, 0)",
+      "radius": "0px",
+      "pad": "13px 15px",
+      "gap": "13px",
+      "text": "Push notificationsNot asked yet"
+    },
+    "sheet.switch": {
+      "x": 313,
+      "y": 193.03,
+      "width": 42,
+      "height": 25,
+      "lines": null,
+      "font": "400 16px/normal normal",
+      "color": "rgb(139, 141, 149)",
+      "background": "rgba(16, 17, 19, 0.12)",
+      "radius": "999px",
+      "pad": "3px",
+      "gap": "normal",
+      "text": null
+    },
+    "shell.tabbar": {
+      "x": 12,
+      "y": 770,
+      "width": 366,
+      "height": 62,
+      "lines": null,
+      "font": "400 16px/normal normal",
+      "color": "rgb(16, 17, 19)",
+      "background": "color(srgb 1 1 1 / 0.84)",
+      "radius": "20px",
+      "pad": "0px 4px",
+      "gap": "normal",
+      "text": "HomeToolsTrainsTodayProfile"
+    }
+  }
+}

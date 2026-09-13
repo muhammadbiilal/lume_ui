@@ -528,11 +528,112 @@ const ACCOUNT_TARGETS = {
 
 /* Extra steps a state needs once the app is up. `chip(id)` selects a category;
    `search(q)` types into the hub's field. */
+/* Global search is a sheet over the screen that raised it (Q10), so these
+   are measured over Home with the sheet up. `#scrim` and `.tabbar` are here
+   so the stacking — scrim over the bar, sheet over the scrim — is a number
+   rather than an impression. */
+const SEARCH_TARGETS = {
+  'screen': '#screen-home',
+  'scrim': '#scrim',
+  'shell.tabbar': '.tabbar',
+  'sheet': '#sheet-search',
+  'sheet.grab': '#sheet-search .sheet__grab',
+  'sheet.head': '#sheet-search .sheet__head',
+  'sheet.body': '#sheet-search .sheet__body',
+  'search': '#sheet-search .search',
+  'search.input': '#globalSearch',
+  'idle': '#searchIdle',
+  'idle.try': '#searchIdle > p:nth-of-type(1)',
+  'idle.jump': '#searchIdle > p:nth-of-type(2)',
+  'chips': '#searchSuggest',
+  'chip': '#searchSuggest .chip',
+  'recents': '#searchRecent',
+  'recent': '#searchRecent .list-row',
+  'recent.icon': '#searchRecent .list-row__icon',
+  'results': '#searchResults:not([hidden])',
+  'result': '#searchResults .list-row',
+  'result.icon': '#searchResults .list-row__icon',
+  'result.title': '#searchResults .list-row__title',
+  'result.sub': '#searchResults .list-row__sub',
+  'result.end': '#searchResults .list-row__end',
+  'empty': '#searchEmpty.is-shown',
+  'empty.title': '#searchEmpty.is-shown .empty__title',
+};
+
+/* The notification centre, reached by its own tab id — the bell's
+   `data-act="tab:notifications"` is the same `goTo`. The first row is the one
+   measured; the probe reads every row's content separately. */
+const NOTIFICATION_TARGETS = {
+  'screen': '#screen-notifications',
+  'header': '#notifHeader',
+  'toolbar': '#notifHeader .toolbar',
+  'toolbar.title': '#notifHeader .toolbar__title',
+  'toolbar.sub': '#notifHeader .toolbar__sub',
+  'tabs': '#screen-notifications .ttabs',
+  'tab': '#screen-notifications .ttab',
+  'filterbar': '#screen-notifications .filterbar',
+  'chip': '#screen-notifications .filterbar .chip',
+  'list': '#screen-notifications .nlist',
+  'row': '#screen-notifications .nrow',
+  'row.main': '#screen-notifications .nrow__main',
+  'row.icon': '#screen-notifications .nrow__icon',
+  'row.titleline': '#screen-notifications .nrow__titleline',
+  'row.badge': '#screen-notifications .nrow__titleline > :not(.nrow__title)',
+  'row.title': '#screen-notifications .nrow__title',
+  'row.text': '#screen-notifications .nrow__text',
+  'row.meta': '#screen-notifications .nrow__meta',
+  'row.dot': '#screen-notifications .nrow__dot',
+  'row.acts': '#screen-notifications .nrow__acts',
+  'row.act': '#screen-notifications .nrow__act',
+  'row.dismiss': '#screen-notifications .nrow__dismiss',
+  'row2': '#screen-notifications .nrow:nth-child(2)',
+  'row2.main': '#screen-notifications .nrow:nth-child(2) .nrow__main',
+  'row2.acts': '#screen-notifications .nrow:nth-child(2) .nrow__acts',
+  'row5': '#screen-notifications .nrow:nth-child(5)',
+  'shell.tabbar': '.tabbar',
+};
+
+/* The engine's own demo banner, which every other capture hides. Measured
+   over Home, where it fires. */
+const BANNER_TARGETS = {
+  'screen': '.screen.is-active',
+  'banner': '#notifBanner:not([hidden])',
+  'banner.main': '#notifBanner .nbanner__main',
+  'banner.icon': '#notifBanner .nbanner__icon',
+  'banner.title': '#notifBanner .nbanner__title',
+  'banner.text': '#notifBanner .nbanner__text',
+  'banner.close': '#notifBanner .nbanner__close',
+  'shell.tabbar': '.tabbar',
+};
+
+/* `#sheet-notifpush` and `#sheet-notifprefs` — the only two notification
+   sheets the reference raises. */
+const sheetTargets = (id) => ({
+  'screen': '.screen.is-active',
+  'scrim': '#scrim',
+  'sheet': `#sheet-${id}`,
+  'sheet.grab': `#sheet-${id} .sheet__grab`,
+  'sheet.head': `#sheet-${id} .sheet__head`,
+  'sheet.title': `#sheet-${id} .sheet__title`,
+  'sheet.body': `#sheet-${id} .sheet__body`,
+  'sheet.btn': `#sheet-${id} .btn`,
+  'sheet.row': `#sheet-${id} .list-row`,
+  'sheet.switch': `#sheet-${id} .switch`,
+  'shell.tabbar': '.tabbar',
+});
+
 const AFTER = {
   tools_search: "search('petrol')",
   tools_noresults: "search('zzzzz')",
   tools_all: "chip('all')",
   tools_islamic: "chip('islamic')",
+  search_idle: "await openSearch('')",
+  search_results: "await openSearch('ca')",
+  search_petrol: "await openSearch('petrol')",
+  search_empty: "await openSearch('zzzz nothing')",
+  banner: "await waitFor('#notifBanner:not([hidden])', 6000); await wait(500)",
+  notifpush: "sheet('notifpush'); await wait(900)",
+  notifprefs: "sheet('notifprefs'); await wait(900)",
 };
 
 /* The instant everything is captured at: Monday 7 September 2026, 16:41:32
@@ -568,7 +669,7 @@ const FREEZE = `
 })();
 `;
 
-const DRIVER = (profile, screen, after, account, route) => FREEZE + `
+const DRIVER = (profile, screen, after, account, route, keepBanner) => FREEZE + `
 (function () {
   try {
     localStorage.setItem('lume-onboarded', '1');
@@ -620,6 +721,41 @@ const DRIVER = (profile, screen, after, account, route) => FREEZE + `
     if (c) c.click();
   }
 
+  /* A sheet, raised by the same data-sheet attribute its callers carry. */
+  function sheet(id) {
+    var b = document.createElement('button');
+    b.setAttribute('data-sheet', id);
+    b.style.cssText = 'position:fixed;opacity:0;pointer-events:none';
+    document.body.appendChild(b);
+    b.click();
+    b.remove();
+  }
+
+  async function waitFor(sel, ms) {
+    for (var i = 0; i < (ms || 4000) / 100; i++) {
+      if (document.querySelector(sel)) return true;
+      await wait(100);
+    }
+    throw new Error('never appeared: ' + sel);
+  }
+
+  /* The global search sheet, raised the way a reader raises it — by the
+     app bar's own control — and typed into after it has finished rising and
+     taken focus (320 ms in the shell, plus the sheet's slow transition). */
+  async function openSearch(q) {
+    var b = document.querySelector('.appbar .iconbtn[data-sheet="search"]');
+    if (b) b.click();
+    await wait(900);
+    if (q) {
+      var el = document.getElementById('globalSearch');
+      if (el) {
+        el.value = q;
+        el.dispatchEvent(new Event('input', { bubbles: true }));
+      }
+      await wait(300);
+    }
+  }
+
   function search(q) {
     var el = document.getElementById('toolSearch');
     if (!el) return;
@@ -646,8 +782,11 @@ const DRIVER = (profile, screen, after, account, route) => FREEZE + `
        being measured, so it is taken out of the capture rather than waited
        out — waiting would make the capture depend on a timer. */
     var suppress = document.createElement('style');
-    suppress.textContent =
-      '.nbanner,.toast{display:none!important}';
+    suppress.textContent = ${JSON.stringify(
+      keepBanner
+        ? '.toast{display:none!important}'
+        : '.nbanner,.toast{display:none!important}',
+    )};
     document.head.appendChild(suppress);
     document.documentElement.setAttribute('data-measure-ready', '1');
   }
@@ -728,11 +867,18 @@ async function main() {
     explore: EXPLORE_TARGETS,
     trains: TRAINS_TARGETS,
     profile: ROUTE ? ACCOUNT_TARGETS : PROFILE_TARGETS,
+    notifications: NOTIFICATION_TARGETS,
   }[SCREEN] || HOME_TARGETS;
+  const after = String(args.after || '');
+  const measured =
+    after.startsWith('search_') ? SEARCH_TARGETS
+      : after === 'banner' ? BANNER_TARGETS
+        : after === 'notifpush' || after === 'notifprefs' ? sheetTargets(after)
+          : targets;
 
   const work = stage(
-  DRIVER(profile, SCREEN, AFTER[args.after] || '', ACCOUNT, ROUTE),
-);
+    DRIVER(profile, SCREEN, AFTER[after] || '', ACCOUNT, ROUTE, after === 'banner'),
+  );
   const server = spawn(process.execPath, ['scripts/serve.js'], {
     cwd: work,
     env: { ...process.env, PORT: String(PORT) },
@@ -827,7 +973,7 @@ async function main() {
     }
 
     const result = await cdp.evaluate(`(function () {
-      var targets = ${JSON.stringify(targets)};
+      var targets = ${JSON.stringify(measured)};
       var out = {};
       var missing = [];
       Object.keys(targets).forEach(function (name) {
