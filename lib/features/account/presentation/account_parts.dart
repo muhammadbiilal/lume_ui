@@ -9,10 +9,17 @@ library;
 import 'package:flutter/material.dart';
 
 import '../../../core/layout/lume_measure.dart';
+import '../../../core/localization/lume_format.dart';
+import '../../../core/theme/lume/lume_colors.dart';
 import '../../../core/theme/lume/lume_space.dart';
+import '../../../core/theme/lume/lume_theme.dart';
+import '../../../core/theme/lume/lume_type.dart';
 import '../../../core/widgets/lume/lume_field.dart';
+import '../../../core/widgets/lume/lume_settings.dart';
 import '../../../core/widgets/lume/lume_surface.dart';
+import '../../../l10n/app_localizations.dart';
 import '../application/account_form.dart';
+import '../domain/notification_prefs.dart';
 
 /// What one account route is: a title, an optional subtitle, and a body.
 ///
@@ -79,6 +86,121 @@ class LumeAccountSection extends StatelessWidget {
             ),
     ),
   );
+}
+
+/// Quiet hours — `renderNotifPrefs`' three rows: the switch, then the
+/// "from" and "Until" steppers.
+///
+/// The reference draws the account's Notifications route and the notification
+/// centre's preferences sheet from the same function, so Flutter builds both
+/// from this one list over the one [LumeNotificationPrefs] the store holds.
+/// Each door passes the write it already makes; neither keeps quiet-hours
+/// state of its own. The steppers are never disabled — the reference leaves
+/// them live whether quiet hours are on or off.
+List<Widget> lumeQuietHoursRows({
+  required AppLocalizations l,
+  required LumeFormatting f,
+  required LumeNotificationPrefs prefs,
+  required ValueChanged<bool> onQuiet,
+  required void Function({required bool from, required int by}) onStep,
+}) => <Widget>[
+  LumeSettingsRow(
+    title: l.notifPrefQuietOn,
+    subtitle:
+        '${f.hourLabel(prefs.quietFrom)} – '
+        '${f.hourLabel(prefs.quietTo)}',
+    toggle: prefs.quiet,
+    onTap: () => onQuiet(!prefs.quiet),
+  ),
+  LumeStepperRow(
+    title: l.notifPrefFrom,
+    stepper: LumeStepper(
+      label: l.notifPrefFrom,
+      value: f.hourLabel(prefs.quietFrom),
+      decrementLabel: l.notifPrefEarlier,
+      incrementLabel: l.notifPrefLater,
+      onDecrement: () => onStep(from: true, by: -1),
+      onIncrement: () => onStep(from: true, by: 1),
+    ),
+  ),
+  LumeStepperRow(
+    title: l.notifPrefTo,
+    isLast: true,
+    stepper: LumeStepper(
+      label: l.notifPrefTo,
+      value: f.hourLabel(prefs.quietTo),
+      decrementLabel: l.notifPrefEarlier,
+      incrementLabel: l.notifPrefLater,
+      onDecrement: () => onStep(from: false, by: -1),
+      onIncrement: () => onStep(from: false, by: 1),
+    ),
+  ),
+];
+
+/// A `.list-row` whose end is a stepper.
+///
+/// Not a [LumeSettingsRow]: that row speaks as one sentence and hides its
+/// children, and a stepper's two buttons have to be heard on their own.
+class LumeStepperRow extends StatelessWidget {
+  const LumeStepperRow({
+    super.key,
+    required this.title,
+    required this.stepper,
+    this.isLast = false,
+  });
+
+  final String title;
+  final Widget stepper;
+  final bool isLast;
+
+  /// How far a stepper's targets reach above and below its 32-point pill.
+  static const double _stepperBand =
+      (LumeStepper.targetSize - LumeStepper.height) / 2;
+
+  @override
+  Widget build(BuildContext context) {
+    final LumeColors lume = context.lume;
+    return Container(
+      constraints: const BoxConstraints(minHeight: LumeSpace.tap),
+      // `.stepper` is 32 tall and its buttons' targets are 44; the stepper's
+      // box also reaches `overhang` past each end of the pill. Those points
+      // come out of the row's own padding — six above and below, six at the
+      // end — so the row is the reference's 59 and the pill's ends sit where
+      // the reference draws them, while every target stays inside the
+      // stepper's box, where a tap can reach it.
+      padding: EdgeInsetsDirectional.fromSTEB(
+        LumeSettingsMetrics.rowPadding.left,
+        LumeSettingsMetrics.rowPadding.top - _stepperBand,
+        LumeSettingsMetrics.rowPadding.right - LumeStepper.overhang,
+        LumeSettingsMetrics.rowPadding.bottom - _stepperBand,
+      ),
+      decoration: BoxDecoration(
+        border: isLast
+            ? null
+            : Border(
+                bottom: BorderSide(color: lume.border, width: LumeSpace.border),
+              ),
+      ),
+      child: Row(
+        children: <Widget>[
+          Expanded(
+            child: Text(
+              title,
+              style: LumeType.tracked(
+                LumeType.natural(context, context.lumeType.meta, size: 14),
+                -0.022,
+              ).copyWith(color: lume.text, fontWeight: FontWeight.w700),
+            ),
+          ),
+          // `.list-row { gap: 13px }` to the pill, not to the target band.
+          const SizedBox(
+            width: LumeSettingsMetrics.rowGap - LumeStepper.overhang,
+          ),
+          stepper,
+        ],
+      ),
+    );
+  }
 }
 
 /// `.list` — a card of settings rows, with the hairlines between them.

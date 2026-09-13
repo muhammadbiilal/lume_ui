@@ -1268,9 +1268,17 @@ It also listened to nothing. The preference store is a `ChangeNotifier` behind
 a plain provider, so a flipped switch stayed where it was and a second step
 started from the hour the sheet opened on. It now listens to the store.
 
-The account's own Notifications route (F5C) draws the same five sections
-without the two stepper rows; that asymmetry is recorded here and left to
-F5C's owner. **Evidence:** `notification_overlays_test.dart`.
+The account's own Notifications route (F5C) drew the same five sections
+without the two stepper rows. **Resolved after F5D:** both doors now build
+quiet hours from `lumeQuietHoursRows` over the one store, step through
+`LumeNotificationPrefs.quietStepped`, and the account host listens to that
+store, so a window stepped in the sheet is the window the route shows when the
+sheet closes. The sheet's private stepper row is gone. **Evidence:**
+`notification_overlays_test.dart`, `account_quiet_hours_test.dart` — wrapping
+both ways, each door seeing the other's step, live steppers with quiet hours
+off, per-button semantics, Urdu reading order, 200 %, and the "from" row
+(59), its pill (125.19 × 32) and the pill's end measured against the
+reference's route.
 
 ### C60 — Home's hero title collapsed in every capture (closed)
 

@@ -523,6 +523,11 @@ const ACCOUNT_TARGETS = {
   'sessrow': '#accountBody .sessrow',
   'conseq': '#accountBody .conseq',
   'state': '#accountBody .state',
+  /* The quiet-hours steppers on the Notifications route, and the row that
+     holds each. Measured wherever the page puts them: getBoundingClientRect
+     answers for rows below the fold too. */
+  'stepper': '#accountBody .stepper',
+  'stepper.row': '#accountBody .list-row:has(.stepper)',
   'shell.tabbar': '.tabbar',
 };
 

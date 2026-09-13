@@ -331,6 +331,19 @@ class LumeNotificationPrefs {
     typesOff: typesOff ?? this.typesOff,
   );
 
+  /// The same value with one quiet-hours bound moved an hour.
+  ///
+  /// `((h + 1) + 24) % 24` in the reference's stepper handler: round the clock
+  /// in both directions, so eleven at night steps forward to midnight and
+  /// midnight steps back to eleven. Neither bound is clamped against the
+  /// other — a window can cross midnight, and the engine reads it either way
+  /// (`inQuietHours`). The one rule both the account route and the preferences
+  /// sheet step through.
+  LumeNotificationPrefs quietStepped({required bool from, required int by}) =>
+      from
+      ? copyWith(quietFrom: (quietFrom + by % 24 + 24) % 24)
+      : copyWith(quietTo: (quietTo + by % 24 + 24) % 24);
+
   /// The same value with one source switched.
   LumeNotificationPrefs typeToggled(String sourceId, {required bool on}) {
     final Set<String> next = Set<String>.of(typesOff);

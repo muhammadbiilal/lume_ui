@@ -2,7 +2,7 @@
   "cell": "account_notifications_390x844_light_en",
   "screen": "profile",
   "state": "default_pk",
-  "account": "authed",
+  "account": "guest",
   "route": "notifications",
   "after": null,
   "profile": {
@@ -220,6 +220,34 @@
       "pad": "0px 20px",
       "gap": "7px",
       "text": "Restore dismissed"
+    },
+    "stepper": {
+      "x": 228.81,
+      "y": 2303,
+      "width": 125.19,
+      "height": 32,
+      "lines": null,
+      "font": "400 16px/normal normal",
+      "color": "rgb(139, 141, 149)",
+      "background": "rgb(241, 241, 238)",
+      "radius": "999px",
+      "pad": "3px",
+      "gap": "4px",
+      "text": "10:00 pm"
+    },
+    "stepper.row": {
+      "x": 21,
+      "y": 2290,
+      "width": 348,
+      "height": 59,
+      "lines": null,
+      "font": "400 16px/normal normal",
+      "color": "rgb(16, 17, 19)",
+      "background": "rgba(0, 0, 0, 0)",
+      "radius": "0px",
+      "pad": "13px 15px",
+      "gap": "13px",
+      "text": "from10:00 pm"
     },
     "shell.tabbar": {
       "x": 12,

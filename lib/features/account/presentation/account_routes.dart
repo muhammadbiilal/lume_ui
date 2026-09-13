@@ -164,6 +164,7 @@ class LumeAccountActions {
     required this.toggleCategory,
     required this.toggleGeneral,
     required this.toggleType,
+    required this.stepQuiet,
     required this.restoreNotifications,
     required this.togglePreview,
     required this.toggleSensitivePreview,
@@ -200,6 +201,10 @@ class LumeAccountActions {
 
   /// One source's own switch, in the per-tool section.
   final void Function(String sourceId, bool on) toggleType;
+
+  /// A quiet-hours bound moved an hour — `from` or "Until" —
+  /// [LumeNotificationPrefs.quietStepped].
+  final void Function({required bool from, required int by}) stepQuiet;
 
   /// `notifrestore` — puts every dismissed notification back.
   final VoidCallback restoreNotifications;
@@ -759,18 +764,16 @@ LumeAccountView _notifications(LumeAccountRouteContext c) {
       LumeAccountSection(
         title: l.notifPrefQuiet,
         subtitle: l.notifPrefQuietSub,
+        // The switch and its two steppers, from the builder the
+        // preferences sheet uses too — one list, one store.
         child: LumeAccountList(
-          rows: <Widget>[
-            LumeSettingsRow(
-              title: l.notifPrefQuietOn,
-              subtitle:
-                  '${c.f.hourLabel(c.notify.quietFrom)} – '
-                  '${c.f.hourLabel(c.notify.quietTo)}',
-              toggle: c.notify.quiet,
-              onTap: () => c.actions.toggleGeneral('quiet', !c.notify.quiet),
-              isLast: true,
-            ),
-          ],
+          rows: lumeQuietHoursRows(
+            l: l,
+            f: c.f,
+            prefs: c.notify,
+            onQuiet: (bool on) => c.actions.toggleGeneral('quiet', on),
+            onStep: c.actions.stepQuiet,
+          ),
         ),
       ),
 

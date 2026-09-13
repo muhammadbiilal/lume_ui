@@ -28,7 +28,6 @@ import '../../../core/theme/lume/lume_space.dart';
 import '../../../core/theme/lume/lume_theme.dart';
 import '../../../core/theme/lume/lume_type.dart';
 import '../../../core/widgets/lume/lume_button.dart';
-import '../../../core/widgets/lume/lume_field.dart';
 import '../../../core/widgets/lume/lume_overlay.dart';
 import '../../../core/widgets/lume/lume_pressable.dart';
 import '../../../core/widgets/lume/lume_settings.dart';
@@ -353,9 +352,6 @@ class LumeNotificationPrefsSheet extends ConsumerWidget {
       (byTool[s.tool] ??= <LumeNotificationSource>[]).add(s);
     }
 
-    /// An hour either side, round the clock.
-    int step(int hour, int by) => (hour + by + 24) % 24;
-
     return SingleChildScrollView(
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -447,48 +443,17 @@ class LumeNotificationPrefsSheet extends ConsumerWidget {
 
           // ---- Quiet hours ------------------------------------------------
           _Head(l.notifPrefQuiet, subtitle: l.notifPrefQuietSub),
+          // The same three rows the account's Notifications route draws,
+          // from the same builder, over the same store.
           LumeAccountList(
-            rows: <Widget>[
-              LumeSettingsRow(
-                title: l.notifPrefQuietOn,
-                subtitle:
-                    '${f.hourLabel(prefs.quietFrom)} – '
-                    '${f.hourLabel(prefs.quietTo)}',
-                toggle: prefs.quiet,
-                onTap: () => store.write(prefs.copyWith(quiet: !prefs.quiet)),
-              ),
-              _StepperRow(
-                title: l.notifPrefFrom,
-                stepper: LumeStepper(
-                  label: l.notifPrefFrom,
-                  value: f.hourLabel(prefs.quietFrom),
-                  decrementLabel: l.notifPrefEarlier,
-                  incrementLabel: l.notifPrefLater,
-                  onDecrement: () => store.write(
-                    prefs.copyWith(quietFrom: step(prefs.quietFrom, -1)),
-                  ),
-                  onIncrement: () => store.write(
-                    prefs.copyWith(quietFrom: step(prefs.quietFrom, 1)),
-                  ),
-                ),
-              ),
-              _StepperRow(
-                title: l.notifPrefTo,
-                isLast: true,
-                stepper: LumeStepper(
-                  label: l.notifPrefTo,
-                  value: f.hourLabel(prefs.quietTo),
-                  decrementLabel: l.notifPrefEarlier,
-                  incrementLabel: l.notifPrefLater,
-                  onDecrement: () => store.write(
-                    prefs.copyWith(quietTo: step(prefs.quietTo, -1)),
-                  ),
-                  onIncrement: () => store.write(
-                    prefs.copyWith(quietTo: step(prefs.quietTo, 1)),
-                  ),
-                ),
-              ),
-            ],
+            rows: lumeQuietHoursRows(
+              l: l,
+              f: f,
+              prefs: prefs,
+              onQuiet: (bool on) => store.write(prefs.copyWith(quiet: on)),
+              onStep: ({required bool from, required int by}) =>
+                  store.write(prefs.quietStepped(from: from, by: by)),
+            ),
           ),
 
           // ---- Privacy ----------------------------------------------------
@@ -602,50 +567,4 @@ class _ToolLabel extends StatelessWidget {
       0.04,
     ).copyWith(color: context.lume.text3, fontWeight: FontWeight.w700),
   );
-}
-
-/// A `.list-row` whose end is a stepper — `renderNotifPrefs`' "from" and
-/// "Until" rows. Not a [LumeSettingsRow]: that row speaks as one sentence and
-/// hides its children, and a stepper's two buttons have to be heard.
-class _StepperRow extends StatelessWidget {
-  const _StepperRow({
-    required this.title,
-    required this.stepper,
-    this.isLast = false,
-  });
-
-  final String title;
-  final Widget stepper;
-  final bool isLast;
-
-  @override
-  Widget build(BuildContext context) {
-    final LumeColors lume = context.lume;
-    return Container(
-      constraints: const BoxConstraints(minHeight: LumeSpace.tap),
-      padding: LumeSettingsMetrics.rowPadding,
-      decoration: BoxDecoration(
-        border: isLast
-            ? null
-            : Border(
-                bottom: BorderSide(color: lume.border, width: LumeSpace.border),
-              ),
-      ),
-      child: Row(
-        children: <Widget>[
-          Expanded(
-            child: Text(
-              title,
-              style: LumeType.tracked(
-                LumeType.natural(context, context.lumeType.meta, size: 14),
-                -0.022,
-              ).copyWith(color: lume.text, fontWeight: FontWeight.w700),
-            ),
-          ),
-          const SizedBox(width: LumeSettingsMetrics.rowGap),
-          stepper,
-        ],
-      ),
-    );
-  }
 }

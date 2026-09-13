@@ -538,6 +538,14 @@ class _LumeAccountHostState extends ConsumerState<LumeAccountHost> {
         }),
       );
     },
+    stepQuiet: ({required bool from, required int by}) => unawaited(
+      _writeNotify(
+        ref
+            .read(notificationPrefsProvider)
+            .prefs
+            .quietStepped(from: from, by: by),
+      ),
+    ),
     toggleType: (String sourceId, bool on) => unawaited(
       _writeNotify(
         ref.read(notificationPrefsProvider).prefs.typeToggled(sourceId, on: on),
@@ -607,7 +615,14 @@ class _LumeAccountHostState extends ConsumerState<LumeAccountHost> {
     // the row that was just tapped would keep showing the old value until
     // something else rebuilt the screen — which is exactly the kind of lie a
     // settings screen must not tell.
-    listenable: ref.watch(startupControllerProvider),
+    //
+    // And the notification preferences, which have a second door: the
+    // centre's preferences sheet writes the same store, and a window stepped
+    // there has to be the window this route shows when the sheet closes.
+    listenable: Listenable.merge(<Listenable>[
+      ref.watch(startupControllerProvider),
+      ref.watch(notificationPrefsProvider),
+    ]),
     builder: (BuildContext context, Widget? _) => _build(context),
   );
 
