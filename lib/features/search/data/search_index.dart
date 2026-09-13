@@ -11,10 +11,12 @@
 /// the results — there is no list it could leak from.
 library;
 
+import '../../../core/localization/lume_format.dart';
 import '../../../l10n/app_localizations.dart';
 import '../../catalogue/domain/eligibility.dart';
 import '../../catalogue/domain/lume_feature.dart';
 import '../../catalogue/presentation/feature_strings.dart';
+import '../../home/domain/home_repository.dart';
 import '../domain/search_model.dart';
 
 /// One entry the catalogue does not carry.
@@ -136,6 +138,8 @@ class LumeFixtureSearchRepository
     required this.l,
     required this.user,
     required this.recents,
+    this.live = LumeToolStatuses.none,
+    this.formatting,
   });
 
   final LumeEligibility eligibility;
@@ -144,6 +148,14 @@ class LumeFixtureSearchRepository
 
   /// Feature ids, most recent first, as the profile holds them.
   final List<String> recents;
+
+  /// The status lines that would otherwise go stale — the weather's
+  /// temperature and sky, the next prayer. `syncFeatureMeta` writes them into
+  /// the catalogue in the reference, so a recent under the search field says
+  /// what the same tool's tile on Home says. Without [formatting] a recent
+  /// falls back to the catalogue's static line.
+  final LumeToolStatuses live;
+  final LumeFormatting? formatting;
 
   /// The most hits the reference ever shows.
   static const int limit = 14;
@@ -291,8 +303,18 @@ class LumeFixtureSearchRepository
           LumeSearchHit(
             title: LumeFeatureStrings.name(l, f.id),
             // The catalogue's own one-line description, which is what the
-            // reference puts under a recent — not its category.
-            subtitle: LumeFeatureStrings.status(l, f.id) ?? '',
+            // reference puts under a recent — not its category — and live
+            // where the tile's is.
+            subtitle:
+                (formatting == null
+                    ? LumeFeatureStrings.status(l, f.id)
+                    : LumeFeatureStrings.tileStatus(
+                        l,
+                        formatting!,
+                        f.id,
+                        live,
+                      )) ??
+                '',
             icon: f.icon,
             action: LumeSearchAction.tool,
             target: f.id,

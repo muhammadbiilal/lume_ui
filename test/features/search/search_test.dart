@@ -13,10 +13,9 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:go_router/go_router.dart';
 import 'package:lume/app/providers/shell_provider.dart';
 import 'package:lume/core/routing/lume_routes.dart';
-import 'package:lume/core/widgets/lume/lume_chip.dart';
+import 'package:lume/core/widgets/lume/lume_destination_cards.dart';
 import 'package:lume/core/widgets/lume/lume_field.dart';
-import 'package:lume/core/widgets/lume/lume_row.dart';
-import 'package:lume/core/widgets/lume/lume_state.dart';
+import 'package:lume/core/widgets/lume/lume_settings.dart';
 import 'package:lume/features/catalogue/domain/eligibility.dart';
 import 'package:lume/features/onboarding/domain/onboarding_state.dart';
 import 'package:lume/features/onboarding/domain/profile_repository.dart';
@@ -390,7 +389,8 @@ void main() {
       // different string.
       expect(find.text('TRY SEARCHING FOR'), findsOneWidget);
       expect(find.text('JUMP BACK IN'), findsOneWidget);
-      expect(find.byType(LumeFilterChip), findsNWidgets(6));
+      // `.chip`, not `.fchip` — measured against the reference.
+      expect(find.byType(LumeChoiceChip), findsNWidgets(6));
     });
 
     testWidgets('typing replaces the idle blocks with results', (
@@ -426,7 +426,8 @@ void main() {
       );
       await tester.pumpAndSettle();
 
-      expect(find.byType(LumeToolState), findsOneWidget);
+      // `.empty`, not `.state` — no surface of its own, and its own drawing.
+      expect(find.byType(LumeEmptyState), findsOneWidget);
       expect(find.text('Nothing found'), findsOneWidget);
       expect(
         find.text(
@@ -440,7 +441,7 @@ void main() {
       WidgetTester tester,
     ) async {
       await open(tester);
-      await tester.tap(find.widgetWithText(LumeFilterChip, 'calculator'));
+      await tester.tap(find.widgetWithText(LumeChoiceChip, 'calculator'));
       await tester.pumpAndSettle();
 
       expect(find.byKey(LumeSearchSheet.resultsKey), findsOneWidget);
@@ -483,7 +484,7 @@ void main() {
       WidgetTester tester,
     ) async {
       final GoRouter router = await open(tester);
-      await tester.tap(find.byType(LumeRichRow).first);
+      await tester.tap(find.byType(LumeSettingsRow).first);
       await tester.pumpAndSettle();
       expect(locationOf(router), startsWith('/home/tool/'));
     });
@@ -518,7 +519,7 @@ void main() {
       );
       await tester.enterText(find.byType(LumeSearchField), 'surah');
       await tester.pumpAndSettle();
-      expect(find.byType(LumeToolState), findsOneWidget);
+      expect(find.byType(LumeEmptyState), findsOneWidget);
       expect(find.textContaining('Surah'), findsNothing);
     });
   });

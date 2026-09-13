@@ -20,9 +20,16 @@
 /// none: the index is local and synchronous. The repository contract can fail
 /// so Dayroz can answer over a network, and nothing draws a state this build
 /// cannot reach (Q11).
+///
+/// Geometry, measured against the running reference with
+/// `measure_destinations.mjs --after search_*`: the field sits in a 68-point
+/// head (14 above, 10 below); the chips are `.chip`, inset 20 inside the body;
+/// recents and results are `.list.list--flat` — a shadowless card of 61-point
+/// `.list-row`s; nothing found is `.empty` with its own drawing.
 library;
 
 import 'dart:async';
+import 'dart:math' as math;
 
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -31,18 +38,18 @@ import 'package:go_router/go_router.dart';
 import '../../../app/providers/personalisation.dart';
 import '../../../app/providers/shell_provider.dart';
 import '../../../app/providers/theme_provider.dart';
-import '../../../core/icons/lume_icon.dart';
 import '../../../core/icons/lume_icons.dart';
+import '../../../core/fixtures/lume_clock.dart';
+import '../../../core/localization/lume_format.dart';
 import '../../../core/routing/lume_routes.dart';
 import '../../../core/theme/lume/lume_colors.dart';
-import '../../../core/theme/lume/lume_space.dart';
 import '../../../core/theme/lume/lume_theme.dart';
 import '../../../core/theme/lume/lume_type.dart';
-import '../../../core/widgets/lume/lume_chip.dart';
+import '../../../core/widgets/lume/lume_destination_cards.dart';
 import '../../../core/widgets/lume/lume_field.dart';
 import '../../../core/widgets/lume/lume_overlay.dart';
-import '../../../core/widgets/lume/lume_row.dart';
-import '../../../core/widgets/lume/lume_state.dart';
+import '../../../core/widgets/lume/lume_settings.dart';
+import '../../../core/widgets/lume/lume_surface.dart';
 import '../../../l10n/app_localizations.dart';
 import '../../account/presentation/personalise_sheet.dart';
 import '../../catalogue/domain/eligibility.dart';
@@ -78,6 +85,19 @@ class LumeSearchSheet extends ConsumerStatefulWidget {
 
   /// The result list.
   static const Key resultsKey = ValueKey<String>('search.results');
+
+  /// Nothing found.
+  static const Key emptyKey = ValueKey<String>('search.empty');
+
+  /// `.sheet__head { padding: 14px 18px 10px }`. The body already pads the
+  /// sides, so only the vertical halves are added here.
+  static const double headTop = 14;
+  static const double headBottom = 10;
+
+  /// `.chips { padding: 0 var(--pad) 2px; gap: 7px }` — the suggestion chips
+  /// are inset twenty points inside the body, not flush with the field.
+  static const double chipInset = 20;
+  static const double chipGap = 7;
 
   @override
   ConsumerState<LumeSearchSheet> createState() => _LumeSearchSheetState();
@@ -132,11 +152,18 @@ class _LumeSearchSheetState extends ConsumerState<LumeSearchSheet> {
     final AppLocalizations l = AppLocalizations.of(context);
     final LumeStartupController gate = ref.read(startupControllerProvider);
     final LumeProfileRecord profile = gate.state.profile;
+    final LumeUserContext user = LumeUserContext.from(profile);
     return LumeFixtureSearchRepository(
       eligibility: ref.read(eligibilityProvider),
       l: l,
-      user: LumeUserContext.from(profile),
+      user: user,
       recents: profile.recents,
+      // The same live status lines Home's tiles and the hub read, so a recent
+      // says "34° Hazy sun" where its tile does.
+      live: ref
+          .read(homeDataRepositoryProvider)
+          .statusesFor(user, now: LumeClockScope.of(context).now()),
+      formatting: LumeFormatting.of(context, countryCode: user.country),
     );
   }
 
@@ -173,7 +200,6 @@ class _LumeSearchSheetState extends ConsumerState<LumeSearchSheet> {
   void _activate(LumeSearchHit hit) {
     final NavigatorState nav = Navigator.of(context);
     final GoRouter router = GoRouter.of(context);
-    final AppLocalizations l = AppLocalizations.of(context);
 
     switch (hit.action) {
       case LumeSearchAction.tool:
@@ -198,15 +224,11 @@ class _LumeSearchSheetState extends ConsumerState<LumeSearchSheet> {
         nav.pop();
         showLumeToast(context, LumeToastData(message: hit.target));
     }
-    // Nothing reaches here that the reference does not do; `l` is read so a
-    // future verb can report itself without re-plumbing the localisations.
-    assert(l.searchEverything.isNotEmpty);
   }
 
   @override
   Widget build(BuildContext context) {
     final AppLocalizations l = AppLocalizations.of(context);
-    final LumeColors lume = context.lume;
     final LumeSearchResults? results = _results;
 
     return LumeSheet(
@@ -218,7 +240,10 @@ class _LumeSearchSheetState extends ConsumerState<LumeSearchSheet> {
           // `.sheet__head` holds the field alone: search has no title,
           // because the field says what the sheet is.
           Padding(
-            padding: const EdgeInsets.only(bottom: 10),
+            padding: const EdgeInsets.only(
+              top: LumeSearchSheet.headTop,
+              bottom: LumeSearchSheet.headBottom,
+            ),
             child: LumeSearchField(
               key: LumeSearchSheet.fieldKey,
               controller: _field,
@@ -233,7 +258,7 @@ class _LumeSearchSheetState extends ConsumerState<LumeSearchSheet> {
                 ? _idleView(l)
                 : results.isEmpty
                 ? _nothingFound(l)
-                : _resultList(results, lume),
+                : _resultList(l, results),
           ),
         ],
       ),
@@ -250,74 +275,90 @@ class _LumeSearchSheetState extends ConsumerState<LumeSearchSheet> {
         crossAxisAlignment: CrossAxisAlignment.stretch,
         mainAxisSize: MainAxisSize.min,
         children: <Widget>[
+          // `style="margin:4px 0 9px"`.
           _groupLabel(l.searchTry, top: 4),
-          // `.chips--wrap { flex-wrap: wrap }` — the idle chips wrap rather
-          // than scrolling sideways, because there are at most six and a
-          // hidden one is a suggestion nobody takes.
-          Wrap(
-            spacing: 7,
-            runSpacing: 7,
-            children: <Widget>[
-              for (final String word in idle.suggestions)
-                LumeFilterChip(label: word, onTap: () => _suggest(word)),
-            ],
+          // `.chips.chips--wrap` — they wrap rather than scroll sideways,
+          // because there are at most six and a hidden one is a suggestion
+          // nobody takes.
+          Padding(
+            padding: const EdgeInsets.fromLTRB(
+              LumeSearchSheet.chipInset,
+              0,
+              LumeSearchSheet.chipInset,
+              2,
+            ),
+            child: Wrap(
+              spacing: LumeSearchSheet.chipGap,
+              runSpacing: LumeSearchSheet.chipGap,
+              children: <Widget>[
+                for (final String word in idle.suggestions)
+                  LumeChoiceChip(
+                    label: word,
+                    selected: false,
+                    onTap: () => _suggest(word),
+                  ),
+              ],
+            ),
           ),
+          // `style="margin:20px 0 9px"`.
           _groupLabel(l.searchJumpBack, top: 20),
-          LumeRows(
-            flat: true,
-            children: <Widget>[
-              for (final LumeSearchHit hit in idle.recent)
-                LumeRichRow(
-                  icon: hit.icon,
-                  title: hit.title,
-                  subtitle: hit.subtitle.isEmpty ? null : hit.subtitle,
-                  chevron: true,
-                  onTap: () => _activate(hit),
-                ),
-            ],
-          ),
+          _list(<Widget>[
+            for (int i = 0; i < idle.recent.length; i++)
+              LumeSettingsRow(
+                icon: idle.recent[i].icon,
+                title: idle.recent[i].title,
+                subtitle: idle.recent[i].subtitle.isEmpty
+                    ? null
+                    : idle.recent[i].subtitle,
+                onTap: () => _activate(idle.recent[i]),
+                isLast: i == idle.recent.length - 1,
+              ),
+          ]),
         ],
       ),
     );
   }
 
-  Widget _resultList(LumeSearchResults results, LumeColors lume) =>
+  Widget _resultList(AppLocalizations l, LumeSearchResults results) =>
       SingleChildScrollView(
         key: LumeSearchSheet.resultsKey,
         child: Semantics(
           // A screen reader is told how many there are before it starts
           // reading them out.
-          label: AppLocalizations.of(
-            context,
-          ).toolsResultCount(results.hits.length),
+          label: l.toolsResultCount(results.hits.length),
           container: true,
-          child: LumeRows(
-            flat: true,
-            children: <Widget>[
-              for (final LumeSearchHit hit in results.hits)
-                LumeRichRow(
-                  icon: hit.icon,
-                  title: hit.title,
-                  subtitle: hit.subtitle.isEmpty ? null : hit.subtitle,
-                  // `#i-arrow-ur` — a result leaves for somewhere, which is a
-                  // different promise from a row that drills in.
-                  trailing: LumeIcon(
-                    LumeIcons.arrowUr,
-                    size: LumeSpace.iconSm,
-                    color: lume.text3,
-                  ),
-                  onTap: () => _activate(hit),
-                ),
-            ],
-          ),
+          child: _list(<Widget>[
+            for (int i = 0; i < results.hits.length; i++)
+              LumeSettingsRow(
+                icon: results.hits[i].icon,
+                title: results.hits[i].title,
+                subtitle: results.hits[i].subtitle.isEmpty
+                    ? null
+                    : results.hits[i].subtitle,
+                // `#i-arrow-ur` — a result leaves for somewhere, which is a
+                // different promise from a row that drills in.
+                trailingIcon: LumeIcons.arrowUr,
+                onTap: () => _activate(results.hits[i]),
+                isLast: i == results.hits.length - 1,
+              ),
+          ]),
         ),
       );
 
+  /// `.list.list--flat` — the card without its shadow, because the sheet it
+  /// sits in already casts one.
+  Widget _list(List<Widget> rows) => LumeCard(
+    padded: false,
+    shadow: false,
+    child: Column(mainAxisSize: MainAxisSize.min, children: rows),
+  );
+
   Widget _nothingFound(AppLocalizations l) => SingleChildScrollView(
-    child: LumeToolState(
-      icon: LumeIcons.search,
+    child: LumeEmptyState(
+      key: LumeSearchSheet.emptyKey,
       title: l.searchNothing,
       text: l.searchNothingSub,
+      art: const _SearchEmptyArt(),
     ),
   );
 
@@ -331,4 +372,66 @@ class _LumeSearchSheetState extends ConsumerState<LumeSearchSheet> {
       ).copyWith(color: context.lume.text3, fontWeight: FontWeight.w700),
     ),
   );
+}
+
+/// The drawing over "Nothing found", from `#sheet-search`'s own `.empty`.
+///
+/// `<circle cx="44" cy="30" r="22" stroke="var(--border-2)" stroke-width="2"
+/// stroke-dasharray="5 7"/>`, `<path d="m58 44 12 12" stroke-width="2.4"
+/// stroke-linecap="round"/>` and `<circle cx="20" cy="14" r="3"
+/// fill="var(--accent)" opacity=".4"/>` — a dashed lens with nothing in it.
+class _SearchEmptyArt extends StatelessWidget {
+  const _SearchEmptyArt();
+
+  @override
+  Widget build(BuildContext context) {
+    final LumeColors lume = context.lume;
+    return CustomPaint(
+      size: const Size(88, 66),
+      painter: _SearchEmptyPainter(ring: lume.border2, dot: lume.accent),
+    );
+  }
+}
+
+class _SearchEmptyPainter extends CustomPainter {
+  const _SearchEmptyPainter({required this.ring, required this.dot});
+
+  final Color ring;
+  final Color dot;
+
+  @override
+  void paint(Canvas canvas, Size size) {
+    final Paint lens = Paint()
+      ..color = ring
+      ..style = PaintingStyle.stroke
+      ..strokeWidth = 2;
+    const Offset centre = Offset(44, 30);
+    const double r = 22;
+    // `stroke-dasharray="5 7"`, walked round the circle as arcs.
+    const double dash = 5 / r;
+    const double gap = 7 / r;
+    final Rect box = Rect.fromCircle(center: centre, radius: r);
+    for (double a = 0; a < 2 * math.pi; a += dash + gap) {
+      canvas.drawArc(box, a, math.min(dash, 2 * math.pi - a), false, lens);
+    }
+
+    canvas.drawLine(
+      const Offset(58, 44),
+      const Offset(70, 56),
+      Paint()
+        ..color = ring
+        ..strokeWidth = 2.4
+        ..strokeCap = StrokeCap.round,
+    );
+
+    canvas.drawCircle(
+      const Offset(20, 14),
+      3,
+      Paint()..color = dot.withValues(alpha: 0.4),
+    );
+  }
+
+  @override
+  bool shouldRepaint(_SearchEmptyPainter old) =>
+      old.ring != ring || old.dot != dot;
 }
