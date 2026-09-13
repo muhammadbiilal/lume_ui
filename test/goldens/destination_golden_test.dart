@@ -36,7 +36,12 @@ import 'package:lume/features/tools/presentation/tools_screen.dart';
 
 import '../features/destinations/destination_harness.dart';
 import '../features/destinations/today_explore_harness.dart';
+import 'package:lume/core/routing/lume_routes.dart';
+import 'package:lume/features/account/data/fake_account_repository.dart';
 import 'package:lume/features/account/domain/account_model.dart';
+import 'package:lume/features/account/presentation/account_host.dart';
+import 'package:lume/features/startup/application/startup_controller.dart';
+import '../features/account/account_harness.dart';
 import '../features/destinations/profile_harness.dart';
 import '../features/destinations/trains_harness.dart';
 import '../helpers/capture.dart';
@@ -71,6 +76,38 @@ const List<Cell> kCells = <Cell>[
 
 void main() {
   setUpAll(loadLumeFonts);
+
+  /// One account route, on Profile's branch, with the section's own fixtures.
+  Future<void> shootAccount(
+    WidgetTester tester,
+    LumeAccountRoute route,
+    Cell cell, {
+    LumeFakeAccountRepository? account,
+    String? name,
+  }) async {
+    // A launch that has finished, so the routes that name a country name it
+    // rather than falling back to its code.
+    final LumeStartupController gate =
+        await tester.runAsync(bootedGate) ?? await bootedGate();
+    await captureLume(
+      tester,
+      LumeAccountHost(branch: LumeRoutes.profile, route: route),
+      name: name ?? 'account_${route.segment}',
+      outDir: kOut,
+      surface: cell.$2,
+      theme: cell.$3,
+      locale: cell.$4,
+      textScale: cell.$5,
+      suffix: cell.$5 == 1.0 ? '' : '_x${cell.$5.toStringAsFixed(0)}',
+      overrides: accountOverrides(account: account, gate: gate),
+    );
+    await expectLater(
+      find.byType(MaterialApp),
+      matchesGoldenFile(
+        'images/${name ?? 'account_${route.segment}'}_${cell.$1}.png',
+      ),
+    );
+  }
 
   Future<void> shoot(
     WidgetTester tester,
@@ -621,6 +658,33 @@ void main() {
         ),
         'profile_default_pk_noname',
         kCells.first,
+      );
+    });
+  });
+
+  group('the account routes', () {
+    // All twenty-one, at the reference cell. A settings section fails
+    // quietly — a route that renders an empty body throws nothing — so every
+    // one of them is captured rather than a handful of archetypes.
+    for (final LumeAccountRoute route in LumeAccountRoute.values) {
+      testWidgets('account_${route.segment} · the reference cell', (
+        WidgetTester tester,
+      ) async {
+        await shootAccount(tester, route, kCells.first);
+      });
+    }
+
+    // The refusal a guest meets on a protected route, which is a screen in
+    // its own right rather than an absence.
+    testWidgets('account_sessions_guest · the reference cell', (
+      WidgetTester tester,
+    ) async {
+      await shootAccount(
+        tester,
+        LumeAccountRoute.sessions,
+        kCells.first,
+        account: LumeFakeAccountRepository.guest(),
+        name: 'account_sessions_guest',
       );
     });
   });

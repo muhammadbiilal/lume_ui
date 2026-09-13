@@ -136,8 +136,13 @@ class _LumeProfileHostState extends ConsumerState<LumeProfileHost> {
       final Widget screen = LumeProfileScreen(
         view: view,
         actions: LumeProfileActions(
-          open: (LumeAccountRoute route) =>
-              context.go(LumeRoutes.accountRoute(widget.branch, route.segment)),
+          open: (LumeAccountRoute route) {
+            // Entering the section starts a fresh stack: Back from the first
+            // route returns here, whatever the last visit left behind.
+            ref.read(accountStackProvider.notifier).state =
+                const <LumeAccountRoute>[];
+            context.go(LumeRoutes.accountRoute(widget.branch, route.segment));
+          },
           // The personalisation picker belongs to onboarding, not to the
           // account: it is the same sheet the "What are you here for?" step
           // uses, and a second copy would be a second answer.

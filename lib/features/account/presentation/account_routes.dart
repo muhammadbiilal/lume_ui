@@ -504,6 +504,7 @@ LumeAccountView _time(LumeAccountRouteContext c) {
     subtitle: c.profile.timeZone ?? c.homeZone,
     body: (BuildContext context) => <Widget>[
       LumeAccountSection(
+        title: l.acctClockFormat,
         child: LumeOptionList(
           label: l.acctClockFormat,
           children: <LumeOptionRow>[
@@ -526,6 +527,7 @@ LumeAccountView _time(LumeAccountRouteContext c) {
         ),
       ),
       LumeAccountSection(
+        title: l.acctTimezoneTitle,
         child: LumeOptionList(
           label: l.acctTimezoneTitle,
           children: <LumeOptionRow>[
@@ -820,7 +822,7 @@ LumeAccountView _account(LumeAccountRouteContext c) {
         child: LumeDangerZone(
           label: l.acctDangerZone,
           text: l.acctDeleteRowSub,
-          child: LumeButton.danger(
+          child: LumeButton.dangerGhost(
             label: l.acctDeleteRow,
             icon: LumeIcons.trash,
             block: true,

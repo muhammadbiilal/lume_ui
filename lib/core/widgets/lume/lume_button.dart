@@ -39,6 +39,11 @@ enum LumeButtonTone {
   /// Irreversible or destructive. Rose ink on a rose surface.
   danger,
 
+  /// `.btn--dangerghost` — the same ink on nothing, inside a rose hairline.
+  /// The destructive action *inside* a danger block, where the block is
+  /// already carrying the warning and a second filled surface would shout.
+  dangerGhost,
+
   /// The default fill — near-black. Used where a screen has no accent action
   /// but still needs weight, as the onboarding footer does.
   solid,
@@ -72,6 +77,20 @@ class LumeButton extends StatelessWidget {
     this.busyLabel,
     this.semanticLabel,
   }) : tone = LumeButtonTone.accent;
+
+  /// `.btn--dangerghost`.
+  const LumeButton.dangerGhost({
+    super.key,
+    required this.label,
+    this.onPressed,
+    this.icon,
+    this.trailingIcon,
+    this.block = false,
+    this.small = false,
+    this.busy = false,
+    this.busyLabel,
+    this.semanticLabel,
+  }) : tone = LumeButtonTone.dangerGhost;
 
   const LumeButton.danger({
     super.key,
@@ -133,8 +152,24 @@ class LumeButton extends StatelessWidget {
         lume.roseInk,
         null,
       ),
+      // `background: transparent` — the block around it is already carrying
+      // the warning, and a second filled surface inside it would shout.
+      LumeButtonTone.dangerGhost => (
+        const Color(0x00000000),
+        lume.roseInk,
+        null,
+      ),
       LumeButtonTone.solid => (lume.text, lume.bg, null),
     };
+
+    /// `.btn--dangerghost { border: 1px solid rose 34% }`. The only tone with
+    /// an outline: the others are surfaces.
+    final Border? outline = tone == LumeButtonTone.dangerGhost
+        ? Border.all(
+            color: lume.rose.withValues(alpha: 0.34),
+            width: LumeSpace.border,
+          )
+        : null;
 
     final TextStyle style = LumeType.tracked(
       LumeType.fit(
@@ -185,6 +220,7 @@ class LumeButton extends StatelessWidget {
       decoration: BoxDecoration(
         color: bg,
         borderRadius: LumeRadius.brSm,
+        border: outline,
         boxShadow: _enabled ? shadow : null,
       ),
       child: content,

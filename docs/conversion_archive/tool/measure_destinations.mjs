@@ -51,6 +51,14 @@ const STATE = args.state || 'default_pk';
    is a different store with a different shape. `guest` is the absence of
    both. */
 const ACCOUNT = args.account || 'guest';
+/* One of `ui/account-ui.js`'s twenty-one routes, opened after the profile tab
+   is shown. Empty measures the tab itself. */
+const ROUTE = args.route || '';
+/* What to call the cell. The default spells out the whole state, which is
+   right for a destination; an account route is named after the route, so the
+   web capture and the Flutter one share a basename and `compare.mjs` can put
+   them side by side. */
+const CELL = args.cell || '';
 const SHOT = args.shot === '1' || args.shot === 'true';
 const SHOTS = resolve(args.shots || 'docs/conversion_archive/shots/destinations');
 /* How far down the active screen is scrolled before anything is read. The
@@ -97,13 +105,31 @@ const MEASURE_USER = {
   emailVerified: true,
   pendingEmail: '',
   twoFactor: false,
+  /* The same three the Flutter fixture seeds, so "Active sessions" and the
+     count on Security describe the same account on both sides. One device
+     would put the reference on its "no other devices" state and Flutter on
+     its list, and the comparison would be about the fixture. */
   sessions: [
     {
       id: DEVICE,
-      label: 'This device',
-      place: 'Islamabad, PK',
+      label: 'Pixel 6 Pro · Lume',
+      place: 'Islamabad, Pakistan',
       created: new Date(2024, 2, 18, 9, 12).getTime(),
       lastSeen: new Date(2026, 8, 7, 16, 30).getTime(),
+    },
+    {
+      id: 'dev-mac',
+      label: 'MacBook Air · Safari',
+      place: 'Islamabad, Pakistan',
+      created: new Date(2025, 5, 2, 11, 0).getTime(),
+      lastSeen: new Date(2026, 8, 6, 21, 14).getTime(),
+    },
+    {
+      id: 'dev-ipad',
+      label: 'iPad · Lume',
+      place: 'Lahore, Pakistan',
+      created: new Date(2025, 9, 14, 18, 30).getTime(),
+      lastSeen: new Date(2026, 7, 29, 9, 2).getTime(),
     },
   ],
 };
@@ -468,6 +494,38 @@ const TOOLS_TARGETS = {
   'shell.tabbar': '#tabbar',
 };
 
+/* The account host: one header and one body, whichever of the twenty-one
+   routes is in it. The body's own blocks are named rather than indexed,
+   because a route that renders nothing would otherwise measure as "the first
+   section is missing" rather than as an empty screen. */
+const ACCOUNT_TARGETS = {
+  'screen': '#screen-account',
+  'toolbar': '#screen-account .toolbar',
+  'toolbar.back': '#screen-account .toolbar .iconbtn',
+  'toolbar.title': '#screen-account .toolbar__title',
+  'toolbar.sub': '#screen-account .toolbar__sub',
+  'body': '#accountBody',
+  'sect': '#accountBody .sect',
+  'list': '#accountBody .list',
+  'srow': '#accountBody .list-row',
+  'srow.icon': '#accountBody .list-row__icon',
+  'srow.title': '#accountBody .list-row__title',
+  'srow.value': '#accountBody .srow__value',
+  'optlist': '#accountBody .optlist',
+  'optrow': '#accountBody .optrow',
+  'optrow.on': '#accountBody .optrow.is-on',
+  'notecard': '#accountBody .notecard',
+  'field': '#accountBody .field',
+  'field.box': '#accountBody .field__box',
+  'btn': '#accountBody .btn',
+  'danger': '#accountBody .danger',
+  'storegroup': '#accountBody .storegroup',
+  'sessrow': '#accountBody .sessrow',
+  'conseq': '#accountBody .conseq',
+  'state': '#accountBody .state',
+  'shell.tabbar': '.tabbar',
+};
+
 /* Extra steps a state needs once the app is up. `chip(id)` selects a category;
    `search(q)` types into the hub's field. */
 const AFTER = {
@@ -510,7 +568,7 @@ const FREEZE = `
 })();
 `;
 
-const DRIVER = (profile, screen, after, account) => FREEZE + `
+const DRIVER = (profile, screen, after, account, route) => FREEZE + `
 (function () {
   try {
     localStorage.setItem('lume-onboarded', '1');
@@ -573,6 +631,12 @@ const DRIVER = (profile, screen, after, account) => FREEZE + `
     await wait(900);
     tab(${JSON.stringify(screen)});
     await wait(600);
+    /* The account host is reached the way a reader reaches it: by the same
+       data-act a row carries. Nothing here pokes at internals. */
+    if (${JSON.stringify(route)}) {
+      act('acct:' + ${JSON.stringify(route)});
+      await wait(500);
+    }
     ${after || ''};
     await wait(400);
     var clock = document.getElementById('statusClock');
@@ -663,10 +727,12 @@ async function main() {
     today: TODAY_TARGETS,
     explore: EXPLORE_TARGETS,
     trains: TRAINS_TARGETS,
-    profile: PROFILE_TARGETS,
+    profile: ROUTE ? ACCOUNT_TARGETS : PROFILE_TARGETS,
   }[SCREEN] || HOME_TARGETS;
 
-  const work = stage(DRIVER(profile, SCREEN, AFTER[args.after] || '', ACCOUNT));
+  const work = stage(
+  DRIVER(profile, SCREEN, AFTER[args.after] || '', ACCOUNT, ROUTE),
+);
   const server = spawn(process.execPath, ['scripts/serve.js'], {
     cwd: work,
     env: { ...process.env, PORT: String(PORT) },
@@ -1078,9 +1144,10 @@ async function main() {
        guest, and the same profile signed in is a different screen. */
     const SUFFIX =
       `${STATE}${ACCOUNT === 'guest' ? '' : '_' + ACCOUNT}` +
+      `${ROUTE ? '_' + ROUTE : ''}` +
       `${args.after ? '_' + args.after : ''}`;
     const cell =
-      `${SCREEN}_${SUFFIX}${SCROLL ? '_s' + SCROLL : ''}` +
+      `${CELL || SCREEN + '_' + SUFFIX}${SCROLL ? '_s' + SCROLL : ''}` +
       `_${WIDTH}x${HEIGHT}_${THEME}_${LANG}`;
 
     if (SHOT) {
@@ -1088,7 +1155,7 @@ async function main() {
         format: 'png',
         captureBeyondViewport: false,
       });
-      const dir = join(SHOTS, `${SCREEN}_${SUFFIX}`);
+      const dir = join(SHOTS, CELL || `${SCREEN}_${SUFFIX}`);
       mkdirSync(dir, { recursive: true });
       writeFileSync(join(dir, `${cell}.web.png`), Buffer.from(shot.data, 'base64'));
     }
@@ -1101,6 +1168,7 @@ async function main() {
           screen: SCREEN,
           state: STATE,
           account: ACCOUNT,
+          route: ROUTE || null,
           after: args.after || null,
           profile: { country: profile.country, city: profile.city,
                      islamic: profile.islamic, interests: profile.interests,

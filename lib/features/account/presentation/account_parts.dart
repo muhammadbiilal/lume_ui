@@ -43,10 +43,16 @@ class LumeAccountSection extends StatelessWidget {
   const LumeAccountSection({
     super.key,
     required this.child,
+    this.title,
     this.tight = false,
   });
 
   final Widget child;
+
+  /// `UI.section({ title })` — the head over a block. Only the Time route
+  /// uses one, and without it its two radio groups run together with nothing
+  /// to say which is the clock and which is the zone.
+  final String? title;
 
   /// `sect--tight` — 12 rather than 24, for a block that belongs to the one
   /// above it.
@@ -55,7 +61,18 @@ class LumeAccountSection extends StatelessWidget {
   @override
   Widget build(BuildContext context) => Padding(
     padding: EdgeInsets.only(top: tight ? LumeSpace.gapCard : LumeSpace.x6),
-    child: LumeMeasure(child: child),
+    child: LumeMeasure(
+      child: title == null
+          ? child
+          : Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisSize: MainAxisSize.min,
+              children: <Widget>[
+                LumeSectionHeader(title: title!),
+                child,
+              ],
+            ),
+    ),
   );
 }
 
@@ -128,6 +145,9 @@ class LumeAccountField extends StatelessWidget {
   Widget build(BuildContext context) {
     final LumeFormIssue? issue = form.errorOn(name);
     return LumeInputField(
+      // The account's forms are the *product's* field, not the authentication
+      // flow's: an uppercase 11-point label over a 48-point box.
+      variant: LumeFieldVariant.form,
       label: label,
       value: form.read(name),
       onChanged: (String v) => form.edit(name, v),

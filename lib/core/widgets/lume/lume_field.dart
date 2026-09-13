@@ -1055,10 +1055,18 @@ class LumeSwitch extends StatelessWidget {
 /// section ask for the same password, refuse it for the same reasons and draw
 /// the same box; two copies would drift the first time one of them was
 /// adjusted.
+/// Which of the stylesheet's two field shapes this is.
+///
+/// `.field` is the product's ordinary form field — an uppercase 11-point
+/// label over a 48-point box on `card-2`. `.auth .field` is the same element
+/// with the authentication flow's own chrome: a sentence-case 13-point label
+/// over a 52-point box with more room in it. Both exist in `tools/shared.css`
+/// and `auth.css`, and a field drawn in the wrong one is visibly the wrong
+/// size.
+enum LumeFieldVariant { form, auth }
+
 class LumeInputField extends StatefulWidget {
-  /// `.field__label` — 13 / 600, one definition for every form in the
-  /// product. The authentication chrome reads it from here rather than
-  /// keeping a second copy.
+  /// `.auth .field__label` — 13 / 600, sentence case.
   static TextStyle labelStyle(BuildContext context) =>
       context.lumeType.body.copyWith(
         fontSize: 13,
@@ -1067,6 +1075,13 @@ class LumeInputField extends StatefulWidget {
         letterSpacing: -0.065,
         color: context.lume.text2,
       );
+
+  /// `.field__label` — 11 / 700, `.02em`, **uppercase**, muted. The form
+  /// field's own label, and the one the account section's forms wear.
+  static TextStyle formLabelStyle(BuildContext context) => LumeType.tracked(
+    LumeType.natural(context, context.lumeType.metaSmall, size: 11),
+    0.02,
+  ).copyWith(color: context.lume.text3, fontWeight: FontWeight.w700);
 
   /// `.field__hint` and the message under a field — 12.5 / 500, muted.
   static TextStyle captionStyle(BuildContext context) =>
@@ -1101,7 +1116,11 @@ class LumeInputField extends StatefulWidget {
     this.autofocus = false,
     this.focusNode,
     this.enabled = true,
+    this.variant = LumeFieldVariant.auth,
   });
+
+  /// Which shape to draw. See [LumeFieldVariant].
+  final LumeFieldVariant variant;
 
   final String label;
   final String value;
@@ -1141,6 +1160,14 @@ class LumeInputField extends StatefulWidget {
   static const double messageHeight = 17;
   static const double labelGap = 8;
   static const double toggleSize = 34;
+
+  /// `.field { gap: 6px }` and `.field__box { padding: 10px 12px }` with a
+  /// 14 / 700 input — measured at 48 tall, four shorter than the auth box.
+  static const double formLabelGap = 6;
+  static const double formBoxHeight = 48;
+
+  /// `--r-xs`, where the auth box takes the larger radius.
+  static const double formBoxRadius = 12;
 
   @override
   State<LumeInputField> createState() => _LumeInputFieldState();
@@ -1195,6 +1222,35 @@ class _LumeInputFieldState extends State<LumeInputField> {
     final bool filled = widget.value.isNotEmpty;
     final bool good = !invalid && widget.valid;
 
+    final bool form = widget.variant == LumeFieldVariant.form;
+    // `.field__label` is uppercased as presentation, which is why it is done
+    // here and not baked into a translation: Urdu and Arabic have no case and
+    // are unchanged by it.
+    final TextStyle labelStyle = form
+        ? LumeInputField.formLabelStyle(context)
+        : LumeInputField.labelStyle(context);
+    final String label = form
+        ? LumeType.overline(context, widget.label)
+        : widget.label;
+
+    // `.field__box input` is 14 / 700 / -.026em; the authentication flow's
+    // override is 16 / 600. Two sizes, because the stylesheet has two.
+    final TextStyle inputStyle = form
+        ? context.lumeType.body.copyWith(
+            fontSize: 14,
+            fontWeight: FontWeight.w700,
+            height: 1.25,
+            letterSpacing: -0.364,
+            color: lume.text,
+          )
+        : context.lumeType.body.copyWith(
+            fontSize: 16,
+            fontWeight: FontWeight.w600,
+            height: 1.25,
+            letterSpacing: -0.192,
+            color: lume.text,
+          );
+
     final Color edge = invalid
         ? Color.lerp(lume.rose, lume.border2, 0.4)!
         : good
@@ -1209,29 +1265,41 @@ class _LumeInputFieldState extends State<LumeInputField> {
         Text.rich(
           TextSpan(
             children: <InlineSpan>[
-              TextSpan(text: widget.label),
+              TextSpan(text: label),
               if (widget.optionalLabel != null)
+                // `text-transform: none; font-style: normal` on the optional
+                // marker: it is a word, not part of the label's kicker.
                 TextSpan(
                   text: ' · ${widget.optionalLabel}',
-                  style: LumeInputField.labelStyle(
-                    context,
-                  ).copyWith(fontWeight: FontWeight.w600, color: lume.text3),
+                  // `text-transform: none; font-style: normal;
+                  // font-weight: 600` — and nothing about the tracking, which
+                  // it inherits.
+                  style: labelStyle.copyWith(
+                    fontWeight: FontWeight.w600,
+                    color: lume.text3,
+                  ),
                 ),
             ],
           ),
-          style: LumeInputField.labelStyle(context),
+          style: labelStyle,
         ),
-        const SizedBox(height: LumeInputField.labelGap),
+        SizedBox(
+          height: form ? LumeInputField.formLabelGap : LumeInputField.labelGap,
+        ),
         AnimatedContainer(
           duration: LumeMotion.fast,
           curve: LumeMotion.easeOut,
-          constraints: const BoxConstraints(
-            minHeight: LumeInputField.boxHeight,
+          constraints: BoxConstraints(
+            minHeight: form
+                ? LumeInputField.formBoxHeight
+                : LumeInputField.boxHeight,
           ),
-          padding: const EdgeInsets.symmetric(horizontal: LumeSpace.x4),
+          padding: EdgeInsets.symmetric(horizontal: form ? 12 : LumeSpace.x4),
           decoration: BoxDecoration(
-            color: filled ? lume.cardHover : lume.card,
-            borderRadius: BorderRadius.circular(LumeInputField.boxRadius),
+            color: form ? lume.card2 : (filled ? lume.cardHover : lume.card),
+            borderRadius: BorderRadius.circular(
+              form ? LumeInputField.formBoxRadius : LumeInputField.boxRadius,
+            ),
             border: Border.all(color: edge, width: LumeSpace.border),
             boxShadow: _focused || invalid
                 ? <BoxShadow>[
@@ -1270,13 +1338,7 @@ class _LumeInputFieldState extends State<LumeInputField> {
                     maxLengthEnforcement: MaxLengthEnforcement.enforced,
                     onChanged: widget.onChanged,
                     onSubmitted: (_) => widget.onSubmitted?.call(),
-                    style: context.lumeType.body.copyWith(
-                      fontSize: 16,
-                      fontWeight: FontWeight.w600,
-                      height: 1.25,
-                      letterSpacing: -0.192,
-                      color: lume.text,
-                    ),
+                    style: inputStyle,
                     cursorColor: lume.accent,
                     decoration: InputDecoration(
                       isDense: true,
@@ -1286,11 +1348,8 @@ class _LumeInputFieldState extends State<LumeInputField> {
                       focusedBorder: InputBorder.none,
                       contentPadding: EdgeInsets.zero,
                       hintText: widget.placeholder,
-                      hintStyle: context.lumeType.body.copyWith(
-                        fontSize: 16,
+                      hintStyle: inputStyle.copyWith(
                         fontWeight: FontWeight.w500,
-                        height: 1.25,
-                        letterSpacing: -0.192,
                         color: lume.text3,
                       ),
                     ),

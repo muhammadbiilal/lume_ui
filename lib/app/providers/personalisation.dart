@@ -20,6 +20,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../features/account/data/fake_account_repository.dart';
 import '../../features/account/data/notification_prefs_store.dart';
+import '../../features/account/domain/account_model.dart';
 import '../../features/account/domain/account_repository.dart';
 import '../../features/catalogue/data/feature_catalogue.dart';
 import '../../features/catalogue/domain/eligibility.dart';
@@ -127,6 +128,22 @@ final Provider<LumeSyncRepository> syncRepositoryProvider =
 
 final Provider<LumeAccountDeletion> accountDeletionProvider =
     Provider<LumeAccountDeletion>((Ref ref) => ref.watch(accountStoreProvider));
+
+/// Where the account section has been.
+///
+/// `account.screen.js` keeps an `accountStack` for exactly this: Back inside
+/// the section returns to the route above, and only leaves the account once
+/// there is nothing left to return to. The router cannot hold it — the
+/// twenty-one routes are *siblings* under one path, so navigating between them
+/// replaces rather than stacks, and `push` does not reach inside a branch's
+/// navigator.
+///
+/// It lives here rather than in the host because a host is rebuilt on every
+/// route change and a stack in its state would not survive the first step.
+final StateProvider<List<LumeAccountRoute>> accountStackProvider =
+    StateProvider<List<LumeAccountRoute>>(
+      (Ref ref) => const <LumeAccountRoute>[],
+    );
 
 /// Notification preferences — one store, reached from the account section and
 /// from the notification centre's own settings.

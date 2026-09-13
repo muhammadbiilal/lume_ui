@@ -134,18 +134,42 @@ class _LumeAccountHostState extends ConsumerState<LumeAccountHost> {
 
   // -- leaving -------------------------------------------------------------
 
+  /// Open another account route, remembering this one.
+  void _open(LumeAccountRoute next) {
+    if (next == widget.route) return;
+    final StateController<List<LumeAccountRoute>> stack = ref.read(
+      accountStackProvider.notifier,
+    );
+    stack.state = <LumeAccountRoute>[...stack.state, widget.route];
+    context.go(LumeRoutes.accountRoute(widget.branch, next.segment));
+  }
+
   /// Back, with the guard in front of it.
   ///
   /// A dirty form is not a screen somebody can be moved off silently: the
   /// reader is asked, and only their own answer lets the navigation through.
+  ///
+  /// Where it goes is the section's own stack: the route above, and only out
+  /// of the account once there is nothing left to return to. A deep link into
+  /// a leaf starts with an empty stack, so Back takes it to the branch — never
+  /// to a screen it was not opened from, and never out of the app.
   Future<void> _leave() async {
     if (_form.dirty && !await _confirmDiscard()) return;
     if (!mounted) return;
-    if (context.canPop()) {
-      context.pop();
-    } else {
-      context.go(widget.branch);
+
+    final StateController<List<LumeAccountRoute>> stack = ref.read(
+      accountStackProvider.notifier,
+    );
+    if (stack.state.isNotEmpty) {
+      final List<LumeAccountRoute> rest = <LumeAccountRoute>[...stack.state];
+      final LumeAccountRoute back = rest.removeLast();
+      stack.state = rest;
+      context.go(LumeRoutes.accountRoute(widget.branch, back.segment));
+      return;
     }
+    // A route does not survive leaving the account.
+    stack.state = const <LumeAccountRoute>[];
+    context.go(widget.branch);
   }
 
   Future<bool> _confirmDiscard() async {
@@ -420,8 +444,7 @@ class _LumeAccountHostState extends ConsumerState<LumeAccountHost> {
   }
 
   LumeAccountActions _actions(AppLocalizations l) => LumeAccountActions(
-    open: (LumeAccountRoute route) =>
-        context.push(LumeRoutes.accountRoute(widget.branch, route.segment)),
+    open: _open,
     openTool: (String id) {
       ref.read(recentToolsProvider).note(id);
       context.go(LumeRoutes.tool(widget.branch, id));
@@ -502,8 +525,9 @@ class _LumeAccountHostState extends ConsumerState<LumeAccountHost> {
     final LumeAccountView view = _view();
 
     final Widget screen = PopScope<Object?>(
-      // A dirty form is not a screen somebody can be swiped off.
-      canPop: !_form.dirty,
+      // Never the framework's pop: the section's Back walks its own stack, and
+      // a dirty form is not a screen somebody can be swiped off either.
+      canPop: false,
       onPopInvokedWithResult: (bool didPop, Object? _) {
         if (didPop) return;
         unawaited(_leave());

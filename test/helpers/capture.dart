@@ -19,6 +19,7 @@ import 'dart:ui' as ui;
 
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:lume/core/layout/lume_breakpoint.dart';
 
@@ -48,6 +49,11 @@ Future<Map<String, Object?>> captureLume(
   double textScale = 1.0,
   String outDir = kShotsDir,
   String suffix = '',
+
+  /// Forwarded to the one `ProviderScope` the harness builds. A second scope
+  /// nested inside it does not override a provider that is *derived* from the
+  /// one being replaced, which is a silent no-op rather than an error.
+  List<Override> overrides = const <Override>[],
 }) async {
   // `FontLoader.load` does real asynchronous work, and a widget test runs in a
   // fake-async zone where real work never completes. Both this and the image
@@ -78,6 +84,7 @@ Future<Map<String, Object?>> captureLume(
     theme: theme,
     locale: locale,
     textScale: textScale,
+    overrides: overrides,
   );
   await tester.pumpAndSettle();
 

@@ -889,6 +889,125 @@ means the div is as wide as the wider of its two lines, and each `<p>` fills
 it. At 390 the guest's address wraps and takes the full 312; the holder's name
 is 132.3 and the address sits centred under it.
 
+### C41 — an option row's title and its description run together. **Open.**
+
+**Found in F5C. Measured, and put to a decision rather than settled.**
+
+`.optrow__title` and `.optrow__sub` are inline `<span>`s, and nothing
+blockifies them. `components.css` has a rule that turns `.list-row__title`,
+`.list-row__sub` and a dozen other spans into blocks; `.optrow__*` is not in
+it. So the prototype renders an option row as one line with the two strings
+jammed against each other:
+
+| route | what the reference draws |
+|---|---|
+| Units | `Follow my regionAutomatic`, `Metrickm · °C · kg`, `Imperialmi · °F · lb` |
+| Currency | `Follow my regionAutomatic (PKR)` |
+| Language | `Englishenglish` |
+
+Measured: the row is **46** in the prototype and 57 in Flutter, which draws
+the description on its own line as every other row in the product does. Five
+routes carry option rows — language, region, currency, units, time,
+appearance — and the difference is eleven points a row on all of them.
+
+**Why it is open rather than reproduced.** The visual-authority rule says the
+rendered Lume interface wins and reserves *a visible departure from Lume* for
+a decision. Reproducing it means shipping "Follow my regionAutomatic"; not
+reproducing it is a visible departure on five screens. Neither is ours to
+choose, so both are measured and the question is asked.
+
+`account_bounds_test.dart` records the numbers and does not assert them, and
+`ACCOUNT_PARITY.md` marks every affected row **open — C41**.
+
+### C42 — an option row's mark was a bare check
+
+**Found and corrected in F5C.** `.optrow__mark` is a 20-point ring with a
+1.5-point border on **every** row, filled with the accent and a 12-point check
+on the chosen one — and `.optrow.is-on .optrow__title` takes the accent ink.
+Flutter drew a bare check on the chosen row and nothing at all on the others,
+so an unchosen option had nothing at its end to say it was one.
+
+Also corrected while it was open: `.optrow`'s padding is `--pad-row` —
+`12px 16px`, "one value for nine row types" — where Flutter had 14/12.
+
+**Exact parity, restored**, and §60's "colour-independent status indicators"
+kept: the ring, the fill, the check and the title's colour all move together.
+
+### C43 — a list under a form moves with the form. **Open.**
+
+**Found in F5C. Measured, and put to a decision.** On Edit and Delete the
+blocks are in the reference's order and the reference's shape, and the list
+*below* the form sits lower than the prototype's: six points a field on Edit
+(88 over the whole form), thirty-four on Delete's two consequence lists.
+
+It is an accumulation rather than a structural difference — no block is
+missing, misplaced or the wrong size — but it is larger than D20's three
+points and is therefore named rather than absorbed into a tolerance.
+
+### C44 — the Notifications screen filters twice; Flutter can only filter once. **Open.**
+
+**Found in F5C. Measured, and put to a decision.** `services/notifications.js`
+narrows the category list by two questions before it draws a switch:
+
+1. the reader's faith preference, and
+2. whether any **visible feature** feeds the category —
+   `NOTIFY.SOURCES.some(src => src.cat === c.id && visible(feature(src.tool)))`.
+
+Flutter asks the first (C34) and cannot ask the second: there is no
+notification engine in this build, and no source table to ask. So the
+reference lists five categories for a non-Muslim Pakistani reader and Flutter
+lists ten.
+
+**Dayroz obligation.** When there is an engine, the second filter belongs
+beside the first — in `LumeNotificationPrefs.visible`, so the count and the
+list keep asking one question rather than two.
+
+### C45 — `--pad-row` is 12/16
+
+Recorded as part of C42.
+
+### C46 — the toolbar's back control, and its target
+
+**Found and corrected in F5C.** Two things at once. The drawn circle is
+`.toolbar .iconbtn`'s **38**, not onboarding's `.onb__nav` 34 —
+`LumeBackButton` had one size and the product has two. And its 44-point
+accessible target was growing the bar: a `.toolbar` is measured at **61** and
+Flutter's stood at 66, because `10 + 44 + 12` is 66.
+
+The target now overhangs into the bar's own 10/12 padding instead of pushing
+it out, which is the separation D35 made on a card action, in a second place.
+The circle carries a key so a measurement can tell it from the target.
+
+**Exact parity, restored.** `ACCOUNT_PARITY.md` reads `=` on `toolbar` and
+`toolbar.back` for all twenty-one routes.
+
+### C47 — the toolbar's title took a token's line
+
+**Found and corrected in F5C.** `.toolbar__title` is 20 / 800 / −0.034em with
+`line-height: normal`, which is the font's natural **25**. Flutter took the
+`--t-title` token's line instead, which is taller — enough to make the bar two
+points deep and to push the 38-point back control two points off the padding
+it should sit on.
+
+The same class as C27 and C28: a role token used where the stylesheet is not
+using one.
+
+### C48 — the account's forms are the product's field, not authentication's
+
+**Found and corrected in F5C.** `tools/shared.css` and `auth.css` define two
+shapes for the same element, and the account section wears the first:
+
+| | `.field` | `.auth .field` |
+|---|---|---|
+| label | 11 / 700, `.02em`, **uppercase**, `text-3` | 13 / 600, `-.005em`, sentence case, `text-2` |
+| box | `padding: 10px 12px`, `card-2`, `--r-xs` | `min-height: 52`, `padding: 0 18`, card |
+| input | 14 / 700 / −.026em | 16 / 600 / −.192px |
+
+`LumeInputField` — the authentication flow's field, moved into core this
+phase — was drawing the auth shape everywhere. It now takes a
+`LumeFieldVariant`, so one widget draws the two shapes the stylesheets have
+and a third copy is not needed for the next form.
+
 ## 3. Open questions
 
 ### Resolved in F1
@@ -918,6 +1037,9 @@ deleted row invites the same question again.
 
 | Date | Change | Reason |
 |---|---|---|
+| 2026-09-13 (F5C-C) | **All twenty-one routes measured against the prototype** — a web capture, a Flutter capture, a side-by-side and a structural comparison each, in `ACCOUNT_PARITY.md` | A settings section fails quietly; a route that renders an empty body throws nothing |
+| 2026-09-13 (F5C-C) | **C42, C46, C47, C48 raised and corrected** — the option row's ring and padding, the toolbar's back control and its target, the toolbar's title line, and the account form's own field shape | Found by adding the account routes to the measured-bounds comparison |
+| 2026-09-13 (F5C-C) | **C41, C43, C44 raised and left open** — the option row's run-together description, the accumulation under a form, and the Notifications screen's second filter | The visual-authority rule reserves a visible departure from Lume for a decision, and these three are not ours to take |
 | 2026-09-13 (F5C-B/C) | **Profile and the twenty-one account routes implemented** — one composition in four identity states, a per-route gate, and no placeholder among them | Profile was the last destination still rendering the F3 fixture, and a functional row must not point at a generic screen |
 | 2026-09-13 (F5C-B/C) | **D40 and D41 recorded** — the version line names this build, and the Personalisation sheet is two editors | A version is a claim about which code is running; six of the sheet's seven controls are now routes |
 | 2026-09-13 (F5C-B/C) | **C34 raised and corrected** — the notification count and the notification list are the same faith-gated question, asked once | The reference counts eleven and shows ten to a non-Muslim reader |

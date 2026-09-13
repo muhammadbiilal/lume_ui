@@ -78,12 +78,20 @@ abstract final class LumeSettingsMetrics {
     vertical: 14,
   );
 
-  /// `.optrow { padding: var(--pad-row); gap: 12px }`.
+  /// `.optrow { padding: var(--pad-row); gap: 12px }` — and `--pad-row` is
+  /// `12px 16px`, "one value for nine row types".
   static const EdgeInsets optionPadding = EdgeInsets.symmetric(
-    horizontal: 14,
+    horizontal: 16,
     vertical: 12,
   );
   static const double optionGap = 12;
+
+  /// `.optrow__mark { width: 20px; height: 20px; border: 1.5px }`, its check
+  /// 12. A ring on every row, filled on the chosen one — so an unchosen
+  /// option still reads as an option.
+  static const double optionMark = 20;
+  static const double optionMarkBorder = 1.5;
+  static const double optionMarkGlyph = 12;
 
   /// `.srow__value { max-width: 46vw }`.
   static const double valueFraction = 0.46;
@@ -427,10 +435,10 @@ class LumeOptionRow extends StatelessWidget {
                               ),
                               -0.022,
                             ).copyWith(
-                              color: lume.text,
-                              fontWeight: selected
-                                  ? FontWeight.w700
-                                  : FontWeight.w600,
+                              // `.optrow.is-on .optrow__title { color:
+                              // var(--accent-ink) }`.
+                              color: selected ? lume.accentInk : lume.text,
+                              fontWeight: FontWeight.w700,
                             ),
                       ),
                       if (subtitle != null) ...<Widget>[
@@ -452,16 +460,30 @@ class LumeOptionRow extends StatelessWidget {
                   ),
                 ),
                 const SizedBox(width: LumeSettingsMetrics.optionGap),
-                // The check is the state made visible. It is not the only
-                // signal — the weight changes too — so the row does not
-                // depend on colour alone.
-                Opacity(
-                  opacity: selected ? 1 : 0,
-                  child: LumeIcon(
-                    LumeIcons.check,
-                    size: 17,
-                    color: lume.accent,
+                // `.optrow__mark` — a ring on every row, filled with a check
+                // on the chosen one. Drawn on the unchosen rows too, because
+                // an option with nothing at its end does not read as one; and
+                // the title's weight and colour change with it, so the state
+                // never rests on colour alone.
+                Container(
+                  width: LumeSettingsMetrics.optionMark,
+                  height: LumeSettingsMetrics.optionMark,
+                  decoration: BoxDecoration(
+                    shape: BoxShape.circle,
+                    color: selected ? lume.accent : null,
+                    border: Border.all(
+                      color: selected ? lume.accent : lume.border2,
+                      width: LumeSettingsMetrics.optionMarkBorder,
+                    ),
                   ),
+                  alignment: Alignment.center,
+                  child: selected
+                      ? LumeIcon(
+                          LumeIcons.check,
+                          size: LumeSettingsMetrics.optionMarkGlyph,
+                          color: lume.onAccent,
+                        )
+                      : null,
                 ),
               ],
             ),
@@ -1033,7 +1055,7 @@ class LumeDangerZone extends StatelessWidget {
             style: LumeType.tracked(
               LumeType.natural(context, context.lumeType.metaSmall, size: 11),
               0.07,
-            ).copyWith(color: lume.rose, fontWeight: FontWeight.w700),
+            ).copyWith(color: lume.roseInk, fontWeight: FontWeight.w700),
           ),
         ),
         const SizedBox(height: LumeSettingsMetrics.groupLabelGap),
@@ -1041,10 +1063,13 @@ class LumeDangerZone extends StatelessWidget {
           width: double.infinity,
           padding: const EdgeInsets.all(16),
           decoration: BoxDecoration(
-            color: lume.rose.withValues(alpha: 0.06),
-            borderRadius: LumeRadius.brLg,
+            // `color-mix(in srgb, var(--rose) 6%, var(--card))` — six per cent
+            // of rose *into the card*, which is a near-white surface. Six per
+            // cent of rose over the page is a different, greyer colour.
+            color: Color.lerp(lume.card, lume.rose, 0.06),
+            borderRadius: LumeRadius.brMd,
             border: Border.all(
-              color: lume.rose.withValues(alpha: 0.24),
+              color: lume.rose.withValues(alpha: 0.22),
               width: LumeSpace.border,
             ),
           ),

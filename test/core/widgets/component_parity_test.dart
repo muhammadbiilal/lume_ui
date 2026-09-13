@@ -753,7 +753,7 @@ void main() {
     testWidgets('the back control matches .onb__nav', (
       WidgetTester tester,
     ) async {
-      expect(LumeBackButton.size, 34);
+      expect(LumeBackButton.onboardingSize, 34);
       await render(tester, LumeBackButton(onPressed: () {}));
       final BoxDecoration d = decorationUnder(
         tester,

@@ -63,7 +63,24 @@ class LumeToolbar extends StatelessWidget {
       child: Row(
         children: <Widget>[
           if (onBack != null) ...<Widget>[
-            LumeBackButton(onPressed: onBack, label: backLabel),
+            // The circle is 38 and the target is 44 (D6). The extra three
+            // points on each side overhang into the bar's own 10/12 padding
+            // rather than growing it: a `.toolbar` is 61 in the prototype and
+            // an accessible target must not make it 66. Same rule as D35 —
+            // the touchable area and the drawn one are separate.
+            SizedBox(
+              width: LumeBackButton.toolbarSize,
+              height: LumeBackButton.toolbarSize,
+              child: OverflowBox(
+                maxWidth: LumeSpace.tap,
+                maxHeight: LumeSpace.tap,
+                child: LumeBackButton(
+                  onPressed: onBack,
+                  label: backLabel,
+                  size: LumeBackButton.toolbarSize,
+                ),
+              ),
+            ),
             const SizedBox(width: 10),
           ],
           Expanded(
@@ -75,11 +92,16 @@ class LumeToolbar extends StatelessWidget {
                   header: true,
                   child: Text(
                     title,
-                    // Measured: 20 / 800 / −0.034em.
+                    // Measured: 20 / 800 / −0.034em, on the font's natural
+                    // line — which is 25, not the `--t-title` token's. The
+                    // token's is taller, and it pushed the 38-point back
+                    // control off the bar's own padding and the bar itself
+                    // two points past its measured 61.
                     style: LumeType.tracked(
-                      LumeType.fit(
+                      LumeType.natural(
                         context,
                         context.lumeType.title,
+                        size: 20,
                       ).copyWith(fontWeight: FontWeight.w800),
                       -0.034,
                     ).copyWith(color: lume.text),
@@ -127,12 +149,30 @@ class LumeToolbar extends StatelessWidget {
 /// The chevron mirrors in RTL, because "back" is a statement about reading
 /// order.
 class LumeBackButton extends StatelessWidget {
-  const LumeBackButton({super.key, this.onPressed, this.label});
+  const LumeBackButton({
+    super.key,
+    this.onPressed,
+    this.label,
+    this.size = onboardingSize,
+  });
 
   final VoidCallback? onPressed;
   final String? label;
 
-  static const double size = 34;
+  /// The drawn circle. Two of them in the product, and they are different
+  /// controls that happen to look alike: `.onb__nav` is 34 and the toolbar's
+  /// `.iconbtn` is 38.
+  final double size;
+
+  /// `.onb__nav` — onboarding's, and the default.
+  static const double onboardingSize = 34;
+
+  /// `.toolbar .iconbtn`.
+  static const double toolbarSize = 38;
+
+  /// The drawn circle, so a measurement can tell it from the target around
+  /// it. They are deliberately different sizes — see D6.
+  static const Key circleKey = Key('back.circle');
 
   @override
   Widget build(BuildContext context) {
@@ -162,6 +202,7 @@ class LumeBackButton extends StatelessWidget {
               child: Center(
                 widthFactor: 1,
                 child: Container(
+                  key: circleKey,
                   width: size,
                   height: size,
                   alignment: Alignment.center,

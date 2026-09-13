@@ -65,9 +65,12 @@ class LumeFakeAccountRepository
   static final LumeAccountIdentity _seedIdentity = LumeAccountIdentity(
     email: 'amina@example.com',
     createdAt: DateTime(2024, 3, 18),
-    displayName: 'Amina',
+    // The same figures `measure_destinations.mjs` writes into
+    // `lume-accounts`, so a capture and a golden describe the same person and
+    // the comparison is about the layout rather than about the name.
+    displayName: 'Amina Rahman',
     firstName: 'Amina',
-    lastName: 'Rafiq',
+    lastName: 'Rahman',
   );
 
   /// Measured from the reference's own session list: this device first, the
