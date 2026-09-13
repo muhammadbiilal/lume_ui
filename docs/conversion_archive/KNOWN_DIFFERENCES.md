@@ -1097,6 +1097,190 @@ the note it would otherwise inherit is suppressed. Of the fifty-six remaining
 differences in the table, twenty-eight are D20, fifteen are C41, eight are C43
 and five are not compared. None is unexplained.
 
+### C52 — the reference counts one habit in the plural
+
+**Found in F5D. Reproduced.** `n.habit.title` is `'{n} habits left today'`,
+`n.tasks.title` `'{n} tasks left today'` and `n.bill.title`
+`'{n} bill needs attention'` — none has a one/other form, so the running
+reference renders **"1 habits left today"** beside **"1 bill needs
+attention"**. `probe_notifications.mjs` reads both off the screen.
+
+The fixture's counts are the reference's own and fixed, so `nHabitTitle`,
+`nTasksLeft` and `nBillTitle` are carried as the rendered, non-plural strings.
+**Dayroz obligation:** the moment a count is live, each becomes an ICU plural
+in all three languages.
+
+### C53 — in Urdu and Arabic the reference's notifications are English
+
+**Found in F5D. Corrected in Flutter.** `probe_notifications.mjs --lang ur`
+and `--lang ar` render every row title, body, meta line, badge, action and the
+header in English: `assets/js/i18n/tools.js` carries the `n.*` keys for
+English only, and the one translated fragment on screen is `weather.rain`.
+
+Flutter translates all of them — the 43 centre keys, the 29 row keys, the
+sheets' strings — because §11 and §48 make a notification's language the
+reader's, and a missing dictionary is not a design. Direction, fonts and line
+breaking follow the language. **Classification:** permitted correction.
+**Evidence:** the centre's "every language, and twice the type size" tests and
+the `390x844_light_ur` / `_ar` goldens.
+
+### C54 — a low notification ranks as a normal one
+
+**Found in F5D. Reproduced.** `priorityRank: PRIORITY[src.priority] || 1`
+— `low` is `0`, which is falsy, so it ranks `1`. The consequence is visible:
+tomorrow's forecast (low, 300 minutes) sits **above** the electricity bill
+(normal, 640 minutes) because rank ties and age decides.
+
+`lumeReferenceRank` reproduces it for ordering only; `LumeNotificationPriority`
+keeps its true rank for everything else. **Evidence:** "rank outranks recency,
+with low ranked as normal (C54)" and the thirteen-title order test.
+
+### C55 — the notification fixture was written, not read
+
+**Found and corrected in F5D.** The partial checkpoint's samples — a heavy-rain
+warning, Metformin, the Green Line, three KSE rows to fold, a note card saying
+there was no notification server — were composed by hand. None is what the
+reference renders at the fixture instant, and the note card is a surface the
+reference does not have. That is a visible departure, not a fixture detail.
+
+They are now the rows the running reference renders, read with
+`probe_notifications.mjs`:
+
+* **thirteen** for Pakistan (`muslim_pk` and `default_pk` alike — no prayer is
+  within 45 minutes and there is no weather alert), **ten** for London and New
+  York;
+* the **market row is per exchange**: `EXCHANGES[country].indices[0]`, and only
+  past half a percent — Pakistan (+0.82 %) and Saudi Arabia (+0.53 %) build a
+  row; London (0.38 %), New York (0.42 %), Dubai (0.40 %) and Mumbai (0.49 %)
+  do not;
+* **tomorrow's forecast is per market**, in its units — Islamabad 36° / 27° /
+  1 %, London 25° / 17° / 10 %, New York 84° / 68° / 50 %. A market the probe
+  has no state for reads Pakistan's, labelled fixture-only;
+* **sensitivity is the source's** (`src.sensitive`), not the category's: a bill
+  in Money withholds its amount, and `LumeNotificationSource.sensitive` now
+  says so;
+* **folding is unreachable**: `groupId` is the source id and each source builds
+  one row. The rule is kept as a contract and tested as a function.
+
+The invented note card is removed. **Evidence:**
+`notification_centre_test.dart` — the reference order, the London and New York
+feeds, withheld bodies.
+
+### C56 — search was laid out from its markup, not measured
+
+**Found and corrected in F5D.** Measured with `measure_destinations.mjs --after
+search_*` over Home, and corrected:
+
+| part | was | reference |
+|---|---|---|
+| suggestions | filter chips, flush | `.chip` (`LumeChoiceChip`), inset 20, 2 below |
+| recents and hits | rich rows in a lifted card | `.list.list--flat` — a shadowless card of 61-point `.list-row`s; hits end in `#i-arrow-ur` |
+| nothing found | a tool state | `.empty` with the sheet's own lens drawing |
+| scrim | colour only | `backdrop-filter: blur(3px)`, fading in with the colour — every sheet |
+| the field | no focus treatment | `.search:focus-within` — a half-accent border and a 3-point tint ring, replacing `shadow-xs`; every search field, onboarding's country picker included |
+| a recent's line | the catalogue's static status | the live tile status — "34° Hazy sun" |
+| medium and expanded | a dialog centred in the window | rising from the bottom, 24 clear, at most 520 wide, rounded, grab kept |
+
+**Evidence:** `search_bounds_test.dart` — sheet, field, both labels, first chip,
+recents card, first row, first hit, empty drawing and its title, each within
+one point. The idle goldens pump past the sheet's 320 ms focus delay: at
+medium the transition settles sooner, and a capture without it would show a
+field the reference never shows unfocused.
+
+### C57 — the centre's composition and row, measured
+
+**Found and corrected in F5D.** Measured with `measure_destinations.mjs --screen
+notifications`:
+
+* **sections** are `.sect`, 24 apart (`--gap-section`) — the partial checkpoint
+  used 14;
+* **tabs** are `.ttabs` edge to edge with a 20 inset, 4 between tabs, each
+  count in a tinted pill, and the selected tab's **accent** bar inset 8 and
+  hanging 1 — not a full-width text-coloured underline. This is the shared
+  `LumeTabs`, so the component gallery's tabs changed with it;
+* the **category bar** spaces chips 7 apart with 2 below. Its chips' 44-point
+  targets reach 6.5 past each 31-point chip, and the gaps around the bar give
+  those points back — the rule D6 and D35 keep — so the chips and the list land
+  where the reference's do;
+* the **list clips** (`.nlist { overflow: hidden }`);
+* **the row**, from `.nrow`: 12 × 16 padding, a 36-point icon on `--r-icon`
+  with a 17-point glyph, health tinted rose, a 14 / 700 / −.026em title on 1.3,
+  a 12 / 400 body on 1.45 three below it, an 11 / 600 meta line of 13 five
+  below that, an 8-point dot; the unread tint across the **whole** row with a
+  3-point accent bar; a 44-point action strip holding a 7 × 14 tinted pill and
+  a 32-point dismiss whose 44-point target is the strip's own height; expired
+  rows at 58 %.
+
+**Evidence:** `notification_bounds_test.dart` — toolbar, tabs, category bar,
+list, first row, its title line, badge, title, body, meta, dot and dismiss
+within one point. The second row's pill and the fifth row are within three: each
+row is about 0.7 shorter, 18.19 and 17.39 rounded to whole points (D20), which
+also makes the thirteen-row list 8.88 shorter — reported, not asserted.
+
+### C58 — the banner was built, and never shown
+
+**Found and corrected in F5D.** `LumeNotificationBannerHost` existed and was
+tested on its own; nothing in the app mounted it or decided when it should be
+up. The reference's shell ticks: `setTimeout(notifyTick, 2500)` and
+`setInterval(notifyTick, 45000)`.
+
+`LumeNotificationPresenter` wraps the shell and reproduces the tick exactly:
+
+* `nextToPresent` — the first unread, unexpired row not yet presented — and
+  `markPresented` whatever surface it goes to, so an event reaches one surface;
+* `mayInterrupt` — never with in-app off; important and above, or only critical
+  inside quiet hours;
+* nothing at all while in-app and push are both off;
+* no banner on the centre, where the event is still marked;
+* no banner while the app is away — there is no push in this build, so the
+  event waits.
+
+One addition the reference leaves to chance: never over a sheet or a dialog.
+The banner sits in the shell's own slot (top at compact, the trailing corner at
+medium and expanded), blurs what is behind it by 20, and brings its own
+material. The presented set is nondurable, so a restart presents the first
+banner again where the reference remembers it in the profile — fixture-only.
+**Evidence:** `notification_presenter_test.dart`, eleven tests.
+
+### C59 — the notification sheets were not the reference's
+
+**Found and corrected in F5D.**
+
+**`#sheet-notifpush`.** A 56-point art tile on `--r-lg` with `#i-bell-ring` at
+26; a 20 / 800 title; the text at 13 on 1.5, no wider than 32 of the font's own
+zeros; the categories as centred pills; an accent button carrying its words
+alone; and "Not now" as bare text, its 44-point target taken from the margins
+around it. It still grants nothing.
+
+**`#sheet-notifprefs`.** A head with the reference's subtitle — "What Lume may
+tell you, and when" — and `.closebtn`, a 30-point tinted circle, which every
+titled sheet now carries. The body is `renderNotifPrefs`: General (Push, "Not
+asked yet"; In-app; Sound; Vibration; Badge count), Categories, By tool, Quiet
+hours with its **from** and **Until** steppers — an hour at a time, round the
+clock, "from" lowercase as the reference renders it — Privacy, and **Restore
+dismissed**, which now restores (`restoreAll`) and says so.
+
+It also listened to nothing. The preference store is a `ChangeNotifier` behind
+a plain provider, so a flipped switch stayed where it was and a second step
+started from the hour the sheet opened on. It now listens to the store.
+
+The account's own Notifications route (F5C) draws the same five sections
+without the two stepper rows; that asymmetry is recorded here and left to
+F5C's owner. **Evidence:** `notification_overlays_test.dart`.
+
+### C60 — Home's hero title collapses in every capture (open)
+
+**Found in F5D, in the side-by-sides behind the sheets. Not corrected here.**
+The reference sets "Plan your day before it starts" in two full lines 235.55
+wide. Flutter draws **"Plan / your …"**: `LumeBalancedText` narrows its box
+until the line count changes, but the title is clamped to two lines with an
+ellipsis, so the count never changes and the box collapses. It is in the
+committed F5B Home goldens.
+
+Home belongs to F5B, whose goldens were approved as they stand, so F5D records
+it rather than rewriting them. **Proposed:** balance against the unclamped line
+count, then clamp.
+
 ## 3. Open questions
 
 ### Resolved in F1

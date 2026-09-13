@@ -2,8 +2,9 @@
 
 Every non-tool application surface that exists in the running Lume
 implementation after F5C, traced from callers, builders, state and handlers
-rather than from the earlier documents' names. Conversion evidence; the
-product documentation is in `../`.
+rather than from the earlier documents' names — and, under each, its Flutter
+status at the close of F5D. Conversion evidence; the product documentation is
+in `../`.
 
 Method: `grep` for the trigger attribute or action string, then read the
 builder and its CSS. Where a document and the source disagree, the source is
@@ -84,9 +85,13 @@ sliced to 6) and **recents** — the profile's recents mapped through
 
 ### Flutter status
 
-`/…/search` is routed to `LumeFixtureScreen`. **The reference has no search
-route** — it is a sheet over the current destination. Recorded as decision
-**Q10** below.
+**Built (F5D).** `showLumeSearch` raises `LumeSearchSheet` on the root
+navigator, over whichever branch opened it; `/<branch>/search` presents the
+same sheet over that branch (Q10). The index, scoring, cap, recents and
+suggestions are `LumeFixtureSearchRepository`; no loading, error or offline
+state is drawn (Q11). Geometry measured against the reference — chips, the
+shadowless list, the empty drawing, the blurred scrim and the focus ring — in
+`test/features/search/search_bounds_test.dart`; corrections recorded as C56.
 
 ---
 
@@ -137,9 +142,13 @@ country — and withholds a sensitive tool's detail when previews are off
 
 ### Flutter status
 
-`/…/notifications` is routed to `LumeFixtureScreen`. The **badge** exists
-(`LumeHeaderButton` with a count). The preference screen exists (F5C,
-`account/notifications`) and is a **different surface**.
+**Built (F5D).** `/<branch>/notifications` is `LumeNotificationHost` over
+`LumeNotificationCentre`, reading `notificationFeedProvider` — a nondurable
+`LumeFixtureNotificationRepository` carrying the thirteen rows the reference
+renders at the fixture instant (C55). Composition and row geometry measured in
+`test/features/notifications/notification_bounds_test.dart` (C57). The
+preference *route* (F5C, `account/notifications`) remains a different surface
+sharing one store.
 
 ---
 
@@ -147,13 +156,13 @@ country — and withholds a sensitive tool's detail when previews are off
 
 | id | trigger | callers | Flutter status |
 |---|---|---|---|
-| `sheet-search` | `data-sheet="search"` | Home bar, Explore head, `quransearch` | **absent** |
+| `sheet-search` | `data-sheet="search"` | Home bar, Explore head, `quransearch` | **built** — `search_sheet.dart` (F5D) |
 | `sheet-personalise` | `sheet:personalise` | 23 call sites | **built** — `personalise_sheet.dart` (F5C) |
 | `sheet-market` | `sheet:market` | 3 | tool-phase (Markets) |
-| `sheet-notifprefs` | `sheet:notifprefs` | 2 | the account route covers the same content (F5C); the sheet form is F5D |
+| `sheet-notifprefs` | `sheet:notifprefs` | 2 | **built** — `showLumeNotificationPrefsSheet` (F5D), `renderNotifPrefs`' five sections and Restore dismissed (C59) |
 | `sheet-authlegal` | `sheet:authlegal` | 1 | **built** — auth flow (F4) |
 | `sheet-recdelete` | `sheetOpen('recdelete')` | 3 | **built** — `LumeDeleteConfirmation` |
-| `sheet-notifpush` | `sheetOpen('notifpush')` | 2 | **absent** |
+| `sheet-notifpush` | `sheetOpen('notifpush')` | 2 | **built** — `showLumeNotificationPushSheet` (F5D); reports an answer, grants nothing (C59) |
 | `sheet-share` | `sheetOpen('share')` | 1 | tool-phase (share cards) |
 | `sheet-confirm` | `sheetOpen('confirm')` | 1 | **built** — `showLumeDialog` / `LumeDeleteConfirmation` |
 
@@ -169,7 +178,7 @@ the dialog after 60 ms, focus restored to the opener on close.
 | surface | trigger | builder | Flutter |
 |---|---|---|---|
 | toast | `toast(msg)` and `act: 'toast:…'` | shell | **built** — `LumeToast` |
-| notification banner | `notifyTick()` when the surface is `banner` and the centre is not showing | `services/notifications.js:56` | **absent** |
+| notification banner | `notifyTick()` when the surface is `banner` and the centre is not showing | `services/notifications.js:56` | **built** — `LumeNotificationPresenter` in the shell, on the reference's 2.5 s / 45 s tick (C58) |
 | offline banner | `UI.offlineBanner` | `ui/components.js` | **built** — `LumeOfflineBanner` |
 | retry / conflict notice | `UI.errorState`, `rec.conflict*` keys | `ui/components.js`, `ui/crud.js` | **built** — `LumeNotice`, `LumeToolState` |
 
@@ -202,17 +211,17 @@ The reference opens `#sheet-search` over the current destination. Flutter's
 router already declares `/<branch>/search`, asserted by `router_test.dart`,
 currently rendering a placeholder screen.
 
-**Proposed:** keep the route as an addressable deep link, and have it present
+**Decided:** keep the route as an addressable deep link, and have it present
 the **sheet** over the branch root rather than a screen of its own — so the
 rendered result matches the reference and the existing route contract and its
-tests survive. Recorded rather than settled.
+tests survive. Implemented as `_SearchOverBranch` in `app_router.dart`.
 
 ### Q11 — the reference's search has no loading, error or offline state
 
 Its index is synchronous and local. The brief asks for those states. Building
 them would mean inventing a screen the reference never shows.
 
-**Proposed:** the repository contract carries them, so Dayroz can supply a
+**Decided:** the repository contract carries them, so Dayroz can supply a
 remote index without a redesign; the fixture resolves synchronously and those
 states are unreachable in this build, which is what the reference does. Any
 state that cannot be reached is not drawn.

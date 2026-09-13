@@ -1,10 +1,11 @@
 /// Visual evidence for the four cross-cutting surfaces.
 ///
 /// Global search, the notification centre, the banner and the two
-/// notification sheets — each at the cells the brief requires, and each in
-/// the states the reference actually has. A state the reference has no
-/// composition for is not shot, because there would be nothing to compare it
-/// against.
+/// notification sheets — each captured the way the reference is measured:
+/// through the real router, over the destination it belongs to, with the
+/// shell, its navigation and the scrim. A surface shot on its own is a
+/// different picture from the one `measure_destinations.mjs` takes, and a
+/// comparison between the two says nothing.
 ///
 /// Every capture writes a `.flutter.png` and its measured sidecar into
 /// `docs/conversion_archive/shots/cross-cutting/`, and compares against a
@@ -12,18 +13,20 @@
 /// inventory checker counts them separately.
 library;
 
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:lume/app/providers/notification_feed.dart';
 import 'package:lume/app/providers/personalisation.dart';
-import 'package:lume/core/widgets/lume/lume_overlay.dart';
+import 'package:lume/core/navigation/lume_shell.dart';
 import 'package:lume/features/account/data/notification_prefs_store.dart';
 import 'package:lume/features/account/domain/notification_prefs.dart';
 import 'package:lume/features/notifications/data/notification_fixtures.dart';
 import 'package:lume/features/notifications/domain/notification_model.dart';
-import 'package:lume/features/notifications/presentation/notification_banner.dart';
-import 'package:lume/features/notifications/presentation/notification_centre.dart';
+import 'package:lume/features/notifications/presentation/notification_host.dart';
+import 'package:lume/features/notifications/presentation/notification_presenter.dart';
 import 'package:lume/features/notifications/presentation/notification_sheets.dart';
 import 'package:lume/features/search/presentation/search_sheet.dart';
 import 'package:lume/l10n/app_localizations.dart';
@@ -39,17 +42,18 @@ const String kOut = '$kShotsDir/cross-cutting';
 void main() {
   setUpAll(loadLumeFonts);
 
-  /// One surface, captured and compared.
+  /// One cell, through the router, captured and compared.
   Future<void> shoot(
-    WidgetTester tester,
-    Widget child,
-    String name,
-    Cell cell, {
+    WidgetTester tester, {
+    required String location,
+    required String name,
+    required Cell cell,
     List<Override> overrides = const <Override>[],
+    Future<void> Function(WidgetTester tester)? after,
   }) async {
-    await captureLume(
+    await captureLumeRoute(
       tester,
-      child,
+      location: location,
       name: name,
       outDir: kOut,
       surface: cell.$2,
@@ -58,12 +62,15 @@ void main() {
       textScale: cell.$5,
       suffix: cell.$5 == 1.0 ? '' : '_x${cell.$5.toStringAsFixed(0)}',
       overrides: overrides,
+      after: after,
     );
     await expectLater(
       find.byType(MaterialApp),
       matchesGoldenFile('images/${name}_${cell.$1}.png'),
     );
   }
+
+  Cell cellNamed(String name) => kCells.firstWhere((Cell c) => c.$1 == name);
 
   /// A feed with fixed content, so a capture is the same next week.
   LumeFixtureNotificationRepository feed(
@@ -74,7 +81,7 @@ void main() {
     LumeNotificationFailure? failWith,
   }) => LumeFixtureNotificationRepository(
     eligibility: kEligibility,
-    user: LumeUsers.muslimPk,
+    user: LumeUsers.defaultPk,
     l: l,
     readPrefs: () => prefs,
     samples: samples ?? kNotificationSamples,
@@ -82,18 +89,43 @@ void main() {
     failWith: failWith,
   );
 
+  Override feedWith({
+    List<LumeNotificationSample>? samples,
+    bool quietHours = false,
+    LumeNotificationFailure? failWith,
+  }) => notificationFeedProvider.overrideWith(
+    (Ref ref) => feed(
+      ref.watch(notificationStringsProvider),
+      samples: samples,
+      quietHours: quietHours,
+      failWith: failWith,
+    ),
+  );
+
   // ---------------------------------------------------------------- search
 
   group('global search', () {
-    // The sheet itself, at every cell. Its geometry is the thing being
-    // compared, and a sheet over a destination shows less of it.
+    Future<void> Function(WidgetTester) typing(String query) =>
+        (WidgetTester t) => t.enterText(
+          find.descendant(
+            of: find.byKey(LumeSearchSheet.fieldKey),
+            matching: find.byType(EditableText),
+          ),
+          query,
+        );
+
     for (final Cell cell in kCells) {
       testWidgets('idle · ${cell.$1}', (WidgetTester tester) async {
         await shoot(
           tester,
-          const LumeSearchSheet(branch: '/home'),
-          'search_idle',
-          cell,
+          location: '/home/search',
+          name: 'search_idle',
+          cell: cell,
+          // Past the sheet's 320 ms focus delay. At medium and expanded the
+          // sheet's transition is shorter than the delay, and settling would
+          // otherwise capture the field before it has taken focus — which the
+          // reference, measured 900 ms after opening, never shows.
+          after: (WidgetTester t) => t.pump(const Duration(milliseconds: 400)),
         );
       });
     }
@@ -101,9 +133,10 @@ void main() {
     testWidgets('results · the reference cell', (WidgetTester tester) async {
       await shoot(
         tester,
-        const _TypedSearch(query: 'ca'),
-        'search_results',
-        kCells.first,
+        location: '/home/search',
+        name: 'search_results',
+        cell: kCells.first,
+        after: typing('ca'),
       );
     });
 
@@ -112,27 +145,30 @@ void main() {
     ) async {
       await shoot(
         tester,
-        const _TypedSearch(query: 'zzzz nothing'),
-        'search_empty',
-        kCells.first,
+        location: '/home/search',
+        name: 'search_empty',
+        cell: kCells.first,
+        after: typing('zzzz nothing'),
       );
     });
 
     testWidgets('results · right to left', (WidgetTester tester) async {
       await shoot(
         tester,
-        const _TypedSearch(query: 'ca'),
-        'search_results',
-        kCells.firstWhere((Cell c) => c.$1 == '390x844_light_ur'),
+        location: '/home/search',
+        name: 'search_results',
+        cell: cellNamed('390x844_light_ur'),
+        after: typing('ca'),
       );
     });
 
     testWidgets('results · twice the type size', (WidgetTester tester) async {
       await shoot(
         tester,
-        const _TypedSearch(query: 'ca'),
-        'search_results',
-        kCells.firstWhere((Cell c) => c.$1 == '390x844_light_en_x2'),
+        location: '/home/search',
+        name: 'search_results',
+        cell: cellNamed('390x844_light_en_x2'),
+        after: typing('ca'),
       );
     });
   });
@@ -140,18 +176,27 @@ void main() {
   // ---------------------------------------------------- notification centre
 
   group('the notification centre', () {
+    /// Past the first visit's skeleton, then [then].
+    Future<void> Function(WidgetTester) settled([
+      Future<void> Function(WidgetTester)? then,
+    ]) => (WidgetTester t) async {
+      await t.pump(LumeNotificationHost.settle);
+      await t.pumpAndSettle();
+      if (then != null) await then(t);
+    };
+
+    Future<void> Function(WidgetTester) tab(String label) =>
+        (WidgetTester t) => t.tap(find.text(label).first);
+
     for (final Cell cell in kCells) {
       testWidgets('all · ${cell.$1}', (WidgetTester tester) async {
         await shoot(
           tester,
-          const _Centre(),
-          'notif_centre',
-          cell,
-          overrides: <Override>[
-            notificationFeedProvider.overrideWith(
-              (Ref ref) => feed(ref.watch(notificationStringsProvider)),
-            ),
-          ],
+          location: '/home/notifications',
+          name: 'notif_centre',
+          cell: cell,
+          overrides: <Override>[feedWith()],
+          after: settled(),
         );
       });
     }
@@ -161,14 +206,11 @@ void main() {
     ) async {
       await shoot(
         tester,
-        const _Centre(filter: LumeNotificationFilter.unread()),
-        'notif_unread',
-        kCells.first,
-        overrides: <Override>[
-          notificationFeedProvider.overrideWith(
-            (Ref ref) => feed(ref.watch(notificationStringsProvider)),
-          ),
-        ],
+        location: '/home/notifications',
+        name: 'notif_unread',
+        cell: kCells.first,
+        overrides: <Override>[feedWith()],
+        after: settled(tab('Unread')),
       );
     });
 
@@ -177,14 +219,11 @@ void main() {
     ) async {
       await shoot(
         tester,
-        const _Centre(filter: LumeNotificationFilter.important()),
-        'notif_important',
-        kCells.first,
-        overrides: <Override>[
-          notificationFeedProvider.overrideWith(
-            (Ref ref) => feed(ref.watch(notificationStringsProvider)),
-          ),
-        ],
+        location: '/home/notifications',
+        name: 'notif_important',
+        cell: kCells.first,
+        overrides: <Override>[feedWith()],
+        after: settled(tab('Important')),
       );
     });
 
@@ -193,17 +232,13 @@ void main() {
     ) async {
       await shoot(
         tester,
-        const _Centre(),
-        'notif_empty',
-        kCells.first,
+        location: '/home/notifications',
+        name: 'notif_empty',
+        cell: kCells.first,
         overrides: <Override>[
-          notificationFeedProvider.overrideWith(
-            (Ref ref) => feed(
-              ref.watch(notificationStringsProvider),
-              samples: const <LumeNotificationSample>[],
-            ),
-          ),
+          feedWith(samples: const <LumeNotificationSample>[]),
         ],
+        after: settled(),
       );
     });
 
@@ -212,17 +247,17 @@ void main() {
     ) async {
       await shoot(
         tester,
-        const _Centre(),
-        'notif_hidden',
-        kCells.first,
+        location: '/home/notifications',
+        name: 'notif_hidden',
+        cell: kCells.first,
         overrides: <Override>[
-          notificationFeedProvider.overrideWith(
-            (Ref ref) => feed(
-              ref.watch(notificationStringsProvider),
-              prefs: const LumeNotificationPrefs(preview: false),
+          notificationPrefsProvider.overrideWithValue(
+            LumeMemoryNotificationPrefs(
+              const LumeNotificationPrefs(preview: false),
             ),
           ),
         ],
+        after: settled(),
       );
     });
 
@@ -231,15 +266,11 @@ void main() {
     ) async {
       await shoot(
         tester,
-        const _Centre(),
-        'notif_quiet',
-        kCells.first,
-        overrides: <Override>[
-          notificationFeedProvider.overrideWith(
-            (Ref ref) =>
-                feed(ref.watch(notificationStringsProvider), quietHours: true),
-          ),
-        ],
+        location: '/home/notifications',
+        name: 'notif_quiet',
+        cell: kCells.first,
+        overrides: <Override>[feedWith(quietHours: true)],
+        after: settled(),
       );
     });
 
@@ -248,17 +279,13 @@ void main() {
     ) async {
       await shoot(
         tester,
-        const _Centre(),
-        'notif_error',
-        kCells.first,
+        location: '/home/notifications',
+        name: 'notif_error',
+        cell: kCells.first,
         overrides: <Override>[
-          notificationFeedProvider.overrideWith(
-            (Ref ref) => feed(
-              ref.watch(notificationStringsProvider),
-              failWith: LumeNotificationFailure.unreachable,
-            ),
-          ),
+          feedWith(failWith: LumeNotificationFailure.unreachable),
         ],
+        after: settled(),
       );
     });
   });
@@ -266,6 +293,13 @@ void main() {
   // ---------------------------------------------------------------- banner
 
   group('the banner', () {
+    /// Home, past the shell's first tick — the reference's own demo banner.
+    Future<void> firstTick(WidgetTester t) async {
+      await t.pump(LumeNotificationPresenter.firstTick);
+      await t.pump();
+      await t.pump();
+    }
+
     for (final String name in <String>[
       '390x844_light_en',
       '390x844_dark_en',
@@ -273,22 +307,31 @@ void main() {
       '390x844_light_en_x2',
       '852x393_light_en',
     ]) {
-      testWidgets('over a screen · $name', (WidgetTester tester) async {
+      testWidgets('over Home · $name', (WidgetTester tester) async {
         await shoot(
           tester,
-          const _Banner(),
-          'notif_banner',
-          kCells.firstWhere((Cell c) => c.$1 == name),
+          location: '/home',
+          name: 'notif_banner',
+          cell: cellNamed(name),
+          after: firstTick,
         );
       });
     }
 
-    testWidgets('withholding a sensitive body', (WidgetTester tester) async {
+    testWidgets('with previews off', (WidgetTester tester) async {
       await shoot(
         tester,
-        const _Banner(withheld: true),
-        'notif_banner_hidden',
-        kCells.first,
+        location: '/home',
+        name: 'notif_banner_hidden',
+        cell: kCells.first,
+        overrides: <Override>[
+          notificationPrefsProvider.overrideWithValue(
+            LumeMemoryNotificationPrefs(
+              const LumeNotificationPrefs(preview: false),
+            ),
+          ),
+        ],
+        after: firstTick,
       );
     });
   });
@@ -296,6 +339,14 @@ void main() {
   // ---------------------------------------------------------------- sheets
 
   group('the notification sheets', () {
+    /// Raised over Home the way their callers raise them.
+    Future<void> Function(WidgetTester) raise(
+      Future<Object?> Function(BuildContext context) show,
+    ) => (WidgetTester t) async {
+      unawaited(show(t.element(find.byType(LumeShell))));
+      await t.pumpAndSettle();
+    };
+
     for (final String name in <String>[
       '390x844_light_en',
       '390x844_dark_en',
@@ -305,186 +356,27 @@ void main() {
       testWidgets('push ask · $name', (WidgetTester tester) async {
         await shoot(
           tester,
-          const _PushAsk(),
-          'notif_push',
-          kCells.firstWhere((Cell c) => c.$1 == name),
+          location: '/home',
+          name: 'notif_push',
+          cell: cellNamed(name),
+          after: raise(showLumeNotificationPushSheet),
         );
       });
 
       testWidgets('preferences · $name', (WidgetTester tester) async {
         await shoot(
           tester,
-          const _PrefsSheet(),
-          'notif_prefs_sheet',
-          kCells.firstWhere((Cell c) => c.$1 == name),
+          location: '/home',
+          name: 'notif_prefs_sheet',
+          cell: cellNamed(name),
           overrides: <Override>[
             notificationPrefsProvider.overrideWithValue(
               LumeMemoryNotificationPrefs(),
             ),
           ],
+          after: raise(showLumeNotificationPrefsSheet),
         );
       });
     }
   });
-}
-
-/// Search with something already typed, so the result list is what is shot.
-class _TypedSearch extends StatefulWidget {
-  const _TypedSearch({required this.query});
-
-  final String query;
-
-  @override
-  State<_TypedSearch> createState() => _TypedSearchState();
-}
-
-class _TypedSearchState extends State<_TypedSearch> {
-  @override
-  void initState() {
-    super.initState();
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      final EditableTextState? field = tester(context);
-      field?.updateEditingValue(
-        TextEditingValue(
-          text: widget.query,
-          selection: TextSelection.collapsed(offset: widget.query.length),
-        ),
-      );
-    });
-  }
-
-  /// The sheet's own field, found through the tree rather than through a key
-  /// the production widget does not need.
-  EditableTextState? tester(BuildContext context) {
-    EditableTextState? found;
-    void visit(Element e) {
-      if (e is StatefulElement && e.state is EditableTextState) {
-        found ??= e.state as EditableTextState;
-      }
-      e.visitChildren(visit);
-    }
-
-    context.visitChildElements(visit);
-    return found;
-  }
-
-  @override
-  Widget build(BuildContext context) => const LumeSearchSheet(branch: '/home');
-}
-
-/// The centre's body, with its own scroll, so a capture holds the whole list.
-class _Centre extends ConsumerStatefulWidget {
-  const _Centre({this.filter = const LumeNotificationFilter.all()});
-
-  final LumeNotificationFilter filter;
-
-  @override
-  ConsumerState<_Centre> createState() => _CentreState();
-}
-
-class _CentreState extends ConsumerState<_Centre> {
-  LumeNotificationFeed? _feed;
-  LumeNotificationFailure? _failure;
-
-  @override
-  void initState() {
-    super.initState();
-    WidgetsBinding.instance.addPostFrameCallback((_) async {
-      try {
-        final LumeNotificationFeed f = await ref
-            .read(notificationFeedProvider)
-            .feed(now: DateTime(2026, 9, 13, 16, 41));
-        if (mounted) setState(() => _feed = f);
-      } on LumeNotificationException catch (e) {
-        if (mounted) setState(() => _failure = e.failure);
-      }
-    });
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    final LumeNotificationFeed f =
-        _feed ??
-        const LumeNotificationFeed(
-          all: <LumeNotification>[],
-          quietHours: false,
-          pushEnabled: false,
-        );
-    return SingleChildScrollView(
-      padding: const EdgeInsets.all(20),
-      child: LumeNotificationCentre(
-        feed: f,
-        filter: widget.filter,
-        failure: _failure,
-        actions: LumeNotificationActions(
-          setFilter: (_) {},
-          open: (_) {},
-          act: (_) {},
-          dismiss: (_) {},
-          markAllRead: () {},
-          openSettings: () {},
-          retry: () {},
-        ),
-      ),
-    );
-  }
-}
-
-/// A banner over a plain ground, so the banner is what is compared.
-class _Banner extends StatelessWidget {
-  const _Banner({this.withheld = false});
-
-  final bool withheld;
-
-  @override
-  Widget build(BuildContext context) => LumeNotificationBannerHost(
-    notification: withheld
-        ? const LumeNotification(
-            id: 'meds.dose#1',
-            title: 'Time for a dose',
-            body: 'A medication reminder is due',
-            category: 'health',
-            icon: 'pulse',
-            tool: 'meds',
-            agoMinutes: 8,
-            priority: LumeNotificationPriority.high,
-          )
-        : const LumeNotification(
-            id: 'weather.alert#0',
-            title: 'Heavy rain warning',
-            body: 'Karachi · this evening',
-            category: 'weather',
-            icon: 'cloud-sun',
-            tool: 'weather',
-            agoMinutes: 2,
-            priority: LumeNotificationPriority.critical,
-          ),
-    child: const SizedBox.expand(),
-  );
-}
-
-class _PushAsk extends StatelessWidget {
-  const _PushAsk();
-
-  @override
-  Widget build(BuildContext context) => Align(
-    alignment: Alignment.bottomCenter,
-    child: LumeSheet(child: LumeNotificationPushAsk(sheetContext: context)),
-  );
-}
-
-class _PrefsSheet extends StatelessWidget {
-  const _PrefsSheet();
-
-  @override
-  Widget build(BuildContext context) => Align(
-    alignment: Alignment.bottomCenter,
-    child: LumeSheet(
-      tall: true,
-      title: AppLocalizations.of(context).nSettings,
-      closeLabel: AppLocalizations.of(context).actionClose,
-      onClose: () {},
-      child: const LumeNotificationPrefsSheet(),
-    ),
-  );
 }
