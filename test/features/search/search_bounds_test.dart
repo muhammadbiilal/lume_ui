@@ -21,10 +21,12 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:go_router/go_router.dart';
 import 'package:lume/core/widgets/lume/lume_destination_cards.dart';
 import 'package:lume/core/widgets/lume/lume_overlay.dart';
 import 'package:lume/core/widgets/lume/lume_settings.dart';
 import 'package:lume/core/widgets/lume/lume_surface.dart';
+import 'package:lume/features/explore/presentation/explore_screen.dart';
 import 'package:lume/features/onboarding/domain/onboarding_state.dart';
 import 'package:lume/features/onboarding/domain/profile_repository.dart';
 import 'package:lume/features/search/presentation/search_sheet.dart';
@@ -160,5 +162,50 @@ void main() {
       ...compare(tester, b, 'empty.title', find.text('Nothing found')),
     ];
     expect(misses, isEmpty, reason: misses.join('\n'));
+  });
+
+  testWidgets('over Explore, the same sheet — and leaving returns to Explore', (
+    WidgetTester tester,
+  ) async {
+    final GoRouter router = await pumpLumeRouter(
+      tester,
+      initialLocation: '/explore/search',
+      surface: kPhone,
+    );
+    await tester.pumpAndSettle();
+    expect(find.byType(LumeSearchSheet), findsOneWidget);
+    // The branch keeps Explore's root under the sheet; the sheet is over it.
+    expect(find.byType(LumeExploreScreen, skipOffstage: false), findsWidgets);
+    // The sheet's geometry does not depend on what it is over.
+    final Map<String, dynamic> b = measured('search_idle');
+    final List<String> misses = <String>[
+      ...compare(tester, b, 'sheet', find.byType(LumeSheet)),
+      ...compare(tester, b, 'search', find.byKey(LumeSearchSheet.fieldKey)),
+    ];
+    expect(misses, isEmpty, reason: misses.join('\n'));
+
+    await tester.binding.handlePopRoute();
+    await tester.pumpAndSettle();
+    expect(find.byType(LumeSearchSheet), findsNothing);
+    expect(locationOf(router), '/explore');
+  });
+
+  testWidgets('with the keyboard up, the sheet rides above it', (
+    WidgetTester tester,
+  ) async {
+    await open(tester);
+    const double keyboard = 336;
+    tester.view.viewInsets = FakeViewPadding(
+      bottom: keyboard * tester.view.devicePixelRatio,
+    );
+    addTearDown(tester.view.resetViewInsets);
+    await tester.pumpAndSettle();
+
+    final Rect sheet = tester.getRect(find.byType(LumeSheet));
+    expect(sheet.bottom, closeTo(kPhone.height - keyboard, kTolerance));
+    expect(
+      tester.getRect(find.byKey(LumeSearchSheet.fieldKey)).bottom,
+      lessThan(kPhone.height - keyboard),
+    );
   });
 }

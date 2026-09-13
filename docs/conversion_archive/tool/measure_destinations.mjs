@@ -533,7 +533,7 @@ const ACCOUNT_TARGETS = {
    so the stacking — scrim over the bar, sheet over the scrim — is a number
    rather than an impression. */
 const SEARCH_TARGETS = {
-  'screen': '#screen-home',
+  'screen': '.screen.is-active',
   'scrim': '#scrim',
   'shell.tabbar': '.tabbar',
   'sheet': '#sheet-search',
@@ -631,6 +631,9 @@ const AFTER = {
   search_results: "await openSearch('ca')",
   search_petrol: "await openSearch('petrol')",
   search_empty: "await openSearch('zzzz nothing')",
+  /* The same sheet over the other destination that raises it, by that
+     destination's own control. */
+  search_explore: "await openSearch('', '#screen-explore .page-head .iconbtn[data-sheet=\"search\"]')",
   banner: "await waitFor('#notifBanner:not([hidden])', 6000); await wait(500)",
   notifpush: "sheet('notifpush'); await wait(900)",
   notifprefs: "sheet('notifprefs'); await wait(900)",
@@ -742,8 +745,8 @@ const DRIVER = (profile, screen, after, account, route, keepBanner) => FREEZE + 
   /* The global search sheet, raised the way a reader raises it — by the
      app bar's own control — and typed into after it has finished rising and
      taken focus (320 ms in the shell, plus the sheet's slow transition). */
-  async function openSearch(q) {
-    var b = document.querySelector('.appbar .iconbtn[data-sheet="search"]');
+  async function openSearch(q, control) {
+    var b = document.querySelector(control || '.appbar .iconbtn[data-sheet="search"]');
     if (b) b.click();
     await wait(900);
     if (q) {

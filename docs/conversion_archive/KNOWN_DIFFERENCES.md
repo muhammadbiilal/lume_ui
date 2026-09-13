@@ -1183,7 +1183,11 @@ search_*` over Home, and corrected:
 
 **Evidence:** `search_bounds_test.dart` — sheet, field, both labels, first chip,
 recents card, first row, first hit, empty drawing and its title, each within
-one point. The idle goldens pump past the sheet's 320 ms focus delay: at
+one point; the same sheet over Explore, raised by Explore's page head, at the
+same geometry the reference measures there (`search_explore`), with Back
+returning to `/explore`; and with a 336-point keyboard up, the sheet riding
+above it. The keyboard cell is Flutter's alone — headless Chrome raises no
+keyboard, and the reference's `100dvh` would not track one. The idle goldens pump past the sheet's 320 ms focus delay: at
 medium the transition settles sooner, and a capture without it would show a
 field the reference never shows unfocused.
 

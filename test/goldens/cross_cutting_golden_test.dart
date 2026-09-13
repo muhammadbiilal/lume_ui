@@ -171,6 +171,40 @@ void main() {
         after: typing('ca'),
       );
     });
+
+    // The second destination that raises it — Explore's own page head.
+    testWidgets('idle over Explore · the reference cell', (
+      WidgetTester tester,
+    ) async {
+      await shoot(
+        tester,
+        location: '/explore/search',
+        name: 'search_explore',
+        cell: kCells.first,
+        after: (WidgetTester t) => t.pump(const Duration(milliseconds: 400)),
+      );
+    });
+
+    // A phone keyboard, 336 points tall. The web reference cannot raise
+    // one, so this cell is Flutter's alone: the sheet rides above the
+    // inset and the bar hides rather than sitting behind the keys.
+    testWidgets('with the keyboard up · the reference cell', (
+      WidgetTester tester,
+    ) async {
+      await shoot(
+        tester,
+        location: '/home/search',
+        name: 'search_keyboard',
+        cell: kCells.first,
+        after: (WidgetTester t) async {
+          t.view.viewInsets = FakeViewPadding(
+            bottom: 336 * t.view.devicePixelRatio,
+          );
+          addTearDown(t.view.resetViewInsets);
+          await t.pump(const Duration(milliseconds: 400));
+        },
+      );
+    });
   });
 
   // ---------------------------------------------------- notification centre
