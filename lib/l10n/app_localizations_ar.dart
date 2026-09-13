@@ -150,7 +150,7 @@ class AppLocalizationsAr extends AppLocalizations {
   String get acctDeviceAndroid => 'هاتف أندرويد';
 
   @override
-  String get acctDeviceBrowser => 'هذا المتصفح';
+  String get acctDeviceBrowser => 'متصفح ويب';
 
   @override
   String get acctDeviceIos => 'آيفون';
@@ -400,14 +400,14 @@ class AppLocalizationsAr extends AppLocalizations {
   String get acctPushAsk => 'لم يُطلب بعد';
 
   @override
-  String get acctPushDenied => 'محظورة في إعدادات متصفحك';
+  String get acctPushDenied => 'محظورة في إعدادات جهازك';
 
   @override
   String get acctPushDeniedHelp =>
-      'الإشعارات محظورة. اسمح بها من إعدادات الموقع في متصفحك.';
+      'الإشعارات محظورة. اسمح بها لـ Lume من إعدادات جهازك.';
 
   @override
-  String get acctPushGranted => 'مسموح بها من متصفحك';
+  String get acctPushGranted => 'مسموح بها على هذا الجهاز';
 
   @override
   String get acctPushOff => 'مغلقة';
@@ -532,8 +532,10 @@ class AppLocalizationsAr extends AppLocalizations {
     String _temp0 = intl.Intl.pluralLogic(
       n,
       locale: localeName,
-      other: '$n signed in',
-      one: '1 signed in',
+      other: '$n جهازًا مسجّلًا',
+      few: '$n أجهزة مسجّلة',
+      two: 'جهازان مسجّلان',
+      one: 'جهاز واحد مسجّل الدخول',
     );
     return '$_temp0';
   }
@@ -564,8 +566,10 @@ class AppLocalizationsAr extends AppLocalizations {
     String _temp0 = intl.Intl.pluralLogic(
       n,
       locale: localeName,
-      other: 'Signed out $n other devices',
-      one: 'Signed out 1 other device',
+      other: 'تم تسجيل خروج $n جهازًا آخر',
+      few: 'تم تسجيل خروج $n أجهزة أخرى',
+      two: 'تم تسجيل خروج جهازين آخرين',
+      one: 'تم تسجيل خروج جهاز واحد آخر',
     );
     return '$_temp0';
   }

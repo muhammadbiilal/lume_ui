@@ -674,6 +674,29 @@ void main() {
       });
     }
 
+    // And the three cells that change the *shape* of a settings row rather
+    // than its surroundings: the two right-to-left languages, where the
+    // chevron mirrors and the value moves to the other edge, and twice the
+    // type size, where a two-line subtitle becomes a four-line one.
+    //
+    // `account_locale_test.dart` asserts that none of the twenty-one
+    // overflows in any of them. These are the pictures of what it looked
+    // like, for the evidence audit to read.
+    for (final Cell cell in kCells.where(
+      (Cell c) =>
+          c.$1 == '390x844_light_ur' ||
+          c.$1 == '390x844_light_ar' ||
+          c.$1 == '390x844_light_en_x2',
+    )) {
+      for (final LumeAccountRoute route in LumeAccountRoute.values) {
+        testWidgets('account_${route.segment} · ${cell.$1}', (
+          WidgetTester tester,
+        ) async {
+          await shootAccount(tester, route, cell);
+        });
+      }
+    }
+
     // The refusal a guest meets on a protected route, which is a screen in
     // its own right rather than an absence.
     testWidgets('account_sessions_guest · the reference cell', (

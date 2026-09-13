@@ -153,7 +153,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get acctDeviceAndroid => 'Android phone';
 
   @override
-  String get acctDeviceBrowser => 'This browser';
+  String get acctDeviceBrowser => 'Web browser';
 
   @override
   String get acctDeviceIos => 'iPhone';
@@ -407,14 +407,14 @@ class AppLocalizationsEn extends AppLocalizations {
   String get acctPushAsk => 'Not asked yet';
 
   @override
-  String get acctPushDenied => 'Blocked in your browser settings';
+  String get acctPushDenied => 'Blocked in your device settings';
 
   @override
   String get acctPushDeniedHelp =>
-      'Notifications are blocked. Allow them in your browser’s site settings.';
+      'Notifications are blocked. Allow them for Lume in your device settings.';
 
   @override
-  String get acctPushGranted => 'Allowed by your browser';
+  String get acctPushGranted => 'Allowed on this device';
 
   @override
   String get acctPushOff => 'Off';

@@ -370,10 +370,10 @@ abstract class AppLocalizations {
   /// **'Android phone'**
   String get acctDeviceAndroid;
 
-  /// Reference: `acct.device.browser`.
+  /// The platform a session was opened from, beside `acctDeviceAndroid`, `acctDeviceIos`, `acctDeviceMac` and `acctDeviceWindows`. The reference said "This browser" because the reference *was* the browser; here it names one platform among five, and never the reader’s own device.
   ///
   /// In en, this message translates to:
-  /// **'This browser'**
+  /// **'Web browser'**
   String get acctDeviceBrowser;
 
   /// Reference: `acct.device.ios`.
@@ -832,22 +832,22 @@ abstract class AppLocalizations {
   /// **'Not asked yet'**
   String get acctPushAsk;
 
-  /// Reference: `n.push.denied`.
+  /// Reference: `n.push.denied`. Reworded in F5C: the reference is a web page and said "browser", which is a claim a Flutter build cannot make (C49).
   ///
   /// In en, this message translates to:
-  /// **'Blocked in your browser settings'**
+  /// **'Blocked in your device settings'**
   String get acctPushDenied;
 
-  /// Reference: `n.push.deniedHelp`.
+  /// Reference: `n.push.deniedHelp`. Reworded in F5C: the reference is a web page and said "browser", which is a claim a Flutter build cannot make (C49).
   ///
   /// In en, this message translates to:
-  /// **'Notifications are blocked. Allow them in your browser’s site settings.'**
+  /// **'Notifications are blocked. Allow them for Lume in your device settings.'**
   String get acctPushDeniedHelp;
 
-  /// Reference: `n.push.granted`.
+  /// Reference: `n.push.granted`. Reworded in F5C: the reference is a web page and said "browser", which is a claim a Flutter build cannot make (C49).
   ///
   /// In en, this message translates to:
-  /// **'Allowed by your browser'**
+  /// **'Allowed on this device'**
   String get acctPushGranted;
 
   /// Reference: `n.push.off`.

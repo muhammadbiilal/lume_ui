@@ -153,7 +153,7 @@ class AppLocalizationsUr extends AppLocalizations {
   String get acctDeviceAndroid => 'اینڈرائیڈ فون';
 
   @override
-  String get acctDeviceBrowser => 'یہ براؤزر';
+  String get acctDeviceBrowser => 'ویب براؤزر';
 
   @override
   String get acctDeviceIos => 'آئی فون';
@@ -406,14 +406,14 @@ class AppLocalizationsUr extends AppLocalizations {
   String get acctPushAsk => 'ابھی نہیں پوچھا گیا';
 
   @override
-  String get acctPushDenied => 'آپ کے براؤزر کی ترتیبات میں بند ہے';
+  String get acctPushDenied => 'آپ کے ڈیوائس کی ترتیبات میں بند ہے';
 
   @override
   String get acctPushDeniedHelp =>
-      'اطلاعات بند ہیں۔ اپنے براؤزر کی سائٹ ترتیبات میں اجازت دیں۔';
+      'اطلاعات بند ہیں۔ اپنی ڈیوائس کی ترتیبات میں Lume کو اجازت دیں۔';
 
   @override
-  String get acctPushGranted => 'آپ کے براؤزر نے اجازت دی';
+  String get acctPushGranted => 'اس ڈیوائس پر اجازت ہے';
 
   @override
   String get acctPushOff => 'بند';
@@ -538,8 +538,8 @@ class AppLocalizationsUr extends AppLocalizations {
     String _temp0 = intl.Intl.pluralLogic(
       n,
       locale: localeName,
-      other: '$n signed in',
-      one: '1 signed in',
+      other: '$n آلات سائن اِن',
+      one: '1 آلہ سائن اِن',
     );
     return '$_temp0';
   }
@@ -570,8 +570,8 @@ class AppLocalizationsUr extends AppLocalizations {
     String _temp0 = intl.Intl.pluralLogic(
       n,
       locale: localeName,
-      other: 'Signed out $n other devices',
-      one: 'Signed out 1 other device',
+      other: '$n دوسرے آلات سائن آؤٹ کر دیے',
+      one: '1 دوسرا آلہ سائن آؤٹ کر دیا',
     );
     return '$_temp0';
   }
@@ -3284,6 +3284,7 @@ class AppLocalizationsUr extends AppLocalizations {
       n,
       locale: localeName,
       other: '$n ٹرینیں',
+      one: '1 ٹرین',
     );
     return '$_temp0';
   }
@@ -3369,6 +3370,7 @@ class AppLocalizationsUr extends AppLocalizations {
       n,
       locale: localeName,
       other: 'اس راستے پر آج $n ٹرینیں',
+      one: 'اس راستے پر آج 1 ٹرین',
     );
     return '$_temp0';
   }
@@ -3437,6 +3439,7 @@ class AppLocalizationsUr extends AppLocalizations {
       n,
       locale: localeName,
       other: '$n منٹ پہلے اپ ڈیٹ',
+      one: '1 منٹ پہلے اپ ڈیٹ',
     );
     return '$_temp0';
   }

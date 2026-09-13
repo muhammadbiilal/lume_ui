@@ -18,6 +18,46 @@ import '../../helpers/lume_harness.dart';
 
 const String _dir = 'lib/l10n';
 
+/// The whole file, metadata included. The English one declares the
+/// placeholder contract, and only `@key` entries carry it.
+Map<String, dynamic> _raw(String code) =>
+    jsonDecode(File('$_dir/app_$code.arb').readAsStringSync())
+        as Map<String, dynamic>;
+
+/// The placeholder names `key` declares, from `@key.placeholders`.
+Set<String> _declared(Map<String, dynamic> raw, String key) {
+  final Object? meta = raw['@$key'];
+  if (meta is! Map<String, dynamic>) return const <String>{};
+  final Object? ph = meta['placeholders'];
+  if (ph is! Map<String, dynamic>) return const <String>{};
+  return ph.keys.toSet();
+}
+
+/// Does this message actually reference `name`?
+///
+/// `{name}` or `{name, plural, …}` — and nothing else, because the first word
+/// of a plural branch also sits behind a brace and is not a placeholder.
+bool _uses(String message, String name) =>
+    RegExp(r'\{\s*' + RegExp.escape(name) + r'\s*[},]').hasMatch(message);
+
+/// The branch keys of a plural message: `=0`, `=1`, `one`, `few`, `other`.
+Set<String> _branches(String message) => <String>{
+  for (final RegExpMatch m in RegExp(
+    r'(?:^|[{\s])(zero|one|two|few|many|other|=\d+)\s*\{',
+  ).allMatches(message))
+    m.group(1)!,
+};
+
+bool _isPlural(String message) =>
+    RegExp(r'\{\s*\w+\s*,\s*plural\s*,').hasMatch(message);
+
+bool _isSelect(String message) =>
+    RegExp(r'\{\s*\w+\s*,\s*select\s*,').hasMatch(message);
+
+/// A branch that means exactly one.
+bool _hasSingular(String message) =>
+    _branches(message).contains('=1') || _branches(message).contains('one');
+
 Map<String, String> _arb(String code) {
   final Map<String, dynamic> raw =
       jsonDecode(File('$_dir/app_$code.arb').readAsStringSync())
@@ -81,20 +121,85 @@ void main() {
       );
     });
 
-    test('every authentication string is really translated', () {
-      // The suite's ratio check tolerates a few proper nouns across the whole
-      // file. Authentication is 104 strings added at once, so it is checked on
-      // its own: one exception, named, and nothing else.
+    test('every string that has words in it is really translated', () {
+      // The ratio above catches a file that was copied. This catches the
+      // single key that was missed — which is the way it actually happens,
+      // and which used to ship "3 signed in" to an Urdu reader.
+      //
+      // Two kinds of value are legitimately identical, and both are decided
+      // by what the value *is* rather than by a list that would rot:
+      //
+      //  * a composition of placeholders and punctuation, which has no words
+      //    to translate — `{high} / {low}`;
+      //  * the named exceptions below, each a token rather than a phrase.
       const Set<String> allowed = <String>{
-        // A sample address is a technical token, not a phrase.
+        // A sample address is a technical token.
         'authEmailPlaceholder',
+        // An organisation's acronym. ISNA is ISNA in every language.
+        'methodIsna',
+        // Sample data in a tool's status line: a score, a dialling code, a
+        // window of hours, an index, two operators, a tax year, a tally.
+        // Fixture values, not sentences.
+        'toolStatusCricket',
+        'toolStatusEmergency',
+        'toolStatusLoadshed',
+        'toolStatusMarkets',
+        'toolStatusPackages',
+        'toolStatusTax',
+        'toolStatusWater',
       };
-      for (final Map<String, dynamic> other in <Map<String, dynamic>>[ur, ar]) {
+
+      /// Anything left once the placeholders and the punctuation are gone.
+      bool hasWords(String v) => v
+          .replaceAll(RegExp(r'\{[^{}]*\}'), ' ')
+          .replaceAll(RegExp(r'[^A-Za-z]'), ' ')
+          .trim()
+          .isNotEmpty;
+
+      final List<String> missed = <String>[];
+      for (final MapEntry<String, Map<String, String>> lang
+          in <String, Map<String, String>>{'ur': ur, 'ar': ar}.entries) {
         for (final String key in en.keys) {
-          if (!key.startsWith('auth')) continue;
           if (allowed.contains(key)) continue;
-          expect(other[key], isNot(en[key]), reason: '$key is still English');
+          if (!hasWords(en[key]!)) continue;
+          if (lang.value[key] == en[key]) missed.add('${lang.key}/$key');
         }
+      }
+      expect(missed, isEmpty, reason: 'still English: ${missed.join(', ')}');
+    });
+
+    test('and an exception is only an exception while it is one', () {
+      // A key on the list that has since been translated, or has grown words
+      // it did not have, should come off it rather than sit there excusing
+      // nothing.
+      for (final String key in <String>['authEmailPlaceholder', 'methodIsna']) {
+        expect(en, contains(key), reason: '$key no longer exists');
+        expect(
+          ur[key],
+          en[key],
+          reason: '$key is translated now and can leave the list',
+        );
+      }
+    });
+
+    test('nothing tells a reader about their browser', () {
+      // C49. The reference is a web page and says so — "check your browser's
+      // storage settings", "allowed by your browser". A Flutter build has no
+      // browser, and a sentence pointing a phone user at one is an
+      // instruction they cannot follow.
+      const Set<String> namesAPlatform = <String>{
+        // One of five platform labels a session can carry, beside Android,
+        // iPhone, Mac and Windows. It names a platform, never the reader's
+        // own device.
+        'acctDeviceBrowser',
+      };
+      for (final String key in en.keys) {
+        if (namesAPlatform.contains(key)) continue;
+        expect(
+          en[key]!.toLowerCase(),
+          isNot(contains('browser')),
+          reason: '$key talks about a browser',
+        );
       }
     });
 
@@ -106,6 +211,134 @@ void main() {
       final Map<String, dynamic> j =
           jsonDecode(backlog.readAsStringSync()) as Map<String, dynamic>;
       expect(j, isEmpty, reason: 'untranslated keys: ${j.keys.join(', ')}');
+    });
+  });
+
+  group('placeholders', () {
+    // A translation that drops a placeholder does not fail to build and does
+    // not fall back: it renders a sentence with the number missing from it.
+    final Map<String, dynamic> rawEn = _raw('en');
+
+    test('every declared placeholder is used by the English string', () {
+      for (final String key in en.keys) {
+        for (final String name in _declared(rawEn, key)) {
+          expect(
+            _uses(en[key]!, name),
+            isTrue,
+            reason: '$key declares {$name} and never uses it',
+          );
+        }
+      }
+    });
+
+    test('and by every translation of it', () {
+      for (final MapEntry<String, Map<String, String>> lang
+          in <String, Map<String, String>>{'ur': ur, 'ar': ar}.entries) {
+        for (final String key in en.keys) {
+          for (final String name in _declared(rawEn, key)) {
+            expect(
+              _uses(lang.value[key]!, name),
+              isTrue,
+              reason: '${lang.key}/$key drops {$name}',
+            );
+          }
+        }
+      }
+    });
+
+    test('and no translation invents a placeholder of its own', () {
+      // Anything `gen_l10n` would treat as a placeholder but English never
+      // declared. It would render as the literal brace text.
+      final RegExp simple = RegExp(r'\{\s*(\w+)\s*\}');
+      for (final MapEntry<String, Map<String, String>> lang
+          in <String, Map<String, String>>{'ur': ur, 'ar': ar}.entries) {
+        for (final String key in en.keys) {
+          final Set<String> allowed = _declared(rawEn, key);
+          for (final RegExpMatch m in simple.allMatches(lang.value[key]!)) {
+            final String name = m.group(1)!;
+            // A branch body of exactly one word looks the same to this
+            // regular expression, so only names English also uses count.
+            if (!simple.hasMatch(en[key]!) && !_uses(en[key]!, name)) continue;
+            if (allowed.isEmpty) continue;
+            expect(
+              allowed.contains(name) || !_uses(en[key]!, name),
+              isTrue,
+              reason: '${lang.key}/$key uses an undeclared {$name}',
+            );
+          }
+        }
+      }
+    });
+  });
+
+  group('plurals', () {
+    test('a plural in English is a plural in every language', () {
+      for (final MapEntry<String, Map<String, String>> lang
+          in <String, Map<String, String>>{'ur': ur, 'ar': ar}.entries) {
+        for (final String key in en.keys) {
+          expect(
+            _isPlural(lang.value[key]!),
+            _isPlural(en[key]!),
+            reason: '${lang.key}/$key disagrees about being a plural',
+          );
+          expect(
+            _isSelect(lang.value[key]!),
+            _isSelect(en[key]!),
+            reason: '${lang.key}/$key disagrees about being a select',
+          );
+        }
+      }
+    });
+
+    test('every plural has an "other", in every language', () {
+      // ICU falls back to `other`, so a message without one has no fallback
+      // at all for a count nobody enumerated.
+      for (final MapEntry<String, Map<String, String>> lang
+          in <String, Map<String, String>>{
+            'en': en,
+            'ur': ur,
+            'ar': ar,
+          }.entries) {
+        for (final String key in lang.value.keys) {
+          final String message = lang.value[key]!;
+          if (!_isPlural(message)) continue;
+          expect(
+            _branches(message),
+            contains('other'),
+            reason: '${lang.key}/$key has no other branch',
+          );
+        }
+      }
+    });
+
+    test('a language that counts one separately says so everywhere', () {
+      // English and Urdu both have a singular. Where English distinguishes
+      // one, Urdu must too, or an Urdu reader is told "1 trains" — which is
+      // exactly what three Trains strings used to say.
+      for (final String key in en.keys) {
+        if (!_isPlural(en[key]!) || !_hasSingular(en[key]!)) continue;
+        expect(
+          _hasSingular(ur[key]!),
+          isTrue,
+          reason: 'ur/$key collapses the singular into the plural',
+        );
+      }
+    });
+
+    test('and Arabic is allowed to count further than English does', () {
+      // Arabic has a dual and a paucal. Matching English branch-for-branch
+      // would be the wrong kind of parity: what matters is that it covers at
+      // least as much, never less.
+      for (final String key in en.keys) {
+        if (!_isPlural(en[key]!)) continue;
+        final Set<String> enB = _branches(en[key]!);
+        final Set<String> arB = _branches(ar[key]!);
+        expect(
+          arB.length,
+          greaterThanOrEqualTo(enB.length),
+          reason: 'ar/$key has fewer branches than English',
+        );
+      }
     });
   });
 

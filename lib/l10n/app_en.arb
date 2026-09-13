@@ -187,9 +187,9 @@
   "@acctDeviceAndroid": {
     "description": "Reference: `acct.device.android`."
   },
-  "acctDeviceBrowser": "This browser",
+  "acctDeviceBrowser": "Web browser",
   "@acctDeviceBrowser": {
-    "description": "Reference: `acct.device.browser`."
+    "description": "The platform a session was opened from, beside `acctDeviceAndroid`, `acctDeviceIos`, `acctDeviceMac` and `acctDeviceWindows`. The reference said \"This browser\" because the reference *was* the browser; here it names one platform among five, and never the reader’s own device."
   },
   "acctDeviceIos": "iPhone",
   "@acctDeviceIos": {
@@ -510,17 +510,17 @@
   "@acctPushAsk": {
     "description": "Reference: `n.push.ask`."
   },
-  "acctPushDenied": "Blocked in your browser settings",
+  "acctPushDenied": "Blocked in your device settings",
   "@acctPushDenied": {
-    "description": "Reference: `n.push.denied`."
+    "description": "Reference: `n.push.denied`. Reworded in F5C: the reference is a web page and said \"browser\", which is a claim a Flutter build cannot make (C49)."
   },
-  "acctPushDeniedHelp": "Notifications are blocked. Allow them in your browser’s site settings.",
+  "acctPushDeniedHelp": "Notifications are blocked. Allow them for Lume in your device settings.",
   "@acctPushDeniedHelp": {
-    "description": "Reference: `n.push.deniedHelp`."
+    "description": "Reference: `n.push.deniedHelp`. Reworded in F5C: the reference is a web page and said \"browser\", which is a claim a Flutter build cannot make (C49)."
   },
-  "acctPushGranted": "Allowed by your browser",
+  "acctPushGranted": "Allowed on this device",
   "@acctPushGranted": {
-    "description": "Reference: `n.push.granted`."
+    "description": "Reference: `n.push.granted`. Reworded in F5C: the reference is a web page and said \"browser\", which is a claim a Flutter build cannot make (C49)."
   },
   "acctPushOff": "Off",
   "@acctPushOff": {
