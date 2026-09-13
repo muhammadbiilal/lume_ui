@@ -220,15 +220,22 @@ class _LumeAccountHostState extends ConsumerState<LumeAccountHost> {
     return showLumeSheet<bool>(
       context: context,
       barrierLabel: title,
-      child: LumeSheet(
-        child: LumeDeleteConfirmation(
-          title: title,
-          consequence: text,
-          confirmLabel: confirm,
-          cancelLabel: l.actionCancel,
-          kind: kind,
-          onConfirm: () => Navigator.of(context).pop(true),
-          onCancel: () => Navigator.of(context).pop(false),
+      // The buttons pop the *sheet's* route, which is why they take their
+      // context from inside it. Closing over this method's `context` would
+      // find the navigator the host is on — and a sheet raised on the root
+      // navigator is not on that one, so Cancel would dismiss the screen
+      // underneath instead of the question.
+      child: Builder(
+        builder: (BuildContext sheetContext) => LumeSheet(
+          child: LumeDeleteConfirmation(
+            title: title,
+            consequence: text,
+            confirmLabel: confirm,
+            cancelLabel: l.actionCancel,
+            kind: kind,
+            onConfirm: () => Navigator.of(sheetContext).pop(true),
+            onCancel: () => Navigator.of(sheetContext).pop(false),
+          ),
         ),
       ),
     );

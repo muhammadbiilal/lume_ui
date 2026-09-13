@@ -62,6 +62,7 @@ import '../../features/onboarding/presentation/onboarding_flow.dart';
 import '../../features/shell/presentation/fixture_tool_screen.dart';
 import '../../features/startup/application/startup_controller.dart';
 import '../../features/startup/domain/startup_state.dart';
+import '../../features/search/presentation/search_sheet.dart';
 import '../../features/startup/presentation/splash_screen.dart';
 import '../../l10n/app_localizations.dart';
 import '../navigation/lume_destination.dart';
@@ -269,13 +270,16 @@ List<RouteBase> _nestedRoutes(LumeDestinationId branch) {
         backLabel: AppLocalizations.of(context).actionBack,
       ),
     ),
+    // Global search is a *sheet*, not a screen (Q10). The reference raises
+    // `#sheet-search` over whichever destination is showing and leaves that
+    // destination where it was, so this route renders the branch and puts the
+    // sheet over it. The address exists so a deep link can reach search; the
+    // rendered result is what the reference draws.
     GoRoute(
       path: LumeRoutes.searchSegment,
-      builder: (BuildContext context, GoRouterState state) => LumeFixtureScreen(
-        title: AppLocalizations.of(context).actionSearch,
-        storageId: '${branch.name}/search',
-        onBack: () => context.go(root),
-        backLabel: AppLocalizations.of(context).actionBack,
+      builder: (BuildContext context, GoRouterState state) => _SearchOverBranch(
+        branch: branch,
+        child: _destination(context, branch),
       ),
     ),
     // The account host, and the alias that reaches it.
@@ -596,4 +600,53 @@ class _ShellHost extends ConsumerWidget {
       initialLocation: branch == navigationShell.currentIndex,
     );
   }
+}
+
+/// The branch, with global search over it.
+///
+/// `/<branch>/search` is an address for a sheet rather than a screen of its
+/// own (Q10). The destination renders normally and the sheet rises on the
+/// first frame; when it closes — by Back, Escape, the scrim, or a hit being
+/// chosen — the address goes back to the branch's root so the URL and what is
+/// on screen agree again.
+class _SearchOverBranch extends StatefulWidget {
+  const _SearchOverBranch({required this.branch, required this.child});
+
+  final LumeDestinationId branch;
+
+  /// The destination the sheet is over, built by the same function the
+  /// branch's own route uses. One destination, not a second copy of it.
+  final Widget child;
+
+  @override
+  State<_SearchOverBranch> createState() => _SearchOverBranchState();
+}
+
+class _SearchOverBranchState extends State<_SearchOverBranch> {
+  bool _raised = false;
+
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) => _raise());
+  }
+
+  Future<void> _raise() async {
+    if (_raised || !mounted) return;
+    _raised = true;
+    await showLumeSearch(context, branch: widget.branch.path);
+    if (!mounted) return;
+    // A hit has already navigated somewhere else by the time this returns;
+    // only an actual dismissal leaves us still standing on the search
+    // address, and that is the one case that has to be tidied up.
+    final String here = GoRouter.of(
+      context,
+    ).routerDelegate.currentConfiguration.uri.path;
+    if (here == LumeRoutes.search(widget.branch.path)) {
+      context.go(widget.branch.path);
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) => widget.child;
 }

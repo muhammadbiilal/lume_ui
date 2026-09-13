@@ -466,6 +466,7 @@ class _RawInput extends StatefulWidget {
     required this.style,
     this.focusNode,
     this.autofocus = false,
+    this.onSubmitted,
   });
 
   final TextEditingController? controller;
@@ -477,6 +478,7 @@ class _RawInput extends StatefulWidget {
   final TextStyle style;
   final FocusNode? focusNode;
   final bool autofocus;
+  final ValueChanged<String>? onSubmitted;
 
   @override
   State<_RawInput> createState() => _RawInputState();
@@ -532,6 +534,12 @@ class _RawInputState extends State<_RawInput> {
         autofocus: widget.autofocus,
         enabled: widget.enabled,
         onChanged: widget.onChanged,
+        onSubmitted: widget.onSubmitted,
+        // A search field's keyboard says "search"; every other kind keeps
+        // the platform default, because nothing else here submits.
+        textInputAction: widget.onSubmitted == null
+            ? null
+            : TextInputAction.search,
         keyboardType: _keyboard,
         maxLines: widget.kind == LumeFieldKind.multiline ? null : 1,
         minLines: widget.kind == LumeFieldKind.multiline ? 3 : 1,
@@ -573,12 +581,24 @@ class LumeSearchField extends StatelessWidget {
     this.autofocus = false,
     this.semanticLabel,
     this.small = false,
+    this.focusNode,
+    this.onSubmitted,
   });
 
   final String? placeholder;
   final TextEditingController? controller;
   final String? value;
   final ValueChanged<String>? onChanged;
+
+  /// For a caller that focuses the field itself. Global search does: the
+  /// reference waits until the sheet has finished rising before it takes
+  /// focus, which `autofocus` cannot express.
+  final FocusNode? focusNode;
+
+  /// The keyboard's own submit. A search field has nothing to submit *to* —
+  /// results are already live — so this re-runs the query rather than
+  /// navigating anywhere.
+  final ValueChanged<String>? onSubmitted;
 
   /// Shows a clear affordance when non-null and the field has content.
   final VoidCallback? onClear;
@@ -634,6 +654,8 @@ class LumeSearchField extends StatelessWidget {
                 kind: LumeFieldKind.text,
                 enabled: enabled,
                 autofocus: autofocus,
+                focusNode: focusNode,
+                onSubmitted: onSubmitted,
                 style: LumeType.fit(
                   context,
                   context.lumeType.bodyStrong,

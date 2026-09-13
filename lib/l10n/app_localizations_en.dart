@@ -2639,10 +2639,23 @@ class AppLocalizationsEn extends AppLocalizations {
   String get scoreVersus => 'vs';
 
   @override
+  String get searchDarkMode => 'Dark mode';
+
+  @override
+  String get searchEverything => 'Search everything';
+
+  @override
+  String get searchInSettings => 'Settings';
+
+  @override
   String get searchJumpBack => 'Jump back in';
 
   @override
   String get searchNothing => 'Nothing found';
+
+  @override
+  String get searchNothingSub =>
+      'Try another word, or turn on more interests in Personalisation.';
 
   @override
   String get searchPlaceholder => 'Search anything — tools, rates, places';

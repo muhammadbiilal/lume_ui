@@ -4834,6 +4834,24 @@ abstract class AppLocalizations {
   /// **'vs'**
   String get scoreVersus;
 
+  /// Reference: `extra.darkMode`. One of two settings the search index carries beside the catalogue, so a reader looking for "night" or "theme" finds the switch rather than nothing.
+  ///
+  /// In en, this message translates to:
+  /// **'Dark mode'**
+  String get searchDarkMode;
+
+  /// Reference: the `aria-label` on `#globalSearch` and on the app bar’s search control. What a screen reader is told the field and the button are for.
+  ///
+  /// In en, this message translates to:
+  /// **'Search everything'**
+  String get searchEverything;
+
+  /// The subtitle on a search hit that is a setting rather than a tool. The reference writes it as a bare English literal in `services/search.js`; here it is a key, because it is a UI label rather than a proper noun (§47, §106).
+  ///
+  /// In en, this message translates to:
+  /// **'Settings'**
+  String get searchInSettings;
+
   /// Reference key search.jumpBack
   ///
   /// In en, this message translates to:
@@ -4845,6 +4863,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Nothing found'**
   String get searchNothing;
+
+  /// Reference: `search.nothingSub`. The empty result state’s second line. It names Personalisation because turning on an interest is what actually widens the index.
+  ///
+  /// In en, this message translates to:
+  /// **'Try another word, or turn on more interests in Personalisation.'**
+  String get searchNothingSub;
 
   /// Reference key search.placeholder
   ///

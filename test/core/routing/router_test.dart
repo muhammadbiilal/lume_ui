@@ -340,7 +340,10 @@ void main() {
 
       await tester.tap(find.text('Today').last);
       await tester.pumpAndSettle();
-      router.go('/today/search');
+      // A tool, because it is a *screen* on the branch. Search used to stand
+      // here and no longer can: it is a sheet over the destination (Q10), so
+      // switching branches with it up dismisses it rather than parking it.
+      router.go('/today/tool/calculator');
       await tester.pumpAndSettle();
 
       await tester.tap(find.text('Home').last);
@@ -349,7 +352,7 @@ void main() {
 
       await tester.tap(find.text('Today').last);
       await tester.pumpAndSettle();
-      expect(locationOf(router), '/today/search');
+      expect(locationOf(router), '/today/tool/calculator');
     });
   });
 

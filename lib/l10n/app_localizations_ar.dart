@@ -2637,10 +2637,23 @@ class AppLocalizationsAr extends AppLocalizations {
   String get scoreVersus => 'ضد';
 
   @override
+  String get searchDarkMode => 'الوضع الداكن';
+
+  @override
+  String get searchEverything => 'ابحث في كل شيء';
+
+  @override
+  String get searchInSettings => 'الإعدادات';
+
+  @override
   String get searchJumpBack => 'عد إلى';
 
   @override
   String get searchNothing => 'لا توجد نتائج';
+
+  @override
+  String get searchNothingSub =>
+      'جرّب کلمة أخرى، أو فعّل اهتمامات أخرى من التخصيص.';
 
   @override
   String get searchPlaceholder => 'ابحث عن أي شيء — أدوات، أسعار، أماكن';

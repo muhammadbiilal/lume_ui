@@ -3540,6 +3540,18 @@
   "@scoreVersus": {
     "description": "Reference: between the two sides"
   },
+  "searchDarkMode": "Dark mode",
+  "@searchDarkMode": {
+    "description": "Reference: `extra.darkMode`. One of two settings the search index carries beside the catalogue, so a reader looking for \"night\" or \"theme\" finds the switch rather than nothing."
+  },
+  "searchEverything": "Search everything",
+  "@searchEverything": {
+    "description": "Reference: the `aria-label` on `#globalSearch` and on the app bar’s search control. What a screen reader is told the field and the button are for."
+  },
+  "searchInSettings": "Settings",
+  "@searchInSettings": {
+    "description": "The subtitle on a search hit that is a setting rather than a tool. The reference writes it as a bare English literal in `services/search.js`; here it is a key, because it is a UI label rather than a proper noun (§47, §106)."
+  },
   "searchJumpBack": "Jump back in",
   "@searchJumpBack": {
     "description": "Reference key search.jumpBack"
@@ -3547,6 +3559,10 @@
   "searchNothing": "Nothing found",
   "@searchNothing": {
     "description": "Reference key search.nothing"
+  },
+  "searchNothingSub": "Try another word, or turn on more interests in Personalisation.",
+  "@searchNothingSub": {
+    "description": "Reference: `search.nothingSub`. The empty result state’s second line. It names Personalisation because turning on an interest is what actually widens the index."
   },
   "searchPlaceholder": "Search anything — tools, rates, places",
   "@searchPlaceholder": {

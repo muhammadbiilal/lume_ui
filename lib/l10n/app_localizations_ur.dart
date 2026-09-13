@@ -2640,10 +2640,23 @@ class AppLocalizationsUr extends AppLocalizations {
   String get scoreVersus => 'بمقابلہ';
 
   @override
+  String get searchDarkMode => 'ڈارک موڈ';
+
+  @override
+  String get searchEverything => 'سب کچھ تلاش کریں';
+
+  @override
+  String get searchInSettings => 'ترتیبات';
+
+  @override
   String get searchJumpBack => 'واپس جائیں';
 
   @override
   String get searchNothing => 'کچھ نہیں ملا';
+
+  @override
+  String get searchNothingSub =>
+      'کوئی اور لفظ آزمائیں، یا پرسنلائزیشن میں مزید دلچسپیاں چالو کریں۔';
 
   @override
   String get searchPlaceholder => 'کچھ بھی تلاش کریں — ٹولز، ریٹ، مقامات';

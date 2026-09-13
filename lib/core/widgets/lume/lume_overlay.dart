@@ -38,6 +38,7 @@ class LumeSheet extends StatelessWidget {
     this.title,
     this.onClose,
     this.closeLabel,
+    this.tall = false,
   });
 
   final Widget child;
@@ -45,29 +46,57 @@ class LumeSheet extends StatelessWidget {
   final VoidCallback? onClose;
   final String? closeLabel;
 
+  /// `.sheet--tall` — search and Personalisation, which are lists rather than
+  /// decisions and are given six more per cent of the viewport for them.
+  final bool tall;
+
+  /// `.sheet { max-height: 86% }`.
+  static const double heightFraction = 0.86;
+
+  /// `.sheet--tall { max-height: 92% }`.
+  static const double tallHeightFraction = 0.92;
+
+  /// `padding-bottom: max(18px, env(safe-area-inset-bottom))` — a floor, not
+  /// just the inset, so a device without one still has a bottom edge.
+  static const double bottomFloor = 18;
+
   @override
   Widget build(BuildContext context) {
     final LumeColors lume = context.lume;
     final bool compact = context.isCompact;
+    final double inset = MediaQuery.paddingOf(context).bottom;
 
     return Container(
       constraints: BoxConstraints(
         maxWidth: compact ? double.infinity : 520,
-        maxHeight: MediaQuery.sizeOf(context).height * 0.88,
+        maxHeight:
+            MediaQuery.sizeOf(context).height *
+            (tall ? tallHeightFraction : heightFraction),
       ),
       decoration: BoxDecoration(
         color: lume.card,
         // Compact rounds only the top, because the sheet meets the bottom
         // edge. Above compact it floats, so every corner rounds.
         borderRadius: compact ? LumeRadius.sheetTop : LumeRadius.brXl,
-        border: compact
-            ? null
-            : Border.all(color: lume.border, width: LumeSpace.border),
+        // `border: 1px solid var(--border); border-bottom: 0` — the hairline
+        // is there at every width; only the bottom edge is absent, because
+        // there is nothing below it to separate from.
+        border: BorderDirectional(
+          top: BorderSide(color: lume.border, width: LumeSpace.border),
+          start: BorderSide(color: lume.border, width: LumeSpace.border),
+          end: BorderSide(color: lume.border, width: LumeSpace.border),
+          bottom: compact
+              ? BorderSide.none
+              : BorderSide(color: lume.border, width: LumeSpace.border),
+        ),
         boxShadow: context.lumeShadows.lg,
       ),
-      child: SafeArea(
-        top: false,
-        bottom: compact,
+      child: Padding(
+        padding: EdgeInsets.only(
+          bottom: compact
+              ? (inset > bottomFloor ? inset : bottomFloor)
+              : bottomFloor,
+        ),
         child: Column(
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -75,9 +104,12 @@ class LumeSheet extends StatelessWidget {
             if (compact)
               Center(
                 child: Container(
-                  width: 38,
+                  // `.sheet__grab { width: 36px; height: 4px;
+                  // margin: 9px auto 0 }` — no bottom margin: the head's own
+                  // 14 points of top padding is the gap under it.
+                  width: 36,
                   height: 4,
-                  margin: const EdgeInsets.only(top: 10, bottom: 6),
+                  margin: const EdgeInsets.only(top: 9),
                   decoration: BoxDecoration(
                     color: lume.border2,
                     borderRadius: LumeRadius.full,
@@ -86,11 +118,12 @@ class LumeSheet extends StatelessWidget {
               ),
             if (title != null)
               Padding(
+                // `.sheet__head { padding: 14px 18px 10px }`.
                 padding: const EdgeInsetsDirectional.only(
-                  start: LumeSpace.x5,
-                  end: LumeSpace.x3,
-                  top: LumeSpace.x3,
-                  bottom: LumeSpace.x2,
+                  start: 18,
+                  end: 18,
+                  top: 14,
+                  bottom: 10,
                 ),
                 child: Row(
                   children: <Widget>[
@@ -121,13 +154,10 @@ class LumeSheet extends StatelessWidget {
                 ),
               ),
             Flexible(
+              // `.sheet__body { padding: 0 18px 8px }` — no top padding,
+              // because the head above it already ends with ten.
               child: Padding(
-                padding: const EdgeInsets.fromLTRB(
-                  LumeSpace.x5,
-                  LumeSpace.x2,
-                  LumeSpace.x5,
-                  LumeSpace.x5,
-                ),
+                padding: const EdgeInsets.fromLTRB(18, 0, 18, 8),
                 child: child,
               ),
             ),
@@ -155,6 +185,11 @@ Future<T?> showLumeSheet<T>({
   if (!compact) {
     return showDialog<T>(
       context: context,
+      // `.scrim` is z-index 50 and `.tabbar` is 40: the scrim covers the
+      // navigation bar, so the sheet belongs to the root navigator rather
+      // than to the branch it was raised from. A branch-navigator sheet
+      // would be drawn *under* the bar.
+      useRootNavigator: true,
       barrierDismissible: dismissible,
       barrierColor: scrim,
       barrierLabel: barrierLabel,
@@ -169,6 +204,7 @@ Future<T?> showLumeSheet<T>({
 
   return showModalBottomSheet<T>(
     context: context,
+    useRootNavigator: true,
     isScrollControlled: true,
     isDismissible: dismissible,
     enableDrag: dismissible,
