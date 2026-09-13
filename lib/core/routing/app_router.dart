@@ -62,6 +62,7 @@ import '../../features/onboarding/presentation/onboarding_flow.dart';
 import '../../features/shell/presentation/fixture_tool_screen.dart';
 import '../../features/startup/application/startup_controller.dart';
 import '../../features/startup/domain/startup_state.dart';
+import '../../features/notifications/presentation/notification_host.dart';
 import '../../features/search/presentation/search_sheet.dart';
 import '../../features/startup/presentation/splash_screen.dart';
 import '../../l10n/app_localizations.dart';
@@ -261,14 +262,13 @@ List<RouteBase> _nestedRoutes(LumeDestinationId branch) {
             NavigationGallery(onBack: () => context.go(root)),
       ),
     ],
+    // The notification centre is a screen of its own, mounted on every
+    // branch — so the one opened from Today is the same screen with the same
+    // behaviour as the one opened from Home, and only its stack differs.
     GoRoute(
       path: LumeRoutes.notificationsSegment,
-      builder: (BuildContext context, GoRouterState state) => LumeFixtureScreen(
-        title: AppLocalizations.of(context).navNotifications,
-        storageId: '${branch.name}/notifications',
-        onBack: () => context.go(root),
-        backLabel: AppLocalizations.of(context).actionBack,
-      ),
+      builder: (BuildContext context, GoRouterState state) =>
+          LumeNotificationHost(branch: root),
     ),
     // Global search is a *sheet*, not a screen (Q10). The reference raises
     // `#sheet-search` over whichever destination is showing and leaves that

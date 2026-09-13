@@ -3616,6 +3616,264 @@ abstract class AppLocalizations {
   /// **'Umm al-Qura'**
   String get methodUmmAlQura;
 
+  /// Reference: `n.act.complete`.
+  ///
+  /// In en, this message translates to:
+  /// **'Mark done'**
+  String get nActComplete;
+
+  /// Reference: `n.act.pay`.
+  ///
+  /// In en, this message translates to:
+  /// **'Pay'**
+  String get nActPay;
+
+  /// Reference: `n.act.track`.
+  ///
+  /// In en, this message translates to:
+  /// **'Track'**
+  String get nActTrack;
+
+  /// Reference: `n.act.viewDoc`.
+  ///
+  /// In en, this message translates to:
+  /// **'View document'**
+  String get nActViewDoc;
+
+  /// Reference: `n.act.viewFlight`.
+  ///
+  /// In en, this message translates to:
+  /// **'View flight'**
+  String get nActViewFlight;
+
+  /// Reference: `n.act.viewMarket`.
+  ///
+  /// In en, this message translates to:
+  /// **'View market'**
+  String get nActViewMarket;
+
+  /// Reference: `n.act.viewPrayer`.
+  ///
+  /// In en, this message translates to:
+  /// **'View prayer times'**
+  String get nActViewPrayer;
+
+  /// Reference: `n.act.viewTrain`.
+  ///
+  /// In en, this message translates to:
+  /// **'View train'**
+  String get nActViewTrain;
+
+  /// Reference: `n.act.viewWeather`.
+  ///
+  /// In en, this message translates to:
+  /// **'View forecast'**
+  String get nActViewWeather;
+
+  /// Reference: `n.actioned`. A row that has been acted on stays in history and stops asking.
+  ///
+  /// In en, this message translates to:
+  /// **'Done'**
+  String get nActioned;
+
+  /// Reference: `n.allRead`. The centre’s subtitle when nothing is unread.
+  ///
+  /// In en, this message translates to:
+  /// **'You’re all caught up'**
+  String get nAllRead;
+
+  /// Reference: `n.category`. The filter bar’s own label.
+  ///
+  /// In en, this message translates to:
+  /// **'Category'**
+  String get nCategory;
+
+  /// Reference: `n.daysAgo`. A day or more.
+  ///
+  /// In en, this message translates to:
+  /// **'{n, plural, =1{1 d ago} other{{n} d ago}}'**
+  String nDaysAgo(int n);
+
+  /// Reference: `n.dismiss`. The ✕ on a row, and the banner’s close control.
+  ///
+  /// In en, this message translates to:
+  /// **'Dismiss'**
+  String get nDismiss;
+
+  /// Reference: `n.empty.caughtUp`. The Unread tab’s own empty state, which is a different sentence from the general one because it means something different.
+  ///
+  /// In en, this message translates to:
+  /// **'You’re all caught up'**
+  String get nEmptyCaughtUp;
+
+  /// Reference: `n.empty.text`.
+  ///
+  /// In en, this message translates to:
+  /// **'New alerts and updates will appear here.'**
+  String get nEmptyText;
+
+  /// Reference: `n.empty.title`.
+  ///
+  /// In en, this message translates to:
+  /// **'Nothing to tell you'**
+  String get nEmptyTitle;
+
+  /// Reference: `n.error.text`.
+  ///
+  /// In en, this message translates to:
+  /// **'Nothing was lost. Try again.'**
+  String get nErrorText;
+
+  /// Reference: `n.error.title`. An engine that throws still leaves the reader somewhere.
+  ///
+  /// In en, this message translates to:
+  /// **'Notifications could not be loaded'**
+  String get nErrorTitle;
+
+  /// Reference: `n.expired`. Past the moment it was about.
+  ///
+  /// In en, this message translates to:
+  /// **'Expired'**
+  String get nExpired;
+
+  /// Not in the reference. Added because the reference’s own centre is driven by a live engine and this one is a fixture — and a list of alerts that were never delivered must say so rather than implying a delivery that did not happen (§125).
+  ///
+  /// In en, this message translates to:
+  /// **'These are sample alerts. Lume has no notification server in this build, so nothing here was delivered and nothing new will arrive.'**
+  String get nFixtureNote;
+
+  /// Reference: `n.group.body`.
+  ///
+  /// In en, this message translates to:
+  /// **'{n, plural, =1{1 more update} other{{n} more updates}}'**
+  String nGroupBody(int n);
+
+  /// Reference: `n.group.title`. Three or more updates of one event fold into a single row.
+  ///
+  /// In en, this message translates to:
+  /// **'{name} activity'**
+  String nGroupTitle(String name);
+
+  /// Reference: `n.hidden`. What a row says instead of its body when previews are off. The detail never reaches the screen rather than being hidden on it.
+  ///
+  /// In en, this message translates to:
+  /// **'Content hidden'**
+  String get nHidden;
+
+  /// Reference: `n.hoursAgo`. Under a day.
+  ///
+  /// In en, this message translates to:
+  /// **'{n, plural, =1{1 hr ago} other{{n} hr ago}}'**
+  String nHoursAgo(int n);
+
+  /// Reference: `n.markAllRead`. Offered only while something is unread.
+  ///
+  /// In en, this message translates to:
+  /// **'Mark all as read'**
+  String get nMarkAllRead;
+
+  /// Reference: `n.minsAgo`. Under an hour. A plural because Arabic has a dual and a paucal for it.
+  ///
+  /// In en, this message translates to:
+  /// **'{n, plural, =1{1 min ago} other{{n} min ago}}'**
+  String nMinsAgo(int n);
+
+  /// Reference: `n.now`. Under a minute old.
+  ///
+  /// In en, this message translates to:
+  /// **'just now'**
+  String get nNow;
+
+  /// Reference: `n.pri.critical`. The badge on a critical row.
+  ///
+  /// In en, this message translates to:
+  /// **'Critical'**
+  String get nPriCritical;
+
+  /// Reference: `n.pri.high`. The badge on a high-priority row.
+  ///
+  /// In en, this message translates to:
+  /// **'Important'**
+  String get nPriHigh;
+
+  /// Reference: the `#sheet-notifpush` primary action.
+  ///
+  /// In en, this message translates to:
+  /// **'Allow notifications'**
+  String get nPushAllow;
+
+  /// Reference: the `#sheet-notifpush` quiet action. Declining is a choice, not an absence of one.
+  ///
+  /// In en, this message translates to:
+  /// **'Not now'**
+  String get nPushNotNow;
+
+  /// Reference: `n.push.off`.
+  ///
+  /// In en, this message translates to:
+  /// **'Off'**
+  String get nPushOff;
+
+  /// Reference: `n.push.on`. Whether push has been allowed on this device.
+  ///
+  /// In en, this message translates to:
+  /// **'On'**
+  String get nPushOn;
+
+  /// Reference: the `#sheet-notifpush` body. It names what will be sent and, in the same breath, what will not.
+  ///
+  /// In en, this message translates to:
+  /// **'Lume will tell you about prayer times, bills, delays and the things you asked for. Nothing else.'**
+  String get nPushText;
+
+  /// Reference: the `#sheet-notifpush` heading. Permission is never requested at boot — the reader sees an explanation first.
+  ///
+  /// In en, this message translates to:
+  /// **'Turn on notifications'**
+  String get nPushTitle;
+
+  /// Reference: `n.quiet.text`. Quiet hours silence the interruption, not the delivery — and the note says so, because a reader who thought otherwise would stop checking.
+  ///
+  /// In en, this message translates to:
+  /// **'Nothing will interrupt you, but everything still arrives here.'**
+  String get nQuietText;
+
+  /// Reference: `n.quiet.title`.
+  ///
+  /// In en, this message translates to:
+  /// **'Quiet hours are on'**
+  String get nQuietTitle;
+
+  /// Reference: `n.settings`. The header action and the trailing row, both of which open the preferences.
+  ///
+  /// In en, this message translates to:
+  /// **'Notification settings'**
+  String get nSettings;
+
+  /// Reference: `n.tab.important`. Priority rank 2 and above, expired rows excluded.
+  ///
+  /// In en, this message translates to:
+  /// **'Important'**
+  String get nTabImportant;
+
+  /// Reference: `n.tab.unread`.
+  ///
+  /// In en, this message translates to:
+  /// **'Unread'**
+  String get nTabUnread;
+
+  /// Reference: `n.unread`. What the dot on an unread row is called to a screen reader.
+  ///
+  /// In en, this message translates to:
+  /// **'Unread'**
+  String get nUnread;
+
+  /// Reference: `n.unreadCount`. The centre’s subtitle while anything is unread.
+  ///
+  /// In en, this message translates to:
+  /// **'{n, plural, =1{1 unread} other{{n} unread}}'**
+  String nUnreadCount(int n);
+
   /// Reference key acct.account
   ///
   /// In en, this message translates to:

@@ -1982,6 +1982,189 @@ class AppLocalizationsAr extends AppLocalizations {
   String get methodUmmAlQura => 'أم القرى';
 
   @override
+  String get nActComplete => 'وضع علامة تم';
+
+  @override
+  String get nActPay => 'ادفع';
+
+  @override
+  String get nActTrack => 'تتبّع';
+
+  @override
+  String get nActViewDoc => 'عرض المستند';
+
+  @override
+  String get nActViewFlight => 'عرض الرحلة';
+
+  @override
+  String get nActViewMarket => 'عرض السوق';
+
+  @override
+  String get nActViewPrayer => 'عرض مواقيت الصلاة';
+
+  @override
+  String get nActViewTrain => 'عرض القطار';
+
+  @override
+  String get nActViewWeather => 'عرض التوقعات';
+
+  @override
+  String get nActioned => 'تم';
+
+  @override
+  String get nAllRead => 'لقد اطّلعت على كل شيء';
+
+  @override
+  String get nCategory => 'الفئة';
+
+  @override
+  String nDaysAgo(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: 'قبل $n يوم',
+      few: 'قبل $n أيام',
+      two: 'قبل يومين',
+      one: 'قبل يوم',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get nDismiss => 'إخفاء';
+
+  @override
+  String get nEmptyCaughtUp => 'لقد اطّلعت على كل شيء';
+
+  @override
+  String get nEmptyText => 'ستظهر التنبيهات والتحديثات الجديدة هنا.';
+
+  @override
+  String get nEmptyTitle => 'لا شيء لإخبارك به';
+
+  @override
+  String get nErrorText => 'لم يُفقد شيء. حاول مرة أخرى.';
+
+  @override
+  String get nErrorTitle => 'تعذّر تحميل الإشعارات';
+
+  @override
+  String get nExpired => 'انتهت';
+
+  @override
+  String get nFixtureNote =>
+      'هذه تنبيهات نموذجية. لا يوجد خادم إشعارات في هذا الإصدار، لذلك لم يُرسل شيء هنا ولن يصل شيء جديد.';
+
+  @override
+  String nGroupBody(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n تحديثًا إضافيًا',
+      few: '$n تحديثات إضافية',
+      two: 'تحديثان إضافيان',
+      one: 'تحديث إضافي',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String nGroupTitle(String name) {
+    return 'نشاط $name';
+  }
+
+  @override
+  String get nHidden => 'المحتوى مخفي';
+
+  @override
+  String nHoursAgo(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: 'قبل $n ساعة',
+      few: 'قبل $n ساعات',
+      two: 'قبل ساعتين',
+      one: 'قبل ساعة',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get nMarkAllRead => 'وضع علامة مقروء على الكل';
+
+  @override
+  String nMinsAgo(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: 'قبل $n دقيقة',
+      few: 'قبل $n دقائق',
+      two: 'قبل دقيقتين',
+      one: 'قبل دقيقة',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get nNow => 'الآن';
+
+  @override
+  String get nPriCritical => 'حرج';
+
+  @override
+  String get nPriHigh => 'مهم';
+
+  @override
+  String get nPushAllow => 'السماح بالإشعارات';
+
+  @override
+  String get nPushNotNow => 'ليس الآن';
+
+  @override
+  String get nPushOff => 'معطّلة';
+
+  @override
+  String get nPushOn => 'مفعّلة';
+
+  @override
+  String get nPushText =>
+      'سيخبرك Lume بمواقيت الصلاة والفواتير والتأخيرات وما طلبته. لا شيء غير ذلك.';
+
+  @override
+  String get nPushTitle => 'تفعيل الإشعارات';
+
+  @override
+  String get nQuietText => 'لن يقاطعك شيء، لكن كل شيء يصل إلى هنا.';
+
+  @override
+  String get nQuietTitle => 'ساعات الهدوء مفعّلة';
+
+  @override
+  String get nSettings => 'إعدادات الإشعارات';
+
+  @override
+  String get nTabImportant => 'مهم';
+
+  @override
+  String get nTabUnread => 'غير مقروءة';
+
+  @override
+  String get nUnread => 'غير مقروء';
+
+  @override
+  String nUnreadCount(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n غير مقروء',
+      few: '$n غير مقروءة',
+      two: 'اثنان غير مقروءين',
+      one: 'واحد غير مقروء',
+    );
+    return '$_temp0';
+  }
+
+  @override
   String get navAccount => 'الحساب';
 
   @override

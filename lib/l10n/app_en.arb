@@ -2633,6 +2633,208 @@
   "@methodUmmAlQura": {
     "description": "Prayer calculation method"
   },
+  "nActComplete": "Mark done",
+  "@nActComplete": {
+    "description": "Reference: `n.act.complete`."
+  },
+  "nActPay": "Pay",
+  "@nActPay": {
+    "description": "Reference: `n.act.pay`."
+  },
+  "nActTrack": "Track",
+  "@nActTrack": {
+    "description": "Reference: `n.act.track`."
+  },
+  "nActViewDoc": "View document",
+  "@nActViewDoc": {
+    "description": "Reference: `n.act.viewDoc`."
+  },
+  "nActViewFlight": "View flight",
+  "@nActViewFlight": {
+    "description": "Reference: `n.act.viewFlight`."
+  },
+  "nActViewMarket": "View market",
+  "@nActViewMarket": {
+    "description": "Reference: `n.act.viewMarket`."
+  },
+  "nActViewPrayer": "View prayer times",
+  "@nActViewPrayer": {
+    "description": "Reference: `n.act.viewPrayer`."
+  },
+  "nActViewTrain": "View train",
+  "@nActViewTrain": {
+    "description": "Reference: `n.act.viewTrain`."
+  },
+  "nActViewWeather": "View forecast",
+  "@nActViewWeather": {
+    "description": "Reference: `n.act.viewWeather`."
+  },
+  "nActioned": "Done",
+  "@nActioned": {
+    "description": "Reference: `n.actioned`. A row that has been acted on stays in history and stops asking."
+  },
+  "nAllRead": "You’re all caught up",
+  "@nAllRead": {
+    "description": "Reference: `n.allRead`. The centre’s subtitle when nothing is unread."
+  },
+  "nCategory": "Category",
+  "@nCategory": {
+    "description": "Reference: `n.category`. The filter bar’s own label."
+  },
+  "nDaysAgo": "{n, plural, =1{1 d ago} other{{n} d ago}}",
+  "@nDaysAgo": {
+    "description": "Reference: `n.daysAgo`. A day or more.",
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
+  "nDismiss": "Dismiss",
+  "@nDismiss": {
+    "description": "Reference: `n.dismiss`. The ✕ on a row, and the banner’s close control."
+  },
+  "nEmptyCaughtUp": "You’re all caught up",
+  "@nEmptyCaughtUp": {
+    "description": "Reference: `n.empty.caughtUp`. The Unread tab’s own empty state, which is a different sentence from the general one because it means something different."
+  },
+  "nEmptyText": "New alerts and updates will appear here.",
+  "@nEmptyText": {
+    "description": "Reference: `n.empty.text`."
+  },
+  "nEmptyTitle": "Nothing to tell you",
+  "@nEmptyTitle": {
+    "description": "Reference: `n.empty.title`."
+  },
+  "nErrorText": "Nothing was lost. Try again.",
+  "@nErrorText": {
+    "description": "Reference: `n.error.text`."
+  },
+  "nErrorTitle": "Notifications could not be loaded",
+  "@nErrorTitle": {
+    "description": "Reference: `n.error.title`. An engine that throws still leaves the reader somewhere."
+  },
+  "nExpired": "Expired",
+  "@nExpired": {
+    "description": "Reference: `n.expired`. Past the moment it was about."
+  },
+  "nFixtureNote": "These are sample alerts. Lume has no notification server in this build, so nothing here was delivered and nothing new will arrive.",
+  "@nFixtureNote": {
+    "description": "Not in the reference. Added because the reference’s own centre is driven by a live engine and this one is a fixture — and a list of alerts that were never delivered must say so rather than implying a delivery that did not happen (§125)."
+  },
+  "nGroupBody": "{n, plural, =1{1 more update} other{{n} more updates}}",
+  "@nGroupBody": {
+    "description": "Reference: `n.group.body`.",
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
+  "nGroupTitle": "{name} activity",
+  "@nGroupTitle": {
+    "description": "Reference: `n.group.title`. Three or more updates of one event fold into a single row.",
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "nHidden": "Content hidden",
+  "@nHidden": {
+    "description": "Reference: `n.hidden`. What a row says instead of its body when previews are off. The detail never reaches the screen rather than being hidden on it."
+  },
+  "nHoursAgo": "{n, plural, =1{1 hr ago} other{{n} hr ago}}",
+  "@nHoursAgo": {
+    "description": "Reference: `n.hoursAgo`. Under a day.",
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
+  "nMarkAllRead": "Mark all as read",
+  "@nMarkAllRead": {
+    "description": "Reference: `n.markAllRead`. Offered only while something is unread."
+  },
+  "nMinsAgo": "{n, plural, =1{1 min ago} other{{n} min ago}}",
+  "@nMinsAgo": {
+    "description": "Reference: `n.minsAgo`. Under an hour. A plural because Arabic has a dual and a paucal for it.",
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
+  "nNow": "just now",
+  "@nNow": {
+    "description": "Reference: `n.now`. Under a minute old."
+  },
+  "nPriCritical": "Critical",
+  "@nPriCritical": {
+    "description": "Reference: `n.pri.critical`. The badge on a critical row."
+  },
+  "nPriHigh": "Important",
+  "@nPriHigh": {
+    "description": "Reference: `n.pri.high`. The badge on a high-priority row."
+  },
+  "nPushAllow": "Allow notifications",
+  "@nPushAllow": {
+    "description": "Reference: the `#sheet-notifpush` primary action."
+  },
+  "nPushNotNow": "Not now",
+  "@nPushNotNow": {
+    "description": "Reference: the `#sheet-notifpush` quiet action. Declining is a choice, not an absence of one."
+  },
+  "nPushOff": "Off",
+  "@nPushOff": {
+    "description": "Reference: `n.push.off`."
+  },
+  "nPushOn": "On",
+  "@nPushOn": {
+    "description": "Reference: `n.push.on`. Whether push has been allowed on this device."
+  },
+  "nPushText": "Lume will tell you about prayer times, bills, delays and the things you asked for. Nothing else.",
+  "@nPushText": {
+    "description": "Reference: the `#sheet-notifpush` body. It names what will be sent and, in the same breath, what will not."
+  },
+  "nPushTitle": "Turn on notifications",
+  "@nPushTitle": {
+    "description": "Reference: the `#sheet-notifpush` heading. Permission is never requested at boot — the reader sees an explanation first."
+  },
+  "nQuietText": "Nothing will interrupt you, but everything still arrives here.",
+  "@nQuietText": {
+    "description": "Reference: `n.quiet.text`. Quiet hours silence the interruption, not the delivery — and the note says so, because a reader who thought otherwise would stop checking."
+  },
+  "nQuietTitle": "Quiet hours are on",
+  "@nQuietTitle": {
+    "description": "Reference: `n.quiet.title`."
+  },
+  "nSettings": "Notification settings",
+  "@nSettings": {
+    "description": "Reference: `n.settings`. The header action and the trailing row, both of which open the preferences."
+  },
+  "nTabImportant": "Important",
+  "@nTabImportant": {
+    "description": "Reference: `n.tab.important`. Priority rank 2 and above, expired rows excluded."
+  },
+  "nTabUnread": "Unread",
+  "@nTabUnread": {
+    "description": "Reference: `n.tab.unread`."
+  },
+  "nUnread": "Unread",
+  "@nUnread": {
+    "description": "Reference: `n.unread`. What the dot on an unread row is called to a screen reader."
+  },
+  "nUnreadCount": "{n, plural, =1{1 unread} other{{n} unread}}",
+  "@nUnreadCount": {
+    "description": "Reference: `n.unreadCount`. The centre’s subtitle while anything is unread.",
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
   "navAccount": "Account",
   "@navAccount": {
     "description": "Reference key acct.account"

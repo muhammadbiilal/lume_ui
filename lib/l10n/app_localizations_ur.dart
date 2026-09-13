@@ -1970,6 +1970,180 @@ class AppLocalizationsUr extends AppLocalizations {
   String get methodUmmAlQura => 'ام القریٰ';
 
   @override
+  String get nActComplete => 'مکمل نشان زد کریں';
+
+  @override
+  String get nActPay => 'ادائیگی';
+
+  @override
+  String get nActTrack => 'ٹریک کریں';
+
+  @override
+  String get nActViewDoc => 'دستاویز دیکھیں';
+
+  @override
+  String get nActViewFlight => 'پرواز دیکھیں';
+
+  @override
+  String get nActViewMarket => 'مارکیٹ دیکھیں';
+
+  @override
+  String get nActViewPrayer => 'نماز کے اوقات دیکھیں';
+
+  @override
+  String get nActViewTrain => 'ٹرین دیکھیں';
+
+  @override
+  String get nActViewWeather => 'پیش گوئی دیکھیں';
+
+  @override
+  String get nActioned => 'ہو گیا';
+
+  @override
+  String get nAllRead => 'آپ سب کچھ پڑھ چکے ہیں';
+
+  @override
+  String get nCategory => 'زمرہ';
+
+  @override
+  String nDaysAgo(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n دن پہلے',
+      one: '1 دن پہلے',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get nDismiss => 'ہٹائیں';
+
+  @override
+  String get nEmptyCaughtUp => 'آپ سب کچھ پڑھ چکے ہیں';
+
+  @override
+  String get nEmptyText => 'نئی اطلاعات اور اپ ڈیٹس یہاں آئیں گی۔';
+
+  @override
+  String get nEmptyTitle => 'بتانے کو کچھ نہیں';
+
+  @override
+  String get nErrorText => 'کچھ ضائع نہیں ہوا۔ دوبارہ کوشش کریں۔';
+
+  @override
+  String get nErrorTitle => 'اطلاعات لوڈ نہیں ہو سکیں';
+
+  @override
+  String get nExpired => 'میعاد ختم';
+
+  @override
+  String get nFixtureNote =>
+      'یہ نمونہ اطلاعات ہیں۔ اس بلڈ میں Lume کا کوئی اطلاعاتی سرور نہیں، اس لیے یہاں کچھ بھیجا نہیں گیا اور نہ کچھ نیا آئے گا۔';
+
+  @override
+  String nGroupBody(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n مزید اپ ڈیٹس',
+      one: '1 مزید اپ ڈیٹ',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String nGroupTitle(String name) {
+    return '$name سرگرمی';
+  }
+
+  @override
+  String get nHidden => 'مواد چھپا ہوا ہے';
+
+  @override
+  String nHoursAgo(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n گھنٹے پہلے',
+      one: '1 گھنٹہ پہلے',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get nMarkAllRead => 'سب کو پڑھا ہوا نشان زد کریں';
+
+  @override
+  String nMinsAgo(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n منٹ پہلے',
+      one: '1 منٹ پہلے',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get nNow => 'ابھی';
+
+  @override
+  String get nPriCritical => 'نازک';
+
+  @override
+  String get nPriHigh => 'اہم';
+
+  @override
+  String get nPushAllow => 'اطلاعات کی اجازت دیں';
+
+  @override
+  String get nPushNotNow => 'ابھی نہیں';
+
+  @override
+  String get nPushOff => 'بند';
+
+  @override
+  String get nPushOn => 'چالو';
+
+  @override
+  String get nPushText =>
+      'Lume آپ کو نماز کے اوقات، بلوں، تاخیر اور جو آپ نے مانگا اُس کے بارے میں بتائے گا۔ اور کچھ نہیں۔';
+
+  @override
+  String get nPushTitle => 'اطلاعات چالو کریں';
+
+  @override
+  String get nQuietText =>
+      'کوئی چیز آپ کو نہیں ٹوکے گی، مگر سب کچھ یہاں پہنچتا رہے گا۔';
+
+  @override
+  String get nQuietTitle => 'خاموش اوقات چالو ہیں';
+
+  @override
+  String get nSettings => 'اطلاعات کی ترتیبات';
+
+  @override
+  String get nTabImportant => 'اہم';
+
+  @override
+  String get nTabUnread => 'غیر پڑھے';
+
+  @override
+  String get nUnread => 'غیر پڑھا';
+
+  @override
+  String nUnreadCount(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n غیر پڑھے',
+      one: '1 غیر پڑھا',
+    );
+    return '$_temp0';
+  }
+
+  @override
   String get navAccount => 'اکاؤنٹ';
 
   @override

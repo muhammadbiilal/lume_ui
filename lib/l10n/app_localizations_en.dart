@@ -1970,6 +1970,180 @@ class AppLocalizationsEn extends AppLocalizations {
   String get methodUmmAlQura => 'Umm al-Qura';
 
   @override
+  String get nActComplete => 'Mark done';
+
+  @override
+  String get nActPay => 'Pay';
+
+  @override
+  String get nActTrack => 'Track';
+
+  @override
+  String get nActViewDoc => 'View document';
+
+  @override
+  String get nActViewFlight => 'View flight';
+
+  @override
+  String get nActViewMarket => 'View market';
+
+  @override
+  String get nActViewPrayer => 'View prayer times';
+
+  @override
+  String get nActViewTrain => 'View train';
+
+  @override
+  String get nActViewWeather => 'View forecast';
+
+  @override
+  String get nActioned => 'Done';
+
+  @override
+  String get nAllRead => 'You’re all caught up';
+
+  @override
+  String get nCategory => 'Category';
+
+  @override
+  String nDaysAgo(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n d ago',
+      one: '1 d ago',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get nDismiss => 'Dismiss';
+
+  @override
+  String get nEmptyCaughtUp => 'You’re all caught up';
+
+  @override
+  String get nEmptyText => 'New alerts and updates will appear here.';
+
+  @override
+  String get nEmptyTitle => 'Nothing to tell you';
+
+  @override
+  String get nErrorText => 'Nothing was lost. Try again.';
+
+  @override
+  String get nErrorTitle => 'Notifications could not be loaded';
+
+  @override
+  String get nExpired => 'Expired';
+
+  @override
+  String get nFixtureNote =>
+      'These are sample alerts. Lume has no notification server in this build, so nothing here was delivered and nothing new will arrive.';
+
+  @override
+  String nGroupBody(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n more updates',
+      one: '1 more update',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String nGroupTitle(String name) {
+    return '$name activity';
+  }
+
+  @override
+  String get nHidden => 'Content hidden';
+
+  @override
+  String nHoursAgo(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n hr ago',
+      one: '1 hr ago',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get nMarkAllRead => 'Mark all as read';
+
+  @override
+  String nMinsAgo(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n min ago',
+      one: '1 min ago',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get nNow => 'just now';
+
+  @override
+  String get nPriCritical => 'Critical';
+
+  @override
+  String get nPriHigh => 'Important';
+
+  @override
+  String get nPushAllow => 'Allow notifications';
+
+  @override
+  String get nPushNotNow => 'Not now';
+
+  @override
+  String get nPushOff => 'Off';
+
+  @override
+  String get nPushOn => 'On';
+
+  @override
+  String get nPushText =>
+      'Lume will tell you about prayer times, bills, delays and the things you asked for. Nothing else.';
+
+  @override
+  String get nPushTitle => 'Turn on notifications';
+
+  @override
+  String get nQuietText =>
+      'Nothing will interrupt you, but everything still arrives here.';
+
+  @override
+  String get nQuietTitle => 'Quiet hours are on';
+
+  @override
+  String get nSettings => 'Notification settings';
+
+  @override
+  String get nTabImportant => 'Important';
+
+  @override
+  String get nTabUnread => 'Unread';
+
+  @override
+  String get nUnread => 'Unread';
+
+  @override
+  String nUnreadCount(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n unread',
+      one: '1 unread',
+    );
+    return '$_temp0';
+  }
+
+  @override
   String get navAccount => 'Account';
 
   @override
