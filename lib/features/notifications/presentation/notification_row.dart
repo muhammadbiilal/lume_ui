@@ -5,11 +5,18 @@
 /// here, which is the only way to be sure a preview cannot leak: there is
 /// nothing on this widget to leak *from*.
 ///
-/// Its own structure, from `screens/notifications.css`: a tinted icon whose
-/// colour is the category's, a title line that may carry a priority badge,
-/// the body, and a meta line of age · category · state. An unread row is
-/// tinted and carries a dot; a row with an action or that is not folded also
-/// carries an action strip.
+/// Its geometry, from `screens/notifications.css` and measured against the
+/// running reference (`measure_destinations.mjs --screen notifications`):
+///
+/// * `.nrow__main` pads `--pad-row` (12 × 16), with a 36-point icon, a 12-point
+///   gap, the body, and the unread dot — 80.58 tall for one line of text;
+/// * the title is 14 / 700 / −.026em on a 1.3 line, the body 12 / 400 on
+///   1.45 three below it, the meta line 11 / 600 five below that;
+/// * `.nrow__acts` is 44 tall — a 32-point line plus 12 underneath — inset 64
+///   at the start so a button sits under the title;
+/// * an unread row is tinted across its *whole* height, action strip and
+///   all, and carries a three-point accent bar at its inline start;
+/// * an expired row is drawn at 58 % and loses its dot.
 library;
 
 import 'package:flutter/material.dart';
@@ -34,6 +41,7 @@ Color lumeNotificationTint(LumeColors lume, String category) =>
       'travel' => lume.tone(lume.violet),
       'weather' => lume.tone(lume.sky),
       'documents' => lume.tone(lume.indigo),
+      'health' => lume.tone(lume.rose),
       _ => lume.tintNeutral,
     };
 
@@ -46,6 +54,7 @@ Color lumeNotificationInk(LumeColors lume, String category) =>
       'travel' => lume.violet,
       'weather' => lume.sky,
       'documents' => lume.indigo,
+      'health' => lume.rose,
       _ => lume.text2,
     };
 
@@ -87,8 +96,36 @@ class LumeNotificationRow extends StatelessWidget {
   final VoidCallback? onDismiss;
   final bool isLast;
 
-  /// `.nrow__icon` is 34 × 34 with a 17 px glyph.
-  static const double iconSize = 34;
+  /// `--pad-row: 12px 16px`.
+  static const EdgeInsets padding = EdgeInsets.symmetric(
+    vertical: 12,
+    horizontal: 16,
+  );
+
+  /// `.nrow__icon` — 36 × 36 on `--r-icon`, with a 17-point glyph.
+  static const double iconSize = 36;
+  static const double glyph = 17;
+
+  /// `.nrow__main { gap: 12px }`.
+  static const double gap = 12;
+
+  /// `.nrow__dot` — 8 × 8, six below the top of the title.
+  static const double dot = 8;
+
+  /// `.nrow.is-unread::before { width: 3px }`.
+  static const double unreadBar = 3;
+
+  /// `.nrow__acts { padding: 0 16px 12px 64px }` — the icon's inset, its
+  /// width and its gap, so a button starts under the title.
+  static const double actsStart = 64;
+
+  /// `.nrow__dismiss` — a 32-point circle holding a 14-point cross. Also the
+  /// height of the strip's one line, which the action pill is centred in.
+  static const double dismissSize = 32;
+  static const double dismissGlyph = 14;
+
+  /// `.nrow.is-expired { opacity: .58 }`.
+  static const double expiredOpacity = 0.58;
 
   @override
   Widget build(BuildContext context) {
@@ -128,12 +165,8 @@ class LumeNotificationRow extends StatelessWidget {
       onTap: onOpen,
       semanticLabel: spoken,
       minSize: 0,
-      child: Container(
-        padding: const EdgeInsets.symmetric(vertical: 13, horizontal: 16),
-        color: n.read
-            ? null
-            // `.nrow.is-unread` — four per cent of accent *into the card*.
-            : Color.lerp(lume.card, lume.accent, 0.04),
+      child: Padding(
+        padding: padding,
         child: ExcludeSemantics(
           child: Row(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -143,22 +176,23 @@ class LumeNotificationRow extends StatelessWidget {
                 height: iconSize,
                 decoration: BoxDecoration(
                   color: lumeNotificationTint(lume, n.category),
-                  borderRadius: LumeRadius.brSm,
+                  borderRadius: LumeRadius.brIcon,
                 ),
                 child: Center(
                   child: LumeIcon(
                     n.icon,
-                    size: LumeSpace.iconMd,
+                    size: glyph,
                     color: lumeNotificationInk(lume, n.category),
                   ),
                 ),
               ),
-              const SizedBox(width: 12),
+              const SizedBox(width: gap),
               Expanded(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   mainAxisSize: MainAxisSize.min,
                   children: <Widget>[
+                    // `.nrow__titleline { align-items: center; gap: 6px }`.
                     Row(
                       children: <Widget>[
                         Flexible(
@@ -171,37 +205,40 @@ class LumeNotificationRow extends StatelessWidget {
                                     context.lumeType.meta,
                                     size: 14,
                                   ),
-                                  -0.022,
+                                  -0.026,
                                 ).copyWith(
-                                  color: lume.text,
+                                  // `.is-actioned .nrow__title` — done with,
+                                  // so it stops asking to be read first.
+                                  color: n.actioned ? lume.text2 : lume.text,
                                   fontWeight: FontWeight.w700,
+                                  height: 1.3,
+                                  leadingDistribution:
+                                      TextLeadingDistribution.even,
                                 ),
-                            maxLines: 2,
-                            overflow: TextOverflow.ellipsis,
                           ),
                         ),
                         if (badgeLabel != null) ...<Widget>[
-                          const SizedBox(width: 7),
+                          const SizedBox(width: 6),
                           LumeBadge(label: badgeLabel, tone: tone!),
                         ],
                       ],
                     ),
-                    const SizedBox(height: 2),
+                    const SizedBox(height: 3),
                     Text(
                       n.body,
                       style:
                           LumeType.natural(
                             context,
                             context.lumeType.metaSmall,
-                            size: 12.5,
+                            size: 12,
                           ).copyWith(
                             color: lume.text2,
-                            fontWeight: FontWeight.w500,
+                            fontWeight: FontWeight.w400,
+                            height: 1.45,
+                            leadingDistribution: TextLeadingDistribution.even,
                           ),
-                      maxLines: 3,
-                      overflow: TextOverflow.ellipsis,
                     ),
-                    const SizedBox(height: 4),
+                    const SizedBox(height: 5),
                     Text(
                       meta,
                       style:
@@ -211,19 +248,21 @@ class LumeNotificationRow extends StatelessWidget {
                             size: 11,
                           ).copyWith(
                             color: lume.text3,
-                            fontWeight: FontWeight.w500,
+                            fontWeight: FontWeight.w600,
+                            // Measured 13: 11 px on a normal line box, which
+                            // is shorter than the font's own natural one.
+                            height: 13 / 11,
+                            leadingDistribution: TextLeadingDistribution.even,
                           ),
-                      maxLines: 1,
-                      overflow: TextOverflow.ellipsis,
                     ),
                   ],
                 ),
               ),
-              if (!n.read) ...<Widget>[
-                const SizedBox(width: 10),
+              if (!n.read && !n.expired) ...<Widget>[
+                const SizedBox(width: gap),
                 Container(
-                  width: 7,
-                  height: 7,
+                  width: dot,
+                  height: dot,
                   margin: const EdgeInsets.only(top: 6),
                   decoration: BoxDecoration(
                     color: lume.accent,
@@ -237,78 +276,133 @@ class LumeNotificationRow extends StatelessWidget {
       ),
     );
 
-    final bool hasStrip =
-        (actionLabel != null && onAct != null) ||
-        (!n.grouped && onDismiss != null);
+    final bool canAct = actionLabel != null && onAct != null;
+    final bool canDismiss = !n.grouped && onDismiss != null;
 
-    return DecoratedBox(
+    // `.nrow__acts` is a 32-point line with twelve under it: 44, which is
+    // also the smallest target §9 allows. So each control's target is the
+    // strip's full height and its drawing sits in the top 32 — the targets
+    // are accessible and the row is exactly as tall as the reference's.
+    // At the end, the cross's 44-point target spends six of the reference's
+    // sixteen-point inset, so the circle still ends sixteen from the edge.
+    final Widget strip = Padding(
+      padding: const EdgeInsetsDirectional.only(
+        start: actsStart,
+        end: 16 - (LumeSpace.tap - dismissSize) / 2,
+      ),
+      child: SizedBox(
+        height: LumeSpace.tap,
+        child: Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: <Widget>[
+            if (canAct)
+              LumePressable(
+                onTap: onAct,
+                semanticLabel: '$actionLabel, ${n.title}',
+                borderRadius: LumeRadius.full,
+                minSize: 0,
+                child: SizedBox(
+                  height: LumeSpace.tap,
+                  child: Align(
+                    alignment: AlignmentDirectional.topStart,
+                    child: SizedBox(
+                      height: dismissSize,
+                      child: Center(
+                        // `.nrow__act` — a tinted pill, 7 × 14.
+                        child: Container(
+                          padding: const EdgeInsets.symmetric(
+                            vertical: 7,
+                            horizontal: 14,
+                          ),
+                          decoration: BoxDecoration(
+                            color: lume.tintAccent,
+                            borderRadius: LumeRadius.full,
+                          ),
+                          child: Text(
+                            actionLabel!,
+                            style:
+                                LumeType.natural(
+                                  context,
+                                  context.lumeType.metaSmall,
+                                  size: 12,
+                                ).copyWith(
+                                  color: lume.accent,
+                                  fontWeight: FontWeight.w700,
+                                  // Measured 29 with 7 above and below: a
+                                  // 15-point line for 12 px.
+                                  height: 15 / 12,
+                                  leadingDistribution:
+                                      TextLeadingDistribution.even,
+                                ),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+            const Spacer(),
+            if (canDismiss)
+              LumePressable(
+                onTap: onDismiss,
+                semanticLabel: '${l.nDismiss}, ${n.title}',
+                borderRadius: LumeRadius.full,
+                minSize: 0,
+                child: SizedBox(
+                  width: LumeSpace.tap,
+                  height: LumeSpace.tap,
+                  child: Align(
+                    alignment: Alignment.topCenter,
+                    child: SizedBox(
+                      width: dismissSize,
+                      height: dismissSize,
+                      child: Center(
+                        child: LumeIcon(
+                          LumeIcons.x,
+                          size: dismissGlyph,
+                          color: lume.text3,
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+          ],
+        ),
+      ),
+    );
+
+    Widget row = Container(
       decoration: BoxDecoration(
+        // `.nrow.is-unread` — four per cent of accent into the card, across
+        // the whole row.
+        color: n.read ? null : Color.lerp(lume.card, lume.accent, 0.04),
         border: isLast
             ? null
             : Border(
                 bottom: BorderSide(color: lume.border, width: LumeSpace.border),
               ),
       ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        mainAxisSize: MainAxisSize.min,
+      child: Stack(
         children: <Widget>[
-          main,
-          if (hasStrip)
-            Padding(
-              padding: const EdgeInsetsDirectional.only(
-                start: 62,
-                end: 10,
-                bottom: 10,
-              ),
-              child: Row(
-                children: <Widget>[
-                  if (actionLabel != null && onAct != null)
-                    LumePressable(
-                      onTap: onAct,
-                      semanticLabel: '$actionLabel, ${n.title}',
-                      borderRadius: LumeRadius.brSm,
-                      minSize: LumeSpace.tap,
-                      child: Padding(
-                        padding: const EdgeInsets.symmetric(
-                          vertical: 6,
-                          horizontal: 10,
-                        ),
-                        child: Text(
-                          actionLabel!,
-                          style:
-                              LumeType.tracked(
-                                LumeType.natural(
-                                  context,
-                                  context.lumeType.metaSmall,
-                                  size: 12,
-                                ),
-                                -0.01,
-                              ).copyWith(
-                                color: lume.accent,
-                                fontWeight: FontWeight.w700,
-                              ),
-                        ),
-                      ),
-                    ),
-                  const Spacer(),
-                  if (!n.grouped && onDismiss != null)
-                    LumePressable(
-                      onTap: onDismiss,
-                      semanticLabel: '${l.nDismiss}, ${n.title}',
-                      borderRadius: LumeRadius.full,
-                      minSize: LumeSpace.tap,
-                      child: LumeIcon(
-                        LumeIcons.x,
-                        size: LumeSpace.iconSm,
-                        color: lume.text3,
-                      ),
-                    ),
-                ],
-              ),
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            mainAxisSize: MainAxisSize.min,
+            children: <Widget>[main, if (canAct || canDismiss) strip],
+          ),
+          if (!n.read)
+            PositionedDirectional(
+              start: 0,
+              top: 0,
+              bottom: 0,
+              width: unreadBar,
+              child: ColoredBox(color: lume.accent),
             ),
         ],
       ),
     );
+
+    if (n.expired) row = Opacity(opacity: expiredOpacity, child: row);
+    return row;
   }
 }

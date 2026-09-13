@@ -87,14 +87,16 @@ class LumeNotificationCentre extends StatelessWidget {
     final AppLocalizations l = AppLocalizations.of(context);
 
     if (failure != null) {
-      return LumeToolState(
-        icon: LumeIcons.alert,
-        title: l.nErrorTitle,
-        text: l.nErrorText,
-        action: LumeButton.accent(
-          label: l.actionTryAgain,
-          icon: LumeIcons.refresh,
-          onPressed: actions.retry,
+      return _section(
+        LumeToolState(
+          icon: LumeIcons.alert,
+          title: l.nErrorTitle,
+          text: l.nErrorText,
+          action: LumeButton.accent(
+            label: l.actionTryAgain,
+            icon: LumeIcons.refresh,
+            onPressed: actions.retry,
+          ),
         ),
       );
     }
@@ -104,38 +106,40 @@ class LumeNotificationCentre extends StatelessWidget {
       l,
     );
 
+    final List<Widget> categories = _categories(context, l);
+    // The category bar is laid out at its chips' 44-point targets, which
+    // reach past each 31-point chip; the gap after it gives those points
+    // back, so the list lands where the reference's does.
+    final double afterBar = categories.isEmpty
+        ? sectionGap
+        : sectionGap - LumeFilterBar.overhang;
+
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       mainAxisSize: MainAxisSize.min,
       children: <Widget>[
-        _tabs(context, l),
-        ..._categories(context, l),
+        // `UI.section({ flush: true })` — edge to edge, carrying its own
+        // inset, so its rule runs the full width.
+        Padding(
+          padding: const EdgeInsets.only(top: sectionGap),
+          child: _tabs(context, l),
+        ),
+        ...categories,
         if (feed.quietHours)
-          Padding(
-            padding: const EdgeInsets.only(top: 14),
-            child: LumeNoteCard(
+          _section(
+            LumeNoteCard(
               icon: LumeIcons.moon,
               title: l.nQuietTitle,
               text: l.nQuietText,
             ),
+            top: afterBar,
           ),
-        Padding(
-          padding: const EdgeInsets.only(top: 14),
-          child: shown.isEmpty ? _empty(l) : _list(context, l, shown),
+        _section(
+          shown.isEmpty ? _empty(l) : _list(context, l, shown),
+          top: feed.quietHours ? sectionGap : afterBar,
         ),
-        // Nothing here was delivered, and the screen says so rather than
-        // letting a list of sample alerts imply that it was (§125).
-        Padding(
-          padding: const EdgeInsets.only(top: 14),
-          child: LumeNoteCard(
-            icon: LumeIcons.info,
-            title: l.navNotifications,
-            text: l.nFixtureNote,
-          ),
-        ),
-        Padding(
-          padding: const EdgeInsets.only(top: 14),
-          child: LumeRows(
+        _section(
+          LumeRows(
             children: <Widget>[
               LumeCompactRow(
                 icon: LumeIcons.settings,
@@ -149,6 +153,20 @@ class LumeNotificationCentre extends StatelessWidget {
       ],
     );
   }
+
+  /// `--gap-section`. Every block of the centre is a `.sect`, and each sits
+  /// 24 below the one before — measured: tabs at 86 under a 62-point
+  /// toolbar, the category bar at 150, the list at 207.
+  static const double sectionGap = 24;
+
+  /// `--pad`.
+  static const double gutter = 20;
+
+  /// `.sect { padding: 0 var(--pad); margin-top: var(--gap-section) }`.
+  static Widget _section(Widget child, {double top = sectionGap}) => Padding(
+    padding: EdgeInsets.fromLTRB(gutter, top, gutter, 0),
+    child: child,
+  );
 
   Widget _tabs(BuildContext context, AppLocalizations l) => LumeTabs(
     key: tabsKey,
@@ -186,9 +204,12 @@ class LumeNotificationCentre extends StatelessWidget {
 
     return <Widget>[
       Padding(
-        padding: const EdgeInsets.only(top: 14),
+        // `.filterbar__group { margin: 0 calc(var(--pad) * -1) }` — the chips
+        // scroll edge to edge and start at the page's inset.
+        padding: const EdgeInsets.only(
+          top: sectionGap - LumeFilterBar.overhang,
+        ),
         child: LumeFilterBar(
-          gutters: false,
           children: <Widget>[
             LumeFilterChip(
               label: l.commonAll,
@@ -225,6 +246,9 @@ class LumeNotificationCentre extends StatelessWidget {
   ) => LumeCard(
     key: listKey,
     padded: false,
+    // `.nlist { overflow: hidden }` — the unread tint and its bar stay inside
+    // the rounded corners.
+    clip: true,
     child: Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       mainAxisSize: MainAxisSize.min,

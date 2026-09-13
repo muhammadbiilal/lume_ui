@@ -254,16 +254,16 @@ void main() {
     expect(find.textContaining('unread'), findsWidgets);
 
     // 2. Opening a row marks it read and goes to its tool on this branch.
-    await tester.tap(find.text('Heavy rain warning'));
+    await tester.tap(find.text('EK 624 is delayed'));
     await tester.pumpAndSettle();
-    expect(locationOf(router), '/home/tool/weather');
+    expect(locationOf(router), '/home/tool/flights');
 
     // 3. Back returns to the centre, and that row is no longer unread.
     router.go('/home/notifications');
     await tester.pumpAndSettle();
     final LumeNotificationRow row = tester.widget<LumeNotificationRow>(
       find.ancestor(
-        of: find.text('Heavy rain warning'),
+        of: find.text('EK 624 is delayed'),
         matching: find.byType(LumeNotificationRow),
       ),
     );
@@ -308,6 +308,9 @@ void main() {
     await tester.pumpAndSettle();
     expect(find.text('Show previews'), findsOneWidget);
 
+    // Privacy is the preferences' fifth section, below the sheet's fold.
+    await tester.ensureVisible(find.text('Show previews'));
+    await tester.pumpAndSettle();
     await tester.tap(find.text('Show previews'));
     await tester.pumpAndSettle();
     await tester.binding.handlePopRoute();

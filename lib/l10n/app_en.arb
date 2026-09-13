@@ -2633,9 +2633,9 @@
   "@methodUmmAlQura": {
     "description": "Prayer calculation method"
   },
-  "nActComplete": "Mark done",
+  "nActComplete": "Open tasks",
   "@nActComplete": {
-    "description": "Reference: `n.act.complete`."
+    "description": "Reference: `n.act.complete`. It opens the task list; it does not complete anything, whatever its key says."
   },
   "nActPay": "Pay",
   "@nActPay": {
@@ -2657,7 +2657,7 @@
   "@nActViewMarket": {
     "description": "Reference: `n.act.viewMarket`."
   },
-  "nActViewPrayer": "View prayer times",
+  "nActViewPrayer": "View prayer",
   "@nActViewPrayer": {
     "description": "Reference: `n.act.viewPrayer`."
   },
@@ -2665,7 +2665,7 @@
   "@nActViewTrain": {
     "description": "Reference: `n.act.viewTrain`."
   },
-  "nActViewWeather": "View forecast",
+  "nActViewWeather": "View weather",
   "@nActViewWeather": {
     "description": "Reference: `n.act.viewWeather`."
   },
@@ -2676,6 +2676,37 @@
   "nAllRead": "You’re all caught up",
   "@nAllRead": {
     "description": "Reference: `n.allRead`. The centre’s subtitle when nothing is unread."
+  },
+  "nBillBody": "{amount} is past its due date.",
+  "@nBillBody": {
+    "description": "Reference: `n.bill.body`. Shown only when sensitive previews are on.",
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "nBillDueTitle": "{name} is due soon",
+  "@nBillDueTitle": {
+    "description": "Reference: `n.billDue.title`.",
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "nBillPrivate": "A bill is past its due date.",
+  "@nBillPrivate": {
+    "description": "Reference: `n.bill.private`."
+  },
+  "nBillTitle": "{n} bill needs attention",
+  "@nBillTitle": {
+    "description": "Reference: `n.bill.title`. **Not a plural, on purpose** — the reference’s is not, so \"2 bill needs attention\" is what it would say. C52.",
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
   },
   "nCategory": "Category",
   "@nCategory": {
@@ -2693,6 +2724,40 @@
   "nDismiss": "Dismiss",
   "@nDismiss": {
     "description": "Reference: `n.dismiss`. The ✕ on a row, and the banner’s close control."
+  },
+  "nDocBody": "Expires in {n} days, on {date}.",
+  "@nDocBody": {
+    "description": "Reference: `n.doc.body`. Shown only when sensitive previews are on.",
+    "placeholders": {
+      "n": {
+        "type": "int"
+      },
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "nDocPrivate": "A document is expiring soon.",
+  "@nDocPrivate": {
+    "description": "Reference: `n.doc.private`."
+  },
+  "nDocTitle": "Renew your {name}",
+  "@nDocTitle": {
+    "description": "Reference: `n.doc.title`.",
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "nDueInDays": "due in {n} days",
+  "@nDueInDays": {
+    "description": "Reference: the bills tool’s `dueLabel`, which is also what a due bill says while sensitive previews are off. Lower case, as the reference renders it.",
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
   },
   "nEmptyCaughtUp": "You’re all caught up",
   "@nEmptyCaughtUp": {
@@ -2718,9 +2783,44 @@
   "@nExpired": {
     "description": "Reference: `n.expired`. Past the moment it was about."
   },
-  "nFixtureNote": "These are sample alerts. Lume has no notification server in this build, so nothing here was delivered and nothing new will arrive.",
-  "@nFixtureNote": {
-    "description": "Not in the reference. Added because the reference’s own centre is driven by a live engine and this one is a fixture — and a list of alerts that were never delivered must say so rather than implying a delivery that did not happen (§125)."
+  "nFlightBody": "{n} minutes late · now arriving {eta} at {to}",
+  "@nFlightBody": {
+    "description": "Reference: `n.flight.body`. Not a plural in the reference.",
+    "placeholders": {
+      "n": {
+        "type": "int"
+      },
+      "eta": {
+        "type": "String"
+      },
+      "to": {
+        "type": "String"
+      }
+    }
+  },
+  "nFlightTitle": "{no} is delayed",
+  "@nFlightTitle": {
+    "description": "Reference: `n.flight.title`. `{no}` is a flight code and is direction-isolated where it is drawn.",
+    "placeholders": {
+      "no": {
+        "type": "String"
+      }
+    }
+  },
+  "nForecastBody": "High {hi} · Low {lo} · {rain}% Rain",
+  "@nForecastBody": {
+    "description": "Reference: `weather.hilo` joined to `weather.rain` by the forecast source. The reference translates only the last word, so its Urdu reads \"High 36° · Low 27° · 1% بارش\".",
+    "placeholders": {
+      "hi": {
+        "type": "String"
+      },
+      "lo": {
+        "type": "String"
+      },
+      "rain": {
+        "type": "String"
+      }
+    }
   },
   "nGroupBody": "{n, plural, =1{1 more update} other{{n} more updates}}",
   "@nGroupBody": {
@@ -2737,6 +2837,24 @@
     "placeholders": {
       "name": {
         "type": "String"
+      }
+    }
+  },
+  "nHabitBody": "You’re on a {n}-day streak.",
+  "@nHabitBody": {
+    "description": "Reference: `n.habit.body`.",
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
+  "nHabitTitle": "{n} habits left today",
+  "@nHabitTitle": {
+    "description": "Reference: `n.habit.title`. **Not a plural, on purpose** — the reference renders \"1 habits left today\". C52.",
+    "placeholders": {
+      "n": {
+        "type": "int"
       }
     }
   },
@@ -2757,6 +2875,47 @@
   "@nMarkAllRead": {
     "description": "Reference: `n.markAllRead`. Offered only while something is unread."
   },
+  "nMarketBody": "Now {value} on {exchange}.",
+  "@nMarketBody": {
+    "description": "Reference: `n.market.body`.",
+    "placeholders": {
+      "value": {
+        "type": "String"
+      },
+      "exchange": {
+        "type": "String"
+      }
+    }
+  },
+  "nMarketTitle": "{name} moved {pct}",
+  "@nMarketTitle": {
+    "description": "Reference: `n.market.title`. `{pct}` carries its own sign and is direction-isolated.",
+    "placeholders": {
+      "name": {
+        "type": "String"
+      },
+      "pct": {
+        "type": "String"
+      }
+    }
+  },
+  "nMedBody": "Your next dose is at {at}.",
+  "@nMedBody": {
+    "description": "Reference: `n.med.body`. Shown only when sensitive previews are on.",
+    "placeholders": {
+      "at": {
+        "type": "String"
+      }
+    }
+  },
+  "nMedPrivate": "You have a dose due.",
+  "@nMedPrivate": {
+    "description": "Reference: `n.med.private`. What a medication row says while sensitive previews are off — the default."
+  },
+  "nMedTitle": "Time for your medication",
+  "@nMedTitle": {
+    "description": "Reference: `n.med.title`."
+  },
   "nMinsAgo": "{n, plural, =1{1 min ago} other{{n} min ago}}",
   "@nMinsAgo": {
     "description": "Reference: `n.minsAgo`. Under an hour. A plural because Arabic has a dual and a paucal for it.",
@@ -2769,6 +2928,36 @@
   "nNow": "just now",
   "@nNow": {
     "description": "Reference: `n.now`. Under a minute old."
+  },
+  "nOutageTitle": "Power off at {time}",
+  "@nOutageTitle": {
+    "description": "Reference: `n.outage.title`.",
+    "placeholders": {
+      "time": {
+        "type": "String"
+      }
+    }
+  },
+  "nParcelBody": "{carrier} · expected {eta}",
+  "@nParcelBody": {
+    "description": "Reference: `n.parcel.body`.",
+    "placeholders": {
+      "carrier": {
+        "type": "String"
+      },
+      "eta": {
+        "type": "String"
+      }
+    }
+  },
+  "nParcelTitle": "{item} is on its way",
+  "@nParcelTitle": {
+    "description": "Reference: `n.parcel.title`.",
+    "placeholders": {
+      "item": {
+        "type": "String"
+      }
+    }
   },
   "nPriCritical": "Critical",
   "@nPriCritical": {
@@ -2810,9 +2999,47 @@
   "@nQuietTitle": {
     "description": "Reference: `n.quiet.title`."
   },
+  "nRestored": "Dismissed notifications restored",
+  "@nRestored": {
+    "description": "Reference: `n.restored`. The toast after the preferences' Restore dismissed control brings every dismissed row back."
+  },
   "nSettings": "Notification settings",
   "@nSettings": {
     "description": "Reference: `n.settings`. The header action and the trailing row, both of which open the preferences."
+  },
+  "nSettingsSub": "What Lume may tell you, and when",
+  "@nSettingsSub": {
+    "description": "Reference: `n.settingsSub`. The line under the notification preferences sheet's title."
+  },
+  "nSubBody": "In {n} days · {amount}",
+  "@nSubBody": {
+    "description": "Reference: `n.sub.body`. Shown only when sensitive previews are on.",
+    "placeholders": {
+      "n": {
+        "type": "int"
+      },
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "nSubPrivate": "A subscription renews in {n} days.",
+  "@nSubPrivate": {
+    "description": "Reference: `n.sub.private`.",
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
+  "nSubTitle": "{name} renews soon",
+  "@nSubTitle": {
+    "description": "Reference: `n.sub.title`.",
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
   },
   "nTabImportant": "Important",
   "@nTabImportant": {
@@ -2821,6 +3048,45 @@
   "nTabUnread": "Unread",
   "@nTabUnread": {
     "description": "Reference: `n.tab.unread`."
+  },
+  "nTaskNext": "Next: {title}",
+  "@nTaskNext": {
+    "description": "Reference: `notif.taskNext`.",
+    "placeholders": {
+      "title": {
+        "type": "String"
+      }
+    }
+  },
+  "nTasksLeft": "{n} tasks left today",
+  "@nTasksLeft": {
+    "description": "Reference: `notif.tasksLeft`. **Not a plural, on purpose** — C52.",
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
+  "nTrainBody": "{n} minutes behind · next stop {next}",
+  "@nTrainBody": {
+    "description": "Reference: `n.train.body`. Not a plural in the reference.",
+    "placeholders": {
+      "n": {
+        "type": "int"
+      },
+      "next": {
+        "type": "String"
+      }
+    }
+  },
+  "nTrainTitle": "{name} is running late",
+  "@nTrainTitle": {
+    "description": "Reference: `n.train.title`.",
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
   },
   "nUnread": "Unread",
   "@nUnread": {
@@ -2832,6 +3098,15 @@
     "placeholders": {
       "n": {
         "type": "int"
+      }
+    }
+  },
+  "nWeatherTitle": "Tomorrow in {city}",
+  "@nWeatherTitle": {
+    "description": "Reference: `n.weather.title`.",
+    "placeholders": {
+      "city": {
+        "type": "String"
       }
     }
   },
@@ -3035,6 +3310,22 @@
   "notifPrefCategoriesSub": "Switch off anything you don’t want to hear about",
   "@notifPrefCategoriesSub": {
     "description": "Reference: `n.pref.categoriesSub`."
+  },
+  "notifPrefEarlier": "Earlier",
+  "@notifPrefEarlier": {
+    "description": "Reference: `n.pref.earlier`. The quiet-hours stepper's decrement."
+  },
+  "notifPrefFrom": "from",
+  "@notifPrefFrom": {
+    "description": "Reference: `n.pref.from`, lowercase as the reference renders it. The first quiet-hours stepper row."
+  },
+  "notifPrefLater": "Later",
+  "@notifPrefLater": {
+    "description": "Reference: `n.pref.later`. The quiet-hours stepper's increment."
+  },
+  "notifPrefTo": "Until",
+  "@notifPrefTo": {
+    "description": "Reference: `n.pref.to`. The second quiet-hours stepper row."
   },
   "notifPrefGeneral": "General",
   "@notifPrefGeneral": {

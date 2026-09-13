@@ -157,13 +157,19 @@ class _LumeNotificationHostState extends ConsumerState<LumeNotificationHost> {
           ),
         ),
         SliverPadding(
-          padding: const EdgeInsets.fromLTRB(20, 4, 20, 24),
+          // Every block below is a `.sect` and carries its own inset and its
+          // own 24 above. The tabs run edge to edge, so the page cannot pad
+          // them in.
+          padding: const EdgeInsets.only(bottom: 24),
           sliver: SliverToBoxAdapter(
             child: waiting
-                ? const LumeSkeleton(
-                    key: LumeNotificationHost.skeletonKey,
-                    kind: LumeSkeletonKind.row,
-                    count: 4,
+                ? const Padding(
+                    padding: EdgeInsets.fromLTRB(20, 24, 20, 0),
+                    child: LumeSkeleton(
+                      key: LumeNotificationHost.skeletonKey,
+                      kind: LumeSkeletonKind.row,
+                      count: 4,
+                    ),
                   )
                 : LumeNotificationCentre(
                     feed:

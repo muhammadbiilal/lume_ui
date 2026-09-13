@@ -740,7 +740,7 @@ LumeAccountView _notifications(LumeAccountRouteContext c) {
                 rows: <Widget>[
                   for (int i = 0; i < group.value.length; i++)
                     LumeSettingsRow(
-                      title: _typeLabel(l, group.value[i].type),
+                      title: lumeNotificationTypeLabel(l, group.value[i].type),
                       toggle: c.notify.isTypeOn(group.value[i].id),
                       onTap: () => c.actions.toggleType(
                         group.value[i].id,
@@ -826,23 +826,26 @@ LumeAccountView _notifications(LumeAccountRouteContext c) {
   );
 }
 
-String _typeLabel(AppLocalizations l, String type) => switch (type) {
-  'prayerReminder' => l.ntypePrayerReminder,
-  'billOverdue' => l.ntypeBillOverdue,
-  'billDue' => l.ntypeBillDue,
-  'marketMove' => l.ntypeMarketMove,
-  'parcelUpdate' => l.ntypeParcelUpdate,
-  'flightChange' => l.ntypeFlightChange,
-  'trainDelay' => l.ntypeTrainDelay,
-  'severeWeather' => l.ntypeSevereWeather,
-  'forecast' => l.ntypeForecast,
-  'outage' => l.ntypeOutage,
-  'docExpiry' => l.ntypeDocExpiry,
-  'subRenewal' => l.ntypeSubRenewal,
-  'taskReminder' => l.ntypeTaskReminder,
-  'medication' => l.ntypeMedication,
-  _ => l.ntypeHabitReminder,
-};
+/// A notification type's own name, `ntype.*` — shared by this route and the
+/// notification centre's preferences sheet, which show the same list.
+String lumeNotificationTypeLabel(AppLocalizations l, String type) =>
+    switch (type) {
+      'prayerReminder' => l.ntypePrayerReminder,
+      'billOverdue' => l.ntypeBillOverdue,
+      'billDue' => l.ntypeBillDue,
+      'marketMove' => l.ntypeMarketMove,
+      'parcelUpdate' => l.ntypeParcelUpdate,
+      'flightChange' => l.ntypeFlightChange,
+      'trainDelay' => l.ntypeTrainDelay,
+      'severeWeather' => l.ntypeSevereWeather,
+      'forecast' => l.ntypeForecast,
+      'outage' => l.ntypeOutage,
+      'docExpiry' => l.ntypeDocExpiry,
+      'subRenewal' => l.ntypeSubRenewal,
+      'taskReminder' => l.ntypeTaskReminder,
+      'medication' => l.ntypeMedication,
+      _ => l.ntypeHabitReminder,
+    };
 
 String _categoryLabel(AppLocalizations l, String id) => switch (id) {
   'faith' => l.ncatFaith,

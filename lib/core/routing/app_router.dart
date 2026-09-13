@@ -58,6 +58,7 @@ import '../../features/tools/presentation/tools_host.dart';
 import '../../features/gallery/presentation/navigation_gallery.dart';
 import '../../features/onboarding/domain/onboarding_state.dart';
 import '../../features/onboarding/domain/profile_repository.dart';
+import '../../features/notifications/presentation/notification_presenter.dart';
 import '../../features/onboarding/presentation/onboarding_flow.dart';
 import '../../features/shell/presentation/fixture_tool_screen.dart';
 import '../../features/startup/application/startup_controller.dart';
@@ -582,12 +583,18 @@ class _ShellHost extends ConsumerWidget {
         ? -1
         : destinations.indexWhere((LumeDestination d) => d.id == current);
 
-    return LumeShell(
-      destinations: destinations,
-      selectedIndex: selectedIndex,
-      navigationLabel: l.a11yMainNavigation,
-      onSelected: (int index) => _select(destinations[index].id),
-      child: navigationShell,
+    // The banner belongs to the shell, not to a screen: the reference's
+    // `#notifBanner` sits over whatever is showing, and its tick runs for as
+    // long as the shell does.
+    return LumeNotificationPresenter(
+      location: location,
+      child: LumeShell(
+        destinations: destinations,
+        selectedIndex: selectedIndex,
+        navigationLabel: l.a11yMainNavigation,
+        onSelected: (int index) => _select(destinations[index].id),
+        child: navigationShell,
+      ),
     );
   }
 

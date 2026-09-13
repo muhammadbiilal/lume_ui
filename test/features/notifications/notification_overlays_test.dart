@@ -14,16 +14,22 @@ library;
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:lume/app/providers/notification_feed.dart';
 import 'package:lume/app/providers/personalisation.dart';
+import 'package:lume/core/widgets/lume/lume_field.dart';
 import 'package:lume/core/widgets/lume/lume_overlay.dart';
 import 'package:lume/core/widgets/lume/lume_settings.dart';
 import 'package:lume/features/account/data/notification_prefs_store.dart';
+import 'package:lume/features/account/domain/notification_prefs.dart';
+import 'package:lume/features/notifications/data/notification_fixtures.dart';
 import 'package:lume/features/notifications/domain/notification_model.dart';
 import 'package:lume/features/notifications/presentation/notification_banner.dart';
 import 'package:lume/features/notifications/presentation/notification_sheets.dart';
+import 'package:lume/l10n/app_localizations.dart';
 
 import '../../helpers/load_fonts.dart';
 import '../../helpers/lume_harness.dart';
+import '../destinations/destination_harness.dart';
 
 const LumeNotification kAlert = LumeNotification(
   id: 'weather.alert#0',
@@ -302,6 +308,7 @@ void main() {
     Future<LumeMemoryNotificationPrefs> openPrefs(
       WidgetTester tester, {
       Locale locale = const Locale('en'),
+      List<Override> extra = const <Override>[],
     }) async {
       final LumeMemoryNotificationPrefs store = LumeMemoryNotificationPrefs();
       await pumpLume(
@@ -318,6 +325,7 @@ void main() {
         locale: locale,
         overrides: <Override>[
           notificationPrefsProvider.overrideWithValue(store),
+          ...extra,
         ],
       );
       await tester.tap(find.text('open'));
@@ -325,14 +333,96 @@ void main() {
       return store;
     }
 
-    testWidgets('is the same three switches and the same categories', (
+    testWidgets('the quiet hours step by the hour, round the clock', (
+      WidgetTester tester,
+    ) async {
+      final LumeMemoryNotificationPrefs store = await openPrefs(tester);
+      expect(store.prefs.quietFrom, 22);
+      expect(store.prefs.quietTo, 7);
+
+      await tester.ensureVisible(find.byType(LumeStepper).first);
+      await tester.pumpAndSettle();
+      // `((h + 1) + 24) % 24` — past eleven at night is midnight, not 24.
+      for (final int want in <int>[23, 0]) {
+        await tester.tap(find.bySemanticsLabel('Later from'));
+        await tester.pumpAndSettle();
+        expect(store.prefs.quietFrom, want);
+      }
+      await tester.tap(find.bySemanticsLabel('Earlier Until'));
+      await tester.pumpAndSettle();
+      expect(store.prefs.quietTo, 6);
+    });
+
+    testWidgets('Restore dismissed brings every dismissed row back', (
+      WidgetTester tester,
+    ) async {
+      final DateTime now = DateTime(2026, 9, 7, 16, 41);
+      final LumeFixtureNotificationRepository feed =
+          LumeFixtureNotificationRepository(
+            eligibility: kEligibility,
+            user: LumeUsers.defaultPk,
+            l: lookupAppLocalizations(const Locale('en')),
+            readPrefs: () => const LumeNotificationPrefs(),
+          );
+      final String gone = (await feed.feed(now: now)).all.first.id;
+      await feed.dismiss(gone);
+      expect(
+        (await feed.feed(now: now)).all.map((LumeNotification n) => n.id),
+        isNot(contains(gone)),
+      );
+
+      await openPrefs(
+        tester,
+        extra: <Override>[notificationFeedProvider.overrideWithValue(feed)],
+      );
+      final Finder restore = find.byKey(LumeNotificationPrefsSheet.restoreKey);
+      await tester.ensureVisible(restore);
+      await tester.pumpAndSettle();
+      await tester.tap(restore);
+      await tester.pumpAndSettle();
+
+      expect(
+        (await feed.feed(now: now)).all.map((LumeNotification n) => n.id),
+        contains(gone),
+      );
+      expect(find.text('Dismissed notifications restored'), findsOneWidget);
+
+      // Past the toast's own life, so nothing is left running.
+      await tester.pump(const Duration(seconds: 6));
+      await tester.pumpAndSettle();
+    });
+
+    testWidgets('is the reference’s five sections, under its own head', (
       WidgetTester tester,
     ) async {
       await openPrefs(tester);
       expect(find.text('Notification settings'), findsWidgets);
-      expect(find.text('In-app notifications'), findsOneWidget);
-      expect(find.text('Show previews'), findsOneWidget);
-      expect(find.text('Preview sensitive content'), findsOneWidget);
+      expect(find.text('What Lume may tell you, and when'), findsOneWidget);
+      // `renderNotifPrefs`, in order: General, Categories, By tool, Quiet
+      // hours, Privacy — and the control that brings dismissed rows back.
+      for (final String head in <String>[
+        'General',
+        'Categories',
+        'By tool',
+        'Privacy',
+        'Restore dismissed',
+      ]) {
+        expect(find.text(head), findsWidgets, reason: head);
+      }
+      expect(find.text('Quiet hours'), findsWidgets);
+      for (final String row in <String>[
+        'Push notifications',
+        'In-app notifications',
+        'Sound',
+        'Vibration',
+        'Badge count',
+        'Show previews',
+        'Preview sensitive content',
+        'from',
+        'Until',
+      ]) {
+        expect(find.text(row), findsOneWidget, reason: row);
+      }
     });
 
     testWidgets('a switch writes to the record the centre reads', (
@@ -341,11 +431,13 @@ void main() {
       final LumeMemoryNotificationPrefs store = await openPrefs(tester);
       expect(store.prefs.preview, isTrue);
 
-      await tester.tap(
-        find.byWidgetPredicate(
-          (Widget w) => w is LumeSettingsRow && w.title == 'Show previews',
-        ),
+      // Privacy is the fifth section, below the fold of the sheet.
+      final Finder previews = find.byWidgetPredicate(
+        (Widget w) => w is LumeSettingsRow && w.title == 'Show previews',
       );
+      await tester.ensureVisible(previews);
+      await tester.pumpAndSettle();
+      await tester.tap(previews);
       await tester.pumpAndSettle();
       expect(store.prefs.preview, isFalse);
     });
@@ -369,11 +461,12 @@ void main() {
       WidgetTester tester,
     ) async {
       final LumeMemoryNotificationPrefs store = await openPrefs(tester);
-      await tester.tap(
-        find.byWidgetPredicate(
-          (Widget w) => w is LumeSettingsRow && w.title == 'Show previews',
-        ),
+      final Finder previews = find.byWidgetPredicate(
+        (Widget w) => w is LumeSettingsRow && w.title == 'Show previews',
       );
+      await tester.ensureVisible(previews);
+      await tester.pumpAndSettle();
+      await tester.tap(previews);
       await tester.pumpAndSettle();
       await tester.tap(find.bySemanticsLabel('Close'));
       await tester.pumpAndSettle();

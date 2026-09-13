@@ -1,30 +1,29 @@
 /// The notification feed, as a deterministic fixture.
 ///
 /// **Nothing here was delivered.** The reference's engine builds each row from
-/// a live tool context — prayer times, bill balances, an exchange's indices —
-/// and those tools are not converted yet. So this carries the reference's own
-/// fifteen sources with fixed, sample content, and the centre says out loud
-/// that it is sample content (`nFixtureNote`). A list of alerts that were
-/// never sent must not imply that they were (§125).
+/// a live tool context, and those tools are not converted yet. So this carries
+/// the rows the reference *renders* at the fixture instant, read off the
+/// running prototype with `probe_notifications.mjs` rather than written by
+/// hand, with every value labelled fixture-only.
 ///
-/// What it does reproduce exactly is the part that is about the reader rather
-/// than about the data:
+/// What it reproduces exactly is the part that is about the reader:
 ///
 /// * **eligibility** — a source whose tool this reader cannot see is not
-///   built, so a faith-gated or country-gated alert is absent rather than
-///   filtered (§64);
-/// * **preferences** — a category switched off, or a type switched off,
-///   removes its rows;
-/// * **privacy** — with previews off every body becomes "Content hidden";
-///   with sensitive previews off, a sensitive source's body becomes its own
+///   built, so a country-gated alert is absent rather than filtered (§64).
+///   Pakistan renders thirteen rows; London renders ten;
+/// * **preferences** — a category or a type switched off removes its rows;
+/// * **privacy** — previews off turns every body into "Content hidden";
+///   sensitive previews off turns a *sensitive source's* body into its own
 ///   discreet line. The detail never reaches the widget layer;
-/// * **order** — expired last, then priority descending, then age ascending;
-/// * **folding** — three or more rows of one event become the first plus a
-///   summary.
+/// * **order** — expired last, then rank, then age — with the reference's
+///   own rank, in which low counts as normal (C54);
+/// * **folding** — three rows of one source fold. The reference cannot reach
+///   it (each source builds one row), so no fixture does either; the rule is
+///   kept as a contract and tested as a function.
 ///
-/// Ages are minutes *before the injected clock*, exactly as the reference
-/// anchors them to when Lume started — so "18 min ago" is a fact about the
-/// clock rather than a literal.
+/// Two sources the reference declares do not build at the fixture instant:
+/// the next prayer is more than 45 minutes away, and there is no weather
+/// alert. They are absent here for the same reason.
 library;
 
 import '../../../l10n/app_localizations.dart';
@@ -33,12 +32,15 @@ import '../../catalogue/domain/eligibility.dart';
 import '../../catalogue/domain/lume_feature.dart';
 import '../domain/notification_model.dart';
 
-/// One row of sample content for a source in `kNotificationSources`.
+/// Resolves a row's text for a reader, in their language.
+typedef LumeNotificationText =
+    String Function(AppLocalizations l, LumeUserContext user);
+
+/// One rendered row, for a source in `kNotificationSources`.
 ///
-/// **Every field is fixture-only.** The Dayroz obligation is one row per
-/// source in `docs/conversion_archive/CROSS_CUTTING_INVENTORY.md`: the title
-/// and body come from the tool's own live context, and the age from the
-/// event's real timestamp.
+/// **Every value is fixture-only.** The Dayroz obligation for each is the
+/// tool's own live context: the flight's real delay, the bill's real amount,
+/// the event's real timestamp. The sentences are the reference's keys.
 class LumeNotificationSample {
   const LumeNotificationSample({
     required this.sourceId,
@@ -49,183 +51,268 @@ class LumeNotificationSample {
     this.privateBody,
     this.actionKey,
     this.expiresMinutes,
-    this.groupId,
+    this.builds,
   });
 
   /// The `kNotificationSources` id this stands for.
   final String sourceId;
 
-  final String title;
+  final LumeNotificationText title;
 
-  /// What the row says when previews are on.
-  final String body;
+  /// What the row says when every preview is on.
+  final LumeNotificationText body;
 
-  /// What a *sensitive* source says when sensitive previews are off. The
-  /// reference calls it `bodyPrivate`: it reports that something changed
-  /// without reporting what.
-  final String? privateBody;
+  /// What a sensitive source says while sensitive previews are off — the
+  /// reference's `bodyPrivate`. `null` for a source that has none.
+  final LumeNotificationText? privateBody;
 
-  /// Minutes before the injected clock.
+  /// Minutes before the fixture instant. The reference anchors ages to when
+  /// Lume started; with its clock frozen these are the source's own `ago`.
   final int agoMinutes;
 
   final LumeNotificationPriority priority;
 
-  /// Which localised verb the row's own button reads, if it has one.
+  /// Which `n.act.*` verb the row's own button reads, if it has one.
   final String? actionKey;
 
   /// How long after its event the row stops asking to be acted on.
   final int? expiresMinutes;
 
-  /// Rows sharing one id are updates of one event and fold when there are
-  /// three or more.
-  final String? groupId;
+  /// Whether the source builds a row for this reader at all — the reference's
+  /// `build` returning `null`. `null` means it always does.
+  ///
+  /// This is not eligibility: a tool the reader can see may still have
+  /// nothing to say. Markets is global, and speaks only when the reader's own
+  /// exchange moved enough.
+  final bool Function(LumeUserContext user)? builds;
 }
 
-/// The reference's fifteen, with sample content.
+/// The lead index of each exchange the reference knows, fixture-only:
+/// `EXCHANGES[code].indices[0]` in `tool-data.js`.
 ///
-/// Ages and priorities are the reference's own (`notify-engine.js`,
-/// `SOURCES`); the sentences are this fixture's, because the live ones do not
-/// exist until the tools do.
-const List<LumeNotificationSample> kNotificationSamples =
+/// A country with no entry has no exchange (`GLOBAL`), so no market row.
+typedef LumeLeadIndex = ({
+  String name,
+  double pct,
+  String value,
+  String exchange,
+});
+
+const Map<String, LumeLeadIndex> kLeadIndices = <String, LumeLeadIndex>{
+  'PK': (
+    name: 'KSE-100',
+    pct: 0.82,
+    value: '154,230.42',
+    exchange: 'Pakistan Stock Exchange',
+  ),
+  'US': (
+    name: 'S&P 500',
+    pct: 0.42,
+    value: '5,812.44',
+    exchange: 'Nasdaq · NYSE',
+  ),
+  'GB': (
+    name: 'FTSE 100',
+    pct: 0.38,
+    value: '8,288.60',
+    exchange: 'London Stock Exchange',
+  ),
+  'AE': (
+    name: 'DFM General',
+    pct: 0.40,
+    value: '4,622.18',
+    exchange: 'Dubai Financial Market',
+  ),
+  'SA': (
+    name: 'TASI',
+    pct: 0.53,
+    value: '11,844.20',
+    exchange: 'Saudi Exchange',
+  ),
+  'IN': (
+    name: 'NIFTY 50',
+    pct: 0.49,
+    value: '24,188.65',
+    exchange: 'National Stock Exchange',
+  ),
+};
+
+/// `if (!ix || Math.abs(ix.pct) < 0.5) return null;`
+const double kMarketMoveThreshold = 0.5;
+
+LumeLeadIndex? _moved(LumeUserContext u) {
+  final LumeLeadIndex? ix = kLeadIndices[u.country];
+  if (ix == null || ix.pct.abs() < kMarketMoveThreshold) return null;
+  return ix;
+}
+
+/// Tomorrow's forecast, as the reference renders it in each market's own
+/// units — read off the running prototype with `probe_notifications.mjs`
+/// (`muslim_pk`, `muslim_gb`, `default_us`). Fixture-only.
+///
+/// A market the probe has no state for reads Pakistan's, and says nothing
+/// about its own sky; the Dayroz obligation is the weather tool's live
+/// forecast.
+typedef LumeForecast = ({String hi, String lo, String rain});
+
+const Map<String, LumeForecast> kTomorrowForecasts = <String, LumeForecast>{
+  'PK': (hi: '36°', lo: '27°', rain: '1'),
+  'GB': (hi: '25°', lo: '17°', rain: '10'),
+  'US': (hi: '84°', lo: '68°', rain: '50'),
+};
+
+String _signedPct(double pct) =>
+    '${pct >= 0 ? '+' : ''}${pct.toStringAsFixed(2)}%';
+
+/// The thirteen rows the reference renders for a reader in Pakistan, in the
+/// order its engine declares their sources.
+final List<LumeNotificationSample> kNotificationSamples =
     <LumeNotificationSample>[
       LumeNotificationSample(
-        sourceId: 'prayer.next',
-        title: 'Asr is coming up',
-        body: 'Asr at 4:52 PM · in 22 minutes',
-        agoMinutes: 0,
-        actionKey: 'viewPrayer',
-        expiresMinutes: 60,
-      ),
-      LumeNotificationSample(
-        sourceId: 'meds.dose',
-        title: 'Time for a dose',
-        body: 'Metformin · 500 mg with food',
-        privateBody: 'A medication reminder is due',
-        agoMinutes: 8,
+        sourceId: 'bills.overdue',
+        title: (AppLocalizations l, LumeUserContext u) => l.nBillTitle(1),
+        body: (AppLocalizations l, LumeUserContext u) =>
+            l.nBillBody('Rs 7,920'),
+        privateBody: (AppLocalizations l, LumeUserContext u) => l.nBillPrivate,
+        agoMinutes: 180,
         priority: LumeNotificationPriority.high,
-        expiresMinutes: 240,
+        actionKey: 'pay',
       ),
       LumeNotificationSample(
-        sourceId: 'loadshed.next',
-        title: 'Load-shedding at 6:00 PM',
-        body: 'Gulshan-e-Iqbal · about 2 hours',
-        agoMinutes: 12,
+        sourceId: 'bills.due',
+        title: (AppLocalizations l, LumeUserContext u) =>
+            l.nBillDueTitle('Electricity'),
+        body: (AppLocalizations l, LumeUserContext u) =>
+            '${l.nDueInDays(4)} · Rs 20,900',
+        privateBody: (AppLocalizations l, LumeUserContext u) => l.nDueInDays(4),
+        agoMinutes: 640,
+        actionKey: 'pay',
+      ),
+      LumeNotificationSample(
+        sourceId: 'markets.move',
+        // Only the reader's own exchange, and only past half a percent:
+        // Pakistan (+0.82%) and Saudi Arabia (+0.53%) build; London, New York,
+        // Dubai and Mumbai do not.
+        builds: (LumeUserContext u) => _moved(u) != null,
+        title: (AppLocalizations l, LumeUserContext u) =>
+            l.nMarketTitle(_moved(u)!.name, _signedPct(_moved(u)!.pct)),
+        body: (AppLocalizations l, LumeUserContext u) =>
+            l.nMarketBody(_moved(u)!.value, _moved(u)!.exchange),
+        agoMinutes: 2,
+        actionKey: 'viewMarket',
       ),
       LumeNotificationSample(
         sourceId: 'parcel.transit',
-        title: 'Your parcel is out for delivery',
-        body: 'TCS · arriving today',
+        title: (AppLocalizations l, LumeUserContext u) =>
+            l.nParcelTitle('Keyboard'),
+        body: (AppLocalizations l, LumeUserContext u) =>
+            l.nParcelBody('TCS', 'Today, by 18:00'),
         agoMinutes: 18,
         actionKey: 'track',
       ),
       LumeNotificationSample(
         sourceId: 'flights.delay',
-        title: 'PK-301 is delayed',
-        body: 'Now departing 7:40 PM · gate 14',
+        title: (AppLocalizations l, LumeUserContext u) =>
+            l.nFlightTitle('EK 624'),
+        body: (AppLocalizations l, LumeUserContext u) =>
+            l.nFlightBody(17, '08:22', 'Islamabad Intl'),
         agoMinutes: 34,
         priority: LumeNotificationPriority.high,
         actionKey: 'viewFlight',
       ),
       LumeNotificationSample(
         sourceId: 'trains.delay',
-        title: 'Green Line is running late',
-        body: 'About 35 minutes behind',
+        title: (AppLocalizations l, LumeUserContext u) =>
+            l.nTrainTitle('Tezgam Express'),
+        body: (AppLocalizations l, LumeUserContext u) =>
+            l.nTrainBody(35, 'Khanewal Junction'),
         agoMinutes: 52,
         actionKey: 'viewTrain',
       ),
       LumeNotificationSample(
-        sourceId: 'weather.alert',
-        title: 'Heavy rain warning',
-        body: 'Karachi · this evening',
-        agoMinutes: 96,
-        priority: LumeNotificationPriority.critical,
-        actionKey: 'viewWeather',
-        expiresMinutes: 720,
-      ),
-      LumeNotificationSample(
-        sourceId: 'bills.overdue',
-        title: '2 bills are overdue',
-        body: 'Rs 8,400 outstanding',
-        privateBody: 'Some bills need attention',
-        agoMinutes: 180,
-        priority: LumeNotificationPriority.high,
-        actionKey: 'pay',
-      ),
-      LumeNotificationSample(
-        sourceId: 'todos.today',
-        title: '3 tasks left today',
-        body: 'Next: pick up groceries',
-        agoMinutes: 200,
-        actionKey: 'complete',
-        expiresMinutes: 720,
-      ),
-      LumeNotificationSample(
         sourceId: 'weather.tomorrow',
-        title: 'Tomorrow in Karachi',
-        body: '34° / 27° · clear',
+        // The reader's own city, as the reference's `P().city` — so London
+        // reads "Tomorrow in London".
+        title: (AppLocalizations l, LumeUserContext u) =>
+            l.nWeatherTitle(u.city),
+        // Tomorrow's forecast is seeded by country in the reference
+        // (`D.daily(base.temp, country)`) and formatted in the reader's units,
+        // so each market reads its own — New York in Fahrenheit.
+        body: (AppLocalizations l, LumeUserContext u) {
+          final LumeForecast f =
+              kTomorrowForecasts[u.country] ?? kTomorrowForecasts['PK']!;
+          return l.nForecastBody(f.hi, f.lo, f.rain);
+        },
         agoMinutes: 300,
         priority: LumeNotificationPriority.low,
         expiresMinutes: 900,
       ),
       LumeNotificationSample(
-        sourceId: 'habits.streak',
-        title: 'Water · 4 days running',
-        body: 'One more glass keeps it going',
-        agoMinutes: 420,
-        priority: LumeNotificationPriority.low,
-        expiresMinutes: 600,
-      ),
-      LumeNotificationSample(
-        sourceId: 'bills.due',
-        title: 'K-Electric is due soon',
-        body: 'Due Friday · Rs 5,100',
-        privateBody: 'Due Friday',
-        agoMinutes: 640,
-        actionKey: 'pay',
-      ),
-      LumeNotificationSample(
-        sourceId: 'subs.renewal',
-        title: 'A subscription renews tomorrow',
-        body: 'Spotify · Rs 499 monthly',
-        privateBody: 'A subscription renews tomorrow',
-        agoMinutes: 720,
+        sourceId: 'loadshed.next',
+        title: (AppLocalizations l, LumeUserContext u) =>
+            l.nOutageTitle('19:00'),
+        // `ls.area + ' · ' + ls.slot.duration` — data, not a sentence, in the
+        // reference too.
+        body: (AppLocalizations l, LumeUserContext u) => 'Islamabad · 1h',
+        agoMinutes: 12,
       ),
       LumeNotificationSample(
         sourceId: 'documents.expiring',
-        title: 'Your passport expires in 30 days',
-        body: 'Renew before 13 October',
-        privateBody: 'A document needs attention',
+        title: (AppLocalizations l, LumeUserContext u) =>
+            l.nDocTitle('Driving Licence'),
+        body: (AppLocalizations l, LumeUserContext u) =>
+            l.nDocBody(25, '3 Oct 2025'),
+        privateBody: (AppLocalizations l, LumeUserContext u) => l.nDocPrivate,
         agoMinutes: 1440,
         priority: LumeNotificationPriority.high,
         actionKey: 'viewDoc',
       ),
-      // Three updates of one event, so the folding rule has something to
-      // fold. The reference folds at three.
       LumeNotificationSample(
-        sourceId: 'markets.move',
-        title: 'KSE-100 is up 0.8%',
-        body: '78,412 · Pakistan Stock Exchange',
-        agoMinutes: 2,
-        actionKey: 'viewMarket',
-        groupId: 'markets.kse',
+        sourceId: 'subs.renewal',
+        title: (AppLocalizations l, LumeUserContext u) =>
+            l.nSubTitle('Netflix'),
+        body: (AppLocalizations l, LumeUserContext u) =>
+            l.nSubBody(6, 'Rs 2,550'),
+        privateBody: (AppLocalizations l, LumeUserContext u) =>
+            l.nSubPrivate(6),
+        agoMinutes: 720,
       ),
       LumeNotificationSample(
-        sourceId: 'markets.move',
-        title: 'KSE-100 is up 1.1%',
-        body: '78,655 · Pakistan Stock Exchange',
-        agoMinutes: 14,
-        actionKey: 'viewMarket',
-        groupId: 'markets.kse',
+        sourceId: 'todos.today',
+        title: (AppLocalizations l, LumeUserContext u) => l.nTasksLeft(4),
+        body: (AppLocalizations l, LumeUserContext u) =>
+            l.nTaskNext('Send the quarterly summary'),
+        agoMinutes: 200,
+        actionKey: 'complete',
+        expiresMinutes: 720,
       ),
       LumeNotificationSample(
-        sourceId: 'markets.move',
-        title: 'KSE-100 is up 0.4%',
-        body: '78,120 · Pakistan Stock Exchange',
-        agoMinutes: 26,
-        actionKey: 'viewMarket',
-        groupId: 'markets.kse',
+        sourceId: 'meds.dose',
+        title: (AppLocalizations l, LumeUserContext u) => l.nMedTitle,
+        body: (AppLocalizations l, LumeUserContext u) => l.nMedBody('8:00 pm'),
+        privateBody: (AppLocalizations l, LumeUserContext u) => l.nMedPrivate,
+        agoMinutes: 8,
+        priority: LumeNotificationPriority.high,
+        expiresMinutes: 240,
+      ),
+      LumeNotificationSample(
+        sourceId: 'habits.streak',
+        title: (AppLocalizations l, LumeUserContext u) => l.nHabitTitle(1),
+        body: (AppLocalizations l, LumeUserContext u) => l.nHabitBody(12),
+        agoMinutes: 420,
+        priority: LumeNotificationPriority.low,
+        expiresMinutes: 600,
       ),
     ];
+
+/// The reference's rank: `PRIORITY[src.priority] || 1`.
+///
+/// `PRIORITY.low` is `0`, and `0 || 1` is `1` — so a low row sorts as though
+/// it were normal. That is why "Tomorrow" and the habit reminder render above
+/// the due bill and the subscription. Reproduced, not repaired (C54): the
+/// Important filter still asks for rank two and above, which low never
+/// reaches either way.
+int lumeReferenceRank(LumeNotificationPriority p) => p.rank == 0 ? 1 : p.rank;
 
 /// The feed, for as long as the process lives.
 class LumeFixtureNotificationRepository
@@ -235,23 +322,19 @@ class LumeFixtureNotificationRepository
     required this.user,
     required this.l,
     required this.readPrefs,
-    this.samples = kNotificationSamples,
+    List<LumeNotificationSample>? samples,
     this.quietHours = false,
     this.pushEnabled = false,
     this.failWith,
     this.delay = Duration.zero,
-  });
+  }) : samples = samples ?? kNotificationSamples;
 
   final LumeEligibility eligibility;
   final LumeUserContext user;
   final AppLocalizations l;
 
-  /// The preferences, *asked for* rather than held.
-  ///
-  /// A snapshot taken when the repository was built would be stale the moment
-  /// the reader switched a category off — and they can do that from the
-  /// preferences sheet without this being rebuilt. The record is read at the
-  /// moment it is needed, from the same store the account route writes.
+  /// The preferences, *asked for* rather than held, from the same store the
+  /// account's Notifications route and the preferences sheet write.
   final LumeNotificationPrefs Function() readPrefs;
 
   final List<LumeNotificationSample> samples;
@@ -267,10 +350,15 @@ class LumeFixtureNotificationRepository
   final Set<String> _read = <String>{};
   final Set<String> _dismissed = <String>{};
 
+  /// What has been presented, through any surface. Nondurable, like the
+  /// rest: a restart presents the first banner again, where the reference
+  /// remembers it in the profile.
+  final Set<String> _presented = <String>{};
+
   @override
   bool get isDurable => false;
 
-  /// Three or more rows of one event fold at [foldAt].
+  /// Three or more rows of one source fold at [foldAt].
   static const int foldAt = 3;
 
   LumeNotificationSource? _sourceOf(String id) {
@@ -299,49 +387,45 @@ class LumeFixtureNotificationRepository
   /// `bodyFor(src, made)` — what the row is allowed to say.
   String _body(
     LumeNotificationSample s,
-    LumeNotificationCategory? cat,
+    LumeNotificationSource src,
     LumeNotificationPrefs prefs,
   ) {
     if (!prefs.preview) return l.nHidden;
-    final bool sensitive = cat?.sensitive ?? false;
-    if (sensitive && !prefs.sensitivePreview && s.privateBody != null) {
-      return s.privateBody!;
+    if (src.sensitive && !prefs.sensitivePreview && s.privateBody != null) {
+      return s.privateBody!(l, user);
     }
-    return s.body;
+    return s.body(l, user);
   }
 
-  @override
-  Future<LumeNotificationFeed> feed({required DateTime now}) async {
-    if (delay > Duration.zero) await Future<void>.delayed(delay);
-    if (failWith != null) throw LumeNotificationException(failWith!);
-
+  /// Every row this reader may see, ordered. No clock is read: ages are the
+  /// fixture's own, relative to the fixture instant.
+  List<LumeNotification> _build() {
     final LumeNotificationPrefs prefs = readPrefs();
     final List<LumeNotification> out = <LumeNotification>[];
     for (int i = 0; i < samples.length; i++) {
       final LumeNotificationSample s = samples[i];
       final LumeNotificationSource? src = _sourceOf(s.sourceId);
       if (src == null || !_allowed(src, prefs)) continue;
+      if (s.builds != null && !s.builds!(user)) continue;
 
       final String id = '${s.sourceId}#$i';
       if (_dismissed.contains(id)) continue;
 
       final LumeNotificationCategory? cat = _categoryOf(src.category);
-      final bool expired =
-          s.expiresMinutes != null && s.agoMinutes > s.expiresMinutes!;
-
       out.add(
         LumeNotification(
           id: id,
-          title: s.title,
-          body: _body(s, cat, prefs),
+          title: s.title(l, user),
+          body: _body(s, src, prefs),
           category: src.category,
           icon: cat?.icon ?? 'bell',
           tool: src.tool,
           agoMinutes: s.agoMinutes,
           priority: s.priority,
           read: _read.contains(id),
-          expired: expired,
-          groupId: s.groupId ?? id,
+          expired: s.expiresMinutes != null && s.agoMinutes > s.expiresMinutes!,
+          // `groupId: src.id` — a group is repetition of one source.
+          groupId: s.sourceId,
           action: s.actionKey == null
               ? null
               : LumeNotificationAction(labelKey: s.actionKey!, tool: src.tool),
@@ -349,18 +433,23 @@ class LumeFixtureNotificationRepository
       );
     }
 
-    // Expired last, then priority descending, then age ascending. Priority
-    // outranking recency is the whole point: an important row must not fall
-    // off the bottom because three ordinary ones arrived.
     out.sort((LumeNotification a, LumeNotification b) {
       if (a.expired != b.expired) return a.expired ? 1 : -1;
-      final int byPriority = b.priority.rank.compareTo(a.priority.rank);
-      if (byPriority != 0) return byPriority;
+      final int byRank = lumeReferenceRank(
+        b.priority,
+      ).compareTo(lumeReferenceRank(a.priority));
+      if (byRank != 0) return byRank;
       return a.agoMinutes.compareTo(b.agoMinutes);
     });
+    return List<LumeNotification>.unmodifiable(out);
+  }
 
+  @override
+  Future<LumeNotificationFeed> feed({required DateTime now}) async {
+    if (delay > Duration.zero) await Future<void>.delayed(delay);
+    if (failWith != null) throw LumeNotificationException(failWith!);
     return LumeNotificationFeed(
-      all: List<LumeNotification>.unmodifiable(out),
+      all: _build(),
       quietHours: quietHours,
       pushEnabled: pushEnabled,
     );
@@ -371,21 +460,35 @@ class LumeFixtureNotificationRepository
 
   @override
   Future<void> markAllRead() async {
-    final LumeNotificationFeed f = await feed(now: DateTime.now());
-    for (final LumeNotification n in f.all) {
+    for (final LumeNotification n in _build()) {
       _read.add(n.id);
     }
   }
 
   @override
   Future<void> dismiss(String id) async => _dismissed.add(id);
+
+  @override
+  Future<LumeNotification?> nextToPresent({required DateTime now}) async {
+    if (failWith != null) throw LumeNotificationException(failWith!);
+    for (final LumeNotification n in _build()) {
+      if (!n.read && !n.expired && !_presented.contains(n.id)) return n;
+    }
+    return null;
+  }
+
+  @override
+  Future<void> markPresented(String id) async => _presented.add(id);
+
+  @override
+  Future<void> restoreAll() async => _dismissed.clear();
 }
 
-/// Fold three or more updates of one event into the first plus a summary.
+/// Fold three or more rows of one source into the first plus a summary.
 ///
-/// `grouped(rows)` in the reference. Unrelated events are never folded
-/// together, and the summary is marked read only when every row it stands
-/// for has been.
+/// `grouped(rows)` in the reference. **Unreachable from every fixture**, as it
+/// is in the reference, where each source builds at most one row; kept because
+/// a live engine can produce repeats, and tested as a function.
 List<LumeNotification> foldNotifications(
   List<LumeNotification> rows,
   AppLocalizations l,

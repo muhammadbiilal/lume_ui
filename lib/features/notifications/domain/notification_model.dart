@@ -239,6 +239,34 @@ abstract interface class LumeNotificationRepository {
 
   /// One row, gone from the list.
   Future<void> dismiss(String id);
+
+  /// The next thing nobody has been told about — unread, unexpired, and not
+  /// yet presented through any surface — or `null`. `nextToPresent` in the
+  /// reference's engine, which takes the first of the ordered list.
+  Future<LumeNotification?> nextToPresent({required DateTime now});
+
+  /// Never offer [id] again, whichever surface it went to: an event reaches
+  /// the reader through exactly one.
+  Future<void> markPresented(String id);
+
+  /// Every dismissed row, back — `restoreAll`, behind the preferences'
+  /// "Restore dismissed".
+  Future<void> restoreAll();
+}
+
+/// `mayInterrupt(n)` — whether an event is worth a banner over what the
+/// reader is doing.
+///
+/// Never while in-app notifications are off. Otherwise, important and above;
+/// inside quiet hours, only critical. Everything else waits in the centre,
+/// which is a surface too.
+bool lumeMayInterrupt(
+  LumeNotification n, {
+  required bool inApp,
+  required bool quietHours,
+}) {
+  if (!inApp) return false;
+  return n.priority.rank >= (quietHours ? 3 : 2);
 }
 
 /// Whether what is behind the feed survives a restart. `false` for every

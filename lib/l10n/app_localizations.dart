@@ -3616,10 +3616,10 @@ abstract class AppLocalizations {
   /// **'Umm al-Qura'**
   String get methodUmmAlQura;
 
-  /// Reference: `n.act.complete`.
+  /// Reference: `n.act.complete`. It opens the task list; it does not complete anything, whatever its key says.
   ///
   /// In en, this message translates to:
-  /// **'Mark done'**
+  /// **'Open tasks'**
   String get nActComplete;
 
   /// Reference: `n.act.pay`.
@@ -3655,7 +3655,7 @@ abstract class AppLocalizations {
   /// Reference: `n.act.viewPrayer`.
   ///
   /// In en, this message translates to:
-  /// **'View prayer times'**
+  /// **'View prayer'**
   String get nActViewPrayer;
 
   /// Reference: `n.act.viewTrain`.
@@ -3667,7 +3667,7 @@ abstract class AppLocalizations {
   /// Reference: `n.act.viewWeather`.
   ///
   /// In en, this message translates to:
-  /// **'View forecast'**
+  /// **'View weather'**
   String get nActViewWeather;
 
   /// Reference: `n.actioned`. A row that has been acted on stays in history and stops asking.
@@ -3681,6 +3681,30 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'You’re all caught up'**
   String get nAllRead;
+
+  /// Reference: `n.bill.body`. Shown only when sensitive previews are on.
+  ///
+  /// In en, this message translates to:
+  /// **'{amount} is past its due date.'**
+  String nBillBody(String amount);
+
+  /// Reference: `n.billDue.title`.
+  ///
+  /// In en, this message translates to:
+  /// **'{name} is due soon'**
+  String nBillDueTitle(String name);
+
+  /// Reference: `n.bill.private`.
+  ///
+  /// In en, this message translates to:
+  /// **'A bill is past its due date.'**
+  String get nBillPrivate;
+
+  /// Reference: `n.bill.title`. **Not a plural, on purpose** — the reference’s is not, so "2 bill needs attention" is what it would say. C52.
+  ///
+  /// In en, this message translates to:
+  /// **'{n} bill needs attention'**
+  String nBillTitle(int n);
 
   /// Reference: `n.category`. The filter bar’s own label.
   ///
@@ -3699,6 +3723,30 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Dismiss'**
   String get nDismiss;
+
+  /// Reference: `n.doc.body`. Shown only when sensitive previews are on.
+  ///
+  /// In en, this message translates to:
+  /// **'Expires in {n} days, on {date}.'**
+  String nDocBody(int n, String date);
+
+  /// Reference: `n.doc.private`.
+  ///
+  /// In en, this message translates to:
+  /// **'A document is expiring soon.'**
+  String get nDocPrivate;
+
+  /// Reference: `n.doc.title`.
+  ///
+  /// In en, this message translates to:
+  /// **'Renew your {name}'**
+  String nDocTitle(String name);
+
+  /// Reference: the bills tool’s `dueLabel`, which is also what a due bill says while sensitive previews are off. Lower case, as the reference renders it.
+  ///
+  /// In en, this message translates to:
+  /// **'due in {n} days'**
+  String nDueInDays(int n);
 
   /// Reference: `n.empty.caughtUp`. The Unread tab’s own empty state, which is a different sentence from the general one because it means something different.
   ///
@@ -3736,11 +3784,23 @@ abstract class AppLocalizations {
   /// **'Expired'**
   String get nExpired;
 
-  /// Not in the reference. Added because the reference’s own centre is driven by a live engine and this one is a fixture — and a list of alerts that were never delivered must say so rather than implying a delivery that did not happen (§125).
+  /// Reference: `n.flight.body`. Not a plural in the reference.
   ///
   /// In en, this message translates to:
-  /// **'These are sample alerts. Lume has no notification server in this build, so nothing here was delivered and nothing new will arrive.'**
-  String get nFixtureNote;
+  /// **'{n} minutes late · now arriving {eta} at {to}'**
+  String nFlightBody(int n, String eta, String to);
+
+  /// Reference: `n.flight.title`. `{no}` is a flight code and is direction-isolated where it is drawn.
+  ///
+  /// In en, this message translates to:
+  /// **'{no} is delayed'**
+  String nFlightTitle(String no);
+
+  /// Reference: `weather.hilo` joined to `weather.rain` by the forecast source. The reference translates only the last word, so its Urdu reads "High 36° · Low 27° · 1% بارش".
+  ///
+  /// In en, this message translates to:
+  /// **'High {hi} · Low {lo} · {rain}% Rain'**
+  String nForecastBody(String hi, String lo, String rain);
 
   /// Reference: `n.group.body`.
   ///
@@ -3753,6 +3813,18 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'{name} activity'**
   String nGroupTitle(String name);
+
+  /// Reference: `n.habit.body`.
+  ///
+  /// In en, this message translates to:
+  /// **'You’re on a {n}-day streak.'**
+  String nHabitBody(int n);
+
+  /// Reference: `n.habit.title`. **Not a plural, on purpose** — the reference renders "1 habits left today". C52.
+  ///
+  /// In en, this message translates to:
+  /// **'{n} habits left today'**
+  String nHabitTitle(int n);
 
   /// Reference: `n.hidden`. What a row says instead of its body when previews are off. The detail never reaches the screen rather than being hidden on it.
   ///
@@ -3772,6 +3844,36 @@ abstract class AppLocalizations {
   /// **'Mark all as read'**
   String get nMarkAllRead;
 
+  /// Reference: `n.market.body`.
+  ///
+  /// In en, this message translates to:
+  /// **'Now {value} on {exchange}.'**
+  String nMarketBody(String value, String exchange);
+
+  /// Reference: `n.market.title`. `{pct}` carries its own sign and is direction-isolated.
+  ///
+  /// In en, this message translates to:
+  /// **'{name} moved {pct}'**
+  String nMarketTitle(String name, String pct);
+
+  /// Reference: `n.med.body`. Shown only when sensitive previews are on.
+  ///
+  /// In en, this message translates to:
+  /// **'Your next dose is at {at}.'**
+  String nMedBody(String at);
+
+  /// Reference: `n.med.private`. What a medication row says while sensitive previews are off — the default.
+  ///
+  /// In en, this message translates to:
+  /// **'You have a dose due.'**
+  String get nMedPrivate;
+
+  /// Reference: `n.med.title`.
+  ///
+  /// In en, this message translates to:
+  /// **'Time for your medication'**
+  String get nMedTitle;
+
   /// Reference: `n.minsAgo`. Under an hour. A plural because Arabic has a dual and a paucal for it.
   ///
   /// In en, this message translates to:
@@ -3783,6 +3885,24 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'just now'**
   String get nNow;
+
+  /// Reference: `n.outage.title`.
+  ///
+  /// In en, this message translates to:
+  /// **'Power off at {time}'**
+  String nOutageTitle(String time);
+
+  /// Reference: `n.parcel.body`.
+  ///
+  /// In en, this message translates to:
+  /// **'{carrier} · expected {eta}'**
+  String nParcelBody(String carrier, String eta);
+
+  /// Reference: `n.parcel.title`.
+  ///
+  /// In en, this message translates to:
+  /// **'{item} is on its way'**
+  String nParcelTitle(String item);
 
   /// Reference: `n.pri.critical`. The badge on a critical row.
   ///
@@ -3844,11 +3964,41 @@ abstract class AppLocalizations {
   /// **'Quiet hours are on'**
   String get nQuietTitle;
 
+  /// Reference: `n.restored`. The toast after the preferences' Restore dismissed control brings every dismissed row back.
+  ///
+  /// In en, this message translates to:
+  /// **'Dismissed notifications restored'**
+  String get nRestored;
+
   /// Reference: `n.settings`. The header action and the trailing row, both of which open the preferences.
   ///
   /// In en, this message translates to:
   /// **'Notification settings'**
   String get nSettings;
+
+  /// Reference: `n.settingsSub`. The line under the notification preferences sheet's title.
+  ///
+  /// In en, this message translates to:
+  /// **'What Lume may tell you, and when'**
+  String get nSettingsSub;
+
+  /// Reference: `n.sub.body`. Shown only when sensitive previews are on.
+  ///
+  /// In en, this message translates to:
+  /// **'In {n} days · {amount}'**
+  String nSubBody(int n, String amount);
+
+  /// Reference: `n.sub.private`.
+  ///
+  /// In en, this message translates to:
+  /// **'A subscription renews in {n} days.'**
+  String nSubPrivate(int n);
+
+  /// Reference: `n.sub.title`.
+  ///
+  /// In en, this message translates to:
+  /// **'{name} renews soon'**
+  String nSubTitle(String name);
 
   /// Reference: `n.tab.important`. Priority rank 2 and above, expired rows excluded.
   ///
@@ -3862,6 +4012,30 @@ abstract class AppLocalizations {
   /// **'Unread'**
   String get nTabUnread;
 
+  /// Reference: `notif.taskNext`.
+  ///
+  /// In en, this message translates to:
+  /// **'Next: {title}'**
+  String nTaskNext(String title);
+
+  /// Reference: `notif.tasksLeft`. **Not a plural, on purpose** — C52.
+  ///
+  /// In en, this message translates to:
+  /// **'{n} tasks left today'**
+  String nTasksLeft(int n);
+
+  /// Reference: `n.train.body`. Not a plural in the reference.
+  ///
+  /// In en, this message translates to:
+  /// **'{n} minutes behind · next stop {next}'**
+  String nTrainBody(int n, String next);
+
+  /// Reference: `n.train.title`.
+  ///
+  /// In en, this message translates to:
+  /// **'{name} is running late'**
+  String nTrainTitle(String name);
+
   /// Reference: `n.unread`. What the dot on an unread row is called to a screen reader.
   ///
   /// In en, this message translates to:
@@ -3873,6 +4047,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'{n, plural, =1{1 unread} other{{n} unread}}'**
   String nUnreadCount(int n);
+
+  /// Reference: `n.weather.title`.
+  ///
+  /// In en, this message translates to:
+  /// **'Tomorrow in {city}'**
+  String nWeatherTitle(String city);
 
   /// Reference key acct.account
   ///
@@ -4137,6 +4317,30 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Switch off anything you don’t want to hear about'**
   String get notifPrefCategoriesSub;
+
+  /// Reference: `n.pref.earlier`. The quiet-hours stepper's decrement.
+  ///
+  /// In en, this message translates to:
+  /// **'Earlier'**
+  String get notifPrefEarlier;
+
+  /// Reference: `n.pref.from`, lowercase as the reference renders it. The first quiet-hours stepper row.
+  ///
+  /// In en, this message translates to:
+  /// **'from'**
+  String get notifPrefFrom;
+
+  /// Reference: `n.pref.later`. The quiet-hours stepper's increment.
+  ///
+  /// In en, this message translates to:
+  /// **'Later'**
+  String get notifPrefLater;
+
+  /// Reference: `n.pref.to`. The second quiet-hours stepper row.
+  ///
+  /// In en, this message translates to:
+  /// **'Until'**
+  String get notifPrefTo;
 
   /// Reference: `n.pref.general`.
   ///

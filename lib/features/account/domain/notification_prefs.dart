@@ -83,6 +83,7 @@ class LumeNotificationSource {
     required this.tool,
     required this.category,
     required this.type,
+    this.sensitive = false,
   });
 
   final String id;
@@ -94,6 +95,13 @@ class LumeNotificationSource {
 
   /// The kind of notification, which the per-tool section switches.
   final String type;
+
+  /// A *source* property, not a category one: `src.sensitive` in the
+  /// reference's engine. Bills, due bills, documents, subscriptions and
+  /// medication withhold their detail while sensitive previews are off,
+  /// though only one of them is in the Health category. Keying this off the
+  /// category would have shown a bill's amount by default.
+  final bool sensitive;
 }
 
 /// The fifteen, in the engine's own order.
@@ -110,12 +118,14 @@ const List<LumeNotificationSource> kNotificationSources =
         tool: 'bills',
         category: 'finance',
         type: 'billOverdue',
+        sensitive: true,
       ),
       LumeNotificationSource(
         id: 'bills.due',
         tool: 'bills',
         category: 'finance',
         type: 'billDue',
+        sensitive: true,
       ),
       LumeNotificationSource(
         id: 'markets.move',
@@ -164,12 +174,14 @@ const List<LumeNotificationSource> kNotificationSources =
         tool: 'documents',
         category: 'documents',
         type: 'docExpiry',
+        sensitive: true,
       ),
       LumeNotificationSource(
         id: 'subs.renewal',
         tool: 'subs',
         category: 'finance',
         type: 'subRenewal',
+        sensitive: true,
       ),
       LumeNotificationSource(
         id: 'todos.today',
@@ -182,6 +194,7 @@ const List<LumeNotificationSource> kNotificationSources =
         tool: 'meds',
         category: 'health',
         type: 'medication',
+        sensitive: true,
       ),
       LumeNotificationSource(
         id: 'habits.streak',

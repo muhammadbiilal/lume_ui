@@ -1970,7 +1970,7 @@ class AppLocalizationsUr extends AppLocalizations {
   String get methodUmmAlQura => 'ام القریٰ';
 
   @override
-  String get nActComplete => 'مکمل نشان زد کریں';
+  String get nActComplete => 'کام کھولیں';
 
   @override
   String get nActPay => 'ادائیگی';
@@ -1988,19 +1988,37 @@ class AppLocalizationsUr extends AppLocalizations {
   String get nActViewMarket => 'مارکیٹ دیکھیں';
 
   @override
-  String get nActViewPrayer => 'نماز کے اوقات دیکھیں';
+  String get nActViewPrayer => 'نماز دیکھیں';
 
   @override
   String get nActViewTrain => 'ٹرین دیکھیں';
 
   @override
-  String get nActViewWeather => 'پیش گوئی دیکھیں';
+  String get nActViewWeather => 'موسم دیکھیں';
 
   @override
   String get nActioned => 'ہو گیا';
 
   @override
   String get nAllRead => 'آپ سب کچھ پڑھ چکے ہیں';
+
+  @override
+  String nBillBody(String amount) {
+    return '$amount کی آخری تاریخ گزر چکی ہے۔';
+  }
+
+  @override
+  String nBillDueTitle(String name) {
+    return '$name کی ادائیگی جلد ہے';
+  }
+
+  @override
+  String get nBillPrivate => 'ایک بل کی آخری تاریخ گزر چکی ہے۔';
+
+  @override
+  String nBillTitle(int n) {
+    return '$n بل توجہ چاہتا ہے';
+  }
 
   @override
   String get nCategory => 'زمرہ';
@@ -2018,6 +2036,24 @@ class AppLocalizationsUr extends AppLocalizations {
 
   @override
   String get nDismiss => 'ہٹائیں';
+
+  @override
+  String nDocBody(int n, String date) {
+    return '$n دن میں، $date کو ختم ہو رہا ہے۔';
+  }
+
+  @override
+  String get nDocPrivate => 'ایک دستاویز جلد ختم ہو رہی ہے۔';
+
+  @override
+  String nDocTitle(String name) {
+    return 'اپنا $name تجدید کریں';
+  }
+
+  @override
+  String nDueInDays(int n) {
+    return '$n دن میں واجب';
+  }
 
   @override
   String get nEmptyCaughtUp => 'آپ سب کچھ پڑھ چکے ہیں';
@@ -2038,8 +2074,19 @@ class AppLocalizationsUr extends AppLocalizations {
   String get nExpired => 'میعاد ختم';
 
   @override
-  String get nFixtureNote =>
-      'یہ نمونہ اطلاعات ہیں۔ اس بلڈ میں Lume کا کوئی اطلاعاتی سرور نہیں، اس لیے یہاں کچھ بھیجا نہیں گیا اور نہ کچھ نیا آئے گا۔';
+  String nFlightBody(int n, String eta, String to) {
+    return '$n منٹ تاخیر · اب $to پر $eta پہنچے گی';
+  }
+
+  @override
+  String nFlightTitle(String no) {
+    return '$no تاخیر کا شکار ہے';
+  }
+
+  @override
+  String nForecastBody(String hi, String lo, String rain) {
+    return 'زیادہ $hi · کم $lo · $rain% بارش';
+  }
 
   @override
   String nGroupBody(int n) {
@@ -2055,6 +2102,16 @@ class AppLocalizationsUr extends AppLocalizations {
   @override
   String nGroupTitle(String name) {
     return '$name سرگرمی';
+  }
+
+  @override
+  String nHabitBody(int n) {
+    return 'آپ کا $n دن کا تسلسل جاری ہے۔';
+  }
+
+  @override
+  String nHabitTitle(int n) {
+    return 'آج $n عادتیں باقی';
   }
 
   @override
@@ -2075,6 +2132,27 @@ class AppLocalizationsUr extends AppLocalizations {
   String get nMarkAllRead => 'سب کو پڑھا ہوا نشان زد کریں';
 
   @override
+  String nMarketBody(String value, String exchange) {
+    return '$exchange پر اب $value۔';
+  }
+
+  @override
+  String nMarketTitle(String name, String pct) {
+    return '$name میں $pct تبدیلی';
+  }
+
+  @override
+  String nMedBody(String at) {
+    return 'آپ کی اگلی خوراک $at پر ہے۔';
+  }
+
+  @override
+  String get nMedPrivate => 'آپ کی ایک خوراک باقی ہے۔';
+
+  @override
+  String get nMedTitle => 'آپ کی دوا کا وقت';
+
+  @override
   String nMinsAgo(int n) {
     String _temp0 = intl.Intl.pluralLogic(
       n,
@@ -2087,6 +2165,21 @@ class AppLocalizationsUr extends AppLocalizations {
 
   @override
   String get nNow => 'ابھی';
+
+  @override
+  String nOutageTitle(String time) {
+    return '$time پر بجلی بند';
+  }
+
+  @override
+  String nParcelBody(String carrier, String eta) {
+    return '$carrier · متوقع $eta';
+  }
+
+  @override
+  String nParcelTitle(String item) {
+    return '$item راستے میں ہے';
+  }
 
   @override
   String get nPriCritical => 'نازک';
@@ -2121,13 +2214,54 @@ class AppLocalizationsUr extends AppLocalizations {
   String get nQuietTitle => 'خاموش اوقات چالو ہیں';
 
   @override
+  String get nRestored => 'مسترد کی گئی اطلاعات بحال کر دی گئیں';
+
+  @override
   String get nSettings => 'اطلاعات کی ترتیبات';
+
+  @override
+  String get nSettingsSub => 'Lume آپ کو کیا اور کب بتا سکتا ہے';
+
+  @override
+  String nSubBody(int n, String amount) {
+    return '$n دن میں · $amount';
+  }
+
+  @override
+  String nSubPrivate(int n) {
+    return 'ایک سبسکرپشن $n دن میں تجدید ہوگی۔';
+  }
+
+  @override
+  String nSubTitle(String name) {
+    return '$name کی تجدید جلد ہوگی';
+  }
 
   @override
   String get nTabImportant => 'اہم';
 
   @override
   String get nTabUnread => 'غیر پڑھے';
+
+  @override
+  String nTaskNext(String title) {
+    return 'اگلا: $title';
+  }
+
+  @override
+  String nTasksLeft(int n) {
+    return 'آج $n کام باقی';
+  }
+
+  @override
+  String nTrainBody(int n, String next) {
+    return '$n منٹ پیچھے · اگلا اسٹاپ $next';
+  }
+
+  @override
+  String nTrainTitle(String name) {
+    return '$name تاخیر سے چل رہی ہے';
+  }
 
   @override
   String get nUnread => 'غیر پڑھا';
@@ -2141,6 +2275,11 @@ class AppLocalizationsUr extends AppLocalizations {
       one: '1 غیر پڑھا',
     );
     return '$_temp0';
+  }
+
+  @override
+  String nWeatherTitle(String city) {
+    return 'کل $city میں';
   }
 
   @override
@@ -2288,6 +2427,18 @@ class AppLocalizationsUr extends AppLocalizations {
   @override
   String get notifPrefCategoriesSub =>
       'جس کے بارے میں نہیں سننا، اُسے بند کر دیں';
+
+  @override
+  String get notifPrefEarlier => 'پہلے';
+
+  @override
+  String get notifPrefFrom => 'سے';
+
+  @override
+  String get notifPrefLater => 'بعد میں';
+
+  @override
+  String get notifPrefTo => 'تک';
 
   @override
   String get notifPrefGeneral => 'عمومی';

@@ -20,12 +20,14 @@
 library;
 
 import 'dart:async';
+import 'dart:ui' show ImageFilter;
 
 import 'package:flutter/material.dart';
 import 'package:flutter/semantics.dart';
 
 import '../../../core/icons/lume_icon.dart';
 import '../../../core/icons/lume_icons.dart';
+import '../../../core/navigation/lume_shell.dart';
 import '../../../core/theme/lume/lume_colors.dart';
 import '../../../core/theme/lume/lume_space.dart';
 import '../../../core/theme/lume/lume_theme.dart';
@@ -63,106 +65,124 @@ class LumeNotificationBanner extends StatelessWidget {
     final AppLocalizations l = AppLocalizations.of(context);
     final LumeNotification n = notification;
 
-    return Container(
-      padding: const EdgeInsetsDirectional.fromSTEB(4, 4, 6, 4),
+    return DecoratedBox(
+      // The shadow sits outside the clip below, or the clip would cut it off.
       decoration: BoxDecoration(
-        // `color-mix(in srgb, var(--card) 94%, transparent)`.
-        color: lume.card.withValues(alpha: 0.94),
         borderRadius: LumeRadius.brMd,
-        border: Border.all(color: lume.border, width: LumeSpace.border),
         boxShadow: context.lumeShadows.lg,
       ),
-      // `align-items: stretch` — the close control is as tall as the banner,
-      // which in Flutter means the row has to know its own height first.
-      child: IntrinsicHeight(
-        child: Row(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: <Widget>[
-            Expanded(
-              child: LumePressable(
-                onTap: onOpen,
-                semanticLabel: '${n.title}, ${n.body}',
-                borderRadius: LumeRadius.brSm,
-                minSize: 0,
-                child: Padding(
-                  padding: const EdgeInsets.all(8),
-                  child: Row(
-                    children: <Widget>[
-                      Container(
-                        width: iconSize,
-                        height: iconSize,
-                        decoration: BoxDecoration(
-                          color: lume.tintNeutral,
-                          borderRadius: LumeRadius.brSm,
-                        ),
-                        child: Center(
-                          child: LumeIcon(
-                            n.icon,
-                            size: LumeSpace.iconSm,
-                            color: lume.text2,
-                          ),
-                        ),
-                      ),
-                      const SizedBox(width: 10),
-                      Expanded(
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          mainAxisSize: MainAxisSize.min,
+      child: ClipRRect(
+        borderRadius: LumeRadius.brMd,
+        // `backdrop-filter: saturate(1.6) blur(20px)` — the screen under the
+        // banner is softened rather than legible through its 94 % card.
+        child: BackdropFilter(
+          filter: ImageFilter.blur(sigmaX: 20, sigmaY: 20),
+          child: Container(
+            padding: const EdgeInsetsDirectional.fromSTEB(4, 4, 6, 4),
+            decoration: BoxDecoration(
+              // `color-mix(in srgb, var(--card) 94%, transparent)`.
+              color: lume.card.withValues(alpha: 0.94),
+              borderRadius: LumeRadius.brMd,
+              border: Border.all(color: lume.border, width: LumeSpace.border),
+            ),
+            // `align-items: stretch` — the close control is as tall as the banner,
+            // which in Flutter means the row has to know its own height first.
+            child: IntrinsicHeight(
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: <Widget>[
+                  Expanded(
+                    child: LumePressable(
+                      onTap: onOpen,
+                      semanticLabel: '${n.title}, ${n.body}',
+                      borderRadius: LumeRadius.brSm,
+                      minSize: 0,
+                      child: Padding(
+                        padding: const EdgeInsets.all(8),
+                        child: Row(
                           children: <Widget>[
-                            Text(
-                              n.title,
-                              style:
-                                  LumeType.tracked(
-                                    LumeType.natural(
-                                      context,
-                                      context.lumeType.meta,
-                                      size: 13,
-                                    ),
-                                    -0.024,
-                                  ).copyWith(
-                                    color: lume.text,
-                                    fontWeight: FontWeight.w700,
-                                  ),
-                              maxLines: 1,
-                              overflow: TextOverflow.ellipsis,
+                            Container(
+                              width: iconSize,
+                              height: iconSize,
+                              decoration: BoxDecoration(
+                                color: lume.tintNeutral,
+                                borderRadius: LumeRadius.brSm,
+                              ),
+                              child: Center(
+                                child: LumeIcon(
+                                  n.icon,
+                                  size: LumeSpace.iconSm,
+                                  color: lume.text2,
+                                ),
+                              ),
                             ),
-                            const SizedBox(height: 1),
-                            Text(
-                              n.body,
-                              style:
-                                  LumeType.natural(
-                                    context,
-                                    context.lumeType.metaSmall,
-                                    size: 11,
-                                  ).copyWith(
-                                    color: lume.text3,
-                                    fontWeight: FontWeight.w500,
+                            const SizedBox(width: 10),
+                            Expanded(
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                mainAxisSize: MainAxisSize.min,
+                                children: <Widget>[
+                                  Text(
+                                    n.title,
+                                    style:
+                                        LumeType.tracked(
+                                          LumeType.natural(
+                                            context,
+                                            context.lumeType.meta,
+                                            size: 13,
+                                          ),
+                                          -0.024,
+                                        ).copyWith(
+                                          color: lume.text,
+                                          fontWeight: FontWeight.w700,
+                                        ),
+                                    maxLines: 1,
+                                    overflow: TextOverflow.ellipsis,
                                   ),
-                              maxLines: 1,
-                              overflow: TextOverflow.ellipsis,
+                                  const SizedBox(height: 1),
+                                  Text(
+                                    n.body,
+                                    style:
+                                        LumeType.natural(
+                                          context,
+                                          context.lumeType.metaSmall,
+                                          size: 11,
+                                        ).copyWith(
+                                          color: lume.text3,
+                                          fontWeight: FontWeight.w500,
+                                        ),
+                                    maxLines: 1,
+                                    overflow: TextOverflow.ellipsis,
+                                  ),
+                                ],
+                              ),
                             ),
                           ],
                         ),
                       ),
-                    ],
+                    ),
                   ),
-                ),
+                  const SizedBox(width: 4),
+                  LumePressable(
+                    onTap: onDismiss,
+                    semanticLabel: l.nDismiss,
+                    borderRadius: LumeRadius.brSm,
+                    minSize: 0,
+                    child: SizedBox(
+                      width: iconSize,
+                      child: Center(
+                        child: LumeIcon(
+                          LumeIcons.x,
+                          size: 14,
+                          color: lume.text3,
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
               ),
             ),
-            const SizedBox(width: 4),
-            LumePressable(
-              onTap: onDismiss,
-              semanticLabel: l.nDismiss,
-              borderRadius: LumeRadius.brSm,
-              minSize: 0,
-              child: SizedBox(
-                width: iconSize,
-                child: Center(
-                  child: LumeIcon(LumeIcons.x, size: 14, color: lume.text3),
-                ),
-              ),
-            ),
-          ],
+          ),
         ),
       ),
     );
@@ -266,17 +286,25 @@ class _LumeNotificationBannerHostState
       children: <Widget>[
         widget.child,
         if (n != null)
-          Positioned(
-            left: LumeNotificationBanner.inset,
-            right: LumeNotificationBanner.inset,
-            top: MediaQuery.paddingOf(context).top + LumeNotificationBanner.top,
-            child: LumeNotificationBanner(
-              notification: n,
-              onOpen: () {
-                _dismiss();
-                widget.onOpen?.call(n);
-              },
-              onDismiss: _dismiss,
+          // The shell's own banner slot, so the banner sits where the shell
+          // measured it at every width: dropped in from the top on a phone,
+          // settled into the trailing corner at medium and expanded
+          // (`responsive.css`), where the top belongs to the status strip.
+          Positioned.fill(
+            // Above the shell's own `Scaffold`, so it brings its own
+            // material: without one, text has no default style to inherit.
+            child: Material(
+              type: MaterialType.transparency,
+              child: LumeOverlayHost(
+                banner: LumeNotificationBanner(
+                  notification: n,
+                  onOpen: () {
+                    _dismiss();
+                    widget.onOpen?.call(n);
+                  },
+                  onDismiss: _dismiss,
+                ),
+              ),
             ),
           ),
       ],

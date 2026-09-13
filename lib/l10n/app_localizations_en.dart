@@ -1970,7 +1970,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get methodUmmAlQura => 'Umm al-Qura';
 
   @override
-  String get nActComplete => 'Mark done';
+  String get nActComplete => 'Open tasks';
 
   @override
   String get nActPay => 'Pay';
@@ -1988,19 +1988,37 @@ class AppLocalizationsEn extends AppLocalizations {
   String get nActViewMarket => 'View market';
 
   @override
-  String get nActViewPrayer => 'View prayer times';
+  String get nActViewPrayer => 'View prayer';
 
   @override
   String get nActViewTrain => 'View train';
 
   @override
-  String get nActViewWeather => 'View forecast';
+  String get nActViewWeather => 'View weather';
 
   @override
   String get nActioned => 'Done';
 
   @override
   String get nAllRead => 'You’re all caught up';
+
+  @override
+  String nBillBody(String amount) {
+    return '$amount is past its due date.';
+  }
+
+  @override
+  String nBillDueTitle(String name) {
+    return '$name is due soon';
+  }
+
+  @override
+  String get nBillPrivate => 'A bill is past its due date.';
+
+  @override
+  String nBillTitle(int n) {
+    return '$n bill needs attention';
+  }
 
   @override
   String get nCategory => 'Category';
@@ -2018,6 +2036,24 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get nDismiss => 'Dismiss';
+
+  @override
+  String nDocBody(int n, String date) {
+    return 'Expires in $n days, on $date.';
+  }
+
+  @override
+  String get nDocPrivate => 'A document is expiring soon.';
+
+  @override
+  String nDocTitle(String name) {
+    return 'Renew your $name';
+  }
+
+  @override
+  String nDueInDays(int n) {
+    return 'due in $n days';
+  }
 
   @override
   String get nEmptyCaughtUp => 'You’re all caught up';
@@ -2038,8 +2074,19 @@ class AppLocalizationsEn extends AppLocalizations {
   String get nExpired => 'Expired';
 
   @override
-  String get nFixtureNote =>
-      'These are sample alerts. Lume has no notification server in this build, so nothing here was delivered and nothing new will arrive.';
+  String nFlightBody(int n, String eta, String to) {
+    return '$n minutes late · now arriving $eta at $to';
+  }
+
+  @override
+  String nFlightTitle(String no) {
+    return '$no is delayed';
+  }
+
+  @override
+  String nForecastBody(String hi, String lo, String rain) {
+    return 'High $hi · Low $lo · $rain% Rain';
+  }
 
   @override
   String nGroupBody(int n) {
@@ -2055,6 +2102,16 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String nGroupTitle(String name) {
     return '$name activity';
+  }
+
+  @override
+  String nHabitBody(int n) {
+    return 'You’re on a $n-day streak.';
+  }
+
+  @override
+  String nHabitTitle(int n) {
+    return '$n habits left today';
   }
 
   @override
@@ -2075,6 +2132,27 @@ class AppLocalizationsEn extends AppLocalizations {
   String get nMarkAllRead => 'Mark all as read';
 
   @override
+  String nMarketBody(String value, String exchange) {
+    return 'Now $value on $exchange.';
+  }
+
+  @override
+  String nMarketTitle(String name, String pct) {
+    return '$name moved $pct';
+  }
+
+  @override
+  String nMedBody(String at) {
+    return 'Your next dose is at $at.';
+  }
+
+  @override
+  String get nMedPrivate => 'You have a dose due.';
+
+  @override
+  String get nMedTitle => 'Time for your medication';
+
+  @override
   String nMinsAgo(int n) {
     String _temp0 = intl.Intl.pluralLogic(
       n,
@@ -2087,6 +2165,21 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get nNow => 'just now';
+
+  @override
+  String nOutageTitle(String time) {
+    return 'Power off at $time';
+  }
+
+  @override
+  String nParcelBody(String carrier, String eta) {
+    return '$carrier · expected $eta';
+  }
+
+  @override
+  String nParcelTitle(String item) {
+    return '$item is on its way';
+  }
 
   @override
   String get nPriCritical => 'Critical';
@@ -2121,13 +2214,54 @@ class AppLocalizationsEn extends AppLocalizations {
   String get nQuietTitle => 'Quiet hours are on';
 
   @override
+  String get nRestored => 'Dismissed notifications restored';
+
+  @override
   String get nSettings => 'Notification settings';
+
+  @override
+  String get nSettingsSub => 'What Lume may tell you, and when';
+
+  @override
+  String nSubBody(int n, String amount) {
+    return 'In $n days · $amount';
+  }
+
+  @override
+  String nSubPrivate(int n) {
+    return 'A subscription renews in $n days.';
+  }
+
+  @override
+  String nSubTitle(String name) {
+    return '$name renews soon';
+  }
 
   @override
   String get nTabImportant => 'Important';
 
   @override
   String get nTabUnread => 'Unread';
+
+  @override
+  String nTaskNext(String title) {
+    return 'Next: $title';
+  }
+
+  @override
+  String nTasksLeft(int n) {
+    return '$n tasks left today';
+  }
+
+  @override
+  String nTrainBody(int n, String next) {
+    return '$n minutes behind · next stop $next';
+  }
+
+  @override
+  String nTrainTitle(String name) {
+    return '$name is running late';
+  }
 
   @override
   String get nUnread => 'Unread';
@@ -2141,6 +2275,11 @@ class AppLocalizationsEn extends AppLocalizations {
       one: '1 unread',
     );
     return '$_temp0';
+  }
+
+  @override
+  String nWeatherTitle(String city) {
+    return 'Tomorrow in $city';
   }
 
   @override
@@ -2287,6 +2426,18 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get notifPrefCategoriesSub =>
       'Switch off anything you don’t want to hear about';
+
+  @override
+  String get notifPrefEarlier => 'Earlier';
+
+  @override
+  String get notifPrefFrom => 'from';
+
+  @override
+  String get notifPrefLater => 'Later';
+
+  @override
+  String get notifPrefTo => 'Until';
 
   @override
   String get notifPrefGeneral => 'General';

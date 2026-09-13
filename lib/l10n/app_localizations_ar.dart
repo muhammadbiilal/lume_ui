@@ -1982,7 +1982,7 @@ class AppLocalizationsAr extends AppLocalizations {
   String get methodUmmAlQura => 'أم القرى';
 
   @override
-  String get nActComplete => 'وضع علامة تم';
+  String get nActComplete => 'فتح المهام';
 
   @override
   String get nActPay => 'ادفع';
@@ -2000,19 +2000,37 @@ class AppLocalizationsAr extends AppLocalizations {
   String get nActViewMarket => 'عرض السوق';
 
   @override
-  String get nActViewPrayer => 'عرض مواقيت الصلاة';
+  String get nActViewPrayer => 'عرض الصلاة';
 
   @override
   String get nActViewTrain => 'عرض القطار';
 
   @override
-  String get nActViewWeather => 'عرض التوقعات';
+  String get nActViewWeather => 'عرض الطقس';
 
   @override
   String get nActioned => 'تم';
 
   @override
   String get nAllRead => 'لقد اطّلعت على كل شيء';
+
+  @override
+  String nBillBody(String amount) {
+    return 'تجاوز $amount تاريخ استحقاقه.';
+  }
+
+  @override
+  String nBillDueTitle(String name) {
+    return 'موعد $name قريب';
+  }
+
+  @override
+  String get nBillPrivate => 'تجاوزت فاتورة تاريخ استحقاقها.';
+
+  @override
+  String nBillTitle(int n) {
+    return '$n فاتورة تحتاج إلى انتباه';
+  }
 
   @override
   String get nCategory => 'الفئة';
@@ -2034,6 +2052,24 @@ class AppLocalizationsAr extends AppLocalizations {
   String get nDismiss => 'إخفاء';
 
   @override
+  String nDocBody(int n, String date) {
+    return 'ينتهي خلال $n يومًا، في $date.';
+  }
+
+  @override
+  String get nDocPrivate => 'مستند على وشك الانتهاء.';
+
+  @override
+  String nDocTitle(String name) {
+    return 'جدّد $name';
+  }
+
+  @override
+  String nDueInDays(int n) {
+    return 'مستحق خلال $n أيام';
+  }
+
+  @override
   String get nEmptyCaughtUp => 'لقد اطّلعت على كل شيء';
 
   @override
@@ -2052,8 +2088,19 @@ class AppLocalizationsAr extends AppLocalizations {
   String get nExpired => 'انتهت';
 
   @override
-  String get nFixtureNote =>
-      'هذه تنبيهات نموذجية. لا يوجد خادم إشعارات في هذا الإصدار، لذلك لم يُرسل شيء هنا ولن يصل شيء جديد.';
+  String nFlightBody(int n, String eta, String to) {
+    return 'متأخرة $n دقيقة · تصل الآن $eta إلى $to';
+  }
+
+  @override
+  String nFlightTitle(String no) {
+    return 'الرحلة $no متأخرة';
+  }
+
+  @override
+  String nForecastBody(String hi, String lo, String rain) {
+    return 'العظمى $hi · الصغرى $lo · $rain% المطر';
+  }
 
   @override
   String nGroupBody(int n) {
@@ -2071,6 +2118,16 @@ class AppLocalizationsAr extends AppLocalizations {
   @override
   String nGroupTitle(String name) {
     return 'نشاط $name';
+  }
+
+  @override
+  String nHabitBody(int n) {
+    return 'أنت في سلسلة من $n يومًا.';
+  }
+
+  @override
+  String nHabitTitle(int n) {
+    return '$n عادات متبقية اليوم';
   }
 
   @override
@@ -2093,6 +2150,27 @@ class AppLocalizationsAr extends AppLocalizations {
   String get nMarkAllRead => 'وضع علامة مقروء على الكل';
 
   @override
+  String nMarketBody(String value, String exchange) {
+    return 'الآن $value في $exchange.';
+  }
+
+  @override
+  String nMarketTitle(String name, String pct) {
+    return 'تحرّك $name بنسبة $pct';
+  }
+
+  @override
+  String nMedBody(String at) {
+    return 'جرعتك التالية في $at.';
+  }
+
+  @override
+  String get nMedPrivate => 'لديك جرعة مستحقة.';
+
+  @override
+  String get nMedTitle => 'حان وقت دوائك';
+
+  @override
   String nMinsAgo(int n) {
     String _temp0 = intl.Intl.pluralLogic(
       n,
@@ -2107,6 +2185,21 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get nNow => 'الآن';
+
+  @override
+  String nOutageTitle(String time) {
+    return 'انقطاع الكهرباء في $time';
+  }
+
+  @override
+  String nParcelBody(String carrier, String eta) {
+    return '$carrier · متوقع $eta';
+  }
+
+  @override
+  String nParcelTitle(String item) {
+    return '$item في الطريق';
+  }
 
   @override
   String get nPriCritical => 'حرج';
@@ -2139,13 +2232,54 @@ class AppLocalizationsAr extends AppLocalizations {
   String get nQuietTitle => 'ساعات الهدوء مفعّلة';
 
   @override
+  String get nRestored => 'تمت استعادة الإشعارات المستبعدة';
+
+  @override
   String get nSettings => 'إعدادات الإشعارات';
+
+  @override
+  String get nSettingsSub => 'ما الذي قد يخبرك به Lume، ومتى';
+
+  @override
+  String nSubBody(int n, String amount) {
+    return 'خلال $n أيام · $amount';
+  }
+
+  @override
+  String nSubPrivate(int n) {
+    return 'يتجدد اشتراك خلال $n أيام.';
+  }
+
+  @override
+  String nSubTitle(String name) {
+    return 'يتجدد $name قريبًا';
+  }
 
   @override
   String get nTabImportant => 'مهم';
 
   @override
   String get nTabUnread => 'غير مقروءة';
+
+  @override
+  String nTaskNext(String title) {
+    return 'التالي: $title';
+  }
+
+  @override
+  String nTasksLeft(int n) {
+    return '$n مهام متبقية اليوم';
+  }
+
+  @override
+  String nTrainBody(int n, String next) {
+    return 'متأخر $n دقيقة · المحطة التالية $next';
+  }
+
+  @override
+  String nTrainTitle(String name) {
+    return '$name متأخر';
+  }
 
   @override
   String get nUnread => 'غير مقروء';
@@ -2161,6 +2295,11 @@ class AppLocalizationsAr extends AppLocalizations {
       one: 'واحد غير مقروء',
     );
     return '$_temp0';
+  }
+
+  @override
+  String nWeatherTitle(String city) {
+    return 'غدًا في $city';
   }
 
   @override
@@ -2305,6 +2444,18 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get notifPrefCategoriesSub => 'أوقف أي شيء لا تريد سماعه';
+
+  @override
+  String get notifPrefEarlier => 'أبكر';
+
+  @override
+  String get notifPrefFrom => 'من';
+
+  @override
+  String get notifPrefLater => 'لاحقًا';
+
+  @override
+  String get notifPrefTo => 'حتى';
 
   @override
   String get notifPrefGeneral => 'عام';

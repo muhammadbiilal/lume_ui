@@ -17,7 +17,6 @@ import 'package:lume/app/providers/personalisation.dart';
 import 'package:lume/core/routing/lume_routes.dart';
 import 'package:lume/core/widgets/lume/lume_chip.dart';
 import 'package:lume/core/widgets/lume/lume_state.dart';
-import 'package:lume/core/widgets/lume/lume_surface.dart';
 import 'package:lume/features/account/data/notification_prefs_store.dart';
 import 'package:lume/features/account/domain/notification_prefs.dart';
 import 'package:lume/features/catalogue/domain/eligibility.dart';
@@ -36,6 +35,26 @@ import '../destinations/destination_harness.dart';
 
 /// Tall, so the whole centre lays out in one pass.
 const Size kTall = Size(390, 3000);
+
+/// The thirteen titles the reference renders for a reader in Pakistan, top
+/// to bottom — `probe_notifications.mjs --state muslim_pk`. Not a sort this
+/// file derives: the order itself is the evidence, including the low rows
+/// ranking as normal (C54).
+const List<String> kReferenceOrder = <String>[
+  'Time for your medication',
+  'EK 624 is delayed',
+  '1 bill needs attention',
+  'Renew your Driving Licence',
+  'KSE-100 moved +0.82%',
+  'Power off at 19:00',
+  'Keyboard is on its way',
+  'Tezgam Express is running late',
+  '4 tasks left today',
+  'Tomorrow in Islamabad',
+  '1 habits left today',
+  'Electricity is due soon',
+  'Netflix renews soon',
+];
 
 void main() {
   setUpAll(loadLumeFonts);
@@ -80,27 +99,73 @@ void main() {
   // ------------------------------------------------------------- the feed
 
   group('the feed', () {
-    testWidgets('is only what this reader can reach', (
+    testWidgets('is exactly what the reference renders, row for row', (
       WidgetTester tester,
     ) async {
       final AppLocalizations l = await stringsFor(tester);
-      final LumeNotificationFeed muslim = await repo(
+      final LumeNotificationFeed pk = await repo(
         l: l,
-      ).feed(now: DateTime(2026, 9, 13));
-      final LumeNotificationFeed secular = await repo(
-        l: l,
-        user: LumeUsers.defaultPk,
-      ).feed(now: DateTime(2026, 9, 13));
-
-      // The prayer row is faith-gated, so it is *absent* rather than hidden.
+      ).feed(now: DateTime(2026, 9, 7, 16, 41));
       expect(
-        muslim.all.where((LumeNotification n) => n.tool == 'prayer'),
-        isNotEmpty,
+        pk.all.map((LumeNotification n) => n.title).toList(),
+        kReferenceOrder,
+      );
+      expect(pk.unread, 13);
+      expect(pk.important, 4);
+    });
+
+    testWidgets('and is only what this reader can reach', (
+      WidgetTester tester,
+    ) async {
+      final AppLocalizations l = await stringsFor(tester);
+      final LumeNotificationFeed gb = await repo(
+        l: l,
+        user: LumeUsers.muslimGb,
+      ).feed(now: DateTime(2026, 9, 7, 16, 41));
+      // Ten in London. The power cut and the train are Pakistani services,
+      // so they are absent rather than filtered; the market row is absent
+      // because London's own index did not move enough to say anything.
+      expect(gb.all, hasLength(10));
+      for (final String tool in <String>['markets', 'loadshed', 'trains']) {
+        expect(
+          gb.all.where((LumeNotification n) => n.tool == tool),
+          isEmpty,
+          reason: tool,
+        );
+      }
+      expect(
+        gb.all.map((LumeNotification n) => n.title),
+        contains('Tomorrow in London'),
+      );
+      // London's own sky, and no FTSE row: it moved 0.38%, under the half
+      // percent the reference's market source asks for.
+      expect(
+        gb.all.firstWhere((LumeNotification n) => n.tool == 'weather').body,
+        'High 25° · Low 17° · 10% Rain',
       );
       expect(
-        secular.all.where((LumeNotification n) => n.tool == 'prayer'),
+        gb.all.where((LumeNotification n) => n.tool == 'markets'),
         isEmpty,
       );
+    });
+
+    testWidgets('and New York reads its own, in its own units', (
+      WidgetTester tester,
+    ) async {
+      final AppLocalizations l = await stringsFor(tester);
+      final LumeNotificationFeed us = await repo(
+        l: l,
+        user: LumeUsers.defaultUs,
+      ).feed(now: DateTime(2026, 9, 7, 16, 41));
+      // `probe_notifications.mjs --state default_us`: ten rows, four
+      // important, no S&P row (0.42%).
+      expect(us.all, hasLength(10));
+      expect(us.important, 4);
+      final LumeNotification weather = us.all.firstWhere(
+        (LumeNotification n) => n.tool == 'weather',
+      );
+      expect(weather.title, 'Tomorrow in New York');
+      expect(weather.body, 'High 84° · Low 68° · 50% Rain');
     });
 
     testWidgets('and a market’s own alerts belong to that market', (
@@ -148,11 +213,13 @@ void main() {
       );
     });
 
-    testWidgets('priority outranks recency', (WidgetTester tester) async {
+    testWidgets('rank outranks recency, with low ranked as normal (C54)', (
+      WidgetTester tester,
+    ) async {
       final AppLocalizations l = await stringsFor(tester);
       final LumeNotificationFeed f = await repo(
         l: l,
-      ).feed(now: DateTime(2026, 9, 13));
+      ).feed(now: DateTime(2026, 9, 7, 16, 41));
       final List<LumeNotification> live = f.all
           .where((LumeNotification n) => !n.expired)
           .toList();
@@ -160,15 +227,22 @@ void main() {
       for (int i = 1; i < live.length; i++) {
         final LumeNotification a = live[i - 1];
         final LumeNotification b = live[i];
-        expect(
-          a.priority.rank >= b.priority.rank,
-          isTrue,
-          reason: '${a.title} before ${b.title}',
-        );
-        if (a.priority.rank == b.priority.rank) {
+        final int ra = lumeReferenceRank(a.priority);
+        final int rb = lumeReferenceRank(b.priority);
+        expect(ra >= rb, isTrue, reason: '${a.title} before ${b.title}');
+        if (ra == rb) {
           expect(a.agoMinutes <= b.agoMinutes, isTrue, reason: a.title);
         }
       }
+      // The consequence the reference actually renders: a low forecast above
+      // a normal due bill.
+      final List<String> titles = f.all
+          .map((LumeNotification n) => n.title)
+          .toList();
+      expect(
+        titles.indexOf('Tomorrow in Islamabad'),
+        lessThan(titles.indexOf('Electricity is due soon')),
+      );
     });
 
     testWidgets('and an expired row sinks below every live one', (
@@ -221,11 +295,18 @@ void main() {
       final LumeNotification meds = f.all.firstWhere(
         (LumeNotification n) => n.tool == 'meds',
       );
-      // The drug and the dose are not on the screen, and were never put
-      // there: the repository substituted before the widget existed.
-      expect(meds.body, 'A medication reminder is due');
-      expect(meds.body, isNot(contains('Metformin')));
-      expect(meds.body, isNot(contains('500')));
+      // The dose time is not on the screen, and was never put there: the
+      // repository substituted before the widget existed.
+      expect(meds.body, 'You have a dose due.');
+      expect(meds.body, isNot(contains('8:00 pm')));
+
+      // And sensitivity is the *source's*, not the category's: a bill is in
+      // Money, and still withholds its amount.
+      final LumeNotification bill = f.all.firstWhere(
+        (LumeNotification n) => n.title == '1 bill needs attention',
+      );
+      expect(bill.body, 'A bill is past its due date.');
+      expect(bill.body, isNot(contains('7,920')));
     });
 
     testWidgets('and says it once the reader asks for it', (
@@ -239,7 +320,11 @@ void main() {
       final LumeNotification meds = f.all.firstWhere(
         (LumeNotification n) => n.tool == 'meds',
       );
-      expect(meds.body, contains('Metformin'));
+      expect(meds.body, 'Your next dose is at 8:00 pm.');
+      final LumeNotification bill = f.all.firstWhere(
+        (LumeNotification n) => n.title == '1 bill needs attention',
+      );
+      expect(bill.body, 'Rs 7,920 is past its due date.');
     });
 
     testWidgets('a non-sensitive row is unaffected either way', (
@@ -254,7 +339,7 @@ void main() {
         final LumeNotification train = f.all.firstWhere(
           (LumeNotification n) => n.tool == 'trains',
         );
-        expect(train.body, 'About 35 minutes behind');
+        expect(train.body, '35 minutes behind · next stop Khanewal Junction');
       }
     });
   });
@@ -262,53 +347,74 @@ void main() {
   // ------------------------------------------------------------- grouping
 
   group('folding', () {
-    testWidgets('three updates of one event become two rows', (
+    LumeNotification row(String group, int ago, {bool read = false}) =>
+        LumeNotification(
+          id: '$group#$ago',
+          title: 'KSE-100 moved',
+          body: 'body',
+          category: 'markets',
+          icon: 'trending',
+          tool: 'markets',
+          agoMinutes: ago,
+          read: read,
+          groupId: group,
+        );
+
+    testWidgets('three rows of one source become two', (
       WidgetTester tester,
     ) async {
       final AppLocalizations l = await stringsFor(tester);
-      final LumeNotificationFeed f = await repo(
-        l: l,
-      ).feed(now: DateTime(2026, 9, 13));
-      final List<LumeNotification> folded = foldNotifications(f.all, l);
-
-      final Iterable<LumeNotification> kse = folded.where(
-        (LumeNotification n) => n.groupId == 'markets.kse',
+      final List<LumeNotification> folded = foldNotifications(
+        <LumeNotification>[
+          row('markets.move', 2),
+          row('markets.move', 14),
+          row('markets.move', 26),
+        ],
+        l,
       );
-      expect(kse.length, 2);
-      expect(kse.last.grouped, isTrue);
-      expect(kse.last.members, 2);
-      expect(kse.last.body, '2 more updates');
+      expect(folded, hasLength(2));
+      expect(folded.last.grouped, isTrue);
+      expect(folded.last.members, 2);
+      expect(folded.last.body, '2 more updates');
     });
 
     testWidgets('and two do not', (WidgetTester tester) async {
       final AppLocalizations l = await stringsFor(tester);
-      final List<LumeNotificationSample> two = kNotificationSamples
-          .where(
-            (LumeNotificationSample s) =>
-                s.sourceId != 'markets.move' || s.agoMinutes != 26,
-          )
-          .toList();
-      final LumeNotificationFeed f = await repo(
-        l: l,
-        samples: two,
-      ).feed(now: DateTime(2026, 9, 13));
-      final List<LumeNotification> folded = foldNotifications(f.all, l);
+      final List<LumeNotification> folded = foldNotifications(
+        <LumeNotification>[row('markets.move', 2), row('markets.move', 14)],
+        l,
+      );
       expect(folded.where((LumeNotification n) => n.grouped), isEmpty);
     });
 
-    testWidgets('unrelated events are never folded together', (
+    testWidgets('the summary is read only when everything it holds is', (
       WidgetTester tester,
     ) async {
       final AppLocalizations l = await stringsFor(tester);
+      final List<LumeNotification> folded = foldNotifications(
+        <LumeNotification>[
+          row('markets.move', 2),
+          row('markets.move', 14, read: true),
+          row('markets.move', 26),
+        ],
+        l,
+      );
+      expect(folded.last.read, isFalse);
+    });
+
+    testWidgets('and the reference never reaches it', (
+      WidgetTester tester,
+    ) async {
+      // Each source builds at most one row, so the rendered feed has nothing
+      // to fold — which is what the reference draws.
+      final AppLocalizations l = await stringsFor(tester);
       final LumeNotificationFeed f = await repo(
         l: l,
-      ).feed(now: DateTime(2026, 9, 13));
-      final List<LumeNotification> folded = foldNotifications(f.all, l);
-      for (final LumeNotification n in folded.where(
-        (LumeNotification x) => x.grouped,
-      )) {
-        expect(n.groupId, 'markets.kse');
-      }
+      ).feed(now: DateTime(2026, 9, 7, 16, 41));
+      expect(
+        foldNotifications(f.all, l).where((LumeNotification n) => n.grouped),
+        isEmpty,
+      );
     });
   });
 
@@ -483,18 +589,18 @@ void main() {
       WidgetTester tester,
     ) async {
       final GoRouter router = await open(tester);
-      await tester.tap(find.text('Heavy rain warning'));
+      await tester.tap(find.text('EK 624 is delayed'));
       await tester.pumpAndSettle();
-      expect(locationOf(router), '/home/tool/weather');
+      expect(locationOf(router), '/home/tool/flights');
     });
 
     testWidgets('and from another branch it opens on that branch', (
       WidgetTester tester,
     ) async {
       final GoRouter router = await open(tester, at: '/today/notifications');
-      await tester.tap(find.text('Heavy rain warning'));
+      await tester.tap(find.text('EK 624 is delayed'));
       await tester.pumpAndSettle();
-      expect(locationOf(router), '/today/tool/weather');
+      expect(locationOf(router), '/today/tool/flights');
     });
 
     testWidgets('marking all read empties the Unread tab', (
@@ -521,12 +627,12 @@ void main() {
 
     testWidgets('dismissing a row removes it', (WidgetTester tester) async {
       await open(tester);
-      expect(find.text('Green Line is running late'), findsOneWidget);
+      expect(find.text('Tezgam Express is running late'), findsOneWidget);
       await tester.tap(
-        find.bySemanticsLabel('Dismiss, Green Line is running late'),
+        find.bySemanticsLabel('Dismiss, Tezgam Express is running late'),
       );
       await tester.pumpAndSettle();
-      expect(find.text('Green Line is running late'), findsNothing);
+      expect(find.text('Tezgam Express is running late'), findsNothing);
     });
 
     testWidgets('the empty state says which tab is empty', (
@@ -565,10 +671,6 @@ void main() {
       WidgetTester tester,
     ) async {
       await open(tester);
-      expect(
-        find.textContaining('no notification server in this build'),
-        findsOneWidget,
-      );
       for (final String never in <String>[
         'Synced',
         'Delivered',
@@ -640,7 +742,9 @@ void main() {
       final SemanticsHandle handle = tester.ensureSemantics();
       await open(tester);
       expect(
-        find.bySemanticsLabel(RegExp('^Unread, Heavy rain warning, Critical')),
+        find.bySemanticsLabel(
+          RegExp('^Unread, Time for your medication, Important'),
+        ),
         findsOneWidget,
       );
       handle.dispose();
@@ -669,7 +773,9 @@ void main() {
           await tester.pumpAndSettle();
 
           expect(
-            Directionality.of(tester.element(find.byType(LumeNoteCard).first)),
+            Directionality.of(
+              tester.element(find.byType(LumeNotificationRow).first),
+            ),
             lang.$2,
             reason: lang.$1,
           );
