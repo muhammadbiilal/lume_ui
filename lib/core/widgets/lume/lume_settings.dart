@@ -420,43 +420,63 @@ class LumeOptionRow extends StatelessWidget {
             child: Row(
               children: <Widget>[
                 Expanded(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    mainAxisSize: MainAxisSize.min,
-                    children: <Widget>[
-                      Text(
-                        title,
-                        style:
-                            LumeType.tracked(
-                              LumeType.natural(
-                                context,
-                                context.lumeType.meta,
-                                size: 14,
-                              ),
-                              -0.022,
-                            ).copyWith(
-                              // `.optrow.is-on .optrow__title { color:
-                              // var(--accent-ink) }`.
-                              color: selected ? lume.accentInk : lume.text,
-                              fontWeight: FontWeight.w700,
-                            ),
-                      ),
-                      if (subtitle != null) ...<Widget>[
-                        const SizedBox(height: 1),
-                        LumeNumerals(
-                          subtitle!,
+                  // **C41, reproduced by decision.** `.optrow__title` and
+                  // `.optrow__sub` are inline `<span>`s, and the rule in
+                  // `components.css` that blockifies `.list-row__title` and
+                  // `.list-row__sub` does not name them. So the prototype
+                  // draws one line with the two strings against each other —
+                  // "Follow my regionAutomatic", "Metrickm · °C · kg" — and
+                  // so does this. One `Text.rich`, two spans, no separator.
+                  //
+                  // The row is 46 because of it, where a second line would
+                  // make it 57. Recorded in KNOWN_DIFFERENCES as C41 with a
+                  // Dayroz obligation to blockify the description.
+                  child: Text.rich(
+                    TextSpan(
+                      children: <InlineSpan>[
+                        TextSpan(
+                          text: title,
                           style:
-                              LumeType.natural(
-                                context,
-                                context.lumeType.metaSmall,
-                                size: 11,
+                              LumeType.tracked(
+                                LumeType.natural(
+                                  context,
+                                  context.lumeType.meta,
+                                  size: 14,
+                                ),
+                                -0.022,
                               ).copyWith(
-                                color: lume.text3,
-                                fontWeight: FontWeight.w500,
+                                // `.optrow.is-on .optrow__title { color:
+                                // var(--accent-ink) }`.
+                                color: selected ? lume.accentInk : lume.text,
+                                fontWeight: FontWeight.w700,
+                                // `.optrow__title` sets a size and no line
+                                // height, so it inherits `--t-body`'s 1.5 —
+                                // 21 at 14, which is what makes the row 46
+                                // rather than the 43 the font's own line
+                                // would give.
+                                height: LumeType.lineHeight(context, 1.5),
                               ),
                         ),
+                        if (subtitle != null)
+                          TextSpan(
+                            text: subtitle,
+                            style:
+                                LumeType.natural(
+                                  context,
+                                  context.lumeType.metaSmall,
+                                  size: 11,
+                                ).copyWith(
+                                  color: lume.text3,
+                                  fontWeight: FontWeight.w500,
+                                  height: LumeType.lineHeight(context, 1.5),
+                                ),
+                          ),
                       ],
-                    ],
+                    ),
+                    // The two run together on one line; a long one wraps as
+                    // one paragraph, which is what the reference does too.
+                    maxLines: 2,
+                    overflow: TextOverflow.ellipsis,
                   ),
                 ),
                 const SizedBox(width: LumeSettingsMetrics.optionGap),

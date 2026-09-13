@@ -41,6 +41,8 @@ import '../../../core/widgets/lume/lume_overlay.dart';
 import '../../../core/widgets/lume/lume_surface.dart';
 import '../../../l10n/app_localizations.dart';
 import '../../auth/application/auth_flow_controller.dart';
+import '../../catalogue/domain/eligibility.dart';
+import '../../catalogue/presentation/feature_strings.dart';
 import '../../onboarding/data/country_fixture.dart';
 import '../../onboarding/domain/onboarding_state.dart';
 import '../../startup/application/startup_controller.dart';
@@ -439,6 +441,16 @@ class _LumeAccountHostState extends ConsumerState<LumeAccountHost> {
       recents: const <LumeLibraryEntry>[],
       sessions: _sessions,
       stored: _stored,
+      // §64 again: the catalogue is asked whether a tool is visible, and the
+      // notification categories follow from that rather than from a list of
+      // their own. A faith-gated or country-gated tool takes its alerts with
+      // it, and the count on Profile and the list on the Notifications route
+      // are the same question asked once.
+      isToolVisible: (String toolId) {
+        final LumeEligibility eligibility = ref.read(eligibilityProvider);
+        return eligibility.visibleById(toolId, LumeUserContext.from(p)) != null;
+      },
+      toolName: (String toolId) => LumeFeatureStrings.name(l, toolId),
       actions: _actions(l),
     );
   }
@@ -462,6 +474,30 @@ class _LumeAccountHostState extends ConsumerState<LumeAccountHost> {
     ),
     setTheme: (ThemeMode mode) =>
         ref.read(themeModeProvider.notifier).state = mode,
+    toggleGeneral: (String name, bool on) {
+      final LumeNotificationPrefs now = ref
+          .read(notificationPrefsProvider)
+          .prefs;
+      unawaited(
+        _writeNotify(switch (name) {
+          // Push reports what the OS has granted. This build never asks, so
+          // switching it on cannot make it true — and the row says "Not
+          // asked yet" rather than pretending.
+          'push' => now.copyWith(push: on),
+          'inApp' => now.copyWith(inApp: on),
+          'sound' => now.copyWith(sound: on),
+          'haptics' => now.copyWith(haptics: on),
+          'badge' => now.copyWith(badge: on),
+          _ => now.copyWith(quiet: on),
+        }),
+      );
+    },
+    toggleType: (String sourceId, bool on) => unawaited(
+      _writeNotify(
+        ref.read(notificationPrefsProvider).prefs.typeToggled(sourceId, on: on),
+      ),
+    ),
+    restoreNotifications: () => _say(l.notifPrefRestore),
     toggleCategory: (String id, bool on) => unawaited(
       _writeNotify(
         ref.read(notificationPrefsProvider).prefs.toggled(id, on: on),

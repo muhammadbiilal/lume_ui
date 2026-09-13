@@ -3850,6 +3850,192 @@ abstract class AppLocalizations {
   /// **'Pakistan name squad for the home Test series'**
   String get newsSquad;
 
+  /// Reference: `n.pref.badge`.
+  ///
+  /// In en, this message translates to:
+  /// **'Badge count'**
+  String get notifPrefBadge;
+
+  /// Reference: `n.pref.badgeSub`.
+  ///
+  /// In en, this message translates to:
+  /// **'Show the unread count on the bell'**
+  String get notifPrefBadgeSub;
+
+  /// Reference: `n.pref.categories`.
+  ///
+  /// In en, this message translates to:
+  /// **'Categories'**
+  String get notifPrefCategories;
+
+  /// Reference: `n.pref.categoriesSub`.
+  ///
+  /// In en, this message translates to:
+  /// **'Switch off anything you don’t want to hear about'**
+  String get notifPrefCategoriesSub;
+
+  /// Reference: `n.pref.general`.
+  ///
+  /// In en, this message translates to:
+  /// **'General'**
+  String get notifPrefGeneral;
+
+  /// Reference: `n.pref.haptics`.
+  ///
+  /// In en, this message translates to:
+  /// **'Vibration'**
+  String get notifPrefHaptics;
+
+  /// Reference: `n.pref.inApp`.
+  ///
+  /// In en, this message translates to:
+  /// **'In-app notifications'**
+  String get notifPrefInApp;
+
+  /// Reference: `n.pref.inAppSub`.
+  ///
+  /// In en, this message translates to:
+  /// **'Banners and the notification centre'**
+  String get notifPrefInAppSub;
+
+  /// Reference: `n.pref.perTool`.
+  ///
+  /// In en, this message translates to:
+  /// **'By tool'**
+  String get notifPrefPerTool;
+
+  /// Reference: `n.pref.perToolSub`.
+  ///
+  /// In en, this message translates to:
+  /// **'Fine-grained control over each kind of alert'**
+  String get notifPrefPerToolSub;
+
+  /// Reference: `n.pref.push`.
+  ///
+  /// In en, this message translates to:
+  /// **'Push notifications'**
+  String get notifPrefPush;
+
+  /// Reference: `n.pref.quiet`.
+  ///
+  /// In en, this message translates to:
+  /// **'Quiet hours'**
+  String get notifPrefQuiet;
+
+  /// Reference: `n.pref.quietOn`.
+  ///
+  /// In en, this message translates to:
+  /// **'Quiet hours'**
+  String get notifPrefQuietOn;
+
+  /// Reference: `n.pref.quietSub`.
+  ///
+  /// In en, this message translates to:
+  /// **'Nothing interrupts you; everything still arrives'**
+  String get notifPrefQuietSub;
+
+  /// Reference: `n.pref.restore`.
+  ///
+  /// In en, this message translates to:
+  /// **'Restore dismissed'**
+  String get notifPrefRestore;
+
+  /// Reference: `n.pref.sound`.
+  ///
+  /// In en, this message translates to:
+  /// **'Sound'**
+  String get notifPrefSound;
+
+  /// Reference: `ntype.billDue`.
+  ///
+  /// In en, this message translates to:
+  /// **'Bills due soon'**
+  String get ntypeBillDue;
+
+  /// Reference: `ntype.billOverdue`.
+  ///
+  /// In en, this message translates to:
+  /// **'Overdue bills'**
+  String get ntypeBillOverdue;
+
+  /// Reference: `ntype.docExpiry`.
+  ///
+  /// In en, this message translates to:
+  /// **'Document expiry'**
+  String get ntypeDocExpiry;
+
+  /// Reference: `ntype.flightChange`.
+  ///
+  /// In en, this message translates to:
+  /// **'Flight changes'**
+  String get ntypeFlightChange;
+
+  /// Reference: `ntype.forecast`.
+  ///
+  /// In en, this message translates to:
+  /// **'Daily forecast'**
+  String get ntypeForecast;
+
+  /// Reference: `ntype.habitReminder`.
+  ///
+  /// In en, this message translates to:
+  /// **'Habit reminders'**
+  String get ntypeHabitReminder;
+
+  /// Reference: `ntype.marketMove`.
+  ///
+  /// In en, this message translates to:
+  /// **'Market movement'**
+  String get ntypeMarketMove;
+
+  /// Reference: `ntype.medication`.
+  ///
+  /// In en, this message translates to:
+  /// **'Medication reminders'**
+  String get ntypeMedication;
+
+  /// Reference: `ntype.outage`.
+  ///
+  /// In en, this message translates to:
+  /// **'Power outages'**
+  String get ntypeOutage;
+
+  /// Reference: `ntype.parcelUpdate`.
+  ///
+  /// In en, this message translates to:
+  /// **'Parcel updates'**
+  String get ntypeParcelUpdate;
+
+  /// Reference: `ntype.prayerReminder`.
+  ///
+  /// In en, this message translates to:
+  /// **'Prayer reminder'**
+  String get ntypePrayerReminder;
+
+  /// Reference: `ntype.severeWeather`.
+  ///
+  /// In en, this message translates to:
+  /// **'Severe weather'**
+  String get ntypeSevereWeather;
+
+  /// Reference: `ntype.subRenewal`.
+  ///
+  /// In en, this message translates to:
+  /// **'Subscription renewals'**
+  String get ntypeSubRenewal;
+
+  /// Reference: `ntype.taskReminder`.
+  ///
+  /// In en, this message translates to:
+  /// **'Task reminders'**
+  String get ntypeTaskReminder;
+
+  /// Reference: `ntype.trainDelay`.
+  ///
+  /// In en, this message translates to:
+  /// **'Train delays'**
+  String get ntypeTrainDelay;
+
   /// Reference key onb.allSet
   ///
   /// In en, this message translates to:

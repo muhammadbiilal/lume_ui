@@ -889,9 +889,9 @@ means the div is as wide as the wider of its two lines, and each `<p>` fills
 it. At 390 the guest's address wraps and takes the full 312; the holder's name
 is 132.3 and the address sits centred under it.
 
-### C41 — an option row's title and its description run together. **Open.**
+### C41 — an option row's title and its description run together
 
-**Found in F5C. Measured, and put to a decision rather than settled.**
+**Found in F5C. Put to a decision, and the decision was to reproduce.**
 
 `.optrow__title` and `.optrow__sub` are inline `<span>`s, and nothing
 blockifies them. `components.css` has a rule that turns `.list-row__title`,
@@ -910,14 +910,21 @@ the description on its own line as every other row in the product does. Five
 routes carry option rows — language, region, currency, units, time,
 appearance — and the difference is eleven points a row on all of them.
 
-**Why it is open rather than reproduced.** The visual-authority rule says the
-rendered Lume interface wins and reserves *a visible departure from Lume* for
-a decision. Reproducing it means shipping "Follow my regionAutomatic"; not
-reproducing it is a visible departure on five screens. Neither is ours to
-choose, so both are measured and the question is asked.
+**Why it was a decision.** The visual-authority rule says the rendered Lume
+interface wins and reserves *a visible departure from Lume* for a decision.
+Reproducing it means shipping "Follow my regionAutomatic"; not reproducing it
+is a visible departure on five screens. Neither was ours to choose.
 
-`account_bounds_test.dart` records the numbers and does not assert them, and
-`ACCOUNT_PARITY.md` marks every affected row **open — C41**.
+**Decided: reproduce.** `LumeOptionRow` draws one `Text.rich` with two spans
+and no separator, on the line height the spans inherit — `--t-body`'s 1.5,
+which is 21 at 14 and is what makes the row **46** rather than the 43 the
+font's own line would give. `account_bounds_test.dart` asserts it, and
+`optrow` reads `=` on all five routes.
+
+**Dayroz obligation.** Add `.optrow__title` and `.optrow__sub` to the rule in
+`components.css` that already blockifies `.list-row__title` and
+`.list-row__sub`. Until then every option in the account section reads as one
+run-on word.
 
 ### C42 — an option row's mark was a bare check
 
@@ -944,23 +951,38 @@ It is an accumulation rather than a structural difference — no block is
 missing, misplaced or the wrong size — but it is larger than D20's three
 points and is therefore named rather than absorbed into a tolerance.
 
-### C44 — the Notifications screen filters twice; Flutter can only filter once. **Open.**
+### C44 — the Notifications screen filters twice, and the route was half built
 
-**Found in F5C. Measured, and put to a decision.** `services/notifications.js`
-narrows the category list by two questions before it draws a switch:
+**Found in F5C. Put to a decision, and the decision was to carry the
+reference's own table.**
+
+Two things, and the first was mine. `ROUTES.notifications` delegates to
+`renderNotifPrefs`, which draws **five** sections — General, Categories, By
+tool, Quiet hours, Privacy — and a control that restores every dismissed
+notification. Flutter had built two of them. That is not a difference; it is a
+route that was not finished, and it is finished now.
+
+The second is the filter. `services/notifications.js` narrows the category
+list by two questions before it draws a switch:
 
 1. the reader's faith preference, and
 2. whether any **visible feature** feeds the category —
    `NOTIFY.SOURCES.some(src => src.cat === c.id && visible(feature(src.tool)))`.
 
-Flutter asks the first (C34) and cannot ask the second: there is no
-notification engine in this build, and no source table to ask. So the
-reference lists five categories for a non-Muslim Pakistani reader and Flutter
-lists ten.
+**Decided: carry `SOURCES` as a fixture.** `kNotificationSources` is the
+engine's own fifteen rows — id, tool, category, type — and nothing else from
+it: no build function, no schedule, no delivery. With the table in hand
+`LumeNotificationPrefs.visible` can ask both questions in one place, so the
+count on Profile and the list on this route cannot disagree (C34), and the By
+tool section has something true to group by.
 
-**Dayroz obligation.** When there is an engine, the second filter belongs
-beside the first — in `LumeNotificationPrefs.visible`, so the count and the
-list keep asking one question rather than two.
+**No icons.** `toggle()` emits a title, an optional description and a switch
+and no `.list-row__icon` at all, so every row on this route is 59 where the
+icon'd rows elsewhere in the section are 61. The categories carry glyphs in
+the engine's table and the screen does not draw them.
+
+**Dayroz obligation.** When there is an engine, `SOURCES` moves behind it and
+this table goes away; `visible` keeps asking the same two questions.
 
 ### C45 — `--pad-row` is 12/16
 
@@ -1037,6 +1059,8 @@ deleted row invites the same question again.
 
 | Date | Change | Reason |
 |---|---|---|
+| 2026-09-13 (F5C-C) | **C41 decided: reproduce.** An option row's title and its description run together on one line, exactly as the prototype draws them | The rendered Lume interface wins; the Dayroz obligation is recorded rather than the defect silently repaired |
+| 2026-09-13 (F5C-C) | **C44 decided: carry the engine's `SOURCES` as a fixture**, and the Notifications route finished — five sections, not two | The table is what the category filter and the By tool section both need, and neither is an engine |
 | 2026-09-13 (F5C-C) | **All twenty-one routes measured against the prototype** — a web capture, a Flutter capture, a side-by-side and a structural comparison each, in `ACCOUNT_PARITY.md` | A settings section fails quietly; a route that renders an empty body throws nothing |
 | 2026-09-13 (F5C-C) | **C42, C46, C47, C48 raised and corrected** — the option row's ring and padding, the toolbar's back control and its target, the toolbar's title line, and the account form's own field shape | Found by adding the account routes to the measured-bounds comparison |
 | 2026-09-13 (F5C-C) | **C41, C43, C44 raised and left open** — the option row's run-together description, the accumulation under a form, and the Notifications screen's second filter | The visual-authority rule reserves a visible departure from Lume for a decision, and these three are not ours to take |

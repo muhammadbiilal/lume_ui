@@ -2099,6 +2099,101 @@ class AppLocalizationsUr extends AppLocalizations {
       'پاکستان نے ہوم ٹیسٹ سیریز کے لیے اسکواڈ کا اعلان کر دیا';
 
   @override
+  String get notifPrefBadge => 'بیج کی گنتی';
+
+  @override
+  String get notifPrefBadgeSub => 'گھنٹی پر اَن پڑھی کی تعداد دکھائیں';
+
+  @override
+  String get notifPrefCategories => 'زمرے';
+
+  @override
+  String get notifPrefCategoriesSub =>
+      'جس کے بارے میں نہیں سننا، اُسے بند کر دیں';
+
+  @override
+  String get notifPrefGeneral => 'عمومی';
+
+  @override
+  String get notifPrefHaptics => 'وائبریشن';
+
+  @override
+  String get notifPrefInApp => 'ایپ کے اندر اطلاعات';
+
+  @override
+  String get notifPrefInAppSub => 'بینرز اور اطلاعات کا مرکز';
+
+  @override
+  String get notifPrefPerTool => 'بلحاظ ٹول';
+
+  @override
+  String get notifPrefPerToolSub => 'ہر قسم کی اطلاع پر باریک کنٹرول';
+
+  @override
+  String get notifPrefPush => 'پُش اطلاعات';
+
+  @override
+  String get notifPrefQuiet => 'خاموش اوقات';
+
+  @override
+  String get notifPrefQuietOn => 'خاموش اوقات';
+
+  @override
+  String get notifPrefQuietSub =>
+      'کوئی چیز مخل نہیں ہوگی؛ سب کچھ پھر بھی آتا رہے گا';
+
+  @override
+  String get notifPrefRestore => 'ہٹائی گئی بحال کریں';
+
+  @override
+  String get notifPrefSound => 'آواز';
+
+  @override
+  String get ntypeBillDue => 'جلد واجب الادا بل';
+
+  @override
+  String get ntypeBillOverdue => 'واجب الادا بل';
+
+  @override
+  String get ntypeDocExpiry => 'دستاویز کی میعاد';
+
+  @override
+  String get ntypeFlightChange => 'پرواز میں تبدیلی';
+
+  @override
+  String get ntypeForecast => 'روزانہ پیش گوئی';
+
+  @override
+  String get ntypeHabitReminder => 'عادات کی یاد دہانی';
+
+  @override
+  String get ntypeMarketMove => 'منڈی کی حرکت';
+
+  @override
+  String get ntypeMedication => 'ادویات کی یاد دہانی';
+
+  @override
+  String get ntypeOutage => 'بجلی کی بندش';
+
+  @override
+  String get ntypeParcelUpdate => 'پارسل کی اپ ڈیٹ';
+
+  @override
+  String get ntypePrayerReminder => 'نماز کی یاد دہانی';
+
+  @override
+  String get ntypeSevereWeather => 'شدید موسم';
+
+  @override
+  String get ntypeSubRenewal => 'سبسکرپشن کی تجدید';
+
+  @override
+  String get ntypeTaskReminder => 'کاموں کی یاد دہانی';
+
+  @override
+  String get ntypeTrainDelay => 'ٹرین کی تاخیر';
+
+  @override
   String get onbAllSet => 'سب تیار';
 
   @override

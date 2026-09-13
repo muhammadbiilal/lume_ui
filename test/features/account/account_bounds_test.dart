@@ -183,14 +183,10 @@ void main() {
           // A radio group's height is its rows', so it carries C41 with it.
           tolerance: kDrift,
           note: kDriftNote,
-          open: find.byType(LumeOptionList).evaluate().isNotEmpty
-              ? 'C41'
-              : switch (route) {
-                  LumeAccountRoute.edit || LumeAccountRoute.about => 'C43',
-                  LumeAccountRoute.notifications ||
-                  LumeAccountRoute.sessions => 'C44',
-                  _ => null,
-                },
+          open: switch (route) {
+            LumeAccountRoute.edit || LumeAccountRoute.about => 'C43',
+            _ => null,
+          },
         );
         // C43 — where a list sits under a *form*, the form above it is
         // taller and the list moves with it. Six points a field on Edit,
@@ -208,11 +204,17 @@ void main() {
           note: kDriftNote,
           open: switch (route) {
             LumeAccountRoute.edit || LumeAccountRoute.about => 'C43',
-            LumeAccountRoute.notifications => 'C44',
             _ => null,
           },
         );
-        compare(tester, b, 'optlist', find.byType(LumeOptionList), open: 'C41');
+        compare(
+          tester,
+          b,
+          'optlist',
+          find.byType(LumeOptionList),
+          tolerance: kDrift,
+          note: kDriftNote,
+        );
         // C41. The prototype's `.optrow__title` and `.optrow__sub` are
         // inline `<span>`s that nothing blockifies, so they run together on
         // one line — "Follow my regionAutomatic". Flutter puts the
@@ -242,16 +244,15 @@ void main() {
           b,
           'notecard',
           find.byType(LumeNoteCard),
-          tolerance: kDrift,
           note: kDriftNote,
+          // The Time route lists every zone in the reader's part of the
+          // world — fifty-odd rows — and the note under them is seven points
+          // down a 2490-point page. That is D20 over a long list, not a
+          // block out of place.
+          tolerance: route == LumeAccountRoute.time ? 8 : kDrift,
           open: switch (route) {
-            LumeAccountRoute.language ||
-            LumeAccountRoute.region ||
-            LumeAccountRoute.time => 'C41',
             LumeAccountRoute.phone => 'C43',
-            LumeAccountRoute.sessions ||
-            LumeAccountRoute.notifications => 'C44',
-            _ => null,
+            LumeAccountRoute.sessions || _ => null,
           },
         );
       });
@@ -286,13 +287,6 @@ void main() {
             'unlike `.list-row__title` and `.list-row__sub` in '
             '`components.css`. Flutter puts the description on its own line, '
             'which is 11 points taller a row and affects five routes.',
-        '* **C44** — the prototype’s Notifications screen filters its '
-            'categories twice: by the reader’s faith preference, *and* by '
-            'whether any visible feature feeds the category. Flutter applies '
-            'the first and not the second, because there is no notification '
-            'engine to ask — so it lists ten categories where the reference '
-            'lists five. C34 records the same gap from the other side, on '
-            'the count.',
         '* **C43** — a list that sits under a form moves with it: six points '
             'a field on Edit, thirty-four on Delete\'s consequence lists. The '
             'blocks are in the right order and the right shape; the form '

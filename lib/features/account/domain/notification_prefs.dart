@@ -65,6 +65,132 @@ const List<LumeNotificationCategory> kNotificationCategories =
       LumeNotificationCategory(id: 'system', icon: LumeIcons.settings),
     ];
 
+/// One thing that can send a notification.
+///
+/// `notify-engine.js`'s `SOURCES`, carried as a table rather than as an
+/// engine: what the preferences screen needs from it is which *tool* feeds
+/// which *category*, and that is a fact about the product rather than about a
+/// running scheduler.
+///
+/// **It does not send anything.** There is no build function here, no
+/// schedule and no delivery — the fifteen rows exist so the category list can
+/// be filtered the way the reference filters it, and so the per-tool section
+/// has something true to group by.
+@immutable
+class LumeNotificationSource {
+  const LumeNotificationSource({
+    required this.id,
+    required this.tool,
+    required this.category,
+    required this.type,
+  });
+
+  final String id;
+
+  /// The feature id in the catalogue, so eligibility can be asked about it.
+  final String tool;
+
+  final String category;
+
+  /// The kind of notification, which the per-tool section switches.
+  final String type;
+}
+
+/// The fifteen, in the engine's own order.
+const List<LumeNotificationSource> kNotificationSources =
+    <LumeNotificationSource>[
+      LumeNotificationSource(
+        id: 'prayer.next',
+        tool: 'prayer',
+        category: 'faith',
+        type: 'prayerReminder',
+      ),
+      LumeNotificationSource(
+        id: 'bills.overdue',
+        tool: 'bills',
+        category: 'finance',
+        type: 'billOverdue',
+      ),
+      LumeNotificationSource(
+        id: 'bills.due',
+        tool: 'bills',
+        category: 'finance',
+        type: 'billDue',
+      ),
+      LumeNotificationSource(
+        id: 'markets.move',
+        tool: 'markets',
+        category: 'markets',
+        type: 'marketMove',
+      ),
+      LumeNotificationSource(
+        id: 'parcel.transit',
+        tool: 'parcel',
+        category: 'travel',
+        type: 'parcelUpdate',
+      ),
+      LumeNotificationSource(
+        id: 'flights.delay',
+        tool: 'flights',
+        category: 'travel',
+        type: 'flightChange',
+      ),
+      LumeNotificationSource(
+        id: 'trains.delay',
+        tool: 'trains',
+        category: 'travel',
+        type: 'trainDelay',
+      ),
+      LumeNotificationSource(
+        id: 'weather.alert',
+        tool: 'weather',
+        category: 'weather',
+        type: 'severeWeather',
+      ),
+      LumeNotificationSource(
+        id: 'weather.tomorrow',
+        tool: 'weather',
+        category: 'weather',
+        type: 'forecast',
+      ),
+      LumeNotificationSource(
+        id: 'loadshed.next',
+        tool: 'loadshed',
+        category: 'system',
+        type: 'outage',
+      ),
+      LumeNotificationSource(
+        id: 'documents.expiring',
+        tool: 'documents',
+        category: 'documents',
+        type: 'docExpiry',
+      ),
+      LumeNotificationSource(
+        id: 'subs.renewal',
+        tool: 'subs',
+        category: 'finance',
+        type: 'subRenewal',
+      ),
+      LumeNotificationSource(
+        id: 'todos.today',
+        tool: 'todos',
+        category: 'reminders',
+        type: 'taskReminder',
+      ),
+      LumeNotificationSource(
+        id: 'meds.dose',
+        tool: 'meds',
+        category: 'health',
+        type: 'medication',
+      ),
+      LumeNotificationSource(
+        id: 'habits.streak',
+        tool: 'habits',
+        category: 'personal',
+        type: 'habitReminder',
+      ),
+    ];
+
 /// What the reader has asked for.
 @immutable
 class LumeNotificationPrefs {
@@ -80,6 +206,7 @@ class LumeNotificationPrefs {
     this.preview = true,
     this.sensitivePreview = false,
     this.off = const <String>{},
+    this.typesOff = const <String>{},
   });
 
   /// System push. `false` until the OS has actually granted it, and this build
@@ -110,20 +237,57 @@ class LumeNotificationPrefs {
   /// stops a new kind of notification arriving silently switched off.
   final Set<String> off;
 
+  /// Source ids the reader has switched **off**, for the per-tool section.
+  /// Exceptions again, so a source added later arrives switched on.
+  final Set<String> typesOff;
+
   bool isOn(String id) => !off.contains(id);
+
+  bool isTypeOn(String sourceId) => !typesOff.contains(sourceId);
 
   /// The categories a given reader can see at all.
   ///
-  /// The faith gate is asked here rather than at the row, so the count and the
-  /// list cannot disagree — which is exactly what they do in the reference.
-  /// See C34.
-  static List<LumeNotificationCategory> visible({required bool islamic}) =>
-      kNotificationCategories
-          .where((LumeNotificationCategory c) => islamic || !c.faith)
-          .toList(growable: false);
+  /// **Two filters, the reference's own.** A category is offered when the
+  /// reader's faith preference allows it *and* some visible feature feeds it
+  /// — `NOTIFY.SOURCES.some(src => src.cat === c.id && visible(src.tool))`.
+  /// Asked once, here, so the count on Profile and the list on this screen
+  /// cannot disagree; in the reference they do, and C34 records it.
+  ///
+  /// `isToolVisible` is the catalogue's own answer, so a country-gated tool
+  /// takes its category with it. `null` means "do not ask the second
+  /// question" — a caller with no catalogue to hand.
+  static List<LumeNotificationCategory> visible({
+    required bool islamic,
+    bool Function(String toolId)? isToolVisible,
+  }) => kNotificationCategories
+      .where((LumeNotificationCategory c) {
+        if (c.faith && !islamic) return false;
+        if (isToolVisible == null) return true;
+        return kNotificationSources.any(
+          (LumeNotificationSource s) =>
+              s.category == c.id && isToolVisible(s.tool),
+        );
+      })
+      .toList(growable: false);
 
-  int onCount({required bool islamic}) => visible(
+  /// The sources behind one category, for the per-tool section.
+  static List<LumeNotificationSource> sourcesFor(
+    String categoryId, {
+    bool Function(String toolId)? isToolVisible,
+  }) => kNotificationSources
+      .where(
+        (LumeNotificationSource s) =>
+            s.category == categoryId &&
+            (isToolVisible == null || isToolVisible(s.tool)),
+      )
+      .toList(growable: false);
+
+  int onCount({
+    required bool islamic,
+    bool Function(String toolId)? isToolVisible,
+  }) => visible(
     islamic: islamic,
+    isToolVisible: isToolVisible,
   ).where((LumeNotificationCategory c) => isOn(c.id)).length;
 
   LumeNotificationPrefs copyWith({
@@ -138,6 +302,7 @@ class LumeNotificationPrefs {
     bool? preview,
     bool? sensitivePreview,
     Set<String>? off,
+    Set<String>? typesOff,
   }) => LumeNotificationPrefs(
     push: push ?? this.push,
     inApp: inApp ?? this.inApp,
@@ -150,7 +315,19 @@ class LumeNotificationPrefs {
     preview: preview ?? this.preview,
     sensitivePreview: sensitivePreview ?? this.sensitivePreview,
     off: off ?? this.off,
+    typesOff: typesOff ?? this.typesOff,
   );
+
+  /// The same value with one source switched.
+  LumeNotificationPrefs typeToggled(String sourceId, {required bool on}) {
+    final Set<String> next = Set<String>.of(typesOff);
+    if (on) {
+      next.remove(sourceId);
+    } else {
+      next.add(sourceId);
+    }
+    return copyWith(typesOff: next);
+  }
 
   /// The same value with one category switched.
   LumeNotificationPrefs toggled(String id, {required bool on}) {
@@ -176,7 +353,8 @@ class LumeNotificationPrefs {
       other.quietTo == quietTo &&
       other.preview == preview &&
       other.sensitivePreview == sensitivePreview &&
-      setEquals(other.off, off);
+      setEquals(other.off, off) &&
+      setEquals(other.typesOff, typesOff);
 
   @override
   int get hashCode => Object.hash(
@@ -191,6 +369,7 @@ class LumeNotificationPrefs {
     preview,
     sensitivePreview,
     Object.hashAllUnordered(off),
+    Object.hashAllUnordered(typesOff),
   );
 }
 

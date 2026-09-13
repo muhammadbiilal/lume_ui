@@ -65,6 +65,8 @@ class LumeAccountRouteContext {
     required this.sessions,
     required this.stored,
     required this.actions,
+    required this.isToolVisible,
+    required this.toolName,
     this.identity,
   });
 
@@ -105,7 +107,29 @@ class LumeAccountRouteContext {
 
   final LumeAccountActions actions;
 
+  /// The catalogue's own answer about a tool, so a country-gated or
+  /// faith-gated feature takes its notifications with it. One gate, asked
+  /// here as everywhere else (§64).
+  final bool Function(String toolId) isToolVisible;
+
+  /// What a tool is called, in the reading language.
+  final String Function(String toolId) toolName;
+
   bool get isAuthed => state == LumeAccountState.authed;
+
+  /// The visible sources, grouped by the tool that sends them — the per-tool
+  /// section's own shape.
+  Map<String, List<LumeNotificationSource>> get sourcesByTool {
+    final Map<String, List<LumeNotificationSource>> out =
+        <String, List<LumeNotificationSource>>{};
+    for (final LumeNotificationSource source in kNotificationSources) {
+      if (!isToolVisible(source.tool)) continue;
+      out
+          .putIfAbsent(source.tool, () => <LumeNotificationSource>[])
+          .add(source);
+    }
+    return out;
+  }
 }
 
 /// One saved or recent tool, as the library route draws it.
@@ -137,6 +161,9 @@ class LumeAccountActions {
     required this.setZone,
     required this.setTheme,
     required this.toggleCategory,
+    required this.toggleGeneral,
+    required this.toggleType,
+    required this.restoreNotifications,
     required this.togglePreview,
     required this.toggleSensitivePreview,
     required this.toggleRecommendations,
@@ -165,6 +192,16 @@ class LumeAccountActions {
   final void Function(ThemeMode mode) setTheme;
 
   final void Function(String categoryId, bool on) toggleCategory;
+
+  /// One of the five General switches: `push`, `inApp`, `sound`, `haptics`,
+  /// `badge` — and `quiet`, which is the same kind of thing.
+  final void Function(String name, bool on) toggleGeneral;
+
+  /// One source's own switch, in the per-tool section.
+  final void Function(String sourceId, bool on) toggleType;
+
+  /// `notifrestore` — puts every dismissed notification back.
+  final VoidCallback restoreNotifications;
   final void Function(bool on) togglePreview;
   final void Function(bool on) toggleSensitivePreview;
   final void Function(bool on) toggleRecommendations;
@@ -592,26 +629,80 @@ LumeAccountView _appearance(LumeAccountRouteContext c) {
 
 /// One preference store, two doors.
 ///
-/// The switches are the notification centre's own; this is the other door
-/// onto them. There is no engine behind them in this build, and the note says
-/// so rather than letting the screen imply one.
+/// The switches are the notification centre's own; this is the other door onto
+/// them. Five sections, in the order `services/notifications.js` emits them:
+/// General, Categories, Per tool, Quiet hours, Privacy — and the control that
+/// puts them all back.
+///
+/// **There is no engine behind them in this build**, and the screen does not
+/// imply one: push reports what the OS has actually granted, which is nothing
+/// here, and says "Not asked yet" rather than "Off".
+///
+/// A category is offered when the reader's faith preference allows it *and*
+/// some visible feature feeds it. Both filters are asked in one place —
+/// `LumeNotificationPrefs.visible` — so the count on Profile and the list here
+/// cannot disagree. See C34 and C44.
 LumeAccountView _notifications(LumeAccountRouteContext c) {
   final AppLocalizations l = c.l;
   final bool islamic = c.profile.islamic ?? false;
   final List<LumeNotificationCategory> cats = LumeNotificationPrefs.visible(
     islamic: islamic,
+    isToolVisible: c.isToolVisible,
   );
 
   return LumeAccountView(
     title: l.navNotifications,
     subtitle: c.notify.push ? l.acctPushOn : l.acctPushOff,
     body: (BuildContext context) => <Widget>[
+      // ---- General ------------------------------------------------------
       LumeAccountSection(
+        title: l.notifPrefGeneral,
+        child: LumeAccountList(
+          rows: <Widget>[
+            LumeSettingsRow(
+              title: l.notifPrefPush,
+              // What the OS has granted, not what the app would like. This
+              // build never asks, so it never claims to have been allowed.
+              subtitle: l.acctPushAsk,
+              toggle: c.notify.push,
+              onTap: () => c.actions.toggleGeneral('push', !c.notify.push),
+            ),
+            LumeSettingsRow(
+              title: l.notifPrefInApp,
+              subtitle: l.notifPrefInAppSub,
+              toggle: c.notify.inApp,
+              onTap: () => c.actions.toggleGeneral('inApp', !c.notify.inApp),
+            ),
+            LumeSettingsRow(
+              title: l.notifPrefSound,
+              toggle: c.notify.sound,
+              onTap: () => c.actions.toggleGeneral('sound', !c.notify.sound),
+            ),
+            LumeSettingsRow(
+              title: l.notifPrefHaptics,
+              toggle: c.notify.haptics,
+              onTap: () =>
+                  c.actions.toggleGeneral('haptics', !c.notify.haptics),
+            ),
+            LumeSettingsRow(
+              title: l.notifPrefBadge,
+              subtitle: l.notifPrefBadgeSub,
+              toggle: c.notify.badge,
+              onTap: () => c.actions.toggleGeneral('badge', !c.notify.badge),
+              isLast: true,
+            ),
+          ],
+        ),
+      ),
+
+      // ---- Categories ---------------------------------------------------
+      LumeAccountSection(
+        title: l.notifPrefCategories,
+        subtitle: l.notifPrefCategoriesSub,
         child: LumeAccountList(
           rows: <Widget>[
             for (int i = 0; i < cats.length; i++)
               LumeSettingsRow(
-                icon: cats[i].icon,
                 title: _categoryLabel(l, cats[i].id),
                 toggle: c.notify.isOn(cats[i].id),
                 onTap: () => c.actions.toggleCategory(
@@ -623,19 +714,74 @@ LumeAccountView _notifications(LumeAccountRouteContext c) {
           ],
         ),
       ),
+
+      // ---- Per tool -----------------------------------------------------
       LumeAccountSection(
-        tight: true,
+        title: l.notifPrefPerTool,
+        subtitle: l.notifPrefPerToolSub,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          mainAxisSize: MainAxisSize.min,
+          children: <Widget>[
+            for (final MapEntry<String, List<LumeNotificationSource>> group
+                in c.sourcesByTool.entries) ...<Widget>[
+              Padding(
+                padding: const EdgeInsets.only(top: 12, bottom: 6),
+                child: Text(
+                  c.toolName(group.key),
+                  style: LumeInputField.formLabelStyle(context),
+                ),
+              ),
+              LumeAccountList(
+                rows: <Widget>[
+                  for (int i = 0; i < group.value.length; i++)
+                    LumeSettingsRow(
+                      title: _typeLabel(l, group.value[i].type),
+                      toggle: c.notify.isTypeOn(group.value[i].id),
+                      onTap: () => c.actions.toggleType(
+                        group.value[i].id,
+                        !c.notify.isTypeOn(group.value[i].id),
+                      ),
+                      isLast: i == group.value.length - 1,
+                    ),
+                ],
+              ),
+            ],
+          ],
+        ),
+      ),
+
+      // ---- Quiet hours --------------------------------------------------
+      LumeAccountSection(
+        title: l.notifPrefQuiet,
+        subtitle: l.notifPrefQuietSub,
         child: LumeAccountList(
           rows: <Widget>[
             LumeSettingsRow(
-              icon: LumeIcons.eye,
+              title: l.notifPrefQuietOn,
+              subtitle:
+                  '${c.f.hourLabel(c.notify.quietFrom)} – '
+                  '${c.f.hourLabel(c.notify.quietTo)}',
+              toggle: c.notify.quiet,
+              onTap: () => c.actions.toggleGeneral('quiet', !c.notify.quiet),
+              isLast: true,
+            ),
+          ],
+        ),
+      ),
+
+      // ---- Privacy ------------------------------------------------------
+      LumeAccountSection(
+        title: l.acctPrivacyTitle,
+        child: LumeAccountList(
+          rows: <Widget>[
+            LumeSettingsRow(
               title: l.acctPrivacyPreview,
               subtitle: l.acctPrivacyPreviewSub,
               toggle: c.notify.preview,
               onTap: () => c.actions.togglePreview(!c.notify.preview),
             ),
             LumeSettingsRow(
-              icon: LumeIcons.lock,
               title: l.acctPrivacySensitive,
               subtitle: l.acctPrivacySensitiveSub,
               // Inverted on purpose: the switch asks whether sensitive
@@ -648,6 +794,7 @@ LumeAccountView _notifications(LumeAccountRouteContext c) {
           ],
         ),
       ),
+
       if (!c.isAuthed)
         LumeAccountSection(
           tight: true,
@@ -657,9 +804,37 @@ LumeAccountView _notifications(LumeAccountRouteContext c) {
             text: l.acctGuestNotifText,
           ),
         ),
+
+      LumeAccountSection(
+        tight: true,
+        child: LumeButton(
+          label: l.notifPrefRestore,
+          icon: LumeIcons.refresh,
+          block: true,
+          onPressed: c.actions.restoreNotifications,
+        ),
+      ),
     ],
   );
 }
+
+String _typeLabel(AppLocalizations l, String type) => switch (type) {
+  'prayerReminder' => l.ntypePrayerReminder,
+  'billOverdue' => l.ntypeBillOverdue,
+  'billDue' => l.ntypeBillDue,
+  'marketMove' => l.ntypeMarketMove,
+  'parcelUpdate' => l.ntypeParcelUpdate,
+  'flightChange' => l.ntypeFlightChange,
+  'trainDelay' => l.ntypeTrainDelay,
+  'severeWeather' => l.ntypeSevereWeather,
+  'forecast' => l.ntypeForecast,
+  'outage' => l.ntypeOutage,
+  'docExpiry' => l.ntypeDocExpiry,
+  'subRenewal' => l.ntypeSubRenewal,
+  'taskReminder' => l.ntypeTaskReminder,
+  'medication' => l.ntypeMedication,
+  _ => l.ntypeHabitReminder,
+};
 
 String _categoryLabel(AppLocalizations l, String id) => switch (id) {
   'faith' => l.ncatFaith,

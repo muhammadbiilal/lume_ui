@@ -9,7 +9,6 @@ A row reading "not measured" is a block the route does not have — the radio gr
 A row marked **open** is a difference that has been found, measured and put to a decision rather than settled. It does not fail the suite, because failing on an open question would mean either silencing it or blocking on it. The two open numbers are:
 
 * **C41** — the prototype renders an option row's title and its description on *one line, run together*: "Follow my regionAutomatic", "Metrickm · °C · kg". `.optrow__title` and `.optrow__sub` are inline `<span>`s and nothing blockifies them, unlike `.list-row__title` and `.list-row__sub` in `components.css`. Flutter puts the description on its own line, which is 11 points taller a row and affects five routes.
-* **C44** — the prototype’s Notifications screen filters its categories twice: by the reader’s faith preference, *and* by whether any visible feature feeds the category. Flutter applies the first and not the second, because there is no notification engine to ask — so it lists ten categories where the reference lists five. C34 records the same gap from the other side, on the count.
 * **C43** — a list that sits under a form moves with it: six points a field on Edit, thirty-four on Delete's consequence lists. The blocks are in the right order and the right shape; the form above them is taller.
 
 372 values compared.
@@ -51,24 +50,24 @@ A row marked **open** is a difference that has been found, measured and put to a
 | `toolbar.back` | x | 20.00 | 20.00 | = |  |
 | `toolbar.back` | width | 38.00 | 38.00 | = |  |
 | `toolbar.back` | height | 38.00 | 38.00 | = |  |
-| `list` | y | 86.00 | 87.00 | 1.00 | **open — C41** |
-| `list` | x | 20.00 | 20.00 | = | **open — C41** |
-| `list` | width | 350.00 | 350.00 | = | **open — C41** |
-| `list` | height | 139.00 | 150.00 | 11.00 | **open — C41** |
+| `list` | y | 86.00 | 87.00 | 1.00 | cumulative line-box rounding (D20) |
+| `list` | x | 20.00 | 20.00 | = | cumulative line-box rounding (D20) |
+| `list` | width | 350.00 | 350.00 | = | cumulative line-box rounding (D20) |
+| `list` | height | 139.00 | 141.00 | 2.00 | cumulative line-box rounding (D20) |
 | `srow` | — | — | — | — | not measured |
-| `optlist` | y | 86.00 | 87.00 | 1.00 | **open — C41** |
-| `optlist` | x | 20.00 | 20.00 | = | **open — C41** |
-| `optlist` | width | 350.00 | 350.00 | = | **open — C41** |
-| `optlist` | height | 139.00 | 150.00 | 11.00 | **open — C41** |
+| `optlist` | y | 86.00 | 87.00 | 1.00 | cumulative line-box rounding (D20) |
+| `optlist` | x | 20.00 | 20.00 | = | cumulative line-box rounding (D20) |
+| `optlist` | width | 350.00 | 350.00 | = | cumulative line-box rounding (D20) |
+| `optlist` | height | 139.00 | 141.00 | 2.00 | cumulative line-box rounding (D20) |
 | `optrow` | y | 87.00 | 89.00 | 2.00 | **open — C41** |
 | `optrow` | x | 21.00 | 22.00 | 1.00 | **open — C41** |
 | `optrow` | width | 348.00 | 346.00 | -2.00 | **open — C41** |
-| `optrow` | height | 46.00 | 57.00 | 11.00 | **open — C41** |
+| `optrow` | height | 46.00 | 46.00 | = | **open — C41** |
 | `field` | — | — | — | — | not measured |
-| `notecard` | y | 241.00 | 253.00 | 12.00 | **open — C41** |
-| `notecard` | x | 20.00 | 20.00 | = | **open — C41** |
-| `notecard` | width | 350.00 | 350.00 | = | **open — C41** |
-| `notecard` | height | 85.00 | 84.00 | -1.00 | **open — C41** |
+| `notecard` | y | 241.00 | 244.00 | 3.00 | cumulative line-box rounding (D20) |
+| `notecard` | x | 20.00 | 20.00 | = | cumulative line-box rounding (D20) |
+| `notecard` | width | 350.00 | 350.00 | = | cumulative line-box rounding (D20) |
+| `notecard` | height | 85.00 | 84.00 | -1.00 | cumulative line-box rounding (D20) |
 
 ### region
 
@@ -93,10 +92,10 @@ A row marked **open** is a difference that has been found, measured and put to a
 | `optlist` | — | — | — | — | not measured |
 | `optrow` | — | — | — | — | not measured |
 | `field` | — | — | — | — | not measured |
-| `notecard` | y | 86.00 | 87.00 | 1.00 | **open — C41** |
-| `notecard` | x | 20.00 | 20.00 | = | **open — C41** |
-| `notecard` | width | 350.00 | 350.00 | = | **open — C41** |
-| `notecard` | height | 103.00 | 100.00 | -3.00 | **open — C41** |
+| `notecard` | y | 86.00 | 87.00 | 1.00 | cumulative line-box rounding (D20) |
+| `notecard` | x | 20.00 | 20.00 | = | cumulative line-box rounding (D20) |
+| `notecard` | width | 350.00 | 350.00 | = | cumulative line-box rounding (D20) |
+| `notecard` | height | 103.00 | 100.00 | -3.00 | cumulative line-box rounding (D20) |
 
 ### currency
 
@@ -110,19 +109,19 @@ A row marked **open** is a difference that has been found, measured and put to a
 | `toolbar.back` | x | 20.00 | 20.00 | = |  |
 | `toolbar.back` | width | 38.00 | 38.00 | = |  |
 | `toolbar.back` | height | 38.00 | 38.00 | = |  |
-| `list` | y | 86.00 | 87.00 | 1.00 | **open — C41** |
-| `list` | x | 20.00 | 20.00 | = | **open — C41** |
-| `list` | width | 350.00 | 350.00 | = | **open — C41** |
-| `list` | height | 415.00 | 420.00 | 5.00 | **open — C41** |
+| `list` | y | 86.00 | 87.00 | 1.00 | cumulative line-box rounding (D20) |
+| `list` | x | 20.00 | 20.00 | = | cumulative line-box rounding (D20) |
+| `list` | width | 350.00 | 350.00 | = | cumulative line-box rounding (D20) |
+| `list` | height | 415.00 | 417.00 | 2.00 | cumulative line-box rounding (D20) |
 | `srow` | — | — | — | — | not measured |
-| `optlist` | y | 86.00 | 87.00 | 1.00 | **open — C41** |
-| `optlist` | x | 20.00 | 20.00 | = | **open — C41** |
-| `optlist` | width | 350.00 | 350.00 | = | **open — C41** |
-| `optlist` | height | 415.00 | 420.00 | 5.00 | **open — C41** |
+| `optlist` | y | 86.00 | 87.00 | 1.00 | cumulative line-box rounding (D20) |
+| `optlist` | x | 20.00 | 20.00 | = | cumulative line-box rounding (D20) |
+| `optlist` | width | 350.00 | 350.00 | = | cumulative line-box rounding (D20) |
+| `optlist` | height | 415.00 | 417.00 | 2.00 | cumulative line-box rounding (D20) |
 | `optrow` | y | 87.00 | 89.00 | 2.00 | **open — C41** |
 | `optrow` | x | 21.00 | 22.00 | 1.00 | **open — C41** |
 | `optrow` | width | 348.00 | 346.00 | -2.00 | **open — C41** |
-| `optrow` | height | 46.00 | 57.00 | 11.00 | **open — C41** |
+| `optrow` | height | 46.00 | 46.00 | = | **open — C41** |
 | `field` | — | — | — | — | not measured |
 | `notecard` | — | — | — | — | not measured |
 
@@ -138,19 +137,19 @@ A row marked **open** is a difference that has been found, measured and put to a
 | `toolbar.back` | x | 20.00 | 20.00 | = |  |
 | `toolbar.back` | width | 38.00 | 38.00 | = |  |
 | `toolbar.back` | height | 38.00 | 38.00 | = |  |
-| `list` | y | 85.00 | 86.00 | 1.00 | **open — C41** |
-| `list` | x | 20.00 | 20.00 | = | **open — C41** |
-| `list` | width | 350.00 | 350.00 | = | **open — C41** |
-| `list` | height | 139.00 | 174.00 | 35.00 | **open — C41** |
+| `list` | y | 85.00 | 86.00 | 1.00 | cumulative line-box rounding (D20) |
+| `list` | x | 20.00 | 20.00 | = | cumulative line-box rounding (D20) |
+| `list` | width | 350.00 | 350.00 | = | cumulative line-box rounding (D20) |
+| `list` | height | 139.00 | 141.00 | 2.00 | cumulative line-box rounding (D20) |
 | `srow` | — | — | — | — | not measured |
-| `optlist` | y | 85.00 | 86.00 | 1.00 | **open — C41** |
-| `optlist` | x | 20.00 | 20.00 | = | **open — C41** |
-| `optlist` | width | 350.00 | 350.00 | = | **open — C41** |
-| `optlist` | height | 139.00 | 174.00 | 35.00 | **open — C41** |
+| `optlist` | y | 85.00 | 86.00 | 1.00 | cumulative line-box rounding (D20) |
+| `optlist` | x | 20.00 | 20.00 | = | cumulative line-box rounding (D20) |
+| `optlist` | width | 350.00 | 350.00 | = | cumulative line-box rounding (D20) |
+| `optlist` | height | 139.00 | 141.00 | 2.00 | cumulative line-box rounding (D20) |
 | `optrow` | y | 86.00 | 88.00 | 2.00 | **open — C41** |
 | `optrow` | x | 21.00 | 22.00 | 1.00 | **open — C41** |
 | `optrow` | width | 348.00 | 346.00 | -2.00 | **open — C41** |
-| `optrow` | height | 46.00 | 57.00 | 11.00 | **open — C41** |
+| `optrow` | height | 46.00 | 46.00 | = | **open — C41** |
 | `field` | — | — | — | — | not measured |
 | `notecard` | — | — | — | — | not measured |
 
@@ -166,24 +165,24 @@ A row marked **open** is a difference that has been found, measured and put to a
 | `toolbar.back` | x | 20.00 | 20.00 | = |  |
 | `toolbar.back` | width | 38.00 | 38.00 | = |  |
 | `toolbar.back` | height | 38.00 | 38.00 | = |  |
-| `list` | y | 117.00 | 119.00 | 2.00 | **open — C41** |
-| `list` | x | 20.00 | 20.00 | = | **open — C41** |
-| `list` | width | 350.00 | 350.00 | = | **open — C41** |
-| `list` | height | 139.00 | 138.00 | -1.00 | **open — C41** |
+| `list` | y | 117.00 | 119.00 | 2.00 | cumulative line-box rounding (D20) |
+| `list` | x | 20.00 | 20.00 | = | cumulative line-box rounding (D20) |
+| `list` | width | 350.00 | 350.00 | = | cumulative line-box rounding (D20) |
+| `list` | height | 139.00 | 141.00 | 2.00 | cumulative line-box rounding (D20) |
 | `srow` | — | — | — | — | not measured |
-| `optlist` | y | 117.00 | 119.00 | 2.00 | **open — C41** |
-| `optlist` | x | 20.00 | 20.00 | = | **open — C41** |
-| `optlist` | width | 350.00 | 350.00 | = | **open — C41** |
-| `optlist` | height | 139.00 | 138.00 | -1.00 | **open — C41** |
+| `optlist` | y | 117.00 | 119.00 | 2.00 | cumulative line-box rounding (D20) |
+| `optlist` | x | 20.00 | 20.00 | = | cumulative line-box rounding (D20) |
+| `optlist` | width | 350.00 | 350.00 | = | cumulative line-box rounding (D20) |
+| `optlist` | height | 139.00 | 141.00 | 2.00 | cumulative line-box rounding (D20) |
 | `optrow` | y | 118.00 | 121.00 | 3.00 | **open — C41** |
 | `optrow` | x | 21.00 | 22.00 | 1.00 | **open — C41** |
 | `optrow` | width | 348.00 | 346.00 | -2.00 | **open — C41** |
-| `optrow` | height | 46.00 | 45.00 | -1.00 | **open — C41** |
+| `optrow` | height | 46.00 | 46.00 | = | **open — C41** |
 | `field` | — | — | — | — | not measured |
-| `notecard` | y | 2490.00 | 3011.00 | 521.00 | **open — C41** |
-| `notecard` | x | 20.00 | 20.00 | = | **open — C41** |
-| `notecard` | width | 350.00 | 350.00 | = | **open — C41** |
-| `notecard` | height | 85.00 | 84.00 | -1.00 | **open — C41** |
+| `notecard` | y | 2490.00 | 2497.00 | 7.00 | cumulative line-box rounding (D20) |
+| `notecard` | x | 20.00 | 20.00 | = | cumulative line-box rounding (D20) |
+| `notecard` | width | 350.00 | 350.00 | = | cumulative line-box rounding (D20) |
+| `notecard` | height | 85.00 | 84.00 | -1.00 | cumulative line-box rounding (D20) |
 
 ### appearance
 
@@ -197,19 +196,19 @@ A row marked **open** is a difference that has been found, measured and put to a
 | `toolbar.back` | x | 20.00 | 20.00 | = |  |
 | `toolbar.back` | width | 38.00 | 38.00 | = |  |
 | `toolbar.back` | height | 38.00 | 38.00 | = |  |
-| `list` | y | 85.00 | 86.00 | 1.00 | **open — C41** |
-| `list` | x | 20.00 | 20.00 | = | **open — C41** |
-| `list` | width | 350.00 | 350.00 | = | **open — C41** |
-| `list` | height | 139.00 | 138.00 | -1.00 | **open — C41** |
+| `list` | y | 85.00 | 86.00 | 1.00 | cumulative line-box rounding (D20) |
+| `list` | x | 20.00 | 20.00 | = | cumulative line-box rounding (D20) |
+| `list` | width | 350.00 | 350.00 | = | cumulative line-box rounding (D20) |
+| `list` | height | 139.00 | 141.00 | 2.00 | cumulative line-box rounding (D20) |
 | `srow` | — | — | — | — | not measured |
-| `optlist` | y | 85.00 | 86.00 | 1.00 | **open — C41** |
-| `optlist` | x | 20.00 | 20.00 | = | **open — C41** |
-| `optlist` | width | 350.00 | 350.00 | = | **open — C41** |
-| `optlist` | height | 139.00 | 138.00 | -1.00 | **open — C41** |
+| `optlist` | y | 85.00 | 86.00 | 1.00 | cumulative line-box rounding (D20) |
+| `optlist` | x | 20.00 | 20.00 | = | cumulative line-box rounding (D20) |
+| `optlist` | width | 350.00 | 350.00 | = | cumulative line-box rounding (D20) |
+| `optlist` | height | 139.00 | 141.00 | 2.00 | cumulative line-box rounding (D20) |
 | `optrow` | y | 86.00 | 88.00 | 2.00 | **open — C41** |
 | `optrow` | x | 21.00 | 22.00 | 1.00 | **open — C41** |
 | `optrow` | width | 348.00 | 346.00 | -2.00 | **open — C41** |
-| `optrow` | height | 46.00 | 45.00 | -1.00 | **open — C41** |
+| `optrow` | height | 46.00 | 46.00 | = | **open — C41** |
 | `field` | — | — | — | — | not measured |
 | `notecard` | — | — | — | — | not measured |
 
@@ -225,14 +224,14 @@ A row marked **open** is a difference that has been found, measured and put to a
 | `toolbar.back` | x | 20.00 | 20.00 | = |  |
 | `toolbar.back` | width | 38.00 | 38.00 | = |  |
 | `toolbar.back` | height | 38.00 | 38.00 | = |  |
-| `list` | y | 117.00 | 87.00 | -30.00 | **open — C44** |
-| `list` | x | 20.00 | 20.00 | = | **open — C44** |
-| `list` | width | 350.00 | 350.00 | = | **open — C44** |
-| `list` | height | 282.00 | 611.00 | 329.00 | **open — C44** |
-| `srow` | y | 118.00 | 88.00 | -30.00 | **open — C44** |
-| `srow` | x | 21.00 | 21.00 | = | **open — C44** |
-| `srow` | width | 348.00 | 348.00 | = | **open — C44** |
-| `srow` | height | 59.00 | 61.00 | 2.00 | **open — C44** |
+| `list` | y | 117.00 | 119.00 | 2.00 | cumulative line-box rounding (D20) |
+| `list` | x | 20.00 | 20.00 | = | cumulative line-box rounding (D20) |
+| `list` | width | 350.00 | 350.00 | = | cumulative line-box rounding (D20) |
+| `list` | height | 282.00 | 282.00 | = | cumulative line-box rounding (D20) |
+| `srow` | y | 118.00 | 120.00 | 2.00 | cumulative line-box rounding (D20) |
+| `srow` | x | 21.00 | 21.00 | = | cumulative line-box rounding (D20) |
+| `srow` | width | 348.00 | 348.00 | = | cumulative line-box rounding (D20) |
+| `srow` | height | 59.00 | 59.00 | = | cumulative line-box rounding (D20) |
 | `optlist` | — | — | — | — | not measured |
 | `optrow` | — | — | — | — | not measured |
 | `field` | — | — | — | — | not measured |
@@ -425,10 +424,10 @@ A row marked **open** is a difference that has been found, measured and put to a
 | `toolbar.back` | x | 20.00 | 20.00 | = |  |
 | `toolbar.back` | width | 38.00 | 38.00 | = |  |
 | `toolbar.back` | height | 38.00 | 38.00 | = |  |
-| `list` | y | 86.00 | 87.00 | 1.00 | **open — C44** |
-| `list` | x | 20.00 | 20.00 | = | **open — C44** |
-| `list` | width | 350.00 | 350.00 | = | **open — C44** |
-| `list` | height | 217.00 | 217.00 | = | **open — C44** |
+| `list` | y | 86.00 | 87.00 | 1.00 | cumulative line-box rounding (D20) |
+| `list` | x | 20.00 | 20.00 | = | cumulative line-box rounding (D20) |
+| `list` | width | 350.00 | 350.00 | = | cumulative line-box rounding (D20) |
+| `list` | height | 217.00 | 217.00 | = | cumulative line-box rounding (D20) |
 | `srow` | y | 87.00 | 88.00 | 1.00 | cumulative line-box rounding (D20) |
 | `srow` | x | 21.00 | 21.00 | = | cumulative line-box rounding (D20) |
 | `srow` | width | 348.00 | 348.00 | = | cumulative line-box rounding (D20) |

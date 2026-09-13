@@ -44,6 +44,7 @@ class LumeAccountSection extends StatelessWidget {
     super.key,
     required this.child,
     this.title,
+    this.subtitle,
     this.tight = false,
   });
 
@@ -53,6 +54,10 @@ class LumeAccountSection extends StatelessWidget {
   /// uses one, and without it its two radio groups run together with nothing
   /// to say which is the clock and which is the zone.
   final String? title;
+
+  /// The line under it. Two of the Notifications screen's five heads carry
+  /// one, and it says what the switches below are for.
+  final String? subtitle;
 
   /// `sect--tight` — 12 rather than 24, for a block that belongs to the one
   /// above it.
@@ -68,7 +73,7 @@ class LumeAccountSection extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisSize: MainAxisSize.min,
               children: <Widget>[
-                LumeSectionHeader(title: title!),
+                LumeSectionHeader(title: title!, subtitle: subtitle),
                 child,
               ],
             ),

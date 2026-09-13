@@ -2814,6 +2814,130 @@
   "@newsSquad": {
     "description": "Reference: a Pakistan headline"
   },
+  "notifPrefBadge": "Badge count",
+  "@notifPrefBadge": {
+    "description": "Reference: `n.pref.badge`."
+  },
+  "notifPrefBadgeSub": "Show the unread count on the bell",
+  "@notifPrefBadgeSub": {
+    "description": "Reference: `n.pref.badgeSub`."
+  },
+  "notifPrefCategories": "Categories",
+  "@notifPrefCategories": {
+    "description": "Reference: `n.pref.categories`."
+  },
+  "notifPrefCategoriesSub": "Switch off anything you don’t want to hear about",
+  "@notifPrefCategoriesSub": {
+    "description": "Reference: `n.pref.categoriesSub`."
+  },
+  "notifPrefGeneral": "General",
+  "@notifPrefGeneral": {
+    "description": "Reference: `n.pref.general`."
+  },
+  "notifPrefHaptics": "Vibration",
+  "@notifPrefHaptics": {
+    "description": "Reference: `n.pref.haptics`."
+  },
+  "notifPrefInApp": "In-app notifications",
+  "@notifPrefInApp": {
+    "description": "Reference: `n.pref.inApp`."
+  },
+  "notifPrefInAppSub": "Banners and the notification centre",
+  "@notifPrefInAppSub": {
+    "description": "Reference: `n.pref.inAppSub`."
+  },
+  "notifPrefPerTool": "By tool",
+  "@notifPrefPerTool": {
+    "description": "Reference: `n.pref.perTool`."
+  },
+  "notifPrefPerToolSub": "Fine-grained control over each kind of alert",
+  "@notifPrefPerToolSub": {
+    "description": "Reference: `n.pref.perToolSub`."
+  },
+  "notifPrefPush": "Push notifications",
+  "@notifPrefPush": {
+    "description": "Reference: `n.pref.push`."
+  },
+  "notifPrefQuiet": "Quiet hours",
+  "@notifPrefQuiet": {
+    "description": "Reference: `n.pref.quiet`."
+  },
+  "notifPrefQuietOn": "Quiet hours",
+  "@notifPrefQuietOn": {
+    "description": "Reference: `n.pref.quietOn`."
+  },
+  "notifPrefQuietSub": "Nothing interrupts you; everything still arrives",
+  "@notifPrefQuietSub": {
+    "description": "Reference: `n.pref.quietSub`."
+  },
+  "notifPrefRestore": "Restore dismissed",
+  "@notifPrefRestore": {
+    "description": "Reference: `n.pref.restore`."
+  },
+  "notifPrefSound": "Sound",
+  "@notifPrefSound": {
+    "description": "Reference: `n.pref.sound`."
+  },
+  "ntypeBillDue": "Bills due soon",
+  "@ntypeBillDue": {
+    "description": "Reference: `ntype.billDue`."
+  },
+  "ntypeBillOverdue": "Overdue bills",
+  "@ntypeBillOverdue": {
+    "description": "Reference: `ntype.billOverdue`."
+  },
+  "ntypeDocExpiry": "Document expiry",
+  "@ntypeDocExpiry": {
+    "description": "Reference: `ntype.docExpiry`."
+  },
+  "ntypeFlightChange": "Flight changes",
+  "@ntypeFlightChange": {
+    "description": "Reference: `ntype.flightChange`."
+  },
+  "ntypeForecast": "Daily forecast",
+  "@ntypeForecast": {
+    "description": "Reference: `ntype.forecast`."
+  },
+  "ntypeHabitReminder": "Habit reminders",
+  "@ntypeHabitReminder": {
+    "description": "Reference: `ntype.habitReminder`."
+  },
+  "ntypeMarketMove": "Market movement",
+  "@ntypeMarketMove": {
+    "description": "Reference: `ntype.marketMove`."
+  },
+  "ntypeMedication": "Medication reminders",
+  "@ntypeMedication": {
+    "description": "Reference: `ntype.medication`."
+  },
+  "ntypeOutage": "Power outages",
+  "@ntypeOutage": {
+    "description": "Reference: `ntype.outage`."
+  },
+  "ntypeParcelUpdate": "Parcel updates",
+  "@ntypeParcelUpdate": {
+    "description": "Reference: `ntype.parcelUpdate`."
+  },
+  "ntypePrayerReminder": "Prayer reminder",
+  "@ntypePrayerReminder": {
+    "description": "Reference: `ntype.prayerReminder`."
+  },
+  "ntypeSevereWeather": "Severe weather",
+  "@ntypeSevereWeather": {
+    "description": "Reference: `ntype.severeWeather`."
+  },
+  "ntypeSubRenewal": "Subscription renewals",
+  "@ntypeSubRenewal": {
+    "description": "Reference: `ntype.subRenewal`."
+  },
+  "ntypeTaskReminder": "Task reminders",
+  "@ntypeTaskReminder": {
+    "description": "Reference: `ntype.taskReminder`."
+  },
+  "ntypeTrainDelay": "Train delays",
+  "@ntypeTrainDelay": {
+    "description": "Reference: `ntype.trainDelay`."
+  },
   "onbAllSet": "All set",
   "@onbAllSet": {
     "description": "Reference key onb.allSet"

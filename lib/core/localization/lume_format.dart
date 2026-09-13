@@ -203,6 +203,12 @@ class LumeFormatting {
     _dateTag,
   ).format(d).replaceAll(' ', ' ').replaceAll(' ', ' ');
 
+  /// A whole hour of the day, in the reader's own clock — "10 pm", "22:00".
+  ///
+  /// Quiet hours are stored as 0–23 and shown as times, so the conversion
+  /// belongs here with every other clock rather than at the screen.
+  String hourLabel(int hour) => time(DateTime(2000, 1, 1, hour));
+
   /// A countdown as `h:mm:ss` — the hero's live pill.
   static String countdown(Duration d) {
     final int total = d.isNegative ? 0 : d.inSeconds;

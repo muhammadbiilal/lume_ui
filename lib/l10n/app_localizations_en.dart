@@ -2098,6 +2098,102 @@ class AppLocalizationsEn extends AppLocalizations {
   String get newsSquad => 'Pakistan name squad for the home Test series';
 
   @override
+  String get notifPrefBadge => 'Badge count';
+
+  @override
+  String get notifPrefBadgeSub => 'Show the unread count on the bell';
+
+  @override
+  String get notifPrefCategories => 'Categories';
+
+  @override
+  String get notifPrefCategoriesSub =>
+      'Switch off anything you don’t want to hear about';
+
+  @override
+  String get notifPrefGeneral => 'General';
+
+  @override
+  String get notifPrefHaptics => 'Vibration';
+
+  @override
+  String get notifPrefInApp => 'In-app notifications';
+
+  @override
+  String get notifPrefInAppSub => 'Banners and the notification centre';
+
+  @override
+  String get notifPrefPerTool => 'By tool';
+
+  @override
+  String get notifPrefPerToolSub =>
+      'Fine-grained control over each kind of alert';
+
+  @override
+  String get notifPrefPush => 'Push notifications';
+
+  @override
+  String get notifPrefQuiet => 'Quiet hours';
+
+  @override
+  String get notifPrefQuietOn => 'Quiet hours';
+
+  @override
+  String get notifPrefQuietSub =>
+      'Nothing interrupts you; everything still arrives';
+
+  @override
+  String get notifPrefRestore => 'Restore dismissed';
+
+  @override
+  String get notifPrefSound => 'Sound';
+
+  @override
+  String get ntypeBillDue => 'Bills due soon';
+
+  @override
+  String get ntypeBillOverdue => 'Overdue bills';
+
+  @override
+  String get ntypeDocExpiry => 'Document expiry';
+
+  @override
+  String get ntypeFlightChange => 'Flight changes';
+
+  @override
+  String get ntypeForecast => 'Daily forecast';
+
+  @override
+  String get ntypeHabitReminder => 'Habit reminders';
+
+  @override
+  String get ntypeMarketMove => 'Market movement';
+
+  @override
+  String get ntypeMedication => 'Medication reminders';
+
+  @override
+  String get ntypeOutage => 'Power outages';
+
+  @override
+  String get ntypeParcelUpdate => 'Parcel updates';
+
+  @override
+  String get ntypePrayerReminder => 'Prayer reminder';
+
+  @override
+  String get ntypeSevereWeather => 'Severe weather';
+
+  @override
+  String get ntypeSubRenewal => 'Subscription renewals';
+
+  @override
+  String get ntypeTaskReminder => 'Task reminders';
+
+  @override
+  String get ntypeTrainDelay => 'Train delays';
+
+  @override
   String get onbAllSet => 'All set';
 
   @override

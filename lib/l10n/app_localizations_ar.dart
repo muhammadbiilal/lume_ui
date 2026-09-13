@@ -2105,6 +2105,99 @@ class AppLocalizationsAr extends AppLocalizations {
   String get newsSquad => 'باكستان تعلن تشكيلتها لسلسلة الاختبار على أرضها';
 
   @override
+  String get notifPrefBadge => 'عدّاد الشارة';
+
+  @override
+  String get notifPrefBadgeSub => 'إظهار عدد غير المقروء على الجرس';
+
+  @override
+  String get notifPrefCategories => 'الفئات';
+
+  @override
+  String get notifPrefCategoriesSub => 'أوقف أي شيء لا تريد سماعه';
+
+  @override
+  String get notifPrefGeneral => 'عام';
+
+  @override
+  String get notifPrefHaptics => 'الاهتزاز';
+
+  @override
+  String get notifPrefInApp => 'الإشعارات داخل التطبيق';
+
+  @override
+  String get notifPrefInAppSub => 'اللافتات ومركز الإشعارات';
+
+  @override
+  String get notifPrefPerTool => 'حسب الأداة';
+
+  @override
+  String get notifPrefPerToolSub => 'تحكّم دقيق في كل نوع من التنبيهات';
+
+  @override
+  String get notifPrefPush => 'الإشعارات الفورية';
+
+  @override
+  String get notifPrefQuiet => 'ساعات الهدوء';
+
+  @override
+  String get notifPrefQuietOn => 'ساعات الهدوء';
+
+  @override
+  String get notifPrefQuietSub => 'لا شيء يقاطعك؛ وكل شيء يصلك رغم ذلك';
+
+  @override
+  String get notifPrefRestore => 'استعادة المستبعدة';
+
+  @override
+  String get notifPrefSound => 'الصوت';
+
+  @override
+  String get ntypeBillDue => 'فواتير تستحق قريبًا';
+
+  @override
+  String get ntypeBillOverdue => 'فواتير متأخرة';
+
+  @override
+  String get ntypeDocExpiry => 'انتهاء صلاحية مستند';
+
+  @override
+  String get ntypeFlightChange => 'تغييرات الرحلة';
+
+  @override
+  String get ntypeForecast => 'توقعات يومية';
+
+  @override
+  String get ntypeHabitReminder => 'تذكيرات العادات';
+
+  @override
+  String get ntypeMarketMove => 'حركة السوق';
+
+  @override
+  String get ntypeMedication => 'تذكيرات الدواء';
+
+  @override
+  String get ntypeOutage => 'انقطاع الكهرباء';
+
+  @override
+  String get ntypeParcelUpdate => 'تحديثات الطرد';
+
+  @override
+  String get ntypePrayerReminder => 'تذكير الصلاة';
+
+  @override
+  String get ntypeSevereWeather => 'طقس قاسٍ';
+
+  @override
+  String get ntypeSubRenewal => 'تجديد الاشتراكات';
+
+  @override
+  String get ntypeTaskReminder => 'تذكيرات المهام';
+
+  @override
+  String get ntypeTrainDelay => 'تأخر القطارات';
+
+  @override
   String get onbAllSet => 'كل شيء جاهز';
 
   @override
