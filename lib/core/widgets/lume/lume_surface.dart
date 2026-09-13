@@ -29,6 +29,8 @@ class LumeCard extends StatelessWidget {
     this.onTap,
     this.semanticLabel,
     this.tone,
+    this.shadow = true,
+    this.clip = false,
   });
 
   final Widget child;
@@ -42,6 +44,18 @@ class LumeCard extends StatelessWidget {
   /// A tinted variant. `null` is the plain white card.
   final Color? tone;
 
+  /// `.list--flat { box-shadow: none }` — the same surface without its lift.
+  /// Global search's recents and results sit inside a sheet that already
+  /// casts the shadow, and a second one under the list would be a card
+  /// floating over a card.
+  final bool shadow;
+
+  /// `overflow: hidden` — for a card whose rows paint their own ground, like
+  /// the notification list's unread tint, which would otherwise square off
+  /// the card's rounded corners. Clipped inside the border, so the hairline
+  /// stays the card's.
+  final bool clip;
+
   @override
   Widget build(BuildContext context) {
     final LumeColors lume = context.lume;
@@ -51,7 +65,7 @@ class LumeCard extends StatelessWidget {
         color: tone ?? lume.card,
         borderRadius: LumeRadius.brLg,
         border: Border.all(color: lume.border, width: LumeSpace.border),
-        boxShadow: context.lumeShadows.sm,
+        boxShadow: shadow ? context.lumeShadows.sm : null,
       ),
       child: Padding(
         // The border is part of the box: a `.kard` with a 1-point border and
@@ -60,7 +74,14 @@ class LumeCard extends StatelessWidget {
         padding:
             (padded ? const EdgeInsets.all(LumeSpace.padCard) : EdgeInsets.zero)
                 .add(const EdgeInsets.all(LumeSpace.border)),
-        child: child,
+        child: clip
+            ? ClipRRect(
+                borderRadius:
+                    LumeRadius.brLg -
+                    const BorderRadius.all(Radius.circular(LumeSpace.border)),
+                child: child,
+              )
+            : child,
       ),
     );
 

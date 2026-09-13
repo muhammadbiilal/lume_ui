@@ -148,6 +148,7 @@ class LumeSettingsRow extends StatelessWidget {
     this.isLast = false,
     this.semanticLabel,
     this.notSetLabel,
+    this.trailingIcon,
   }) : assert(
          value == null || value != '' || notSetLabel != null,
          'a value the product holds and knows to be empty has to say so — '
@@ -186,6 +187,13 @@ class LumeSettingsRow extends StatelessWidget {
   /// not reach for the localisations. Required whenever [value] can be empty:
   /// a bare title where a value was promised is exactly the gap §125 forbids.
   final String? notSetLabel;
+
+  /// The glyph the end draws in place of the chevron, when [chevron] is on.
+  ///
+  /// Global search's hits carry `#i-arrow-ur`: a result leaves for somewhere,
+  /// which is a different promise from a row that drills in. Same 16-point
+  /// end glyph, same colour; only the shape changes.
+  final String? trailingIcon;
 
   @override
   Widget build(BuildContext context) {
@@ -329,7 +337,7 @@ class LumeSettingsRow extends StatelessWidget {
                   if (shown != null)
                     const SizedBox(width: LumeSettingsMetrics.endGap),
                   LumeIcon(
-                    LumeIcons.chevR,
+                    trailingIcon ?? LumeIcons.chevR,
                     size: LumeSettingsMetrics.endGlyph,
                     color: lume.text3,
                   ),

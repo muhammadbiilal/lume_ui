@@ -626,59 +626,103 @@ class LumeSearchField extends StatelessWidget {
     return Semantics(
       textField: true,
       label: semanticLabel ?? placeholder,
-      child: Container(
-        constraints: const BoxConstraints(minHeight: height),
-        padding: EdgeInsets.symmetric(
-          horizontal: small ? horizontalPaddingSmall : horizontalPadding,
-        ),
-        decoration: BoxDecoration(
-          color: lume.card,
-          borderRadius: LumeRadius.brSm,
-          border: Border.all(color: lume.border, width: LumeSpace.border),
-          boxShadow: context.lumeShadows.xs,
-        ),
-        child: Row(
-          children: <Widget>[
-            LumeIcon(
-              LumeIcons.search,
-              size: LumeSpace.iconMd,
-              color: lume.text3,
+      child: _FocusWithin(
+        builder: (BuildContext context, bool within) => AnimatedContainer(
+          duration: LumeMotion.duration(context, LumeMotion.fast),
+          curve: LumeMotion.ease,
+          constraints: const BoxConstraints(minHeight: height),
+          padding: EdgeInsets.symmetric(
+            horizontal: small ? horizontalPaddingSmall : horizontalPadding,
+          ),
+          decoration: BoxDecoration(
+            color: lume.card,
+            borderRadius: LumeRadius.brSm,
+            // `.search:focus-within { border-color: color-mix(in srgb,
+            // var(--accent) 50%, var(--border)) }`.
+            border: Border.all(
+              color: within
+                  ? Color.lerp(lume.border, lume.accent, 0.5)!
+                  : lume.border,
+              width: LumeSpace.border,
             ),
-            const SizedBox(width: 9),
-            Expanded(
-              child: _RawInput(
-                controller: controller,
-                value: value,
-                onChanged: onChanged,
-                placeholder: placeholder,
-                kind: LumeFieldKind.text,
-                enabled: enabled,
-                autofocus: autofocus,
-                focusNode: focusNode,
-                onSubmitted: onSubmitted,
-                style: LumeType.fit(
-                  context,
-                  context.lumeType.bodyStrong,
-                ).copyWith(color: lume.text, fontSize: small ? 13 : null),
+            // `box-shadow: 0 0 0 3px var(--tint-accent)` — *instead of*
+            // `shadow-xs`, because the rule replaces the property.
+            boxShadow: within
+                ? <BoxShadow>[
+                    BoxShadow(color: lume.tintAccent, spreadRadius: 3),
+                  ]
+                : context.lumeShadows.xs,
+          ),
+          child: Row(
+            children: <Widget>[
+              LumeIcon(
+                LumeIcons.search,
+                size: LumeSpace.iconMd,
+                color: lume.text3,
               ),
-            ),
-            if (onClear != null && hasText)
-              LumePressable(
-                onTap: onClear,
-                semanticLabel: 'Clear',
-                minSize: 32,
-                borderRadius: LumeRadius.full,
-                child: LumeIcon(
-                  LumeIcons.x,
-                  size: LumeSpace.iconSm,
-                  color: lume.text3,
+              const SizedBox(width: 9),
+              Expanded(
+                child: _RawInput(
+                  controller: controller,
+                  value: value,
+                  onChanged: onChanged,
+                  placeholder: placeholder,
+                  kind: LumeFieldKind.text,
+                  enabled: enabled,
+                  autofocus: autofocus,
+                  focusNode: focusNode,
+                  onSubmitted: onSubmitted,
+                  style: LumeType.fit(
+                    context,
+                    context.lumeType.bodyStrong,
+                  ).copyWith(color: lume.text, fontSize: small ? 13 : null),
                 ),
               ),
-          ],
+              if (onClear != null && hasText)
+                LumePressable(
+                  onTap: onClear,
+                  semanticLabel: 'Clear',
+                  minSize: 32,
+                  borderRadius: LumeRadius.full,
+                  child: LumeIcon(
+                    LumeIcons.x,
+                    size: LumeSpace.iconSm,
+                    color: lume.text3,
+                  ),
+                ),
+            ],
+          ),
         ),
       ),
     );
   }
+}
+
+/// `:focus-within` for a box whose *input* is what takes focus.
+///
+/// The same relationship `LumeToolField` keeps: a `Focus` that can never be
+/// focused itself and hears when a descendant is.
+class _FocusWithin extends StatefulWidget {
+  const _FocusWithin({required this.builder});
+
+  final Widget Function(BuildContext context, bool within) builder;
+
+  @override
+  State<_FocusWithin> createState() => _FocusWithinState();
+}
+
+class _FocusWithinState extends State<_FocusWithin> {
+  bool _within = false;
+
+  @override
+  Widget build(BuildContext context) => Focus(
+    canRequestFocus: false,
+    skipTraversal: true,
+    onFocusChange: (bool has) {
+      if (_within != has) setState(() => _within = has);
+    },
+    child: widget.builder(context, _within),
+  );
 }
 
 /// `.stepper` — decrement, value, increment.

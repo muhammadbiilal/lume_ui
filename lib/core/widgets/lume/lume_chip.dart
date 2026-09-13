@@ -345,16 +345,27 @@ class LumeTabs extends StatelessWidget {
         ),
         child: SingleChildScrollView(
           scrollDirection: Axis.horizontal,
+          // `.ttabs { padding: 0 var(--pad) 2px }` — the strip runs edge to
+          // edge under a full-width rule, and its tabs start at the page's
+          // inset. The two below are where the selected tab's bar hangs.
+          padding: const EdgeInsetsDirectional.only(
+            start: LumeSpace.pageCompact,
+            end: LumeSpace.pageCompact,
+            bottom: 2,
+          ),
           child: Row(
             children: <Widget>[
-              for (final LumeChoice item in items)
+              for (int i = 0; i < items.length; i++) ...<Widget>[
+                // `.ttabs { gap: 4px }`.
+                if (i > 0) const SizedBox(width: 4),
                 _Tab(
-                  item: item,
-                  selected: item.value == value,
+                  item: items[i],
+                  selected: items[i].value == value,
                   onTap: onChanged == null
                       ? null
-                      : () => onChanged!(item.value),
+                      : () => onChanged!(items[i].value),
                 ),
+              ],
             ],
           ),
         ),
@@ -383,48 +394,77 @@ class _Tab extends StatelessWidget {
         borderRadius: LumeRadius.brXs,
         minSize: LumeTabs.height,
         excludeSemantics: true,
-        child: Container(
-          constraints: const BoxConstraints(minHeight: LumeTabs.height),
-          padding: const EdgeInsets.only(
-            top: 10,
-            bottom: 11,
-            left: 12,
-            right: 12,
-          ),
-          decoration: BoxDecoration(
-            border: Border(
-              bottom: BorderSide(
-                color: selected ? lume.text : Colors.transparent,
-                width: 2,
+        child: Stack(
+          clipBehavior: Clip.none,
+          children: <Widget>[
+            Container(
+              constraints: const BoxConstraints(minHeight: LumeTabs.height),
+              // `.ttab { padding: 10px 12px 11px }`.
+              padding: const EdgeInsets.only(
+                top: 10,
+                bottom: 11,
+                left: 12,
+                right: 12,
+              ),
+              child: Row(
+                mainAxisSize: MainAxisSize.min,
+                children: <Widget>[
+                  Text(
+                    item.label,
+                    style:
+                        LumeType.tracked(
+                          LumeType.fit(context, context.lumeType.meta),
+                          -0.024,
+                        ).copyWith(
+                          color: selected ? lume.text : lume.text3,
+                          fontSize: 13,
+                          fontWeight: FontWeight.w700,
+                        ),
+                  ),
+                  if (item.count != null) ...<Widget>[
+                    const SizedBox(width: 5),
+                    // `.ttab i` — the count in a small pill of its own.
+                    Container(
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 5,
+                        vertical: 1,
+                      ),
+                      decoration: BoxDecoration(
+                        color: lume.tintNeutral,
+                        borderRadius: LumeRadius.full,
+                      ),
+                      child: Text(
+                        '${item.count}',
+                        style:
+                            LumeType.numeric(
+                              LumeType.fit(context, context.lumeType.metaSmall),
+                            ).copyWith(
+                              color: lume.text3,
+                              fontSize: 10,
+                              fontWeight: FontWeight.w700,
+                            ),
+                      ),
+                    ),
+                  ],
+                ],
               ),
             ),
-          ),
-          child: Row(
-            mainAxisSize: MainAxisSize.min,
-            children: <Widget>[
-              Text(
-                item.label,
-                style:
-                    LumeType.tracked(
-                      LumeType.fit(context, context.lumeType.meta),
-                      -0.024,
-                    ).copyWith(
-                      color: selected ? lume.text : lume.text3,
-                      fontSize: 13,
-                      fontWeight: FontWeight.w700,
-                    ),
-              ),
-              if (item.count != null) ...<Widget>[
-                const SizedBox(width: 5),
-                Text(
-                  '${item.count}',
-                  style: LumeType.numeric(
-                    LumeType.fit(context, context.lumeType.metaSmall),
-                  ).copyWith(color: lume.text3),
+            // `.ttab.is-on::after` — an accent bar inset eight at each end,
+            // hanging one point below the tab, rounded at two.
+            if (selected)
+              PositionedDirectional(
+                start: 8,
+                end: 8,
+                bottom: -1,
+                height: 2,
+                child: DecoratedBox(
+                  decoration: BoxDecoration(
+                    color: lume.accent,
+                    borderRadius: const BorderRadius.all(Radius.circular(2)),
+                  ),
                 ),
-              ],
-            ],
-          ),
+              ),
+          ],
         ),
       ),
     );
@@ -588,18 +628,31 @@ class LumeFilterBar extends StatelessWidget {
   final List<Widget> children;
   final bool gutters;
 
+  /// `.filterbar__group { gap: 7px }`.
+  static const double gap = 7;
+
+  /// How far each chip's 44-point target reaches past its 31-point drawing,
+  /// above and below. The bar is laid out at the target's height; a caller
+  /// holding the reference's positions takes this back out of the space
+  /// around it, so the targets overhang the gaps instead of growing the page
+  /// — the rule D6 and D35 keep.
+  static const double overhang = (LumeSpace.tap - LumeFilterChip.height) / 2;
+
   @override
   Widget build(BuildContext context) => SingleChildScrollView(
     scrollDirection: Axis.horizontal,
+    // `.filterbar__group { padding-bottom: 2px; padding-inline: var(--pad) }`.
     padding: gutters
-        ? const EdgeInsetsDirectional.symmetric(
-            horizontal: LumeSpace.pageCompact,
+        ? const EdgeInsetsDirectional.only(
+            start: LumeSpace.pageCompact,
+            end: LumeSpace.pageCompact,
+            bottom: 2,
           )
-        : EdgeInsets.zero,
+        : const EdgeInsetsDirectional.only(bottom: 2),
     child: Row(
       children: <Widget>[
         for (int i = 0; i < children.length; i++) ...<Widget>[
-          if (i > 0) const SizedBox(width: 6),
+          if (i > 0) const SizedBox(width: gap),
           children[i],
         ],
       ],
