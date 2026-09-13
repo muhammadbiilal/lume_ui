@@ -46,7 +46,9 @@ class LumeToolbar extends StatelessWidget {
   final String? backLabel;
   final List<Widget> actions;
 
-  static const double height = 62;
+  /// `10 + 38 + 12` of padding and back control, and one more point for the
+  /// hairline below it.
+  static const double height = 61;
 
   @override
   Widget build(BuildContext context) {
@@ -54,6 +56,19 @@ class LumeToolbar extends StatelessWidget {
 
     return Container(
       constraints: const BoxConstraints(minHeight: height),
+      // `border-bottom: 1px solid transparent`, which `.toolbar.is-stuck`
+      // turns to `--border` when the bar sticks. Transparent is not the same
+      // as absent: the point it occupies is what makes a `.toolbar` 61 rather
+      // than 60, and without it the 38-point back control centres itself in a
+      // 40-point content box and sits a point low on every route (C46).
+      decoration: const BoxDecoration(
+        border: Border(
+          bottom: BorderSide(
+            color: Colors.transparent,
+            width: LumeSpace.border,
+          ),
+        ),
+      ),
       padding: const EdgeInsetsDirectional.only(
         top: 10,
         bottom: 12,
@@ -109,16 +124,25 @@ class LumeToolbar extends StatelessWidget {
                     overflow: TextOverflow.ellipsis,
                   ),
                 ),
-                if (subtitle != null)
+                if (subtitle != null) ...<Widget>[
+                  // `margin-top: 1px`.
+                  const SizedBox(height: 1),
                   Text(
                     subtitle!,
-                    style: LumeType.fit(
+                    // C47 again, one line down: `.toolbar__sub` is 11 / 500
+                    // with no `line-height`, so the line is the font's own
+                    // 13 and not `--t-meta-small`'s 16. The token's three
+                    // extra points made the bar 64 where it is measured at
+                    // 62 on every route that carries a subtitle.
+                    style: LumeType.natural(
                       context,
                       context.lumeType.metaSmall,
-                    ).copyWith(color: lume.text3),
+                      size: 11,
+                    ).copyWith(color: lume.text3, fontWeight: FontWeight.w500),
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
                   ),
+                ],
               ],
             ),
           ),

@@ -1000,8 +1000,24 @@ The target now overhangs into the bar's own 10/12 padding instead of pushing
 it out, which is the separation D35 made on a card action, in a second place.
 The circle carries a key so a measurement can tell it from the target.
 
-**Exact parity, restored.** `ACCOUNT_PARITY.md` reads `=` on `toolbar` and
-`toolbar.back` for all twenty-one routes.
+**Corrected again in F5C-D, and this time it is true.** The claim above was
+written when the bar was right on the routes that were being looked at, and
+the generated table said otherwise on all twenty-one: `toolbar` height 61 → 62
+and `toolbar.back` y 10 → 11, every route, a point each. Both came from one
+missing point — `.toolbar` carries `border-bottom: 1px solid transparent`,
+which `.toolbar.is-stuck` turns to `--border` when the bar sticks, and
+transparent is not the same as absent. Without it the bar was 60 of content
+against a `minHeight` of 62, so the 38-point back control centred itself in a
+40-point box and sat a point low.
+
+Flutter draws the hairline, transparent, and takes its height constant down to
+**61**. `ACCOUNT_PARITY.md` now reads `=` on `toolbar` and `toolbar.back` for
+all twenty-one routes — checked against the generated file rather than
+asserted.
+
+**The lesson recorded with it:** a parity claim written in prose beside a
+generated table is a claim nobody re-reads. The table is the evidence; the
+prose has to be checked against it whenever the table changes.
 
 ### C47 — the toolbar's title took a token's line
 
@@ -1029,6 +1045,57 @@ shapes for the same element, and the account section wears the first:
 phase — was drawing the auth shape everywhere. It now takes a
 `LumeFieldVariant`, so one widget draws the two shapes the stylesheets have
 and a third copy is not needed for the next form.
+
+### C49 — the reference tells a phone user about their browser
+
+**Found and corrected in F5C.** The prototype is a web page and says so in
+five strings. `acct.err.storage` tells a reader to "check your browser's
+storage settings"; `n.push.denied`, `n.push.deniedHelp` and `n.push.granted`
+describe a browser's permission prompt; `acct.device.browser` labels the
+current session "This browser".
+
+A Flutter build has no browser. Each of the first four is an instruction the
+reader cannot follow, so each names the device instead. The fifth keeps the
+word and is the only one that may: it is one of five platform labels a session
+row can carry — beside Android phone, iPhone, Mac and Windows PC — so it says
+"Web browser", which is a fact about a platform rather than a claim about the
+reader's own device.
+
+`arb_parity_test.dart` holds the line: no English value may contain the word
+"browser", with `acctDeviceBrowser` named as the single exception.
+
+### C50 — the toolbar's subtitle took a token's line too
+
+**Found and corrected in F5C-D.** C47 fixed the title and stopped one line
+short. `.toolbar__sub` is `font-size: 11px; font-weight: 500; margin-top: 1px`
+with no `line-height`, so its line is the font's natural **13** and the block
+is 25 + 1 + 13 = **39**. Flutter took `--t-meta-small`'s explicit 16 and
+dropped the margin, making the text block 41 and the bar 64 where every route
+carrying a subtitle measures 62.
+
+It stayed hidden because the bar's own `minHeight` of 62 absorbed it: the
+route read 63 against 62 and passed inside the one-point tolerance. Fixing the
+hairline removed the cushion and the real number appeared.
+
+The same class as C27, C28 and C47 — a role token used where the stylesheet is
+not using one — and the third time it has been the toolbar. Every text style
+in `LumeToolbar` now comes from `LumeType.natural`, which is what
+`line-height: normal` means.
+
+### C51 — a reported difference wearing another difference's explanation
+
+**Found and corrected in F5C-D.** `ACCOUNT_PARITY.md` labelled the `field`
+height rows "cumulative line-box rounding (D20)" on five routes, where the
+numbers are 81 → 92 and 67 → 92. Eleven and twenty-five points are not
+rounding, and the rows are not asserted at all: `checkHeight: false`, because
+`.field` bounds the input and `LumeInputField` bounds its label and message
+with it (C48). The number was real, the claim beside it was not, and a reader
+scanning the table would have taken it for a difference already accounted for.
+
+An axis that is reported but not asserted now says so, with the reason, and
+the note it would otherwise inherit is suppressed. Of the fifty-six remaining
+differences in the table, twenty-eight are D20, fifteen are C41, eight are C43
+and five are not compared. None is unexplained.
 
 ## 3. Open questions
 
@@ -1066,6 +1133,8 @@ deleted row invites the same question again.
 | 2026-09-13 (F5C-C) | **C41, C43, C44 raised and left open** — the option row's run-together description, the accumulation under a form, and the Notifications screen's second filter | The visual-authority rule reserves a visible departure from Lume for a decision, and these three are not ours to take |
 | 2026-09-13 (F5C-B/C) | **Profile and the twenty-one account routes implemented** — one composition in four identity states, a per-route gate, and no placeholder among them | Profile was the last destination still rendering the F3 fixture, and a functional row must not point at a generic screen |
 | 2026-09-13 (F5C-B/C) | **D40 and D41 recorded** — the version line names this build, and the Personalisation sheet is two editors | A version is a claim about which code is running; six of the sheet's seven controls are now routes |
+| 2026-09-13 (F5C-D) | **C49–C51 raised and corrected; C46's parity claim withdrawn and re-earned** — five strings telling a phone user about their browser, the toolbar's missing transparent hairline and its subtitle's token line, and a report row wearing another finding's explanation | The generated table said Δ 1.00 on `toolbar` for all twenty-one routes while the prose beside it said `=`; exact values went from 249 of 372 to 316 |
+| 2026-09-13 (F5C-D) | **Three Urdu plurals and two account strings corrected** — "1 ٹرینیں" for one train, and "3 signed in" on an Urdu Security route | The suite checked that the file was translated and never that a message counted; five new parity tests |
 | 2026-09-13 (F5C-B/C) | **C34 raised and corrected** — the notification count and the notification list are the same faith-gated question, asked once | The reference counts eleven and shows ten to a non-Muslim reader |
 | 2026-09-13 (F5C-B/C) | **C35–C40 raised and corrected** — the settings row's padding, icon and two gaps; a promised "Not set" that never rendered; the end's conditional gap; a tag that filled its width; a badge three points too tall; and the identity card's gap between blocks rather than lines | Found by adding Profile to the measured-bounds comparison in all three identity states, and then measuring each row's *parts* |
 | 2026-09-13 (F5C) | **D38 and D39 recorded — the swap swaps and the day chips choose a day** | Two approved functional corrections; the reference ships a toast with no effect and three buttons with no handler |

@@ -85,6 +85,11 @@ void main() {
     double tolerance = kTolerance,
     String note = '',
 
+    /// Why an axis is reported but not asserted. Required whenever
+    /// [checkWidth] or [checkHeight] is false — a number in the table with
+    /// no claim attached needs to say that it has none.
+    String uncompared = 'not compared',
+
     /// A difference that has been found, measured and *put to a decision*
     /// rather than settled. The value is still reported — with its number, so
     /// the report says which question it belongs to — and it does not fail
@@ -108,7 +113,13 @@ void main() {
     final Rect r = tester.getRect(finder.first);
     final double origin = originOf(bounds);
 
-    void check(String what, double wanted, double got, {bool assertIt = true}) {
+    void check(
+      String what,
+      double wanted,
+      double got, {
+      bool assertIt = true,
+      String? insteadOfNote,
+    }) {
       compared++;
       if (open != null) assertIt = false;
       if (assertIt && (got - wanted).abs() > tolerance) {
@@ -122,7 +133,7 @@ void main() {
         '| `$name` | $what | ${wanted.toStringAsFixed(2)} | '
         '${got.toStringAsFixed(2)} | '
         '${(got - wanted).abs() < 0.005 ? "=" : (got - wanted).toStringAsFixed(2)}'
-        ' | ${open != null ? "**open — $open**" : note} |',
+        ' | ${insteadOfNote ?? (open != null ? "**open — $open**" : note)} |',
       );
     }
 
@@ -133,12 +144,17 @@ void main() {
       (b['width'] as num).toDouble(),
       r.width,
       assertIt: checkWidth,
+      insteadOfNote: checkWidth ? null : uncompared,
     );
     check(
       'height',
       (b['height'] as num).toDouble(),
       r.height,
       assertIt: checkHeight,
+      // An axis nobody asserts must not carry an explanation of its number:
+      // labelling a twenty-five point difference "line-box rounding" reads
+      // as a finding that has been accounted for, and it has not.
+      insteadOfNote: checkHeight ? null : uncompared,
     );
   }
 
@@ -229,6 +245,9 @@ void main() {
           // The field's own box is compared; the label and the message line
           // above and below it are the route's, not the field's.
           checkHeight: false,
+          uncompared:
+              'not compared — `.field` bounds the input alone and '
+              '`LumeInputField` bounds its label and message with it (C48)',
           tolerance: kDrift,
           note: kDriftNote,
           open:
