@@ -1035,9 +1035,18 @@ class LumeStatRow extends StatelessWidget {
 /// Shared rather than screen-local: Today and Explore both carry one, and a
 /// second copy is how two pills end up a point apart.
 class LumeTag extends StatelessWidget {
-  const LumeTag({super.key, required this.label, this.neutral = true});
+  const LumeTag({
+    super.key,
+    required this.label,
+    this.neutral = true,
+    this.icon,
+  });
 
   final String label;
+
+  /// A 13-point glyph before the words. Profile's membership tag carries one;
+  /// a market tag does not.
+  final String? icon;
 
   /// `.tag--neutral` is the muted variant and the one a market wears; the
   /// accented one names a state.
@@ -1053,13 +1062,31 @@ class LumeTag extends StatelessWidget {
         color: lume.tintNeutral,
         borderRadius: BorderRadius.circular(999),
       ),
-      alignment: Alignment.center,
-      child: Text(
-        label,
-        style: LumeType.tracked(
-          LumeType.natural(context, context.lumeType.tab),
-          -0.005,
-        ).copyWith(color: lume.text3),
+      // No `alignment`: `Container` wraps an aligned child in an `Align`,
+      // which expands to whatever width it is offered — and a `.tag` is as
+      // wide as its words. The row centres itself in the 21 points instead.
+      child: Row(
+        mainAxisSize: MainAxisSize.min,
+        children: <Widget>[
+          if (icon != null) ...<Widget>[
+            // `.tag { gap: 4px }` and no `svg` override, so the glyph is the
+            // base `.ico`'s 20 — which is most of the tag's height and is
+            // what makes "Member since 18 March 2024" 178.78 wide.
+            LumeIcon(icon!, size: 20, color: lume.text3),
+            const SizedBox(width: 4),
+          ],
+          Flexible(
+            child: Text(
+              label,
+              maxLines: 1,
+              overflow: TextOverflow.ellipsis,
+              style: LumeType.tracked(
+                LumeType.natural(context, context.lumeType.tab),
+                -0.005,
+              ).copyWith(color: lume.text3),
+            ),
+          ),
+        ],
       ),
     );
   }

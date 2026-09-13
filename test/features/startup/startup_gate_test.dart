@@ -22,7 +22,13 @@ void main() {
   const String signIn = '/auth/signin';
   const String expired = '/auth/expired';
   const String splash = LumeRouteGate.splash;
-  const String account = '/profile/account';
+  // A *protected* account route. The section as a whole is not gated — most
+  // of it works for a guest — so the gate has to be asked about a route that
+  // actually needs an account.
+  const String account = '/profile/account/password';
+
+  /// One that does not: a guest may read the help without signing in.
+  const String openAccountRoute = '/profile/account/help';
 
   LumeStartupState ready({
     LumeAuthStatus auth = const LumeAuthStatus.guest(),
@@ -125,7 +131,45 @@ void main() {
   group('the account surfaces', () {
     test('need an account, and hold what was asked for', () {
       expect(go(ready(), account), signIn);
-      expect(go(ready(), '/home/account'), signIn);
+      expect(go(ready(), '/home/account/sessions'), signIn);
+    });
+
+    test('and only seven of the twenty-one are on that list', () {
+      // A row a guest can see must lead somewhere. Preferences, language,
+      // region, privacy, data & sync, help and about are theirs as much as
+      // anybody's, and the edit form is the only screen that changes the name
+      // they gave this device.
+      for (final String open in <String>[
+        openAccountRoute,
+        '/profile/account/prefs',
+        '/profile/account/language',
+        '/profile/account/region',
+        '/profile/account/currency',
+        '/profile/account/units',
+        '/profile/account/time',
+        '/profile/account/appearance',
+        '/profile/account/notifications',
+        '/profile/account/library',
+        '/profile/account/edit',
+        '/profile/account/privacy',
+        '/profile/account/sync',
+        '/profile/account/about',
+      ]) {
+        expect(LumeRouteGate.isProtected(open), isFalse, reason: open);
+        expect(go(ready(), open), isNull, reason: open);
+      }
+      for (final String shut in <String>[
+        '/profile/account/account',
+        '/profile/account/email',
+        '/profile/account/phone',
+        '/profile/account/security',
+        '/profile/account/password',
+        '/profile/account/sessions',
+        '/profile/account/delete',
+      ]) {
+        expect(LumeRouteGate.isProtected(shut), isTrue, reason: shut);
+        expect(go(ready(), shut), signIn, reason: shut);
+      }
     });
 
     test('open for somebody signed in', () {
@@ -149,6 +193,8 @@ void main() {
         '/home/search',
         '/tools/tool/calculator',
         '/home/tool/records/records/7',
+        // The bare account path is an alias for `prefs`, which is open.
+        '/profile/account',
       ]) {
         expect(LumeRouteGate.isProtected(location), isFalse, reason: location);
         expect(go(ready(), location), isNull, reason: location);

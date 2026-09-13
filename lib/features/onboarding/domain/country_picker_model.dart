@@ -28,6 +28,7 @@ class LumeCountry {
     required this.code,
     required this.name,
     required this.currency,
+    this.timeZone = 'UTC',
     this.popular = false,
   });
 
@@ -40,6 +41,14 @@ class LumeCountry {
 
   /// ISO 4217. Shown as the row's trailing meta.
   final String currency;
+
+  /// The IANA zone the country implies — `geo.js`'s own `tz` column.
+  ///
+  /// It is a *default*, not a fact about the reader: a country can span
+  /// several zones, and the Time route lets them say which. Carried here
+  /// because the table is already loaded and a second source would disagree
+  /// with it.
+  final String timeZone;
 
   final bool popular;
 

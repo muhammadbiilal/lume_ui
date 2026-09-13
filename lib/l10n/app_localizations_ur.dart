@@ -21,6 +21,628 @@ class AppLocalizationsUr extends AppLocalizations {
   String get a11yShare => 'شیئر';
 
   @override
+  String get acctAboutText =>
+      'روزمرہ زندگی کے لیے ایک عالمی ایپ۔ ہر جگہ، آپ کی زبان میں، اور اُنہی حصوں کے ساتھ جو آپ نے منتخب کیے۔';
+
+  @override
+  String get acctAboutTitle => 'Lume کے بارے میں';
+
+  @override
+  String get acctAppearanceDark => 'گہرا';
+
+  @override
+  String get acctAppearanceLight => 'روشن';
+
+  @override
+  String get acctAppearanceSystem => 'سسٹم کے مطابق';
+
+  @override
+  String get acctAppearanceTitle => 'ظاہری شکل';
+
+  @override
+  String get acctBuild => 'بلڈ';
+
+  @override
+  String acctCatsOn(int n, int total) {
+    return '$total میں سے $n چالو';
+  }
+
+  @override
+  String get acctChangePassword => 'پاس ورڈ تبدیل کریں';
+
+  @override
+  String get acctChangePasswordSub =>
+      'آخری تبدیلی اس ڈیوائس پر محفوظ نہیں کی جاتی';
+
+  @override
+  String get acctClock12 => '12 گھنٹے';
+
+  @override
+  String get acctClock24 => '24 گھنٹے';
+
+  @override
+  String get acctClockFormat => 'گھڑی';
+
+  @override
+  String get acctCompleteCta => 'اپنا نام شامل کریں';
+
+  @override
+  String get acctCompleteText =>
+      'اپنا نام شامل کریں تاکہ Lume آپ کو ٹھیک طرح مخاطب کر سکے۔';
+
+  @override
+  String get acctCompleteTitle => 'اپنی پروفائل مکمل کریں';
+
+  @override
+  String get acctCurrencyAuto => 'میرے خطے کے مطابق';
+
+  @override
+  String get acctCurrencyNote =>
+      'کچھ ٹولز پھر بھی اپنی منڈی کی کرنسی میں قیمت دکھاتے ہیں۔';
+
+  @override
+  String get acctCurrencyTitle => 'کرنسی';
+
+  @override
+  String get acctDangerZone => 'خطرناک حصہ';
+
+  @override
+  String get acctDataAccount => 'آپ کا اکاؤنٹ اور سیشنز';
+
+  @override
+  String get acctDataNotes => 'نوٹس، کام، اخراجات اور ٹریکرز';
+
+  @override
+  String get acctDataNotify => 'اطلاعات کی ترتیبات اور تاریخ';
+
+  @override
+  String get acctDataPrefs => 'ترجیحات، خطہ اور زبان';
+
+  @override
+  String get acctDataTools => 'ٹولز، پسندیدہ اور حالیہ اسکرینیں';
+
+  @override
+  String get acctDeleteConfirmText =>
+      'اکاؤنٹ حذف کرنے کے لیے اپنا پاس ورڈ درج کریں۔';
+
+  @override
+  String get acctDeleteConfirmTitle => 'تصدیق کریں کہ یہ آپ ہیں';
+
+  @override
+  String get acctDeleteCta => 'میرا اکاؤنٹ حذف کریں';
+
+  @override
+  String get acctDeleteFinalText =>
+      'یہ اکاؤنٹ ہمیشہ کے لیے ختم کر دیتا ہے۔ واپسی کا کوئی راستہ نہیں۔';
+
+  @override
+  String get acctDeleteFinalTitle => 'اپنا اکاؤنٹ حذف کریں؟';
+
+  @override
+  String get acctDeleteK1 =>
+      'نوٹس، کام، اخراجات اور ترجیحات اسی ڈیوائس پر رہیں گے۔';
+
+  @override
+  String get acctDeleteKeeps => 'کیا باقی رہے گا';
+
+  @override
+  String get acctDeleteRow => 'اکاؤنٹ حذف کریں';
+
+  @override
+  String get acctDeleteRowSub => 'اپنا Lume اکاؤنٹ مستقل طور پر ختم کریں';
+
+  @override
+  String get acctDeleteTitle => 'اکاؤنٹ حذف کریں';
+
+  @override
+  String get acctDeleteW1 => 'آپ کا اکاؤنٹ اور ای میل ختم کر دیے جائیں گے۔';
+
+  @override
+  String get acctDeleteW2 => 'ہر سائن اِن ڈیوائس سائن آؤٹ ہو جائے گی۔';
+
+  @override
+  String get acctDeleteW3 => 'یہ واپس نہیں ہو سکتا۔';
+
+  @override
+  String get acctDeleteWhat => 'یہ کیا کرتا ہے';
+
+  @override
+  String get acctDeleted => 'اکاؤنٹ حذف ہو گیا';
+
+  @override
+  String get acctDeviceAndroid => 'اینڈرائیڈ فون';
+
+  @override
+  String get acctDeviceBrowser => 'یہ براؤزر';
+
+  @override
+  String get acctDeviceIos => 'آئی فون';
+
+  @override
+  String get acctDeviceMac => 'میک';
+
+  @override
+  String get acctDeviceWindows => 'ونڈوز پی سی';
+
+  @override
+  String get acctDiscardCta => 'تبدیلیاں چھوڑ دیں';
+
+  @override
+  String get acctDiscardText =>
+      'آپ نے اس اسکرین میں تبدیلی کی ہے اور محفوظ نہیں کی۔ اب جانے سے وہ تبدیلیاں ضائع ہو جائیں گی۔';
+
+  @override
+  String get acctDiscardTitle => 'اپنی تبدیلیاں چھوڑ دیں؟';
+
+  @override
+  String get acctEditProfile => 'پروفائل میں ترمیم';
+
+  @override
+  String get acctEditSaved => 'پروفائل اپ ڈیٹ ہو گئی';
+
+  @override
+  String get acctEditTitle => 'پروفائل میں ترمیم';
+
+  @override
+  String get acctEmailChanged => 'ای میل اپ ڈیٹ ہو گیا';
+
+  @override
+  String get acctEmailPending => 'تصدیق باقی ہے';
+
+  @override
+  String acctEmailPendingText(String email) {
+    return 'تصدیق کے بعد $email آپ کا پتہ بن جائے گا۔';
+  }
+
+  @override
+  String get acctEmailTitle => 'ای میل پتہ';
+
+  @override
+  String get acctErrCurrentRequired => 'اپنا موجودہ پاس ورڈ درج کریں۔';
+
+  @override
+  String get acctErrCurrentWrong => 'موجودہ پاس ورڈ درست نہیں ہے۔';
+
+  @override
+  String get acctErrPasswordSame =>
+      'ایسا پاس ورڈ چنیں جو آپ نے یہاں پہلے استعمال نہ کیا ہو۔';
+
+  @override
+  String get acctErrPhoneInvalid => 'ایسا فون نمبر درج کریں جسے Lume پڑھ سکے۔';
+
+  @override
+  String get acctErrPhotoTooBig =>
+      'یہ تصویر اس ڈیوائس پر محفوظ کرنے کے لیے بہت بڑی ہے۔ کوئی چھوٹی آزمائیں۔';
+
+  @override
+  String get acctErrStorage =>
+      'Lume اس ڈیوائس پر محفوظ نہیں کر سکا۔ اپنے براؤزر کی اسٹوریج ترتیبات دیکھیں اور دوبارہ کوشش کریں۔';
+
+  @override
+  String get acctFavourites => 'آپ کے پسندیدہ';
+
+  @override
+  String get acctFieldConfirmNew => 'نئے پاس ورڈ کی تصدیق کریں';
+
+  @override
+  String get acctFieldCurrent => 'موجودہ پاس ورڈ';
+
+  @override
+  String get acctFieldDisplayName => 'ظاہری نام';
+
+  @override
+  String get acctFieldFirst => 'پہلا نام';
+
+  @override
+  String get acctFieldLast => 'آخری نام';
+
+  @override
+  String get acctFieldNewEmail => 'نیا ای میل پتہ';
+
+  @override
+  String get acctFieldPhone => 'فون';
+
+  @override
+  String get acctGuestBadge => 'مہمان';
+
+  @override
+  String get acctGuestEditNote =>
+      'یہ نام اسی ڈیوائس پر رکھا جاتا ہے۔ اکاؤنٹ بنانے پر یہ آپ کے ساتھ چلا جائے گا۔';
+
+  @override
+  String get acctGuestNotifText =>
+      'مہمان کے طور پر اطلاعات اسی ڈیوائس کی ہوتی ہیں۔ سائن اِن کرنے سے کبھی کسی دوسرے اکاؤنٹ کی اطلاعات نہیں دکھائی جاتیں۔';
+
+  @override
+  String get acctGuestNotifTitle => 'اس ڈیوائس پر اطلاعات';
+
+  @override
+  String get acctGuestText =>
+      'آپ مہمان کے طور پر Lume استعمال کر رہے ہیں۔ سب کچھ اسی ڈیوائس پر محفوظ ہے۔';
+
+  @override
+  String get acctGuestTitle => 'Lume میں خوش آمدید';
+
+  @override
+  String get acctGuestWhy => 'اکاؤنٹ بنائیں تاکہ';
+
+  @override
+  String get acctGuestWhy1 => 'اپنا Lume ہر ڈیوائس پر رکھ سکیں';
+
+  @override
+  String get acctGuestWhy2 => 'فون کھو جانے پر اپنی ترتیبات واپس پا سکیں';
+
+  @override
+  String get acctGuestWhy3 => 'اکاؤنٹ والی سہولتیں آتے ہی استعمال کر سکیں';
+
+  @override
+  String get acctHelpContact => 'رائے بھیجیں';
+
+  @override
+  String get acctHelpText =>
+      'Lume ایک ہی اسکرین کا پروڈکٹ ہے: ہر چیز ہوم سے ایک یا دو ٹیپ دور ہے۔';
+
+  @override
+  String get acctHelpTitle => 'مدد';
+
+  @override
+  String get acctHelpTour => 'تعارفی دورہ دوبارہ دیکھیں';
+
+  @override
+  String get acctLanguageNote =>
+      'زبان بدلنے سے آپ کی لکھی ہوئی کوئی چیز نہیں بدلتی۔';
+
+  @override
+  String get acctLanguageTitle => 'زبان';
+
+  @override
+  String acctLastSeen(String when) {
+    return 'آخری بار $when';
+  }
+
+  @override
+  String get acctLoggedOut => 'سائن آؤٹ ہو گئے';
+
+  @override
+  String get acctLogoutText =>
+      'اپنے اکاؤنٹ تک پہنچنے کے لیے دوبارہ سائن اِن کرنا ہوگا۔ اس ڈیوائس پر سب کچھ جہاں ہے وہیں رہے گا۔';
+
+  @override
+  String get acctLogoutTitle => 'سائن آؤٹ کریں؟';
+
+  @override
+  String acctMemberSince(String date) {
+    return '$date سے رکن';
+  }
+
+  @override
+  String get acctNameNote => 'یہی وہ نام ہے جس سے Lume آپ کو مخاطب کرتا ہے۔';
+
+  @override
+  String get acctNoFavourites => 'ابھی کچھ محفوظ نہیں';
+
+  @override
+  String get acctNoFavouritesText =>
+      'کسی بھی ٹول پر ستارہ دبائیں اور وہ یہاں آ جائے گا۔';
+
+  @override
+  String get acctNoOtherDevices => 'کوئی دوسری ڈیوائس سائن اِن نہیں ہے۔';
+
+  @override
+  String get acctNothingChanged => 'ابھی محفوظ کرنے کو کچھ نہیں';
+
+  @override
+  String get acctPersonalTitle => 'ذاتی معلومات';
+
+  @override
+  String get acctPhoneNote => 'اختیاری۔ اسی ڈیوائس پر محفوظ۔';
+
+  @override
+  String get acctPhoneSaved => 'فون نمبر محفوظ ہو گیا';
+
+  @override
+  String get acctPhoneScope => 'یہ کس کام آتا ہے';
+
+  @override
+  String get acctPhoneScopeText =>
+      'اسی ڈیوائس پر رکھا جاتا ہے تاکہ کوئی ٹول اسے پیش کر سکے۔ Lume میں فون سے سائن اِن یا بحالی نہیں، اس لیے یہ اور کچھ نہیں کرتا۔';
+
+  @override
+  String get acctPhoneTitle => 'فون نمبر';
+
+  @override
+  String get acctPhoto => 'پروفائل تصویر';
+
+  @override
+  String get acctPhotoAdd => 'تصویر شامل کریں';
+
+  @override
+  String get acctPhotoNote => 'اختیاری۔ اسی ڈیوائس پر محفوظ۔';
+
+  @override
+  String get acctPhotoRemove => 'تصویر ہٹا دیں';
+
+  @override
+  String get acctPhotoReplace => 'تصویر بدلیں';
+
+  @override
+  String get acctPrefsTitle => 'ترجیحات';
+
+  @override
+  String get acctPrivacyAnalytics => 'استعمال کے اعدادوشمار';
+
+  @override
+  String get acctPrivacyAnalyticsSub =>
+      'Lume کوئی نہیں جمع کرتا۔ بند کرنے کو کچھ ہے ہی نہیں۔';
+
+  @override
+  String get acctPrivacyPersonal => 'ذاتی نوعیت';
+
+  @override
+  String get acctPrivacyPersonalSub =>
+      'جو آپ Lume میں کرتے ہیں اسی سے ترتیب طے کریں';
+
+  @override
+  String get acctPrivacyPreview => 'اطلاعات کا پیش منظر';
+
+  @override
+  String get acctPrivacyPreviewSub => 'لاک اسکرین پر اطلاع کا متن دکھائیں';
+
+  @override
+  String get acctPrivacySensitive => 'پیش منظر میں حساس مواد';
+
+  @override
+  String get acctPrivacySensitiveSub =>
+      'صحت، پیسہ اور دستاویزات کھولے بغیر پوشیدہ رہتے ہیں';
+
+  @override
+  String get acctPrivacyTitle => 'رازداری';
+
+  @override
+  String get acctPushAsk => 'ابھی نہیں پوچھا گیا';
+
+  @override
+  String get acctPushDenied => 'آپ کے براؤزر کی ترتیبات میں بند ہے';
+
+  @override
+  String get acctPushDeniedHelp =>
+      'اطلاعات بند ہیں۔ اپنے براؤزر کی سائٹ ترتیبات میں اجازت دیں۔';
+
+  @override
+  String get acctPushGranted => 'آپ کے براؤزر نے اجازت دی';
+
+  @override
+  String get acctPushOff => 'بند';
+
+  @override
+  String get acctPushOn => 'چالو';
+
+  @override
+  String get acctPushThanks => 'اطلاعات چالو ہیں';
+
+  @override
+  String get acctPushUnsupported => 'یہ ڈیوائس پُش اطلاعات نہیں دکھا سکتی';
+
+  @override
+  String get acctPwStrengthLabel => 'مضبوطی';
+
+  @override
+  String get acctRegionChange => 'ملک یا شہر بدلیں';
+
+  @override
+  String get acctRegionTitle => 'خطہ اور کرنسی';
+
+  @override
+  String get acctRegionWarn =>
+      'خطہ بدلنے سے آپ کی کرنسی، منڈیاں، تعطیلات، ہنگامی نمبر اور مقامی خدمات بدل سکتی ہیں۔';
+
+  @override
+  String get acctRowAbout => 'Lume کے بارے میں';
+
+  @override
+  String get acctRowAboutSub => 'ورژن، لائسنس اور کریڈٹس';
+
+  @override
+  String get acctRowAppearance => 'ظاہری شکل';
+
+  @override
+  String get acctRowAppearanceSub => 'روشن، گہرا یا سسٹم کے مطابق';
+
+  @override
+  String get acctRowHelp => 'مدد';
+
+  @override
+  String get acctRowHelpSub => 'جوابات، اور ہم تک پہنچنے کا راستہ';
+
+  @override
+  String get acctRowInterests => 'آپ کی دلچسپیاں';
+
+  @override
+  String get acctRowInterestsSub =>
+      'آپ کے ہوم، ٹولز اور مطالعے کو ترتیب دیتی ہیں';
+
+  @override
+  String get acctRowLanguage => 'زبان';
+
+  @override
+  String get acctRowLibrary => 'آپ کی لائبریری';
+
+  @override
+  String get acctRowLibrarySub => 'محفوظ مطالعہ، نوٹس اور پسندیدہ';
+
+  @override
+  String get acctRowNotificationsSub =>
+      'پُش اطلاعات، ایپ کے اندر اپ ڈیٹس اور خاموش اوقات';
+
+  @override
+  String get acctRowPersonal => 'ذاتی معلومات';
+
+  @override
+  String get acctRowPersonalSub => 'نام، ای میل، فون اور خطہ';
+
+  @override
+  String get acctRowPreferences => 'ترجیحات';
+
+  @override
+  String get acctRowPreferencesSub => 'زبان، کرنسی، اکائیاں اور وقت';
+
+  @override
+  String get acctRowPrivacy => 'رازداری';
+
+  @override
+  String get acctRowPrivacySub => 'Lume کیا دکھاتا، رکھتا اور بانٹتا ہے';
+
+  @override
+  String get acctRowRegion => 'خطہ اور کرنسی';
+
+  @override
+  String get acctRowRegionSub => 'ملک، شہر اور اُن سے جڑی خدمات';
+
+  @override
+  String get acctRowSecurity => 'سیکیورٹی';
+
+  @override
+  String get acctRowSecuritySub => 'پاس ورڈ، سیشنز اور اکاؤنٹ کی حفاظت';
+
+  @override
+  String get acctRowSync => 'ڈیٹا اور ہم آہنگی';
+
+  @override
+  String get acctRowSyncSub => 'آپ کے Lume کا ہر حصہ کہاں محفوظ ہے';
+
+  @override
+  String get acctRowTour => 'تعارفی دورہ دوبارہ دیکھیں';
+
+  @override
+  String get acctRowTourSub => 'یہاں کیا ہے، ایک مختصر یاد دہانی';
+
+  @override
+  String get acctSaveChanges => 'تبدیلیاں محفوظ کریں';
+
+  @override
+  String get acctSecurityScope => 'Lume کیا محفوظ رکھتا ہے';
+
+  @override
+  String get acctSecurityScopeText =>
+      'آپ کا پاس ورڈ اور آپ کی سائن اِن ڈیوائسیں۔ اس بلڈ میں دو مرحلوں والی تصدیق یا بایومیٹرک لاک نہیں ہے، اس لیے یہاں ایسا کوئی دعویٰ نہیں۔';
+
+  @override
+  String get acctSecurityTitle => 'سیکیورٹی';
+
+  @override
+  String acctSessionsSub(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n signed in',
+      one: '1 signed in',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get acctSessionsTitle => 'فعال سیشنز';
+
+  @override
+  String get acctSignOut => 'سائن آؤٹ';
+
+  @override
+  String get acctSignOutDevice => 'سائن آؤٹ';
+
+  @override
+  String get acctSignOutOthers => 'دیگر تمام ڈیوائسوں سے سائن آؤٹ کریں';
+
+  @override
+  String get acctSignOutOthersText =>
+      'ہر دوسری سائن اِن ڈیوائس کو دوبارہ سائن اِن کرنا ہوگا۔';
+
+  @override
+  String acctSignedInAs(String email) {
+    return '$email کے طور پر سائن اِن';
+  }
+
+  @override
+  String acctSignedOutOthers(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: 'Signed out $n other devices',
+      one: 'Signed out 1 other device',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get acctSince => 'رکن بنے';
+
+  @override
+  String get acctStatus => 'اکاؤنٹ کی حالت';
+
+  @override
+  String get acctStatusActive => 'فعال';
+
+  @override
+  String get acctStatusLocked => 'مقفل';
+
+  @override
+  String get acctSupport => 'مدد';
+
+  @override
+  String get acctSyncDevice => 'اسی ڈیوائس پر محفوظ';
+
+  @override
+  String get acctSyncNone =>
+      'ابھی کچھ ہم آہنگ نہیں ہوتا۔ اس بلڈ میں Lume کا کوئی سرور نہیں، اس لیے اوپر کی ہر چیز اسی ڈیوائس پر رہتی ہے — آپ کا اکاؤنٹ بھی۔';
+
+  @override
+  String get acctSyncSynced => 'آپ کے اکاؤنٹ سے ہم آہنگ';
+
+  @override
+  String get acctSyncTitle => 'ڈیٹا اور ہم آہنگی';
+
+  @override
+  String acctThemeSwitched(String mode) {
+    return 'ظاہری شکل: $mode';
+  }
+
+  @override
+  String get acctThisDevice => 'یہ ڈیوائس';
+
+  @override
+  String get acctTimeTitle => 'وقت اور ٹائم زون';
+
+  @override
+  String get acctTimezoneAuto => 'اس ڈیوائس کے مطابق';
+
+  @override
+  String get acctTimezoneFollowRegion => 'میرے خطے کے مطابق';
+
+  @override
+  String get acctTimezoneNote =>
+      'منڈیاں، پروازیں اور ٹرینیں ہمیشہ اپنا ٹائم زون استعمال کرتی ہیں۔';
+
+  @override
+  String get acctTimezoneTitle => 'وقت';
+
+  @override
+  String get acctUnitsAuto => 'میرے خطے کے مطابق';
+
+  @override
+  String get acctUnitsImperial => 'امپیریل';
+
+  @override
+  String get acctUnitsMetric => 'میٹرک';
+
+  @override
+  String get acctUnitsTitle => 'اکائیاں';
+
+  @override
+  String get acctVersion => 'ورژن';
+
+  @override
+  String get acctYourLume => 'آپ کا Lume';
+
+  @override
   String get actionAdd => 'شامل کریں';
 
   @override
@@ -36,10 +658,16 @@ class AppLocalizationsUr extends AppLocalizations {
   String get actionCancel => 'منسوخ';
 
   @override
+  String get actionChange => 'تبدیل کریں';
+
+  @override
   String get actionClear => 'صاف کریں';
 
   @override
   String get actionClose => 'بند کریں';
+
+  @override
+  String get actionConfirm => 'تصدیق کریں';
 
   @override
   String get actionContinue => 'جاری رکھیں';
@@ -72,6 +700,9 @@ class AppLocalizationsUr extends AppLocalizations {
   String get actionRemove => 'ہٹائیں';
 
   @override
+  String get actionResend => 'دوبارہ بھیجیں';
+
+  @override
   String get actionSave => 'محفوظ کریں';
 
   @override
@@ -88,6 +719,9 @@ class AppLocalizationsUr extends AppLocalizations {
 
   @override
   String get actionTryAgain => 'دوبارہ کوشش کریں';
+
+  @override
+  String get actionVerify => 'تصدیق کریں';
 
   @override
   String get actionWeek => 'ہفتہ';
@@ -571,6 +1205,9 @@ class AppLocalizationsUr extends AppLocalizations {
 
   @override
   String get commonOptional => 'اختیاری';
+
+  @override
+  String get commonOr => 'یا';
 
   @override
   String get commonOverdue => 'تاخیر';
@@ -1353,6 +1990,39 @@ class AppLocalizationsUr extends AppLocalizations {
   String get navTrains => 'ٹرینیں';
 
   @override
+  String get ncatDocuments => 'دستاویزات';
+
+  @override
+  String get ncatFaith => 'ایمان';
+
+  @override
+  String get ncatFinance => 'پیسہ';
+
+  @override
+  String get ncatHealth => 'صحت';
+
+  @override
+  String get ncatMarkets => 'منڈیاں';
+
+  @override
+  String get ncatNews => 'خبریں';
+
+  @override
+  String get ncatPersonal => 'ذاتی';
+
+  @override
+  String get ncatReminders => 'یاد دہانیاں';
+
+  @override
+  String get ncatSystem => 'سسٹم';
+
+  @override
+  String get ncatTravel => 'سفر';
+
+  @override
+  String get ncatWeather => 'موسم';
+
+  @override
   String get nearbyChaiShai => 'چائے شائے';
 
   @override
@@ -1609,10 +2279,63 @@ class AppLocalizationsUr extends AppLocalizations {
   String get persAllCountries => 'تمام ممالک';
 
   @override
+  String get persAppLanguage => 'ایپ کی زبان';
+
+  @override
+  String get persCity => 'شہر';
+
+  @override
+  String get persCitySub => 'موسم، مقامی معلومات اور قریبی مقامات کے لیے';
+
+  @override
+  String get persContent => 'مواد';
+
+  @override
+  String get persCountry => 'ملک';
+
+  @override
+  String get persCountrySub => 'صرف مقامی خدمات کھولتا ہے — اور کچھ نہیں';
+
+  @override
+  String get persCurrency => 'کرنسی';
+
+  @override
+  String persCurrencyAuto(String code) {
+    return 'خودکار ($code)';
+  }
+
+  @override
+  String get persDataSafe =>
+      'یہ تبدیلیاں صرف یہ بدلتی ہیں کہ آپ کیا دیکھتے ہیں۔ آپ کے نوٹس، کام اور ریکارڈ محفوظ رہتے ہیں۔';
+
+  @override
+  String get persFinance => 'مالی معلومات';
+
+  @override
+  String get persFinanceSub => 'شرحیں، سونا اور منڈیاں';
+
+  @override
+  String get persFormatting => 'زبان اور ترتیب';
+
+  @override
+  String get persInterests => 'آپ کی دلچسپیاں';
+
+  @override
+  String persInterestsHint(int min) {
+    return 'کم از کم $min چنیں۔ یہی طے کرتی ہیں کہ آپ کی ہوم اسکرین پر کیا آئے گا۔';
+  }
+
+  @override
   String get persIslamic => 'اسلامی خصوصیات';
 
   @override
   String get persIslamicSub => 'نماز کے اوقات، قرآن، دعائیں، زکوٰۃ اور رمضان';
+
+  @override
+  String get persNews => 'خبریں';
+
+  @override
+  String get persNewsSub => 'ایکسپلور اور ٹوڈے پر سرخیاں';
 
   @override
   String get persPopular => 'مقبول';
@@ -1621,13 +2344,68 @@ class AppLocalizationsUr extends AppLocalizations {
   String get persRecent => 'حالیہ';
 
   @override
+  String get persRecos => 'تجاویز';
+
+  @override
+  String get persRecosSub => 'آپ کے Lume استعمال کی بنیاد پر ٹولز تجویز کریں';
+
+  @override
+  String get persRegion => 'علاقہ';
+
+  @override
+  String get persSavePrefs => 'ترجیحات محفوظ کریں';
+
+  @override
+  String get persSaved => 'آپ کی ایپ اپ ڈیٹ ہو گئی';
+
+  @override
   String get persSearchCities => 'شہر تلاش کریں';
 
   @override
   String get persSearchCountries => 'ممالک تلاش کریں';
 
   @override
+  String get persSport => 'کھیل';
+
+  @override
+  String get persSportSub => 'براہِ راست کرکٹ اسکور';
+
+  @override
+  String get persSub => 'جب چاہیں تبدیل کریں';
+
+  @override
+  String get persTime12 => '12 گھنٹے';
+
+  @override
+  String get persTime24 => '24 گھنٹے';
+
+  @override
+  String get persTimeFormat => 'وقت';
+
+  @override
+  String get persTitle => 'ذاتی ترتیب';
+
+  @override
+  String get persUnits => 'اکائیاں';
+
+  @override
+  String get persUnitsAuto => 'خودکار';
+
+  @override
+  String get persUnitsImperial => 'امپیریل';
+
+  @override
+  String get persUnitsMetric => 'میٹرک';
+
+  @override
   String get persUseLocation => 'میرا موجودہ مقام استعمال کریں';
+
+  @override
+  String get persUseLocationSub =>
+      'اختیاری — آپ اسے ہمیشہ خود بھی طے کر سکتے ہیں';
+
+  @override
+  String get persWhereYouAre => 'آپ کہاں ہیں';
 
   @override
   String get prayerAsr => 'عصر';
@@ -1643,6 +2421,9 @@ class AppLocalizationsUr extends AppLocalizations {
 
   @override
   String get prayerMaghrib => 'مغرب';
+
+  @override
+  String get profileSub => 'ترجیحات اور محفوظ اشیاء';
 
   @override
   String get qaDocscan => 'دستاویز اسکین کریں';

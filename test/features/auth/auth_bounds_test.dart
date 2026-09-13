@@ -17,6 +17,7 @@
 /// tolerance is a whole logical pixel.
 library;
 
+import 'package:lume/core/widgets/lume/lume_field.dart';
 import 'dart:convert';
 import 'dart:io';
 
@@ -134,7 +135,7 @@ void main() {
 
   /// The nth field on the screen.
   Finder fieldAt(int index) =>
-      find.byType(LumeAuthInput).at(index).hitTestable(at: Alignment.topLeft);
+      find.byType(LumeInputField).at(index).hitTestable(at: Alignment.topLeft);
 
   /// The chrome of a screen the reference has compressed (D19): recorded in
   /// the report, never asserted.

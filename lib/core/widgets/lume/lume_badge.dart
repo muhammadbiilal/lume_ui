@@ -102,21 +102,29 @@ class LumeBadge extends StatelessWidget {
               ExcludeSemantics(
                 child: Text(
                   glyph,
+                  // `.badge i { font-size: 11px; line-height: 1 }` — a glyph
+                  // set on its own box, so it does not decide the pill's
+                  // height.
                   style: LumeType.fit(
                     context,
                     context.lumeType.metaSmall,
-                  ).copyWith(color: fg, fontSize: 9),
+                  ).copyWith(color: fg, fontSize: 11, height: 1),
                 ),
               ),
               const SizedBox(width: 4),
             ],
             Text(
               label,
+              // `.badge` sets a size and leaves `line-height` alone, so the
+              // line is the font's natural 12 rather than the `--t-metasm`
+              // token's. With 2 points of padding above and below that is
+              // the pill's measured 16; the token's line made it 19. See C35.
               style: LumeType.tracked(
-                LumeType.fit(
+                LumeType.natural(
                   context,
                   context.lumeType.metaSmall,
-                ).copyWith(fontSize: 10, fontWeight: FontWeight.w700),
+                  size: 10,
+                ).copyWith(fontWeight: FontWeight.w700),
                 0.005,
               ).copyWith(color: fg),
               maxLines: 1,

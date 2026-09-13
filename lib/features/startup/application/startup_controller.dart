@@ -13,6 +13,7 @@
 library;
 
 import 'dart:async';
+import '../../onboarding/data/country_fixture.dart';
 
 import 'package:flutter/foundation.dart';
 
@@ -66,6 +67,16 @@ class LumeStartupController extends ChangeNotifier {
       auth = const LumeAuthStatus.guest();
     }
 
+    // The country table, for every surface that has to name a country. It is
+    // a bundled asset and it caches, so this is the one read; a failure is
+    // not a launch that cannot happen, and the screens fall back to the code.
+    LumeCountryFixture? countries;
+    try {
+      countries = await LumeCountryFixture.load();
+    } on Object {
+      countries = null;
+    }
+
     if (_disposed) return;
     _publish(
       _state.copyWith(
@@ -73,6 +84,7 @@ class LumeStartupController extends ChangeNotifier {
         profile: profile,
         profileIsDurable: profileRepository.isDurable,
         auth: auth,
+        countries: countries,
       ),
     );
   }

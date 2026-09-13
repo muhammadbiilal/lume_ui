@@ -776,6 +776,119 @@ unseen because the button had never been measured: the Trains bounds comparison
 checked the card, the fields, the swap and the first chip, and stopped there.
 It is on the list with C32 because the same omission hid both.
 
+### C34 — the notification count and the notification list disagree about faith
+
+**Found in F5C. Corrected.** Profile's Notifications row says "{n} of {total}
+on", and `notifValue()` computes both figures from the whole `CATEGORIES`
+table — eleven, always. The screen that row leads to filters the same table
+twice before drawing it: once by the reader's faith preference, and once by
+whether any *visible* feature feeds the category.
+
+So a reader who has not switched the Islamic experience on is told about
+eleven categories and shown ten. The figure is not wrong about the table; it
+is wrong about the screen it is a summary of, which is the same class as C23.
+
+**Corrected rather than reproduced**, because the faith gate is the one rule
+§64 asks to be applied everywhere rather than at the entry point:
+`LumeNotificationPrefs.visible(islamic:)` is asked once and answers both the
+count and the list, so they cannot disagree. A Muslim reader still sees
+eleven; a non-Muslim reader is told ten of ten.
+
+**Dayroz obligation.** The second filter — whether a category has any visible
+source behind it — belongs here too once there is a notification engine to
+ask. Until then the count would over-report for a reader whose country has no
+Pakistani services, and that is recorded rather than fixed against data that
+does not exist yet.
+
+### C35 — the settings row was a point or two out in five places
+
+**Found and corrected in F5C.** `.list-row` is `padding: 13px 15px; gap: 13px`
+with a 34-point icon tile and a 17-point glyph in it. Flutter had 14/12, a
+36-point tile, a 12-point gap after the icon and an 8-point gap before the
+row's end.
+
+None of it was visible on its own, and all of it moved the description: the
+Notifications row's "Push alerts, in-app updates and quiet hours" took three
+lines where the reference takes two, which is eleven points on one row and
+compounds down a list of eight. Measured: `srow` 348 × 61, `srow.icon` 34 ×
+34 at x 36, `srow.title` and `srow.sub` 242 wide at x 83.
+
+**Exact parity, restored.** An implementation defect, found by adding Profile
+to the bounds comparison and then measuring the row's *parts* rather than the
+row — which is the same lesson C32 taught about the first chip.
+
+### C36 — a row promised "Not set" and rendered nothing
+
+**Found and corrected in F5C.** `srow` distinguishes two things the product
+must not confuse: an empty string is *a value the product holds and knows to
+be empty*, and `undefined` is a value it does not have. The reference renders
+`a.notSet` for the first. `LumeSettingsRow`'s documentation said so, and its
+code rendered nothing at all — so a guest's Display name row showed a bare
+title where the reference shows "Not set", and the row was eleven points
+shorter for it.
+
+The row now takes a `notSetLabel` and asserts it is given wherever the value
+can be empty. A core widget does not reach for the localisations, so the
+caller supplies the string; the *rule* stays in the widget.
+
+**Exact parity, restored**, and a gap §125 forbids closed with it.
+
+### C37 — `.list-row__end`'s gap falls between its children
+
+**Found and corrected in F5C.** `.list-row__end { gap: 8px }` separates a
+value from its chevron. A row that has no value has nothing to separate, so
+the eight points do not exist and its description has them instead. Flutter
+put the gap in unconditionally and every valueless row's text column was eight
+points narrower than the reference's 242.
+
+**Exact parity, restored.** The same class as C35, found by the same
+measurement.
+
+### C38 — `.tag` was as wide as whatever it was put in
+
+**Found and corrected in F5C.** `Container` wraps an aligned child in an
+`Align`, which expands to the width it is offered. `LumeTag` set
+`alignment: Alignment.center`, so the guest badge — a 45-point pill reading
+"Guest" — rendered as a 312-point bar across the identity card.
+
+It had never shown before because Today's and Explore's market tags sit in
+rows that constrain them. The row inside centres itself in the 21 points
+without the `Align`, and the tag is its words wide again.
+
+While it was open: `.tag`'s glyph is the base `.ico`'s **20**, not 13, and its
+gap is 4, not 5 — which is the six points between a 178.78-wide membership tag
+and a 172.78-wide one.
+
+### C39 — the status badge stood 19 where the reference draws 16
+
+**Found and corrected in F5C.** `.badge` sets `font-size: 10px` and leaves
+`line-height` alone, so its line is the font's natural 12 and the pill is
+2 + 12 + 2 = **16**. `LumeBadge` took the `--t-metasm` token's line instead,
+which is taller, and stood 19. Its glyph is `font-size: 11px; line-height: 1`
+— set on its own box so it never decides the pill's height, which Flutter's
+did.
+
+Found on the expired identity card, where the badge is the only thing in the
+meta row and its three points moved everything below it. It affects every
+badge in the product; the five destination comparisons were re-scored
+afterwards and none moved.
+
+### C40 — the identity card's gap belongs between the blocks, not the lines
+
+**Found and corrected in F5C.** `.phead__id` is a flex column with
+`gap: 10px`, and its three children are the avatar, a `<div>` holding the name
+*and* the address, and the meta row. The gap therefore falls twice, not three
+times: the two lines inside the div sit against each other.
+
+Flutter put ten points between the name and the address as well, which made
+the card ten points taller in every state that has both. Measured: `phead.name`
+at y 198 and `phead.mail` at 222, with 24 points of name between them.
+
+The same block is also *shrink-to-fit* — `align-items: center` on the column
+means the div is as wide as the wider of its two lines, and each `<p>` fills
+it. At 390 the guest's address wraps and takes the full 312; the holder's name
+is 132.3 and the address sits centred under it.
+
 ## 3. Open questions
 
 ### Resolved in F1
@@ -805,6 +918,10 @@ deleted row invites the same question again.
 
 | Date | Change | Reason |
 |---|---|---|
+| 2026-09-13 (F5C-B/C) | **Profile and the twenty-one account routes implemented** — one composition in four identity states, a per-route gate, and no placeholder among them | Profile was the last destination still rendering the F3 fixture, and a functional row must not point at a generic screen |
+| 2026-09-13 (F5C-B/C) | **D40 and D41 recorded** — the version line names this build, and the Personalisation sheet is two editors | A version is a claim about which code is running; six of the sheet's seven controls are now routes |
+| 2026-09-13 (F5C-B/C) | **C34 raised and corrected** — the notification count and the notification list are the same faith-gated question, asked once | The reference counts eleven and shows ten to a non-Muslim reader |
+| 2026-09-13 (F5C-B/C) | **C35–C40 raised and corrected** — the settings row's padding, icon and two gaps; a promised "Not set" that never rendered; the end's conditional gap; a tag that filled its width; a badge three points too tall; and the identity card's gap between blocks rather than lines | Found by adding Profile to the measured-bounds comparison in all three identity states, and then measuring each row's *parts* |
 | 2026-09-13 (F5C) | **D38 and D39 recorded — the swap swaps and the day chips choose a day** | Two approved functional corrections; the reference ships a toast with no effect and three buttons with no handler |
 | 2026-09-13 (F5C) | **C30 and C31 raised; decision taken: reproduce.** The departures heading names an origin the roster is not filtered by; two currency notations sit five rows apart | Both are captions written against unfiltered data; both carry a Dayroz obligation rather than a silent repair |
 | 2026-09-13 (F5C) | **C32 and C33 raised; C33 corrected** — the search foot's items overflow rather than shrink, and the Search button had lost `.btn`'s tracking | A row of `Flexible` chips ellipsised "Tomorrow" at a width with 16 points to spare; the button had never been measured |
@@ -1571,6 +1688,38 @@ rollover across an injected clock, LTR and RTL, the `selected` semantics flag,
 keyboard focus, and restoration. Golden:
 `trains_tomorrow_390x844_light_en.png`; the refusal state is
 `trains_invalid_390x844_light_en.png`.
+
+### D40 — the version line names this build
+
+**New in F5C.** Profile's foot and the About route both print a version. The
+reference prints `4.1.0`, which is the web prototype's; Flutter prints the
+package's own, read from `pubspec.yaml` and pinned by `build_version_test`.
+
+A version number is a claim about which code the reader is running. Carrying
+the prototype's across would be the one kind of statistic §125 forbids — a
+figure that looks verified and is not — and would make a bug report name a
+build that does not exist. The captures differ from the prototype by that
+string, on purpose.
+
+### D41 — the Personalisation sheet is two editors, not one
+
+**New in F5C.** `sheet:personalise` is one tall sheet holding location,
+language, units, currency, time, interests and the content switches. Six of
+those seven now have a route of their own in the account section — the sheet
+and the routes were always two ways to the same preference — and a second
+language picker would be a second answer to the same question.
+
+So the sheet is split at the two places that actually open it:
+
+| entry point | opens |
+|---|---|
+| Profile's Interests row | the interests picker |
+| the Region route's Change control | country, then the cities in it |
+
+Both reuse onboarding's own views rather than copying them, both write through
+the one profile store, and neither is a route: the reference opens a sheet
+from both places, and a sheet has no address. The content switches stay where
+the reference also keeps them, on the Privacy route.
 
 ### ~~D37~~ — withdrawn. Recorded as part of C27.
 

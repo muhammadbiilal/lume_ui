@@ -94,7 +94,9 @@ void main() {
         initialLocation: '/profile/account',
         signedIn: true,
       );
-      expect(locationOf(router), '/profile/account');
+      // The bare path is an alias: the section has no landing page, so it
+      // resolves to the route the page head's own control opens.
+      expect(locationOf(router), '/profile/account/prefs');
       expect(tester.takeException(), isNull);
       expectNoOverflow(tester);
     });
@@ -124,7 +126,10 @@ void main() {
         initialLocation: '/account',
         signedIn: true,
       );
-      expect(locationOf(router), LumeRoutes.account(LumeRoutes.profile));
+      expect(
+        locationOf(router),
+        LumeRoutes.accountRoute(LumeRoutes.profile, 'prefs'),
+      );
     });
   });
 
@@ -139,7 +144,8 @@ void main() {
     final Map<String, String> vocabulary = <String, String>{
       'notifications': LumeRoutes.notifications(branch),
       'search': LumeRoutes.search(branch),
-      'account': LumeRoutes.account(branch),
+      'account': LumeRoutes.accountRoute(branch, 'prefs'),
+      'accountLeaf': LumeRoutes.accountRoute(branch, 'security'),
       'unavailable': LumeRoutes.unavailable(branch),
       'tool': LumeRoutes.tool(branch, tool),
       'records': LumeRoutes.records(branch, tool),

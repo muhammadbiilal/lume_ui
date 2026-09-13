@@ -11,6 +11,7 @@
 /// thing that drifts.
 library;
 
+import '../../../core/widgets/lume/lume_field.dart';
 import 'package:flutter/material.dart';
 
 import '../../../core/icons/lume_icons.dart';
@@ -128,7 +129,7 @@ Widget? _failure(BuildContext context, LumeAuthFlowController c) {
 }
 
 /// One field, wired to the controller.
-LumeAuthInput _input(
+LumeInputField _input(
   BuildContext context,
   LumeAuthFlowController c, {
   required LumeAuthField field,
@@ -145,8 +146,7 @@ LumeAuthInput _input(
 }) {
   final AppLocalizations l = AppLocalizations.of(context);
   final LumeAuthIssue? issue = c.form.errors[field];
-  return LumeAuthInput(
-    field: field,
+  return LumeInputField(
     label: label,
     value: c.form.read(field),
     onChanged: (String v) => c.edit(field, v),

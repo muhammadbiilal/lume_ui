@@ -178,6 +178,12 @@ class LumeFormatting {
   /// `en_GB` does not.
   String dateFull(DateTime d) => intl.DateFormat.MMMMEEEEd(_dateTag).format(d);
 
+  /// "18 March 2024" — a date with its **year**.
+  ///
+  /// A membership date needs one: `dateFull` is weekday/day/month, so an
+  /// account created in 2024 read exactly like one created today.
+  String dateLongYear(DateTime d) => intl.DateFormat.yMMMMd(_dateTag).format(d);
+
   /// "14 Sep".
   String dateMedium(DateTime d) => intl.DateFormat.MMMd(_dateTag).format(d);
 

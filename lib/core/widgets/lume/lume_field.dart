@@ -1047,3 +1047,338 @@ class LumeSwitch extends StatelessWidget {
     );
   }
 }
+
+/// A text field, in all six of its states: at rest, focused, filled, valid,
+/// invalid and disabled — with an optional reveal control for a password.
+///
+/// Shared rather than screen-local. The authentication flow and the account
+/// section ask for the same password, refuse it for the same reasons and draw
+/// the same box; two copies would drift the first time one of them was
+/// adjusted.
+class LumeInputField extends StatefulWidget {
+  /// `.field__label` — 13 / 600, one definition for every form in the
+  /// product. The authentication chrome reads it from here rather than
+  /// keeping a second copy.
+  static TextStyle labelStyle(BuildContext context) =>
+      context.lumeType.body.copyWith(
+        fontSize: 13,
+        fontWeight: FontWeight.w600,
+        height: 1.3,
+        letterSpacing: -0.065,
+        color: context.lume.text2,
+      );
+
+  /// `.field__hint` and the message under a field — 12.5 / 500, muted.
+  static TextStyle captionStyle(BuildContext context) =>
+      context.lumeType.body.copyWith(
+        fontSize: 12.5,
+        fontWeight: FontWeight.w500,
+        height: 1.45,
+        color: context.lume.text3,
+      );
+
+  const LumeInputField({
+    super.key,
+    required this.label,
+    required this.value,
+    required this.onChanged,
+    this.onEditingComplete,
+    this.onSubmitted,
+    this.error,
+    this.hint,
+    this.placeholder,
+    this.optionalLabel,
+    this.valid = false,
+    this.obscure = false,
+    this.revealed = false,
+    this.onToggleReveal,
+    this.revealShowLabel,
+    this.revealHideLabel,
+    this.keyboardType,
+    this.autofillHints,
+    this.maxLength,
+    this.textInputAction,
+    this.autofocus = false,
+    this.focusNode,
+    this.enabled = true,
+  });
+
+  final String label;
+  final String value;
+  final ValueChanged<String> onChanged;
+
+  /// Fires on blur. Only the checks that can be made in isolation happen
+  /// there; the rest wait for the submission.
+  final VoidCallback? onEditingComplete;
+  final VoidCallback? onSubmitted;
+
+  final String? error;
+  final String? hint;
+  final String? placeholder;
+  final String? optionalLabel;
+
+  /// Passed a check it could be judged on alone. Draws a tick as well as a
+  /// border, so the state is never colour alone.
+  final bool valid;
+
+  final bool obscure;
+  final bool revealed;
+  final VoidCallback? onToggleReveal;
+  final String? revealShowLabel;
+  final String? revealHideLabel;
+
+  final TextInputType? keyboardType;
+  final List<String>? autofillHints;
+  final int? maxLength;
+  final TextInputAction? textInputAction;
+  final bool autofocus;
+  final FocusNode? focusNode;
+  final bool enabled;
+
+  /// `.auth .field__box { min-height: 52px }`.
+  static const double boxHeight = 52;
+  static const double boxRadius = 14;
+  static const double messageHeight = 17;
+  static const double labelGap = 8;
+  static const double toggleSize = 34;
+
+  @override
+  State<LumeInputField> createState() => _LumeInputFieldState();
+}
+
+class _LumeInputFieldState extends State<LumeInputField> {
+  late final TextEditingController _controller = TextEditingController(
+    text: widget.value,
+  );
+  late final FocusNode _node = widget.focusNode ?? FocusNode();
+  bool _ownsNode = false;
+  bool _focused = false;
+
+  @override
+  void initState() {
+    super.initState();
+    _ownsNode = widget.focusNode == null;
+    _node.addListener(_onFocus);
+  }
+
+  void _onFocus() {
+    if (_focused == _node.hasFocus) return;
+    setState(() => _focused = _node.hasFocus);
+    if (!_node.hasFocus) widget.onEditingComplete?.call();
+  }
+
+  @override
+  void didUpdateWidget(LumeInputField old) {
+    super.didUpdateWidget(old);
+    // The controller owns the caret; only a value the flow changed out from
+    // under the field is written back.
+    if (widget.value != _controller.text && widget.value != old.value) {
+      _controller.value = TextEditingValue(
+        text: widget.value,
+        selection: TextSelection.collapsed(offset: widget.value.length),
+      );
+    }
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    _node.removeListener(_onFocus);
+    if (_ownsNode) _node.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final LumeColors lume = context.lume;
+    final bool invalid = widget.error != null;
+    final bool filled = widget.value.isNotEmpty;
+    final bool good = !invalid && widget.valid;
+
+    final Color edge = invalid
+        ? Color.lerp(lume.rose, lume.border2, 0.4)!
+        : good
+        ? Color.lerp(lume.accent, lume.border2, 0.45)!
+        : _focused
+        ? lume.accent
+        : lume.border2;
+
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: <Widget>[
+        Text.rich(
+          TextSpan(
+            children: <InlineSpan>[
+              TextSpan(text: widget.label),
+              if (widget.optionalLabel != null)
+                TextSpan(
+                  text: ' · ${widget.optionalLabel}',
+                  style: LumeInputField.labelStyle(
+                    context,
+                  ).copyWith(fontWeight: FontWeight.w600, color: lume.text3),
+                ),
+            ],
+          ),
+          style: LumeInputField.labelStyle(context),
+        ),
+        const SizedBox(height: LumeInputField.labelGap),
+        AnimatedContainer(
+          duration: LumeMotion.fast,
+          curve: LumeMotion.easeOut,
+          constraints: const BoxConstraints(
+            minHeight: LumeInputField.boxHeight,
+          ),
+          padding: const EdgeInsets.symmetric(horizontal: LumeSpace.x4),
+          decoration: BoxDecoration(
+            color: filled ? lume.cardHover : lume.card,
+            borderRadius: BorderRadius.circular(LumeInputField.boxRadius),
+            border: Border.all(color: edge, width: LumeSpace.border),
+            boxShadow: _focused || invalid
+                ? <BoxShadow>[
+                    BoxShadow(
+                      color: invalid
+                          ? lume.rose.withValues(alpha: 0.13)
+                          : lume.accent.withValues(alpha: 0.16),
+                      spreadRadius: 3,
+                    ),
+                  ]
+                : null,
+          ),
+          child: Row(
+            children: <Widget>[
+              Expanded(
+                // Material's TextField wants a Material ancestor for its
+                // selection handles and cursor. Lume draws its own box, so the
+                // field carries a transparent one rather than making every
+                // screen that holds a field also hold a Scaffold.
+                child: Material(
+                  type: MaterialType.transparency,
+                  child: TextField(
+                    controller: _controller,
+                    focusNode: _node,
+                    enabled: widget.enabled,
+                    autofocus: widget.autofocus,
+                    obscureText: widget.obscure && !widget.revealed,
+                    // A password field must never hand its contents to the
+                    // keyboard's learning dictionary or its suggestion strip.
+                    enableSuggestions: !widget.obscure,
+                    autocorrect: !widget.obscure,
+                    keyboardType: widget.keyboardType,
+                    autofillHints: widget.autofillHints,
+                    textInputAction: widget.textInputAction,
+                    maxLength: widget.maxLength,
+                    maxLengthEnforcement: MaxLengthEnforcement.enforced,
+                    onChanged: widget.onChanged,
+                    onSubmitted: (_) => widget.onSubmitted?.call(),
+                    style: context.lumeType.body.copyWith(
+                      fontSize: 16,
+                      fontWeight: FontWeight.w600,
+                      height: 1.25,
+                      letterSpacing: -0.192,
+                      color: lume.text,
+                    ),
+                    cursorColor: lume.accent,
+                    decoration: InputDecoration(
+                      isDense: true,
+                      counterText: '',
+                      border: InputBorder.none,
+                      enabledBorder: InputBorder.none,
+                      focusedBorder: InputBorder.none,
+                      contentPadding: EdgeInsets.zero,
+                      hintText: widget.placeholder,
+                      hintStyle: context.lumeType.body.copyWith(
+                        fontSize: 16,
+                        fontWeight: FontWeight.w500,
+                        height: 1.25,
+                        letterSpacing: -0.192,
+                        color: lume.text3,
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+              if (good && widget.onToggleReveal == null)
+                Padding(
+                  padding: const EdgeInsetsDirectional.only(start: 10),
+                  child: ExcludeSemantics(
+                    child: LumeIcon(
+                      LumeIcons.check,
+                      size: 17,
+                      color: lume.accent,
+                    ),
+                  ),
+                ),
+              if (widget.onToggleReveal != null)
+                Transform.translate(
+                  offset: const Offset(8, 0),
+                  child: LumePressable(
+                    onTap: widget.onToggleReveal,
+                    semanticLabel: widget.revealed
+                        ? widget.revealHideLabel
+                        : widget.revealShowLabel,
+                    selected: widget.revealed,
+                    borderRadius: BorderRadius.circular(10),
+                    child: SizedBox.square(
+                      dimension: LumeInputField.toggleSize,
+                      child: Center(
+                        child: LumeIcon(
+                          widget.revealed ? LumeIcons.eyeOff : LumeIcons.eye,
+                          size: LumeSpace.iconSm,
+                          color: lume.text3,
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+            ],
+          ),
+        ),
+        const SizedBox(height: LumeInputField.labelGap),
+        // The message line is always in the layout, even with nothing to say,
+        // so an error appearing never moves the button being reached for.
+        ConstrainedBox(
+          constraints: const BoxConstraints(
+            minHeight: LumeInputField.messageHeight,
+          ),
+          child: invalid
+              ? Semantics(
+                  liveRegion: true,
+                  child: Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: <Widget>[
+                      Padding(
+                        padding: const EdgeInsets.only(top: 2),
+                        child: LumeIcon(
+                          LumeIcons.alert,
+                          size: 12,
+                          color: lume.roseInk,
+                        ),
+                      ),
+                      const SizedBox(width: 5),
+                      Expanded(
+                        child: Text(
+                          widget.error!,
+                          style: context.lumeType.body.copyWith(
+                            fontSize: 12,
+                            fontWeight: FontWeight.w600,
+                            height: 1.4,
+                            color: lume.roseInk,
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                )
+              : widget.hint != null
+              ? Text(
+                  widget.hint!,
+                  style: LumeInputField.captionStyle(
+                    context,
+                  ).copyWith(fontSize: 12, height: 1.4),
+                )
+              : const SizedBox.shrink(),
+        ),
+      ],
+    );
+  }
+}

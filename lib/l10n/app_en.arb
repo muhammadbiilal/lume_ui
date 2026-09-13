@@ -15,6 +15,801 @@
   "@a11yShare": {
     "description": "Reference key a11y.share"
   },
+  "acctAboutText": "A global daily-life super-app. Built to work anywhere, in your language, with the parts of it you asked for.",
+  "@acctAboutText": {
+    "description": "Reference: `acct.aboutText`."
+  },
+  "acctAboutTitle": "About Lume",
+  "@acctAboutTitle": {
+    "description": "Reference: `acct.aboutTitle`."
+  },
+  "acctAppearanceDark": "Dark",
+  "@acctAppearanceDark": {
+    "description": "Reference: `acct.appearanceDark`."
+  },
+  "acctAppearanceLight": "Light",
+  "@acctAppearanceLight": {
+    "description": "Reference: `acct.appearanceLight`."
+  },
+  "acctAppearanceSystem": "Follow the system",
+  "@acctAppearanceSystem": {
+    "description": "Reference: `acct.appearanceSystem`."
+  },
+  "acctAppearanceTitle": "Appearance",
+  "@acctAppearanceTitle": {
+    "description": "Reference: `acct.appearanceTitle`."
+  },
+  "acctBuild": "Build",
+  "@acctBuild": {
+    "description": "Reference: `acct.build`."
+  },
+  "acctCatsOn": "{n} of {total} on",
+  "@acctCatsOn": {
+    "description": "Reference: `acct.catsOn`.",
+    "placeholders": {
+      "n": {
+        "type": "int"
+      },
+      "total": {
+        "type": "int"
+      }
+    }
+  },
+  "acctChangePassword": "Change password",
+  "@acctChangePassword": {
+    "description": "Reference: `acct.changePassword`."
+  },
+  "acctChangePasswordSub": "Last changed is not recorded on this device",
+  "@acctChangePasswordSub": {
+    "description": "Reference: `acct.changePasswordSub`."
+  },
+  "acctClock12": "12-hour",
+  "@acctClock12": {
+    "description": "Reference: `acct.clock12`."
+  },
+  "acctClock24": "24-hour",
+  "@acctClock24": {
+    "description": "Reference: `acct.clock24`."
+  },
+  "acctClockFormat": "Clock",
+  "@acctClockFormat": {
+    "description": "Reference: `acct.clockFormat`."
+  },
+  "acctCompleteCta": "Add your name",
+  "@acctCompleteCta": {
+    "description": "Reference: `acct.completeCta`."
+  },
+  "acctCompleteText": "Add your name so Lume can greet you properly.",
+  "@acctCompleteText": {
+    "description": "Reference: `acct.completeText`."
+  },
+  "acctCompleteTitle": "Complete your profile",
+  "@acctCompleteTitle": {
+    "description": "Reference: `acct.completeTitle`."
+  },
+  "acctCurrencyAuto": "Follow my region",
+  "@acctCurrencyAuto": {
+    "description": "Reference: `acct.currencyAuto`."
+  },
+  "acctCurrencyNote": "Some tools quote their own market’s currency regardless.",
+  "@acctCurrencyNote": {
+    "description": "Reference: `acct.currencyNote`."
+  },
+  "acctCurrencyTitle": "Currency",
+  "@acctCurrencyTitle": {
+    "description": "Reference: `acct.currencyTitle`."
+  },
+  "acctDangerZone": "Danger zone",
+  "@acctDangerZone": {
+    "description": "Reference: `acct.dangerZone`."
+  },
+  "acctDataAccount": "Your account and sessions",
+  "@acctDataAccount": {
+    "description": "Reference: `acct.data.account`."
+  },
+  "acctDataNotes": "Notes, tasks, expenses and trackers",
+  "@acctDataNotes": {
+    "description": "Reference: `acct.data.notes`."
+  },
+  "acctDataNotify": "Notification settings and history",
+  "@acctDataNotify": {
+    "description": "Reference: `acct.data.notify`."
+  },
+  "acctDataPrefs": "Preferences, region and language",
+  "@acctDataPrefs": {
+    "description": "Reference: `acct.data.prefs`."
+  },
+  "acctDataTools": "Tools, favourites and recent screens",
+  "@acctDataTools": {
+    "description": "Reference: `acct.data.tools`."
+  },
+  "acctDeleteConfirmText": "Enter your password to delete the account.",
+  "@acctDeleteConfirmText": {
+    "description": "Reference: `acct.deleteConfirmText`."
+  },
+  "acctDeleteConfirmTitle": "Confirm it’s you",
+  "@acctDeleteConfirmTitle": {
+    "description": "Reference: `acct.deleteConfirmTitle`."
+  },
+  "acctDeleteCta": "Delete my account",
+  "@acctDeleteCta": {
+    "description": "Reference: `acct.deleteCta`."
+  },
+  "acctDeleteFinalText": "This removes the account for good. There is no way back.",
+  "@acctDeleteFinalText": {
+    "description": "Reference: `acct.deleteFinalText`."
+  },
+  "acctDeleteFinalTitle": "Delete your account?",
+  "@acctDeleteFinalTitle": {
+    "description": "Reference: `acct.deleteFinalTitle`."
+  },
+  "acctDeleteK1": "Notes, tasks, expenses and preferences remain on this device.",
+  "@acctDeleteK1": {
+    "description": "Reference: `acct.deleteK1`."
+  },
+  "acctDeleteKeeps": "What stays",
+  "@acctDeleteKeeps": {
+    "description": "Reference: `acct.deleteKeeps`."
+  },
+  "acctDeleteRow": "Delete account",
+  "@acctDeleteRow": {
+    "description": "Reference: `acct.deleteRow`."
+  },
+  "acctDeleteRowSub": "Permanently remove your Lume account",
+  "@acctDeleteRowSub": {
+    "description": "Reference: `acct.deleteRowSub`."
+  },
+  "acctDeleteTitle": "Delete account",
+  "@acctDeleteTitle": {
+    "description": "Reference: `acct.deleteTitle`."
+  },
+  "acctDeleteW1": "Your account and email are removed.",
+  "@acctDeleteW1": {
+    "description": "Reference: `acct.deleteW1`."
+  },
+  "acctDeleteW2": "Every signed-in device is signed out.",
+  "@acctDeleteW2": {
+    "description": "Reference: `acct.deleteW2`."
+  },
+  "acctDeleteW3": "This cannot be undone.",
+  "@acctDeleteW3": {
+    "description": "Reference: `acct.deleteW3`."
+  },
+  "acctDeleteWhat": "What this does",
+  "@acctDeleteWhat": {
+    "description": "Reference: `acct.deleteWhat`."
+  },
+  "acctDeleted": "Account deleted",
+  "@acctDeleted": {
+    "description": "Reference: `acct.deleted`."
+  },
+  "acctDeviceAndroid": "Android phone",
+  "@acctDeviceAndroid": {
+    "description": "Reference: `acct.device.android`."
+  },
+  "acctDeviceBrowser": "This browser",
+  "@acctDeviceBrowser": {
+    "description": "Reference: `acct.device.browser`."
+  },
+  "acctDeviceIos": "iPhone",
+  "@acctDeviceIos": {
+    "description": "Reference: `acct.device.ios`."
+  },
+  "acctDeviceMac": "Mac",
+  "@acctDeviceMac": {
+    "description": "Reference: `acct.device.mac`."
+  },
+  "acctDeviceWindows": "Windows PC",
+  "@acctDeviceWindows": {
+    "description": "Reference: `acct.device.windows`."
+  },
+  "acctDiscardCta": "Discard",
+  "@acctDiscardCta": {
+    "description": "Reference: `acct.discardCta`."
+  },
+  "acctDiscardText": "You’ve edited this screen without saving. Leaving now loses those edits.",
+  "@acctDiscardText": {
+    "description": "Reference: `acct.discardText`."
+  },
+  "acctDiscardTitle": "Discard your changes?",
+  "@acctDiscardTitle": {
+    "description": "Reference: `acct.discardTitle`."
+  },
+  "acctEditProfile": "Edit profile",
+  "@acctEditProfile": {
+    "description": "Reference: `acct.editProfile`."
+  },
+  "acctEditSaved": "Profile updated",
+  "@acctEditSaved": {
+    "description": "Reference: `acct.editSaved`."
+  },
+  "acctEditTitle": "Edit profile",
+  "@acctEditTitle": {
+    "description": "Reference: `acct.editTitle`."
+  },
+  "acctEmailChanged": "Email updated",
+  "@acctEmailChanged": {
+    "description": "Reference: `acct.emailChanged`."
+  },
+  "acctEmailPending": "Pending verification",
+  "@acctEmailPending": {
+    "description": "Reference: `acct.emailPending`."
+  },
+  "acctEmailPendingText": "{email} becomes your address once you verify it.",
+  "@acctEmailPendingText": {
+    "description": "Reference: `acct.emailPendingText`.",
+    "placeholders": {
+      "email": {
+        "type": "String"
+      }
+    }
+  },
+  "acctEmailTitle": "Email address",
+  "@acctEmailTitle": {
+    "description": "Reference: `acct.emailTitle`."
+  },
+  "acctErrCurrentRequired": "Enter your current password.",
+  "@acctErrCurrentRequired": {
+    "description": "Reference: `acct.err.currentRequired`."
+  },
+  "acctErrCurrentWrong": "That current password is incorrect.",
+  "@acctErrCurrentWrong": {
+    "description": "Reference: `acct.err.currentWrong`."
+  },
+  "acctErrPasswordSame": "Choose a password you haven’t used here before.",
+  "@acctErrPasswordSame": {
+    "description": "Reference: `acct.err.passwordSame`."
+  },
+  "acctErrPhoneInvalid": "Enter a phone number Lume can read.",
+  "@acctErrPhoneInvalid": {
+    "description": "Reference: `acct.err.phoneInvalid`."
+  },
+  "acctErrPhotoTooBig": "That image is too large for this device to keep. Try a smaller one.",
+  "@acctErrPhotoTooBig": {
+    "description": "Reference: `acct.err.photoTooBig`."
+  },
+  "acctErrStorage": "Lume couldn’t save to this device. Check your browser’s storage settings and try again.",
+  "@acctErrStorage": {
+    "description": "Reference: `acct.err.storage`."
+  },
+  "acctFavourites": "Your favourites",
+  "@acctFavourites": {
+    "description": "Reference: `acct.favourites`."
+  },
+  "acctFieldConfirmNew": "Confirm new password",
+  "@acctFieldConfirmNew": {
+    "description": "Reference: `acct.f.confirmNew`."
+  },
+  "acctFieldCurrent": "Current password",
+  "@acctFieldCurrent": {
+    "description": "Reference: `acct.f.current`."
+  },
+  "acctFieldDisplayName": "Display name",
+  "@acctFieldDisplayName": {
+    "description": "Reference: `acct.f.displayName`."
+  },
+  "acctFieldFirst": "First name",
+  "@acctFieldFirst": {
+    "description": "Reference: `acct.f.first`."
+  },
+  "acctFieldLast": "Last name",
+  "@acctFieldLast": {
+    "description": "Reference: `acct.f.last`."
+  },
+  "acctFieldNewEmail": "New email address",
+  "@acctFieldNewEmail": {
+    "description": "Reference: `acct.f.newEmail`."
+  },
+  "acctFieldPhone": "Phone",
+  "@acctFieldPhone": {
+    "description": "Reference: `acct.f.phone`."
+  },
+  "acctGuestBadge": "Guest",
+  "@acctGuestBadge": {
+    "description": "Reference: `acct.guestBadge`."
+  },
+  "acctGuestEditNote": "This name is kept on this device. Creating an account brings it with you.",
+  "@acctGuestEditNote": {
+    "description": "Reference: `acct.guestEditNote`."
+  },
+  "acctGuestNotifText": "Alerts belong to this device while you’re a guest. Signing in never shows you another account’s notifications.",
+  "@acctGuestNotifText": {
+    "description": "Reference: `acct.guestNotifText`."
+  },
+  "acctGuestNotifTitle": "Notifications on this device",
+  "@acctGuestNotifTitle": {
+    "description": "Reference: `acct.guestNotifTitle`."
+  },
+  "acctGuestText": "You’re using Lume as a guest. Everything you’ve set up is saved on this device.",
+  "@acctGuestText": {
+    "description": "Reference: `acct.guestText`."
+  },
+  "acctGuestTitle": "Welcome to Lume",
+  "@acctGuestTitle": {
+    "description": "Reference: `acct.guestTitle`."
+  },
+  "acctGuestWhy": "Create an account to",
+  "@acctGuestWhy": {
+    "description": "Reference: `acct.guestWhy`."
+  },
+  "acctGuestWhy1": "keep your Lume across devices",
+  "@acctGuestWhy1": {
+    "description": "Reference: `acct.guestWhy1`."
+  },
+  "acctGuestWhy2": "recover your settings if you lose this phone",
+  "@acctGuestWhy2": {
+    "description": "Reference: `acct.guestWhy2`."
+  },
+  "acctGuestWhy3": "use account-based features as they arrive",
+  "@acctGuestWhy3": {
+    "description": "Reference: `acct.guestWhy3`."
+  },
+  "acctHelpContact": "Send feedback",
+  "@acctHelpContact": {
+    "description": "Reference: `acct.helpContact`."
+  },
+  "acctHelpText": "Lume is a single-screen product: everything is one or two taps from Home.",
+  "@acctHelpText": {
+    "description": "Reference: `acct.helpText`."
+  },
+  "acctHelpTitle": "Help",
+  "@acctHelpTitle": {
+    "description": "Reference: `acct.helpTitle`."
+  },
+  "acctHelpTour": "Replay the welcome tour",
+  "@acctHelpTour": {
+    "description": "Reference: `acct.helpTour`."
+  },
+  "acctLanguageNote": "Changing the language never changes anything you wrote.",
+  "@acctLanguageNote": {
+    "description": "Reference: `acct.languageNote`."
+  },
+  "acctLanguageTitle": "Language",
+  "@acctLanguageTitle": {
+    "description": "Reference: `acct.languageTitle`."
+  },
+  "acctLastSeen": "Last seen {when}",
+  "@acctLastSeen": {
+    "description": "Reference: `acct.lastSeen`.",
+    "placeholders": {
+      "when": {
+        "type": "String"
+      }
+    }
+  },
+  "acctLoggedOut": "Signed out",
+  "@acctLoggedOut": {
+    "description": "Reference: `acct.loggedOut`."
+  },
+  "acctLogoutText": "You’ll need to sign in again to reach your account. Everything on this device stays where it is.",
+  "@acctLogoutText": {
+    "description": "Reference: `acct.logoutText`."
+  },
+  "acctLogoutTitle": "Log out?",
+  "@acctLogoutTitle": {
+    "description": "Reference: `acct.logoutTitle`."
+  },
+  "acctMemberSince": "Member since {date}",
+  "@acctMemberSince": {
+    "description": "Reference: `acct.memberSince`.",
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "acctNameNote": "This is the name Lume greets you with.",
+  "@acctNameNote": {
+    "description": "Reference: `acct.nameNote`."
+  },
+  "acctNoFavourites": "Nothing saved yet",
+  "@acctNoFavourites": {
+    "description": "Reference: `acct.noFavourites`."
+  },
+  "acctNoFavouritesText": "Tap the star on any tool and it lands here.",
+  "@acctNoFavouritesText": {
+    "description": "Reference: `acct.noFavouritesText`."
+  },
+  "acctNoOtherDevices": "No other devices are signed in.",
+  "@acctNoOtherDevices": {
+    "description": "Reference: `acct.noOtherDevices`."
+  },
+  "acctNothingChanged": "Nothing to save yet",
+  "@acctNothingChanged": {
+    "description": "Reference: `acct.nothingChanged`."
+  },
+  "acctPersonalTitle": "Personal information",
+  "@acctPersonalTitle": {
+    "description": "Reference: `acct.personalTitle`."
+  },
+  "acctPhoneNote": "Optional. Stored on this device.",
+  "@acctPhoneNote": {
+    "description": "Reference: `acct.phoneNote`."
+  },
+  "acctPhoneSaved": "Phone number saved",
+  "@acctPhoneSaved": {
+    "description": "Reference: `acct.phoneSaved`."
+  },
+  "acctPhoneScope": "What this is for",
+  "@acctPhoneScope": {
+    "description": "Reference: `acct.phoneScope`."
+  },
+  "acctPhoneScopeText": "Kept on this device so a tool can offer it. Lume has no phone sign-in or phone recovery, so it does nothing else.",
+  "@acctPhoneScopeText": {
+    "description": "Reference: `acct.phoneScopeText`."
+  },
+  "acctPhoneTitle": "Phone number",
+  "@acctPhoneTitle": {
+    "description": "Reference: `acct.phoneTitle`."
+  },
+  "acctPhoto": "Profile photo",
+  "@acctPhoto": {
+    "description": "Reference: `acct.photo`."
+  },
+  "acctPhotoAdd": "Add photo",
+  "@acctPhotoAdd": {
+    "description": "Reference: `acct.photoAdd`."
+  },
+  "acctPhotoNote": "Optional. Stored on this device.",
+  "@acctPhotoNote": {
+    "description": "Reference: `acct.photoNote`."
+  },
+  "acctPhotoRemove": "Remove photo",
+  "@acctPhotoRemove": {
+    "description": "Reference: `acct.photoRemove`."
+  },
+  "acctPhotoReplace": "Replace photo",
+  "@acctPhotoReplace": {
+    "description": "Reference: `acct.photoReplace`."
+  },
+  "acctPrefsTitle": "Preferences",
+  "@acctPrefsTitle": {
+    "description": "Reference: `acct.prefsTitle`."
+  },
+  "acctPrivacyAnalytics": "Usage analytics",
+  "@acctPrivacyAnalytics": {
+    "description": "Reference: `acct.privacyAnalytics`."
+  },
+  "acctPrivacyAnalyticsSub": "Lume collects none. There is nothing to turn off.",
+  "@acctPrivacyAnalyticsSub": {
+    "description": "Reference: `acct.privacyAnalyticsSub`."
+  },
+  "acctPrivacyPersonal": "Personalisation",
+  "@acctPrivacyPersonal": {
+    "description": "Reference: `acct.privacyPersonal`."
+  },
+  "acctPrivacyPersonalSub": "Use what you do in Lume to order what you see",
+  "@acctPrivacyPersonalSub": {
+    "description": "Reference: `acct.privacyPersonalSub`."
+  },
+  "acctPrivacyPreview": "Notification previews",
+  "@acctPrivacyPreview": {
+    "description": "Reference: `acct.privacyPreview`."
+  },
+  "acctPrivacyPreviewSub": "Show the content of an alert on the lock screen",
+  "@acctPrivacyPreviewSub": {
+    "description": "Reference: `acct.privacyPreviewSub`."
+  },
+  "acctPrivacySensitive": "Sensitive content in previews",
+  "@acctPrivacySensitive": {
+    "description": "Reference: `acct.privacySensitive`."
+  },
+  "acctPrivacySensitiveSub": "Health, money and documents stay hidden until opened",
+  "@acctPrivacySensitiveSub": {
+    "description": "Reference: `acct.privacySensitiveSub`."
+  },
+  "acctPrivacyTitle": "Privacy",
+  "@acctPrivacyTitle": {
+    "description": "Reference: `acct.privacyTitle`."
+  },
+  "acctPushAsk": "Not asked yet",
+  "@acctPushAsk": {
+    "description": "Reference: `n.push.ask`."
+  },
+  "acctPushDenied": "Blocked in your browser settings",
+  "@acctPushDenied": {
+    "description": "Reference: `n.push.denied`."
+  },
+  "acctPushDeniedHelp": "Notifications are blocked. Allow them in your browser’s site settings.",
+  "@acctPushDeniedHelp": {
+    "description": "Reference: `n.push.deniedHelp`."
+  },
+  "acctPushGranted": "Allowed by your browser",
+  "@acctPushGranted": {
+    "description": "Reference: `n.push.granted`."
+  },
+  "acctPushOff": "Off",
+  "@acctPushOff": {
+    "description": "Reference: `n.push.off`."
+  },
+  "acctPushOn": "On",
+  "@acctPushOn": {
+    "description": "Reference: `n.push.on`."
+  },
+  "acctPushThanks": "Notifications are on",
+  "@acctPushThanks": {
+    "description": "Reference: `n.push.thanks`."
+  },
+  "acctPushUnsupported": "This device can’t show push notifications",
+  "@acctPushUnsupported": {
+    "description": "Reference: `n.push.unsupported`."
+  },
+  "acctPwStrengthLabel": "Strength",
+  "@acctPwStrengthLabel": {
+    "description": "Reference: `acct.pw.strengthLabel`."
+  },
+  "acctRegionChange": "Change country or city",
+  "@acctRegionChange": {
+    "description": "Reference: `acct.regionChange`."
+  },
+  "acctRegionTitle": "Region & currency",
+  "@acctRegionTitle": {
+    "description": "Reference: `acct.regionTitle`."
+  },
+  "acctRegionWarn": "Changing your region may update your currency, markets, holidays, emergency numbers and local services.",
+  "@acctRegionWarn": {
+    "description": "Reference: `acct.regionWarn`."
+  },
+  "acctRowAbout": "About Lume",
+  "@acctRowAbout": {
+    "description": "Reference: `acct.row.about`."
+  },
+  "acctRowAboutSub": "Version, licences and credits",
+  "@acctRowAboutSub": {
+    "description": "Reference: `acct.row.aboutSub`."
+  },
+  "acctRowAppearance": "Appearance",
+  "@acctRowAppearance": {
+    "description": "Reference: `acct.row.appearance`."
+  },
+  "acctRowAppearanceSub": "Light, dark or follow your system",
+  "@acctRowAppearanceSub": {
+    "description": "Reference: `acct.row.appearanceSub`."
+  },
+  "acctRowHelp": "Help",
+  "@acctRowHelp": {
+    "description": "Reference: `acct.row.help`."
+  },
+  "acctRowHelpSub": "Answers, and a way to reach us",
+  "@acctRowHelpSub": {
+    "description": "Reference: `acct.row.helpSub`."
+  },
+  "acctRowInterests": "Your interests",
+  "@acctRowInterests": {
+    "description": "Reference: `acct.row.interests`."
+  },
+  "acctRowInterestsSub": "Shapes your home, tools and reading",
+  "@acctRowInterestsSub": {
+    "description": "Reference: `acct.row.interestsSub`."
+  },
+  "acctRowLanguage": "Language",
+  "@acctRowLanguage": {
+    "description": "Reference: `acct.row.language`."
+  },
+  "acctRowLibrary": "Your library",
+  "@acctRowLibrary": {
+    "description": "Reference: `acct.row.library`."
+  },
+  "acctRowLibrarySub": "Saved reads, notes and favourites",
+  "@acctRowLibrarySub": {
+    "description": "Reference: `acct.row.librarySub`."
+  },
+  "acctRowNotificationsSub": "Push alerts, in-app updates and quiet hours",
+  "@acctRowNotificationsSub": {
+    "description": "Reference: `acct.row.notificationsSub`."
+  },
+  "acctRowPersonal": "Personal information",
+  "@acctRowPersonal": {
+    "description": "Reference: `acct.row.personal`."
+  },
+  "acctRowPersonalSub": "Name, email, phone and region",
+  "@acctRowPersonalSub": {
+    "description": "Reference: `acct.row.personalSub`."
+  },
+  "acctRowPreferences": "Preferences",
+  "@acctRowPreferences": {
+    "description": "Reference: `acct.row.preferences`."
+  },
+  "acctRowPreferencesSub": "Language, currency, units and time",
+  "@acctRowPreferencesSub": {
+    "description": "Reference: `acct.row.preferencesSub`."
+  },
+  "acctRowPrivacy": "Privacy",
+  "@acctRowPrivacy": {
+    "description": "Reference: `acct.row.privacy`."
+  },
+  "acctRowPrivacySub": "What Lume shows, keeps and shares",
+  "@acctRowPrivacySub": {
+    "description": "Reference: `acct.row.privacySub`."
+  },
+  "acctRowRegion": "Region & currency",
+  "@acctRowRegion": {
+    "description": "Reference: `acct.row.region`."
+  },
+  "acctRowRegionSub": "Country, city and the services that follow them",
+  "@acctRowRegionSub": {
+    "description": "Reference: `acct.row.regionSub`."
+  },
+  "acctRowSecurity": "Security",
+  "@acctRowSecurity": {
+    "description": "Reference: `acct.row.security`."
+  },
+  "acctRowSecuritySub": "Password, sessions and account protection",
+  "@acctRowSecuritySub": {
+    "description": "Reference: `acct.row.securitySub`."
+  },
+  "acctRowSync": "Data & sync",
+  "@acctRowSync": {
+    "description": "Reference: `acct.row.sync`."
+  },
+  "acctRowSyncSub": "Where each part of your Lume is stored",
+  "@acctRowSyncSub": {
+    "description": "Reference: `acct.row.syncSub`."
+  },
+  "acctRowTour": "Replay the welcome tour",
+  "@acctRowTour": {
+    "description": "Reference: `acct.row.tour`."
+  },
+  "acctRowTourSub": "A quick reminder of what’s here",
+  "@acctRowTourSub": {
+    "description": "Reference: `acct.row.tourSub`."
+  },
+  "acctSaveChanges": "Save changes",
+  "@acctSaveChanges": {
+    "description": "Reference: `acct.saveChanges`."
+  },
+  "acctSecurityScope": "What Lume protects",
+  "@acctSecurityScope": {
+    "description": "Reference: `acct.securityScope`."
+  },
+  "acctSecurityScopeText": "Your password and your signed-in devices. There is no two-factor or biometric unlock in this build, so nothing here claims otherwise.",
+  "@acctSecurityScopeText": {
+    "description": "Reference: `acct.securityScopeText`."
+  },
+  "acctSecurityTitle": "Security",
+  "@acctSecurityTitle": {
+    "description": "Reference: `acct.securityTitle`."
+  },
+  "acctSessionsSub": "{n, plural, =1{1 signed in} other{{n} signed in}}",
+  "@acctSessionsSub": {
+    "description": "Reference: `acct.sessionsSub`.",
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
+  "acctSessionsTitle": "Active sessions",
+  "@acctSessionsTitle": {
+    "description": "Reference: `acct.sessionsTitle`."
+  },
+  "acctSignOut": "Log out",
+  "@acctSignOut": {
+    "description": "Reference: `acct.signOut`."
+  },
+  "acctSignOutDevice": "Sign out",
+  "@acctSignOutDevice": {
+    "description": "Reference: `acct.signOutDevice`."
+  },
+  "acctSignOutOthers": "Sign out all other devices",
+  "@acctSignOutOthers": {
+    "description": "Reference: `acct.signOutOthers`."
+  },
+  "acctSignOutOthersText": "Every other signed-in device will need to sign in again.",
+  "@acctSignOutOthersText": {
+    "description": "Reference: `acct.signOutOthersText`."
+  },
+  "acctSignedInAs": "Signed in as {email}",
+  "@acctSignedInAs": {
+    "description": "Reference: `acct.signedInAs`.",
+    "placeholders": {
+      "email": {
+        "type": "String"
+      }
+    }
+  },
+  "acctSignedOutOthers": "{n, plural, =1{Signed out 1 other device} other{Signed out {n} other devices}}",
+  "@acctSignedOutOthers": {
+    "description": "Reference: `acct.signedOutOthers`.",
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
+  "acctSince": "Member since",
+  "@acctSince": {
+    "description": "Reference: `acct.since`."
+  },
+  "acctStatus": "Account status",
+  "@acctStatus": {
+    "description": "Reference: `acct.status`."
+  },
+  "acctStatusActive": "Active",
+  "@acctStatusActive": {
+    "description": "Reference: `acct.statusActive`."
+  },
+  "acctStatusLocked": "Locked",
+  "@acctStatusLocked": {
+    "description": "Reference: `acct.statusLocked`."
+  },
+  "acctSupport": "Support",
+  "@acctSupport": {
+    "description": "Reference: `acct.support`."
+  },
+  "acctSyncDevice": "Stored on this device",
+  "@acctSyncDevice": {
+    "description": "Reference: `acct.syncDevice`."
+  },
+  "acctSyncNone": "Nothing syncs yet. Lume has no server in this build, so everything above stays on this device — including your account.",
+  "@acctSyncNone": {
+    "description": "Reference: `acct.syncNone`."
+  },
+  "acctSyncSynced": "Synced to your account",
+  "@acctSyncSynced": {
+    "description": "Reference: `acct.syncSynced`."
+  },
+  "acctSyncTitle": "Data & sync",
+  "@acctSyncTitle": {
+    "description": "Reference: `acct.syncTitle`."
+  },
+  "acctThemeSwitched": "Appearance: {mode}",
+  "@acctThemeSwitched": {
+    "description": "Reference: `acct.themeSwitched`.",
+    "placeholders": {
+      "mode": {
+        "type": "String"
+      }
+    }
+  },
+  "acctThisDevice": "This device",
+  "@acctThisDevice": {
+    "description": "Reference: `acct.thisDevice`."
+  },
+  "acctTimeTitle": "Time & timezone",
+  "@acctTimeTitle": {
+    "description": "Reference: `acct.timeTitle`."
+  },
+  "acctTimezoneAuto": "Follow this device",
+  "@acctTimezoneAuto": {
+    "description": "Reference: `acct.timezoneAuto`."
+  },
+  "acctTimezoneFollowRegion": "Follow my region",
+  "@acctTimezoneFollowRegion": {
+    "description": "Reference: `acct.timezoneFollowRegion`."
+  },
+  "acctTimezoneNote": "Markets, flights and trains always use their own timezone.",
+  "@acctTimezoneNote": {
+    "description": "Reference: `acct.timezoneNote`."
+  },
+  "acctTimezoneTitle": "Time",
+  "@acctTimezoneTitle": {
+    "description": "Reference: `acct.timezoneTitle`."
+  },
+  "acctUnitsAuto": "Follow my region",
+  "@acctUnitsAuto": {
+    "description": "Reference: `acct.unitsAuto`."
+  },
+  "acctUnitsImperial": "Imperial",
+  "@acctUnitsImperial": {
+    "description": "Reference: `acct.unitsImperial`."
+  },
+  "acctUnitsMetric": "Metric",
+  "@acctUnitsMetric": {
+    "description": "Reference: `acct.unitsMetric`."
+  },
+  "acctUnitsTitle": "Units",
+  "@acctUnitsTitle": {
+    "description": "Reference: `acct.unitsTitle`."
+  },
+  "acctVersion": "Version",
+  "@acctVersion": {
+    "description": "Reference: `acct.version`."
+  },
+  "acctYourLume": "Your Lume",
+  "@acctYourLume": {
+    "description": "Reference: `acct.yourLume`."
+  },
   "actionAdd": "Add",
   "@actionAdd": {
     "description": "Reference key a.add"
@@ -35,6 +830,10 @@
   "@actionCancel": {
     "description": "Reference key a.cancel"
   },
+  "actionChange": "Change",
+  "@actionChange": {
+    "description": "Reference: `a.change`."
+  },
   "actionClear": "Clear",
   "@actionClear": {
     "description": "Reference key a.clear"
@@ -42,6 +841,10 @@
   "actionClose": "Close",
   "@actionClose": {
     "description": "Reference key a.close"
+  },
+  "actionConfirm": "Confirm",
+  "@actionConfirm": {
+    "description": "Reference: `a.confirm`."
   },
   "actionContinue": "Continue",
   "@actionContinue": {
@@ -83,6 +886,10 @@
   "@actionRemove": {
     "description": "Reference key a.remove"
   },
+  "actionResend": "Resend",
+  "@actionResend": {
+    "description": "Reference: `a.resend`."
+  },
   "actionSave": "Save",
   "@actionSave": {
     "description": "Reference key a.save"
@@ -106,6 +913,10 @@
   "actionTryAgain": "Try again",
   "@actionTryAgain": {
     "description": "Reference key a.tryAgain"
+  },
+  "actionVerify": "Verify",
+  "@actionVerify": {
+    "description": "Reference: `a.verify`."
   },
   "actionWeek": "Week",
   "@actionWeek": {
@@ -724,6 +1535,10 @@
   "commonOptional": "Optional",
   "@commonOptional": {
     "description": "Reference key a.optional; §8 marks optional fields rather than required ones"
+  },
+  "commonOr": "or",
+  "@commonOr": {
+    "description": "Reference: `a.or`."
   },
   "commonOverdue": "Overdue",
   "@commonOverdue": {
@@ -1846,6 +2661,50 @@
   "@navTrains": {
     "description": "Reference key nav.trains"
   },
+  "ncatDocuments": "Documents",
+  "@ncatDocuments": {
+    "description": "Reference: `ncat.documents`."
+  },
+  "ncatFaith": "Faith",
+  "@ncatFaith": {
+    "description": "Reference: `ncat.faith`."
+  },
+  "ncatFinance": "Money",
+  "@ncatFinance": {
+    "description": "Reference: `ncat.finance`."
+  },
+  "ncatHealth": "Health",
+  "@ncatHealth": {
+    "description": "Reference: `ncat.health`."
+  },
+  "ncatMarkets": "Markets",
+  "@ncatMarkets": {
+    "description": "Reference: `ncat.markets`."
+  },
+  "ncatNews": "News",
+  "@ncatNews": {
+    "description": "Reference: `ncat.news`."
+  },
+  "ncatPersonal": "Personal",
+  "@ncatPersonal": {
+    "description": "Reference: `ncat.personal`."
+  },
+  "ncatReminders": "Reminders",
+  "@ncatReminders": {
+    "description": "Reference: `ncat.reminders`."
+  },
+  "ncatSystem": "System",
+  "@ncatSystem": {
+    "description": "Reference: `ncat.system`."
+  },
+  "ncatTravel": "Travel",
+  "@ncatTravel": {
+    "description": "Reference: `ncat.travel`."
+  },
+  "ncatWeather": "Weather",
+  "@ncatWeather": {
+    "description": "Reference: `ncat.weather`."
+  },
   "nearbyChaiShai": "Chai Shai",
   "@nearbyChaiShai": {
     "description": "Reference: a nearby place"
@@ -2200,6 +3059,72 @@
   "@persAllCountries": {
     "description": "Reference key pers.allCountries"
   },
+  "persAppLanguage": "App language",
+  "@persAppLanguage": {
+    "description": "Reference: `pers.appLanguage`."
+  },
+  "persCity": "City",
+  "@persCity": {
+    "description": "Reference: `pers.city`."
+  },
+  "persCitySub": "Used for weather, local information and nearby places",
+  "@persCitySub": {
+    "description": "Reference: `pers.citySub`."
+  },
+  "persContent": "Content",
+  "@persContent": {
+    "description": "Reference: `pers.content`."
+  },
+  "persCountry": "Country",
+  "@persCountry": {
+    "description": "Reference: `pers.country`."
+  },
+  "persCountrySub": "Unlocks local services — nothing else",
+  "@persCountrySub": {
+    "description": "Reference: `pers.countrySub`."
+  },
+  "persCurrency": "Currency",
+  "@persCurrency": {
+    "description": "Reference: `pers.currency`."
+  },
+  "persCurrencyAuto": "Automatic ({code})",
+  "@persCurrencyAuto": {
+    "description": "Reference: `pers.currencyAuto`.",
+    "placeholders": {
+      "code": {
+        "type": "String"
+      }
+    }
+  },
+  "persDataSafe": "Changing any of this only changes what you see. Your notes, tasks and records stay exactly where they are.",
+  "@persDataSafe": {
+    "description": "Reference: `pers.dataSafe`."
+  },
+  "persFinance": "Financial information",
+  "@persFinance": {
+    "description": "Reference: `pers.finance`."
+  },
+  "persFinanceSub": "Rates, gold and markets",
+  "@persFinanceSub": {
+    "description": "Reference: `pers.financeSub`."
+  },
+  "persFormatting": "Language & formatting",
+  "@persFormatting": {
+    "description": "Reference: `pers.formatting`."
+  },
+  "persInterests": "Your interests",
+  "@persInterests": {
+    "description": "Reference: `pers.interests`."
+  },
+  "persInterestsHint": "Pick at least {min}. They decide what fills your home screen.",
+  "@persInterestsHint": {
+    "description": "Reference: `pers.interestsHint`.",
+    "placeholders": {
+      "min": {
+        "type": "int"
+      }
+    }
+  },
   "persIslamic": "Islamic features",
   "@persIslamic": {
     "description": "Reference key pers.islamic"
@@ -2207,6 +3132,14 @@
   "persIslamicSub": "Prayer times, Qur’an, duas, zakat and Ramadan",
   "@persIslamicSub": {
     "description": "Reference key pers.islamicSub"
+  },
+  "persNews": "News",
+  "@persNews": {
+    "description": "Reference: `pers.news`."
+  },
+  "persNewsSub": "Headlines on Explore and Today",
+  "@persNewsSub": {
+    "description": "Reference: `pers.newsSub`."
   },
   "persPopular": "Popular",
   "@persPopular": {
@@ -2216,6 +3149,26 @@
   "@persRecent": {
     "description": "Reference key pers.recent"
   },
+  "persRecos": "Recommendations",
+  "@persRecos": {
+    "description": "Reference: `pers.recos`."
+  },
+  "persRecosSub": "Suggest tools based on how you use Lume",
+  "@persRecosSub": {
+    "description": "Reference: `pers.recosSub`."
+  },
+  "persRegion": "Region",
+  "@persRegion": {
+    "description": "Reference: `pers.region`."
+  },
+  "persSavePrefs": "Save preferences",
+  "@persSavePrefs": {
+    "description": "Reference: `pers.savePrefs`."
+  },
+  "persSaved": "Your app has been updated",
+  "@persSaved": {
+    "description": "Reference: `pers.saved`."
+  },
   "persSearchCities": "Search cities",
   "@persSearchCities": {
     "description": "Reference key pers.searchCities"
@@ -2224,9 +3177,61 @@
   "@persSearchCountries": {
     "description": "Reference key pers.searchCountries"
   },
+  "persSport": "Sport",
+  "@persSport": {
+    "description": "Reference: `pers.sport`."
+  },
+  "persSportSub": "Live cricket scores",
+  "@persSportSub": {
+    "description": "Reference: `pers.sportSub`."
+  },
+  "persSub": "Change any of this whenever you like",
+  "@persSub": {
+    "description": "Reference: `pers.sub`."
+  },
+  "persTime12": "12-hour",
+  "@persTime12": {
+    "description": "Reference: `pers.time12`."
+  },
+  "persTime24": "24-hour",
+  "@persTime24": {
+    "description": "Reference: `pers.time24`."
+  },
+  "persTimeFormat": "Time",
+  "@persTimeFormat": {
+    "description": "Reference: `pers.timeFormat`."
+  },
+  "persTitle": "Personalisation",
+  "@persTitle": {
+    "description": "Reference: `pers.title`."
+  },
+  "persUnits": "Units",
+  "@persUnits": {
+    "description": "Reference: `pers.units`."
+  },
+  "persUnitsAuto": "Automatic",
+  "@persUnitsAuto": {
+    "description": "Reference: `pers.unitsAuto`."
+  },
+  "persUnitsImperial": "Imperial",
+  "@persUnitsImperial": {
+    "description": "Reference: `pers.unitsImperial`."
+  },
+  "persUnitsMetric": "Metric",
+  "@persUnitsMetric": {
+    "description": "Reference: `pers.unitsMetric`."
+  },
   "persUseLocation": "Use my current location",
   "@persUseLocation": {
     "description": "Reference key pers.useLocation"
+  },
+  "persUseLocationSub": "Optional — you can always set this by hand",
+  "@persUseLocationSub": {
+    "description": "Reference: `pers.useLocationSub`."
+  },
+  "persWhereYouAre": "Where you are",
+  "@persWhereYouAre": {
+    "description": "Reference: `pers.whereYouAre`."
   },
   "prayerAsr": "Asr",
   "@prayerAsr": {
@@ -2247,6 +3252,10 @@
   "prayerMaghrib": "Maghrib",
   "@prayerMaghrib": {
     "description": "Reference key prayer.maghrib"
+  },
+  "profileSub": "Preferences and your saved things",
+  "@profileSub": {
+    "description": "Reference: `profile.sub`."
   },
   "qaDocscan": "Scan doc",
   "@qaDocscan": {

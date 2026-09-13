@@ -21,6 +21,629 @@ class AppLocalizationsEn extends AppLocalizations {
   String get a11yShare => 'Share';
 
   @override
+  String get acctAboutText =>
+      'A global daily-life super-app. Built to work anywhere, in your language, with the parts of it you asked for.';
+
+  @override
+  String get acctAboutTitle => 'About Lume';
+
+  @override
+  String get acctAppearanceDark => 'Dark';
+
+  @override
+  String get acctAppearanceLight => 'Light';
+
+  @override
+  String get acctAppearanceSystem => 'Follow the system';
+
+  @override
+  String get acctAppearanceTitle => 'Appearance';
+
+  @override
+  String get acctBuild => 'Build';
+
+  @override
+  String acctCatsOn(int n, int total) {
+    return '$n of $total on';
+  }
+
+  @override
+  String get acctChangePassword => 'Change password';
+
+  @override
+  String get acctChangePasswordSub =>
+      'Last changed is not recorded on this device';
+
+  @override
+  String get acctClock12 => '12-hour';
+
+  @override
+  String get acctClock24 => '24-hour';
+
+  @override
+  String get acctClockFormat => 'Clock';
+
+  @override
+  String get acctCompleteCta => 'Add your name';
+
+  @override
+  String get acctCompleteText =>
+      'Add your name so Lume can greet you properly.';
+
+  @override
+  String get acctCompleteTitle => 'Complete your profile';
+
+  @override
+  String get acctCurrencyAuto => 'Follow my region';
+
+  @override
+  String get acctCurrencyNote =>
+      'Some tools quote their own market’s currency regardless.';
+
+  @override
+  String get acctCurrencyTitle => 'Currency';
+
+  @override
+  String get acctDangerZone => 'Danger zone';
+
+  @override
+  String get acctDataAccount => 'Your account and sessions';
+
+  @override
+  String get acctDataNotes => 'Notes, tasks, expenses and trackers';
+
+  @override
+  String get acctDataNotify => 'Notification settings and history';
+
+  @override
+  String get acctDataPrefs => 'Preferences, region and language';
+
+  @override
+  String get acctDataTools => 'Tools, favourites and recent screens';
+
+  @override
+  String get acctDeleteConfirmText =>
+      'Enter your password to delete the account.';
+
+  @override
+  String get acctDeleteConfirmTitle => 'Confirm it’s you';
+
+  @override
+  String get acctDeleteCta => 'Delete my account';
+
+  @override
+  String get acctDeleteFinalText =>
+      'This removes the account for good. There is no way back.';
+
+  @override
+  String get acctDeleteFinalTitle => 'Delete your account?';
+
+  @override
+  String get acctDeleteK1 =>
+      'Notes, tasks, expenses and preferences remain on this device.';
+
+  @override
+  String get acctDeleteKeeps => 'What stays';
+
+  @override
+  String get acctDeleteRow => 'Delete account';
+
+  @override
+  String get acctDeleteRowSub => 'Permanently remove your Lume account';
+
+  @override
+  String get acctDeleteTitle => 'Delete account';
+
+  @override
+  String get acctDeleteW1 => 'Your account and email are removed.';
+
+  @override
+  String get acctDeleteW2 => 'Every signed-in device is signed out.';
+
+  @override
+  String get acctDeleteW3 => 'This cannot be undone.';
+
+  @override
+  String get acctDeleteWhat => 'What this does';
+
+  @override
+  String get acctDeleted => 'Account deleted';
+
+  @override
+  String get acctDeviceAndroid => 'Android phone';
+
+  @override
+  String get acctDeviceBrowser => 'This browser';
+
+  @override
+  String get acctDeviceIos => 'iPhone';
+
+  @override
+  String get acctDeviceMac => 'Mac';
+
+  @override
+  String get acctDeviceWindows => 'Windows PC';
+
+  @override
+  String get acctDiscardCta => 'Discard';
+
+  @override
+  String get acctDiscardText =>
+      'You’ve edited this screen without saving. Leaving now loses those edits.';
+
+  @override
+  String get acctDiscardTitle => 'Discard your changes?';
+
+  @override
+  String get acctEditProfile => 'Edit profile';
+
+  @override
+  String get acctEditSaved => 'Profile updated';
+
+  @override
+  String get acctEditTitle => 'Edit profile';
+
+  @override
+  String get acctEmailChanged => 'Email updated';
+
+  @override
+  String get acctEmailPending => 'Pending verification';
+
+  @override
+  String acctEmailPendingText(String email) {
+    return '$email becomes your address once you verify it.';
+  }
+
+  @override
+  String get acctEmailTitle => 'Email address';
+
+  @override
+  String get acctErrCurrentRequired => 'Enter your current password.';
+
+  @override
+  String get acctErrCurrentWrong => 'That current password is incorrect.';
+
+  @override
+  String get acctErrPasswordSame =>
+      'Choose a password you haven’t used here before.';
+
+  @override
+  String get acctErrPhoneInvalid => 'Enter a phone number Lume can read.';
+
+  @override
+  String get acctErrPhotoTooBig =>
+      'That image is too large for this device to keep. Try a smaller one.';
+
+  @override
+  String get acctErrStorage =>
+      'Lume couldn’t save to this device. Check your browser’s storage settings and try again.';
+
+  @override
+  String get acctFavourites => 'Your favourites';
+
+  @override
+  String get acctFieldConfirmNew => 'Confirm new password';
+
+  @override
+  String get acctFieldCurrent => 'Current password';
+
+  @override
+  String get acctFieldDisplayName => 'Display name';
+
+  @override
+  String get acctFieldFirst => 'First name';
+
+  @override
+  String get acctFieldLast => 'Last name';
+
+  @override
+  String get acctFieldNewEmail => 'New email address';
+
+  @override
+  String get acctFieldPhone => 'Phone';
+
+  @override
+  String get acctGuestBadge => 'Guest';
+
+  @override
+  String get acctGuestEditNote =>
+      'This name is kept on this device. Creating an account brings it with you.';
+
+  @override
+  String get acctGuestNotifText =>
+      'Alerts belong to this device while you’re a guest. Signing in never shows you another account’s notifications.';
+
+  @override
+  String get acctGuestNotifTitle => 'Notifications on this device';
+
+  @override
+  String get acctGuestText =>
+      'You’re using Lume as a guest. Everything you’ve set up is saved on this device.';
+
+  @override
+  String get acctGuestTitle => 'Welcome to Lume';
+
+  @override
+  String get acctGuestWhy => 'Create an account to';
+
+  @override
+  String get acctGuestWhy1 => 'keep your Lume across devices';
+
+  @override
+  String get acctGuestWhy2 => 'recover your settings if you lose this phone';
+
+  @override
+  String get acctGuestWhy3 => 'use account-based features as they arrive';
+
+  @override
+  String get acctHelpContact => 'Send feedback';
+
+  @override
+  String get acctHelpText =>
+      'Lume is a single-screen product: everything is one or two taps from Home.';
+
+  @override
+  String get acctHelpTitle => 'Help';
+
+  @override
+  String get acctHelpTour => 'Replay the welcome tour';
+
+  @override
+  String get acctLanguageNote =>
+      'Changing the language never changes anything you wrote.';
+
+  @override
+  String get acctLanguageTitle => 'Language';
+
+  @override
+  String acctLastSeen(String when) {
+    return 'Last seen $when';
+  }
+
+  @override
+  String get acctLoggedOut => 'Signed out';
+
+  @override
+  String get acctLogoutText =>
+      'You’ll need to sign in again to reach your account. Everything on this device stays where it is.';
+
+  @override
+  String get acctLogoutTitle => 'Log out?';
+
+  @override
+  String acctMemberSince(String date) {
+    return 'Member since $date';
+  }
+
+  @override
+  String get acctNameNote => 'This is the name Lume greets you with.';
+
+  @override
+  String get acctNoFavourites => 'Nothing saved yet';
+
+  @override
+  String get acctNoFavouritesText =>
+      'Tap the star on any tool and it lands here.';
+
+  @override
+  String get acctNoOtherDevices => 'No other devices are signed in.';
+
+  @override
+  String get acctNothingChanged => 'Nothing to save yet';
+
+  @override
+  String get acctPersonalTitle => 'Personal information';
+
+  @override
+  String get acctPhoneNote => 'Optional. Stored on this device.';
+
+  @override
+  String get acctPhoneSaved => 'Phone number saved';
+
+  @override
+  String get acctPhoneScope => 'What this is for';
+
+  @override
+  String get acctPhoneScopeText =>
+      'Kept on this device so a tool can offer it. Lume has no phone sign-in or phone recovery, so it does nothing else.';
+
+  @override
+  String get acctPhoneTitle => 'Phone number';
+
+  @override
+  String get acctPhoto => 'Profile photo';
+
+  @override
+  String get acctPhotoAdd => 'Add photo';
+
+  @override
+  String get acctPhotoNote => 'Optional. Stored on this device.';
+
+  @override
+  String get acctPhotoRemove => 'Remove photo';
+
+  @override
+  String get acctPhotoReplace => 'Replace photo';
+
+  @override
+  String get acctPrefsTitle => 'Preferences';
+
+  @override
+  String get acctPrivacyAnalytics => 'Usage analytics';
+
+  @override
+  String get acctPrivacyAnalyticsSub =>
+      'Lume collects none. There is nothing to turn off.';
+
+  @override
+  String get acctPrivacyPersonal => 'Personalisation';
+
+  @override
+  String get acctPrivacyPersonalSub =>
+      'Use what you do in Lume to order what you see';
+
+  @override
+  String get acctPrivacyPreview => 'Notification previews';
+
+  @override
+  String get acctPrivacyPreviewSub =>
+      'Show the content of an alert on the lock screen';
+
+  @override
+  String get acctPrivacySensitive => 'Sensitive content in previews';
+
+  @override
+  String get acctPrivacySensitiveSub =>
+      'Health, money and documents stay hidden until opened';
+
+  @override
+  String get acctPrivacyTitle => 'Privacy';
+
+  @override
+  String get acctPushAsk => 'Not asked yet';
+
+  @override
+  String get acctPushDenied => 'Blocked in your browser settings';
+
+  @override
+  String get acctPushDeniedHelp =>
+      'Notifications are blocked. Allow them in your browser’s site settings.';
+
+  @override
+  String get acctPushGranted => 'Allowed by your browser';
+
+  @override
+  String get acctPushOff => 'Off';
+
+  @override
+  String get acctPushOn => 'On';
+
+  @override
+  String get acctPushThanks => 'Notifications are on';
+
+  @override
+  String get acctPushUnsupported => 'This device can’t show push notifications';
+
+  @override
+  String get acctPwStrengthLabel => 'Strength';
+
+  @override
+  String get acctRegionChange => 'Change country or city';
+
+  @override
+  String get acctRegionTitle => 'Region & currency';
+
+  @override
+  String get acctRegionWarn =>
+      'Changing your region may update your currency, markets, holidays, emergency numbers and local services.';
+
+  @override
+  String get acctRowAbout => 'About Lume';
+
+  @override
+  String get acctRowAboutSub => 'Version, licences and credits';
+
+  @override
+  String get acctRowAppearance => 'Appearance';
+
+  @override
+  String get acctRowAppearanceSub => 'Light, dark or follow your system';
+
+  @override
+  String get acctRowHelp => 'Help';
+
+  @override
+  String get acctRowHelpSub => 'Answers, and a way to reach us';
+
+  @override
+  String get acctRowInterests => 'Your interests';
+
+  @override
+  String get acctRowInterestsSub => 'Shapes your home, tools and reading';
+
+  @override
+  String get acctRowLanguage => 'Language';
+
+  @override
+  String get acctRowLibrary => 'Your library';
+
+  @override
+  String get acctRowLibrarySub => 'Saved reads, notes and favourites';
+
+  @override
+  String get acctRowNotificationsSub =>
+      'Push alerts, in-app updates and quiet hours';
+
+  @override
+  String get acctRowPersonal => 'Personal information';
+
+  @override
+  String get acctRowPersonalSub => 'Name, email, phone and region';
+
+  @override
+  String get acctRowPreferences => 'Preferences';
+
+  @override
+  String get acctRowPreferencesSub => 'Language, currency, units and time';
+
+  @override
+  String get acctRowPrivacy => 'Privacy';
+
+  @override
+  String get acctRowPrivacySub => 'What Lume shows, keeps and shares';
+
+  @override
+  String get acctRowRegion => 'Region & currency';
+
+  @override
+  String get acctRowRegionSub =>
+      'Country, city and the services that follow them';
+
+  @override
+  String get acctRowSecurity => 'Security';
+
+  @override
+  String get acctRowSecuritySub => 'Password, sessions and account protection';
+
+  @override
+  String get acctRowSync => 'Data & sync';
+
+  @override
+  String get acctRowSyncSub => 'Where each part of your Lume is stored';
+
+  @override
+  String get acctRowTour => 'Replay the welcome tour';
+
+  @override
+  String get acctRowTourSub => 'A quick reminder of what’s here';
+
+  @override
+  String get acctSaveChanges => 'Save changes';
+
+  @override
+  String get acctSecurityScope => 'What Lume protects';
+
+  @override
+  String get acctSecurityScopeText =>
+      'Your password and your signed-in devices. There is no two-factor or biometric unlock in this build, so nothing here claims otherwise.';
+
+  @override
+  String get acctSecurityTitle => 'Security';
+
+  @override
+  String acctSessionsSub(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n signed in',
+      one: '1 signed in',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get acctSessionsTitle => 'Active sessions';
+
+  @override
+  String get acctSignOut => 'Log out';
+
+  @override
+  String get acctSignOutDevice => 'Sign out';
+
+  @override
+  String get acctSignOutOthers => 'Sign out all other devices';
+
+  @override
+  String get acctSignOutOthersText =>
+      'Every other signed-in device will need to sign in again.';
+
+  @override
+  String acctSignedInAs(String email) {
+    return 'Signed in as $email';
+  }
+
+  @override
+  String acctSignedOutOthers(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: 'Signed out $n other devices',
+      one: 'Signed out 1 other device',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get acctSince => 'Member since';
+
+  @override
+  String get acctStatus => 'Account status';
+
+  @override
+  String get acctStatusActive => 'Active';
+
+  @override
+  String get acctStatusLocked => 'Locked';
+
+  @override
+  String get acctSupport => 'Support';
+
+  @override
+  String get acctSyncDevice => 'Stored on this device';
+
+  @override
+  String get acctSyncNone =>
+      'Nothing syncs yet. Lume has no server in this build, so everything above stays on this device — including your account.';
+
+  @override
+  String get acctSyncSynced => 'Synced to your account';
+
+  @override
+  String get acctSyncTitle => 'Data & sync';
+
+  @override
+  String acctThemeSwitched(String mode) {
+    return 'Appearance: $mode';
+  }
+
+  @override
+  String get acctThisDevice => 'This device';
+
+  @override
+  String get acctTimeTitle => 'Time & timezone';
+
+  @override
+  String get acctTimezoneAuto => 'Follow this device';
+
+  @override
+  String get acctTimezoneFollowRegion => 'Follow my region';
+
+  @override
+  String get acctTimezoneNote =>
+      'Markets, flights and trains always use their own timezone.';
+
+  @override
+  String get acctTimezoneTitle => 'Time';
+
+  @override
+  String get acctUnitsAuto => 'Follow my region';
+
+  @override
+  String get acctUnitsImperial => 'Imperial';
+
+  @override
+  String get acctUnitsMetric => 'Metric';
+
+  @override
+  String get acctUnitsTitle => 'Units';
+
+  @override
+  String get acctVersion => 'Version';
+
+  @override
+  String get acctYourLume => 'Your Lume';
+
+  @override
   String get actionAdd => 'Add';
 
   @override
@@ -36,10 +659,16 @@ class AppLocalizationsEn extends AppLocalizations {
   String get actionCancel => 'Cancel';
 
   @override
+  String get actionChange => 'Change';
+
+  @override
   String get actionClear => 'Clear';
 
   @override
   String get actionClose => 'Close';
+
+  @override
+  String get actionConfirm => 'Confirm';
 
   @override
   String get actionContinue => 'Continue';
@@ -72,6 +701,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get actionRemove => 'Remove';
 
   @override
+  String get actionResend => 'Resend';
+
+  @override
   String get actionSave => 'Save';
 
   @override
@@ -88,6 +720,9 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get actionTryAgain => 'Try again';
+
+  @override
+  String get actionVerify => 'Verify';
 
   @override
   String get actionWeek => 'Week';
@@ -570,6 +1205,9 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get commonOptional => 'Optional';
+
+  @override
+  String get commonOr => 'or';
 
   @override
   String get commonOverdue => 'Overdue';
@@ -1352,6 +1990,39 @@ class AppLocalizationsEn extends AppLocalizations {
   String get navTrains => 'Trains';
 
   @override
+  String get ncatDocuments => 'Documents';
+
+  @override
+  String get ncatFaith => 'Faith';
+
+  @override
+  String get ncatFinance => 'Money';
+
+  @override
+  String get ncatHealth => 'Health';
+
+  @override
+  String get ncatMarkets => 'Markets';
+
+  @override
+  String get ncatNews => 'News';
+
+  @override
+  String get ncatPersonal => 'Personal';
+
+  @override
+  String get ncatReminders => 'Reminders';
+
+  @override
+  String get ncatSystem => 'System';
+
+  @override
+  String get ncatTravel => 'Travel';
+
+  @override
+  String get ncatWeather => 'Weather';
+
+  @override
   String get nearbyChaiShai => 'Chai Shai';
 
   @override
@@ -1608,10 +2279,64 @@ class AppLocalizationsEn extends AppLocalizations {
   String get persAllCountries => 'All countries';
 
   @override
+  String get persAppLanguage => 'App language';
+
+  @override
+  String get persCity => 'City';
+
+  @override
+  String get persCitySub =>
+      'Used for weather, local information and nearby places';
+
+  @override
+  String get persContent => 'Content';
+
+  @override
+  String get persCountry => 'Country';
+
+  @override
+  String get persCountrySub => 'Unlocks local services — nothing else';
+
+  @override
+  String get persCurrency => 'Currency';
+
+  @override
+  String persCurrencyAuto(String code) {
+    return 'Automatic ($code)';
+  }
+
+  @override
+  String get persDataSafe =>
+      'Changing any of this only changes what you see. Your notes, tasks and records stay exactly where they are.';
+
+  @override
+  String get persFinance => 'Financial information';
+
+  @override
+  String get persFinanceSub => 'Rates, gold and markets';
+
+  @override
+  String get persFormatting => 'Language & formatting';
+
+  @override
+  String get persInterests => 'Your interests';
+
+  @override
+  String persInterestsHint(int min) {
+    return 'Pick at least $min. They decide what fills your home screen.';
+  }
+
+  @override
   String get persIslamic => 'Islamic features';
 
   @override
   String get persIslamicSub => 'Prayer times, Qur’an, duas, zakat and Ramadan';
+
+  @override
+  String get persNews => 'News';
+
+  @override
+  String get persNewsSub => 'Headlines on Explore and Today';
 
   @override
   String get persPopular => 'Popular';
@@ -1620,13 +2345,67 @@ class AppLocalizationsEn extends AppLocalizations {
   String get persRecent => 'Recent';
 
   @override
+  String get persRecos => 'Recommendations';
+
+  @override
+  String get persRecosSub => 'Suggest tools based on how you use Lume';
+
+  @override
+  String get persRegion => 'Region';
+
+  @override
+  String get persSavePrefs => 'Save preferences';
+
+  @override
+  String get persSaved => 'Your app has been updated';
+
+  @override
   String get persSearchCities => 'Search cities';
 
   @override
   String get persSearchCountries => 'Search countries';
 
   @override
+  String get persSport => 'Sport';
+
+  @override
+  String get persSportSub => 'Live cricket scores';
+
+  @override
+  String get persSub => 'Change any of this whenever you like';
+
+  @override
+  String get persTime12 => '12-hour';
+
+  @override
+  String get persTime24 => '24-hour';
+
+  @override
+  String get persTimeFormat => 'Time';
+
+  @override
+  String get persTitle => 'Personalisation';
+
+  @override
+  String get persUnits => 'Units';
+
+  @override
+  String get persUnitsAuto => 'Automatic';
+
+  @override
+  String get persUnitsImperial => 'Imperial';
+
+  @override
+  String get persUnitsMetric => 'Metric';
+
+  @override
   String get persUseLocation => 'Use my current location';
+
+  @override
+  String get persUseLocationSub => 'Optional — you can always set this by hand';
+
+  @override
+  String get persWhereYouAre => 'Where you are';
 
   @override
   String get prayerAsr => 'Asr';
@@ -1642,6 +2421,9 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get prayerMaghrib => 'Maghrib';
+
+  @override
+  String get profileSub => 'Preferences and your saved things';
 
   @override
   String get qaDocscan => 'Scan doc';

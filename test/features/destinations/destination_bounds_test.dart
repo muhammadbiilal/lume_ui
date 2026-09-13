@@ -38,6 +38,10 @@ import 'package:lume/core/widgets/lume/lume_surface.dart';
 import 'package:lume/features/explore/presentation/explore_screen.dart';
 import 'package:lume/features/home/presentation/home_screen.dart';
 import 'package:lume/features/today/presentation/today_screen.dart';
+import 'package:lume/core/widgets/lume/lume_button.dart';
+import 'package:lume/core/widgets/lume/lume_settings.dart';
+import 'package:lume/features/account/domain/account_model.dart';
+import 'package:lume/features/account/presentation/profile_screen.dart';
 import 'package:lume/features/trains/presentation/trains_screen.dart';
 import 'package:lume/features/tools/presentation/tools_screen.dart';
 
@@ -45,6 +49,7 @@ import '../../helpers/load_fonts.dart';
 import '../../helpers/lume_harness.dart';
 import 'destination_harness.dart';
 import 'today_explore_harness.dart';
+import 'profile_harness.dart';
 import 'trains_harness.dart';
 
 const String reportPath = 'docs/conversion_archive/DESTINATION_PARITY.md';
@@ -825,6 +830,194 @@ void main() {
       // Cricket is hidden for this reader, and the prototype measures it as
       // 0 × 0. Recorded by `compare`, asserted by the composition test.
       compare(tester, b, 'score', find.byType(LumeScoreCard));
+    });
+  });
+
+  // ---------------------------------------------------------------- Profile
+
+  group('Profile is where the prototype puts it', () {
+    /// Each identity state is its own capture, because the card above the
+    /// groups is a different height in each and everything below it moves.
+    Future<void> checkState(
+      WidgetTester tester,
+      String cellName,
+      String heading,
+      LumeAccountState state, {
+      LumeAccountIdentity? identity,
+    }) async {
+      final Map<String, dynamic>? c = cell(cellName);
+      if (c == null) return;
+      final Map<String, dynamic> b = c['bounds'] as Map<String, dynamic>;
+      rows.add('\n### $heading\n');
+      rows.add('| element | axis | prototype | Flutter | Δ | note |');
+      rows.add('|---|---|---|---|---|---|');
+
+      await pumpProfile(
+        tester,
+        state: state,
+        identity: identity,
+        surface: kTall,
+      );
+
+      compare(
+        tester,
+        b,
+        'pagehead',
+        inKey(LumeProfileScreen.headKey, find.byType(LumePageHead)),
+      );
+      compare(
+        tester,
+        b,
+        'pagehead.prefs',
+        inKey(LumeProfileScreen.headKey, find.byType(LumeHeaderButton)),
+      );
+      compare(
+        tester,
+        b,
+        'phead',
+        inKey(LumeProfileScreen.identityKey, find.byType(LumeIdentityCard)),
+        tolerance: kDrift,
+        note: kDriftNote,
+      );
+      compare(
+        tester,
+        b,
+        'phead.avatar',
+        inKey(LumeProfileScreen.identityKey, find.byType(LumeProfileAvatar)),
+      );
+      compare(
+        tester,
+        b,
+        'phead.name',
+        find.byKey(LumeIdentityCard.nameKey),
+        // Centred text fills its column and is centred inside it; the
+        // prototype's `<p>` is the same box.
+        checkWidth: false,
+        note: 'a centred line fills its column on both sides',
+      );
+      compare(
+        tester,
+        b,
+        'phead.acts',
+        inKey(LumeProfileScreen.identityKey, find.byType(LumeButton)).first,
+        checkHeight: false,
+        tolerance: kDrift,
+        note: 'the first action, after the guest card’s D20 rounding',
+      );
+      compare(
+        tester,
+        b,
+        'phead.meta',
+        inKey(LumeProfileScreen.identityKey, find.byType(Wrap)),
+        // A wrapping row of tags is as wide as the tags in it; the prototype's
+        // is a centred flex and reports the same.
+        checkWidth: false,
+        note: 'a centred wrap is as wide as its runs on both sides',
+      );
+      if (b.containsKey('guestwhy')) {
+        compare(
+          tester,
+          b,
+          'guestwhy',
+          inKey(LumeProfileScreen.identityKey, find.byType(LumeGuestWhy)),
+          // Three 17.5-point lines, each rounded up to 18. That is D20, and
+          // it is the whole of the guest card's 1.5-point difference.
+          tolerance: kDrift,
+          note: kDriftNote,
+        );
+      }
+      // The three groups, and the first row of the first one. A group's own
+      // box is what everything under it depends on, and the row is where the
+      // 34-point icon, the two 13-point gaps and the 15-point padding show up.
+      // `.sect`'s 24-point separation is a *margin* in the prototype and
+      // padding inside the section here, so the section boxes are not
+      // comparable. Its contents are: the label the group starts with and the
+      // list under it.
+      compare(
+        tester,
+        b,
+        'group.label',
+        inKey(LumeProfileScreen.lumeKey, find.byType(LumeSettingsGroupLabel)),
+        tolerance: kDrift,
+        note: kDriftNote,
+      );
+      compare(
+        tester,
+        b,
+        'group.list',
+        inKey(LumeProfileScreen.lumeKey, find.byType(LumeCard)),
+        tolerance: kDrift,
+        note: kDriftNote,
+      );
+      compare(
+        tester,
+        b,
+        'srow',
+        inKey(LumeProfileScreen.lumeKey, find.byType(LumeSettingsRow)),
+        tolerance: kDrift,
+        note: kDriftNote,
+      );
+      // The row's own parts. Measuring only the row would let the 34-point
+      // icon, the two 13-point gaps and the 15-point padding cancel one
+      // another out.
+      final Finder firstRow = inKey(
+        LumeProfileScreen.lumeKey,
+        find.byType(LumeSettingsRow),
+      ).first;
+      compare(
+        tester,
+        b,
+        'srow.icon',
+        find.descendant(
+          of: firstRow,
+          matching: find.byKey(LumeSettingsRow.iconKey),
+        ),
+        tolerance: kDrift,
+        note: kDriftNote,
+      );
+      compare(
+        tester,
+        b,
+        'srow.title',
+        find.descendant(of: firstRow, matching: find.byType(Text)).first,
+        tolerance: kDrift,
+        note: kDriftNote,
+      );
+      compare(
+        tester,
+        b,
+        'srow.sub',
+        find.descendant(of: firstRow, matching: find.byType(Text)).at(1),
+        tolerance: kDrift,
+        note: kDriftNote,
+      );
+    }
+
+    testWidgets('a guest', (WidgetTester tester) async {
+      await checkState(
+        tester,
+        'profile_default_pk',
+        'Profile · a guest',
+        LumeAccountState.guest,
+      );
+    });
+
+    testWidgets('signed in', (WidgetTester tester) async {
+      await checkState(
+        tester,
+        'profile_default_pk_authed',
+        'Profile · signed in',
+        LumeAccountState.authed,
+      );
+    });
+
+    testWidgets('a session that has run out', (WidgetTester tester) async {
+      await checkState(
+        tester,
+        'profile_default_pk_expired',
+        'Profile · a session that has run out',
+        LumeAccountState.expired,
+      );
     });
   });
 

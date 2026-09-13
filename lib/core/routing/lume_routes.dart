@@ -52,6 +52,7 @@ abstract final class LumeRoutes {
 
   /// The parameter names, so a screen reads them by name rather than by
   /// spelling them again.
+  static const String accountRouteParam = 'accountRoute';
   static const String toolIdParam = 'toolId';
   static const String recordIdParam = 'recordId';
 
@@ -85,7 +86,24 @@ abstract final class LumeRoutes {
   static String search(String branch) => '$branch/$searchSegment';
 
   /// Account and settings on a branch.
+  /// The account host's root.
+  ///
+  /// **An alias, not a screen.** `ui/account-ui.js` has no account landing
+  /// page: every entry point names a route and the host always has one open.
+  /// The router redirects this to `prefs`, which is where the page head's own
+  /// control goes, so a link to `/profile/account` resolves somewhere real
+  /// instead of to a blank host.
   static String account(String branch) => '$branch/$accountSegment';
+
+  /// One of the twenty-one account routes, on a branch.
+  ///
+  /// `segment` comes from `LumeAccountRoute.segment` — the only place the
+  /// spellings are written, so a route cannot become reachable under a name
+  /// the enum does not know. Taken as a string for the same reason
+  /// [authRoute] does: routing is core and the account is a feature, and core
+  /// does not import features.
+  static String accountRoute(String branch, String segment) =>
+      '$branch/$accountSegment/$segment';
 
   /// The "this is not available here" destination.
   static String unavailable(String branch) => '$branch/$unavailableSegment';

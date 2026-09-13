@@ -46,6 +46,7 @@ import '../../../core/theme/lume/lume_colors.dart';
 import '../../../core/theme/lume/lume_motion.dart';
 import '../../../core/theme/lume/lume_space.dart';
 import '../../../core/theme/lume/lume_theme.dart';
+import '../../../core/widgets/lume/lume_field.dart';
 import '../../../core/widgets/lume/lume_pressable.dart';
 import '../../../core/widgets/lume/lume_text.dart';
 
@@ -183,22 +184,13 @@ abstract final class LumeAuthType {
     color: context.lume.text2,
   );
 
+  /// The field's own two styles, which the form field defines because every
+  /// form in the product draws them — not only this flow's.
   static TextStyle caption(BuildContext context) =>
-      context.lumeType.body.copyWith(
-        fontSize: 12.5,
-        fontWeight: FontWeight.w500,
-        height: 1.45,
-        color: context.lume.text3,
-      );
+      LumeInputField.captionStyle(context);
 
   static TextStyle label(BuildContext context) =>
-      context.lumeType.body.copyWith(
-        fontSize: 13,
-        fontWeight: FontWeight.w600,
-        height: 1.3,
-        letterSpacing: -0.065,
-        color: context.lume.text2,
-      );
+      LumeInputField.labelStyle(context);
 
   static TextStyle button(BuildContext context) =>
       context.lumeType.body.copyWith(

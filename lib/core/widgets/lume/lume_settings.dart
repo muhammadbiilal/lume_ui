@@ -15,6 +15,7 @@ library;
 
 import 'package:flutter/material.dart';
 
+import '../../layout/lume_breakpoint.dart';
 import '../../icons/lume_icon.dart';
 import '../../icons/lume_icons.dart';
 import '../../localization/lume_numerals.dart';
@@ -28,6 +29,22 @@ import 'lume_pressable.dart';
 abstract final class LumeSettingsMetrics {
   /// `.group-label { padding: 0 var(--pad); margin-bottom: 9px }`.
   static const double groupLabelGap = 9;
+
+  /// `.list-row { padding: 13px 15px; gap: 13px }`, measured at 348 × 61 with
+  /// a 1-point hairline under it.
+  static const EdgeInsets rowPadding = EdgeInsets.symmetric(
+    horizontal: 15,
+    vertical: 13,
+  );
+  static const double rowGap = 13;
+
+  /// `.list-row__icon { width: 34px; height: 34px }`, its glyph 17.
+  static const double rowIcon = 34;
+  static const double rowGlyph = 17;
+
+  /// `.list-row__end { gap: 8px }`, its glyph 16.
+  static const double endGap = 8;
+  static const double endGlyph = 16;
 
   /// `.phead { margin: 14px var(--pad) 0; padding: 20px 18px 18px }`.
   static const EdgeInsets identityPadding = EdgeInsets.fromLTRB(18, 20, 18, 18);
@@ -46,6 +63,14 @@ abstract final class LumeSettingsMetrics {
   /// `.pavatar--sm`.
   static const double avatarSmall = 54;
   static const double avatarSmallRadius = 18;
+
+  /// `.phead__meta { gap: 6px }`.
+  static const double metaGap = 6;
+
+  /// `.app--wide .phead { max-width: 620px }`, and its actions turn into a
+  /// centred row of buttons no narrower than 190.
+  static const double identityWide = 620;
+  static const double actionWide = 190;
 
   /// `.guestwhy { margin-top: 14px; padding: 14px 16px }`.
   static const EdgeInsets guestWhyPadding = EdgeInsets.symmetric(
@@ -68,20 +93,29 @@ abstract final class LumeSettingsMetrics {
 class LumeSettingsGroupLabel extends StatelessWidget {
   const LumeSettingsGroupLabel(this.label, {super.key});
 
+  /// The whole group's leading line, so a test can measure it.
+  static const Key anchor = Key('group.label');
+
   final String label;
 
   @override
   Widget build(BuildContext context) => Semantics(
     header: true,
-    child: Text(
-      // `text-transform: uppercase` is presentation, so it is applied here
-      // rather than baked into a translation. Urdu and Arabic have no case
-      // and are unchanged by it.
-      LumeType.overline(context, label),
-      style: LumeType.tracked(
-        LumeType.natural(context, context.lumeType.metaSmall, size: 11),
-        0.07,
-      ).copyWith(color: context.lume.text3, fontWeight: FontWeight.w700),
+    // A `<p>`, so it fills the group's width whatever the word is. A shrunk
+    // box would put the label's own bounds a translation away from the
+    // reference's for no visible reason.
+    child: SizedBox(
+      width: double.infinity,
+      child: Text(
+        // `text-transform: uppercase` is presentation, so it is applied here
+        // rather than baked into a translation. Urdu and Arabic have no case
+        // and are unchanged by it.
+        LumeType.overline(context, label),
+        style: LumeType.tracked(
+          LumeType.natural(context, context.lumeType.metaSmall, size: 11),
+          0.07,
+        ).copyWith(color: context.lume.text3, fontWeight: FontWeight.w700),
+      ),
     ),
   );
 }
@@ -89,6 +123,10 @@ class LumeSettingsGroupLabel extends StatelessWidget {
 /// `.list-row` as a settings row: an icon, a title, a description, a value
 /// that wraps, and a chevron — or a switch instead of the last two.
 class LumeSettingsRow extends StatelessWidget {
+  /// `.list-row__icon`, so a test measures the 34-point tile rather than the
+  /// 17-point glyph inside it.
+  static const Key iconKey = Key('srow.icon');
+
   const LumeSettingsRow({
     super.key,
     required this.title,
@@ -101,7 +139,12 @@ class LumeSettingsRow extends StatelessWidget {
     this.onTap,
     this.isLast = false,
     this.semanticLabel,
-  });
+    this.notSetLabel,
+  }) : assert(
+         value == null || value != '' || notSetLabel != null,
+         'a value the product holds and knows to be empty has to say so — '
+         'pass notSetLabel',
+       );
 
   final String title;
   final String? icon;
@@ -129,21 +172,34 @@ class LumeSettingsRow extends StatelessWidget {
   /// Overrides what a screen reader hears.
   final String? semanticLabel;
 
+  /// What an **empty** [value] reads as — the product's own "Not set".
+  ///
+  /// Supplied by the caller rather than read here, because a core widget does
+  /// not reach for the localisations. Required whenever [value] can be empty:
+  /// a bare title where a value was promised is exactly the gap §125 forbids.
+  final String? notSetLabel;
+
   @override
   Widget build(BuildContext context) {
     final LumeColors lume = context.lume;
     final bool isSwitch = toggle != null;
+    // An empty string is a value the product holds and knows to be empty;
+    // `null` is a value it does not have. They are not the same, and only the
+    // first has something to say.
+    final String? shown = value == null
+        ? null
+        : (value!.isEmpty ? notSetLabel : value);
 
     return LumePressable(
       onTap: onTap,
       semanticLabel:
-          semanticLabel ?? <String>[title, ?subtitle, ?value].join(', '),
+          semanticLabel ?? <String>[title, ?subtitle, ?shown].join(', '),
       button: !isSwitch,
       selected: isSwitch ? toggle : null,
       minSize: 0,
       child: Container(
         constraints: const BoxConstraints(minHeight: LumeSpace.tap),
-        padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 12),
+        padding: LumeSettingsMetrics.rowPadding,
         decoration: BoxDecoration(
           border: isLast
               ? null
@@ -159,8 +215,9 @@ class LumeSettingsRow extends StatelessWidget {
             children: <Widget>[
               if (icon != null) ...<Widget>[
                 Container(
-                  width: 36,
-                  height: 36,
+                  key: LumeSettingsRow.iconKey,
+                  width: LumeSettingsMetrics.rowIcon,
+                  height: LumeSettingsMetrics.rowIcon,
                   decoration: BoxDecoration(
                     color: accent ? lume.tintAccent : lume.tintNeutral,
                     borderRadius: LumeRadius.brIcon,
@@ -168,15 +225,20 @@ class LumeSettingsRow extends StatelessWidget {
                   alignment: Alignment.center,
                   child: LumeIcon(
                     icon!,
-                    size: 17,
+                    size: LumeSettingsMetrics.rowGlyph,
                     color: accent ? lume.accent : lume.text2,
                   ),
                 ),
-                const SizedBox(width: 12),
+                const SizedBox(width: LumeSettingsMetrics.rowGap),
               ],
               Expanded(
                 child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
+                  // `.list-row__title` and `.list-row__sub` are `<span>`s in a
+                  // block column: each fills the body's width, and the text
+                  // starts at its leading edge. Shrinking them to the words
+                  // would put their bounds a translation away from the
+                  // reference's for no visible reason.
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
                   mainAxisSize: MainAxisSize.min,
                   children: <Widget>[
                     Text(
@@ -210,35 +272,57 @@ class LumeSettingsRow extends StatelessWidget {
                   ],
                 ),
               ),
-              const SizedBox(width: 8),
+              const SizedBox(width: LumeSettingsMetrics.rowGap),
               if (isSwitch)
                 _Switch(on: toggle!)
               else ...<Widget>[
-                if (value != null)
-                  Flexible(
-                    child: ConstrainedBox(
-                      constraints: BoxConstraints(
-                        maxWidth:
-                            MediaQuery.sizeOf(context).width *
-                            LumeSettingsMetrics.valueFraction,
-                      ),
-                      child: LumeNumerals(
-                        value!,
-                        style:
+                if (shown != null)
+                  // `flex: none` on `.list-row__end`: the end keeps its
+                  // content width and the *body* gives, which is what puts
+                  // "Push alerts, in-app updates and quiet hours" on two
+                  // lines rather than three. A `Flexible` here would divide
+                  // the free space instead — see C32.
+                  ConstrainedBox(
+                    constraints: BoxConstraints(
+                      maxWidth:
+                          MediaQuery.sizeOf(context).width *
+                          LumeSettingsMetrics.valueFraction,
+                    ),
+                    // A plain `Text`, not `LumeNumerals`: a value is arbitrary
+                    // prose — "Follow the system", "Pakistan · Islamabad ·
+                    // PKR" — and forcing an LTR run around a translated one
+                    // would be the opposite of what D5 asked for. A value
+                    // that *is* a figure is formatted before it gets here.
+                    child: Text(
+                      shown,
+                      // `text-align: end` — a value hangs off the trailing
+                      // edge, and a wrapped one keeps it.
+                      textAlign: TextAlign.end,
+                      style:
+                          LumeType.tracked(
                             LumeType.natural(
                               context,
                               context.lumeType.meta,
                               size: 12.5,
-                            ).copyWith(
-                              color: lume.text2,
-                              fontWeight: FontWeight.w700,
                             ),
-                      ),
+                            -0.02,
+                          ).copyWith(
+                            color: lume.text2,
+                            fontWeight: FontWeight.w700,
+                          ),
                     ),
                   ),
                 if (chevron) ...<Widget>[
-                  const SizedBox(width: 8),
-                  LumeIcon(LumeIcons.chevR, size: 16, color: lume.text3),
+                  // `.list-row__end { gap: 8px }` falls *between* its
+                  // children, so a row whose end is only a chevron has no gap
+                  // at all — and eight more points for its description.
+                  if (shown != null)
+                    const SizedBox(width: LumeSettingsMetrics.endGap),
+                  LumeIcon(
+                    LumeIcons.chevR,
+                    size: LumeSettingsMetrics.endGlyph,
+                    color: lume.text3,
+                  ),
                 ],
               ],
             ],
@@ -505,6 +589,195 @@ class LumeProfileAvatar extends StatelessWidget {
   }
 }
 
+/// `.phead` — who Lume thinks the reader is, and what to do about it.
+///
+/// One composition for every identity state. What changes is what is in it:
+/// the guest, the holder, the holder whose session has lapsed and the holder
+/// with no name are four *contents*, not four layouts. The screen renders from
+/// state rather than being edited in place, so it cannot drift into claiming
+/// an account that is not there.
+///
+/// Everything here is given to it. It reads no repository and decides no
+/// eligibility — which is why the same widget draws all four states and why a
+/// test can put it in one directly.
+class LumeIdentityCard extends StatelessWidget {
+  /// `.phead__name`, so a test can measure the line the identity is on
+  /// whichever state put it there.
+  static const Key nameKey = Key('phead.name');
+
+  const LumeIdentityCard({
+    super.key,
+    required this.name,
+    this.secondary,
+    this.avatar = const LumeProfileAvatar(),
+    this.meta = const <Widget>[],
+    this.why,
+    this.actions = const <Widget>[],
+    this.art,
+  });
+
+  /// `.phead__name` — 19/800. With no name, the address is the identity:
+  /// there is nothing to invent and nothing to apologise for.
+  final String name;
+
+  /// `.phead__mail` — 12.5/500, or absent when the line above it is already
+  /// the address.
+  final String? secondary;
+
+  final Widget avatar;
+
+  /// `.phead__meta` — tags and badges, centred and wrapping.
+  final List<Widget> meta;
+
+  /// `.guestwhy`, for the states that have no account behind them.
+  final Widget? why;
+
+  /// `.phead__acts` — stacked full-width on a phone, a centred row when the
+  /// shell is wide.
+  final List<Widget> actions;
+
+  /// `.phead__art`, clipped by the card.
+  final Widget? art;
+
+  @override
+  Widget build(BuildContext context) {
+    final LumeColors lume = context.lume;
+    // `shell.js`: `app--wide` is `BP.is('expanded') && innerWidth >= 1180`.
+    // Both halves, because the rule is written for a sidebar shell with room
+    // beside it, not for any wide window.
+    final bool wide = context.isExpanded && context.isWideSurface;
+
+    final Widget body = Column(
+      mainAxisSize: MainAxisSize.min,
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: <Widget>[
+        Column(
+          mainAxisSize: MainAxisSize.min,
+          children: <Widget>[
+            avatar,
+            const SizedBox(height: LumeSettingsMetrics.identityGap),
+            // `.phead__id`'s 10-point gap falls between the avatar, this
+            // block and the meta row — **not** between the two lines inside
+            // it. The reference wraps the name and the address in one `div`,
+            // and they sit line against line.
+            // `.phead__id` is `align-items: center`, so the wrapper holding
+            // the two lines is shrink-to-fit — as wide as the wider of them,
+            // and no wider — while each `<p>` inside fills it. `stretch`
+            // alone would take the whole card; `IntrinsicWidth` is what makes
+            // the column ask its children how wide they want to be, and the
+            // constraint still clips a long address to the text column.
+            IntrinsicWidth(
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: <Widget>[
+                  Text(
+                    name,
+                    key: nameKey,
+                    textAlign: TextAlign.center,
+                    style: LumeType.tracked(
+                      LumeType.natural(
+                        context,
+                        context.lumeType.title,
+                        size: 19,
+                      ),
+                      -0.032,
+                    ).copyWith(color: lume.text, fontWeight: FontWeight.w800),
+                  ),
+                  if (secondary != null)
+                    Text(
+                      secondary!,
+                      textAlign: TextAlign.center,
+                      style:
+                          LumeType.natural(
+                            context,
+                            context.lumeType.meta,
+                            size: 12.5,
+                          ).copyWith(
+                            color: lume.text3,
+                            fontWeight: FontWeight.w500,
+                          ),
+                    ),
+                ],
+              ),
+            ),
+            if (meta.isNotEmpty) ...<Widget>[
+              const SizedBox(height: LumeSettingsMetrics.identityGap),
+              Wrap(
+                alignment: WrapAlignment.center,
+                spacing: LumeSettingsMetrics.metaGap,
+                runSpacing: LumeSettingsMetrics.metaGap,
+                children: meta,
+              ),
+            ],
+          ],
+        ),
+        if (why != null) ...<Widget>[
+          const SizedBox(height: LumeSettingsMetrics.actsTop),
+          why!,
+        ],
+        if (actions.isNotEmpty) ...<Widget>[
+          const SizedBox(height: LumeSettingsMetrics.actsTop),
+          if (wide)
+            Wrap(
+              alignment: WrapAlignment.center,
+              spacing: LumeSettingsMetrics.actsGap,
+              runSpacing: LumeSettingsMetrics.actsGap,
+              children: <Widget>[
+                for (final Widget a in actions)
+                  ConstrainedBox(
+                    constraints: const BoxConstraints(
+                      minWidth: LumeSettingsMetrics.actionWide,
+                    ),
+                    child: a,
+                  ),
+              ],
+            )
+          else
+            Column(
+              mainAxisSize: MainAxisSize.min,
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: <Widget>[
+                for (int i = 0; i < actions.length; i++) ...<Widget>[
+                  if (i > 0)
+                    const SizedBox(height: LumeSettingsMetrics.actsGap),
+                  actions[i],
+                ],
+              ],
+            ),
+        ],
+      ],
+    );
+
+    return Container(
+      clipBehavior: Clip.antiAlias,
+      constraints: wide
+          ? const BoxConstraints(maxWidth: LumeSettingsMetrics.identityWide)
+          : const BoxConstraints(),
+      decoration: BoxDecoration(
+        color: lume.card,
+        borderRadius: LumeRadius.brXl,
+        border: Border.all(color: lume.border, width: LumeSpace.border),
+        boxShadow: context.lumeShadows.sm,
+      ),
+      child: Stack(
+        children: <Widget>[
+          if (art != null)
+            Positioned.fill(
+              child: IgnorePointer(child: ExcludeSemantics(child: art!)),
+            ),
+          Padding(
+            // A `Container`, so `Border.all`'s dimensions are already
+            // reserved and must not be added again (C26).
+            padding: LumeSettingsMetrics.identityPadding,
+            child: body,
+          ),
+        ],
+      ),
+    );
+  }
+}
+
 /// `.guestwhy` — three reasons an account is worth having.
 class LumeGuestWhy extends StatelessWidget {
   const LumeGuestWhy({super.key, required this.title, required this.reasons});
@@ -609,7 +882,7 @@ class LumeSessionRow extends StatelessWidget {
       label: semanticLabel,
       child: Container(
         constraints: const BoxConstraints(minHeight: LumeSpace.tap),
-        padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 12),
+        padding: LumeSettingsMetrics.rowPadding,
         decoration: BoxDecoration(
           border: isLast
               ? null

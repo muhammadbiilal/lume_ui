@@ -129,6 +129,7 @@ class LumeCountryFixture {
       // was not generated for.
       name: (names[lang] ?? names['en']) as String,
       currency: e['currency'] as String,
+      timeZone: (e['timezone'] as String?) ?? 'UTC',
       popular: e['popular'] as bool,
     );
   }
@@ -141,6 +142,53 @@ class LumeCountryFixture {
   /// renders them.
   List<String> orderFor(String languageCode) =>
       _order[languageCode] ?? _order['en']!;
+
+  /// One country's name in [languageCode], or `null` for a code the table
+  /// does not carry.
+  ///
+  /// The caller decides what to show instead — and the honest fallback is the
+  /// ISO code itself, which is true, rather than a blank or a guess.
+  String? nameOf(String code, String languageCode) {
+    for (final LumeCountry c in forLanguage(languageCode)) {
+      if (c.code == code) return c.name;
+    }
+    return null;
+  }
+
+  /// The zone a country implies, or `UTC` for a code the table lacks.
+  String zoneOf(String code) {
+    for (final LumeCountry c in forLanguage('en')) {
+      if (c.code == code) return c.timeZone;
+    }
+    return 'UTC';
+  }
+
+  /// The currency a country uses, or an empty string for a code the table
+  /// does not carry.
+  String currencyOf(String code) {
+    for (final LumeCountry c in forLanguage('en')) {
+      if (c.code == code) return c.currency;
+    }
+    return '';
+  }
+
+  /// The zones near a country, sorted.
+  ///
+  /// `zonesNear` in `ui/account-ui.js`: every distinct zone in the table whose
+  /// *area* — the part before the slash — matches the reader's. A list of
+  /// every zone on earth would be a search problem; this is the set that is
+  /// actually reachable from here.
+  List<String> zonesNear(String code) {
+    final String home = zoneOf(code);
+    final String area = home.split('/').first;
+    final Set<String> seen = <String>{};
+    for (final LumeCountry c in forLanguage('en')) {
+      if (c.timeZone.split('/').first != area) continue;
+      seen.add(c.timeZone);
+    }
+    final List<String> out = seen.toList()..sort();
+    return out;
+  }
 
   /// A country's cities and regions. Empty for a code that is not in the
   /// table, which cannot happen through the picker but can through a link.

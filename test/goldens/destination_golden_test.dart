@@ -36,6 +36,8 @@ import 'package:lume/features/tools/presentation/tools_screen.dart';
 
 import '../features/destinations/destination_harness.dart';
 import '../features/destinations/today_explore_harness.dart';
+import 'package:lume/features/account/domain/account_model.dart';
+import '../features/destinations/profile_harness.dart';
 import '../features/destinations/trains_harness.dart';
 import '../helpers/capture.dart';
 import '../helpers/load_fonts.dart';
@@ -576,6 +578,53 @@ void main() {
       });
     }
   });
+  group('Profile', () {
+    // The account state is part of the cell's identity: `profile_default_pk`
+    // is a guest, and the same profile signed in is a different screen. The
+    // names match `measure_destinations.mjs --account`, so a capture and its
+    // comparison line up without a lookup table.
+    const Map<String, LumeAccountState> states = <String, LumeAccountState>{
+      'profile_default_pk': LumeAccountState.guest,
+      'profile_default_pk_authed': LumeAccountState.authed,
+      'profile_default_pk_expired': LumeAccountState.expired,
+    };
+
+    for (final MapEntry<String, LumeAccountState> e in states.entries) {
+      for (final Cell cell in kCells) {
+        testWidgets('${e.key} · ${cell.$1}', (WidgetTester tester) async {
+          await shoot(
+            tester,
+            profileScreenFor(
+              profileView(state: e.value),
+              LumeRecordedProfile(),
+            ),
+            e.key,
+            cell,
+          );
+        });
+      }
+    }
+
+    // The account with no name at all — the one state that carries the
+    // invitation to complete itself.
+    testWidgets('profile_default_pk_noname · the reference cell', (
+      WidgetTester tester,
+    ) async {
+      await shoot(
+        tester,
+        profileScreenFor(
+          profileView(
+            state: LumeAccountState.authed,
+            identity: kNamelessIdentity,
+          ),
+          LumeRecordedProfile(),
+        ),
+        'profile_default_pk_noname',
+        kCells.first,
+      );
+    });
+  });
+
   group('Trains', () {
     Future<Widget> screen(LumeUserContext user) async => LumeTrainsScreen(
       user: user,

@@ -21,6 +21,622 @@ class AppLocalizationsAr extends AppLocalizations {
   String get a11yShare => 'مشاركة';
 
   @override
+  String get acctAboutText =>
+      'تطبيق عالمي للحياة اليومية. مصمم ليعمل في أي مكان، بلغتك، وبالأجزاء التي اخترتها.';
+
+  @override
+  String get acctAboutTitle => 'عن Lume';
+
+  @override
+  String get acctAppearanceDark => 'داكن';
+
+  @override
+  String get acctAppearanceLight => 'فاتح';
+
+  @override
+  String get acctAppearanceSystem => 'حسب النظام';
+
+  @override
+  String get acctAppearanceTitle => 'المظهر';
+
+  @override
+  String get acctBuild => 'الإصدار البرمجي';
+
+  @override
+  String acctCatsOn(int n, int total) {
+    return '$n من $total مفعّلة';
+  }
+
+  @override
+  String get acctChangePassword => 'تغيير كلمة المرور';
+
+  @override
+  String get acctChangePasswordSub =>
+      'لا يُسجَّل تاريخ آخر تغيير على هذا الجهاز';
+
+  @override
+  String get acctClock12 => '12 ساعة';
+
+  @override
+  String get acctClock24 => '24 ساعة';
+
+  @override
+  String get acctClockFormat => 'الساعة';
+
+  @override
+  String get acctCompleteCta => 'أضف اسمك';
+
+  @override
+  String get acctCompleteText => 'أضف اسمك حتى يتمكن Lume من تحيتك كما ينبغي.';
+
+  @override
+  String get acctCompleteTitle => 'أكمل ملفك الشخصي';
+
+  @override
+  String get acctCurrencyAuto => 'حسب منطقتي';
+
+  @override
+  String get acctCurrencyNote =>
+      'بعض الأدوات تعرض السعر بعملة سوقها الخاصة على أي حال.';
+
+  @override
+  String get acctCurrencyTitle => 'العملة';
+
+  @override
+  String get acctDangerZone => 'منطقة الخطر';
+
+  @override
+  String get acctDataAccount => 'حسابك وجلساتك';
+
+  @override
+  String get acctDataNotes => 'الملاحظات والمهام والمصاريف والمتتبعات';
+
+  @override
+  String get acctDataNotify => 'إعدادات الإشعارات وسجلها';
+
+  @override
+  String get acctDataPrefs => 'التفضيلات والمنطقة واللغة';
+
+  @override
+  String get acctDataTools => 'الأدوات والمفضلات والشاشات الأخيرة';
+
+  @override
+  String get acctDeleteConfirmText => 'أدخل كلمة المرور لحذف الحساب.';
+
+  @override
+  String get acctDeleteConfirmTitle => 'أكّد أنك أنت';
+
+  @override
+  String get acctDeleteCta => 'احذف حسابي';
+
+  @override
+  String get acctDeleteFinalText => 'هذا يزيل الحساب نهائيًا. لا سبيل للرجوع.';
+
+  @override
+  String get acctDeleteFinalTitle => 'حذف حسابك؟';
+
+  @override
+  String get acctDeleteK1 =>
+      'تبقى الملاحظات والمهام والمصاريف والتفضيلات على هذا الجهاز.';
+
+  @override
+  String get acctDeleteKeeps => 'ما الذي يبقى';
+
+  @override
+  String get acctDeleteRow => 'حذف الحساب';
+
+  @override
+  String get acctDeleteRowSub => 'إزالة حساب Lume الخاص بك نهائيًا';
+
+  @override
+  String get acctDeleteTitle => 'حذف الحساب';
+
+  @override
+  String get acctDeleteW1 => 'يُزال حسابك وبريدك الإلكتروني.';
+
+  @override
+  String get acctDeleteW2 => 'يتم تسجيل خروج كل جهاز مسجّل الدخول.';
+
+  @override
+  String get acctDeleteW3 => 'لا يمكن التراجع عن هذا.';
+
+  @override
+  String get acctDeleteWhat => 'ماذا يفعل هذا';
+
+  @override
+  String get acctDeleted => 'تم حذف الحساب';
+
+  @override
+  String get acctDeviceAndroid => 'هاتف أندرويد';
+
+  @override
+  String get acctDeviceBrowser => 'هذا المتصفح';
+
+  @override
+  String get acctDeviceIos => 'آيفون';
+
+  @override
+  String get acctDeviceMac => 'ماك';
+
+  @override
+  String get acctDeviceWindows => 'حاسوب ويندوز';
+
+  @override
+  String get acctDiscardCta => 'تجاهل';
+
+  @override
+  String get acctDiscardText =>
+      'لقد عدّلت هذه الشاشة دون حفظ. المغادرة الآن تفقد تلك التعديلات.';
+
+  @override
+  String get acctDiscardTitle => 'تجاهل تغييراتك؟';
+
+  @override
+  String get acctEditProfile => 'تعديل الملف الشخصي';
+
+  @override
+  String get acctEditSaved => 'تم تحديث الملف الشخصي';
+
+  @override
+  String get acctEditTitle => 'تعديل الملف الشخصي';
+
+  @override
+  String get acctEmailChanged => 'تم تحديث البريد الإلكتروني';
+
+  @override
+  String get acctEmailPending => 'بانتظار التحقق';
+
+  @override
+  String acctEmailPendingText(String email) {
+    return 'يصبح $email عنوانك بمجرد التحقق منه.';
+  }
+
+  @override
+  String get acctEmailTitle => 'البريد الإلكتروني';
+
+  @override
+  String get acctErrCurrentRequired => 'أدخل كلمة المرور الحالية.';
+
+  @override
+  String get acctErrCurrentWrong => 'كلمة المرور الحالية غير صحيحة.';
+
+  @override
+  String get acctErrPasswordSame => 'اختر كلمة مرور لم تستخدمها هنا من قبل.';
+
+  @override
+  String get acctErrPhoneInvalid => 'أدخل رقم هاتف يستطيع Lume قراءته.';
+
+  @override
+  String get acctErrPhotoTooBig =>
+      'هذه الصورة أكبر من أن يحفظها هذا الجهاز. جرّب صورة أصغر.';
+
+  @override
+  String get acctErrStorage =>
+      'تعذّر على Lume الحفظ على هذا الجهاز. راجع إعدادات التخزين في متصفحك وحاول مرة أخرى.';
+
+  @override
+  String get acctFavourites => 'مفضلاتك';
+
+  @override
+  String get acctFieldConfirmNew => 'تأكيد كلمة المرور الجديدة';
+
+  @override
+  String get acctFieldCurrent => 'كلمة المرور الحالية';
+
+  @override
+  String get acctFieldDisplayName => 'الاسم المعروض';
+
+  @override
+  String get acctFieldFirst => 'الاسم الأول';
+
+  @override
+  String get acctFieldLast => 'اسم العائلة';
+
+  @override
+  String get acctFieldNewEmail => 'البريد الإلكتروني الجديد';
+
+  @override
+  String get acctFieldPhone => 'الهاتف';
+
+  @override
+  String get acctGuestBadge => 'ضيف';
+
+  @override
+  String get acctGuestEditNote =>
+      'يُحفظ هذا الاسم على هذا الجهاز. وإنشاء حساب ينقله معك.';
+
+  @override
+  String get acctGuestNotifText =>
+      'كضيف، تخص التنبيهات هذا الجهاز وحده. وتسجيل الدخول لا يعرض لك أبدًا إشعارات حساب آخر.';
+
+  @override
+  String get acctGuestNotifTitle => 'الإشعارات على هذا الجهاز';
+
+  @override
+  String get acctGuestText =>
+      'أنت تستخدم Lume كضيف. كل ما أعددته محفوظ على هذا الجهاز.';
+
+  @override
+  String get acctGuestTitle => 'مرحبًا بك في Lume';
+
+  @override
+  String get acctGuestWhy => 'أنشئ حسابًا لكي';
+
+  @override
+  String get acctGuestWhy1 => 'تحتفظ بـ Lume على كل أجهزتك';
+
+  @override
+  String get acctGuestWhy2 => 'تستعيد إعداداتك إذا فقدت هذا الهاتف';
+
+  @override
+  String get acctGuestWhy3 => 'تستخدم ميزات الحساب فور توفرها';
+
+  @override
+  String get acctHelpContact => 'أرسل ملاحظاتك';
+
+  @override
+  String get acctHelpText =>
+      'Lume منتج من شاشة واحدة: كل شيء على بُعد نقرة أو نقرتين من الرئيسية.';
+
+  @override
+  String get acctHelpTitle => 'المساعدة';
+
+  @override
+  String get acctHelpTour => 'أعد جولة الترحيب';
+
+  @override
+  String get acctLanguageNote => 'تغيير اللغة لا يغيّر أي شيء كتبته.';
+
+  @override
+  String get acctLanguageTitle => 'اللغة';
+
+  @override
+  String acctLastSeen(String when) {
+    return 'آخر ظهور $when';
+  }
+
+  @override
+  String get acctLoggedOut => 'تم تسجيل الخروج';
+
+  @override
+  String get acctLogoutText =>
+      'ستحتاج إلى تسجيل الدخول مجددًا للوصول إلى حسابك. وكل ما على هذا الجهاز يبقى في مكانه.';
+
+  @override
+  String get acctLogoutTitle => 'تسجيل الخروج؟';
+
+  @override
+  String acctMemberSince(String date) {
+    return 'عضو منذ $date';
+  }
+
+  @override
+  String get acctNameNote => 'هذا هو الاسم الذي يحييك به Lume.';
+
+  @override
+  String get acctNoFavourites => 'لا شيء محفوظ بعد';
+
+  @override
+  String get acctNoFavouritesText => 'اضغط النجمة على أي أداة لتظهر هنا.';
+
+  @override
+  String get acctNoOtherDevices => 'لا توجد أجهزة أخرى مسجّلة الدخول.';
+
+  @override
+  String get acctNothingChanged => 'لا شيء لحفظه بعد';
+
+  @override
+  String get acctPersonalTitle => 'المعلومات الشخصية';
+
+  @override
+  String get acctPhoneNote => 'اختياري. يُحفظ على هذا الجهاز.';
+
+  @override
+  String get acctPhoneSaved => 'تم حفظ رقم الهاتف';
+
+  @override
+  String get acctPhoneScope => 'ما الغرض من هذا';
+
+  @override
+  String get acctPhoneScopeText =>
+      'يُحفظ على هذا الجهاز لتتمكن أداة من عرضه. لا يوجد في Lume تسجيل دخول أو استرداد عبر الهاتف، فهو لا يفعل شيئًا آخر.';
+
+  @override
+  String get acctPhoneTitle => 'رقم الهاتف';
+
+  @override
+  String get acctPhoto => 'صورة الملف الشخصي';
+
+  @override
+  String get acctPhotoAdd => 'أضف صورة';
+
+  @override
+  String get acctPhotoNote => 'اختياري. تُحفظ على هذا الجهاز.';
+
+  @override
+  String get acctPhotoRemove => 'أزل الصورة';
+
+  @override
+  String get acctPhotoReplace => 'استبدل الصورة';
+
+  @override
+  String get acctPrefsTitle => 'التفضيلات';
+
+  @override
+  String get acctPrivacyAnalytics => 'تحليلات الاستخدام';
+
+  @override
+  String get acctPrivacyAnalyticsSub =>
+      'لا يجمع Lume أيًا منها. لا شيء لإيقافه.';
+
+  @override
+  String get acctPrivacyPersonal => 'التخصيص';
+
+  @override
+  String get acctPrivacyPersonalSub =>
+      'استخدام ما تفعله في Lume لترتيب ما تراه';
+
+  @override
+  String get acctPrivacyPreview => 'معاينة الإشعارات';
+
+  @override
+  String get acctPrivacyPreviewSub => 'إظهار محتوى التنبيه على شاشة القفل';
+
+  @override
+  String get acctPrivacySensitive => 'المحتوى الحساس في المعاينات';
+
+  @override
+  String get acctPrivacySensitiveSub =>
+      'تبقى الصحة والمال والمستندات مخفية حتى تُفتح';
+
+  @override
+  String get acctPrivacyTitle => 'الخصوصية';
+
+  @override
+  String get acctPushAsk => 'لم يُطلب بعد';
+
+  @override
+  String get acctPushDenied => 'محظورة في إعدادات متصفحك';
+
+  @override
+  String get acctPushDeniedHelp =>
+      'الإشعارات محظورة. اسمح بها من إعدادات الموقع في متصفحك.';
+
+  @override
+  String get acctPushGranted => 'مسموح بها من متصفحك';
+
+  @override
+  String get acctPushOff => 'مغلقة';
+
+  @override
+  String get acctPushOn => 'مفعّلة';
+
+  @override
+  String get acctPushThanks => 'الإشعارات مفعّلة';
+
+  @override
+  String get acctPushUnsupported =>
+      'لا يستطيع هذا الجهاز عرض الإشعارات الفورية';
+
+  @override
+  String get acctPwStrengthLabel => 'القوة';
+
+  @override
+  String get acctRegionChange => 'تغيير الدولة أو المدينة';
+
+  @override
+  String get acctRegionTitle => 'المنطقة والعملة';
+
+  @override
+  String get acctRegionWarn =>
+      'قد يؤدي تغيير منطقتك إلى تحديث عملتك وأسواقك وعطلاتك وأرقام الطوارئ والخدمات المحلية.';
+
+  @override
+  String get acctRowAbout => 'عن Lume';
+
+  @override
+  String get acctRowAboutSub => 'الإصدار والتراخيص وشكر وتقدير';
+
+  @override
+  String get acctRowAppearance => 'المظهر';
+
+  @override
+  String get acctRowAppearanceSub => 'فاتح أو داكن أو حسب النظام';
+
+  @override
+  String get acctRowHelp => 'المساعدة';
+
+  @override
+  String get acctRowHelpSub => 'إجابات، وطريقة للتواصل معنا';
+
+  @override
+  String get acctRowInterests => 'اهتماماتك';
+
+  @override
+  String get acctRowInterestsSub => 'تشكّل صفحتك الرئيسية وأدواتك وقراءاتك';
+
+  @override
+  String get acctRowLanguage => 'اللغة';
+
+  @override
+  String get acctRowLibrary => 'مكتبتك';
+
+  @override
+  String get acctRowLibrarySub => 'القراءات المحفوظة والملاحظات والمفضلات';
+
+  @override
+  String get acctRowNotificationsSub =>
+      'التنبيهات الفورية والتحديثات داخل التطبيق وساعات الهدوء';
+
+  @override
+  String get acctRowPersonal => 'المعلومات الشخصية';
+
+  @override
+  String get acctRowPersonalSub => 'الاسم والبريد والهاتف والمنطقة';
+
+  @override
+  String get acctRowPreferences => 'التفضيلات';
+
+  @override
+  String get acctRowPreferencesSub => 'اللغة والعملة والوحدات والوقت';
+
+  @override
+  String get acctRowPrivacy => 'الخصوصية';
+
+  @override
+  String get acctRowPrivacySub => 'ما يعرضه Lume ويحتفظ به ويشاركه';
+
+  @override
+  String get acctRowRegion => 'المنطقة والعملة';
+
+  @override
+  String get acctRowRegionSub => 'الدولة والمدينة والخدمات التابعة لهما';
+
+  @override
+  String get acctRowSecurity => 'الأمان';
+
+  @override
+  String get acctRowSecuritySub => 'كلمة المرور والجلسات وحماية الحساب';
+
+  @override
+  String get acctRowSync => 'البيانات والمزامنة';
+
+  @override
+  String get acctRowSyncSub => 'أين يُخزَّن كل جزء من Lume الخاص بك';
+
+  @override
+  String get acctRowTour => 'أعد جولة الترحيب';
+
+  @override
+  String get acctRowTourSub => 'تذكير سريع بما هو متاح هنا';
+
+  @override
+  String get acctSaveChanges => 'حفظ التغييرات';
+
+  @override
+  String get acctSecurityScope => 'ما الذي يحميه Lume';
+
+  @override
+  String get acctSecurityScopeText =>
+      'كلمة مرورك وأجهزتك المسجّلة. لا توجد في هذا الإصدار مصادقة ثنائية ولا فتح بالبصمة، ولا شيء هنا يدّعي غير ذلك.';
+
+  @override
+  String get acctSecurityTitle => 'الأمان';
+
+  @override
+  String acctSessionsSub(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n signed in',
+      one: '1 signed in',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get acctSessionsTitle => 'الجلسات النشطة';
+
+  @override
+  String get acctSignOut => 'تسجيل الخروج';
+
+  @override
+  String get acctSignOutDevice => 'تسجيل الخروج';
+
+  @override
+  String get acctSignOutOthers => 'تسجيل الخروج من كل الأجهزة الأخرى';
+
+  @override
+  String get acctSignOutOthersText =>
+      'سيحتاج كل جهاز آخر مسجّل الدخول إلى تسجيل الدخول من جديد.';
+
+  @override
+  String acctSignedInAs(String email) {
+    return 'مسجّل الدخول بـ $email';
+  }
+
+  @override
+  String acctSignedOutOthers(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: 'Signed out $n other devices',
+      one: 'Signed out 1 other device',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get acctSince => 'عضو منذ';
+
+  @override
+  String get acctStatus => 'حالة الحساب';
+
+  @override
+  String get acctStatusActive => 'نشط';
+
+  @override
+  String get acctStatusLocked => 'مقفل';
+
+  @override
+  String get acctSupport => 'الدعم';
+
+  @override
+  String get acctSyncDevice => 'مخزَّن على هذا الجهاز';
+
+  @override
+  String get acctSyncNone =>
+      'لا شيء يُزامَن بعد. لا يوجد خادم لـ Lume في هذا الإصدار، لذا يبقى كل ما في الأعلى على هذا الجهاز — بما في ذلك حسابك.';
+
+  @override
+  String get acctSyncSynced => 'مزامَن مع حسابك';
+
+  @override
+  String get acctSyncTitle => 'البيانات والمزامنة';
+
+  @override
+  String acctThemeSwitched(String mode) {
+    return 'المظهر: $mode';
+  }
+
+  @override
+  String get acctThisDevice => 'هذا الجهاز';
+
+  @override
+  String get acctTimeTitle => 'الوقت والمنطقة الزمنية';
+
+  @override
+  String get acctTimezoneAuto => 'حسب هذا الجهاز';
+
+  @override
+  String get acctTimezoneFollowRegion => 'حسب منطقتي';
+
+  @override
+  String get acctTimezoneNote =>
+      'تستخدم الأسواق والرحلات والقطارات دائمًا منطقتها الزمنية الخاصة.';
+
+  @override
+  String get acctTimezoneTitle => 'الوقت';
+
+  @override
+  String get acctUnitsAuto => 'حسب منطقتي';
+
+  @override
+  String get acctUnitsImperial => 'إمبراطوري';
+
+  @override
+  String get acctUnitsMetric => 'متري';
+
+  @override
+  String get acctUnitsTitle => 'الوحدات';
+
+  @override
+  String get acctVersion => 'الإصدار';
+
+  @override
+  String get acctYourLume => 'حسابك في Lume';
+
+  @override
   String get actionAdd => 'إضافة';
 
   @override
@@ -36,10 +652,16 @@ class AppLocalizationsAr extends AppLocalizations {
   String get actionCancel => 'إلغاء';
 
   @override
+  String get actionChange => 'تغيير';
+
+  @override
   String get actionClear => 'مسح';
 
   @override
   String get actionClose => 'إغلاق';
+
+  @override
+  String get actionConfirm => 'تأكيد';
 
   @override
   String get actionContinue => 'متابعة';
@@ -72,6 +694,9 @@ class AppLocalizationsAr extends AppLocalizations {
   String get actionRemove => 'إزالة';
 
   @override
+  String get actionResend => 'إعادة الإرسال';
+
+  @override
   String get actionSave => 'حفظ';
 
   @override
@@ -88,6 +713,9 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get actionTryAgain => 'حاول مرة أخرى';
+
+  @override
+  String get actionVerify => 'تحقّق';
 
   @override
   String get actionWeek => 'أسبوع';
@@ -581,6 +1209,9 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get commonOptional => 'اختياري';
+
+  @override
+  String get commonOr => 'أو';
 
   @override
   String get commonOverdue => 'متأخر';
@@ -1367,6 +1998,39 @@ class AppLocalizationsAr extends AppLocalizations {
   String get navTrains => 'القطارات';
 
   @override
+  String get ncatDocuments => 'المستندات';
+
+  @override
+  String get ncatFaith => 'الإيمان';
+
+  @override
+  String get ncatFinance => 'المال';
+
+  @override
+  String get ncatHealth => 'الصحة';
+
+  @override
+  String get ncatMarkets => 'الأسواق';
+
+  @override
+  String get ncatNews => 'الأخبار';
+
+  @override
+  String get ncatPersonal => 'شخصي';
+
+  @override
+  String get ncatReminders => 'التذكيرات';
+
+  @override
+  String get ncatSystem => 'النظام';
+
+  @override
+  String get ncatTravel => 'السفر';
+
+  @override
+  String get ncatWeather => 'الطقس';
+
+  @override
   String get nearbyChaiShai => 'تشاي شاي';
 
   @override
@@ -1616,10 +2280,63 @@ class AppLocalizationsAr extends AppLocalizations {
   String get persAllCountries => 'كل الدول';
 
   @override
+  String get persAppLanguage => 'لغة التطبيق';
+
+  @override
+  String get persCity => 'المدينة';
+
+  @override
+  String get persCitySub => 'للطقس والمعلومات المحلية والأماكن القريبة';
+
+  @override
+  String get persContent => 'المحتوى';
+
+  @override
+  String get persCountry => 'الدولة';
+
+  @override
+  String get persCountrySub => 'تفتح الخدمات المحلية فقط — لا شيء آخر';
+
+  @override
+  String get persCurrency => 'العملة';
+
+  @override
+  String persCurrencyAuto(String code) {
+    return 'تلقائي ($code)';
+  }
+
+  @override
+  String get persDataSafe =>
+      'هذه التغييرات تؤثر على ما تراه فقط. ملاحظاتك ومهامك وسجلاتك تبقى كما هي.';
+
+  @override
+  String get persFinance => 'المعلومات المالية';
+
+  @override
+  String get persFinanceSub => 'الأسعار والذهب والأسواق';
+
+  @override
+  String get persFormatting => 'اللغة والتنسيق';
+
+  @override
+  String get persInterests => 'اهتماماتك';
+
+  @override
+  String persInterestsHint(int min) {
+    return 'اختر $min على الأقل. هي التي تحدد ما يملأ شاشتك الرئيسية.';
+  }
+
+  @override
   String get persIslamic => 'الميزات الإسلامية';
 
   @override
   String get persIslamicSub => 'مواقيت الصلاة والقرآن والأدعية والزكاة ورمضان';
+
+  @override
+  String get persNews => 'الأخبار';
+
+  @override
+  String get persNewsSub => 'العناوين في استكشف واليوم';
 
   @override
   String get persPopular => 'شائعة';
@@ -1628,13 +2345,67 @@ class AppLocalizationsAr extends AppLocalizations {
   String get persRecent => 'حديثة';
 
   @override
+  String get persRecos => 'التوصيات';
+
+  @override
+  String get persRecosSub => 'اقتراح أدوات بناءً على طريقة استخدامك لـ Lume';
+
+  @override
+  String get persRegion => 'المنطقة';
+
+  @override
+  String get persSavePrefs => 'حفظ التفضيلات';
+
+  @override
+  String get persSaved => 'تم تحديث تطبيقك';
+
+  @override
   String get persSearchCities => 'ابحث عن مدينة';
 
   @override
   String get persSearchCountries => 'ابحث عن دولة';
 
   @override
+  String get persSport => 'الرياضة';
+
+  @override
+  String get persSportSub => 'نتائج الكريكيت المباشرة';
+
+  @override
+  String get persSub => 'غيّر أيًا من هذا متى شئت';
+
+  @override
+  String get persTime12 => '12 ساعة';
+
+  @override
+  String get persTime24 => '24 ساعة';
+
+  @override
+  String get persTimeFormat => 'الوقت';
+
+  @override
+  String get persTitle => 'التخصيص';
+
+  @override
+  String get persUnits => 'الوحدات';
+
+  @override
+  String get persUnitsAuto => 'تلقائي';
+
+  @override
+  String get persUnitsImperial => 'إمبراطوري';
+
+  @override
+  String get persUnitsMetric => 'متري';
+
+  @override
   String get persUseLocation => 'استخدم موقعي الحالي';
+
+  @override
+  String get persUseLocationSub => 'اختياري — يمكنك دائمًا ضبطه يدويًا';
+
+  @override
+  String get persWhereYouAre => 'أين أنت';
 
   @override
   String get prayerAsr => 'العصر';
@@ -1650,6 +2421,9 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get prayerMaghrib => 'المغرب';
+
+  @override
+  String get profileSub => 'التفضيلات والعناصر المحفوظة';
 
   @override
   String get qaDocscan => 'امسح مستندًا';

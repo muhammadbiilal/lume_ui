@@ -147,7 +147,7 @@ void main() {
     ) async {
       final GoRouter router = await pumpLumeRouter(
         tester,
-        initialLocation: '/profile/account',
+        initialLocation: '/profile/account/security',
       );
       expect(locationOf(router), '/auth/signin');
 
@@ -164,14 +164,14 @@ void main() {
     ) async {
       final GoRouter router = await pumpLumeRouter(
         tester,
-        initialLocation: '/profile/account',
+        initialLocation: '/profile/account/security',
       );
       expect(locationOf(router), '/auth/signin');
 
       await signIn(tester);
       expect(
         locationOf(router),
-        '/profile/account',
+        '/profile/account/security',
         reason: 'the deep link survived the detour',
       );
     });
@@ -181,7 +181,7 @@ void main() {
     ) async {
       final GoRouter router = await pumpLumeRouter(
         tester,
-        initialLocation: '/home/account',
+        initialLocation: '/home/account/password',
       );
       expect(find.byType(LumeAuthSecondary), findsOneWidget);
       await tester.ensureVisible(find.byType(LumeAuthSecondary));

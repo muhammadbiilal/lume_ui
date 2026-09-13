@@ -22,6 +22,7 @@ import 'package:flutter/foundation.dart';
 
 import '../../../core/routing/lume_routes.dart';
 import '../../auth/domain/auth_model.dart';
+import '../../onboarding/data/country_fixture.dart';
 import '../../onboarding/domain/onboarding_state.dart';
 
 /// How far the launch has got.
@@ -44,6 +45,7 @@ class LumeStartupState {
     this.profile = const LumeProfileRecord(),
     this.profileIsDurable = false,
     this.held,
+    this.countries,
   });
 
   final LumeStartupPhase phase;
@@ -63,6 +65,18 @@ class LumeStartupState {
   /// it can be. Survives onboarding and authentication both.
   final String? held;
 
+  /// The country table, read once at launch.
+  ///
+  /// Three surfaces need a country's *name* — onboarding's picker, Profile's
+  /// region row and the account's region route — and a name is a translated
+  /// string from a bundled table, not something a screen can derive from
+  /// `PK`. Reading it here means every one of them reads the same table, and
+  /// none of them has to render an empty box while an asset decodes.
+  ///
+  /// `null` means the read failed. That is a real state: the screens fall
+  /// back to the ISO code, which is true, rather than to a blank.
+  final LumeCountryFixture? countries;
+
   bool get isReady => phase == LumeStartupPhase.ready;
 
   LumeStartupState copyWith({
@@ -72,12 +86,14 @@ class LumeStartupState {
     bool? profileIsDurable,
     String? held,
     bool clearHeld = false,
+    LumeCountryFixture? countries,
   }) => LumeStartupState(
     phase: phase ?? this.phase,
     auth: auth ?? this.auth,
     profile: profile ?? this.profile,
     profileIsDurable: profileIsDurable ?? this.profileIsDurable,
     held: clearHeld ? null : (held ?? this.held),
+    countries: countries ?? this.countries,
   );
 
   @override
@@ -92,10 +108,12 @@ class LumeStartupState {
       // all three.
       other.profile == profile &&
       other.profileIsDurable == profileIsDurable &&
-      other.held == held;
+      other.held == held &&
+      identical(other.countries, countries);
 
   @override
-  int get hashCode => Object.hash(phase, auth, profile, profileIsDurable, held);
+  int get hashCode =>
+      Object.hash(phase, auth, profile, profileIsDurable, held, countries);
 }
 
 /// The single routing decision.
@@ -103,14 +121,42 @@ abstract final class LumeRouteGate {
   /// Where the splash lives while the launch is still deciding.
   static const String splash = '/splash';
 
-  /// The locations that need an account.
+  /// The account routes that need an account.
   ///
-  /// **Only the account's own surfaces.** Everything else in Lume works for a
-  /// guest, and a row a guest can see must lead somewhere. "Data & sync" is
-  /// not on this list: it describes what is on this device, which is exactly
-  /// as true for a guest.
-  static bool isProtected(String location) =>
-      location.contains('/${LumeRoutes.accountSegment}');
+  /// **Only seven of the twenty-one.** Everything else in the section works
+  /// for a guest, and a row a guest can see must lead somewhere: "Data &
+  /// sync" and "Privacy" describe what is on *this device*, which is exactly
+  /// as true without an account, and the edit form is the only screen that
+  /// changes a guest's own device name.
+  ///
+  /// The segments rather than the enum, because routing is core and the
+  /// account is a feature. `account_routes_test.dart` asserts this set is
+  /// exactly `LumeAccountRepository.requiresAccount`'s, so the two cannot
+  /// drift.
+  static const Set<String> protectedAccountRoutes = <String>{
+    'account',
+    'email',
+    'phone',
+    'security',
+    'password',
+    'sessions',
+    'delete',
+  };
+
+  /// Whether a location needs an account.
+  ///
+  /// The *route* decides, not the section: `/profile/account/help` is open and
+  /// `/profile/account/password` is not, and treating the whole section as
+  /// protected would send a guest to sign in to read the help.
+  static bool isProtected(String location) {
+    final int at = location.indexOf('/${LumeRoutes.accountSegment}/');
+    if (at < 0) return false;
+    final String rest = location.substring(
+      at + LumeRoutes.accountSegment.length + 2,
+    );
+    final String segment = rest.split('/').first.split('?').first;
+    return protectedAccountRoutes.contains(segment);
+  }
 
   /// Whether a location belongs to the authentication flow.
   static bool isAuth(String location) =>

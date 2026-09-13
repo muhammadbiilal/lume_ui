@@ -124,6 +124,1134 @@ abstract class AppLocalizations {
   /// **'Share'**
   String get a11yShare;
 
+  /// Reference: `acct.aboutText`.
+  ///
+  /// In en, this message translates to:
+  /// **'A global daily-life super-app. Built to work anywhere, in your language, with the parts of it you asked for.'**
+  String get acctAboutText;
+
+  /// Reference: `acct.aboutTitle`.
+  ///
+  /// In en, this message translates to:
+  /// **'About Lume'**
+  String get acctAboutTitle;
+
+  /// Reference: `acct.appearanceDark`.
+  ///
+  /// In en, this message translates to:
+  /// **'Dark'**
+  String get acctAppearanceDark;
+
+  /// Reference: `acct.appearanceLight`.
+  ///
+  /// In en, this message translates to:
+  /// **'Light'**
+  String get acctAppearanceLight;
+
+  /// Reference: `acct.appearanceSystem`.
+  ///
+  /// In en, this message translates to:
+  /// **'Follow the system'**
+  String get acctAppearanceSystem;
+
+  /// Reference: `acct.appearanceTitle`.
+  ///
+  /// In en, this message translates to:
+  /// **'Appearance'**
+  String get acctAppearanceTitle;
+
+  /// Reference: `acct.build`.
+  ///
+  /// In en, this message translates to:
+  /// **'Build'**
+  String get acctBuild;
+
+  /// Reference: `acct.catsOn`.
+  ///
+  /// In en, this message translates to:
+  /// **'{n} of {total} on'**
+  String acctCatsOn(int n, int total);
+
+  /// Reference: `acct.changePassword`.
+  ///
+  /// In en, this message translates to:
+  /// **'Change password'**
+  String get acctChangePassword;
+
+  /// Reference: `acct.changePasswordSub`.
+  ///
+  /// In en, this message translates to:
+  /// **'Last changed is not recorded on this device'**
+  String get acctChangePasswordSub;
+
+  /// Reference: `acct.clock12`.
+  ///
+  /// In en, this message translates to:
+  /// **'12-hour'**
+  String get acctClock12;
+
+  /// Reference: `acct.clock24`.
+  ///
+  /// In en, this message translates to:
+  /// **'24-hour'**
+  String get acctClock24;
+
+  /// Reference: `acct.clockFormat`.
+  ///
+  /// In en, this message translates to:
+  /// **'Clock'**
+  String get acctClockFormat;
+
+  /// Reference: `acct.completeCta`.
+  ///
+  /// In en, this message translates to:
+  /// **'Add your name'**
+  String get acctCompleteCta;
+
+  /// Reference: `acct.completeText`.
+  ///
+  /// In en, this message translates to:
+  /// **'Add your name so Lume can greet you properly.'**
+  String get acctCompleteText;
+
+  /// Reference: `acct.completeTitle`.
+  ///
+  /// In en, this message translates to:
+  /// **'Complete your profile'**
+  String get acctCompleteTitle;
+
+  /// Reference: `acct.currencyAuto`.
+  ///
+  /// In en, this message translates to:
+  /// **'Follow my region'**
+  String get acctCurrencyAuto;
+
+  /// Reference: `acct.currencyNote`.
+  ///
+  /// In en, this message translates to:
+  /// **'Some tools quote their own market’s currency regardless.'**
+  String get acctCurrencyNote;
+
+  /// Reference: `acct.currencyTitle`.
+  ///
+  /// In en, this message translates to:
+  /// **'Currency'**
+  String get acctCurrencyTitle;
+
+  /// Reference: `acct.dangerZone`.
+  ///
+  /// In en, this message translates to:
+  /// **'Danger zone'**
+  String get acctDangerZone;
+
+  /// Reference: `acct.data.account`.
+  ///
+  /// In en, this message translates to:
+  /// **'Your account and sessions'**
+  String get acctDataAccount;
+
+  /// Reference: `acct.data.notes`.
+  ///
+  /// In en, this message translates to:
+  /// **'Notes, tasks, expenses and trackers'**
+  String get acctDataNotes;
+
+  /// Reference: `acct.data.notify`.
+  ///
+  /// In en, this message translates to:
+  /// **'Notification settings and history'**
+  String get acctDataNotify;
+
+  /// Reference: `acct.data.prefs`.
+  ///
+  /// In en, this message translates to:
+  /// **'Preferences, region and language'**
+  String get acctDataPrefs;
+
+  /// Reference: `acct.data.tools`.
+  ///
+  /// In en, this message translates to:
+  /// **'Tools, favourites and recent screens'**
+  String get acctDataTools;
+
+  /// Reference: `acct.deleteConfirmText`.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter your password to delete the account.'**
+  String get acctDeleteConfirmText;
+
+  /// Reference: `acct.deleteConfirmTitle`.
+  ///
+  /// In en, this message translates to:
+  /// **'Confirm it’s you'**
+  String get acctDeleteConfirmTitle;
+
+  /// Reference: `acct.deleteCta`.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete my account'**
+  String get acctDeleteCta;
+
+  /// Reference: `acct.deleteFinalText`.
+  ///
+  /// In en, this message translates to:
+  /// **'This removes the account for good. There is no way back.'**
+  String get acctDeleteFinalText;
+
+  /// Reference: `acct.deleteFinalTitle`.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete your account?'**
+  String get acctDeleteFinalTitle;
+
+  /// Reference: `acct.deleteK1`.
+  ///
+  /// In en, this message translates to:
+  /// **'Notes, tasks, expenses and preferences remain on this device.'**
+  String get acctDeleteK1;
+
+  /// Reference: `acct.deleteKeeps`.
+  ///
+  /// In en, this message translates to:
+  /// **'What stays'**
+  String get acctDeleteKeeps;
+
+  /// Reference: `acct.deleteRow`.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete account'**
+  String get acctDeleteRow;
+
+  /// Reference: `acct.deleteRowSub`.
+  ///
+  /// In en, this message translates to:
+  /// **'Permanently remove your Lume account'**
+  String get acctDeleteRowSub;
+
+  /// Reference: `acct.deleteTitle`.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete account'**
+  String get acctDeleteTitle;
+
+  /// Reference: `acct.deleteW1`.
+  ///
+  /// In en, this message translates to:
+  /// **'Your account and email are removed.'**
+  String get acctDeleteW1;
+
+  /// Reference: `acct.deleteW2`.
+  ///
+  /// In en, this message translates to:
+  /// **'Every signed-in device is signed out.'**
+  String get acctDeleteW2;
+
+  /// Reference: `acct.deleteW3`.
+  ///
+  /// In en, this message translates to:
+  /// **'This cannot be undone.'**
+  String get acctDeleteW3;
+
+  /// Reference: `acct.deleteWhat`.
+  ///
+  /// In en, this message translates to:
+  /// **'What this does'**
+  String get acctDeleteWhat;
+
+  /// Reference: `acct.deleted`.
+  ///
+  /// In en, this message translates to:
+  /// **'Account deleted'**
+  String get acctDeleted;
+
+  /// Reference: `acct.device.android`.
+  ///
+  /// In en, this message translates to:
+  /// **'Android phone'**
+  String get acctDeviceAndroid;
+
+  /// Reference: `acct.device.browser`.
+  ///
+  /// In en, this message translates to:
+  /// **'This browser'**
+  String get acctDeviceBrowser;
+
+  /// Reference: `acct.device.ios`.
+  ///
+  /// In en, this message translates to:
+  /// **'iPhone'**
+  String get acctDeviceIos;
+
+  /// Reference: `acct.device.mac`.
+  ///
+  /// In en, this message translates to:
+  /// **'Mac'**
+  String get acctDeviceMac;
+
+  /// Reference: `acct.device.windows`.
+  ///
+  /// In en, this message translates to:
+  /// **'Windows PC'**
+  String get acctDeviceWindows;
+
+  /// Reference: `acct.discardCta`.
+  ///
+  /// In en, this message translates to:
+  /// **'Discard'**
+  String get acctDiscardCta;
+
+  /// Reference: `acct.discardText`.
+  ///
+  /// In en, this message translates to:
+  /// **'You’ve edited this screen without saving. Leaving now loses those edits.'**
+  String get acctDiscardText;
+
+  /// Reference: `acct.discardTitle`.
+  ///
+  /// In en, this message translates to:
+  /// **'Discard your changes?'**
+  String get acctDiscardTitle;
+
+  /// Reference: `acct.editProfile`.
+  ///
+  /// In en, this message translates to:
+  /// **'Edit profile'**
+  String get acctEditProfile;
+
+  /// Reference: `acct.editSaved`.
+  ///
+  /// In en, this message translates to:
+  /// **'Profile updated'**
+  String get acctEditSaved;
+
+  /// Reference: `acct.editTitle`.
+  ///
+  /// In en, this message translates to:
+  /// **'Edit profile'**
+  String get acctEditTitle;
+
+  /// Reference: `acct.emailChanged`.
+  ///
+  /// In en, this message translates to:
+  /// **'Email updated'**
+  String get acctEmailChanged;
+
+  /// Reference: `acct.emailPending`.
+  ///
+  /// In en, this message translates to:
+  /// **'Pending verification'**
+  String get acctEmailPending;
+
+  /// Reference: `acct.emailPendingText`.
+  ///
+  /// In en, this message translates to:
+  /// **'{email} becomes your address once you verify it.'**
+  String acctEmailPendingText(String email);
+
+  /// Reference: `acct.emailTitle`.
+  ///
+  /// In en, this message translates to:
+  /// **'Email address'**
+  String get acctEmailTitle;
+
+  /// Reference: `acct.err.currentRequired`.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter your current password.'**
+  String get acctErrCurrentRequired;
+
+  /// Reference: `acct.err.currentWrong`.
+  ///
+  /// In en, this message translates to:
+  /// **'That current password is incorrect.'**
+  String get acctErrCurrentWrong;
+
+  /// Reference: `acct.err.passwordSame`.
+  ///
+  /// In en, this message translates to:
+  /// **'Choose a password you haven’t used here before.'**
+  String get acctErrPasswordSame;
+
+  /// Reference: `acct.err.phoneInvalid`.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter a phone number Lume can read.'**
+  String get acctErrPhoneInvalid;
+
+  /// Reference: `acct.err.photoTooBig`.
+  ///
+  /// In en, this message translates to:
+  /// **'That image is too large for this device to keep. Try a smaller one.'**
+  String get acctErrPhotoTooBig;
+
+  /// Reference: `acct.err.storage`.
+  ///
+  /// In en, this message translates to:
+  /// **'Lume couldn’t save to this device. Check your browser’s storage settings and try again.'**
+  String get acctErrStorage;
+
+  /// Reference: `acct.favourites`.
+  ///
+  /// In en, this message translates to:
+  /// **'Your favourites'**
+  String get acctFavourites;
+
+  /// Reference: `acct.f.confirmNew`.
+  ///
+  /// In en, this message translates to:
+  /// **'Confirm new password'**
+  String get acctFieldConfirmNew;
+
+  /// Reference: `acct.f.current`.
+  ///
+  /// In en, this message translates to:
+  /// **'Current password'**
+  String get acctFieldCurrent;
+
+  /// Reference: `acct.f.displayName`.
+  ///
+  /// In en, this message translates to:
+  /// **'Display name'**
+  String get acctFieldDisplayName;
+
+  /// Reference: `acct.f.first`.
+  ///
+  /// In en, this message translates to:
+  /// **'First name'**
+  String get acctFieldFirst;
+
+  /// Reference: `acct.f.last`.
+  ///
+  /// In en, this message translates to:
+  /// **'Last name'**
+  String get acctFieldLast;
+
+  /// Reference: `acct.f.newEmail`.
+  ///
+  /// In en, this message translates to:
+  /// **'New email address'**
+  String get acctFieldNewEmail;
+
+  /// Reference: `acct.f.phone`.
+  ///
+  /// In en, this message translates to:
+  /// **'Phone'**
+  String get acctFieldPhone;
+
+  /// Reference: `acct.guestBadge`.
+  ///
+  /// In en, this message translates to:
+  /// **'Guest'**
+  String get acctGuestBadge;
+
+  /// Reference: `acct.guestEditNote`.
+  ///
+  /// In en, this message translates to:
+  /// **'This name is kept on this device. Creating an account brings it with you.'**
+  String get acctGuestEditNote;
+
+  /// Reference: `acct.guestNotifText`.
+  ///
+  /// In en, this message translates to:
+  /// **'Alerts belong to this device while you’re a guest. Signing in never shows you another account’s notifications.'**
+  String get acctGuestNotifText;
+
+  /// Reference: `acct.guestNotifTitle`.
+  ///
+  /// In en, this message translates to:
+  /// **'Notifications on this device'**
+  String get acctGuestNotifTitle;
+
+  /// Reference: `acct.guestText`.
+  ///
+  /// In en, this message translates to:
+  /// **'You’re using Lume as a guest. Everything you’ve set up is saved on this device.'**
+  String get acctGuestText;
+
+  /// Reference: `acct.guestTitle`.
+  ///
+  /// In en, this message translates to:
+  /// **'Welcome to Lume'**
+  String get acctGuestTitle;
+
+  /// Reference: `acct.guestWhy`.
+  ///
+  /// In en, this message translates to:
+  /// **'Create an account to'**
+  String get acctGuestWhy;
+
+  /// Reference: `acct.guestWhy1`.
+  ///
+  /// In en, this message translates to:
+  /// **'keep your Lume across devices'**
+  String get acctGuestWhy1;
+
+  /// Reference: `acct.guestWhy2`.
+  ///
+  /// In en, this message translates to:
+  /// **'recover your settings if you lose this phone'**
+  String get acctGuestWhy2;
+
+  /// Reference: `acct.guestWhy3`.
+  ///
+  /// In en, this message translates to:
+  /// **'use account-based features as they arrive'**
+  String get acctGuestWhy3;
+
+  /// Reference: `acct.helpContact`.
+  ///
+  /// In en, this message translates to:
+  /// **'Send feedback'**
+  String get acctHelpContact;
+
+  /// Reference: `acct.helpText`.
+  ///
+  /// In en, this message translates to:
+  /// **'Lume is a single-screen product: everything is one or two taps from Home.'**
+  String get acctHelpText;
+
+  /// Reference: `acct.helpTitle`.
+  ///
+  /// In en, this message translates to:
+  /// **'Help'**
+  String get acctHelpTitle;
+
+  /// Reference: `acct.helpTour`.
+  ///
+  /// In en, this message translates to:
+  /// **'Replay the welcome tour'**
+  String get acctHelpTour;
+
+  /// Reference: `acct.languageNote`.
+  ///
+  /// In en, this message translates to:
+  /// **'Changing the language never changes anything you wrote.'**
+  String get acctLanguageNote;
+
+  /// Reference: `acct.languageTitle`.
+  ///
+  /// In en, this message translates to:
+  /// **'Language'**
+  String get acctLanguageTitle;
+
+  /// Reference: `acct.lastSeen`.
+  ///
+  /// In en, this message translates to:
+  /// **'Last seen {when}'**
+  String acctLastSeen(String when);
+
+  /// Reference: `acct.loggedOut`.
+  ///
+  /// In en, this message translates to:
+  /// **'Signed out'**
+  String get acctLoggedOut;
+
+  /// Reference: `acct.logoutText`.
+  ///
+  /// In en, this message translates to:
+  /// **'You’ll need to sign in again to reach your account. Everything on this device stays where it is.'**
+  String get acctLogoutText;
+
+  /// Reference: `acct.logoutTitle`.
+  ///
+  /// In en, this message translates to:
+  /// **'Log out?'**
+  String get acctLogoutTitle;
+
+  /// Reference: `acct.memberSince`.
+  ///
+  /// In en, this message translates to:
+  /// **'Member since {date}'**
+  String acctMemberSince(String date);
+
+  /// Reference: `acct.nameNote`.
+  ///
+  /// In en, this message translates to:
+  /// **'This is the name Lume greets you with.'**
+  String get acctNameNote;
+
+  /// Reference: `acct.noFavourites`.
+  ///
+  /// In en, this message translates to:
+  /// **'Nothing saved yet'**
+  String get acctNoFavourites;
+
+  /// Reference: `acct.noFavouritesText`.
+  ///
+  /// In en, this message translates to:
+  /// **'Tap the star on any tool and it lands here.'**
+  String get acctNoFavouritesText;
+
+  /// Reference: `acct.noOtherDevices`.
+  ///
+  /// In en, this message translates to:
+  /// **'No other devices are signed in.'**
+  String get acctNoOtherDevices;
+
+  /// Reference: `acct.nothingChanged`.
+  ///
+  /// In en, this message translates to:
+  /// **'Nothing to save yet'**
+  String get acctNothingChanged;
+
+  /// Reference: `acct.personalTitle`.
+  ///
+  /// In en, this message translates to:
+  /// **'Personal information'**
+  String get acctPersonalTitle;
+
+  /// Reference: `acct.phoneNote`.
+  ///
+  /// In en, this message translates to:
+  /// **'Optional. Stored on this device.'**
+  String get acctPhoneNote;
+
+  /// Reference: `acct.phoneSaved`.
+  ///
+  /// In en, this message translates to:
+  /// **'Phone number saved'**
+  String get acctPhoneSaved;
+
+  /// Reference: `acct.phoneScope`.
+  ///
+  /// In en, this message translates to:
+  /// **'What this is for'**
+  String get acctPhoneScope;
+
+  /// Reference: `acct.phoneScopeText`.
+  ///
+  /// In en, this message translates to:
+  /// **'Kept on this device so a tool can offer it. Lume has no phone sign-in or phone recovery, so it does nothing else.'**
+  String get acctPhoneScopeText;
+
+  /// Reference: `acct.phoneTitle`.
+  ///
+  /// In en, this message translates to:
+  /// **'Phone number'**
+  String get acctPhoneTitle;
+
+  /// Reference: `acct.photo`.
+  ///
+  /// In en, this message translates to:
+  /// **'Profile photo'**
+  String get acctPhoto;
+
+  /// Reference: `acct.photoAdd`.
+  ///
+  /// In en, this message translates to:
+  /// **'Add photo'**
+  String get acctPhotoAdd;
+
+  /// Reference: `acct.photoNote`.
+  ///
+  /// In en, this message translates to:
+  /// **'Optional. Stored on this device.'**
+  String get acctPhotoNote;
+
+  /// Reference: `acct.photoRemove`.
+  ///
+  /// In en, this message translates to:
+  /// **'Remove photo'**
+  String get acctPhotoRemove;
+
+  /// Reference: `acct.photoReplace`.
+  ///
+  /// In en, this message translates to:
+  /// **'Replace photo'**
+  String get acctPhotoReplace;
+
+  /// Reference: `acct.prefsTitle`.
+  ///
+  /// In en, this message translates to:
+  /// **'Preferences'**
+  String get acctPrefsTitle;
+
+  /// Reference: `acct.privacyAnalytics`.
+  ///
+  /// In en, this message translates to:
+  /// **'Usage analytics'**
+  String get acctPrivacyAnalytics;
+
+  /// Reference: `acct.privacyAnalyticsSub`.
+  ///
+  /// In en, this message translates to:
+  /// **'Lume collects none. There is nothing to turn off.'**
+  String get acctPrivacyAnalyticsSub;
+
+  /// Reference: `acct.privacyPersonal`.
+  ///
+  /// In en, this message translates to:
+  /// **'Personalisation'**
+  String get acctPrivacyPersonal;
+
+  /// Reference: `acct.privacyPersonalSub`.
+  ///
+  /// In en, this message translates to:
+  /// **'Use what you do in Lume to order what you see'**
+  String get acctPrivacyPersonalSub;
+
+  /// Reference: `acct.privacyPreview`.
+  ///
+  /// In en, this message translates to:
+  /// **'Notification previews'**
+  String get acctPrivacyPreview;
+
+  /// Reference: `acct.privacyPreviewSub`.
+  ///
+  /// In en, this message translates to:
+  /// **'Show the content of an alert on the lock screen'**
+  String get acctPrivacyPreviewSub;
+
+  /// Reference: `acct.privacySensitive`.
+  ///
+  /// In en, this message translates to:
+  /// **'Sensitive content in previews'**
+  String get acctPrivacySensitive;
+
+  /// Reference: `acct.privacySensitiveSub`.
+  ///
+  /// In en, this message translates to:
+  /// **'Health, money and documents stay hidden until opened'**
+  String get acctPrivacySensitiveSub;
+
+  /// Reference: `acct.privacyTitle`.
+  ///
+  /// In en, this message translates to:
+  /// **'Privacy'**
+  String get acctPrivacyTitle;
+
+  /// Reference: `n.push.ask`.
+  ///
+  /// In en, this message translates to:
+  /// **'Not asked yet'**
+  String get acctPushAsk;
+
+  /// Reference: `n.push.denied`.
+  ///
+  /// In en, this message translates to:
+  /// **'Blocked in your browser settings'**
+  String get acctPushDenied;
+
+  /// Reference: `n.push.deniedHelp`.
+  ///
+  /// In en, this message translates to:
+  /// **'Notifications are blocked. Allow them in your browser’s site settings.'**
+  String get acctPushDeniedHelp;
+
+  /// Reference: `n.push.granted`.
+  ///
+  /// In en, this message translates to:
+  /// **'Allowed by your browser'**
+  String get acctPushGranted;
+
+  /// Reference: `n.push.off`.
+  ///
+  /// In en, this message translates to:
+  /// **'Off'**
+  String get acctPushOff;
+
+  /// Reference: `n.push.on`.
+  ///
+  /// In en, this message translates to:
+  /// **'On'**
+  String get acctPushOn;
+
+  /// Reference: `n.push.thanks`.
+  ///
+  /// In en, this message translates to:
+  /// **'Notifications are on'**
+  String get acctPushThanks;
+
+  /// Reference: `n.push.unsupported`.
+  ///
+  /// In en, this message translates to:
+  /// **'This device can’t show push notifications'**
+  String get acctPushUnsupported;
+
+  /// Reference: `acct.pw.strengthLabel`.
+  ///
+  /// In en, this message translates to:
+  /// **'Strength'**
+  String get acctPwStrengthLabel;
+
+  /// Reference: `acct.regionChange`.
+  ///
+  /// In en, this message translates to:
+  /// **'Change country or city'**
+  String get acctRegionChange;
+
+  /// Reference: `acct.regionTitle`.
+  ///
+  /// In en, this message translates to:
+  /// **'Region & currency'**
+  String get acctRegionTitle;
+
+  /// Reference: `acct.regionWarn`.
+  ///
+  /// In en, this message translates to:
+  /// **'Changing your region may update your currency, markets, holidays, emergency numbers and local services.'**
+  String get acctRegionWarn;
+
+  /// Reference: `acct.row.about`.
+  ///
+  /// In en, this message translates to:
+  /// **'About Lume'**
+  String get acctRowAbout;
+
+  /// Reference: `acct.row.aboutSub`.
+  ///
+  /// In en, this message translates to:
+  /// **'Version, licences and credits'**
+  String get acctRowAboutSub;
+
+  /// Reference: `acct.row.appearance`.
+  ///
+  /// In en, this message translates to:
+  /// **'Appearance'**
+  String get acctRowAppearance;
+
+  /// Reference: `acct.row.appearanceSub`.
+  ///
+  /// In en, this message translates to:
+  /// **'Light, dark or follow your system'**
+  String get acctRowAppearanceSub;
+
+  /// Reference: `acct.row.help`.
+  ///
+  /// In en, this message translates to:
+  /// **'Help'**
+  String get acctRowHelp;
+
+  /// Reference: `acct.row.helpSub`.
+  ///
+  /// In en, this message translates to:
+  /// **'Answers, and a way to reach us'**
+  String get acctRowHelpSub;
+
+  /// Reference: `acct.row.interests`.
+  ///
+  /// In en, this message translates to:
+  /// **'Your interests'**
+  String get acctRowInterests;
+
+  /// Reference: `acct.row.interestsSub`.
+  ///
+  /// In en, this message translates to:
+  /// **'Shapes your home, tools and reading'**
+  String get acctRowInterestsSub;
+
+  /// Reference: `acct.row.language`.
+  ///
+  /// In en, this message translates to:
+  /// **'Language'**
+  String get acctRowLanguage;
+
+  /// Reference: `acct.row.library`.
+  ///
+  /// In en, this message translates to:
+  /// **'Your library'**
+  String get acctRowLibrary;
+
+  /// Reference: `acct.row.librarySub`.
+  ///
+  /// In en, this message translates to:
+  /// **'Saved reads, notes and favourites'**
+  String get acctRowLibrarySub;
+
+  /// Reference: `acct.row.notificationsSub`.
+  ///
+  /// In en, this message translates to:
+  /// **'Push alerts, in-app updates and quiet hours'**
+  String get acctRowNotificationsSub;
+
+  /// Reference: `acct.row.personal`.
+  ///
+  /// In en, this message translates to:
+  /// **'Personal information'**
+  String get acctRowPersonal;
+
+  /// Reference: `acct.row.personalSub`.
+  ///
+  /// In en, this message translates to:
+  /// **'Name, email, phone and region'**
+  String get acctRowPersonalSub;
+
+  /// Reference: `acct.row.preferences`.
+  ///
+  /// In en, this message translates to:
+  /// **'Preferences'**
+  String get acctRowPreferences;
+
+  /// Reference: `acct.row.preferencesSub`.
+  ///
+  /// In en, this message translates to:
+  /// **'Language, currency, units and time'**
+  String get acctRowPreferencesSub;
+
+  /// Reference: `acct.row.privacy`.
+  ///
+  /// In en, this message translates to:
+  /// **'Privacy'**
+  String get acctRowPrivacy;
+
+  /// Reference: `acct.row.privacySub`.
+  ///
+  /// In en, this message translates to:
+  /// **'What Lume shows, keeps and shares'**
+  String get acctRowPrivacySub;
+
+  /// Reference: `acct.row.region`.
+  ///
+  /// In en, this message translates to:
+  /// **'Region & currency'**
+  String get acctRowRegion;
+
+  /// Reference: `acct.row.regionSub`.
+  ///
+  /// In en, this message translates to:
+  /// **'Country, city and the services that follow them'**
+  String get acctRowRegionSub;
+
+  /// Reference: `acct.row.security`.
+  ///
+  /// In en, this message translates to:
+  /// **'Security'**
+  String get acctRowSecurity;
+
+  /// Reference: `acct.row.securitySub`.
+  ///
+  /// In en, this message translates to:
+  /// **'Password, sessions and account protection'**
+  String get acctRowSecuritySub;
+
+  /// Reference: `acct.row.sync`.
+  ///
+  /// In en, this message translates to:
+  /// **'Data & sync'**
+  String get acctRowSync;
+
+  /// Reference: `acct.row.syncSub`.
+  ///
+  /// In en, this message translates to:
+  /// **'Where each part of your Lume is stored'**
+  String get acctRowSyncSub;
+
+  /// Reference: `acct.row.tour`.
+  ///
+  /// In en, this message translates to:
+  /// **'Replay the welcome tour'**
+  String get acctRowTour;
+
+  /// Reference: `acct.row.tourSub`.
+  ///
+  /// In en, this message translates to:
+  /// **'A quick reminder of what’s here'**
+  String get acctRowTourSub;
+
+  /// Reference: `acct.saveChanges`.
+  ///
+  /// In en, this message translates to:
+  /// **'Save changes'**
+  String get acctSaveChanges;
+
+  /// Reference: `acct.securityScope`.
+  ///
+  /// In en, this message translates to:
+  /// **'What Lume protects'**
+  String get acctSecurityScope;
+
+  /// Reference: `acct.securityScopeText`.
+  ///
+  /// In en, this message translates to:
+  /// **'Your password and your signed-in devices. There is no two-factor or biometric unlock in this build, so nothing here claims otherwise.'**
+  String get acctSecurityScopeText;
+
+  /// Reference: `acct.securityTitle`.
+  ///
+  /// In en, this message translates to:
+  /// **'Security'**
+  String get acctSecurityTitle;
+
+  /// Reference: `acct.sessionsSub`.
+  ///
+  /// In en, this message translates to:
+  /// **'{n, plural, =1{1 signed in} other{{n} signed in}}'**
+  String acctSessionsSub(int n);
+
+  /// Reference: `acct.sessionsTitle`.
+  ///
+  /// In en, this message translates to:
+  /// **'Active sessions'**
+  String get acctSessionsTitle;
+
+  /// Reference: `acct.signOut`.
+  ///
+  /// In en, this message translates to:
+  /// **'Log out'**
+  String get acctSignOut;
+
+  /// Reference: `acct.signOutDevice`.
+  ///
+  /// In en, this message translates to:
+  /// **'Sign out'**
+  String get acctSignOutDevice;
+
+  /// Reference: `acct.signOutOthers`.
+  ///
+  /// In en, this message translates to:
+  /// **'Sign out all other devices'**
+  String get acctSignOutOthers;
+
+  /// Reference: `acct.signOutOthersText`.
+  ///
+  /// In en, this message translates to:
+  /// **'Every other signed-in device will need to sign in again.'**
+  String get acctSignOutOthersText;
+
+  /// Reference: `acct.signedInAs`.
+  ///
+  /// In en, this message translates to:
+  /// **'Signed in as {email}'**
+  String acctSignedInAs(String email);
+
+  /// Reference: `acct.signedOutOthers`.
+  ///
+  /// In en, this message translates to:
+  /// **'{n, plural, =1{Signed out 1 other device} other{Signed out {n} other devices}}'**
+  String acctSignedOutOthers(int n);
+
+  /// Reference: `acct.since`.
+  ///
+  /// In en, this message translates to:
+  /// **'Member since'**
+  String get acctSince;
+
+  /// Reference: `acct.status`.
+  ///
+  /// In en, this message translates to:
+  /// **'Account status'**
+  String get acctStatus;
+
+  /// Reference: `acct.statusActive`.
+  ///
+  /// In en, this message translates to:
+  /// **'Active'**
+  String get acctStatusActive;
+
+  /// Reference: `acct.statusLocked`.
+  ///
+  /// In en, this message translates to:
+  /// **'Locked'**
+  String get acctStatusLocked;
+
+  /// Reference: `acct.support`.
+  ///
+  /// In en, this message translates to:
+  /// **'Support'**
+  String get acctSupport;
+
+  /// Reference: `acct.syncDevice`.
+  ///
+  /// In en, this message translates to:
+  /// **'Stored on this device'**
+  String get acctSyncDevice;
+
+  /// Reference: `acct.syncNone`.
+  ///
+  /// In en, this message translates to:
+  /// **'Nothing syncs yet. Lume has no server in this build, so everything above stays on this device — including your account.'**
+  String get acctSyncNone;
+
+  /// Reference: `acct.syncSynced`.
+  ///
+  /// In en, this message translates to:
+  /// **'Synced to your account'**
+  String get acctSyncSynced;
+
+  /// Reference: `acct.syncTitle`.
+  ///
+  /// In en, this message translates to:
+  /// **'Data & sync'**
+  String get acctSyncTitle;
+
+  /// Reference: `acct.themeSwitched`.
+  ///
+  /// In en, this message translates to:
+  /// **'Appearance: {mode}'**
+  String acctThemeSwitched(String mode);
+
+  /// Reference: `acct.thisDevice`.
+  ///
+  /// In en, this message translates to:
+  /// **'This device'**
+  String get acctThisDevice;
+
+  /// Reference: `acct.timeTitle`.
+  ///
+  /// In en, this message translates to:
+  /// **'Time & timezone'**
+  String get acctTimeTitle;
+
+  /// Reference: `acct.timezoneAuto`.
+  ///
+  /// In en, this message translates to:
+  /// **'Follow this device'**
+  String get acctTimezoneAuto;
+
+  /// Reference: `acct.timezoneFollowRegion`.
+  ///
+  /// In en, this message translates to:
+  /// **'Follow my region'**
+  String get acctTimezoneFollowRegion;
+
+  /// Reference: `acct.timezoneNote`.
+  ///
+  /// In en, this message translates to:
+  /// **'Markets, flights and trains always use their own timezone.'**
+  String get acctTimezoneNote;
+
+  /// Reference: `acct.timezoneTitle`.
+  ///
+  /// In en, this message translates to:
+  /// **'Time'**
+  String get acctTimezoneTitle;
+
+  /// Reference: `acct.unitsAuto`.
+  ///
+  /// In en, this message translates to:
+  /// **'Follow my region'**
+  String get acctUnitsAuto;
+
+  /// Reference: `acct.unitsImperial`.
+  ///
+  /// In en, this message translates to:
+  /// **'Imperial'**
+  String get acctUnitsImperial;
+
+  /// Reference: `acct.unitsMetric`.
+  ///
+  /// In en, this message translates to:
+  /// **'Metric'**
+  String get acctUnitsMetric;
+
+  /// Reference: `acct.unitsTitle`.
+  ///
+  /// In en, this message translates to:
+  /// **'Units'**
+  String get acctUnitsTitle;
+
+  /// Reference: `acct.version`.
+  ///
+  /// In en, this message translates to:
+  /// **'Version'**
+  String get acctVersion;
+
+  /// Reference: `acct.yourLume`.
+  ///
+  /// In en, this message translates to:
+  /// **'Your Lume'**
+  String get acctYourLume;
+
   /// Reference key a.add
   ///
   /// In en, this message translates to:
@@ -154,6 +1282,12 @@ abstract class AppLocalizations {
   /// **'Cancel'**
   String get actionCancel;
 
+  /// Reference: `a.change`.
+  ///
+  /// In en, this message translates to:
+  /// **'Change'**
+  String get actionChange;
+
   /// Reference key a.clear
   ///
   /// In en, this message translates to:
@@ -165,6 +1299,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Close'**
   String get actionClose;
+
+  /// Reference: `a.confirm`.
+  ///
+  /// In en, this message translates to:
+  /// **'Confirm'**
+  String get actionConfirm;
 
   /// Reference key a.continue
   ///
@@ -226,6 +1366,12 @@ abstract class AppLocalizations {
   /// **'Remove'**
   String get actionRemove;
 
+  /// Reference: `a.resend`.
+  ///
+  /// In en, this message translates to:
+  /// **'Resend'**
+  String get actionResend;
+
   /// Reference key a.save
   ///
   /// In en, this message translates to:
@@ -261,6 +1407,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Try again'**
   String get actionTryAgain;
+
+  /// Reference: `a.verify`.
+  ///
+  /// In en, this message translates to:
+  /// **'Verify'**
+  String get actionVerify;
 
   /// Reference key a.week
   ///
@@ -1077,6 +2229,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Optional'**
   String get commonOptional;
+
+  /// Reference: `a.or`.
+  ///
+  /// In en, this message translates to:
+  /// **'or'**
+  String get commonOr;
 
   /// Reference key common.overdue
   ///
@@ -2500,6 +3658,72 @@ abstract class AppLocalizations {
   /// **'Trains'**
   String get navTrains;
 
+  /// Reference: `ncat.documents`.
+  ///
+  /// In en, this message translates to:
+  /// **'Documents'**
+  String get ncatDocuments;
+
+  /// Reference: `ncat.faith`.
+  ///
+  /// In en, this message translates to:
+  /// **'Faith'**
+  String get ncatFaith;
+
+  /// Reference: `ncat.finance`.
+  ///
+  /// In en, this message translates to:
+  /// **'Money'**
+  String get ncatFinance;
+
+  /// Reference: `ncat.health`.
+  ///
+  /// In en, this message translates to:
+  /// **'Health'**
+  String get ncatHealth;
+
+  /// Reference: `ncat.markets`.
+  ///
+  /// In en, this message translates to:
+  /// **'Markets'**
+  String get ncatMarkets;
+
+  /// Reference: `ncat.news`.
+  ///
+  /// In en, this message translates to:
+  /// **'News'**
+  String get ncatNews;
+
+  /// Reference: `ncat.personal`.
+  ///
+  /// In en, this message translates to:
+  /// **'Personal'**
+  String get ncatPersonal;
+
+  /// Reference: `ncat.reminders`.
+  ///
+  /// In en, this message translates to:
+  /// **'Reminders'**
+  String get ncatReminders;
+
+  /// Reference: `ncat.system`.
+  ///
+  /// In en, this message translates to:
+  /// **'System'**
+  String get ncatSystem;
+
+  /// Reference: `ncat.travel`.
+  ///
+  /// In en, this message translates to:
+  /// **'Travel'**
+  String get ncatTravel;
+
+  /// Reference: `ncat.weather`.
+  ///
+  /// In en, this message translates to:
+  /// **'Weather'**
+  String get ncatWeather;
+
   /// Reference: a nearby place
   ///
   /// In en, this message translates to:
@@ -2932,6 +4156,90 @@ abstract class AppLocalizations {
   /// **'All countries'**
   String get persAllCountries;
 
+  /// Reference: `pers.appLanguage`.
+  ///
+  /// In en, this message translates to:
+  /// **'App language'**
+  String get persAppLanguage;
+
+  /// Reference: `pers.city`.
+  ///
+  /// In en, this message translates to:
+  /// **'City'**
+  String get persCity;
+
+  /// Reference: `pers.citySub`.
+  ///
+  /// In en, this message translates to:
+  /// **'Used for weather, local information and nearby places'**
+  String get persCitySub;
+
+  /// Reference: `pers.content`.
+  ///
+  /// In en, this message translates to:
+  /// **'Content'**
+  String get persContent;
+
+  /// Reference: `pers.country`.
+  ///
+  /// In en, this message translates to:
+  /// **'Country'**
+  String get persCountry;
+
+  /// Reference: `pers.countrySub`.
+  ///
+  /// In en, this message translates to:
+  /// **'Unlocks local services — nothing else'**
+  String get persCountrySub;
+
+  /// Reference: `pers.currency`.
+  ///
+  /// In en, this message translates to:
+  /// **'Currency'**
+  String get persCurrency;
+
+  /// Reference: `pers.currencyAuto`.
+  ///
+  /// In en, this message translates to:
+  /// **'Automatic ({code})'**
+  String persCurrencyAuto(String code);
+
+  /// Reference: `pers.dataSafe`.
+  ///
+  /// In en, this message translates to:
+  /// **'Changing any of this only changes what you see. Your notes, tasks and records stay exactly where they are.'**
+  String get persDataSafe;
+
+  /// Reference: `pers.finance`.
+  ///
+  /// In en, this message translates to:
+  /// **'Financial information'**
+  String get persFinance;
+
+  /// Reference: `pers.financeSub`.
+  ///
+  /// In en, this message translates to:
+  /// **'Rates, gold and markets'**
+  String get persFinanceSub;
+
+  /// Reference: `pers.formatting`.
+  ///
+  /// In en, this message translates to:
+  /// **'Language & formatting'**
+  String get persFormatting;
+
+  /// Reference: `pers.interests`.
+  ///
+  /// In en, this message translates to:
+  /// **'Your interests'**
+  String get persInterests;
+
+  /// Reference: `pers.interestsHint`.
+  ///
+  /// In en, this message translates to:
+  /// **'Pick at least {min}. They decide what fills your home screen.'**
+  String persInterestsHint(int min);
+
   /// Reference key pers.islamic
   ///
   /// In en, this message translates to:
@@ -2943,6 +4251,18 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Prayer times, Qur’an, duas, zakat and Ramadan'**
   String get persIslamicSub;
+
+  /// Reference: `pers.news`.
+  ///
+  /// In en, this message translates to:
+  /// **'News'**
+  String get persNews;
+
+  /// Reference: `pers.newsSub`.
+  ///
+  /// In en, this message translates to:
+  /// **'Headlines on Explore and Today'**
+  String get persNewsSub;
 
   /// Reference key pers.popular
   ///
@@ -2956,6 +4276,36 @@ abstract class AppLocalizations {
   /// **'Recent'**
   String get persRecent;
 
+  /// Reference: `pers.recos`.
+  ///
+  /// In en, this message translates to:
+  /// **'Recommendations'**
+  String get persRecos;
+
+  /// Reference: `pers.recosSub`.
+  ///
+  /// In en, this message translates to:
+  /// **'Suggest tools based on how you use Lume'**
+  String get persRecosSub;
+
+  /// Reference: `pers.region`.
+  ///
+  /// In en, this message translates to:
+  /// **'Region'**
+  String get persRegion;
+
+  /// Reference: `pers.savePrefs`.
+  ///
+  /// In en, this message translates to:
+  /// **'Save preferences'**
+  String get persSavePrefs;
+
+  /// Reference: `pers.saved`.
+  ///
+  /// In en, this message translates to:
+  /// **'Your app has been updated'**
+  String get persSaved;
+
   /// Reference key pers.searchCities
   ///
   /// In en, this message translates to:
@@ -2968,11 +4318,89 @@ abstract class AppLocalizations {
   /// **'Search countries'**
   String get persSearchCountries;
 
+  /// Reference: `pers.sport`.
+  ///
+  /// In en, this message translates to:
+  /// **'Sport'**
+  String get persSport;
+
+  /// Reference: `pers.sportSub`.
+  ///
+  /// In en, this message translates to:
+  /// **'Live cricket scores'**
+  String get persSportSub;
+
+  /// Reference: `pers.sub`.
+  ///
+  /// In en, this message translates to:
+  /// **'Change any of this whenever you like'**
+  String get persSub;
+
+  /// Reference: `pers.time12`.
+  ///
+  /// In en, this message translates to:
+  /// **'12-hour'**
+  String get persTime12;
+
+  /// Reference: `pers.time24`.
+  ///
+  /// In en, this message translates to:
+  /// **'24-hour'**
+  String get persTime24;
+
+  /// Reference: `pers.timeFormat`.
+  ///
+  /// In en, this message translates to:
+  /// **'Time'**
+  String get persTimeFormat;
+
+  /// Reference: `pers.title`.
+  ///
+  /// In en, this message translates to:
+  /// **'Personalisation'**
+  String get persTitle;
+
+  /// Reference: `pers.units`.
+  ///
+  /// In en, this message translates to:
+  /// **'Units'**
+  String get persUnits;
+
+  /// Reference: `pers.unitsAuto`.
+  ///
+  /// In en, this message translates to:
+  /// **'Automatic'**
+  String get persUnitsAuto;
+
+  /// Reference: `pers.unitsImperial`.
+  ///
+  /// In en, this message translates to:
+  /// **'Imperial'**
+  String get persUnitsImperial;
+
+  /// Reference: `pers.unitsMetric`.
+  ///
+  /// In en, this message translates to:
+  /// **'Metric'**
+  String get persUnitsMetric;
+
   /// Reference key pers.useLocation
   ///
   /// In en, this message translates to:
   /// **'Use my current location'**
   String get persUseLocation;
+
+  /// Reference: `pers.useLocationSub`.
+  ///
+  /// In en, this message translates to:
+  /// **'Optional — you can always set this by hand'**
+  String get persUseLocationSub;
+
+  /// Reference: `pers.whereYouAre`.
+  ///
+  /// In en, this message translates to:
+  /// **'Where you are'**
+  String get persWhereYouAre;
 
   /// Reference key prayer.asr
   ///
@@ -3003,6 +4431,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Maghrib'**
   String get prayerMaghrib;
+
+  /// Reference: `profile.sub`.
+  ///
+  /// In en, this message translates to:
+  /// **'Preferences and your saved things'**
+  String get profileSub;
 
   /// Reference key qa.docscan
   ///

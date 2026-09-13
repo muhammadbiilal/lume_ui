@@ -46,6 +46,11 @@ const LANG = args.lang || 'en';
 const DIR = args.dir || (LANG === 'en' ? 'ltr' : 'rtl');
 const SCREEN = args.screen || 'home';
 const STATE = args.state || 'default_pk';
+/* Profile renders three identity states and the profile store knows about
+   none of them: the account lives in `lume-accounts` / `lume-session`, which
+   is a different store with a different shape. `guest` is the absence of
+   both. */
+const ACCOUNT = args.account || 'guest';
 const SHOT = args.shot === '1' || args.shot === 'true';
 const SHOTS = resolve(args.shots || 'docs/conversion_archive/shots/destinations');
 /* How far down the active screen is scrolled before anything is read. The
@@ -70,6 +75,46 @@ const base = {
   method: 'MWL', interests: DEFAULTS.slice(),
   prefs: { news: true, cricket: true, finance: true, recos: true },
   recents: [], favourites: [], market: null, recentCountries: [],
+};
+
+/* One device, so "Active sessions" lists this browser once rather than once
+   per capture, and one account, created far enough back that "member since"
+   has a year worth printing. No digest worth the name: nothing signs in
+   during a measurement, and a capture must not carry a credential. */
+const DEVICE = 'dev-measure';
+const ACCOUNT_EMAIL = 'amina@example.com';
+const MEASURE_USER = {
+  id: 'usr-measure',
+  email: ACCOUNT_EMAIL,
+  displayName: 'Amina Rahman',
+  firstName: 'Amina',
+  lastName: 'Rahman',
+  phone: '',
+  photo: '',
+  digest: '',
+  createdAt: new Date(2024, 2, 18, 9, 12).getTime(),
+  status: 'active',
+  emailVerified: true,
+  pendingEmail: '',
+  twoFactor: false,
+  sessions: [
+    {
+      id: DEVICE,
+      label: 'This device',
+      place: 'Islamabad, PK',
+      created: new Date(2024, 2, 18, 9, 12).getTime(),
+      lastSeen: new Date(2026, 8, 7, 16, 30).getTime(),
+    },
+  ],
+};
+
+/* §124.14 — an account with no name is a real state, and the one that gets
+   the invitation to complete itself. The address is the identity. */
+const NAMELESS_USER = {
+  ...MEASURE_USER,
+  displayName: '',
+  firstName: '',
+  lastName: '',
 };
 
 const STATES = {
@@ -171,16 +216,21 @@ const PROFILE_TARGETS = {
   'phead.meta': '#screen-profile .phead__meta',
   'phead.acts': '#screen-profile .phead__acts',
   'guestwhy': '#screen-profile .guestwhy',
-  'group.lume': '#screen-profile #sect-lume',
+  'phead.complete': '#screen-profile [data-sect="identity"] .notecard',
+  'phead.completecta': '#screen-profile [data-sect="identity"] .btnrow',
+  'group.lume': '#screen-profile [data-sect="lume"]',
   'group.label': '#screen-profile .group-label',
+  'group.list': '#screen-profile [data-sect="lume"] .list',
   'srow': '#screen-profile .list-row',
   'srow.icon': '#screen-profile .list-row__icon',
   'srow.title': '#screen-profile .list-row__title',
   'srow.sub': '#screen-profile .list-row__sub',
   'srow.value': '#screen-profile .srow__value',
-  'group.account': '#screen-profile #sect-account',
-  'group.support': '#screen-profile #sect-support',
+  'srow.chev': '#screen-profile .list-row__end .ico',
+  'group.account': '#screen-profile [data-sect="account"]',
+  'group.support': '#screen-profile [data-sect="support"]',
   'session': '#screen-profile [data-sect="session"]',
+  'session.row': '#screen-profile [data-sect="session"] .list-row',
   'version': '#screen-profile .meta',
   'shell.tabbar': '.tabbar',
 };
@@ -460,11 +510,31 @@ const FREEZE = `
 })();
 `;
 
-const DRIVER = (profile, screen, after) => FREEZE + `
+const DRIVER = (profile, screen, after, account) => FREEZE + `
 (function () {
   try {
     localStorage.setItem('lume-onboarded', '1');
     localStorage.setItem('lume-profile', ${JSON.stringify(JSON.stringify(profile))});
+    var acct = ${JSON.stringify(account)};
+    if (acct !== 'guest') {
+      localStorage.setItem('lume-device', ${JSON.stringify(DEVICE)});
+      localStorage.setItem('lume-accounts', acct === 'noname'
+        ? ${JSON.stringify(
+            JSON.stringify({ [ACCOUNT_EMAIL]: NAMELESS_USER }),
+          )}
+        : ${JSON.stringify(
+            JSON.stringify({ [ACCOUNT_EMAIL]: MEASURE_USER }),
+          )});
+      localStorage.setItem('lume-session', JSON.stringify({
+        email: ${JSON.stringify(ACCOUNT_EMAIL)},
+        token: 'tok-measure',
+        issued: Date.now() - 86400000,
+        /* An expired session is a session, not a missing one: the record
+           stays and only the expiry moves behind us. */
+        expires: acct === 'expired' ? Date.now() - 1000 : Date.now() + 86400000 * 29,
+        device: ${JSON.stringify(DEVICE)}
+      }));
+    }
   } catch (e) {}
 
   function wait(ms) { return new Promise(function (r) { setTimeout(r, ms); }); }
@@ -596,7 +666,7 @@ async function main() {
     profile: PROFILE_TARGETS,
   }[SCREEN] || HOME_TARGETS;
 
-  const work = stage(DRIVER(profile, SCREEN, AFTER[args.after] || ''));
+  const work = stage(DRIVER(profile, SCREEN, AFTER[args.after] || '', ACCOUNT));
   const server = spawn(process.execPath, ['scripts/serve.js'], {
     cwd: work,
     env: { ...process.env, PORT: String(PORT) },
@@ -1004,9 +1074,13 @@ async function main() {
     })()`);
 
     mkdirSync(OUT, { recursive: true });
+    /* The account is part of the cell's identity: `profile_default_pk` is a
+       guest, and the same profile signed in is a different screen. */
+    const SUFFIX =
+      `${STATE}${ACCOUNT === 'guest' ? '' : '_' + ACCOUNT}` +
+      `${args.after ? '_' + args.after : ''}`;
     const cell =
-      `${SCREEN}_${STATE}${args.after ? '_' + args.after : ''}` +
-      `${SCROLL ? '_s' + SCROLL : ''}` +
+      `${SCREEN}_${SUFFIX}${SCROLL ? '_s' + SCROLL : ''}` +
       `_${WIDTH}x${HEIGHT}_${THEME}_${LANG}`;
 
     if (SHOT) {
@@ -1014,10 +1088,7 @@ async function main() {
         format: 'png',
         captureBeyondViewport: false,
       });
-      const dir = join(
-        SHOTS,
-        `${SCREEN}_${STATE}${args.after ? '_' + args.after : ''}`,
-      );
+      const dir = join(SHOTS, `${SCREEN}_${SUFFIX}`);
       mkdirSync(dir, { recursive: true });
       writeFileSync(join(dir, `${cell}.web.png`), Buffer.from(shot.data, 'base64'));
     }
@@ -1029,6 +1100,7 @@ async function main() {
           cell,
           screen: SCREEN,
           state: STATE,
+          account: ACCOUNT,
           after: args.after || null,
           profile: { country: profile.country, city: profile.city,
                      islamic: profile.islamic, interests: profile.interests,

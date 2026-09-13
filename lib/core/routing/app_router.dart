@@ -50,6 +50,9 @@ import '../../features/gallery/presentation/gallery_screen.dart';
 import '../../features/explore/presentation/explore_host.dart';
 import '../../features/home/presentation/home_host.dart';
 import '../../features/today/presentation/today_host.dart';
+import '../../features/account/domain/account_model.dart';
+import '../../features/account/presentation/account_host.dart';
+import '../../features/account/presentation/profile_host.dart';
 import '../../features/trains/presentation/trains_host.dart';
 import '../../features/tools/presentation/tools_host.dart';
 import '../../features/gallery/presentation/navigation_gallery.dart';
@@ -61,7 +64,6 @@ import '../../features/startup/application/startup_controller.dart';
 import '../../features/startup/domain/startup_state.dart';
 import '../../features/startup/presentation/splash_screen.dart';
 import '../../l10n/app_localizations.dart';
-import '../icons/lume_icons.dart';
 import '../navigation/lume_destination.dart';
 import '../navigation/lume_shell.dart';
 import 'lume_routes.dart';
@@ -276,14 +278,37 @@ List<RouteBase> _nestedRoutes(LumeDestinationId branch) {
         backLabel: AppLocalizations.of(context).actionBack,
       ),
     ),
+    // The account host, and the alias that reaches it.
+    //
+    // `/…/account` is not a screen: `ui/account-ui.js` has no landing page,
+    // and every entry point names a route. It resolves to `prefs`, which is
+    // where the page head's own control goes, so a link to the bare path lands
+    // somewhere real rather than on an empty host.
     GoRoute(
       path: LumeRoutes.accountSegment,
-      builder: (BuildContext context, GoRouterState state) => LumeFixtureScreen(
-        title: AppLocalizations.of(context).navAccount,
-        storageId: '${branch.name}/account',
-        onBack: () => context.go(root),
-        backLabel: AppLocalizations.of(context).actionBack,
-      ),
+      redirect: (BuildContext context, GoRouterState state) =>
+          LumeRoutes.accountRoute(root, LumeAccountRoute.prefs.segment),
+    ),
+    GoRoute(
+      path: '${LumeRoutes.accountSegment}/:${LumeRoutes.accountRouteParam}',
+      builder: (BuildContext context, GoRouterState state) {
+        final LumeAccountRoute? route = LumeAccountRoute.parse(
+          state.pathParameters[LumeRoutes.accountRouteParam],
+        );
+        // A segment the enum does not know is not a route. The same refusal
+        // an unknown tool gets, for the same reason: "there is no such thing"
+        // and "you may not have this" must not be distinguishable.
+        if (route == null) {
+          final AppLocalizations l = AppLocalizations.of(context);
+          return LumeMessageScreen(
+            title: l.toolUnavailableTitle,
+            text: l.toolUnavailableText,
+            actionLabel: l.actionBack,
+            onAction: () => context.go(root),
+          );
+        }
+        return LumeAccountHost(branch: root, route: route);
+      },
     ),
     GoRoute(
       path: LumeRoutes.unavailableSegment,
@@ -376,11 +401,11 @@ const String _navigationGallerySegment = 'navigation-gallery';
 
 /// A branch root.
 ///
-/// Home, the Tools hub, Today, Explore and Trains are the product; Profile is
-/// still the F3 fixture that proved the shell, and it is replaced by its own
-/// screen in turn.
+/// All six destinations are the product now. The F3 fixture that proved the
+/// shell is gone from this path entirely: there is no fall-through, and the
+/// switch is exhaustive, so a destination added later cannot quietly render a
+/// placeholder.
 Widget _destination(BuildContext context, LumeDestinationId id) {
-  final AppLocalizations l = AppLocalizations.of(context);
   final String root = id.path;
 
   switch (id) {
@@ -395,54 +420,8 @@ Widget _destination(BuildContext context, LumeDestinationId id) {
     case LumeDestinationId.trains:
       return LumeTrainsHost(branch: root);
     case LumeDestinationId.profile:
-      break;
+      return LumeProfileHost(branch: root);
   }
-
-  return LumeFixtureScreen(
-    title: destinationLabel(l, id),
-    storageId: id.name,
-    links: <LumeFixtureLink>[
-      LumeFixtureLink(
-        label: l.actionSearch,
-        icon: LumeIcons.search,
-        onTap: () => context.go(LumeRoutes.search(root)),
-      ),
-      LumeFixtureLink(
-        label: l.navNotifications,
-        icon: LumeIcons.bell,
-        onTap: () => context.go(LumeRoutes.notifications(root)),
-      ),
-      LumeFixtureLink(
-        label: l.navTools,
-        icon: LumeIcons.grid,
-        onTap: () =>
-            context.go(LumeRoutes.tool(root, LumeFixtureTool.ready.name)),
-      ),
-      LumeFixtureLink(
-        label: l.commonHistory,
-        icon: LumeIcons.list,
-        onTap: () =>
-            context.go(LumeRoutes.records(root, LumeFixtureTool.records.name)),
-      ),
-      LumeFixtureLink(
-        label: l.navAccount,
-        icon: LumeIcons.user,
-        onTap: () => context.go(LumeRoutes.account(root)),
-      ),
-      if (id == LumeDestinationId.profile) ...<LumeFixtureLink>[
-        LumeFixtureLink(
-          label: l.appTagline,
-          icon: LumeIcons.sparkles,
-          onTap: () => context.go('$root/$_gallerySegment'),
-        ),
-        LumeFixtureLink(
-          label: l.a11yMainNavigation,
-          icon: LumeIcons.compass,
-          onTap: () => context.go('$root/$_navigationGallerySegment'),
-        ),
-      ],
-    ],
-  );
 }
 
 /// A tool screen, behind the catalogue's own gate.

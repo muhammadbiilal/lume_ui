@@ -69,9 +69,19 @@ class LumeAccountIdentity {
   /// code is accepted.
   final String? pendingEmail;
 
-  /// First and last together, or empty. Never assembled from the address.
-  String get fullName =>
-      <String>[firstName, lastName].where((String s) => s.isNotEmpty).join(' ');
+  /// The name Lume has, or empty. **Never assembled from the address.**
+  ///
+  /// `account.js`'s own order: a display name if there is one, otherwise
+  /// first and last together. An account with neither has no name, and the
+  /// screens that show one say the address instead rather than inventing it.
+  String get fullName {
+    final String shown = displayName.trim();
+    if (shown.isNotEmpty) return shown;
+    return <String>[
+      firstName,
+      lastName,
+    ].where((String s) => s.trim().isNotEmpty).join(' ').trim();
+  }
 
   /// Up to two letters from a *real* name — never invented from an address.
   ///

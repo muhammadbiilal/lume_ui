@@ -13,7 +13,7 @@ A text heading's **width** is recorded rather than asserted: the prototype's
 `.section__head > div` shrink-wraps to its longest line and the Flutter heading
 fills its column. Both start at the same x and render on the same baselines.
 
-**323 values compared, tolerance 1 logical pixel.**
+**483 values compared, tolerance 1 logical pixel.**
 
 
 ### Home · not Muslim, Pakistan
@@ -342,6 +342,181 @@ fills its column. Both start at the same x and render on the same baselines.
 | `nearby.row` | width | 348.00 | 348.00 | = | cumulative line-box rounding (D20) |
 | `nearby.row` | height | 61.00 | 61.00 | = | cumulative line-box rounding (D20) |
 | `score` | — | — | — | — | hidden in the prototype |
+
+### Profile · a guest
+
+| element | axis | prototype | Flutter | Δ | note |
+|---|---|---|---|---|---|
+| `pagehead` | y | 0.00 | 0.00 | = |  |
+| `pagehead` | x | 0.00 | 0.00 | = |  |
+| `pagehead` | width | 390.00 | 390.00 | = |  |
+| `pagehead` | height | 67.00 | 67.00 | = |  |
+| `pagehead.prefs` | y | 12.00 | 12.00 | = |  |
+| `pagehead.prefs` | x | 332.00 | 332.00 | = |  |
+| `pagehead.prefs` | width | 38.00 | 38.00 | = |  |
+| `pagehead.prefs` | height | 38.00 | 38.00 | = |  |
+| `phead` | y | 91.00 | 91.00 | = | cumulative line-box rounding (D20) |
+| `phead` | x | 20.00 | 20.00 | = | cumulative line-box rounding (D20) |
+| `phead` | width | 350.00 | 350.00 | = | cumulative line-box rounding (D20) |
+| `phead` | height | 459.50 | 461.00 | 1.50 | cumulative line-box rounding (D20) |
+| `phead.avatar` | y | 112.00 | 112.00 | = |  |
+| `phead.avatar` | x | 157.00 | 157.00 | = |  |
+| `phead.avatar` | width | 76.00 | 76.00 | = |  |
+| `phead.avatar` | height | 76.00 | 76.00 | = |  |
+| `phead.name` | y | 198.00 | 198.00 | = | a centred line fills its column on both sides |
+| `phead.name` | x | 39.00 | 39.00 | = | a centred line fills its column on both sides |
+| `phead.name` | width | 312.00 | 312.00 | = | a centred line fills its column on both sides |
+| `phead.name` | height | 24.00 | 24.00 | = | a centred line fills its column on both sides |
+| `phead.acts` | y | 430.50 | 432.00 | 1.50 | the first action, after the guest card’s D20 rounding |
+| `phead.acts` | x | 39.00 | 39.00 | = | the first action, after the guest card’s D20 rounding |
+| `phead.acts` | width | 312.00 | 312.00 | = | the first action, after the guest card’s D20 rounding |
+| `phead.acts` | height | 101.00 | 46.00 | -55.00 | the first action, after the guest card’s D20 rounding |
+| `phead.meta` | y | 264.00 | 264.00 | = | a centred wrap is as wide as its runs on both sides |
+| `phead.meta` | x | 172.42 | 172.43 | 0.01 | a centred wrap is as wide as its runs on both sides |
+| `phead.meta` | width | 45.16 | 45.15 | -0.01 | a centred wrap is as wide as its runs on both sides |
+| `phead.meta` | height | 21.00 | 21.00 | = | a centred wrap is as wide as its runs on both sides |
+| `guestwhy` | y | 299.00 | 299.00 | = | cumulative line-box rounding (D20) |
+| `guestwhy` | x | 39.00 | 39.00 | = | cumulative line-box rounding (D20) |
+| `guestwhy` | width | 312.00 | 312.00 | = | cumulative line-box rounding (D20) |
+| `guestwhy` | height | 117.50 | 119.00 | 1.50 | cumulative line-box rounding (D20) |
+| `group.label` | y | 574.50 | 576.00 | 1.50 | cumulative line-box rounding (D20) |
+| `group.label` | x | 20.00 | 20.00 | = | cumulative line-box rounding (D20) |
+| `group.label` | width | 350.00 | 350.00 | = | cumulative line-box rounding (D20) |
+| `group.label` | height | 13.00 | 13.00 | = | cumulative line-box rounding (D20) |
+| `group.list` | y | 596.50 | 598.00 | 1.50 | cumulative line-box rounding (D20) |
+| `group.list` | x | 20.00 | 20.00 | = | cumulative line-box rounding (D20) |
+| `group.list` | width | 350.00 | 350.00 | = | cumulative line-box rounding (D20) |
+| `group.list` | height | 588.00 | 588.00 | = | cumulative line-box rounding (D20) |
+| `srow` | y | 597.50 | 599.00 | 1.50 | cumulative line-box rounding (D20) |
+| `srow` | x | 21.00 | 21.00 | = | cumulative line-box rounding (D20) |
+| `srow` | width | 348.00 | 348.00 | = | cumulative line-box rounding (D20) |
+| `srow` | height | 61.00 | 61.00 | = | cumulative line-box rounding (D20) |
+| `srow.icon` | y | 610.50 | 612.00 | 1.50 | cumulative line-box rounding (D20) |
+| `srow.icon` | x | 36.00 | 36.00 | = | cumulative line-box rounding (D20) |
+| `srow.icon` | width | 34.00 | 34.00 | = | cumulative line-box rounding (D20) |
+| `srow.icon` | height | 34.00 | 34.00 | = | cumulative line-box rounding (D20) |
+| `srow.title` | y | 611.50 | 613.00 | 1.50 | cumulative line-box rounding (D20) |
+| `srow.title` | x | 83.00 | 83.00 | = | cumulative line-box rounding (D20) |
+| `srow.title` | width | 242.00 | 242.00 | = | cumulative line-box rounding (D20) |
+| `srow.title` | height | 18.00 | 18.00 | = | cumulative line-box rounding (D20) |
+| `srow.sub` | y | 630.50 | 632.00 | 1.50 | cumulative line-box rounding (D20) |
+| `srow.sub` | x | 83.00 | 83.00 | = | cumulative line-box rounding (D20) |
+| `srow.sub` | width | 242.00 | 242.00 | = | cumulative line-box rounding (D20) |
+| `srow.sub` | height | 13.00 | 13.00 | = | cumulative line-box rounding (D20) |
+
+### Profile · signed in
+
+| element | axis | prototype | Flutter | Δ | note |
+|---|---|---|---|---|---|
+| `pagehead` | y | 0.00 | 0.00 | = |  |
+| `pagehead` | x | 0.00 | 0.00 | = |  |
+| `pagehead` | width | 390.00 | 390.00 | = |  |
+| `pagehead` | height | 67.00 | 67.00 | = |  |
+| `pagehead.prefs` | y | 12.00 | 12.00 | = |  |
+| `pagehead.prefs` | x | 332.00 | 332.00 | = |  |
+| `pagehead.prefs` | width | 38.00 | 38.00 | = |  |
+| `pagehead.prefs` | height | 38.00 | 38.00 | = |  |
+| `phead` | y | 91.00 | 91.00 | = | cumulative line-box rounding (D20) |
+| `phead` | x | 20.00 | 20.00 | = | cumulative line-box rounding (D20) |
+| `phead` | width | 350.00 | 350.00 | = | cumulative line-box rounding (D20) |
+| `phead` | height | 257.00 | 257.00 | = | cumulative line-box rounding (D20) |
+| `phead.avatar` | y | 112.00 | 112.00 | = |  |
+| `phead.avatar` | x | 157.00 | 157.00 | = |  |
+| `phead.avatar` | width | 76.00 | 76.00 | = |  |
+| `phead.avatar` | height | 76.00 | 76.00 | = |  |
+| `phead.name` | y | 198.00 | 198.00 | = | a centred line fills its column on both sides |
+| `phead.name` | x | 129.83 | 129.84 | 0.01 | a centred line fills its column on both sides |
+| `phead.name` | width | 130.33 | 130.32 | -0.01 | a centred line fills its column on both sides |
+| `phead.name` | height | 24.00 | 24.00 | = | a centred line fills its column on both sides |
+| `phead.acts` | y | 283.00 | 283.00 | = | the first action, after the guest card’s D20 rounding |
+| `phead.acts` | x | 39.00 | 39.00 | = | the first action, after the guest card’s D20 rounding |
+| `phead.acts` | width | 312.00 | 312.00 | = | the first action, after the guest card’s D20 rounding |
+| `phead.acts` | height | 46.00 | 46.00 | = | the first action, after the guest card’s D20 rounding |
+| `phead.meta` | y | 248.00 | 248.00 | = | a centred wrap is as wide as its runs on both sides |
+| `phead.meta` | x | 105.61 | 105.61 | = | a centred wrap is as wide as its runs on both sides |
+| `phead.meta` | width | 178.78 | 178.77 | -0.01 | a centred wrap is as wide as its runs on both sides |
+| `phead.meta` | height | 21.00 | 21.00 | = | a centred wrap is as wide as its runs on both sides |
+| `group.label` | y | 372.00 | 372.00 | = | cumulative line-box rounding (D20) |
+| `group.label` | x | 20.00 | 20.00 | = | cumulative line-box rounding (D20) |
+| `group.label` | width | 350.00 | 350.00 | = | cumulative line-box rounding (D20) |
+| `group.label` | height | 13.00 | 13.00 | = | cumulative line-box rounding (D20) |
+| `group.list` | y | 394.00 | 394.00 | = | cumulative line-box rounding (D20) |
+| `group.list` | x | 20.00 | 20.00 | = | cumulative line-box rounding (D20) |
+| `group.list` | width | 350.00 | 350.00 | = | cumulative line-box rounding (D20) |
+| `group.list` | height | 516.00 | 516.00 | = | cumulative line-box rounding (D20) |
+| `srow` | y | 395.00 | 395.00 | = | cumulative line-box rounding (D20) |
+| `srow` | x | 21.00 | 21.00 | = | cumulative line-box rounding (D20) |
+| `srow` | width | 348.00 | 348.00 | = | cumulative line-box rounding (D20) |
+| `srow` | height | 61.00 | 61.00 | = | cumulative line-box rounding (D20) |
+| `srow.icon` | y | 408.00 | 408.00 | = | cumulative line-box rounding (D20) |
+| `srow.icon` | x | 36.00 | 36.00 | = | cumulative line-box rounding (D20) |
+| `srow.icon` | width | 34.00 | 34.00 | = | cumulative line-box rounding (D20) |
+| `srow.icon` | height | 34.00 | 34.00 | = | cumulative line-box rounding (D20) |
+| `srow.title` | y | 409.00 | 409.00 | = | cumulative line-box rounding (D20) |
+| `srow.title` | x | 83.00 | 83.00 | = | cumulative line-box rounding (D20) |
+| `srow.title` | width | 242.00 | 242.00 | = | cumulative line-box rounding (D20) |
+| `srow.title` | height | 18.00 | 18.00 | = | cumulative line-box rounding (D20) |
+| `srow.sub` | y | 428.00 | 428.00 | = | cumulative line-box rounding (D20) |
+| `srow.sub` | x | 83.00 | 83.00 | = | cumulative line-box rounding (D20) |
+| `srow.sub` | width | 242.00 | 242.00 | = | cumulative line-box rounding (D20) |
+| `srow.sub` | height | 13.00 | 13.00 | = | cumulative line-box rounding (D20) |
+
+### Profile · a session that has run out
+
+| element | axis | prototype | Flutter | Δ | note |
+|---|---|---|---|---|---|
+| `pagehead` | y | 0.00 | 0.00 | = |  |
+| `pagehead` | x | 0.00 | 0.00 | = |  |
+| `pagehead` | width | 390.00 | 390.00 | = |  |
+| `pagehead` | height | 67.00 | 67.00 | = |  |
+| `pagehead.prefs` | y | 12.00 | 12.00 | = |  |
+| `pagehead.prefs` | x | 332.00 | 332.00 | = |  |
+| `pagehead.prefs` | width | 38.00 | 38.00 | = |  |
+| `pagehead.prefs` | height | 38.00 | 38.00 | = |  |
+| `phead` | y | 91.00 | 91.00 | = | cumulative line-box rounding (D20) |
+| `phead` | x | 20.00 | 20.00 | = | cumulative line-box rounding (D20) |
+| `phead` | width | 350.00 | 350.00 | = | cumulative line-box rounding (D20) |
+| `phead` | height | 252.00 | 252.00 | = | cumulative line-box rounding (D20) |
+| `phead.avatar` | y | 112.00 | 112.00 | = |  |
+| `phead.avatar` | x | 157.00 | 157.00 | = |  |
+| `phead.avatar` | width | 76.00 | 76.00 | = |  |
+| `phead.avatar` | height | 76.00 | 76.00 | = |  |
+| `phead.name` | y | 198.00 | 198.00 | = | a centred line fills its column on both sides |
+| `phead.name` | x | 89.17 | 89.18 | 0.01 | a centred line fills its column on both sides |
+| `phead.name` | width | 211.66 | 211.64 | -0.02 | a centred line fills its column on both sides |
+| `phead.name` | height | 24.00 | 24.00 | = | a centred line fills its column on both sides |
+| `phead.acts` | y | 278.00 | 278.00 | = | the first action, after the guest card’s D20 rounding |
+| `phead.acts` | x | 39.00 | 39.00 | = | the first action, after the guest card’s D20 rounding |
+| `phead.acts` | width | 312.00 | 312.00 | = | the first action, after the guest card’s D20 rounding |
+| `phead.acts` | height | 46.00 | 46.00 | = | the first action, after the guest card’s D20 rounding |
+| `phead.meta` | y | 248.00 | 248.00 | = | a centred wrap is as wide as its runs on both sides |
+| `phead.meta` | x | 124.31 | 124.68 | 0.37 | a centred wrap is as wide as its runs on both sides |
+| `phead.meta` | width | 141.36 | 140.64 | -0.72 | a centred wrap is as wide as its runs on both sides |
+| `phead.meta` | height | 16.00 | 16.00 | = | a centred wrap is as wide as its runs on both sides |
+| `group.label` | y | 367.00 | 367.00 | = | cumulative line-box rounding (D20) |
+| `group.label` | x | 20.00 | 20.00 | = | cumulative line-box rounding (D20) |
+| `group.label` | width | 350.00 | 350.00 | = | cumulative line-box rounding (D20) |
+| `group.label` | height | 13.00 | 13.00 | = | cumulative line-box rounding (D20) |
+| `group.list` | y | 389.00 | 389.00 | = | cumulative line-box rounding (D20) |
+| `group.list` | x | 20.00 | 20.00 | = | cumulative line-box rounding (D20) |
+| `group.list` | width | 350.00 | 350.00 | = | cumulative line-box rounding (D20) |
+| `group.list` | height | 588.00 | 588.00 | = | cumulative line-box rounding (D20) |
+| `srow` | y | 390.00 | 390.00 | = | cumulative line-box rounding (D20) |
+| `srow` | x | 21.00 | 21.00 | = | cumulative line-box rounding (D20) |
+| `srow` | width | 348.00 | 348.00 | = | cumulative line-box rounding (D20) |
+| `srow` | height | 61.00 | 61.00 | = | cumulative line-box rounding (D20) |
+| `srow.icon` | y | 403.00 | 403.00 | = | cumulative line-box rounding (D20) |
+| `srow.icon` | x | 36.00 | 36.00 | = | cumulative line-box rounding (D20) |
+| `srow.icon` | width | 34.00 | 34.00 | = | cumulative line-box rounding (D20) |
+| `srow.icon` | height | 34.00 | 34.00 | = | cumulative line-box rounding (D20) |
+| `srow.title` | y | 404.00 | 404.00 | = | cumulative line-box rounding (D20) |
+| `srow.title` | x | 83.00 | 83.00 | = | cumulative line-box rounding (D20) |
+| `srow.title` | width | 242.00 | 242.00 | = | cumulative line-box rounding (D20) |
+| `srow.title` | height | 18.00 | 18.00 | = | cumulative line-box rounding (D20) |
+| `srow.sub` | y | 423.00 | 423.00 | = | cumulative line-box rounding (D20) |
+| `srow.sub` | x | 83.00 | 83.00 | = | cumulative line-box rounding (D20) |
+| `srow.sub` | width | 242.00 | 242.00 | = | cumulative line-box rounding (D20) |
+| `srow.sub` | height | 13.00 | 13.00 | = | cumulative line-box rounding (D20) |
 
 ### Trains · Muslim, Pakistan — the upper half
 

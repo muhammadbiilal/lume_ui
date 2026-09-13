@@ -18,6 +18,9 @@ library;
 import 'package:flutter/widgets.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../features/account/data/fake_account_repository.dart';
+import '../../features/account/data/notification_prefs_store.dart';
+import '../../features/account/domain/account_repository.dart';
 import '../../features/catalogue/data/feature_catalogue.dart';
 import '../../features/catalogue/domain/eligibility.dart';
 import '../../features/home/data/home_fixtures.dart';
@@ -93,6 +96,43 @@ final Provider<LumeTrainsRepository> trainsRepositoryProvider =
     Provider<LumeTrainsRepository>(
       (Ref ref) =>
           LumeFakeTrainsRepository(eligibility: ref.watch(eligibilityProvider)),
+    );
+
+/// The account, the devices, what is stored and how to end it.
+///
+/// One object behind five interfaces, because they are five questions about
+/// the same account and a second instance would answer them differently. A
+/// **guest** is the product's starting state: a fresh install has no account,
+/// and the screens are built to say so rather than to fill the gap.
+///
+/// Overriding this one provider is the whole of the swap when Dayroz's real
+/// account service arrives.
+final Provider<LumeFakeAccountRepository> accountStoreProvider =
+    Provider<LumeFakeAccountRepository>(
+      (Ref ref) => LumeFakeAccountRepository.guest(),
+    );
+
+final Provider<LumeAccountRepository> accountRepositoryProvider =
+    Provider<LumeAccountRepository>(
+      (Ref ref) => ref.watch(accountStoreProvider),
+    );
+
+final Provider<LumeSessionRepository> sessionRepositoryProvider =
+    Provider<LumeSessionRepository>(
+      (Ref ref) => ref.watch(accountStoreProvider),
+    );
+
+final Provider<LumeSyncRepository> syncRepositoryProvider =
+    Provider<LumeSyncRepository>((Ref ref) => ref.watch(accountStoreProvider));
+
+final Provider<LumeAccountDeletion> accountDeletionProvider =
+    Provider<LumeAccountDeletion>((Ref ref) => ref.watch(accountStoreProvider));
+
+/// Notification preferences — one store, reached from the account section and
+/// from the notification centre's own settings.
+final Provider<LumeMemoryNotificationPrefs> notificationPrefsProvider =
+    Provider<LumeMemoryNotificationPrefs>(
+      (Ref ref) => LumeMemoryNotificationPrefs(),
     );
 
 /// The reader's kept journeys. Separate from the feed, and not durable.
