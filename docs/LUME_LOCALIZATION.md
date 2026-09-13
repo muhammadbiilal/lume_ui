@@ -118,25 +118,28 @@ covered `auth*`. The named check now covers every key that has words in it.
 
 ---
 
-## 4. Browser wording
+## 4. A string may not describe the reader's environment wrongly
 
-The reference is a web page, and says so. A Flutter build has no browser, so
-a sentence pointing a phone user at one is an instruction they cannot follow
-(C49).
+**No user-facing string tells a reader about their browser.** Lume on a phone
+has none, and a sentence pointing them at one is an instruction they cannot
+follow — a permission they cannot grant, a setting they cannot open.
 
-| key | reference | Flutter |
-|---|---|---|
-| `acctErrStorage` | "check your browser's storage settings" | names the device |
-| `acctPushDenied` | "Blocked in your browser settings" | "Blocked in your device settings" |
-| `acctPushDeniedHelp` | "…in your browser's site settings" | "…for Lume in your device settings" |
-| `acctPushGranted` | "Allowed by your browser" | "Allowed on this device" |
-| `acctDeviceBrowser` | "This browser" | "Web browser" |
+| key | says |
+|---|---|
+| `acctErrStorage` | the device could not keep it |
+| `acctPushDenied` | "Blocked in your device settings" |
+| `acctPushDeniedHelp` | "…Allow them for Lume in your device settings." |
+| `acctPushGranted` | "Allowed on this device" |
 
-`acctDeviceBrowser` is the one that keeps the word, and the only one allowed
-to: it is one of five platform labels a session row can carry, beside Android,
-iPhone, Mac and Windows. It names a platform, never the reader's own device.
-`nothing tells a reader about their browser` enforces exactly that exception
-and no other.
+One key keeps the word, and is the only one allowed to. `acctDeviceBrowser` is
+one of five platform labels a session row can carry — beside Android phone,
+iPhone, Mac and Windows PC — so "Web browser" is a fact about where a session
+was opened, never a claim about the device in the reader's hand.
+
+`nothing tells a reader about their browser` enforces exactly that one
+exception: no English value may contain the word, and the test names the key
+that may. The wording each of these replaced is recorded as C49 in
+[`conversion_archive/KNOWN_DIFFERENCES.md`](conversion_archive/KNOWN_DIFFERENCES.md).
 
 ---
 

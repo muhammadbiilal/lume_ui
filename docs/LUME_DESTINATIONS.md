@@ -185,7 +185,7 @@ promise and the count can wait for the tool itself.
 
 ## 5. Today
 
-Eight blocks in the order `today.screen.js` emits them: the page head, the day
+Eight blocks, in the order the source emits them: the page head, the day
 ring, three statistics, a reflection, **Your day**, **Tasks**, **Habits** and a
 locked door. The prayers are **not** a section of their own — they are merged
 into the agenda and sorted with the meetings, the errand and the outage, which

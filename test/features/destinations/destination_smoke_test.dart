@@ -1,5 +1,5 @@
 /// The launch, then Home, then the hub, then a tool, then Today, then
-/// Explore, then back.
+/// Explore, then Trains, then Profile and the account section — and back.
 ///
 /// One test that walks the product the way a person does — through the real
 /// router, the real gate and the real registry — because every other test in
@@ -11,11 +11,15 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:go_router/go_router.dart';
 import 'package:lume/core/navigation/lume_navigation_surfaces.dart';
 import 'package:lume/core/routing/lume_routes.dart';
+import 'package:lume/core/widgets/lume/lume_header.dart';
 import 'package:lume/core/widgets/lume/lume_overlay.dart';
+import 'package:lume/core/widgets/lume/lume_rail.dart';
+import 'package:lume/core/widgets/lume/lume_settings.dart';
 import 'package:lume/features/explore/presentation/explore_screen.dart';
 import 'package:lume/features/home/presentation/home_screen.dart';
 import 'package:lume/features/today/presentation/today_screen.dart';
 import 'package:lume/features/tools/presentation/tools_screen.dart';
+import 'package:lume/features/trains/presentation/trains_screen.dart';
 
 import '../../helpers/lume_harness.dart';
 
@@ -130,6 +134,106 @@ void main() {
           .pixels,
       greaterThan(0),
     );
+
+    // 6. Nothing threw on the way.
+    expect(tester.takeException(), isNull);
+  });
+
+  testWidgets('a walk through Trains and into a journey', (
+    WidgetTester tester,
+  ) async {
+    final GoRouter router = await pumpLumeRouter(
+      tester,
+      surface: LumeViewport.tall,
+    );
+
+    // 1. Trains is a tab in this market, and tapping it draws the rail.
+    await tester.tap(find.text('Trains').last);
+    await tester.pumpAndSettle();
+    expect(locationOf(router), LumeRoutes.trains);
+    expect(find.byType(LumeTrainsScreen), findsOneWidget);
+
+    // 2. The search card opens on a journey, both ends named.
+    final String origin = tester
+        .widget<LumeRailField>(
+          find.byKey(const ValueKey<String>('trains.origin')),
+        )
+        .value;
+    final String destination = tester
+        .widget<LumeRailField>(
+          find.byKey(const ValueKey<String>('trains.destination')),
+        )
+        .value;
+    expect(origin, isNotEmpty);
+    expect(destination, isNotEmpty);
+    expect(origin, isNot(destination));
+
+    // 3. Swapping the ends asks the timetable again and answers (R2).
+    await tester.tap(find.byType(LumeRailSwap));
+    await tester.pumpAndSettle();
+    expect(
+      tester
+          .widget<LumeRailField>(
+            find.byKey(const ValueKey<String>('trains.origin')),
+          )
+          .value,
+      destination,
+    );
+    expect(find.byType(LumeToast), findsOneWidget);
+
+    // 4. And the reader is still on Trains, with its own tab selected.
+    expect(locationOf(router), LumeRoutes.trains);
+    expect(tester.takeException(), isNull);
+  });
+
+  testWidgets('a walk through Profile and into the account', (
+    WidgetTester tester,
+  ) async {
+    final GoRouter router = await pumpLumeRouter(
+      tester,
+      surface: LumeViewport.tall,
+    );
+
+    // 1. Profile is the fifth destination.
+    await tester.tap(find.text('Profile').last);
+    await tester.pumpAndSettle();
+    expect(locationOf(router), LumeRoutes.profile);
+
+    // 2. A row opens one of the twenty-one account routes, on this branch.
+    await tester.tap(
+      find.byWidgetPredicate(
+        (Widget w) => w is LumeSettingsRow && w.title == 'Privacy',
+      ),
+    );
+    await tester.pumpAndSettle();
+    expect(locationOf(router), endsWith('/account/privacy'));
+
+    // 3. A switch there writes, and the row it wrote reads back changed.
+    final Finder previews = find.byWidgetPredicate(
+      (Widget w) => w is LumeSettingsRow && w.title == 'Notification previews',
+    );
+    final bool before = tester.widget<LumeSettingsRow>(previews).toggle!;
+    await tester.tap(previews);
+    await tester.pumpAndSettle();
+    expect(tester.widget<LumeSettingsRow>(previews).toggle, !before);
+
+    // 4. A route reached from a route returns to it, not out of the section.
+    await tester.tap(
+      find.byWidgetPredicate(
+        (Widget w) => w is LumeSettingsRow && w.title == 'Data & sync',
+      ),
+    );
+    await tester.pumpAndSettle();
+    expect(locationOf(router), endsWith('/account/sync'));
+
+    await tester.tap(find.byType(LumeBackButton));
+    await tester.pumpAndSettle();
+    expect(locationOf(router), endsWith('/account/privacy'));
+
+    // 5. And out of the section is Profile, not Home.
+    await tester.tap(find.byType(LumeBackButton));
+    await tester.pumpAndSettle();
+    expect(locationOf(router), LumeRoutes.profile);
 
     // 6. Nothing threw on the way.
     expect(tester.takeException(), isNull);
