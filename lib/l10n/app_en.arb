@@ -256,6 +256,10 @@
   "@acctErrCurrentWrong": {
     "description": "Reference: `acct.err.currentWrong`."
   },
+  "acctErrNameRequired": "Enter a name, or leave it blank to use your email address.",
+  "@acctErrNameRequired": {
+    "description": "A name refusal. No fixture returns it — `updateUser` in `account.js` accepts a blank name — but `LumeAccountFailure.nameRequired` is part of the repository contract a real service may use, and a contract value with no sentence would render the network error instead."
+  },
   "acctErrPasswordSame": "Choose a password you haven’t used here before.",
   "@acctErrPasswordSame": {
     "description": "Reference: `acct.err.passwordSame`."
@@ -268,9 +272,9 @@
   "@acctErrPhotoTooBig": {
     "description": "Reference: `acct.err.photoTooBig`."
   },
-  "acctErrStorage": "Lume couldn’t save to this device. Check your browser’s storage settings and try again.",
+  "acctErrStorage": "Lume couldn’t save to this device. Check that there is space free and try again.",
   "@acctErrStorage": {
-    "description": "Reference: `acct.err.storage`."
+    "description": "Reference: `acct.err.storage`. The prototype says \"check your browser’s storage settings\", which is advice a phone cannot act on. C49."
   },
   "acctFavourites": "Your favourites",
   "@acctFavourites": {
@@ -2854,6 +2858,18 @@
   "@notifPrefPerToolSub": {
     "description": "Reference: `n.pref.perToolSub`."
   },
+  "notifPrefPreview": "Show previews",
+  "@notifPrefPreview": {
+    "description": "Reference: `n.pref.p`. The Notifications screen and the Privacy route show the *same* preference with different words and opposite polarity, which is deliberate in the reference: one asks whether to show, the other whether to hide.review"
+  },
+  "notifPrefPreviewSub": "Include the detail, not just the title",
+  "@notifPrefPreviewSub": {
+    "description": "Reference: `n.pref.p`. The Notifications screen and the Privacy route show the *same* preference with different words and opposite polarity, which is deliberate in the reference: one asks whether to show, the other whether to hide.reviewSub"
+  },
+  "notifPrefPrivacySub": "What a notification is allowed to reveal",
+  "@notifPrefPrivacySub": {
+    "description": "Reference: `n.pref.privacySub`."
+  },
   "notifPrefPush": "Push notifications",
   "@notifPrefPush": {
     "description": "Reference: `n.pref.push`."
@@ -2873,6 +2889,14 @@
   "notifPrefRestore": "Restore dismissed",
   "@notifPrefRestore": {
     "description": "Reference: `n.pref.restore`."
+  },
+  "notifPrefSensitive": "Preview sensitive content",
+  "@notifPrefSensitive": {
+    "description": "Reference: `n.pref.s`. The Notifications screen and the Privacy route show the *same* preference with different words and opposite polarity, which is deliberate in the reference: one asks whether to show, the other whether to hide.ensitive"
+  },
+  "notifPrefSensitiveSub": "Health, documents and money say only that something changed",
+  "@notifPrefSensitiveSub": {
+    "description": "Reference: `n.pref.s`. The Notifications screen and the Privacy route show the *same* preference with different words and opposite polarity, which is deliberate in the reference: one asks whether to show, the other whether to hide.ensitiveSub"
   },
   "notifPrefSound": "Sound",
   "@notifPrefSound": {

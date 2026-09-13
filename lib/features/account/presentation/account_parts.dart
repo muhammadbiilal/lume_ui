@@ -100,6 +100,9 @@ class LumeAccountList extends StatelessWidget {
 /// cannot drift apart: every one reads its value, its error and its reveal
 /// state from the same controller.
 class LumeAccountField extends StatelessWidget {
+  /// The key a field carries, from the name its value is stored under.
+  static Key fieldKey(String name) => ValueKey<String>('field.$name');
+
   const LumeAccountField({
     super.key,
     required this.form,
@@ -117,6 +120,9 @@ class LumeAccountField extends StatelessWidget {
     this.maxLength,
     this.onSubmitted,
     this.onLeave,
+    this.textInputAction = TextInputAction.next,
+    this.autofocus = false,
+    this.focusNode,
   });
 
   final LumeAccountForm form;
@@ -146,10 +152,22 @@ class LumeAccountField extends StatelessWidget {
   /// Blur. The route decides which checks a field can be judged on alone.
   final void Function(String name)? onLeave;
 
+  /// What the keyboard's own key does. `next` moves to the field below;
+  /// `done` on the last field of a form sends it, which is the whole reason
+  /// [onSubmitted] exists.
+  final TextInputAction textInputAction;
+
+  final bool autofocus;
+  final FocusNode? focusNode;
+
   @override
   Widget build(BuildContext context) {
     final LumeFormIssue? issue = form.errorOn(name);
     return LumeInputField(
+      // Addressable by the name the controller stores it under, so a test can
+      // say "the phone field" rather than finding it by the words above it —
+      // which are a rich label and change with the language.
+      key: fieldKey(name),
       // The account's forms are the *product's* field, not the authentication
       // flow's: an uppercase 11-point label over a 48-point box.
       variant: LumeFieldVariant.form,
@@ -171,6 +189,11 @@ class LumeAccountField extends StatelessWidget {
       keyboardType: keyboardType,
       autofillHints: autofillHints,
       maxLength: maxLength,
+      textInputAction: textInputAction,
+      autofocus: autofocus,
+      focusNode: focusNode,
+      // Every control that would start a second submission is inert while one
+      // is outstanding, the field included.
       enabled: !form.busy,
     );
   }

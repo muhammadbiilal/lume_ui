@@ -204,6 +204,10 @@ class AppLocalizationsEn extends AppLocalizations {
   String get acctErrCurrentWrong => 'That current password is incorrect.';
 
   @override
+  String get acctErrNameRequired =>
+      'Enter a name, or leave it blank to use your email address.';
+
+  @override
   String get acctErrPasswordSame =>
       'Choose a password you haven’t used here before.';
 
@@ -216,7 +220,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get acctErrStorage =>
-      'Lume couldn’t save to this device. Check your browser’s storage settings and try again.';
+      'Lume couldn’t save to this device. Check that there is space free and try again.';
 
   @override
   String get acctFavourites => 'Your favourites';
@@ -2130,6 +2134,15 @@ class AppLocalizationsEn extends AppLocalizations {
       'Fine-grained control over each kind of alert';
 
   @override
+  String get notifPrefPreview => 'Show previews';
+
+  @override
+  String get notifPrefPreviewSub => 'Include the detail, not just the title';
+
+  @override
+  String get notifPrefPrivacySub => 'What a notification is allowed to reveal';
+
+  @override
   String get notifPrefPush => 'Push notifications';
 
   @override
@@ -2144,6 +2157,13 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get notifPrefRestore => 'Restore dismissed';
+
+  @override
+  String get notifPrefSensitive => 'Preview sensitive content';
+
+  @override
+  String get notifPrefSensitiveSub =>
+      'Health, documents and money say only that something changed';
 
   @override
   String get notifPrefSound => 'Sound';

@@ -9,6 +9,7 @@
 library;
 
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:go_router/go_router.dart';
@@ -71,28 +72,79 @@ List<Override> accountOverrides({
 ];
 
 /// One account route, through the real router, on Profile's branch.
+///
+/// [profile] is the whole saved record the launch reads, for the routes that
+/// draw from it — the library reads its favourites, Personalisation its
+/// switches — and passing the *repository* rather than a built gate keeps the
+/// router and the widgets on one set of objects.
 Future<GoRouter> pumpAccountRouter(
   WidgetTester tester, {
   required LumeAccountRoute route,
   LumeFakeAccountRepository? account,
   LumeMemoryNotificationPrefs? notify,
+  LumeProfileRecord? profile,
   Size surface = LumeViewport.phone,
   ThemeMode theme = ThemeMode.light,
   Locale locale = const Locale('en'),
   double textScale = 1.0,
-}) => pumpLumeRouter(
-  tester,
-  initialLocation: LumeRoutes.accountRoute(LumeRoutes.profile, route.segment),
-  // The router's gate reads the *session*, the host's reads the account, and
-  // both have to say the same thing or the test is measuring the seam.
-  signedIn:
-      (account ?? LumeFakeAccountRepository()).state == LumeAccountState.authed,
-  overrides: accountOverrides(account: account, notify: notify),
-  surface: surface,
-  theme: theme,
-  locale: locale,
-  textScale: textScale,
-);
+}) async {
+  LumeMemoryProfileRepository? profiles;
+  if (profile != null) {
+    profiles = LumeMemoryProfileRepository();
+    await profiles.writeProfile(profile);
+  }
+  return pumpLumeRouter(
+    tester,
+    initialLocation: LumeRoutes.accountRoute(LumeRoutes.profile, route.segment),
+    // The router's gate reads the *session*, the host's reads the account, and
+    // both have to say the same thing or the test is measuring the seam.
+    signedIn:
+        (account ?? LumeFakeAccountRepository()).state ==
+        LumeAccountState.authed,
+    profile: profiles,
+    overrides: accountOverrides(account: account, notify: notify),
+    surface: surface,
+    theme: theme,
+    locale: locale,
+    textScale: textScale,
+  );
+}
+
+/// Every label, value and hint the semantics tree carries, in one list.
+///
+/// The *whole* tree rather than the node under a finder, because a leak is
+/// exactly the thing that turns up somewhere nobody thought to look. The
+/// semantics owner belongs to the child pipeline owner, not the root one, so
+/// the root is asked for its children rather than for an owner of its own.
+///
+/// Call it inside `tester.ensureSemantics()`; empty strings are dropped,
+/// since "this node says nothing" is not a claim about anything.
+List<String> semanticStrings(WidgetTester tester) {
+  SemanticsNode? root;
+  tester.binding.rootPipelineOwner.visitChildren((PipelineOwner child) {
+    root ??= child.semanticsOwner?.rootSemanticsNode;
+  });
+
+  final List<String> said = <String>[];
+  void walk(SemanticsNode node) {
+    final SemanticsData d = node.getSemanticsData();
+    said
+      ..add(d.label)
+      ..add(d.value)
+      ..add(d.hint)
+      ..add(d.tooltip);
+    node.visitChildren((SemanticsNode child) {
+      walk(child);
+      return true;
+    });
+  }
+
+  if (root case final SemanticsNode r) walk(r);
+  return <String>[
+    for (final String s in said)
+      if (s.isNotEmpty) s,
+  ];
+}
 
 /// The host on its own, past the router's gate.
 Future<void> pumpAccountHost(

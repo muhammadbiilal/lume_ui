@@ -166,4 +166,29 @@ class LumeAccountForm extends ChangeNotifier {
     _message = null;
     notifyListeners();
   }
+
+  /// Forget everything, without telling anybody.
+  ///
+  /// A password lives in this object only while it is being typed. When the
+  /// screen that was typing it goes away — saved, cancelled, disposed, or
+  /// replaced by a deep link — what it held goes with it, rather than waiting
+  /// for the garbage collector and staying in the heap in the meantime.
+  ///
+  /// Silent on purpose: nothing should rebuild because a screen closed.
+  void wipe() {
+    _initial = const <String, String>{};
+    _values = <String, String>{};
+    _errors.clear();
+    _valid.clear();
+    _touched.clear();
+    _revealed.clear();
+    _message = null;
+    _busy = false;
+  }
+
+  @override
+  void dispose() {
+    wipe();
+    super.dispose();
+  }
 }

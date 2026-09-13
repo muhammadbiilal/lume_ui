@@ -198,10 +198,12 @@ class LumeSettingsRow extends StatelessWidget {
         ? null
         : (value!.isEmpty ? notSetLabel : value);
 
-    return LumePressable(
+    final String label =
+        semanticLabel ?? <String>[title, ?subtitle, ?shown].join(', ');
+
+    final Widget row = LumePressable(
       onTap: onTap,
-      semanticLabel:
-          semanticLabel ?? <String>[title, ?subtitle, ?shown].join(', '),
+      semanticLabel: label,
       button: !isSwitch,
       selected: isSwitch ? toggle : null,
       minSize: 0,
@@ -337,6 +339,20 @@ class LumeSettingsRow extends StatelessWidget {
           ),
         ),
       ),
+    );
+
+    if (onTap != null) return row;
+
+    // A row with nothing to press is a fact — About's version, Data & sync's
+    // five kinds — and an inert `LumePressable` reports nothing, by design:
+    // it is not a disabled button. But the row excludes its children's own
+    // semantics so the label is read once rather than in fragments, and
+    // without a node of its own that leaves the fact silent (§60).
+    return Semantics(
+      container: true,
+      label: label,
+      selected: isSwitch ? toggle : null,
+      child: row,
     );
   }
 }

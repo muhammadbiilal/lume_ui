@@ -161,12 +161,10 @@ class LumeFakeAccountRepository
     // A guest has a display name too, and may change it. Everything else on
     // the form belongs to an account.
     final bool guest = state != LumeAccountState.authed || _identity == null;
-    if (displayName != null && displayName.trim().isEmpty && !guest) {
-      return const LumeAccountResult.refused(
-        LumeAccountFailure.nameRequired,
-        field: 'displayName',
-      );
-    }
+    // A blank name is **not** refused. `updateUser` in `account.js` trims it
+    // and stores it, and the identity card is built for exactly that: with no
+    // name the address is the identity. Refusing it here would have made the
+    // nameless state unreachable through the form that creates it.
     if (phone != null && phone.isNotEmpty && !_phone.hasMatch(phone.trim())) {
       return const LumeAccountResult.refused(
         LumeAccountFailure.invalidPhone,

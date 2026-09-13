@@ -201,6 +201,10 @@ class AppLocalizationsAr extends AppLocalizations {
   String get acctErrCurrentWrong => 'كلمة المرور الحالية غير صحيحة.';
 
   @override
+  String get acctErrNameRequired =>
+      'أدخل اسمًا، أو اتركه فارغًا لاستخدام بريدك الإلكتروني.';
+
+  @override
   String get acctErrPasswordSame => 'اختر كلمة مرور لم تستخدمها هنا من قبل.';
 
   @override
@@ -212,7 +216,7 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get acctErrStorage =>
-      'تعذّر على Lume الحفظ على هذا الجهاز. راجع إعدادات التخزين في متصفحك وحاول مرة أخرى.';
+      'تعذّر على Lume الحفظ على هذا الجهاز. تأكد من وجود مساحة فارغة وحاول مرة أخرى.';
 
   @override
   String get acctFavourites => 'مفضلاتك';
@@ -2135,6 +2139,15 @@ class AppLocalizationsAr extends AppLocalizations {
   String get notifPrefPerToolSub => 'تحكّم دقيق في كل نوع من التنبيهات';
 
   @override
+  String get notifPrefPreview => 'إظهار المعاينات';
+
+  @override
+  String get notifPrefPreviewSub => 'تضمين التفاصيل، لا العنوان فقط';
+
+  @override
+  String get notifPrefPrivacySub => 'ما الذي يُسمح للإشعار بكشفه';
+
+  @override
   String get notifPrefPush => 'الإشعارات الفورية';
 
   @override
@@ -2148,6 +2161,13 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get notifPrefRestore => 'استعادة المستبعدة';
+
+  @override
+  String get notifPrefSensitive => 'معاينة المحتوى الحساس';
+
+  @override
+  String get notifPrefSensitiveSub =>
+      'الصحة والمستندات والمال تقول فقط إن شيئًا ما تغيّر';
 
   @override
   String get notifPrefSound => 'الصوت';

@@ -42,6 +42,7 @@ import '../../../core/widgets/lume/lume_surface.dart';
 import '../../../l10n/app_localizations.dart';
 import '../../auth/application/auth_flow_controller.dart';
 import '../../catalogue/domain/eligibility.dart';
+import '../../catalogue/domain/lume_feature.dart';
 import '../../catalogue/presentation/feature_strings.dart';
 import '../../onboarding/data/country_fixture.dart';
 import '../../onboarding/domain/onboarding_state.dart';
@@ -127,6 +128,31 @@ class _LumeAccountHostState extends ConsumerState<LumeAccountHost> {
       _sessions = sessions;
       _stored = stored;
     });
+  }
+
+  /// The reader's own tools, named by the catalogue.
+  ///
+  /// Filtered on the way *out* as well as on the way in (§64): a faith-gated
+  /// or country-gated tool must not resurface through a favourite or a recent
+  /// any more than it may through search. An id the catalogue no longer knows
+  /// simply drops, which is why this maps rather than indexes.
+  List<LumeLibraryEntry> _entries(
+    AppLocalizations l,
+    LumeProfileRecord profile,
+    List<String> ids,
+  ) {
+    final LumeEligibility eligibility = ref.watch(eligibilityProvider);
+    final LumeUserContext user = LumeUserContext.from(profile);
+    return <LumeLibraryEntry>[
+      for (final String id in ids)
+        if (eligibility.visibleById(id, user) case final LumeFeature f)
+          LumeLibraryEntry(
+            id: f.id,
+            name: LumeFeatureStrings.name(l, f.id),
+            category: LumeFeatureStrings.category(l, f.category),
+            icon: f.icon,
+          ),
+    ];
   }
 
   void _say(String message) {
@@ -281,6 +307,9 @@ class _LumeAccountHostState extends ConsumerState<LumeAccountHost> {
             confirm: _form.read('confirm'),
           );
           if (!_settle(r)) return;
+          // Three passwords were in this object a moment ago. They go now,
+          // rather than waiting for the screen to be disposed.
+          _form.wipe();
           _say(l.authUpdatedTitle);
           await _leave();
         case LumeAccountRoute.delete:
@@ -333,7 +362,16 @@ class _LumeAccountHostState extends ConsumerState<LumeAccountHost> {
           kind: LumeDeleteKind.irreversible,
         ) ??
         false;
-    if (!confirmed || !mounted) return;
+    if (!confirmed || !mounted) {
+      // Cancelled at the second question. The password was typed for an
+      // action that is not happening, so it does not stay on the screen.
+      if (mounted) {
+        _form
+          ..wipe()
+          ..reset(const <String, String>{'current': ''});
+      }
+      return;
+    }
 
     _form.beginSubmit();
     final LumeAccountResult r = await ref
@@ -341,6 +379,7 @@ class _LumeAccountHostState extends ConsumerState<LumeAccountHost> {
         .deleteAccount(password: _form.read('current'));
     if (!mounted) return;
     if (!_settle(r)) return;
+    _form.wipe();
     _say(l.acctDeleted);
     // §37 — the account is gone and the reader's own things are not.
     if (mounted) context.go(widget.branch);
@@ -437,8 +476,8 @@ class _LumeAccountHostState extends ConsumerState<LumeAccountHost> {
       homeZone: table?.zoneOf(p.country) ?? 'UTC',
       zones: table?.zonesNear(p.country) ?? const <String>[],
       version: kLumeVersion,
-      favourites: const <LumeLibraryEntry>[],
-      recents: const <LumeLibraryEntry>[],
+      favourites: _entries(l, p, p.favourites),
+      recents: _entries(l, p, p.recents),
       sessions: _sessions,
       stored: _stored,
       // §64 again: the catalogue is asked whether a tool is visible, and the
@@ -556,7 +595,16 @@ class _LumeAccountHostState extends ConsumerState<LumeAccountHost> {
   }
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context) => ListenableBuilder(
+    // The launch holds the profile, and a chooser writes to it. Without this
+    // the row that was just tapped would keep showing the old value until
+    // something else rebuilt the screen — which is exactly the kind of lie a
+    // settings screen must not tell.
+    listenable: ref.watch(startupControllerProvider),
+    builder: (BuildContext context, Widget? _) => _build(context),
+  );
+
+  Widget _build(BuildContext context) {
     final AppLocalizations l = AppLocalizations.of(context);
     final LumeAccountView view = _view();
 

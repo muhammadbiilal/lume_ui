@@ -30,6 +30,7 @@ import '../../../core/theme/lume/lume_theme.dart';
 import '../../../core/theme/lume/lume_type.dart';
 import '../../../core/widgets/lume/lume_button.dart';
 import '../../../core/widgets/lume/lume_field.dart';
+import '../../../core/widgets/lume/lume_row.dart';
 import '../../../core/widgets/lume/lume_settings.dart';
 import '../../../core/widgets/lume/lume_state.dart';
 import '../../../core/widgets/lume/lume_surface.dart';
@@ -462,7 +463,10 @@ LumeAccountView _region(LumeAccountRouteContext c) {
 LumeAccountView _currency(LumeAccountRouteContext c) {
   final AppLocalizations l = c.l;
   // The reader's own market first, then the currencies the product quotes.
-  final List<String> codes = <String>[
+  // A set, because the reader's market is often already one of them and the
+  // list must not offer it twice — and a set literal keeps insertion order,
+  // so "first" still means first.
+  final List<String> codes = <String>{
     LumePreference.auto,
     if (c.homeCurrency.isNotEmpty) c.homeCurrency,
     'USD',
@@ -472,7 +476,7 @@ LumeAccountView _currency(LumeAccountRouteContext c) {
     'SAR',
     'INR',
     'JPY',
-  ].toSet().toList(growable: false);
+  }.toList(growable: false);
 
   return LumeAccountView(
     title: l.acctCurrencyTitle,
@@ -771,24 +775,28 @@ LumeAccountView _notifications(LumeAccountRouteContext c) {
       ),
 
       // ---- Privacy ------------------------------------------------------
+      //
+      // The *same* preference the Privacy route shows, with different words
+      // and the opposite polarity — which is what the reference does. Here
+      // the switch asks whether to **show** a preview; there it asks whether
+      // sensitive content stays **hidden**. One store, two sentences.
       LumeAccountSection(
         title: l.acctPrivacyTitle,
+        subtitle: l.notifPrefPrivacySub,
         child: LumeAccountList(
           rows: <Widget>[
             LumeSettingsRow(
-              title: l.acctPrivacyPreview,
-              subtitle: l.acctPrivacyPreviewSub,
+              title: l.notifPrefPreview,
+              subtitle: l.notifPrefPreviewSub,
               toggle: c.notify.preview,
               onTap: () => c.actions.togglePreview(!c.notify.preview),
             ),
             LumeSettingsRow(
-              title: l.acctPrivacySensitive,
-              subtitle: l.acctPrivacySensitiveSub,
-              // Inverted on purpose: the switch asks whether sensitive
-              // content stays *hidden*, which is the promise being made.
-              toggle: !c.notify.sensitivePreview,
+              title: l.notifPrefSensitive,
+              subtitle: l.notifPrefSensitiveSub,
+              toggle: c.notify.sensitivePreview,
               onTap: () =>
-                  c.actions.toggleSensitivePreview(c.notify.sensitivePreview),
+                  c.actions.toggleSensitivePreview(!c.notify.sensitivePreview),
               isLast: true,
             ),
           ],
@@ -865,30 +873,35 @@ LumeAccountView _library(LumeAccountRouteContext c) {
           ),
         )
       else
+        // `richRow` for a favourite and `compactRow` for a recent, which is
+        // what the reference draws: a saved tool gets its category, a recent
+        // one gets a line. Both are named from the catalogue, so a renamed
+        // or translated tool is renamed here too.
         LumeAccountSection(
-          child: LumeAccountList(
-            rows: <Widget>[
-              for (int i = 0; i < c.favourites.length; i++)
-                LumeSettingsRow(
-                  icon: c.favourites[i].icon,
-                  title: c.favourites[i].name,
-                  subtitle: c.favourites[i].category,
-                  onTap: () => c.actions.openTool(c.favourites[i].id),
-                  isLast: i == c.favourites.length - 1,
+          title: l.acctFavourites,
+          child: LumeRows(
+            children: <Widget>[
+              for (final LumeLibraryEntry f in c.favourites)
+                LumeRichRow(
+                  icon: f.icon,
+                  title: f.name,
+                  subtitle: f.category,
+                  chevron: true,
+                  onTap: () => c.actions.openTool(f.id),
                 ),
             ],
           ),
         ),
       if (c.recents.isNotEmpty)
         LumeAccountSection(
-          child: LumeAccountList(
-            rows: <Widget>[
-              for (int i = 0; i < c.recents.length; i++)
-                LumeSettingsRow(
-                  icon: c.recents[i].icon,
-                  title: c.recents[i].name,
-                  onTap: () => c.actions.openTool(c.recents[i].id),
-                  isLast: i == c.recents.length - 1,
+          title: l.toolsRecent,
+          child: LumeRows(
+            children: <Widget>[
+              for (final LumeLibraryEntry r in c.recents)
+                LumeCompactRow(
+                  icon: r.icon,
+                  label: r.name,
+                  onTap: () => c.actions.openTool(r.id),
                 ),
             ],
           ),
@@ -1128,6 +1141,10 @@ LumeAccountView _edit(LumeAccountRouteContext c) {
                     keyboardType: TextInputType.phone,
                     error: (LumeFormIssue i) => accountMessage(l, i),
                     onLeave: c.actions.leaveField,
+                    // The last field of the form: the keyboard's own key
+                    // sends it rather than moving to nothing.
+                    textInputAction: TextInputAction.done,
+                    onSubmitted: c.form.dirty ? c.actions.submit : null,
                   ),
                 ],
               ],
@@ -1256,6 +1273,7 @@ LumeAccountView _email(LumeAccountRouteContext c) {
                 autofillHints: const <String>[AutofillHints.email],
                 error: (LumeFormIssue i) => accountMessage(l, i),
                 onLeave: c.actions.leaveField,
+                textInputAction: TextInputAction.done,
                 onSubmitted: c.actions.submit,
               ),
               const SizedBox(height: 16),
@@ -1295,6 +1313,7 @@ LumeAccountView _phone(LumeAccountRouteContext c) {
               autofillHints: const <String>[AutofillHints.telephoneNumber],
               error: (LumeFormIssue i) => accountMessage(l, i),
               onLeave: c.actions.leaveField,
+              textInputAction: TextInputAction.done,
               onSubmitted: c.actions.submit,
             ),
             const SizedBox(height: 14),
@@ -1447,6 +1466,7 @@ LumeAccountView _password(LumeAccountRouteContext c) {
               autofillHints: const <String>[AutofillHints.newPassword],
               error: (LumeFormIssue i) => accountMessage(l, i),
               onLeave: c.actions.leaveField,
+              textInputAction: TextInputAction.done,
               onSubmitted: c.actions.submit,
             ),
             const SizedBox(height: 18),
@@ -1540,9 +1560,12 @@ LumeAccountView _privacy(LumeAccountRouteContext c) {
               icon: LumeIcons.lock,
               title: l.acctPrivacySensitive,
               subtitle: l.acctPrivacySensitiveSub,
+              // Inverted on purpose: this one asks whether sensitive content
+              // stays *hidden*, which is the promise being made. Tapping it
+              // flips the preference underneath, not the sentence.
               toggle: !c.notify.sensitivePreview,
               onTap: () =>
-                  c.actions.toggleSensitivePreview(c.notify.sensitivePreview),
+                  c.actions.toggleSensitivePreview(!c.notify.sensitivePreview),
             ),
             LumeSettingsRow(
               icon: LumeIcons.sparkles,
@@ -1825,6 +1848,8 @@ LumeAccountView _delete(LumeAccountRouteContext c) {
               autofillHints: const <String>[AutofillHints.password],
               error: (LumeFormIssue i) => accountMessage(l, i),
               onLeave: c.actions.leaveField,
+              textInputAction: TextInputAction.done,
+              onSubmitted: c.actions.submit,
             ),
             const SizedBox(height: 18),
             LumeButton.danger(
@@ -1861,7 +1886,7 @@ String accountMessage(AppLocalizations l, LumeFormIssue issue) =>
       'emailTaken' => l.authErrEmailTaken,
       'emailSame' => l.authErrEmailSame,
       'phoneInvalid' => l.acctErrPhoneInvalid,
-      'nameRequired' => l.authFieldName,
+      'nameRequired' => l.acctErrNameRequired,
       'locked' => l.authErrLocked,
       'signedOut' => l.authErrSignedOut,
       'storage' => l.acctErrStorage,

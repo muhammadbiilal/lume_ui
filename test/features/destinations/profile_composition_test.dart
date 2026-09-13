@@ -92,7 +92,7 @@ void main() {
       expect(find.text('Sara'), findsNWidgets(2));
       expect(find.byKey(LumeIdentityCard.nameKey), findsOneWidget);
       expect(
-        (tester.widget<Text>(find.byKey(LumeIdentityCard.nameKey))).data,
+        tester.widget<Text>(find.byKey(LumeIdentityCard.nameKey)).data,
         'Sara',
       );
       // Still a guest: the badge and the reasons stay.

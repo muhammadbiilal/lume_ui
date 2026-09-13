@@ -466,6 +466,12 @@ abstract class AppLocalizations {
   /// **'That current password is incorrect.'**
   String get acctErrCurrentWrong;
 
+  /// A name refusal. No fixture returns it — `updateUser` in `account.js` accepts a blank name — but `LumeAccountFailure.nameRequired` is part of the repository contract a real service may use, and a contract value with no sentence would render the network error instead.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter a name, or leave it blank to use your email address.'**
+  String get acctErrNameRequired;
+
   /// Reference: `acct.err.passwordSame`.
   ///
   /// In en, this message translates to:
@@ -484,10 +490,10 @@ abstract class AppLocalizations {
   /// **'That image is too large for this device to keep. Try a smaller one.'**
   String get acctErrPhotoTooBig;
 
-  /// Reference: `acct.err.storage`.
+  /// Reference: `acct.err.storage`. The prototype says "check your browser’s storage settings", which is advice a phone cannot act on. C49.
   ///
   /// In en, this message translates to:
-  /// **'Lume couldn’t save to this device. Check your browser’s storage settings and try again.'**
+  /// **'Lume couldn’t save to this device. Check that there is space free and try again.'**
   String get acctErrStorage;
 
   /// Reference: `acct.favourites`.
@@ -3910,6 +3916,24 @@ abstract class AppLocalizations {
   /// **'Fine-grained control over each kind of alert'**
   String get notifPrefPerToolSub;
 
+  /// Reference: `n.pref.p`. The Notifications screen and the Privacy route show the *same* preference with different words and opposite polarity, which is deliberate in the reference: one asks whether to show, the other whether to hide.review
+  ///
+  /// In en, this message translates to:
+  /// **'Show previews'**
+  String get notifPrefPreview;
+
+  /// Reference: `n.pref.p`. The Notifications screen and the Privacy route show the *same* preference with different words and opposite polarity, which is deliberate in the reference: one asks whether to show, the other whether to hide.reviewSub
+  ///
+  /// In en, this message translates to:
+  /// **'Include the detail, not just the title'**
+  String get notifPrefPreviewSub;
+
+  /// Reference: `n.pref.privacySub`.
+  ///
+  /// In en, this message translates to:
+  /// **'What a notification is allowed to reveal'**
+  String get notifPrefPrivacySub;
+
   /// Reference: `n.pref.push`.
   ///
   /// In en, this message translates to:
@@ -3939,6 +3963,18 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Restore dismissed'**
   String get notifPrefRestore;
+
+  /// Reference: `n.pref.s`. The Notifications screen and the Privacy route show the *same* preference with different words and opposite polarity, which is deliberate in the reference: one asks whether to show, the other whether to hide.ensitive
+  ///
+  /// In en, this message translates to:
+  /// **'Preview sensitive content'**
+  String get notifPrefSensitive;
+
+  /// Reference: `n.pref.s`. The Notifications screen and the Privacy route show the *same* preference with different words and opposite polarity, which is deliberate in the reference: one asks whether to show, the other whether to hide.ensitiveSub
+  ///
+  /// In en, this message translates to:
+  /// **'Health, documents and money say only that something changed'**
+  String get notifPrefSensitiveSub;
 
   /// Reference: `n.pref.sound`.
   ///

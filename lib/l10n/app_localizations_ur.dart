@@ -204,6 +204,10 @@ class AppLocalizationsUr extends AppLocalizations {
   String get acctErrCurrentWrong => 'موجودہ پاس ورڈ درست نہیں ہے۔';
 
   @override
+  String get acctErrNameRequired =>
+      'نام درج کریں، یا خالی چھوڑ دیں تاکہ آپ کا ای میل پتہ استعمال ہو۔';
+
+  @override
   String get acctErrPasswordSame =>
       'ایسا پاس ورڈ چنیں جو آپ نے یہاں پہلے استعمال نہ کیا ہو۔';
 
@@ -216,7 +220,7 @@ class AppLocalizationsUr extends AppLocalizations {
 
   @override
   String get acctErrStorage =>
-      'Lume اس ڈیوائس پر محفوظ نہیں کر سکا۔ اپنے براؤزر کی اسٹوریج ترتیبات دیکھیں اور دوبارہ کوشش کریں۔';
+      'Lume اس ڈیوائس پر محفوظ نہیں کر سکا۔ دیکھیں کہ جگہ خالی ہے اور دوبارہ کوشش کریں۔';
 
   @override
   String get acctFavourites => 'آپ کے پسندیدہ';
@@ -2130,6 +2134,15 @@ class AppLocalizationsUr extends AppLocalizations {
   String get notifPrefPerToolSub => 'ہر قسم کی اطلاع پر باریک کنٹرول';
 
   @override
+  String get notifPrefPreview => 'پیش منظر دکھائیں';
+
+  @override
+  String get notifPrefPreviewSub => 'صرف عنوان نہیں، تفصیل بھی شامل کریں';
+
+  @override
+  String get notifPrefPrivacySub => 'ایک اطلاع کیا ظاہر کر سکتی ہے';
+
+  @override
   String get notifPrefPush => 'پُش اطلاعات';
 
   @override
@@ -2144,6 +2157,13 @@ class AppLocalizationsUr extends AppLocalizations {
 
   @override
   String get notifPrefRestore => 'ہٹائی گئی بحال کریں';
+
+  @override
+  String get notifPrefSensitive => 'حساس مواد کا پیش منظر';
+
+  @override
+  String get notifPrefSensitiveSub =>
+      'صحت، دستاویزات اور پیسہ صرف اتنا کہتے ہیں کہ کچھ بدلا ہے';
 
   @override
   String get notifPrefSound => 'آواز';
