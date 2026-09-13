@@ -2095,7 +2095,7 @@ class AppLocalizationsUr extends AppLocalizations {
   String get nPriHigh => 'اہم';
 
   @override
-  String get nPushAllow => 'اطلاعات کی اجازت دیں';
+  String get nPushAllow => 'اطلاعات چالو کریں';
 
   @override
   String get nPushNotNow => 'ابھی نہیں';
@@ -2108,10 +2108,10 @@ class AppLocalizationsUr extends AppLocalizations {
 
   @override
   String get nPushText =>
-      'Lume آپ کو نماز کے اوقات، بلوں، تاخیر اور جو آپ نے مانگا اُس کے بارے میں بتائے گا۔ اور کچھ نہیں۔';
+      'جن چیزوں کو آپ پہلے سے دیکھتے ہیں اُن کی کارآمد اطلاعات — اور کچھ نہیں۔';
 
   @override
-  String get nPushTitle => 'اطلاعات چالو کریں';
+  String get nPushTitle => 'باخبر رہیں';
 
   @override
   String get nQuietText =>

@@ -2115,7 +2115,7 @@ class AppLocalizationsAr extends AppLocalizations {
   String get nPriHigh => 'مهم';
 
   @override
-  String get nPushAllow => 'السماح بالإشعارات';
+  String get nPushAllow => 'تفعيل الإشعارات';
 
   @override
   String get nPushNotNow => 'ليس الآن';
@@ -2127,11 +2127,10 @@ class AppLocalizationsAr extends AppLocalizations {
   String get nPushOn => 'مفعّلة';
 
   @override
-  String get nPushText =>
-      'سيخبرك Lume بمواقيت الصلاة والفواتير والتأخيرات وما طلبته. لا شيء غير ذلك.';
+  String get nPushText => 'تنبيهات مفيدة لما تتابعه بالفعل — ولا شيء غير ذلك.';
 
   @override
-  String get nPushTitle => 'تفعيل الإشعارات';
+  String get nPushTitle => 'ابقَ على اطلاع';
 
   @override
   String get nQuietText => 'لن يقاطعك شيء، لكن كل شيء يصل إلى هنا.';

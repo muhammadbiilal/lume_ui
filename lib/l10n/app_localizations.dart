@@ -3796,13 +3796,13 @@ abstract class AppLocalizations {
   /// **'Important'**
   String get nPriHigh;
 
-  /// Reference: the `#sheet-notifpush` primary action.
+  /// Reference: `n.ask.enable`.
   ///
   /// In en, this message translates to:
-  /// **'Allow notifications'**
+  /// **'Enable notifications'**
   String get nPushAllow;
 
-  /// Reference: the `#sheet-notifpush` quiet action. Declining is a choice, not an absence of one.
+  /// Reference: `n.ask.later`. Declining is a choice, not the absence of one.
   ///
   /// In en, this message translates to:
   /// **'Not now'**
@@ -3820,16 +3820,16 @@ abstract class AppLocalizations {
   /// **'On'**
   String get nPushOn;
 
-  /// Reference: the `#sheet-notifpush` body. It names what will be sent and, in the same breath, what will not.
+  /// Reference: `n.ask.text`. It names what will be sent and, in the same breath, what will not.
   ///
   /// In en, this message translates to:
-  /// **'Lume will tell you about prayer times, bills, delays and the things you asked for. Nothing else.'**
+  /// **'Useful alerts for the things you already follow — and nothing else.'**
   String get nPushText;
 
-  /// Reference: the `#sheet-notifpush` heading. Permission is never requested at boot — the reader sees an explanation first.
+  /// Reference: `n.ask.title`.
   ///
   /// In en, this message translates to:
-  /// **'Turn on notifications'**
+  /// **'Stay informed'**
   String get nPushTitle;
 
   /// Reference: `n.quiet.text`. Quiet hours silence the interruption, not the delivery — and the note says so, because a reader who thought otherwise would stop checking.

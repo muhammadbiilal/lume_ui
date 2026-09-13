@@ -2095,7 +2095,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get nPriHigh => 'Important';
 
   @override
-  String get nPushAllow => 'Allow notifications';
+  String get nPushAllow => 'Enable notifications';
 
   @override
   String get nPushNotNow => 'Not now';
@@ -2108,10 +2108,10 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get nPushText =>
-      'Lume will tell you about prayer times, bills, delays and the things you asked for. Nothing else.';
+      'Useful alerts for the things you already follow — and nothing else.';
 
   @override
-  String get nPushTitle => 'Turn on notifications';
+  String get nPushTitle => 'Stay informed';
 
   @override
   String get nQuietText =>

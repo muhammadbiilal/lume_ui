@@ -70,7 +70,7 @@ void main() {
     eligibility: kEligibility,
     user: user ?? LumeUsers.muslimPk,
     l: l,
-    prefs: prefs ?? const LumeNotificationPrefs(),
+    readPrefs: () => prefs ?? const LumeNotificationPrefs(),
     samples: samples ?? kNotificationSamples,
     quietHours: quietHours,
     pushEnabled: pushEnabled,

@@ -234,7 +234,7 @@ class LumeFixtureNotificationRepository
     required this.eligibility,
     required this.user,
     required this.l,
-    required this.prefs,
+    required this.readPrefs,
     this.samples = kNotificationSamples,
     this.quietHours = false,
     this.pushEnabled = false,
@@ -246,9 +246,13 @@ class LumeFixtureNotificationRepository
   final LumeUserContext user;
   final AppLocalizations l;
 
-  /// The same preference record the account's Notifications route writes.
-  /// One store, two surfaces.
-  final LumeNotificationPrefs prefs;
+  /// The preferences, *asked for* rather than held.
+  ///
+  /// A snapshot taken when the repository was built would be stale the moment
+  /// the reader switched a category off — and they can do that from the
+  /// preferences sheet without this being rebuilt. The record is read at the
+  /// moment it is needed, from the same store the account route writes.
+  final LumeNotificationPrefs Function() readPrefs;
 
   final List<LumeNotificationSample> samples;
   final bool quietHours;
@@ -284,7 +288,7 @@ class LumeFixtureNotificationRepository
   }
 
   /// `allowed(src)` — the same three gates, in the same order.
-  bool _allowed(LumeNotificationSource src) {
+  bool _allowed(LumeNotificationSource src, LumeNotificationPrefs prefs) {
     final LumeFeature? f = eligibility.visibleById(src.tool, user);
     if (f == null) return false;
     if (!prefs.isOn(src.category)) return false;
@@ -293,7 +297,11 @@ class LumeFixtureNotificationRepository
   }
 
   /// `bodyFor(src, made)` — what the row is allowed to say.
-  String _body(LumeNotificationSample s, LumeNotificationCategory? cat) {
+  String _body(
+    LumeNotificationSample s,
+    LumeNotificationCategory? cat,
+    LumeNotificationPrefs prefs,
+  ) {
     if (!prefs.preview) return l.nHidden;
     final bool sensitive = cat?.sensitive ?? false;
     if (sensitive && !prefs.sensitivePreview && s.privateBody != null) {
@@ -307,11 +315,12 @@ class LumeFixtureNotificationRepository
     if (delay > Duration.zero) await Future<void>.delayed(delay);
     if (failWith != null) throw LumeNotificationException(failWith!);
 
+    final LumeNotificationPrefs prefs = readPrefs();
     final List<LumeNotification> out = <LumeNotification>[];
     for (int i = 0; i < samples.length; i++) {
       final LumeNotificationSample s = samples[i];
       final LumeNotificationSource? src = _sourceOf(s.sourceId);
-      if (src == null || !_allowed(src)) continue;
+      if (src == null || !_allowed(src, prefs)) continue;
 
       final String id = '${s.sourceId}#$i';
       if (_dismissed.contains(id)) continue;
@@ -324,7 +333,7 @@ class LumeFixtureNotificationRepository
         LumeNotification(
           id: id,
           title: s.title,
-          body: _body(s, cat),
+          body: _body(s, cat, prefs),
           category: src.category,
           icon: cat?.icon ?? 'bell',
           tool: src.tool,

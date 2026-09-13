@@ -2778,13 +2778,13 @@
   "@nPriHigh": {
     "description": "Reference: `n.pri.high`. The badge on a high-priority row."
   },
-  "nPushAllow": "Allow notifications",
+  "nPushAllow": "Enable notifications",
   "@nPushAllow": {
-    "description": "Reference: the `#sheet-notifpush` primary action."
+    "description": "Reference: `n.ask.enable`."
   },
   "nPushNotNow": "Not now",
   "@nPushNotNow": {
-    "description": "Reference: the `#sheet-notifpush` quiet action. Declining is a choice, not an absence of one."
+    "description": "Reference: `n.ask.later`. Declining is a choice, not the absence of one."
   },
   "nPushOff": "Off",
   "@nPushOff": {
@@ -2794,13 +2794,13 @@
   "@nPushOn": {
     "description": "Reference: `n.push.on`. Whether push has been allowed on this device."
   },
-  "nPushText": "Lume will tell you about prayer times, bills, delays and the things you asked for. Nothing else.",
+  "nPushText": "Useful alerts for the things you already follow — and nothing else.",
   "@nPushText": {
-    "description": "Reference: the `#sheet-notifpush` body. It names what will be sent and, in the same breath, what will not."
+    "description": "Reference: `n.ask.text`. It names what will be sent and, in the same breath, what will not."
   },
-  "nPushTitle": "Turn on notifications",
+  "nPushTitle": "Stay informed",
   "@nPushTitle": {
-    "description": "Reference: the `#sheet-notifpush` heading. Permission is never requested at boot — the reader sees an explanation first."
+    "description": "Reference: `n.ask.title`."
   },
   "nQuietText": "Nothing will interrupt you, but everything still arrives here.",
   "@nQuietText": {

@@ -46,7 +46,10 @@ final Provider<LumeNotificationRepository> notificationFeedProvider =
         eligibility: ref.watch(eligibilityProvider),
         user: LumeUserContext.from(gate.state.profile),
         l: ref.watch(notificationStringsProvider),
-        // The same record the Notifications *preferences* route writes.
-        prefs: ref.watch(notificationPrefsProvider).prefs,
+        // Asked for at read time, from the same store the Notifications
+        // *preferences* route writes — so a switch flipped in the sheet is
+        // true the next time the centre reads, without this provider having
+        // to be rebuilt.
+        readPrefs: () => ref.read(notificationPrefsProvider).prefs,
       );
     });

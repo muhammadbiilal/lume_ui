@@ -22,12 +22,11 @@ import '../../../core/icons/lume_icons.dart';
 import '../../../core/widgets/lume/lume_destination.dart';
 import '../../../core/routing/lume_routes.dart';
 import '../../../core/widgets/lume/lume_header.dart';
-import '../../../core/widgets/lume/lume_overlay.dart';
 import '../../../core/widgets/lume/lume_state.dart';
 import '../../../l10n/app_localizations.dart';
-import '../../account/domain/account_model.dart';
 import '../domain/notification_model.dart';
 import 'notification_centre.dart';
+import 'notification_sheets.dart';
 
 /// The centre on a branch.
 class LumeNotificationHost extends ConsumerStatefulWidget {
@@ -94,10 +93,6 @@ class _LumeNotificationHostState extends ConsumerState<LumeNotificationHost> {
       if (!mounted || request != _request) return;
       setState(() => _failure = LumeNotificationFailure.unreachable);
     }
-  }
-
-  void _say(String message) {
-    if (mounted) showLumeToast(context, LumeToastData(message: message));
   }
 
   Future<void> _open(LumeNotification n) async {
@@ -197,26 +192,17 @@ class _LumeNotificationHostState extends ConsumerState<LumeNotificationHost> {
     );
   }
 
-  /// The preferences are an account route, and the centre links to it rather
-  /// than carrying a second copy of it.
+  /// The preferences, as a sheet over the centre.
+  ///
+  /// `#sheet-notifprefs`, which is what the reference raises from here — not
+  /// a walk out to the account section, which would lose the reader's place
+  /// and their filter. The same store either way, so a switch flipped here is
+  /// flipped there.
   void _openSettings() {
-    if (widget.branch == LumeRoutes.profile) {
-      context.go(
-        LumeRoutes.accountRoute(
-          LumeRoutes.profile,
-          LumeAccountRoute.notifications.segment,
-        ),
-      );
-      return;
-    }
-    // From any other branch the preferences still live on Profile's, because
-    // that is where the account is. Saying so beats a dead control.
-    _say(AppLocalizations.of(context).nSettings);
-    context.go(
-      LumeRoutes.accountRoute(
-        LumeRoutes.profile,
-        LumeAccountRoute.notifications.segment,
-      ),
+    unawaited(
+      showLumeNotificationPrefsSheet(context).then((_) {
+        if (mounted) unawaited(_read());
+      }),
     );
   }
 }

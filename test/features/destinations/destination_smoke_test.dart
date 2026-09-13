@@ -18,6 +18,10 @@ import 'package:lume/core/widgets/lume/lume_settings.dart';
 import 'package:lume/features/explore/presentation/explore_screen.dart';
 import 'package:lume/features/home/presentation/home_screen.dart';
 import 'package:lume/features/today/presentation/today_screen.dart';
+import 'package:lume/core/widgets/lume/lume_field.dart';
+import 'package:lume/features/notifications/presentation/notification_host.dart';
+import 'package:lume/features/notifications/presentation/notification_row.dart';
+import 'package:lume/features/search/presentation/search_sheet.dart';
 import 'package:lume/features/tools/presentation/tools_screen.dart';
 import 'package:lume/features/trains/presentation/trains_screen.dart';
 
@@ -183,6 +187,134 @@ void main() {
 
     // 4. And the reader is still on Trains, with its own tab selected.
     expect(locationOf(router), LumeRoutes.trains);
+    expect(tester.takeException(), isNull);
+  });
+
+  testWidgets('a walk into search, a result, and back', (
+    WidgetTester tester,
+  ) async {
+    final GoRouter router = await pumpLumeRouter(
+      tester,
+      surface: LumeViewport.tall,
+    );
+
+    // 1. Home's app bar raises search over Home, which stays where it was.
+    await tester.tap(find.bySemanticsLabel('Search everything').first);
+    await tester.pumpAndSettle();
+    expect(find.byType(LumeSearchSheet), findsOneWidget);
+    expect(find.text('Quick tools'), findsOneWidget);
+    expect(locationOf(router), '/home/search');
+
+    // 2. A word nobody would guess from the tool's name finds it.
+    await tester.enterText(find.byType(LumeSearchField), 'petrol');
+    await tester.pumpAndSettle();
+    await tester.tap(find.text('Fuel Prices'));
+    await tester.pumpAndSettle();
+    expect(locationOf(router), '/home/tool/fuel');
+    expect(find.byType(LumeSearchSheet), findsNothing);
+
+    // 3. And Back returns to Home, not to the search address.
+    await tester.binding.handlePopRoute();
+    await tester.pumpAndSettle();
+    expect(locationOf(router), LumeRoutes.home);
+    expect(tester.takeException(), isNull);
+  });
+
+  testWidgets('a direct search link, then dismissed', (
+    WidgetTester tester,
+  ) async {
+    // The destination is established *before* the sheet appears, so a deep
+    // link never flashes the wrong branch behind it.
+    final GoRouter router = await pumpLumeRouter(
+      tester,
+      initialLocation: '/today/search',
+      surface: LumeViewport.tall,
+    );
+    expect(find.byType(LumeTodayScreen), findsOneWidget);
+    expect(find.byType(LumeSearchSheet), findsOneWidget);
+
+    await tester.binding.handlePopRoute();
+    await tester.pumpAndSettle();
+    expect(find.byType(LumeSearchSheet), findsNothing);
+    expect(locationOf(router), LumeRoutes.today);
+  });
+
+  testWidgets('a walk through the notification centre and into a target', (
+    WidgetTester tester,
+  ) async {
+    final GoRouter router = await pumpLumeRouter(
+      tester,
+      initialLocation: '/home/notifications',
+      surface: LumeViewport.tall,
+    );
+    await tester.pump(LumeNotificationHost.settle);
+    await tester.pumpAndSettle();
+
+    // 1. Unread to begin with, and the header says how many.
+    expect(find.textContaining('unread'), findsWidgets);
+
+    // 2. Opening a row marks it read and goes to its tool on this branch.
+    await tester.tap(find.text('Heavy rain warning'));
+    await tester.pumpAndSettle();
+    expect(locationOf(router), '/home/tool/weather');
+
+    // 3. Back returns to the centre, and that row is no longer unread.
+    router.go('/home/notifications');
+    await tester.pumpAndSettle();
+    final LumeNotificationRow row = tester.widget<LumeNotificationRow>(
+      find.ancestor(
+        of: find.text('Heavy rain warning'),
+        matching: find.byType(LumeNotificationRow),
+      ),
+    );
+    expect(row.notification.read, isTrue);
+    expect(tester.takeException(), isNull);
+  });
+
+  testWidgets('mark all read, and the shell badge follows', (
+    WidgetTester tester,
+  ) async {
+    final GoRouter router = await pumpLumeRouter(
+      tester,
+      initialLocation: '/home/notifications',
+      surface: LumeViewport.tall,
+    );
+    await tester.pump(LumeNotificationHost.settle);
+    await tester.pumpAndSettle();
+
+    await tester.tap(find.bySemanticsLabel('Mark all as read'));
+    await tester.pumpAndSettle();
+    expect(find.text('You’re all caught up'), findsWidgets);
+
+    // The centre and Home's bell read the same feed, so the badge cannot
+    // disagree with the list.
+    router.go(LumeRoutes.home);
+    await tester.pumpAndSettle();
+    expect(tester.takeException(), isNull);
+  });
+
+  testWidgets('the preferences sheet opens over the centre and saves', (
+    WidgetTester tester,
+  ) async {
+    await pumpLumeRouter(
+      tester,
+      initialLocation: '/home/notifications',
+      surface: LumeViewport.tall,
+    );
+    await tester.pump(LumeNotificationHost.settle);
+    await tester.pumpAndSettle();
+
+    await tester.tap(find.bySemanticsLabel('Notification settings').first);
+    await tester.pumpAndSettle();
+    expect(find.text('Show previews'), findsOneWidget);
+
+    await tester.tap(find.text('Show previews'));
+    await tester.pumpAndSettle();
+    await tester.binding.handlePopRoute();
+    await tester.pumpAndSettle();
+
+    // Back on the centre, and every body is now withheld.
+    expect(find.text('Content hidden'), findsWidgets);
     expect(tester.takeException(), isNull);
   });
 
