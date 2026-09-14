@@ -35,6 +35,8 @@ import '../../../core/widgets/lume/lume_explore.dart';
 import '../../explore/domain/explore_model.dart';
 import '../../explore/presentation/explore_art.dart';
 import '../../today/presentation/today_art.dart';
+import '../../../core/widgets/lume/lume_art.dart';
+import '../../../core/widgets/lume/lume_destination.dart';
 
 /// Asserted by the gallery test. A production route must never resolve here.
 const bool kGalleryIsDevelopmentOnly = true;
@@ -1241,14 +1243,18 @@ class _ComponentGalleryState extends ConsumerState<ComponentGallery> {
       ),
       _Case(
         'image cards',
+        // `.hstrip` — the measured strip, full bleed, 11 apart.
         LumeHorizontalStrip(
-          gutters: false,
+          gap: 11,
+          padding: const EdgeInsets.only(bottom: 4),
+          bleed: true,
           children: <Widget>[
             LumeImageCard(
               title: 'What the new fuel prices mean',
               kicker: 'News',
               meta: '4 min read',
               seed: 3,
+              tone: LumeArtTone.sky,
               onTap: () {},
             ),
             LumeImageCard(
@@ -1256,6 +1262,7 @@ class _ComponentGalleryState extends ConsumerState<ComponentGallery> {
               kicker: 'Guide',
               meta: '6 min read',
               seed: 7,
+              tone: LumeArtTone.violet,
               onTap: () {},
             ),
           ],

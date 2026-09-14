@@ -19,11 +19,14 @@ import 'package:flutter/semantics.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../app/providers/personalisation.dart';
+import '../../../app/providers/platform_services.dart';
 import '../../../app/providers/shell_provider.dart';
 import '../../../core/fixtures/lume_clock.dart';
 import '../../../core/icons/lume_icons.dart';
 import '../../../core/localization/lume_format.dart';
 import '../../../core/navigation/lume_tool_frame.dart';
+import '../../../core/platform/lume_export.dart';
+import '../../../core/platform/lume_share.dart';
 import '../../../core/widgets/lume/lume_button.dart';
 import '../../../core/widgets/lume/lume_overlay.dart';
 import '../../../core/widgets/lume/lume_state.dart';
@@ -33,6 +36,7 @@ import '../../catalogue/domain/eligibility.dart';
 import '../../catalogue/domain/lume_feature.dart';
 import '../../catalogue/presentation/feature_strings.dart';
 import '../../onboarding/domain/onboarding_state.dart';
+import '../../share/presentation/share_sheet.dart';
 import '../../startup/application/startup_controller.dart';
 import 'tool_strings.dart';
 
@@ -72,6 +76,8 @@ class LumeToolScreen extends ConsumerStatefulWidget {
     this.status = LumeToolStatus.ready,
     this.onRetry,
     this.subtitle,
+    this.shareCard,
+    this.exportFile,
   });
 
   final LumeFeature feature;
@@ -88,6 +94,16 @@ class LumeToolScreen extends ConsumerStatefulWidget {
 
   /// `c.headerSub` — a tool's own sub-line, where it has one.
   final String? subtitle;
+
+  /// D7 — the card this tool shares, as the screen stands at the moment of
+  /// the press. `null` (the function, or its answer) when there is nothing
+  /// honest to share: the tool bar's Share is then disabled, not inert.
+  final LumeShareCard? Function()? shareCard;
+
+  /// D7 — the file this tool exports, as the screen stands at the moment of
+  /// the press. Throws [ArgumentError] only on a tool's own bug, which the
+  /// reader is told as a failure.
+  final LumeExportFile? Function()? exportFile;
 
   /// `toast()` — 2.1 seconds, or 6 with an action.
   static const Duration toastFor = Duration(milliseconds: 2100);
@@ -123,12 +139,18 @@ class LumeToolScreenState extends ConsumerState<LumeToolScreen> {
   Timer? _toastTimer;
 
   /// Show [message], and tell a screen reader once it is on screen.
-  void say(String message, {String? actionLabel, VoidCallback? onAction}) {
+  void say(
+    String message, {
+    String? actionLabel,
+    VoidCallback? onAction,
+    LumeToastTone tone = LumeToastTone.success,
+  }) {
     if (!mounted) return;
     _toastTimer?.cancel();
     setState(
       () => _toast = LumeToastData(
         message: message,
+        tone: tone,
         actionLabel: actionLabel,
         onAction: onAction,
       ),
@@ -154,6 +176,41 @@ class LumeToolScreenState extends ConsumerState<LumeToolScreen> {
   void dispose() {
     _toastTimer?.cancel();
     super.dispose();
+  }
+
+  /// `share:<tool>` — the share card sheet, with the card as it stands now.
+  Future<void> share() async {
+    final LumeShareCard? card = widget.shareCard?.call();
+    if (card == null || !mounted) return;
+    await showLumeShareSheet(context: context, card: card);
+  }
+
+  /// `export:<tool>` — the file as it stands now, handed to the exporter, and
+  /// a sentence only for what the platform reported.
+  Future<void> export() async {
+    final AppLocalizations l = AppLocalizations.of(context);
+    final LumeExportFile? file;
+    try {
+      file = widget.exportFile?.call();
+    } on ArgumentError {
+      say(l.toolExportFailed, tone: LumeToastTone.error);
+      return;
+    }
+    if (file == null) return;
+    final LumeExportOutcome outcome = await ref
+        .read(exporterProvider)
+        .export(file);
+    if (!mounted) return;
+    switch (outcome) {
+      case LumeExportOutcome.saved:
+        say(l.toolExportedAs(file.fileName));
+      case LumeExportOutcome.cancelled:
+        break;
+      case LumeExportOutcome.unavailable:
+        say(l.toolExportUnavailable, tone: LumeToastTone.info);
+      case LumeExportOutcome.failed:
+        say(l.toolExportFailed, tone: LumeToastTone.error);
+    }
   }
 
   static void _inert() {}
@@ -188,13 +245,13 @@ class LumeToolScreenState extends ConsumerState<LumeToolScreen> {
         LumeIconButton(
           icon: LumeIcons.share,
           label: l.a11yShare,
-          onPressed: a.onShare ?? _inert,
+          onPressed: a.onShare ?? (widget.shareCard == null ? null : share),
         ),
       if (s.contains(LumeToolSupport.export))
         LumeIconButton(
           icon: LumeIcons.download,
           label: l.a11yExport,
-          onPressed: a.onExport ?? _inert,
+          onPressed: a.onExport ?? (widget.exportFile == null ? null : export),
         ),
     ];
     if (s.contains(LumeToolSupport.favourites) && out.length < 3) {

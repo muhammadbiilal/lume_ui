@@ -1488,6 +1488,104 @@ verified source; it needs an owned, dated directory per country, the
 region-level numbers the catalogue's `reqCity` promises, and a review of each
 number before release.
 
+### C68 — Share and Export that tell the truth (D7)
+
+**Found in F6A building the share-card system on Tax; corrected, for
+ratification.**
+
+- **"Shared" and "Image saved" whatever happened.** `share-cards.js` toasts
+  "Shared" when `navigator.share` is missing, and "Image saved" when the
+  canvas produced no image. Flutter says each only when the platform reports
+  it: the share sheet's `success` is "Shared", `dismissed` says nothing,
+  `unavailable` and a platform error say so (`shareUnavailable`,
+  `shareFailed`). Export's "Saved {name}" is said only when the reader chose a
+  destination; cancelled says nothing; a failure is "Couldn’t write the file".
+- **Save image has nowhere honest to go yet.** Writing to the photo library
+  needs Android's storage permission below API 30 and iOS's photo-library
+  usage strings — a permission and user-data decision this phase does not
+  take. The production `LumeImageSaver` answers `unavailable` and the sheet
+  says "Saving images isn’t available yet — use Share to save it"; the
+  platform share sheet offers its own save destination. **Platform services
+  task:** decide the permission, then put a saver (the cached `gal` is the
+  candidate) behind the same contract.
+- **Export leaves through the share sheet.** A browser download has no phone
+  equivalent a reader can find again; `LumePlatformExporter` hands the file
+  (from memory, no temporary file of Lume's) to the share sheet, where Save to
+  Files, Drive and mail are the destinations. Same file name, MIME type, BOM,
+  CRLF and quoting as `exportTool` (`lume_share_export_test.dart`).
+- **A tool with nothing to share gets the habits quote.** `openShare` falls
+  back to `SHARE_CONTENT.quote` ("Small things done consistently…") for any
+  tool `shareForTool` does not know, and for Tax in a market with no income
+  tax. A card that says something unrelated to the screen is not honest
+  content: Tax there shares "No personal income tax · Take-home: …" with its
+  authority and year, and a tool that declares sharing but supplies no card
+  gets a disabled Share, not an unrelated one.
+- **Toasts over the sheet.** The reference's toast sits above the open sheet
+  (z-index 70 over 55); the sheet's own toasts are drawn in the overlay above
+  it, and the sheet stays open, as the reference's does.
+
+**Privacy rule:** `LumeShareCard.forFeature` makes no card for a sensitive
+tool, whatever the tool asks for.
+
+**Dependency:** `share_plus` (cached 11.1.0), used only by
+`lume_share_platform.dart`; no permission.
+
+### C69 — Recipes: a chosen cuisine that looks unchosen, a field set in twice
+
+**Found in F6A on Recipes.**
+
+- **The chosen cuisine chip is unmarked — corrected, for ratification.**
+  `recipes.tool.js` writes `class="chip is-on"`; the stylesheet styles a chosen
+  chip as `.chip.is-active` (near-black fill), and `.chip.is-on` has no rule,
+  so every cuisine chip draws the same white pill whichever is chosen, and
+  none says `aria-pressed` (`tool_recipes_default_pk_cuisine-Pakistani_…`
+  measures "Pakistani" in the unchosen fill). The intent is unambiguous —
+  the module marks one chip as chosen — so Flutter draws it as `.is-active`
+  and announces it selected (`recipes_test.dart`).
+- **The search field sits a second gutter in — reproduced.** `.search { margin:
+  0 var(--pad) }` is written for a full-bleed field; inside a section that
+  already has its gutter it lands 40 in at 390 (157 at 700, 333 at 1100) and
+  310 wide. Reproduced as rendered.
+- **The favourites strip starts at the page edge on a phone — reproduced.**
+  `.sect--flush` removes the section's gutter and `.hstrip`'s negative margin
+  cancels its own, so the first card sits at x 0 at 390 and at the content
+  column's edge above compact, exactly the measured `bleed` geometry.
+
+**Found on Recipes (reference tool 5), corrected the way C62's were:**
+
+| widget | was | reference, measured |
+|---|---|---|
+| `LumeSearchField` | a 20-point glyph | `.search svg` 17 (input at +26) |
+| `LumeToolState` | a bare 24-point glyph, a solid outline, 4 between title and text, the 12-point role's 16 line | `.state__art` 46 tile (radius 16, card fill, hairline) with a 21-point glyph; `1px dashed border-2`; 10 between every part; text 12 on 18, at most 30ch |
+| `LumeRichRow` | no illustration lead; chevron 6 after; meta on one line, truncated | `.rrow__thumb` 52 × 40, radius 12; chevron 12 after; `.rrow__meta` wraps, 5 apart both ways (two lines, 29 tall) |
+| `LumeImageCard` | a 108-point gradient panel with its own shapes, the text under it on the card-title and caption roles, no card | `.imgcard`: 168 wide, bordered, radius 16, `shadow-sm`; 96-point `LumeArt` (`artimg`: `ART_TONES`, the seeded circles, `xMidYMid slice`); body `10 12 12`; kicker 10 / 700 / .04em, title 13 / 700 on 1.28, meta 10 / 500 |
+| `LumeBadge` (`ok`) | accent at 14 % with accent-700 ink | `.badge--ok`: `--up` at 14 %, `--up` ink |
+| two `LumeHorizontalStrip`s, and Timer's `LumeChipRow` | an unmeasured strip in `lume_table.dart` beside the measured one, and a third copy of `.chips` in the Timer tool | one strip (`lume_destination.dart`): `.chips` for Timer and Recipes, `bleed` with gap 11 for `.hstrip` |
+
+### C70 — News: "Top" is everything, and a search is told about a category
+
+**Found in F6A on News; reproduced.**
+
+- **"Top" is not a category.** `news.tool.js` treats the chip as "all": with
+  Top chosen every story shows, including those filed under Business or Sport;
+  the one story filed under Top appears only there. Reproduced as written
+  (`news_test.dart` "Top is every story").
+- **A search that finds nothing is told "Nothing in this category yet".** The
+  empty state has one sentence for both reasons a list can be empty
+  (`tool_news_default_pk_q-zzz_…` measures it under Top). Reproduced; a
+  product decision whether a search deserves its own sentence, as Recipes has.
+- **Choosing a category can leave a lead and nothing else.** With one Business
+  story in Pakistan's edition, Business shows that story as the lead and the
+  empty sentence under Latest (`…cat-Business…`). Reproduced.
+- **The chosen category chip is unmarked**, as C69 records for Recipes — the
+  same `is-on` class. Corrected the same way.
+- **Publishers are not translated.** Headlines and categories read in the
+  reader's language; "Dawn", "Reuters" and the rest are the names they
+  publish under, and stay as they are.
+- **Share** shares the top story and its publisher and age, not the unrelated
+  quote the reference falls back to (C68); with no top story, Share is
+  disabled.
+
 ### C63 — English dates written the wrong way outside the United States
 
 **Found in F6A** on the UAE Tax capture ("Mon, 7 Sep") and confirmed by

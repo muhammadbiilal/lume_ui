@@ -26,6 +26,12 @@ dependencies:
   # needs no CALL_PHONE permission). Used only by
   # lib/core/platform/lume_dialer_platform.dart, behind LumeDialer.
   url_launcher: ^6.3.2
+  # D7 — hands a rendered share card or an exported file to the platform's
+  # share sheet from memory (no temporary file of ours, no storage
+  # permission) and reports whether the reader chose a destination. Used only
+  # by lib/core/platform/lume_share_platform.dart, behind LumeSharer and
+  # LumeExporter.
+  share_plus: ^11.1.0
 
 dev_dependencies:
   flutter_test:

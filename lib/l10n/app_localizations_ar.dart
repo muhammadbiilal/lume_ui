@@ -1282,6 +1282,9 @@ class AppLocalizationsAr extends AppLocalizations {
   String get commonSave => 'حفظ';
 
   @override
+  String get commonSaved => 'محفوظ';
+
+  @override
   String get commonShare => 'مشاركة';
 
   @override
@@ -2768,10 +2771,42 @@ class AppLocalizationsAr extends AppLocalizations {
   }
 
   @override
+  String newsAgoHours(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n ساعة',
+      few: '$n ساعات',
+      two: 'ساعتان',
+      one: 'ساعة',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String newsAgoMinutes(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n دقيقة',
+      few: '$n دقائق',
+      two: 'دقيقتان',
+      one: 'دقيقة',
+    );
+    return '$_temp0';
+  }
+
+  @override
   String get newsCatBusiness => 'أعمال';
 
   @override
+  String get newsCatHealth => 'صحة';
+
+  @override
   String get newsCatKarachi => 'كراتشي';
+
+  @override
+  String get newsCatLifestyle => 'أسلوب حياة';
 
   @override
   String get newsCatMoney => 'مال';
@@ -2783,7 +2818,64 @@ class AppLocalizationsAr extends AppLocalizations {
   String get newsCatSport => 'رياضة';
 
   @override
+  String get newsCatTechnology => 'تقنية';
+
+  @override
+  String get newsCatTop => 'الأبرز';
+
+  @override
   String get newsCatWellbeing => 'صحة ورفاهية';
+
+  @override
+  String get newsCatWorld => 'العالم';
+
+  @override
+  String get newsEdition => 'نسختك';
+
+  @override
+  String get newsEmptyText => 'جرّب فئة أخرى، أو وسّع مصادرك من الإعدادات.';
+
+  @override
+  String get newsEmptyTitle => 'لا شيء في هذه الفئة بعد';
+
+  @override
+  String get newsHeadlineGlobalCoastal =>
+      'المدن الساحلية تنشر مخططًا مشتركًا للتكيّف';
+
+  @override
+  String get newsHeadlineGlobalOnDevice =>
+      'النماذج العاملة على الجهاز تعيد بهدوء تشكيل ما تفعله الهواتف دون اتصال';
+
+  @override
+  String get newsHeadlineGlobalRates =>
+      'البنوك المركزية تلمّح إلى وتيرة أبطأ لخفض الفائدة مع العام الجديد';
+
+  @override
+  String get newsHeadlineGlobalTactics =>
+      'التحوّل التكتيكي الذي حسم أكبر مباراة في نهاية الأسبوع';
+
+  @override
+  String get newsHeadlineGlobalWalk =>
+      'نزهة قصيرة بعد الطعام تفيد أكثر من نزهة طويلة قبل النوم';
+
+  @override
+  String get newsHeadlinePkDengue =>
+      'مراقبة حمى الضنك في الإقليم تنتقل إلى دورة تقارير أسبوعية';
+
+  @override
+  String get newsHeadlinePkSquad =>
+      'باكستان تعلن تشكيلة من 16 لاعبًا لسلسلة الاختبارات على أرضها';
+
+  @override
+  String get newsHeadlinePkStartups =>
+      'الشركات الناشئة في كراتشي جمعت 84 مليون دولار هذا الربع بقيادة التقنية المالية';
+
+  @override
+  String get newsHeadlinePkTrade =>
+      'استئناف محادثات الممر التجاري الإقليمي بعد توقف ستة أشهر';
+
+  @override
+  String get newsLatest => 'الأحدث';
 
   @override
   String get newsLoadshed =>
@@ -2801,13 +2893,54 @@ class AppLocalizationsAr extends AppLocalizations {
   String get newsRupee => 'الروبية تستقر مع ارتفاع التحويلات للشهر الثالث';
 
   @override
+  String get newsSaved => 'قراءاتك';
+
+  @override
+  String newsSavedCount(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n خبرًا محفوظًا',
+      few: '$n أخبار محفوظة',
+      two: 'خبران محفوظان',
+      one: 'خبر محفوظ واحد',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get newsSavedOpen => 'جارٍ فتح الأخبار المحفوظة';
+
+  @override
   String get newsSavings => 'دليل مبسّط لأول هدف ادخاري لك';
+
+  @override
+  String get newsSearch => 'ابحث في الأخبار';
+
+  @override
+  String newsShareSource(String source, String ago) {
+    return '$source · $ago';
+  }
 
   @override
   String get newsShortList => 'لماذا تُنجز القائمة الأقصر عملًا أكثر';
 
   @override
+  String get newsSources => 'المصادر';
+
+  @override
+  String get newsSourcesEdit => 'اختر مصادرك';
+
+  @override
+  String newsSourcesValue(String n) {
+    return 'تتابع $n';
+  }
+
+  @override
   String get newsSquad => 'باكستان تعلن تشكيلتها لسلسلة الاختبار على أرضها';
+
+  @override
+  String get newsTop => 'أبرز خبر';
 
   @override
   String get notifPrefBadge => 'عدّاد الشارة';
@@ -3318,6 +3451,141 @@ class AppLocalizationsAr extends AppLocalizations {
   String get recSaveFailedText => 'لم يضع شيء مما كتبته. حاول مرة أخرى.';
 
   @override
+  String get recipeCuisineGlobal => 'عالمي';
+
+  @override
+  String get recipeCuisineLevantine => 'شامي';
+
+  @override
+  String get recipeCuisineMediterranean => 'متوسطي';
+
+  @override
+  String get recipeCuisinePakistani => 'باكستاني';
+
+  @override
+  String get recipeNameBeefPulao => 'بولاو باللحم';
+
+  @override
+  String get recipeNameChickenKarahi => 'دجاج كراهي';
+
+  @override
+  String get recipeNameDaalChawal => 'دال وأرز';
+
+  @override
+  String get recipeNameGreekSalad => 'سلطة يونانية';
+
+  @override
+  String get recipeNameOvernightOats => 'شوفان منقوع';
+
+  @override
+  String get recipeNameShakshuka => 'شكشوكة';
+
+  @override
+  String get recipeTagBreakfast => 'فطور';
+
+  @override
+  String get recipeTagBudget => 'اقتصادي';
+
+  @override
+  String get recipeTagDinner => 'عشاء';
+
+  @override
+  String get recipeTagFamily => 'عائلي';
+
+  @override
+  String get recipeTagLight => 'خفيف';
+
+  @override
+  String get recipeTagLunch => 'غداء';
+
+  @override
+  String get recipeTagMakeAhead => 'يُحضَّر مسبقًا';
+
+  @override
+  String get recipeTagNoCook => 'بلا طهي';
+
+  @override
+  String get recipeTagSpicy => 'حار';
+
+  @override
+  String get recipeTagVegetarian => 'نباتي';
+
+  @override
+  String get recipesAll => 'كل الوصفات';
+
+  @override
+  String get recipesFavourites => 'مفضّلاتك';
+
+  @override
+  String recipesIngredients(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n مكوّنًا',
+      few: '$n مكوّنات',
+      two: 'مكوّنان',
+      one: 'مكوّن واحد',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get recipesNoMatch => 'لا توجد وصفات مطابقة';
+
+  @override
+  String get recipesNoMatchText => 'جرّب مطبخًا أو مكوّنًا أو وسمًا.';
+
+  @override
+  String recipesPrepCook(String prep, String cook) {
+    return '$prep + $cook دقيقة';
+  }
+
+  @override
+  String get recipesRelated => 'افعل المزيد بهذا';
+
+  @override
+  String get recipesSearch => 'ابحث في الوصفات';
+
+  @override
+  String recipesServes(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: 'لـ$n شخصًا',
+      few: 'لـ$n أشخاص',
+      two: 'لشخصين',
+      one: 'لشخص واحد',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String recipesShareText(int count, String names) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count وصفة',
+      few: '$count وصفات',
+      two: 'وصفتان',
+      one: 'وصفة واحدة',
+    );
+    return '$_temp0 · مفضّلاتك: $names';
+  }
+
+  @override
+  String recipesSteps(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n خطوة',
+      few: '$n خطوات',
+      two: 'خطوتان',
+      one: 'خطوة واحدة',
+    );
+    return '$_temp0';
+  }
+
+  @override
   String get recordsNoSelectionText => 'اختر سجلاً لعرضه هنا.';
 
   @override
@@ -3369,6 +3637,37 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get searchTry => 'جرّب البحث عن';
+
+  @override
+  String get shareCardReady => 'بطاقتك جاهزة';
+
+  @override
+  String get shareFailed => 'تعذّرت مشاركة البطاقة';
+
+  @override
+  String get shareGenerating => 'يتم إنشاء بطاقتك…';
+
+  @override
+  String get sharePreviewLabel => 'معاينة بطاقة المشاركة';
+
+  @override
+  String get shareSaveDenied => 'لا يستطيع Lume الحفظ في صورك';
+
+  @override
+  String get shareSaveFailed => 'تعذّر حفظ الصورة';
+
+  @override
+  String get shareSaveUnavailable =>
+      'حفظ الصور غير متاح بعد — استخدم المشاركة لحفظها';
+
+  @override
+  String get shareSaved => 'تم حفظ الصورة';
+
+  @override
+  String get shareShared => 'تمت المشاركة';
+
+  @override
+  String get shareUnavailable => 'المشاركة غير متاحة على هذا الجهاز';
 
   @override
   String get slideMoneyCta => 'عرض المال';
@@ -3752,6 +4051,17 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get toolErrorTitle => 'حدث خطأ ما';
+
+  @override
+  String get toolExportFailed => 'تعذّرت كتابة الملف';
+
+  @override
+  String get toolExportUnavailable => 'التصدير غير متاح على هذا الجهاز';
+
+  @override
+  String toolExportedAs(String name) {
+    return 'تم حفظ $name';
+  }
 
   @override
   String toolFavourited(String name) {
@@ -4321,6 +4631,11 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get unitDays => 'يوم';
+
+  @override
+  String unitKcalCount(String n) {
+    return '$n سعرة';
+  }
 
   @override
   String get unitKmh => 'كم/س';

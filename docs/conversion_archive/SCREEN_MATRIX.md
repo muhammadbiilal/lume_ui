@@ -232,7 +232,7 @@ run on the shared CRUD engine.
 | `shopping` | Shopping List | manager | medium | — | **yes** | Y | — | not started |
 | `birthdays` | Birthdays | planner | medium | — | **yes** | — | — | not started |
 | `streak` | Daily Streak | tracker | medium | — | — | — | — | not started |
-| `recipes` | Recipes | library | high | — | — | — | — | not started |
+| `recipes` | Recipes | library | high | — | — | — | — | **built (F6A)** — reference tool for the visual-library archetype; search, cuisine chips, image-card strip, art rows, `.state` empty, share card (C68, C69) |
 | `mealplan` | Meal Planner | planner | high | — | — | — | — | not started |
 | `alarms` | Alarms | manager | medium | — | — | — | — | not started |
 | `learning` | Learning & Growth | tracker | high | — | — | — | — | **built (F6A)** — reference tool for the tracker archetype; bar chart and heatmap |

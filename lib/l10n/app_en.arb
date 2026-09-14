@@ -1626,6 +1626,10 @@
   "@commonSave": {
     "description": "Reference key common.save"
   },
+  "commonSaved": "Saved",
+  "@commonSaved": {
+    "description": "Reference key common.saved — a badge on a saved item"
+  },
   "commonShare": "Share",
   "@commonShare": {
     "description": "Reference key common.share"
@@ -3767,13 +3771,39 @@
       }
     }
   },
+  "newsAgoHours": "{n, plural, =1{1 hr} other{{n} hr}}",
+  "@newsAgoHours": {
+    "description": "How long ago a story was published, in hours — the reference writes \"1 hr\", \"2 hr\"",
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
+  "newsAgoMinutes": "{n, plural, =1{1 min} other{{n} min}}",
+  "@newsAgoMinutes": {
+    "description": "How long ago a story was published, in minutes — the reference writes \"18 min\"",
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
   "newsCatBusiness": "Business",
   "@newsCatBusiness": {
     "description": "Reference: a news category"
   },
+  "newsCatHealth": "Health",
+  "@newsCatHealth": {
+    "description": "A category in tool-data.js NEWS_CATEGORIES. The reference writes it in English in every language"
+  },
   "newsCatKarachi": "Karachi",
   "@newsCatKarachi": {
     "description": "Reference: a news category"
+  },
+  "newsCatLifestyle": "Lifestyle",
+  "@newsCatLifestyle": {
+    "description": "A category in tool-data.js NEWS_CATEGORIES. The reference writes it in English in every language"
   },
   "newsCatMoney": "Money",
   "@newsCatMoney": {
@@ -3787,9 +3817,73 @@
   "@newsCatSport": {
     "description": "Reference: a news category"
   },
+  "newsCatTechnology": "Technology",
+  "@newsCatTechnology": {
+    "description": "A category in tool-data.js NEWS_CATEGORIES. The reference writes it in English in every language"
+  },
+  "newsCatTop": "Top",
+  "@newsCatTop": {
+    "description": "A category in tool-data.js NEWS_CATEGORIES. The reference writes it in English in every language"
+  },
   "newsCatWellbeing": "Wellbeing",
   "@newsCatWellbeing": {
     "description": "Reference: a news category"
+  },
+  "newsCatWorld": "World",
+  "@newsCatWorld": {
+    "description": "A category in tool-data.js NEWS_CATEGORIES. The reference writes it in English in every language"
+  },
+  "newsEdition": "Your edition",
+  "@newsEdition": {
+    "description": "Reference key news.edition"
+  },
+  "newsEmptyText": "Try another category, or widen your sources in settings.",
+  "@newsEmptyText": {
+    "description": "Reference key news.empty.text"
+  },
+  "newsEmptyTitle": "Nothing in this category yet",
+  "@newsEmptyTitle": {
+    "description": "Reference key news.empty.title"
+  },
+  "newsHeadlineGlobalCoastal": "Coastal cities publish a shared adaptation blueprint",
+  "@newsHeadlineGlobalCoastal": {
+    "description": "A headline in tool-data.js NEWS — fixture content, translated so no screen mixes languages"
+  },
+  "newsHeadlineGlobalOnDevice": "On-device models are quietly reshaping what phones can do offline",
+  "@newsHeadlineGlobalOnDevice": {
+    "description": "A headline in tool-data.js NEWS — fixture content, translated so no screen mixes languages"
+  },
+  "newsHeadlineGlobalRates": "Central banks signal a slower path on rate cuts into the new year",
+  "@newsHeadlineGlobalRates": {
+    "description": "A headline in tool-data.js NEWS — fixture content, translated so no screen mixes languages"
+  },
+  "newsHeadlineGlobalTactics": "The tactical shift that decided the weekend’s biggest fixture",
+  "@newsHeadlineGlobalTactics": {
+    "description": "A headline in tool-data.js NEWS — fixture content, translated so no screen mixes languages"
+  },
+  "newsHeadlineGlobalWalk": "A short walk after meals does more than a long one before bed",
+  "@newsHeadlineGlobalWalk": {
+    "description": "A headline in tool-data.js NEWS — fixture content, translated so no screen mixes languages"
+  },
+  "newsHeadlinePkDengue": "Provincial dengue surveillance moves to a weekly reporting cycle",
+  "@newsHeadlinePkDengue": {
+    "description": "A headline in tool-data.js NEWS — fixture content, translated so no screen mixes languages"
+  },
+  "newsHeadlinePkSquad": "Pakistan name a 16-player squad for the home Test series",
+  "@newsHeadlinePkSquad": {
+    "description": "A headline in tool-data.js NEWS — fixture content, translated so no screen mixes languages"
+  },
+  "newsHeadlinePkStartups": "Karachi start-ups raised $84m this quarter, led by fintech",
+  "@newsHeadlinePkStartups": {
+    "description": "A headline in tool-data.js NEWS — fixture content, translated so no screen mixes languages"
+  },
+  "newsHeadlinePkTrade": "Regional trade corridor talks resume after a six-month pause",
+  "@newsHeadlinePkTrade": {
+    "description": "A headline in tool-data.js NEWS — fixture content, translated so no screen mixes languages"
+  },
+  "newsLatest": "Latest",
+  "@newsLatest": {
+    "description": "Reference key news.latest"
   },
   "newsLoadshed": "K-Electric announces revised loadshedding schedule for September",
   "@newsLoadshed": {
@@ -3812,17 +3906,71 @@
   "@newsRupee": {
     "description": "Reference: a Pakistan headline"
   },
+  "newsSaved": "Your reading",
+  "@newsSaved": {
+    "description": "Reference key news.saved"
+  },
+  "newsSavedCount": "{n, plural, =1{1 saved story} other{{n} saved stories}}",
+  "@newsSavedCount": {
+    "description": "Reference key news.savedCount, pluralised",
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
+  "newsSavedOpen": "Opening saved stories",
+  "@newsSavedOpen": {
+    "description": "Reference key news.savedOpen — the toast the saved row speaks"
+  },
   "newsSavings": "A plain-English guide to your first savings goal",
   "@newsSavings": {
     "description": "Reference: a global headline"
+  },
+  "newsSearch": "Search stories",
+  "@newsSearch": {
+    "description": "Reference key news.search"
+  },
+  "newsShareSource": "{source} · {ago}",
+  "@newsShareSource": {
+    "description": "The source line of a shared top story: the publisher and how long ago",
+    "placeholders": {
+      "source": {
+        "type": "String"
+      },
+      "ago": {
+        "type": "String"
+      }
+    }
   },
   "newsShortList": "Why a shorter to-do list finishes more work",
   "@newsShortList": {
     "description": "Reference: a global headline"
   },
+  "newsSources": "Sources",
+  "@newsSources": {
+    "description": "Reference key news.sources"
+  },
+  "newsSourcesEdit": "Choose your sources",
+  "@newsSourcesEdit": {
+    "description": "Reference key news.sourcesEdit — the toast the sources row speaks"
+  },
+  "newsSourcesValue": "{n} following",
+  "@newsSourcesValue": {
+    "description": "Reference key news.sourcesValue. The number arrives formatted",
+    "placeholders": {
+      "n": {
+        "type": "String"
+      }
+    }
+  },
   "newsSquad": "Pakistan name squad for the home Test series",
   "@newsSquad": {
     "description": "Reference: a Pakistan headline"
+  },
+  "newsTop": "Top story",
+  "@newsTop": {
+    "description": "Reference key news.top"
   },
   "notifPrefBadge": "Badge count",
   "@notifPrefBadge": {
@@ -4511,6 +4659,161 @@
   "@recSaveFailedText": {
     "description": "Reference key rec.saveFailedText"
   },
+  "recipeCuisineGlobal": "Global",
+  "@recipeCuisineGlobal": {
+    "description": "A cuisine in tool-data.js RECIPES. The reference writes it in English in every language"
+  },
+  "recipeCuisineLevantine": "Levantine",
+  "@recipeCuisineLevantine": {
+    "description": "A cuisine in tool-data.js RECIPES. The reference writes it in English in every language"
+  },
+  "recipeCuisineMediterranean": "Mediterranean",
+  "@recipeCuisineMediterranean": {
+    "description": "A cuisine in tool-data.js RECIPES. The reference writes it in English in every language"
+  },
+  "recipeCuisinePakistani": "Pakistani",
+  "@recipeCuisinePakistani": {
+    "description": "A cuisine in tool-data.js RECIPES. The reference writes it in English in every language"
+  },
+  "recipeNameBeefPulao": "Beef Pulao",
+  "@recipeNameBeefPulao": {
+    "description": "A dish in tool-data.js RECIPES — a name, transliterated where it is one and translated where it describes"
+  },
+  "recipeNameChickenKarahi": "Chicken Karahi",
+  "@recipeNameChickenKarahi": {
+    "description": "A dish in tool-data.js RECIPES — a name, transliterated where it is one and translated where it describes"
+  },
+  "recipeNameDaalChawal": "Daal Chawal",
+  "@recipeNameDaalChawal": {
+    "description": "A dish in tool-data.js RECIPES — a name, transliterated where it is one and translated where it describes"
+  },
+  "recipeNameGreekSalad": "Greek Salad",
+  "@recipeNameGreekSalad": {
+    "description": "A dish in tool-data.js RECIPES — a name, transliterated where it is one and translated where it describes"
+  },
+  "recipeNameOvernightOats": "Overnight Oats",
+  "@recipeNameOvernightOats": {
+    "description": "A dish in tool-data.js RECIPES — a name, transliterated where it is one and translated where it describes"
+  },
+  "recipeNameShakshuka": "Shakshuka",
+  "@recipeNameShakshuka": {
+    "description": "A dish in tool-data.js RECIPES — a name, transliterated where it is one and translated where it describes"
+  },
+  "recipeTagBreakfast": "Breakfast",
+  "@recipeTagBreakfast": {
+    "description": "A tag in tool-data.js RECIPES"
+  },
+  "recipeTagBudget": "Budget",
+  "@recipeTagBudget": {
+    "description": "A tag in tool-data.js RECIPES"
+  },
+  "recipeTagDinner": "Dinner",
+  "@recipeTagDinner": {
+    "description": "A tag in tool-data.js RECIPES"
+  },
+  "recipeTagFamily": "Family",
+  "@recipeTagFamily": {
+    "description": "A tag in tool-data.js RECIPES"
+  },
+  "recipeTagLight": "Light",
+  "@recipeTagLight": {
+    "description": "A tag in tool-data.js RECIPES"
+  },
+  "recipeTagLunch": "Lunch",
+  "@recipeTagLunch": {
+    "description": "A tag in tool-data.js RECIPES"
+  },
+  "recipeTagMakeAhead": "Make ahead",
+  "@recipeTagMakeAhead": {
+    "description": "A tag in tool-data.js RECIPES"
+  },
+  "recipeTagNoCook": "No cook",
+  "@recipeTagNoCook": {
+    "description": "A tag in tool-data.js RECIPES"
+  },
+  "recipeTagSpicy": "Spicy",
+  "@recipeTagSpicy": {
+    "description": "A tag in tool-data.js RECIPES"
+  },
+  "recipeTagVegetarian": "Vegetarian",
+  "@recipeTagVegetarian": {
+    "description": "A tag in tool-data.js RECIPES"
+  },
+  "recipesAll": "All recipes",
+  "@recipesAll": {
+    "description": "Reference key recipes.all"
+  },
+  "recipesFavourites": "Your favourites",
+  "@recipesFavourites": {
+    "description": "Reference key recipes.favourites"
+  },
+  "recipesIngredients": "{n, plural, =1{1 ingredient} other{{n} ingredients}}",
+  "@recipesIngredients": {
+    "description": "Reference: `r.ingredients + \" \" + t(\"recipes.ingredients\")`, pluralised",
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
+  "recipesNoMatch": "No recipes match",
+  "@recipesNoMatch": {
+    "description": "Reference key recipes.noMatch"
+  },
+  "recipesNoMatchText": "Try a cuisine, an ingredient or a tag.",
+  "@recipesNoMatchText": {
+    "description": "Reference key recipes.noMatchText"
+  },
+  "recipesPrepCook": "{prep} + {cook} min",
+  "@recipesPrepCook": {
+    "description": "Reference key recipes.prepCook — preparation and cooking, in minutes",
+    "placeholders": {
+      "prep": {
+        "type": "String"
+      },
+      "cook": {
+        "type": "String"
+      }
+    }
+  },
+  "recipesRelated": "Do more with this",
+  "@recipesRelated": {
+    "description": "Reference key recipes.related"
+  },
+  "recipesSearch": "Search recipes",
+  "@recipesSearch": {
+    "description": "Reference key recipes.search"
+  },
+  "recipesServes": "{n, plural, =1{serves 1} other{serves {n}}}",
+  "@recipesServes": {
+    "description": "Reference key recipes.serves, pluralised",
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
+  "recipesShareText": "{count, plural, =1{1 recipe} other{{count} recipes}} · Your favourites: {names}",
+  "@recipesShareText": {
+    "description": "The Recipes share card (C68). The reference shares an unrelated quote; this says what the library holds",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      },
+      "names": {
+        "type": "String"
+      }
+    }
+  },
+  "recipesSteps": "{n, plural, =1{1 step} other{{n} steps}}",
+  "@recipesSteps": {
+    "description": "Reference key recipes.stepsN, pluralised",
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
   "recordsNoSelectionText": "Choose a record to see it here.",
   "@recordsNoSelectionText": {
     "description": "Master-detail pane before a record is chosen"
@@ -4593,6 +4896,46 @@
   "searchTry": "Try searching for",
   "@searchTry": {
     "description": "Reference key search.try"
+  },
+  "shareCardReady": "Your card is ready",
+  "@shareCardReady": {
+    "description": "Reference key share.cardReady"
+  },
+  "shareFailed": "Couldn’t share the card",
+  "@shareFailed": {
+    "description": "Said when the share sheet failed (D7). The reference has none"
+  },
+  "shareGenerating": "Creating your card…",
+  "@shareGenerating": {
+    "description": "Reference key share.generating"
+  },
+  "sharePreviewLabel": "Share card preview",
+  "@sharePreviewLabel": {
+    "description": "Reference: aria-label on the share canvas"
+  },
+  "shareSaveDenied": "Lume can’t save to your photos",
+  "@shareSaveDenied": {
+    "description": "Said when the reader refused the photo library (D7)"
+  },
+  "shareSaveFailed": "Couldn’t save the image",
+  "@shareSaveFailed": {
+    "description": "Said when saving the image failed (D7)"
+  },
+  "shareSaveUnavailable": "Saving images isn’t available yet — use Share to save it",
+  "@shareSaveUnavailable": {
+    "description": "Said by Save image while the photo-library permission is undecided (D7)"
+  },
+  "shareSaved": "Image saved",
+  "@shareSaved": {
+    "description": "Reference key share.saved — said only once the photo library has the image (D7)"
+  },
+  "shareShared": "Shared",
+  "@shareShared": {
+    "description": "Reference key share.shared — said only when the share sheet reports a destination was chosen (D7)"
+  },
+  "shareUnavailable": "Sharing isn’t available on this device",
+  "@shareUnavailable": {
+    "description": "Said when the platform has no share sheet (D7). The reference has none"
   },
   "slideMoneyCta": "See money",
   "@slideMoneyCta": {
@@ -5140,6 +5483,23 @@
   "toolErrorTitle": "Something went wrong",
   "@toolErrorTitle": {
     "description": "Tool host error state"
+  },
+  "toolExportFailed": "Couldn’t write the file",
+  "@toolExportFailed": {
+    "description": "Reference key tool.exportFailed"
+  },
+  "toolExportUnavailable": "Exporting isn’t available on this device",
+  "@toolExportUnavailable": {
+    "description": "Said when the platform cannot write a file (D7). The reference has none"
+  },
+  "toolExportedAs": "Saved {name}",
+  "@toolExportedAs": {
+    "description": "Reference key tool.exportedAs — said only when the reader chose where the file went (D7). The name is a file name",
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
   },
   "toolFavourited": "Added {name} to favourites",
   "@toolFavourited": {
@@ -5904,6 +6264,15 @@
   "unitDays": "days",
   "@unitDays": {
     "description": "Reference: a statistic’s unit"
+  },
+  "unitKcalCount": "{n} kcal",
+  "@unitKcalCount": {
+    "description": "Reference: `c.num(r.kcal) + \" \" + t(\"unit.kcal\")`. The number arrives formatted",
+    "placeholders": {
+      "n": {
+        "type": "String"
+      }
+    }
   },
   "unitKmh": "km/h",
   "@unitKmh": {

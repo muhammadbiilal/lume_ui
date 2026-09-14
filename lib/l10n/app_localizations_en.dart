@@ -1274,6 +1274,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get commonSave => 'Save';
 
   @override
+  String get commonSaved => 'Saved';
+
+  @override
   String get commonShare => 'Share';
 
   @override
@@ -2748,10 +2751,38 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
+  String newsAgoHours(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n hr',
+      one: '1 hr',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String newsAgoMinutes(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n min',
+      one: '1 min',
+    );
+    return '$_temp0';
+  }
+
+  @override
   String get newsCatBusiness => 'Business';
 
   @override
+  String get newsCatHealth => 'Health';
+
+  @override
   String get newsCatKarachi => 'Karachi';
+
+  @override
+  String get newsCatLifestyle => 'Lifestyle';
 
   @override
   String get newsCatMoney => 'Money';
@@ -2763,7 +2794,65 @@ class AppLocalizationsEn extends AppLocalizations {
   String get newsCatSport => 'Sport';
 
   @override
+  String get newsCatTechnology => 'Technology';
+
+  @override
+  String get newsCatTop => 'Top';
+
+  @override
   String get newsCatWellbeing => 'Wellbeing';
+
+  @override
+  String get newsCatWorld => 'World';
+
+  @override
+  String get newsEdition => 'Your edition';
+
+  @override
+  String get newsEmptyText =>
+      'Try another category, or widen your sources in settings.';
+
+  @override
+  String get newsEmptyTitle => 'Nothing in this category yet';
+
+  @override
+  String get newsHeadlineGlobalCoastal =>
+      'Coastal cities publish a shared adaptation blueprint';
+
+  @override
+  String get newsHeadlineGlobalOnDevice =>
+      'On-device models are quietly reshaping what phones can do offline';
+
+  @override
+  String get newsHeadlineGlobalRates =>
+      'Central banks signal a slower path on rate cuts into the new year';
+
+  @override
+  String get newsHeadlineGlobalTactics =>
+      'The tactical shift that decided the weekend’s biggest fixture';
+
+  @override
+  String get newsHeadlineGlobalWalk =>
+      'A short walk after meals does more than a long one before bed';
+
+  @override
+  String get newsHeadlinePkDengue =>
+      'Provincial dengue surveillance moves to a weekly reporting cycle';
+
+  @override
+  String get newsHeadlinePkSquad =>
+      'Pakistan name a 16-player squad for the home Test series';
+
+  @override
+  String get newsHeadlinePkStartups =>
+      'Karachi start-ups raised \$84m this quarter, led by fintech';
+
+  @override
+  String get newsHeadlinePkTrade =>
+      'Regional trade corridor talks resume after a six-month pause';
+
+  @override
+  String get newsLatest => 'Latest';
 
   @override
   String get newsLoadshed =>
@@ -2782,13 +2871,52 @@ class AppLocalizationsEn extends AppLocalizations {
       'Rupee holds steady as remittances climb for a third month';
 
   @override
+  String get newsSaved => 'Your reading';
+
+  @override
+  String newsSavedCount(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n saved stories',
+      one: '1 saved story',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get newsSavedOpen => 'Opening saved stories';
+
+  @override
   String get newsSavings => 'A plain-English guide to your first savings goal';
+
+  @override
+  String get newsSearch => 'Search stories';
+
+  @override
+  String newsShareSource(String source, String ago) {
+    return '$source · $ago';
+  }
 
   @override
   String get newsShortList => 'Why a shorter to-do list finishes more work';
 
   @override
+  String get newsSources => 'Sources';
+
+  @override
+  String get newsSourcesEdit => 'Choose your sources';
+
+  @override
+  String newsSourcesValue(String n) {
+    return '$n following';
+  }
+
+  @override
   String get newsSquad => 'Pakistan name squad for the home Test series';
+
+  @override
+  String get newsTop => 'Top story';
 
   @override
   String get notifPrefBadge => 'Badge count';
@@ -3311,6 +3439,133 @@ class AppLocalizationsEn extends AppLocalizations {
   String get recSaveFailedText => 'Nothing you typed was lost. Try again.';
 
   @override
+  String get recipeCuisineGlobal => 'Global';
+
+  @override
+  String get recipeCuisineLevantine => 'Levantine';
+
+  @override
+  String get recipeCuisineMediterranean => 'Mediterranean';
+
+  @override
+  String get recipeCuisinePakistani => 'Pakistani';
+
+  @override
+  String get recipeNameBeefPulao => 'Beef Pulao';
+
+  @override
+  String get recipeNameChickenKarahi => 'Chicken Karahi';
+
+  @override
+  String get recipeNameDaalChawal => 'Daal Chawal';
+
+  @override
+  String get recipeNameGreekSalad => 'Greek Salad';
+
+  @override
+  String get recipeNameOvernightOats => 'Overnight Oats';
+
+  @override
+  String get recipeNameShakshuka => 'Shakshuka';
+
+  @override
+  String get recipeTagBreakfast => 'Breakfast';
+
+  @override
+  String get recipeTagBudget => 'Budget';
+
+  @override
+  String get recipeTagDinner => 'Dinner';
+
+  @override
+  String get recipeTagFamily => 'Family';
+
+  @override
+  String get recipeTagLight => 'Light';
+
+  @override
+  String get recipeTagLunch => 'Lunch';
+
+  @override
+  String get recipeTagMakeAhead => 'Make ahead';
+
+  @override
+  String get recipeTagNoCook => 'No cook';
+
+  @override
+  String get recipeTagSpicy => 'Spicy';
+
+  @override
+  String get recipeTagVegetarian => 'Vegetarian';
+
+  @override
+  String get recipesAll => 'All recipes';
+
+  @override
+  String get recipesFavourites => 'Your favourites';
+
+  @override
+  String recipesIngredients(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n ingredients',
+      one: '1 ingredient',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get recipesNoMatch => 'No recipes match';
+
+  @override
+  String get recipesNoMatchText => 'Try a cuisine, an ingredient or a tag.';
+
+  @override
+  String recipesPrepCook(String prep, String cook) {
+    return '$prep + $cook min';
+  }
+
+  @override
+  String get recipesRelated => 'Do more with this';
+
+  @override
+  String get recipesSearch => 'Search recipes';
+
+  @override
+  String recipesServes(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: 'serves $n',
+      one: 'serves 1',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String recipesShareText(int count, String names) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count recipes',
+      one: '1 recipe',
+    );
+    return '$_temp0 · Your favourites: $names';
+  }
+
+  @override
+  String recipesSteps(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n steps',
+      one: '1 step',
+    );
+    return '$_temp0';
+  }
+
+  @override
   String get recordsNoSelectionText => 'Choose a record to see it here.';
 
   @override
@@ -3363,6 +3618,37 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get searchTry => 'Try searching for';
+
+  @override
+  String get shareCardReady => 'Your card is ready';
+
+  @override
+  String get shareFailed => 'Couldn’t share the card';
+
+  @override
+  String get shareGenerating => 'Creating your card…';
+
+  @override
+  String get sharePreviewLabel => 'Share card preview';
+
+  @override
+  String get shareSaveDenied => 'Lume can’t save to your photos';
+
+  @override
+  String get shareSaveFailed => 'Couldn’t save the image';
+
+  @override
+  String get shareSaveUnavailable =>
+      'Saving images isn’t available yet — use Share to save it';
+
+  @override
+  String get shareSaved => 'Image saved';
+
+  @override
+  String get shareShared => 'Shared';
+
+  @override
+  String get shareUnavailable => 'Sharing isn’t available on this device';
 
   @override
   String get slideMoneyCta => 'See money';
@@ -3748,6 +4034,18 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get toolErrorTitle => 'Something went wrong';
+
+  @override
+  String get toolExportFailed => 'Couldn’t write the file';
+
+  @override
+  String get toolExportUnavailable =>
+      'Exporting isn’t available on this device';
+
+  @override
+  String toolExportedAs(String name) {
+    return 'Saved $name';
+  }
 
   @override
   String toolFavourited(String name) {
@@ -4307,6 +4605,11 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get unitDays => 'days';
+
+  @override
+  String unitKcalCount(String n) {
+    return '$n kcal';
+  }
 
   @override
   String get unitKmh => 'km/h';

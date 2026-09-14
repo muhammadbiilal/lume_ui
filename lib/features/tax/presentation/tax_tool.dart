@@ -18,9 +18,12 @@ library;
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../../core/fixtures/lume_clock.dart';
 import '../../../core/fixtures/lume_reference_rates.dart';
 import '../../../core/icons/lume_icons.dart';
 import '../../../core/localization/lume_format.dart';
+import '../../../core/platform/lume_export.dart';
+import '../../../core/platform/lume_share.dart';
 import '../../../core/theme/lume/lume_colors.dart';
 import '../../../core/theme/lume/lume_space.dart';
 import '../../../core/theme/lume/lume_theme.dart';
@@ -77,6 +80,7 @@ class LumeTaxTool extends ConsumerStatefulWidget {
 }
 
 class _LumeTaxToolState extends ConsumerState<LumeTaxTool> {
+  final GlobalKey<LumeToolScreenState> _host = GlobalKey<LumeToolScreenState>();
   late final LumeToolSession _session = ref.read(toolSessionProvider);
   late final TextEditingController _income;
   late final TextEditingController _deductions;
@@ -145,14 +149,104 @@ class _LumeTaxToolState extends ConsumerState<LumeTaxTool> {
         : _untaxed(context, l, f, cfg, country);
 
     return LumeToolScreen(
+      key: _host,
       feature: r.feature,
       user: r.user,
       onBack: r.onBack,
       onOpenRelated: r.onOpenRelated,
+      shareCard: cfg == null ? null : () => _shareCard(l, f, cfg),
+      exportFile: cfg == null ? null : () => _exportFile(context, l, f, cfg),
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: sections,
       ),
+    );
+  }
+
+  LumeTaxResult _result(LumeTaxConfig cfg) => LumeTaxRules.compute(
+    cfg,
+    period: _period,
+    income: LumeTaxTool.parse(_income.text),
+    deductions: LumeTaxTool.parse(_deductions.text),
+  );
+
+  double _gross(LumeTaxConfig cfg) => _income.text.trim().isEmpty
+      ? LumeTaxRules.openingGross(lumeRatePerUsd(cfg.currency))
+      : LumeTaxTool.parse(_income.text);
+
+  /// The band as the table writes it.
+  String _bandLabel(
+    AppLocalizations l,
+    String Function(double) money,
+    LumeTaxBandResult b,
+  ) => b.isTop
+      ? l.taxAbove(money(b.lower))
+      : '${money(b.lower)} – ${money(b.upper)}';
+
+  /// `shareForTool('tax')` — the annual figure, the effective rate, and the
+  /// authority and year that make the figure honest. A market with no income
+  /// tax has no figure; the reference then falls back to an unrelated quote,
+  /// and Lume shares what the screen says instead (C68).
+  LumeShareCard? _shareCard(
+    AppLocalizations l,
+    LumeFormatting f,
+    LumeTaxConfig cfg,
+  ) {
+    final String source = '${_authority(l, cfg.authority)} · ${cfg.year}';
+    if (!cfg.taxable) {
+      return LumeShareCard.forFeature(
+        sensitive: widget.request.feature.sensitive,
+        kind: LumeShareKind.reminder,
+        text:
+            '${l.taxNoneTitle} · ${l.taxTakeHome}: '
+            '${f.money(_gross(cfg), code: cfg.currency)}',
+        source: source,
+      );
+    }
+    final LumeTaxResult t = _result(cfg);
+    return LumeShareCard.forFeature(
+      sensitive: widget.request.feature.sensitive,
+      kind: LumeShareKind.reminder,
+      text:
+          '${l.taxDueAnnual}: ${f.money(t.dueAnnual, code: cfg.currency)} · '
+          '${l.taxEffective('${f.number(t.effective * 100, decimals: 1)}%')}',
+      source: source,
+    );
+  }
+
+  /// `exportTool('tax')` — the bands as a CSV when there is tax to band, the
+  /// reference's JSON record when there is not.
+  LumeExportFile _exportFile(
+    BuildContext context,
+    AppLocalizations l,
+    LumeFormatting f,
+    LumeTaxConfig cfg,
+  ) {
+    final DateTime now = LumeClockScope.of(context).now();
+    if (!cfg.taxable) {
+      return LumeExportFile.record(
+        tool: LumeTaxTool.id,
+        day: now,
+        exported: now,
+        locale:
+            '${Localizations.localeOf(context).languageCode}-'
+            '${widget.request.user.country}',
+        currency: cfg.currency,
+      );
+    }
+    String money(double v) => f.money(v, code: cfg.currency);
+    return LumeExportFile.csv(
+      tool: LumeTaxTool.id,
+      day: now,
+      rows: <List<Object?>>[
+        <Object?>[l.taxBand, l.taxRate, l.taxTaxedHere],
+        for (final LumeTaxBandResult b in _result(cfg).bands)
+          <Object?>[
+            _bandLabel(l, money, b),
+            '${(b.rate * 100).toStringAsFixed(0)}%',
+            b.tax.round(),
+          ],
+      ],
     );
   }
 
@@ -296,9 +390,7 @@ class _LumeTaxToolState extends ConsumerState<LumeTaxTool> {
           rows: <List<String>>[
             for (final LumeTaxBandResult b in t.bands)
               <String>[
-                b.isTop
-                    ? l.taxAbove(money(b.lower))
-                    : '${money(b.lower)} – ${money(b.upper)}',
+                _bandLabel(l, money, b),
                 '${f.number(b.rate * 100, decimals: 0)}%',
                 money(b.tax),
               ],
@@ -331,16 +423,20 @@ class _LumeTaxToolState extends ConsumerState<LumeTaxTool> {
     ];
   }
 
-  /// Export first and filled, Share beside it. Inert until F6A-D7 is decided —
-  /// see [LumeToolActions].
+  /// Export first and filled, Share beside it — the same two the tool bar
+  /// offers, through the same host (D7).
   Widget _actions(AppLocalizations l) => LumeButtonRow(
     children: <Widget>[
       LumeButton.accent(
         label: l.commonExport,
         icon: LumeIcons.download,
-        onPressed: () {},
+        onPressed: () => _host.currentState?.export(),
       ),
-      LumeButton(label: l.commonShare, icon: LumeIcons.share, onPressed: () {}),
+      LumeButton(
+        label: l.commonShare,
+        icon: LumeIcons.share,
+        onPressed: () => _host.currentState?.share(),
+      ),
     ],
   );
 

@@ -854,6 +854,14 @@ const TOOL_TARGETS = {
   'state.art': '#toolBody .state__art',
   'state.title': '#toolBody .state__title',
   'state.text': '#toolBody .state__text',
+  // News — the editorial feed: a lead story over the latest rows.
+  'lead': '#toolBody .lead',
+  'lead.art': '#toolBody .lead .artimg',
+  'lead.body': '#toolBody .lead__body',
+  'lead.cat': '#toolBody .lead__cat',
+  'lead.title': '#toolBody .lead__title',
+  'lead.meta': '#toolBody .lead__meta',
+  'rows2': '#toolBody .sect:nth-of-type(6) .rows',
 };
 
 /* The instant everything is captured at: Monday 7 September 2026, 16:41:32
@@ -1673,6 +1681,35 @@ async function main() {
             document.querySelectorAll('#toolBody .rows > .crow'),
             function (el) {
               return { label: (el.querySelector('.crow__label') || {}).textContent || null,
+                       act: el.getAttribute('data-act') };
+            })
+        } : null;
+        composition.news = q('.lead') || (q('#toolBody .tsearch input') &&
+            /stor/i.test(q('#toolBody .tsearch input').getAttribute('placeholder') || '')) ? {
+          context: texts('#toolBody .ctxbar__item'),
+          placeholder: q('#toolBody .tsearch input') ? q('#toolBody .tsearch input').getAttribute('placeholder') : null,
+          chips: texts('#toolBody .chips .chip'),
+          chipOn: tx('#toolBody .chips .chip.is-on'),
+          lead: q('#toolBody .lead') ? {
+            cat: tx('#toolBody .lead__cat'),
+            title: tx('#toolBody .lead__title'),
+            meta: tx('#toolBody .lead__meta'),
+            act: q('#toolBody .lead').getAttribute('data-act')
+          } : null,
+          rows: Array.prototype.map.call(
+            document.querySelectorAll('#toolBody .rows > .rrow'),
+            function (el) {
+              return { title: (el.querySelector('.rrow__title') || {}).textContent || null,
+                       sub: (el.querySelector('.rrow__sub') || {}).textContent || null,
+                       meta: Array.prototype.map.call(el.querySelectorAll('.rrow__meta > span'),
+                         function (m) { return m.textContent; }) };
+            }),
+          empty: q('#toolBody .state') ? { title: tx('#toolBody .state__title'), text: tx('#toolBody .state__text') } : null,
+          reading: Array.prototype.map.call(
+            document.querySelectorAll('#toolBody .rows > .crow'),
+            function (el) {
+              return { label: (el.querySelector('.crow__label') || {}).textContent || null,
+                       value: (el.querySelector('.crow__value') || {}).textContent || null,
                        act: el.getAttribute('data-act') };
             })
         } : null;

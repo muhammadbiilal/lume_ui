@@ -233,7 +233,7 @@ spec port ──► tool host adapter ──► route dispatch
 3. **Learning** (E) — bar chart, heatmap — *built*
 4. **Timer** (L) — the clock screen over an injectable interval — *built*
 5. **Emergency** (N) — the dialer contract (D6) — *built*
-6. **Recipes** (K) — art and image cards
+6. **Recipes** (K) — art and image cards; the first share-card consumer after Tax — *built*
 7. **News** (I) — art rows, lead article, chips
 8. **Calendar** (F) — the month grid
 9. **Currency & Gold** (G) — sparkline, line chart, deltas
@@ -251,4 +251,4 @@ spec port ──► tool host adapter ──► route dispatch
 | F6A-D4 | Explorer (G) reference is Currency & Gold, not Markets. | Approve; Markets follows on its approved composition. |
 | F6A-D5 | Scripture reader (J) and camera instrument (M) have no reference yet. | Choose `hadith` for J and `qr` for M in the next wave. |
 | F6A-D6 | Emergency's actions are `tel:` links that leave the app. | **Decided: functional.** A press opens the platform dialer with the number shown and never calls, through the injectable `LumeDialer` (`url_launcher` behind `LumePlatformDialer`, recording fake in every test); unavailable and failed are said, opened and dismissed are not (C67). |
-| F6A-D7 | Share opens the share-card sheet and Export writes a file and toasts its name. Neither system is converted, and writing a file needs a platform dependency. | Keep the controls drawn, named and inert (no false "Saved …"); convert the share-card system and export as their own foundation before a tool that depends on them ships. |
+| F6A-D7 | Share opens the share-card sheet and Export writes a file and toasts its name. Neither system is converted, and writing a file needs a platform dependency. | **Decided: functional.** Built on Tax, the first consumer with defined content: `LumeShareCard` (typed, validated, refused for sensitive tools) drawn as the reference's 1080 × 1350 card in the share sheet; `LumeSharer` and `LumeExporter` over `share_plus`, `LumeExportFile` with the reference's name, MIME type, BOM, CRLF and quoting; recording fakes in every test. Each sentence is said only when the platform reports it (C68). Save image answers "not available yet" until the photo-library permission is decided — a platform-services task. |

@@ -1274,6 +1274,9 @@ class AppLocalizationsUr extends AppLocalizations {
   String get commonSave => 'محفوظ کریں';
 
   @override
+  String get commonSaved => 'محفوظ';
+
+  @override
   String get commonShare => 'شیئر';
 
   @override
@@ -2748,10 +2751,38 @@ class AppLocalizationsUr extends AppLocalizations {
   }
 
   @override
+  String newsAgoHours(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n گھنٹے',
+      one: '1 گھنٹہ',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String newsAgoMinutes(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n منٹ',
+      one: '1 منٹ',
+    );
+    return '$_temp0';
+  }
+
+  @override
   String get newsCatBusiness => 'کاروبار';
 
   @override
+  String get newsCatHealth => 'صحت';
+
+  @override
   String get newsCatKarachi => 'کراچی';
+
+  @override
+  String get newsCatLifestyle => 'طرزِ زندگی';
 
   @override
   String get newsCatMoney => 'پیسہ';
@@ -2763,7 +2794,65 @@ class AppLocalizationsUr extends AppLocalizations {
   String get newsCatSport => 'کھیل';
 
   @override
+  String get newsCatTechnology => 'ٹیکنالوجی';
+
+  @override
+  String get newsCatTop => 'اہم';
+
+  @override
   String get newsCatWellbeing => 'بہبود';
+
+  @override
+  String get newsCatWorld => 'دنیا';
+
+  @override
+  String get newsEdition => 'آپ کا ایڈیشن';
+
+  @override
+  String get newsEmptyText =>
+      'کوئی اور زمرہ آزمائیں، یا ترتیبات میں اپنے ذرائع بڑھائیں۔';
+
+  @override
+  String get newsEmptyTitle => 'اس زمرے میں ابھی کچھ نہیں';
+
+  @override
+  String get newsHeadlineGlobalCoastal =>
+      'ساحلی شہروں نے موسمیاتی مطابقت کا مشترکہ خاکہ جاری کر دیا';
+
+  @override
+  String get newsHeadlineGlobalOnDevice =>
+      'آلے پر چلنے والے ماڈل خاموشی سے بدل رہے ہیں کہ فون آف لائن کیا کر سکتے ہیں';
+
+  @override
+  String get newsHeadlineGlobalRates =>
+      'مرکزی بینکوں کا نئے سال میں شرحِ سود میں کمی کی رفتار سست رکھنے کا اشارہ';
+
+  @override
+  String get newsHeadlineGlobalTactics =>
+      'وہ حکمتِ عملی کی تبدیلی جس نے ہفتے کے سب سے بڑے مقابلے کا فیصلہ کیا';
+
+  @override
+  String get newsHeadlineGlobalWalk =>
+      'کھانے کے بعد مختصر چہل قدمی سونے سے پہلے لمبی سیر سے زیادہ مفید';
+
+  @override
+  String get newsHeadlinePkDengue =>
+      'صوبائی ڈینگی نگرانی ہفتہ وار رپورٹنگ پر منتقل';
+
+  @override
+  String get newsHeadlinePkSquad =>
+      'پاکستان نے ہوم ٹیسٹ سیریز کے لیے 16 رکنی اسکواڈ کا اعلان کر دیا';
+
+  @override
+  String get newsHeadlinePkStartups =>
+      'کراچی کے اسٹارٹ اپس نے اس سہ ماہی میں 8 کروڑ 40 لاکھ ڈالر جمع کیے، فن ٹیک سرِفہرست';
+
+  @override
+  String get newsHeadlinePkTrade =>
+      'چھ ماہ کے وقفے کے بعد علاقائی تجارتی راہداری مذاکرات دوبارہ شروع';
+
+  @override
+  String get newsLatest => 'تازہ ترین';
 
   @override
   String get newsLoadshed =>
@@ -2782,14 +2871,53 @@ class AppLocalizationsUr extends AppLocalizations {
       'ترسیلاتِ زر میں مسلسل تیسرے ماہ اضافے پر روپیہ مستحکم';
 
   @override
+  String get newsSaved => 'آپ کا مطالعہ';
+
+  @override
+  String newsSavedCount(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n محفوظ خبریں',
+      one: '1 محفوظ خبر',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get newsSavedOpen => 'محفوظ خبریں کھل رہی ہیں';
+
+  @override
   String get newsSavings => 'آپ کے پہلے بچت ہدف کی آسان رہنمائی';
+
+  @override
+  String get newsSearch => 'خبریں تلاش کریں';
+
+  @override
+  String newsShareSource(String source, String ago) {
+    return '$source · $ago';
+  }
 
   @override
   String get newsShortList => 'مختصر فہرست سے کام زیادہ کیوں ہوتے ہیں';
 
   @override
+  String get newsSources => 'ذرائع';
+
+  @override
+  String get newsSourcesEdit => 'اپنے ذرائع منتخب کریں';
+
+  @override
+  String newsSourcesValue(String n) {
+    return '$n کی پیروی';
+  }
+
+  @override
   String get newsSquad =>
       'پاکستان نے ہوم ٹیسٹ سیریز کے لیے اسکواڈ کا اعلان کر دیا';
+
+  @override
+  String get newsTop => 'اہم خبر';
 
   @override
   String get notifPrefBadge => 'بیج کی گنتی';
@@ -3311,6 +3439,133 @@ class AppLocalizationsUr extends AppLocalizations {
       'آپ کا لکھا ہوا کچھ ضائع نہیں ہوا۔ دوبارہ کوشش کریں۔';
 
   @override
+  String get recipeCuisineGlobal => 'عالمی';
+
+  @override
+  String get recipeCuisineLevantine => 'شامی';
+
+  @override
+  String get recipeCuisineMediterranean => 'بحیرہ روم';
+
+  @override
+  String get recipeCuisinePakistani => 'پاکستانی';
+
+  @override
+  String get recipeNameBeefPulao => 'بیف پلاؤ';
+
+  @override
+  String get recipeNameChickenKarahi => 'چکن کڑاہی';
+
+  @override
+  String get recipeNameDaalChawal => 'دال چاول';
+
+  @override
+  String get recipeNameGreekSalad => 'یونانی سلاد';
+
+  @override
+  String get recipeNameOvernightOats => 'رات بھر بھیگے جئی';
+
+  @override
+  String get recipeNameShakshuka => 'شکشوکہ';
+
+  @override
+  String get recipeTagBreakfast => 'ناشتہ';
+
+  @override
+  String get recipeTagBudget => 'کم خرچ';
+
+  @override
+  String get recipeTagDinner => 'رات کا کھانا';
+
+  @override
+  String get recipeTagFamily => 'خاندان';
+
+  @override
+  String get recipeTagLight => 'ہلکا';
+
+  @override
+  String get recipeTagLunch => 'دوپہر کا کھانا';
+
+  @override
+  String get recipeTagMakeAhead => 'پہلے سے تیار';
+
+  @override
+  String get recipeTagNoCook => 'بغیر پکائے';
+
+  @override
+  String get recipeTagSpicy => 'مصالحے دار';
+
+  @override
+  String get recipeTagVegetarian => 'سبزی خور';
+
+  @override
+  String get recipesAll => 'تمام ترکیبیں';
+
+  @override
+  String get recipesFavourites => 'آپ کی پسندیدہ';
+
+  @override
+  String recipesIngredients(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n اجزاء',
+      one: '1 جزو',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get recipesNoMatch => 'کوئی ترکیب نہیں ملی';
+
+  @override
+  String get recipesNoMatchText => 'کوئی کھانا، جزو یا ٹیگ آزمائیں۔';
+
+  @override
+  String recipesPrepCook(String prep, String cook) {
+    return '$prep + $cook منٹ';
+  }
+
+  @override
+  String get recipesRelated => 'اس کے ساتھ مزید کریں';
+
+  @override
+  String get recipesSearch => 'ترکیبیں تلاش کریں';
+
+  @override
+  String recipesServes(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n افراد کے لیے',
+      one: '1 فرد کے لیے',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String recipesShareText(int count, String names) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count ترکیبیں',
+      one: '1 ترکیب',
+    );
+    return '$_temp0 · آپ کی پسندیدہ: $names';
+  }
+
+  @override
+  String recipesSteps(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n مراحل',
+      one: '1 مرحلہ',
+    );
+    return '$_temp0';
+  }
+
+  @override
   String get recordsNoSelectionText =>
       'یہاں دیکھنے کے لیے کوئی ریکارڈ منتخب کریں۔';
 
@@ -3364,6 +3619,37 @@ class AppLocalizationsUr extends AppLocalizations {
 
   @override
   String get searchTry => 'یہ تلاش کر کے دیکھیں';
+
+  @override
+  String get shareCardReady => 'آپ کا کارڈ تیار ہے';
+
+  @override
+  String get shareFailed => 'کارڈ شیئر نہیں ہو سکا';
+
+  @override
+  String get shareGenerating => 'آپ کا کارڈ بن رہا ہے…';
+
+  @override
+  String get sharePreviewLabel => 'شیئر کارڈ کی جھلک';
+
+  @override
+  String get shareSaveDenied => 'Lume آپ کی تصاویر میں محفوظ نہیں کر سکتا';
+
+  @override
+  String get shareSaveFailed => 'تصویر محفوظ نہیں ہو سکی';
+
+  @override
+  String get shareSaveUnavailable =>
+      'تصاویر محفوظ کرنا ابھی دستیاب نہیں — محفوظ کرنے کے لیے شیئر استعمال کریں';
+
+  @override
+  String get shareSaved => 'تصویر محفوظ ہو گئی';
+
+  @override
+  String get shareShared => 'شیئر ہو گیا';
+
+  @override
+  String get shareUnavailable => 'اس آلے پر شیئر کرنا دستیاب نہیں';
 
   @override
   String get slideMoneyCta => 'پیسہ دیکھیں';
@@ -3751,6 +4037,17 @@ class AppLocalizationsUr extends AppLocalizations {
 
   @override
   String get toolErrorTitle => 'کچھ غلط ہو گیا';
+
+  @override
+  String get toolExportFailed => 'فائل نہیں لکھی جا سکی';
+
+  @override
+  String get toolExportUnavailable => 'اس آلے پر ایکسپورٹ دستیاب نہیں';
+
+  @override
+  String toolExportedAs(String name) {
+    return '$name محفوظ ہو گئی';
+  }
 
   @override
   String toolFavourited(String name) {
@@ -4310,6 +4607,11 @@ class AppLocalizationsUr extends AppLocalizations {
 
   @override
   String get unitDays => 'دن';
+
+  @override
+  String unitKcalCount(String n) {
+    return '$n کیلوریز';
+  }
 
   @override
   String get unitKmh => 'کلومیٹر/گھنٹہ';

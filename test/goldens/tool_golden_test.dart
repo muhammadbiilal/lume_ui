@@ -11,6 +11,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:lume/core/navigation/lume_tool_frame.dart';
 import 'package:lume/core/routing/lume_routes.dart';
+import 'package:lume/core/widgets/lume/lume_button.dart';
 import 'package:lume/features/tax/presentation/tax_tool.dart';
 import 'package:lume/features/timer/presentation/timer_tool.dart';
 
@@ -249,6 +250,84 @@ void main() {
       await tester.tap(find.text('Start'));
       await tester.pump();
     });
+  });
+
+  // -------------------------------------------------------------- Recipes
+
+  group('Recipes', () {
+    final String location = LumeRoutes.tool(LumeRoutes.tools, 'recipes');
+
+    for (final Cell cell in kCells) {
+      testWidgets(cell.$1, (WidgetTester tester) async {
+        await shoot(
+          tester,
+          state: 'default_pk',
+          location: location,
+          golden: 'tool_recipes_default_pk',
+          cell: cell,
+        );
+      });
+    }
+
+    testWidgets('Pakistani chosen · the reference cell', (
+      WidgetTester tester,
+    ) async {
+      await shoot(
+        tester,
+        state: 'default_pk',
+        location: location,
+        golden: 'tool_recipes_default_pk_cuisine-Pakistani',
+        cell: kCells.first,
+        after: (WidgetTester t) async {
+          await t.tap(find.text('Pakistani').first);
+          await t.pumpAndSettle();
+        },
+      );
+    });
+
+    testWidgets('no match · the reference cell', (WidgetTester tester) async {
+      await shoot(
+        tester,
+        state: 'default_pk',
+        location: location,
+        golden: 'tool_recipes_default_pk_q-zzz',
+        cell: kCells.first,
+        after: (WidgetTester t) async {
+          await t.enterText(find.byType(EditableText), 'zzz');
+          await t.pumpAndSettle();
+          FocusManager.instance.primaryFocus?.unfocus();
+          await t.pumpAndSettle();
+        },
+      );
+    });
+  });
+
+  // ----------------------------------------------------------- Share card
+
+  // The share sheet over Tax (D7): the card drawn from the screen's own
+  // figure, in light, dark and a right-to-left language.
+  group('Share card, over Tax', () {
+    for (final Cell cell in <Cell>[kCells[0], kCells[1], kCells[7]]) {
+      testWidgets(cell.$1, (WidgetTester tester) async {
+        await shoot(
+          tester,
+          state: 'default_pk',
+          golden: 'tool_tax_share',
+          cell: cell,
+          after: (WidgetTester t) async {
+            await t.tap(
+              find
+                  .descendant(
+                    of: find.byType(LumeToolFrame),
+                    matching: find.byType(LumeIconButton),
+                  )
+                  .first,
+            );
+            await t.pumpAndSettle();
+          },
+        );
+      });
+    }
   });
 
   // ------------------------------------------------------------ Emergency

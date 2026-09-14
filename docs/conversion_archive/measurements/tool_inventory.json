@@ -73,6 +73,7 @@
    "timer",
    "tax",
    "emergency",
+   "recipes",
    "learning"
   ]
  },
@@ -2813,7 +2814,7 @@
    "approvedComposition": null,
    "recordFamily": false,
    "module": "assets/js/tools/personal/recipes.tool.js",
-   "flutter": "placeholder"
+   "flutter": "built"
   },
   {
    "id": "mealplan",

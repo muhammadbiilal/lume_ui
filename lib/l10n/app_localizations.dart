@@ -2362,6 +2362,12 @@ abstract class AppLocalizations {
   /// **'Save'**
   String get commonSave;
 
+  /// Reference key common.saved — a badge on a saved item
+  ///
+  /// In en, this message translates to:
+  /// **'Saved'**
+  String get commonSaved;
+
   /// Reference key common.share
   ///
   /// In en, this message translates to:
@@ -4918,17 +4924,41 @@ abstract class AppLocalizations {
   /// **'Jamaat for Asr at {time}'**
   String nearbyToobaSub(String time);
 
+  /// How long ago a story was published, in hours — the reference writes "1 hr", "2 hr"
+  ///
+  /// In en, this message translates to:
+  /// **'{n, plural, =1{1 hr} other{{n} hr}}'**
+  String newsAgoHours(int n);
+
+  /// How long ago a story was published, in minutes — the reference writes "18 min"
+  ///
+  /// In en, this message translates to:
+  /// **'{n, plural, =1{1 min} other{{n} min}}'**
+  String newsAgoMinutes(int n);
+
   /// Reference: a news category
   ///
   /// In en, this message translates to:
   /// **'Business'**
   String get newsCatBusiness;
 
+  /// A category in tool-data.js NEWS_CATEGORIES. The reference writes it in English in every language
+  ///
+  /// In en, this message translates to:
+  /// **'Health'**
+  String get newsCatHealth;
+
   /// Reference: a news category
   ///
   /// In en, this message translates to:
   /// **'Karachi'**
   String get newsCatKarachi;
+
+  /// A category in tool-data.js NEWS_CATEGORIES. The reference writes it in English in every language
+  ///
+  /// In en, this message translates to:
+  /// **'Lifestyle'**
+  String get newsCatLifestyle;
 
   /// Reference: a news category
   ///
@@ -4948,11 +4978,107 @@ abstract class AppLocalizations {
   /// **'Sport'**
   String get newsCatSport;
 
+  /// A category in tool-data.js NEWS_CATEGORIES. The reference writes it in English in every language
+  ///
+  /// In en, this message translates to:
+  /// **'Technology'**
+  String get newsCatTechnology;
+
+  /// A category in tool-data.js NEWS_CATEGORIES. The reference writes it in English in every language
+  ///
+  /// In en, this message translates to:
+  /// **'Top'**
+  String get newsCatTop;
+
   /// Reference: a news category
   ///
   /// In en, this message translates to:
   /// **'Wellbeing'**
   String get newsCatWellbeing;
+
+  /// A category in tool-data.js NEWS_CATEGORIES. The reference writes it in English in every language
+  ///
+  /// In en, this message translates to:
+  /// **'World'**
+  String get newsCatWorld;
+
+  /// Reference key news.edition
+  ///
+  /// In en, this message translates to:
+  /// **'Your edition'**
+  String get newsEdition;
+
+  /// Reference key news.empty.text
+  ///
+  /// In en, this message translates to:
+  /// **'Try another category, or widen your sources in settings.'**
+  String get newsEmptyText;
+
+  /// Reference key news.empty.title
+  ///
+  /// In en, this message translates to:
+  /// **'Nothing in this category yet'**
+  String get newsEmptyTitle;
+
+  /// A headline in tool-data.js NEWS — fixture content, translated so no screen mixes languages
+  ///
+  /// In en, this message translates to:
+  /// **'Coastal cities publish a shared adaptation blueprint'**
+  String get newsHeadlineGlobalCoastal;
+
+  /// A headline in tool-data.js NEWS — fixture content, translated so no screen mixes languages
+  ///
+  /// In en, this message translates to:
+  /// **'On-device models are quietly reshaping what phones can do offline'**
+  String get newsHeadlineGlobalOnDevice;
+
+  /// A headline in tool-data.js NEWS — fixture content, translated so no screen mixes languages
+  ///
+  /// In en, this message translates to:
+  /// **'Central banks signal a slower path on rate cuts into the new year'**
+  String get newsHeadlineGlobalRates;
+
+  /// A headline in tool-data.js NEWS — fixture content, translated so no screen mixes languages
+  ///
+  /// In en, this message translates to:
+  /// **'The tactical shift that decided the weekend’s biggest fixture'**
+  String get newsHeadlineGlobalTactics;
+
+  /// A headline in tool-data.js NEWS — fixture content, translated so no screen mixes languages
+  ///
+  /// In en, this message translates to:
+  /// **'A short walk after meals does more than a long one before bed'**
+  String get newsHeadlineGlobalWalk;
+
+  /// A headline in tool-data.js NEWS — fixture content, translated so no screen mixes languages
+  ///
+  /// In en, this message translates to:
+  /// **'Provincial dengue surveillance moves to a weekly reporting cycle'**
+  String get newsHeadlinePkDengue;
+
+  /// A headline in tool-data.js NEWS — fixture content, translated so no screen mixes languages
+  ///
+  /// In en, this message translates to:
+  /// **'Pakistan name a 16-player squad for the home Test series'**
+  String get newsHeadlinePkSquad;
+
+  /// A headline in tool-data.js NEWS — fixture content, translated so no screen mixes languages
+  ///
+  /// In en, this message translates to:
+  /// **'Karachi start-ups raised \$84m this quarter, led by fintech'**
+  String get newsHeadlinePkStartups;
+
+  /// A headline in tool-data.js NEWS — fixture content, translated so no screen mixes languages
+  ///
+  /// In en, this message translates to:
+  /// **'Regional trade corridor talks resume after a six-month pause'**
+  String get newsHeadlinePkTrade;
+
+  /// Reference key news.latest
+  ///
+  /// In en, this message translates to:
+  /// **'Latest'**
+  String get newsLatest;
 
   /// Reference: a Pakistan headline
   ///
@@ -4978,11 +5104,41 @@ abstract class AppLocalizations {
   /// **'Rupee holds steady as remittances climb for a third month'**
   String get newsRupee;
 
+  /// Reference key news.saved
+  ///
+  /// In en, this message translates to:
+  /// **'Your reading'**
+  String get newsSaved;
+
+  /// Reference key news.savedCount, pluralised
+  ///
+  /// In en, this message translates to:
+  /// **'{n, plural, =1{1 saved story} other{{n} saved stories}}'**
+  String newsSavedCount(int n);
+
+  /// Reference key news.savedOpen — the toast the saved row speaks
+  ///
+  /// In en, this message translates to:
+  /// **'Opening saved stories'**
+  String get newsSavedOpen;
+
   /// Reference: a global headline
   ///
   /// In en, this message translates to:
   /// **'A plain-English guide to your first savings goal'**
   String get newsSavings;
+
+  /// Reference key news.search
+  ///
+  /// In en, this message translates to:
+  /// **'Search stories'**
+  String get newsSearch;
+
+  /// The source line of a shared top story: the publisher and how long ago
+  ///
+  /// In en, this message translates to:
+  /// **'{source} · {ago}'**
+  String newsShareSource(String source, String ago);
 
   /// Reference: a global headline
   ///
@@ -4990,11 +5146,35 @@ abstract class AppLocalizations {
   /// **'Why a shorter to-do list finishes more work'**
   String get newsShortList;
 
+  /// Reference key news.sources
+  ///
+  /// In en, this message translates to:
+  /// **'Sources'**
+  String get newsSources;
+
+  /// Reference key news.sourcesEdit — the toast the sources row speaks
+  ///
+  /// In en, this message translates to:
+  /// **'Choose your sources'**
+  String get newsSourcesEdit;
+
+  /// Reference key news.sourcesValue. The number arrives formatted
+  ///
+  /// In en, this message translates to:
+  /// **'{n} following'**
+  String newsSourcesValue(String n);
+
   /// Reference: a Pakistan headline
   ///
   /// In en, this message translates to:
   /// **'Pakistan name squad for the home Test series'**
   String get newsSquad;
+
+  /// Reference key news.top
+  ///
+  /// In en, this message translates to:
+  /// **'Top story'**
+  String get newsTop;
 
   /// Reference: `n.pref.badge`.
   ///
@@ -5950,6 +6130,192 @@ abstract class AppLocalizations {
   /// **'Nothing you typed was lost. Try again.'**
   String get recSaveFailedText;
 
+  /// A cuisine in tool-data.js RECIPES. The reference writes it in English in every language
+  ///
+  /// In en, this message translates to:
+  /// **'Global'**
+  String get recipeCuisineGlobal;
+
+  /// A cuisine in tool-data.js RECIPES. The reference writes it in English in every language
+  ///
+  /// In en, this message translates to:
+  /// **'Levantine'**
+  String get recipeCuisineLevantine;
+
+  /// A cuisine in tool-data.js RECIPES. The reference writes it in English in every language
+  ///
+  /// In en, this message translates to:
+  /// **'Mediterranean'**
+  String get recipeCuisineMediterranean;
+
+  /// A cuisine in tool-data.js RECIPES. The reference writes it in English in every language
+  ///
+  /// In en, this message translates to:
+  /// **'Pakistani'**
+  String get recipeCuisinePakistani;
+
+  /// A dish in tool-data.js RECIPES — a name, transliterated where it is one and translated where it describes
+  ///
+  /// In en, this message translates to:
+  /// **'Beef Pulao'**
+  String get recipeNameBeefPulao;
+
+  /// A dish in tool-data.js RECIPES — a name, transliterated where it is one and translated where it describes
+  ///
+  /// In en, this message translates to:
+  /// **'Chicken Karahi'**
+  String get recipeNameChickenKarahi;
+
+  /// A dish in tool-data.js RECIPES — a name, transliterated where it is one and translated where it describes
+  ///
+  /// In en, this message translates to:
+  /// **'Daal Chawal'**
+  String get recipeNameDaalChawal;
+
+  /// A dish in tool-data.js RECIPES — a name, transliterated where it is one and translated where it describes
+  ///
+  /// In en, this message translates to:
+  /// **'Greek Salad'**
+  String get recipeNameGreekSalad;
+
+  /// A dish in tool-data.js RECIPES — a name, transliterated where it is one and translated where it describes
+  ///
+  /// In en, this message translates to:
+  /// **'Overnight Oats'**
+  String get recipeNameOvernightOats;
+
+  /// A dish in tool-data.js RECIPES — a name, transliterated where it is one and translated where it describes
+  ///
+  /// In en, this message translates to:
+  /// **'Shakshuka'**
+  String get recipeNameShakshuka;
+
+  /// A tag in tool-data.js RECIPES
+  ///
+  /// In en, this message translates to:
+  /// **'Breakfast'**
+  String get recipeTagBreakfast;
+
+  /// A tag in tool-data.js RECIPES
+  ///
+  /// In en, this message translates to:
+  /// **'Budget'**
+  String get recipeTagBudget;
+
+  /// A tag in tool-data.js RECIPES
+  ///
+  /// In en, this message translates to:
+  /// **'Dinner'**
+  String get recipeTagDinner;
+
+  /// A tag in tool-data.js RECIPES
+  ///
+  /// In en, this message translates to:
+  /// **'Family'**
+  String get recipeTagFamily;
+
+  /// A tag in tool-data.js RECIPES
+  ///
+  /// In en, this message translates to:
+  /// **'Light'**
+  String get recipeTagLight;
+
+  /// A tag in tool-data.js RECIPES
+  ///
+  /// In en, this message translates to:
+  /// **'Lunch'**
+  String get recipeTagLunch;
+
+  /// A tag in tool-data.js RECIPES
+  ///
+  /// In en, this message translates to:
+  /// **'Make ahead'**
+  String get recipeTagMakeAhead;
+
+  /// A tag in tool-data.js RECIPES
+  ///
+  /// In en, this message translates to:
+  /// **'No cook'**
+  String get recipeTagNoCook;
+
+  /// A tag in tool-data.js RECIPES
+  ///
+  /// In en, this message translates to:
+  /// **'Spicy'**
+  String get recipeTagSpicy;
+
+  /// A tag in tool-data.js RECIPES
+  ///
+  /// In en, this message translates to:
+  /// **'Vegetarian'**
+  String get recipeTagVegetarian;
+
+  /// Reference key recipes.all
+  ///
+  /// In en, this message translates to:
+  /// **'All recipes'**
+  String get recipesAll;
+
+  /// Reference key recipes.favourites
+  ///
+  /// In en, this message translates to:
+  /// **'Your favourites'**
+  String get recipesFavourites;
+
+  /// Reference: `r.ingredients + " " + t("recipes.ingredients")`, pluralised
+  ///
+  /// In en, this message translates to:
+  /// **'{n, plural, =1{1 ingredient} other{{n} ingredients}}'**
+  String recipesIngredients(int n);
+
+  /// Reference key recipes.noMatch
+  ///
+  /// In en, this message translates to:
+  /// **'No recipes match'**
+  String get recipesNoMatch;
+
+  /// Reference key recipes.noMatchText
+  ///
+  /// In en, this message translates to:
+  /// **'Try a cuisine, an ingredient or a tag.'**
+  String get recipesNoMatchText;
+
+  /// Reference key recipes.prepCook — preparation and cooking, in minutes
+  ///
+  /// In en, this message translates to:
+  /// **'{prep} + {cook} min'**
+  String recipesPrepCook(String prep, String cook);
+
+  /// Reference key recipes.related
+  ///
+  /// In en, this message translates to:
+  /// **'Do more with this'**
+  String get recipesRelated;
+
+  /// Reference key recipes.search
+  ///
+  /// In en, this message translates to:
+  /// **'Search recipes'**
+  String get recipesSearch;
+
+  /// Reference key recipes.serves, pluralised
+  ///
+  /// In en, this message translates to:
+  /// **'{n, plural, =1{serves 1} other{serves {n}}}'**
+  String recipesServes(int n);
+
+  /// The Recipes share card (C68). The reference shares an unrelated quote; this says what the library holds
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =1{1 recipe} other{{count} recipes}} · Your favourites: {names}'**
+  String recipesShareText(int count, String names);
+
+  /// Reference key recipes.stepsN, pluralised
+  ///
+  /// In en, this message translates to:
+  /// **'{n, plural, =1{1 step} other{{n} steps}}'**
+  String recipesSteps(int n);
+
   /// Master-detail pane before a record is chosen
   ///
   /// In en, this message translates to:
@@ -6045,6 +6411,66 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Try searching for'**
   String get searchTry;
+
+  /// Reference key share.cardReady
+  ///
+  /// In en, this message translates to:
+  /// **'Your card is ready'**
+  String get shareCardReady;
+
+  /// Said when the share sheet failed (D7). The reference has none
+  ///
+  /// In en, this message translates to:
+  /// **'Couldn’t share the card'**
+  String get shareFailed;
+
+  /// Reference key share.generating
+  ///
+  /// In en, this message translates to:
+  /// **'Creating your card…'**
+  String get shareGenerating;
+
+  /// Reference: aria-label on the share canvas
+  ///
+  /// In en, this message translates to:
+  /// **'Share card preview'**
+  String get sharePreviewLabel;
+
+  /// Said when the reader refused the photo library (D7)
+  ///
+  /// In en, this message translates to:
+  /// **'Lume can’t save to your photos'**
+  String get shareSaveDenied;
+
+  /// Said when saving the image failed (D7)
+  ///
+  /// In en, this message translates to:
+  /// **'Couldn’t save the image'**
+  String get shareSaveFailed;
+
+  /// Said by Save image while the photo-library permission is undecided (D7)
+  ///
+  /// In en, this message translates to:
+  /// **'Saving images isn’t available yet — use Share to save it'**
+  String get shareSaveUnavailable;
+
+  /// Reference key share.saved — said only once the photo library has the image (D7)
+  ///
+  /// In en, this message translates to:
+  /// **'Image saved'**
+  String get shareSaved;
+
+  /// Reference key share.shared — said only when the share sheet reports a destination was chosen (D7)
+  ///
+  /// In en, this message translates to:
+  /// **'Shared'**
+  String get shareShared;
+
+  /// Said when the platform has no share sheet (D7). The reference has none
+  ///
+  /// In en, this message translates to:
+  /// **'Sharing isn’t available on this device'**
+  String get shareUnavailable;
 
   /// Reference key slide.money.cta
   ///
@@ -6747,6 +7173,24 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Something went wrong'**
   String get toolErrorTitle;
+
+  /// Reference key tool.exportFailed
+  ///
+  /// In en, this message translates to:
+  /// **'Couldn’t write the file'**
+  String get toolExportFailed;
+
+  /// Said when the platform cannot write a file (D7). The reference has none
+  ///
+  /// In en, this message translates to:
+  /// **'Exporting isn’t available on this device'**
+  String get toolExportUnavailable;
+
+  /// Reference key tool.exportedAs — said only when the reader chose where the file went (D7). The name is a file name
+  ///
+  /// In en, this message translates to:
+  /// **'Saved {name}'**
+  String toolExportedAs(String name);
 
   /// Reference key tool.favourited — the toast after the header's favourite action
   ///
@@ -7688,6 +8132,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'days'**
   String get unitDays;
+
+  /// Reference: `c.num(r.kcal) + " " + t("unit.kcal")`. The number arrives formatted
+  ///
+  /// In en, this message translates to:
+  /// **'{n} kcal'**
+  String unitKcalCount(String n);
 
   /// Reference: a wind speed unit
   ///

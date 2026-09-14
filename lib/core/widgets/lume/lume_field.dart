@@ -655,11 +655,8 @@ class LumeSearchField extends StatelessWidget {
           ),
           child: Row(
             children: <Widget>[
-              LumeIcon(
-                LumeIcons.search,
-                size: LumeSpace.iconMd,
-                color: lume.text3,
-              ),
+              // `.search svg { width: 17px; height: 17px }`.
+              LumeIcon(LumeIcons.search, size: 17, color: lume.text3),
               const SizedBox(width: 9),
               Expanded(
                 child: _RawInput(

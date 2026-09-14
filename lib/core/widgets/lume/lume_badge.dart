@@ -80,7 +80,8 @@ class LumeBadge extends StatelessWidget {
         lume.accent.withValues(alpha: 0.16),
         lume.accentInk,
       ),
-      LumeBadgeTone.ok => (lume.accent.withValues(alpha: 0.14), lume.accent700),
+      // `.badge--ok { background: up 14%; color: var(--up) }`.
+      LumeBadgeTone.ok => (lume.up.withValues(alpha: 0.14), lume.up),
       LumeBadgeTone.warn => (lume.amber.withValues(alpha: 0.20), lume.amberInk),
       LumeBadgeTone.late_ => (lume.rose.withValues(alpha: 0.18), lume.roseInk),
       LumeBadgeTone.off => (lume.tintNeutral, lume.text3),

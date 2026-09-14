@@ -98,6 +98,7 @@ class LumeRichRow extends StatelessWidget {
     this.iconTone,
     this.iconInk,
     this.logo,
+    this.thumb,
     this.badge,
     this.delta,
     this.trailing,
@@ -126,6 +127,10 @@ class LumeRichRow extends StatelessWidget {
   /// A short code where an icon would say less — a currency, a ticker.
   final String? logo;
 
+  /// `.rrow__thumb` — a 52 × 40 illustration, radius 12, in place of an
+  /// icon tile.
+  final Widget? thumb;
+
   final LumeBadge? badge;
   final LumeDelta? delta;
 
@@ -148,7 +153,13 @@ class LumeRichRow extends StatelessWidget {
       padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 16),
       child: Row(
         children: <Widget>[
-          if (icon != null || logo != null) ...<Widget>[
+          if (thumb != null) ...<Widget>[
+            ClipRRect(
+              borderRadius: LumeRadius.brIcon,
+              child: SizedBox(width: 52, height: 40, child: thumb),
+            ),
+            const SizedBox(width: 12),
+          ] else if (icon != null || logo != null) ...<Widget>[
             _RowLead(icon: icon, logo: logo, tone: iconTone, ink: iconInk),
             const SizedBox(width: 12),
           ],
@@ -238,7 +249,8 @@ class LumeRichRow extends StatelessWidget {
             ),
           ],
           if (chevron) ...<Widget>[
-            const SizedBox(width: 6),
+            // `.rrow { gap: 12px }` — the chevron is a flex item like the rest.
+            const SizedBox(width: 12),
             LumeIcon(LumeIcons.chevR, size: 15, color: lume.text3),
           ],
         ],
@@ -305,34 +317,33 @@ class _MetaLine extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final LumeColors lume = context.lume;
-    final TextStyle style = LumeType.fit(
+    // `.rrow__meta` — 10 / 500 on the font's own 12, so two wrapped lines and
+    // their 5-point gap measure 29.
+    final TextStyle style = LumeType.natural(
       context,
       context.lumeType.metaSmall,
-    ).copyWith(color: lume.text3, fontSize: 10);
+      size: 10,
+    ).copyWith(color: lume.text3, fontWeight: FontWeight.w500);
 
-    return Row(
+    // `.rrow__meta { display: flex; flex-wrap: wrap; align-items: center;
+    // gap: 5px }` — every part and every dot is a flex item, so a long line
+    // wraps between them, 5 apart both ways.
+    final Widget dot = Container(
+      width: 2.5,
+      height: 2.5,
+      decoration: BoxDecoration(
+        color: lume.text3.withValues(alpha: 0.5),
+        shape: BoxShape.circle,
+      ),
+    );
+    return Wrap(
+      spacing: 5,
+      runSpacing: 5,
+      crossAxisAlignment: WrapCrossAlignment.center,
       children: <Widget>[
         for (int i = 0; i < parts.length; i++) ...<Widget>[
-          if (i > 0) ...<Widget>[
-            const SizedBox(width: 5),
-            Container(
-              width: 2.5,
-              height: 2.5,
-              decoration: BoxDecoration(
-                color: lume.text3.withValues(alpha: 0.5),
-                shape: BoxShape.circle,
-              ),
-            ),
-            const SizedBox(width: 5),
-          ],
-          Flexible(
-            child: Text(
-              parts[i],
-              style: style,
-              maxLines: 1,
-              overflow: TextOverflow.ellipsis,
-            ),
-          ),
+          if (i > 0) dot,
+          Text(parts[i], style: style),
         ],
       ],
     );

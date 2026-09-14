@@ -32,6 +32,8 @@ import 'package:lume/core/localization/lume_locales.dart';
 import 'package:lume/app/providers/platform_services.dart';
 import 'package:lume/app/providers/shell_provider.dart';
 import 'package:lume/core/platform/lume_dialer.dart';
+import 'package:lume/core/platform/lume_export.dart';
+import 'package:lume/core/platform/lume_share.dart';
 import 'package:lume/core/routing/app_router.dart';
 import 'package:lume/features/auth/data/fake_auth_repository.dart';
 import 'package:lume/features/auth/domain/auth_repository.dart';
@@ -107,6 +109,9 @@ Future<void> pumpLume(
       // test that asserts on one passes its own instance in [overrides].
       overrides: <Override>[
         dialerProvider.overrideWithValue(LumeRecordingDialer()),
+        sharerProvider.overrideWithValue(LumeRecordingSharer()),
+        imageSaverProvider.overrideWithValue(LumeRecordingImageSaver()),
+        exporterProvider.overrideWithValue(LumeRecordingExporter()),
         ...overrides,
       ],
       child: MaterialApp(
@@ -204,6 +209,9 @@ Future<GoRouter> pumpLumeRouter(
         profileRepositoryProvider.overrideWithValue(profiles),
         startupControllerProvider.overrideWithValue(gate),
         dialerProvider.overrideWithValue(LumeRecordingDialer()),
+        sharerProvider.overrideWithValue(LumeRecordingSharer()),
+        imageSaverProvider.overrideWithValue(LumeRecordingImageSaver()),
+        exporterProvider.overrideWithValue(LumeRecordingExporter()),
         ...overrides,
       ],
       child: MaterialApp.router(

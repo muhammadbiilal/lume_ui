@@ -191,7 +191,9 @@ void main() {
       expect(find.byType(LumeSheet), findsOneWidget);
     });
 
-    testWidgets('share and export are named, and claim nothing (F6A-D7)', (
+    // D7 decided: both work, through the host. What each hands over, and
+    // every outcome's sentence, is `share_export_host_test.dart`.
+    testWidgets('share and export are named, enabled, and stay on Tax (D7)', (
       WidgetTester tester,
     ) async {
       final GoRouter router = await pumpTax(
@@ -204,15 +206,14 @@ void main() {
       for (final Finder f in <Finder>[
         find.byType(LumeIconButton).at(0),
         find.byType(LumeIconButton).at(1),
-        find.widgetWithText(LumeButton, 'Export'),
-        find.widgetWithText(LumeButton, 'Share'),
       ]) {
-        await tester.tap(f);
-        await tester.pumpAndSettle();
+        expect(tester.widget<LumeIconButton>(f).onPressed, isNotNull);
       }
+      await tester.tap(find.widgetWithText(LumeButton, 'Export'));
+      await tester.pump();
+      expect(find.text('Saved lume-tax-2026-09-07.csv'), findsOneWidget);
+      await tester.pump(const Duration(seconds: 3));
       expect(locationOf(router), kTaxLocation);
-      expect(find.byType(LumeToast), findsNothing);
-      expect(find.textContaining('Saved'), findsNothing);
       semantics.dispose();
     });
   });

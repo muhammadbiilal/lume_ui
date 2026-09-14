@@ -18,6 +18,8 @@
 /// — no surface, a 19 px title, centred in the space the list would occupy.
 library;
 
+import 'dart:ui' show PathMetric;
+
 import 'package:flutter/material.dart';
 
 import '../../icons/lume_icon.dart';
@@ -71,65 +73,142 @@ class LumeToolState extends StatelessWidget {
     return Semantics(
       liveRegion: isError,
       container: true,
-      child: Container(
-        width: double.infinity,
-        padding: const EdgeInsets.symmetric(vertical: 34, horizontal: 24),
-        decoration: BoxDecoration(
-          color: lume.card2,
-          borderRadius: LumeRadius.brLg,
-          border: Border.all(color: lume.border2, width: LumeSpace.border),
-        ),
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: <Widget>[
-            LumeIcon(
-              icon ?? LumeIcons.sparkles,
-              size: LumeSpace.iconLg,
-              color: isError ? lume.roseInk : lume.text3,
-            ),
-            const SizedBox(height: 10),
-            Text(
-              title,
-              textAlign: TextAlign.center,
-              style: LumeType.tracked(
-                LumeType.fit(
-                  context,
-                  context.lumeType.body,
-                ).copyWith(fontWeight: FontWeight.w700),
-                -0.026,
-              ).copyWith(color: lume.text),
-            ),
-            if (text != null) ...<Widget>[
-              const SizedBox(height: LumeSpace.x1),
-              Text(
-                text!,
-                textAlign: TextAlign.center,
-                style: LumeType.fit(
-                  context,
-                  context.lumeType.meta,
-                ).copyWith(color: lume.text3, fontWeight: FontWeight.w400),
+      // `.state { padding: 34px 24px; gap: 10px; background: card-2;
+      // border: 1px dashed border-2; border-radius: r-lg }`.
+      child: CustomPaint(
+        painter: _DashedOutline(color: lume.border2, radius: LumeRadius.lg),
+        child: Container(
+          width: double.infinity,
+          padding: const EdgeInsets.symmetric(
+            vertical: 34 + LumeSpace.border,
+            horizontal: 24 + LumeSpace.border,
+          ),
+          decoration: BoxDecoration(
+            color: lume.card2,
+            borderRadius: LumeRadius.brLg,
+          ),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: <Widget>[
+              // `.state__art` — a 46-point tile, radius 16, the card fill inside
+              // a hairline, holding a 21-point glyph.
+              Container(
+                width: 46,
+                height: 46,
+                alignment: Alignment.center,
+                decoration: BoxDecoration(
+                  color: lume.card,
+                  borderRadius: LumeRadius.brMd,
+                  border: Border.all(
+                    color: lume.border,
+                    width: LumeSpace.border,
+                  ),
+                ),
+                child: LumeIcon(
+                  icon ?? LumeIcons.sparkles,
+                  size: 21,
+                  color: isError ? lume.amber : lume.text3,
+                ),
               ),
-            ],
-            if (action != null) ...<Widget>[
-              const SizedBox(height: LumeSpace.x4),
-              action!,
-            ],
-            if (footnote != null) ...<Widget>[
-              const SizedBox(height: LumeSpace.x3),
+              const SizedBox(height: 10),
+              // `.state__title` — 14 / 700 / −.026em on the font's own line.
               Text(
-                footnote!,
+                title,
                 textAlign: TextAlign.center,
-                style: LumeType.fit(
-                  context,
-                  context.lumeType.metaSmall,
-                ).copyWith(color: lume.text3),
+                style: LumeType.tracked(
+                  LumeType.natural(
+                    context,
+                    context.lumeType.body,
+                    size: 14,
+                  ).copyWith(fontWeight: FontWeight.w700),
+                  -0.026,
+                ).copyWith(color: lume.text),
               ),
+              if (text != null) ...<Widget>[
+                const SizedBox(height: 10),
+                // `.state__text` — 12 on a 1.5 line, muted, at most 30ch wide.
+                ConstrainedBox(
+                  constraints: BoxConstraints(maxWidth: _thirtyCh(context)),
+                  child: Text(
+                    text!,
+                    textAlign: TextAlign.center,
+                    style: LumeType.fit(
+                      context,
+                      context.lumeType.body.copyWith(
+                        fontSize: 12,
+                        height: 1.5,
+                        fontWeight: FontWeight.w400,
+                      ),
+                    ).copyWith(color: lume.text3),
+                  ),
+                ),
+              ],
+              if (action != null) ...<Widget>[
+                // `gap: 10px` then `.state .btn { margin-top: 4px }`.
+                const SizedBox(height: 14),
+                action!,
+              ],
+              if (footnote != null) ...<Widget>[
+                const SizedBox(height: LumeSpace.x3),
+                Text(
+                  footnote!,
+                  textAlign: TextAlign.center,
+                  style: LumeType.fit(
+                    context,
+                    context.lumeType.metaSmall,
+                  ).copyWith(color: lume.text3),
+                ),
+              ],
             ],
-          ],
+          ),
         ),
       ),
     );
   }
+
+  /// `max-width: 30ch` — thirty widths of the zero at 12 points.
+  static double _thirtyCh(BuildContext context) {
+    final TextPainter zero = TextPainter(
+      text: TextSpan(
+        text: '0',
+        style: context.lumeType.body.copyWith(fontSize: 12),
+      ),
+      textDirection: TextDirection.ltr,
+      textScaler: MediaQuery.textScalerOf(context),
+    )..layout();
+    return zero.width * 30;
+  }
+}
+
+/// `border: 1px dashed` — Chrome's dashes on a one-point line: three on,
+/// three off, following the rounded corners.
+class _DashedOutline extends CustomPainter {
+  const _DashedOutline({required this.color, required this.radius});
+
+  final Color color;
+  final double radius;
+
+  @override
+  void paint(Canvas canvas, Size size) {
+    final Paint paint = Paint()
+      ..color = color
+      ..style = PaintingStyle.stroke
+      ..strokeWidth = LumeSpace.border;
+    final RRect outline = RRect.fromRectAndRadius(
+      (Offset.zero & size).deflate(LumeSpace.border / 2),
+      Radius.circular(radius - LumeSpace.border / 2),
+    );
+    for (final PathMetric metric
+        in (Path()..addRRect(outline)).computeMetrics()) {
+      for (double d = 0; d < metric.length; d += 6) {
+        canvas.drawPath(metric.extractPath(d, d + 3), paint);
+      }
+    }
+  }
+
+  @override
+  bool shouldRepaint(_DashedOutline old) =>
+      old.color != color || old.radius != radius;
 }
 
 /// Which collection state is showing.

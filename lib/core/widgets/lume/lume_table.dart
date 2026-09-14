@@ -12,10 +12,10 @@ import 'package:flutter/material.dart';
 import '../../icons/lume_icon.dart';
 import '../../localization/lume_numerals.dart';
 import '../../theme/lume/lume_colors.dart';
-import '../../theme/lume/lume_gradients.dart';
 import '../../theme/lume/lume_space.dart';
 import '../../theme/lume/lume_theme.dart';
 import '../../theme/lume/lume_type.dart';
+import 'lume_art.dart';
 import 'lume_pressable.dart';
 
 /// A table column.
@@ -245,178 +245,133 @@ class _TableRow extends StatelessWidget {
 
 /// `.imgcard` — a card whose lead is a generated illustration.
 ///
-/// The art is deterministic from its seed, so the same story gets the same
-/// picture on every render and a golden does not flicker.
+/// Stylesheet: 168 wide, radius 16 with the art clipped to it, the card fill
+/// inside a one-point border, `shadow-sm`; a 96-point [LumeArt]; then
+/// `10 12 12` of body — the kicker 10 / 700 / .04em in capitals and the accent,
+/// the title 13 / 700 / −.026em on a 1.28 line 4 below it, the meta 10 / 500
+/// muted 5 below that.
 class LumeImageCard extends StatelessWidget {
   const LumeImageCard({
     super.key,
     required this.title,
-    required this.seed,
+    this.seed = 1,
+    this.tone = LumeArtTone.accent,
+    this.glyph,
     this.kicker,
     this.meta,
-    this.gradient,
-    this.glyph,
     this.onTap,
-    this.width,
+    this.width = defaultWidth,
+    this.semanticLabel,
   });
 
   final String title;
-
-  /// Chooses the colourway and the shapes. Same seed, same art.
   final int seed;
-
+  final LumeArtTone tone;
+  final String? glyph;
   final String? kicker;
   final String? meta;
-  final LumeGradient? gradient;
-  final String? glyph;
   final VoidCallback? onTap;
-  final double? width;
 
-  static const double artHeight = 108;
+  /// `.imgcard { width: 168px }`; `null` for `.imgcard--wide`.
+  final double? width;
+  final String? semanticLabel;
+
+  static const double defaultWidth = 168;
+  static const double artHeight = 96;
 
   @override
   Widget build(BuildContext context) {
     final LumeColors lume = context.lume;
-    final Map<String, LumeGradient> ways = context.lumeGradients.all;
-    final LumeGradient g =
-        gradient ?? ways.values.elementAt(seed.abs() % ways.length);
 
-    final Widget card = Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      mainAxisSize: MainAxisSize.min,
-      children: <Widget>[
-        ClipRRect(
-          borderRadius: LumeRadius.brMd,
-          child: Container(
-            height: artHeight,
-            width: double.infinity,
-            decoration: BoxDecoration(gradient: g.linear),
-            child: CustomPaint(
-              painter: _ArtPainter(seed: seed, ink: g.on),
+    final Widget body = Padding(
+      padding: const EdgeInsets.fromLTRB(12, 10, 12, 12),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisSize: MainAxisSize.min,
+        children: <Widget>[
+          if (kicker != null)
+            Text(
+              LumeType.overline(context, kicker!),
+              style: LumeType.tracked(
+                LumeType.natural(context, context.lumeType.label, size: 10),
+                0.04,
+              ).copyWith(fontWeight: FontWeight.w700, color: lume.accent),
+              maxLines: 1,
+              overflow: TextOverflow.ellipsis,
+            ),
+          Padding(
+            padding: EdgeInsets.only(top: kicker == null ? 0 : 4),
+            child: Text(
+              title,
+              style: LumeType.fit(
+                context,
+                LumeType.tracked(
+                  context.lumeType.body.copyWith(
+                    fontSize: 13,
+                    height: 1.28,
+                    fontWeight: FontWeight.w700,
+                  ),
+                  -0.026,
+                ),
+              ).copyWith(color: lume.text),
+              maxLines: 2,
+              overflow: TextOverflow.ellipsis,
             ),
           ),
-        ),
-        const SizedBox(height: 10),
-        if (kicker != null)
-          Text(
-            LumeType.overline(context, kicker!),
-            style: LumeType.overlineStyle(
-              context,
-              context.lumeType,
-            ).copyWith(color: lume.accent700),
-          ),
-        Text(
-          title,
-          style: LumeType.fit(
-            context,
-            context.lumeType.cardTitle,
-          ).copyWith(color: lume.text),
-          maxLines: 2,
-          overflow: TextOverflow.ellipsis,
-        ),
-        if (meta != null)
-          Text(
-            meta!,
-            style: LumeType.fit(
-              context,
-              context.lumeType.metaSmall,
-            ).copyWith(color: lume.text3),
-            maxLines: 1,
-            overflow: TextOverflow.ellipsis,
-          ),
-      ],
+          if (meta != null)
+            Padding(
+              padding: const EdgeInsets.only(top: 5),
+              child: Text(
+                meta!,
+                style: LumeType.natural(
+                  context,
+                  context.lumeType.metaSmall,
+                  size: 10,
+                ).copyWith(fontWeight: FontWeight.w500, color: lume.text3),
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
+              ),
+            ),
+        ],
+      ),
     );
 
-    final Widget sized = width == null
-        ? card
-        : SizedBox(width: width, child: card);
+    final Widget card = Container(
+      width: width,
+      decoration: BoxDecoration(
+        color: lume.card,
+        borderRadius: LumeRadius.brMd,
+        border: Border.all(color: lume.border, width: LumeSpace.border),
+        boxShadow: context.lumeShadows.sm,
+      ),
+      child: ClipRRect(
+        borderRadius: BorderRadius.circular(LumeRadius.md - LumeSpace.border),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          mainAxisSize: MainAxisSize.min,
+          children: <Widget>[
+            SizedBox(
+              height: artHeight,
+              child: LumeArt(tone: tone, seed: seed, glyph: glyph),
+            ),
+            body,
+          ],
+        ),
+      ),
+    );
 
-    if (onTap == null) return sized;
+    if (onTap == null) return card;
     return LumePressable(
       onTap: onTap,
       button: false,
-      semanticLabel: title,
+      semanticLabel:
+          semanticLabel ??
+          <String?>[kicker, title, meta].whereType<String>().join(', '),
       borderRadius: LumeRadius.brMd,
       minSize: 0,
-      child: sized,
+      child: card,
     );
   }
-}
-
-/// Deterministic decorative shapes. Soft geometry and floating circles, from
-/// §53's visual language — never a stock illustration.
-class _ArtPainter extends CustomPainter {
-  const _ArtPainter({required this.seed, required this.ink});
-
-  final int seed;
-  final Color ink;
-
-  @override
-  void paint(Canvas canvas, Size size) {
-    // A tiny deterministic sequence: same seed, same picture, every time.
-    int s = seed.abs() * 2654435761 % 2147483647;
-    double next() {
-      s = (s * 1103515245 + 12345) % 2147483647;
-      return s / 2147483647;
-    }
-
-    final Paint p = Paint()..color = ink.withValues(alpha: 0.14);
-    for (int i = 0; i < 4; i++) {
-      canvas.drawCircle(
-        Offset(next() * size.width, next() * size.height),
-        12 + next() * 34,
-        p,
-      );
-    }
-    canvas.drawRRect(
-      RRect.fromRectAndRadius(
-        Rect.fromLTWH(
-          size.width * 0.55,
-          size.height * 0.35,
-          size.width * 0.5,
-          size.height * 0.7,
-        ),
-        const Radius.circular(26),
-      ),
-      Paint()..color = ink.withValues(alpha: 0.10),
-    );
-  }
-
-  @override
-  bool shouldRepaint(_ArtPainter old) => old.seed != seed || old.ink != ink;
-}
-
-/// `.hstrip` — a horizontally scrolling rail of cards.
-class LumeHorizontalStrip extends StatelessWidget {
-  const LumeHorizontalStrip({
-    super.key,
-    required this.children,
-    this.gutters = true,
-    this.itemWidth = 220,
-  });
-
-  final List<Widget> children;
-  final bool gutters;
-  final double itemWidth;
-
-  @override
-  Widget build(BuildContext context) => SingleChildScrollView(
-    scrollDirection: Axis.horizontal,
-    padding: gutters
-        ? const EdgeInsetsDirectional.symmetric(
-            horizontal: LumeSpace.pageCompact,
-          )
-        : EdgeInsets.zero,
-    child: Row(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: <Widget>[
-        for (int i = 0; i < children.length; i++) ...<Widget>[
-          if (i > 0) const SizedBox(width: LumeSpace.x3),
-          SizedBox(width: itemWidth, child: children[i]),
-        ],
-      ],
-    ),
-  );
 }
 
 /// One tool in the related rail.

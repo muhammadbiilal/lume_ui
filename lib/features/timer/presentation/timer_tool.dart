@@ -19,6 +19,7 @@ import '../../../core/theme/lume/lume_colors.dart';
 import '../../../core/theme/lume/lume_theme.dart';
 import '../../../core/theme/lume/lume_type.dart';
 import '../../../core/widgets/lume/lume_button.dart';
+import '../../../core/widgets/lume/lume_destination.dart';
 import '../../../core/widgets/lume/lume_destination_cards.dart';
 import '../../../core/widgets/lume/lume_row.dart';
 import '../../../core/widgets/lume/lume_tool.dart';
@@ -113,7 +114,7 @@ class _LumeTimerToolState extends ConsumerState<LumeTimerTool> {
           ),
           LumeToolSection(
             title: l.timerPresets,
-            child: LumeChipRow(
+            child: LumeHorizontalStrip.chips(
               key: LumeTimerTool.presetsKey,
               children: <Widget>[
                 for (final int secs in LumeTimerTool.presets)
@@ -218,29 +219,4 @@ class LumeClockFace extends StatelessWidget {
       ),
     );
   }
-}
-
-/// `.chips` — a scrolling row of chips 7 apart, inside its own page gutter.
-class LumeChipRow extends StatelessWidget {
-  const LumeChipRow({super.key, required this.children});
-
-  final List<Widget> children;
-
-  @override
-  Widget build(BuildContext context) => SingleChildScrollView(
-    scrollDirection: Axis.horizontal,
-    padding: EdgeInsetsDirectional.only(
-      start: LumeLayout.pageGutter(context.measureClass),
-      end: LumeLayout.pageGutter(context.measureClass),
-      bottom: 2,
-    ),
-    child: Row(
-      children: <Widget>[
-        for (int i = 0; i < children.length; i++) ...<Widget>[
-          if (i > 0) const SizedBox(width: 7),
-          children[i],
-        ],
-      ],
-    ),
-  );
 }
