@@ -5602,6 +5602,38 @@
   "@qaWater": {
     "description": "Reference key qa.water"
   },
+  "qrDetects": "What it recognises",
+  "@qrDetects": {
+    "description": "Reference key qr.detects"
+  },
+  "qrHint": "Point the camera at a code",
+  "@qrHint": {
+    "description": "Reference key qr.hint"
+  },
+  "qrKindLink": "Website",
+  "@qrKindLink": {
+    "description": "Reference key qr.kind.link"
+  },
+  "qrKindWifi": "Wi-Fi network",
+  "@qrKindWifi": {
+    "description": "Reference key qr.kind.wifi"
+  },
+  "qrScan": "Scan",
+  "@qrScan": {
+    "description": "Reference key qr.scan"
+  },
+  "qrStepAct": "Open, copy or save",
+  "@qrStepAct": {
+    "description": "Reference key qr.step.act"
+  },
+  "qrStepDetect": "Lume reads it automatically",
+  "@qrStepDetect": {
+    "description": "Reference key qr.step.detect"
+  },
+  "qrStepPoint": "Point at the code",
+  "@qrStepPoint": {
+    "description": "Reference key qr.step.point"
+  },
   "ratesBuyValue": "Buy {value}",
   "@ratesBuyValue": {
     "description": "Reference: `t(\"rates.buy\") + \" \" + num` — the buying rate. The number arrives formatted",
@@ -6452,6 +6484,43 @@
   "routeMissingTitle": "We can’t find that",
   "@routeMissingTitle": {
     "description": "Unrecognised location"
+  },
+  "scanDenied": "Lume can't use the camera. You can allow it in Settings.",
+  "@scanDenied": {
+    "description": "Said when the camera permission is refused; the permission is asked for only by a press"
+  },
+  "scanEmptyText": "Anything you capture appears here and stays on this device.",
+  "@scanEmptyText": {
+    "description": "Reference key scan.empty.text"
+  },
+  "scanEmptyTitle": "Nothing scanned yet",
+  "@scanEmptyTitle": {
+    "description": "Reference key scan.empty.title"
+  },
+  "scanFailed": "Couldn't scan. Try again.",
+  "@scanFailed": {
+    "description": "Said when the scanner fails"
+  },
+  "scanFromGallery": "From gallery",
+  "@scanFromGallery": {
+    "description": "Reference key scan.fromGallery"
+  },
+  "scanNothing": "No code found",
+  "@scanNothing": {
+    "description": "Said when a scan ends without reading a code"
+  },
+  "scanRead": "Read: {value}",
+  "@scanRead": {
+    "description": "Said when a code is read; the value is the code's own text",
+    "placeholders": {
+      "value": {
+        "type": "String"
+      }
+    }
+  },
+  "scanUnavailable": "Scanning isn't available in this version yet",
+  "@scanUnavailable": {
+    "description": "Said when Scan or From gallery is pressed and this build has no camera scanner — the reference says \"Scanning\" while nothing scans"
   },
   "scoreAllOut": "all out",
   "@scoreAllOut": {

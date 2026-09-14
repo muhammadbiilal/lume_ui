@@ -4099,6 +4099,30 @@ class AppLocalizationsUr extends AppLocalizations {
   String get qaWater => 'پانی درج کریں';
 
   @override
+  String get qrDetects => 'یہ کیا پہچانتا ہے';
+
+  @override
+  String get qrHint => 'کیمرے کو کوڈ کی طرف کریں';
+
+  @override
+  String get qrKindLink => 'ویب سائٹ';
+
+  @override
+  String get qrKindWifi => 'وائی فائی نیٹ ورک';
+
+  @override
+  String get qrScan => 'اسکین کریں';
+
+  @override
+  String get qrStepAct => 'کھولیں، کاپی کریں یا محفوظ کریں';
+
+  @override
+  String get qrStepDetect => 'Lume اسے خود پڑھ لیتا ہے';
+
+  @override
+  String get qrStepPoint => 'کوڈ کی طرف کریں';
+
+  @override
   String ratesBuyValue(String value) {
     return 'خرید $value';
   }
@@ -4714,6 +4738,34 @@ class AppLocalizationsUr extends AppLocalizations {
 
   @override
   String get routeMissingTitle => 'ہمیں وہ نہیں مل رہا';
+
+  @override
+  String get scanDenied =>
+      'Lume کیمرا استعمال نہیں کر سکتا۔ آپ سیٹنگز میں اجازت دے سکتے ہیں۔';
+
+  @override
+  String get scanEmptyText =>
+      'آپ جو بھی محفوظ کریں گے یہاں آئے گا اور اسی ڈیوائس پر رہے گا۔';
+
+  @override
+  String get scanEmptyTitle => 'ابھی کچھ اسکین نہیں ہوا';
+
+  @override
+  String get scanFailed => 'اسکین نہیں ہو سکا۔ دوبارہ کوشش کریں۔';
+
+  @override
+  String get scanFromGallery => 'گیلری سے';
+
+  @override
+  String get scanNothing => 'کوئی کوڈ نہیں ملا';
+
+  @override
+  String scanRead(String value) {
+    return 'پڑھا گیا: $value';
+  }
+
+  @override
+  String get scanUnavailable => 'اس ورژن میں ابھی اسکیننگ دستیاب نہیں';
 
   @override
   String get scoreAllOut => 'آل آؤٹ';

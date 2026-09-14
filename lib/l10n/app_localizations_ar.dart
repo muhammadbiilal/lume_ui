@@ -4121,6 +4121,30 @@ class AppLocalizationsAr extends AppLocalizations {
   String get qaWater => 'سجّل الماء';
 
   @override
+  String get qrDetects => 'ما الذي يتعرّف عليه';
+
+  @override
+  String get qrHint => 'وجّه الكاميرا نحو الرمز';
+
+  @override
+  String get qrKindLink => 'موقع ويب';
+
+  @override
+  String get qrKindWifi => 'شبكة Wi-Fi';
+
+  @override
+  String get qrScan => 'امسح';
+
+  @override
+  String get qrStepAct => 'افتح أو انسخ أو احفظ';
+
+  @override
+  String get qrStepDetect => 'يقرؤه Lume تلقائيًا';
+
+  @override
+  String get qrStepPoint => 'وجّه نحو الرمز';
+
+  @override
   String ratesBuyValue(String value) {
     return 'شراء $value';
   }
@@ -4745,6 +4769,33 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get routeMissingTitle => 'تعذّر العثور على ذلك';
+
+  @override
+  String get scanDenied =>
+      'لا يستطيع Lume استخدام الكاميرا. يمكنك السماح بذلك من الإعدادات.';
+
+  @override
+  String get scanEmptyText => 'كل ما تلتقطه يظهر هنا ويبقى على هذا الجهاز.';
+
+  @override
+  String get scanEmptyTitle => 'لم يُمسح شيء بعد';
+
+  @override
+  String get scanFailed => 'تعذّر المسح. حاول مرة أخرى.';
+
+  @override
+  String get scanFromGallery => 'من المعرض';
+
+  @override
+  String get scanNothing => 'لم يُعثر على رمز';
+
+  @override
+  String scanRead(String value) {
+    return 'قُرئ: $value';
+  }
+
+  @override
+  String get scanUnavailable => 'المسح غير متاح في هذا الإصدار بعد';
 
   @override
   String get scoreAllOut => 'خرجوا جميعًا';

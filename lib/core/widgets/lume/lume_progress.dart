@@ -374,140 +374,149 @@ class _TimelineRow extends StatelessWidget {
 
     return Padding(
       padding: EdgeInsets.only(bottom: last ? 0 : gap),
-      child: IntrinsicHeight(
-        child: Row(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: <Widget>[
-            SizedBox(
-              width: 52,
-              child: Padding(
-                padding: const EdgeInsets.only(top: 1),
-                child: Align(
-                  alignment: AlignmentDirectional.topEnd,
-                  child: LumeNumerals(
-                    entry.time ?? '',
-                    style: LumeType.numeric(
-                      LumeType.natural(
-                        context,
-                        context.lumeType.metaSmall,
-                        size: 11,
-                      ),
-                    ).copyWith(fontWeight: FontWeight.w700, color: lume.text3),
+      // .tline__rail is 20 tall — a 14-point node 3 down — so an entry with
+      // only a title is 20, not the title's own line.
+      child: ConstrainedBox(
+        constraints: const BoxConstraints(minHeight: 20),
+        child: IntrinsicHeight(
+          child: Row(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: <Widget>[
+              SizedBox(
+                width: 52,
+                child: Padding(
+                  padding: const EdgeInsets.only(top: 1),
+                  child: Align(
+                    alignment: AlignmentDirectional.topEnd,
+                    child: LumeNumerals(
+                      entry.time ?? '',
+                      style:
+                          LumeType.numeric(
+                            LumeType.natural(
+                              context,
+                              context.lumeType.metaSmall,
+                              size: 11,
+                            ),
+                          ).copyWith(
+                            fontWeight: FontWeight.w700,
+                            color: lume.text3,
+                          ),
+                    ),
                   ),
                 ),
               ),
-            ),
-            const SizedBox(width: 11),
-            SizedBox(
-              width: 16,
-              child: Stack(
-                clipBehavior: Clip.none,
-                children: <Widget>[
-                  if (!last)
-                    PositionedDirectional(
-                      start: 8 - 0.75,
-                      top: 18,
-                      bottom: -gap,
-                      width: 1.5,
-                      child: ColoredBox(color: lume.border),
-                    ),
-                  PositionedDirectional(
-                    start: 1,
-                    top: 3,
-                    child: Container(
-                      width: 14,
-                      height: 14,
-                      alignment: Alignment.center,
-                      decoration: BoxDecoration(
-                        color: fill,
-                        shape: BoxShape.circle,
-                        border: Border.all(color: ring, width: 2),
-                        boxShadow: now
-                            ? <BoxShadow>[
-                                BoxShadow(
-                                  color: lume.tintAccent,
-                                  spreadRadius: 4,
-                                ),
-                              ]
-                            : null,
-                      ),
-                      child: entry.icon == null
-                          ? null
-                          : LumeIcon(entry.icon!, size: 8, color: glyph),
-                    ),
-                  ),
-                ],
-              ),
-            ),
-            const SizedBox(width: 11),
-            Expanded(
-              child: Padding(
-                padding: const EdgeInsets.only(bottom: 2),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  mainAxisSize: MainAxisSize.min,
+              const SizedBox(width: 11),
+              SizedBox(
+                width: 16,
+                child: Stack(
+                  clipBehavior: Clip.none,
                   children: <Widget>[
-                    Text(
-                      entry.title,
-                      style:
-                          LumeType.tracked(
-                            LumeType.natural(
-                              context,
-                              context.lumeType.body,
-                              size: 13,
-                            ),
-                            -0.024,
-                          ).copyWith(
-                            fontWeight: FontWeight.w700,
-                            color: done ? lume.text2 : lume.text,
-                          ),
+                    if (!last)
+                      PositionedDirectional(
+                        start: 8 - 0.75,
+                        top: 18,
+                        bottom: -gap,
+                        width: 1.5,
+                        child: ColoredBox(color: lume.border),
+                      ),
+                    PositionedDirectional(
+                      start: 1,
+                      top: 3,
+                      child: Container(
+                        width: 14,
+                        height: 14,
+                        alignment: Alignment.center,
+                        decoration: BoxDecoration(
+                          color: fill,
+                          shape: BoxShape.circle,
+                          border: Border.all(color: ring, width: 2),
+                          boxShadow: now
+                              ? <BoxShadow>[
+                                  BoxShadow(
+                                    color: lume.tintAccent,
+                                    spreadRadius: 4,
+                                  ),
+                                ]
+                              : null,
+                        ),
+                        child: entry.icon == null
+                            ? null
+                            : LumeIcon(entry.icon!, size: 8, color: glyph),
+                      ),
                     ),
-                    if (entry.subtitle != null)
-                      Padding(
-                        padding: const EdgeInsets.only(top: 2),
-                        child: Text(
-                          entry.subtitle!,
-                          style:
-                              LumeType.natural(
-                                context,
-                                context.lumeType.metaSmall,
-                                size: 11,
-                              ).copyWith(
-                                fontWeight: FontWeight.w500,
-                                color: lume.text2,
-                              ),
-                        ),
-                      ),
-                    if (entry.meta != null)
-                      Padding(
-                        padding: const EdgeInsets.only(top: 3),
-                        child: Text(
-                          entry.meta!,
-                          style:
-                              LumeType.natural(
-                                context,
-                                context.lumeType.metaSmall,
-                                size: 10,
-                              ).copyWith(
-                                fontWeight: FontWeight.w500,
-                                color: lume.text3,
-                              ),
-                        ),
-                      ),
                   ],
                 ),
               ),
-            ),
-            if (entry.value != null) ...<Widget>[
               const SizedBox(width: 11),
-              LumeNumerals(
-                entry.value!,
-                style: LumeType.numeric(
-                  LumeType.natural(context, context.lumeType.label, size: 12),
-                ).copyWith(fontWeight: FontWeight.w700, color: lume.text2),
+              Expanded(
+                child: Padding(
+                  padding: const EdgeInsets.only(bottom: 2),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisSize: MainAxisSize.min,
+                    children: <Widget>[
+                      Text(
+                        entry.title,
+                        style:
+                            LumeType.tracked(
+                              LumeType.natural(
+                                context,
+                                context.lumeType.body,
+                                size: 13,
+                              ),
+                              -0.024,
+                            ).copyWith(
+                              fontWeight: FontWeight.w700,
+                              color: done ? lume.text2 : lume.text,
+                            ),
+                      ),
+                      if (entry.subtitle != null)
+                        Padding(
+                          padding: const EdgeInsets.only(top: 2),
+                          child: Text(
+                            entry.subtitle!,
+                            style:
+                                LumeType.natural(
+                                  context,
+                                  context.lumeType.metaSmall,
+                                  size: 11,
+                                ).copyWith(
+                                  fontWeight: FontWeight.w500,
+                                  color: lume.text2,
+                                ),
+                          ),
+                        ),
+                      if (entry.meta != null)
+                        Padding(
+                          padding: const EdgeInsets.only(top: 3),
+                          child: Text(
+                            entry.meta!,
+                            style:
+                                LumeType.natural(
+                                  context,
+                                  context.lumeType.metaSmall,
+                                  size: 10,
+                                ).copyWith(
+                                  fontWeight: FontWeight.w500,
+                                  color: lume.text3,
+                                ),
+                          ),
+                        ),
+                    ],
+                  ),
+                ),
               ),
+              if (entry.value != null) ...<Widget>[
+                const SizedBox(width: 11),
+                LumeNumerals(
+                  entry.value!,
+                  style: LumeType.numeric(
+                    LumeType.natural(context, context.lumeType.label, size: 12),
+                  ).copyWith(fontWeight: FontWeight.w700, color: lume.text2),
+                ),
+              ],
             ],
-          ],
+          ),
         ),
       ),
     );

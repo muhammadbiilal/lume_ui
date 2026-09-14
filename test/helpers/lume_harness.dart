@@ -34,6 +34,7 @@ import 'package:lume/app/providers/records_provider.dart';
 import 'package:lume/features/records/data/memory_record_repository.dart';
 import 'package:lume/features/records/data/record_seeds.dart';
 import 'package:lume/app/providers/shell_provider.dart';
+import 'package:lume/core/platform/lume_scanner.dart';
 import 'package:lume/core/platform/lume_dialer.dart';
 import 'package:lume/core/platform/lume_export.dart';
 import 'package:lume/core/platform/lume_share.dart';
@@ -115,6 +116,7 @@ Future<void> pumpLume(
         sharerProvider.overrideWithValue(LumeRecordingSharer()),
         imageSaverProvider.overrideWithValue(LumeRecordingImageSaver()),
         exporterProvider.overrideWithValue(LumeRecordingExporter()),
+        scannerProvider.overrideWithValue(LumeRecordingScanner()),
         // Records on the fixture day, read at once: a test that is about
         // loading builds its own store with a delay.
         recordRepositoryProvider.overrideWith((Ref ref) {
@@ -226,6 +228,7 @@ Future<GoRouter> pumpLumeRouter(
         sharerProvider.overrideWithValue(LumeRecordingSharer()),
         imageSaverProvider.overrideWithValue(LumeRecordingImageSaver()),
         exporterProvider.overrideWithValue(LumeRecordingExporter()),
+        scannerProvider.overrideWithValue(LumeRecordingScanner()),
         // Records on the fixture day, read at once: a test that is about
         // loading builds its own store with a delay.
         recordRepositoryProvider.overrideWith((Ref ref) {

@@ -9,6 +9,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../core/platform/lume_dialer.dart';
 import '../../core/platform/lume_dialer_platform.dart';
 import '../../core/platform/lume_export.dart';
+import '../../core/platform/lume_scanner.dart';
 import '../../core/platform/lume_share.dart';
 import '../../core/platform/lume_share_platform.dart';
 
@@ -26,6 +27,13 @@ final Provider<LumeSharer> sharerProvider = Provider<LumeSharer>(
 /// the photo-library permission is decided ([LumeUnavailableImageSaver]).
 final Provider<LumeImageSaver> imageSaverProvider = Provider<LumeImageSaver>(
   (Ref ref) => const LumeUnavailableImageSaver(),
+);
+
+/// C78 — reads a code with the camera or from an image. Unavailable until a
+/// camera package and its permission wording are decided
+/// ([LumeUnavailableScanner]): nothing reaches the device.
+final Provider<LumeScanner> scannerProvider = Provider<LumeScanner>(
+  (Ref ref) => const LumeUnavailableScanner(),
 );
 
 /// D7 — writes a tool's export where the reader chooses.

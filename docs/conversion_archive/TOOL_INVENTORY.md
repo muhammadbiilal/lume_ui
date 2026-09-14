@@ -112,7 +112,7 @@ Builders named are the `UI.*` calls the module makes (inventory `modules[].ui`).
 | J | **Scripture reader** | a `kard--reader` card (Arabic, translation, source, share/listen) → search/filter → rows | `quran` `hadith` `ayah` `duas` `names99` (5) | **Hadith** — decision F6A-D5; *built* (C77) |
 | K | **Visual library** | `searchBar` → chips → `hscroll` of `imageCard`s → `richRow`s with `art` thumbnails | `recipes` `play` (2) | **Recipes** |
 | L | **Clock instrument** | `shared/clock.js` `clockScreen` driven by the host's `runClock` | `timer` `stopwatch` `focus` (3) | **Timer** |
-| M | **Camera instrument** | `shared/scanner.js` `scannerScreen`; a permission the user grants by acting | `qr` `docscan` (2); `passport` `wastatus` ask for a permission without the scanner | none yet — decision F6A-D5 |
+| M | **Camera instrument** | `shared/scanner.js` `scannerScreen`; a permission the user grants by acting | `qr` `docscan` (2); `passport` `wastatus` ask for a permission without the scanner | **QR Scanner** — decision F6A-D5; *built* (C78) |
 | N | **Action interface** | an SOS card and a grid of call cards, each an external `tel:` link | `emergency` (1) | **Emergency** — decision F6A-D6 |
 | — | **Singular instruments** | each has a host handler of its own and shares no builder with another | `calculator` (`calcToolRender`), `converter` (`swapConverter`), `tasbih` (`resetToolTasbih`), `speedtest` (`runSpeedTest`), `qibla` | converted one by one |
 
@@ -242,6 +242,7 @@ spec port ──► tool host adapter ──► route dispatch
 12. **Documents** (B) — the record layer's second family and irreversible delete; "Encrypted on device" over the in-memory store, with the obligation (C75) — *built*
 13. **Weather** (D) — the context dashboard on the reference weather port, extended to the hours, air and sun; "Delayed", never "Live" (C76) — *built*
 14. **Hadith** (J) — the scripture reader; hadith kept as written, a share that is the hadith read (C77) — *built*
+15. **QR Scanner** (M) — the camera instrument through a scanner contract that says it cannot scan yet; the camera package left open (C78) — *built*
 
 ## 6. Decisions this inventory raises
 

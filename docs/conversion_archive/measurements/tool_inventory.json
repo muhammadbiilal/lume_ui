@@ -72,12 +72,14 @@
   "flutterBuilt": [
    "timer",
    "calendar",
+   "hadith",
    "goldrates",
    "tax",
    "weather",
    "flights",
    "news",
    "emergency",
+   "qr",
    "recipes",
    "learning",
    "documents",
@@ -1229,7 +1231,7 @@
    "approvedComposition": null,
    "recordFamily": false,
    "module": "assets/js/tools/islamic/hadith.tool.js",
-   "flutter": "placeholder"
+   "flutter": "built"
   },
   {
    "id": "duas",
@@ -2446,7 +2448,7 @@
    "approvedComposition": null,
    "recordFamily": false,
    "module": "assets/js/tools/daily/qr.tool.js",
-   "flutter": "placeholder"
+   "flutter": "built"
   },
   {
    "id": "docscan",

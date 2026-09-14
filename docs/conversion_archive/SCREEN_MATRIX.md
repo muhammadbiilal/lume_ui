@@ -216,7 +216,7 @@ run on the shared CRUD engine.
 | `news` | News | reader | high | — | — | — | — | **built (F6A)** — reference tool for the editorial-reader archetype; edition strip, search, categories, lead story, art rows, reading rows, share card (C68, C70) |
 | `cricket` | Cricket | dashboard | high | — | — | — | — | not started |
 | `emergency` | Emergency | action | low | — | — | Y | — | **built (F6A)** — reference tool for the action archetype; SOS card, call grid through the D6 dialer contract, info rows, note (C67) |
-| `qr` | QR Scanner | instrument | low | — | — | Y | — | not started |
+| `qr` | QR Scanner | instrument | low | — | — | Y | — | **built (F6A)** — reference tool for camera instruments; viewfinder, Scan and From gallery through the scanner contract (unavailable in this build, said plainly), what it recognises, history (C78) |
 | `docscan` | Document Scanner | instrument | medium | — | — | Y | — | not started |
 | `passport` | Passport Photos | instrument | medium | — | — | — | — | not started |
 | `vehicle` | Vehicle & Fines | manager | high | PK | — | — | — | not started |

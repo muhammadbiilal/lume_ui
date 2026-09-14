@@ -754,6 +754,36 @@ void main() {
     });
   });
 
+  // ----------------------------------------------------------- QR Scanner
+
+  group('QR Scanner', () {
+    final String location = LumeRoutes.tool(LumeRoutes.tools, 'qr');
+
+    for (final Cell cell in kCells) {
+      testWidgets(cell.$1, (WidgetTester tester) async {
+        await shoot(
+          tester,
+          state: 'default_pk',
+          location: location,
+          golden: 'tool_qr_default_pk',
+          cell: cell,
+        );
+      });
+    }
+
+    for (final String state in <String>['default_us', 'muslim_gb']) {
+      testWidgets('$state · the reference cell', (WidgetTester tester) async {
+        await shoot(
+          tester,
+          state: state,
+          location: location,
+          golden: 'tool_qr_$state',
+          cell: kCells.first,
+        );
+      });
+    }
+  });
+
   // ----------------------------------------------------------- Share card
 
   // The share sheet over Tax (D7): the card drawn from the screen's own

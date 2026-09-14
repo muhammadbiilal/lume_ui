@@ -18,6 +18,7 @@ import '../../goldrates/presentation/goldrates_tool.dart';
 import '../../hadith/presentation/hadith_tool.dart';
 import '../../learning/presentation/learning_tool.dart';
 import '../../news/presentation/news_tool.dart';
+import '../../qr/presentation/qr_tool.dart';
 import '../../recipes/presentation/recipes_tool.dart';
 import '../../tax/presentation/tax_tool.dart';
 import '../../timer/presentation/timer_tool.dart';
@@ -42,4 +43,5 @@ const Map<String, LumeToolBuilder> kLumeToolRegistry =
       'documents': LumeDocumentsTool.open,
       'weather': LumeWeatherTool.open,
       'hadith': LumeHadithTool.open,
+      'qr': LumeQrTool.open,
     };

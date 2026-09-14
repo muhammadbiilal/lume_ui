@@ -7342,6 +7342,54 @@ abstract class AppLocalizations {
   /// **'Log water'**
   String get qaWater;
 
+  /// Reference key qr.detects
+  ///
+  /// In en, this message translates to:
+  /// **'What it recognises'**
+  String get qrDetects;
+
+  /// Reference key qr.hint
+  ///
+  /// In en, this message translates to:
+  /// **'Point the camera at a code'**
+  String get qrHint;
+
+  /// Reference key qr.kind.link
+  ///
+  /// In en, this message translates to:
+  /// **'Website'**
+  String get qrKindLink;
+
+  /// Reference key qr.kind.wifi
+  ///
+  /// In en, this message translates to:
+  /// **'Wi-Fi network'**
+  String get qrKindWifi;
+
+  /// Reference key qr.scan
+  ///
+  /// In en, this message translates to:
+  /// **'Scan'**
+  String get qrScan;
+
+  /// Reference key qr.step.act
+  ///
+  /// In en, this message translates to:
+  /// **'Open, copy or save'**
+  String get qrStepAct;
+
+  /// Reference key qr.step.detect
+  ///
+  /// In en, this message translates to:
+  /// **'Lume reads it automatically'**
+  String get qrStepDetect;
+
+  /// Reference key qr.step.point
+  ///
+  /// In en, this message translates to:
+  /// **'Point at the code'**
+  String get qrStepPoint;
+
   /// Reference: `t("rates.buy") + " " + num` — the buying rate. The number arrives formatted
   ///
   /// In en, this message translates to:
@@ -8355,6 +8403,54 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'We can’t find that'**
   String get routeMissingTitle;
+
+  /// Said when the camera permission is refused; the permission is asked for only by a press
+  ///
+  /// In en, this message translates to:
+  /// **'Lume can\'t use the camera. You can allow it in Settings.'**
+  String get scanDenied;
+
+  /// Reference key scan.empty.text
+  ///
+  /// In en, this message translates to:
+  /// **'Anything you capture appears here and stays on this device.'**
+  String get scanEmptyText;
+
+  /// Reference key scan.empty.title
+  ///
+  /// In en, this message translates to:
+  /// **'Nothing scanned yet'**
+  String get scanEmptyTitle;
+
+  /// Said when the scanner fails
+  ///
+  /// In en, this message translates to:
+  /// **'Couldn\'t scan. Try again.'**
+  String get scanFailed;
+
+  /// Reference key scan.fromGallery
+  ///
+  /// In en, this message translates to:
+  /// **'From gallery'**
+  String get scanFromGallery;
+
+  /// Said when a scan ends without reading a code
+  ///
+  /// In en, this message translates to:
+  /// **'No code found'**
+  String get scanNothing;
+
+  /// Said when a code is read; the value is the code's own text
+  ///
+  /// In en, this message translates to:
+  /// **'Read: {value}'**
+  String scanRead(String value);
+
+  /// Said when Scan or From gallery is pressed and this build has no camera scanner — the reference says "Scanning" while nothing scans
+  ///
+  /// In en, this message translates to:
+  /// **'Scanning isn\'t available in this version yet'**
+  String get scanUnavailable;
 
   /// Reference: a side that has lost every wicket
   ///

@@ -4102,6 +4102,30 @@ class AppLocalizationsEn extends AppLocalizations {
   String get qaWater => 'Log water';
 
   @override
+  String get qrDetects => 'What it recognises';
+
+  @override
+  String get qrHint => 'Point the camera at a code';
+
+  @override
+  String get qrKindLink => 'Website';
+
+  @override
+  String get qrKindWifi => 'Wi-Fi network';
+
+  @override
+  String get qrScan => 'Scan';
+
+  @override
+  String get qrStepAct => 'Open, copy or save';
+
+  @override
+  String get qrStepDetect => 'Lume reads it automatically';
+
+  @override
+  String get qrStepPoint => 'Point at the code';
+
+  @override
   String ratesBuyValue(String value) {
     return 'Buy $value';
   }
@@ -4715,6 +4739,34 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get routeMissingTitle => 'We can’t find that';
+
+  @override
+  String get scanDenied =>
+      'Lume can\'t use the camera. You can allow it in Settings.';
+
+  @override
+  String get scanEmptyText =>
+      'Anything you capture appears here and stays on this device.';
+
+  @override
+  String get scanEmptyTitle => 'Nothing scanned yet';
+
+  @override
+  String get scanFailed => 'Couldn\'t scan. Try again.';
+
+  @override
+  String get scanFromGallery => 'From gallery';
+
+  @override
+  String get scanNothing => 'No code found';
+
+  @override
+  String scanRead(String value) {
+    return 'Read: $value';
+  }
+
+  @override
+  String get scanUnavailable => 'Scanning isn\'t available in this version yet';
 
   @override
   String get scoreAllOut => 'all out';

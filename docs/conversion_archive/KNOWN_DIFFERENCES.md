@@ -1973,6 +1973,7 @@ were:**
 |---|---|---|
 | viewfinder (in `qr_tool.dart`) | — | `.scanner__view`: 232 tall at radius 20 on the scan gradient; a 148 frame at radius 16 ringed in white at .55 over the rest dimmed at .28; a 148 × 2 accent-400 beam sweeping every 2.4 s, still when motion is reduced; the hint 16 up, 11 / 600 white at .82 on black at .32 in a `6 12` pill; the actions 14 below |
 | `LumeScanner` (new) | — | the device contract: `scan()` and `pickImage()` reporting a `LumeScanOutcome`, with an unavailable default and a recording fake |
+| `LumeTimeline` | an entry with only a title as tall as the title's line (18) | `.tline__rail` is 20 — a 14-point node 3 down — so such an entry is 20 and the next begins 36 below it; entries with a subtitle were already taller |
 
 ### C63 — English dates written the wrong way outside the United States
 
