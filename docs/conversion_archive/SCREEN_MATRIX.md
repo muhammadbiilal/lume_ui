@@ -186,7 +186,7 @@ run on the shared CRUD engine.
 | id | Name | Archetype | Density | Gate | Record | Quick | Share | Status |
 |---|---|---|---|---|---|---|---|---|
 | `compound` | Compound Interest | calculator | medium | — | — | — | — | not started |
-| `goldrates` | Currency & Gold | explorer | high | — | — | — | — | not started |
+| `goldrates` | Currency & Gold | explorer | high | — | — | — | — | **built (F6A)** — reference tool for the data-explorer archetype; market strip, gold summary with its change, metals table, currency search, rows with sparkline and delta, 30-day line chart, gold converter, price share card (C72) |
 | `markets` | Markets | explorer | veryhigh | — | — | — | — | not started |
 | `fuel` | Fuel Prices | explorer | high | — | — | — | — | not started |
 | `fuelcost` | Fuel Cost | calculator | medium | — | — | — | — | not started |

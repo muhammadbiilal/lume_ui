@@ -2278,6 +2278,36 @@ abstract class AppLocalizations {
   /// **'Week'**
   String get calendarWeek;
 
+  /// Reference key ccy.aed — a currency's name
+  ///
+  /// In en, this message translates to:
+  /// **'UAE Dirham'**
+  String get ccyAed;
+
+  /// Reference key ccy.eur — a currency's name
+  ///
+  /// In en, this message translates to:
+  /// **'Euro'**
+  String get ccyEur;
+
+  /// Reference key ccy.gbp — a currency's name
+  ///
+  /// In en, this message translates to:
+  /// **'Pound Sterling'**
+  String get ccyGbp;
+
+  /// Reference key ccy.sar — a currency's name
+  ///
+  /// In en, this message translates to:
+  /// **'Saudi Riyal'**
+  String get ccySar;
+
+  /// Reference key ccy.usd — a currency's name
+  ///
+  /// In en, this message translates to:
+  /// **'US Dollar'**
+  String get ccyUsd;
+
   /// Reference: a collection card
   ///
   /// In en, this message translates to:
@@ -2331,6 +2361,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'All'**
   String get commonAll;
+
+  /// Reference key common.change — a column head
+  ///
+  /// In en, this message translates to:
+  /// **'Change'**
+  String get commonChange;
 
   /// Reference key common.days
   ///
@@ -6406,6 +6442,144 @@ abstract class AppLocalizations {
   /// **'Log water'**
   String get qaWater;
 
+  /// Reference: `t("rates.buy") + " " + num` — the buying rate. The number arrives formatted
+  ///
+  /// In en, this message translates to:
+  /// **'Buy {value}'**
+  String ratesBuyValue(String value);
+
+  /// Reference key rates.converter
+  ///
+  /// In en, this message translates to:
+  /// **'What is my gold worth?'**
+  String get ratesConverter;
+
+  /// Reference key rates.currencies
+  ///
+  /// In en, this message translates to:
+  /// **'Currencies'**
+  String get ratesCurrencies;
+
+  /// A chart axis label, days before today — the reference writes "30d", "15d"
+  ///
+  /// In en, this message translates to:
+  /// **'{n}d'**
+  String ratesDaysAgo(int n);
+
+  /// Reference key rates.gold22
+  ///
+  /// In en, this message translates to:
+  /// **'Gold 22k'**
+  String get ratesGold22;
+
+  /// Reference key rates.gold24
+  ///
+  /// In en, this message translates to:
+  /// **'Gold 24k'**
+  String get ratesGold24;
+
+  /// Reference key rates.goldHistory — the chart's accessible name
+  ///
+  /// In en, this message translates to:
+  /// **'Gold per tola'**
+  String get ratesGoldHistory;
+
+  /// Reference key rates.goldHistoryCap
+  ///
+  /// In en, this message translates to:
+  /// **'Open market close, last 30 days'**
+  String get ratesGoldHistoryCap;
+
+  /// Reference key rates.history
+  ///
+  /// In en, this message translates to:
+  /// **'Gold, 30 days'**
+  String get ratesHistory;
+
+  /// What the 30-day chart says to a screen reader after its name — the first and last close, formatted
+  ///
+  /// In en, this message translates to:
+  /// **'From {from} to {to}'**
+  String ratesHistoryRange(String from, String to);
+
+  /// Reference key rates.metal
+  ///
+  /// In en, this message translates to:
+  /// **'Metal'**
+  String get ratesMetal;
+
+  /// Reference key rates.metals
+  ///
+  /// In en, this message translates to:
+  /// **'Metals'**
+  String get ratesMetals;
+
+  /// Reference key rates.noMatch
+  ///
+  /// In en, this message translates to:
+  /// **'No currency matches'**
+  String get ratesNoMatch;
+
+  /// Reference key rates.noMatchText
+  ///
+  /// In en, this message translates to:
+  /// **'Try a three-letter code such as USD or EUR.'**
+  String get ratesNoMatchText;
+
+  /// Reference key rates.openMarket
+  ///
+  /// In en, this message translates to:
+  /// **'Open market'**
+  String get ratesOpenMarket;
+
+  /// Reference: `"/ " + t("unit.tola")` — a price per unit, after the figure
+  ///
+  /// In en, this message translates to:
+  /// **'/ {unit}'**
+  String ratesPerUnit(String unit);
+
+  /// Reference key rates.search
+  ///
+  /// In en, this message translates to:
+  /// **'Search currencies'**
+  String get ratesSearch;
+
+  /// Reference: `t("rates.sell") + " " + num` — the selling rate. The number arrives formatted
+  ///
+  /// In en, this message translates to:
+  /// **'Sell {value}'**
+  String ratesSellValue(String value);
+
+  /// The share card: a metal, its price, and the unit ("/ tola"), all formatted
+  ///
+  /// In en, this message translates to:
+  /// **'{metal}: {value} {unit}'**
+  String ratesShareText(String metal, String value, String unit);
+
+  /// Reference key rates.silver
+  ///
+  /// In en, this message translates to:
+  /// **'Silver'**
+  String get ratesSilver;
+
+  /// Reference key rates.silverTola
+  ///
+  /// In en, this message translates to:
+  /// **'Silver / tola'**
+  String get ratesSilverTola;
+
+  /// Reference key rates.weight
+  ///
+  /// In en, this message translates to:
+  /// **'Weight'**
+  String get ratesWeight;
+
+  /// Reference key rates.worth
+  ///
+  /// In en, this message translates to:
+  /// **'Worth'**
+  String get ratesWorth;
+
   /// Reference key rec.conflict
   ///
   /// In en, this message translates to:
@@ -8475,6 +8649,12 @@ abstract class AppLocalizations {
   /// **'days'**
   String get unitDays;
 
+  /// Reference key unit.gram
+  ///
+  /// In en, this message translates to:
+  /// **'g'**
+  String get unitGram;
+
   /// Reference: `c.num(r.kcal) + " " + t("unit.kcal")`. The number arrives formatted
   ///
   /// In en, this message translates to:
@@ -8511,11 +8691,23 @@ abstract class AppLocalizations {
   /// **'/{total}'**
   String unitOfTotal(int total);
 
+  /// Reference key unit.ounce — a troy ounce
+  ///
+  /// In en, this message translates to:
+  /// **'oz'**
+  String get unitOunce;
+
   /// Reference: a statistic’s unit
   ///
   /// In en, this message translates to:
   /// **'k'**
   String get unitThousand;
+
+  /// Reference key unit.tola — 11.664 grams
+  ///
+  /// In en, this message translates to:
+  /// **'tola'**
+  String get unitTola;
 
   /// Reference: WEATHER_BY_COUNTRY / WEATHER_BY_ZONE condition phrase.
   ///

@@ -5,13 +5,16 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:lume/core/time/lume_hijri.dart';
 
 void main() {
-  test('the fixture day is 23 Rabi‘ al-Awwal 1448, as the reference labels it', () {
-    // `tool_calendar_muslim_pk_…` — "23 Rabi‘ al-Awwal 1448" on 7 Sep 2026.
-    expect(
-      LumeHijriDate.of(DateTime(2026, 9, 7, 16, 41, 32)),
-      const LumeHijriDate(1448, 3, 23),
-    );
-  });
+  test(
+    'the fixture day is 23 Rabi‘ al-Awwal 1448, as the reference labels it',
+    () {
+      // `tool_calendar_muslim_pk_…` — "23 Rabi‘ al-Awwal 1448" on 7 Sep 2026.
+      expect(
+        LumeHijriDate.of(DateTime(2026, 9, 7, 16, 41, 32)),
+        const LumeHijriDate(1448, 3, 23),
+      );
+    },
+  );
 
   test('every hour of a civil day is one Hijri date', () {
     final LumeHijriDate morning = LumeHijriDate.of(DateTime(2026, 9, 7, 0, 5));

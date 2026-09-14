@@ -46,12 +46,24 @@ class LumeTable extends StatelessWidget {
     required this.rows,
     required this.label,
     this.onRowTap,
+    this.cell,
+    this.cellWidth,
   });
 
   final List<LumeColumn> columns;
 
   /// Cell text, already formatted. One list per row, matching [columns].
   final List<List<String>> rows;
+
+  /// A cell drawn as something other than its text — `UI.delta` in a
+  /// change column. The text still sizes the column and names the row;
+  /// `null` from the builder draws the text.
+  final Widget? Function(int row, int column)? cell;
+
+  /// The drawn width of a [cell] the builder draws, without its padding —
+  /// so the column wants what is on screen, not the text behind it. `null`
+  /// measures the text.
+  final double? Function(BuildContext context, int row, int column)? cellWidth;
 
   /// The accessible name of the scroll region. Required: an unlabelled
   /// scrollable is one a screen reader cannot announce.
@@ -114,9 +126,11 @@ class LumeTable extends StatelessWidget {
         columns[c].width ??
             <double>[
               measure(heads[c], headStyle(context)) + headPadding.horizontal,
-              for (final List<String> r in rows)
-                if (c < r.length)
-                  measure(r[c], cellStyle(context, c)) + cellPadding.horizontal,
+              for (int i = 0; i < rows.length; i++)
+                if (c < rows[i].length)
+                  (cellWidth?.call(context, i, c) ??
+                          measure(rows[i][c], cellStyle(context, c))) +
+                      cellPadding.horizontal,
             ].reduce((double a, double b) => a > b ? a : b),
     ];
     final double wanted = wants.fold(0, (double a, double b) => a + b);
@@ -163,6 +177,7 @@ class LumeTable extends StatelessWidget {
                           columns: columns,
                           widths: widths,
                           cells: rows[i],
+                          drawn: cell == null ? null : (int c) => cell!(i, c),
                           last: i == rows.length - 1,
                           onTap: onRowTap == null ? null : () => onRowTap!(i),
                         ),
@@ -183,6 +198,7 @@ class _TableRow extends StatelessWidget {
     required this.columns,
     required this.widths,
     required this.cells,
+    this.drawn,
     this.header = false,
     this.last = false,
     this.onTap,
@@ -191,6 +207,7 @@ class _TableRow extends StatelessWidget {
   final List<LumeColumn> columns;
   final List<double> widths;
   final List<String> cells;
+  final Widget? Function(int column)? drawn;
   final bool header;
   final bool last;
   final VoidCallback? onTap;
@@ -220,13 +237,15 @@ class _TableRow extends StatelessWidget {
                   : AlignmentDirectional.centerStart,
               // `.is-rtl .dtable td, th { direction: ltr; unicode-bidi:
               // isolate }` — a band's two amounts must not trade places.
-              child: LumeNumerals(
-                cells[i],
-                style: header
-                    ? LumeTable.headStyle(context)
-                    : LumeTable.cellStyle(context, i),
-                maxLines: 1,
-              ),
+              child:
+                  drawn?.call(i) ??
+                  LumeNumerals(
+                    cells[i],
+                    style: header
+                        ? LumeTable.headStyle(context)
+                        : LumeTable.cellStyle(context, i),
+                    maxLines: 1,
+                  ),
             ),
         ],
       ),

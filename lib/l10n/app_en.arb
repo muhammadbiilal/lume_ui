@@ -1547,6 +1547,26 @@
   "@calendarWeek": {
     "description": "Reference key calendar.week"
   },
+  "ccyAed": "UAE Dirham",
+  "@ccyAed": {
+    "description": "Reference key ccy.aed — a currency's name"
+  },
+  "ccyEur": "Euro",
+  "@ccyEur": {
+    "description": "Reference key ccy.eur — a currency's name"
+  },
+  "ccyGbp": "Pound Sterling",
+  "@ccyGbp": {
+    "description": "Reference key ccy.gbp — a currency's name"
+  },
+  "ccySar": "Saudi Riyal",
+  "@ccySar": {
+    "description": "Reference key ccy.sar — a currency's name"
+  },
+  "ccyUsd": "US Dollar",
+  "@ccyUsd": {
+    "description": "Reference key ccy.usd — a currency's name"
+  },
   "collectionBudget": "Budget basics",
   "@collectionBudget": {
     "description": "Reference: a collection card"
@@ -1605,6 +1625,10 @@
   "commonAll": "All",
   "@commonAll": {
     "description": "Reference key common.all"
+  },
+  "commonChange": "Change",
+  "@commonChange": {
+    "description": "Reference key common.change — a column head"
   },
   "commonDays": "days",
   "@commonDays": {
@@ -4843,6 +4867,137 @@
   "@qaWater": {
     "description": "Reference key qa.water"
   },
+  "ratesBuyValue": "Buy {value}",
+  "@ratesBuyValue": {
+    "description": "Reference: `t(\"rates.buy\") + \" \" + num` — the buying rate. The number arrives formatted",
+    "placeholders": {
+      "value": {
+        "type": "String"
+      }
+    }
+  },
+  "ratesConverter": "What is my gold worth?",
+  "@ratesConverter": {
+    "description": "Reference key rates.converter"
+  },
+  "ratesCurrencies": "Currencies",
+  "@ratesCurrencies": {
+    "description": "Reference key rates.currencies"
+  },
+  "ratesDaysAgo": "{n}d",
+  "@ratesDaysAgo": {
+    "description": "A chart axis label, days before today — the reference writes \"30d\", \"15d\"",
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
+  "ratesGold22": "Gold 22k",
+  "@ratesGold22": {
+    "description": "Reference key rates.gold22"
+  },
+  "ratesGold24": "Gold 24k",
+  "@ratesGold24": {
+    "description": "Reference key rates.gold24"
+  },
+  "ratesGoldHistory": "Gold per tola",
+  "@ratesGoldHistory": {
+    "description": "Reference key rates.goldHistory — the chart's accessible name"
+  },
+  "ratesGoldHistoryCap": "Open market close, last 30 days",
+  "@ratesGoldHistoryCap": {
+    "description": "Reference key rates.goldHistoryCap"
+  },
+  "ratesHistory": "Gold, 30 days",
+  "@ratesHistory": {
+    "description": "Reference key rates.history"
+  },
+  "ratesHistoryRange": "From {from} to {to}",
+  "@ratesHistoryRange": {
+    "description": "What the 30-day chart says to a screen reader after its name — the first and last close, formatted",
+    "placeholders": {
+      "from": {
+        "type": "String"
+      },
+      "to": {
+        "type": "String"
+      }
+    }
+  },
+  "ratesMetal": "Metal",
+  "@ratesMetal": {
+    "description": "Reference key rates.metal"
+  },
+  "ratesMetals": "Metals",
+  "@ratesMetals": {
+    "description": "Reference key rates.metals"
+  },
+  "ratesNoMatch": "No currency matches",
+  "@ratesNoMatch": {
+    "description": "Reference key rates.noMatch"
+  },
+  "ratesNoMatchText": "Try a three-letter code such as USD or EUR.",
+  "@ratesNoMatchText": {
+    "description": "Reference key rates.noMatchText"
+  },
+  "ratesOpenMarket": "Open market",
+  "@ratesOpenMarket": {
+    "description": "Reference key rates.openMarket"
+  },
+  "ratesPerUnit": "/ {unit}",
+  "@ratesPerUnit": {
+    "description": "Reference: `\"/ \" + t(\"unit.tola\")` — a price per unit, after the figure",
+    "placeholders": {
+      "unit": {
+        "type": "String"
+      }
+    }
+  },
+  "ratesSearch": "Search currencies",
+  "@ratesSearch": {
+    "description": "Reference key rates.search"
+  },
+  "ratesSellValue": "Sell {value}",
+  "@ratesSellValue": {
+    "description": "Reference: `t(\"rates.sell\") + \" \" + num` — the selling rate. The number arrives formatted",
+    "placeholders": {
+      "value": {
+        "type": "String"
+      }
+    }
+  },
+  "ratesShareText": "{metal}: {value} {unit}",
+  "@ratesShareText": {
+    "description": "The share card: a metal, its price, and the unit (\"/ tola\"), all formatted",
+    "placeholders": {
+      "metal": {
+        "type": "String"
+      },
+      "value": {
+        "type": "String"
+      },
+      "unit": {
+        "type": "String"
+      }
+    }
+  },
+  "ratesSilver": "Silver",
+  "@ratesSilver": {
+    "description": "Reference key rates.silver"
+  },
+  "ratesSilverTola": "Silver / tola",
+  "@ratesSilverTola": {
+    "description": "Reference key rates.silverTola"
+  },
+  "ratesWeight": "Weight",
+  "@ratesWeight": {
+    "description": "Reference key rates.weight"
+  },
+  "ratesWorth": "Worth",
+  "@ratesWorth": {
+    "description": "Reference key rates.worth"
+  },
   "recConflict": "This record changed elsewhere",
   "@recConflict": {
     "description": "Reference key rec.conflict"
@@ -6493,6 +6648,10 @@
   "@unitDays": {
     "description": "Reference: a statistic’s unit"
   },
+  "unitGram": "g",
+  "@unitGram": {
+    "description": "Reference key unit.gram"
+  },
   "unitKcalCount": "{n} kcal",
   "@unitKcalCount": {
     "description": "Reference: `c.num(r.kcal) + \" \" + t(\"unit.kcal\")`. The number arrives formatted",
@@ -6532,9 +6691,17 @@
       }
     }
   },
+  "unitOunce": "oz",
+  "@unitOunce": {
+    "description": "Reference key unit.ounce — a troy ounce"
+  },
   "unitThousand": "k",
   "@unitThousand": {
     "description": "Reference: a statistic’s unit"
+  },
+  "unitTola": "tola",
+  "@unitTola": {
+    "description": "Reference key unit.tola — 11.664 grams"
   },
   "weatherBreezy": "Breezy",
   "@weatherBreezy": {

@@ -1230,6 +1230,21 @@ class AppLocalizationsAr extends AppLocalizations {
   String get calendarWeek => 'أسبوع';
 
   @override
+  String get ccyAed => 'الدرهم الإماراتي';
+
+  @override
+  String get ccyEur => 'اليورو';
+
+  @override
+  String get ccyGbp => 'الجنيه الإسترليني';
+
+  @override
+  String get ccySar => 'الريال السعودي';
+
+  @override
+  String get ccyUsd => 'الدولار الأمريكي';
+
+  @override
   String get collectionBudget => 'أساسيات الميزانية';
 
   @override
@@ -1263,6 +1278,9 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get commonAll => 'الكل';
+
+  @override
+  String get commonChange => 'التغيّر';
 
   @override
   String get commonDays => 'أيام';
@@ -3586,6 +3604,87 @@ class AppLocalizationsAr extends AppLocalizations {
   String get qaWater => 'سجّل الماء';
 
   @override
+  String ratesBuyValue(String value) {
+    return 'شراء $value';
+  }
+
+  @override
+  String get ratesConverter => 'كم يساوي ذهبي؟';
+
+  @override
+  String get ratesCurrencies => 'العملات';
+
+  @override
+  String ratesDaysAgo(int n) {
+    return '$n ي';
+  }
+
+  @override
+  String get ratesGold22 => 'ذهب عيار 22';
+
+  @override
+  String get ratesGold24 => 'ذهب عيار 24';
+
+  @override
+  String get ratesGoldHistory => 'الذهب لكل تولة';
+
+  @override
+  String get ratesGoldHistoryCap => 'إغلاق السوق المفتوحة، آخر 30 يومًا';
+
+  @override
+  String get ratesHistory => 'الذهب، 30 يومًا';
+
+  @override
+  String ratesHistoryRange(String from, String to) {
+    return 'من $from إلى $to';
+  }
+
+  @override
+  String get ratesMetal => 'المعدن';
+
+  @override
+  String get ratesMetals => 'المعادن';
+
+  @override
+  String get ratesNoMatch => 'لا توجد عملة مطابقة';
+
+  @override
+  String get ratesNoMatchText => 'جرّب رمزًا من ثلاثة أحرف مثل USD أو EUR.';
+
+  @override
+  String get ratesOpenMarket => 'السوق المفتوحة';
+
+  @override
+  String ratesPerUnit(String unit) {
+    return '/ $unit';
+  }
+
+  @override
+  String get ratesSearch => 'ابحث في العملات';
+
+  @override
+  String ratesSellValue(String value) {
+    return 'بيع $value';
+  }
+
+  @override
+  String ratesShareText(String metal, String value, String unit) {
+    return '$metal: $value $unit';
+  }
+
+  @override
+  String get ratesSilver => 'فضة';
+
+  @override
+  String get ratesSilverTola => 'فضة / تولة';
+
+  @override
+  String get ratesWeight => 'الوزن';
+
+  @override
+  String get ratesWorth => 'القيمة';
+
+  @override
   String get recConflict => 'تغيّر هذا السجل في مكان آخر';
 
   @override
@@ -4804,6 +4903,9 @@ class AppLocalizationsAr extends AppLocalizations {
   String get unitDays => 'يوم';
 
   @override
+  String get unitGram => 'غ';
+
+  @override
   String unitKcalCount(String n) {
     return '$n سعرة';
   }
@@ -4828,7 +4930,13 @@ class AppLocalizationsAr extends AppLocalizations {
   }
 
   @override
+  String get unitOunce => 'أونصة';
+
+  @override
   String get unitThousand => 'ألف';
+
+  @override
+  String get unitTola => 'تولة';
 
   @override
   String get weatherBreezy => 'نسيم لطيف';

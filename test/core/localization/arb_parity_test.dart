@@ -143,6 +143,10 @@ void main() {
         // The United Kingdom's non-emergency medical line, by the name printed
         // on it: NHS 111 is dialled and signed as NHS 111 in any language.
         'emergNameNhs111',
+        // Currency & Gold: a price per unit and the share card's line are
+        // only their placeholders and punctuation; the words arrive filled.
+        'ratesPerUnit',
+        'ratesShareText',
         // Sample data in a tool's status line: a score, a dialling code, a
         // window of hours, an index, two operators, a tax year, a tally.
         // Fixture values, not sentences.

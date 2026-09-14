@@ -1222,6 +1222,21 @@ class AppLocalizationsEn extends AppLocalizations {
   String get calendarWeek => 'Week';
 
   @override
+  String get ccyAed => 'UAE Dirham';
+
+  @override
+  String get ccyEur => 'Euro';
+
+  @override
+  String get ccyGbp => 'Pound Sterling';
+
+  @override
+  String get ccySar => 'Saudi Riyal';
+
+  @override
+  String get ccyUsd => 'US Dollar';
+
+  @override
   String get collectionBudget => 'Budget basics';
 
   @override
@@ -1255,6 +1270,9 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get commonAll => 'All';
+
+  @override
+  String get commonChange => 'Change';
 
   @override
   String get commonDays => 'days';
@@ -3572,6 +3590,87 @@ class AppLocalizationsEn extends AppLocalizations {
   String get qaWater => 'Log water';
 
   @override
+  String ratesBuyValue(String value) {
+    return 'Buy $value';
+  }
+
+  @override
+  String get ratesConverter => 'What is my gold worth?';
+
+  @override
+  String get ratesCurrencies => 'Currencies';
+
+  @override
+  String ratesDaysAgo(int n) {
+    return '${n}d';
+  }
+
+  @override
+  String get ratesGold22 => 'Gold 22k';
+
+  @override
+  String get ratesGold24 => 'Gold 24k';
+
+  @override
+  String get ratesGoldHistory => 'Gold per tola';
+
+  @override
+  String get ratesGoldHistoryCap => 'Open market close, last 30 days';
+
+  @override
+  String get ratesHistory => 'Gold, 30 days';
+
+  @override
+  String ratesHistoryRange(String from, String to) {
+    return 'From $from to $to';
+  }
+
+  @override
+  String get ratesMetal => 'Metal';
+
+  @override
+  String get ratesMetals => 'Metals';
+
+  @override
+  String get ratesNoMatch => 'No currency matches';
+
+  @override
+  String get ratesNoMatchText => 'Try a three-letter code such as USD or EUR.';
+
+  @override
+  String get ratesOpenMarket => 'Open market';
+
+  @override
+  String ratesPerUnit(String unit) {
+    return '/ $unit';
+  }
+
+  @override
+  String get ratesSearch => 'Search currencies';
+
+  @override
+  String ratesSellValue(String value) {
+    return 'Sell $value';
+  }
+
+  @override
+  String ratesShareText(String metal, String value, String unit) {
+    return '$metal: $value $unit';
+  }
+
+  @override
+  String get ratesSilver => 'Silver';
+
+  @override
+  String get ratesSilverTola => 'Silver / tola';
+
+  @override
+  String get ratesWeight => 'Weight';
+
+  @override
+  String get ratesWorth => 'Worth';
+
+  @override
   String get recConflict => 'This record changed elsewhere';
 
   @override
@@ -4778,6 +4877,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get unitDays => 'days';
 
   @override
+  String get unitGram => 'g';
+
+  @override
   String unitKcalCount(String n) {
     return '$n kcal';
   }
@@ -4802,7 +4904,13 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
+  String get unitOunce => 'oz';
+
+  @override
   String get unitThousand => 'k';
+
+  @override
+  String get unitTola => 'tola';
 
   @override
   String get weatherBreezy => 'Breezy';

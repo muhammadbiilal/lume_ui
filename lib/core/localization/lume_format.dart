@@ -282,6 +282,25 @@ class LumeFormatting {
   String percent(num v, {int decimals = 2}) =>
       '${number(v.abs(), decimals: decimals)}%';
 
+  /// `c.signed(n, dp)` — a change with its sign and exactly [decimals]
+  /// places: "+1,162", "−0.18". The minus is U+2212, as the reference writes
+  /// it, and zero carries no sign.
+  String signed(num v, {int decimals = 2}) {
+    final intl.NumberFormat f = intl.NumberFormat.decimalPattern(_tag)
+      ..minimumFractionDigits = decimals
+      ..maximumFractionDigits = decimals;
+    final String sign = v > 0
+        ? '+'
+        : v < 0
+        ? '−'
+        : '';
+    return '$sign${f.format(v.abs())}';
+  }
+
+  /// `c.pct(n, dp)` — "+0.42%", "−0.18%", "0.00%".
+  String signedPercent(num v, {int decimals = 2}) =>
+      '${signed(v, decimals: decimals)}%';
+
   /// An amount already expressed in the local currency — a published pump
   /// price, a bill. `moneyRaw`: formatted, never converted.
   String money(num value, {String? code, int decimals = 0}) {
@@ -300,11 +319,23 @@ class LumeFormatting {
   /// CLDR puts there and what the reference renders: measured, its fuel row
   /// is `Rs\u00a0264.61`. A breaking space lets "Rs" and the figure land on
   /// two lines, which is a price split in half.
-  static String _symbol(String code) => switch (code) {
+  ///
+  /// The dollar is "US$" to a world-English reader — Pakistan and the United
+  /// Kingdom measure `US$2,740` — and "$" where English follows the United
+  /// States or, as the UAE does, keeps the bare sign (`tool_goldrates_*`).
+  /// The yen is "¥".
+  String _symbol(String code) => switch (code) {
     'PKR' => 'Rs$_nb',
     'INR' => '₹',
     'GBP' => '£',
-    'USD' => r'$',
+    'USD' =>
+      locale.languageCode == 'en' &&
+              countryCode != 'AE' &&
+              !americanEnglish.contains(countryCode) &&
+              !usFormEnglish.contains(countryCode)
+          ? r'US$'
+          : r'$',
+    'JPY' => '¥',
     'AED' => 'AED$_nb',
     'SAR' => 'SAR$_nb',
     _ => '$code$_nb',

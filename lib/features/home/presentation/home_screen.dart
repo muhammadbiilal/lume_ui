@@ -573,7 +573,10 @@ class LumeHomeScreen extends StatelessWidget {
         title: market.index.name,
         meta: '${market.exchange.name} · ${_session(l, market)}',
         value: f.integer(market.index.value),
+        // Home's `.delta` (screens/shared.css) is not the tool `.delta`: it
+        // keeps the row's 16-point line, which the destination measures.
         trailing: LumeDelta(
+          lineHeight: 16 / 11,
           text: f.percent(market.index.percent),
           direction: market.index.isUp
               ? LumeDeltaDirection.up

@@ -49,6 +49,7 @@ class LumeSummaryCard extends StatelessWidget {
     this.unit,
     this.valueSmall,
     this.caption,
+    this.captionDelta,
     this.stats = const <LumeStat>[],
     this.aside,
     this.footer,
@@ -69,6 +70,10 @@ class LumeSummaryCard extends StatelessWidget {
   final String? valueSmall;
 
   final String? caption;
+
+  /// `caption: UI.delta(…)` — a change set as the caption, on the caption's
+  /// own 17.4-point line and in its ink. Takes the place of [caption].
+  final LumeDelta? captionDelta;
 
   /// The strip of secondary figures under the lead.
   final List<LumeStat> stats;
@@ -194,6 +199,8 @@ class LumeSummaryCard extends StatelessWidget {
                         if (unit != null)
                           Opacity(
                             opacity: 0.74,
+                            // On the value's own 1.05 line, which it
+                            // inherits: 15.75 tall.
                             child: Text(
                               unit!,
                               style: LumeType.tracked(
@@ -202,12 +209,33 @@ class LumeSummaryCard extends StatelessWidget {
                                   context.lumeType.cardTitle,
                                 ),
                                 -0.02,
-                              ).copyWith(color: ink),
+                              ).copyWith(color: ink, height: 1.05),
                             ),
                           ),
                       ],
                     ),
-                    if (caption != null) ...<Widget>[
+                    if (captionDelta != null) ...<Widget>[
+                      const SizedBox(height: 7),
+                      // `.delta` is an inline-flex box 15.95 tall on the
+                      // caption's 17.4 line.
+                      ConstrainedBox(
+                        constraints: BoxConstraints(
+                          minHeight: MediaQuery.textScalerOf(
+                            context,
+                          ).scale(12 * 1.45),
+                        ),
+                        child: Align(
+                          alignment: AlignmentDirectional.centerStart,
+                          widthFactor: 1,
+                          child: LumeDelta(
+                            text: captionDelta!.text,
+                            direction: captionDelta!.direction,
+                            color: captionDelta!.color ?? captionInk,
+                            lineHeight: 1.45,
+                          ),
+                        ),
+                      ),
+                    ] else if (caption != null) ...<Widget>[
                       const SizedBox(height: 7),
                       Text(
                         caption!,

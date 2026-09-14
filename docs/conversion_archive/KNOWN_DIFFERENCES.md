@@ -1634,6 +1634,51 @@ the reference itself produced for the fixture day (Islamabad Maghrib 18:27,
 London 19:35). Both are labels, not religious determinations — Dayroz
 supplies the authority, method and madhab the reader follows.
 
+### C72 — Currency & Gold: a converter that does not convert
+
+**Found in F6A on Currency & Gold.**
+
+- **One market, fixture figures — reproduced.** `metals()` authors gold at
+  88 dollars a gram and silver at 1.05, converts them at the reference's own
+  rate table, prices every currency's buying rate at 0.996 of its selling
+  rate and gives each change by its place in the list. The ounce is 2,740
+  *dollars* whatever the reader's currency, and 22 carat is 24 × 0.916. All
+  reproduced; `goldrates_fixtures.dart` carries the Dayroz obligation (a
+  licensed, timestamped source with its delay stated).
+- **"What is my gold worth?" never answers — corrected, for ratification.**
+  The converter writes the worth of ten grams once and reads neither field
+  again: type 25 and it still says Rs 249,040. Flutter prices the weight
+  typed (24-carat gold per gram × grams), keeps the weight in the tool
+  session, and shows "—" for anything that is not a number of grams rather
+  than a guessed price. The worth field is read-only.
+- **The share card is an unrelated quote — corrected (C68).** Flutter shares
+  the price the screen leads with — "Gold 24k: Rs 290,480 / tola", with the
+  market and the day.
+- **The chart's labels stretch with the chart — corrected.** The line chart
+  is an SVG with `preserveAspectRatio="none"`, so at 700 and 1100 its "30d",
+  "15d" and "Today" are drawn 1.5 and 2.2 times as wide as they are tall.
+  Flutter places them where the reference does and draws the text unstretched.
+- **English in every language — translated.** `rates.*`, `ccy.*` and
+  `unit.*` have no Urdu or Arabic in the reference, and the axis labels are
+  literals; all are keyed and translated here, as D12 decided for interests.
+
+**Found on Currency & Gold (reference tool 8), corrected or built the way C62's were:**
+
+| widget | was | reference, measured |
+|---|---|---|
+| `LumeDelta` | a 9-point glyph; the text on the role's 16-point line, untracked; a double space drawn double | `.delta`: glyph 11 on a line of 1, 3 apart; 11 / 700 / −.01em tabular on 13; spaces collapsed (`nowrap`); inside a summary caption it takes the caption's 1.45 (15.95) and its ink; Home's markets row keeps its 16-point line, because Home's `.delta` is `screens/shared.css`'s, not the tool one |
+| `LumeRichRow` | a 36-point logo tile in 12 / 500 `text-2`; the value on 22; nothing between value and change | `.rrow__logo` 38 × 38, 11 / 800 / −.02em capitals in `text`; `.rrow__value` on 18; `.rrow__end` 2 apart (33 with a change) |
+| `LumeSummaryCard` | the unit on its own 19-point line; a caption only as text | `.summary__unit` on the value's 1.05 line (15.75); `captionDelta` for `caption: UI.delta(…)` |
+| `LumeTable` | text cells only | a `cell` builder for a drawn change, and `cellWidth`, so the column wants the drawn width as `table-layout: auto` does (85.02 at 390) |
+| `LumeToolField` affix | the role's 16-point line | `.field__affix` 11 / 700 / −.01em on 13 |
+| `LumeFormatting` | "$" for every dollar; "JPY " for the yen; no signed figures | "US$" to a world-English reader (Pakistan, the United Kingdom), "$" where English follows the United States and in the UAE; "¥"; `signed` and `signedPercent` with U+2212 and exactly the places asked for |
+| `LumeSparkline`, `LumeLineChart` (new) | — | `sparkline()`: 56 × 22 view box stretched to 54, 2 of padding, a 1.6 line over a 14 % area; `lineChart()`: 320 × 132, 6 above and 20 below, grid at 0, ½ and 1, a 12 % area, a 2-point round-joined line, a 3.2 dot stretched with the box, labels 11 / 600 on the baseline 4 up, caption 10 below |
+
+**Ports with obligations.** `lumeWalk` is `tool-data.js` `walk()` over the
+reference's seeded generator; `lume_reference_walk_test.dart` rebuilds the
+dollar row's sparkline and the 30-day chart from it and matches the `d`
+attributes the reference drew, to the tenth.
+
 ### C63 — English dates written the wrong way outside the United States
 
 **Found in F6A** on the UAE Tax capture ("Mon, 7 Sep") and confirmed by

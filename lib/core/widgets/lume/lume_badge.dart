@@ -146,12 +146,26 @@ enum LumeDeltaDirection { up, down, flat }
 /// The arrow is the point. A red number and a green number are the same number
 /// to a lot of people; an arrow and a sign are not.
 class LumeDelta extends StatelessWidget {
-  const LumeDelta({super.key, required this.text, required this.direction});
+  const LumeDelta({
+    super.key,
+    required this.text,
+    required this.direction,
+    this.color,
+    this.lineHeight,
+  });
+
+  /// A line the change inherits from where it is set — a summary caption's
+  /// 1.45, which makes it 15.95 tall. `null` is the font's own 13.
+  final double? lineHeight;
 
   /// The already-formatted change — "2.4 %", "−120".
   final String text;
 
   final LumeDeltaDirection direction;
+
+  /// `.summary[class*="summary--"] .delta { color: inherit }` — on a
+  /// gradient the change takes the card's ink; `null` is the direction's.
+  final Color? color;
 
   /// The reference's own glyphs.
   static String glyphFor(LumeDeltaDirection d) => switch (d) {
@@ -167,11 +181,13 @@ class LumeDelta extends StatelessWidget {
     // rendered `.delta--up` / `.delta--down`: rgb(23, 145, 111) and
     // rgb(198, 72, 92). F2 read them off the brand ramp, which was two shades
     // too dark on one and a different hue on the other.
-    final Color fg = switch (direction) {
-      LumeDeltaDirection.up => lume.up,
-      LumeDeltaDirection.down => lume.down,
-      LumeDeltaDirection.flat => lume.text3,
-    };
+    final Color fg =
+        color ??
+        switch (direction) {
+          LumeDeltaDirection.up => lume.up,
+          LumeDeltaDirection.down => lume.down,
+          LumeDeltaDirection.flat => lume.text3,
+        };
 
     return Semantics(
       label:
@@ -184,24 +200,70 @@ class LumeDelta extends StatelessWidget {
         child: Row(
           mainAxisSize: MainAxisSize.min,
           children: <Widget>[
+            Text(glyphFor(direction), style: _glyphStyle(context, fg)),
+            const SizedBox(width: gap),
             Text(
-              glyphFor(direction),
-              style: LumeType.fit(
-                context,
-                context.lumeType.metaSmall,
-              ).copyWith(color: fg, fontSize: 9),
-            ),
-            const SizedBox(width: 3),
-            Text(
-              text,
-              style: LumeType.numeric(
-                LumeType.fit(context, context.lumeType.metaSmall),
-              ).copyWith(color: fg, fontWeight: FontWeight.w700),
+              _drawn,
+              style: _textStyle(context, fg).copyWith(height: lineHeight),
             ),
           ],
         ),
       ),
     );
+  }
+
+  /// `.delta { gap: 3px }`.
+  static const double gap = 3;
+
+  /// `white-space: nowrap` collapses a run of spaces to one, as the
+  /// reference's "+1,162  +0.42%" is drawn.
+  String get _drawn => text.replaceAll(RegExp(r'\s+'), ' ');
+
+  /// `.delta i` — 11 on a line of 1.
+  static TextStyle _glyphStyle(BuildContext context, Color fg) =>
+      LumeType.natural(
+        context,
+        context.lumeType.metaSmall,
+        size: 11,
+      ).copyWith(color: fg, height: 1);
+
+  /// `.delta` — 11 / 700 / −.01em, tabular, on the font's own 13.
+  static TextStyle _textStyle(BuildContext context, Color fg) =>
+      LumeType.numeric(
+        LumeType.tracked(
+          LumeType.natural(context, context.lumeType.metaSmall, size: 11),
+          -0.01,
+        ),
+      ).copyWith(color: fg, fontWeight: FontWeight.w700);
+
+  /// How wide a change is drawn — for a table column that sizes itself to
+  /// its widest cell, as `table-layout: auto` does.
+  static double widthOf(
+    BuildContext context,
+    String text,
+    LumeDeltaDirection direction,
+  ) {
+    final TextScaler scaler = MediaQuery.textScalerOf(context);
+    final TextDirection dir = Directionality.of(context);
+    double w(String s, TextStyle style) {
+      final TextPainter p = TextPainter(
+        text: TextSpan(text: s, style: style),
+        textDirection: dir,
+        textScaler: scaler,
+        maxLines: 1,
+      )..layout();
+      final double width = p.width;
+      p.dispose();
+      return width;
+    }
+
+    const Color ink = Color(0xFF000000);
+    return w(glyphFor(direction), _glyphStyle(context, ink)) +
+        gap +
+        w(
+          LumeDelta(text: text, direction: direction)._drawn,
+          _textStyle(context, ink),
+        );
   }
 }
 

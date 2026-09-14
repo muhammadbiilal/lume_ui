@@ -1222,6 +1222,21 @@ class AppLocalizationsUr extends AppLocalizations {
   String get calendarWeek => 'ہفتہ';
 
   @override
+  String get ccyAed => 'اماراتی درہم';
+
+  @override
+  String get ccyEur => 'یورو';
+
+  @override
+  String get ccyGbp => 'برطانوی پاؤنڈ';
+
+  @override
+  String get ccySar => 'سعودی ریال';
+
+  @override
+  String get ccyUsd => 'امریکی ڈالر';
+
+  @override
   String get collectionBudget => 'بجٹ کی بنیادی باتیں';
 
   @override
@@ -1255,6 +1270,9 @@ class AppLocalizationsUr extends AppLocalizations {
 
   @override
   String get commonAll => 'سب';
+
+  @override
+  String get commonChange => 'تبدیلی';
 
   @override
   String get commonDays => 'دن';
@@ -3571,6 +3589,87 @@ class AppLocalizationsUr extends AppLocalizations {
   String get qaWater => 'پانی درج کریں';
 
   @override
+  String ratesBuyValue(String value) {
+    return 'خرید $value';
+  }
+
+  @override
+  String get ratesConverter => 'میرے سونے کی قیمت کیا ہے؟';
+
+  @override
+  String get ratesCurrencies => 'کرنسیاں';
+
+  @override
+  String ratesDaysAgo(int n) {
+    return '$n دن';
+  }
+
+  @override
+  String get ratesGold22 => 'سونا 22 قیراط';
+
+  @override
+  String get ratesGold24 => 'سونا 24 قیراط';
+
+  @override
+  String get ratesGoldHistory => 'فی تولہ سونا';
+
+  @override
+  String get ratesGoldHistoryCap => 'اوپن مارکیٹ بندش، گزشتہ 30 دن';
+
+  @override
+  String get ratesHistory => 'سونا، 30 دن';
+
+  @override
+  String ratesHistoryRange(String from, String to) {
+    return '$from سے $to تک';
+  }
+
+  @override
+  String get ratesMetal => 'دھات';
+
+  @override
+  String get ratesMetals => 'دھاتیں';
+
+  @override
+  String get ratesNoMatch => 'کوئی کرنسی نہیں ملی';
+
+  @override
+  String get ratesNoMatchText => 'USD یا EUR جیسا تین حرفی کوڈ آزمائیں۔';
+
+  @override
+  String get ratesOpenMarket => 'اوپن مارکیٹ';
+
+  @override
+  String ratesPerUnit(String unit) {
+    return '/ $unit';
+  }
+
+  @override
+  String get ratesSearch => 'کرنسیاں تلاش کریں';
+
+  @override
+  String ratesSellValue(String value) {
+    return 'فروخت $value';
+  }
+
+  @override
+  String ratesShareText(String metal, String value, String unit) {
+    return '$metal: $value $unit';
+  }
+
+  @override
+  String get ratesSilver => 'چاندی';
+
+  @override
+  String get ratesSilverTola => 'چاندی / تولہ';
+
+  @override
+  String get ratesWeight => 'وزن';
+
+  @override
+  String get ratesWorth => 'قیمت';
+
+  @override
   String get recConflict => 'یہ ریکارڈ کہیں اور بدل گیا';
 
   @override
@@ -4780,6 +4879,9 @@ class AppLocalizationsUr extends AppLocalizations {
   String get unitDays => 'دن';
 
   @override
+  String get unitGram => 'گرام';
+
+  @override
   String unitKcalCount(String n) {
     return '$n کیلوریز';
   }
@@ -4804,7 +4906,13 @@ class AppLocalizationsUr extends AppLocalizations {
   }
 
   @override
+  String get unitOunce => 'اونس';
+
+  @override
   String get unitThousand => 'ہزار';
+
+  @override
+  String get unitTola => 'تولہ';
 
   @override
   String get weatherBreezy => 'نسیم دار';

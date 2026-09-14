@@ -236,7 +236,7 @@ spec port ──► tool host adapter ──► route dispatch
 6. **Recipes** (K) — art and image cards; the first share-card consumer after Tax — *built*
 7. **News** (I) — art rows, lead article, chips — *built*
 8. **Calendar** (F) — the month grid, the day's timeline, holidays; no CRUD in the reference (C71) — *built*
-9. **Currency & Gold** (G) — sparkline, line chart, deltas
+9. **Currency & Gold** (G) — sparkline, line chart, deltas; a converter that converts (C72) — *built*
 10. **Flights** (H) — map and journey
 11. **Expenses** (C) — the record layer, first family
 12. **Documents** (B) — the record layer's second family and irreversible delete

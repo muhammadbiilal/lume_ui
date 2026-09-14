@@ -72,6 +72,7 @@
   "flutterBuilt": [
    "timer",
    "calendar",
+   "goldrates",
    "tax",
    "news",
    "emergency",
@@ -1501,7 +1502,7 @@
    "approvedComposition": null,
    "recordFamily": false,
    "module": "assets/js/tools/money/goldrates.tool.js",
-   "flutter": "placeholder"
+   "flutter": "built"
   },
   {
    "id": "markets",

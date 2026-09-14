@@ -223,28 +223,36 @@ class LumeRichRow extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.end,
               mainAxisSize: MainAxisSize.min,
               children: <Widget>[
-                if (value != null)
-                  LumeNumerals(
-                    value!,
-                    style: LumeType.numeric(
-                      LumeType.tracked(
-                        LumeType.fit(
-                          context,
-                          context.lumeType.body,
-                        ).copyWith(fontWeight: FontWeight.w700),
-                        -0.03,
-                      ),
-                    ).copyWith(color: lume.text),
-                  ),
-                if (valueSub != null)
-                  Text(
-                    valueSub!,
-                    style: LumeType.fit(
-                      context,
-                      context.lumeType.metaSmall,
-                    ).copyWith(color: lume.text3),
-                  ),
-                ?delta,
+                for (final (int, Widget) w in <Widget>[
+                  if (value != null)
+                    // `.rrow__value` — 14 / 700 / −.03em on the font's own
+                    // 18.
+                    LumeNumerals(
+                      value!,
+                      style: LumeType.numeric(
+                        LumeType.tracked(
+                          LumeType.natural(
+                            context,
+                            context.lumeType.body,
+                          ).copyWith(fontWeight: FontWeight.w700),
+                          -0.03,
+                        ),
+                      ).copyWith(color: lume.text),
+                    ),
+                  if (valueSub != null)
+                    Text(
+                      valueSub!,
+                      style: LumeType.fit(
+                        context,
+                        context.lumeType.metaSmall,
+                      ).copyWith(color: lume.text3),
+                    ),
+                  ?delta,
+                ].indexed) ...<Widget>[
+                  // `.rrow__end { gap: 2px }`.
+                  if (w.$1 > 0) const SizedBox(height: 2),
+                  w.$2,
+                ],
               ],
             ),
           ],
@@ -280,27 +288,32 @@ class _RowLead extends StatelessWidget {
   final Color? tone;
   final Color? ink;
 
-  /// Measured: 36 × 36, 12 px radius, `tintNeutral`.
+  /// Measured: `.rrow__icon` 36 × 36; `.rrow__logo` 38 × 38. Both 12 px
+  /// radius on `tintNeutral`.
   static const double size = 36;
+  static const double logoSize = 38;
 
   @override
   Widget build(BuildContext context) {
     final LumeColors lume = context.lume;
+    final double side = logo != null ? logoSize : size;
     return Container(
-      width: size,
-      height: size,
+      width: side,
+      height: side,
       alignment: Alignment.center,
       decoration: BoxDecoration(
         color: tone ?? lume.tintNeutral,
         borderRadius: LumeRadius.brIcon,
       ),
       child: logo != null
+          // `.rrow__logo` — 11 / 800 / −.02em, capitals, in the text ink.
           ? Text(
-              logo!,
-              style: LumeType.fit(
-                context,
-                context.lumeType.meta,
-              ).copyWith(color: lume.text2),
+              LumeType.overline(context, logo!),
+              maxLines: 1,
+              style: LumeType.tracked(
+                LumeType.natural(context, context.lumeType.metaSmall, size: 11),
+                -0.02,
+              ).copyWith(color: lume.text, fontWeight: FontWeight.w800),
             )
           // `.rrow__icon svg { width: 17px }`.
           : LumeIcon(icon!, size: 17, color: ink ?? lume.text2),

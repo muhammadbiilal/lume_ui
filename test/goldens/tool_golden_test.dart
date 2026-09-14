@@ -402,6 +402,52 @@ void main() {
     });
   });
 
+  // ------------------------------------------------------ Currency & Gold
+
+  group('Currency & Gold', () {
+    final String location = LumeRoutes.tool(LumeRoutes.tools, 'goldrates');
+
+    for (final Cell cell in kCells) {
+      testWidgets(cell.$1, (WidgetTester tester) async {
+        await shoot(
+          tester,
+          state: 'default_pk',
+          location: location,
+          golden: 'tool_goldrates_default_pk',
+          cell: cell,
+        );
+      });
+    }
+
+    for (final String state in <String>['default_us', 'muslim_gb']) {
+      testWidgets('$state · the reference cell', (WidgetTester tester) async {
+        await shoot(
+          tester,
+          state: state,
+          location: location,
+          golden: 'tool_goldrates_$state',
+          cell: kCells.first,
+        );
+      });
+    }
+
+    testWidgets('no match · the reference cell', (WidgetTester tester) async {
+      await shoot(
+        tester,
+        state: 'default_pk',
+        location: location,
+        golden: 'tool_goldrates_default_pk_q-zzz',
+        cell: kCells.first,
+        after: (WidgetTester t) async {
+          await t.enterText(find.byType(EditableText).first, 'zzz');
+          await t.pumpAndSettle();
+          FocusManager.instance.primaryFocus?.unfocus();
+          await t.pumpAndSettle();
+        },
+      );
+    });
+  });
+
   // ----------------------------------------------------------- Share card
 
   // The share sheet over Tax (D7): the card drawn from the screen's own

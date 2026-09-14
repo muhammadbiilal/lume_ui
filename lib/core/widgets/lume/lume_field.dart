@@ -209,11 +209,12 @@ class _Affix extends StatelessWidget {
   final String text;
 
   @override
+  // `.field__affix` — 11 / 700 / −.01em on the font's own 13.
   Widget build(BuildContext context) => Text(
     text,
-    style: LumeType.fit(
-      context,
-      context.lumeType.metaSmall,
+    style: LumeType.tracked(
+      LumeType.natural(context, context.lumeType.metaSmall),
+      -0.01,
     ).copyWith(color: context.lume.text3, fontWeight: FontWeight.w700),
   );
 }
