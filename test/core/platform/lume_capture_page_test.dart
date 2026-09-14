@@ -88,6 +88,27 @@ void main() {
     expect(camera.opened, 1);
     expect(status(tester), 'Starting the camera…');
     expect(find.text('Scan a QR code'), findsOneWidget);
+    // A route of its own still sets text in Lume's type, not Flutter's
+    // no-Material error style (the yellow underline a device showed).
+    for (final String text in <String>[
+      'Scan a QR code',
+      'Starting the camera…',
+    ]) {
+      final Element e = tester.element(find.text(text));
+      final TextStyle effective = DefaultTextStyle.of(
+        e,
+      ).style.merge(tester.widget<Text>(find.text(text)).style);
+      expect(
+        effective.decoration,
+        isNot(TextDecoration.underline),
+        reason: text,
+      );
+      expect(
+        find.ancestor(of: find.text(text), matching: find.byType(Material)),
+        findsWidgets,
+        reason: text,
+      );
+    }
 
     camera.events!.onLive();
     await tester.pump();
@@ -195,26 +216,33 @@ void main() {
     expect(camera.opened, 2);
   });
 
-  testWidgets('refused after a prompt is denied', (WidgetTester tester) async {
-    final (Future<LumeScanResult> result, _Camera camera, _) = await open(
-      tester,
-    );
-    tester.binding.handleAppLifecycleStateChanged(AppLifecycleState.inactive);
-    tester.binding.handleAppLifecycleStateChanged(AppLifecycleState.resumed);
-    camera.events!.onTrouble(LumeScanOutcome.denied);
-    await settle(tester);
-    expect((await result).outcome, LumeScanOutcome.denied);
-  });
-
-  testWidgets('refused with no prompt shown is blocked — only Settings can '
-      'change it', (WidgetTester tester) async {
-    final (Future<LumeScanResult> result, _Camera camera, _) = await open(
-      tester,
-    );
-    camera.events!.onTrouble(LumeScanOutcome.denied);
-    await settle(tester);
-    expect((await result).outcome, LumeScanOutcome.blocked);
-  });
+  // Android makes Lume inactive for a refused prompt and for a refusal it
+  // no longer asks about alike (the F6B device walk: 4.7 s and 0.53 s), so
+  // the page guesses neither way: a refusal is what the camera said.
+  for (final bool prompted in <bool>[true, false]) {
+    for (final LumeScanOutcome said in <LumeScanOutcome>[
+      LumeScanOutcome.denied,
+      LumeScanOutcome.blocked,
+    ]) {
+      testWidgets('refused as $said, prompt shown: $prompted — passed on as '
+          'said', (WidgetTester tester) async {
+        final (Future<LumeScanResult> result, _Camera camera, _) = await open(
+          tester,
+        );
+        if (prompted) {
+          tester.binding.handleAppLifecycleStateChanged(
+            AppLifecycleState.inactive,
+          );
+          tester.binding.handleAppLifecycleStateChanged(
+            AppLifecycleState.resumed,
+          );
+        }
+        camera.events!.onTrouble(said);
+        await settle(tester);
+        expect((await result).outcome, said);
+      });
+    }
+  }
 
   testWidgets('a camera that fails to start ends the page', (
     WidgetTester tester,

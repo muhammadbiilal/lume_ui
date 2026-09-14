@@ -121,10 +121,6 @@ class LumeCapturePageState extends State<LumeCapturePage>
   bool _live = false;
   bool _notQr = false;
   bool _done = false;
-
-  /// Something — a permission prompt — has been drawn over Lume since the
-  /// page opened.
-  bool _prompted = false;
   Timer? _limit;
 
   /// Rebuilt each time the camera returns, so a reopened camera is a new one.
@@ -178,7 +174,6 @@ class LumeCapturePageState extends State<LumeCapturePage>
       // Inactive is a permission prompt or a notification shade: the camera
       // stays, or the prompt would be asked again on every return.
       case AppLifecycleState.inactive:
-        _prompted = true;
         _limit?.cancel();
       case AppLifecycleState.hidden:
       case AppLifecycleState.paused:
@@ -215,16 +210,10 @@ class LumeCapturePageState extends State<LumeCapturePage>
       }
     },
     // Android answers `CameraAccessDenied` both when the reader refuses the
-    // prompt and when it will never prompt again. Only the first puts a
-    // prompt over Lume, so a refusal with no prompt shown is a refusal only
-    // Settings can undo.
-    onTrouble: (LumeScanOutcome outcome) => _finish(
-      LumeScanResult(
-        outcome == LumeScanOutcome.denied && !_prompted
-            ? LumeScanOutcome.blocked
-            : outcome,
-      ),
-    ),
+    // prompt and when it will never prompt again, and makes Lume inactive in
+    // both — its permission screen runs even when it draws nothing. The page
+    // cannot tell them apart, so it passes on what the camera said (C80).
+    onTrouble: (LumeScanOutcome outcome) => _finish(LumeScanResult(outcome)),
   );
 
   @override
@@ -243,104 +232,110 @@ class LumeCapturePageState extends State<LumeCapturePage>
 
     return PopScope<LumeScanResult>(
       canPop: true,
-      child: ColoredBox(
-        color: Colors.black,
-        child: Stack(
-          fit: StackFit.expand,
-          children: <Widget>[
-            if (phase != LumeCapturePhase.paused && !_done)
-              KeyedSubtree(
-                key: LumeCapturePage.cameraKey,
-                child: KeyedSubtree(
-                  key: ValueKey<int>(_session),
-                  child: ExcludeSemantics(
-                    child: widget.camera(context, _events, side),
+      // The page is its own route with no scaffold: without a Material, text
+      // falls back to Flutter's error style — the yellow double underline the
+      // F6B device walk showed.
+      child: Material(
+        type: MaterialType.transparency,
+        child: ColoredBox(
+          color: Colors.black,
+          child: Stack(
+            fit: StackFit.expand,
+            children: <Widget>[
+              if (phase != LumeCapturePhase.paused && !_done)
+                KeyedSubtree(
+                  key: LumeCapturePage.cameraKey,
+                  child: KeyedSubtree(
+                    key: ValueKey<int>(_session),
+                    child: ExcludeSemantics(
+                      child: widget.camera(context, _events, side),
+                    ),
                   ),
                 ),
+              Positioned.fill(
+                key: LumeCapturePage.windowKey,
+                child: ExcludeSemantics(
+                  child: CustomPaint(painter: LumeScanWindow(side: side)),
+                ),
               ),
-            Positioned.fill(
-              key: LumeCapturePage.windowKey,
-              child: ExcludeSemantics(
-                child: CustomPaint(painter: LumeScanWindow(side: side)),
-              ),
-            ),
-            PositionedDirectional(
-              top: pad.top + LumeSpace.x2,
-              start: LumeSpace.x3,
-              end: LumeSpace.x3,
-              child: Row(
-                children: <Widget>[
-                  LumePressable(
-                    key: LumeCapturePage.closeKey,
-                    onTap: () => _finish(
-                      const LumeScanResult(LumeScanOutcome.cancelled),
+              PositionedDirectional(
+                top: pad.top + LumeSpace.x2,
+                start: LumeSpace.x3,
+                end: LumeSpace.x3,
+                child: Row(
+                  children: <Widget>[
+                    LumePressable(
+                      key: LumeCapturePage.closeKey,
+                      onTap: () => _finish(
+                        const LumeScanResult(LumeScanOutcome.cancelled),
+                      ),
+                      semanticLabel: l.actionClose,
+                      borderRadius: LumeRadius.full,
+                      minSize: LumeSpace.tap,
+                      child: Container(
+                        width: LumeSpace.tap,
+                        height: LumeSpace.tap,
+                        alignment: Alignment.center,
+                        decoration: BoxDecoration(
+                          color: Colors.black.withValues(alpha: 0.32),
+                          shape: BoxShape.circle,
+                        ),
+                        child: const LumeIcon(
+                          LumeIcons.x,
+                          size: LumeSpace.iconMd,
+                          color: Colors.white,
+                        ),
+                      ),
                     ),
-                    semanticLabel: l.actionClose,
-                    borderRadius: LumeRadius.full,
-                    minSize: LumeSpace.tap,
+                    const SizedBox(width: LumeSpace.x3),
+                    Expanded(
+                      child: Semantics(
+                        header: true,
+                        child: Text(
+                          l.captureTitle,
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
+                          style: LumeType.fit(
+                            context,
+                            context.lumeType.cardTitle,
+                          ).copyWith(color: Colors.white),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              Positioned(
+                left: LumeSpace.x5,
+                right: LumeSpace.x5,
+                bottom: pad.bottom + 40,
+                child: Center(
+                  child: Semantics(
+                    liveRegion: true,
                     child: Container(
-                      width: LumeSpace.tap,
-                      height: LumeSpace.tap,
-                      alignment: Alignment.center,
+                      key: LumeCapturePage.statusKey,
+                      padding: const EdgeInsets.symmetric(
+                        vertical: 8,
+                        horizontal: 14,
+                      ),
                       decoration: BoxDecoration(
-                        color: Colors.black.withValues(alpha: 0.32),
-                        shape: BoxShape.circle,
+                        color: Colors.black.withValues(alpha: 0.5),
+                        borderRadius: LumeRadius.full,
                       ),
-                      child: const LumeIcon(
-                        LumeIcons.x,
-                        size: LumeSpace.iconMd,
-                        color: Colors.white,
-                      ),
-                    ),
-                  ),
-                  const SizedBox(width: LumeSpace.x3),
-                  Expanded(
-                    child: Semantics(
-                      header: true,
                       child: Text(
-                        l.captureTitle,
-                        maxLines: 1,
-                        overflow: TextOverflow.ellipsis,
+                        status,
+                        textAlign: TextAlign.center,
                         style: LumeType.fit(
                           context,
-                          context.lumeType.cardTitle,
+                          context.lumeType.bodyStrong,
                         ).copyWith(color: Colors.white),
                       ),
                     ),
                   ),
-                ],
-              ),
-            ),
-            Positioned(
-              left: LumeSpace.x5,
-              right: LumeSpace.x5,
-              bottom: pad.bottom + 40,
-              child: Center(
-                child: Semantics(
-                  liveRegion: true,
-                  child: Container(
-                    key: LumeCapturePage.statusKey,
-                    padding: const EdgeInsets.symmetric(
-                      vertical: 8,
-                      horizontal: 14,
-                    ),
-                    decoration: BoxDecoration(
-                      color: Colors.black.withValues(alpha: 0.5),
-                      borderRadius: LumeRadius.full,
-                    ),
-                    child: Text(
-                      status,
-                      textAlign: TextAlign.center,
-                      style: LumeType.fit(
-                        context,
-                        context.lumeType.bodyStrong,
-                      ).copyWith(color: Colors.white),
-                    ),
-                  ),
                 ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

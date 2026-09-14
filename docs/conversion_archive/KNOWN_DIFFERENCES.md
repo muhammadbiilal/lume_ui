@@ -2030,14 +2030,28 @@ were:**
   multiple codes; not a QR code; unreadable or damaged; too large (over
   25 MB). A barcode that is not a QR code in front of the camera is said on
   the page and scanning continues.
-- **A native adaptation: telling "denied" from "denied for good" on
-  Android.** The camera plugin answers `CameraAccessDenied` both times; only
-  a real prompt makes the app inactive first, so a refusal with no prompt
-  shown is reported as blocked. iOS reports its own
-  `CameraAccessDeniedWithoutPrompt` and `CameraAccessRestricted`.
+- **Android does not tell "denied" from "denied for good" — corrected after
+  the device walk.** The camera plugin answers `CameraAccessDenied` both
+  times. The first version of this entry reported a refusal with no prompt
+  shown as blocked, on the reasoning that only a real prompt makes the app
+  inactive. The emulator disproved it: Android's permission screen runs, and
+  makes Lume inactive, even when it draws nothing (inactive 0.53 s with no
+  dialog; 4.7 s for a scripted refusal of a real one). A timing threshold
+  would misjudge a quick reader or a slow phone, so the guess was removed:
+  on Android every camera refusal is said as denied — "Lume can't use the
+  camera. You can allow it in Settings." — which is true either way. Telling
+  them apart needs `shouldShowRequestPermissionRationale`, i.e. native code
+  or a permission plugin: a dependency decision left open. iOS reports its
+  own `CameraAccessDeniedWithoutPrompt` and `CameraAccessRestricted`, which
+  are said as blocked.
 - **Blocked is explained, not routed.** "Camera access for Lume is off. Turn
   it on in Settings to scan." Opening the app's settings page would need a
   further plugin; the sentence is the smallest Lume-styled explanation.
+- **The capture page sets its text in Lume's type.** A route of its own with
+  no scaffold, it had no `Material` ancestor, and the device showed its
+  title and status in Flutter's fallback style (yellow double underline).
+  It is now wrapped in a transparent `Material`; the test asserts the
+  ancestor and the absence of underline.
 - **A code is shown first, and goes nowhere by itself.** `LumeQrPayload`
   classifies the text and `LumeQrResultSheet` shows its kind, the destination
   to judge, what Lume holds back, and the whole text (selectable, never
