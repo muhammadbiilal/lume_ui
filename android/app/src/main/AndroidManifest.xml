@@ -1,4 +1,27 @@
-<manifest xmlns:android="http://schemas.android.com/apk/res/android">
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+    <!-- F6B (C80): the camera, for QR scanning only. Asked for when Scan is
+         pressed, never at launch; frames are decoded on the device and none
+         is kept. -->
+    <uses-permission android:name="android.permission.CAMERA" />
+    <!-- A phone without a camera can still install Lume: Scan says scanning
+         is unavailable, and From gallery still reads a code. -->
+    <uses-feature
+        android:name="android.hardware.camera.any"
+        android:required="false"
+        tools:replace="android:required" />
+    <!-- The camera plugin declares the microphone for video recording. Lume
+         records no video and no sound. -->
+    <uses-permission
+        android:name="android.permission.RECORD_AUDIO"
+        tools:node="remove" />
+    <!-- F6B: Save image writes through MediaStore, which needs no permission
+         from Android 10 (API 29). Only Android 6–9 need storage access to add
+         one picture, and it is asked when Save image is pressed. Never
+         MANAGE_EXTERNAL_STORAGE, never a read permission. -->
+    <uses-permission
+        android:name="android.permission.WRITE_EXTERNAL_STORAGE"
+        android:maxSdkVersion="28" />
     <application
         android:label="lume"
         android:name="${applicationName}"

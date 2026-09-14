@@ -1266,6 +1266,18 @@ class AppLocalizationsEn extends AppLocalizations {
   String get calendarWeek => 'Week';
 
   @override
+  String get captureNotQr => 'That isn\'t a QR code. Lume reads QR codes.';
+
+  @override
+  String get capturePaused => 'Camera paused';
+
+  @override
+  String get captureStarting => 'Starting the camera…';
+
+  @override
+  String get captureTitle => 'Scan a QR code';
+
+  @override
   String get ccyAed => 'UAE Dirham';
 
   @override
@@ -4102,16 +4114,95 @@ class AppLocalizationsEn extends AppLocalizations {
   String get qaWater => 'Log water';
 
   @override
+  String get qrCopied => 'Copied';
+
+  @override
+  String get qrCopy => 'Copy';
+
+  @override
+  String get qrCopyNetwork => 'Copy network name';
+
+  @override
   String get qrDetects => 'What it recognises';
+
+  @override
+  String get qrFullText => 'What the code says';
 
   @override
   String get qrHint => 'Point the camera at a code';
 
   @override
+  String get qrKindContact => 'Contact';
+
+  @override
+  String get qrKindEmail => 'Email address';
+
+  @override
   String get qrKindLink => 'Website';
 
   @override
+  String get qrKindLocation => 'Location';
+
+  @override
+  String get qrKindMessage => 'Text message';
+
+  @override
+  String get qrKindPhone => 'Phone number';
+
+  @override
+  String get qrKindRefused => 'A link Lume won\'t open';
+
+  @override
+  String get qrKindText => 'Text';
+
+  @override
   String get qrKindWifi => 'Wi-Fi network';
+
+  @override
+  String get qrNoteContact => 'Lume doesn\'t add contacts';
+
+  @override
+  String get qrNoteEmail =>
+      'The code\'s own subject and text aren\'t filled in';
+
+  @override
+  String get qrNoteInsecure =>
+      'Not secure — this site\'s connection isn\'t encrypted';
+
+  @override
+  String get qrNoteLocation => 'Lume doesn\'t open maps yet';
+
+  @override
+  String get qrNoteMessage => 'The code\'s own message text isn\'t filled in';
+
+  @override
+  String get qrNoteRefused =>
+      'Lume doesn\'t open this kind of link. You can copy it.';
+
+  @override
+  String get qrNoteWifi =>
+      'Lume doesn\'t join networks. The password stays hidden.';
+
+  @override
+  String get qrOpenEmail => 'Write an email';
+
+  @override
+  String get qrOpenFailed => 'Couldn\'t open it';
+
+  @override
+  String get qrOpenMessage => 'Open in Messages';
+
+  @override
+  String get qrOpenPhone => 'Open in Phone';
+
+  @override
+  String get qrOpenSite => 'Open website';
+
+  @override
+  String get qrOpenUnavailable => 'Nothing on this device can open it';
+
+  @override
+  String get qrResultNote => 'Nothing opens unless you choose it';
 
   @override
   String get qrScan => 'Scan';
@@ -4741,6 +4832,10 @@ class AppLocalizationsEn extends AppLocalizations {
   String get routeMissingTitle => 'We can’t find that';
 
   @override
+  String get scanBlocked =>
+      'Camera access for Lume is off. Turn it on in Settings to scan.';
+
+  @override
   String get scanDenied =>
       'Lume can\'t use the camera. You can allow it in Settings.';
 
@@ -4758,15 +4853,27 @@ class AppLocalizationsEn extends AppLocalizations {
   String get scanFromGallery => 'From gallery';
 
   @override
+  String get scanMultiple =>
+      'That image has more than one QR code. Choose one with a single code.';
+
+  @override
   String get scanNothing => 'No code found';
 
   @override
-  String scanRead(String value) {
-    return 'Read: $value';
-  }
+  String get scanPhotosDenied =>
+      'Lume can\'t open your photos. You can allow it in Settings.';
 
   @override
-  String get scanUnavailable => 'Scanning isn\'t available in this version yet';
+  String get scanTooLarge => 'That image is too large to read';
+
+  @override
+  String get scanUnavailable => 'Scanning isn\'t available on this device';
+
+  @override
+  String get scanUnreadable => 'Lume couldn\'t read that image';
+
+  @override
+  String get scanUnsupported => 'That code isn\'t a QR code';
 
   @override
   String get scoreAllOut => 'all out';
@@ -4828,8 +4935,11 @@ class AppLocalizationsEn extends AppLocalizations {
   String get shareSaveFailed => 'Couldn’t save the image';
 
   @override
+  String get shareSaveNoSpace => 'Not enough space to save the image';
+
+  @override
   String get shareSaveUnavailable =>
-      'Saving images isn’t available yet — use Share to save it';
+      'Saving images isn’t available on this device — use Share to save it';
 
   @override
   String get shareSaved => 'Image saved';

@@ -32,6 +32,22 @@ dependencies:
   # by lib/core/platform/lume_share_platform.dart, behind LumeSharer and
   # LumeExporter.
   share_plus: ^11.1.0
+  # F6B — QR scanning, camera and picked image, decoded on the device by
+  # zxing-cpp through FFI: no network, no analytics (mobile_scanner was
+  # rejected because Android ML Kit sends usage metrics to Google). Brings the
+  # `camera` plugin in with it, so no separate camera dependency is added.
+  # Used only by lib/core/platform/lume_scanner_platform.dart, behind
+  # LumeScanner. Pinned.
+  flutter_zxing: 3.0.1
+  # F6B — the system photo picker for "From gallery": the Android Photo Picker
+  # and iOS PHPicker grant the one image chosen, with no library permission.
+  # Used only by the scanner adapter. Pinned.
+  image_picker: 1.2.3
+  # F6B — Save image: MediaStore on Android (a storage permission only on
+  # Android 10 and below) and add-only Photos access on iOS 14+. Used only by
+  # lib/core/platform/lume_image_saver_platform.dart, behind LumeImageSaver.
+  # Pinned.
+  gal: 2.3.3
 
 dev_dependencies:
   flutter_test:

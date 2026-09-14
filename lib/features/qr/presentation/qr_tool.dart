@@ -2,9 +2,9 @@
 ///
 /// `tools/daily/qr.tool.js` over `shared/scanner.js`: the viewfinder with its
 /// frame, beam and hint, Scan and From gallery, what the scanner recognises,
-/// and the history. Scan and From gallery go through [scannerProvider], which
-/// in this build answers "unavailable": no camera package is chosen, so
-/// nothing claims to be scanning (C78).
+/// and the history. Scan and From gallery go through [scannerProvider]; a code
+/// read is shown in [LumeQrResultSheet] and goes nowhere until the reader
+/// chooses; every other outcome is said as it is (C78, C80).
 library;
 
 import 'package:flutter/material.dart';
@@ -12,6 +12,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../app/providers/platform_services.dart';
 import '../../../core/icons/lume_icons.dart';
+import '../../../core/platform/lume_qr_payload.dart';
 import '../../../core/platform/lume_scanner.dart';
 import '../../../core/theme/lume/lume_gradients.dart';
 import '../../../core/theme/lume/lume_space.dart';
@@ -21,10 +22,12 @@ import '../../../core/widgets/lume/lume_button.dart';
 import '../../../core/widgets/lume/lume_overlay.dart';
 import '../../../core/widgets/lume/lume_progress.dart';
 import '../../../core/widgets/lume/lume_row.dart';
+import '../../../core/widgets/lume/lume_scan_window.dart';
 import '../../../core/widgets/lume/lume_tool.dart';
 import '../../../l10n/app_localizations.dart';
 import '../../tools/application/tool_request.dart';
 import '../../tools/presentation/tool_screen.dart';
+import 'qr_result_sheet.dart';
 
 class LumeQrTool extends ConsumerStatefulWidget {
   const LumeQrTool({super.key, required this.request});
@@ -44,6 +47,33 @@ class LumeQrTool extends ConsumerStatefulWidget {
   static const Key stepsKey = ValueKey<String>('qr.steps');
   static const Key historyKey = ValueKey<String>('qr.history');
 
+  /// What the screen says for an outcome that is not a code read; `null` for
+  /// one that says nothing (the reader cancelled).
+  static (String, LumeToastTone)? saying(
+    AppLocalizations l,
+    LumeScanOutcome outcome, {
+    required bool camera,
+  }) => switch (outcome) {
+    // A read with no text is a code with nothing in it.
+    LumeScanOutcome.read => (l.scanUnreadable, LumeToastTone.error),
+    LumeScanOutcome.nothing => (l.scanNothing, LumeToastTone.info),
+    LumeScanOutcome.cancelled => null,
+    LumeScanOutcome.denied => (
+      camera ? l.scanDenied : l.scanPhotosDenied,
+      LumeToastTone.error,
+    ),
+    LumeScanOutcome.blocked => (
+      camera ? l.scanBlocked : l.scanPhotosDenied,
+      LumeToastTone.error,
+    ),
+    LumeScanOutcome.unavailable => (l.scanUnavailable, LumeToastTone.info),
+    LumeScanOutcome.failed => (l.scanFailed, LumeToastTone.error),
+    LumeScanOutcome.multiple => (l.scanMultiple, LumeToastTone.info),
+    LumeScanOutcome.unsupported => (l.scanUnsupported, LumeToastTone.info),
+    LumeScanOutcome.unreadable => (l.scanUnreadable, LumeToastTone.error),
+    LumeScanOutcome.tooLarge => (l.scanTooLarge, LumeToastTone.error),
+  };
+
   @override
   ConsumerState<LumeQrTool> createState() => _LumeQrToolState();
 }
@@ -52,24 +82,34 @@ class _LumeQrToolState extends ConsumerState<LumeQrTool> {
   final GlobalKey<LumeToolScreenState> _host = GlobalKey<LumeToolScreenState>();
   bool _busy = false;
 
-  Future<void> _run(Future<LumeScanResult> Function(LumeScanner) ask) async {
+  Future<void> _run({required bool camera}) async {
     if (_busy) return;
     final AppLocalizations l = AppLocalizations.of(context);
+    final LumeScanner scanner = ref.read(scannerProvider);
     setState(() => _busy = true);
-    final LumeScanResult result = await ask(ref.read(scannerProvider));
+    final LumeScanResult result;
+    try {
+      result = camera ? await scanner.scan() : await scanner.pickImage();
+    } finally {
+      if (mounted) setState(() => _busy = false);
+    }
     if (!mounted) return;
-    setState(() => _busy = false);
-    final (String message, LumeToastTone tone) = switch (result.outcome) {
-      LumeScanOutcome.read => (
-        l.scanRead(result.value ?? ''),
-        LumeToastTone.success,
-      ),
-      LumeScanOutcome.nothing => (l.scanNothing, LumeToastTone.info),
-      LumeScanOutcome.denied => (l.scanDenied, LumeToastTone.error),
-      LumeScanOutcome.unavailable => (l.scanUnavailable, LumeToastTone.info),
-      LumeScanOutcome.failed => (l.scanFailed, LumeToastTone.error),
-    };
-    _host.currentState?.say(message, tone: tone);
+    final String? value = result.value;
+    if (result.outcome == LumeScanOutcome.read &&
+        value != null &&
+        value.isNotEmpty) {
+      await showLumeQrResult(
+        context: context,
+        payload: LumeQrPayload.classify(value),
+      );
+      return;
+    }
+    final (String, LumeToastTone)? said = LumeQrTool.saying(
+      l,
+      result.outcome,
+      camera: camera,
+    );
+    if (said != null) _host.currentState?.say(said.$1, tone: said.$2);
   }
 
   @override
@@ -101,17 +141,13 @@ class _LumeQrToolState extends ConsumerState<LumeQrTool> {
                       key: LumeQrTool.scanKey,
                       label: l.qrScan,
                       icon: LumeIcons.qr,
-                      onPressed: _busy
-                          ? null
-                          : () => _run((LumeScanner s) => s.scan()),
+                      onPressed: _busy ? null : () => _run(camera: true),
                     ),
                     LumeButton(
                       key: LumeQrTool.galleryKey,
                       label: l.scanFromGallery,
                       icon: LumeIcons.image,
-                      onPressed: _busy
-                          ? null
-                          : () => _run((LumeScanner s) => s.pickImage()),
+                      onPressed: _busy ? null : () => _run(camera: false),
                     ),
                   ],
                 ),
@@ -136,7 +172,8 @@ class _LumeQrToolState extends ConsumerState<LumeQrTool> {
           LumeToolSection(
             title: l.commonHistory,
             // The reference's two scans are fixtures: nothing here has been
-            // scanned, and pressing one only names it (C78).
+            // scanned, a scan is never added to it, and pressing one only
+            // names it (C78, C80).
             child: LumeRows(
               key: LumeQrTool.historyKey,
               children: <Widget>[
@@ -240,13 +277,9 @@ class _ViewfinderState extends State<_Viewfinder>
             child: Stack(
               alignment: Alignment.center,
               children: <Widget>[
-                // `box-shadow: 0 0 0 2px white/.55, 0 0 0 999px black/.28` —
-                // a CSS shadow is never painted under its own box, so the
-                // frame is a clear window: the dimming and the ring are drawn
-                // around it, not behind it.
                 const Positioned.fill(
                   child: ExcludeSemantics(
-                    child: CustomPaint(painter: _FrameCutout(size: frame)),
+                    child: CustomPaint(painter: LumeScanWindow(side: frame)),
                   ),
                 ),
                 const SizedBox(
@@ -311,43 +344,4 @@ class _ViewfinderState extends State<_Viewfinder>
       ),
     );
   }
-}
-
-/// The viewfinder's window: everything outside a centred [size]-point square
-/// at radius 16 dimmed with black at .28, and a 2-point white ring at .55
-/// just outside its edge. The inside is left clear.
-class _FrameCutout extends CustomPainter {
-  const _FrameCutout({required this.size});
-
-  final double size;
-
-  static const double radius = 16;
-
-  @override
-  void paint(Canvas canvas, Size box) {
-    final Rect window = Rect.fromCenter(
-      center: box.center(Offset.zero),
-      width: size,
-      height: size,
-    );
-    final RRect hole = RRect.fromRectAndRadius(
-      window,
-      const Radius.circular(radius),
-    );
-    final Path dim = Path()
-      ..fillType = PathFillType.evenOdd
-      ..addRect(Offset.zero & box)
-      ..addRRect(hole);
-    canvas.drawPath(dim, Paint()..color = const Color(0x47000000));
-    canvas.drawRRect(
-      hole.inflate(1),
-      Paint()
-        ..style = PaintingStyle.stroke
-        ..strokeWidth = 2
-        ..color = const Color(0x8CFFFFFF),
-    );
-  }
-
-  @override
-  bool shouldRepaint(_FrameCutout old) => old.size != size;
 }

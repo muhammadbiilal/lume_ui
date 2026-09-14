@@ -1273,6 +1273,18 @@ class AppLocalizationsAr extends AppLocalizations {
   String get calendarWeek => 'أسبوع';
 
   @override
+  String get captureNotQr => 'هذا ليس رمز QR. يقرأ Lume رموز QR فقط.';
+
+  @override
+  String get capturePaused => 'الكاميرا متوقفة مؤقتًا';
+
+  @override
+  String get captureStarting => 'جارٍ تشغيل الكاميرا…';
+
+  @override
+  String get captureTitle => 'امسح رمز QR';
+
+  @override
   String get ccyAed => 'الدرهم الإماراتي';
 
   @override
@@ -4121,16 +4133,91 @@ class AppLocalizationsAr extends AppLocalizations {
   String get qaWater => 'سجّل الماء';
 
   @override
+  String get qrCopied => 'تم النسخ';
+
+  @override
+  String get qrCopy => 'نسخ';
+
+  @override
+  String get qrCopyNetwork => 'انسخ اسم الشبكة';
+
+  @override
   String get qrDetects => 'ما الذي يتعرّف عليه';
+
+  @override
+  String get qrFullText => 'ما يقوله الرمز';
 
   @override
   String get qrHint => 'وجّه الكاميرا نحو الرمز';
 
   @override
+  String get qrKindContact => 'جهة اتصال';
+
+  @override
+  String get qrKindEmail => 'عنوان بريد إلكتروني';
+
+  @override
   String get qrKindLink => 'موقع ويب';
 
   @override
+  String get qrKindLocation => 'موقع';
+
+  @override
+  String get qrKindMessage => 'رسالة نصية';
+
+  @override
+  String get qrKindPhone => 'رقم هاتف';
+
+  @override
+  String get qrKindRefused => 'رابط لن يفتحه Lume';
+
+  @override
+  String get qrKindText => 'نص';
+
+  @override
   String get qrKindWifi => 'شبكة Wi-Fi';
+
+  @override
+  String get qrNoteContact => 'لا يضيف Lume جهات اتصال';
+
+  @override
+  String get qrNoteEmail => 'لا يُملأ الموضوع والنص الموجودان في الرمز';
+
+  @override
+  String get qrNoteInsecure => 'غير آمن — اتصال هذا الموقع غير مشفّر';
+
+  @override
+  String get qrNoteLocation => 'لا يفتح Lume الخرائط بعد';
+
+  @override
+  String get qrNoteMessage => 'لا يُملأ نص الرسالة الموجود في الرمز';
+
+  @override
+  String get qrNoteRefused => 'لا يفتح Lume هذا النوع من الروابط. يمكنك نسخه.';
+
+  @override
+  String get qrNoteWifi => 'لا ينضم Lume إلى الشبكات. تبقى كلمة المرور مخفية.';
+
+  @override
+  String get qrOpenEmail => 'اكتب رسالة بريد';
+
+  @override
+  String get qrOpenFailed => 'تعذّر فتحه';
+
+  @override
+  String get qrOpenMessage => 'افتح في الرسائل';
+
+  @override
+  String get qrOpenPhone => 'افتح في الهاتف';
+
+  @override
+  String get qrOpenSite => 'افتح الموقع';
+
+  @override
+  String get qrOpenUnavailable => 'لا يوجد على هذا الجهاز ما يفتحه';
+
+  @override
+  String get qrResultNote => 'لن يُفتح شيء إلا إذا اخترته';
 
   @override
   String get qrScan => 'امسح';
@@ -4771,6 +4858,10 @@ class AppLocalizationsAr extends AppLocalizations {
   String get routeMissingTitle => 'تعذّر العثور على ذلك';
 
   @override
+  String get scanBlocked =>
+      'الوصول إلى الكاميرا متوقف لـ Lume. فعّله من الإعدادات للمسح.';
+
+  @override
   String get scanDenied =>
       'لا يستطيع Lume استخدام الكاميرا. يمكنك السماح بذلك من الإعدادات.';
 
@@ -4787,15 +4878,27 @@ class AppLocalizationsAr extends AppLocalizations {
   String get scanFromGallery => 'من المعرض';
 
   @override
+  String get scanMultiple =>
+      'في هذه الصورة أكثر من رمز QR. اختر صورة فيها رمز واحد.';
+
+  @override
   String get scanNothing => 'لم يُعثر على رمز';
 
   @override
-  String scanRead(String value) {
-    return 'قُرئ: $value';
-  }
+  String get scanPhotosDenied =>
+      'لا يستطيع Lume فتح صورك. يمكنك السماح بذلك من الإعدادات.';
 
   @override
-  String get scanUnavailable => 'المسح غير متاح في هذا الإصدار بعد';
+  String get scanTooLarge => 'هذه الصورة أكبر من أن تُقرأ';
+
+  @override
+  String get scanUnavailable => 'المسح غير متاح على هذا الجهاز';
+
+  @override
+  String get scanUnreadable => 'تعذّر على Lume قراءة هذه الصورة';
+
+  @override
+  String get scanUnsupported => 'هذا الرمز ليس رمز QR';
 
   @override
   String get scoreAllOut => 'خرجوا جميعًا';
@@ -4857,8 +4960,11 @@ class AppLocalizationsAr extends AppLocalizations {
   String get shareSaveFailed => 'تعذّر حفظ الصورة';
 
   @override
+  String get shareSaveNoSpace => 'لا توجد مساحة كافية لحفظ الصورة';
+
+  @override
   String get shareSaveUnavailable =>
-      'حفظ الصور غير متاح بعد — استخدم المشاركة لحفظها';
+      'حفظ الصور غير متاح على هذا الجهاز — استخدم المشاركة لحفظها';
 
   @override
   String get shareSaved => 'تم حفظ الصورة';

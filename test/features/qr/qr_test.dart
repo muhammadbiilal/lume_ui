@@ -1,12 +1,15 @@
 /// QR Scanner, against the running reference, and used — the camera
-/// instrument (F6A-D5).
+/// instrument (F6A-D5), scanning for real behind its adapter (C80).
 library;
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:lume/app/providers/platform_services.dart';
 import 'package:lume/core/navigation/lume_tool_frame.dart';
+import 'package:lume/core/platform/lume_dialer.dart';
+import 'package:lume/core/platform/lume_link_opener.dart';
 import 'package:lume/core/platform/lume_scanner.dart';
 import 'package:lume/core/routing/lume_routes.dart';
 import 'package:lume/core/widgets/lume/lume_button.dart';
@@ -16,6 +19,7 @@ import 'package:lume/core/widgets/lume/lume_progress.dart';
 import 'package:lume/core/widgets/lume/lume_row.dart';
 import 'package:lume/core/widgets/lume/lume_table.dart';
 import 'package:lume/core/widgets/lume/lume_tool.dart';
+import 'package:lume/features/qr/presentation/qr_result_sheet.dart';
 import 'package:lume/features/qr/presentation/qr_tool.dart';
 
 import '../../helpers/capture.dart';
@@ -51,15 +55,43 @@ Future<void> pumpQr(
 Finder inKey(Key key, Finder matching) =>
     find.descendant(of: find.byKey(key), matching: matching);
 
-Future<String> pressAndHear(WidgetTester tester, Key button) async {
+Future<String?> pressAndHear(WidgetTester tester, Key button) async {
   await tester.ensureVisible(find.byKey(button));
   await tester.tap(find.byKey(button));
   await tester.pump();
   await tester.pump(const Duration(milliseconds: 300));
-  final LumeToast toast = tester.widget<LumeToast>(find.byType(LumeToast));
-  final String said = toast.data.message;
+  final Finder toast = find.byType(LumeToast);
+  final String? said = toast.evaluate().isEmpty
+      ? null
+      : tester.widget<LumeToast>(toast).data.message;
   await tester.pump(const Duration(seconds: 6));
   return said;
+}
+
+/// Presses Scan with [value] as the code the camera reads, and leaves the
+/// result sheet open.
+Future<void> scanRead(
+  WidgetTester tester,
+  String value, {
+  List<Override> overrides = const <Override>[],
+  Locale locale = const Locale('en'),
+}) async {
+  await pumpQr(
+    tester,
+    surface: const Size(390, 900),
+    locale: locale,
+    overrides: <Override>[
+      scannerProvider.overrideWithValue(
+        LumeRecordingScanner(
+          result: LumeScanResult(LumeScanOutcome.read, value),
+        ),
+      ),
+      ...overrides,
+    ],
+  );
+  await tester.tap(find.byKey(LumeQrTool.scanKey));
+  await tester.pump();
+  await tester.pump(const Duration(milliseconds: 400));
 }
 
 void main() {
@@ -172,53 +204,87 @@ void main() {
   });
 
   group('used', () {
-    testWidgets('Scan says it cannot scan yet, and nothing reaches a camera '
-        '(C78)', (WidgetTester tester) async {
+    testWidgets('where nothing can scan, both say so', (
+      WidgetTester tester,
+    ) async {
       await pumpQr(tester, surface: const Size(390, 900));
       expect(
         await pressAndHear(tester, LumeQrTool.scanKey),
-        "Scanning isn't available in this version yet",
+        "Scanning isn't available on this device",
       );
       expect(
         await pressAndHear(tester, LumeQrTool.galleryKey),
-        "Scanning isn't available in this version yet",
+        "Scanning isn't available on this device",
       );
     });
 
-    for (final (String name, LumeScanResult result, String said)
-        in <(String, LumeScanResult, String)>[
+    for (final (Key button, LumeScanOutcome outcome, String? said)
+        in <(Key, LumeScanOutcome, String?)>[
+          (LumeQrTool.scanKey, LumeScanOutcome.cancelled, null),
           (
-            'a code read',
-            const LumeScanResult(LumeScanOutcome.read, 'https://lume.app'),
-            'Read: https://lume.app',
-          ),
-          (
-            'nothing in view',
-            const LumeScanResult(LumeScanOutcome.nothing),
-            'No code found',
-          ),
-          (
-            'the camera refused',
-            const LumeScanResult(LumeScanOutcome.denied),
+            LumeQrTool.scanKey,
+            LumeScanOutcome.denied,
             "Lume can't use the camera. You can allow it in Settings.",
           ),
           (
-            'a failure',
-            const LumeScanResult(LumeScanOutcome.failed),
+            LumeQrTool.scanKey,
+            LumeScanOutcome.blocked,
+            'Camera access for Lume is off. Turn it on in Settings to scan.',
+          ),
+          (
+            LumeQrTool.scanKey,
+            LumeScanOutcome.failed,
+            "Couldn't scan. Try again.",
+          ),
+          (LumeQrTool.galleryKey, LumeScanOutcome.cancelled, null),
+          (LumeQrTool.galleryKey, LumeScanOutcome.nothing, 'No code found'),
+          (
+            LumeQrTool.galleryKey,
+            LumeScanOutcome.denied,
+            "Lume can't open your photos. You can allow it in Settings.",
+          ),
+          (
+            LumeQrTool.galleryKey,
+            LumeScanOutcome.multiple,
+            'That image has more than one QR code. Choose one with a single '
+                'code.',
+          ),
+          (
+            LumeQrTool.galleryKey,
+            LumeScanOutcome.unsupported,
+            "That code isn't a QR code",
+          ),
+          (
+            LumeQrTool.galleryKey,
+            LumeScanOutcome.unreadable,
+            "Lume couldn't read that image",
+          ),
+          (
+            LumeQrTool.galleryKey,
+            LumeScanOutcome.tooLarge,
+            'That image is too large to read',
+          ),
+          (
+            LumeQrTool.galleryKey,
+            LumeScanOutcome.failed,
             "Couldn't scan. Try again.",
           ),
         ]) {
-      testWidgets('through the adapter: $name', (WidgetTester tester) async {
+      final String which = button == LumeQrTool.scanKey ? 'Scan' : 'Gallery';
+      testWidgets('$which: ${outcome.name}', (WidgetTester tester) async {
         final LumeRecordingScanner scanner = LumeRecordingScanner(
-          result: result,
+          result: LumeScanResult(outcome),
         );
         await pumpQr(
           tester,
           surface: const Size(390, 900),
           overrides: <Override>[scannerProvider.overrideWithValue(scanner)],
         );
-        expect(await pressAndHear(tester, LumeQrTool.scanKey), said);
-        expect(scanner.requested, <String>['scan']);
+        expect(await pressAndHear(tester, button), said);
+        expect(scanner.requested, <String>[
+          button == LumeQrTool.scanKey ? 'scan' : 'pickImage',
+        ]);
+        expect(find.byType(LumeQrResultSheet), findsNothing);
       });
     }
 
@@ -231,6 +297,216 @@ void main() {
         overrides: <Override>[scannerProvider.overrideWithValue(scanner)],
       );
       expect(scanner.requested, isEmpty);
+    });
+
+    testWidgets('a link read is shown first, and opens only on a press', (
+      WidgetTester tester,
+    ) async {
+      final LumeRecordingLinkOpener opener = LumeRecordingLinkOpener();
+      await scanRead(
+        tester,
+        'https://lume.app/tools',
+        overrides: <Override>[linkOpenerProvider.overrideWithValue(opener)],
+      );
+      expect(find.byType(LumeQrResultSheet), findsOneWidget);
+      expect(tester.widget<LumeSheet>(find.byType(LumeSheet)).title, 'Website');
+      expect(
+        tester
+            .widget<LumeRichRow>(find.byKey(LumeQrResultSheet.destinationKey))
+            .title,
+        contains('lume.app'),
+      );
+      expect(find.text('https://lume.app/tools'), findsOneWidget);
+      expect(opener.requested, isEmpty, reason: 'nothing opens by itself');
+
+      await tester.tap(find.byKey(LumeQrResultSheet.openKey));
+      await tester.pump();
+      await tester.pump(const Duration(milliseconds: 400));
+      expect(opener.opened, <Uri>[Uri.parse('https://lume.app/tools')]);
+      expect(find.byType(LumeQrResultSheet), findsNothing);
+    });
+
+    testWidgets('an http link says it is not secure', (
+      WidgetTester tester,
+    ) async {
+      await scanRead(tester, 'http://example.com');
+      expect(
+        tester
+            .widget<LumeRichRow>(find.byKey(LumeQrResultSheet.destinationKey))
+            .subtitle,
+        "Not secure — this site's connection isn't encrypted",
+      );
+    });
+
+    testWidgets('a link nothing on the device opens says so, and stays', (
+      WidgetTester tester,
+    ) async {
+      await scanRead(
+        tester,
+        'https://lume.app',
+        overrides: <Override>[
+          linkOpenerProvider.overrideWithValue(
+            LumeRecordingLinkOpener(outcome: LumeOpenOutcome.unavailable),
+          ),
+        ],
+      );
+      await tester.tap(find.byKey(LumeQrResultSheet.openKey));
+      await tester.pump();
+      await tester.pump(const Duration(milliseconds: 300));
+      expect(
+        tester.widget<LumeToast>(find.byType(LumeToast)).data.message,
+        'Nothing on this device can open it',
+      );
+      expect(find.byType(LumeQrResultSheet), findsOneWidget);
+      await tester.pump(const Duration(seconds: 6));
+    });
+
+    testWidgets('a refused scheme is shown and cannot be opened', (
+      WidgetTester tester,
+    ) async {
+      final LumeRecordingLinkOpener opener = LumeRecordingLinkOpener();
+      await scanRead(
+        tester,
+        'javascript:alert(1)',
+        overrides: <Override>[linkOpenerProvider.overrideWithValue(opener)],
+      );
+      expect(
+        tester.widget<LumeSheet>(find.byType(LumeSheet)).title,
+        "A link Lume won't open",
+      );
+      expect(find.byKey(LumeQrResultSheet.openKey), findsNothing);
+      expect(
+        find.text("Lume doesn't open this kind of link. You can copy it."),
+        findsOneWidget,
+      );
+      expect(find.text('javascript:alert(1)'), findsOneWidget);
+      expect(opener.requested, isEmpty);
+    });
+
+    testWidgets('Wi-Fi: the network is shown, the password never is, and '
+        'Copy copies the network name', (WidgetTester tester) async {
+      final List<String?> copied = <String?>[];
+      tester.binding.defaultBinaryMessenger.setMockMethodCallHandler(
+        SystemChannels.platform,
+        (MethodCall call) async {
+          if (call.method == 'Clipboard.setData') {
+            copied.add(
+              (call.arguments as Map<Object?, Object?>)['text'] as String?,
+            );
+          }
+          return null;
+        },
+      );
+      addTearDown(
+        () => tester.binding.defaultBinaryMessenger.setMockMethodCallHandler(
+          SystemChannels.platform,
+          null,
+        ),
+      );
+      await scanRead(tester, 'WIFI:T:WPA;S:Home-WiFi;P:hunter22;;');
+      expect(
+        tester.widget<LumeSheet>(find.byType(LumeSheet)).title,
+        'Wi-Fi network',
+      );
+      expect(find.textContaining('hunter22'), findsNothing);
+      expect(find.byKey(LumeQrResultSheet.openKey), findsNothing);
+      await tester.tap(find.byKey(LumeQrResultSheet.copyKey));
+      await tester.pump();
+      await tester.pump(const Duration(milliseconds: 300));
+      expect(copied, <String?>['Home-WiFi']);
+      expect(
+        tester.widget<LumeToast>(find.byType(LumeToast)).data.message,
+        'Copied',
+      );
+      await tester.pump(const Duration(seconds: 6));
+    });
+
+    testWidgets('a number goes to the dialer, never a call, only on a press', (
+      WidgetTester tester,
+    ) async {
+      final LumeRecordingDialer dialer = LumeRecordingDialer();
+      await scanRead(
+        tester,
+        'tel:+923001234567',
+        overrides: <Override>[dialerProvider.overrideWithValue(dialer)],
+      );
+      expect(dialer.requested, isEmpty);
+      expect(
+        tester.widget<LumeButton>(find.byKey(LumeQrResultSheet.openKey)).label,
+        'Open in Phone',
+      );
+      await tester.tap(find.byKey(LumeQrResultSheet.openKey));
+      await tester.pump();
+      await tester.pump(const Duration(milliseconds: 400));
+      expect(dialer.dialled.map((LumeDialNumber n) => n.dialable), <String>[
+        '+923001234567',
+      ]);
+    });
+
+    testWidgets('a message goes to the number without the code\'s text', (
+      WidgetTester tester,
+    ) async {
+      final LumeRecordingLinkOpener opener = LumeRecordingLinkOpener();
+      await scanRead(
+        tester,
+        'SMSTO:+447700900123:Reply WIN to claim',
+        overrides: <Override>[linkOpenerProvider.overrideWithValue(opener)],
+      );
+      expect(
+        find.text("The code's own message text isn't filled in"),
+        findsOneWidget,
+      );
+      await tester.tap(find.byKey(LumeQrResultSheet.openKey));
+      await tester.pump();
+      await tester.pump(const Duration(milliseconds: 400));
+      expect(opener.opened, <Uri>[Uri(scheme: 'sms', path: '+447700900123')]);
+    });
+
+    testWidgets('a scan is never added to the history', (
+      WidgetTester tester,
+    ) async {
+      await scanRead(tester, 'https://lume.app/new');
+      Navigator.of(tester.element(find.byType(LumeQrResultSheet))).pop();
+      await tester.pump();
+      await tester.pump(const Duration(milliseconds: 400));
+      expect(
+        tester
+            .widgetList<LumeRichRow>(
+              inKey(LumeQrTool.historyKey, find.byType(LumeRichRow)),
+            )
+            .map((LumeRichRow r) => r.title),
+        <String>['lume.app/tools', 'Home-WiFi'],
+      );
+    });
+
+    testWidgets('the result in Urdu, right to left, at 200 %', (
+      WidgetTester tester,
+    ) async {
+      await pumpQr(
+        tester,
+        surface: const Size(390, 900),
+        locale: const Locale('ur'),
+        textScale: 2,
+        overrides: <Override>[
+          scannerProvider.overrideWithValue(
+            LumeRecordingScanner(
+              result: const LumeScanResult(
+                LumeScanOutcome.read,
+                'http://example.com/a-very-long-path/that-keeps-going',
+              ),
+            ),
+          ),
+        ],
+      );
+      await tester.tap(find.byKey(LumeQrTool.scanKey));
+      await tester.pump();
+      await tester.pump(const Duration(milliseconds: 400));
+      expect(find.byType(LumeQrResultSheet), findsOneWidget);
+      expect(
+        Directionality.of(tester.element(find.byType(LumeQrResultSheet))),
+        TextDirection.rtl,
+      );
+      expectNoOverflow(tester);
     });
 
     testWidgets('in Urdu', (WidgetTester tester) async {

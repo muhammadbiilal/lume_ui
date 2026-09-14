@@ -1,36 +1,62 @@
 /// Reading a code with the camera, or from an image — through a contract.
 ///
 /// The reference's Scan says "Scanning" and From gallery says "Choosing an
-/// image", and neither does anything more. Lume reaches the camera only
-/// through this contract, and says what actually happened (C78):
+/// image", and neither does anything more. Lume reaches the camera and the
+/// photo picker only through this contract, and says what actually happened
+/// (C78, C80):
 ///
-/// * a [LumeScanner] reports a [LumeScanResult]; the screen says it —
-///   read, nothing found, permission refused, unavailable, failed;
+/// * a [LumeScanner] reports a [LumeScanResult]; the screen says it;
 /// * the camera is asked for only by a press, never at launch, and a refusal
 ///   is explained rather than asked again;
-/// * [LumeUnavailableScanner] is this build's scanner: no camera package is
-///   chosen yet, so it answers "unavailable" and never touches the device;
-/// * [LumeRecordingScanner] records instead, for tests.
+/// * a read code is only ever *text*: what it is and where it would go is
+///   decided by `LumeQrPayload`, and nothing is opened without a second press;
+/// * `LumePlatformScanner` (`lume_scanner_platform.dart`) is the device
+///   adapter, the one file that knows which packages scan;
+/// * [LumeUnavailableScanner] never touches a device, and
+///   [LumeRecordingScanner] records instead, for tests.
 library;
 
 import 'package:flutter/foundation.dart';
 
 /// What became of one request to read a code.
 enum LumeScanOutcome {
-  /// A code was read; [LumeScanResult.value] holds its text.
+  /// A QR code was read; [LumeScanResult.value] holds its text.
   read,
 
-  /// The camera looked, or the image was opened, and no code was in it.
+  /// The image was opened and no code was in it.
   nothing,
 
-  /// The reader refused the camera or the photo library.
+  /// The reader closed the camera, or chose no image. Not a failure, and
+  /// nothing is said about it.
+  cancelled,
+
+  /// The reader refused the camera or the photos this time.
   denied,
 
-  /// Nothing on this device, or in this build, can scan.
+  /// The permission is off and the platform will not ask again — refused
+  /// for good, or restricted by the device's owner. Only Settings can change
+  /// it.
+  blocked,
+
+  /// Nothing on this device can scan: no camera, or no scanner on this
+  /// platform.
   unavailable,
 
-  /// The platform was asked and threw.
+  /// The camera would not start, or the platform threw.
   failed,
+
+  /// The image holds more than one QR code, and Lume will not guess which
+  /// the reader meant.
+  multiple,
+
+  /// A code was found, and it is not a QR code.
+  unsupported,
+
+  /// The image could not be decoded, or the code in it is damaged.
+  unreadable,
+
+  /// The image is larger than Lume will decode on the device.
+  tooLarge,
 }
 
 @immutable
@@ -54,19 +80,22 @@ class LumeScanResult {
 
   @override
   int get hashCode => Object.hash(outcome, value);
+
+  @override
+  String toString() => 'LumeScanResult(${outcome.name}, $value)';
 }
 
-/// Reads a code. Asks for the camera or the photo library only when called.
+/// Reads a code. Asks for the camera or the photos only when called.
 abstract interface class LumeScanner {
-  /// Opens the camera and reads the first code it sees.
+  /// Opens the camera and reads the first QR code it sees.
   Future<LumeScanResult> scan();
 
-  /// Lets the reader choose an image and reads a code in it.
+  /// Lets the reader choose one image and reads the QR code in it.
   Future<LumeScanResult> pickImage();
 }
 
-/// This build's scanner: unavailable until a camera package and its
-/// permission wording are decided. It never reaches the platform.
+/// A scanner for a platform with no camera adapter. It never reaches the
+/// platform.
 class LumeUnavailableScanner implements LumeScanner {
   const LumeUnavailableScanner();
 

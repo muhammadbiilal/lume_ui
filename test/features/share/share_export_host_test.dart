@@ -182,9 +182,8 @@ void main() {
       await tester.pump(const Duration(seconds: 4));
     });
 
-    testWidgets('the production saver says it cannot save yet', (
-      WidgetTester tester,
-    ) async {
+    testWidgets('where nothing can save an image, it says so and points to '
+        'Share', (WidgetTester tester) async {
       final TaxServices s = TaxServices(
         saver: const LumeUnavailableImageSaver(),
       );
@@ -193,10 +192,28 @@ void main() {
       await tester.pumpAndSettle();
       await pressAndRender(tester, find.byKey(LumeShareSheet.saveKey));
       expect(
-        find.text('Saving images isn’t available yet — use Share to save it'),
+        find.text(
+          'Saving images isn’t available on this device — use Share to save it',
+        ),
         findsOneWidget,
       );
       expect(find.text('Image saved'), findsNothing);
+      await tester.pump(const Duration(seconds: 4));
+    });
+
+    testWidgets('a full photo library is said, never saved', (
+      WidgetTester tester,
+    ) async {
+      final TaxServices s = TaxServices(
+        saver: LumeRecordingImageSaver(outcome: LumeSaveOutcome.noSpace),
+      );
+      await pumpTaxWith(tester, s);
+      await tester.tap(toolbarAction('Share'));
+      await tester.pumpAndSettle();
+      await pressAndRender(tester, find.byKey(LumeShareSheet.saveKey));
+      expect(find.text('Not enough space to save the image'), findsOneWidget);
+      expect(find.text('Image saved'), findsNothing);
+      expect((s.saver as LumeRecordingImageSaver).saved, hasLength(1));
       await tester.pump(const Duration(seconds: 4));
     });
 

@@ -2356,6 +2356,30 @@ abstract class AppLocalizations {
   /// **'Week'**
   String get calendarWeek;
 
+  /// Camera page status when a barcode that is not a QR code is in view; scanning continues
+  ///
+  /// In en, this message translates to:
+  /// **'That isn\'t a QR code. Lume reads QR codes.'**
+  String get captureNotQr;
+
+  /// Camera page status while the app is away or the page is covered; the camera is closed
+  ///
+  /// In en, this message translates to:
+  /// **'Camera paused'**
+  String get capturePaused;
+
+  /// Camera page status while the camera starts, before any picture
+  ///
+  /// In en, this message translates to:
+  /// **'Starting the camera…'**
+  String get captureStarting;
+
+  /// Title of the full-screen camera page
+  ///
+  /// In en, this message translates to:
+  /// **'Scan a QR code'**
+  String get captureTitle;
+
   /// Reference key ccy.aed — a currency's name
   ///
   /// In en, this message translates to:
@@ -7342,11 +7366,35 @@ abstract class AppLocalizations {
   /// **'Log water'**
   String get qaWater;
 
+  /// Said once the text is on the clipboard
+  ///
+  /// In en, this message translates to:
+  /// **'Copied'**
+  String get qrCopied;
+
+  /// Copies the decoded text
+  ///
+  /// In en, this message translates to:
+  /// **'Copy'**
+  String get qrCopy;
+
+  /// Copies a Wi-Fi code's network name, never its password
+  ///
+  /// In en, this message translates to:
+  /// **'Copy network name'**
+  String get qrCopyNetwork;
+
   /// Reference key qr.detects
   ///
   /// In en, this message translates to:
   /// **'What it recognises'**
   String get qrDetects;
+
+  /// Label over the full decoded text
+  ///
+  /// In en, this message translates to:
+  /// **'What the code says'**
+  String get qrFullText;
 
   /// Reference key qr.hint
   ///
@@ -7354,17 +7402,143 @@ abstract class AppLocalizations {
   /// **'Point the camera at a code'**
   String get qrHint;
 
+  /// Kind of QR code: a vCard or MeCard
+  ///
+  /// In en, this message translates to:
+  /// **'Contact'**
+  String get qrKindContact;
+
+  /// Kind of QR code: a mailto: address
+  ///
+  /// In en, this message translates to:
+  /// **'Email address'**
+  String get qrKindEmail;
+
   /// Reference key qr.kind.link
   ///
   /// In en, this message translates to:
   /// **'Website'**
   String get qrKindLink;
 
+  /// Kind of QR code: geo: coordinates
+  ///
+  /// In en, this message translates to:
+  /// **'Location'**
+  String get qrKindLocation;
+
+  /// Kind of QR code: an SMS to a number
+  ///
+  /// In en, this message translates to:
+  /// **'Text message'**
+  String get qrKindMessage;
+
+  /// Kind of QR code: a tel: number
+  ///
+  /// In en, this message translates to:
+  /// **'Phone number'**
+  String get qrKindPhone;
+
+  /// Kind of QR code: a scheme Lume refuses, or an address that fails its checks
+  ///
+  /// In en, this message translates to:
+  /// **'A link Lume won\'t open'**
+  String get qrKindRefused;
+
+  /// Kind of QR code: plain text
+  ///
+  /// In en, this message translates to:
+  /// **'Text'**
+  String get qrKindText;
+
   /// Reference key qr.kind.wifi
   ///
   /// In en, this message translates to:
   /// **'Wi-Fi network'**
   String get qrKindWifi;
+
+  /// Under a contact code
+  ///
+  /// In en, this message translates to:
+  /// **'Lume doesn\'t add contacts'**
+  String get qrNoteContact;
+
+  /// Under an email code that carried a subject or body, which Lume drops
+  ///
+  /// In en, this message translates to:
+  /// **'The code\'s own subject and text aren\'t filled in'**
+  String get qrNoteEmail;
+
+  /// Under an http:// destination
+  ///
+  /// In en, this message translates to:
+  /// **'Not secure — this site\'s connection isn\'t encrypted'**
+  String get qrNoteInsecure;
+
+  /// Under a location code
+  ///
+  /// In en, this message translates to:
+  /// **'Lume doesn\'t open maps yet'**
+  String get qrNoteLocation;
+
+  /// Under an SMS code that carried a prefilled message, which Lume drops
+  ///
+  /// In en, this message translates to:
+  /// **'The code\'s own message text isn\'t filled in'**
+  String get qrNoteMessage;
+
+  /// Under a refused code
+  ///
+  /// In en, this message translates to:
+  /// **'Lume doesn\'t open this kind of link. You can copy it.'**
+  String get qrNoteRefused;
+
+  /// Under a Wi-Fi code
+  ///
+  /// In en, this message translates to:
+  /// **'Lume doesn\'t join networks. The password stays hidden.'**
+  String get qrNoteWifi;
+
+  /// Opens a new email to the address
+  ///
+  /// In en, this message translates to:
+  /// **'Write an email'**
+  String get qrOpenEmail;
+
+  /// Said when opening the address fails
+  ///
+  /// In en, this message translates to:
+  /// **'Couldn\'t open it'**
+  String get qrOpenFailed;
+
+  /// Opens Messages to the number
+  ///
+  /// In en, this message translates to:
+  /// **'Open in Messages'**
+  String get qrOpenMessage;
+
+  /// Opens the dialer with the number; never calls
+  ///
+  /// In en, this message translates to:
+  /// **'Open in Phone'**
+  String get qrOpenPhone;
+
+  /// Opens a checked web address in the browser
+  ///
+  /// In en, this message translates to:
+  /// **'Open website'**
+  String get qrOpenSite;
+
+  /// Said when no app takes the address
+  ///
+  /// In en, this message translates to:
+  /// **'Nothing on this device can open it'**
+  String get qrOpenUnavailable;
+
+  /// Subtitle of the sheet showing what a QR code said
+  ///
+  /// In en, this message translates to:
+  /// **'Nothing opens unless you choose it'**
+  String get qrResultNote;
 
   /// Reference key qr.scan
   ///
@@ -8404,6 +8578,12 @@ abstract class AppLocalizations {
   /// **'We can’t find that'**
   String get routeMissingTitle;
 
+  /// Said when the camera permission is off for good or restricted, and the system will not ask again
+  ///
+  /// In en, this message translates to:
+  /// **'Camera access for Lume is off. Turn it on in Settings to scan.'**
+  String get scanBlocked;
+
   /// Said when the camera permission is refused; the permission is asked for only by a press
   ///
   /// In en, this message translates to:
@@ -8434,23 +8614,47 @@ abstract class AppLocalizations {
   /// **'From gallery'**
   String get scanFromGallery;
 
+  /// Said when a chosen image holds several QR codes; Lume does not guess which one
+  ///
+  /// In en, this message translates to:
+  /// **'That image has more than one QR code. Choose one with a single code.'**
+  String get scanMultiple;
+
   /// Said when a scan ends without reading a code
   ///
   /// In en, this message translates to:
   /// **'No code found'**
   String get scanNothing;
 
-  /// Said when a code is read; the value is the code's own text
+  /// Said when choosing an image is refused access to photos
   ///
   /// In en, this message translates to:
-  /// **'Read: {value}'**
-  String scanRead(String value);
+  /// **'Lume can\'t open your photos. You can allow it in Settings.'**
+  String get scanPhotosDenied;
+
+  /// Said when a chosen image is larger than Lume decodes on the device
+  ///
+  /// In en, this message translates to:
+  /// **'That image is too large to read'**
+  String get scanTooLarge;
 
   /// Said when Scan or From gallery is pressed and this build has no camera scanner — the reference says "Scanning" while nothing scans
   ///
   /// In en, this message translates to:
-  /// **'Scanning isn\'t available in this version yet'**
+  /// **'Scanning isn\'t available on this device'**
   String get scanUnavailable;
+
+  /// Said when a chosen image cannot be decoded, or its code is damaged
+  ///
+  /// In en, this message translates to:
+  /// **'Lume couldn\'t read that image'**
+  String get scanUnreadable;
+
+  /// Said when a chosen image holds a barcode that is not a QR code
+  ///
+  /// In en, this message translates to:
+  /// **'That code isn\'t a QR code'**
+  String get scanUnsupported;
 
   /// Reference: a side that has lost every wicket
   ///
@@ -8560,10 +8764,16 @@ abstract class AppLocalizations {
   /// **'Couldn’t save the image'**
   String get shareSaveFailed;
 
+  /// Said when the photo library reports no space
+  ///
+  /// In en, this message translates to:
+  /// **'Not enough space to save the image'**
+  String get shareSaveNoSpace;
+
   /// Said by Save image while the photo-library permission is undecided (D7)
   ///
   /// In en, this message translates to:
-  /// **'Saving images isn’t available yet — use Share to save it'**
+  /// **'Saving images isn’t available on this device — use Share to save it'**
   String get shareSaveUnavailable;
 
   /// Reference key share.saved — said only once the photo library has the image (D7)

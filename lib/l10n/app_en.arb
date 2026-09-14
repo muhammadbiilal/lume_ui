@@ -1599,6 +1599,22 @@
   "@calendarWeek": {
     "description": "Reference key calendar.week"
   },
+  "captureNotQr": "That isn't a QR code. Lume reads QR codes.",
+  "@captureNotQr": {
+    "description": "Camera page status when a barcode that is not a QR code is in view; scanning continues"
+  },
+  "capturePaused": "Camera paused",
+  "@capturePaused": {
+    "description": "Camera page status while the app is away or the page is covered; the camera is closed"
+  },
+  "captureStarting": "Starting the camera…",
+  "@captureStarting": {
+    "description": "Camera page status while the camera starts, before any picture"
+  },
+  "captureTitle": "Scan a QR code",
+  "@captureTitle": {
+    "description": "Title of the full-screen camera page"
+  },
   "ccyAed": "UAE Dirham",
   "@ccyAed": {
     "description": "Reference key ccy.aed — a currency's name"
@@ -5602,21 +5618,121 @@
   "@qaWater": {
     "description": "Reference key qa.water"
   },
+  "qrCopied": "Copied",
+  "@qrCopied": {
+    "description": "Said once the text is on the clipboard"
+  },
+  "qrCopy": "Copy",
+  "@qrCopy": {
+    "description": "Copies the decoded text"
+  },
+  "qrCopyNetwork": "Copy network name",
+  "@qrCopyNetwork": {
+    "description": "Copies a Wi-Fi code's network name, never its password"
+  },
   "qrDetects": "What it recognises",
   "@qrDetects": {
     "description": "Reference key qr.detects"
+  },
+  "qrFullText": "What the code says",
+  "@qrFullText": {
+    "description": "Label over the full decoded text"
   },
   "qrHint": "Point the camera at a code",
   "@qrHint": {
     "description": "Reference key qr.hint"
   },
+  "qrKindContact": "Contact",
+  "@qrKindContact": {
+    "description": "Kind of QR code: a vCard or MeCard"
+  },
+  "qrKindEmail": "Email address",
+  "@qrKindEmail": {
+    "description": "Kind of QR code: a mailto: address"
+  },
   "qrKindLink": "Website",
   "@qrKindLink": {
     "description": "Reference key qr.kind.link"
   },
+  "qrKindLocation": "Location",
+  "@qrKindLocation": {
+    "description": "Kind of QR code: geo: coordinates"
+  },
+  "qrKindMessage": "Text message",
+  "@qrKindMessage": {
+    "description": "Kind of QR code: an SMS to a number"
+  },
+  "qrKindPhone": "Phone number",
+  "@qrKindPhone": {
+    "description": "Kind of QR code: a tel: number"
+  },
+  "qrKindRefused": "A link Lume won't open",
+  "@qrKindRefused": {
+    "description": "Kind of QR code: a scheme Lume refuses, or an address that fails its checks"
+  },
+  "qrKindText": "Text",
+  "@qrKindText": {
+    "description": "Kind of QR code: plain text"
+  },
   "qrKindWifi": "Wi-Fi network",
   "@qrKindWifi": {
     "description": "Reference key qr.kind.wifi"
+  },
+  "qrNoteContact": "Lume doesn't add contacts",
+  "@qrNoteContact": {
+    "description": "Under a contact code"
+  },
+  "qrNoteEmail": "The code's own subject and text aren't filled in",
+  "@qrNoteEmail": {
+    "description": "Under an email code that carried a subject or body, which Lume drops"
+  },
+  "qrNoteInsecure": "Not secure — this site's connection isn't encrypted",
+  "@qrNoteInsecure": {
+    "description": "Under an http:// destination"
+  },
+  "qrNoteLocation": "Lume doesn't open maps yet",
+  "@qrNoteLocation": {
+    "description": "Under a location code"
+  },
+  "qrNoteMessage": "The code's own message text isn't filled in",
+  "@qrNoteMessage": {
+    "description": "Under an SMS code that carried a prefilled message, which Lume drops"
+  },
+  "qrNoteRefused": "Lume doesn't open this kind of link. You can copy it.",
+  "@qrNoteRefused": {
+    "description": "Under a refused code"
+  },
+  "qrNoteWifi": "Lume doesn't join networks. The password stays hidden.",
+  "@qrNoteWifi": {
+    "description": "Under a Wi-Fi code"
+  },
+  "qrOpenEmail": "Write an email",
+  "@qrOpenEmail": {
+    "description": "Opens a new email to the address"
+  },
+  "qrOpenFailed": "Couldn't open it",
+  "@qrOpenFailed": {
+    "description": "Said when opening the address fails"
+  },
+  "qrOpenMessage": "Open in Messages",
+  "@qrOpenMessage": {
+    "description": "Opens Messages to the number"
+  },
+  "qrOpenPhone": "Open in Phone",
+  "@qrOpenPhone": {
+    "description": "Opens the dialer with the number; never calls"
+  },
+  "qrOpenSite": "Open website",
+  "@qrOpenSite": {
+    "description": "Opens a checked web address in the browser"
+  },
+  "qrOpenUnavailable": "Nothing on this device can open it",
+  "@qrOpenUnavailable": {
+    "description": "Said when no app takes the address"
+  },
+  "qrResultNote": "Nothing opens unless you choose it",
+  "@qrResultNote": {
+    "description": "Subtitle of the sheet showing what a QR code said"
   },
   "qrScan": "Scan",
   "@qrScan": {
@@ -6485,6 +6601,10 @@
   "@routeMissingTitle": {
     "description": "Unrecognised location"
   },
+  "scanBlocked": "Camera access for Lume is off. Turn it on in Settings to scan.",
+  "@scanBlocked": {
+    "description": "Said when the camera permission is off for good or restricted, and the system will not ask again"
+  },
   "scanDenied": "Lume can't use the camera. You can allow it in Settings.",
   "@scanDenied": {
     "description": "Said when the camera permission is refused; the permission is asked for only by a press"
@@ -6505,22 +6625,33 @@
   "@scanFromGallery": {
     "description": "Reference key scan.fromGallery"
   },
+  "scanMultiple": "That image has more than one QR code. Choose one with a single code.",
+  "@scanMultiple": {
+    "description": "Said when a chosen image holds several QR codes; Lume does not guess which one"
+  },
   "scanNothing": "No code found",
   "@scanNothing": {
     "description": "Said when a scan ends without reading a code"
   },
-  "scanRead": "Read: {value}",
-  "@scanRead": {
-    "description": "Said when a code is read; the value is the code's own text",
-    "placeholders": {
-      "value": {
-        "type": "String"
-      }
-    }
+  "scanPhotosDenied": "Lume can't open your photos. You can allow it in Settings.",
+  "@scanPhotosDenied": {
+    "description": "Said when choosing an image is refused access to photos"
   },
-  "scanUnavailable": "Scanning isn't available in this version yet",
+  "scanTooLarge": "That image is too large to read",
+  "@scanTooLarge": {
+    "description": "Said when a chosen image is larger than Lume decodes on the device"
+  },
+  "scanUnavailable": "Scanning isn't available on this device",
   "@scanUnavailable": {
     "description": "Said when Scan or From gallery is pressed and this build has no camera scanner — the reference says \"Scanning\" while nothing scans"
+  },
+  "scanUnreadable": "Lume couldn't read that image",
+  "@scanUnreadable": {
+    "description": "Said when a chosen image cannot be decoded, or its code is damaged"
+  },
+  "scanUnsupported": "That code isn't a QR code",
+  "@scanUnsupported": {
+    "description": "Said when a chosen image holds a barcode that is not a QR code"
   },
   "scoreAllOut": "all out",
   "@scoreAllOut": {
@@ -6613,7 +6744,11 @@
   "@shareSaveFailed": {
     "description": "Said when saving the image failed (D7)"
   },
-  "shareSaveUnavailable": "Saving images isn’t available yet — use Share to save it",
+  "shareSaveNoSpace": "Not enough space to save the image",
+  "@shareSaveNoSpace": {
+    "description": "Said when the photo library reports no space"
+  },
+  "shareSaveUnavailable": "Saving images isn’t available on this device — use Share to save it",
   "@shareSaveUnavailable": {
     "description": "Said by Save image while the photo-library permission is undecided (D7)"
   },

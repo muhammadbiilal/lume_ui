@@ -26,6 +26,10 @@
 	<string>$(FLUTTER_BUILD_NUMBER)</string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
+	<key>NSCameraUsageDescription</key>
+	<string>Lume uses the camera only while you scan a QR code. Nothing is recorded or uploaded.</string>
+	<key>NSPhotoLibraryAddUsageDescription</key>
+	<string>Lume adds the image you choose to save to your photos. It cannot see your other photos.</string>
 	<key>UIApplicationSceneManifest</key>
 	<dict>
 		<key>UIApplicationSupportsMultipleScenes</key>

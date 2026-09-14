@@ -1264,6 +1264,18 @@ class AppLocalizationsUr extends AppLocalizations {
   String get calendarWeek => 'ہفتہ';
 
   @override
+  String get captureNotQr => 'یہ QR کوڈ نہیں ہے۔ Lume صرف QR کوڈ پڑھتا ہے۔';
+
+  @override
+  String get capturePaused => 'کیمرا رکا ہوا ہے';
+
+  @override
+  String get captureStarting => 'کیمرا شروع ہو رہا ہے…';
+
+  @override
+  String get captureTitle => 'QR کوڈ اسکین کریں';
+
+  @override
   String get ccyAed => 'اماراتی درہم';
 
   @override
@@ -4099,16 +4111,92 @@ class AppLocalizationsUr extends AppLocalizations {
   String get qaWater => 'پانی درج کریں';
 
   @override
+  String get qrCopied => 'کاپی ہو گیا';
+
+  @override
+  String get qrCopy => 'کاپی کریں';
+
+  @override
+  String get qrCopyNetwork => 'نیٹ ورک کا نام کاپی کریں';
+
+  @override
   String get qrDetects => 'یہ کیا پہچانتا ہے';
+
+  @override
+  String get qrFullText => 'کوڈ میں کیا لکھا ہے';
 
   @override
   String get qrHint => 'کیمرے کو کوڈ کی طرف کریں';
 
   @override
+  String get qrKindContact => 'رابطہ';
+
+  @override
+  String get qrKindEmail => 'ای میل ایڈریس';
+
+  @override
   String get qrKindLink => 'ویب سائٹ';
 
   @override
+  String get qrKindLocation => 'مقام';
+
+  @override
+  String get qrKindMessage => 'ٹیکسٹ میسج';
+
+  @override
+  String get qrKindPhone => 'فون نمبر';
+
+  @override
+  String get qrKindRefused => 'ایسا لنک جو Lume نہیں کھولے گا';
+
+  @override
+  String get qrKindText => 'متن';
+
+  @override
   String get qrKindWifi => 'وائی فائی نیٹ ورک';
+
+  @override
+  String get qrNoteContact => 'Lume رابطے شامل نہیں کرتا';
+
+  @override
+  String get qrNoteEmail => 'کوڈ میں لکھا موضوع اور متن خود سے نہیں بھرا جاتا';
+
+  @override
+  String get qrNoteInsecure => 'محفوظ نہیں — اس سائٹ کا کنکشن انکرپٹڈ نہیں';
+
+  @override
+  String get qrNoteLocation => 'Lume ابھی نقشے نہیں کھولتا';
+
+  @override
+  String get qrNoteMessage => 'کوڈ میں لکھا پیغام خود سے نہیں بھرا جاتا';
+
+  @override
+  String get qrNoteRefused =>
+      'Lume اس قسم کا لنک نہیں کھولتا۔ آپ اسے کاپی کر سکتے ہیں۔';
+
+  @override
+  String get qrNoteWifi => 'Lume نیٹ ورک سے نہیں جڑتا۔ پاس ورڈ چھپا رہتا ہے۔';
+
+  @override
+  String get qrOpenEmail => 'ای میل لکھیں';
+
+  @override
+  String get qrOpenFailed => 'اسے کھولا نہیں جا سکا';
+
+  @override
+  String get qrOpenMessage => 'پیغامات میں کھولیں';
+
+  @override
+  String get qrOpenPhone => 'فون میں کھولیں';
+
+  @override
+  String get qrOpenSite => 'ویب سائٹ کھولیں';
+
+  @override
+  String get qrOpenUnavailable => 'اس ڈیوائس پر اسے کھولنے والی کوئی ایپ نہیں';
+
+  @override
+  String get qrResultNote => 'آپ کے منتخب کیے بغیر کچھ نہیں کھلے گا';
 
   @override
   String get qrScan => 'اسکین کریں';
@@ -4740,6 +4828,10 @@ class AppLocalizationsUr extends AppLocalizations {
   String get routeMissingTitle => 'ہمیں وہ نہیں مل رہا';
 
   @override
+  String get scanBlocked =>
+      'Lume کے لیے کیمرے کی رسائی بند ہے۔ اسکین کرنے کے لیے سیٹنگز میں اسے آن کریں۔';
+
+  @override
   String get scanDenied =>
       'Lume کیمرا استعمال نہیں کر سکتا۔ آپ سیٹنگز میں اجازت دے سکتے ہیں۔';
 
@@ -4757,15 +4849,27 @@ class AppLocalizationsUr extends AppLocalizations {
   String get scanFromGallery => 'گیلری سے';
 
   @override
+  String get scanMultiple =>
+      'اس تصویر میں ایک سے زیادہ QR کوڈ ہیں۔ ایک کوڈ والی تصویر منتخب کریں۔';
+
+  @override
   String get scanNothing => 'کوئی کوڈ نہیں ملا';
 
   @override
-  String scanRead(String value) {
-    return 'پڑھا گیا: $value';
-  }
+  String get scanPhotosDenied =>
+      'Lume آپ کی تصاویر نہیں کھول سکتا۔ آپ سیٹنگز میں اجازت دے سکتے ہیں۔';
 
   @override
-  String get scanUnavailable => 'اس ورژن میں ابھی اسکیننگ دستیاب نہیں';
+  String get scanTooLarge => 'یہ تصویر پڑھنے کے لیے بہت بڑی ہے';
+
+  @override
+  String get scanUnavailable => 'اس ڈیوائس پر اسکیننگ دستیاب نہیں';
+
+  @override
+  String get scanUnreadable => 'Lume یہ تصویر نہیں پڑھ سکا';
+
+  @override
+  String get scanUnsupported => 'یہ کوڈ QR کوڈ نہیں ہے';
 
   @override
   String get scoreAllOut => 'آل آؤٹ';
@@ -4827,8 +4931,11 @@ class AppLocalizationsUr extends AppLocalizations {
   String get shareSaveFailed => 'تصویر محفوظ نہیں ہو سکی';
 
   @override
+  String get shareSaveNoSpace => 'تصویر محفوظ کرنے کے لیے جگہ کافی نہیں';
+
+  @override
   String get shareSaveUnavailable =>
-      'تصاویر محفوظ کرنا ابھی دستیاب نہیں — محفوظ کرنے کے لیے شیئر استعمال کریں';
+      'اس ڈیوائس پر تصاویر محفوظ کرنا دستیاب نہیں — محفوظ کرنے کے لیے شیئر استعمال کریں';
 
   @override
   String get shareSaved => 'تصویر محفوظ ہو گئی';

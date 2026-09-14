@@ -109,7 +109,11 @@ enum LumeSaveOutcome {
   /// The reader refused the photo library.
   denied,
 
-  /// Nothing on this build can save an image (see [LumeUnavailableImageSaver]).
+  /// The photo library reports no room for the picture.
+  noSpace,
+
+  /// Nothing on this device can save an image this way — no adapter, or an
+  /// iOS older than add-only access (`LumePlatformImageSaver`).
   unavailable,
   failed,
 }
@@ -171,11 +175,7 @@ class LumeRecordingImageSaver implements LumeImageSaver {
   }
 }
 
-/// The production saver until the photo-library permission is decided.
-///
-/// Saving to the gallery needs Android's `WRITE_EXTERNAL_STORAGE` below
-/// API 30 and iOS's photo-library usage strings — a permission and user-data
-/// decision this phase does not take. Until it is taken, Save image says it
+/// A saver for a platform with no photo-library adapter. Save image says it
 /// cannot save rather than pretending it did (D7); Share still offers the
 /// platform's own "Save image" destination.
 class LumeUnavailableImageSaver implements LumeImageSaver {

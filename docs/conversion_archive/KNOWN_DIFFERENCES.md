@@ -1943,6 +1943,7 @@ were:**
 ### C78 — QR Scanner: a scanner that says it cannot scan yet
 
 **Found in F6A on QR Scanner, the camera-instrument reference (F6A-D5).**
+*Scanning was decided in F6B: see C80. The entry below is F6A's record.*
 
 - **Scan only says "Scanning" — corrected, through a contract.** The
   reference's Scan toasts "Scanning" and From gallery "Choosing an image";
@@ -2006,6 +2007,74 @@ were:**
 - **Held by tests.** Once per event; withdraws after its life; never over the
   centre or a sheet; waits while the app is away; not brought back by
   navigation, by leaving and returning, or by a language change.
+
+### C80 — QR Scanner reads codes, and opens nothing by itself
+
+**Decided in F6B (decision 1). Supersedes C78's "no camera package is chosen".**
+
+- **Scanning is real — corrected.** Scan opens a full-screen Lume capture
+  page (`lume_capture_page.dart`); From gallery opens the system picker. Both
+  decode on the device with zxing-cpp (`flutter_zxing`), behind
+  `LumeScanner`; the dependency record is `F6B_PLATFORM_DECISIONS.md`. No
+  widget reaches a plugin: `lume_scanner_platform.dart` is the only file that
+  imports one.
+- **The camera exists only while the page is seen.** It is taken out of the
+  tree — which closes it — when the app is hidden or paused, and when any
+  route covers the page; it reopens as a new camera on return. An inactive
+  app (a permission prompt, the notification shade) keeps it, or the prompt
+  would be asked again on every return. Nothing is kept: no frame, no image,
+  no history; a scan is never added to the fixture history.
+- **Every outcome is said.** Read; no code; cancelled (said as nothing);
+  denied; blocked (off for good, or restricted); unavailable (no camera — a
+  camera that shows no picture within 10 s in the foreground); failed;
+  multiple codes; not a QR code; unreadable or damaged; too large (over
+  25 MB). A barcode that is not a QR code in front of the camera is said on
+  the page and scanning continues.
+- **A native adaptation: telling "denied" from "denied for good" on
+  Android.** The camera plugin answers `CameraAccessDenied` both times; only
+  a real prompt makes the app inactive first, so a refusal with no prompt
+  shown is reported as blocked. iOS reports its own
+  `CameraAccessDeniedWithoutPrompt` and `CameraAccessRestricted`.
+- **Blocked is explained, not routed.** "Camera access for Lume is off. Turn
+  it on in Settings to scan." Opening the app's settings page would need a
+  further plugin; the sentence is the smallest Lume-styled explanation.
+- **A code is shown first, and goes nowhere by itself.** `LumeQrPayload`
+  classifies the text and `LumeQrResultSheet` shows its kind, the destination
+  to judge, what Lume holds back, and the whole text (selectable, never
+  markup, direction overrides and controls made visible). A second press
+  opens only `https`/`http` (http marked not secure) with a plain ASCII host
+  and no credentials, `tel:` through the dialer (never USSD), `sms:` to one
+  number without its body, and `mailto:` to one address without subject or
+  body. Wi-Fi (password never shown or copied), contacts, locations, every
+  other scheme — `javascript:`, `intent:`, `file:`, `lume:`, an app's own —
+  and plain text open nothing. `LumeLinkOpener.allows` checks the allowlist
+  again at the door.
+- **"Live · Camera · Updated 30 sec ago" — still reproduced**, under C78's
+  obligation, until the release-honesty gate decides it (F6B decision 5).
+
+| widget | was | now |
+|---|---|---|
+| `LumeScanWindow` (new, shared) | the viewfinder's private cutout painter | the same painter, drawn by the viewfinder and the capture page |
+| `LumeCapturePage` (new) | — | black ground, the scan window at 64 % of the shorter side (160–300), a 44-point close control, the title, and a status pill; states starting, live, paused |
+| `LumeQrResultSheet` (new) | a toast "Read: …" | the sheet above; Copy and one Open action |
+
+### C81 — Save image saves, with add-only access
+
+**Decided in F6B (decision 2).**
+
+- **Corrected.** `LumePlatformImageSaver` (`gal`) replaces the unavailable
+  saver. It checks the bytes are a PNG, asks for access only if it is not
+  held, writes once, and reports saved only when the write returns.
+- **Android.** MediaStore into Pictures; no permission from Android 10.
+  Android 6–9 need `WRITE_EXTERNAL_STORAGE` (`maxSdkVersion 28`), asked on
+  the press. A taken name gets a numbered suffix from the platform.
+- **iOS.** Add-only access on iOS 14+ (`NSPhotoLibraryAddUsageDescription`).
+  On iOS 13 Photos can only grant the whole library, so Save image reports
+  unavailable ("use Share to save it") and asks nothing.
+- **Names.** `lume-<kind>-<yyyyMMdd>-<HHmmss>`: the card kind and the moment,
+  nothing from the card's words.
+- **Unchanged.** The card is the 1080 × 1350 render of the card alone — no
+  app chrome — and a sensitive tool never gets one (D7).
 
 ### C63 — English dates written the wrong way outside the United States
 

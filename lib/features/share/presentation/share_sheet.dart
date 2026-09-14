@@ -100,6 +100,7 @@ class _LumeShareSheetState extends ConsumerState<LumeShareSheet> {
     return switch (outcome) {
       LumeSaveOutcome.saved => (l.shareSaved, LumeToastTone.success),
       LumeSaveOutcome.denied => (l.shareSaveDenied, LumeToastTone.error),
+      LumeSaveOutcome.noSpace => (l.shareSaveNoSpace, LumeToastTone.error),
       LumeSaveOutcome.unavailable => (
         l.shareSaveUnavailable,
         LumeToastTone.info,
