@@ -238,11 +238,14 @@ Map<String, Widget> specimens() => <String, Widget>{
     ],
   ),
   'journey': const LumeJourney(
-    steps: <LumeJourneyStep>[
-      LumeJourneyStep(label: 'Sent', done: true),
-      LumeJourneyStep(label: 'In transit', current: true),
-      LumeJourneyStep(label: 'Delivered'),
-    ],
+    fromCode: 'LHE',
+    from: 'Lahore',
+    fromTime: '09:00',
+    toCode: 'ISB',
+    to: 'Islamabad',
+    toTime: '13:40',
+    remaining: '120 km to run',
+    progress: 0.6,
   ),
   'table': const LumeTable(
     label: 'Prayer times',

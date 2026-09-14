@@ -17,6 +17,7 @@ export 'lume_chip.dart';
 export 'lume_crud.dart';
 export 'lume_field.dart';
 export 'lume_header.dart';
+export 'lume_journey.dart';
 export 'lume_overlay.dart';
 export 'lume_pressable.dart';
 export 'lume_progress.dart';

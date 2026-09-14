@@ -147,6 +147,8 @@ void main() {
         // only their placeholders and punctuation; the words arrive filled.
         'ratesPerUnit',
         'ratesShareText',
+        // Flights: altitude and speed side by side, each already worded.
+        'flightsCruiseSub',
         // Sample data in a tool's status line: a score, a dialling code, a
         // window of hours, an index, two operators, a tax year, a tally.
         // Fixture values, not sentences.

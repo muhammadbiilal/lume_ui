@@ -448,6 +448,71 @@ void main() {
     });
   });
 
+  // -------------------------------------------------------------- Flights
+
+  group('Flights', () {
+    final String location = LumeRoutes.tool(LumeRoutes.tools, 'flights');
+
+    for (final Cell cell in kCells) {
+      testWidgets(cell.$1, (WidgetTester tester) async {
+        await shoot(
+          tester,
+          state: 'default_pk',
+          location: location,
+          golden: 'tool_flights_default_pk',
+          cell: cell,
+        );
+      });
+    }
+
+    for (final String state in <String>['default_us', 'muslim_gb']) {
+      testWidgets('$state · the reference cell', (WidgetTester tester) async {
+        await shoot(
+          tester,
+          state: state,
+          location: location,
+          golden: 'tool_flights_$state',
+          cell: kCells.first,
+        );
+      });
+    }
+
+    testWidgets('QR 614 chosen · the reference cell', (
+      WidgetTester tester,
+    ) async {
+      await shoot(
+        tester,
+        state: 'default_pk',
+        location: location,
+        golden: 'tool_flights_default_pk_flight-QR-614',
+        cell: kCells.first,
+        after: (WidgetTester t) async {
+          final Finder row = find.text('QR 614').last;
+          await t.ensureVisible(row);
+          await t.tap(row);
+          await t.pumpAndSettle();
+          await scrolledTo(0)(t);
+        },
+      );
+    });
+
+    testWidgets('no match · the reference cell', (WidgetTester tester) async {
+      await shoot(
+        tester,
+        state: 'default_pk',
+        location: location,
+        golden: 'tool_flights_default_pk_q-zzz',
+        cell: kCells.first,
+        after: (WidgetTester t) async {
+          await t.enterText(find.byType(EditableText).first, 'zzz');
+          await t.pumpAndSettle();
+          FocusManager.instance.primaryFocus?.unfocus();
+          await t.pumpAndSettle();
+        },
+      );
+    });
+  });
+
   // ----------------------------------------------------------- Share card
 
   // The share sheet over Tax (D7): the card drawn from the screen's own

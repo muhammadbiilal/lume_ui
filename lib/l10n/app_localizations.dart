@@ -2392,6 +2392,12 @@ abstract class AppLocalizations {
   /// **'Export'**
   String get commonExport;
 
+  /// Reference key common.field — a table column head
+  ///
+  /// In en, this message translates to:
+  /// **'Field'**
+  String get commonField;
+
   /// Reference key common.history
   ///
   /// In en, this message translates to:
@@ -2541,6 +2547,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Total'**
   String get commonTotal;
+
+  /// Reference key common.value — a table column head
+  ///
+  /// In en, this message translates to:
+  /// **'Value'**
+  String get commonValue;
 
   /// Reference key common.week
   ///
@@ -3633,6 +3645,252 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'{n} min'**
   String featuredMinutes(int n);
+
+  /// Reference key flights.actualDep
+  ///
+  /// In en, this message translates to:
+  /// **'Actual departure'**
+  String get flightsActualDep;
+
+  /// Reference key flights.aircraft
+  ///
+  /// In en, this message translates to:
+  /// **'Aircraft & route'**
+  String get flightsAircraft;
+
+  /// Reference key flights.altitude
+  ///
+  /// In en, this message translates to:
+  /// **'Altitude'**
+  String get flightsAltitude;
+
+  /// Reference: `c.num(alt) + " " + t("unit.ft")` — the number arrives formatted
+  ///
+  /// In en, this message translates to:
+  /// **'{feet} ft'**
+  String flightsAltitudeFeet(String feet);
+
+  /// Reference key flights.arrivals
+  ///
+  /// In en, this message translates to:
+  /// **'Arrivals'**
+  String get flightsArrivals;
+
+  /// Reference key flights.board — the segmented control's name
+  ///
+  /// In en, this message translates to:
+  /// **'Board'**
+  String get flightsBoard;
+
+  /// Reference key flights.cruise
+  ///
+  /// In en, this message translates to:
+  /// **'Cruising'**
+  String get flightsCruise;
+
+  /// Reference: altitude and ground speed, each formatted with its unit
+  ///
+  /// In en, this message translates to:
+  /// **'{altitude} · {speed}'**
+  String flightsCruiseSub(String altitude, String speed);
+
+  /// Reference key flights.delayed — a metric label
+  ///
+  /// In en, this message translates to:
+  /// **'Delayed'**
+  String get flightsDelayed;
+
+  /// Reference key flights.departures
+  ///
+  /// In en, this message translates to:
+  /// **'Departures'**
+  String get flightsDepartures;
+
+  /// Reference key flights.distance
+  ///
+  /// In en, this message translates to:
+  /// **'Route distance'**
+  String get flightsDistance;
+
+  /// Reference key flights.enRoute — a metric label
+  ///
+  /// In en, this message translates to:
+  /// **'En route'**
+  String get flightsEnRoute;
+
+  /// Reference key flights.estArrival
+  ///
+  /// In en, this message translates to:
+  /// **'Estimated arrival'**
+  String get flightsEstArrival;
+
+  /// Reference: `t("flights.eta") + " " + eta`
+  ///
+  /// In en, this message translates to:
+  /// **'ETA {time}'**
+  String flightsEta(String time);
+
+  /// Reference: `t("flights.gate") + " " + gate`
+  ///
+  /// In en, this message translates to:
+  /// **'Gate {gate}'**
+  String flightsGate(String gate);
+
+  /// Reference key flights.lateBy
+  ///
+  /// In en, this message translates to:
+  /// **'{n} minutes late'**
+  String flightsLateBy(int n);
+
+  /// Reference: `"+" + delay + "m"` — minutes late, in a row's meta line
+  ///
+  /// In en, this message translates to:
+  /// **'+{n}m'**
+  String flightsLateShort(int n);
+
+  /// Reference key flights.live — a section title
+  ///
+  /// In en, this message translates to:
+  /// **'Live board'**
+  String get flightsLive;
+
+  /// Reference key flights.map — the map's accessible name
+  ///
+  /// In en, this message translates to:
+  /// **'Live position'**
+  String get flightsMap;
+
+  /// Reference key flights.noMatch
+  ///
+  /// In en, this message translates to:
+  /// **'No flights on this board'**
+  String get flightsNoMatch;
+
+  /// Reference key flights.noMatchText
+  ///
+  /// In en, this message translates to:
+  /// **'Try arrivals, or search a flight number or airport.'**
+  String get flightsNoMatchText;
+
+  /// Reference key flights.onTime
+  ///
+  /// In en, this message translates to:
+  /// **'On time'**
+  String get flightsOnTime;
+
+  /// Reference key flights.registration
+  ///
+  /// In en, this message translates to:
+  /// **'Registration'**
+  String get flightsRegistration;
+
+  /// Reference key flights.remaining — the distance arrives formatted with its unit
+  ///
+  /// In en, this message translates to:
+  /// **'{distance} to run'**
+  String flightsRemaining(String distance);
+
+  /// Reference key flights.scheduled — under an arrival time that has not moved
+  ///
+  /// In en, this message translates to:
+  /// **'Scheduled'**
+  String get flightsScheduled;
+
+  /// Reference key flights.scheduledDep
+  ///
+  /// In en, this message translates to:
+  /// **'Scheduled departure'**
+  String get flightsScheduledDep;
+
+  /// Reference key flights.search
+  ///
+  /// In en, this message translates to:
+  /// **'Flight number, route or airport'**
+  String get flightsSearch;
+
+  /// The share card for the selected flight — codes and a clock time
+  ///
+  /// In en, this message translates to:
+  /// **'{flight} · {from} → {to} · ETA {time}'**
+  String flightsShareText(String flight, String from, String to, String time);
+
+  /// Reference key flights.speed
+  ///
+  /// In en, this message translates to:
+  /// **'Ground speed'**
+  String get flightsSpeed;
+
+  /// Reference key flights.st.delayed
+  ///
+  /// In en, this message translates to:
+  /// **'Delayed'**
+  String get flightsStDelayed;
+
+  /// Reference key flights.st.enroute — a flight's status badge
+  ///
+  /// In en, this message translates to:
+  /// **'En route'**
+  String get flightsStEnroute;
+
+  /// Reference key flights.st.landed
+  ///
+  /// In en, this message translates to:
+  /// **'Landed'**
+  String get flightsStLanded;
+
+  /// Reference key flights.st.scheduled
+  ///
+  /// In en, this message translates to:
+  /// **'Scheduled'**
+  String get flightsStScheduled;
+
+  /// Reference key flights.terminal
+  ///
+  /// In en, this message translates to:
+  /// **'Terminal'**
+  String get flightsTerminal;
+
+  /// Reference: `term + " · " + t("flights.gate") + " " + gate`
+  ///
+  /// In en, this message translates to:
+  /// **'{terminal} · Gate {gate}'**
+  String flightsTerminalGate(String terminal, String gate);
+
+  /// Reference key flights.timeline
+  ///
+  /// In en, this message translates to:
+  /// **'Timeline'**
+  String get flightsTimeline;
+
+  /// Reference key flights.total — a metric label
+  ///
+  /// In en, this message translates to:
+  /// **'Flights'**
+  String get flightsTotal;
+
+  /// Reference key flights.track
+  ///
+  /// In en, this message translates to:
+  /// **'Track this flight'**
+  String get flightsTrack;
+
+  /// Reference key flights.tracked
+  ///
+  /// In en, this message translates to:
+  /// **'Tracked'**
+  String get flightsTracked;
+
+  /// Reference key flights.tracking — the toast
+  ///
+  /// In en, this message translates to:
+  /// **'Tracking {flight}'**
+  String flightsTracking(String flight);
+
+  /// Reference key flights.type
+  ///
+  /// In en, this message translates to:
+  /// **'Aircraft'**
+  String get flightsType;
 
   /// Reference key fresh.agoMin — the source line of a delayed tool
   ///
@@ -8661,11 +8919,23 @@ abstract class AppLocalizations {
   /// **'{n} kcal'**
   String unitKcalCount(String n);
 
+  /// Reference key unit.km
+  ///
+  /// In en, this message translates to:
+  /// **'km'**
+  String get unitKm;
+
   /// Reference: a wind speed unit
   ///
   /// In en, this message translates to:
   /// **'km/h'**
   String get unitKmh;
+
+  /// Reference key unit.mi
+  ///
+  /// In en, this message translates to:
+  /// **'mi'**
+  String get unitMi;
 
   /// Reference: a statistic’s unit
   ///

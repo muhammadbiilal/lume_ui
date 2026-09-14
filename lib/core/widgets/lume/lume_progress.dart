@@ -1,4 +1,5 @@
-/// Progress: the bar, the meter row, the ring, the timeline and the journey.
+/// Progress: the bar, the meter row, the ring and the timeline. The journey is
+/// lume_journey.dart.
 ///
 /// Measured: `.pbar` is 6 px tall, pill-shaped, on a 14 %-ink track.
 /// `.tline__item` uses an 11 px gap and a tabular 11 / 700 time column.
@@ -506,108 +507,6 @@ class _TimelineRow extends StatelessWidget {
                 ).copyWith(fontWeight: FontWeight.w700, color: lume.text2),
               ),
             ],
-          ],
-        ),
-      ),
-    );
-  }
-}
-
-/// One step of a journey.
-@immutable
-class LumeJourneyStep {
-  const LumeJourneyStep({
-    required this.label,
-    this.done = false,
-    this.current = false,
-  });
-
-  final String label;
-  final bool done;
-  final bool current;
-}
-
-/// `.journey` — a horizontal progress presentation. A parcel, an application,
-/// a multi-step form.
-class LumeJourney extends StatelessWidget {
-  const LumeJourney({super.key, required this.steps});
-
-  final List<LumeJourneyStep> steps;
-
-  @override
-  Widget build(BuildContext context) {
-    final LumeColors lume = context.lume;
-    final int reached = steps.lastIndexWhere(
-      (LumeJourneyStep s) => s.done || s.current,
-    );
-
-    return Semantics(
-      label: 'Progress',
-      value: reached < 0
-          ? 'not started'
-          : '${steps[reached].label}, step ${reached + 1} of ${steps.length}',
-      child: ExcludeSemantics(
-        child: Row(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: <Widget>[
-            for (int i = 0; i < steps.length; i++)
-              Expanded(
-                child: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  children: <Widget>[
-                    Row(
-                      children: <Widget>[
-                        Expanded(
-                          child: i == 0
-                              ? const SizedBox(height: 2)
-                              : Container(
-                                  height: 2,
-                                  color: i <= reached
-                                      ? lume.accent
-                                      : lume.border2,
-                                ),
-                        ),
-                        Container(
-                          width: steps[i].current ? 14 : 10,
-                          height: steps[i].current ? 14 : 10,
-                          decoration: BoxDecoration(
-                            color: i <= reached ? lume.accent : lume.card,
-                            shape: BoxShape.circle,
-                            border: Border.all(
-                              color: i <= reached ? lume.accent : lume.border2,
-                              width: 2,
-                            ),
-                          ),
-                        ),
-                        Expanded(
-                          child: i == steps.length - 1
-                              ? const SizedBox(height: 2)
-                              : Container(
-                                  height: 2,
-                                  color: i < reached
-                                      ? lume.accent
-                                      : lume.border2,
-                                ),
-                        ),
-                      ],
-                    ),
-                    const SizedBox(height: 6),
-                    Text(
-                      steps[i].label,
-                      textAlign: TextAlign.center,
-                      style: LumeType.fit(context, context.lumeType.metaSmall)
-                          .copyWith(
-                            color: i <= reached ? lume.text : lume.text3,
-                            fontWeight: steps[i].current
-                                ? FontWeight.w700
-                                : FontWeight.w500,
-                          ),
-                      maxLines: 2,
-                      overflow: TextOverflow.ellipsis,
-                    ),
-                  ],
-                ),
-              ),
           ],
         ),
       ),

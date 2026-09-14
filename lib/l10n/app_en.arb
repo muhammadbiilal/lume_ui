@@ -1646,6 +1646,10 @@
   "@commonExport": {
     "description": "Reference key common.export"
   },
+  "commonField": "Field",
+  "@commonField": {
+    "description": "Reference key common.field — a table column head"
+  },
   "commonHistory": "History",
   "@commonHistory": {
     "description": "Reference key common.history"
@@ -1745,6 +1749,10 @@
   "commonTotal": "Total",
   "@commonTotal": {
     "description": "Reference key common.total"
+  },
+  "commonValue": "Value",
+  "@commonValue": {
+    "description": "Reference key common.value — a table column head"
   },
   "commonWeek": "Week",
   "@commonWeek": {
@@ -2571,6 +2579,235 @@
         "type": "int"
       }
     }
+  },
+  "flightsActualDep": "Actual departure",
+  "@flightsActualDep": {
+    "description": "Reference key flights.actualDep"
+  },
+  "flightsAircraft": "Aircraft & route",
+  "@flightsAircraft": {
+    "description": "Reference key flights.aircraft"
+  },
+  "flightsAltitude": "Altitude",
+  "@flightsAltitude": {
+    "description": "Reference key flights.altitude"
+  },
+  "flightsAltitudeFeet": "{feet} ft",
+  "@flightsAltitudeFeet": {
+    "description": "Reference: `c.num(alt) + \" \" + t(\"unit.ft\")` — the number arrives formatted",
+    "placeholders": {
+      "feet": {
+        "type": "String"
+      }
+    }
+  },
+  "flightsArrivals": "Arrivals",
+  "@flightsArrivals": {
+    "description": "Reference key flights.arrivals"
+  },
+  "flightsBoard": "Board",
+  "@flightsBoard": {
+    "description": "Reference key flights.board — the segmented control's name"
+  },
+  "flightsCruise": "Cruising",
+  "@flightsCruise": {
+    "description": "Reference key flights.cruise"
+  },
+  "flightsCruiseSub": "{altitude} · {speed}",
+  "@flightsCruiseSub": {
+    "description": "Reference: altitude and ground speed, each formatted with its unit",
+    "placeholders": {
+      "altitude": {
+        "type": "String"
+      },
+      "speed": {
+        "type": "String"
+      }
+    }
+  },
+  "flightsDelayed": "Delayed",
+  "@flightsDelayed": {
+    "description": "Reference key flights.delayed — a metric label"
+  },
+  "flightsDepartures": "Departures",
+  "@flightsDepartures": {
+    "description": "Reference key flights.departures"
+  },
+  "flightsDistance": "Route distance",
+  "@flightsDistance": {
+    "description": "Reference key flights.distance"
+  },
+  "flightsEnRoute": "En route",
+  "@flightsEnRoute": {
+    "description": "Reference key flights.enRoute — a metric label"
+  },
+  "flightsEstArrival": "Estimated arrival",
+  "@flightsEstArrival": {
+    "description": "Reference key flights.estArrival"
+  },
+  "flightsEta": "ETA {time}",
+  "@flightsEta": {
+    "description": "Reference: `t(\"flights.eta\") + \" \" + eta`",
+    "placeholders": {
+      "time": {
+        "type": "String"
+      }
+    }
+  },
+  "flightsGate": "Gate {gate}",
+  "@flightsGate": {
+    "description": "Reference: `t(\"flights.gate\") + \" \" + gate`",
+    "placeholders": {
+      "gate": {
+        "type": "String"
+      }
+    }
+  },
+  "flightsLateBy": "{n} minutes late",
+  "@flightsLateBy": {
+    "description": "Reference key flights.lateBy",
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
+  "flightsLateShort": "+{n}m",
+  "@flightsLateShort": {
+    "description": "Reference: `\"+\" + delay + \"m\"` — minutes late, in a row's meta line",
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
+  "flightsLive": "Live board",
+  "@flightsLive": {
+    "description": "Reference key flights.live — a section title"
+  },
+  "flightsMap": "Live position",
+  "@flightsMap": {
+    "description": "Reference key flights.map — the map's accessible name"
+  },
+  "flightsNoMatch": "No flights on this board",
+  "@flightsNoMatch": {
+    "description": "Reference key flights.noMatch"
+  },
+  "flightsNoMatchText": "Try arrivals, or search a flight number or airport.",
+  "@flightsNoMatchText": {
+    "description": "Reference key flights.noMatchText"
+  },
+  "flightsOnTime": "On time",
+  "@flightsOnTime": {
+    "description": "Reference key flights.onTime"
+  },
+  "flightsRegistration": "Registration",
+  "@flightsRegistration": {
+    "description": "Reference key flights.registration"
+  },
+  "flightsRemaining": "{distance} to run",
+  "@flightsRemaining": {
+    "description": "Reference key flights.remaining — the distance arrives formatted with its unit",
+    "placeholders": {
+      "distance": {
+        "type": "String"
+      }
+    }
+  },
+  "flightsScheduled": "Scheduled",
+  "@flightsScheduled": {
+    "description": "Reference key flights.scheduled — under an arrival time that has not moved"
+  },
+  "flightsScheduledDep": "Scheduled departure",
+  "@flightsScheduledDep": {
+    "description": "Reference key flights.scheduledDep"
+  },
+  "flightsSearch": "Flight number, route or airport",
+  "@flightsSearch": {
+    "description": "Reference key flights.search"
+  },
+  "flightsShareText": "{flight} · {from} → {to} · ETA {time}",
+  "@flightsShareText": {
+    "description": "The share card for the selected flight — codes and a clock time",
+    "placeholders": {
+      "flight": {
+        "type": "String"
+      },
+      "from": {
+        "type": "String"
+      },
+      "to": {
+        "type": "String"
+      },
+      "time": {
+        "type": "String"
+      }
+    }
+  },
+  "flightsSpeed": "Ground speed",
+  "@flightsSpeed": {
+    "description": "Reference key flights.speed"
+  },
+  "flightsStDelayed": "Delayed",
+  "@flightsStDelayed": {
+    "description": "Reference key flights.st.delayed"
+  },
+  "flightsStEnroute": "En route",
+  "@flightsStEnroute": {
+    "description": "Reference key flights.st.enroute — a flight's status badge"
+  },
+  "flightsStLanded": "Landed",
+  "@flightsStLanded": {
+    "description": "Reference key flights.st.landed"
+  },
+  "flightsStScheduled": "Scheduled",
+  "@flightsStScheduled": {
+    "description": "Reference key flights.st.scheduled"
+  },
+  "flightsTerminal": "Terminal",
+  "@flightsTerminal": {
+    "description": "Reference key flights.terminal"
+  },
+  "flightsTerminalGate": "{terminal} · Gate {gate}",
+  "@flightsTerminalGate": {
+    "description": "Reference: `term + \" · \" + t(\"flights.gate\") + \" \" + gate`",
+    "placeholders": {
+      "terminal": {
+        "type": "String"
+      },
+      "gate": {
+        "type": "String"
+      }
+    }
+  },
+  "flightsTimeline": "Timeline",
+  "@flightsTimeline": {
+    "description": "Reference key flights.timeline"
+  },
+  "flightsTotal": "Flights",
+  "@flightsTotal": {
+    "description": "Reference key flights.total — a metric label"
+  },
+  "flightsTrack": "Track this flight",
+  "@flightsTrack": {
+    "description": "Reference key flights.track"
+  },
+  "flightsTracked": "Tracked",
+  "@flightsTracked": {
+    "description": "Reference key flights.tracked"
+  },
+  "flightsTracking": "Tracking {flight}",
+  "@flightsTracking": {
+    "description": "Reference key flights.tracking — the toast",
+    "placeholders": {
+      "flight": {
+        "type": "String"
+      }
+    }
+  },
+  "flightsType": "Aircraft",
+  "@flightsType": {
+    "description": "Reference key flights.type"
   },
   "freshAgoMin": "Updated {n} min ago",
   "@freshAgoMin": {
@@ -6661,9 +6898,17 @@
       }
     }
   },
+  "unitKm": "km",
+  "@unitKm": {
+    "description": "Reference key unit.km"
+  },
   "unitKmh": "km/h",
   "@unitKmh": {
     "description": "Reference: a wind speed unit"
+  },
+  "unitMi": "mi",
+  "@unitMi": {
+    "description": "Reference key unit.mi"
   },
   "unitMinutes": "min",
   "@unitMinutes": {

@@ -354,9 +354,16 @@ class LumeMetric extends StatelessWidget {
   Widget build(BuildContext context) {
     final LumeColors lume = context.lume;
 
+    // `.metric` — `13px 12px` of padding inside a one-point border, radius
+    // 12, children 2 apart; the icon's 16 with 5 below it; the value
+    // 15 / 800 / −.036em on the font's own 19; the label 10 / 600 on 12. No
+    // minimum: the specimen's 84 is an icon's worth taller than Flights' 61.
     final Widget card = Container(
-      constraints: const BoxConstraints(minHeight: height),
-      padding: const EdgeInsets.symmetric(vertical: 13, horizontal: 12),
+      padding: const EdgeInsets.symmetric(
+        vertical: 13,
+        horizontal: 12,
+        // Container adds the border's width to this padding itself.
+      ),
       decoration: BoxDecoration(
         color: lume.card,
         borderRadius: LumeRadius.brIcon,
@@ -364,23 +371,20 @@ class LumeMetric extends StatelessWidget {
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
-        mainAxisAlignment: MainAxisAlignment.center,
         mainAxisSize: MainAxisSize.min,
         children: <Widget>[
           if (icon != null) ...<Widget>[
-            LumeIcon(icon!, size: LumeSpace.iconMd, color: lume.text3),
-            const SizedBox(height: LumeSpace.x2),
+            LumeIcon(icon!, size: LumeSpace.iconSm, color: lume.accent),
+            const SizedBox(height: 5 + 2),
           ],
           LumeNumerals(
             value,
-            style: LumeType.numeric(
-              LumeType.tracked(
-                LumeType.fit(
-                  context,
-                  context.lumeType.cardTitle,
-                ).copyWith(fontWeight: FontWeight.w800),
-                -0.036,
-              ),
+            style: LumeType.tracked(
+              LumeType.natural(
+                context,
+                context.lumeType.cardTitle,
+              ).copyWith(fontWeight: FontWeight.w800),
+              -0.036,
             ).copyWith(color: lume.text),
             maxLines: 1,
             overflow: TextOverflow.ellipsis,
@@ -388,18 +392,15 @@ class LumeMetric extends StatelessWidget {
           const SizedBox(height: 2),
           Text(
             label,
-            style: LumeType.fit(context, context.lumeType.metaSmall).copyWith(
-              color: lume.text3,
-              fontSize: 10,
-              fontWeight: FontWeight.w600,
-            ),
+            style: LumeType.natural(
+              context,
+              context.lumeType.metaSmall,
+              size: 10,
+            ).copyWith(color: lume.text3, fontWeight: FontWeight.w600),
             maxLines: 2,
             overflow: TextOverflow.ellipsis,
           ),
-          if (delta != null) ...<Widget>[
-            const SizedBox(height: LumeSpace.x1),
-            delta!,
-          ],
+          if (delta != null) ...<Widget>[const SizedBox(height: 2), delta!],
         ],
       ),
     );
@@ -438,7 +439,8 @@ class LumeMetrics extends StatelessWidget {
 
     return LayoutBuilder(
       builder: (BuildContext context, BoxConstraints constraints) {
-        const double gap = LumeSpace.x2;
+        // `.metrics { gap: 10px }` — measured on Flights, 110 + 10 + 110.
+        const double gap = 10;
         final double width = (constraints.maxWidth - gap * (cols - 1)) / cols;
         return Wrap(
           spacing: gap,

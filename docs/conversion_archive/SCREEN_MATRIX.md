@@ -212,7 +212,7 @@ run on the shared CRUD engine.
 | `weather` | Weather | dashboard | high | — | — | Y | — | not started |
 | `loadshed` | Loadshedding | dashboard | high | PK | — | — | — | not started |
 | `trains` | Trains | tracking | veryhigh | PK | — | — | — | not started |
-| `flights` | Flights | tracking | veryhigh | — | — | — | — | not started |
+| `flights` | Flights | tracking | veryhigh | — | — | — | — | **built (F6A)** — reference tool for the tracking archetype; search, board view, metrics, route map, live board with a selected flight, journey, aircraft table, timeline, track and share actions (C73) |
 | `news` | News | reader | high | — | — | — | — | **built (F6A)** — reference tool for the editorial-reader archetype; edition strip, search, categories, lead story, art rows, reading rows, share card (C68, C70) |
 | `cricket` | Cricket | dashboard | high | — | — | — | — | not started |
 | `emergency` | Emergency | action | low | — | — | Y | — | **built (F6A)** — reference tool for the action archetype; SOS card, call grid through the D6 dialer contract, info rows, note (C67) |

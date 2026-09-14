@@ -1192,12 +1192,14 @@ class _ComponentGalleryState extends ConsumerState<ComponentGallery> {
       const _Case(
         'journey',
         LumeJourney(
-          steps: <LumeJourneyStep>[
-            LumeJourneyStep(label: 'Sent', done: true),
-            LumeJourneyStep(label: 'In transit', current: true),
-            LumeJourneyStep(label: 'Out for delivery'),
-            LumeJourneyStep(label: 'Delivered'),
-          ],
+          fromCode: 'LHE',
+          from: 'Lahore',
+          fromTime: '09:00',
+          toCode: 'ISB',
+          to: 'Islamabad',
+          toTime: '13:40',
+          remaining: '120 km to run',
+          progress: 0.6,
         ),
       ),
       const _Case(

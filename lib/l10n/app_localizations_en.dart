@@ -1287,6 +1287,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get commonExport => 'Export';
 
   @override
+  String get commonField => 'Field';
+
+  @override
   String get commonHistory => 'History';
 
   @override
@@ -1362,6 +1365,9 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get commonTotal => 'Total';
+
+  @override
+  String get commonValue => 'Value';
 
   @override
   String get commonWeek => 'Week';
@@ -1943,6 +1949,150 @@ class AppLocalizationsEn extends AppLocalizations {
   String featuredMinutes(int n) {
     return '$n min';
   }
+
+  @override
+  String get flightsActualDep => 'Actual departure';
+
+  @override
+  String get flightsAircraft => 'Aircraft & route';
+
+  @override
+  String get flightsAltitude => 'Altitude';
+
+  @override
+  String flightsAltitudeFeet(String feet) {
+    return '$feet ft';
+  }
+
+  @override
+  String get flightsArrivals => 'Arrivals';
+
+  @override
+  String get flightsBoard => 'Board';
+
+  @override
+  String get flightsCruise => 'Cruising';
+
+  @override
+  String flightsCruiseSub(String altitude, String speed) {
+    return '$altitude · $speed';
+  }
+
+  @override
+  String get flightsDelayed => 'Delayed';
+
+  @override
+  String get flightsDepartures => 'Departures';
+
+  @override
+  String get flightsDistance => 'Route distance';
+
+  @override
+  String get flightsEnRoute => 'En route';
+
+  @override
+  String get flightsEstArrival => 'Estimated arrival';
+
+  @override
+  String flightsEta(String time) {
+    return 'ETA $time';
+  }
+
+  @override
+  String flightsGate(String gate) {
+    return 'Gate $gate';
+  }
+
+  @override
+  String flightsLateBy(int n) {
+    return '$n minutes late';
+  }
+
+  @override
+  String flightsLateShort(int n) {
+    return '+${n}m';
+  }
+
+  @override
+  String get flightsLive => 'Live board';
+
+  @override
+  String get flightsMap => 'Live position';
+
+  @override
+  String get flightsNoMatch => 'No flights on this board';
+
+  @override
+  String get flightsNoMatchText =>
+      'Try arrivals, or search a flight number or airport.';
+
+  @override
+  String get flightsOnTime => 'On time';
+
+  @override
+  String get flightsRegistration => 'Registration';
+
+  @override
+  String flightsRemaining(String distance) {
+    return '$distance to run';
+  }
+
+  @override
+  String get flightsScheduled => 'Scheduled';
+
+  @override
+  String get flightsScheduledDep => 'Scheduled departure';
+
+  @override
+  String get flightsSearch => 'Flight number, route or airport';
+
+  @override
+  String flightsShareText(String flight, String from, String to, String time) {
+    return '$flight · $from → $to · ETA $time';
+  }
+
+  @override
+  String get flightsSpeed => 'Ground speed';
+
+  @override
+  String get flightsStDelayed => 'Delayed';
+
+  @override
+  String get flightsStEnroute => 'En route';
+
+  @override
+  String get flightsStLanded => 'Landed';
+
+  @override
+  String get flightsStScheduled => 'Scheduled';
+
+  @override
+  String get flightsTerminal => 'Terminal';
+
+  @override
+  String flightsTerminalGate(String terminal, String gate) {
+    return '$terminal · Gate $gate';
+  }
+
+  @override
+  String get flightsTimeline => 'Timeline';
+
+  @override
+  String get flightsTotal => 'Flights';
+
+  @override
+  String get flightsTrack => 'Track this flight';
+
+  @override
+  String get flightsTracked => 'Tracked';
+
+  @override
+  String flightsTracking(String flight) {
+    return 'Tracking $flight';
+  }
+
+  @override
+  String get flightsType => 'Aircraft';
 
   @override
   String freshAgoMin(int n) {
@@ -4885,7 +5035,13 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
+  String get unitKm => 'km';
+
+  @override
   String get unitKmh => 'km/h';
+
+  @override
+  String get unitMi => 'mi';
 
   @override
   String get unitMinutes => 'min';

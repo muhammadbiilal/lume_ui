@@ -104,10 +104,20 @@ class LumeRichRow extends StatelessWidget {
     this.trailing,
     this.onTap,
     this.chevron = false,
+    this.selected = false,
+    this.metaLineHeight,
   });
 
   final String title;
   final String? subtitle;
+
+  /// `.rrow.is-selected` — the row a detail below it is showing, on
+  /// `tint-accent`, and announced as selected.
+  final bool selected;
+
+  /// The meta line's height, where a glyph drawn from a fallback face sets it
+  /// taller than the font's own 12 — an arrow's 14; null is the font's own.
+  final double? metaLineHeight;
 
   /// Dot-separated metadata under the subtitle.
   final List<String>? meta;
@@ -150,6 +160,7 @@ class LumeRichRow extends StatelessWidget {
     final LumeColors lume = context.lume;
 
     final Widget row = Container(
+      color: selected ? lume.tintAccent : null,
       padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 16),
       child: Row(
         children: <Widget>[
@@ -208,7 +219,7 @@ class LumeRichRow extends StatelessWidget {
                 if (meta != null && meta!.isNotEmpty) ...<Widget>[
                   // `gap: 1px` then `.rrow__meta { margin-top: 3px }`.
                   const SizedBox(height: 4),
-                  _MetaLine(parts: meta!),
+                  _MetaLine(parts: meta!, lineHeight: metaLineHeight),
                 ],
               ],
             ),
@@ -239,13 +250,19 @@ class LumeRichRow extends StatelessWidget {
                         ),
                       ).copyWith(color: lume.text),
                     ),
+                  // `.rrow__valuesub` — 10 / 600 on the font's own 12.
                   if (valueSub != null)
                     Text(
                       valueSub!,
-                      style: LumeType.fit(
-                        context,
-                        context.lumeType.metaSmall,
-                      ).copyWith(color: lume.text3),
+                      style:
+                          LumeType.natural(
+                            context,
+                            context.lumeType.metaSmall,
+                            size: 10,
+                          ).copyWith(
+                            color: lume.text3,
+                            fontWeight: FontWeight.w600,
+                          ),
                     ),
                   ?delta,
                 ].indexed) ...<Widget>[
@@ -269,6 +286,7 @@ class LumeRichRow extends StatelessWidget {
     return LumePressable(
       onTap: onTap,
       button: false,
+      selected: selected,
       semanticLabel: _spoken,
       minSize: LumeSpace.tap,
       borderRadius: BorderRadius.zero,
@@ -276,8 +294,13 @@ class LumeRichRow extends StatelessWidget {
     );
   }
 
-  String get _spoken =>
-      <String?>[title, subtitle, value].whereType<String>().join(', ');
+  String get _spoken => <String?>[
+    title,
+    badge?.label,
+    subtitle,
+    value,
+    valueSub,
+  ].whereType<String>().join(', ');
 }
 
 class _RowLead extends StatelessWidget {
@@ -323,20 +346,26 @@ class _RowLead extends StatelessWidget {
 
 /// The dot-separated metadata line shared by the rich row and the record row.
 class _MetaLine extends StatelessWidget {
-  const _MetaLine({required this.parts});
+  const _MetaLine({required this.parts, this.lineHeight});
 
   final List<String> parts;
+  final double? lineHeight;
 
   @override
   Widget build(BuildContext context) {
     final LumeColors lume = context.lume;
     // `.rrow__meta` — 10 / 500 on the font's own 12, so two wrapped lines and
     // their 5-point gap measure 29.
-    final TextStyle style = LumeType.natural(
-      context,
-      context.lumeType.metaSmall,
-      size: 10,
-    ).copyWith(color: lume.text3, fontWeight: FontWeight.w500);
+    final TextStyle style =
+        LumeType.natural(
+          context,
+          context.lumeType.metaSmall,
+          size: 10,
+        ).copyWith(
+          color: lume.text3,
+          fontWeight: FontWeight.w500,
+          height: lineHeight,
+        );
 
     // `.rrow__meta { display: flex; flex-wrap: wrap; align-items: center;
     // gap: 5px }` — every part and every dot is a flex item, so a long line

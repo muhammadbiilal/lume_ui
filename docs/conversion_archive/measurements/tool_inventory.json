@@ -74,6 +74,7 @@
    "calendar",
    "goldrates",
    "tax",
+   "flights",
    "news",
    "emergency",
    "recipes",
@@ -2298,7 +2299,7 @@
    "approvedComposition": null,
    "recordFamily": false,
    "module": "assets/js/tools/daily/flights.tool.js",
-   "flutter": "placeholder"
+   "flutter": "built"
   },
   {
    "id": "news",

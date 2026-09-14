@@ -624,21 +624,21 @@ void main() {
       expect(t.getSemantics(find.byType(LumeProgressBar)).value, '100%');
     });
 
-    testWidgets('a journey says where it has reached', (WidgetTester t) async {
+    testWidgets('a journey says what is left to run', (WidgetTester t) async {
       await show(
         t,
         const LumeJourney(
-          steps: <LumeJourneyStep>[
-            LumeJourneyStep(label: 'Sent', done: true),
-            LumeJourneyStep(label: 'In transit', current: true),
-            LumeJourneyStep(label: 'Delivered'),
-          ],
+          fromCode: 'LHE',
+          from: 'Lahore',
+          fromTime: '09:00',
+          toCode: 'ISB',
+          to: 'Islamabad',
+          toTime: '13:40',
+          remaining: '120 km to run',
+          progress: 0.6,
         ),
       );
-      expect(
-        t.getSemantics(find.byType(LumeJourney)).value,
-        contains('In transit'),
-      );
+      expect(t.getSemantics(find.byType(LumeJourney)).value, '120 km to run');
     });
 
     testWidgets('the segmented progress says which step', (

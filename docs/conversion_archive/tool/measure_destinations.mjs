@@ -899,6 +899,36 @@ const TOOL_TARGETS = {
   'chart': '#toolBody .chart--line',
   'chart.svg': '#toolBody .chart--line svg',
   'chart.cap': '#toolBody .chart__cap',
+  // Flights — the board's metrics, the map, the rows' badge and ETA, the
+  // selected flight's journey, and the actions.
+  'metrics': '#toolBody .metrics',
+  'metric1': '#toolBody .metric:nth-child(1)',
+  'metric2': '#toolBody .metric:nth-child(2)',
+  'metric.value': '#toolBody .metric__value',
+  'metric.label': '#toolBody .metric__label',
+  'lmap': '#toolBody .lmap',
+  'lmap.pin1': '#toolBody .lmap__pin:nth-of-type(1)',
+  'lmap.pinOn': '#toolBody .lmap__pin.is-on',
+  'lmap.pin3': '#toolBody .lmap__pin:nth-of-type(3)',
+  'lmap.cap': '#toolBody .lmap__cap',
+  'rrow.badge': '#toolBody .rows .rrow .badge',
+  'rrow.valuesub': '#toolBody .rrow__valuesub',
+  'rrowSel': '#toolBody .rrow.is-selected',
+  'rrow2': '#toolBody .rows > .rrow:nth-child(2)',
+  'journey': '#toolBody .journey',
+  'journey.from': '#toolBody .journey__end:first-child',
+  'journey.code': '#toolBody .journey__end:first-child b',
+  'journey.name': '#toolBody .journey__end:first-child span',
+  'journey.time': '#toolBody .journey__end:first-child i',
+  'journey.to': '#toolBody .journey__end--to',
+  'journey.track': '#toolBody .journey__track',
+  'journey.line': '#toolBody .journey__line',
+  'journey.prog': '#toolBody .journey__prog',
+  'journey.craft': '#toolBody .journey__craft',
+  'journey.dur': '#toolBody .journey__dur',
+  'btnrow': '#toolBody .btnrow',
+  'btn1': '#toolBody .btnrow .btn:nth-child(1)',
+  'btn2': '#toolBody .btnrow .btn:nth-child(2)',
 };
 
 /* The instant everything is captured at: Monday 7 September 2026, 16:41:32
@@ -1822,6 +1852,59 @@ async function main() {
           },
           fields: Array.prototype.map.call(document.querySelectorAll('#toolBody .fgrid .field'),
             function (el) { var i = el.querySelector('input'); return [(el.querySelector('.field__label') || {}).textContent, i ? i.value : null]; })
+        } : null;
+        composition.flights = q('#toolBody .journey') ? {
+          placeholder: q('#toolBody .tsearch input') ? q('#toolBody .tsearch input').getAttribute('placeholder') : null,
+          segments: texts('#toolBody .segmented button'),
+          segmentOn: tx('#toolBody .segmented .is-on'),
+          metrics: Array.prototype.map.call(document.querySelectorAll('#toolBody .metric'),
+            function (el) { return [tx.call ? (el.querySelector('.metric__value') || {}).textContent : null, (el.querySelector('.metric__label') || {}).textContent]; }),
+          map: {
+            label: q('#toolBody .lmap').getAttribute('aria-label'),
+            caption: tx('#toolBody .lmap__cap'),
+            route: (q('#toolBody .lmap__route path') || { getAttribute: function () { return null; } }).getAttribute('d'),
+            pins: Array.prototype.map.call(document.querySelectorAll('#toolBody .lmap__pin'),
+              function (el) { return [el.getAttribute('aria-label'), el.style.left, el.style.top, el.classList.contains('is-on')]; })
+          },
+          rows: Array.prototype.map.call(document.querySelectorAll('#toolBody .rows > .rrow'),
+            function (el) {
+              var logo = el.querySelector('.rrow__logo');
+              return { logo: logo ? logo.textContent : null,
+                       logoBg: logo ? getComputedStyle(logo).backgroundColor : null,
+                       title: (el.querySelector('.rrow__title') || {}).textContent || null,
+                       sub: (el.querySelector('.rrow__sub') || {}).textContent || null,
+                       badge: (el.querySelector('.badge') || {}).textContent || null,
+                       badgeTone: (el.querySelector('.badge') || { className: '' }).className,
+                       meta: Array.prototype.map.call(el.querySelectorAll('.rrow__meta > span'), function (m) { return m.textContent; }),
+                       value: (el.querySelector('.rrow__value') || {}).textContent || null,
+                       valueSub: (el.querySelector('.rrow__valuesub') || {}).textContent || null,
+                       selected: el.classList.contains('is-selected'),
+                       act: el.getAttribute('data-act') };
+            }),
+          empty: q('#toolBody .state') ? { title: tx('#toolBody .state__title'), text: tx('#toolBody .state__text'),
+            action: tx('#toolBody .state .btn') } : null,
+          journey: {
+            codes: texts('#toolBody .journey__end b'),
+            names: texts('#toolBody .journey__end span'),
+            times: texts('#toolBody .journey__end i'),
+            duration: tx('#toolBody .journey__dur'),
+            fill: q('#toolBody .journey__prog').getAttribute('data-fill'),
+            at: q('#toolBody .journey__craft').style.left
+          },
+          table: {
+            head: texts('#toolBody .dtable th'),
+            rows: Array.prototype.map.call(document.querySelectorAll('#toolBody .dtable tbody tr'),
+              function (tr) { return Array.prototype.map.call(tr.querySelectorAll('td'), function (td) { return td.textContent; }); })
+          },
+          timeline: Array.prototype.map.call(document.querySelectorAll('#toolBody .tline__item'),
+            function (el) {
+              var st = ['done', 'now'].filter(function (k) { return el.classList.contains('is-' + k); })[0] || '';
+              return { time: (el.querySelector('.tline__time') || {}).textContent || null,
+                       title: (el.querySelector('.tline__title') || {}).textContent || null,
+                       sub: (el.querySelector('.tline__sub') || {}).textContent || null,
+                       state: st };
+            }),
+          buttons: texts('#toolBody .btnrow .btn')
         } : null;
         composition.rows = Array.prototype.map.call(
           document.querySelectorAll('#toolBody .rows > .rrow'),

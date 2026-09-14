@@ -1679,6 +1679,60 @@ reference's seeded generator; `lume_reference_walk_test.dart` rebuilds the
 dollar row's sparkline and the 30-day chart from it and matches the `d`
 attributes the reference drew, to the tenth.
 
+### C73 — Flights: a live board of five fixed flights
+
+**Found in F6A on Flights.**
+
+- **"Live" over fixture data — reproduced, with the host's own freshness.**
+  The tool is titled "Live tracking", its board "Live board", its map "Live
+  position", its source "ADS-B network · Updated 30 sec ago", and every
+  figure is `FLIGHTS` from `tool-data.js`. The host shows each tool's
+  catalogue freshness as the reference does (Currency & Gold's "Delayed 15
+  min" is the same rule), so this is reproduced, not relabelled.
+  `flights_fixtures.dart` carries the Dayroz obligation: a licensed
+  flight-status feed with its observation time, and positions from a real
+  ADS-B source, before the word "Live" is true.
+- **The board does not filter by the reader's airport — reproduced.**
+  `flights.tool.js` computes `home` from the city and never reads it.
+  Arrivals lists all five flights, wherever they land; Departures lists every
+  flight still in the air or yet to leave, wherever it leaves from; Tracked
+  is the flights en route, because no reader has favourited the tool and the
+  reference falls back to `tone2 === 'live'`. The same class of finding as
+  C30, kept the same way: `LumeFlightsTool.board` is tested to return what
+  the reference returns.
+- **"Track this flight" keeps nothing — reproduced.** It toasts "Tracking
+  EK 624"; Tracked does not change. Tracking is a notification
+  subscription, which is Dayroz's to build.
+- **Distances are written without grouping — reproduced.** `L.distance`
+  rounds and concatenates, so the table reads "38,000 ft" two rows above
+  "2038 km" (the same decision as C31's two notations).
+- **A scheduled flight is "Cruising" now — reproduced.** The timeline marks
+  cruising as now whenever `progress < 1`, so TK 710, which has not left,
+  cruises at 0 ft and 0 km/h.
+- **The empty board's action does nothing — corrected, for ratification.**
+  "No flights on this board" offers Arrivals, which only sets the view; a
+  search that emptied Arrivals stays empty. Flutter's Arrivals also clears
+  the search it is offering the alternative to.
+- **The map's pins are buttons that do nothing — corrected.** Each is a
+  `<button>` with a name and no action. Flutter announces them by name
+  inside the map and does not present them as controls.
+- **The share card is an unrelated quote — corrected (C68).** Flutter shares
+  the chosen flight: "EK 624 · DXB → ISB · ETA 08:22", with the airline and
+  the day.
+- **English in every language — translated.** `flights.*`, `unit.km`,
+  `unit.mi`, `common.field` and `common.value` are keyed and translated (D12);
+  airline, airport and aircraft names are proper names and stay as written.
+
+**Found on Flights (reference tool 9), corrected or built the way C62's were:**
+
+| widget | was | reference, measured |
+|---|---|---|
+| `LumeJourney` | three to four labelled steps on a dotted rail — no `.journey` of that shape exists | rebuilt as `.journey`: two 66-point ends (code 17 / 800 / −.04em on 22, place 10 / 600 on 12, time 12 / 700 tabular on 15; 55 tall) 12 either side of a 46-point track 8 down — a dashed 2-point line 9 down, the accent progress over it, a 20-point craft in a 4-point tint ring on the progress point, what is left 26 down; ends trade sides in RTL and the craft turns round; moved to `lume_journey.dart` |
+| `LumeMap` (new) | — | `.lmap`: 220 tall as `--tall`, radius 20 in a one-point border, card-2 under two 12 % washes and a 34-point grid at half strength, a 1.6 dashed route (4 on, 3 off) at .8, 26-point pins placed by percentage inside the border, the active one accent in a 5-point ring, the caption pill 12 in and 10 up on a 14-point line (22) |
+| `LumeMetric` | an 84-point minimum; the value on the role's line; label on 16; the icon muted with 8 below | `.metric`: no minimum (61 without an icon, the specimen's 84 with one); value 15 / 800 / −.036em on 19, label 10 / 600 on 12, 2 apart; icon 16 in the accent with 7 below |
+| `LumeMetrics` | 8 between columns | `.metrics { gap: 10px }` — 110 + 10 + 110 |
+| `LumeRichRow` | no selected state; `valueSub` on 16; the meta line always the font's 12 | `.rrow.is-selected` on `tint-accent`, announced selected; `.rrow__valuesub` 10 / 600 on 12; `metaLineHeight` for a meta line a fallback glyph sets taller — Flights' "→" makes it 14 (75-point rows) |
+
 ### C63 — English dates written the wrong way outside the United States
 
 **Found in F6A** on the UAE Tax capture ("Mon, 7 Sep") and confirmed by

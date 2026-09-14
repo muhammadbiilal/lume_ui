@@ -1295,6 +1295,9 @@ class AppLocalizationsAr extends AppLocalizations {
   String get commonExport => 'تصدير';
 
   @override
+  String get commonField => 'الحقل';
+
+  @override
   String get commonHistory => 'السجل';
 
   @override
@@ -1370,6 +1373,9 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get commonTotal => 'الإجمالي';
+
+  @override
+  String get commonValue => 'القيمة';
 
   @override
   String get commonWeek => 'أسبوع';
@@ -1951,6 +1957,149 @@ class AppLocalizationsAr extends AppLocalizations {
   String featuredMinutes(int n) {
     return '$n دقيقة';
   }
+
+  @override
+  String get flightsActualDep => 'المغادرة الفعلية';
+
+  @override
+  String get flightsAircraft => 'الطائرة والمسار';
+
+  @override
+  String get flightsAltitude => 'الارتفاع';
+
+  @override
+  String flightsAltitudeFeet(String feet) {
+    return '$feet قدم';
+  }
+
+  @override
+  String get flightsArrivals => 'الوصول';
+
+  @override
+  String get flightsBoard => 'اللوحة';
+
+  @override
+  String get flightsCruise => 'في مرحلة التحليق';
+
+  @override
+  String flightsCruiseSub(String altitude, String speed) {
+    return '$altitude · $speed';
+  }
+
+  @override
+  String get flightsDelayed => 'متأخرة';
+
+  @override
+  String get flightsDepartures => 'المغادرة';
+
+  @override
+  String get flightsDistance => 'مسافة المسار';
+
+  @override
+  String get flightsEnRoute => 'في الطريق';
+
+  @override
+  String get flightsEstArrival => 'الوصول المتوقع';
+
+  @override
+  String flightsEta(String time) {
+    return 'الوصول المتوقع $time';
+  }
+
+  @override
+  String flightsGate(String gate) {
+    return 'البوابة $gate';
+  }
+
+  @override
+  String flightsLateBy(int n) {
+    return 'متأخرة $n دقيقة';
+  }
+
+  @override
+  String flightsLateShort(int n) {
+    return '+$n د';
+  }
+
+  @override
+  String get flightsLive => 'اللوحة المباشرة';
+
+  @override
+  String get flightsMap => 'الموقع المباشر';
+
+  @override
+  String get flightsNoMatch => 'لا رحلات على هذه اللوحة';
+
+  @override
+  String get flightsNoMatchText => 'جرّب الوصول، أو ابحث عن رقم رحلة أو مطار.';
+
+  @override
+  String get flightsOnTime => 'في الموعد';
+
+  @override
+  String get flightsRegistration => 'التسجيل';
+
+  @override
+  String flightsRemaining(String distance) {
+    return 'متبقٍّ $distance';
+  }
+
+  @override
+  String get flightsScheduled => 'مجدولة';
+
+  @override
+  String get flightsScheduledDep => 'المغادرة المجدولة';
+
+  @override
+  String get flightsSearch => 'رقم الرحلة أو المسار أو المطار';
+
+  @override
+  String flightsShareText(String flight, String from, String to, String time) {
+    return '$flight · $from → $to · الوصول المتوقع $time';
+  }
+
+  @override
+  String get flightsSpeed => 'السرعة الأرضية';
+
+  @override
+  String get flightsStDelayed => 'متأخرة';
+
+  @override
+  String get flightsStEnroute => 'في الطريق';
+
+  @override
+  String get flightsStLanded => 'هبطت';
+
+  @override
+  String get flightsStScheduled => 'مجدولة';
+
+  @override
+  String get flightsTerminal => 'المبنى';
+
+  @override
+  String flightsTerminalGate(String terminal, String gate) {
+    return '$terminal · البوابة $gate';
+  }
+
+  @override
+  String get flightsTimeline => 'الجدول الزمني';
+
+  @override
+  String get flightsTotal => 'الرحلات';
+
+  @override
+  String get flightsTrack => 'تتبّع هذه الرحلة';
+
+  @override
+  String get flightsTracked => 'المتتبَّعة';
+
+  @override
+  String flightsTracking(String flight) {
+    return 'جارٍ تتبّع $flight';
+  }
+
+  @override
+  String get flightsType => 'الطائرة';
 
   @override
   String freshAgoMin(int n) {
@@ -4911,7 +5060,13 @@ class AppLocalizationsAr extends AppLocalizations {
   }
 
   @override
+  String get unitKm => 'كم';
+
+  @override
   String get unitKmh => 'كم/س';
+
+  @override
+  String get unitMi => 'ميل';
 
   @override
   String get unitMinutes => 'دقيقة';

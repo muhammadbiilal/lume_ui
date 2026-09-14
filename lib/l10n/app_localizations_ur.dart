@@ -1287,6 +1287,9 @@ class AppLocalizationsUr extends AppLocalizations {
   String get commonExport => 'برآمد';
 
   @override
+  String get commonField => 'خانہ';
+
+  @override
   String get commonHistory => 'تاریخ';
 
   @override
@@ -1362,6 +1365,9 @@ class AppLocalizationsUr extends AppLocalizations {
 
   @override
   String get commonTotal => 'کل';
+
+  @override
+  String get commonValue => 'قدر';
 
   @override
   String get commonWeek => 'ہفتہ';
@@ -1943,6 +1949,150 @@ class AppLocalizationsUr extends AppLocalizations {
   String featuredMinutes(int n) {
     return '$n منٹ';
   }
+
+  @override
+  String get flightsActualDep => 'اصل روانگی';
+
+  @override
+  String get flightsAircraft => 'طیارہ اور روٹ';
+
+  @override
+  String get flightsAltitude => 'بلندی';
+
+  @override
+  String flightsAltitudeFeet(String feet) {
+    return '$feet فٹ';
+  }
+
+  @override
+  String get flightsArrivals => 'آمد';
+
+  @override
+  String get flightsBoard => 'بورڈ';
+
+  @override
+  String get flightsCruise => 'پرواز جاری';
+
+  @override
+  String flightsCruiseSub(String altitude, String speed) {
+    return '$altitude · $speed';
+  }
+
+  @override
+  String get flightsDelayed => 'تاخیر کا شکار';
+
+  @override
+  String get flightsDepartures => 'روانگی';
+
+  @override
+  String get flightsDistance => 'روٹ کا فاصلہ';
+
+  @override
+  String get flightsEnRoute => 'راستے میں';
+
+  @override
+  String get flightsEstArrival => 'متوقع آمد';
+
+  @override
+  String flightsEta(String time) {
+    return 'متوقع آمد $time';
+  }
+
+  @override
+  String flightsGate(String gate) {
+    return 'گیٹ $gate';
+  }
+
+  @override
+  String flightsLateBy(int n) {
+    return '$n منٹ تاخیر';
+  }
+
+  @override
+  String flightsLateShort(int n) {
+    return '+$n منٹ';
+  }
+
+  @override
+  String get flightsLive => 'لائیو بورڈ';
+
+  @override
+  String get flightsMap => 'موجودہ مقام';
+
+  @override
+  String get flightsNoMatch => 'اس بورڈ پر کوئی فلائٹ نہیں';
+
+  @override
+  String get flightsNoMatchText =>
+      'آمد دیکھیں، یا فلائٹ نمبر یا ایئرپورٹ تلاش کریں۔';
+
+  @override
+  String get flightsOnTime => 'بروقت';
+
+  @override
+  String get flightsRegistration => 'رجسٹریشن';
+
+  @override
+  String flightsRemaining(String distance) {
+    return '$distance باقی';
+  }
+
+  @override
+  String get flightsScheduled => 'طے شدہ';
+
+  @override
+  String get flightsScheduledDep => 'طے شدہ روانگی';
+
+  @override
+  String get flightsSearch => 'فلائٹ نمبر، روٹ یا ایئرپورٹ';
+
+  @override
+  String flightsShareText(String flight, String from, String to, String time) {
+    return '$flight · $from → $to · متوقع آمد $time';
+  }
+
+  @override
+  String get flightsSpeed => 'زمینی رفتار';
+
+  @override
+  String get flightsStDelayed => 'تاخیر';
+
+  @override
+  String get flightsStEnroute => 'راستے میں';
+
+  @override
+  String get flightsStLanded => 'اتر گئی';
+
+  @override
+  String get flightsStScheduled => 'طے شدہ';
+
+  @override
+  String get flightsTerminal => 'ٹرمینل';
+
+  @override
+  String flightsTerminalGate(String terminal, String gate) {
+    return '$terminal · گیٹ $gate';
+  }
+
+  @override
+  String get flightsTimeline => 'ٹائم لائن';
+
+  @override
+  String get flightsTotal => 'فلائٹس';
+
+  @override
+  String get flightsTrack => 'اس فلائٹ کو ٹریک کریں';
+
+  @override
+  String get flightsTracked => 'ٹریک شدہ';
+
+  @override
+  String flightsTracking(String flight) {
+    return '$flight ٹریک ہو رہی ہے';
+  }
+
+  @override
+  String get flightsType => 'طیارہ';
 
   @override
   String freshAgoMin(int n) {
@@ -4887,7 +5037,13 @@ class AppLocalizationsUr extends AppLocalizations {
   }
 
   @override
+  String get unitKm => 'کلومیٹر';
+
+  @override
   String get unitKmh => 'کلومیٹر/گھنٹہ';
+
+  @override
+  String get unitMi => 'میل';
 
   @override
   String get unitMinutes => 'منٹ';
