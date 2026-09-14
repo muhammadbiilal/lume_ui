@@ -16,6 +16,7 @@ import '../../../core/widgets/lume/lume_row.dart';
 import '../../../core/widgets/lume/lume_state.dart';
 import '../../../core/widgets/lume/lume_surface.dart';
 import '../../../core/widgets/lume/lume_table.dart';
+import '../../../core/widgets/lume/lume_tool.dart';
 import '../../../l10n/app_localizations.dart';
 
 /// The fixture tools, and which of the frame's paths each one takes.
@@ -133,33 +134,35 @@ class FixtureToolScreen extends StatelessWidget {
         ),
       ],
       onOpenRelated: onOpenRelated,
-      body: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: <Widget>[
-          LumeCard(
-            child: Column(
-              children: <Widget>[
-                for (int i = 0; i < 6; i++)
-                  LumeCompactRow(
-                    label: l.navTools,
-                    value: '${i + 1}',
-                    chevron: false,
-                  ),
-              ],
-            ),
-          ),
-          if (onOpenRecords != null) ...<Widget>[
-            const SizedBox(height: LumeSpace.gapCard),
+      body: LumeToolSection(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: <Widget>[
             LumeCard(
-              child: LumeRichRow(
-                title: l.commonHistory,
-                icon: LumeIcons.list,
-                onTap: onOpenRecords,
-                chevron: true,
+              child: Column(
+                children: <Widget>[
+                  for (int i = 0; i < 6; i++)
+                    LumeCompactRow(
+                      label: l.navTools,
+                      value: '${i + 1}',
+                      chevron: false,
+                    ),
+                ],
               ),
             ),
+            if (onOpenRecords != null) ...<Widget>[
+              const SizedBox(height: LumeSpace.gapCard),
+              LumeCard(
+                child: LumeRichRow(
+                  title: l.commonHistory,
+                  icon: LumeIcons.list,
+                  onTap: onOpenRecords,
+                  chevron: true,
+                ),
+              ),
+            ],
           ],
-        ],
+        ),
       ),
     );
   }

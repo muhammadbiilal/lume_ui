@@ -22,6 +22,7 @@ import 'package:flutter/rendering.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:lume/core/layout/lume_breakpoint.dart';
+import 'package:lume/features/onboarding/domain/profile_repository.dart';
 
 import 'load_fonts.dart';
 import 'lume_harness.dart';
@@ -202,6 +203,15 @@ Future<Map<String, Object?>> captureLumeRoute(
   String suffix = '',
   List<Override> overrides = const <Override>[],
   Future<void> Function(WidgetTester tester)? after,
+
+  /// The directory under [outDir], where it is not [name]. The web tool names
+  /// a scrolled capture `<cell>_s560_…` inside the cell's own folder, and a
+  /// pair has to share a folder for `compare.mjs` to find it.
+  String? folder,
+
+  /// The saved profile the launch reads — another market, another faith
+  /// setting — where the default Pakistani reader is not the cell.
+  LumeProfileRepository? profile,
 }) async {
   await tester.runAsync(loadLumeFonts);
 
@@ -213,6 +223,7 @@ Future<Map<String, Object?>> captureLumeRoute(
     locale: locale,
     textScale: textScale,
     overrides: overrides,
+    profile: profile,
   );
   await tester.pumpAndSettle();
   if (after != null) {
@@ -235,7 +246,7 @@ Future<Map<String, Object?>> captureLumeRoute(
       '${name}_${surface.width.round()}x${surface.height.round()}'
       '_${themeName}_${locale.languageCode}$suffix';
 
-  final Directory dir = Directory('$outDir/$name');
+  final Directory dir = Directory('$outDir/${folder ?? name}');
   dir.createSync(recursive: true);
   File(
     '${dir.path}/$cell.flutter.png',

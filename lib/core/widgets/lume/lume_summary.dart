@@ -84,7 +84,23 @@ class LumeSummaryCard extends StatelessWidget {
     final LumeColors lume = context.lume;
     final bool onGradient = gradient != null;
     final Color ink = onGradient ? gradient!.on : lume.text;
-    final Color dim = onGradient ? gradient!.onDim : lume.text2;
+
+    // Measured on `.summary` and its parts, on a tool screen:
+    //
+    //   kicker   11 / 700 / .05em, 13 tall — muted at .72 on the plain card,
+    //            `--on-grad-dim` at full strength on a gradient
+    //   value    6 below; 34 / 800 / −0.05em on a 1.05 line (35.7)
+    //   caption  7 below; 12 / 500 on 1.45 (17.4) — `text-2`, or on-grad-dim
+    //   stats    16 below, then a hairline in 14 % of the ink, then 14; three
+    //            equal columns 10 apart; 15 / 800 / −0.032em on 19 over
+    //            10 / 600 on 12, 2 between
+    //   foot     14 below
+    //
+    // A gradient card keeps its one-point border, only transparent, so its
+    // content sits where the plain card's does; both keep `shadow-sm`.
+    final Color kickerInk = onGradient ? gradient!.onDim : lume.text3;
+    final Color captionInk = onGradient ? gradient!.onDim : lume.text2;
+    final Color statLabelInk = onGradient ? gradient!.onDim : lume.text3;
 
     return Container(
       padding: const EdgeInsets.all(LumeSpace.x5),
@@ -92,13 +108,14 @@ class LumeSummaryCard extends StatelessWidget {
         color: onGradient ? null : lume.card,
         gradient: gradient?.linear,
         borderRadius: LumeRadius.brLg,
-        border: onGradient
-            ? null
-            : Border.all(color: lume.border, width: LumeSpace.border),
-        boxShadow: onGradient ? null : context.lumeShadows.sm,
+        border: Border.all(
+          color: onGradient ? Colors.transparent : lume.border,
+          width: LumeSpace.border,
+        ),
+        boxShadow: context.lumeShadows.sm,
       ),
       child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.stretch,
         mainAxisSize: MainAxisSize.min,
         children: <Widget>[
           Row(
@@ -109,112 +126,153 @@ class LumeSummaryCard extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   mainAxisSize: MainAxisSize.min,
                   children: <Widget>[
-                    if (kicker != null) ...<Widget>[
+                    if (kicker != null)
                       Opacity(
-                        opacity: onGradient ? 0.82 : 0.72,
+                        opacity: onGradient ? 1 : 0.72,
                         child: Text(
                           LumeType.overline(context, kicker!),
-                          style: LumeType.overlineStyle(
-                            context,
-                            context.lumeType,
-                          ).copyWith(color: onGradient ? ink : lume.text3),
+                          semanticsLabel: kicker,
+                          style:
+                              LumeType.tracked(
+                                LumeType.natural(
+                                  context,
+                                  context.lumeType.metaSmall,
+                                ),
+                                0.05,
+                              ).copyWith(
+                                color: kickerInk,
+                                fontWeight: FontWeight.w700,
+                              ),
                         ),
                       ),
-                      const SizedBox(height: LumeSpace.x2),
-                    ],
-                    Row(
-                      crossAxisAlignment: CrossAxisAlignment.baseline,
-                      textBaseline: TextBaseline.alphabetic,
+                    const SizedBox(height: 6),
+                    Wrap(
+                      spacing: LumeSpace.x2,
+                      crossAxisAlignment: WrapCrossAlignment.end,
                       children: <Widget>[
-                        Flexible(
-                          child: LumeNumerals(
-                            value,
-                            style: LumeType.numeric(
-                              LumeType.tracked(
-                                LumeType.fit(
-                                  context,
-                                  context.lumeType.display,
-                                ).copyWith(fontSize: valueSize),
-                                -0.05,
-                              ),
-                            ).copyWith(color: ink),
-                            maxLines: 1,
-                            overflow: TextOverflow.ellipsis,
-                          ),
+                        LumeNumerals(
+                          value,
+                          style: LumeType.numeric(
+                            LumeType.tracked(
+                              LumeType.fit(
+                                context,
+                                context.lumeType.display,
+                              ).copyWith(fontSize: valueSize, height: 1.05),
+                              -0.05,
+                            ),
+                          ).copyWith(color: ink),
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
                         ),
-                        if (unit != null) ...<Widget>[
-                          const SizedBox(width: LumeSpace.x2),
+                        if (unit != null)
                           Opacity(
                             opacity: 0.74,
                             child: Text(
                               unit!,
-                              style: LumeType.fit(
-                                context,
-                                context.lumeType.cardTitle,
+                              style: LumeType.tracked(
+                                LumeType.natural(
+                                  context,
+                                  context.lumeType.cardTitle,
+                                ),
+                                -0.02,
                               ).copyWith(color: ink),
                             ),
                           ),
-                        ],
                       ],
                     ),
                     if (caption != null) ...<Widget>[
-                      const SizedBox(height: LumeSpace.x2),
+                      const SizedBox(height: 7),
                       Text(
                         caption!,
-                        style: LumeType.fit(
-                          context,
-                          context.lumeType.meta,
-                        ).copyWith(color: dim, fontWeight: FontWeight.w500),
+                        style: LumeType.fit(context, context.lumeType.meta)
+                            .copyWith(
+                              color: captionInk,
+                              fontWeight: FontWeight.w500,
+                              height: 1.45,
+                            ),
                       ),
                     ],
                   ],
                 ),
               ),
-              if (aside != null) ...<Widget>[
-                const SizedBox(width: LumeSpace.x3),
-                aside!,
-              ],
+              if (aside != null) ...<Widget>[const SizedBox(width: 14), aside!],
             ],
           ),
           if (stats.isNotEmpty) ...<Widget>[
             const SizedBox(height: LumeSpace.x4),
-            Row(
-              children: <Widget>[
-                for (final LumeStat s in stats)
-                  Expanded(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      mainAxisSize: MainAxisSize.min,
-                      children: <Widget>[
-                        LumeNumerals(
-                          s.value,
-                          style: LumeType.numeric(
-                            LumeType.fit(context, context.lumeType.cardTitle),
-                          ).copyWith(color: ink),
-                        ),
-                        Text(
-                          s.label,
-                          style: LumeType.fit(
-                            context,
-                            context.lumeType.metaSmall,
-                          ).copyWith(color: dim),
-                          maxLines: 1,
-                          overflow: TextOverflow.ellipsis,
-                        ),
-                      ],
-                    ),
+            Container(
+              padding: const EdgeInsets.only(top: 14),
+              decoration: BoxDecoration(
+                border: Border(
+                  top: BorderSide(
+                    color: ink.withValues(alpha: 0.14),
+                    width: LumeSpace.border,
                   ),
-              ],
+                ),
+              ),
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[
+                  for (int i = 0; i < 3; i++) ...<Widget>[
+                    if (i > 0) const SizedBox(width: 10),
+                    Expanded(
+                      child: i < stats.length
+                          ? _Stat(
+                              stat: stats[i],
+                              ink: ink,
+                              labelInk: statLabelInk,
+                            )
+                          : const SizedBox.shrink(),
+                    ),
+                  ],
+                ],
+              ),
             ),
           ],
-          if (footer != null) ...<Widget>[
-            const SizedBox(height: LumeSpace.x4),
-            footer!,
-          ],
+          if (footer != null) ...<Widget>[const SizedBox(height: 14), footer!],
         ],
       ),
     );
   }
+}
+
+/// `.summary__stat` — a figure and what it counts.
+class _Stat extends StatelessWidget {
+  const _Stat({required this.stat, required this.ink, required this.labelInk});
+
+  final LumeStat stat;
+  final Color ink;
+  final Color labelInk;
+
+  @override
+  Widget build(BuildContext context) => Column(
+    crossAxisAlignment: CrossAxisAlignment.start,
+    mainAxisSize: MainAxisSize.min,
+    children: <Widget>[
+      LumeNumerals(
+        stat.value,
+        style: LumeType.numeric(
+          LumeType.tracked(
+            LumeType.natural(context, context.lumeType.cardTitle),
+            -0.032,
+          ),
+        ).copyWith(color: ink, fontWeight: FontWeight.w800),
+        maxLines: 1,
+        overflow: TextOverflow.ellipsis,
+      ),
+      const SizedBox(height: 2),
+      Text(
+        stat.label,
+        style: LumeType.natural(
+          context,
+          context.lumeType.metaSmall,
+          size: 10,
+        ).copyWith(color: labelInk, fontWeight: FontWeight.w600),
+        maxLines: 1,
+        overflow: TextOverflow.ellipsis,
+      ),
+    ],
+  );
 }
 
 /// `.metric` — one figure in a grid of them.

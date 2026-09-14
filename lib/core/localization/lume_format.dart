@@ -103,11 +103,33 @@ class LumeFormatting {
   static String dateLocale(String language, String country) {
     final String exact = '${language}_$country';
     if (intl.DateFormat.localeExists(exact)) return exact;
-    if (language == 'en' && !americanEnglish.contains(country)) {
+    if (language == 'en' &&
+        !americanEnglish.contains(country) &&
+        !usFormEnglish.contains(country)) {
       return worldEnglish;
     }
     return intl.DateFormat.localeExists(language) ? language : 'en';
   }
+
+  /// English locales with no CLDR data of their own that the browser still
+  /// writes the American way — "Mon, Sep 7", "6:27 PM".
+  ///
+  /// Read off the reference's own engine, not assumed: every country's
+  /// `en-XX` short date and clock, grouped by what ICU renders. Saudi Arabia,
+  /// Japan and Turkey are here; Pakistan, India and Germany are not. The UAE
+  /// is its own case ([dateShort]).
+  static const Set<String> usFormEnglish = <String>{
+    'AD', 'AF', 'AL', 'AM', 'AO', 'AR', 'AW', 'AZ', 'BA', 'BD', 'BF', 'BG', //
+    'BH', 'BI', 'BJ', 'BN', 'BO', 'BR', 'BT', 'BY', 'CD', 'CF', 'CG', 'CI',
+    'CL', 'CN', 'CO', 'CR', 'CU', 'CV', 'DJ', 'DO', 'DZ', 'EC', 'EE', 'EG',
+    'ET', 'GA', 'GE', 'GN', 'GQ', 'GR', 'GT', 'GW', 'HN', 'HR', 'HT', 'IQ',
+    'IR', 'IS', 'JO', 'JP', 'KG', 'KH', 'KM', 'KP', 'KR', 'KW', 'KZ', 'LA',
+    'LB', 'LI', 'LK', 'LT', 'LU', 'LV', 'LY', 'MA', 'MC', 'MD', 'ME', 'MK',
+    'ML', 'MM', 'MN', 'MR', 'MX', 'MZ', 'NE', 'NI', 'NP', 'OM', 'PA', 'PE',
+    'PH', 'PS', 'PY', 'QA', 'RS', 'RU', 'SA', 'SM', 'SN', 'SO', 'SR', 'ST',
+    'SV', 'SY', 'TD', 'TG', 'TH', 'TJ', 'TL', 'TM', 'TN', 'TR', 'TW', 'UA',
+    'UY', 'UZ', 'VA', 'VE', 'VN', 'YE',
+  };
 
   /// The markets that measure in feet and Fahrenheit. Everywhere else is
   /// metric, which is the automatic default rather than a guess.
@@ -168,7 +190,13 @@ class LumeFormatting {
   /// day:'numeric', month:'short'}`, which is a month *name*. `MEd` is the
   /// numeric skeleton and renders "Mon, 9/7" — a date that reads as 9 July in
   /// half the world.
-  String dateShort(DateTime d) => intl.DateFormat.MMMEd(_dateTag).format(d);
+  String dateShort(DateTime d) =>
+      locale.languageCode == 'en' && countryCode == 'AE'
+      // `en-AE` alone writes the day first on American month names —
+      // "Mon, 7 Sep" — and no locale `intl` ships does, so the skeleton is
+      // spelled out over the American data.
+      ? intl.DateFormat('EEE, d MMM', 'en').format(d)
+      : intl.DateFormat.MMMEd(_dateTag).format(d);
 
   /// "7 September" — a date with its month written out.
   String dateLong(DateTime d) => intl.DateFormat.MMMMd(_dateTag).format(d);

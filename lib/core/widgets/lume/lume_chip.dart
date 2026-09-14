@@ -247,15 +247,24 @@ class LumeSegmented extends StatelessWidget {
           color: lume.tintNeutral,
           borderRadius: LumeRadius.full,
         ),
+        // `.seg { flex: 1 }` inside `gap: 3px` — the segments share the track
+        // equally, whatever their labels, so the thumb does not change width
+        // as the selection moves. Measured on Tax: two segments of 170.5 in a
+        // 350 track.
         child: Row(
-          mainAxisSize: MainAxisSize.min,
           children: <Widget>[
-            for (final LumeChoice item in items)
-              _Segment(
-                item: item,
-                selected: item.value == value,
-                onTap: onChanged == null ? null : () => onChanged!(item.value),
+            for (int i = 0; i < items.length; i++) ...<Widget>[
+              if (i > 0) const SizedBox(width: 3),
+              Expanded(
+                child: _Segment(
+                  item: items[i],
+                  selected: items[i].value == value,
+                  onTap: onChanged == null
+                      ? null
+                      : () => onChanged!(items[i].value),
+                ),
               ),
+            ],
           ],
         ),
       ),
@@ -288,6 +297,7 @@ class _Segment extends StatelessWidget {
           curve: LumeMotion.ease,
           constraints: const BoxConstraints(minHeight: LumeSegmented.height),
           padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 10),
+          alignment: Alignment.center,
           decoration: BoxDecoration(
             // The selected segment is a raised thumb, not just a tinted cell.
             color: selected ? lume.card : Colors.transparent,
@@ -296,8 +306,10 @@ class _Segment extends StatelessWidget {
           ),
           child: Text(
             item.label,
+            textAlign: TextAlign.center,
+            // 12 / 700 on the font's own 15: `8 + 15 + 8` is the measured 31.
             style: LumeType.tracked(
-              LumeType.fit(context, context.lumeType.label),
+              LumeType.natural(context, context.lumeType.label),
               -0.02,
             ).copyWith(color: selected ? lume.text : lume.text3),
             maxLines: 1,

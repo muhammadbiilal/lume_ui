@@ -24,14 +24,19 @@
 /// mark — and not for cleanup.
 library;
 
+import 'dart:ui' as ui;
+
 import 'package:flutter/material.dart';
 
 import '../layout/lume_measure.dart';
+import '../theme/lume/lume_colors.dart';
 import '../theme/lume/lume_space.dart';
+import '../theme/lume/lume_theme.dart';
 import '../widgets/lume/lume_badge.dart';
 import '../widgets/lume/lume_header.dart';
 import '../widgets/lume/lume_state.dart';
 import '../widgets/lume/lume_table.dart';
+import '../widgets/lume/lume_tool.dart';
 
 /// What a tool has to show, before it has anything to show.
 enum LumeToolStatus {
@@ -163,35 +168,77 @@ class LumeToolFrame extends StatefulWidget {
 }
 
 class _LumeToolFrameState extends State<LumeToolFrame> {
+  final ScrollController _scroll = ScrollController();
+
+  /// `.toolbar.is-stuck` — the hairline appears once content has scrolled
+  /// under the bar (`root.scrollTop > 4`).
+  bool _stuck = false;
+
+  @override
+  void initState() {
+    super.initState();
+    _scroll.addListener(_onScroll);
+  }
+
+  void _onScroll() {
+    final bool stuck = _scroll.hasClients && _scroll.offset > 4;
+    if (stuck != _stuck) setState(() => _stuck = stuck);
+  }
+
   @override
   void dispose() {
     widget.onLeave?.call();
+    _scroll
+      ..removeListener(_onScroll)
+      ..dispose();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
+    final LumeColors lume = context.lume;
     return CustomScrollView(
-      primary: false,
+      controller: _scroll,
       slivers: <Widget>[
-        SliverToBoxAdapter(
-          child: LumeMeasure(
-            wide: widget.wide,
-            gutters: false,
-            child: LumeToolbar(
-              title: widget.title,
-              subtitle: widget.subtitle,
-              onBack: widget.onBack,
-              backLabel: widget.strings.back,
-              actions: widget.actions,
+        // `.toolbar { position: sticky; top: 0; background: bg 88 %;
+        // backdrop-filter: saturate(1.6) blur(18px) }`.
+        PinnedHeaderSliver(
+          child: ClipRect(
+            child: BackdropFilter(
+              filter: ui.ImageFilter.blur(sigmaX: 9, sigmaY: 9),
+              child: DecoratedBox(
+                decoration: BoxDecoration(
+                  color: lume.bg.withValues(alpha: 0.88),
+                  border: Border(
+                    bottom: BorderSide(
+                      color: _stuck ? lume.border : Colors.transparent,
+                      width: LumeSpace.border,
+                    ),
+                  ),
+                ),
+                child: LumeMeasure(
+                  wide: widget.wide,
+                  gutters: false,
+                  child: LumeToolbar(
+                    title: widget.title,
+                    subtitle: widget.subtitle,
+                    onBack: widget.onBack,
+                    backLabel: widget.strings.back,
+                    actions: widget.actions,
+                  ),
+                ),
+              ),
             ),
           ),
         ),
         SliverToBoxAdapter(
+          // Sections bring their own gutters, and a flush one brings none, so
+          // the measure only caps and centres here.
           child: LumeMeasure(
             wide: widget.wide,
+            gutters: false,
             child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.stretch,
               children: _content(context),
             ),
           ),
@@ -205,79 +252,85 @@ class _LumeToolFrameState extends State<LumeToolFrame> {
     );
   }
 
+  /// `engine.js` `build()`: the body, then `sourceSection`, `privacyNote` and
+  /// `relatedSection`, each its own `.sect`.
   List<Widget> _content(BuildContext context) {
     if (!widget.eligible) {
       return <Widget>[
-        LumeToolState(
-          title: widget.strings.unavailableTitle,
-          text: widget.strings.unavailableText,
+        LumeToolSection(
+          child: LumeToolState(
+            title: widget.strings.unavailableTitle,
+            text: widget.strings.unavailableText,
+          ),
         ),
       ];
     }
 
     return switch (widget.status) {
       LumeToolStatus.unavailable => <Widget>[
-        LumeToolState(
-          title: widget.strings.unavailableTitle,
-          text: widget.strings.unavailableText,
+        LumeToolSection(
+          child: LumeToolState(
+            title: widget.strings.unavailableTitle,
+            text: widget.strings.unavailableText,
+          ),
         ),
       ],
       LumeToolStatus.error => <Widget>[
-        LumeToolState.error(
-          title: widget.strings.errorTitle,
-          text: widget.strings.errorText,
-          action: widget.onRetry == null
-              ? null
-              : LumeNoticeAction(
-                  label: widget.strings.retry,
-                  onPressed: widget.onRetry,
-                ),
+        LumeToolSection(
+          child: LumeToolState.error(
+            title: widget.strings.errorTitle,
+            text: widget.strings.errorText,
+            action: widget.onRetry == null
+                ? null
+                : LumeNoticeAction(
+                    label: widget.strings.retry,
+                    onPressed: widget.onRetry,
+                  ),
+          ),
         ),
       ],
       LumeToolStatus.loading => <Widget>[
-        Semantics(
-          label: widget.strings.loading,
-          liveRegion: true,
-          child: const Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: <Widget>[
-              LumeSkeleton(kind: LumeSkeletonKind.metric),
-              SizedBox(height: LumeSpace.gapCard),
-              LumeSkeleton(kind: LumeSkeletonKind.card),
-              SizedBox(height: LumeSpace.gapCard),
-              LumeSkeleton(kind: LumeSkeletonKind.row, count: 2),
-            ],
+        LumeToolSection(
+          child: Semantics(
+            label: widget.strings.loading,
+            liveRegion: true,
+            child: const Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: <Widget>[
+                LumeSkeleton(kind: LumeSkeletonKind.metric),
+                SizedBox(height: LumeSpace.gapCard),
+                LumeSkeleton(kind: LumeSkeletonKind.card),
+                SizedBox(height: LumeSpace.gapCard),
+                LumeSkeleton(kind: LumeSkeletonKind.row, count: 2),
+              ],
+            ),
           ),
         ),
       ],
       LumeToolStatus.ready => <Widget>[
-        if (widget.freshness != null &&
-            widget.freshnessLabel != null) ...<Widget>[
-          LumeFreshness(
-            label: widget.freshnessLabel!,
-            quality: widget.freshness!,
-          ),
-          const SizedBox(height: LumeSpace.x3),
-        ],
         widget.body,
-        if (widget.source != null ||
+        if (widget.freshness != null ||
+            widget.source != null ||
             widget.updated != null ||
-            widget.sourceNote != null) ...<Widget>[
-          const SizedBox(height: LumeSpace.x4),
-          LumeSourceLine(
-            source: widget.source,
-            updated: widget.updated,
-            note: widget.sourceNote,
+            widget.sourceNote != null)
+          LumeToolSection(
+            child: LumeSourceBar(
+              quality: widget.freshness,
+              qualityLabel: widget.freshnessLabel,
+              source: widget.source,
+              updated: widget.updated,
+              note: widget.sourceNote,
+            ),
           ),
-        ],
-        if (widget.privacy != null) ...<Widget>[
-          const SizedBox(height: LumeSpace.gapSection),
-          widget.privacy!,
-        ],
-        if (widget.related.isNotEmpty) ...<Widget>[
-          const SizedBox(height: LumeSpace.gapSection),
-          LumeRelatedTools(tools: widget.related, onOpen: widget.onOpenRelated),
-        ],
+        if (widget.privacy != null) LumeToolSection(child: widget.privacy!),
+        if (widget.related.isNotEmpty)
+          LumeToolSection(
+            title: widget.strings.relatedTitle,
+            child: LumeRelatedTools(
+              tools: widget.related,
+              onOpen: widget.onOpenRelated,
+            ),
+          ),
       ],
     };
   }

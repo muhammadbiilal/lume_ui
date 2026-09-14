@@ -59,9 +59,67 @@ class LumeTable extends StatelessWidget {
 
   final void Function(int index)? onRowTap;
 
+  /// `.dtable th` — `padding: 10px 14px`; `td` — `11px 14px`.
+  static const EdgeInsets headPadding = EdgeInsets.symmetric(
+    vertical: 10,
+    horizontal: 14,
+  );
+  static const EdgeInsets cellPadding = EdgeInsets.symmetric(
+    vertical: 11,
+    horizontal: 14,
+  );
+
+  /// `th` — 10 / 700 / .03em, uppercase, muted, on `card-2`.
+  static TextStyle headStyle(BuildContext context) => LumeType.tracked(
+    LumeType.natural(context, context.lumeType.metaSmall, size: 10),
+    0.03,
+  ).copyWith(color: context.lume.text3, fontWeight: FontWeight.w700);
+
+  /// `td` — 12 / 600, `text-2`; the first column is `text`.
+  static TextStyle cellStyle(BuildContext context, int column) =>
+      LumeType.numeric(
+        LumeType.natural(context, context.lumeType.meta),
+      ).copyWith(
+        color: column == 0 ? context.lume.text : context.lume.text2,
+        fontWeight: FontWeight.w600,
+      );
+
   @override
   Widget build(BuildContext context) {
     final LumeColors lume = context.lume;
+    final TextScaler scaler = MediaQuery.textScalerOf(context);
+    final TextDirection direction = Directionality.of(context);
+    final List<String> heads = <String>[
+      for (final LumeColumn c in columns) LumeType.overline(context, c.label),
+    ];
+
+    // `width: 100%` under automatic table layout: every cell is `nowrap`, so a
+    // column wants exactly its widest cell, and whatever the table has left
+    // over is shared out in proportion to those widths. Narrower than the
+    // columns want, it keeps them and scrolls instead (§86).
+    double measure(String text, TextStyle style) {
+      final TextPainter p = TextPainter(
+        text: TextSpan(text: text, style: style),
+        textDirection: direction,
+        textScaler: scaler,
+        maxLines: 1,
+      )..layout();
+      final double w = p.width;
+      p.dispose();
+      return w;
+    }
+
+    final List<double> wants = <double>[
+      for (int c = 0; c < columns.length; c++)
+        columns[c].width ??
+            <double>[
+              measure(heads[c], headStyle(context)) + headPadding.horizontal,
+              for (final List<String> r in rows)
+                if (c < r.length)
+                  measure(r[c], cellStyle(context, c)) + cellPadding.horizontal,
+            ].reduce((double a, double b) => a > b ? a : b),
+    ];
+    final double wanted = wants.fold(0, (double a, double b) => a + b);
 
     return Semantics(
       label: label,
@@ -69,28 +127,49 @@ class LumeTable extends StatelessWidget {
       child: DecoratedBox(
         decoration: BoxDecoration(
           color: lume.card,
-          borderRadius: LumeRadius.brMd,
+          borderRadius: LumeRadius.brLg,
           border: Border.all(color: lume.border, width: LumeSpace.border),
+          boxShadow: context.lumeShadows.sm,
         ),
-        child: ClipRRect(
-          borderRadius: LumeRadius.brMd,
-          child: SingleChildScrollView(
-            scrollDirection: Axis.horizontal,
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: <Widget>[
-                _TableRow(
-                  columns: columns,
-                  cells: columns.map((LumeColumn c) => c.label).toList(),
-                  header: true,
-                ),
-                for (int i = 0; i < rows.length; i++)
-                  _TableRow(
-                    columns: columns,
-                    cells: rows[i],
-                    onTap: onRowTap == null ? null : () => onRowTap!(i),
+        // The hairline is the box's own, outside the rows: a `DecoratedBox`
+        // paints it over its child, which put the table two points short.
+        child: Padding(
+          padding: const EdgeInsets.all(LumeSpace.border),
+          child: ClipRRect(
+            borderRadius: LumeRadius.brLg,
+            child: LayoutBuilder(
+              builder: (BuildContext context, BoxConstraints c) {
+                final double room = c.maxWidth.isFinite ? c.maxWidth : wanted;
+                final double scale = wanted < room && wanted > 0
+                    ? room / wanted
+                    : 1;
+                final List<double> widths = <double>[
+                  for (final double w in wants) w * scale,
+                ];
+                return SingleChildScrollView(
+                  scrollDirection: Axis.horizontal,
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: <Widget>[
+                      _TableRow(
+                        columns: columns,
+                        widths: widths,
+                        cells: heads,
+                        header: true,
+                      ),
+                      for (int i = 0; i < rows.length; i++)
+                        _TableRow(
+                          columns: columns,
+                          widths: widths,
+                          cells: rows[i],
+                          last: i == rows.length - 1,
+                          onTap: onRowTap == null ? null : () => onRowTap!(i),
+                        ),
+                    ],
                   ),
-              ],
+                );
+              },
             ),
           ),
         ),
@@ -102,14 +181,18 @@ class LumeTable extends StatelessWidget {
 class _TableRow extends StatelessWidget {
   const _TableRow({
     required this.columns,
+    required this.widths,
     required this.cells,
     this.header = false,
+    this.last = false,
     this.onTap,
   });
 
   final List<LumeColumn> columns;
+  final List<double> widths;
   final List<String> cells;
   final bool header;
+  final bool last;
   final VoidCallback? onTap;
 
   @override
@@ -119,32 +202,31 @@ class _TableRow extends StatelessWidget {
     final Widget row = Container(
       decoration: BoxDecoration(
         color: header ? lume.card2 : null,
-        border: Border(
-          bottom: BorderSide(color: lume.border, width: LumeSpace.border),
-        ),
+        border: last
+            ? null
+            : Border(
+                bottom: BorderSide(color: lume.border, width: LumeSpace.border),
+              ),
       ),
       child: Row(
+        mainAxisSize: MainAxisSize.min,
         children: <Widget>[
-          for (int i = 0; i < cells.length; i++)
+          for (int i = 0; i < cells.length && i < widths.length; i++)
             Container(
-              width: columns[i].width ?? 120,
-              padding: LumeSpace.padRow,
+              width: widths[i],
+              padding: header ? LumeTable.headPadding : LumeTable.cellPadding,
               alignment: columns[i].numeric
                   ? AlignmentDirectional.centerEnd
                   : AlignmentDirectional.centerStart,
-              child: columns[i].numeric && !header
-                  ? LumeNumerals(
-                      cells[i],
-                      style: _style(context, i),
-                      maxLines: 1,
-                      overflow: TextOverflow.ellipsis,
-                    )
-                  : Text(
-                      cells[i],
-                      style: _style(context, i),
-                      maxLines: 1,
-                      overflow: TextOverflow.ellipsis,
-                    ),
+              // `.is-rtl .dtable td, th { direction: ltr; unicode-bidi:
+              // isolate }` — a band's two amounts must not trade places.
+              child: LumeNumerals(
+                cells[i],
+                style: header
+                    ? LumeTable.headStyle(context)
+                    : LumeTable.cellStyle(context, i),
+                maxLines: 1,
+              ),
             ),
         ],
       ),
@@ -158,21 +240,6 @@ class _TableRow extends StatelessWidget {
       semanticLabel: cells.join(', '),
       child: row,
     );
-  }
-
-  TextStyle _style(BuildContext context, int i) {
-    final LumeColors lume = context.lume;
-    if (header) {
-      return LumeType.fit(
-        context,
-        context.lumeType.metaSmall,
-      ).copyWith(color: lume.text3, fontWeight: FontWeight.w700);
-    }
-    final TextStyle base = LumeType.fit(
-      context,
-      context.lumeType.meta,
-    ).copyWith(color: columns[i].strong ? lume.text : lume.text2);
-    return columns[i].numeric ? LumeType.numeric(base) : base;
   }
 }
 
@@ -377,45 +444,86 @@ class LumeRelatedTools extends StatelessWidget {
   final List<LumeRelatedTool> tools;
   final void Function(String id)? onOpen;
 
+  /// `.related__item` — measured 78 wide, `12px 6px` padding, 7 between the
+  /// 34-point icon tile and the label.
+  static const double itemWidth = 78;
+  static const double iconSize = 34;
+
   @override
   Widget build(BuildContext context) {
     if (tools.isEmpty) return const SizedBox.shrink();
     final LumeColors lume = context.lume;
 
-    return Wrap(
-      spacing: LumeSpace.x2,
-      runSpacing: LumeSpace.x2,
-      children: <Widget>[
-        for (final LumeRelatedTool t in tools)
-          LumePressable(
-            onTap: onOpen == null ? null : () => onOpen!(t.id),
-            semanticLabel: t.name,
-            borderRadius: LumeRadius.brSm,
-            minSize: LumeSpace.tap,
-            child: Container(
-              padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 12),
-              decoration: BoxDecoration(
-                color: lume.card,
+    // `.related` is a single scrolling row, and its items stretch to the
+    // tallest, so a name that takes two lines makes every tile two lines tall.
+    return SingleChildScrollView(
+      scrollDirection: Axis.horizontal,
+      padding: const EdgeInsets.only(bottom: 2),
+      child: IntrinsicHeight(
+        child: Row(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: <Widget>[
+            for (int i = 0; i < tools.length; i++) ...<Widget>[
+              if (i > 0) const SizedBox(width: LumeSpace.x2),
+              LumePressable(
+                onTap: onOpen == null ? null : () => onOpen!(tools[i].id),
+                semanticLabel: tools[i].name,
                 borderRadius: LumeRadius.brSm,
-                border: Border.all(color: lume.border, width: LumeSpace.border),
-              ),
-              child: Row(
-                mainAxisSize: MainAxisSize.min,
-                children: <Widget>[
-                  LumeIcon(t.icon, size: LumeSpace.iconMd, color: lume.text2),
-                  const SizedBox(width: LumeSpace.x2),
-                  Text(
-                    t.name,
-                    style: LumeType.fit(
-                      context,
-                      context.lumeType.meta,
-                    ).copyWith(color: lume.text),
+                minSize: LumeSpace.tap,
+                child: Container(
+                  width: itemWidth,
+                  padding: const EdgeInsets.symmetric(
+                    vertical: 12,
+                    horizontal: 6,
                   ),
-                ],
+                  decoration: BoxDecoration(
+                    color: lume.card,
+                    borderRadius: LumeRadius.brSm,
+                    border: Border.all(
+                      color: lume.border,
+                      width: LumeSpace.border,
+                    ),
+                  ),
+                  child: Column(
+                    children: <Widget>[
+                      Container(
+                        width: iconSize,
+                        height: iconSize,
+                        alignment: Alignment.center,
+                        decoration: BoxDecoration(
+                          color: lume.tintNeutral,
+                          borderRadius: LumeRadius.brIcon,
+                        ),
+                        child: LumeIcon(
+                          tools[i].icon,
+                          size: LumeSpace.iconSm,
+                          color: lume.text2,
+                        ),
+                      ),
+                      const SizedBox(height: 7),
+                      Text(
+                        tools[i].name,
+                        textAlign: TextAlign.center,
+                        style:
+                            LumeType.tracked(
+                              LumeType.fit(
+                                context,
+                                context.lumeType.metaSmall,
+                              ).copyWith(fontSize: 10, height: 1.25),
+                              -0.015,
+                            ).copyWith(
+                              color: lume.text,
+                              fontWeight: FontWeight.w600,
+                            ),
+                      ),
+                    ],
+                  ),
+                ),
               ),
-            ),
-          ),
-      ],
+            ],
+          ],
+        ),
+      ),
     );
   }
 }

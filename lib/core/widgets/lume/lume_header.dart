@@ -19,11 +19,14 @@ import 'package:flutter/material.dart';
 
 import '../../icons/lume_icon.dart';
 import '../../icons/lume_icons.dart';
+import '../../layout/lume_breakpoint.dart';
+import '../../layout/lume_measure.dart';
 import '../../theme/lume/lume_colors.dart';
 import '../../theme/lume/lume_motion.dart';
 import '../../theme/lume/lume_space.dart';
 import '../../theme/lume/lume_theme.dart';
 import '../../theme/lume/lume_type.dart';
+import 'lume_button.dart';
 import 'lume_pressable.dart';
 
 /// `.toolbar` — back, title, optional subtitle, trailing actions.
@@ -69,11 +72,13 @@ class LumeToolbar extends StatelessWidget {
           ),
         ),
       ),
-      padding: const EdgeInsetsDirectional.only(
+      // `padding: 10px var(--pad) 12px` — the gutter is the width class's:
+      // measured on Tax, the title starts 24 in at 700 and 32 in at 1100.
+      padding: EdgeInsetsDirectional.only(
         top: 10,
         bottom: 12,
-        start: LumeSpace.pageCompact,
-        end: LumeSpace.pageCompact,
+        start: LumeLayout.pageGutter(context.measureClass),
+        end: LumeLayout.pageGutter(context.measureClass),
       ),
       child: Row(
         children: <Widget>[
@@ -153,7 +158,22 @@ class LumeToolbar extends StatelessWidget {
               children: <Widget>[
                 for (int i = 0; i < actions.length; i++) ...<Widget>[
                   if (i > 0) const SizedBox(width: 6),
-                  actions[i],
+                  // An icon action is drawn at 38 and touched at 44, the same
+                  // as the back control: its target overhangs the bar's own
+                  // padding rather than growing the bar. Measured on Tax, a
+                  // `.toolbar` with two icon actions is still 62 (D6).
+                  if (actions[i] is LumeIconButton)
+                    SizedBox(
+                      width: LumeIconButton.size,
+                      height: LumeIconButton.size,
+                      child: OverflowBox(
+                        maxWidth: LumeSpace.tap,
+                        maxHeight: LumeSpace.tap,
+                        child: actions[i],
+                      ),
+                    )
+                  else
+                    actions[i],
                 ],
               ],
             ),
@@ -276,11 +296,12 @@ class LumeContextBar extends StatelessWidget {
         children: <Widget>[
           for (int i = 0; i < items.length; i++) ...<Widget>[
             if (i > 0)
+              // `.ctxbar__sep` — 3 × 3 in `currentColor` at .35.
               Container(
                 width: 3,
                 height: 3,
                 decoration: BoxDecoration(
-                  color: lume.text3.withValues(alpha: 0.5),
+                  color: lume.text3.withValues(alpha: 0.35),
                   shape: BoxShape.circle,
                 ),
               ),
@@ -310,33 +331,51 @@ class _ContextItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final LumeColors lume = context.lume;
-    final TextStyle style = LumeType.fit(
+    final bool pressable = item.onTap != null;
+    // `button.ctxbar__item { color: var(--text-2) }` — the one item that
+    // opens something reads a step darker than the facts beside it, and its
+    // icon and caret take the same ink.
+    final Color ink = pressable ? lume.text2 : lume.text3;
+    // 11 / 600 on the font's own 13.
+    final TextStyle style = LumeType.natural(
       context,
       context.lumeType.metaSmall,
-    ).copyWith(color: lume.text3, fontWeight: FontWeight.w600);
+    ).copyWith(color: ink, fontWeight: FontWeight.w600);
 
     final Widget content = Row(
       mainAxisSize: MainAxisSize.min,
       children: <Widget>[
         if (item.icon != null) ...<Widget>[
-          LumeIcon(item.icon!, size: 13, color: lume.text3),
+          LumeIcon(item.icon!, size: 13, color: ink),
           const SizedBox(width: 5),
         ],
         Text(item.label, style: style),
-        if (item.onTap != null) ...<Widget>[
+        if (pressable) ...<Widget>[
           const SizedBox(width: 5),
-          LumeIcon(LumeIcons.chevD, size: 12, color: lume.text3),
+          // `.ctxbar__caret` — 11 at .6.
+          Opacity(
+            opacity: 0.6,
+            child: LumeIcon(LumeIcons.chevD, size: 11, color: ink),
+          ),
         ],
       ],
     );
 
-    if (item.onTap == null) return content;
+    if (!pressable) return content;
+    // `min-height: 32px; padding: 7px 4px; margin: -7px -4px` — the button
+    // takes 18 of the strip's height, which is what makes the strip 22. Its
+    // drawn target reaches 7 further each way, but a Flutter hit test does not
+    // reach past the box it lands in, so the touchable area is the 18
+    // (C62).
     return LumePressable(
       onTap: item.onTap,
       borderRadius: LumeRadius.full,
-      minSize: 22,
+      minSize: 0,
       semanticLabel: item.label,
-      child: content,
+      child: SizedBox(
+        height: 18,
+        child: Center(widthFactor: 1, child: content),
+      ),
     );
   }
 }

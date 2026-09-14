@@ -205,7 +205,11 @@ class LumeDelta extends StatelessWidget {
 }
 
 /// How current a value is. §108: quality is never implied.
-enum LumeFreshnessQuality { live, delayed, cached, estimated }
+///
+/// `computed` and `local` are the tool frame's own two (`engine.js`
+/// `FRESH_TEXT`): a figure worked out for the reader's place, and a figure
+/// that lives on the device. Each draws differently from the others.
+enum LumeFreshnessQuality { live, delayed, cached, estimated, computed, local }
 
 /// `.fresh` — a dot and a word saying how current the data is.
 ///
@@ -255,28 +259,46 @@ class _LumeFreshnessState extends State<LumeFreshness>
   @override
   Widget build(BuildContext context) {
     final LumeColors lume = context.lume;
+    // `.fresh--*` — measured: live is `--up`, delayed `--amber`, computed
+    // `--sky`, and the rest the muted ink.
     final Color fg = switch (widget.quality) {
-      LumeFreshnessQuality.live => lume.accent700,
-      LumeFreshnessQuality.delayed => lume.amberInk,
+      LumeFreshnessQuality.live => lume.up,
+      LumeFreshnessQuality.delayed => lume.amber,
       LumeFreshnessQuality.cached => lume.text3,
       LumeFreshnessQuality.estimated => lume.text3,
+      LumeFreshnessQuality.computed => lume.sky,
+      LumeFreshnessQuality.local => lume.text3,
     };
 
-    // Shape carries the quality as well as colour: live is filled, cached is
-    // hollow, estimated is hollow and dashed-looking at this size.
-    final bool filled =
-        widget.quality == LumeFreshnessQuality.live ||
-        widget.quality == LumeFreshnessQuality.delayed;
+    // Shape carries the quality as well as colour (§101): a filled circle is
+    // live, a filled square delayed, a hollow circle cached, a filled diamond
+    // computed, a hollow rounded square local.
+    final bool filled = switch (widget.quality) {
+      LumeFreshnessQuality.live ||
+      LumeFreshnessQuality.delayed ||
+      LumeFreshnessQuality.computed => true,
+      _ => false,
+    };
+    final BorderRadius? corners = switch (widget.quality) {
+      LumeFreshnessQuality.delayed ||
+      LumeFreshnessQuality.computed => BorderRadius.circular(1),
+      LumeFreshnessQuality.local => BorderRadius.circular(2),
+      _ => null,
+    };
 
     Widget dot = Container(
-      width: 7,
-      height: 7,
+      width: 6,
+      height: 6,
       decoration: BoxDecoration(
         color: filled ? fg : Colors.transparent,
-        shape: BoxShape.circle,
+        shape: corners == null ? BoxShape.circle : BoxShape.rectangle,
+        borderRadius: corners,
         border: filled ? null : Border.all(color: fg, width: 1.5),
       ),
     );
+    if (widget.quality == LumeFreshnessQuality.computed) {
+      dot = Transform.rotate(angle: 0.7853981633974483, child: dot);
+    }
 
     if (_pulse != null) {
       dot = FadeTransition(
@@ -295,7 +317,8 @@ class _LumeFreshnessState extends State<LumeFreshness>
             const SizedBox(width: 6),
             Text(
               widget.label,
-              style: LumeType.fit(
+              // 11 / 700 on the font's own 13, measured on `.fresh`.
+              style: LumeType.natural(
                 context,
                 context.lumeType.metaSmall,
               ).copyWith(color: fg, fontWeight: FontWeight.w700),
@@ -325,18 +348,30 @@ class LumeSourceLine extends StatelessWidget {
       updated,
       note,
     ].whereType<String>().toList();
+    // 10 / 500 on the font's own 12.
+    final TextStyle style = LumeType.natural(
+      context,
+      context.lumeType.metaSmall,
+      size: 10,
+    ).copyWith(color: lume.text3);
 
+    // `.srcline span + span::before { content: "·"; margin-inline-end: 8px;
+    // opacity: .55 }` inside an 8-point gap — so every part after the first
+    // leads with its separator.
     return Wrap(
       spacing: LumeSpace.x2,
       runSpacing: 2,
       children: <Widget>[
-        for (final String p in parts)
-          Text(
-            p,
-            style: LumeType.fit(
-              context,
-              context.lumeType.metaSmall,
-            ).copyWith(color: lume.text3, fontSize: 10),
+        for (int i = 0; i < parts.length; i++)
+          Row(
+            mainAxisSize: MainAxisSize.min,
+            children: <Widget>[
+              if (i > 0) ...<Widget>[
+                Opacity(opacity: 0.55, child: Text('·', style: style)),
+                const SizedBox(width: LumeSpace.x2),
+              ],
+              Text(parts[i], style: style),
+            ],
           ),
       ],
     );

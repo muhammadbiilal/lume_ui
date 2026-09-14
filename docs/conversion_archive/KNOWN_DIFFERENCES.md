@@ -1340,6 +1340,39 @@ in all three languages.
 weather adapter, keeping provenance, observation time and sunset in the same
 nullable contracts.
 
+### C62 — tool foundations that had never met a tool (F6A)
+
+**Found in F6A**, the first time a real tool screen was measured
+(`tool_tax_*` cells). The F2/F3 widgets had been measured against isolated
+specimens, and on a composed screen seven of them disagreed with the reference.
+All are corrected, and every one is held by `tax_bounds_test.dart`:
+
+| widget | was | reference, measured |
+|---|---|---|
+| `LumeToolFrame` | freshness chip above the body, bare source line below, gutters around everything, toolbar that scrolled away | body sections, then a `.srcbar` card, privacy and related each in their own `.sect`; a sticky translucent toolbar that takes its hairline once content is under it |
+| `LumeSummaryCard` | kicker 8 above the value, caption 8 below, no rule above the stats, no border on a gradient | 6 / 7 / 16 + hairline + 14; a transparent one-point border on gradients; `shadow-sm` on both |
+| `LumeTable` | fixed 120-point columns, radius 16, no shadow, border painted over the rows | automatic-layout column widths, radius 20, `shadow-sm`, the border outside the rows |
+| `LumeRelatedTools` | horizontal chips | 78-wide stacked tiles in a scrolling row |
+| `LumeFreshness` | four qualities, live in `accent-700`, a 7-point dot | six qualities; live `--up`, delayed `--amber`, computed `--sky`; 6-point dot whose *shape* also carries the quality |
+| `LumeSegmented` | segments as wide as their labels | segments share the track (`flex: 1`) |
+| `LumeToolbar` / `LumeContextBar` | icon actions grew the bar to 67; strip 26 tall on a 16-point line; gutter fixed at 20 | icon targets overhang the padding (bar stays 62, D6); strip 22 on the font's 13; gutter follows the width class |
+
+**One residual.** A pressable context-strip item is drawn 32 tall in the
+reference with negative margins; a Flutter hit test does not reach outside the
+box it lands in, so its touchable height is the 18 it occupies. Both are below
+§9's 44; the reference's is too.
+
+### C63 — English dates written the wrong way outside the United States
+
+**Found in F6A** on the UAE Tax capture ("Mon, 7 Sep") and confirmed by
+grouping what ICU renders for `en-XX` in every country. `LumeFormatting`
+sent every English locale outside the US to world English; ICU writes 119 of
+them the American way ("Mon, Sep 7", "6:27 PM") — Saudi Arabia, Japan and Turkey
+among them — and the UAE alone as "Mon, 7 Sep". Corrected: the 119 read the
+American data, and the UAE's short date is spelled out. Denmark, Finland and
+Indonesia ("6.27 pm") and Canada and Ireland ("p.m.") remain as `intl` writes
+them; no converted tool shows them yet.
+
 ## 3. Open questions
 
 ### Resolved in F1
