@@ -40,6 +40,7 @@ import '../../../core/widgets/lume/lume_table.dart';
 import '../../../core/widgets/lume/lume_tool.dart';
 import '../../../l10n/app_localizations.dart';
 import '../../account/presentation/personalise_sheet.dart';
+import '../../tools/application/tool_numbers.dart';
 import '../../tools/application/tool_request.dart';
 import '../../tools/application/tool_session.dart';
 import '../../tools/presentation/tool_screen.dart';
@@ -65,15 +66,11 @@ class LumeTaxTool extends ConsumerStatefulWidget {
   static const Key splitKey = ValueKey<String>('tax.split');
   static const Key leviesKey = ValueKey<String>('tax.levies');
 
-  /// A number the way `String(n)` writes it: no trailing `.0` on a whole
-  /// number, every digit of one that is not.
-  static String jsNumber(double v) =>
-      v == v.truncateToDouble() && v.abs() < 1e15
-      ? v.toInt().toString()
-      : v.toString();
+  /// A number the way `String(n)` writes it ([lumeJsNumber]).
+  static String jsNumber(double v) => lumeJsNumber(v);
 
-  /// `Number(text)` — an empty field is zero.
-  static double parse(String text) => double.tryParse(text.trim()) ?? 0;
+  /// `Number(text)` — an empty field is zero ([lumeFieldNumber]).
+  static double parse(String text) => lumeFieldNumber(text);
 
   @override
   ConsumerState<LumeTaxTool> createState() => _LumeTaxToolState();

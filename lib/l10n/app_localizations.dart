@@ -1444,6 +1444,90 @@ abstract class AppLocalizations {
   /// **'Week'**
   String get actionWeek;
 
+  /// Days in an exact age
+  ///
+  /// In en, this message translates to:
+  /// **'{n, plural, =1{1 day} other{{n} days}}'**
+  String ageDaysCount(int n);
+
+  /// Reference key age.days
+  ///
+  /// In en, this message translates to:
+  /// **'Days lived'**
+  String get ageDaysLived;
+
+  /// Reference key age.dob
+  ///
+  /// In en, this message translates to:
+  /// **'Date of birth'**
+  String get ageDob;
+
+  /// Reference key age.exact, composed from the two counts so each has its own singular
+  ///
+  /// In en, this message translates to:
+  /// **'{months} and {days}'**
+  String ageExact(String months, String days);
+
+  /// Under a date of birth after today; the age is not worked out from it
+  ///
+  /// In en, this message translates to:
+  /// **'That date hasn’t happened yet'**
+  String get ageFuture;
+
+  /// Reference key age.hours
+  ///
+  /// In en, this message translates to:
+  /// **'Hours'**
+  String get ageHours;
+
+  /// Reference key age.milestone
+  ///
+  /// In en, this message translates to:
+  /// **'{n} days old'**
+  String ageMilestone(String n);
+
+  /// Reference key age.milestones
+  ///
+  /// In en, this message translates to:
+  /// **'Milestones'**
+  String get ageMilestones;
+
+  /// Months in an exact age
+  ///
+  /// In en, this message translates to:
+  /// **'{n, plural, =1{1 month} other{{n} months}}'**
+  String ageMonthsCount(int n);
+
+  /// Reference key age.nextBirthday
+  ///
+  /// In en, this message translates to:
+  /// **'Next birthday'**
+  String get ageNextBirthday;
+
+  /// Days to the next birthday; the reference says "in 0 days" on the day itself
+  ///
+  /// In en, this message translates to:
+  /// **'{n, plural, =0{today} =1{in 1 day} other{in {count} days}}'**
+  String ageUntil(int n, String count);
+
+  /// Reference key age.weeks
+  ///
+  /// In en, this message translates to:
+  /// **'Weeks'**
+  String get ageWeeks;
+
+  /// The unit beside an age in whole years
+  ///
+  /// In en, this message translates to:
+  /// **'{n, plural, =1{year} other{years}}'**
+  String ageYearsUnit(int n);
+
+  /// Reference key age.youAre
+  ///
+  /// In en, this message translates to:
+  /// **'You are'**
+  String get ageYouAre;
+
   /// Reference: a prayer still to come
   ///
   /// In en, this message translates to:
@@ -2698,6 +2782,84 @@ abstract class AppLocalizations {
   /// **'Yesterday'**
   String get commonYesterday;
 
+  /// Reference key compound.after
+  ///
+  /// In en, this message translates to:
+  /// **'{n, plural, =1{after 1 year} other{after {count} years}}'**
+  String compoundAfter(int n, String count);
+
+  /// A projection axis label; the reference writes a literal English "y"
+  ///
+  /// In en, this message translates to:
+  /// **'{count}y'**
+  String compoundAxisYears(String count);
+
+  /// Reference key compound.byYear
+  ///
+  /// In en, this message translates to:
+  /// **'Year by year'**
+  String get compoundByYear;
+
+  /// Reference key compound.contributed
+  ///
+  /// In en, this message translates to:
+  /// **'Contributed'**
+  String get compoundContributed;
+
+  /// Reference key compound.finalValue
+  ///
+  /// In en, this message translates to:
+  /// **'Projected value'**
+  String get compoundFinalValue;
+
+  /// Reference key compound.growth
+  ///
+  /// In en, this message translates to:
+  /// **'Growth'**
+  String get compoundGrowth;
+
+  /// Reference key compound.initial
+  ///
+  /// In en, this message translates to:
+  /// **'Starting amount'**
+  String get compoundInitial;
+
+  /// Reference key compound.monthly
+  ///
+  /// In en, this message translates to:
+  /// **'Added each month'**
+  String get compoundMonthly;
+
+  /// Reference key compound.projection
+  ///
+  /// In en, this message translates to:
+  /// **'Projection'**
+  String get compoundProjection;
+
+  /// Reference key compound.rate
+  ///
+  /// In en, this message translates to:
+  /// **'Annual return'**
+  String get compoundRate;
+
+  /// Reference key compound.return
+  ///
+  /// In en, this message translates to:
+  /// **'Return'**
+  String get compoundReturn;
+
+  /// Reference key compound.value
+  ///
+  /// In en, this message translates to:
+  /// **'Value'**
+  String get compoundValue;
+
+  /// Reference key compound.years
+  ///
+  /// In en, this message translates to:
+  /// **'Years'**
+  String get compoundYears;
+
   /// Reference: the cricket Discover card’s title. The side is a three-letter code
   ///
   /// In en, this message translates to:
@@ -2709,6 +2871,114 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'2nd Test · Day {n}'**
   String cricketSecondTest(int n);
+
+  /// Reference key datecalc.addSubtract
+  ///
+  /// In en, this message translates to:
+  /// **'Add days'**
+  String get datecalcAddDays;
+
+  /// Reference key datecalc.between
+  ///
+  /// In en, this message translates to:
+  /// **'Between the dates'**
+  String get datecalcBetween;
+
+  /// Reference key datecalc.business
+  ///
+  /// In en, this message translates to:
+  /// **'Working days'**
+  String get datecalcBusiness;
+
+  /// The days between two dates; n chooses the form, count is n as the locale writes it
+  ///
+  /// In en, this message translates to:
+  /// **'{n, plural, =1{{count} day} other{{count} days}}'**
+  String datecalcDays(int n, String count);
+
+  /// Reference key datecalc.days
+  ///
+  /// In en, this message translates to:
+  /// **'Days to add'**
+  String get datecalcDaysToAdd;
+
+  /// Reference key datecalc.difference
+  ///
+  /// In en, this message translates to:
+  /// **'Difference'**
+  String get datecalcDifference;
+
+  /// Reference key datecalc.from
+  ///
+  /// In en, this message translates to:
+  /// **'From'**
+  String get datecalcFrom;
+
+  /// Reference key datecalc.fromStart; count keeps the sign of the days added
+  ///
+  /// In en, this message translates to:
+  /// **'{n, plural, =1{{count} day from the start date} other{{count} days from the start date}}'**
+  String datecalcFromStart(int n, String count);
+
+  /// Reference key datecalc.holidays
+  ///
+  /// In en, this message translates to:
+  /// **'Public holidays in the year'**
+  String get datecalcHolidays;
+
+  /// Reference key datecalc.mode
+  ///
+  /// In en, this message translates to:
+  /// **'Mode'**
+  String get datecalcMode;
+
+  /// Reference key datecalc.result
+  ///
+  /// In en, this message translates to:
+  /// **'Result date'**
+  String get datecalcResult;
+
+  /// Reference key datecalc.start
+  ///
+  /// In en, this message translates to:
+  /// **'Start date'**
+  String get datecalcStart;
+
+  /// Reference key common.months, as a summary figure label
+  ///
+  /// In en, this message translates to:
+  /// **'months'**
+  String get datecalcStatMonths;
+
+  /// Reference key common.weeks, as a summary figure label
+  ///
+  /// In en, this message translates to:
+  /// **'weeks'**
+  String get datecalcStatWeeks;
+
+  /// Reference key common.years, as a summary figure label
+  ///
+  /// In en, this message translates to:
+  /// **'years'**
+  String get datecalcStatYears;
+
+  /// Reference key datecalc.to
+  ///
+  /// In en, this message translates to:
+  /// **'To'**
+  String get datecalcTo;
+
+  /// Reference key datecalc.weekdays
+  ///
+  /// In en, this message translates to:
+  /// **'Weekdays'**
+  String get datecalcWeekdays;
+
+  /// Reference key datecalc.weekends
+  ///
+  /// In en, this message translates to:
+  /// **'Weekend days'**
+  String get datecalcWeekends;
 
   /// Reference: the duas Discover card’s meta
   ///
@@ -5517,6 +5787,114 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'until {time}'**
   String loadshedUntil(String time);
+
+  /// Reference key loan.amortisation
+  ///
+  /// In en, this message translates to:
+  /// **'Amortisation'**
+  String get loanAmortisation;
+
+  /// Reference key loan.balance
+  ///
+  /// In en, this message translates to:
+  /// **'Balance'**
+  String get loanBalance;
+
+  /// Reference key loan.compare
+  ///
+  /// In en, this message translates to:
+  /// **'If the rate changed'**
+  String get loanCompare;
+
+  /// Reference key loan.higherRate
+  ///
+  /// In en, this message translates to:
+  /// **'Two points higher'**
+  String get loanHigherRate;
+
+  /// Reference key loan.interest
+  ///
+  /// In en, this message translates to:
+  /// **'Interest'**
+  String get loanInterest;
+
+  /// Reference key loan.interestShare
+  ///
+  /// In en, this message translates to:
+  /// **'Interest share'**
+  String get loanInterestShare;
+
+  /// Reference key loan.lowerRate
+  ///
+  /// In en, this message translates to:
+  /// **'Two points lower'**
+  String get loanLowerRate;
+
+  /// Reference key loan.monthly
+  ///
+  /// In en, this message translates to:
+  /// **'Monthly payment'**
+  String get loanMonthly;
+
+  /// Reference key loan.over
+  ///
+  /// In en, this message translates to:
+  /// **'{n, plural, =1{over 1 payment} other{over {count} payments}}'**
+  String loanOver(int n, String count);
+
+  /// Reference key loan.principal
+  ///
+  /// In en, this message translates to:
+  /// **'Loan amount'**
+  String get loanPrincipal;
+
+  /// Reference key loan.principalShort
+  ///
+  /// In en, this message translates to:
+  /// **'Principal'**
+  String get loanPrincipalShort;
+
+  /// Reference key loan.rate
+  ///
+  /// In en, this message translates to:
+  /// **'Interest rate'**
+  String get loanRate;
+
+  /// Reference key loan.rateAt
+  ///
+  /// In en, this message translates to:
+  /// **'At {rate}%'**
+  String loanRateAt(String rate);
+
+  /// Reference key loan.split
+  ///
+  /// In en, this message translates to:
+  /// **'Principal vs interest'**
+  String get loanSplit;
+
+  /// Reference key loan.tenure
+  ///
+  /// In en, this message translates to:
+  /// **'Tenure'**
+  String get loanTenure;
+
+  /// Reference key loan.totalInterest
+  ///
+  /// In en, this message translates to:
+  /// **'Total interest'**
+  String get loanTotalInterest;
+
+  /// Reference key loan.totalPaid
+  ///
+  /// In en, this message translates to:
+  /// **'Total repaid'**
+  String get loanTotalPaid;
+
+  /// Reference key loan.yourRate
+  ///
+  /// In en, this message translates to:
+  /// **'Your rate'**
+  String get loanYourRate;
 
   /// The market a national pump price applies to. Only the markets whose regulator publishes one need a key
   ///
@@ -8950,6 +9328,48 @@ abstract class AppLocalizations {
   /// **'Starting Lume'**
   String get startupLoading;
 
+  /// Reference key stopwatch.empty.text
+  ///
+  /// In en, this message translates to:
+  /// **'Start the stopwatch and tap Lap to record one.'**
+  String get stopwatchEmptyText;
+
+  /// Reference key stopwatch.empty.title
+  ///
+  /// In en, this message translates to:
+  /// **'No laps yet'**
+  String get stopwatchEmptyTitle;
+
+  /// Reference key stopwatch.hint, corrected: the reference says "tap again to lap", and tapping again pauses
+  ///
+  /// In en, this message translates to:
+  /// **'Start, then Lap to mark each lap'**
+  String get stopwatchHint;
+
+  /// Reference key stopwatch.lap
+  ///
+  /// In en, this message translates to:
+  /// **'Lap {n}'**
+  String stopwatchLap(String n);
+
+  /// Records a lap while the stopwatch runs
+  ///
+  /// In en, this message translates to:
+  /// **'Lap'**
+  String get stopwatchLapAction;
+
+  /// Reference key stopwatch.laps
+  ///
+  /// In en, this message translates to:
+  /// **'Laps'**
+  String get stopwatchLaps;
+
+  /// Pauses the running stopwatch
+  ///
+  /// In en, this message translates to:
+  /// **'Pause'**
+  String get stopwatchPause;
+
   /// Reference key subs.renews
   ///
   /// In en, this message translates to:
@@ -9262,6 +9682,60 @@ abstract class AppLocalizations {
   /// **'Presets'**
   String get timerPresets;
 
+  /// Reference key tip.bill
+  ///
+  /// In en, this message translates to:
+  /// **'Bill'**
+  String get tipBill;
+
+  /// The people stepper’s decrease action
+  ///
+  /// In en, this message translates to:
+  /// **'Fewer'**
+  String get tipFewer;
+
+  /// The people stepper’s increase action
+  ///
+  /// In en, this message translates to:
+  /// **'More'**
+  String get tipMore;
+
+  /// Reference key tip.people
+  ///
+  /// In en, this message translates to:
+  /// **'People'**
+  String get tipPeople;
+
+  /// Reference key tip.perPerson
+  ///
+  /// In en, this message translates to:
+  /// **'Each person pays'**
+  String get tipPerPerson;
+
+  /// Reference key tip.person
+  ///
+  /// In en, this message translates to:
+  /// **'Person {n}'**
+  String tipPerson(String n);
+
+  /// Reference key tip.custom
+  ///
+  /// In en, this message translates to:
+  /// **'Split'**
+  String get tipSplit;
+
+  /// Reference keys tip.tip and tip.tipAmount
+  ///
+  /// In en, this message translates to:
+  /// **'Tip'**
+  String get tipTip;
+
+  /// Reference key tip.total
+  ///
+  /// In en, this message translates to:
+  /// **'Total'**
+  String get tipTotal;
+
   /// Reference: the toast behind the Add control
   ///
   /// In en, this message translates to:
@@ -9555,6 +10029,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Added {name} to favourites'**
   String toolFavourited(String name);
+
+  /// Reference key tool.inputs — a calculator’s inputs section
+  ///
+  /// In en, this message translates to:
+  /// **'Inputs'**
+  String get toolInputs;
 
   /// Reference key habits.insights — a tracker's insight section head
   ///
@@ -10568,6 +11048,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'tola'**
   String get unitTola;
+
+  /// A field suffix: the value is a number of years
+  ///
+  /// In en, this message translates to:
+  /// **'years'**
+  String get unitYearsSuffix;
 
   /// Reference key weather.air
   ///

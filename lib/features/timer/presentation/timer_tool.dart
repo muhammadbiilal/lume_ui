@@ -2,8 +2,7 @@
 ///
 /// `tools/everyday/timer.tool.js` over `shared/clock.js` `clockScreen`: the
 /// face with its time, hint and two actions; the presets; the history. The
-/// stopwatch and the focus session are the same instrument with other faces,
-/// which is why the face is its own widget ([LumeClockFace]).
+/// stopwatch draws the same face ([LumeClockFace]).
 library;
 
 import 'package:flutter/material.dart';
@@ -11,14 +10,9 @@ import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../core/icons/lume_icons.dart';
-import '../../../core/layout/lume_breakpoint.dart';
-import '../../../core/layout/lume_measure.dart';
 import '../../../core/localization/lume_format.dart';
-import '../../../core/localization/lume_numerals.dart';
-import '../../../core/theme/lume/lume_colors.dart';
-import '../../../core/theme/lume/lume_theme.dart';
-import '../../../core/theme/lume/lume_type.dart';
 import '../../../core/widgets/lume/lume_button.dart';
+import '../../../core/widgets/lume/lume_clock_face.dart';
 import '../../../core/widgets/lume/lume_destination.dart';
 import '../../../core/widgets/lume/lume_destination_cards.dart';
 import '../../../core/widgets/lume/lume_row.dart';
@@ -97,6 +91,7 @@ class _LumeTimerToolState extends ConsumerState<LumeTimerTool> {
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: <Widget>[
           LumeClockFace(
+            timeKey: LumeTimerTool.timeKey,
             display: _clock.display,
             hint: l.timerHint,
             primary: LumeButton.accent(
@@ -145,75 +140,6 @@ class _LumeTimerToolState extends ConsumerState<LumeTimerTool> {
                 ),
               ],
             ),
-          ),
-        ],
-      ),
-    );
-  }
-}
-
-/// `.clockface` — a running clock's time, its hint and its two actions.
-///
-/// Stylesheet: 28 above and 4 below inside the page gutter; 14 between the
-/// parts, the hint pulled 8 closer; the time 58 / 800 / −0.055em in tabular
-/// figures; the hint 12 / 600, muted; the actions 8 apart.
-class LumeClockFace extends StatelessWidget {
-  const LumeClockFace({
-    super.key,
-    required this.display,
-    required this.primary,
-    required this.reset,
-    this.hint,
-  });
-
-  final String display;
-  final String? hint;
-  final Widget primary;
-  final Widget reset;
-
-  @override
-  Widget build(BuildContext context) {
-    final LumeColors lume = context.lume;
-    final double gutter = LumeLayout.pageGutter(context.measureClass);
-    return Padding(
-      padding: EdgeInsets.fromLTRB(gutter, 28, gutter, 4),
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: <Widget>[
-          // A live region, so a reader hears the minute it changes to — and
-          // `.is-rtl .clockface__time { direction: ltr }`.
-          Semantics(
-            liveRegion: true,
-            child: LumeNumerals(
-              display,
-              key: LumeTimerTool.timeKey,
-              style: LumeType.numeric(
-                LumeType.tracked(
-                  LumeType.natural(
-                    context,
-                    context.lumeType.display,
-                    size: 58,
-                  ).copyWith(fontWeight: FontWeight.w800),
-                  -0.055,
-                ),
-              ).copyWith(color: lume.text),
-            ),
-          ),
-          if (hint != null) ...<Widget>[
-            const SizedBox(height: 14 - 8),
-            Text(
-              hint!,
-              textAlign: TextAlign.center,
-              style: LumeType.natural(
-                context,
-                context.lumeType.meta,
-              ).copyWith(color: lume.text3, fontWeight: FontWeight.w600),
-            ),
-          ],
-          const SizedBox(height: 14),
-          Row(
-            mainAxisSize: MainAxisSize.min,
-            children: <Widget>[primary, const SizedBox(width: 8), reset],
           ),
         ],
       ),

@@ -81,6 +81,14 @@ to zero; a laps section.
 * Anything further found while measuring is added here and to
   `KNOWN_DIFFERENCES.md` before the tool is committed.
 
+**Found while building, recorded in C83:** Loan / EMI's rate comparison
+worked on an overwritten principal (a `var` redeclared in its loop), Tip &
+Split's chosen tip never shown (`is-on` against a stylesheet that styles
+`is-active`) and its stepper reaching zero people, Age's "in 0 days",
+Stopwatch's promise to lap on a second tap, English plurals without a
+singular, and the meter bar Lume drew in the accent where the reference draws
+it in ink.
+
 ### Dependencies
 
 Wave 1 needs nothing F6A and F6B do not already provide: the tool host, field

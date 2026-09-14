@@ -2108,6 +2108,77 @@ were:**
   licences and attribution recorded, and tests that one record identity
   resolves to the same hadith in every language.
 
+### C83 — Rollout wave 1: six tools and what differs in each
+
+**F6B decision 7.** Age, Date Calculator, Tip & Split, Loan / EMI and
+Compound Interest on Tax's form calculator; Stopwatch on Timer's clock
+instrument (`ROLLOUT_WAVE_1.md`). Each reproduces its module's composition,
+labels, figures and order; what follows is every place it does not.
+
+**Shared across the wave**
+
+- **Share hands over the screen's figure — corrected, as C68 did for Tax.**
+  Age, Tip & Split, Loan / EMI and Compound Interest declare sharing, and
+  `shareForTool` knows none of them, so the reference shares the habits
+  quote. Each shares its own result with the day it was worked out.
+- **Date fields are picked.** `<input type="date">` holds an ISO value and
+  the browser draws a picker; `LumeToolField.onTap` shows the day in the
+  reader's locale ("18/04/1993") and opens the platform's date picker. No
+  keyboard rises for a date.
+- **A count reads in the singular.** "1 days", "in 1 days", "over 1
+  payments" and "after 1 years" are plural messages with a `=1` form in every
+  language.
+- **Numbers are the locale's.** Weeks, months and years group as the locale
+  writes numbers; `toFixed` places are kept ("0.0", "0.00").
+
+**Age.** On the birthday itself the meter says "today", where the reference
+says "in 0 days". A date of birth after today is refused under the field and
+the figures stay at today rather than going negative. Days are counted as
+calendar days, so a clock change cannot lose one.
+
+**Date Calculator.** The weekend is Saturday and Sunday for every country,
+as the reference counts it — **Dayroz obligation:** the country's own weekend
+(Friday and Saturday in the UAE and Saudi Arabia). The holiday count is the
+country's whole list, as `D.holidaysFor(country).length` is, not the four the
+calendar shows. A fraction of a day to add falls to the day before it, as the
+reference's `setHours(0)` does. In a right-to-left interface the range arrow
+points left.
+
+**Tip & Split.** The people stepper stops at one; the reference reaches zero
+and then charges one person the whole bill. The people row is 44 tall so each
+stepper target is (D6): the card is six taller than the reference's, and
+every section under it six lower — compared as a recorded shift, not
+tolerated. Amounts show up to two decimals, none on a whole figure, as
+`moneyRaw(v, ccy, 2)` does.
+
+**Loan / EMI.** *A reference defect, corrected.* `loan()` declares `var
+principal` a second time inside the schedule loop; `var` is function-scoped,
+so the loan amount is overwritten with the last month's principal, and the
+"If the rate changed" rows are worked on that — at 10 % the reference offers
+a payment of a few thousand rupees on a 5.66 million loan. Lume works them on
+the loan amount (Rs 120,258 and Rs 131,685 either side of Rs 125,904).
+
+**Compound Interest.** The projection's axis labels are translated — the
+reference writes a literal English "y" after the years.
+
+**Stopwatch.** *Two reference defects, corrected, and the hint with them.*
+`runClock` adds whole seconds and prints `.00`, so the hundredths never move;
+the laps section can never fill, because nothing writes a lap. Lume counts
+elapsed time from a monotonic source and repaints every 30 ms, and while it
+runs the buttons are **Pause** and **Lap**; paused, **Start** and **Reset**.
+The hint "Tap start, tap again to lap" promised what the second press never
+did (it pauses) and now reads "Start, then Lap to mark each lap"; the empty
+state says "tap Lap". Leaving the tool stops the clock and keeps the time, as
+`stopClocks` does. Timer keeps its own C66 behaviour.
+
+| widget | was | now |
+|---|---|---|
+| `LumeClockFace` | private to Timer | shared; Timer and Stopwatch draw it, with the time's key a parameter |
+| `LumeFieldGrid` (new) | Tax's hand-built row | `.fgrid`: two columns 12 apart, wide fields and a lone field spanning; used by Loan, Compound and Date Calculator |
+| `LumeToolField` | typed only | `onTap` for a picked value, with a calendar glyph at the end |
+| `LumeFormatting` | — | `fixed` (`toFixed`), `moneyUpTo` (`moneyRaw` with a decimal cap), `dateMediumYear`, `dateNumeric` |
+| `LumeCalendarFixtures` | four holidays | `holidayCountFor`, the whole list's length |
+
 ### C63 — English dates written the wrong way outside the United States
 
 **Found in F6A** on the UAE Tax capture ("Mon, 7 Sep") and confirmed by

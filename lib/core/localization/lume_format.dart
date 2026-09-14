@@ -221,6 +221,13 @@ class LumeFormatting {
   /// "14 Sep".
   String dateMedium(DateTime d) => intl.DateFormat.MMMd(_dateTag).format(d);
 
+  /// "30 Aug 2020" — `{day: 'numeric', month: 'short', year: 'numeric'}`.
+  String dateMediumYear(DateTime d) =>
+      intl.DateFormat.yMMMd(_dateTag).format(d);
+
+  /// "18/04/1993" — a date as a date field shows it, in the locale's order.
+  String dateNumeric(DateTime d) => intl.DateFormat.yMd(_dateTag).format(d);
+
   /// "September 2026" — a month and its year, as a calendar titles it.
   String monthYear(DateTime d) => intl.DateFormat.yMMMM(_dateTag).format(d);
 
@@ -282,6 +289,14 @@ class LumeFormatting {
   String integer(num v) =>
       intl.NumberFormat.decimalPattern(_tag).format(v.round());
 
+  /// `n.toFixed(d)` — exactly [decimals] places, "0.0" and not "0".
+  String fixed(num v, int decimals) {
+    final intl.NumberFormat f = intl.NumberFormat.decimalPattern(_tag)
+      ..minimumFractionDigits = decimals
+      ..maximumFractionDigits = decimals;
+    return f.format(v);
+  }
+
   String percent(num v, {int decimals = 2}) =>
       '${number(v.abs(), decimals: decimals)}%';
 
@@ -313,6 +328,28 @@ class LumeFormatting {
       symbol: _symbol(code ?? currency),
       decimalDigits: decimals,
     );
+    return f.format(value);
+  }
+
+  /// `moneyRaw(v, ccy, 2)` — `Intl.NumberFormat` with only a maximum set, so
+  /// the currency's own minor units are the minimum: "$22.00", and "Rs 6,226"
+  /// because the running reference gives the rupee none (measured on Tip &
+  /// Split, `tool_tipsplit_default_pk` and `_default_us`). `intl` gives the
+  /// rupee two, so that one is taken from the measurement.
+  String moneyUpTo(num value, {String? code, required int maxDecimals}) {
+    final String c = code ?? currency;
+    final int minor = c == 'PKR'
+        ? 0
+        : intl.NumberFormat.currency(locale: _tag, name: c).decimalDigits ?? 2;
+    final intl.NumberFormat f =
+        intl.NumberFormat.currency(
+            locale: _tag,
+            name: c,
+            symbol: _symbol(c),
+            decimalDigits: maxDecimals,
+          )
+          ..minimumFractionDigits = minor < maxDecimals ? minor : maxDecimals
+          ..maximumFractionDigits = maxDecimals;
     return f.format(value);
   }
 

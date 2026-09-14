@@ -206,4 +206,9 @@ abstract final class LumeCalendarFixtures {
   /// `holidaysFor(code).slice(0, 4)`.
   static List<LumeHoliday> holidaysFor(String code) =>
       (_holidays[code.toUpperCase()] ?? fallback).take(4).toList();
+
+  /// `D.holidaysFor(country).length` — the whole list, which Date Calculator
+  /// counts, not the four the calendar shows.
+  static int holidayCountFor(String code) =>
+      (_holidays[code.toUpperCase()] ?? fallback).length;
 }

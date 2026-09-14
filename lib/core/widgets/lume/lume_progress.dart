@@ -124,7 +124,9 @@ class LumeMeterRow extends StatelessWidget {
           value: progress,
           label: label,
           valueText: value,
-          tone: tone,
+          // `.pbar__fill { background: currentColor }` — outside a summary a
+          // meter is drawn in the ink, and only a tone colours it (C83).
+          tone: tone ?? lume.text,
         ),
         if (footnote != null) ...<Widget>[
           const SizedBox(height: 4),

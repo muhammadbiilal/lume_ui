@@ -738,6 +738,100 @@ class AppLocalizationsAr extends AppLocalizations {
   String get actionWeek => 'أسبوع';
 
   @override
+  String ageDaysCount(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n يوم',
+      many: '$n يومًا',
+      few: '$n أيام',
+      two: 'يومان',
+      one: 'يوم واحد',
+      zero: '$n يوم',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get ageDaysLived => 'الأيام التي عشتها';
+
+  @override
+  String get ageDob => 'تاريخ الميلاد';
+
+  @override
+  String ageExact(String months, String days) {
+    return '$months و$days';
+  }
+
+  @override
+  String get ageFuture => 'هذا التاريخ لم يأتِ بعد';
+
+  @override
+  String get ageHours => 'الساعات';
+
+  @override
+  String ageMilestone(String n) {
+    return 'عمرك $n يوم';
+  }
+
+  @override
+  String get ageMilestones => 'محطات';
+
+  @override
+  String ageMonthsCount(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n شهر',
+      many: '$n شهرًا',
+      few: '$n أشهر',
+      two: 'شهران',
+      one: 'شهر واحد',
+      zero: '$n أشهر',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get ageNextBirthday => 'عيد الميلاد القادم';
+
+  @override
+  String ageUntil(int n, String count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: 'خلال $count يوم',
+      many: 'خلال $count يومًا',
+      few: 'خلال $count أيام',
+      two: 'خلال يومين',
+      one: 'خلال يوم واحد',
+      zero: 'اليوم',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get ageWeeks => 'الأسابيع';
+
+  @override
+  String ageYearsUnit(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: 'سنة',
+      many: 'سنة',
+      few: 'سنوات',
+      two: 'سنتان',
+      one: 'سنة',
+      zero: 'سنة',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get ageYouAre => 'عمرك';
+
+  @override
   String get agendaAdhanOn => 'الأذان · التذكير مفعّل';
 
   @override
@@ -1454,6 +1548,59 @@ class AppLocalizationsAr extends AppLocalizations {
   String get commonYesterday => 'أمس';
 
   @override
+  String compoundAfter(int n, String count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: 'بعد $count سنة',
+      many: 'بعد $count سنة',
+      few: 'بعد $count سنوات',
+      two: 'بعد سنتين',
+      one: 'بعد سنة واحدة',
+      zero: 'بعد $count سنة',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String compoundAxisYears(String count) {
+    return '$count س';
+  }
+
+  @override
+  String get compoundByYear => 'سنة بسنة';
+
+  @override
+  String get compoundContributed => 'المساهمات';
+
+  @override
+  String get compoundFinalValue => 'القيمة المتوقعة';
+
+  @override
+  String get compoundGrowth => 'النمو';
+
+  @override
+  String get compoundInitial => 'المبلغ الأولي';
+
+  @override
+  String get compoundMonthly => 'الإضافة الشهرية';
+
+  @override
+  String get compoundProjection => 'التوقعات';
+
+  @override
+  String get compoundRate => 'العائد السنوي';
+
+  @override
+  String get compoundReturn => 'العائد';
+
+  @override
+  String get compoundValue => 'القيمة';
+
+  @override
+  String get compoundYears => 'السنوات';
+
+  @override
   String cricketScore(String team, int runs, int wickets) {
     return '$team $runs/$wickets';
   }
@@ -1462,6 +1609,84 @@ class AppLocalizationsAr extends AppLocalizations {
   String cricketSecondTest(int n) {
     return 'الاختبار الثاني · اليوم $n';
   }
+
+  @override
+  String get datecalcAddDays => 'إضافة أيام';
+
+  @override
+  String get datecalcBetween => 'بين التاريخين';
+
+  @override
+  String get datecalcBusiness => 'أيام العمل';
+
+  @override
+  String datecalcDays(int n, String count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$count يوم',
+      many: '$count يومًا',
+      few: '$count أيام',
+      two: 'يومان',
+      one: 'يوم واحد',
+      zero: '$count يوم',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get datecalcDaysToAdd => 'الأيام المضافة';
+
+  @override
+  String get datecalcDifference => 'الفرق';
+
+  @override
+  String get datecalcFrom => 'من';
+
+  @override
+  String datecalcFromStart(int n, String count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$count يوم من تاريخ البدء',
+      many: '$count يومًا من تاريخ البدء',
+      few: '$count أيام من تاريخ البدء',
+      two: 'يومان من تاريخ البدء',
+      one: 'يوم واحد من تاريخ البدء',
+      zero: '$count يوم من تاريخ البدء',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get datecalcHolidays => 'العطلات الرسمية في السنة';
+
+  @override
+  String get datecalcMode => 'الوضع';
+
+  @override
+  String get datecalcResult => 'تاريخ النتيجة';
+
+  @override
+  String get datecalcStart => 'تاريخ البدء';
+
+  @override
+  String get datecalcStatMonths => 'أشهر';
+
+  @override
+  String get datecalcStatWeeks => 'أسابيع';
+
+  @override
+  String get datecalcStatYears => 'سنوات';
+
+  @override
+  String get datecalcTo => 'إلى';
+
+  @override
+  String get datecalcWeekdays => 'أيام الأسبوع';
+
+  @override
+  String get datecalcWeekends => 'أيام العطلة الأسبوعية';
 
   @override
   String get discoverDuasMeta => 'لأيامك العادية';
@@ -3021,6 +3246,74 @@ class AppLocalizationsAr extends AppLocalizations {
   String loadshedUntil(String time) {
     return 'حتى $time';
   }
+
+  @override
+  String get loanAmortisation => 'جدول السداد';
+
+  @override
+  String get loanBalance => 'الرصيد';
+
+  @override
+  String get loanCompare => 'لو تغيّر السعر';
+
+  @override
+  String get loanHigherRate => 'أعلى بنقطتين';
+
+  @override
+  String get loanInterest => 'الفائدة';
+
+  @override
+  String get loanInterestShare => 'حصة الفائدة';
+
+  @override
+  String get loanLowerRate => 'أقل بنقطتين';
+
+  @override
+  String get loanMonthly => 'القسط الشهري';
+
+  @override
+  String loanOver(int n, String count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: 'على $count دفعة',
+      many: 'على $count دفعة',
+      few: 'على $count دفعات',
+      two: 'على دفعتين',
+      one: 'على دفعة واحدة',
+      zero: 'على $count دفعة',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get loanPrincipal => 'مبلغ القرض';
+
+  @override
+  String get loanPrincipalShort => 'الأصل';
+
+  @override
+  String get loanRate => 'سعر الفائدة';
+
+  @override
+  String loanRateAt(String rate) {
+    return 'عند $rate%';
+  }
+
+  @override
+  String get loanSplit => 'الأصل مقابل الفائدة';
+
+  @override
+  String get loanTenure => 'المدة';
+
+  @override
+  String get loanTotalInterest => 'إجمالي الفائدة';
+
+  @override
+  String get loanTotalPaid => 'إجمالي المسدد';
+
+  @override
+  String get loanYourRate => 'سعرك';
 
   @override
   String get marketPk => 'باكستان';
@@ -5059,6 +5352,30 @@ class AppLocalizationsAr extends AppLocalizations {
   String get startupLoading => 'جارٍ بدء Lume';
 
   @override
+  String get stopwatchEmptyText =>
+      'شغّل ساعة الإيقاف واضغط «لفة» لتسجيل واحدة.';
+
+  @override
+  String get stopwatchEmptyTitle => 'لا لفات بعد';
+
+  @override
+  String get stopwatchHint => 'ابدأ، ثم اضغط «لفة» لتسجيل كل لفة';
+
+  @override
+  String stopwatchLap(String n) {
+    return 'اللفة $n';
+  }
+
+  @override
+  String get stopwatchLapAction => 'لفة';
+
+  @override
+  String get stopwatchLaps => 'اللفات';
+
+  @override
+  String get stopwatchPause => 'إيقاف مؤقت';
+
+  @override
   String subsRenews(String date) {
     return 'يتجدّد $date';
   }
@@ -5227,6 +5544,35 @@ class AppLocalizationsAr extends AppLocalizations {
   String get timerPresets => 'إعدادات مسبقة';
 
   @override
+  String get tipBill => 'الفاتورة';
+
+  @override
+  String get tipFewer => 'أقل';
+
+  @override
+  String get tipMore => 'أكثر';
+
+  @override
+  String get tipPeople => 'الأشخاص';
+
+  @override
+  String get tipPerPerson => 'يدفع كل شخص';
+
+  @override
+  String tipPerson(String n) {
+    return 'الشخص $n';
+  }
+
+  @override
+  String get tipSplit => 'التقسيم';
+
+  @override
+  String get tipTip => 'البقشيش';
+
+  @override
+  String get tipTotal => 'الإجمالي';
+
+  @override
   String get todayAddToast => 'تمت إضافة مهمة جديدة';
 
   @override
@@ -5392,6 +5738,9 @@ class AppLocalizationsAr extends AppLocalizations {
   String toolFavourited(String name) {
     return 'أُضيفت $name إلى المفضلة';
   }
+
+  @override
+  String get toolInputs => 'المدخلات';
 
   @override
   String get toolInsights => 'رؤى';
@@ -6001,6 +6350,9 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get unitTola => 'تولة';
+
+  @override
+  String get unitYearsSuffix => 'سنوات';
 
   @override
   String get weatherAir => 'جودة الهواء';

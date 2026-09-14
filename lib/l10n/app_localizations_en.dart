@@ -741,6 +741,85 @@ class AppLocalizationsEn extends AppLocalizations {
   String get actionWeek => 'Week';
 
   @override
+  String ageDaysCount(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n days',
+      one: '1 day',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get ageDaysLived => 'Days lived';
+
+  @override
+  String get ageDob => 'Date of birth';
+
+  @override
+  String ageExact(String months, String days) {
+    return '$months and $days';
+  }
+
+  @override
+  String get ageFuture => 'That date hasn’t happened yet';
+
+  @override
+  String get ageHours => 'Hours';
+
+  @override
+  String ageMilestone(String n) {
+    return '$n days old';
+  }
+
+  @override
+  String get ageMilestones => 'Milestones';
+
+  @override
+  String ageMonthsCount(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n months',
+      one: '1 month',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get ageNextBirthday => 'Next birthday';
+
+  @override
+  String ageUntil(int n, String count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: 'in $count days',
+      one: 'in 1 day',
+      zero: 'today',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get ageWeeks => 'Weeks';
+
+  @override
+  String ageYearsUnit(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: 'years',
+      one: 'year',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get ageYouAre => 'You are';
+
+  @override
   String get agendaAdhanOn => 'Adhan · reminder on';
 
   @override
@@ -1447,6 +1526,55 @@ class AppLocalizationsEn extends AppLocalizations {
   String get commonYesterday => 'Yesterday';
 
   @override
+  String compoundAfter(int n, String count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: 'after $count years',
+      one: 'after 1 year',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String compoundAxisYears(String count) {
+    return '${count}y';
+  }
+
+  @override
+  String get compoundByYear => 'Year by year';
+
+  @override
+  String get compoundContributed => 'Contributed';
+
+  @override
+  String get compoundFinalValue => 'Projected value';
+
+  @override
+  String get compoundGrowth => 'Growth';
+
+  @override
+  String get compoundInitial => 'Starting amount';
+
+  @override
+  String get compoundMonthly => 'Added each month';
+
+  @override
+  String get compoundProjection => 'Projection';
+
+  @override
+  String get compoundRate => 'Annual return';
+
+  @override
+  String get compoundReturn => 'Return';
+
+  @override
+  String get compoundValue => 'Value';
+
+  @override
+  String get compoundYears => 'Years';
+
+  @override
   String cricketScore(String team, int runs, int wickets) {
     return '$team $runs/$wickets';
   }
@@ -1455,6 +1583,76 @@ class AppLocalizationsEn extends AppLocalizations {
   String cricketSecondTest(int n) {
     return '2nd Test · Day $n';
   }
+
+  @override
+  String get datecalcAddDays => 'Add days';
+
+  @override
+  String get datecalcBetween => 'Between the dates';
+
+  @override
+  String get datecalcBusiness => 'Working days';
+
+  @override
+  String datecalcDays(int n, String count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$count days',
+      one: '$count day',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get datecalcDaysToAdd => 'Days to add';
+
+  @override
+  String get datecalcDifference => 'Difference';
+
+  @override
+  String get datecalcFrom => 'From';
+
+  @override
+  String datecalcFromStart(int n, String count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$count days from the start date',
+      one: '$count day from the start date',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get datecalcHolidays => 'Public holidays in the year';
+
+  @override
+  String get datecalcMode => 'Mode';
+
+  @override
+  String get datecalcResult => 'Result date';
+
+  @override
+  String get datecalcStart => 'Start date';
+
+  @override
+  String get datecalcStatMonths => 'months';
+
+  @override
+  String get datecalcStatWeeks => 'weeks';
+
+  @override
+  String get datecalcStatYears => 'years';
+
+  @override
+  String get datecalcTo => 'To';
+
+  @override
+  String get datecalcWeekdays => 'Weekdays';
+
+  @override
+  String get datecalcWeekends => 'Weekend days';
 
   @override
   String get discoverDuasMeta => 'For ordinary days';
@@ -3004,6 +3202,70 @@ class AppLocalizationsEn extends AppLocalizations {
   String loadshedUntil(String time) {
     return 'until $time';
   }
+
+  @override
+  String get loanAmortisation => 'Amortisation';
+
+  @override
+  String get loanBalance => 'Balance';
+
+  @override
+  String get loanCompare => 'If the rate changed';
+
+  @override
+  String get loanHigherRate => 'Two points higher';
+
+  @override
+  String get loanInterest => 'Interest';
+
+  @override
+  String get loanInterestShare => 'Interest share';
+
+  @override
+  String get loanLowerRate => 'Two points lower';
+
+  @override
+  String get loanMonthly => 'Monthly payment';
+
+  @override
+  String loanOver(int n, String count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: 'over $count payments',
+      one: 'over 1 payment',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get loanPrincipal => 'Loan amount';
+
+  @override
+  String get loanPrincipalShort => 'Principal';
+
+  @override
+  String get loanRate => 'Interest rate';
+
+  @override
+  String loanRateAt(String rate) {
+    return 'At $rate%';
+  }
+
+  @override
+  String get loanSplit => 'Principal vs interest';
+
+  @override
+  String get loanTenure => 'Tenure';
+
+  @override
+  String get loanTotalInterest => 'Total interest';
+
+  @override
+  String get loanTotalPaid => 'Total repaid';
+
+  @override
+  String get loanYourRate => 'Your rate';
 
   @override
   String get marketPk => 'Pakistan';
@@ -5035,6 +5297,30 @@ class AppLocalizationsEn extends AppLocalizations {
   String get startupLoading => 'Starting Lume';
 
   @override
+  String get stopwatchEmptyText =>
+      'Start the stopwatch and tap Lap to record one.';
+
+  @override
+  String get stopwatchEmptyTitle => 'No laps yet';
+
+  @override
+  String get stopwatchHint => 'Start, then Lap to mark each lap';
+
+  @override
+  String stopwatchLap(String n) {
+    return 'Lap $n';
+  }
+
+  @override
+  String get stopwatchLapAction => 'Lap';
+
+  @override
+  String get stopwatchLaps => 'Laps';
+
+  @override
+  String get stopwatchPause => 'Pause';
+
+  @override
   String subsRenews(String date) {
     return 'renews $date';
   }
@@ -5204,6 +5490,35 @@ class AppLocalizationsEn extends AppLocalizations {
   String get timerPresets => 'Presets';
 
   @override
+  String get tipBill => 'Bill';
+
+  @override
+  String get tipFewer => 'Fewer';
+
+  @override
+  String get tipMore => 'More';
+
+  @override
+  String get tipPeople => 'People';
+
+  @override
+  String get tipPerPerson => 'Each person pays';
+
+  @override
+  String tipPerson(String n) {
+    return 'Person $n';
+  }
+
+  @override
+  String get tipSplit => 'Split';
+
+  @override
+  String get tipTip => 'Tip';
+
+  @override
+  String get tipTotal => 'Total';
+
+  @override
   String get todayAddToast => 'New task added';
 
   @override
@@ -5370,6 +5685,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String toolFavourited(String name) {
     return 'Added $name to favourites';
   }
+
+  @override
+  String get toolInputs => 'Inputs';
 
   @override
   String get toolInsights => 'Insights';
@@ -5969,6 +6287,9 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get unitTola => 'tola';
+
+  @override
+  String get unitYearsSuffix => 'years';
 
   @override
   String get weatherAir => 'Air quality';

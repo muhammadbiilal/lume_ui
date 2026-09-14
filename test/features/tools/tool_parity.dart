@@ -45,6 +45,14 @@ class ToolParity {
     Set<String> noWidth = const <String>{},
     Set<String> noHeight = const <String>{},
     Set<String> drifting = const <String>{},
+
+    /// A recorded difference, in points, added to the reference's `y` — an
+    /// element that sits lower by a documented amount. Written into the
+    /// report beside the value, so it is never a silent allowance.
+    Map<String, double> shifted = const <String, double>{},
+
+    /// The same, added to the reference's `height`.
+    Map<String, double> grown = const <String, double>{},
   }) {
     final Map<String, dynamic>? web = webToolCell(cell);
     expect(web, isNotNull, reason: '$cell has not been measured');
@@ -63,9 +71,13 @@ class ToolParity {
       final Rect r = tester.getRect(finder.first);
       final Map<String, double> want = <String, double>{
         'x': (w['x'] as num) - (bar['x'] as num).toDouble(),
-        'y': (w['y'] as num) - (bar['y'] as num).toDouble(),
+        'y':
+            (w['y'] as num) -
+            (bar['y'] as num).toDouble() +
+            (shifted[name] ?? 0),
         if (!noWidth.contains(name)) 'width': (w['width'] as num).toDouble(),
-        if (!noHeight.contains(name)) 'height': (w['height'] as num).toDouble(),
+        if (!noHeight.contains(name))
+          'height': (w['height'] as num).toDouble() + (grown[name] ?? 0),
       };
       final Map<String, double> got = <String, double>{
         'x': r.left - flutterBar.left,
@@ -79,8 +91,15 @@ class ToolParity {
       want.forEach((String p, double v) {
         final double d = got[p]! - v;
         compared++;
+        final double? recorded = p == 'y'
+            ? shifted[name]
+            : p == 'height'
+            ? grown[name]
+            : null;
         _rows.add(
-          '| $cell | `$name` | $p | ${v.toStringAsFixed(2)} | '
+          '| $cell | `$name` | $p${recorded == null ? '' : ' (reference '
+                    '${recorded >= 0 ? '+' : ''}${recorded.toStringAsFixed(0)}, '
+                    'recorded)'} | ${v.toStringAsFixed(2)} | '
           '${got[p]!.toStringAsFixed(2)} | ${d.toStringAsFixed(2)} |',
         );
         if (d.abs() > tolerance) {

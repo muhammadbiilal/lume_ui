@@ -740,6 +740,85 @@ class AppLocalizationsUr extends AppLocalizations {
   String get actionWeek => 'ہفتہ';
 
   @override
+  String ageDaysCount(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n دن',
+      one: '1 دن',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get ageDaysLived => 'گزارے گئے دن';
+
+  @override
+  String get ageDob => 'تاریخ پیدائش';
+
+  @override
+  String ageExact(String months, String days) {
+    return '$months اور $days';
+  }
+
+  @override
+  String get ageFuture => 'یہ تاریخ ابھی نہیں آئی';
+
+  @override
+  String get ageHours => 'گھنٹے';
+
+  @override
+  String ageMilestone(String n) {
+    return '$n دن کی عمر';
+  }
+
+  @override
+  String get ageMilestones => 'سنگ میل';
+
+  @override
+  String ageMonthsCount(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n مہینے',
+      one: '1 مہینہ',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get ageNextBirthday => 'اگلی سالگرہ';
+
+  @override
+  String ageUntil(int n, String count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$count دن میں',
+      one: '1 دن میں',
+      zero: 'آج',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get ageWeeks => 'ہفتے';
+
+  @override
+  String ageYearsUnit(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: 'سال',
+      one: 'سال',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get ageYouAre => 'آپ کی عمر';
+
+  @override
   String get agendaAdhanOn => 'اذان · یاد دہانی آن';
 
   @override
@@ -1445,6 +1524,55 @@ class AppLocalizationsUr extends AppLocalizations {
   String get commonYesterday => 'گزشتہ کل';
 
   @override
+  String compoundAfter(int n, String count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$count سال بعد',
+      one: '1 سال بعد',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String compoundAxisYears(String count) {
+    return '$count سال';
+  }
+
+  @override
+  String get compoundByYear => 'سال بہ سال';
+
+  @override
+  String get compoundContributed => 'جمع شدہ';
+
+  @override
+  String get compoundFinalValue => 'متوقع مالیت';
+
+  @override
+  String get compoundGrowth => 'اضافہ';
+
+  @override
+  String get compoundInitial => 'ابتدائی رقم';
+
+  @override
+  String get compoundMonthly => 'ہر ماہ اضافہ';
+
+  @override
+  String get compoundProjection => 'تخمینہ';
+
+  @override
+  String get compoundRate => 'سالانہ منافع';
+
+  @override
+  String get compoundReturn => 'منافع';
+
+  @override
+  String get compoundValue => 'مالیت';
+
+  @override
+  String get compoundYears => 'سال';
+
+  @override
   String cricketScore(String team, int runs, int wickets) {
     return '$team $runs/$wickets';
   }
@@ -1453,6 +1581,76 @@ class AppLocalizationsUr extends AppLocalizations {
   String cricketSecondTest(int n) {
     return 'دوسرا ٹیسٹ · دن $n';
   }
+
+  @override
+  String get datecalcAddDays => 'دن جمع کریں';
+
+  @override
+  String get datecalcBetween => 'تاریخوں کے درمیان';
+
+  @override
+  String get datecalcBusiness => 'کام کے دن';
+
+  @override
+  String datecalcDays(int n, String count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$count دن',
+      one: '$count دن',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get datecalcDaysToAdd => 'جمع کرنے کے دن';
+
+  @override
+  String get datecalcDifference => 'فرق';
+
+  @override
+  String get datecalcFrom => 'سے';
+
+  @override
+  String datecalcFromStart(int n, String count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: 'آغاز کی تاریخ سے $count دن',
+      one: 'آغاز کی تاریخ سے $count دن',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get datecalcHolidays => 'سال کی عام تعطیلات';
+
+  @override
+  String get datecalcMode => 'طریقہ';
+
+  @override
+  String get datecalcResult => 'نتیجے کی تاریخ';
+
+  @override
+  String get datecalcStart => 'آغاز کی تاریخ';
+
+  @override
+  String get datecalcStatMonths => 'مہینے';
+
+  @override
+  String get datecalcStatWeeks => 'ہفتے';
+
+  @override
+  String get datecalcStatYears => 'سال';
+
+  @override
+  String get datecalcTo => 'تک';
+
+  @override
+  String get datecalcWeekdays => 'ہفتے کے عام دن';
+
+  @override
+  String get datecalcWeekends => 'ہفتہ وار چھٹی کے دن';
 
   @override
   String get discoverDuasMeta => 'عام دنوں کے لیے';
@@ -3002,6 +3200,70 @@ class AppLocalizationsUr extends AppLocalizations {
   String loadshedUntil(String time) {
     return '$time تک';
   }
+
+  @override
+  String get loanAmortisation => 'ادائیگی کا گوشوارہ';
+
+  @override
+  String get loanBalance => 'بقایا';
+
+  @override
+  String get loanCompare => 'اگر شرح بدل جائے';
+
+  @override
+  String get loanHigherRate => 'دو پوائنٹ زیادہ';
+
+  @override
+  String get loanInterest => 'سود';
+
+  @override
+  String get loanInterestShare => 'سود کا حصہ';
+
+  @override
+  String get loanLowerRate => 'دو پوائنٹ کم';
+
+  @override
+  String get loanMonthly => 'ماہانہ قسط';
+
+  @override
+  String loanOver(int n, String count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$count اقساط میں',
+      one: '1 قسط میں',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get loanPrincipal => 'قرض کی رقم';
+
+  @override
+  String get loanPrincipalShort => 'اصل رقم';
+
+  @override
+  String get loanRate => 'شرح سود';
+
+  @override
+  String loanRateAt(String rate) {
+    return '$rate% پر';
+  }
+
+  @override
+  String get loanSplit => 'اصل رقم بمقابلہ سود';
+
+  @override
+  String get loanTenure => 'مدت';
+
+  @override
+  String get loanTotalInterest => 'کل سود';
+
+  @override
+  String get loanTotalPaid => 'کل ادائیگی';
+
+  @override
+  String get loanYourRate => 'آپ کی شرح';
 
   @override
   String get marketPk => 'پاکستان';
@@ -5032,6 +5294,30 @@ class AppLocalizationsUr extends AppLocalizations {
   String get startupLoading => 'Lume شروع ہو رہا ہے';
 
   @override
+  String get stopwatchEmptyText =>
+      'اسٹاپ واچ شروع کریں اور ریکارڈ کرنے کے لیے «چکر» دبائیں۔';
+
+  @override
+  String get stopwatchEmptyTitle => 'ابھی کوئی چکر نہیں';
+
+  @override
+  String get stopwatchHint => 'شروع کریں، پھر ہر چکر پر «چکر» دبائیں';
+
+  @override
+  String stopwatchLap(String n) {
+    return 'چکر $n';
+  }
+
+  @override
+  String get stopwatchLapAction => 'چکر';
+
+  @override
+  String get stopwatchLaps => 'چکر';
+
+  @override
+  String get stopwatchPause => 'روکیں';
+
+  @override
   String subsRenews(String date) {
     return '$date کو تجدید';
   }
@@ -5201,6 +5487,35 @@ class AppLocalizationsUr extends AppLocalizations {
   String get timerPresets => 'پری سیٹس';
 
   @override
+  String get tipBill => 'بل';
+
+  @override
+  String get tipFewer => 'کم';
+
+  @override
+  String get tipMore => 'زیادہ';
+
+  @override
+  String get tipPeople => 'افراد';
+
+  @override
+  String get tipPerPerson => 'ہر فرد ادا کرے';
+
+  @override
+  String tipPerson(String n) {
+    return 'فرد $n';
+  }
+
+  @override
+  String get tipSplit => 'تقسیم';
+
+  @override
+  String get tipTip => 'ٹپ';
+
+  @override
+  String get tipTotal => 'کل';
+
+  @override
   String get todayAddToast => 'نیا کام شامل ہو گیا';
 
   @override
@@ -5367,6 +5682,9 @@ class AppLocalizationsUr extends AppLocalizations {
   String toolFavourited(String name) {
     return '$name پسندیدہ میں شامل کر دیا گیا';
   }
+
+  @override
+  String get toolInputs => 'اندراج';
 
   @override
   String get toolInsights => 'بصیرتیں';
@@ -5966,6 +6284,9 @@ class AppLocalizationsUr extends AppLocalizations {
 
   @override
   String get unitTola => 'تولہ';
+
+  @override
+  String get unitYearsSuffix => 'سال';
 
   @override
   String get weatherAir => 'ہوا کا معیار';

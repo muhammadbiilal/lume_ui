@@ -9,7 +9,10 @@ library;
 
 import 'package:flutter/widgets.dart';
 
+import '../../age/presentation/age_tool.dart';
 import '../../calendar/presentation/calendar_tool.dart';
+import '../../compound/presentation/compound_tool.dart';
+import '../../datecalc/presentation/datecalc_tool.dart';
 import '../../documents/presentation/documents_tool.dart';
 import '../../emergency/presentation/emergency_tool.dart';
 import '../../expenses/presentation/expenses_tool.dart';
@@ -17,11 +20,14 @@ import '../../flights/presentation/flights_tool.dart';
 import '../../goldrates/presentation/goldrates_tool.dart';
 import '../../hadith/presentation/hadith_tool.dart';
 import '../../learning/presentation/learning_tool.dart';
+import '../../loan/presentation/loan_tool.dart';
 import '../../news/presentation/news_tool.dart';
 import '../../qr/presentation/qr_tool.dart';
 import '../../recipes/presentation/recipes_tool.dart';
+import '../../stopwatch/presentation/stopwatch_tool.dart';
 import '../../tax/presentation/tax_tool.dart';
 import '../../timer/presentation/timer_tool.dart';
+import '../../tipsplit/presentation/tipsplit_tool.dart';
 import '../../weather/presentation/weather_tool.dart';
 import 'tool_request.dart';
 
@@ -44,4 +50,11 @@ const Map<String, LumeToolBuilder> kLumeToolRegistry =
       'weather': LumeWeatherTool.open,
       'hadith': LumeHadithTool.open,
       'qr': LumeQrTool.open,
+      // F6B rollout wave 1 (`ROLLOUT_WAVE_1.md`).
+      'age': LumeAgeTool.open,
+      'datecalc': LumeDatecalcTool.open,
+      'tipsplit': LumeTipsplitTool.open,
+      'loan': LumeLoanTool.open,
+      'compound': LumeCompoundTool.open,
+      'stopwatch': LumeStopwatchTool.open,
     };

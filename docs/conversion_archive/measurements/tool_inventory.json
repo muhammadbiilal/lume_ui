@@ -70,11 +70,17 @@
    "meds"
   ],
   "flutterBuilt": [
+   "stopwatch",
    "timer",
+   "age",
+   "datecalc",
    "calendar",
    "hadith",
+   "compound",
    "goldrates",
    "tax",
+   "loan",
+   "tipsplit",
    "weather",
    "flights",
    "news",
@@ -532,7 +538,7 @@
    "approvedComposition": null,
    "recordFamily": false,
    "module": "assets/js/tools/everyday/stopwatch.tool.js",
-   "flutter": "placeholder"
+   "flutter": "built"
   },
   {
    "id": "timer",
@@ -596,7 +602,7 @@
    "approvedComposition": null,
    "recordFamily": false,
    "module": "assets/js/tools/everyday/age.tool.js",
-   "flutter": "placeholder"
+   "flutter": "built"
   },
   {
    "id": "focus",
@@ -660,7 +666,7 @@
    "approvedComposition": null,
    "recordFamily": false,
    "module": "assets/js/tools/everyday/datecalc.tool.js",
-   "flutter": "placeholder"
+   "flutter": "built"
   },
   {
    "id": "calendar",
@@ -1471,7 +1477,7 @@
    "approvedComposition": null,
    "recordFamily": false,
    "module": "assets/js/tools/money/compound.tool.js",
-   "flutter": "placeholder"
+   "flutter": "built"
   },
   {
    "id": "goldrates",
@@ -1853,7 +1859,7 @@
    "approvedComposition": null,
    "recordFamily": false,
    "module": "assets/js/tools/money/loan.tool.js",
-   "flutter": "placeholder"
+   "flutter": "built"
   },
   {
    "id": "tipsplit",
@@ -1887,7 +1893,7 @@
    "approvedComposition": null,
    "recordFamily": false,
    "module": "assets/js/tools/money/tipsplit.tool.js",
-   "flutter": "placeholder"
+   "flutter": "built"
   },
   {
    "id": "ledger",

@@ -145,7 +145,8 @@ void main() {
       (WidgetTester tester) async {
         await pumpTax(
           tester,
-          location: LumeRoutes.tool(LumeRoutes.tools, 'loan'),
+          // BMI is held back from wave 1 (`ROLLOUT_WAVE_1.md`).
+          location: LumeRoutes.tool(LumeRoutes.tools, 'bmi'),
         );
         expect(find.byType(FixtureToolScreen), findsOneWidget);
         expect(find.byType(LumeTaxTool), findsNothing);

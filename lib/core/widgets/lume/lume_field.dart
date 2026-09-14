@@ -53,12 +53,18 @@ class LumeToolField extends StatefulWidget {
     this.inputStyle,
     this.enabled = true,
     this.wide = false,
+    this.onTap,
   });
 
   final String label;
   final TextEditingController? controller;
   final String? value;
   final ValueChanged<String>? onChanged;
+
+  /// A field chosen rather than typed — a date. The box shows [value] and a
+  /// press opens the platform's picker; no keyboard rises. `<input
+  /// type="date">` is the same control in the reference.
+  final VoidCallback? onTap;
 
   /// `.field__hint` — 10 / 500, muted.
   final String? hint;
@@ -94,6 +100,21 @@ class LumeToolField extends StatefulWidget {
 }
 
 class _LumeToolFieldState extends State<LumeToolField> {
+  /// A picked field's box is one press target, named by its label and value.
+  Widget _picked(Widget box) {
+    final VoidCallback? onTap = widget.onTap;
+    if (onTap == null) return box;
+    return LumePressable(
+      onTap: widget.enabled ? onTap : null,
+      enabled: widget.enabled,
+      semanticLabel: '${widget.label}, ${widget.value ?? ''}',
+      borderRadius: widget.boxRadius ?? LumeRadius.brXs,
+      minSize: LumeToolField.boxHeight,
+      excludeSemantics: true,
+      child: box,
+    );
+  }
+
   /// `.field__box:focus-within` — the ring belongs to the box, and it is the
   /// *input inside it* that takes focus. `Focus` with `canRequestFocus: false`
   /// is that relationship: it never takes focus itself and hears when a
@@ -135,56 +156,83 @@ class _LumeToolFieldState extends State<LumeToolField> {
           onFocusChange: (bool has) {
             if (_within != has) setState(() => _within = has);
           },
-          child: AnimatedContainer(
-            duration: LumeMotion.duration(context, LumeMotion.fast),
-            curve: LumeMotion.ease,
-            constraints: const BoxConstraints(
-              minHeight: LumeToolField.boxHeight,
-            ),
-            padding:
-                widget.boxPadding ?? const EdgeInsets.symmetric(horizontal: 12),
-            decoration: BoxDecoration(
-              color: lume.card2,
-              borderRadius: widget.boxRadius ?? LumeRadius.brXs,
-              border: Border.all(
-                // `border-color: color-mix(in srgb, accent 50%, border)`.
-                color: _within
-                    ? Color.lerp(lume.border, lume.accent, 0.5)!
-                    : lume.border,
-                width: LumeSpace.border,
+          child: _picked(
+            AnimatedContainer(
+              duration: LumeMotion.duration(context, LumeMotion.fast),
+              curve: LumeMotion.ease,
+              constraints: const BoxConstraints(
+                minHeight: LumeToolField.boxHeight,
               ),
-              // `box-shadow: 0 0 0 3px var(--tint-accent)`.
-              boxShadow: _within
-                  ? <BoxShadow>[
-                      BoxShadow(color: lume.tintAccent, spreadRadius: 3),
-                    ]
-                  : null,
-            ),
-            child: Row(
-              children: <Widget>[
-                if (widget.prefix != null) ...<Widget>[
-                  _Affix(widget.prefix!),
-                  const SizedBox(width: 6),
-                ],
-                Expanded(
-                  child: _RawInput(
-                    controller: widget.controller,
-                    value: widget.value,
-                    onChanged: widget.onChanged,
-                    placeholder: widget.placeholder,
-                    kind: widget.kind,
-                    enabled: widget.enabled,
-                    style: LumeType.fit(
-                      context,
-                      context.lumeType.bodyStrong,
-                    ).copyWith(color: lume.text).merge(widget.inputStyle),
-                  ),
+              padding:
+                  widget.boxPadding ??
+                  const EdgeInsets.symmetric(horizontal: 12),
+              decoration: BoxDecoration(
+                color: lume.card2,
+                borderRadius: widget.boxRadius ?? LumeRadius.brXs,
+                border: Border.all(
+                  // `border-color: color-mix(in srgb, accent 50%, border)`.
+                  color: _within
+                      ? Color.lerp(lume.border, lume.accent, 0.5)!
+                      : lume.border,
+                  width: LumeSpace.border,
                 ),
-                if (widget.suffix != null) ...<Widget>[
-                  const SizedBox(width: 6),
-                  _Affix(widget.suffix!),
+                // `box-shadow: 0 0 0 3px var(--tint-accent)`.
+                boxShadow: _within
+                    ? <BoxShadow>[
+                        BoxShadow(color: lume.tintAccent, spreadRadius: 3),
+                      ]
+                    : null,
+              ),
+              child: Row(
+                children: <Widget>[
+                  if (widget.prefix != null) ...<Widget>[
+                    _Affix(widget.prefix!),
+                    const SizedBox(width: 6),
+                  ],
+                  Expanded(
+                    child: widget.onTap == null
+                        ? _RawInput(
+                            controller: widget.controller,
+                            value: widget.value,
+                            onChanged: widget.onChanged,
+                            placeholder: widget.placeholder,
+                            kind: widget.kind,
+                            enabled: widget.enabled,
+                            style:
+                                LumeType.fit(
+                                      context,
+                                      context.lumeType.bodyStrong,
+                                    )
+                                    .copyWith(color: lume.text)
+                                    .merge(widget.inputStyle),
+                          )
+                        : Text(
+                            widget.value ?? '',
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
+                            style:
+                                LumeType.fit(
+                                      context,
+                                      context.lumeType.bodyStrong,
+                                    )
+                                    .copyWith(color: lume.text)
+                                    .merge(widget.inputStyle),
+                          ),
+                  ),
+                  if (widget.onTap != null) ...<Widget>[
+                    const SizedBox(width: 6),
+                    LumeIcon(
+                      LumeIcons.calendar,
+                      size: LumeSpace.iconSm,
+                      color: lume.text3,
+                    ),
+                  ],
+                  if (widget.suffix != null) ...<Widget>[
+                    const SizedBox(width: 6),
+                    _Affix(widget.suffix!),
+                  ],
                 ],
-              ],
+              ),
             ),
           ),
         ),

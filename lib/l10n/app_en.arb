@@ -940,6 +940,98 @@
   "@actionWeek": {
     "description": "Reference key a.week"
   },
+  "ageDaysCount": "{n, plural, =1{1 day} other{{n} days}}",
+  "@ageDaysCount": {
+    "description": "Days in an exact age",
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
+  "ageDaysLived": "Days lived",
+  "@ageDaysLived": {
+    "description": "Reference key age.days"
+  },
+  "ageDob": "Date of birth",
+  "@ageDob": {
+    "description": "Reference key age.dob"
+  },
+  "ageExact": "{months} and {days}",
+  "@ageExact": {
+    "description": "Reference key age.exact, composed from the two counts so each has its own singular",
+    "placeholders": {
+      "months": {
+        "type": "String"
+      },
+      "days": {
+        "type": "String"
+      }
+    }
+  },
+  "ageFuture": "That date hasn’t happened yet",
+  "@ageFuture": {
+    "description": "Under a date of birth after today; the age is not worked out from it"
+  },
+  "ageHours": "Hours",
+  "@ageHours": {
+    "description": "Reference key age.hours"
+  },
+  "ageMilestone": "{n} days old",
+  "@ageMilestone": {
+    "description": "Reference key age.milestone",
+    "placeholders": {
+      "n": {
+        "type": "String"
+      }
+    }
+  },
+  "ageMilestones": "Milestones",
+  "@ageMilestones": {
+    "description": "Reference key age.milestones"
+  },
+  "ageMonthsCount": "{n, plural, =1{1 month} other{{n} months}}",
+  "@ageMonthsCount": {
+    "description": "Months in an exact age",
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
+  "ageNextBirthday": "Next birthday",
+  "@ageNextBirthday": {
+    "description": "Reference key age.nextBirthday"
+  },
+  "ageUntil": "{n, plural, =0{today} =1{in 1 day} other{in {count} days}}",
+  "@ageUntil": {
+    "description": "Days to the next birthday; the reference says \"in 0 days\" on the day itself",
+    "placeholders": {
+      "n": {
+        "type": "int"
+      },
+      "count": {
+        "type": "String"
+      }
+    }
+  },
+  "ageWeeks": "Weeks",
+  "@ageWeeks": {
+    "description": "Reference key age.weeks"
+  },
+  "ageYearsUnit": "{n, plural, =1{year} other{years}}",
+  "@ageYearsUnit": {
+    "description": "The unit beside an age in whole years",
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
+  "ageYouAre": "You are",
+  "@ageYouAre": {
+    "description": "Reference key age.youAre"
+  },
   "agendaAdhanOn": "Adhan · reminder on",
   "@agendaAdhanOn": {
     "description": "Reference: a prayer still to come"
@@ -1850,6 +1942,71 @@
   "@commonYesterday": {
     "description": "Reference key common.yesterday"
   },
+  "compoundAfter": "{n, plural, =1{after 1 year} other{after {count} years}}",
+  "@compoundAfter": {
+    "description": "Reference key compound.after",
+    "placeholders": {
+      "n": {
+        "type": "int"
+      },
+      "count": {
+        "type": "String"
+      }
+    }
+  },
+  "compoundAxisYears": "{count}y",
+  "@compoundAxisYears": {
+    "description": "A projection axis label; the reference writes a literal English \"y\"",
+    "placeholders": {
+      "count": {
+        "type": "String"
+      }
+    }
+  },
+  "compoundByYear": "Year by year",
+  "@compoundByYear": {
+    "description": "Reference key compound.byYear"
+  },
+  "compoundContributed": "Contributed",
+  "@compoundContributed": {
+    "description": "Reference key compound.contributed"
+  },
+  "compoundFinalValue": "Projected value",
+  "@compoundFinalValue": {
+    "description": "Reference key compound.finalValue"
+  },
+  "compoundGrowth": "Growth",
+  "@compoundGrowth": {
+    "description": "Reference key compound.growth"
+  },
+  "compoundInitial": "Starting amount",
+  "@compoundInitial": {
+    "description": "Reference key compound.initial"
+  },
+  "compoundMonthly": "Added each month",
+  "@compoundMonthly": {
+    "description": "Reference key compound.monthly"
+  },
+  "compoundProjection": "Projection",
+  "@compoundProjection": {
+    "description": "Reference key compound.projection"
+  },
+  "compoundRate": "Annual return",
+  "@compoundRate": {
+    "description": "Reference key compound.rate"
+  },
+  "compoundReturn": "Return",
+  "@compoundReturn": {
+    "description": "Reference key compound.return"
+  },
+  "compoundValue": "Value",
+  "@compoundValue": {
+    "description": "Reference key compound.value"
+  },
+  "compoundYears": "Years",
+  "@compoundYears": {
+    "description": "Reference key compound.years"
+  },
   "cricketScore": "{team} {runs}/{wickets}",
   "@cricketScore": {
     "description": "Reference: the cricket Discover card’s title. The side is a three-letter code",
@@ -1873,6 +2030,94 @@
         "type": "int"
       }
     }
+  },
+  "datecalcAddDays": "Add days",
+  "@datecalcAddDays": {
+    "description": "Reference key datecalc.addSubtract"
+  },
+  "datecalcBetween": "Between the dates",
+  "@datecalcBetween": {
+    "description": "Reference key datecalc.between"
+  },
+  "datecalcBusiness": "Working days",
+  "@datecalcBusiness": {
+    "description": "Reference key datecalc.business"
+  },
+  "datecalcDays": "{n, plural, =1{{count} day} other{{count} days}}",
+  "@datecalcDays": {
+    "description": "The days between two dates; n chooses the form, count is n as the locale writes it",
+    "placeholders": {
+      "n": {
+        "type": "int"
+      },
+      "count": {
+        "type": "String"
+      }
+    }
+  },
+  "datecalcDaysToAdd": "Days to add",
+  "@datecalcDaysToAdd": {
+    "description": "Reference key datecalc.days"
+  },
+  "datecalcDifference": "Difference",
+  "@datecalcDifference": {
+    "description": "Reference key datecalc.difference"
+  },
+  "datecalcFrom": "From",
+  "@datecalcFrom": {
+    "description": "Reference key datecalc.from"
+  },
+  "datecalcFromStart": "{n, plural, =1{{count} day from the start date} other{{count} days from the start date}}",
+  "@datecalcFromStart": {
+    "description": "Reference key datecalc.fromStart; count keeps the sign of the days added",
+    "placeholders": {
+      "n": {
+        "type": "int"
+      },
+      "count": {
+        "type": "String"
+      }
+    }
+  },
+  "datecalcHolidays": "Public holidays in the year",
+  "@datecalcHolidays": {
+    "description": "Reference key datecalc.holidays"
+  },
+  "datecalcMode": "Mode",
+  "@datecalcMode": {
+    "description": "Reference key datecalc.mode"
+  },
+  "datecalcResult": "Result date",
+  "@datecalcResult": {
+    "description": "Reference key datecalc.result"
+  },
+  "datecalcStart": "Start date",
+  "@datecalcStart": {
+    "description": "Reference key datecalc.start"
+  },
+  "datecalcStatMonths": "months",
+  "@datecalcStatMonths": {
+    "description": "Reference key common.months, as a summary figure label"
+  },
+  "datecalcStatWeeks": "weeks",
+  "@datecalcStatWeeks": {
+    "description": "Reference key common.weeks, as a summary figure label"
+  },
+  "datecalcStatYears": "years",
+  "@datecalcStatYears": {
+    "description": "Reference key common.years, as a summary figure label"
+  },
+  "datecalcTo": "To",
+  "@datecalcTo": {
+    "description": "Reference key datecalc.to"
+  },
+  "datecalcWeekdays": "Weekdays",
+  "@datecalcWeekdays": {
+    "description": "Reference key datecalc.weekdays"
+  },
+  "datecalcWeekends": "Weekend days",
+  "@datecalcWeekends": {
+    "description": "Reference key datecalc.weekends"
   },
   "discoverDuasMeta": "For ordinary days",
   "@discoverDuasMeta": {
@@ -4091,6 +4336,91 @@
         "type": "String"
       }
     }
+  },
+  "loanAmortisation": "Amortisation",
+  "@loanAmortisation": {
+    "description": "Reference key loan.amortisation"
+  },
+  "loanBalance": "Balance",
+  "@loanBalance": {
+    "description": "Reference key loan.balance"
+  },
+  "loanCompare": "If the rate changed",
+  "@loanCompare": {
+    "description": "Reference key loan.compare"
+  },
+  "loanHigherRate": "Two points higher",
+  "@loanHigherRate": {
+    "description": "Reference key loan.higherRate"
+  },
+  "loanInterest": "Interest",
+  "@loanInterest": {
+    "description": "Reference key loan.interest"
+  },
+  "loanInterestShare": "Interest share",
+  "@loanInterestShare": {
+    "description": "Reference key loan.interestShare"
+  },
+  "loanLowerRate": "Two points lower",
+  "@loanLowerRate": {
+    "description": "Reference key loan.lowerRate"
+  },
+  "loanMonthly": "Monthly payment",
+  "@loanMonthly": {
+    "description": "Reference key loan.monthly"
+  },
+  "loanOver": "{n, plural, =1{over 1 payment} other{over {count} payments}}",
+  "@loanOver": {
+    "description": "Reference key loan.over",
+    "placeholders": {
+      "n": {
+        "type": "int"
+      },
+      "count": {
+        "type": "String"
+      }
+    }
+  },
+  "loanPrincipal": "Loan amount",
+  "@loanPrincipal": {
+    "description": "Reference key loan.principal"
+  },
+  "loanPrincipalShort": "Principal",
+  "@loanPrincipalShort": {
+    "description": "Reference key loan.principalShort"
+  },
+  "loanRate": "Interest rate",
+  "@loanRate": {
+    "description": "Reference key loan.rate"
+  },
+  "loanRateAt": "At {rate}%",
+  "@loanRateAt": {
+    "description": "Reference key loan.rateAt",
+    "placeholders": {
+      "rate": {
+        "type": "String"
+      }
+    }
+  },
+  "loanSplit": "Principal vs interest",
+  "@loanSplit": {
+    "description": "Reference key loan.split"
+  },
+  "loanTenure": "Tenure",
+  "@loanTenure": {
+    "description": "Reference key loan.tenure"
+  },
+  "loanTotalInterest": "Total interest",
+  "@loanTotalInterest": {
+    "description": "Reference key loan.totalInterest"
+  },
+  "loanTotalPaid": "Total repaid",
+  "@loanTotalPaid": {
+    "description": "Reference key loan.totalPaid"
+  },
+  "loanYourRate": "Your rate",
+  "@loanYourRate": {
+    "description": "Reference key loan.yourRate"
   },
   "marketPk": "Pakistan",
   "@marketPk": {
@@ -6884,6 +7214,39 @@
   "@startupLoading": {
     "description": "Announced while the launch is still deciding where to go"
   },
+  "stopwatchEmptyText": "Start the stopwatch and tap Lap to record one.",
+  "@stopwatchEmptyText": {
+    "description": "Reference key stopwatch.empty.text"
+  },
+  "stopwatchEmptyTitle": "No laps yet",
+  "@stopwatchEmptyTitle": {
+    "description": "Reference key stopwatch.empty.title"
+  },
+  "stopwatchHint": "Start, then Lap to mark each lap",
+  "@stopwatchHint": {
+    "description": "Reference key stopwatch.hint, corrected: the reference says \"tap again to lap\", and tapping again pauses"
+  },
+  "stopwatchLap": "Lap {n}",
+  "@stopwatchLap": {
+    "description": "Reference key stopwatch.lap",
+    "placeholders": {
+      "n": {
+        "type": "String"
+      }
+    }
+  },
+  "stopwatchLapAction": "Lap",
+  "@stopwatchLapAction": {
+    "description": "Records a lap while the stopwatch runs"
+  },
+  "stopwatchLaps": "Laps",
+  "@stopwatchLaps": {
+    "description": "Reference key stopwatch.laps"
+  },
+  "stopwatchPause": "Pause",
+  "@stopwatchPause": {
+    "description": "Pauses the running stopwatch"
+  },
   "subsRenews": "renews {date}",
   "@subsRenews": {
     "description": "Reference key subs.renews",
@@ -7116,6 +7479,47 @@
   "timerPresets": "Presets",
   "@timerPresets": {
     "description": "Reference key timer.presets — a section head"
+  },
+  "tipBill": "Bill",
+  "@tipBill": {
+    "description": "Reference key tip.bill"
+  },
+  "tipFewer": "Fewer",
+  "@tipFewer": {
+    "description": "The people stepper’s decrease action"
+  },
+  "tipMore": "More",
+  "@tipMore": {
+    "description": "The people stepper’s increase action"
+  },
+  "tipPeople": "People",
+  "@tipPeople": {
+    "description": "Reference key tip.people"
+  },
+  "tipPerPerson": "Each person pays",
+  "@tipPerPerson": {
+    "description": "Reference key tip.perPerson"
+  },
+  "tipPerson": "Person {n}",
+  "@tipPerson": {
+    "description": "Reference key tip.person",
+    "placeholders": {
+      "n": {
+        "type": "String"
+      }
+    }
+  },
+  "tipSplit": "Split",
+  "@tipSplit": {
+    "description": "Reference key tip.custom"
+  },
+  "tipTip": "Tip",
+  "@tipTip": {
+    "description": "Reference keys tip.tip and tip.tipAmount"
+  },
+  "tipTotal": "Total",
+  "@tipTotal": {
+    "description": "Reference key tip.total"
   },
   "todayAddToast": "New task added",
   "@todayAddToast": {
@@ -7360,6 +7764,10 @@
         "type": "String"
       }
     }
+  },
+  "toolInputs": "Inputs",
+  "@toolInputs": {
+    "description": "Reference key tool.inputs — a calculator’s inputs section"
   },
   "toolInsights": "Insights",
   "@toolInsights": {
@@ -8182,6 +8590,10 @@
   "unitTola": "tola",
   "@unitTola": {
     "description": "Reference key unit.tola — 11.664 grams"
+  },
+  "unitYearsSuffix": "years",
+  "@unitYearsSuffix": {
+    "description": "A field suffix: the value is a number of years"
   },
   "weatherAir": "Air quality",
   "@weatherAir": {
