@@ -11,6 +11,7 @@ import 'package:flutter/widgets.dart';
 
 import '../../emergency/presentation/emergency_tool.dart';
 import '../../learning/presentation/learning_tool.dart';
+import '../../news/presentation/news_tool.dart';
 import '../../recipes/presentation/recipes_tool.dart';
 import '../../tax/presentation/tax_tool.dart';
 import '../../timer/presentation/timer_tool.dart';
@@ -26,4 +27,5 @@ const Map<String, LumeToolBuilder> kLumeToolRegistry =
       'timer': LumeTimerTool.open,
       'emergency': LumeEmergencyTool.open,
       'recipes': LumeRecipesTool.open,
+      'news': LumeNewsTool.open,
     };

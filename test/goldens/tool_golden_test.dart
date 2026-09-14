@@ -302,6 +302,56 @@ void main() {
     });
   });
 
+  // ----------------------------------------------------------------- News
+
+  group('News', () {
+    final String location = LumeRoutes.tool(LumeRoutes.tools, 'news');
+
+    for (final Cell cell in kCells) {
+      testWidgets(cell.$1, (WidgetTester tester) async {
+        await shoot(
+          tester,
+          state: 'default_pk',
+          location: location,
+          golden: 'tool_news_default_pk',
+          cell: cell,
+        );
+      });
+    }
+
+    testWidgets('Business chosen · the reference cell', (
+      WidgetTester tester,
+    ) async {
+      await shoot(
+        tester,
+        state: 'default_pk',
+        location: location,
+        golden: 'tool_news_default_pk_cat-Business',
+        cell: kCells.first,
+        after: (WidgetTester t) async {
+          await t.tap(find.text('Business').first);
+          await t.pumpAndSettle();
+        },
+      );
+    });
+
+    testWidgets('no match · the reference cell', (WidgetTester tester) async {
+      await shoot(
+        tester,
+        state: 'default_pk',
+        location: location,
+        golden: 'tool_news_default_pk_q-zzz',
+        cell: kCells.first,
+        after: (WidgetTester t) async {
+          await t.enterText(find.byType(EditableText), 'zzz');
+          await t.pumpAndSettle();
+          FocusManager.instance.primaryFocus?.unfocus();
+          await t.pumpAndSettle();
+        },
+      );
+    });
+  });
+
   // ----------------------------------------------------------- Share card
 
   // The share sheet over Tax (D7): the card drawn from the screen's own

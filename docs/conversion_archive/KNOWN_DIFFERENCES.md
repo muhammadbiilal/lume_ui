@@ -1586,6 +1586,38 @@ tool, whatever the tool asks for.
   quote the reference falls back to (C68); with no top story, Share is
   disabled.
 
+### C71 — Calendar: a planner that plans one month and sorts by text
+
+**Found in F6A on Calendar.**
+
+- **Month, Week and Day change nothing — reproduced.** `calendar.tool.js`
+  stores the chosen view and nothing reads it: `monthGrid()` always draws the
+  current month (`tool_calendar_default_pk_view-week_…` measures the same 30
+  days under "Week"). Reproduced — the control is drawn and chosen, the grid
+  stays; a real week and day view is a product decision, not a conversion.
+- **No navigation, no events of the reader's own — reproduced.** The grid is
+  this month only; the agenda is three fixed items; "Add an event" toasts
+  "New event". There is no create, edit or delete to convert (§ record layer
+  stays Expenses and Documents).
+- **The agenda is sorted as text — corrected, for ratification.** With a
+  Muslim reader the next prayer joins the agenda and the list is sorted by
+  `a.time > b.time`, comparing the *formatted* times: "2:00 pm" < "6:27 pm" <
+  "6:30 pm" < "9:00 am", so the morning standup comes last
+  (`tool_calendar_muslim_pk_…`). The agenda's intent is chronological; Flutter
+  sorts by the time itself, in any clock and any digits.
+- **Hijri days count past the end of the month — corrected, for
+  ratification.** Each cell's Hijri day is `today's Hijri day − (today −
+  date)`, never turning over: 30 September reads "46". Flutter computes each
+  day's own Hijri date (`LumeHijriDate`, the reference's arithmetic, taken at
+  the civil day rather than the UTC instant), so the month turns over.
+- **The floating action has no name — corrected.** `UI.fab` writes
+  `aria-label` from `o.label`, and the measured button carries none; Flutter's
+  is announced "Add an event".
+- **Holidays are the first four in data order, in English — partly
+  reproduced.** The order is the reference's (Iqbal Day in November before
+  Kashmir Day in February); the names, kinds and dates are written in the
+  reader's language.
+
 ### C63 — English dates written the wrong way outside the United States
 
 **Found in F6A** on the UAE Tax capture ("Mon, 7 Sep") and confirmed by

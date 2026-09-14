@@ -862,6 +862,28 @@ const TOOL_TARGETS = {
   'lead.title': '#toolBody .lead__title',
   'lead.meta': '#toolBody .lead__meta',
   'rows2': '#toolBody .sect:nth-of-type(6) .rows',
+  // Calendar — the month grid, the day's timeline, the holidays, the add.
+  'segmented': '#toolBody .segmented',
+  'mgrid': '#toolBody .mgrid',
+  'mgrid.title': '#toolBody .mgrid__title',
+  'mgrid.grid': '#toolBody .mgrid__grid',
+  'mgrid.head1': '#toolBody .mgrid__head:nth-child(1)',
+  'mgrid.head7': '#toolBody .mgrid__head:nth-child(7)',
+  'mgrid.cell1': '#toolBody .mgrid__cell:not(.is-empty)',
+  'mgrid.today': '#toolBody .mgrid__cell.is-today',
+  'mgrid.todayNum': '#toolBody .mgrid__cell.is-today b',
+  'mgrid.sub': '#toolBody .mgrid__cell i',
+  'tline': '#toolBody .tline',
+  'tline.item1': '#toolBody .tline__item:nth-child(1)',
+  'tline.item2': '#toolBody .tline__item:nth-child(2)',
+  'tline.time': '#toolBody .tline__time',
+  'tline.rail': '#toolBody .tline__rail',
+  'tline.node': '#toolBody .tline__node',
+  'tline.nodeNow': '#toolBody .tline__item.is-now .tline__node',
+  'tline.title': '#toolBody .tline__title',
+  'tline.sub': '#toolBody .tline__sub',
+  'fab': '#screen-tool .fab',
+  'fab.icon': '#screen-tool .fab svg',
 };
 
 /* The instant everything is captured at: Monday 7 September 2026, 16:41:32
@@ -1712,6 +1734,39 @@ async function main() {
                        value: (el.querySelector('.crow__value') || {}).textContent || null,
                        act: el.getAttribute('data-act') };
             })
+        } : null;
+        composition.calendar = q('.mgrid') ? {
+          context: texts('#toolBody .ctxbar__item'),
+          segments: texts('#toolBody .segmented button, #toolBody .segmented [role=tab], #toolBody .segmented .seg'),
+          segmentOn: tx('#toolBody .segmented .is-on') || tx('#toolBody .segmented [aria-selected=true]'),
+          title: tx('#toolBody .mgrid__title'),
+          heads: texts('#toolBody .mgrid__head'),
+          empties: document.querySelectorAll('#toolBody .mgrid__cell.is-empty').length,
+          days: Array.prototype.map.call(
+            document.querySelectorAll('#toolBody .mgrid__cell:not(.is-empty)'),
+            function (el) {
+              return [(el.querySelector('b') || {}).textContent || null,
+                      (el.querySelector('i') || {}).textContent || null,
+                      el.classList.contains('is-today')];
+            }),
+          agenda: Array.prototype.map.call(
+            document.querySelectorAll('#toolBody .tline__item'),
+            function (el) {
+              var st = ['done', 'now'].filter(function (k) { return el.classList.contains('is-' + k); })[0] || '';
+              return { time: (el.querySelector('.tline__time') || {}).textContent || null,
+                       title: (el.querySelector('.tline__title') || {}).textContent || null,
+                       sub: (el.querySelector('.tline__sub') || {}).textContent || null,
+                       state: st };
+            }),
+          holidays: Array.prototype.map.call(
+            document.querySelectorAll('#toolBody .rows > .crow'),
+            function (el) {
+              var lab = el.querySelector('.crow__label');
+              return { label: lab && lab.firstChild ? lab.firstChild.textContent : null,
+                       sub: (el.querySelector('.crow__label i') || {}).textContent || null,
+                       value: (el.querySelector('.crow__value') || {}).textContent || null };
+            }),
+          fab: q('#screen-tool .fab') ? q('#screen-tool .fab').getAttribute('aria-label') : null
         } : null;
         composition.rows = Array.prototype.map.call(
           document.querySelectorAll('#toolBody .rows > .rrow'),

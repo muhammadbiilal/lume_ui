@@ -234,7 +234,7 @@ spec port ──► tool host adapter ──► route dispatch
 4. **Timer** (L) — the clock screen over an injectable interval — *built*
 5. **Emergency** (N) — the dialer contract (D6) — *built*
 6. **Recipes** (K) — art and image cards; the first share-card consumer after Tax — *built*
-7. **News** (I) — art rows, lead article, chips
+7. **News** (I) — art rows, lead article, chips — *built*
 8. **Calendar** (F) — the month grid
 9. **Currency & Gold** (G) — sparkline, line chart, deltas
 10. **Flights** (H) — map and journey
