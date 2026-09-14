@@ -4822,6 +4822,363 @@
   "@toolUnavailableTitle": {
     "description": "Tool host unavailable state"
   },
+  "toolRelated": "Related tools",
+  "@toolRelated": {
+    "description": "Reference key tool.related — the related-tools section head"
+  },
+  "a11yExport": "Export",
+  "@a11yExport": {
+    "description": "Reference key a11y.export — the tool header export action"
+  },
+  "a11yFavourite": "Save to favourites",
+  "@a11yFavourite": {
+    "description": "Reference key a11y.favourite — the tool header favourite action. The reference has no Urdu or Arabic for it; translated here (§11)."
+  },
+  "a11ySearchTool": "Search this tool",
+  "@a11ySearchTool": {
+    "description": "Reference key a11y.search — the tool header search action, in the reference's own Urdu and Arabic"
+  },
+  "toolChangeCountry": "Change country",
+  "@toolChangeCountry": {
+    "description": "Reference key settings.changeCountry — a tool that is not localised for the reader's country offers this"
+  },
+  "freshLive": "Live",
+  "@freshLive": {
+    "description": "Reference key fresh.live — a live source"
+  },
+  "freshCached": "Cached",
+  "@freshCached": {
+    "description": "Reference key fresh.cached"
+  },
+  "freshDelayed": "Delayed 15 min",
+  "@freshDelayed": {
+    "description": "Reference key fresh.delayed"
+  },
+  "freshDaily": "Updated today",
+  "@freshDaily": {
+    "description": "Reference key fresh.daily"
+  },
+  "freshWeekly": "Updated this week",
+  "@freshWeekly": {
+    "description": "Reference key fresh.weekly"
+  },
+  "freshAnnual": "Current tax year",
+  "@freshAnnual": {
+    "description": "Reference key fresh.annual"
+  },
+  "freshDraw": "Latest draw",
+  "@freshDraw": {
+    "description": "Reference key fresh.draw"
+  },
+  "freshComputed": "Calculated for your location",
+  "@freshComputed": {
+    "description": "Reference key fresh.computed"
+  },
+  "freshStatic": "Reference text",
+  "@freshStatic": {
+    "description": "Reference key fresh.static"
+  },
+  "freshLocal": "Stored on this device",
+  "@freshLocal": {
+    "description": "Reference key fresh.local"
+  },
+  "freshAgoSec": "Updated {n} sec ago",
+  "@freshAgoSec": {
+    "description": "Reference key fresh.agoSec — the source line of a live tool",
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
+  "freshAgoMin": "Updated {n} min ago",
+  "@freshAgoMin": {
+    "description": "Reference key fresh.agoMin — the source line of a delayed tool",
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
+  "freshAt": "Updated at {time}",
+  "@freshAt": {
+    "description": "Reference key fresh.at — a daily source, in the reader's clock",
+    "placeholders": {
+      "time": {
+        "type": "String"
+      }
+    }
+  },
+  "freshOn": "Updated {date}",
+  "@freshOn": {
+    "description": "Reference key fresh.on — a weekly or annual source",
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "freshForCity": "For {city}",
+  "@freshForCity": {
+    "description": "Reference key fresh.forCity — a figure computed for the reader's city",
+    "placeholders": {
+      "city": {
+        "type": "String"
+      }
+    }
+  },
+  "archetypeAction": "Emergency actions",
+  "@archetypeAction": {
+    "description": "Reference key archetype.action — the word in a tool header's sub-line"
+  },
+  "archetypeCalculator": "Calculator",
+  "@archetypeCalculator": {
+    "description": "Reference key archetype.calculator"
+  },
+  "archetypeDashboard": "Dashboard",
+  "@archetypeDashboard": {
+    "description": "Reference key archetype.dashboard"
+  },
+  "archetypeExplorer": "Data explorer",
+  "@archetypeExplorer": {
+    "description": "Reference key archetype.explorer"
+  },
+  "archetypeInstrument": "Instrument",
+  "@archetypeInstrument": {
+    "description": "Reference key archetype.instrument"
+  },
+  "archetypeLibrary": "Library",
+  "@archetypeLibrary": {
+    "description": "Reference key archetype.library"
+  },
+  "archetypeManager": "Records manager",
+  "@archetypeManager": {
+    "description": "Reference key archetype.manager"
+  },
+  "archetypePlanner": "Planner",
+  "@archetypePlanner": {
+    "description": "Reference key archetype.planner"
+  },
+  "archetypeReader": "Reader",
+  "@archetypeReader": {
+    "description": "Reference key archetype.reader"
+  },
+  "archetypeTracker": "Tracker",
+  "@archetypeTracker": {
+    "description": "Reference key archetype.tracker"
+  },
+  "archetypeTracking": "Live tracking",
+  "@archetypeTracking": {
+    "description": "Reference key archetype.tracking"
+  },
+  "toolSourceTax": "Statutory slabs",
+  "@toolSourceTax": {
+    "description": "tool-specs.js src for tax. The reference prints this English string in every language; translated here (§11)."
+  },
+  "taxAbove": "Above {v}",
+  "@taxAbove": {
+    "description": "Reference key tax.above — the top band's label",
+    "placeholders": {
+      "v": {
+        "type": "String"
+      }
+    }
+  },
+  "taxAnnual": "Annual",
+  "@taxAnnual": {
+    "description": "Reference key tax.annual — the period control"
+  },
+  "taxBand": "Band",
+  "@taxBand": {
+    "description": "Reference key tax.band — a table column"
+  },
+  "taxDeductions": "Deductions",
+  "@taxDeductions": {
+    "description": "Reference key tax.deductions — a field"
+  },
+  "taxDueAnnual": "Tax a year",
+  "@taxDueAnnual": {
+    "description": "Reference key tax.dueAnnual — the result's kicker"
+  },
+  "taxDueMonthly": "Tax a month",
+  "@taxDueMonthly": {
+    "description": "Reference key tax.dueMonthly — the result's kicker"
+  },
+  "taxEffective": "Effective rate {rate}",
+  "@taxEffective": {
+    "description": "Reference key tax.effective — the result's caption",
+    "placeholders": {
+      "rate": {
+        "type": "String"
+      }
+    }
+  },
+  "taxIncomeAnnual": "Annual income",
+  "@taxIncomeAnnual": {
+    "description": "Reference key tax.incomeAnnual — a field"
+  },
+  "taxIncomeMonthly": "Monthly income",
+  "@taxIncomeMonthly": {
+    "description": "Reference key tax.incomeMonthly — a field"
+  },
+  "taxIncomeTax": "Income tax",
+  "@taxIncomeTax": {
+    "description": "Reference key tax.incomeTax"
+  },
+  "taxLeviesNote": "Worth knowing",
+  "@taxLeviesNote": {
+    "description": "Reference key tax.leviesNote — a section head"
+  },
+  "taxLeviesNoteText": "These are headline rates. Consumption taxes are paid on what you buy rather than deducted from pay, and social contributions are usually split between you and your employer.",
+  "@taxLeviesNoteText": {
+    "description": "Reference key tax.leviesNoteText"
+  },
+  "taxLevy": "Levy",
+  "@taxLevy": {
+    "description": "Reference key tax.levy — a table column"
+  },
+  "taxMarginal": "Marginal rate",
+  "@taxMarginal": {
+    "description": "Reference key tax.marginal"
+  },
+  "taxMonthly": "Monthly",
+  "@taxMonthly": {
+    "description": "Reference key tax.monthly — the period control"
+  },
+  "taxNoneText": "{authority}. Nothing to calculate for salaried income here.",
+  "@taxNoneText": {
+    "description": "Reference key tax.none.text",
+    "placeholders": {
+      "authority": {
+        "type": "String"
+      }
+    }
+  },
+  "taxNoneTitle": "No personal income tax",
+  "@taxNoneTitle": {
+    "description": "Reference key tax.none.title"
+  },
+  "taxNoneCaption": "Your salary is not subject to personal income tax here.",
+  "@taxNoneCaption": {
+    "description": "Reference key tax.noneCaption"
+  },
+  "taxOtherLevies": "What does apply",
+  "@taxOtherLevies": {
+    "description": "Reference key tax.otherLevies — a section head"
+  },
+  "taxPeriod": "Period",
+  "@taxPeriod": {
+    "description": "Reference key tax.period — the period control's accessible name"
+  },
+  "taxRate": "Rate",
+  "@taxRate": {
+    "description": "Reference key tax.rate — a table column"
+  },
+  "taxSlabs": "How it is worked out",
+  "@taxSlabs": {
+    "description": "Reference key tax.slabs — the breakdown's head"
+  },
+  "taxSplit": "Where it goes",
+  "@taxSplit": {
+    "description": "Reference key tax.split — the donut's accessible name"
+  },
+  "taxTakeHome": "Take-home",
+  "@taxTakeHome": {
+    "description": "Reference key tax.takeHome"
+  },
+  "taxTax": "Tax",
+  "@taxTax": {
+    "description": "Reference key tax.tax — the donut's tax slice"
+  },
+  "taxTaxable": "Taxable income",
+  "@taxTaxable": {
+    "description": "Reference key tax.taxable"
+  },
+  "taxTaxedHere": "Tax in band",
+  "@taxTaxedHere": {
+    "description": "Reference key tax.taxedHere — a table column"
+  },
+  "taxUnsupportedText": "Tax rules are country-specific. Switch country to use a market Lume has configured, or check back — new markets are added regularly.",
+  "@taxUnsupportedText": {
+    "description": "Reference key tax.unsupported.text"
+  },
+  "taxUnsupportedTitle": "Not yet localised for {country}",
+  "@taxUnsupportedTitle": {
+    "description": "Reference key tax.unsupported.title",
+    "placeholders": {
+      "country": {
+        "type": "String"
+      }
+    }
+  },
+  "taxYear": "Year",
+  "@taxYear": {
+    "description": "Reference key tax.year"
+  },
+  "taxAuthorityFbrSalaried": "FBR salaried slabs",
+  "@taxAuthorityFbrSalaried": {
+    "description": "tool-data.js TAX.PK.authority. The reference prints the data string in every language; translated here (§11)."
+  },
+  "taxAuthorityHmrcEngland": "HMRC income tax (England)",
+  "@taxAuthorityHmrcEngland": {
+    "description": "tool-data.js TAX.GB.authority"
+  },
+  "taxAuthorityIrsSingleFiler": "IRS single filer",
+  "@taxAuthorityIrsSingleFiler": {
+    "description": "tool-data.js TAX.US.authority"
+  },
+  "taxAuthorityIndiaNewRegime": "New regime slabs",
+  "@taxAuthorityIndiaNewRegime": {
+    "description": "tool-data.js TAX.IN.authority"
+  },
+  "taxAuthorityNone": "No personal income tax",
+  "@taxAuthorityNone": {
+    "description": "tool-data.js TAX.AE/SA.authority"
+  },
+  "levyCorporate": "Corporate tax",
+  "@levyCorporate": {
+    "description": "Reference key levy.corporate"
+  },
+  "levyEobi": "EOBI",
+  "@levyEobi": {
+    "description": "Reference key levy.eobi"
+  },
+  "levyGosi": "Social insurance (GOSI)",
+  "@levyGosi": {
+    "description": "Reference key levy.gosi"
+  },
+  "levyGst": "GST",
+  "@levyGst": {
+    "description": "Reference key levy.gst"
+  },
+  "levyMedicare": "Medicare",
+  "@levyMedicare": {
+    "description": "Reference key levy.medicare"
+  },
+  "levyNi": "National Insurance",
+  "@levyNi": {
+    "description": "Reference key levy.ni"
+  },
+  "levyPension": "Pension contribution",
+  "@levyPension": {
+    "description": "Reference key levy.pension"
+  },
+  "levyPf": "Provident Fund",
+  "@levyPf": {
+    "description": "Reference key levy.pf"
+  },
+  "levySocialSecurity": "Social Security",
+  "@levySocialSecurity": {
+    "description": "Reference key levy.socialSecurity"
+  },
+  "levyVat": "VAT",
+  "@levyVat": {
+    "description": "Reference key levy.vat"
+  },
+  "levyZakatRate": "Zakat",
+  "@levyZakatRate": {
+    "description": "Reference key levy.zakatRate"
+  },
   "toolsForYou": "For you",
   "@toolsForYou": {
     "description": "Reference key tools.forYou"

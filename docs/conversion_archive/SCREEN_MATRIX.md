@@ -190,7 +190,7 @@ run on the shared CRUD engine.
 | `markets` | Markets | explorer | veryhigh | — | — | — | — | not started |
 | `fuel` | Fuel Prices | explorer | high | — | — | — | — | not started |
 | `fuelcost` | Fuel Cost | calculator | medium | — | — | — | — | not started |
-| `tax` | Tax Calculator | calculator | high | PK GB US IN AE SA | — | — | — | not started |
+| `tax` | Tax Calculator | calculator | high | PK GB US IN AE SA | — | — | — | **built (F6A)** — reference tool for the form-calculator archetype; taxable, untaxed and unsupported compositions |
 | `natsavings` | National Savings | explorer | high | PK | — | — | — | not started |
 | `prizebonds` | Prize Bonds | explorer | high | PK | — | — | — | not started |
 | `bills` | Bills | dashboard | high | — | — | Y | — | not started |

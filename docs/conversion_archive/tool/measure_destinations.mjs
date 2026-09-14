@@ -54,6 +54,11 @@ const ACCOUNT = args.account || 'guest';
 /* One of `ui/account-ui.js`'s twenty-one routes, opened after the profile tab
    is shown. Empty measures the tab itself. */
 const ROUTE = args.route || '';
+/* A tool, opened over the tab by the same `tool:<id>` action a tile carries,
+   and the `toolstate:` actions to run in it first — `period:year`, or several
+   separated by commas. */
+const TOOL = args.tool || '';
+const TOOLSTATE = args.toolstate || '';
 /* What to call the cell. The default spells out the whole state, which is
    right for a destination; an account route is named after the route, so the
    web capture and the Flutter one share a basename and `compare.mjs` can put
@@ -163,6 +168,12 @@ const STATES = {
   default_us: {
     ...base,
     country: 'US', region: 'New York', city: 'New York',
+  },
+  /* Non-Muslim, United Arab Emirates — a market with no personal income tax,
+     which is Tax's second composition. */
+  default_ae: {
+    ...base,
+    country: 'AE', region: 'Dubai', city: 'Dubai',
   },
   /* Someone with a name, favourites and a history. */
   named_pk: {
@@ -644,6 +655,101 @@ const AFTER = {
   notifprefs: "sheet('notifprefs'); await wait(900)",
 };
 
+/* A tool screen: the frame every tool shares, then the pieces a reference tool
+   composes. Selectors that a given tool does not draw are reported absent,
+   which is itself a composition fact. The n-th section is addressed by order,
+   because `data-sect` is set only on the sections a spec names. */
+const TOOL_TARGETS = {
+  'screen': '#screen-tool',
+  'toolbar': '#screen-tool .toolbar',
+  'toolbar.back': '#screen-tool .toolbar > .iconbtn',
+  'toolbar.title': '#screen-tool .toolbar__title',
+  'toolbar.sub': '#screen-tool .toolbar__sub',
+  'toolbar.actions': '#screen-tool .toolbar__actions',
+  'toolbar.action1': '#screen-tool .toolbar__actions > :nth-child(1)',
+  'toolbar.action2': '#screen-tool .toolbar__actions > :nth-child(2)',
+  'toolbar.action3': '#screen-tool .toolbar__actions > :nth-child(3)',
+  ...Object.fromEntries(Array.from({ length: 12 }, (_, i) => [
+    `sect${i + 1}`, `#toolBody > .sect:nth-of-type(${i + 1})`,
+  ])),
+  'sect.head': '#toolBody .sect__head',
+  'sect.title': '#toolBody .sect__title',
+  'ctxbar': '#toolBody .ctxbar',
+  'ctxbar.item1': '#toolBody .ctxbar > .ctxbar__item:nth-of-type(1)',
+  'ctxbar.item2': '#toolBody .ctxbar > .ctxbar__item:nth-of-type(2)',
+  'ctxbar.item3': '#toolBody .ctxbar > .ctxbar__item:nth-of-type(3)',
+  'ctxbar.sep': '#toolBody .ctxbar__sep',
+  'ctxbar.icon': '#toolBody .ctxbar__item svg',
+  'segmented': '#toolBody .segmented',
+  'seg1': '#toolBody .segmented > .seg:nth-child(1)',
+  'seg2': '#toolBody .segmented > .seg:nth-child(2)',
+  'seg.on': '#toolBody .segmented > .seg.is-on',
+  'kard': '#toolBody .kard',
+  'fgrid': '#toolBody .fgrid',
+  'field1': '#toolBody .fgrid > .field:nth-child(1)',
+  'field2': '#toolBody .fgrid > .field:nth-child(2)',
+  'field.label': '#toolBody .field__label',
+  'field.box': '#toolBody .field__box',
+  'field.box2': '#toolBody .fgrid > .field:nth-child(2) .field__box',
+  'field.affix': '#toolBody .field__affix',
+  'field.input': '#toolBody .field__box input',
+  'summary': '#toolBody .summary',
+  'summary.kicker': '#toolBody .summary__kicker',
+  'summary.value': '#toolBody .summary__value',
+  'summary.caption': '#toolBody .summary__caption',
+  'summary.aside': '#toolBody .summary__aside',
+  'summary.stats': '#toolBody .summary__stats',
+  'summary.stat1': '#toolBody .summary__stat:nth-child(1)',
+  'summary.stat2': '#toolBody .summary__stat:nth-child(2)',
+  'summary.stat3': '#toolBody .summary__stat:nth-child(3)',
+  'summary.statv': '#toolBody .summary__statv',
+  'summary.statl': '#toolBody .summary__statl',
+  'summary.foot': '#toolBody .summary__foot',
+  'table': '#toolBody .tablewrap',
+  'table.th1': '#toolBody .dtable th:nth-child(1)',
+  'table.th2': '#toolBody .dtable th:nth-child(2)',
+  'table.th3': '#toolBody .dtable th:nth-child(3)',
+  'table.tr1': '#toolBody .dtable tbody tr:nth-child(1)',
+  'table.td1': '#toolBody .dtable tbody tr:nth-child(1) td:nth-child(1)',
+  'table.td2': '#toolBody .dtable tbody tr:nth-child(1) td:nth-child(2)',
+  'table.td3': '#toolBody .dtable tbody tr:nth-child(1) td:nth-child(3)',
+  'table.trLast': '#toolBody .dtable tbody tr:last-child',
+  'donutwrap': '#toolBody .donutwrap',
+  'donut': '#toolBody .donut',
+  'donut.mid': '#toolBody .donut__mid b',
+  'donut.midsub': '#toolBody .donut__mid i',
+  'donut.legend': '#toolBody .donut__legend',
+  'donut.key1': '#toolBody .donut__key:nth-child(1)',
+  'donut.key2': '#toolBody .donut__key:nth-child(2)',
+  'donut.swatch': '#toolBody .donut__key i',
+  'donut.keyvalue': '#toolBody .donut__key b',
+  'btnrow': '#toolBody .btnrow',
+  'btn1': '#toolBody .btnrow > .btn:nth-child(1)',
+  'btn2': '#toolBody .btnrow > .btn:nth-child(2)',
+  'notecard': '#toolBody .notecard',
+  'notecard.title': '#toolBody .notecard b',
+  'notecard.text': '#toolBody .notecard p',
+  'kard.lead': '#toolBody .kard__lead',
+  'state': '#toolBody .state',
+  'state.title': '#toolBody .state__title',
+  'state.text': '#toolBody .state__text',
+  'state.btn': '#toolBody .state .btn',
+  'srcbar': '#toolBody .srcbar',
+  'fresh': '#toolBody .srcbar .fresh',
+  'fresh.dot': '#toolBody .srcbar .fresh__dot',
+  'srcline': '#toolBody .srcline',
+  'srcline.first': '#toolBody .srcline > span:nth-child(1)',
+  'srcline.second': '#toolBody .srcline > span:nth-child(2)',
+  'related.sect': '#toolBody .sect[data-sect="related"]',
+  'related.title': '#toolBody .sect[data-sect="related"] .sect__title',
+  'related': '#toolBody .related',
+  'related.item1': '#toolBody .related__item:nth-child(1)',
+  'related.item2': '#toolBody .related__item:nth-child(2)',
+  'related.icon': '#toolBody .related__icon',
+  'related.label': '#toolBody .related__label',
+  'privacy': '#toolBody .notecard--lock',
+};
+
 /* The instant everything is captured at: Monday 7 September 2026, 16:41:32
    local — `kFixtureInstant` on the Flutter side, so both render the same day,
    the same greeting and the same "what is open now".
@@ -677,7 +783,7 @@ const FREEZE = `
 })();
 `;
 
-const DRIVER = (profile, screen, after, account, route, keepBanner) => FREEZE + `
+const DRIVER = (profile, screen, after, account, route, keepBanner, tool, toolstate) => FREEZE + `
 (function () {
   try {
     localStorage.setItem('lume-onboarded', '1');
@@ -781,6 +887,18 @@ const DRIVER = (profile, screen, after, account, route, keepBanner) => FREEZE + 
       act('acct:' + ${JSON.stringify(route)});
       await wait(500);
     }
+    /* A tool is opened by the action its tile carries, and put into a state
+       by the actions its own controls carry. */
+    if (${JSON.stringify(tool || '')}) {
+      act('tool:' + ${JSON.stringify(tool || '')});
+      await wait(700);
+      var states = ${JSON.stringify(toolstate || '')}.split(',').filter(Boolean);
+      for (var s = 0; s < states.length; s++) {
+        act('toolstate:' + ${JSON.stringify(tool || '')} + ':' + states[s]);
+        await wait(400);
+      }
+      await waitFor('#screen-tool.is-active #toolBody .sect', 4000);
+    }
     ${after || ''};
     await wait(400);
     var clock = document.getElementById('statusClock');
@@ -878,14 +996,14 @@ async function main() {
     notifications: NOTIFICATION_TARGETS,
   }[SCREEN] || HOME_TARGETS;
   const after = String(args.after || '');
-  const measured =
+  const measured = TOOL ? TOOL_TARGETS :
     after.startsWith('search_') ? SEARCH_TARGETS
       : after === 'banner' ? BANNER_TARGETS
         : after === 'notifpush' || after === 'notifprefs' ? sheetTargets(after)
           : targets;
 
   const work = stage(
-    DRIVER(profile, SCREEN, AFTER[after] || '', ACCOUNT, ROUTE, after === 'banner'),
+    DRIVER(profile, SCREEN, AFTER[after] || '', ACCOUNT, ROUTE, after === 'banner', TOOL, TOOLSTATE),
   );
   const server = spawn(process.execPath, ['scripts/serve.js'], {
     cwd: work,
@@ -1274,6 +1392,76 @@ async function main() {
           });
       }
 
+      if (activeId === 'screen-tool') {
+        var q = function (sel) { return document.querySelector('#screen-tool ' + sel); };
+        var tx = function (sel) { var el = q(sel); return el ? (el.textContent || '').trim() : null; };
+        composition.header = {
+          title: tx('.toolbar__title'),
+          sub: tx('.toolbar__sub'),
+          actions: Array.prototype.map.call(
+            document.querySelectorAll('#screen-tool .toolbar__actions > *'),
+            function (el) {
+              return { id: el.dataset.toolAction || null,
+                       label: el.getAttribute('aria-label'),
+                       text: (el.textContent || '').trim() || null };
+            })
+        };
+        composition.sections = Array.prototype.map.call(
+          document.querySelectorAll('#toolBody > *'),
+          function (el) {
+            var r = el.getBoundingClientRect();
+            return {
+              tag: el.tagName.toLowerCase(),
+              cls: el.className,
+              sect: el.dataset.sect || null,
+              title: (el.querySelector(':scope > .sect__head .sect__title') || {}).textContent || null,
+              y: Math.round(r.y * 100) / 100,
+              height: Math.round(r.height * 100) / 100
+            };
+          });
+        composition.context = texts('#toolBody .ctxbar__item');
+        composition.segments = Array.prototype.map.call(
+          document.querySelectorAll('#toolBody .segmented .seg'),
+          function (el) { return { label: el.textContent.trim(), on: el.classList.contains('is-on') }; });
+        composition.fields = Array.prototype.map.call(
+          document.querySelectorAll('#toolBody .field'),
+          function (el) {
+            var input = el.querySelector('input, select');
+            return { label: (el.querySelector('.field__label') || {}).textContent || null,
+                     value: input ? input.value : null,
+                     affix: (el.querySelector('.field__affix') || {}).textContent || null };
+          });
+        composition.summary = q('.summary') ? {
+          kicker: tx('.summary__kicker'), value: tx('.summary__value'), caption: tx('.summary__caption'),
+          stats: Array.prototype.map.call(document.querySelectorAll('#toolBody .summary__stat'),
+            function (el) {
+              return { value: (el.querySelector('.summary__statv') || {}).textContent,
+                       label: (el.querySelector('.summary__statl') || {}).textContent };
+            })
+        } : null;
+        composition.table = {
+          head: texts('#toolBody .dtable th'),
+          rows: Array.prototype.map.call(document.querySelectorAll('#toolBody .dtable tbody tr'),
+            function (tr) { return Array.prototype.map.call(tr.children, function (td) { return td.textContent.trim(); }); })
+        };
+        composition.donut = q('.donut') ? {
+          mid: tx('.donut__mid b'), sub: tx('.donut__mid i'),
+          keys: Array.prototype.map.call(document.querySelectorAll('#toolBody .donut__key'),
+            function (el) {
+              return { label: (el.querySelector('span') || {}).textContent,
+                       value: (el.querySelector('b') || {}).textContent,
+                       color: getComputedStyle(el.querySelector('i')).backgroundColor };
+            }),
+          arcs: Array.prototype.map.call(document.querySelectorAll('#toolBody .donut__seg'),
+            function (c) { return { dash: c.getAttribute('stroke-dasharray'), offset: c.getAttribute('stroke-dashoffset') }; })
+        } : null;
+        composition.note = q('.notecard') ? { title: tx('.notecard b'), text: tx('.notecard p') } : null;
+        composition.state = q('.state') ? { title: tx('.state__title'), text: tx('.state__text'), action: tx('.state .btn') } : null;
+        composition.buttons = texts('#toolBody .btnrow .btn');
+        composition.source = { fresh: tx('.srcbar .fresh'), line: texts('#toolBody .srcline > span') };
+        composition.related = texts('#toolBody .related__label');
+      }
+
       var screenEl = active;
       return {
         bounds: out,
@@ -1299,9 +1487,12 @@ async function main() {
     const SUFFIX =
       `${STATE}${ACCOUNT === 'guest' ? '' : '_' + ACCOUNT}` +
       `${ROUTE ? '_' + ROUTE : ''}` +
-      `${args.after ? '_' + args.after : ''}`;
+      `${args.after ? '_' + args.after : ''}` +
+      `${TOOLSTATE ? '_' + TOOLSTATE.replace(/[^a-z0-9]+/gi, '-') : ''}`;
+    /* A tool is named for itself, not for the tab it was opened over. */
+    const BASE = CELL || (TOOL ? `tool_${TOOL}_${SUFFIX}` : `${SCREEN}_${SUFFIX}`);
     const cell =
-      `${CELL || SCREEN + '_' + SUFFIX}${SCROLL ? '_s' + SCROLL : ''}` +
+      `${BASE}${SCROLL ? '_s' + SCROLL : ''}` +
       `_${WIDTH}x${HEIGHT}_${THEME}_${LANG}`;
 
     if (SHOT) {
@@ -1309,7 +1500,7 @@ async function main() {
         format: 'png',
         captureBeyondViewport: false,
       });
-      const dir = join(SHOTS, CELL || `${SCREEN}_${SUFFIX}`);
+      const dir = join(SHOTS, BASE);
       mkdirSync(dir, { recursive: true });
       writeFileSync(join(dir, `${cell}.web.png`), Buffer.from(shot.data, 'base64'));
     }
@@ -1323,6 +1514,8 @@ async function main() {
           state: STATE,
           account: ACCOUNT,
           route: ROUTE || null,
+          tool: TOOL || null,
+          toolstate: TOOLSTATE || null,
           after: args.after || null,
           profile: { country: profile.country, city: profile.city,
                      islamic: profile.islamic, interests: profile.interests,

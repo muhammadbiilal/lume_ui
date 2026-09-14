@@ -109,6 +109,23 @@ for (const f of LUME.FEATURES) {
   if (spec.homeEligible) parts.push('homeEligible: true');
   if (spec.quickEligible) parts.push('quickEligible: true');
   if (spec.related.length) parts.push(`related: ${dartSet(spec.related)}`);
+  /* The tool screen's own contract (F6A): what kind of screen it is, how
+     dense, where its numbers come from and how current they are, and which
+     of the frame's capabilities it declares. */
+  parts.push(`archetype: LumeToolArchetype.${spec.archetype}`);
+  parts.push(`density: LumeToolDensity.${spec.density}`);
+  parts.push(`fallbackSource: ${dartString(spec.source)}`);
+  parts.push(`freshness: LumeFreshnessKind.${spec.freshness === 'static' ? 'reference' : spec.freshness}`);
+  const supports = Object.keys(spec.supports).sort();
+  if (supports.length) {
+    parts.push(
+      'supports: <LumeToolSupport>{' +
+        supports.map((s) => `LumeToolSupport.${s === 'favorites' ? 'favourites' : s}`).join(', ') +
+        '}',
+    );
+  }
+  const aware = Object.keys(spec.aware).sort();
+  if (aware.length) parts.push(`aware: ${dartSet(aware)}`);
 
   w('  LumeFeature(');
   for (const p of parts) w(`    ${p},`);

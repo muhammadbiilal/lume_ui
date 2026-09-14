@@ -6376,6 +6376,474 @@ abstract class AppLocalizations {
   /// **'Not part of your setup'**
   String get toolUnavailableTitle;
 
+  /// Reference key tool.related — the related-tools section head
+  ///
+  /// In en, this message translates to:
+  /// **'Related tools'**
+  String get toolRelated;
+
+  /// Reference key a11y.export — the tool header export action
+  ///
+  /// In en, this message translates to:
+  /// **'Export'**
+  String get a11yExport;
+
+  /// Reference key a11y.favourite — the tool header favourite action. The reference has no Urdu or Arabic for it; translated here (§11).
+  ///
+  /// In en, this message translates to:
+  /// **'Save to favourites'**
+  String get a11yFavourite;
+
+  /// Reference key a11y.search — the tool header search action, in the reference's own Urdu and Arabic
+  ///
+  /// In en, this message translates to:
+  /// **'Search this tool'**
+  String get a11ySearchTool;
+
+  /// Reference key settings.changeCountry — a tool that is not localised for the reader's country offers this
+  ///
+  /// In en, this message translates to:
+  /// **'Change country'**
+  String get toolChangeCountry;
+
+  /// Reference key fresh.live — a live source
+  ///
+  /// In en, this message translates to:
+  /// **'Live'**
+  String get freshLive;
+
+  /// Reference key fresh.cached
+  ///
+  /// In en, this message translates to:
+  /// **'Cached'**
+  String get freshCached;
+
+  /// Reference key fresh.delayed
+  ///
+  /// In en, this message translates to:
+  /// **'Delayed 15 min'**
+  String get freshDelayed;
+
+  /// Reference key fresh.daily
+  ///
+  /// In en, this message translates to:
+  /// **'Updated today'**
+  String get freshDaily;
+
+  /// Reference key fresh.weekly
+  ///
+  /// In en, this message translates to:
+  /// **'Updated this week'**
+  String get freshWeekly;
+
+  /// Reference key fresh.annual
+  ///
+  /// In en, this message translates to:
+  /// **'Current tax year'**
+  String get freshAnnual;
+
+  /// Reference key fresh.draw
+  ///
+  /// In en, this message translates to:
+  /// **'Latest draw'**
+  String get freshDraw;
+
+  /// Reference key fresh.computed
+  ///
+  /// In en, this message translates to:
+  /// **'Calculated for your location'**
+  String get freshComputed;
+
+  /// Reference key fresh.static
+  ///
+  /// In en, this message translates to:
+  /// **'Reference text'**
+  String get freshStatic;
+
+  /// Reference key fresh.local
+  ///
+  /// In en, this message translates to:
+  /// **'Stored on this device'**
+  String get freshLocal;
+
+  /// Reference key fresh.agoSec — the source line of a live tool
+  ///
+  /// In en, this message translates to:
+  /// **'Updated {n} sec ago'**
+  String freshAgoSec(int n);
+
+  /// Reference key fresh.agoMin — the source line of a delayed tool
+  ///
+  /// In en, this message translates to:
+  /// **'Updated {n} min ago'**
+  String freshAgoMin(int n);
+
+  /// Reference key fresh.at — a daily source, in the reader's clock
+  ///
+  /// In en, this message translates to:
+  /// **'Updated at {time}'**
+  String freshAt(String time);
+
+  /// Reference key fresh.on — a weekly or annual source
+  ///
+  /// In en, this message translates to:
+  /// **'Updated {date}'**
+  String freshOn(String date);
+
+  /// Reference key fresh.forCity — a figure computed for the reader's city
+  ///
+  /// In en, this message translates to:
+  /// **'For {city}'**
+  String freshForCity(String city);
+
+  /// Reference key archetype.action — the word in a tool header's sub-line
+  ///
+  /// In en, this message translates to:
+  /// **'Emergency actions'**
+  String get archetypeAction;
+
+  /// Reference key archetype.calculator
+  ///
+  /// In en, this message translates to:
+  /// **'Calculator'**
+  String get archetypeCalculator;
+
+  /// Reference key archetype.dashboard
+  ///
+  /// In en, this message translates to:
+  /// **'Dashboard'**
+  String get archetypeDashboard;
+
+  /// Reference key archetype.explorer
+  ///
+  /// In en, this message translates to:
+  /// **'Data explorer'**
+  String get archetypeExplorer;
+
+  /// Reference key archetype.instrument
+  ///
+  /// In en, this message translates to:
+  /// **'Instrument'**
+  String get archetypeInstrument;
+
+  /// Reference key archetype.library
+  ///
+  /// In en, this message translates to:
+  /// **'Library'**
+  String get archetypeLibrary;
+
+  /// Reference key archetype.manager
+  ///
+  /// In en, this message translates to:
+  /// **'Records manager'**
+  String get archetypeManager;
+
+  /// Reference key archetype.planner
+  ///
+  /// In en, this message translates to:
+  /// **'Planner'**
+  String get archetypePlanner;
+
+  /// Reference key archetype.reader
+  ///
+  /// In en, this message translates to:
+  /// **'Reader'**
+  String get archetypeReader;
+
+  /// Reference key archetype.tracker
+  ///
+  /// In en, this message translates to:
+  /// **'Tracker'**
+  String get archetypeTracker;
+
+  /// Reference key archetype.tracking
+  ///
+  /// In en, this message translates to:
+  /// **'Live tracking'**
+  String get archetypeTracking;
+
+  /// tool-specs.js src for tax. The reference prints this English string in every language; translated here (§11).
+  ///
+  /// In en, this message translates to:
+  /// **'Statutory slabs'**
+  String get toolSourceTax;
+
+  /// Reference key tax.above — the top band's label
+  ///
+  /// In en, this message translates to:
+  /// **'Above {v}'**
+  String taxAbove(String v);
+
+  /// Reference key tax.annual — the period control
+  ///
+  /// In en, this message translates to:
+  /// **'Annual'**
+  String get taxAnnual;
+
+  /// Reference key tax.band — a table column
+  ///
+  /// In en, this message translates to:
+  /// **'Band'**
+  String get taxBand;
+
+  /// Reference key tax.deductions — a field
+  ///
+  /// In en, this message translates to:
+  /// **'Deductions'**
+  String get taxDeductions;
+
+  /// Reference key tax.dueAnnual — the result's kicker
+  ///
+  /// In en, this message translates to:
+  /// **'Tax a year'**
+  String get taxDueAnnual;
+
+  /// Reference key tax.dueMonthly — the result's kicker
+  ///
+  /// In en, this message translates to:
+  /// **'Tax a month'**
+  String get taxDueMonthly;
+
+  /// Reference key tax.effective — the result's caption
+  ///
+  /// In en, this message translates to:
+  /// **'Effective rate {rate}'**
+  String taxEffective(String rate);
+
+  /// Reference key tax.incomeAnnual — a field
+  ///
+  /// In en, this message translates to:
+  /// **'Annual income'**
+  String get taxIncomeAnnual;
+
+  /// Reference key tax.incomeMonthly — a field
+  ///
+  /// In en, this message translates to:
+  /// **'Monthly income'**
+  String get taxIncomeMonthly;
+
+  /// Reference key tax.incomeTax
+  ///
+  /// In en, this message translates to:
+  /// **'Income tax'**
+  String get taxIncomeTax;
+
+  /// Reference key tax.leviesNote — a section head
+  ///
+  /// In en, this message translates to:
+  /// **'Worth knowing'**
+  String get taxLeviesNote;
+
+  /// Reference key tax.leviesNoteText
+  ///
+  /// In en, this message translates to:
+  /// **'These are headline rates. Consumption taxes are paid on what you buy rather than deducted from pay, and social contributions are usually split between you and your employer.'**
+  String get taxLeviesNoteText;
+
+  /// Reference key tax.levy — a table column
+  ///
+  /// In en, this message translates to:
+  /// **'Levy'**
+  String get taxLevy;
+
+  /// Reference key tax.marginal
+  ///
+  /// In en, this message translates to:
+  /// **'Marginal rate'**
+  String get taxMarginal;
+
+  /// Reference key tax.monthly — the period control
+  ///
+  /// In en, this message translates to:
+  /// **'Monthly'**
+  String get taxMonthly;
+
+  /// Reference key tax.none.text
+  ///
+  /// In en, this message translates to:
+  /// **'{authority}. Nothing to calculate for salaried income here.'**
+  String taxNoneText(String authority);
+
+  /// Reference key tax.none.title
+  ///
+  /// In en, this message translates to:
+  /// **'No personal income tax'**
+  String get taxNoneTitle;
+
+  /// Reference key tax.noneCaption
+  ///
+  /// In en, this message translates to:
+  /// **'Your salary is not subject to personal income tax here.'**
+  String get taxNoneCaption;
+
+  /// Reference key tax.otherLevies — a section head
+  ///
+  /// In en, this message translates to:
+  /// **'What does apply'**
+  String get taxOtherLevies;
+
+  /// Reference key tax.period — the period control's accessible name
+  ///
+  /// In en, this message translates to:
+  /// **'Period'**
+  String get taxPeriod;
+
+  /// Reference key tax.rate — a table column
+  ///
+  /// In en, this message translates to:
+  /// **'Rate'**
+  String get taxRate;
+
+  /// Reference key tax.slabs — the breakdown's head
+  ///
+  /// In en, this message translates to:
+  /// **'How it is worked out'**
+  String get taxSlabs;
+
+  /// Reference key tax.split — the donut's accessible name
+  ///
+  /// In en, this message translates to:
+  /// **'Where it goes'**
+  String get taxSplit;
+
+  /// Reference key tax.takeHome
+  ///
+  /// In en, this message translates to:
+  /// **'Take-home'**
+  String get taxTakeHome;
+
+  /// Reference key tax.tax — the donut's tax slice
+  ///
+  /// In en, this message translates to:
+  /// **'Tax'**
+  String get taxTax;
+
+  /// Reference key tax.taxable
+  ///
+  /// In en, this message translates to:
+  /// **'Taxable income'**
+  String get taxTaxable;
+
+  /// Reference key tax.taxedHere — a table column
+  ///
+  /// In en, this message translates to:
+  /// **'Tax in band'**
+  String get taxTaxedHere;
+
+  /// Reference key tax.unsupported.text
+  ///
+  /// In en, this message translates to:
+  /// **'Tax rules are country-specific. Switch country to use a market Lume has configured, or check back — new markets are added regularly.'**
+  String get taxUnsupportedText;
+
+  /// Reference key tax.unsupported.title
+  ///
+  /// In en, this message translates to:
+  /// **'Not yet localised for {country}'**
+  String taxUnsupportedTitle(String country);
+
+  /// Reference key tax.year
+  ///
+  /// In en, this message translates to:
+  /// **'Year'**
+  String get taxYear;
+
+  /// tool-data.js TAX.PK.authority. The reference prints the data string in every language; translated here (§11).
+  ///
+  /// In en, this message translates to:
+  /// **'FBR salaried slabs'**
+  String get taxAuthorityFbrSalaried;
+
+  /// tool-data.js TAX.GB.authority
+  ///
+  /// In en, this message translates to:
+  /// **'HMRC income tax (England)'**
+  String get taxAuthorityHmrcEngland;
+
+  /// tool-data.js TAX.US.authority
+  ///
+  /// In en, this message translates to:
+  /// **'IRS single filer'**
+  String get taxAuthorityIrsSingleFiler;
+
+  /// tool-data.js TAX.IN.authority
+  ///
+  /// In en, this message translates to:
+  /// **'New regime slabs'**
+  String get taxAuthorityIndiaNewRegime;
+
+  /// tool-data.js TAX.AE/SA.authority
+  ///
+  /// In en, this message translates to:
+  /// **'No personal income tax'**
+  String get taxAuthorityNone;
+
+  /// Reference key levy.corporate
+  ///
+  /// In en, this message translates to:
+  /// **'Corporate tax'**
+  String get levyCorporate;
+
+  /// Reference key levy.eobi
+  ///
+  /// In en, this message translates to:
+  /// **'EOBI'**
+  String get levyEobi;
+
+  /// Reference key levy.gosi
+  ///
+  /// In en, this message translates to:
+  /// **'Social insurance (GOSI)'**
+  String get levyGosi;
+
+  /// Reference key levy.gst
+  ///
+  /// In en, this message translates to:
+  /// **'GST'**
+  String get levyGst;
+
+  /// Reference key levy.medicare
+  ///
+  /// In en, this message translates to:
+  /// **'Medicare'**
+  String get levyMedicare;
+
+  /// Reference key levy.ni
+  ///
+  /// In en, this message translates to:
+  /// **'National Insurance'**
+  String get levyNi;
+
+  /// Reference key levy.pension
+  ///
+  /// In en, this message translates to:
+  /// **'Pension contribution'**
+  String get levyPension;
+
+  /// Reference key levy.pf
+  ///
+  /// In en, this message translates to:
+  /// **'Provident Fund'**
+  String get levyPf;
+
+  /// Reference key levy.socialSecurity
+  ///
+  /// In en, this message translates to:
+  /// **'Social Security'**
+  String get levySocialSecurity;
+
+  /// Reference key levy.vat
+  ///
+  /// In en, this message translates to:
+  /// **'VAT'**
+  String get levyVat;
+
+  /// Reference key levy.zakatRate
+  ///
+  /// In en, this message translates to:
+  /// **'Zakat'**
+  String get levyZakatRate;
+
   /// Reference key tools.forYou
   ///
   /// In en, this message translates to:

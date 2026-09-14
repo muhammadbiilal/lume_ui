@@ -3546,6 +3546,260 @@ class AppLocalizationsAr extends AppLocalizations {
   String get toolUnavailableTitle => 'ليست ضمن إعداداتك';
 
   @override
+  String get toolRelated => 'أدوات ذات صلة';
+
+  @override
+  String get a11yExport => 'تصدير';
+
+  @override
+  String get a11yFavourite => 'حفظ في المفضلة';
+
+  @override
+  String get a11ySearchTool => 'بحث';
+
+  @override
+  String get toolChangeCountry => 'تغيير البلد';
+
+  @override
+  String get freshLive => 'مباشر';
+
+  @override
+  String get freshCached => 'مخزّن مؤقتًا';
+
+  @override
+  String get freshDelayed => 'متأخر 15 دقيقة';
+
+  @override
+  String get freshDaily => 'حُدّث اليوم';
+
+  @override
+  String get freshWeekly => 'حُدّث هذا الأسبوع';
+
+  @override
+  String get freshAnnual => 'السنة الضريبية الحالية';
+
+  @override
+  String get freshDraw => 'أحدث سحب';
+
+  @override
+  String get freshComputed => 'محسوب لموقعك';
+
+  @override
+  String get freshStatic => 'نص مرجعي';
+
+  @override
+  String get freshLocal => 'مخزّن على هذا الجهاز';
+
+  @override
+  String freshAgoSec(int n) {
+    return 'حُدّث قبل $n ث';
+  }
+
+  @override
+  String freshAgoMin(int n) {
+    return 'حُدّث قبل $n د';
+  }
+
+  @override
+  String freshAt(String time) {
+    return 'حُدّث الساعة $time';
+  }
+
+  @override
+  String freshOn(String date) {
+    return 'حُدّث $date';
+  }
+
+  @override
+  String freshForCity(String city) {
+    return 'لـ$city';
+  }
+
+  @override
+  String get archetypeAction => 'إجراءات الطوارئ';
+
+  @override
+  String get archetypeCalculator => 'حاسبة';
+
+  @override
+  String get archetypeDashboard => 'لوحة المعلومات';
+
+  @override
+  String get archetypeExplorer => 'مستكشف البيانات';
+
+  @override
+  String get archetypeInstrument => 'أداة قياس';
+
+  @override
+  String get archetypeLibrary => 'مكتبة';
+
+  @override
+  String get archetypeManager => 'مدير السجلات';
+
+  @override
+  String get archetypePlanner => 'مخطِّط';
+
+  @override
+  String get archetypeReader => 'قارئ';
+
+  @override
+  String get archetypeTracker => 'متتبِّع';
+
+  @override
+  String get archetypeTracking => 'تتبُّع مباشر';
+
+  @override
+  String get toolSourceTax => 'الشرائح القانونية';
+
+  @override
+  String taxAbove(String v) {
+    return 'أكثر من $v';
+  }
+
+  @override
+  String get taxAnnual => 'سنوي';
+
+  @override
+  String get taxBand => 'الشريحة';
+
+  @override
+  String get taxDeductions => 'الخصومات';
+
+  @override
+  String get taxDueAnnual => 'الضريبة سنويًا';
+
+  @override
+  String get taxDueMonthly => 'الضريبة شهريًا';
+
+  @override
+  String taxEffective(String rate) {
+    return 'المعدل الفعلي $rate';
+  }
+
+  @override
+  String get taxIncomeAnnual => 'الدخل السنوي';
+
+  @override
+  String get taxIncomeMonthly => 'الدخل الشهري';
+
+  @override
+  String get taxIncomeTax => 'ضريبة الدخل';
+
+  @override
+  String get taxLeviesNote => 'من المفيد معرفته';
+
+  @override
+  String get taxLeviesNoteText =>
+      'هذه معدلات عامة. تُدفع ضرائب الاستهلاك على ما تشتريه بدلًا من اقتطاعها من الراتب، وتُقسَّم اشتراكات الضمان الاجتماعي عادةً بينك وبين صاحب العمل.';
+
+  @override
+  String get taxLevy => 'الرسم';
+
+  @override
+  String get taxMarginal => 'المعدل الحدّي';
+
+  @override
+  String get taxMonthly => 'شهري';
+
+  @override
+  String taxNoneText(String authority) {
+    return '$authority. لا شيء لحسابه على دخل الرواتب هنا.';
+  }
+
+  @override
+  String get taxNoneTitle => 'لا ضريبة على الدخل الشخصي';
+
+  @override
+  String get taxNoneCaption => 'راتبك لا يخضع لضريبة الدخل الشخصي هنا.';
+
+  @override
+  String get taxOtherLevies => 'ما الذي ينطبق';
+
+  @override
+  String get taxPeriod => 'الفترة';
+
+  @override
+  String get taxRate => 'المعدل';
+
+  @override
+  String get taxSlabs => 'كيف تُحسب';
+
+  @override
+  String get taxSplit => 'أين يذهب المال';
+
+  @override
+  String get taxTakeHome => 'صافي الدخل';
+
+  @override
+  String get taxTax => 'الضريبة';
+
+  @override
+  String get taxTaxable => 'الدخل الخاضع للضريبة';
+
+  @override
+  String get taxTaxedHere => 'الضريبة في الشريحة';
+
+  @override
+  String get taxUnsupportedText =>
+      'قواعد الضرائب تختلف من بلد إلى آخر. غيّر البلد لاستخدام سوق أعدّه Lume، أو عد لاحقًا — تُضاف أسواق جديدة بانتظام.';
+
+  @override
+  String taxUnsupportedTitle(String country) {
+    return 'غير متاح بعد لـ$country';
+  }
+
+  @override
+  String get taxYear => 'السنة';
+
+  @override
+  String get taxAuthorityFbrSalaried => 'شرائح FBR للرواتب';
+
+  @override
+  String get taxAuthorityHmrcEngland => 'ضريبة الدخل HMRC (إنجلترا)';
+
+  @override
+  String get taxAuthorityIrsSingleFiler => 'IRS مُقدِّم إقرار فردي';
+
+  @override
+  String get taxAuthorityIndiaNewRegime => 'شرائح النظام الجديد';
+
+  @override
+  String get taxAuthorityNone => 'لا ضريبة على الدخل الشخصي';
+
+  @override
+  String get levyCorporate => 'ضريبة الشركات';
+
+  @override
+  String get levyEobi => 'EOBI';
+
+  @override
+  String get levyGosi => 'التأمينات الاجتماعية (GOSI)';
+
+  @override
+  String get levyGst => 'ضريبة السلع والخدمات';
+
+  @override
+  String get levyMedicare => 'ميديكير';
+
+  @override
+  String get levyNi => 'التأمين الوطني';
+
+  @override
+  String get levyPension => 'اشتراك التقاعد';
+
+  @override
+  String get levyPf => 'صندوق الادخار';
+
+  @override
+  String get levySocialSecurity => 'الضمان الاجتماعي';
+
+  @override
+  String get levyVat => 'ضريبة القيمة المضافة';
+
+  @override
+  String get levyZakatRate => 'الزكاة';
+
+  @override
   String get toolsForYou => 'لك';
 
   @override

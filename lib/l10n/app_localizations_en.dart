@@ -3539,6 +3539,261 @@ class AppLocalizationsEn extends AppLocalizations {
   String get toolUnavailableTitle => 'Not part of your setup';
 
   @override
+  String get toolRelated => 'Related tools';
+
+  @override
+  String get a11yExport => 'Export';
+
+  @override
+  String get a11yFavourite => 'Save to favourites';
+
+  @override
+  String get a11ySearchTool => 'Search this tool';
+
+  @override
+  String get toolChangeCountry => 'Change country';
+
+  @override
+  String get freshLive => 'Live';
+
+  @override
+  String get freshCached => 'Cached';
+
+  @override
+  String get freshDelayed => 'Delayed 15 min';
+
+  @override
+  String get freshDaily => 'Updated today';
+
+  @override
+  String get freshWeekly => 'Updated this week';
+
+  @override
+  String get freshAnnual => 'Current tax year';
+
+  @override
+  String get freshDraw => 'Latest draw';
+
+  @override
+  String get freshComputed => 'Calculated for your location';
+
+  @override
+  String get freshStatic => 'Reference text';
+
+  @override
+  String get freshLocal => 'Stored on this device';
+
+  @override
+  String freshAgoSec(int n) {
+    return 'Updated $n sec ago';
+  }
+
+  @override
+  String freshAgoMin(int n) {
+    return 'Updated $n min ago';
+  }
+
+  @override
+  String freshAt(String time) {
+    return 'Updated at $time';
+  }
+
+  @override
+  String freshOn(String date) {
+    return 'Updated $date';
+  }
+
+  @override
+  String freshForCity(String city) {
+    return 'For $city';
+  }
+
+  @override
+  String get archetypeAction => 'Emergency actions';
+
+  @override
+  String get archetypeCalculator => 'Calculator';
+
+  @override
+  String get archetypeDashboard => 'Dashboard';
+
+  @override
+  String get archetypeExplorer => 'Data explorer';
+
+  @override
+  String get archetypeInstrument => 'Instrument';
+
+  @override
+  String get archetypeLibrary => 'Library';
+
+  @override
+  String get archetypeManager => 'Records manager';
+
+  @override
+  String get archetypePlanner => 'Planner';
+
+  @override
+  String get archetypeReader => 'Reader';
+
+  @override
+  String get archetypeTracker => 'Tracker';
+
+  @override
+  String get archetypeTracking => 'Live tracking';
+
+  @override
+  String get toolSourceTax => 'Statutory slabs';
+
+  @override
+  String taxAbove(String v) {
+    return 'Above $v';
+  }
+
+  @override
+  String get taxAnnual => 'Annual';
+
+  @override
+  String get taxBand => 'Band';
+
+  @override
+  String get taxDeductions => 'Deductions';
+
+  @override
+  String get taxDueAnnual => 'Tax a year';
+
+  @override
+  String get taxDueMonthly => 'Tax a month';
+
+  @override
+  String taxEffective(String rate) {
+    return 'Effective rate $rate';
+  }
+
+  @override
+  String get taxIncomeAnnual => 'Annual income';
+
+  @override
+  String get taxIncomeMonthly => 'Monthly income';
+
+  @override
+  String get taxIncomeTax => 'Income tax';
+
+  @override
+  String get taxLeviesNote => 'Worth knowing';
+
+  @override
+  String get taxLeviesNoteText =>
+      'These are headline rates. Consumption taxes are paid on what you buy rather than deducted from pay, and social contributions are usually split between you and your employer.';
+
+  @override
+  String get taxLevy => 'Levy';
+
+  @override
+  String get taxMarginal => 'Marginal rate';
+
+  @override
+  String get taxMonthly => 'Monthly';
+
+  @override
+  String taxNoneText(String authority) {
+    return '$authority. Nothing to calculate for salaried income here.';
+  }
+
+  @override
+  String get taxNoneTitle => 'No personal income tax';
+
+  @override
+  String get taxNoneCaption =>
+      'Your salary is not subject to personal income tax here.';
+
+  @override
+  String get taxOtherLevies => 'What does apply';
+
+  @override
+  String get taxPeriod => 'Period';
+
+  @override
+  String get taxRate => 'Rate';
+
+  @override
+  String get taxSlabs => 'How it is worked out';
+
+  @override
+  String get taxSplit => 'Where it goes';
+
+  @override
+  String get taxTakeHome => 'Take-home';
+
+  @override
+  String get taxTax => 'Tax';
+
+  @override
+  String get taxTaxable => 'Taxable income';
+
+  @override
+  String get taxTaxedHere => 'Tax in band';
+
+  @override
+  String get taxUnsupportedText =>
+      'Tax rules are country-specific. Switch country to use a market Lume has configured, or check back — new markets are added regularly.';
+
+  @override
+  String taxUnsupportedTitle(String country) {
+    return 'Not yet localised for $country';
+  }
+
+  @override
+  String get taxYear => 'Year';
+
+  @override
+  String get taxAuthorityFbrSalaried => 'FBR salaried slabs';
+
+  @override
+  String get taxAuthorityHmrcEngland => 'HMRC income tax (England)';
+
+  @override
+  String get taxAuthorityIrsSingleFiler => 'IRS single filer';
+
+  @override
+  String get taxAuthorityIndiaNewRegime => 'New regime slabs';
+
+  @override
+  String get taxAuthorityNone => 'No personal income tax';
+
+  @override
+  String get levyCorporate => 'Corporate tax';
+
+  @override
+  String get levyEobi => 'EOBI';
+
+  @override
+  String get levyGosi => 'Social insurance (GOSI)';
+
+  @override
+  String get levyGst => 'GST';
+
+  @override
+  String get levyMedicare => 'Medicare';
+
+  @override
+  String get levyNi => 'National Insurance';
+
+  @override
+  String get levyPension => 'Pension contribution';
+
+  @override
+  String get levyPf => 'Provident Fund';
+
+  @override
+  String get levySocialSecurity => 'Social Security';
+
+  @override
+  String get levyVat => 'VAT';
+
+  @override
+  String get levyZakatRate => 'Zakat';
+
+  @override
   String get toolsForYou => 'For you';
 
   @override

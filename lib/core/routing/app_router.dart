@@ -61,6 +61,8 @@ import '../../features/onboarding/domain/profile_repository.dart';
 import '../../features/notifications/presentation/notification_presenter.dart';
 import '../../features/onboarding/presentation/onboarding_flow.dart';
 import '../../features/shell/presentation/fixture_tool_screen.dart';
+import '../../features/tools/application/tool_registry.dart';
+import '../../features/tools/application/tool_request.dart';
 import '../../features/startup/application/startup_controller.dart';
 import '../../features/startup/domain/startup_state.dart';
 import '../../features/notifications/presentation/notification_host.dart';
@@ -451,6 +453,25 @@ Widget _tool(BuildContext context, GoRouterState state, String root) {
       return LumeProfileScope(
         builder: (BuildContext context, LumeUserContext user) {
           final LumeFeature? feature = eligibility.byId(toolId);
+          // A converted tool is built only once the gate has said yes. A
+          // refused one, and one not yet converted, take the fixture path
+          // below — the refusal there is identical for both, so the registry
+          // cannot become a way to tell a hidden tool from a missing one.
+          final LumeToolBuilder? converted = kLumeToolRegistry[toolId];
+          if (feature != null &&
+              converted != null &&
+              eligibility.isVisible(feature, user)) {
+            return converted(
+              LumeToolRequest(
+                feature: feature,
+                user: user,
+                branch: root,
+                onBack: () => context.go(root),
+                onOpenRelated: (String id) =>
+                    context.replace(LumeRoutes.tool(root, id)),
+              ),
+            );
+          }
           return FixtureToolScreen(
             toolId: toolId,
             catalogueEligible: feature == null

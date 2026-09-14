@@ -35,6 +35,64 @@ enum LumeToolCategory { everyday, planning, islamic, money, daily, personal }
 /// The product group a feature belongs to — `g` in the catalogue.
 enum LumeFeatureGroup { daily, money, islam, personal }
 
+/// What kind of screen a tool is — `a` in `tool-specs.js`.
+///
+/// The reference uses the label for three things: the word in the tool
+/// header's sub-line, the fallback screen of a tool with no module, and the
+/// density check. It does not decide layout; `TOOL_INVENTORY.md` §4 derives
+/// the archetypes a conversion builds against from what the modules draw.
+enum LumeToolArchetype {
+  dashboard,
+  explorer,
+  tracking,
+  reader,
+  calculator,
+  manager,
+  tracker,
+  library,
+  planner,
+  instrument,
+  action,
+}
+
+/// How much a tool screen carries — `d`. `tests/verify.js` requires a screen
+/// to earn it: at least 1, 3, 5 or 7 sections.
+enum LumeToolDensity { low, medium, high, veryhigh }
+
+/// How current a tool's figures are — `fresh`.
+///
+/// Ten words for four drawn qualities (`engine.js` `FRESH_TEXT`): `daily`,
+/// `weekly`, `annual`, `draw` and `reference` all draw as cached, and each
+/// says what it is in words. `reference` is the spec's `static`, which Dart
+/// reserves.
+enum LumeFreshnessKind {
+  live,
+  cached,
+  delayed,
+  daily,
+  weekly,
+  annual,
+  draw,
+  computed,
+  reference,
+  local,
+}
+
+/// What a tool declares it can do — `supports`. The frame turns `sharing`,
+/// `export`, `favourites` and `search` into header actions, in that order and
+/// at most three.
+enum LumeToolSupport {
+  search,
+  filters,
+  sorting,
+  history,
+  favourites,
+  sharing,
+  notifications,
+  offline,
+  export,
+}
+
 /// One feature.
 @immutable
 class LumeFeature {
@@ -57,6 +115,12 @@ class LumeFeature {
     this.homeEligible = false,
     this.quickEligible = false,
     this.related = const <String>{},
+    this.archetype = LumeToolArchetype.manager,
+    this.density = LumeToolDensity.medium,
+    this.fallbackSource = 'On device',
+    this.freshness = LumeFreshnessKind.local,
+    this.supports = const <LumeToolSupport>{},
+    this.aware = const <String>{},
   });
 
   /// The stable identity. It is the route parameter, the status key, the
@@ -118,6 +182,25 @@ class LumeFeature {
 
   /// §97 — the tools this one connects to.
   final Set<String> related;
+
+  /// The tool screen's kind. The defaults here and below are `tool-specs.js`'s
+  /// own `FALLBACK`, the contract of a feature with no specification.
+  final LumeToolArchetype archetype;
+
+  final LumeToolDensity density;
+
+  /// Where the figures come from, in English. The reference renders this
+  /// string untranslated; the screen reads a localised one where it has it.
+  final String fallbackSource;
+
+  final LumeFreshnessKind freshness;
+
+  final Set<LumeToolSupport> supports;
+
+  /// What the tool adapts to — `city`, `country`, `currency`, `units`… The
+  /// header's sub-line names the city when a tool is city-aware and the
+  /// country when it is only country-aware.
+  final Set<String> aware;
 
   /// Whether this feature is restricted to particular markets.
   bool get isCountryRestricted => countries != null;

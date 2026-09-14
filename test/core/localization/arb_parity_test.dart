@@ -137,6 +137,9 @@ void main() {
         'authEmailPlaceholder',
         // An organisation's acronym. ISNA is ISNA in every language.
         'methodIsna',
+        // Pakistan's Employees' Old-Age Benefits Institution, by its acronym —
+        // the levy is named on payslips as EOBI in Arabic text too.
+        'levyEobi',
         // Sample data in a tool's status line: a score, a dialling code, a
         // window of hours, an index, two operators, a tax year, a tally.
         // Fixture values, not sentences.

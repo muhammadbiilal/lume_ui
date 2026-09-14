@@ -3542,6 +3542,261 @@ class AppLocalizationsUr extends AppLocalizations {
   String get toolUnavailableTitle => 'آپ کے سیٹ اپ کا حصہ نہیں';
 
   @override
+  String get toolRelated => 'متعلقہ ٹولز';
+
+  @override
+  String get a11yExport => 'برآمد';
+
+  @override
+  String get a11yFavourite => 'پسندیدہ میں محفوظ کریں';
+
+  @override
+  String get a11ySearchTool => 'تلاش';
+
+  @override
+  String get toolChangeCountry => 'ملک تبدیل کریں';
+
+  @override
+  String get freshLive => 'لائیو';
+
+  @override
+  String get freshCached => 'محفوظ شدہ';
+
+  @override
+  String get freshDelayed => '15 منٹ کی تاخیر';
+
+  @override
+  String get freshDaily => 'آج اپ ڈیٹ ہوا';
+
+  @override
+  String get freshWeekly => 'اس ہفتے اپ ڈیٹ ہوا';
+
+  @override
+  String get freshAnnual => 'موجودہ ٹیکس سال';
+
+  @override
+  String get freshDraw => 'تازہ ترین قرعہ اندازی';
+
+  @override
+  String get freshComputed => 'آپ کے مقام کے لیے حساب شدہ';
+
+  @override
+  String get freshStatic => 'حوالہ جاتی متن';
+
+  @override
+  String get freshLocal => 'اس آلے پر محفوظ';
+
+  @override
+  String freshAgoSec(int n) {
+    return '$n سیکنڈ پہلے اپ ڈیٹ ہوا';
+  }
+
+  @override
+  String freshAgoMin(int n) {
+    return '$n منٹ پہلے اپ ڈیٹ ہوا';
+  }
+
+  @override
+  String freshAt(String time) {
+    return '$time پر اپ ڈیٹ ہوا';
+  }
+
+  @override
+  String freshOn(String date) {
+    return '$date کو اپ ڈیٹ ہوا';
+  }
+
+  @override
+  String freshForCity(String city) {
+    return '$city کے لیے';
+  }
+
+  @override
+  String get archetypeAction => 'ہنگامی اقدامات';
+
+  @override
+  String get archetypeCalculator => 'کیلکولیٹر';
+
+  @override
+  String get archetypeDashboard => 'ڈیش بورڈ';
+
+  @override
+  String get archetypeExplorer => 'ڈیٹا ایکسپلورر';
+
+  @override
+  String get archetypeInstrument => 'آلہ';
+
+  @override
+  String get archetypeLibrary => 'لائبریری';
+
+  @override
+  String get archetypeManager => 'ریکارڈ مینیجر';
+
+  @override
+  String get archetypePlanner => 'منصوبہ ساز';
+
+  @override
+  String get archetypeReader => 'ریڈر';
+
+  @override
+  String get archetypeTracker => 'ٹریکر';
+
+  @override
+  String get archetypeTracking => 'لائیو ٹریکنگ';
+
+  @override
+  String get toolSourceTax => 'قانونی سلیب';
+
+  @override
+  String taxAbove(String v) {
+    return '$v سے زیادہ';
+  }
+
+  @override
+  String get taxAnnual => 'سالانہ';
+
+  @override
+  String get taxBand => 'سلیب';
+
+  @override
+  String get taxDeductions => 'کٹوتیاں';
+
+  @override
+  String get taxDueAnnual => 'سالانہ ٹیکس';
+
+  @override
+  String get taxDueMonthly => 'ماہانہ ٹیکس';
+
+  @override
+  String taxEffective(String rate) {
+    return 'مؤثر شرح $rate';
+  }
+
+  @override
+  String get taxIncomeAnnual => 'سالانہ آمدنی';
+
+  @override
+  String get taxIncomeMonthly => 'ماہانہ آمدنی';
+
+  @override
+  String get taxIncomeTax => 'انکم ٹیکس';
+
+  @override
+  String get taxLeviesNote => 'جاننے کے لائق';
+
+  @override
+  String get taxLeviesNoteText =>
+      'یہ بنیادی شرحیں ہیں۔ صرف پر لگنے والے ٹیکس تنخواہ سے کٹنے کے بجائے خریداری پر ادا ہوتے ہیں، اور سماجی تحفظ کی ادائیگیاں عموماً آپ اور آپ کے آجر میں تقسیم ہوتی ہیں۔';
+
+  @override
+  String get taxLevy => 'محصول';
+
+  @override
+  String get taxMarginal => 'حاشیائی شرح';
+
+  @override
+  String get taxMonthly => 'ماہانہ';
+
+  @override
+  String taxNoneText(String authority) {
+    return '$authority۔ یہاں تنخواہ دار آمدنی پر حساب کے لیے کچھ نہیں۔';
+  }
+
+  @override
+  String get taxNoneTitle => 'کوئی ذاتی انکم ٹیکس نہیں';
+
+  @override
+  String get taxNoneCaption =>
+      'یہاں آپ کی تنخواہ پر ذاتی انکم ٹیکس لاگو نہیں ہوتا۔';
+
+  @override
+  String get taxOtherLevies => 'کیا لاگو ہوتا ہے';
+
+  @override
+  String get taxPeriod => 'مدت';
+
+  @override
+  String get taxRate => 'شرح';
+
+  @override
+  String get taxSlabs => 'حساب کیسے ہوتا ہے';
+
+  @override
+  String get taxSplit => 'رقم کہاں جاتی ہے';
+
+  @override
+  String get taxTakeHome => 'خالص آمدنی';
+
+  @override
+  String get taxTax => 'ٹیکس';
+
+  @override
+  String get taxTaxable => 'قابلِ ٹیکس آمدنی';
+
+  @override
+  String get taxTaxedHere => 'سلیب میں ٹیکس';
+
+  @override
+  String get taxUnsupportedText =>
+      'ٹیکس کے قواعد ہر ملک کے اپنے ہوتے ہیں۔ Lume کی ترتیب دی ہوئی مارکیٹ استعمال کرنے کے لیے ملک تبدیل کریں، یا بعد میں دیکھیں — نئی مارکیٹیں باقاعدگی سے شامل ہوتی ہیں۔';
+
+  @override
+  String taxUnsupportedTitle(String country) {
+    return '$country کے لیے ابھی دستیاب نہیں';
+  }
+
+  @override
+  String get taxYear => 'سال';
+
+  @override
+  String get taxAuthorityFbrSalaried => 'ایف بی آر تنخواہ دار سلیب';
+
+  @override
+  String get taxAuthorityHmrcEngland => 'HMRC انکم ٹیکس (انگلینڈ)';
+
+  @override
+  String get taxAuthorityIrsSingleFiler => 'IRS انفرادی فائلر';
+
+  @override
+  String get taxAuthorityIndiaNewRegime => 'نئے نظام کے سلیب';
+
+  @override
+  String get taxAuthorityNone => 'کوئی ذاتی انکم ٹیکس نہیں';
+
+  @override
+  String get levyCorporate => 'کارپوریٹ ٹیکس';
+
+  @override
+  String get levyEobi => 'ای او بی آئی';
+
+  @override
+  String get levyGosi => 'سماجی بیمہ (GOSI)';
+
+  @override
+  String get levyGst => 'جی ایس ٹی';
+
+  @override
+  String get levyMedicare => 'میڈی کیئر';
+
+  @override
+  String get levyNi => 'نیشنل انشورنس';
+
+  @override
+  String get levyPension => 'پنشن کنٹری بیوشن';
+
+  @override
+  String get levyPf => 'پراویڈنٹ فنڈ';
+
+  @override
+  String get levySocialSecurity => 'سوشل سیکیورٹی';
+
+  @override
+  String get levyVat => 'وی اے ٹی';
+
+  @override
+  String get levyZakatRate => 'زکوٰۃ';
+
+  @override
   String get toolsForYou => 'آپ کے لیے';
 
   @override
