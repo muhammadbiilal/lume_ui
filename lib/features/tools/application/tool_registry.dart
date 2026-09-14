@@ -20,6 +20,7 @@ import '../../news/presentation/news_tool.dart';
 import '../../recipes/presentation/recipes_tool.dart';
 import '../../tax/presentation/tax_tool.dart';
 import '../../timer/presentation/timer_tool.dart';
+import '../../weather/presentation/weather_tool.dart';
 import 'tool_request.dart';
 
 /// Builds one converted tool for an opening the gate has allowed.
@@ -38,4 +39,5 @@ const Map<String, LumeToolBuilder> kLumeToolRegistry =
       'flights': LumeFlightsTool.open,
       'expenses': LumeExpensesTool.open,
       'documents': LumeDocumentsTool.open,
+      'weather': LumeWeatherTool.open,
     };

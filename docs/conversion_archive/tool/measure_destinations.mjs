@@ -982,6 +982,37 @@ const TOOL_TARGETS = {
   'dconfirm.title': '#sheet-recdelete .dconfirm__title',
   'dconfirm.text': '#sheet-recdelete .dconfirm__text',
   'dconfirm.go': '#sheet-recdelete [data-rec-go]',
+  /* The scripture reader — Hadith (F6A-D5). */
+  'reader.ref': '#toolBody .kard--reader .reader__ref',
+  'reader.body': '#toolBody .kard--reader .reader__body',
+  'reader.meta': '#toolBody .kard--reader .metaline',
+  'reader.badge': '#toolBody .kard--reader .metaline .badge',
+  'reader.acts': '#toolBody .kard--reader .reader__acts',
+  'reader.btn1': '#toolBody .kard--reader .reader__acts .btn:nth-child(1)',
+  'reader.btn2': '#toolBody .kard--reader .reader__acts .btn:nth-child(2)',
+  /* Weather — the dashboard reference (F6A-D2). */
+  'hourly': '#toolBody .hourly',
+  'hourly.col1': '#toolBody .hourly__col:nth-child(1)',
+  'hourly.col2': '#toolBody .hourly__col:nth-child(2)',
+  'hourly.t': '#toolBody .hourly__col:nth-child(2) .hourly__t',
+  'hourly.icon': '#toolBody .hourly__col:nth-child(2) .hourly__i svg',
+  'hourly.temp': '#toolBody .hourly__col:nth-child(2) .hourly__temp',
+  'hourly.rain': '#toolBody .hourly__col:nth-child(2) .hourly__rain',
+  'tempbar': '#toolBody .tempbar',
+  'tempbar.fill': '#toolBody .tempbar i',
+  'aqi': '#toolBody .aqi',
+  'aqi.value': '#toolBody .aqi__value',
+  'aqi.num': '#toolBody .aqi__value b',
+  'aqi.body': '#toolBody .aqi__body',
+  'aqi.advice': '#toolBody .aqi__advice',
+  'aqi.parts': '#toolBody .aqi__parts',
+  'aqi.part1': '#toolBody .aqi__part:nth-child(1)',
+  'aqi.badge': '#toolBody .aqi__body .badge',
+  'sunarc': '#toolBody .sunarc',
+  'sunarc.svg': '#toolBody .sunarc svg',
+  'sunarc.ends': '#toolBody .sunarc__ends',
+  'sunarc.rise': '#toolBody .sunarc__ends span:first-child',
+  'sunarc.set': '#toolBody .sunarc__ends span:last-child',
   'dconfirm.cancel': '#sheet-recdelete [data-rec-cancel]',
   // Expenses' finance dashboard — the ring, the budget bar, the category
   // filter, the sort, the transactions, the budgets and the recurring rows.
@@ -1944,6 +1975,65 @@ async function main() {
           },
           fields: Array.prototype.map.call(document.querySelectorAll('#toolBody .fgrid .field'),
             function (el) { var i = el.querySelector('input'); return [(el.querySelector('.field__label') || {}).textContent, i ? i.value : null]; })
+        } : null;
+        /* The scripture reader (F6A-D5): the day's passage and its actions. */
+        composition.reader = q('#toolBody .kard--reader') ? {
+          ref: tx('#toolBody .kard--reader .reader__ref'),
+          body: tx('#toolBody .kard--reader .reader__body'),
+          meta: texts('#toolBody .kard--reader .metaline > span'),
+          badge: tx('#toolBody .kard--reader .metaline .badge'),
+          badgeTone: (q('#toolBody .kard--reader .metaline .badge') || { className: '' }).className,
+          buttons: Array.prototype.map.call(document.querySelectorAll('#toolBody .kard--reader .reader__acts .btn'),
+            function (el) { return [el.textContent.trim(), el.getAttribute('data-act'), el.className]; }),
+          filters: Array.prototype.map.call(document.querySelectorAll('#toolBody .fchip'),
+            function (el) { return [el.childNodes[0] ? el.textContent.replace((el.querySelector('.fchip__n') || { textContent: '' }).textContent, '').trim() : null,
+              (el.querySelector('.fchip__n') || {}).textContent || null, el.classList.contains('is-on')]; }),
+          empty: q('#toolBody .state') ? { title: tx('#toolBody .state__title'), text: tx('#toolBody .state__text'),
+            action: tx('#toolBody .state .btn') } : null
+        } : null;
+        /* Weather (F6A-D2): what the dashboard says below its summary. */
+        composition.weather = q('#toolBody .hourly') ? {
+          context: texts('#toolBody .ctxbar .ctxbar__item'),
+          hourly: Array.prototype.map.call(document.querySelectorAll('#toolBody .hourly__col'),
+            function (el) {
+              var svg = el.querySelector('.hourly__i svg use');
+              return [(el.querySelector('.hourly__t') || {}).textContent,
+                      (el.querySelector('.hourly__temp') || {}).textContent,
+                      (el.querySelector('.hourly__rain') || {}).textContent,
+                      el.classList.contains('is-now'),
+                      svg ? (svg.getAttribute('href') || svg.getAttribute('xlink:href')) : null];
+            }),
+          days: Array.prototype.map.call(document.querySelectorAll('#toolBody .rows > .rrow'),
+            function (el) {
+              var bar = el.querySelector('.tempbar i');
+              return { title: (el.querySelector('.rrow__title') || {}).textContent || null,
+                       sub: (el.querySelector('.rrow__sub') || {}).textContent || null,
+                       meta: Array.prototype.map.call(el.querySelectorAll('.rrow__meta > span'), function (m) { return m.textContent; }),
+                       value: (el.querySelector('.rrow__value') || {}).textContent || null,
+                       valueSub: (el.querySelector('.rrow__valuesub') || {}).textContent || null,
+                       bar: bar ? [bar.style.insetInlineStart, bar.style.insetInlineEnd] : null };
+            }),
+          aqi: q('#toolBody .aqi') ? {
+            value: tx('#toolBody .aqi__value b'),
+            unit: tx('#toolBody .aqi__value i'),
+            badge: tx('#toolBody .aqi__body .badge'),
+            badgeTone: (q('#toolBody .aqi__body .badge') || { className: '' }).className,
+            advice: tx('#toolBody .aqi__advice'),
+            parts: Array.prototype.map.call(document.querySelectorAll('#toolBody .aqi__part'),
+              function (el) { return [(el.querySelector('b') || {}).textContent, (el.querySelector('i') || {}).textContent]; })
+          } : null,
+          sun: q('#toolBody .sunarc') ? {
+            ends: Array.prototype.map.call(document.querySelectorAll('#toolBody .sunarc__ends span'),
+              function (el) { return [(el.querySelector('b') || {}).textContent, (el.querySelector('i') || {}).textContent]; }),
+            progress: (q('#toolBody .sunarc__done') || { style: { getPropertyValue: function () { return null; } } }).style.getPropertyValue('--p'),
+            dot: q('#toolBody .sunarc__dot') ? [q('#toolBody .sunarc__dot').getAttribute('cx'), q('#toolBody .sunarc__dot').getAttribute('cy')] : null
+          } : null,
+          metrics: Array.prototype.map.call(document.querySelectorAll('#toolBody .metric'),
+            function (el) { return [(el.querySelector('.metric__value') || {}).textContent, (el.querySelector('.metric__label') || {}).textContent]; }),
+          conditions: Array.prototype.map.call(document.querySelectorAll('#toolBody .crow'),
+            function (el) { return [(el.querySelector('.crow__label') || {}).textContent, (el.querySelector('.crow__value') || {}).textContent]; }),
+          alert: q('#toolBody .notecard') ? { title: tx('#toolBody .notecard__title'), text: tx('#toolBody .notecard__text') } : null,
+          titles: texts('#toolBody .sect__title')
         } : null;
         composition.flights = q('#toolBody .journey') ? {
           placeholder: q('#toolBody .tsearch input') ? q('#toolBody .tsearch input').getAttribute('placeholder') : null,

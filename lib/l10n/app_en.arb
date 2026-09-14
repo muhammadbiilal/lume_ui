@@ -996,6 +996,58 @@
   "@appTagline": {
     "description": "Reference key app.tagline"
   },
+  "aqiGoodAdvice": "Air quality is satisfactory.",
+  "@aqiGoodAdvice": {
+    "description": "Reference key aqi.good.advice"
+  },
+  "aqiGoodLabel": "Good",
+  "@aqiGoodLabel": {
+    "description": "Reference key aqi.good.label"
+  },
+  "aqiHazardousAdvice": "Stay indoors and use filtration where possible.",
+  "@aqiHazardousAdvice": {
+    "description": "Reference key aqi.hazardous.advice"
+  },
+  "aqiHazardousLabel": "Hazardous",
+  "@aqiHazardousLabel": {
+    "description": "Reference key aqi.hazardous.label"
+  },
+  "aqiModerateAdvice": "Unusually sensitive people should limit long outdoor exertion.",
+  "@aqiModerateAdvice": {
+    "description": "Reference key aqi.moderate.advice"
+  },
+  "aqiModerateLabel": "Moderate",
+  "@aqiModerateLabel": {
+    "description": "Reference key aqi.moderate.label"
+  },
+  "aqiSensitiveAdvice": "Children and people with asthma should limit outdoor exertion.",
+  "@aqiSensitiveAdvice": {
+    "description": "Reference key aqi.sensitive.advice"
+  },
+  "aqiSensitiveLabel": "Unhealthy for sensitive groups",
+  "@aqiSensitiveLabel": {
+    "description": "Reference key aqi.sensitive.label"
+  },
+  "aqiUnhealthyAdvice": "Everyone should reduce prolonged outdoor exertion.",
+  "@aqiUnhealthyAdvice": {
+    "description": "Reference key aqi.unhealthy.advice"
+  },
+  "aqiUnhealthyLabel": "Unhealthy",
+  "@aqiUnhealthyLabel": {
+    "description": "Reference key aqi.unhealthy.label"
+  },
+  "aqiUnit": "AQI",
+  "@aqiUnit": {
+    "description": "The index's abbreviation under its value — the reference writes it in every language"
+  },
+  "aqiVeryUnhealthyAdvice": "Avoid outdoor exertion. Keep windows closed.",
+  "@aqiVeryUnhealthyAdvice": {
+    "description": "Reference key aqi.veryUnhealthy.advice"
+  },
+  "aqiVeryUnhealthyLabel": "Very unhealthy",
+  "@aqiVeryUnhealthyLabel": {
+    "description": "Reference key aqi.veryUnhealthy.label"
+  },
   "archetypeAction": "Emergency actions",
   "@archetypeAction": {
     "description": "Reference key archetype.action — the word in a tool header's sub-line"
@@ -1949,6 +2001,18 @@
   "docsVault": "Documents",
   "@docsVault": {
     "description": "Reference key docs.vault — the summary kicker"
+  },
+  "durationHm": "{h}h {m}m",
+  "@durationHm": {
+    "description": "Reference key duration.hm",
+    "placeholders": {
+      "h": {
+        "type": "String"
+      },
+      "m": {
+        "type": "String"
+      }
+    }
   },
   "emergKindAll3": "Police · Fire · Medical",
   "@emergKindAll3": {
@@ -3983,6 +4047,38 @@
   "methodUmmAlQura": "Umm al-Qura",
   "@methodUmmAlQura": {
     "description": "Prayer calculation method"
+  },
+  "moonFirstQuarter": "First quarter",
+  "@moonFirstQuarter": {
+    "description": "Reference key moon.firstQuarter"
+  },
+  "moonFull": "Full",
+  "@moonFull": {
+    "description": "Reference key moon.full"
+  },
+  "moonLastQuarter": "Last quarter",
+  "@moonLastQuarter": {
+    "description": "Reference key moon.lastQuarter"
+  },
+  "moonNew": "New",
+  "@moonNew": {
+    "description": "Reference key moon.new"
+  },
+  "moonWanCrescent": "Waning crescent",
+  "@moonWanCrescent": {
+    "description": "Reference key moon.wanCrescent"
+  },
+  "moonWanGibbous": "Waning gibbous",
+  "@moonWanGibbous": {
+    "description": "Reference key moon.wanGibbous"
+  },
+  "moonWaxCrescent": "Waxing crescent",
+  "@moonWaxCrescent": {
+    "description": "Reference key moon.waxCrescent"
+  },
+  "moonWaxGibbous": "Waxing gibbous",
+  "@moonWaxGibbous": {
+    "description": "Reference key moon.waxGibbous"
   },
   "nActComplete": "Open tasks",
   "@nActComplete": {
@@ -6516,6 +6612,26 @@
       }
     }
   },
+  "sunDaylength": "Daylight",
+  "@sunDaylength": {
+    "description": "Reference key sun.daylength"
+  },
+  "sunMoon": "Moon phase",
+  "@sunMoon": {
+    "description": "Reference key sun.moon"
+  },
+  "sunSunrise": "Sunrise",
+  "@sunSunrise": {
+    "description": "Reference key sun.sunrise"
+  },
+  "sunSunset": "Sunset",
+  "@sunSunset": {
+    "description": "Reference key sun.sunset"
+  },
+  "sunTitle": "Sun & moon",
+  "@sunTitle": {
+    "description": "Reference key sun.title"
+  },
   "surahAlKahf": "Al-Kahf",
   "@surahAlKahf": {
     "description": "The surah the reading fixture is open at"
@@ -7723,6 +7839,10 @@
   "@unitGram": {
     "description": "Reference key unit.gram"
   },
+  "unitHpa": "hPa",
+  "@unitHpa": {
+    "description": "Reference key unit.hpa — the symbol is written the same way in every language"
+  },
   "unitKcalCount": "{n} kcal",
   "@unitKcalCount": {
     "description": "Reference: `c.num(r.kcal) + \" \" + t(\"unit.kcal\")`. The number arrives formatted",
@@ -7782,6 +7902,18 @@
   "@unitTola": {
     "description": "Reference key unit.tola — 11.664 grams"
   },
+  "weatherAir": "Air quality",
+  "@weatherAir": {
+    "description": "Reference key weather.air"
+  },
+  "weatherAlertHeat": "Heat advisory",
+  "@weatherAlertHeat": {
+    "description": "Reference key weather.alert.heat"
+  },
+  "weatherAlertHeatText": "Temperatures above 38° through the afternoon. Limit outdoor exertion and drink more than usual.",
+  "@weatherAlertHeatText": {
+    "description": "Reference key weather.alert.heatText"
+  },
   "weatherBreezy": "Breezy",
   "@weatherBreezy": {
     "description": "Reference: WEATHER_BY_COUNTRY / WEATHER_BY_ZONE condition phrase."
@@ -7814,9 +7946,34 @@
   "@weatherCloudy": {
     "description": "Reference: WEATHER_BY_COUNTRY / WEATHER_BY_ZONE condition phrase."
   },
+  "weatherDetails": "Conditions",
+  "@weatherDetails": {
+    "description": "Reference key weather.details"
+  },
+  "weatherDew": "Dew point",
+  "@weatherDew": {
+    "description": "Reference key weather.dew"
+  },
+  "weatherFeels": "Feels like {t}",
+  "@weatherFeels": {
+    "description": "Reference key weather.feels",
+    "placeholders": {
+      "t": {
+        "type": "String"
+      }
+    }
+  },
+  "weatherForecast": "Five days",
+  "@weatherForecast": {
+    "description": "Reference key weather.forecast"
+  },
   "weatherFresh": "Fresh",
   "@weatherFresh": {
     "description": "Reference: WEATHER_BY_COUNTRY / WEATHER_BY_ZONE condition phrase."
+  },
+  "weatherGusts": "Gusts",
+  "@weatherGusts": {
+    "description": "Reference key weather.gusts"
   },
   "weatherHazy": "hazy",
   "@weatherHazy": {
@@ -7842,6 +7999,22 @@
       }
     }
   },
+  "weatherHilo": "High {hi} · Low {lo}",
+  "@weatherHilo": {
+    "description": "Reference key weather.hilo",
+    "placeholders": {
+      "hi": {
+        "type": "String"
+      },
+      "lo": {
+        "type": "String"
+      }
+    }
+  },
+  "weatherHourly": "Next 12 hours",
+  "@weatherHourly": {
+    "description": "Reference key weather.hourly"
+  },
   "weatherHumid": "Humid",
   "@weatherHumid": {
     "description": "Reference: WEATHER_BY_COUNTRY / WEATHER_BY_ZONE condition phrase."
@@ -7866,6 +8039,10 @@
   "@weatherHumidShowersLater": {
     "description": "Reference: WEATHER_BY_COUNTRY / WEATHER_BY_ZONE condition phrase."
   },
+  "weatherHumidity": "Humidity",
+  "@weatherHumidity": {
+    "description": "Reference key weather.humidity"
+  },
   "weatherLightCloud": "Light cloud",
   "@weatherLightCloud": {
     "description": "A weather condition. The prototype stores these as English sentences in the catalogue and never translates them"
@@ -7882,13 +8059,58 @@
   "@weatherOvercast": {
     "description": "A weather condition. The prototype stores these as English sentences in the catalogue and never translates them"
   },
+  "weatherPressure": "Pressure",
+  "@weatherPressure": {
+    "description": "Reference key weather.pressure"
+  },
   "weatherRain": "Rain",
   "@weatherRain": {
     "description": "Reference key weather.rain"
   },
+  "weatherRainChance": "{pct}% Rain",
+  "@weatherRainChance": {
+    "description": "The forecast row's meta: num(rain) + \"% \" + t(\"weather.rain\")",
+    "placeholders": {
+      "pct": {
+        "type": "String"
+      }
+    }
+  },
+  "weatherStatRain": "Rain",
+  "@weatherStatRain": {
+    "description": "Reference key weather.rain — the stat label; weatherRain is the condition phrase"
+  },
   "weatherSunnySpells": "Sunny spells",
   "@weatherSunnySpells": {
     "description": "Reference: WEATHER_BY_COUNTRY / WEATHER_BY_ZONE condition phrase."
+  },
+  "weatherUv": "UV index",
+  "@weatherUv": {
+    "description": "Reference key weather.uv"
+  },
+  "weatherUvHigh": "High",
+  "@weatherUvHigh": {
+    "description": "Reference key weather.uvHigh"
+  },
+  "weatherUvModerate": "Moderate",
+  "@weatherUvModerate": {
+    "description": "Reference key weather.uvModerate"
+  },
+  "weatherUvValue": "{n} · {band}",
+  "@weatherUvValue": {
+    "description": "The UV row: w.uv + \" · \" + w.uvLabel",
+    "placeholders": {
+      "n": {
+        "type": "String"
+      },
+      "band": {
+        "type": "String"
+      }
+    }
+  },
+  "weatherVisibility": "Visibility",
+  "@weatherVisibility": {
+    "description": "Reference key weather.visibility"
   },
   "weatherWarm": "Warm",
   "@weatherWarm": {
@@ -7901,5 +8123,9 @@
   "weatherWarmAndHumid": "Warm and humid",
   "@weatherWarmAndHumid": {
     "description": "Reference: WEATHER_BY_COUNTRY / WEATHER_BY_ZONE condition phrase."
+  },
+  "weatherWind": "Wind",
+  "@weatherWind": {
+    "description": "Reference key weather.wind"
   }
 }

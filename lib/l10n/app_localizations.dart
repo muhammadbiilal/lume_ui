@@ -1516,6 +1516,84 @@ abstract class AppLocalizations {
   /// **'Your day, in one place'**
   String get appTagline;
 
+  /// Reference key aqi.good.advice
+  ///
+  /// In en, this message translates to:
+  /// **'Air quality is satisfactory.'**
+  String get aqiGoodAdvice;
+
+  /// Reference key aqi.good.label
+  ///
+  /// In en, this message translates to:
+  /// **'Good'**
+  String get aqiGoodLabel;
+
+  /// Reference key aqi.hazardous.advice
+  ///
+  /// In en, this message translates to:
+  /// **'Stay indoors and use filtration where possible.'**
+  String get aqiHazardousAdvice;
+
+  /// Reference key aqi.hazardous.label
+  ///
+  /// In en, this message translates to:
+  /// **'Hazardous'**
+  String get aqiHazardousLabel;
+
+  /// Reference key aqi.moderate.advice
+  ///
+  /// In en, this message translates to:
+  /// **'Unusually sensitive people should limit long outdoor exertion.'**
+  String get aqiModerateAdvice;
+
+  /// Reference key aqi.moderate.label
+  ///
+  /// In en, this message translates to:
+  /// **'Moderate'**
+  String get aqiModerateLabel;
+
+  /// Reference key aqi.sensitive.advice
+  ///
+  /// In en, this message translates to:
+  /// **'Children and people with asthma should limit outdoor exertion.'**
+  String get aqiSensitiveAdvice;
+
+  /// Reference key aqi.sensitive.label
+  ///
+  /// In en, this message translates to:
+  /// **'Unhealthy for sensitive groups'**
+  String get aqiSensitiveLabel;
+
+  /// Reference key aqi.unhealthy.advice
+  ///
+  /// In en, this message translates to:
+  /// **'Everyone should reduce prolonged outdoor exertion.'**
+  String get aqiUnhealthyAdvice;
+
+  /// Reference key aqi.unhealthy.label
+  ///
+  /// In en, this message translates to:
+  /// **'Unhealthy'**
+  String get aqiUnhealthyLabel;
+
+  /// The index's abbreviation under its value — the reference writes it in every language
+  ///
+  /// In en, this message translates to:
+  /// **'AQI'**
+  String get aqiUnit;
+
+  /// Reference key aqi.veryUnhealthy.advice
+  ///
+  /// In en, this message translates to:
+  /// **'Avoid outdoor exertion. Keep windows closed.'**
+  String get aqiVeryUnhealthyAdvice;
+
+  /// Reference key aqi.veryUnhealthy.label
+  ///
+  /// In en, this message translates to:
+  /// **'Very unhealthy'**
+  String get aqiVeryUnhealthyLabel;
+
   /// Reference key archetype.action — the word in a tool header's sub-line
   ///
   /// In en, this message translates to:
@@ -2793,6 +2871,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Documents'**
   String get docsVault;
+
+  /// Reference key duration.hm
+  ///
+  /// In en, this message translates to:
+  /// **'{h}h {m}m'**
+  String durationHm(String h, String m);
 
   /// Reference key emerg.all3 — what a number is for
   ///
@@ -5391,6 +5475,54 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Umm al-Qura'**
   String get methodUmmAlQura;
+
+  /// Reference key moon.firstQuarter
+  ///
+  /// In en, this message translates to:
+  /// **'First quarter'**
+  String get moonFirstQuarter;
+
+  /// Reference key moon.full
+  ///
+  /// In en, this message translates to:
+  /// **'Full'**
+  String get moonFull;
+
+  /// Reference key moon.lastQuarter
+  ///
+  /// In en, this message translates to:
+  /// **'Last quarter'**
+  String get moonLastQuarter;
+
+  /// Reference key moon.new
+  ///
+  /// In en, this message translates to:
+  /// **'New'**
+  String get moonNew;
+
+  /// Reference key moon.wanCrescent
+  ///
+  /// In en, this message translates to:
+  /// **'Waning crescent'**
+  String get moonWanCrescent;
+
+  /// Reference key moon.wanGibbous
+  ///
+  /// In en, this message translates to:
+  /// **'Waning gibbous'**
+  String get moonWanGibbous;
+
+  /// Reference key moon.waxCrescent
+  ///
+  /// In en, this message translates to:
+  /// **'Waxing crescent'**
+  String get moonWaxCrescent;
+
+  /// Reference key moon.waxGibbous
+  ///
+  /// In en, this message translates to:
+  /// **'Waxing gibbous'**
+  String get moonWaxGibbous;
 
   /// Reference: `n.act.complete`. It opens the task list; it does not complete anything, whatever its key says.
   ///
@@ -8434,6 +8566,36 @@ abstract class AppLocalizations {
   /// **'renews {date}'**
   String subsRenews(String date);
 
+  /// Reference key sun.daylength
+  ///
+  /// In en, this message translates to:
+  /// **'Daylight'**
+  String get sunDaylength;
+
+  /// Reference key sun.moon
+  ///
+  /// In en, this message translates to:
+  /// **'Moon phase'**
+  String get sunMoon;
+
+  /// Reference key sun.sunrise
+  ///
+  /// In en, this message translates to:
+  /// **'Sunrise'**
+  String get sunSunrise;
+
+  /// Reference key sun.sunset
+  ///
+  /// In en, this message translates to:
+  /// **'Sunset'**
+  String get sunSunset;
+
+  /// Reference key sun.title
+  ///
+  /// In en, this message translates to:
+  /// **'Sun & moon'**
+  String get sunTitle;
+
   /// The surah the reading fixture is open at
   ///
   /// In en, this message translates to:
@@ -9945,6 +10107,12 @@ abstract class AppLocalizations {
   /// **'g'**
   String get unitGram;
 
+  /// Reference key unit.hpa — the symbol is written the same way in every language
+  ///
+  /// In en, this message translates to:
+  /// **'hPa'**
+  String get unitHpa;
+
   /// Reference: `c.num(r.kcal) + " " + t("unit.kcal")`. The number arrives formatted
   ///
   /// In en, this message translates to:
@@ -10011,6 +10179,24 @@ abstract class AppLocalizations {
   /// **'tola'**
   String get unitTola;
 
+  /// Reference key weather.air
+  ///
+  /// In en, this message translates to:
+  /// **'Air quality'**
+  String get weatherAir;
+
+  /// Reference key weather.alert.heat
+  ///
+  /// In en, this message translates to:
+  /// **'Heat advisory'**
+  String get weatherAlertHeat;
+
+  /// Reference key weather.alert.heatText
+  ///
+  /// In en, this message translates to:
+  /// **'Temperatures above 38° through the afternoon. Limit outdoor exertion and drink more than usual.'**
+  String get weatherAlertHeatText;
+
   /// Reference: WEATHER_BY_COUNTRY / WEATHER_BY_ZONE condition phrase.
   ///
   /// In en, this message translates to:
@@ -10059,11 +10245,41 @@ abstract class AppLocalizations {
   /// **'Cloudy'**
   String get weatherCloudy;
 
+  /// Reference key weather.details
+  ///
+  /// In en, this message translates to:
+  /// **'Conditions'**
+  String get weatherDetails;
+
+  /// Reference key weather.dew
+  ///
+  /// In en, this message translates to:
+  /// **'Dew point'**
+  String get weatherDew;
+
+  /// Reference key weather.feels
+  ///
+  /// In en, this message translates to:
+  /// **'Feels like {t}'**
+  String weatherFeels(String t);
+
+  /// Reference key weather.forecast
+  ///
+  /// In en, this message translates to:
+  /// **'Five days'**
+  String get weatherForecast;
+
   /// Reference: WEATHER_BY_COUNTRY / WEATHER_BY_ZONE condition phrase.
   ///
   /// In en, this message translates to:
   /// **'Fresh'**
   String get weatherFresh;
+
+  /// Reference key weather.gusts
+  ///
+  /// In en, this message translates to:
+  /// **'Gusts'**
+  String get weatherGusts;
 
   /// A weather condition. The prototype stores these as English sentences in the catalogue and never translates them
   ///
@@ -10088,6 +10304,18 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'{high} / {low}'**
   String weatherHighLow(String high, String low);
+
+  /// Reference key weather.hilo
+  ///
+  /// In en, this message translates to:
+  /// **'High {hi} · Low {lo}'**
+  String weatherHilo(String hi, String lo);
+
+  /// Reference key weather.hourly
+  ///
+  /// In en, this message translates to:
+  /// **'Next 12 hours'**
+  String get weatherHourly;
 
   /// Reference: WEATHER_BY_COUNTRY / WEATHER_BY_ZONE condition phrase.
   ///
@@ -10125,6 +10353,12 @@ abstract class AppLocalizations {
   /// **'Humid · showers later'**
   String get weatherHumidShowersLater;
 
+  /// Reference key weather.humidity
+  ///
+  /// In en, this message translates to:
+  /// **'Humidity'**
+  String get weatherHumidity;
+
   /// A weather condition. The prototype stores these as English sentences in the catalogue and never translates them
   ///
   /// In en, this message translates to:
@@ -10149,17 +10383,65 @@ abstract class AppLocalizations {
   /// **'Overcast'**
   String get weatherOvercast;
 
+  /// Reference key weather.pressure
+  ///
+  /// In en, this message translates to:
+  /// **'Pressure'**
+  String get weatherPressure;
+
   /// Reference key weather.rain
   ///
   /// In en, this message translates to:
   /// **'Rain'**
   String get weatherRain;
 
+  /// The forecast row's meta: num(rain) + "% " + t("weather.rain")
+  ///
+  /// In en, this message translates to:
+  /// **'{pct}% Rain'**
+  String weatherRainChance(String pct);
+
+  /// Reference key weather.rain — the stat label; weatherRain is the condition phrase
+  ///
+  /// In en, this message translates to:
+  /// **'Rain'**
+  String get weatherStatRain;
+
   /// Reference: WEATHER_BY_COUNTRY / WEATHER_BY_ZONE condition phrase.
   ///
   /// In en, this message translates to:
   /// **'Sunny spells'**
   String get weatherSunnySpells;
+
+  /// Reference key weather.uv
+  ///
+  /// In en, this message translates to:
+  /// **'UV index'**
+  String get weatherUv;
+
+  /// Reference key weather.uvHigh
+  ///
+  /// In en, this message translates to:
+  /// **'High'**
+  String get weatherUvHigh;
+
+  /// Reference key weather.uvModerate
+  ///
+  /// In en, this message translates to:
+  /// **'Moderate'**
+  String get weatherUvModerate;
+
+  /// The UV row: w.uv + " · " + w.uvLabel
+  ///
+  /// In en, this message translates to:
+  /// **'{n} · {band}'**
+  String weatherUvValue(String n, String band);
+
+  /// Reference key weather.visibility
+  ///
+  /// In en, this message translates to:
+  /// **'Visibility'**
+  String get weatherVisibility;
 
   /// Reference: WEATHER_BY_COUNTRY / WEATHER_BY_ZONE condition phrase.
   ///
@@ -10178,6 +10460,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Warm and humid'**
   String get weatherWarmAndHumid;
+
+  /// Reference key weather.wind
+  ///
+  /// In en, this message translates to:
+  /// **'Wind'**
+  String get weatherWind;
 }
 
 class _AppLocalizationsDelegate

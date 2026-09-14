@@ -103,7 +103,7 @@ Builders named are the `UI.*` calls the module makes (inventory `modules[].ui`).
 | A | **Form calculator** | `field`/`formGrid` inputs → `summaryCard` result → `table` or `donut` breakdown → `buttonRow` | `tax` `loan` `compound` `fuelcost` `zakat` `age` `datecalc` `bmi` `tipsplit` `faraid` (10) | **Tax** |
 | B | **Records manager** | `summaryCard` → `filterBar`/`sortBar` → grouped `richRow`s → `buttonRow`; record layer where present | `documents`† `health`† `meds`† `todos`† `notes`† `reminders`† `events`† `shopping`† `ledger` `installments` `committee` `vehicle` `subs` `vaccines` `alarms` `mediasaver` (16) | **Documents** |
 | C | **Finance dashboard** | `summaryCard` with a ring aside and stats → `barChart`/`donut` → `meterRow`s → rows | `expenses`† `bills` `goals` `babybudget` (4) | **Expenses** |
-| D | **Context dashboard** | `contextBar` bound to the personalise sheet → `summaryCard` → `metrics`/`timeline`/`table` for the reader's place and time | `weather` `prayer` `ramadan` `aqi` `sunmoon` `loadshed` `cricket` `pregnancy` (8) | proposed **Weather** — decision F6A-D2 |
+| D | **Context dashboard** | `contextBar` bound to the personalise sheet → `summaryCard` → `metrics`/`timeline`/`table` for the reader's place and time | `weather` `prayer` `ramadan` `aqi` `sunmoon` `loadshed` `cricket` `pregnancy` (8) | **Weather** — decision F6A-D2; *built* (C76) |
 | E | **Tracker** | `summaryCard` with `progressRing` → `barChart` → `heatmap` → insight rows | `learning` `habits`† `water`† `praytrack` `fasting` `streak` (6) | **Learning** |
 | F | **Planner** | `contextBar` → `segmented` view → a date surface (`monthGrid`) → `timeline` agenda → `fab` | `calendar` (1 on the month grid); `hijri` `holidays` `mealplan` `cycle` `birthdays`† share only the label (5) | **Calendar** — decision F6A-D3 |
 | G | **Data explorer** | `contextBar` → `summaryCard` → `searchBar` → `richRow`s with `sparkline`/`delta` → `lineChart` → `table` | `goldrates` `currency` `fuel` `natsavings` `prizebonds` `packages` `worldclock` `quransearch` (8); `markets` has its own approved composition | **Currency & Gold** — decision F6A-D4 |
@@ -240,6 +240,7 @@ spec port ──► tool host adapter ──► route dispatch
 10. **Flights** (H) — map and journey; a board that lists everything, kept as the reference has it (C73) — *built*
 11. **Expenses** (C) — the record layer, first family; in memory and declared not durable, the dashboard kept as the reference has it (C74) — *built*
 12. **Documents** (B) — the record layer's second family and irreversible delete; "Encrypted on device" over the in-memory store, with the obligation (C75) — *built*
+13. **Weather** (D) — the context dashboard on the reference weather port, extended to the hours, air and sun; "Delayed", never "Live" (C76) — *built*
 
 ## 6. Decisions this inventory raises
 

@@ -74,6 +74,7 @@
    "calendar",
    "goldrates",
    "tax",
+   "weather",
    "flights",
    "news",
    "emergency",
@@ -2177,7 +2178,7 @@
    "approvedComposition": null,
    "recordFamily": false,
    "module": "assets/js/tools/daily/weather.tool.js",
-   "flutter": "placeholder"
+   "flutter": "built"
   },
   {
    "id": "loadshed",

@@ -133,6 +133,9 @@ void main() {
       //    to translate — `{high} / {low}`;
       //  * the named exceptions below, each a token rather than a phrase.
       const Set<String> allowed = <String>{
+        // Symbols written the same in every language.
+        'aqiUnit',
+        'unitHpa',
         // A shop's own name.
         'expensesTxMetro',
         // A sample address is a technical token.

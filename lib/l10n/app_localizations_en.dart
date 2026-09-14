@@ -785,6 +785,50 @@ class AppLocalizationsEn extends AppLocalizations {
   String get appTagline => 'Your day, in one place';
 
   @override
+  String get aqiGoodAdvice => 'Air quality is satisfactory.';
+
+  @override
+  String get aqiGoodLabel => 'Good';
+
+  @override
+  String get aqiHazardousAdvice =>
+      'Stay indoors and use filtration where possible.';
+
+  @override
+  String get aqiHazardousLabel => 'Hazardous';
+
+  @override
+  String get aqiModerateAdvice =>
+      'Unusually sensitive people should limit long outdoor exertion.';
+
+  @override
+  String get aqiModerateLabel => 'Moderate';
+
+  @override
+  String get aqiSensitiveAdvice =>
+      'Children and people with asthma should limit outdoor exertion.';
+
+  @override
+  String get aqiSensitiveLabel => 'Unhealthy for sensitive groups';
+
+  @override
+  String get aqiUnhealthyAdvice =>
+      'Everyone should reduce prolonged outdoor exertion.';
+
+  @override
+  String get aqiUnhealthyLabel => 'Unhealthy';
+
+  @override
+  String get aqiUnit => 'AQI';
+
+  @override
+  String get aqiVeryUnhealthyAdvice =>
+      'Avoid outdoor exertion. Keep windows closed.';
+
+  @override
+  String get aqiVeryUnhealthyLabel => 'Very unhealthy';
+
+  @override
   String get archetypeAction => 'Emergency actions';
 
   @override
@@ -1513,6 +1557,11 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get docsVault => 'Documents';
+
+  @override
+  String durationHm(String h, String m) {
+    return '${h}h ${m}m';
+  }
 
   @override
   String get emergKindAll3 => 'Police · Fire · Medical';
@@ -2930,6 +2979,30 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get methodUmmAlQura => 'Umm al-Qura';
+
+  @override
+  String get moonFirstQuarter => 'First quarter';
+
+  @override
+  String get moonFull => 'Full';
+
+  @override
+  String get moonLastQuarter => 'Last quarter';
+
+  @override
+  String get moonNew => 'New';
+
+  @override
+  String get moonWanCrescent => 'Waning crescent';
+
+  @override
+  String get moonWanGibbous => 'Waning gibbous';
+
+  @override
+  String get moonWaxCrescent => 'Waxing crescent';
+
+  @override
+  String get moonWaxGibbous => 'Waxing gibbous';
 
   @override
   String get nActComplete => 'Open tasks';
@@ -4756,6 +4829,21 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
+  String get sunDaylength => 'Daylight';
+
+  @override
+  String get sunMoon => 'Moon phase';
+
+  @override
+  String get sunSunrise => 'Sunrise';
+
+  @override
+  String get sunSunset => 'Sunset';
+
+  @override
+  String get sunTitle => 'Sun & moon';
+
+  @override
   String get surahAlKahf => 'Al-Kahf';
 
   @override
@@ -5630,6 +5718,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get unitGram => 'g';
 
   @override
+  String get unitHpa => 'hPa';
+
+  @override
   String unitKcalCount(String n) {
     return '$n kcal';
   }
@@ -5669,6 +5760,16 @@ class AppLocalizationsEn extends AppLocalizations {
   String get unitTola => 'tola';
 
   @override
+  String get weatherAir => 'Air quality';
+
+  @override
+  String get weatherAlertHeat => 'Heat advisory';
+
+  @override
+  String get weatherAlertHeatText =>
+      'Temperatures above 38° through the afternoon. Limit outdoor exertion and drink more than usual.';
+
+  @override
   String get weatherBreezy => 'Breezy';
 
   @override
@@ -5693,7 +5794,24 @@ class AppLocalizationsEn extends AppLocalizations {
   String get weatherCloudy => 'Cloudy';
 
   @override
+  String get weatherDetails => 'Conditions';
+
+  @override
+  String get weatherDew => 'Dew point';
+
+  @override
+  String weatherFeels(String t) {
+    return 'Feels like $t';
+  }
+
+  @override
+  String get weatherForecast => 'Five days';
+
+  @override
   String get weatherFresh => 'Fresh';
+
+  @override
+  String get weatherGusts => 'Gusts';
 
   @override
   String get weatherHazy => 'hazy';
@@ -5708,6 +5826,14 @@ class AppLocalizationsEn extends AppLocalizations {
   String weatherHighLow(String high, String low) {
     return '$high / $low';
   }
+
+  @override
+  String weatherHilo(String hi, String lo) {
+    return 'High $hi · Low $lo';
+  }
+
+  @override
+  String get weatherHourly => 'Next 12 hours';
 
   @override
   String get weatherHumid => 'Humid';
@@ -5728,6 +5854,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get weatherHumidShowersLater => 'Humid · showers later';
 
   @override
+  String get weatherHumidity => 'Humidity';
+
+  @override
   String get weatherLightCloud => 'Light cloud';
 
   @override
@@ -5740,10 +5869,38 @@ class AppLocalizationsEn extends AppLocalizations {
   String get weatherOvercast => 'Overcast';
 
   @override
+  String get weatherPressure => 'Pressure';
+
+  @override
   String get weatherRain => 'Rain';
 
   @override
+  String weatherRainChance(String pct) {
+    return '$pct% Rain';
+  }
+
+  @override
+  String get weatherStatRain => 'Rain';
+
+  @override
   String get weatherSunnySpells => 'Sunny spells';
+
+  @override
+  String get weatherUv => 'UV index';
+
+  @override
+  String get weatherUvHigh => 'High';
+
+  @override
+  String get weatherUvModerate => 'Moderate';
+
+  @override
+  String weatherUvValue(String n, String band) {
+    return '$n · $band';
+  }
+
+  @override
+  String get weatherVisibility => 'Visibility';
 
   @override
   String get weatherWarm => 'Warm';
@@ -5753,4 +5910,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get weatherWarmAndHumid => 'Warm and humid';
+
+  @override
+  String get weatherWind => 'Wind';
 }

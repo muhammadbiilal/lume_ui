@@ -209,7 +209,7 @@ run on the shared CRUD engine.
 | `sunmoon` | Sun & Moon | dashboard | medium | — | — | — | — | not started |
 | `worldclock` | World Clock | explorer | medium | — | — | — | — | not started |
 | `holidays` | Public Holidays | planner | medium | — | — | — | — | not started |
-| `weather` | Weather | dashboard | high | — | — | Y | — | not started |
+| `weather` | Weather | dashboard | high | — | — | Y | — | **built (F6A)** — reference tool for context dashboards; context bar, conditions summary, heat advisory, next 12 hours, five days with temperature bars, air quality, sun and moon, conditions; generated figures under "Delayed", never "Live" (C76) |
 | `loadshed` | Loadshedding | dashboard | high | PK | — | — | — | not started |
 | `trains` | Trains | tracking | veryhigh | PK | — | — | — | not started |
 | `flights` | Flights | tracking | veryhigh | — | — | — | — | **built (F6A)** — reference tool for the tracking archetype; search, board view, metrics, route map, live board with a selected flight, journey, aircraft table, timeline, track and share actions (C73) |

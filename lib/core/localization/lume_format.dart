@@ -209,6 +209,9 @@ class LumeFormatting {
   /// `en_GB` does not.
   String dateFull(DateTime d) => intl.DateFormat.MMMMEEEEd(_dateTag).format(d);
 
+  /// "Wednesday" — a forecast day past tomorrow, `{weekday: 'long'}`.
+  String weekdayLong(DateTime d) => intl.DateFormat.EEEE(_dateTag).format(d);
+
   /// "18 March 2024" — a date with its **year**.
   ///
   /// A membership date needs one: `dateFull` is weekday/day/month, so an

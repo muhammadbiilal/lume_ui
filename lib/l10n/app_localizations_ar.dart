@@ -784,6 +784,49 @@ class AppLocalizationsAr extends AppLocalizations {
   String get appTagline => 'يومك في مكان واحد';
 
   @override
+  String get aqiGoodAdvice => 'جودة الهواء مُرضية.';
+
+  @override
+  String get aqiGoodLabel => 'جيد';
+
+  @override
+  String get aqiHazardousAdvice => 'ابقَ في الداخل واستخدم التنقية حيثما أمكن.';
+
+  @override
+  String get aqiHazardousLabel => 'خطر';
+
+  @override
+  String get aqiModerateAdvice =>
+      'على الأشخاص شديدي الحساسية الحدّ من المجهود الطويل في الخارج.';
+
+  @override
+  String get aqiModerateLabel => 'معتدل';
+
+  @override
+  String get aqiSensitiveAdvice =>
+      'على الأطفال ومرضى الربو الحدّ من المجهود في الخارج.';
+
+  @override
+  String get aqiSensitiveLabel => 'غير صحي للفئات الحساسة';
+
+  @override
+  String get aqiUnhealthyAdvice =>
+      'على الجميع تقليل المجهود المطوّل في الخارج.';
+
+  @override
+  String get aqiUnhealthyLabel => 'غير صحي';
+
+  @override
+  String get aqiUnit => 'AQI';
+
+  @override
+  String get aqiVeryUnhealthyAdvice =>
+      'تجنّب المجهود في الخارج. أبقِ النوافذ مغلقة.';
+
+  @override
+  String get aqiVeryUnhealthyLabel => 'غير صحي جدًا';
+
+  @override
   String get archetypeAction => 'إجراءات الطوارئ';
 
   @override
@@ -1528,6 +1571,11 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get docsVault => 'المستندات';
+
+  @override
+  String durationHm(String h, String m) {
+    return '$h س $m د';
+  }
 
   @override
   String get emergKindAll3 => 'الشرطة · الحريق · الطوارئ الطبية';
@@ -2948,6 +2996,30 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get methodUmmAlQura => 'أم القرى';
+
+  @override
+  String get moonFirstQuarter => 'التربيع الأول';
+
+  @override
+  String get moonFull => 'بدر';
+
+  @override
+  String get moonLastQuarter => 'التربيع الأخير';
+
+  @override
+  String get moonNew => 'محاق';
+
+  @override
+  String get moonWanCrescent => 'هلال متناقص';
+
+  @override
+  String get moonWanGibbous => 'أحدب متناقص';
+
+  @override
+  String get moonWaxCrescent => 'هلال متزايد';
+
+  @override
+  String get moonWaxGibbous => 'أحدب متزايد';
 
   @override
   String get nActComplete => 'فتح المهام';
@@ -4786,6 +4858,21 @@ class AppLocalizationsAr extends AppLocalizations {
   }
 
   @override
+  String get sunDaylength => 'ساعات النهار';
+
+  @override
+  String get sunMoon => 'طور القمر';
+
+  @override
+  String get sunSunrise => 'الشروق';
+
+  @override
+  String get sunSunset => 'الغروب';
+
+  @override
+  String get sunTitle => 'الشمس والقمر';
+
+  @override
   String get surahAlKahf => 'الكهف';
 
   @override
@@ -5668,6 +5755,9 @@ class AppLocalizationsAr extends AppLocalizations {
   String get unitGram => 'غ';
 
   @override
+  String get unitHpa => 'hPa';
+
+  @override
   String unitKcalCount(String n) {
     return '$n سعرة';
   }
@@ -5707,6 +5797,16 @@ class AppLocalizationsAr extends AppLocalizations {
   String get unitTola => 'تولة';
 
   @override
+  String get weatherAir => 'جودة الهواء';
+
+  @override
+  String get weatherAlertHeat => 'تحذير من الحرارة';
+
+  @override
+  String get weatherAlertHeatText =>
+      'درجات حرارة فوق 38° طوال فترة بعد الظهر. قلّل المجهود في الخارج واشرب أكثر من المعتاد.';
+
+  @override
   String get weatherBreezy => 'نسيم لطيف';
 
   @override
@@ -5731,7 +5831,24 @@ class AppLocalizationsAr extends AppLocalizations {
   String get weatherCloudy => 'غائم';
 
   @override
+  String get weatherDetails => 'الأحوال الجوية';
+
+  @override
+  String get weatherDew => 'نقطة الندى';
+
+  @override
+  String weatherFeels(String t) {
+    return 'الإحساس $t';
+  }
+
+  @override
+  String get weatherForecast => 'خمسة أيام';
+
+  @override
   String get weatherFresh => 'منعش';
+
+  @override
+  String get weatherGusts => 'الهبّات';
 
   @override
   String get weatherHazy => 'مغبرّ';
@@ -5746,6 +5863,14 @@ class AppLocalizationsAr extends AppLocalizations {
   String weatherHighLow(String high, String low) {
     return '$high / $low';
   }
+
+  @override
+  String weatherHilo(String hi, String lo) {
+    return 'العظمى $hi · الصغرى $lo';
+  }
+
+  @override
+  String get weatherHourly => 'الساعات القادمة';
 
   @override
   String get weatherHumid => 'رطب';
@@ -5766,6 +5891,9 @@ class AppLocalizationsAr extends AppLocalizations {
   String get weatherHumidShowersLater => 'رطب · زخّات لاحقًا';
 
   @override
+  String get weatherHumidity => 'الرطوبة';
+
+  @override
   String get weatherLightCloud => 'غيوم خفيفة';
 
   @override
@@ -5778,10 +5906,38 @@ class AppLocalizationsAr extends AppLocalizations {
   String get weatherOvercast => 'غائم';
 
   @override
+  String get weatherPressure => 'الضغط';
+
+  @override
   String get weatherRain => 'المطر';
 
   @override
+  String weatherRainChance(String pct) {
+    return 'المطر $pct%';
+  }
+
+  @override
+  String get weatherStatRain => 'المطر';
+
+  @override
   String get weatherSunnySpells => 'فترات مشمسة';
+
+  @override
+  String get weatherUv => 'مؤشر الأشعة فوق البنفسجية';
+
+  @override
+  String get weatherUvHigh => 'مرتفع';
+
+  @override
+  String get weatherUvModerate => 'معتدل';
+
+  @override
+  String weatherUvValue(String n, String band) {
+    return '$n · $band';
+  }
+
+  @override
+  String get weatherVisibility => 'مدى الرؤية';
 
   @override
   String get weatherWarm => 'دافئ';
@@ -5791,4 +5947,7 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get weatherWarmAndHumid => 'دافئ ورطب';
+
+  @override
+  String get weatherWind => 'الرياح';
 }

@@ -1855,6 +1855,53 @@ were:**
 | `LumeFilterChip` | the count as plain text at .7 | `.fchip__n`: a full pill, `1px 5px`, 10 / 700 in `text-3` on the neutral tint; white at 22 % under `on-accent` when on |
 | `LumeRichRow` | title and badge on one line that could not give way, which overflowed at 200 % beside a long value | `.rrow__titleline`: one line, the title ellipsized and the badge at its width (`LumeBadge.widthOf`), while the badge, 6 and 40 points of title fit at the reader's size; below that the badge goes 2 under the title — never reached at 1× in any built tool |
 
+### C76 — Weather: a dashboard of generated weather that says so
+
+**Found in F6A on Weather, the context-dashboard reference (F6A-D2).**
+
+- **Never "Live" — decided, and held.** Every figure is the reference's port:
+  C61's `weatherFor` and `daily`, and now `hourly()`, `aqiFor()` and what
+  `weather()` and `sunTimes()` derive (`weather_fixtures.dart`, the same
+  Park–Miller draws in the same order, checked against the reference run on
+  the fixture day). The source line is the catalogue's "Delayed 15 min ·
+  Forecast model · Updated 15 min ago"; a test asserts no "live" appears.
+  **Dayroz obligation:** the weather adapter C61 names, with provenance and
+  observation time, before any figure is presented as current.
+- **Air quality ignores the city — reproduced.** `aqiFor(code, city)` offsets
+  the national figure by the city's name, but the tool calls
+  `D.aqiFor(c.profile.country)`, so every city in a market reads the same
+  (Pakistan 128, the US 33, the UK 27). The pollutant rows are derived from
+  that one number, not measured.
+- **The strip and the summary disagree — reproduced.** "Now" reads 38° under
+  a summary of 34°, and today's forecast says 64 % rain beside a summary at
+  8 %: the hours, the days and the conditions are generated separately.
+- **Fixed conditions — reproduced.** Visibility is always 10 km and pressure
+  1,012 hPa; humidity, gusts, UV and dew point are arithmetic on the
+  temperature, rain and wind.
+- **Sun times come from the prayer schedule — reproduced.** Sunrise and
+  Maghrib at the reader's city in the reader's zone; where either is unknown
+  the reference's own 06:00 and 18:30 stand in. The moon's phase is its age
+  since a known new moon.
+- **One wrapped hour stretches the strip — reproduced.** "10:00 pm" wraps in
+  a 54-point column and the flex row makes every column that tall (116).
+- **The share card is the reference's — reproduced.** `shareForTool('weather')`
+  builds it from the screen: "Islamabad · 34° Hazy sun · humid. High 34° ·
+  Low 23°", stamped with the short date and the time.
+- **English in every language — translated.** The reference translates six
+  weather and three sun strings; `weather.*`, `aqi.*`, `sun.*`, `moon.*`,
+  `unit.hpa` and `duration.hm` are keyed and translated here (D12).
+  Pollutant symbols and "AQI" stay as written.
+
+**Found on Weather (reference tool 12), built the way C62's were:**
+
+| widget | was | reference, measured |
+|---|---|---|
+| `LumeHourlyStrip` (new) | — | `.hourly`: columns 54 wide, 4 apart, from the page gutter, stretched to the tallest; `12 4` in a one-point border at radius 12; time 10 / 700 `text-3` (wrapping), icon 18, temperature 14 / 800, rain 10 / 600 in `sky`, 6 apart; the current hour on the accent tint |
+| `LumeTempBar` (new) | — | `.tempbar`: 60 × 5 on the neutral tint, sky to amber, inset by percentage from the inline start, in a 54 × 22 spark box it runs past |
+| `LumeAqiCard` (new) | — | `.aqi`: value 34 / 800 on 43 over "AQI" 10 / 700; 16 to the body — the badge in a 21-point line, advice 12 on 18, 7 below; parts 14 under past a hairline and 13, each 14 / 800 over 10 / 600 on 14 (34) |
+| `LumeSunArc` (new) | — | `.sunarc`: a 200 × 74 view stretched to the card; a dashed `border-2` arc, the passed part 2.5 in amber, a 6-radius sun ringed in the card; ends 8 below, 14 / 800 over 10 / 600 |
+| `LumeFormatting.weekdayLong` (new) | — | a forecast day past tomorrow in the reader's own date locale |
+
 ### C63 — English dates written the wrong way outside the United States
 
 **Found in F6A** on the UAE Tax capture ("Mon, 7 Sep") and confirmed by
