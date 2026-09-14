@@ -533,7 +533,7 @@ A row marked **open** is a difference that has been found, measured and put to a
 | `list` | y | 237.00 | 245.00 | 8.00 | **open — C43** |
 | `list` | x | 20.00 | 20.00 | = | **open — C43** |
 | `list` | width | 350.00 | 350.00 | = | **open — C43** |
-| `list` | height | 186.00 | 186.00 | = | **open — C43** |
+| `list` | height | 186.00 | 258.00 | 72.00 | **open — C43** |
 | `srow` | y | 238.00 | 246.00 | 8.00 | **open — C43** |
 | `srow` | x | 21.00 | 21.00 | = | **open — C43** |
 | `srow` | width | 348.00 | 348.00 | = | **open — C43** |

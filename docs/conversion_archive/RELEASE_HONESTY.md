@@ -44,6 +44,9 @@ Counts are of the 85 catalogue tools (`feature_catalogue.dart`).
 - **The reference build** resolves every claim exactly as the reference
   draws it, so every golden is unchanged, and About's "Data" row says "Sample
   data — nothing is saved, synced or encrypted in this build".
+  The row makes About's list 72 points taller than the reference's
+  (`ACCOUNT_PARITY.md`, `list` height 186 → 258, under the existing C43
+  entry); the four About goldens were re-captured for it.
 - **A release build** (`--dart-define=LUME_BUILD=release`) resolves each
   claim against the capability and drops or replaces any it does not
   support.

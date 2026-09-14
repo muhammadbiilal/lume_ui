@@ -257,6 +257,7 @@ wrong, recorded rather than rewritten.
 | `0b2f0a8` News | "reference tool 7" | News is reference tool **6** (Tax 1, Learning 2, Timer 3, Emergency 4, Recipes 5, News 6, Calendar 7) |
 | `5aaa445` Weather | "Corrected: the share card carries the conditions" | Weather's share card **reproduces** the reference's `shareForTool('weather')` — "Islamabad · 34° Hazy sun · humid. High 34° · Low 23°" (C76) |
 | `8436532` Hadith | carries C78 in `KNOWN_DIFFERENCES.md` | C78 is **QR Scanner's** entry; it rode in Hadith's commit because the file could not be split non-interactively. It describes nothing about Hadith |
+| `139363b` QR Scanner and Save image (F6B) | its subject begins with an invisible U+FEFF | The message file was written by PowerShell 5.1's UTF-8 encoder, which adds a byte-order mark. Not amended: that would rewrite history. Later F6B commits are written without one |
 
 ## 6. Decisions this inventory raises
 
