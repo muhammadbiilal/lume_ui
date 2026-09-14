@@ -96,6 +96,52 @@ const features = LUME.FEATURES.map((f) => {
   };
 });
 
+/* The archetypes TOOL_INVENTORY.md derives, as data, so the counts are
+   computed rather than typed. `reference` is the tool that proves the
+   archetype; `members` are the tools that share its composition. Tools that
+   belong to no archetype are listed by why. Every catalogue id must appear
+   exactly once across all of it, or the script fails. */
+const ARCHETYPES = {
+  formCalculator: { reference: 'tax', members: ['tax', 'loan', 'compound', 'fuelcost', 'zakat', 'age', 'datecalc', 'bmi', 'tipsplit', 'faraid'] },
+  recordsManager: { reference: 'documents', members: ['documents', 'health', 'meds', 'todos', 'notes', 'reminders', 'events', 'shopping', 'ledger', 'installments', 'committee', 'vehicle', 'subs', 'vaccines', 'alarms', 'mediasaver'] },
+  financeDashboard: { reference: 'expenses', members: ['expenses', 'bills', 'goals', 'babybudget'] },
+  contextDashboard: { reference: 'weather', members: ['weather', 'prayer', 'ramadan', 'aqi', 'sunmoon', 'loadshed', 'cricket', 'pregnancy'] },
+  tracker: { reference: 'learning', members: ['learning', 'habits', 'water', 'praytrack', 'fasting', 'streak'] },
+  planner: { reference: 'calendar', members: ['calendar'] },
+  dataExplorer: { reference: 'goldrates', members: ['goldrates', 'currency', 'fuel', 'natsavings', 'prizebonds', 'packages', 'worldclock', 'quransearch'] },
+  liveTracking: { reference: 'flights', members: ['flights', 'trains', 'parcel', 'mosques', 'taraweeh'] },
+  editorialReader: { reference: 'news', members: ['news'] },
+  scriptureReader: { reference: 'hadith', members: ['hadith', 'quran', 'ayah', 'duas', 'names99'] },
+  visualLibrary: { reference: 'recipes', members: ['recipes', 'play'] },
+  clockInstrument: { reference: 'timer', members: ['timer', 'stopwatch', 'focus'] },
+  cameraInstrument: { reference: 'qr', members: ['qr', 'docscan'] },
+  actionInterface: { reference: 'emergency', members: ['emergency'] },
+};
+const OUTSIDE = {
+  /* A host handler of its own and no builder shared with another tool, or
+     (Markets, D4) session and exchange rules no explorer has. */
+  oneOff: ['calculator', 'converter', 'tasbih', 'speedtest', 'qibla', 'markets'],
+  /* Composed on their own: share a label or a date with an archetype, not its
+     structure (D3), or ask for a permission without the scanner. */
+  ownComposition: ['hijri', 'holidays', 'mealplan', 'cycle', 'birthdays', 'passport', 'wastatus'],
+};
+{
+  const seen = new Map();
+  const note = (id, where) => seen.set(id, [...(seen.get(id) || []), where]);
+  for (const [a, { reference, members }] of Object.entries(ARCHETYPES)) {
+    if (!members.includes(reference)) throw new Error(`${a}: reference ${reference} is not a member`);
+    members.forEach((id) => note(id, a));
+  }
+  for (const [k, ids] of Object.entries(OUTSIDE)) ids.forEach((id) => note(id, k));
+  const all = LUME.FEATURES.map((f) => f.id);
+  const missing = all.filter((id) => !seen.has(id));
+  const twice = [...seen].filter(([, w]) => w.length > 1);
+  const unknown = [...seen.keys()].filter((id) => !all.includes(id));
+  if (missing.length || twice.length || unknown.length) {
+    throw new Error(`archetype map: missing ${missing}, twice ${JSON.stringify(twice)}, unknown ${unknown}`);
+  }
+}
+
 const featureIds = new Set(features.map((f) => f.id));
 const moduleIds = new Set(modules.map((m) => m.id));
 const mismatches = [
@@ -128,6 +174,15 @@ const result = {
     androidOnly: features.filter((f) => f.android).map((f) => f.id),
     sensitive: features.filter((f) => f.sensitive).map((f) => f.id),
     flutterBuilt: features.filter((f) => f.flutter === 'built').map((f) => f.id),
+  },
+  archetypes: {
+    count: Object.keys(ARCHETYPES).length,
+    references: Object.values(ARCHETYPES).map((a) => a.reference),
+    members: Object.values(ARCHETYPES).reduce((n, a) => n + a.members.length, 0),
+    oneOff: OUTSIDE.oneOff,
+    ownComposition: OUTSIDE.ownComposition,
+    recordLayer: features.filter((f) => f.recordFamily).map((f) => f.id),
+    map: ARCHETYPES,
   },
   mismatches,
   sharedModules: sharedFiles.map((p) => ({ file: rel(p), lines: readFileSync(p, 'utf8').split('\n').length })),

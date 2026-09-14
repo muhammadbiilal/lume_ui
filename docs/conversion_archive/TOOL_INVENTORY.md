@@ -138,6 +138,56 @@ a sort bar, an asset detail view, a market sheet, 413 lines and its own
 stylesheet. It is the explorer least like the others, so it cannot stand for
 them; it is converted on its own approved composition in a later wave.
 
+### 4.3 The counts, computed
+
+`inventory_tools.mjs` now carries the archetype map as data and fails unless
+every catalogue id appears exactly once across it. Its output
+(`tool_inventory.json` → `archetypes`):
+
+| | count |
+|---|---:|
+| Confirmed archetypes | **14** |
+| Reference tools | **14** — one per archetype |
+| Archetype members (references included) | **72** |
+| One-off tools | **6** — `calculator` `converter` `tasbih` `speedtest` `qibla` `markets` |
+| Tools on their own composition | **7** — `hijri` `holidays` `mealplan` `cycle` `birthdays` `passport` `wastatus` |
+| Total | **85** |
+| Record families (a layer across archetypes, not counted above) | 12 |
+
+| archetype | reference |
+|---|---|
+| Form calculator | `tax` |
+| Records manager | `documents` |
+| Finance dashboard | `expenses` |
+| Context dashboard | `weather` |
+| Tracker | `learning` |
+| Planner | `calendar` |
+| Data explorer | `goldrates` (Currency & Gold) |
+| Live tracking | `flights` |
+| Editorial reader | `news` |
+| Scripture reader | `hadith` |
+| Visual library | `recipes` |
+| Clock instrument | `timer` |
+| Camera instrument | `qr` |
+| Action interface | `emergency` |
+
+**Why the count moved from 12 to 14.** The earlier "12" counted the
+references that were *chosen* — ten archetypes plus Tax, and Expenses and
+Documents counted once each — while two confirmed archetypes had none: the
+scripture reader (J) and the camera instrument (M). D5 selects `hadith` and
+`qr` for them, so every archetype now has exactly one, and the count is the
+archetype count. Nothing else changed it:
+
+* **No two references share an archetype.** Expenses (finance dashboard) and
+  Documents (records manager) both sit on the record layer, but the layer is
+  not an archetype; their bodies are different compositions.
+* **No one-off was counted as a reference.** The five singular instruments had
+  no reference in either count, and Markets moves from "explorer member" to
+  one-off (D4) without changing the reference count, because it was never the
+  explorer's reference.
+* **Planner stays one member** (D3): the five tools that share only its label
+  are counted on their own compositions, not as planner members.
+
 ## 5. Dependency graph
 
 What each reference needs that Flutter does not have yet. "Frame" is the host

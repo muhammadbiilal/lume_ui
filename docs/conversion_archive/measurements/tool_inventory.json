@@ -73,6 +73,201 @@
    "tax"
   ]
  },
+ "archetypes": {
+  "count": 14,
+  "references": [
+   "tax",
+   "documents",
+   "expenses",
+   "weather",
+   "learning",
+   "calendar",
+   "goldrates",
+   "flights",
+   "news",
+   "hadith",
+   "recipes",
+   "timer",
+   "qr",
+   "emergency"
+  ],
+  "members": 72,
+  "oneOff": [
+   "calculator",
+   "converter",
+   "tasbih",
+   "speedtest",
+   "qibla",
+   "markets"
+  ],
+  "ownComposition": [
+   "hijri",
+   "holidays",
+   "mealplan",
+   "cycle",
+   "birthdays",
+   "passport",
+   "wastatus"
+  ],
+  "recordLayer": [
+   "reminders",
+   "notes",
+   "todos",
+   "events",
+   "shopping",
+   "birthdays",
+   "documents",
+   "health",
+   "habits",
+   "water",
+   "expenses",
+   "meds"
+  ],
+  "map": {
+   "formCalculator": {
+    "reference": "tax",
+    "members": [
+     "tax",
+     "loan",
+     "compound",
+     "fuelcost",
+     "zakat",
+     "age",
+     "datecalc",
+     "bmi",
+     "tipsplit",
+     "faraid"
+    ]
+   },
+   "recordsManager": {
+    "reference": "documents",
+    "members": [
+     "documents",
+     "health",
+     "meds",
+     "todos",
+     "notes",
+     "reminders",
+     "events",
+     "shopping",
+     "ledger",
+     "installments",
+     "committee",
+     "vehicle",
+     "subs",
+     "vaccines",
+     "alarms",
+     "mediasaver"
+    ]
+   },
+   "financeDashboard": {
+    "reference": "expenses",
+    "members": [
+     "expenses",
+     "bills",
+     "goals",
+     "babybudget"
+    ]
+   },
+   "contextDashboard": {
+    "reference": "weather",
+    "members": [
+     "weather",
+     "prayer",
+     "ramadan",
+     "aqi",
+     "sunmoon",
+     "loadshed",
+     "cricket",
+     "pregnancy"
+    ]
+   },
+   "tracker": {
+    "reference": "learning",
+    "members": [
+     "learning",
+     "habits",
+     "water",
+     "praytrack",
+     "fasting",
+     "streak"
+    ]
+   },
+   "planner": {
+    "reference": "calendar",
+    "members": [
+     "calendar"
+    ]
+   },
+   "dataExplorer": {
+    "reference": "goldrates",
+    "members": [
+     "goldrates",
+     "currency",
+     "fuel",
+     "natsavings",
+     "prizebonds",
+     "packages",
+     "worldclock",
+     "quransearch"
+    ]
+   },
+   "liveTracking": {
+    "reference": "flights",
+    "members": [
+     "flights",
+     "trains",
+     "parcel",
+     "mosques",
+     "taraweeh"
+    ]
+   },
+   "editorialReader": {
+    "reference": "news",
+    "members": [
+     "news"
+    ]
+   },
+   "scriptureReader": {
+    "reference": "hadith",
+    "members": [
+     "hadith",
+     "quran",
+     "ayah",
+     "duas",
+     "names99"
+    ]
+   },
+   "visualLibrary": {
+    "reference": "recipes",
+    "members": [
+     "recipes",
+     "play"
+    ]
+   },
+   "clockInstrument": {
+    "reference": "timer",
+    "members": [
+     "timer",
+     "stopwatch",
+     "focus"
+    ]
+   },
+   "cameraInstrument": {
+    "reference": "qr",
+    "members": [
+     "qr",
+     "docscan"
+    ]
+   },
+   "actionInterface": {
+    "reference": "emergency",
+    "members": [
+     "emergency"
+    ]
+   }
+  }
+ },
  "mismatches": [
   {
    "kind": "catalogue feature with no module",
