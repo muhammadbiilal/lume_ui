@@ -89,9 +89,10 @@ class LumeFilterChip extends StatelessWidget {
         mainAxisSize: MainAxisSize.min,
         children: <Widget>[
           if (icon != null) ...<Widget>[
+            // `.fchip svg { width: 13px }`.
             LumeIcon(
               icon!,
-              size: LumeSpace.iconSm,
+              size: 13,
               color: selected ? lume.onAccent : lume.text2,
             ),
             const SizedBox(width: 5),
@@ -517,7 +518,9 @@ class LumeSortBar extends StatelessWidget {
 
     return Row(
       children: <Widget>[
-        LumeIcon(LumeIcons.sliders, size: LumeSpace.iconSm, color: lume.text3),
+        // `.sortbar { gap: 10px }`, `.sortbar__label { gap: 5px; font-weight:
+        // 700 }` with a 13-point glyph.
+        LumeIcon(LumeIcons.sliders, size: 13, color: lume.text3),
         const SizedBox(width: 5),
         if (label != null) ...<Widget>[
           Text(
@@ -525,10 +528,10 @@ class LumeSortBar extends StatelessWidget {
             style: LumeType.fit(
               context,
               context.lumeType.metaSmall,
-            ).copyWith(color: lume.text3, fontWeight: FontWeight.w600),
+            ).copyWith(color: lume.text3, fontWeight: FontWeight.w700),
           ),
-          const SizedBox(width: LumeSpace.x2),
         ],
+        const SizedBox(width: 10),
         Expanded(
           child: SingleChildScrollView(
             scrollDirection: Axis.horizontal,
@@ -605,9 +608,11 @@ class _SortOption extends StatelessWidget {
             child: Row(
               mainAxisSize: MainAxisSize.min,
               children: <Widget>[
+                // `.sortopt` is 23 tall: 5 above and below an 11-point label on
+                // its natural line.
                 Text(
                   item.label,
-                  style: LumeType.fit(context, context.lumeType.metaSmall)
+                  style: LumeType.natural(context, context.lumeType.metaSmall)
                       .copyWith(
                         color: selected ? lume.accentInk : lume.text3,
                         fontWeight: FontWeight.w600,
@@ -620,7 +625,7 @@ class _SortOption extends StatelessWidget {
                     direction == LumeSortDirection.ascending
                         ? LumeIcons.arrowUp
                         : LumeIcons.arrowDown,
-                    size: 13,
+                    size: 11,
                     color: lume.accentInk,
                   ),
                 ],

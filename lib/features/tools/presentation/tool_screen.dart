@@ -79,6 +79,10 @@ class LumeToolScreen extends ConsumerStatefulWidget {
     this.shareCard,
     this.exportFile,
     this.floating,
+    this.title,
+    this.leadingAction,
+    this.headerActions,
+    this.bare = false,
   });
 
   final LumeFeature feature;
@@ -109,6 +113,22 @@ class LumeToolScreen extends ConsumerStatefulWidget {
   /// `.fab` -- a floating action, 22 from the end and 96 from the bottom,
   /// under the toast as the reference stacks them.
   final Widget? floating;
+
+  /// A record operation's own title — "Expense details", "Add expense". `null`
+  /// is the tool's name.
+  final String? title;
+
+  /// `recordActions(c)` — a record tool's Add, in words, ahead of the header's
+  /// own actions, within the same cap of three.
+  final Widget? leadingAction;
+
+  /// A record operation's header actions — Edit on a detail, Save on a form —
+  /// in place of the tool's.
+  final List<Widget>? headerActions;
+
+  /// `LUME_CRUD.screen(c)` — a detail or a form owns the screen, so it has no
+  /// source card, privacy note or related rail of its own.
+  final bool bare;
 
   /// `toast()` — 2.1 seconds, or 6 with an action.
   static const Duration toastFor = Duration(milliseconds: 2100);
@@ -243,6 +263,7 @@ class LumeToolScreenState extends ConsumerState<LumeToolScreen> {
   /// `headerActions()` — share, export, then favourite and search while there
   /// is room, at most three.
   List<Widget> _actions(AppLocalizations l) {
+    if (widget.headerActions case final List<Widget> own) return own;
     final Set<LumeToolSupport> s = widget.feature.supports;
     final LumeToolActions a = widget.actions;
     final List<Widget> out = <Widget>[
@@ -277,7 +298,8 @@ class LumeToolScreenState extends ConsumerState<LumeToolScreen> {
         ),
       );
     }
-    return out.take(3).toList();
+    // `recordActions(c).concat(headerActions(c)).slice(0, 3)`.
+    return <Widget>[?widget.leadingAction, ...out].take(3).toList();
   }
 
   @override
@@ -293,7 +315,7 @@ class LumeToolScreenState extends ConsumerState<LumeToolScreen> {
     final DateTime now = LumeClockScope.of(context).now();
 
     final Widget frame = LumeToolFrame(
-      title: LumeFeatureStrings.name(l, feature.id),
+      title: widget.title ?? LumeFeatureStrings.name(l, feature.id),
       subtitle:
           widget.subtitle ??
           LumeToolStrings.subtitle(
@@ -320,27 +342,34 @@ class LumeToolScreenState extends ConsumerState<LumeToolScreen> {
       // who may not have it (§64).
       eligible: eligibility.isVisible(feature, user),
       onRetry: widget.onRetry,
-      freshness: LumeToolStrings.quality(feature.freshness),
-      freshnessLabel: LumeToolStrings.freshness(l, feature.freshness),
-      source: LumeToolStrings.source(l, feature),
-      updated: LumeToolStrings.updated(
-        l,
-        f,
-        feature.freshness,
-        now: now,
-        city: user.city,
-      ),
-      privacy: feature.sensitive
+      freshness: widget.bare
+          ? null
+          : LumeToolStrings.quality(feature.freshness),
+      freshnessLabel: widget.bare
+          ? null
+          : LumeToolStrings.freshness(l, feature.freshness),
+      source: widget.bare ? null : LumeToolStrings.source(l, feature),
+      updated: widget.bare
+          ? null
+          : LumeToolStrings.updated(
+              l,
+              f,
+              feature.freshness,
+              now: now,
+              city: user.city,
+            ),
+      privacy: feature.sensitive && !widget.bare
           ? LumePrivateState(title: l.toolPrivateTitle, text: l.toolPrivateText)
           : null,
       related: <LumeRelatedTool>[
-        for (final String id in feature.related)
-          if (eligibility.visibleById(id, user) case final LumeFeature r)
-            LumeRelatedTool(
-              id: r.id,
-              name: LumeFeatureStrings.name(l, r.id),
-              icon: r.icon,
-            ),
+        if (!widget.bare)
+          for (final String id in feature.related)
+            if (eligibility.visibleById(id, user) case final LumeFeature r)
+              LumeRelatedTool(
+                id: r.id,
+                name: LumeFeatureStrings.name(l, r.id),
+                icon: r.icon,
+              ),
       ],
       onOpenRelated: widget.onOpenRelated,
       body: widget.body,

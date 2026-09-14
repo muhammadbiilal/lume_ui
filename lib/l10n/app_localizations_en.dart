@@ -1272,7 +1272,13 @@ class AppLocalizationsEn extends AppLocalizations {
   String get commonAll => 'All';
 
   @override
+  String get commonAmount => 'Amount';
+
+  @override
   String get commonChange => 'Change';
+
+  @override
+  String get commonDate => 'Date';
 
   @override
   String get commonDays => 'days';
@@ -1573,6 +1579,138 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get emergencyYourInfo => 'Your information';
+
+  @override
+  String get expensesAdd => 'Add expense';
+
+  @override
+  String get expensesBalance => 'Balance';
+
+  @override
+  String get expensesBudgetUse => 'Budget used';
+
+  @override
+  String get expensesBudgets => 'Budgets';
+
+  @override
+  String get expensesCatBills => 'Bills';
+
+  @override
+  String get expensesCatEating => 'Eating out';
+
+  @override
+  String get expensesCatGroceries => 'Groceries';
+
+  @override
+  String get expensesCatHealth => 'Health';
+
+  @override
+  String get expensesCatOther => 'Other';
+
+  @override
+  String get expensesCatTransport => 'Transport';
+
+  @override
+  String get expensesCategories => 'By category';
+
+  @override
+  String get expensesCategory => 'Category';
+
+  @override
+  String get expensesDailyAvg => 'Daily average';
+
+  @override
+  String get expensesIncome => 'Income';
+
+  @override
+  String get expensesInsight1Text => 'Compared with your three-month average.';
+
+  @override
+  String get expensesInsight1Title => 'Groceries are up 12%';
+
+  @override
+  String get expensesInsight2Text =>
+      'At this pace you finish about 8% under budget.';
+
+  @override
+  String get expensesInsight2Title => 'On track for the month';
+
+  @override
+  String get expensesInsights => 'Insights';
+
+  @override
+  String get expensesMethodAutoDebit => 'Auto-debit';
+
+  @override
+  String expensesMonthlyOn(int day) {
+    return 'monthly, on the ${day}th';
+  }
+
+  @override
+  String get expensesNoMatch => 'No transactions match';
+
+  @override
+  String get expensesNoMatchText => 'Try another category or clear the search.';
+
+  @override
+  String expensesOfBudget(String pct, String budget) {
+    return '$pct of your $budget budget';
+  }
+
+  @override
+  String get expensesRange => 'Range';
+
+  @override
+  String get expensesRec1 => 'Internet';
+
+  @override
+  String get expensesRec2 => 'Electricity';
+
+  @override
+  String get expensesRecurring => 'Recurring';
+
+  @override
+  String get expensesSpent => 'Spent this month';
+
+  @override
+  String get expensesTransactions => 'Transactions';
+
+  @override
+  String get expensesTrend => 'This week';
+
+  @override
+  String expensesTrendCap(String avg) {
+    return 'Averaging $avg a day';
+  }
+
+  @override
+  String get expensesTxAirport => 'Ride to airport';
+
+  @override
+  String get expensesTxCoffee => 'Coffee — Chaaye Khana';
+
+  @override
+  String get expensesTxElectricity => 'Electricity bill';
+
+  @override
+  String get expensesTxFuel => 'Fuel — Shell';
+
+  @override
+  String get expensesTxInternet => 'Internet';
+
+  @override
+  String get expensesTxMetro => 'Metro Cash & Carry';
+
+  @override
+  String get expensesTxPharmacy => 'Pharmacy';
+
+  @override
+  String get expensesTxSalary => 'Salary';
+
+  @override
+  String expensesWhenTime(String day, String time) {
+    return '$day · $time';
+  }
 
   @override
   String get exploreAround => 'Around you';
@@ -3821,6 +3959,41 @@ class AppLocalizationsEn extends AppLocalizations {
   String get ratesWorth => 'Worth';
 
   @override
+  String recAdd(String noun) {
+    return 'Add $noun';
+  }
+
+  @override
+  String recAddFirst(String noun) {
+    return 'Add first $noun';
+  }
+
+  @override
+  String recAdded(String noun) {
+    return '$noun added';
+  }
+
+  @override
+  String get recAttach => 'Add photo or document';
+
+  @override
+  String get recAttachSoon => 'Attachments are coming soon';
+
+  @override
+  String get recAttached => 'Attached';
+
+  @override
+  String recBackToList(String noun) {
+    return 'Back to $noun';
+  }
+
+  @override
+  String get recCheckFields => 'Check the highlighted fields';
+
+  @override
+  String get recConfirmNote => 'Changes are saved only after confirmation';
+
+  @override
   String get recConflict => 'This record changed elsewhere';
 
   @override
@@ -3828,7 +4001,160 @@ class AppLocalizationsEn extends AppLocalizations {
       'A newer version exists. Review your changes or reload the newer one.';
 
   @override
+  String get recCouldNotRefresh => 'Could not refresh';
+
+  @override
+  String recCount(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n records',
+      one: '1 record',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String recCreated(String when) {
+    return 'Created $when';
+  }
+
+  @override
+  String get recCreatedToday => 'Created today';
+
+  @override
+  String get recCreatedYesterday => 'Created yesterday';
+
+  @override
+  String recDaysAgo(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n days ago',
+      one: '1 day ago',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String recDelete(String noun) {
+    return 'Delete $noun';
+  }
+
+  @override
+  String recDeleteAsk(String noun) {
+    return 'Delete this $noun?';
+  }
+
+  @override
   String get recDeleteFailed => 'Could not delete this record';
+
+  @override
+  String recDeleteTextFinal(String name) {
+    return '$name will be removed. This action cannot be undone.';
+  }
+
+  @override
+  String recDeleteTextUndo(String name) {
+    return '$name will be removed. You can undo this straight away.';
+  }
+
+  @override
+  String recDeleted(String noun) {
+    return '$noun deleted';
+  }
+
+  @override
+  String recDeletedFinal(String noun) {
+    return '$noun deleted permanently';
+  }
+
+  @override
+  String recDetailTitle(String noun) {
+    return '$noun details';
+  }
+
+  @override
+  String get recDetails => 'Details';
+
+  @override
+  String get recDiscard => 'Discard';
+
+  @override
+  String get recDiscardAsk => 'Discard your changes?';
+
+  @override
+  String get recDiscardText => 'What you typed will not be saved.';
+
+  @override
+  String recEdit(String noun) {
+    return 'Edit $noun';
+  }
+
+  @override
+  String get recEditing => 'Editing';
+
+  @override
+  String get recErrPositive => 'Enter an amount greater than zero';
+
+  @override
+  String recErrRequired(String field) {
+    return '$field is required';
+  }
+
+  @override
+  String get recExpensesEmptyText =>
+      'Add a record to understand where your money goes and build useful summaries.';
+
+  @override
+  String get recExpensesEmptyTitle => 'Track your first expense';
+
+  @override
+  String get recExpensesNoun => 'expense';
+
+  @override
+  String get recExpensesNounPlural => 'expenses';
+
+  @override
+  String get recExpensesPh => 'What did you spend on?';
+
+  @override
+  String get recFieldAmount => 'Amount';
+
+  @override
+  String get recFieldCategory => 'Category';
+
+  @override
+  String get recFieldDate => 'Date';
+
+  @override
+  String get recFieldNotes => 'Notes';
+
+  @override
+  String get recFieldPayment => 'Payment';
+
+  @override
+  String get recFieldReceipt => 'Receipt';
+
+  @override
+  String get recFieldTitle => 'Title';
+
+  @override
+  String get recGone => 'That record is no longer here';
+
+  @override
+  String get recGoneText => 'It may have been deleted.';
+
+  @override
+  String get recImportLater => 'You can import records later';
+
+  @override
+  String recInformation(String noun) {
+    return '$noun information';
+  }
+
+  @override
+  String get recKeepEditing => 'Keep editing';
 
   @override
   String recLoadError(Object noun) {
@@ -3838,6 +4164,24 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get recLoadErrorText =>
       'Check your connection. Your saved data is still safe on this device.';
+
+  @override
+  String get recNewRecord => 'New record';
+
+  @override
+  String get recNoMatch => 'Nothing matches';
+
+  @override
+  String get recNoMatchText => 'Try a different word, or clear the filters.';
+
+  @override
+  String get recNone => 'None';
+
+  @override
+  String get recNoneYet => 'No records yet';
+
+  @override
+  String get recNotAttached => 'Not attached';
 
   @override
   String get recNothingToUndo => 'Nothing left to undo';
@@ -3853,10 +4197,94 @@ class AppLocalizationsEn extends AppLocalizations {
   String get recOfflineText => 'Showing records saved on this device.';
 
   @override
+  String get recOptional => 'Optional';
+
+  @override
+  String get recPayCard => 'Card';
+
+  @override
+  String get recPayCash => 'Cash';
+
+  @override
+  String get recPayTransfer => 'Transfer';
+
+  @override
+  String get recPayWallet => 'Wallet';
+
+  @override
+  String get recQueued => 'Queued';
+
+  @override
+  String recRecordId(String id) {
+    return 'Record ID $id';
+  }
+
+  @override
+  String get recReload => 'Reload';
+
+  @override
+  String get recReloaded => 'Loaded the newer version';
+
+  @override
+  String get recReview => 'Review';
+
+  @override
+  String recSave(String noun) {
+    return 'Save $noun';
+  }
+
+  @override
   String get recSaveFailed => 'Could not save changes';
 
   @override
   String get recSaveFailedText => 'Nothing you typed was lost. Try again.';
+
+  @override
+  String get recSaving => 'Saving…';
+
+  @override
+  String recSearch(String noun) {
+    return 'Search $noun';
+  }
+
+  @override
+  String get recSeedCoffee => 'Coffee';
+
+  @override
+  String get recSeedGroceries => 'Groceries';
+
+  @override
+  String get recSeedGroceriesNote => 'Weekly household groceries';
+
+  @override
+  String get recSeedInternet => 'Internet bill';
+
+  @override
+  String get recSeedPharmacy => 'Pharmacy';
+
+  @override
+  String get recSeedTaxi => 'Taxi';
+
+  @override
+  String get recSelectText => 'Choose one from the list to see it here.';
+
+  @override
+  String get recSelectTitle => 'Nothing selected';
+
+  @override
+  String get recUndo => 'Undo';
+
+  @override
+  String get recUndone => 'Restored';
+
+  @override
+  String get recUpdate => 'Save changes';
+
+  @override
+  String get recUpdated => 'Saved';
+
+  @override
+  String get recViewCached => 'View cached records';
 
   @override
   String get recipeCuisineGlobal => 'Global';

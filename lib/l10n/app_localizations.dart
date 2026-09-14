@@ -2362,11 +2362,23 @@ abstract class AppLocalizations {
   /// **'All'**
   String get commonAll;
 
+  /// Reference key common.amount — a sort option and an export column
+  ///
+  /// In en, this message translates to:
+  /// **'Amount'**
+  String get commonAmount;
+
   /// Reference key common.change — a column head
   ///
   /// In en, this message translates to:
   /// **'Change'**
   String get commonChange;
+
+  /// Reference key common.date — a sort option and an export column
+  ///
+  /// In en, this message translates to:
+  /// **'Date'**
+  String get commonDate;
 
   /// Reference key common.days
   ///
@@ -2937,6 +2949,252 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Your information'**
   String get emergencyYourInfo;
+
+  /// Reference key expenses.add
+  ///
+  /// In en, this message translates to:
+  /// **'Add expense'**
+  String get expensesAdd;
+
+  /// Reference key expenses.balance
+  ///
+  /// In en, this message translates to:
+  /// **'Balance'**
+  String get expensesBalance;
+
+  /// Reference key expenses.budgetUse
+  ///
+  /// In en, this message translates to:
+  /// **'Budget used'**
+  String get expensesBudgetUse;
+
+  /// Reference key expenses.budgets
+  ///
+  /// In en, this message translates to:
+  /// **'Budgets'**
+  String get expensesBudgets;
+
+  /// EXPENSE_CATEGORIES bills
+  ///
+  /// In en, this message translates to:
+  /// **'Bills'**
+  String get expensesCatBills;
+
+  /// EXPENSE_CATEGORIES eating
+  ///
+  /// In en, this message translates to:
+  /// **'Eating out'**
+  String get expensesCatEating;
+
+  /// tool-data.js EXPENSE_CATEGORIES groceries — written in English in the reference
+  ///
+  /// In en, this message translates to:
+  /// **'Groceries'**
+  String get expensesCatGroceries;
+
+  /// EXPENSE_CATEGORIES health
+  ///
+  /// In en, this message translates to:
+  /// **'Health'**
+  String get expensesCatHealth;
+
+  /// EXPENSE_CATEGORIES other
+  ///
+  /// In en, this message translates to:
+  /// **'Other'**
+  String get expensesCatOther;
+
+  /// EXPENSE_CATEGORIES transport
+  ///
+  /// In en, this message translates to:
+  /// **'Transport'**
+  String get expensesCatTransport;
+
+  /// Reference key expenses.categories
+  ///
+  /// In en, this message translates to:
+  /// **'By category'**
+  String get expensesCategories;
+
+  /// Reference key expenses.category
+  ///
+  /// In en, this message translates to:
+  /// **'Category'**
+  String get expensesCategory;
+
+  /// Reference key expenses.dailyAvg
+  ///
+  /// In en, this message translates to:
+  /// **'Daily average'**
+  String get expensesDailyAvg;
+
+  /// Reference key expenses.income
+  ///
+  /// In en, this message translates to:
+  /// **'Income'**
+  String get expensesIncome;
+
+  /// Reference key expenses.insight1.text
+  ///
+  /// In en, this message translates to:
+  /// **'Compared with your three-month average.'**
+  String get expensesInsight1Text;
+
+  /// Reference key expenses.insight1.title
+  ///
+  /// In en, this message translates to:
+  /// **'Groceries are up 12%'**
+  String get expensesInsight1Title;
+
+  /// Reference key expenses.insight2.text
+  ///
+  /// In en, this message translates to:
+  /// **'At this pace you finish about 8% under budget.'**
+  String get expensesInsight2Text;
+
+  /// Reference key expenses.insight2.title
+  ///
+  /// In en, this message translates to:
+  /// **'On track for the month'**
+  String get expensesInsight2Title;
+
+  /// Reference key expenses.insights
+  ///
+  /// In en, this message translates to:
+  /// **'Insights'**
+  String get expensesInsights;
+
+  /// TRANSACTIONS method "Auto-debit"
+  ///
+  /// In en, this message translates to:
+  /// **'Auto-debit'**
+  String get expensesMethodAutoDebit;
+
+  /// Reference key expenses.monthlyOn — the reference writes "th" for every day
+  ///
+  /// In en, this message translates to:
+  /// **'monthly, on the {day}th'**
+  String expensesMonthlyOn(int day);
+
+  /// Reference key expenses.noMatch
+  ///
+  /// In en, this message translates to:
+  /// **'No transactions match'**
+  String get expensesNoMatch;
+
+  /// Reference key expenses.noMatchText
+  ///
+  /// In en, this message translates to:
+  /// **'Try another category or clear the search.'**
+  String get expensesNoMatchText;
+
+  /// Reference key expenses.ofBudget — both arrive formatted
+  ///
+  /// In en, this message translates to:
+  /// **'{pct} of your {budget} budget'**
+  String expensesOfBudget(String pct, String budget);
+
+  /// Reference key expenses.range — the segmented control's name
+  ///
+  /// In en, this message translates to:
+  /// **'Range'**
+  String get expensesRange;
+
+  /// Reference key expenses.rec1
+  ///
+  /// In en, this message translates to:
+  /// **'Internet'**
+  String get expensesRec1;
+
+  /// Reference key expenses.rec2
+  ///
+  /// In en, this message translates to:
+  /// **'Electricity'**
+  String get expensesRec2;
+
+  /// Reference key expenses.recurring
+  ///
+  /// In en, this message translates to:
+  /// **'Recurring'**
+  String get expensesRecurring;
+
+  /// Reference key expenses.spent
+  ///
+  /// In en, this message translates to:
+  /// **'Spent this month'**
+  String get expensesSpent;
+
+  /// Reference key expenses.transactions
+  ///
+  /// In en, this message translates to:
+  /// **'Transactions'**
+  String get expensesTransactions;
+
+  /// Reference key expenses.trend
+  ///
+  /// In en, this message translates to:
+  /// **'This week'**
+  String get expensesTrend;
+
+  /// Reference key expenses.trendCap
+  ///
+  /// In en, this message translates to:
+  /// **'Averaging {avg} a day'**
+  String expensesTrendCap(String avg);
+
+  /// TRANSACTIONS
+  ///
+  /// In en, this message translates to:
+  /// **'Ride to airport'**
+  String get expensesTxAirport;
+
+  /// TRANSACTIONS — coffee, and the café's name
+  ///
+  /// In en, this message translates to:
+  /// **'Coffee — Chaaye Khana'**
+  String get expensesTxCoffee;
+
+  /// TRANSACTIONS
+  ///
+  /// In en, this message translates to:
+  /// **'Electricity bill'**
+  String get expensesTxElectricity;
+
+  /// TRANSACTIONS — fuel, and the station's name
+  ///
+  /// In en, this message translates to:
+  /// **'Fuel — Shell'**
+  String get expensesTxFuel;
+
+  /// TRANSACTIONS
+  ///
+  /// In en, this message translates to:
+  /// **'Internet'**
+  String get expensesTxInternet;
+
+  /// tool-data.js TRANSACTIONS — a shop's name, kept as written
+  ///
+  /// In en, this message translates to:
+  /// **'Metro Cash & Carry'**
+  String get expensesTxMetro;
+
+  /// TRANSACTIONS
+  ///
+  /// In en, this message translates to:
+  /// **'Pharmacy'**
+  String get expensesTxPharmacy;
+
+  /// TRANSACTIONS
+  ///
+  /// In en, this message translates to:
+  /// **'Salary'**
+  String get expensesTxSalary;
+
+  /// TRANSACTIONS when — "Today · 11:20": a day and a clock time, both formatted
+  ///
+  /// In en, this message translates to:
+  /// **'{day} · {time}'**
+  String expensesWhenTime(String day, String time);
 
   /// Reference: the local services section
   ///
@@ -6838,6 +7096,60 @@ abstract class AppLocalizations {
   /// **'Worth'**
   String get ratesWorth;
 
+  /// Reference key rec.add
+  ///
+  /// In en, this message translates to:
+  /// **'Add {noun}'**
+  String recAdd(String noun);
+
+  /// Reference key rec.addFirst
+  ///
+  /// In en, this message translates to:
+  /// **'Add first {noun}'**
+  String recAddFirst(String noun);
+
+  /// Reference key rec.added
+  ///
+  /// In en, this message translates to:
+  /// **'{noun} added'**
+  String recAdded(String noun);
+
+  /// Reference key rec.attach
+  ///
+  /// In en, this message translates to:
+  /// **'Add photo or document'**
+  String get recAttach;
+
+  /// Reference key rec.attachSoon
+  ///
+  /// In en, this message translates to:
+  /// **'Attachments are coming soon'**
+  String get recAttachSoon;
+
+  /// Reference key rec.attached
+  ///
+  /// In en, this message translates to:
+  /// **'Attached'**
+  String get recAttached;
+
+  /// Reference key rec.backToList
+  ///
+  /// In en, this message translates to:
+  /// **'Back to {noun}'**
+  String recBackToList(String noun);
+
+  /// Reference key rec.checkFields
+  ///
+  /// In en, this message translates to:
+  /// **'Check the highlighted fields'**
+  String get recCheckFields;
+
+  /// Reference key rec.confirmNote
+  ///
+  /// In en, this message translates to:
+  /// **'Changes are saved only after confirmation'**
+  String get recConfirmNote;
+
   /// Reference key rec.conflict
   ///
   /// In en, this message translates to:
@@ -6850,11 +7162,239 @@ abstract class AppLocalizations {
   /// **'A newer version exists. Review your changes or reload the newer one.'**
   String get recConflictText;
 
+  /// Reference key rec.couldNotRefresh
+  ///
+  /// In en, this message translates to:
+  /// **'Could not refresh'**
+  String get recCouldNotRefresh;
+
+  /// Reference key rec.count — the collection's condition under the tool's name. The reference writes "{n} records" for one as well; this is plural
+  ///
+  /// In en, this message translates to:
+  /// **'{n, plural, =1{1 record} other{{n} records}}'**
+  String recCount(int n);
+
+  /// Reference key rec.created
+  ///
+  /// In en, this message translates to:
+  /// **'Created {when}'**
+  String recCreated(String when);
+
+  /// Reference key rec.createdToday
+  ///
+  /// In en, this message translates to:
+  /// **'Created today'**
+  String get recCreatedToday;
+
+  /// Reference key rec.createdYesterday
+  ///
+  /// In en, this message translates to:
+  /// **'Created yesterday'**
+  String get recCreatedYesterday;
+
+  /// Reference key rec.daysAgo — only ever 2 to 30 in the reference
+  ///
+  /// In en, this message translates to:
+  /// **'{n, plural, =1{1 day ago} other{{n} days ago}}'**
+  String recDaysAgo(int n);
+
+  /// Reference key rec.delete
+  ///
+  /// In en, this message translates to:
+  /// **'Delete {noun}'**
+  String recDelete(String noun);
+
+  /// Reference key rec.deleteAsk
+  ///
+  /// In en, this message translates to:
+  /// **'Delete this {noun}?'**
+  String recDeleteAsk(String noun);
+
   /// Reference key rec.deleteFailed
   ///
   /// In en, this message translates to:
   /// **'Could not delete this record'**
   String get recDeleteFailed;
+
+  /// Reference key rec.deleteTextFinal
+  ///
+  /// In en, this message translates to:
+  /// **'{name} will be removed. This action cannot be undone.'**
+  String recDeleteTextFinal(String name);
+
+  /// Reference key rec.deleteTextUndo
+  ///
+  /// In en, this message translates to:
+  /// **'{name} will be removed. You can undo this straight away.'**
+  String recDeleteTextUndo(String name);
+
+  /// Reference key rec.deleted
+  ///
+  /// In en, this message translates to:
+  /// **'{noun} deleted'**
+  String recDeleted(String noun);
+
+  /// Reference key rec.deletedFinal
+  ///
+  /// In en, this message translates to:
+  /// **'{noun} deleted permanently'**
+  String recDeletedFinal(String noun);
+
+  /// Reference key rec.detailTitle
+  ///
+  /// In en, this message translates to:
+  /// **'{noun} details'**
+  String recDetailTitle(String noun);
+
+  /// Reference key rec.details
+  ///
+  /// In en, this message translates to:
+  /// **'Details'**
+  String get recDetails;
+
+  /// Reference key rec.discard
+  ///
+  /// In en, this message translates to:
+  /// **'Discard'**
+  String get recDiscard;
+
+  /// Reference key rec.discardAsk
+  ///
+  /// In en, this message translates to:
+  /// **'Discard your changes?'**
+  String get recDiscardAsk;
+
+  /// Reference key rec.discardText
+  ///
+  /// In en, this message translates to:
+  /// **'What you typed will not be saved.'**
+  String get recDiscardText;
+
+  /// Reference key rec.edit
+  ///
+  /// In en, this message translates to:
+  /// **'Edit {noun}'**
+  String recEdit(String noun);
+
+  /// Reference key rec.editing
+  ///
+  /// In en, this message translates to:
+  /// **'Editing'**
+  String get recEditing;
+
+  /// Reference key rec.err.positive
+  ///
+  /// In en, this message translates to:
+  /// **'Enter an amount greater than zero'**
+  String get recErrPositive;
+
+  /// Reference key rec.err.required
+  ///
+  /// In en, this message translates to:
+  /// **'{field} is required'**
+  String recErrRequired(String field);
+
+  /// Reference key rec.expenses.emptyText
+  ///
+  /// In en, this message translates to:
+  /// **'Add a record to understand where your money goes and build useful summaries.'**
+  String get recExpensesEmptyText;
+
+  /// Reference key rec.expenses.emptyTitle
+  ///
+  /// In en, this message translates to:
+  /// **'Track your first expense'**
+  String get recExpensesEmptyTitle;
+
+  /// Reference key rec.expenses.noun — sentence-internal; a line that starts with it is capitalised where the script has case
+  ///
+  /// In en, this message translates to:
+  /// **'expense'**
+  String get recExpensesNoun;
+
+  /// Reference key rec.expenses.nounPlural
+  ///
+  /// In en, this message translates to:
+  /// **'expenses'**
+  String get recExpensesNounPlural;
+
+  /// Reference key rec.expenses.ph
+  ///
+  /// In en, this message translates to:
+  /// **'What did you spend on?'**
+  String get recExpensesPh;
+
+  /// Reference key rec.f.amount
+  ///
+  /// In en, this message translates to:
+  /// **'Amount'**
+  String get recFieldAmount;
+
+  /// Reference key rec.f.category
+  ///
+  /// In en, this message translates to:
+  /// **'Category'**
+  String get recFieldCategory;
+
+  /// Reference key rec.f.date
+  ///
+  /// In en, this message translates to:
+  /// **'Date'**
+  String get recFieldDate;
+
+  /// Reference key rec.f.notes
+  ///
+  /// In en, this message translates to:
+  /// **'Notes'**
+  String get recFieldNotes;
+
+  /// Reference key rec.f.payment
+  ///
+  /// In en, this message translates to:
+  /// **'Payment'**
+  String get recFieldPayment;
+
+  /// Reference key rec.f.receipt
+  ///
+  /// In en, this message translates to:
+  /// **'Receipt'**
+  String get recFieldReceipt;
+
+  /// Reference key rec.f.title
+  ///
+  /// In en, this message translates to:
+  /// **'Title'**
+  String get recFieldTitle;
+
+  /// Reference key rec.gone
+  ///
+  /// In en, this message translates to:
+  /// **'That record is no longer here'**
+  String get recGone;
+
+  /// Reference key rec.goneText
+  ///
+  /// In en, this message translates to:
+  /// **'It may have been deleted.'**
+  String get recGoneText;
+
+  /// Reference key rec.importLater
+  ///
+  /// In en, this message translates to:
+  /// **'You can import records later'**
+  String get recImportLater;
+
+  /// Reference key rec.information
+  ///
+  /// In en, this message translates to:
+  /// **'{noun} information'**
+  String recInformation(String noun);
+
+  /// Reference key rec.keepEditing
+  ///
+  /// In en, this message translates to:
+  /// **'Keep editing'**
+  String get recKeepEditing;
 
   /// Reference key rec.loadError
   ///
@@ -6867,6 +7407,42 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Check your connection. Your saved data is still safe on this device.'**
   String get recLoadErrorText;
+
+  /// Reference key rec.newRecord
+  ///
+  /// In en, this message translates to:
+  /// **'New record'**
+  String get recNewRecord;
+
+  /// Reference key rec.noMatch
+  ///
+  /// In en, this message translates to:
+  /// **'Nothing matches'**
+  String get recNoMatch;
+
+  /// Reference key rec.noMatchText
+  ///
+  /// In en, this message translates to:
+  /// **'Try a different word, or clear the filters.'**
+  String get recNoMatchText;
+
+  /// Reference key rec.none
+  ///
+  /// In en, this message translates to:
+  /// **'None'**
+  String get recNone;
+
+  /// Reference key rec.noneYet
+  ///
+  /// In en, this message translates to:
+  /// **'No records yet'**
+  String get recNoneYet;
+
+  /// Reference key rec.notAttached
+  ///
+  /// In en, this message translates to:
+  /// **'Not attached'**
+  String get recNotAttached;
 
   /// Reference key rec.nothingToUndo
   ///
@@ -6892,6 +7468,72 @@ abstract class AppLocalizations {
   /// **'Showing records saved on this device.'**
   String get recOfflineText;
 
+  /// Reference key rec.optional
+  ///
+  /// In en, this message translates to:
+  /// **'Optional'**
+  String get recOptional;
+
+  /// Reference key rec.pay.card
+  ///
+  /// In en, this message translates to:
+  /// **'Card'**
+  String get recPayCard;
+
+  /// Reference key rec.pay.cash
+  ///
+  /// In en, this message translates to:
+  /// **'Cash'**
+  String get recPayCash;
+
+  /// Reference key rec.pay.transfer
+  ///
+  /// In en, this message translates to:
+  /// **'Transfer'**
+  String get recPayTransfer;
+
+  /// Reference key rec.pay.wallet
+  ///
+  /// In en, this message translates to:
+  /// **'Wallet'**
+  String get recPayWallet;
+
+  /// Reference key rec.queued
+  ///
+  /// In en, this message translates to:
+  /// **'Queued'**
+  String get recQueued;
+
+  /// Reference key rec.recordId
+  ///
+  /// In en, this message translates to:
+  /// **'Record ID {id}'**
+  String recRecordId(String id);
+
+  /// Reference key rec.reload
+  ///
+  /// In en, this message translates to:
+  /// **'Reload'**
+  String get recReload;
+
+  /// Reference key rec.reloaded
+  ///
+  /// In en, this message translates to:
+  /// **'Loaded the newer version'**
+  String get recReloaded;
+
+  /// Reference key rec.review
+  ///
+  /// In en, this message translates to:
+  /// **'Review'**
+  String get recReview;
+
+  /// Reference key rec.save
+  ///
+  /// In en, this message translates to:
+  /// **'Save {noun}'**
+  String recSave(String noun);
+
   /// Reference key rec.saveFailed
   ///
   /// In en, this message translates to:
@@ -6903,6 +7545,96 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Nothing you typed was lost. Try again.'**
   String get recSaveFailedText;
+
+  /// Reference key rec.saving
+  ///
+  /// In en, this message translates to:
+  /// **'Saving…'**
+  String get recSaving;
+
+  /// Reference key rec.search — the plural noun
+  ///
+  /// In en, this message translates to:
+  /// **'Search {noun}'**
+  String recSearch(String noun);
+
+  /// Reference key rec.seed.coffee
+  ///
+  /// In en, this message translates to:
+  /// **'Coffee'**
+  String get recSeedCoffee;
+
+  /// Reference key rec.seed.groceries — a demonstration record
+  ///
+  /// In en, this message translates to:
+  /// **'Groceries'**
+  String get recSeedGroceries;
+
+  /// Reference key rec.seed.groceriesNote
+  ///
+  /// In en, this message translates to:
+  /// **'Weekly household groceries'**
+  String get recSeedGroceriesNote;
+
+  /// Reference key rec.seed.internet
+  ///
+  /// In en, this message translates to:
+  /// **'Internet bill'**
+  String get recSeedInternet;
+
+  /// Reference key rec.seed.pharmacy
+  ///
+  /// In en, this message translates to:
+  /// **'Pharmacy'**
+  String get recSeedPharmacy;
+
+  /// Reference key rec.seed.taxi
+  ///
+  /// In en, this message translates to:
+  /// **'Taxi'**
+  String get recSeedTaxi;
+
+  /// Reference key rec.selectText
+  ///
+  /// In en, this message translates to:
+  /// **'Choose one from the list to see it here.'**
+  String get recSelectText;
+
+  /// Reference key rec.selectTitle
+  ///
+  /// In en, this message translates to:
+  /// **'Nothing selected'**
+  String get recSelectTitle;
+
+  /// Reference key rec.undo
+  ///
+  /// In en, this message translates to:
+  /// **'Undo'**
+  String get recUndo;
+
+  /// Reference key rec.undone
+  ///
+  /// In en, this message translates to:
+  /// **'Restored'**
+  String get recUndone;
+
+  /// Reference key rec.update
+  ///
+  /// In en, this message translates to:
+  /// **'Save changes'**
+  String get recUpdate;
+
+  /// Reference key rec.updated
+  ///
+  /// In en, this message translates to:
+  /// **'Saved'**
+  String get recUpdated;
+
+  /// Reference key rec.viewCached
+  ///
+  /// In en, this message translates to:
+  /// **'View cached records'**
+  String get recViewCached;
 
   /// A cuisine in tool-data.js RECIPES. The reference writes it in English in every language
   ///

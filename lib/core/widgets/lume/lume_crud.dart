@@ -16,6 +16,8 @@
 /// available without competing with the content for attention.
 library;
 
+import 'dart:ui' show PathMetric;
+
 import 'package:flutter/material.dart';
 
 import '../../icons/lume_icon.dart';
@@ -61,6 +63,7 @@ class LumeRecordId extends StatelessWidget {
   @override
   Widget build(BuildContext context) => Text(
     label,
+    textAlign: TextAlign.center,
     style: LumeType.fit(
       context,
       context.lumeType.metaSmall,
@@ -102,7 +105,6 @@ class LumeDetailActions extends StatelessWidget {
         const SizedBox(height: 10),
         LumeDetailAction(
           label: deleteLabel!,
-          icon: LumeIcons.trash,
           onPressed: onDelete,
           destructive: true,
         ),
@@ -135,7 +137,7 @@ class LumeDetailAction extends StatelessWidget {
   Widget build(BuildContext context) {
     final LumeColors lume = context.lume;
     final Color bg = destructive
-        ? Color.lerp(lume.card, lume.rose, 0.07)!
+        ? Color.lerp(lume.card, lume.rose, 0.10)!
         : lume.tintAccent;
     final Color fg = destructive ? lume.roseInk : lume.accent700;
 
@@ -394,11 +396,15 @@ enum LumeDeleteKind {
   irreversible,
 }
 
-/// The delete confirmation's content.
+/// The confirmation's content — `.dconfirm` in `#sheet-recdelete`.
 ///
-/// A sheet or dialog hosts it; this is what goes inside. It names the record
-/// and states the consequence, and the destructive action is labelled with the
-/// verb rather than "OK".
+/// It names the record and states the consequence before it asks, and the
+/// action is labelled with the verb rather than "OK". Measured
+/// (`tool_expenses_default_pk_delete_*`): a centred column 10 apart inside
+/// `22 20 6`; a 70-point "!" mark in rose at 12 % — amber at 14 % when it
+/// warns — 6 above the title; the title 20 / 700 on 26; the text body on 22 in
+/// `text-2`, no wider than 36 characters, 14 above the buttons; the action
+/// solid rose ink, or amber, and the quiet Cancel under it, both 46 tall.
 class LumeDeleteConfirmation extends StatelessWidget {
   const LumeDeleteConfirmation({
     super.key,
@@ -409,9 +415,10 @@ class LumeDeleteConfirmation extends StatelessWidget {
     this.onConfirm,
     this.onCancel,
     this.kind = LumeDeleteKind.recoverable,
+    this.warn = false,
   });
 
-  /// Names the record — "Delete Groceries?", not "Delete item?".
+  /// Names the record — "Delete this expense?".
   final String title;
 
   /// What happens next. For [LumeDeleteKind.irreversible] this says so.
@@ -425,44 +432,318 @@ class LumeDeleteConfirmation extends StatelessWidget {
   final VoidCallback? onCancel;
   final LumeDeleteKind kind;
 
+  /// `.sheet--confirm.is-warn` — leaving unsaved changes rather than removing
+  /// a saved record.
+  final bool warn;
+
+  static const double markSize = 70;
+
   @override
   Widget build(BuildContext context) {
     final LumeColors lume = context.lume;
+    final TextStyle textStyle = LumeType.fit(
+      context,
+      context.lumeType.body,
+    ).copyWith(color: lume.text2);
+    final TextPainter zero = TextPainter(
+      text: TextSpan(text: '0' * 36, style: textStyle),
+      textDirection: Directionality.of(context),
+      textScaler: MediaQuery.textScalerOf(context),
+      maxLines: 1,
+    )..layout();
+    final double measure = zero.width;
+    zero.dispose();
 
+    return Padding(
+      padding: const EdgeInsets.fromLTRB(20, 22, 20, 6),
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: <Widget>[
+          ExcludeSemantics(
+            child: Container(
+              width: markSize,
+              height: markSize,
+              alignment: Alignment.center,
+              decoration: BoxDecoration(
+                color: warn
+                    ? lume.amber.withValues(alpha: 0.14)
+                    : lume.rose.withValues(alpha: 0.12),
+                shape: BoxShape.circle,
+              ),
+              child: Text(
+                '!',
+                style:
+                    LumeType.natural(
+                      context,
+                      context.lumeType.display,
+                      size: 30,
+                    ).copyWith(
+                      fontWeight: FontWeight.w800,
+                      color: warn ? lume.amber : lume.roseInk,
+                    ),
+              ),
+            ),
+          ),
+          const SizedBox(height: 6 + 10),
+          Semantics(
+            header: true,
+            child: Text(
+              title,
+              textAlign: TextAlign.center,
+              style: LumeType.fit(
+                context,
+                context.lumeType.title,
+              ).copyWith(color: lume.text, fontWeight: FontWeight.w700),
+            ),
+          ),
+          const SizedBox(height: 10),
+          ConstrainedBox(
+            constraints: BoxConstraints(maxWidth: measure),
+            child: Text(
+              consequence,
+              textAlign: TextAlign.center,
+              style: textStyle,
+            ),
+          ),
+          const SizedBox(height: 14 + 10),
+          LumeButton(
+            label: confirmLabel,
+            onPressed: onConfirm,
+            block: true,
+            tone: warn ? LumeButtonTone.warn : LumeButtonTone.critical,
+          ),
+          const SizedBox(height: 10),
+          // The safe choice is the one that is not destructive, and it is the
+          // one the thumb reaches first from the bottom of the screen.
+          LumeButton(label: cancelLabel, onPressed: onCancel, block: true),
+        ],
+      ),
+    );
+  }
+}
+
+/// `.cfield` holding a `select` or a date — the label above, the chosen value
+/// in a 48-point box, a 15-point glyph at its end. Pressing it chooses.
+///
+/// Measured: the label 12 / 700 in `text-2` on 16, with an optional marker
+/// in `metasm` 8 after it; 7 to the box; the box `0 14` of padding in `card`
+/// inside `--border-2`, radius 12; the value 14 / 500, 8 from the glyph.
+class LumeFormPicker extends StatelessWidget {
+  const LumeFormPicker({
+    super.key,
+    required this.label,
+    required this.value,
+    this.onTap,
+    this.optionalLabel,
+    this.icon = LumeIcons.chevD,
+  });
+
+  final String label;
+
+  /// The chosen value, already worded.
+  final String value;
+
+  final VoidCallback? onTap;
+  final String? optionalLabel;
+  final String icon;
+
+  static const double boxHeight = 48;
+
+  @override
+  Widget build(BuildContext context) {
+    final LumeColors lume = context.lume;
+    return Semantics(
+      button: true,
+      label: label,
+      value: value,
+      child: ExcludeSemantics(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          mainAxisSize: MainAxisSize.min,
+          children: <Widget>[
+            LumeFieldLabel(label: label, optionalLabel: optionalLabel),
+            const SizedBox(height: 7),
+            LumePressable(
+              onTap: onTap,
+              borderRadius: LumeRadius.brSm,
+              minSize: boxHeight,
+              child: Container(
+                constraints: const BoxConstraints(minHeight: boxHeight),
+                padding: const EdgeInsets.symmetric(horizontal: 14),
+                decoration: BoxDecoration(
+                  color: lume.card,
+                  borderRadius: LumeRadius.brSm,
+                  border: Border.all(
+                    color: lume.border2,
+                    width: LumeSpace.border,
+                  ),
+                ),
+                child: Row(
+                  children: <Widget>[
+                    Expanded(
+                      child: Text(
+                        value,
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                        style: LumeType.fit(context, context.lumeType.body)
+                            .copyWith(
+                              color: lume.text,
+                              fontWeight: FontWeight.w500,
+                            ),
+                      ),
+                    ),
+                    const SizedBox(width: 8),
+                    LumeIcon(icon, size: 15, color: lume.text3),
+                  ],
+                ),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+/// `.cfield__label` — sentence case at label weight, and "Optional" beside it.
+class LumeFieldLabel extends StatelessWidget {
+  const LumeFieldLabel({super.key, required this.label, this.optionalLabel});
+
+  final String label;
+  final String? optionalLabel;
+
+  @override
+  Widget build(BuildContext context) {
+    final LumeColors lume = context.lume;
+    return Row(
+      crossAxisAlignment: CrossAxisAlignment.baseline,
+      textBaseline: TextBaseline.alphabetic,
+      children: <Widget>[
+        Flexible(
+          child: Text(
+            label,
+            style: LumeType.fit(
+              context,
+              context.lumeType.label,
+            ).copyWith(color: lume.text2),
+          ),
+        ),
+        if (optionalLabel != null) ...<Widget>[
+          const SizedBox(width: 8),
+          Text(
+            optionalLabel!,
+            style: LumeType.fit(
+              context,
+              context.lumeType.metaSmall,
+            ).copyWith(color: lume.text3),
+          ),
+        ],
+      ],
+    );
+  }
+}
+
+/// `.cattach` — adding a photo or a document to a record.
+///
+/// Measured: at least 64 tall, radius 12, `card` inside a dashed
+/// `--border-2`; a 17-point glyph 9 from the 15 / 700 label, in `accent-700`.
+class LumeAttachTile extends StatelessWidget {
+  const LumeAttachTile({
+    super.key,
+    required this.fieldLabel,
+    required this.label,
+    this.optionalLabel,
+    this.attached = false,
+    this.onTap,
+  });
+
+  final String fieldLabel;
+  final String label;
+  final String? optionalLabel;
+  final bool attached;
+  final VoidCallback? onTap;
+
+  static const double height = 64;
+
+  @override
+  Widget build(BuildContext context) {
+    final LumeColors lume = context.lume;
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       mainAxisSize: MainAxisSize.min,
       children: <Widget>[
+        LumeFieldLabel(label: fieldLabel, optionalLabel: optionalLabel),
+        const SizedBox(height: 7),
         Semantics(
-          header: true,
-          child: Text(
-            title,
-            style: LumeType.fit(
-              context,
-              context.lumeType.section,
-            ).copyWith(color: lume.text),
+          button: true,
+          label: label,
+          child: LumePressable(
+            onTap: onTap,
+            borderRadius: LumeRadius.brSm,
+            minSize: height,
+            excludeSemantics: true,
+            child: CustomPaint(
+              foregroundPainter: _DashedBox(lume.border2),
+              child: Container(
+                constraints: const BoxConstraints(minHeight: height),
+                decoration: BoxDecoration(
+                  color: lume.card,
+                  borderRadius: LumeRadius.brSm,
+                ),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: <Widget>[
+                    LumeIcon(
+                      attached ? LumeIcons.checkCircle : LumeIcons.camera,
+                      size: 17,
+                      color: lume.accent700,
+                    ),
+                    const SizedBox(width: 9),
+                    Flexible(
+                      child: Text(
+                        label,
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                        style: LumeType.fit(
+                          context,
+                          context.lumeType.cardTitle,
+                        ).copyWith(color: lume.accent700),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
           ),
         ),
-        const SizedBox(height: LumeSpace.x2),
-        Text(
-          consequence,
-          style: LumeType.fit(
-            context,
-            context.lumeType.body,
-          ).copyWith(color: lume.text2),
-        ),
-        const SizedBox(height: LumeSpace.x5),
-        LumeButton.danger(
-          label: confirmLabel,
-          onPressed: onConfirm,
-          block: true,
-          icon: kind == LumeDeleteKind.irreversible ? LumeIcons.alert : null,
-        ),
-        const SizedBox(height: 10),
-        // The safe choice is the one that is not destructive, and it is the
-        // one the thumb reaches first from the bottom of the screen.
-        LumeButton(label: cancelLabel, onPressed: onCancel, block: true),
       ],
     );
   }
+}
+
+class _DashedBox extends CustomPainter {
+  const _DashedBox(this.color);
+
+  final Color color;
+
+  @override
+  void paint(Canvas canvas, Size size) {
+    final Paint paint = Paint()
+      ..color = color
+      ..style = PaintingStyle.stroke
+      ..strokeWidth = 1;
+    final RRect outline = RRect.fromRectAndRadius(
+      (Offset.zero & size).deflate(0.5),
+      const Radius.circular(LumeRadius.sm),
+    );
+    for (final PathMetric metric
+        in (Path()..addRRect(outline)).computeMetrics()) {
+      for (double d = 0; d < metric.length; d += 6) {
+        canvas.drawPath(metric.extractPath(d, d + 3), paint);
+      }
+    }
+  }
+
+  @override
+  bool shouldRepaint(_DashedBox old) => old.color != color;
 }

@@ -12,6 +12,7 @@ import 'package:lume/core/widgets/lume/lume_chip.dart';
 import 'package:lume/core/widgets/lume/lume_header.dart';
 import 'package:lume/core/widgets/lume/lume_overlay.dart';
 import 'package:lume/features/shell/presentation/fixture_tool_screen.dart';
+import 'package:lume/features/expenses/presentation/expenses_tool.dart';
 import 'package:lume/features/tax/presentation/tax_tool.dart';
 
 import '../../helpers/capture.dart';
@@ -175,10 +176,7 @@ void main() {
       // go_router reports the shell's location after a `replace`, so what is
       // drawn is the evidence: Expenses, and no Tax beneath it to go back to.
       expect(find.byType(LumeTaxTool), findsNothing);
-      expect(
-        tester.widget<FixtureToolScreen>(find.byType(FixtureToolScreen)).toolId,
-        'expenses',
-      );
+      expect(find.byType(LumeExpensesTool), findsOneWidget);
     });
 
     testWidgets('the country opens Personalise', (WidgetTester tester) async {

@@ -1272,7 +1272,13 @@ class AppLocalizationsUr extends AppLocalizations {
   String get commonAll => 'سب';
 
   @override
+  String get commonAmount => 'رقم';
+
+  @override
   String get commonChange => 'تبدیلی';
+
+  @override
+  String get commonDate => 'تاریخ';
 
   @override
   String get commonDays => 'دن';
@@ -1573,6 +1579,138 @@ class AppLocalizationsUr extends AppLocalizations {
 
   @override
   String get emergencyYourInfo => 'آپ کی معلومات';
+
+  @override
+  String get expensesAdd => 'خرچ شامل کریں';
+
+  @override
+  String get expensesBalance => 'بقایا';
+
+  @override
+  String get expensesBudgetUse => 'استعمال شدہ بجٹ';
+
+  @override
+  String get expensesBudgets => 'بجٹ';
+
+  @override
+  String get expensesCatBills => 'بل';
+
+  @override
+  String get expensesCatEating => 'باہر کھانا';
+
+  @override
+  String get expensesCatGroceries => 'گروسری';
+
+  @override
+  String get expensesCatHealth => 'صحت';
+
+  @override
+  String get expensesCatOther => 'دیگر';
+
+  @override
+  String get expensesCatTransport => 'ٹرانسپورٹ';
+
+  @override
+  String get expensesCategories => 'زمرہ جات';
+
+  @override
+  String get expensesCategory => 'زمرہ';
+
+  @override
+  String get expensesDailyAvg => 'روزانہ اوسط';
+
+  @override
+  String get expensesIncome => 'آمدنی';
+
+  @override
+  String get expensesInsight1Text => 'آپ کی تین ماہ کی اوسط کے مقابلے میں۔';
+
+  @override
+  String get expensesInsight1Title => 'گروسری میں 12% اضافہ';
+
+  @override
+  String get expensesInsight2Text =>
+      'اسی رفتار سے آپ بجٹ سے تقریباً 8% کم پر رہیں گے۔';
+
+  @override
+  String get expensesInsight2Title => 'مہینے کے حساب سے درست سمت میں';
+
+  @override
+  String get expensesInsights => 'جائزے';
+
+  @override
+  String get expensesMethodAutoDebit => 'خودکار کٹوتی';
+
+  @override
+  String expensesMonthlyOn(int day) {
+    return 'ماہانہ، $day تاریخ کو';
+  }
+
+  @override
+  String get expensesNoMatch => 'کوئی لین دین نہیں ملا';
+
+  @override
+  String get expensesNoMatchText => 'کوئی اور زمرہ آزمائیں یا تلاش صاف کریں۔';
+
+  @override
+  String expensesOfBudget(String pct, String budget) {
+    return 'آپ کے $budget بجٹ کا $pct';
+  }
+
+  @override
+  String get expensesRange => 'مدت';
+
+  @override
+  String get expensesRec1 => 'انٹرنیٹ';
+
+  @override
+  String get expensesRec2 => 'بجلی';
+
+  @override
+  String get expensesRecurring => 'بار بار';
+
+  @override
+  String get expensesSpent => 'اس مہینے خرچ';
+
+  @override
+  String get expensesTransactions => 'لین دین';
+
+  @override
+  String get expensesTrend => 'اس ہفتے';
+
+  @override
+  String expensesTrendCap(String avg) {
+    return 'اوسطاً $avg روزانہ';
+  }
+
+  @override
+  String get expensesTxAirport => 'ایئرپورٹ کی سواری';
+
+  @override
+  String get expensesTxCoffee => 'کافی — Chaaye Khana';
+
+  @override
+  String get expensesTxElectricity => 'بجلی کا بل';
+
+  @override
+  String get expensesTxFuel => 'پٹرول — Shell';
+
+  @override
+  String get expensesTxInternet => 'انٹرنیٹ';
+
+  @override
+  String get expensesTxMetro => 'Metro Cash & Carry';
+
+  @override
+  String get expensesTxPharmacy => 'فارمیسی';
+
+  @override
+  String get expensesTxSalary => 'تنخواہ';
+
+  @override
+  String expensesWhenTime(String day, String time) {
+    return '$day · $time';
+  }
 
   @override
   String get exploreAround => 'آپ کے آس پاس';
@@ -3820,6 +3958,41 @@ class AppLocalizationsUr extends AppLocalizations {
   String get ratesWorth => 'قیمت';
 
   @override
+  String recAdd(String noun) {
+    return '$noun شامل کریں';
+  }
+
+  @override
+  String recAddFirst(String noun) {
+    return 'پہلا $noun شامل کریں';
+  }
+
+  @override
+  String recAdded(String noun) {
+    return '$noun شامل ہو گیا';
+  }
+
+  @override
+  String get recAttach => 'تصویر یا دستاویز شامل کریں';
+
+  @override
+  String get recAttachSoon => 'منسلکات جلد آ رہے ہیں';
+
+  @override
+  String get recAttached => 'منسلک';
+
+  @override
+  String recBackToList(String noun) {
+    return '$noun پر واپس';
+  }
+
+  @override
+  String get recCheckFields => 'نشان زد خانے دیکھیں';
+
+  @override
+  String get recConfirmNote => 'تبدیلیاں تصدیق کے بعد ہی محفوظ ہوتی ہیں';
+
+  @override
   String get recConflict => 'یہ ریکارڈ کہیں اور بدل گیا';
 
   @override
@@ -3827,7 +4000,160 @@ class AppLocalizationsUr extends AppLocalizations {
       'نیا ورژن موجود ہے۔ اپنی تبدیلیاں دیکھیں یا نیا ورژن لوڈ کریں۔';
 
   @override
+  String get recCouldNotRefresh => 'تازہ نہیں ہو سکا';
+
+  @override
+  String recCount(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n ریکارڈز',
+      one: '1 ریکارڈ',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String recCreated(String when) {
+    return '$when بنایا گیا';
+  }
+
+  @override
+  String get recCreatedToday => 'آج بنایا گیا';
+
+  @override
+  String get recCreatedYesterday => 'کل بنایا گیا';
+
+  @override
+  String recDaysAgo(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n دن پہلے',
+      one: '1 دن پہلے',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String recDelete(String noun) {
+    return '$noun حذف کریں';
+  }
+
+  @override
+  String recDeleteAsk(String noun) {
+    return 'یہ $noun حذف کریں؟';
+  }
+
+  @override
   String get recDeleteFailed => 'یہ ریکارڈ حذف نہ ہو سکا';
+
+  @override
+  String recDeleteTextFinal(String name) {
+    return '$name ہٹا دیا جائے گا۔ یہ عمل واپس نہیں ہو سکتا۔';
+  }
+
+  @override
+  String recDeleteTextUndo(String name) {
+    return '$name ہٹا دیا جائے گا۔ آپ فوراً واپس لا سکتے ہیں۔';
+  }
+
+  @override
+  String recDeleted(String noun) {
+    return '$noun حذف ہو گیا';
+  }
+
+  @override
+  String recDeletedFinal(String noun) {
+    return '$noun مستقل طور پر حذف ہو گیا';
+  }
+
+  @override
+  String recDetailTitle(String noun) {
+    return '$noun کی تفصیل';
+  }
+
+  @override
+  String get recDetails => 'تفصیلات';
+
+  @override
+  String get recDiscard => 'ضائع کریں';
+
+  @override
+  String get recDiscardAsk => 'تبدیلیاں ضائع کر دیں؟';
+
+  @override
+  String get recDiscardText => 'آپ کا لکھا ہوا محفوظ نہیں ہوگا۔';
+
+  @override
+  String recEdit(String noun) {
+    return '$noun میں ترمیم';
+  }
+
+  @override
+  String get recEditing => 'ترمیم جاری ہے';
+
+  @override
+  String get recErrPositive => 'صفر سے زیادہ رقم درج کریں';
+
+  @override
+  String recErrRequired(String field) {
+    return '$field درج کریں';
+  }
+
+  @override
+  String get recExpensesEmptyText =>
+      'ریکارڈ شامل کریں تاکہ معلوم ہو پیسہ کہاں جا رہا ہے۔';
+
+  @override
+  String get recExpensesEmptyTitle => 'پہلا خرچ درج کریں';
+
+  @override
+  String get recExpensesNoun => 'خرچ';
+
+  @override
+  String get recExpensesNounPlural => 'اخراجات';
+
+  @override
+  String get recExpensesPh => 'کس چیز پر خرچ ہوا؟';
+
+  @override
+  String get recFieldAmount => 'رقم';
+
+  @override
+  String get recFieldCategory => 'زمرہ';
+
+  @override
+  String get recFieldDate => 'تاریخ';
+
+  @override
+  String get recFieldNotes => 'نوٹس';
+
+  @override
+  String get recFieldPayment => 'ادائیگی';
+
+  @override
+  String get recFieldReceipt => 'رسید';
+
+  @override
+  String get recFieldTitle => 'عنوان';
+
+  @override
+  String get recGone => 'یہ ریکارڈ اب موجود نہیں';
+
+  @override
+  String get recGoneText => 'شاید حذف ہو چکا ہے۔';
+
+  @override
+  String get recImportLater => 'آپ بعد میں ریکارڈ درآمد کر سکتے ہیں';
+
+  @override
+  String recInformation(String noun) {
+    return '$noun کی معلومات';
+  }
+
+  @override
+  String get recKeepEditing => 'ترمیم جاری رکھیں';
 
   @override
   String recLoadError(Object noun) {
@@ -3837,6 +4163,24 @@ class AppLocalizationsUr extends AppLocalizations {
   @override
   String get recLoadErrorText =>
       'اپنا کنیکشن دیکھیں۔ آپ کا محفوظ ڈیٹا اسی ڈیوائس پر موجود ہے۔';
+
+  @override
+  String get recNewRecord => 'نیا ریکارڈ';
+
+  @override
+  String get recNoMatch => 'کچھ نہیں ملا';
+
+  @override
+  String get recNoMatchText => 'کوئی اور لفظ آزمائیں، یا فلٹر ہٹا دیں۔';
+
+  @override
+  String get recNone => 'کوئی نہیں';
+
+  @override
+  String get recNoneYet => 'ابھی کوئی ریکارڈ نہیں';
+
+  @override
+  String get recNotAttached => 'منسلک نہیں';
 
   @override
   String get recNothingToUndo => 'واپس لانے کو کچھ نہیں';
@@ -3852,11 +4196,95 @@ class AppLocalizationsUr extends AppLocalizations {
   String get recOfflineText => 'اس ڈیوائس پر محفوظ ریکارڈ دکھائے جا رہے ہیں۔';
 
   @override
+  String get recOptional => 'اختیاری';
+
+  @override
+  String get recPayCard => 'کارڈ';
+
+  @override
+  String get recPayCash => 'نقد';
+
+  @override
+  String get recPayTransfer => 'ٹرانسفر';
+
+  @override
+  String get recPayWallet => 'والٹ';
+
+  @override
+  String get recQueued => 'قطار میں';
+
+  @override
+  String recRecordId(String id) {
+    return 'ریکارڈ آئی ڈی $id';
+  }
+
+  @override
+  String get recReload => 'دوبارہ لوڈ';
+
+  @override
+  String get recReloaded => 'نیا ورژن لوڈ ہو گیا';
+
+  @override
+  String get recReview => 'دیکھیں';
+
+  @override
+  String recSave(String noun) {
+    return '$noun محفوظ کریں';
+  }
+
+  @override
   String get recSaveFailed => 'تبدیلیاں محفوظ نہ ہو سکیں';
 
   @override
   String get recSaveFailedText =>
       'آپ کا لکھا ہوا کچھ ضائع نہیں ہوا۔ دوبارہ کوشش کریں۔';
+
+  @override
+  String get recSaving => 'محفوظ ہو رہا ہے…';
+
+  @override
+  String recSearch(String noun) {
+    return '$noun تلاش کریں';
+  }
+
+  @override
+  String get recSeedCoffee => 'کافی';
+
+  @override
+  String get recSeedGroceries => 'گروسری';
+
+  @override
+  String get recSeedGroceriesNote => 'ہفتہ وار گھریلو سودا';
+
+  @override
+  String get recSeedInternet => 'انٹرنیٹ بل';
+
+  @override
+  String get recSeedPharmacy => 'فارمیسی';
+
+  @override
+  String get recSeedTaxi => 'ٹیکسی';
+
+  @override
+  String get recSelectText => 'دیکھنے کے لیے فہرست سے ایک منتخب کریں۔';
+
+  @override
+  String get recSelectTitle => 'کچھ منتخب نہیں';
+
+  @override
+  String get recUndo => 'واپس';
+
+  @override
+  String get recUndone => 'بحال ہو گیا';
+
+  @override
+  String get recUpdate => 'تبدیلیاں محفوظ کریں';
+
+  @override
+  String get recUpdated => 'محفوظ ہو گیا';
+
+  @override
+  String get recViewCached => 'محفوظ شدہ ریکارڈ دیکھیں';
 
   @override
   String get recipeCuisineGlobal => 'عالمی';

@@ -1733,6 +1733,76 @@ attributes the reference drew, to the tenth.
 | `LumeMetrics` | 8 between columns | `.metrics { gap: 10px }` — 110 + 10 + 110 |
 | `LumeRichRow` | no selected state; `valueSub` on 16; the meta line always the font's 12 | `.rrow.is-selected` on `tint-accent`, announced selected; `.rrow__valuesub` 10 / 600 on 12; `metaLineHeight` for a meta line a fallback glyph sets taller — Flights' "→" makes it 14 (75-point rows) |
 
+### C74 — Expenses: records that live as long as the app
+
+**Found in F6A on Expenses, the first tool on the record layer.**
+
+- **Records are kept in memory — decided, not durable.** The reference keeps
+  a collection in `localStorage`. `DAYROZ_ARCHITECTURE_MAPPING.md` rules that
+  reference state is fixtures, not persistence, and F4C's profile set the
+  precedent, so `LumeMemoryRecordRepository` declares `durable: false` and
+  every record, and every change to one, is gone when the app closes. The
+  repository is an interface (`LumeRecordRepository`: open, view, get,
+  create, update against a version, remove, one-step undo, retry) so Dayroz
+  supplies the durable store without the screens changing.
+- **"Stored on this device" over a store that is not — reproduced, with the
+  obligation.** The source line is the catalogue's, as the host shows every
+  tool's. It is not yet true: `records_provider.dart` carries the Dayroz
+  obligation to back the interface with encrypted on-device storage before
+  the line ships.
+- **The records and the dashboard disagree about money — reproduced.** A
+  record's amount is shown as stored, in the reader's currency ("Rs 34");
+  the dashboard converts its dollar fixtures and tidies them ("−Rs 17,500").
+  The records are also not the transactions: adding an expense changes the
+  list and its count, never the summary, the chart or the budgets.
+- **"monthly, on the 3th" — reproduced.** `expenses.monthlyOn` appends "th"
+  to every day. Kept, like C31's notations, until ordinals are keyed per
+  language.
+- **Bills at 109 % in amber — reproduced.** The fixture budget is under the
+  fixture spend; the meter overflows to the warning tone as `pbar--warn`
+  does.
+- **One query for two lists — reproduced.** The records' search and the
+  transactions' filter share `q`: "zzz" empties both, and the transactions
+  offer "All", which clears only the category.
+- **Share is not offered — reproduced.** Expenses is sensitive; the host
+  gives it Export and the privacy note, and no share card.
+- **Transaction dates are the reader's — corrected.** The reference writes
+  "1 Sep" for every reader; Flutter writes the reader's short date for the
+  same day ("1 Sept", "Sep 1").
+- **Record ids are counted — corrected.** The reference's are random
+  ("EXP-MTR672E8ODWJ"), so no capture can be reproduced; these are
+  "EXP-1", "EXP-2" in the order records are made.
+- **The body's "Add expense" only says "New expense" — corrected.** It opens
+  the form the header's Add opens.
+- **Export writes dollars under the local code — corrected.** The CSV's
+  amounts are the converted figures the screen shows, under the currency
+  they are in.
+- **At expanded width the form's Save covers its Cancel — corrected.** The
+  block button overflows the submit row at 1100; the two sit side by side
+  here, each at least 180 wide.
+- **English in every language — translated.** `rec.*` and `expenses.*` are
+  keyed and translated (D12); seeded records are `@keys` resolved in the
+  reader's language, and resolved into words when one is edited. Shop names
+  ("Metro Cash & Carry") are proper names and stay as written.
+
+**Found on Expenses (reference tool 10), corrected or built the way C62's
+were:**
+
+| widget | was | reference, measured |
+|---|---|---|
+| `LumeDeleteConfirmation` | a start-aligned title, text and a pair of buttons | `.dconfirm`: centred inside `22 20 6`; a 70-point "!" in rose at 12 % (amber at 14 % when it warns); title 20 / 700 on 26; text on 22 in `text-2` within 36 characters; the verb as solid rose ink on `on-rose` — amber on `on-amber` for Discard — then the quiet Cancel, both 46 |
+| `LumeButtonTone` | no solid destructive or warning tone | `critical` (`.btn--danger`: rose ink, its shadow) and `warn` (`.is-warn .btn--danger`: amber) |
+| `LumeCollectionState` | a compact icon-and-text block | `.cstate`: 44 / 24 (quiet 32 / 20); a 96-point tinted disc, icon 34, 18 below; title 19 (quiet: card title) 10 above text in `text-2` within 34 characters; the action at least 220 after 22, a footnote after 14; as a pane, a dashed `border-2` outline, 320 tall, centred |
+| `LumeRecordHero` | a summary card | `.chero`: 22 in; kicker label .09em / 700 at .82 with 14 below; value 32 on 1, −.035em, tabular; title after 4; caption 12 / 600 on 16 at .78 after 10 |
+| `LumeRecordRow` | 4 between title and sub; 8 before the value | 2 between; 12 before the value column |
+| `LumeFormPicker`, `LumeFieldLabel`, `LumeAttachTile` (new) | — | `.cfield` with a select or date: label 16 + 7 over a 48 box, `border-2`, radius 12, value 500, a 15-point chevron; `.cattach`: a dashed 64-point tile, camera 17 in `accent-700`, the card-title label |
+| `LumeFormField` | the role's weight and line | input 500; a textarea on 1.55 |
+| `LumeFilterChip` | a 16-point icon | `.fchip svg` 13 |
+| `LumeSortBar` | a 16-point glyph, 600, 8 to the options; 13-point arrows; the option's label on its role's line (26 tall) | glyph 13, label 700, 10 to the options; arrows 11; the label on its natural line — `.sortopt` is 23 |
+| `LumeToolSection` | always 24 or 16 above | `spaceAbove`, so a rail's 44-point targets overhang the gap instead of growing the page: Expenses takes the filter rail's 6.5 and the sort bar's 10.5 out of the space around them, and the record chips' 3 out of the 12 either side |
+| `LumeRichRow` | the value always in `text` | `valueColor` — `.rrow.is-income` in `up` |
+| `LumeToolScreen` | a feature's name and frame on every screen | `title`, `headerActions` and `bare`: a record's detail and form own the screen, with no source, privacy note or related rail |
+
 ### C63 — English dates written the wrong way outside the United States
 
 **Found in F6A** on the UAE Tax capture ("Mon, 7 Sep") and confirmed by

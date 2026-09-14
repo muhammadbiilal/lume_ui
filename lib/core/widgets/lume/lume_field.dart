@@ -405,10 +405,12 @@ class _LumeFormFieldState extends State<LumeFormField> {
                     enabled: widget.enabled,
                     focusNode: _node,
                     autofocus: widget.autofocus,
-                    style: LumeType.fit(
-                      context,
-                      context.lumeType.bodyStrong,
-                    ).copyWith(color: lume.text),
+                    style: LumeType.fit(context, context.lumeType.bodyStrong)
+                        .copyWith(
+                          color: lume.text,
+                          fontWeight: FontWeight.w500,
+                          height: multiline ? 1.55 : null,
+                        ),
                   ),
                 ),
               ],

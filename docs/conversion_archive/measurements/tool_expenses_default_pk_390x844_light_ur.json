@@ -1,0 +1,2932 @@
+{
+  "cell": "tool_expenses_default_pk_390x844_light_ur",
+  "screen": "tool",
+  "state": "default_pk",
+  "account": "guest",
+  "route": null,
+  "tool": "expenses",
+  "toolstate": null,
+  "after": null,
+  "profile": {
+    "country": "PK",
+    "city": "Islamabad",
+    "islamic": false,
+    "interests": [
+      "weather",
+      "calendar",
+      "tasks",
+      "notes",
+      "maths",
+      "expenses",
+      "news"
+    ],
+    "favourites": [],
+    "recents": [],
+    "prefs": {
+      "news": true,
+      "cricket": true,
+      "finance": true,
+      "recos": true
+    },
+    "displayName": ""
+  },
+  "viewport": {
+    "width": 390,
+    "height": 844,
+    "innerWidth": 390
+  },
+  "scrollTop": 0,
+  "theme": "light",
+  "lang": "ur",
+  "dir": "rtl",
+  "tabs": [
+    "home",
+    "tools",
+    "trains",
+    "today",
+    "profile"
+  ],
+  "activeTab": null,
+  "scroll": {
+    "clientHeight": 811,
+    "scrollHeight": 3398,
+    "paddingBottom": "118px"
+  },
+  "missing": [
+    "ctxbar",
+    "ctxbar.item1",
+    "ctxbar.item2",
+    "ctxbar.item3",
+    "ctxbar.sep",
+    "ctxbar.icon",
+    "fgrid",
+    "field1",
+    "field2",
+    "field.label",
+    "field.box",
+    "field.box2",
+    "field.affix",
+    "field.input",
+    "table",
+    "table.th1",
+    "table.th2",
+    "table.th3",
+    "table.tr1",
+    "table.td1",
+    "table.td2",
+    "table.td3",
+    "table.trLast",
+    "kard.lead",
+    "state",
+    "state.title",
+    "state.text",
+    "state.btn",
+    "srcline.second",
+    "summary.small",
+    "course",
+    "course.icon",
+    "course.name",
+    "course.meta",
+    "course.pct",
+    "heat",
+    "heat.cell1",
+    "heat.cell2",
+    "heat.cell22",
+    "heat.key",
+    "heat.keycell",
+    "clockface",
+    "clockface.time",
+    "clockface.sub",
+    "clockface.acts",
+    "clock.btn1",
+    "clock.btn2",
+    "clock.icon",
+    "chips",
+    "chip1",
+    "chip2",
+    "chip4",
+    "sos",
+    "sos.icon",
+    "sos.name",
+    "sos.kind",
+    "sos.num",
+    "calls",
+    "call1",
+    "call2",
+    "call3",
+    "call.icon",
+    "call.name",
+    "call.num",
+    "call.kind",
+    "ctx",
+    "note",
+    "sect3.title",
+    "chip.on",
+    "hstrip",
+    "imgcard1",
+    "imgcard2",
+    "imgcard.art",
+    "imgcard.body",
+    "imgcard.kicker",
+    "imgcard.title",
+    "imgcard.meta",
+    "rrow.thumb",
+    "rrow.chev",
+    "badge",
+    "state.art",
+    "lead",
+    "lead.art",
+    "lead.body",
+    "lead.cat",
+    "lead.title",
+    "lead.meta",
+    "rows2",
+    "mgrid",
+    "mgrid.title",
+    "mgrid.grid",
+    "mgrid.head1",
+    "mgrid.head7",
+    "mgrid.cell1",
+    "mgrid.today",
+    "mgrid.todayNum",
+    "mgrid.sub",
+    "tline",
+    "tline.item1",
+    "tline.item2",
+    "tline.time",
+    "tline.rail",
+    "tline.node",
+    "tline.nodeNow",
+    "tline.title",
+    "tline.sub",
+    "fab",
+    "fab.icon",
+    "summary.unit",
+    "summary.delta",
+    "table.th4",
+    "table.td4",
+    "table.delta",
+    "rrow.logo",
+    "rrow.spark",
+    "rrow.delta",
+    "chart",
+    "chart.svg",
+    "metrics",
+    "metric1",
+    "metric2",
+    "metric.value",
+    "metric.label",
+    "lmap",
+    "lmap.pin1",
+    "lmap.pinOn",
+    "lmap.pin3",
+    "lmap.cap",
+    "rrow.badge",
+    "rrow.valuesub",
+    "rrowSel",
+    "journey",
+    "journey.from",
+    "journey.code",
+    "journey.name",
+    "journey.time",
+    "journey.to",
+    "journey.track",
+    "journey.line",
+    "journey.prog",
+    "journey.craft",
+    "journey.dur",
+    "chero",
+    "chero.kicker",
+    "chero.value",
+    "chero.title",
+    "chero.caption",
+    "cfacts",
+    "cfact1",
+    "cfact.label",
+    "cfact.value",
+    "cacts",
+    "cact.edit",
+    "cact.danger",
+    "crud.id",
+    "cform",
+    "cfield1",
+    "cfield2",
+    "cfield.label",
+    "cfield.box",
+    "cfield.err",
+    "cfield.select",
+    "cfield.textarea",
+    "cattach",
+    "csubmit",
+    "csubmit.btn",
+    "csubmit.note",
+    "cnotice",
+    "cstate",
+    "cstate.art",
+    "cstate.title",
+    "cstate.text",
+    "cstate.cta",
+    "cstate.foot"
+  ],
+  "composition": {
+    "header": {
+      "title": "Expenses",
+      "sub": "5 records",
+      "actions": [
+        {
+          "id": "recadd",
+          "label": "Add expense",
+          "text": "Add"
+        },
+        {
+          "id": "share",
+          "label": "Share",
+          "text": null
+        },
+        {
+          "id": "export",
+          "label": "Export",
+          "text": null
+        }
+      ]
+    },
+    "sections": [
+      {
+        "tag": "section",
+        "cls": "sect sect--tight",
+        "sect": "records",
+        "title": null,
+        "y": 122.39,
+        "height": 478
+      },
+      {
+        "tag": "section",
+        "cls": "sect",
+        "sect": null,
+        "title": null,
+        "y": 624.39,
+        "height": 41.19
+      },
+      {
+        "tag": "section",
+        "cls": "sect",
+        "sect": null,
+        "title": null,
+        "y": 689.58,
+        "height": 218.67
+      },
+      {
+        "tag": "section",
+        "cls": "sect",
+        "sect": null,
+        "title": "This week",
+        "y": 932.25,
+        "height": 213.59
+      },
+      {
+        "tag": "section",
+        "cls": "sect",
+        "sect": null,
+        "title": "By category",
+        "y": 1169.84,
+        "height": 210.56
+      },
+      {
+        "tag": "section",
+        "cls": "sect",
+        "sect": null,
+        "title": null,
+        "y": 1404.41,
+        "height": 37.19
+      },
+      {
+        "tag": "section",
+        "cls": "sect",
+        "sect": null,
+        "title": null,
+        "y": 1465.59,
+        "height": 27.59
+      },
+      {
+        "tag": "section",
+        "cls": "sect",
+        "sect": null,
+        "title": "Transactions",
+        "y": 1517.19,
+        "height": 724.88
+      },
+      {
+        "tag": "section",
+        "cls": "sect",
+        "sect": null,
+        "title": "Budgets",
+        "y": 2266.06,
+        "height": 240.75
+      },
+      {
+        "tag": "section",
+        "cls": "sect",
+        "sect": null,
+        "title": "Recurring",
+        "y": 2530.81,
+        "height": 165.78
+      },
+      {
+        "tag": "section",
+        "cls": "sect",
+        "sect": null,
+        "title": "Insights",
+        "y": 2720.59,
+        "height": 168.97
+      },
+      {
+        "tag": "section",
+        "cls": "sect",
+        "sect": null,
+        "title": null,
+        "y": 2913.56,
+        "height": 46
+      },
+      {
+        "tag": "section",
+        "cls": "sect",
+        "sect": "source",
+        "title": null,
+        "y": 2983.56,
+        "height": 43.59
+      },
+      {
+        "tag": "section",
+        "cls": "sect",
+        "sect": null,
+        "title": null,
+        "y": 3051.16,
+        "height": 107.8
+      },
+      {
+        "tag": "section",
+        "cls": "sect",
+        "sect": "related",
+        "title": "Related tools",
+        "y": 3182.95,
+        "height": 130
+      }
+    ],
+    "context": [],
+    "segments": [
+      {
+        "label": "Week",
+        "on": false
+      },
+      {
+        "label": "Month",
+        "on": true
+      },
+      {
+        "label": "Year",
+        "on": false
+      }
+    ],
+    "fields": [],
+    "summary": {
+      "kicker": "Spent this month",
+      "value": "Rs 42,400",
+      "caption": "53% of your Rs 80,000 budget",
+      "stats": [
+        {
+          "value": "Rs 99,200",
+          "label": "Income"
+        },
+        {
+          "value": "Rs 56,800",
+          "label": "Balance"
+        },
+        {
+          "value": "Rs 6,060",
+          "label": "Daily average"
+        }
+      ]
+    },
+    "table": {
+      "head": [],
+      "rows": []
+    },
+    "donut": {
+      "mid": "Rs 42,400",
+      "sub": "Total",
+      "keys": [
+        {
+          "label": "Groceries",
+          "value": "Rs 11,900",
+          "color": "rgb(16, 153, 138)"
+        },
+        {
+          "label": "Transport",
+          "value": "Rs 8,060",
+          "color": "rgb(110, 98, 229)"
+        },
+        {
+          "label": "Bills",
+          "value": "Rs 9,330",
+          "color": "rgb(224, 145, 58)"
+        },
+        {
+          "label": "Eating out",
+          "value": "Rs 5,940",
+          "color": "rgb(222, 107, 122)"
+        },
+        {
+          "label": "Health",
+          "value": "Rs 3,820",
+          "color": "rgb(62, 155, 212)"
+        },
+        {
+          "label": "Other",
+          "value": "Rs 3,390",
+          "color": "rgb(139, 141, 149)"
+        }
+      ],
+      "arcs": [
+        {
+          "dash": "73.89 263.89",
+          "offset": "0.00"
+        },
+        {
+          "dash": "50.14 263.89",
+          "offset": "-73.89"
+        },
+        {
+          "dash": "58.06 263.89",
+          "offset": "-124.03"
+        },
+        {
+          "dash": "36.95 263.89",
+          "offset": "-182.09"
+        },
+        {
+          "dash": "23.75 263.89",
+          "offset": "-219.03"
+        },
+        {
+          "dash": "21.11 263.89",
+          "offset": "-242.78"
+        }
+      ]
+    },
+    "note": {
+      "title": "Private to you",
+      "text": "This information stays on your device, is never shown on Home and is never included in shared content."
+    },
+    "state": null,
+    "buttons": [
+      "Add expense",
+      "Export"
+    ],
+    "source": {
+      "fresh": "Stored on this device",
+      "line": [
+        "On device"
+      ]
+    },
+    "related": [
+      "Savings Goals",
+      "Subscriptions",
+      "Bills",
+      "Lending Ledger"
+    ],
+    "ring": {
+      "label": "Budget used",
+      "now": "53",
+      "text": "53%",
+      "offset": "88.6"
+    },
+    "courses": [],
+    "bars": [
+      {
+        "label": "M",
+        "title": "M: 42",
+        "on": false,
+        "fill": "69",
+        "height": 3,
+        "color": "rgb(231, 244, 241)"
+      },
+      {
+        "label": "T",
+        "title": "T: 55",
+        "on": false,
+        "fill": "90",
+        "height": 3,
+        "color": "rgb(231, 244, 241)"
+      },
+      {
+        "label": "W",
+        "title": "W: 38",
+        "on": false,
+        "fill": "62",
+        "height": 3,
+        "color": "rgb(231, 244, 241)"
+      },
+      {
+        "label": "T",
+        "title": "T: 61",
+        "on": false,
+        "fill": "100",
+        "height": 3,
+        "color": "rgb(231, 244, 241)"
+      },
+      {
+        "label": "F",
+        "title": "F: 48",
+        "on": false,
+        "fill": "79",
+        "height": 3,
+        "color": "rgb(231, 244, 241)"
+      },
+      {
+        "label": "S",
+        "title": "S: 52",
+        "on": false,
+        "fill": "85",
+        "height": 3,
+        "color": "rgb(231, 244, 241)"
+      },
+      {
+        "label": "S",
+        "title": "S: 44",
+        "on": true,
+        "fill": "72",
+        "height": 3,
+        "color": "rgb(16, 153, 138)"
+      }
+    ],
+    "heat": null,
+    "clock": null,
+    "emergency": null,
+    "library": {
+      "placeholder": "Search expenses",
+      "chips": [],
+      "chipOn": null,
+      "cards": [],
+      "rows": [
+        {
+          "title": "Metro Cash & Carry",
+          "sub": "Groceries",
+          "badge": null,
+          "meta": [
+            "Today · 11:20",
+            "Card"
+          ],
+          "act": null
+        },
+        {
+          "title": "Fuel — Shell",
+          "sub": "Transport",
+          "badge": null,
+          "meta": [
+            "Today · 08:05",
+            "Card"
+          ],
+          "act": null
+        },
+        {
+          "title": "Electricity bill",
+          "sub": "Bills",
+          "badge": null,
+          "meta": [
+            "Yesterday",
+            "Auto-debit"
+          ],
+          "act": null
+        },
+        {
+          "title": "Salary",
+          "sub": "Other",
+          "badge": null,
+          "meta": [
+            "1 Sep",
+            "Transfer"
+          ],
+          "act": null
+        },
+        {
+          "title": "Coffee — Chaaye Khana",
+          "sub": "Eating out",
+          "badge": null,
+          "meta": [
+            "Yesterday",
+            "Cash"
+          ],
+          "act": null
+        },
+        {
+          "title": "Pharmacy",
+          "sub": "Health",
+          "badge": null,
+          "meta": [
+            "4 Sep",
+            "Card"
+          ],
+          "act": null
+        },
+        {
+          "title": "Internet",
+          "sub": "Bills",
+          "badge": null,
+          "meta": [
+            "3 Sep",
+            "Auto-debit"
+          ],
+          "act": null
+        },
+        {
+          "title": "Ride to airport",
+          "sub": "Transport",
+          "badge": null,
+          "meta": [
+            "2 Sep",
+            "Wallet"
+          ],
+          "act": null
+        },
+        {
+          "title": "Groceries are up 12%",
+          "sub": "Compared with your three-month average.",
+          "badge": null,
+          "meta": [],
+          "act": null
+        },
+        {
+          "title": "On track for the month",
+          "sub": "At this pace you finish about 8% under budget.",
+          "badge": null,
+          "meta": [],
+          "act": null
+        }
+      ],
+      "empty": null,
+      "links": [
+        {
+          "label": "Internetmonthly, on the 3th",
+          "act": null
+        },
+        {
+          "label": "Electricitymonthly, on the 12th",
+          "act": null
+        }
+      ]
+    },
+    "news": null,
+    "calendar": null,
+    "explorer": null,
+    "flights": null,
+    "finance": {
+      "ring": {
+        "label": "Budget used",
+        "text": "53%",
+        "now": "53",
+        "mid": "53%"
+      },
+      "bar": {
+        "label": "Budget used",
+        "now": "53",
+        "cls": "pbar"
+      },
+      "bars": [
+        [
+          "M",
+          "69",
+          false
+        ],
+        [
+          "T",
+          "90",
+          false
+        ],
+        [
+          "W",
+          "62",
+          false
+        ],
+        [
+          "T",
+          "100",
+          false
+        ],
+        [
+          "F",
+          "79",
+          false
+        ],
+        [
+          "S",
+          "85",
+          false
+        ],
+        [
+          "S",
+          "72",
+          true
+        ]
+      ],
+      "barsCaption": "Averaging Rs 6,060 a day",
+      "filters": [
+        [
+          "All",
+          true,
+          false
+        ],
+        [
+          "Groceries",
+          false,
+          true
+        ],
+        [
+          "Transport",
+          false,
+          true
+        ],
+        [
+          "Bills",
+          false,
+          true
+        ],
+        [
+          "Eating out",
+          false,
+          true
+        ],
+        [
+          "Health",
+          false,
+          true
+        ],
+        [
+          "Other",
+          false,
+          true
+        ]
+      ],
+      "filterLabel": "Category",
+      "sortLabel": "Sort",
+      "sorts": [
+        [
+          "Date",
+          true,
+          "toolstate:expenses:sort:date|asc"
+        ],
+        [
+          "Amount",
+          false,
+          "toolstate:expenses:sort:amount|desc"
+        ],
+        [
+          "Category",
+          false,
+          "toolstate:expenses:sort:cat|desc"
+        ]
+      ],
+      "transactions": [
+        {
+          "title": "Metro Cash & Carry",
+          "sub": "Groceries",
+          "meta": [
+            "Today · 11:20",
+            "Card"
+          ],
+          "value": "−Rs 17,500",
+          "income": false,
+          "iconCls": "rrow__icon"
+        },
+        {
+          "title": "Fuel — Shell",
+          "sub": "Transport",
+          "meta": [
+            "Today · 08:05",
+            "Card"
+          ],
+          "value": "−Rs 10,800",
+          "income": false,
+          "iconCls": "rrow__icon"
+        },
+        {
+          "title": "Electricity bill",
+          "sub": "Bills",
+          "meta": [
+            "Yesterday",
+            "Auto-debit"
+          ],
+          "value": "−Rs 20,900",
+          "income": false,
+          "iconCls": "rrow__icon"
+        },
+        {
+          "title": "Salary",
+          "sub": "Other",
+          "meta": [
+            "1 Sep",
+            "Transfer"
+          ],
+          "value": "+Rs 524,000",
+          "income": true,
+          "iconCls": "rrow__icon rrow__icon--accent"
+        },
+        {
+          "title": "Coffee — Chaaye Khana",
+          "sub": "Eating out",
+          "meta": [
+            "Yesterday",
+            "Cash"
+          ],
+          "value": "−Rs 1,700",
+          "income": false,
+          "iconCls": "rrow__icon"
+        },
+        {
+          "title": "Pharmacy",
+          "sub": "Health",
+          "meta": [
+            "4 Sep",
+            "Card"
+          ],
+          "value": "−Rs 5,940",
+          "income": false,
+          "iconCls": "rrow__icon"
+        },
+        {
+          "title": "Internet",
+          "sub": "Bills",
+          "meta": [
+            "3 Sep",
+            "Auto-debit"
+          ],
+          "value": "−Rs 7,920",
+          "income": false,
+          "iconCls": "rrow__icon"
+        },
+        {
+          "title": "Ride to airport",
+          "sub": "Transport",
+          "meta": [
+            "2 Sep",
+            "Wallet"
+          ],
+          "value": "−Rs 3,960",
+          "income": false,
+          "iconCls": "rrow__icon"
+        },
+        {
+          "title": "Groceries are up 12%",
+          "sub": "Compared with your three-month average.",
+          "meta": [],
+          "value": null,
+          "income": false,
+          "iconCls": "rrow__icon rrow__icon--accent"
+        },
+        {
+          "title": "On track for the month",
+          "sub": "At this pace you finish about 8% under budget.",
+          "meta": [],
+          "value": null,
+          "income": false,
+          "iconCls": "rrow__icon rrow__icon--accent"
+        }
+      ],
+      "meters": [
+        [
+          "Groceries",
+          "Rs 11,900 / Rs 16,000",
+          "74",
+          "pbar"
+        ],
+        [
+          "Transport",
+          "Rs 8,060 / Rs 10,900",
+          "74",
+          "pbar"
+        ],
+        [
+          "Bills",
+          "Rs 9,330 / Rs 8,580",
+          "109",
+          "pbar pbar--warn"
+        ],
+        [
+          "Eating out",
+          "Rs 5,940 / Rs 8,010",
+          "74",
+          "pbar"
+        ]
+      ],
+      "recurring": [
+        [
+          "Internet",
+          "monthly, on the 3th",
+          "Rs 7,920"
+        ],
+        [
+          "Electricity",
+          "monthly, on the 12th",
+          "Rs 20,900"
+        ]
+      ]
+    },
+    "records": {
+      "placeholder": "Search expenses",
+      "chips": [
+        [
+          "All",
+          "5",
+          true
+        ],
+        [
+          "This month",
+          "5",
+          false
+        ],
+        [
+          "Groceries",
+          "1",
+          false
+        ],
+        [
+          "Transport",
+          "1",
+          false
+        ],
+        [
+          "Bills",
+          "1",
+          false
+        ]
+      ],
+      "rows": [
+        {
+          "initial": "G",
+          "title": "Groceries",
+          "sub": "Today · Groceries",
+          "meta": [],
+          "value": "Rs 34",
+          "badge": null,
+          "selected": false,
+          "done": false,
+          "queued": null
+        },
+        {
+          "initial": "T",
+          "title": "Taxi",
+          "sub": "Yesterday · Transport",
+          "meta": [],
+          "value": "Rs 9",
+          "badge": null,
+          "selected": false,
+          "done": false,
+          "queued": null
+        },
+        {
+          "initial": "I",
+          "title": "Internet bill",
+          "sub": "3 days ago · Bills",
+          "meta": [],
+          "value": "Rs 28",
+          "badge": null,
+          "selected": false,
+          "done": false,
+          "queued": null
+        },
+        {
+          "initial": "C",
+          "title": "Coffee",
+          "sub": "4 days ago · Eating out",
+          "meta": [],
+          "value": "Rs 7",
+          "badge": null,
+          "selected": false,
+          "done": false,
+          "queued": null
+        },
+        {
+          "initial": "P",
+          "title": "Pharmacy",
+          "sub": "6 days ago · Health",
+          "meta": [],
+          "value": "Rs 17",
+          "badge": null,
+          "selected": false,
+          "done": false,
+          "queued": null
+        }
+      ],
+      "states": [],
+      "hero": null,
+      "sectionTitles": [
+        "This week",
+        "By category",
+        "Transactions",
+        "Budgets",
+        "Recurring",
+        "Insights",
+        "Related tools"
+      ],
+      "facts": [],
+      "actions": [],
+      "recordId": null,
+      "fields": [],
+      "submit": [],
+      "submitNote": null,
+      "notices": [],
+      "sheet": null
+    },
+    "rows": [
+      {
+        "title": "Metro Cash & Carry",
+        "sub": "Groceries"
+      },
+      {
+        "title": "Fuel — Shell",
+        "sub": "Transport"
+      },
+      {
+        "title": "Electricity bill",
+        "sub": "Bills"
+      },
+      {
+        "title": "Salary",
+        "sub": "Other"
+      },
+      {
+        "title": "Coffee — Chaaye Khana",
+        "sub": "Eating out"
+      },
+      {
+        "title": "Pharmacy",
+        "sub": "Health"
+      },
+      {
+        "title": "Internet",
+        "sub": "Bills"
+      },
+      {
+        "title": "Ride to airport",
+        "sub": "Transport"
+      },
+      {
+        "title": "Groceries are up 12%",
+        "sub": "Compared with your three-month average."
+      },
+      {
+        "title": "On track for the month",
+        "sub": "At this pace you finish about 8% under budget."
+      }
+    ]
+  },
+  "bounds": {
+    "screen": {
+      "x": 0,
+      "y": 32.8,
+      "width": 390,
+      "height": 811.2,
+      "lines": 32,
+      "font": "400 16px/25.6px normal",
+      "color": "rgb(16, 17, 19)",
+      "background": "rgba(0, 0, 0, 0)",
+      "radius": "0px",
+      "pad": "0px 0px 118px",
+      "gap": "normal",
+      "text": "Expenses5 recordsAdd\n    All5This month5Groceries1Transport1Bills1GGroceriesToday · GroceriesRs 34TTaxiYesterday · TransportRs 9IInternet bill3 days ago · Bills"
+    },
+    "toolbar": {
+      "x": 0,
+      "y": 32.8,
+      "width": 390,
+      "height": 73.59,
+      "lines": 3,
+      "font": "400 16px/25.6px normal",
+      "color": "rgb(16, 17, 19)",
+      "background": "color(srgb 0.964706 0.964706 0.956863 / 0.88)",
+      "radius": "0px",
+      "pad": "10px 20px 12px",
+      "gap": "10px",
+      "text": "Expenses5 recordsAdd"
+    },
+    "toolbar.back": {
+      "x": 332,
+      "y": 49.09,
+      "width": 38,
+      "height": 38,
+      "lines": 1,
+      "font": "400 16px/25.6px normal",
+      "color": "rgb(86, 88, 95)",
+      "background": "rgb(255, 255, 255)",
+      "radius": "12px",
+      "pad": "0px",
+      "gap": "normal",
+      "text": null
+    },
+    "toolbar.title": {
+      "x": 190.55,
+      "y": 42.8,
+      "width": 131.45,
+      "height": 32,
+      "lines": 1,
+      "font": "800 20px/32px -0.68px",
+      "color": "rgb(16, 17, 19)",
+      "background": "rgba(0, 0, 0, 0)",
+      "radius": "0px",
+      "pad": "0px",
+      "gap": "normal",
+      "text": "Expenses"
+    },
+    "toolbar.sub": {
+      "x": 190.55,
+      "y": 75.8,
+      "width": 131.45,
+      "height": 17.59,
+      "lines": 1,
+      "font": "500 11px/17.6px normal",
+      "color": "rgb(139, 141, 149)",
+      "background": "rgba(0, 0, 0, 0)",
+      "radius": "0px",
+      "pad": "0px",
+      "gap": "normal",
+      "text": "5 records"
+    },
+    "toolbar.actions": {
+      "x": 20,
+      "y": 46.09,
+      "width": 160.55,
+      "height": 44,
+      "lines": 2,
+      "font": "400 16px/25.6px normal",
+      "color": "rgb(16, 17, 19)",
+      "background": "rgba(0, 0, 0, 0)",
+      "radius": "0px",
+      "pad": "0px",
+      "gap": "6px",
+      "text": "Add"
+    },
+    "toolbar.action1": {
+      "x": 108,
+      "y": 46.09,
+      "width": 72.55,
+      "height": 44,
+      "lines": 2,
+      "font": "700 15px/20px normal",
+      "color": "rgb(8, 99, 87)",
+      "background": "rgba(0, 0, 0, 0)",
+      "radius": "8px",
+      "pad": "0px 10px",
+      "gap": "6px",
+      "text": "Add"
+    },
+    "toolbar.action2": {
+      "x": 64,
+      "y": 46.09,
+      "width": 38,
+      "height": 38,
+      "lines": 1,
+      "font": "400 16px/25.6px normal",
+      "color": "rgb(86, 88, 95)",
+      "background": "rgb(255, 255, 255)",
+      "radius": "12px",
+      "pad": "0px",
+      "gap": "normal",
+      "text": null
+    },
+    "toolbar.action3": {
+      "x": 20,
+      "y": 46.09,
+      "width": 38,
+      "height": 38,
+      "lines": 1,
+      "font": "400 16px/25.6px normal",
+      "color": "rgb(86, 88, 95)",
+      "background": "rgb(255, 255, 255)",
+      "radius": "12px",
+      "pad": "0px",
+      "gap": "normal",
+      "text": null
+    },
+    "sect1": {
+      "x": 0,
+      "y": 122.39,
+      "width": 390,
+      "height": 478,
+      "lines": 19,
+      "font": "400 16px/25.6px normal",
+      "color": "rgb(16, 17, 19)",
+      "background": "rgba(0, 0, 0, 0)",
+      "radius": "0px",
+      "pad": "0px 20px",
+      "gap": "normal",
+      "text": "All5This month5Groceries1Transport1Bills1GGroceriesToday · GroceriesRs 34TTaxiYesterday · TransportRs 9IInternet bill3 days ago · BillsRs 28CCoffee4 days ago · "
+    },
+    "sect2": {
+      "x": 0,
+      "y": 624.39,
+      "width": 390,
+      "height": 41.19,
+      "lines": 2,
+      "font": "400 16px/25.6px normal",
+      "color": "rgb(16, 17, 19)",
+      "background": "rgba(0, 0, 0, 0)",
+      "radius": "0px",
+      "pad": "0px 20px",
+      "gap": "normal",
+      "text": "WeekMonthYear"
+    },
+    "sect3": {
+      "x": 0,
+      "y": 689.58,
+      "width": 390,
+      "height": 218.67,
+      "lines": 9,
+      "font": "400 16px/25.6px normal",
+      "color": "rgb(16, 17, 19)",
+      "background": "rgba(0, 0, 0, 0)",
+      "radius": "0px",
+      "pad": "0px 20px",
+      "gap": "normal",
+      "text": "Spent this monthRs 42,40053% of your Rs 80,000 budget53%Rs 99,200IncomeRs 56,800BalanceRs 6,060Daily average"
+    },
+    "sect4": {
+      "x": 0,
+      "y": 932.25,
+      "width": 390,
+      "height": 213.59,
+      "lines": 8,
+      "font": "400 16px/25.6px normal",
+      "color": "rgb(16, 17, 19)",
+      "background": "rgba(0, 0, 0, 0)",
+      "radius": "0px",
+      "pad": "0px 20px",
+      "gap": "normal",
+      "text": "This weekMTWTFSSAveraging Rs 6,060 a day"
+    },
+    "sect5": {
+      "x": 0,
+      "y": 1169.84,
+      "width": 390,
+      "height": 210.56,
+      "lines": 8,
+      "font": "400 16px/25.6px normal",
+      "color": "rgb(16, 17, 19)",
+      "background": "rgba(0, 0, 0, 0)",
+      "radius": "0px",
+      "pad": "0px 20px",
+      "gap": "normal",
+      "text": "By categoryRs 42,400TotalGroceriesRs 11,900TransportRs 8,060BillsRs 9,330Eating outRs 5,940HealthRs 3,820OtherRs 3,390"
+    },
+    "sect6": {
+      "x": 0,
+      "y": 1404.41,
+      "width": 390,
+      "height": 37.19,
+      "lines": 1,
+      "font": "400 16px/25.6px normal",
+      "color": "rgb(16, 17, 19)",
+      "background": "rgba(0, 0, 0, 0)",
+      "radius": "0px",
+      "pad": "0px 20px",
+      "gap": "normal",
+      "text": "AllGroceriesTransportBillsEating outHealthOther"
+    },
+    "sect7": {
+      "x": 0,
+      "y": 1465.59,
+      "width": 390,
+      "height": 27.59,
+      "lines": 1,
+      "font": "400 16px/25.6px normal",
+      "color": "rgb(16, 17, 19)",
+      "background": "rgba(0, 0, 0, 0)",
+      "radius": "0px",
+      "pad": "0px 20px",
+      "gap": "normal",
+      "text": "SortDateAmountCategory"
+    },
+    "sect8": {
+      "x": 0,
+      "y": 1517.19,
+      "width": 390,
+      "height": 724.88,
+      "lines": 28,
+      "font": "400 16px/25.6px normal",
+      "color": "rgb(16, 17, 19)",
+      "background": "rgba(0, 0, 0, 0)",
+      "radius": "0px",
+      "pad": "0px 20px",
+      "gap": "normal",
+      "text": "TransactionsMetro Cash & CarryGroceriesToday · 11:20Card−Rs 17,500Fuel — ShellTransportToday · 08:05Card−Rs 10,800Electricity billBillsYesterdayAuto-debit−Rs 20"
+    },
+    "sect9": {
+      "x": 0,
+      "y": 2266.06,
+      "width": 390,
+      "height": 240.75,
+      "lines": 9,
+      "font": "400 16px/25.6px normal",
+      "color": "rgb(16, 17, 19)",
+      "background": "rgba(0, 0, 0, 0)",
+      "radius": "0px",
+      "pad": "0px 20px",
+      "gap": "normal",
+      "text": "BudgetsGroceriesRs 11,900 / Rs 16,000TransportRs 8,060 / Rs 10,900BillsRs 9,330 / Rs 8,580Eating outRs 5,940 / Rs 8,010"
+    },
+    "sect10": {
+      "x": 0,
+      "y": 2530.81,
+      "width": 390,
+      "height": 165.78,
+      "lines": 6,
+      "font": "400 16px/25.6px normal",
+      "color": "rgb(16, 17, 19)",
+      "background": "rgba(0, 0, 0, 0)",
+      "radius": "0px",
+      "pad": "0px 20px",
+      "gap": "normal",
+      "text": "RecurringInternetmonthly, on the 3thRs 7,920Electricitymonthly, on the 12thRs 20,900"
+    },
+    "sect11": {
+      "x": 0,
+      "y": 2720.59,
+      "width": 390,
+      "height": 168.97,
+      "lines": 7,
+      "font": "400 16px/25.6px normal",
+      "color": "rgb(16, 17, 19)",
+      "background": "rgba(0, 0, 0, 0)",
+      "radius": "0px",
+      "pad": "0px 20px",
+      "gap": "normal",
+      "text": "InsightsGroceries are up 12%Compared with your three-month average.On track for the monthAt this pace you finish about 8% under budget."
+    },
+    "sect12": {
+      "x": 0,
+      "y": 2913.56,
+      "width": 390,
+      "height": 46,
+      "lines": 2,
+      "font": "400 16px/25.6px normal",
+      "color": "rgb(16, 17, 19)",
+      "background": "rgba(0, 0, 0, 0)",
+      "radius": "0px",
+      "pad": "0px 20px",
+      "gap": "normal",
+      "text": "Add expenseExport"
+    },
+    "sect.head": {
+      "x": 20,
+      "y": 932.25,
+      "width": 350,
+      "height": 24,
+      "lines": 1,
+      "font": "400 16px/25.6px normal",
+      "color": "rgb(16, 17, 19)",
+      "background": "rgba(0, 0, 0, 0)",
+      "radius": "0px",
+      "pad": "0px",
+      "gap": "12px",
+      "text": "This week"
+    },
+    "sect.title": {
+      "x": 302.48,
+      "y": 932.25,
+      "width": 67.52,
+      "height": 24,
+      "lines": 1,
+      "font": "700 15px/24px -0.42px",
+      "color": "rgb(16, 17, 19)",
+      "background": "rgba(0, 0, 0, 0)",
+      "radius": "0px",
+      "pad": "0px",
+      "gap": "normal",
+      "text": "This week"
+    },
+    "segmented": {
+      "x": 20,
+      "y": 624.39,
+      "width": 350,
+      "height": 41.19,
+      "lines": 2,
+      "font": "400 16px/25.6px normal",
+      "color": "rgb(16, 17, 19)",
+      "background": "rgb(241, 241, 238)",
+      "radius": "999px",
+      "pad": "3px",
+      "gap": "3px",
+      "text": "WeekMonthYear"
+    },
+    "seg1": {
+      "x": 254.34,
+      "y": 627.39,
+      "width": 112.66,
+      "height": 35.19,
+      "lines": 2,
+      "font": "700 12px/19.2px -0.24px",
+      "color": "rgb(139, 141, 149)",
+      "background": "rgba(0, 0, 0, 0)",
+      "radius": "999px",
+      "pad": "8px 10px",
+      "gap": "normal",
+      "text": "Week"
+    },
+    "seg2": {
+      "x": 138.67,
+      "y": 627.39,
+      "width": 112.67,
+      "height": 35.19,
+      "lines": 2,
+      "font": "700 12px/19.2px -0.24px",
+      "color": "rgb(16, 17, 19)",
+      "background": "rgb(255, 255, 255)",
+      "radius": "999px",
+      "pad": "8px 10px",
+      "gap": "normal",
+      "text": "Month"
+    },
+    "seg.on": {
+      "x": 138.67,
+      "y": 627.39,
+      "width": 112.67,
+      "height": 35.19,
+      "lines": 2,
+      "font": "700 12px/19.2px -0.24px",
+      "color": "rgb(16, 17, 19)",
+      "background": "rgb(255, 255, 255)",
+      "radius": "999px",
+      "pad": "8px 10px",
+      "gap": "normal",
+      "text": "Month"
+    },
+    "kard": {
+      "x": 20,
+      "y": 968.25,
+      "width": 350,
+      "height": 177.59,
+      "lines": 7,
+      "font": "400 16px/25.6px normal",
+      "color": "rgb(16, 17, 19)",
+      "background": "rgb(255, 255, 255)",
+      "radius": "20px",
+      "pad": "16px",
+      "gap": "normal",
+      "text": "MTWTFSSAveraging Rs 6,060 a day"
+    },
+    "summary": {
+      "x": 20,
+      "y": 689.58,
+      "width": 350,
+      "height": 218.67,
+      "lines": 9,
+      "font": "400 16px/25.6px normal",
+      "color": "rgb(16, 17, 19)",
+      "background": "rgb(255, 255, 255)",
+      "radius": "20px",
+      "pad": "20px",
+      "gap": "normal",
+      "text": "Spent this monthRs 42,40053% of your Rs 80,000 budget53%Rs 99,200IncomeRs 56,800BalanceRs 6,060Daily average"
+    },
+    "summary.kicker": {
+      "x": 121,
+      "y": 710.58,
+      "width": 228,
+      "height": 17.59,
+      "lines": 1,
+      "font": "700 11px/17.6px 0.55px",
+      "color": "rgb(139, 141, 149)",
+      "background": "rgba(0, 0, 0, 0)",
+      "radius": "0px",
+      "pad": "0px",
+      "gap": "normal",
+      "text": "Spent this month"
+    },
+    "summary.value": {
+      "x": 121,
+      "y": 734.17,
+      "width": 228,
+      "height": 35.69,
+      "lines": 1,
+      "font": "800 34px/35.7px -1.7px",
+      "color": "rgb(16, 17, 19)",
+      "background": "rgba(0, 0, 0, 0)",
+      "radius": "0px",
+      "pad": "0px",
+      "gap": "8px",
+      "text": "Rs 42,400"
+    },
+    "summary.caption": {
+      "x": 121,
+      "y": 776.86,
+      "width": 228,
+      "height": 17.39,
+      "lines": 1,
+      "font": "500 12px/17.4px normal",
+      "color": "rgb(86, 88, 95)",
+      "background": "rgba(0, 0, 0, 0)",
+      "radius": "0px",
+      "pad": "0px",
+      "gap": "normal",
+      "text": "53% of your Rs 80,000 budget"
+    },
+    "summary.aside": {
+      "x": 41,
+      "y": 710.58,
+      "width": 66,
+      "height": 66,
+      "lines": 3,
+      "font": "400 16px/25.6px normal",
+      "color": "rgb(16, 17, 19)",
+      "background": "rgba(0, 0, 0, 0)",
+      "radius": "0px",
+      "pad": "0px",
+      "gap": "normal",
+      "text": "53%"
+    },
+    "summary.stats": {
+      "x": 41,
+      "y": 810.25,
+      "width": 308,
+      "height": 57,
+      "lines": 2,
+      "font": "400 16px/25.6px normal",
+      "color": "rgb(16, 17, 19)",
+      "background": "rgba(0, 0, 0, 0)",
+      "radius": "0px",
+      "pad": "14px 0px 0px",
+      "gap": "10px",
+      "text": "Rs 99,200IncomeRs 56,800BalanceRs 6,060Daily average"
+    },
+    "summary.stat1": {
+      "x": 253,
+      "y": 825.25,
+      "width": 96,
+      "height": 42,
+      "lines": 2,
+      "font": "400 16px/25.6px normal",
+      "color": "rgb(16, 17, 19)",
+      "background": "rgba(0, 0, 0, 0)",
+      "radius": "0px",
+      "pad": "0px",
+      "gap": "normal",
+      "text": "Rs 99,200Income"
+    },
+    "summary.stat2": {
+      "x": 147,
+      "y": 825.25,
+      "width": 96,
+      "height": 42,
+      "lines": 2,
+      "font": "400 16px/25.6px normal",
+      "color": "rgb(16, 17, 19)",
+      "background": "rgba(0, 0, 0, 0)",
+      "radius": "0px",
+      "pad": "0px",
+      "gap": "normal",
+      "text": "Rs 56,800Balance"
+    },
+    "summary.stat3": {
+      "x": 41,
+      "y": 825.25,
+      "width": 96,
+      "height": 42,
+      "lines": 2,
+      "font": "400 16px/25.6px normal",
+      "color": "rgb(16, 17, 19)",
+      "background": "rgba(0, 0, 0, 0)",
+      "radius": "0px",
+      "pad": "0px",
+      "gap": "normal",
+      "text": "Rs 6,060Daily average"
+    },
+    "summary.statv": {
+      "x": 253,
+      "y": 825.25,
+      "width": 96,
+      "height": 24,
+      "lines": 1,
+      "font": "800 15px/24px -0.48px",
+      "color": "rgb(16, 17, 19)",
+      "background": "rgba(0, 0, 0, 0)",
+      "radius": "0px",
+      "pad": "0px",
+      "gap": "normal",
+      "text": "Rs 99,200"
+    },
+    "summary.statl": {
+      "x": 253,
+      "y": 851.25,
+      "width": 96,
+      "height": 16,
+      "lines": 1,
+      "font": "600 10px/16px normal",
+      "color": "rgb(139, 141, 149)",
+      "background": "rgba(0, 0, 0, 0)",
+      "radius": "0px",
+      "pad": "0px",
+      "gap": "normal",
+      "text": "Income"
+    },
+    "summary.foot": {
+      "x": 41,
+      "y": 881.25,
+      "width": 308,
+      "height": 6,
+      "lines": 0,
+      "font": "400 16px/25.6px normal",
+      "color": "rgb(16, 17, 19)",
+      "background": "rgba(0, 0, 0, 0)",
+      "radius": "0px",
+      "pad": "0px",
+      "gap": "normal",
+      "text": null
+    },
+    "donutwrap": {
+      "x": 37,
+      "y": 1222.84,
+      "width": 316,
+      "height": 140.56,
+      "lines": 5,
+      "font": "400 16px/25.6px normal",
+      "color": "rgb(16, 17, 19)",
+      "background": "rgba(0, 0, 0, 0)",
+      "radius": "0px",
+      "pad": "0px",
+      "gap": "18px",
+      "text": "Rs 42,400TotalGroceriesRs 11,900TransportRs 8,060BillsRs 9,330Eating outRs 5,940HealthRs 3,820OtherRs 3,390"
+    },
+    "donut": {
+      "x": 237,
+      "y": 1235.13,
+      "width": 116,
+      "height": 116,
+      "lines": 5,
+      "font": "400 16px/25.6px normal",
+      "color": "rgb(16, 17, 19)",
+      "background": "rgba(0, 0, 0, 0)",
+      "radius": "0px",
+      "pad": "0px",
+      "gap": "normal",
+      "text": "Rs 42,400Total"
+    },
+    "donut.mid": {
+      "x": 261.92,
+      "y": 1273.42,
+      "width": 66.17,
+      "height": 22.39,
+      "lines": 1,
+      "font": "800 14px/22.4px -0.532px",
+      "color": "rgb(16, 17, 19)",
+      "background": "rgba(0, 0, 0, 0)",
+      "radius": "0px",
+      "pad": "0px",
+      "gap": "normal",
+      "text": "Rs 42,400"
+    },
+    "donut.midsub": {
+      "x": 261.92,
+      "y": 1296.81,
+      "width": 66.17,
+      "height": 16,
+      "lines": 1,
+      "font": "600 10px/16px normal",
+      "color": "rgb(139, 141, 149)",
+      "background": "rgba(0, 0, 0, 0)",
+      "radius": "0px",
+      "pad": "0px",
+      "gap": "normal",
+      "text": "Total"
+    },
+    "donut.legend": {
+      "x": 37,
+      "y": 1222.84,
+      "width": 182,
+      "height": 140.56,
+      "lines": 5,
+      "font": "400 16px/25.6px normal",
+      "color": "rgb(16, 17, 19)",
+      "background": "rgba(0, 0, 0, 0)",
+      "radius": "0px",
+      "pad": "0px",
+      "gap": "7px",
+      "text": "GroceriesRs 11,900TransportRs 8,060BillsRs 9,330Eating outRs 5,940HealthRs 3,820OtherRs 3,390"
+    },
+    "donut.key1": {
+      "x": 37,
+      "y": 1222.84,
+      "width": 182,
+      "height": 17.59,
+      "lines": 1,
+      "font": "600 11px/17.6px normal",
+      "color": "rgb(16, 17, 19)",
+      "background": "rgba(0, 0, 0, 0)",
+      "radius": "0px",
+      "pad": "0px",
+      "gap": "8px",
+      "text": "GroceriesRs 11,900"
+    },
+    "donut.key2": {
+      "x": 37,
+      "y": 1247.44,
+      "width": 182,
+      "height": 17.59,
+      "lines": 1,
+      "font": "600 11px/17.6px normal",
+      "color": "rgb(16, 17, 19)",
+      "background": "rgba(0, 0, 0, 0)",
+      "radius": "0px",
+      "pad": "0px",
+      "gap": "8px",
+      "text": "TransportRs 8,060"
+    },
+    "donut.swatch": {
+      "x": 210,
+      "y": 1227.14,
+      "width": 9,
+      "height": 9,
+      "lines": 1,
+      "font": "600 11px/17.6px normal",
+      "color": "rgb(16, 17, 19)",
+      "background": "rgb(16, 153, 138)",
+      "radius": "3px",
+      "pad": "0px",
+      "gap": "normal",
+      "text": null
+    },
+    "donut.keyvalue": {
+      "x": 37,
+      "y": 1222.84,
+      "width": 49.84,
+      "height": 17.59,
+      "lines": 1,
+      "font": "700 11px/17.6px -0.22px",
+      "color": "rgb(16, 17, 19)",
+      "background": "rgba(0, 0, 0, 0)",
+      "radius": "0px",
+      "pad": "0px",
+      "gap": "normal",
+      "text": "Rs 11,900"
+    },
+    "btnrow": {
+      "x": 20,
+      "y": 2913.56,
+      "width": 350,
+      "height": 46,
+      "lines": 2,
+      "font": "400 16px/25.6px normal",
+      "color": "rgb(16, 17, 19)",
+      "background": "rgba(0, 0, 0, 0)",
+      "radius": "0px",
+      "pad": "0px",
+      "gap": "8px",
+      "text": "Add expenseExport"
+    },
+    "btn1": {
+      "x": 199,
+      "y": 2913.56,
+      "width": 171,
+      "height": 46,
+      "lines": 2,
+      "font": "700 14px/22.4px -0.308px",
+      "color": "rgb(255, 255, 255)",
+      "background": "rgb(16, 153, 138)",
+      "radius": "12px",
+      "pad": "0px 20px",
+      "gap": "7px",
+      "text": "Add expense"
+    },
+    "btn2": {
+      "x": 20,
+      "y": 2913.56,
+      "width": 171,
+      "height": 46,
+      "lines": 2,
+      "font": "700 14px/22.4px -0.308px",
+      "color": "rgb(16, 17, 19)",
+      "background": "rgb(241, 241, 238)",
+      "radius": "12px",
+      "pad": "0px 20px",
+      "gap": "7px",
+      "text": "Export"
+    },
+    "notecard": {
+      "x": 20,
+      "y": 3051.16,
+      "width": 350,
+      "height": 107.8,
+      "lines": 4,
+      "font": "400 16px/25.6px normal",
+      "color": "rgb(16, 17, 19)",
+      "background": "rgb(250, 250, 249)",
+      "radius": "12px",
+      "pad": "14px",
+      "gap": "11px",
+      "text": "Private to youThis information stays on your device, is never shown on Home and is never included in shared content."
+    },
+    "notecard.title": {
+      "x": 35,
+      "y": 3066.16,
+      "width": 292,
+      "height": 20.8,
+      "lines": 1,
+      "font": "700 13px/20.8px -0.312px",
+      "color": "rgb(16, 17, 19)",
+      "background": "rgba(0, 0, 0, 0)",
+      "radius": "0px",
+      "pad": "0px",
+      "gap": "normal",
+      "text": "Private to you"
+    },
+    "notecard.text": {
+      "x": 35,
+      "y": 3089.95,
+      "width": 292,
+      "height": 54,
+      "lines": 3,
+      "font": "400 12px/18px normal",
+      "color": "rgb(86, 88, 95)",
+      "background": "rgba(0, 0, 0, 0)",
+      "radius": "0px",
+      "pad": "0px",
+      "gap": "normal",
+      "text": "This information stays on your device, is never shown on Home and is never included in shared content."
+    },
+    "srcbar": {
+      "x": 20,
+      "y": 2983.56,
+      "width": 350,
+      "height": 43.59,
+      "lines": 2,
+      "font": "400 16px/25.6px normal",
+      "color": "rgb(16, 17, 19)",
+      "background": "rgb(250, 250, 249)",
+      "radius": "12px",
+      "pad": "12px 14px",
+      "gap": "12px",
+      "text": "Stored on this deviceOn device"
+    },
+    "fresh": {
+      "x": 230.48,
+      "y": 2996.56,
+      "width": 124.52,
+      "height": 17.59,
+      "lines": 1,
+      "font": "700 11px/17.6px normal",
+      "color": "rgb(139, 141, 149)",
+      "background": "rgba(0, 0, 0, 0)",
+      "radius": "0px",
+      "pad": "0px",
+      "gap": "6px",
+      "text": "Stored on this device"
+    },
+    "fresh.dot": {
+      "x": 349,
+      "y": 3002.36,
+      "width": 6,
+      "height": 6,
+      "lines": 0,
+      "font": "700 11px/17.6px normal",
+      "color": "rgb(139, 141, 149)",
+      "background": "rgba(0, 0, 0, 0)",
+      "radius": "2px",
+      "pad": "0px",
+      "gap": "normal",
+      "text": null
+    },
+    "srcline": {
+      "x": 35,
+      "y": 2997.36,
+      "width": 48.92,
+      "height": 16,
+      "lines": 1,
+      "font": "500 10px/16px normal",
+      "color": "rgb(139, 141, 149)",
+      "background": "rgba(0, 0, 0, 0)",
+      "radius": "0px",
+      "pad": "0px",
+      "gap": "8px",
+      "text": "On device"
+    },
+    "srcline.first": {
+      "x": 35,
+      "y": 2997.36,
+      "width": 48.92,
+      "height": 16,
+      "lines": 1,
+      "font": "500 10px/16px normal",
+      "color": "rgb(139, 141, 149)",
+      "background": "rgba(0, 0, 0, 0)",
+      "radius": "0px",
+      "pad": "0px",
+      "gap": "normal",
+      "text": "On device"
+    },
+    "related.sect": {
+      "x": 0,
+      "y": 3182.95,
+      "width": 390,
+      "height": 130,
+      "lines": 5,
+      "font": "400 16px/25.6px normal",
+      "color": "rgb(16, 17, 19)",
+      "background": "rgba(0, 0, 0, 0)",
+      "radius": "0px",
+      "pad": "0px 20px",
+      "gap": "normal",
+      "text": "Related toolsSavings GoalsSubscriptionsBillsLending Ledger"
+    },
+    "related.title": {
+      "x": 279.25,
+      "y": 3182.95,
+      "width": 90.75,
+      "height": 24,
+      "lines": 1,
+      "font": "700 15px/24px -0.42px",
+      "color": "rgb(16, 17, 19)",
+      "background": "rgba(0, 0, 0, 0)",
+      "radius": "0px",
+      "pad": "0px",
+      "gap": "normal",
+      "text": "Related tools"
+    },
+    "related": {
+      "x": 20,
+      "y": 3218.95,
+      "width": 350,
+      "height": 94,
+      "lines": 4,
+      "font": "400 16px/25.6px normal",
+      "color": "rgb(16, 17, 19)",
+      "background": "rgba(0, 0, 0, 0)",
+      "radius": "0px",
+      "pad": "0px 0px 2px",
+      "gap": "8px",
+      "text": "Savings GoalsSubscriptionsBillsLending Ledger"
+    },
+    "related.item1": {
+      "x": 292,
+      "y": 3218.95,
+      "width": 78,
+      "height": 92,
+      "lines": 4,
+      "font": "400 16px/25.6px normal",
+      "color": "rgb(16, 17, 19)",
+      "background": "rgb(255, 255, 255)",
+      "radius": "12px",
+      "pad": "12px 6px",
+      "gap": "7px",
+      "text": "Savings Goals"
+    },
+    "related.item2": {
+      "x": 206,
+      "y": 3218.95,
+      "width": 78,
+      "height": 92,
+      "lines": 4,
+      "font": "400 16px/25.6px normal",
+      "color": "rgb(16, 17, 19)",
+      "background": "rgb(255, 255, 255)",
+      "radius": "12px",
+      "pad": "12px 6px",
+      "gap": "7px",
+      "text": "Subscriptions"
+    },
+    "related.icon": {
+      "x": 314,
+      "y": 3231.95,
+      "width": 34,
+      "height": 34,
+      "lines": 1,
+      "font": "400 16px/25.6px normal",
+      "color": "rgb(86, 88, 95)",
+      "background": "rgb(241, 241, 238)",
+      "radius": "12px",
+      "pad": "0px",
+      "gap": "normal",
+      "text": null
+    },
+    "related.label": {
+      "x": 299,
+      "y": 3272.95,
+      "width": 64,
+      "height": 25,
+      "lines": 2,
+      "font": "600 10px/12.5px -0.15px",
+      "color": "rgb(16, 17, 19)",
+      "background": "rgba(0, 0, 0, 0)",
+      "radius": "0px",
+      "pad": "0px",
+      "gap": "normal",
+      "text": "Savings Goals"
+    },
+    "privacy": {
+      "x": 20,
+      "y": 3051.16,
+      "width": 350,
+      "height": 107.8,
+      "lines": 4,
+      "font": "400 16px/25.6px normal",
+      "color": "rgb(16, 17, 19)",
+      "background": "rgb(250, 250, 249)",
+      "radius": "12px",
+      "pad": "14px",
+      "gap": "11px",
+      "text": "Private to youThis information stays on your device, is never shown on Home and is never included in shared content."
+    },
+    "pring": {
+      "x": 41,
+      "y": 710.58,
+      "width": 66,
+      "height": 66,
+      "lines": 3,
+      "font": "400 16px/25.6px normal",
+      "color": "rgb(16, 153, 138)",
+      "background": "rgba(0, 0, 0, 0)",
+      "radius": "0px",
+      "pad": "0px",
+      "gap": "normal",
+      "text": "53%"
+    },
+    "pring.mid": {
+      "x": 58.77,
+      "y": 732.38,
+      "width": 30.47,
+      "height": 22.39,
+      "lines": 1,
+      "font": "800 14px/22.4px -0.56px",
+      "color": "rgb(16, 17, 19)",
+      "background": "rgba(0, 0, 0, 0)",
+      "radius": "0px",
+      "pad": "0px",
+      "gap": "normal",
+      "text": "53%"
+    },
+    "kard2": {
+      "x": 20,
+      "y": 968.25,
+      "width": 350,
+      "height": 177.59,
+      "lines": 7,
+      "font": "400 16px/25.6px normal",
+      "color": "rgb(16, 17, 19)",
+      "background": "rgb(255, 255, 255)",
+      "radius": "20px",
+      "pad": "16px",
+      "gap": "normal",
+      "text": "MTWTFSSAveraging Rs 6,060 a day"
+    },
+    "pbar": {
+      "x": 37,
+      "y": 2345.25,
+      "width": 316,
+      "height": 6,
+      "lines": 0,
+      "font": "400 16px/25.6px normal",
+      "color": "rgb(16, 17, 19)",
+      "background": "color(srgb 0.0627451 0.0666667 0.0745098 / 0.14)",
+      "radius": "999px",
+      "pad": "0px",
+      "gap": "normal",
+      "text": null
+    },
+    "bars": {
+      "x": 37,
+      "y": 985.25,
+      "width": 316,
+      "height": 116,
+      "lines": 5,
+      "font": "400 16px/25.6px normal",
+      "color": "rgb(16, 17, 19)",
+      "background": "rgba(0, 0, 0, 0)",
+      "radius": "0px",
+      "pad": "0px",
+      "gap": "6px",
+      "text": "MTWTFSS"
+    },
+    "bars.col1": {
+      "x": 313,
+      "y": 985.25,
+      "width": 40,
+      "height": 116,
+      "lines": 5,
+      "font": "400 16px/25.6px normal",
+      "color": "rgb(16, 17, 19)",
+      "background": "rgba(0, 0, 0, 0)",
+      "radius": "0px",
+      "pad": "0px",
+      "gap": "6px",
+      "text": "M"
+    },
+    "bars.bar1": {
+      "x": 319.2,
+      "y": 1074.66,
+      "width": 27.59,
+      "height": 3,
+      "lines": 0,
+      "font": "400 16px/25.6px normal",
+      "color": "rgb(16, 17, 19)",
+      "background": "rgb(231, 244, 241)",
+      "radius": "6px 6px 3px 3px",
+      "pad": "0px",
+      "gap": "normal",
+      "text": null
+    },
+    "bars.bar2": {
+      "x": 272,
+      "y": 1074.66,
+      "width": 30,
+      "height": 3,
+      "lines": 0,
+      "font": "400 16px/25.6px normal",
+      "color": "rgb(16, 17, 19)",
+      "background": "rgb(231, 244, 241)",
+      "radius": "6px 6px 3px 3px",
+      "pad": "0px",
+      "gap": "normal",
+      "text": null
+    },
+    "bars.bar3": {
+      "x": 228.61,
+      "y": 1074.66,
+      "width": 24.8,
+      "height": 3,
+      "lines": 0,
+      "font": "400 16px/25.6px normal",
+      "color": "rgb(16, 17, 19)",
+      "background": "rgb(231, 244, 241)",
+      "radius": "6px 6px 3px 3px",
+      "pad": "0px",
+      "gap": "normal",
+      "text": null
+    },
+    "bars.bar7": {
+      "x": 42.61,
+      "y": 1074.66,
+      "width": 28.8,
+      "height": 3,
+      "lines": 0,
+      "font": "400 16px/25.6px normal",
+      "color": "rgb(16, 17, 19)",
+      "background": "rgb(16, 153, 138)",
+      "radius": "6px 6px 3px 3px",
+      "pad": "0px",
+      "gap": "normal",
+      "text": null
+    },
+    "bars.label1": {
+      "x": 328.19,
+      "y": 1083.66,
+      "width": 9.63,
+      "height": 17.59,
+      "lines": 1,
+      "font": "600 11px/17.6px normal",
+      "color": "rgb(139, 141, 149)",
+      "background": "rgba(0, 0, 0, 0)",
+      "radius": "0px",
+      "pad": "0px",
+      "gap": "normal",
+      "text": "M"
+    },
+    "rows": {
+      "x": 20,
+      "y": 1553.19,
+      "width": 350,
+      "height": 688.88,
+      "lines": 27,
+      "font": "400 16px/25.6px normal",
+      "color": "rgb(16, 17, 19)",
+      "background": "rgb(255, 255, 255)",
+      "radius": "20px",
+      "pad": "0px",
+      "gap": "normal",
+      "text": "Metro Cash & CarryGroceriesToday · 11:20Card−Rs 17,500Fuel — ShellTransportToday · 08:05Card−Rs 10,800Electricity billBillsYesterdayAuto-debit−Rs 20,900SalaryOt"
+    },
+    "rrow1": {
+      "x": 21,
+      "y": 1554.19,
+      "width": 348,
+      "height": 85.98,
+      "lines": 3,
+      "font": "400 16px/25.6px normal",
+      "color": "rgb(16, 17, 19)",
+      "background": "rgba(0, 0, 0, 0)",
+      "radius": "0px",
+      "pad": "12px 16px",
+      "gap": "12px",
+      "text": "Metro Cash & CarryGroceriesToday · 11:20Card−Rs 17,500"
+    },
+    "rrow.icon": {
+      "x": 317,
+      "y": 1578.67,
+      "width": 36,
+      "height": 36,
+      "lines": 1,
+      "font": "400 16px/25.6px normal",
+      "color": "rgb(86, 88, 95)",
+      "background": "rgb(241, 241, 238)",
+      "radius": "12px",
+      "pad": "0px",
+      "gap": "normal",
+      "text": null
+    },
+    "rrow.title": {
+      "x": 179.44,
+      "y": 1566.19,
+      "width": 125.56,
+      "height": 22.39,
+      "lines": 1,
+      "font": "700 14px/22.4px -0.336px",
+      "color": "rgb(16, 17, 19)",
+      "background": "rgba(0, 0, 0, 0)",
+      "radius": "0px",
+      "pad": "0px",
+      "gap": "normal",
+      "text": "Metro Cash & Carry"
+    },
+    "rrow.sub": {
+      "x": 119.98,
+      "y": 1589.58,
+      "width": 185.02,
+      "height": 17.59,
+      "lines": 1,
+      "font": "500 11px/17.6px normal",
+      "color": "rgb(86, 88, 95)",
+      "background": "rgba(0, 0, 0, 0)",
+      "radius": "0px",
+      "pad": "0px",
+      "gap": "normal",
+      "text": "Groceries"
+    },
+    "crow1": {
+      "x": 21,
+      "y": 2567.81,
+      "width": 348,
+      "height": 64.39,
+      "lines": 3,
+      "font": "400 16px/25.6px normal",
+      "color": "rgb(16, 17, 19)",
+      "background": "rgba(0, 0, 0, 0)",
+      "radius": "0px",
+      "pad": "12px 16px",
+      "gap": "12px",
+      "text": "Internetmonthly, on the 3thRs 7,920"
+    },
+    "crow.icon": {
+      "x": 337,
+      "y": 2591.5,
+      "width": 16,
+      "height": 16,
+      "lines": 1,
+      "font": "400 16px/25.6px normal",
+      "color": "rgb(139, 141, 149)",
+      "background": "rgba(0, 0, 0, 0)",
+      "radius": "0px",
+      "pad": "0px",
+      "gap": "normal",
+      "text": null
+    },
+    "crow.label": {
+      "x": 96.41,
+      "y": 2579.81,
+      "width": 228.59,
+      "height": 39.39,
+      "lines": 2,
+      "font": "600 13px/20.8px -0.286px",
+      "color": "rgb(16, 17, 19)",
+      "background": "rgba(0, 0, 0, 0)",
+      "radius": "0px",
+      "pad": "0px",
+      "gap": "normal",
+      "text": "Internetmonthly, on the 3th"
+    },
+    "crow.value": {
+      "x": 37,
+      "y": 2589.91,
+      "width": 47.41,
+      "height": 19.19,
+      "lines": 1,
+      "font": "700 12px/19.2px -0.24px",
+      "color": "rgb(86, 88, 95)",
+      "background": "rgba(0, 0, 0, 0)",
+      "radius": "0px",
+      "pad": "0px",
+      "gap": "normal",
+      "text": "Rs 7,920"
+    },
+    "tsearch": {
+      "x": 20,
+      "y": 122.39,
+      "width": 350,
+      "height": 44,
+      "lines": 2,
+      "font": "400 16px/25.6px normal",
+      "color": "rgb(16, 17, 19)",
+      "background": "rgba(0, 0, 0, 0)",
+      "radius": "0px",
+      "pad": "0px",
+      "gap": "8px",
+      "text": null
+    },
+    "search": {
+      "x": 40,
+      "y": 122.39,
+      "width": 310,
+      "height": 44,
+      "lines": 2,
+      "font": "400 16px/25.6px normal",
+      "color": "rgb(139, 141, 149)",
+      "background": "rgb(255, 255, 255)",
+      "radius": "12px",
+      "pad": "0px 14px",
+      "gap": "9px",
+      "text": null
+    },
+    "search.icon": {
+      "x": 318,
+      "y": 135.89,
+      "width": 17,
+      "height": 17,
+      "lines": 1,
+      "font": "400 16px/25.6px normal",
+      "color": "rgb(139, 141, 149)",
+      "background": "rgba(0, 0, 0, 0)",
+      "radius": "0px",
+      "pad": "0px",
+      "gap": "normal",
+      "text": null
+    },
+    "search.input": {
+      "x": 55,
+      "y": 132.19,
+      "width": 254,
+      "height": 24.39,
+      "lines": 1,
+      "font": "500 14px/22.4px -0.28px",
+      "color": "rgb(16, 17, 19)",
+      "background": "rgba(0, 0, 0, 0)",
+      "radius": "0px",
+      "pad": "1px 2px",
+      "gap": "normal",
+      "text": null
+    },
+    "rrow2": {
+      "x": 21,
+      "y": 1640.17,
+      "width": 348,
+      "height": 85.98,
+      "lines": 3,
+      "font": "400 16px/25.6px normal",
+      "color": "rgb(16, 17, 19)",
+      "background": "rgba(0, 0, 0, 0)",
+      "radius": "0px",
+      "pad": "12px 16px",
+      "gap": "12px",
+      "text": "Fuel — ShellTransportToday · 08:05Card−Rs 10,800"
+    },
+    "rrow.meta": {
+      "x": 119.98,
+      "y": 1611.17,
+      "width": 185.02,
+      "height": 16,
+      "lines": 1,
+      "font": "500 10px/16px normal",
+      "color": "rgb(139, 141, 149)",
+      "background": "rgba(0, 0, 0, 0)",
+      "radius": "0px",
+      "pad": "0px",
+      "gap": "5px",
+      "text": "Today · 11:20Card"
+    },
+    "rrow.dot": {
+      "x": 237.8,
+      "y": 1617.92,
+      "width": 2.5,
+      "height": 2.5,
+      "lines": 0,
+      "font": "500 10px/16px normal",
+      "color": "rgb(139, 141, 149)",
+      "background": "rgb(139, 141, 149)",
+      "radius": "50%",
+      "pad": "0px",
+      "gap": "normal",
+      "text": null
+    },
+    "rrow.end": {
+      "x": 37,
+      "y": 1585.48,
+      "width": 70.98,
+      "height": 22.39,
+      "lines": 1,
+      "font": "400 16px/25.6px normal",
+      "color": "rgb(16, 17, 19)",
+      "background": "rgba(0, 0, 0, 0)",
+      "radius": "0px",
+      "pad": "0px",
+      "gap": "2px",
+      "text": "−Rs 17,500"
+    },
+    "rrow.value": {
+      "x": 37,
+      "y": 1585.48,
+      "width": 70.98,
+      "height": 22.39,
+      "lines": 1,
+      "font": "700 14px/22.4px -0.42px",
+      "color": "rgb(16, 17, 19)",
+      "background": "rgba(0, 0, 0, 0)",
+      "radius": "0px",
+      "pad": "0px",
+      "gap": "normal",
+      "text": "−Rs 17,500"
+    },
+    "chart.cap": {
+      "x": 37,
+      "y": 1111.25,
+      "width": 316,
+      "height": 17.59,
+      "lines": 1,
+      "font": "500 11px/17.6px normal",
+      "color": "rgb(139, 141, 149)",
+      "background": "rgba(0, 0, 0, 0)",
+      "radius": "0px",
+      "pad": "0px",
+      "gap": "8px",
+      "text": "Averaging Rs 6,060 a day"
+    },
+    "toolbar.textbtn": {
+      "x": 108,
+      "y": 46.09,
+      "width": 72.55,
+      "height": 44,
+      "lines": 2,
+      "font": "700 15px/20px normal",
+      "color": "rgb(8, 99, 87)",
+      "background": "rgba(0, 0, 0, 0)",
+      "radius": "8px",
+      "pad": "0px 10px",
+      "gap": "6px",
+      "text": "Add"
+    },
+    "recs": {
+      "x": 20,
+      "y": 230.39,
+      "width": 350,
+      "height": 370,
+      "lines": 14,
+      "font": "400 16px/25.6px normal",
+      "color": "rgb(16, 17, 19)",
+      "background": "rgba(0, 0, 0, 0)",
+      "radius": "0px",
+      "pad": "0px",
+      "gap": "10px",
+      "text": "GGroceriesToday · GroceriesRs 34TTaxiYesterday · TransportRs 9IInternet bill3 days ago · BillsRs 28CCoffee4 days ago · Eating outRs 7PPharmacy6 days ago · Healt"
+    },
+    "rrec1": {
+      "x": 20,
+      "y": 230.39,
+      "width": 350,
+      "height": 66,
+      "lines": 3,
+      "font": "400 16px/25.6px normal",
+      "color": "rgb(16, 17, 19)",
+      "background": "rgb(255, 255, 255)",
+      "radius": "16px",
+      "pad": "13px 14px",
+      "gap": "12px",
+      "text": "GGroceriesToday · GroceriesRs 34"
+    },
+    "rrec2": {
+      "x": 20,
+      "y": 306.39,
+      "width": 350,
+      "height": 66,
+      "lines": 3,
+      "font": "400 16px/25.6px normal",
+      "color": "rgb(16, 17, 19)",
+      "background": "rgb(255, 255, 255)",
+      "radius": "16px",
+      "pad": "13px 14px",
+      "gap": "12px",
+      "text": "TTaxiYesterday · TransportRs 9"
+    },
+    "rrec.disc": {
+      "x": 317,
+      "y": 244.39,
+      "width": 38,
+      "height": 38,
+      "lines": 2,
+      "font": "700 15px/20px -0.15px",
+      "color": "rgb(8, 99, 87)",
+      "background": "rgb(231, 244, 241)",
+      "radius": "50%",
+      "pad": "0px",
+      "gap": "normal",
+      "text": "G"
+    },
+    "rrec.title": {
+      "x": 236.41,
+      "y": 244.39,
+      "width": 68.59,
+      "height": 20,
+      "lines": 1,
+      "font": "700 15px/20px -0.39px",
+      "color": "rgb(16, 17, 19)",
+      "background": "rgba(0, 0, 0, 0)",
+      "radius": "0px",
+      "pad": "0px",
+      "gap": "normal",
+      "text": "Groceries"
+    },
+    "rrec.sub": {
+      "x": 106.05,
+      "y": 266.39,
+      "width": 198.95,
+      "height": 16,
+      "lines": 1,
+      "font": "500 11px/16px normal",
+      "color": "rgb(139, 141, 149)",
+      "background": "rgba(0, 0, 0, 0)",
+      "radius": "0px",
+      "pad": "0px",
+      "gap": "normal",
+      "text": "Today · Groceries"
+    },
+    "rrec.value": {
+      "x": 58,
+      "y": 253.39,
+      "width": 36.05,
+      "height": 20,
+      "lines": 1,
+      "font": "700 15px/20px -0.45px",
+      "color": "rgb(86, 88, 95)",
+      "background": "rgba(0, 0, 0, 0)",
+      "radius": "0px",
+      "pad": "0px",
+      "gap": "normal",
+      "text": "Rs 34"
+    },
+    "rrec.chev": {
+      "x": 35,
+      "y": 255.89,
+      "width": 15,
+      "height": 15,
+      "lines": 1,
+      "font": "400 16px/25.6px normal",
+      "color": "rgb(139, 141, 149)",
+      "background": "rgba(0, 0, 0, 0)",
+      "radius": "0px",
+      "pad": "0px",
+      "gap": "normal",
+      "text": null
+    },
+    "cchips": {
+      "x": 20,
+      "y": 178.39,
+      "width": 350,
+      "height": 40,
+      "lines": 2,
+      "font": "400 16px/25.6px normal",
+      "color": "rgb(16, 17, 19)",
+      "background": "rgba(0, 0, 0, 0)",
+      "radius": "0px",
+      "pad": "0px 0px 2px",
+      "gap": "8px",
+      "text": "All5This month5Groceries1Transport1Bills1"
+    },
+    "cchip1": {
+      "x": 308.56,
+      "y": 178.39,
+      "width": 61.44,
+      "height": 38,
+      "lines": 2,
+      "font": "700 12px/16px normal",
+      "color": "rgb(255, 255, 255)",
+      "background": "rgb(16, 153, 138)",
+      "radius": "999px",
+      "pad": "0px 16px",
+      "gap": "6px",
+      "text": "All5"
+    },
+    "cchip2": {
+      "x": 190.66,
+      "y": 178.39,
+      "width": 109.91,
+      "height": 38,
+      "lines": 2,
+      "font": "700 12px/16px normal",
+      "color": "rgb(86, 88, 95)",
+      "background": "rgb(255, 255, 255)",
+      "radius": "999px",
+      "pad": "0px 16px",
+      "gap": "6px",
+      "text": "This month5"
+    },
+    "cchip.n": {
+      "x": 325.56,
+      "y": 189.39,
+      "width": 6.84,
+      "height": 16,
+      "lines": 1,
+      "font": "700 12px/16px -0.36px",
+      "color": "rgb(255, 255, 255)",
+      "background": "rgba(0, 0, 0, 0)",
+      "radius": "0px",
+      "pad": "0px",
+      "gap": "normal",
+      "text": "5"
+    },
+    "recsearch": {
+      "x": 20,
+      "y": 122.39,
+      "width": 350,
+      "height": 44,
+      "lines": 2,
+      "font": "400 16px/25.6px normal",
+      "color": "rgb(16, 17, 19)",
+      "background": "rgba(0, 0, 0, 0)",
+      "radius": "0px",
+      "pad": "0px",
+      "gap": "8px",
+      "text": null
+    },
+    "dconfirm": {
+      "x": 1,
+      "y": 860.84,
+      "width": 388,
+      "height": 250,
+      "lines": 10,
+      "font": "400 16px/25.6px normal",
+      "color": "rgb(16, 17, 19)",
+      "background": "rgba(0, 0, 0, 0)",
+      "radius": "0px",
+      "pad": "22px 20px 6px",
+      "gap": "10px",
+      "text": "!"
+    },
+    "dconfirm.mark": {
+      "x": 160,
+      "y": 882.84,
+      "width": 70,
+      "height": 70,
+      "lines": 1,
+      "font": "800 30px/48px normal",
+      "color": "rgb(163, 50, 63)",
+      "background": "color(srgb 0.870588 0.419608 0.478431 / 0.12)",
+      "radius": "50%",
+      "pad": "0px",
+      "gap": "normal",
+      "text": "!"
+    },
+    "dconfirm.title": {
+      "x": 195,
+      "y": 968.84,
+      "width": 0,
+      "height": 0,
+      "lines": 0,
+      "font": "700 20px/26px normal",
+      "color": "rgb(16, 17, 19)",
+      "background": "rgba(0, 0, 0, 0)",
+      "radius": "0px",
+      "pad": "0px",
+      "gap": "normal",
+      "text": null
+    },
+    "dconfirm.text": {
+      "x": 195,
+      "y": 978.84,
+      "width": 0,
+      "height": 0,
+      "lines": 0,
+      "font": "400 14px/22px normal",
+      "color": "rgb(86, 88, 95)",
+      "background": "rgba(0, 0, 0, 0)",
+      "radius": "0px",
+      "pad": "0px",
+      "gap": "normal",
+      "text": null
+    },
+    "dconfirm.go": {
+      "x": 21,
+      "y": 1002.84,
+      "width": 348,
+      "height": 46,
+      "lines": 2,
+      "font": "700 14px/22.4px -0.308px",
+      "color": "rgb(255, 255, 255)",
+      "background": "rgb(163, 50, 63)",
+      "radius": "12px",
+      "pad": "0px 20px",
+      "gap": "7px",
+      "text": null
+    },
+    "dconfirm.cancel": {
+      "x": 21,
+      "y": 1058.84,
+      "width": 348,
+      "height": 46,
+      "lines": 2,
+      "font": "700 14px/22.4px -0.308px",
+      "color": "rgb(16, 17, 19)",
+      "background": "rgb(241, 241, 238)",
+      "radius": "12px",
+      "pad": "0px 20px",
+      "gap": "7px",
+      "text": null
+    },
+    "pbar.fill": {
+      "x": 185.77,
+      "y": 881.25,
+      "width": 163.23,
+      "height": 6,
+      "lines": 0,
+      "font": "400 16px/25.6px normal",
+      "color": "rgb(16, 17, 19)",
+      "background": "rgb(16, 153, 138)",
+      "radius": "999px",
+      "pad": "0px",
+      "gap": "normal",
+      "text": null
+    },
+    "filterbar.tool": {
+      "x": 20,
+      "y": 1404.41,
+      "width": 350,
+      "height": 37.19,
+      "lines": 1,
+      "font": "400 16px/25.6px normal",
+      "color": "rgb(16, 17, 19)",
+      "background": "rgba(0, 0, 0, 0)",
+      "radius": "0px",
+      "pad": "0px",
+      "gap": "8px",
+      "text": "AllGroceriesTransportBillsEating outHealthOther"
+    },
+    "fchip1": {
+      "x": 330.34,
+      "y": 1404.41,
+      "width": 39.66,
+      "height": 35.19,
+      "lines": 2,
+      "font": "600 12px/19.2px -0.18px",
+      "color": "rgb(255, 255, 255)",
+      "background": "rgb(16, 153, 138)",
+      "radius": "999px",
+      "pad": "7px 12px",
+      "gap": "5px",
+      "text": "All"
+    },
+    "fchip2": {
+      "x": 223.61,
+      "y": 1404.41,
+      "width": 99.73,
+      "height": 35.19,
+      "lines": 2,
+      "font": "600 12px/19.2px -0.18px",
+      "color": "rgb(86, 88, 95)",
+      "background": "rgb(255, 255, 255)",
+      "radius": "999px",
+      "pad": "7px 12px",
+      "gap": "5px",
+      "text": "Groceries"
+    },
+    "sortbar": {
+      "x": 20,
+      "y": 1465.59,
+      "width": 350,
+      "height": 27.59,
+      "lines": 2,
+      "font": "400 11px/17.6px normal",
+      "color": "rgb(16, 17, 19)",
+      "background": "rgba(0, 0, 0, 0)",
+      "radius": "0px",
+      "pad": "0px",
+      "gap": "10px",
+      "text": "SortDateAmountCategory"
+    },
+    "sortbar.label": {
+      "x": 328.88,
+      "y": 1470.59,
+      "width": 41.13,
+      "height": 17.59,
+      "lines": 1,
+      "font": "700 11px/17.6px normal",
+      "color": "rgb(139, 141, 149)",
+      "background": "rgba(0, 0, 0, 0)",
+      "radius": "0px",
+      "pad": "0px",
+      "gap": "5px",
+      "text": "Sort"
+    },
+    "sortopt1": {
+      "x": 259.44,
+      "y": 1465.59,
+      "width": 59.44,
+      "height": 27.59,
+      "lines": 2,
+      "font": "600 11px/17.6px normal",
+      "color": "rgb(7, 86, 76)",
+      "background": "rgb(231, 244, 241)",
+      "radius": "999px",
+      "pad": "5px 10px",
+      "gap": "3px",
+      "text": "Date"
+    },
+    "sortopt2": {
+      "x": 191.17,
+      "y": 1465.59,
+      "width": 62.27,
+      "height": 27.59,
+      "lines": 2,
+      "font": "600 11px/17.6px normal",
+      "color": "rgb(139, 141, 149)",
+      "background": "rgb(241, 241, 238)",
+      "radius": "999px",
+      "pad": "5px 10px",
+      "gap": "3px",
+      "text": "Amount"
+    },
+    "meter1": {
+      "x": 37,
+      "y": 2319.06,
+      "width": 316,
+      "height": 32.19,
+      "lines": 1,
+      "font": "400 16px/25.6px normal",
+      "color": "rgb(16, 17, 19)",
+      "background": "rgba(0, 0, 0, 0)",
+      "radius": "0px",
+      "pad": "0px",
+      "gap": "normal",
+      "text": "GroceriesRs 11,900 / Rs 16,000"
+    },
+    "meter2": {
+      "x": 37,
+      "y": 2365.25,
+      "width": 316,
+      "height": 32.19,
+      "lines": 1,
+      "font": "400 16px/25.6px normal",
+      "color": "rgb(16, 17, 19)",
+      "background": "rgba(0, 0, 0, 0)",
+      "radius": "0px",
+      "pad": "0px",
+      "gap": "normal",
+      "text": "TransportRs 8,060 / Rs 10,900"
+    },
+    "meter.label": {
+      "x": 298.02,
+      "y": 2319.06,
+      "width": 54.98,
+      "height": 19.19,
+      "lines": 1,
+      "font": "600 12px/19.2px -0.264px",
+      "color": "rgb(16, 17, 19)",
+      "background": "rgba(0, 0, 0, 0)",
+      "radius": "0px",
+      "pad": "0px",
+      "gap": "normal",
+      "text": "Groceries"
+    },
+    "meter.value": {
+      "x": 37,
+      "y": 2319.06,
+      "width": 123.39,
+      "height": 19.19,
+      "lines": 1,
+      "font": "700 12px/19.2px normal",
+      "color": "rgb(86, 88, 95)",
+      "background": "rgba(0, 0, 0, 0)",
+      "radius": "0px",
+      "pad": "0px",
+      "gap": "normal",
+      "text": "Rs 11,900 / Rs 16,000"
+    },
+    "meter.bar": {
+      "x": 37,
+      "y": 2345.25,
+      "width": 316,
+      "height": 6,
+      "lines": 0,
+      "font": "400 16px/25.6px normal",
+      "color": "rgb(16, 17, 19)",
+      "background": "color(srgb 0.0627451 0.0666667 0.0745098 / 0.14)",
+      "radius": "999px",
+      "pad": "0px",
+      "gap": "normal",
+      "text": null
+    },
+    "bars.label": {
+      "x": 328.19,
+      "y": 1083.66,
+      "width": 9.63,
+      "height": 17.59,
+      "lines": 1,
+      "font": "600 11px/17.6px normal",
+      "color": "rgb(139, 141, 149)",
+      "background": "rgba(0, 0, 0, 0)",
+      "radius": "0px",
+      "pad": "0px",
+      "gap": "normal",
+      "text": "M"
+    }
+  }
+}

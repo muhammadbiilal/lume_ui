@@ -38,11 +38,18 @@ class LumeToolSection extends StatelessWidget {
     this.onLinkTap,
     this.flush = false,
     this.tight = false,
+    this.spaceAbove,
   });
 
   final Widget child;
   final String? title;
   final String? subtitle;
+
+  /// The space above, when a neighbour's 44-point targets overhang the gap —
+  /// a filter rail, a sort bar — and the points they reach past their drawing
+  /// come out of it rather than growing the page. `null` is [gap] or
+  /// [tightGap].
+  final double? spaceAbove;
 
   /// `.sect__link` — "See all", with its chevron.
   final String? link;
@@ -64,7 +71,7 @@ class LumeToolSection extends StatelessWidget {
       context.measureClass,
     );
     return Padding(
-      padding: EdgeInsets.only(top: tight ? tightGap : gap),
+      padding: EdgeInsets.only(top: spaceAbove ?? (tight ? tightGap : gap)),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         mainAxisSize: MainAxisSize.min,

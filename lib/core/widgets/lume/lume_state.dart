@@ -220,6 +220,15 @@ class _DashedOutline extends CustomPainter {
 enum LumeCollectionStateKind { empty, noResults, error, pane }
 
 /// `.cstate` — a record collection's state.
+///
+/// Measured (`crud.css`, `tool_expenses_*`): a column of centred parts 10
+/// apart inside `44 24` of padding — `32 20` when quiet. A 96-point disc in the
+/// accent tint holds a 34-point glyph, 8 above the title; the title is the
+/// 19-point section face, or the 15-point card title when quiet; the text is
+/// body in `text-2`, no wider than 34 characters; each call to action is at
+/// least 220 wide, 12 further down; a footnote is `metasm`, 4 further down.
+/// The pane state is a quiet state in a dashed `--border-2` box, radius 16,
+/// at least 320 tall, its content centred.
 class LumeCollectionState extends StatelessWidget {
   const LumeCollectionState({
     super.key,
@@ -246,75 +255,149 @@ class LumeCollectionState extends StatelessWidget {
 
   final String? footnote;
 
+  static const double artSize = 96;
+  static const double paneMinHeight = 320;
+
   @override
   Widget build(BuildContext context) {
     final LumeColors lume = context.lume;
     final bool isError = kind == LumeCollectionStateKind.error;
-    final bool quiet =
-        kind == LumeCollectionStateKind.noResults ||
-        kind == LumeCollectionStateKind.pane;
+    final bool pane = kind == LumeCollectionStateKind.pane;
+    final bool quiet = kind == LumeCollectionStateKind.noResults || pane;
+    final TextStyle textStyle = LumeType.fit(
+      context,
+      context.lumeType.body,
+    ).copyWith(color: lume.text2);
 
-    return Semantics(
-      liveRegion: isError,
-      container: true,
-      child: Padding(
-        padding: const EdgeInsets.symmetric(
-          vertical: LumeSpace.x8,
-          horizontal: LumeSpace.x5,
-        ),
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: <Widget>[
-            if (!quiet || icon != null) ...<Widget>[
-              LumeIcon(
-                icon ?? (isError ? LumeIcons.alert : LumeIcons.sparkles),
-                size: 28,
-                color: isError ? lume.roseInk : lume.text3,
+    // `max-width: 34ch` — thirty-four zeros of the text's own face.
+    final TextPainter zero = TextPainter(
+      text: TextSpan(text: '0' * 34, style: textStyle),
+      textDirection: Directionality.of(context),
+      textScaler: MediaQuery.textScalerOf(context),
+      maxLines: 1,
+    )..layout();
+    final double measure = zero.width;
+    zero.dispose();
+
+    Widget cta(Widget w) => ConstrainedBox(
+      constraints: const BoxConstraints(minWidth: 220),
+      child: w,
+    );
+
+    final Widget body = Padding(
+      padding: quiet
+          ? const EdgeInsets.symmetric(vertical: 32, horizontal: 20)
+          : const EdgeInsets.symmetric(vertical: 44, horizontal: 24),
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: <Widget>[
+          if (!quiet || icon != null) ...<Widget>[
+            ExcludeSemantics(
+              child: Container(
+                width: artSize,
+                height: artSize,
+                alignment: Alignment.center,
+                decoration: BoxDecoration(
+                  color: isError
+                      ? lume.rose.withValues(alpha: 0.12)
+                      : lume.tintAccent,
+                  shape: BoxShape.circle,
+                ),
+                child: LumeIcon(
+                  icon ?? (isError ? LumeIcons.alert : LumeIcons.sparkles),
+                  size: 34,
+                  color: isError ? lume.roseInk : lume.accent,
+                ),
               ),
-              const SizedBox(height: LumeSpace.x3),
-            ],
-            Text(
-              title,
-              textAlign: TextAlign.center,
-              // Measured: 19 / 700.
-              style: LumeType.fit(
-                context,
-                context.lumeType.section,
-              ).copyWith(color: lume.text, fontSize: 19),
             ),
-            const SizedBox(height: LumeSpace.x2),
-            Text(
-              text,
-              textAlign: TextAlign.center,
-              style: LumeType.fit(
-                context,
-                context.lumeType.body,
-              ).copyWith(color: lume.text2),
-            ),
-            if (primaryAction != null) ...<Widget>[
-              const SizedBox(height: LumeSpace.x5),
-              primaryAction!,
-            ],
-            if (secondaryAction != null) ...<Widget>[
-              const SizedBox(height: LumeSpace.x2),
-              secondaryAction!,
-            ],
-            if (footnote != null) ...<Widget>[
-              const SizedBox(height: LumeSpace.x3),
-              Text(
-                footnote!,
-                textAlign: TextAlign.center,
-                style: LumeType.fit(
-                  context,
-                  context.lumeType.metaSmall,
-                ).copyWith(color: lume.text3),
-              ),
-            ],
+            const SizedBox(height: 8 + 10),
           ],
+          Text(
+            title,
+            textAlign: TextAlign.center,
+            style: quiet
+                ? LumeType.fit(
+                    context,
+                    context.lumeType.cardTitle,
+                  ).copyWith(color: lume.text)
+                : LumeType.fit(
+                    context,
+                    context.lumeType.section,
+                  ).copyWith(color: lume.text, fontSize: 19),
+          ),
+          const SizedBox(height: 10),
+          ConstrainedBox(
+            constraints: BoxConstraints(maxWidth: measure),
+            child: Text(text, textAlign: TextAlign.center, style: textStyle),
+          ),
+          if (primaryAction != null) ...<Widget>[
+            const SizedBox(height: 10 + 12),
+            cta(primaryAction!),
+          ],
+          if (secondaryAction != null) ...<Widget>[
+            const SizedBox(height: 10 + 12),
+            cta(secondaryAction!),
+          ],
+          if (footnote != null) ...<Widget>[
+            const SizedBox(height: 10 + 4),
+            Text(
+              footnote!,
+              textAlign: TextAlign.center,
+              style: LumeType.fit(
+                context,
+                context.lumeType.metaSmall,
+              ).copyWith(color: lume.text3),
+            ),
+          ],
+        ],
+      ),
+    );
+
+    if (!pane) {
+      return Semantics(liveRegion: isError, container: true, child: body);
+    }
+    return Semantics(
+      container: true,
+      child: CustomPaint(
+        foregroundPainter: _PaneOutline(lume.border2),
+        child: ConstrainedBox(
+          constraints: const BoxConstraints(
+            minHeight: paneMinHeight,
+            minWidth: double.infinity,
+          ),
+          child: Center(child: body),
         ),
       ),
     );
   }
+}
+
+/// `border: 1px dashed var(--border-2)` at radius 16.
+class _PaneOutline extends CustomPainter {
+  const _PaneOutline(this.color);
+
+  final Color color;
+
+  @override
+  void paint(Canvas canvas, Size size) {
+    final Paint paint = Paint()
+      ..color = color
+      ..style = PaintingStyle.stroke
+      ..strokeWidth = 1;
+    final RRect outline = RRect.fromRectAndRadius(
+      (Offset.zero & size).deflate(0.5),
+      const Radius.circular(LumeRadius.md),
+    );
+    for (final PathMetric metric
+        in (Path()..addRRect(outline)).computeMetrics()) {
+      for (double d = 0; d < metric.length; d += 6) {
+        canvas.drawPath(metric.extractPath(d, d + 3), paint);
+      }
+    }
+  }
+
+  @override
+  bool shouldRepaint(_PaneOutline old) => old.color != color;
 }
 
 /// What a notice is about.

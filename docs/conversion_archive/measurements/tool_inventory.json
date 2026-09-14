@@ -78,7 +78,8 @@
    "news",
    "emergency",
    "recipes",
-   "learning"
+   "learning",
+   "expenses"
   ]
  },
  "archetypes": {
@@ -3307,7 +3308,7 @@
    "approvedComposition": null,
    "recordFamily": true,
    "module": "assets/js/tools/personal/expenses.tool.js",
-   "flutter": "placeholder"
+   "flutter": "built"
   },
   {
    "id": "goals",

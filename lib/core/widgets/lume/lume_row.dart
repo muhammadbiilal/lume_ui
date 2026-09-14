@@ -106,6 +106,7 @@ class LumeRichRow extends StatelessWidget {
     this.chevron = false,
     this.selected = false,
     this.metaLineHeight,
+    this.valueColor,
   });
 
   final String title;
@@ -118,6 +119,9 @@ class LumeRichRow extends StatelessWidget {
   /// The meta line's height, where a glyph drawn from a fallback face sets it
   /// taller than the font's own 12 — an arrow's 14; null is the font's own.
   final double? metaLineHeight;
+
+  /// `.rrow.is-income .rrow__value { color: var(--up) }` — `null` is `text`.
+  final Color? valueColor;
 
   /// Dot-separated metadata under the subtitle.
   final List<String>? meta;
@@ -248,7 +252,7 @@ class LumeRichRow extends StatelessWidget {
                           ).copyWith(fontWeight: FontWeight.w700),
                           -0.03,
                         ),
-                      ).copyWith(color: lume.text),
+                      ).copyWith(color: valueColor ?? lume.text),
                     ),
                   // `.rrow__valuesub` — 10 / 600 on the font's own 12.
                   if (valueSub != null)
@@ -577,6 +581,8 @@ class LumeRecordRow extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisSize: MainAxisSize.min,
+              // `.rrec__body { gap: 2px }`.
+              spacing: 2,
               children: <Widget>[
                 Row(
                   children: <Widget>[
@@ -620,7 +626,7 @@ class LumeRecordRow extends StatelessWidget {
             ),
           ),
           if (value != null || queuedLabel != null) ...<Widget>[
-            const SizedBox(width: LumeSpace.x2),
+            const SizedBox(width: 12),
             Column(
               crossAxisAlignment: CrossAxisAlignment.end,
               mainAxisSize: MainAxisSize.min,

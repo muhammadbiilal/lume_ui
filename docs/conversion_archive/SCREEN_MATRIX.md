@@ -246,7 +246,7 @@ run on the shared CRUD engine.
 | `bmi` | BMI Calculator | calculator | medium | — | — | — | — | not started |
 | `cycle` | Cycle Tracker | planner | high | — | — | — | — | not started |
 | `pregnancy` | Pregnancy | dashboard | high | — | — | — | — | not started |
-| `expenses` | Expenses | dashboard | veryhigh | — | **yes** | Y | — | not started |
+| `expenses` | Expenses | dashboard | veryhigh | — | **yes** | Y | — | **built (F6A)** — reference tool for the finance dashboard and the first record family; records with search, chips, detail, add, edit, delete with Undo and a discard guard, two panes at expanded; range, spend against budget, week, categories, filtered and sorted transactions, budgets, recurring, insights, export (C74) |
 | `goals` | Savings Goals | dashboard | high | — | — | — | — | not started |
 | `subs` | Subscriptions | manager | high | — | — | — | — | not started |
 | `meds` | Medication | manager | high | — | **yes** | — | — | not started |

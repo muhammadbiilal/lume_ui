@@ -457,8 +457,11 @@ class LumeMetrics extends StatelessWidget {
 
 /// `.chero` — the gradient hero a record detail leads with.
 ///
-/// Measured: 22 px padding, 20 px radius, gradient ground, white ink,
-/// 32 / 800 / −0.035em tabular value.
+/// Measured (`tool_expenses_default_pk_detail_*`): 22 of padding, radius 20,
+/// on the colourway's gradient, 158 tall with every part — the kicker
+/// 12 / 700 / .09em in capitals on 16 at .82, 14 above the value; the value
+/// 32 / 800 / −.035em tabular on a line of 32; the title the 17-point section
+/// face on 22, 4 below; the caption 12 / 600 on 16 at .78, 10 below.
 class LumeRecordHero extends StatelessWidget {
   const LumeRecordHero({
     super.key,
@@ -499,13 +502,14 @@ class LumeRecordHero extends StatelessWidget {
               opacity: 0.82,
               child: Text(
                 LumeType.overline(context, kicker!),
+                semanticsLabel: kicker,
                 style: LumeType.tracked(
                   LumeType.fit(context, context.lumeType.label),
                   0.09,
-                ).copyWith(color: g.on),
+                ).copyWith(color: g.on, fontWeight: FontWeight.w700),
               ),
             ),
-            const SizedBox(height: LumeSpace.x2),
+            const SizedBox(height: 14),
           ],
           LumeNumerals(
             value,
@@ -514,7 +518,7 @@ class LumeRecordHero extends StatelessWidget {
                 LumeType.fit(
                   context,
                   context.lumeType.display,
-                ).copyWith(fontSize: valueSize),
+                ).copyWith(fontSize: valueSize, height: 1),
                 -0.035,
               ),
             ).copyWith(color: g.on),
@@ -522,7 +526,7 @@ class LumeRecordHero extends StatelessWidget {
             overflow: TextOverflow.ellipsis,
           ),
           if (title != null) ...<Widget>[
-            const SizedBox(height: LumeSpace.x1),
+            const SizedBox(height: 4),
             Text(
               title!,
               style: LumeType.fit(
@@ -539,10 +543,11 @@ class LumeRecordHero extends StatelessWidget {
               opacity: 0.78,
               child: Text(
                 caption!,
-                style: LumeType.fit(
-                  context,
-                  context.lumeType.meta,
-                ).copyWith(color: g.on),
+                style: LumeType.fit(context, context.lumeType.meta).copyWith(
+                  color: g.on,
+                  fontWeight: FontWeight.w600,
+                  height: 16 / 12,
+                ),
               ),
             ),
           ],

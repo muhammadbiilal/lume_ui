@@ -1626,9 +1626,17 @@
   "@commonAll": {
     "description": "Reference key common.all"
   },
+  "commonAmount": "Amount",
+  "@commonAmount": {
+    "description": "Reference key common.amount — a sort option and an export column"
+  },
   "commonChange": "Change",
   "@commonChange": {
     "description": "Reference key common.change — a column head"
+  },
+  "commonDate": "Date",
+  "@commonDate": {
+    "description": "Reference key common.date — a sort option and an export column"
   },
   "commonDays": "days",
   "@commonDays": {
@@ -2048,6 +2056,196 @@
   "emergencyYourInfo": "Your information",
   "@emergencyYourInfo": {
     "description": "Reference key emergency.yourInfo"
+  },
+  "expensesAdd": "Add expense",
+  "@expensesAdd": {
+    "description": "Reference key expenses.add"
+  },
+  "expensesBalance": "Balance",
+  "@expensesBalance": {
+    "description": "Reference key expenses.balance"
+  },
+  "expensesBudgetUse": "Budget used",
+  "@expensesBudgetUse": {
+    "description": "Reference key expenses.budgetUse"
+  },
+  "expensesBudgets": "Budgets",
+  "@expensesBudgets": {
+    "description": "Reference key expenses.budgets"
+  },
+  "expensesCatBills": "Bills",
+  "@expensesCatBills": {
+    "description": "EXPENSE_CATEGORIES bills"
+  },
+  "expensesCatEating": "Eating out",
+  "@expensesCatEating": {
+    "description": "EXPENSE_CATEGORIES eating"
+  },
+  "expensesCatGroceries": "Groceries",
+  "@expensesCatGroceries": {
+    "description": "tool-data.js EXPENSE_CATEGORIES groceries — written in English in the reference"
+  },
+  "expensesCatHealth": "Health",
+  "@expensesCatHealth": {
+    "description": "EXPENSE_CATEGORIES health"
+  },
+  "expensesCatOther": "Other",
+  "@expensesCatOther": {
+    "description": "EXPENSE_CATEGORIES other"
+  },
+  "expensesCatTransport": "Transport",
+  "@expensesCatTransport": {
+    "description": "EXPENSE_CATEGORIES transport"
+  },
+  "expensesCategories": "By category",
+  "@expensesCategories": {
+    "description": "Reference key expenses.categories"
+  },
+  "expensesCategory": "Category",
+  "@expensesCategory": {
+    "description": "Reference key expenses.category"
+  },
+  "expensesDailyAvg": "Daily average",
+  "@expensesDailyAvg": {
+    "description": "Reference key expenses.dailyAvg"
+  },
+  "expensesIncome": "Income",
+  "@expensesIncome": {
+    "description": "Reference key expenses.income"
+  },
+  "expensesInsight1Text": "Compared with your three-month average.",
+  "@expensesInsight1Text": {
+    "description": "Reference key expenses.insight1.text"
+  },
+  "expensesInsight1Title": "Groceries are up 12%",
+  "@expensesInsight1Title": {
+    "description": "Reference key expenses.insight1.title"
+  },
+  "expensesInsight2Text": "At this pace you finish about 8% under budget.",
+  "@expensesInsight2Text": {
+    "description": "Reference key expenses.insight2.text"
+  },
+  "expensesInsight2Title": "On track for the month",
+  "@expensesInsight2Title": {
+    "description": "Reference key expenses.insight2.title"
+  },
+  "expensesInsights": "Insights",
+  "@expensesInsights": {
+    "description": "Reference key expenses.insights"
+  },
+  "expensesMethodAutoDebit": "Auto-debit",
+  "@expensesMethodAutoDebit": {
+    "description": "TRANSACTIONS method \"Auto-debit\""
+  },
+  "expensesMonthlyOn": "monthly, on the {day}th",
+  "@expensesMonthlyOn": {
+    "description": "Reference key expenses.monthlyOn — the reference writes \"th\" for every day",
+    "placeholders": {
+      "day": {
+        "type": "int"
+      }
+    }
+  },
+  "expensesNoMatch": "No transactions match",
+  "@expensesNoMatch": {
+    "description": "Reference key expenses.noMatch"
+  },
+  "expensesNoMatchText": "Try another category or clear the search.",
+  "@expensesNoMatchText": {
+    "description": "Reference key expenses.noMatchText"
+  },
+  "expensesOfBudget": "{pct} of your {budget} budget",
+  "@expensesOfBudget": {
+    "description": "Reference key expenses.ofBudget — both arrive formatted",
+    "placeholders": {
+      "pct": {
+        "type": "String"
+      },
+      "budget": {
+        "type": "String"
+      }
+    }
+  },
+  "expensesRange": "Range",
+  "@expensesRange": {
+    "description": "Reference key expenses.range — the segmented control's name"
+  },
+  "expensesRec1": "Internet",
+  "@expensesRec1": {
+    "description": "Reference key expenses.rec1"
+  },
+  "expensesRec2": "Electricity",
+  "@expensesRec2": {
+    "description": "Reference key expenses.rec2"
+  },
+  "expensesRecurring": "Recurring",
+  "@expensesRecurring": {
+    "description": "Reference key expenses.recurring"
+  },
+  "expensesSpent": "Spent this month",
+  "@expensesSpent": {
+    "description": "Reference key expenses.spent"
+  },
+  "expensesTransactions": "Transactions",
+  "@expensesTransactions": {
+    "description": "Reference key expenses.transactions"
+  },
+  "expensesTrend": "This week",
+  "@expensesTrend": {
+    "description": "Reference key expenses.trend"
+  },
+  "expensesTrendCap": "Averaging {avg} a day",
+  "@expensesTrendCap": {
+    "description": "Reference key expenses.trendCap",
+    "placeholders": {
+      "avg": {
+        "type": "String"
+      }
+    }
+  },
+  "expensesTxAirport": "Ride to airport",
+  "@expensesTxAirport": {
+    "description": "TRANSACTIONS"
+  },
+  "expensesTxCoffee": "Coffee — Chaaye Khana",
+  "@expensesTxCoffee": {
+    "description": "TRANSACTIONS — coffee, and the café's name"
+  },
+  "expensesTxElectricity": "Electricity bill",
+  "@expensesTxElectricity": {
+    "description": "TRANSACTIONS"
+  },
+  "expensesTxFuel": "Fuel — Shell",
+  "@expensesTxFuel": {
+    "description": "TRANSACTIONS — fuel, and the station's name"
+  },
+  "expensesTxInternet": "Internet",
+  "@expensesTxInternet": {
+    "description": "TRANSACTIONS"
+  },
+  "expensesTxMetro": "Metro Cash & Carry",
+  "@expensesTxMetro": {
+    "description": "tool-data.js TRANSACTIONS — a shop's name, kept as written"
+  },
+  "expensesTxPharmacy": "Pharmacy",
+  "@expensesTxPharmacy": {
+    "description": "TRANSACTIONS"
+  },
+  "expensesTxSalary": "Salary",
+  "@expensesTxSalary": {
+    "description": "TRANSACTIONS"
+  },
+  "expensesWhenTime": "{day} · {time}",
+  "@expensesWhenTime": {
+    "description": "TRANSACTIONS when — \"Today · 11:20\": a day and a clock time, both formatted",
+    "placeholders": {
+      "day": {
+        "type": "String"
+      },
+      "time": {
+        "type": "String"
+      }
+    }
   },
   "exploreAround": "Around you",
   "@exploreAround": {
@@ -5235,6 +5433,62 @@
   "@ratesWorth": {
     "description": "Reference key rates.worth"
   },
+  "recAdd": "Add {noun}",
+  "@recAdd": {
+    "description": "Reference key rec.add",
+    "placeholders": {
+      "noun": {
+        "type": "String"
+      }
+    }
+  },
+  "recAddFirst": "Add first {noun}",
+  "@recAddFirst": {
+    "description": "Reference key rec.addFirst",
+    "placeholders": {
+      "noun": {
+        "type": "String"
+      }
+    }
+  },
+  "recAdded": "{noun} added",
+  "@recAdded": {
+    "description": "Reference key rec.added",
+    "placeholders": {
+      "noun": {
+        "type": "String"
+      }
+    }
+  },
+  "recAttach": "Add photo or document",
+  "@recAttach": {
+    "description": "Reference key rec.attach"
+  },
+  "recAttachSoon": "Attachments are coming soon",
+  "@recAttachSoon": {
+    "description": "Reference key rec.attachSoon"
+  },
+  "recAttached": "Attached",
+  "@recAttached": {
+    "description": "Reference key rec.attached"
+  },
+  "recBackToList": "Back to {noun}",
+  "@recBackToList": {
+    "description": "Reference key rec.backToList",
+    "placeholders": {
+      "noun": {
+        "type": "String"
+      }
+    }
+  },
+  "recCheckFields": "Check the highlighted fields",
+  "@recCheckFields": {
+    "description": "Reference key rec.checkFields"
+  },
+  "recConfirmNote": "Changes are saved only after confirmation",
+  "@recConfirmNote": {
+    "description": "Reference key rec.confirmNote"
+  },
   "recConflict": "This record changed elsewhere",
   "@recConflict": {
     "description": "Reference key rec.conflict"
@@ -5243,9 +5497,226 @@
   "@recConflictText": {
     "description": "Reference key rec.conflictText"
   },
+  "recCouldNotRefresh": "Could not refresh",
+  "@recCouldNotRefresh": {
+    "description": "Reference key rec.couldNotRefresh"
+  },
+  "recCount": "{n, plural, =1{1 record} other{{n} records}}",
+  "@recCount": {
+    "description": "Reference key rec.count — the collection's condition under the tool's name. The reference writes \"{n} records\" for one as well; this is plural",
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
+  "recCreated": "Created {when}",
+  "@recCreated": {
+    "description": "Reference key rec.created",
+    "placeholders": {
+      "when": {
+        "type": "String"
+      }
+    }
+  },
+  "recCreatedToday": "Created today",
+  "@recCreatedToday": {
+    "description": "Reference key rec.createdToday"
+  },
+  "recCreatedYesterday": "Created yesterday",
+  "@recCreatedYesterday": {
+    "description": "Reference key rec.createdYesterday"
+  },
+  "recDaysAgo": "{n, plural, =1{1 day ago} other{{n} days ago}}",
+  "@recDaysAgo": {
+    "description": "Reference key rec.daysAgo — only ever 2 to 30 in the reference",
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
+  "recDelete": "Delete {noun}",
+  "@recDelete": {
+    "description": "Reference key rec.delete",
+    "placeholders": {
+      "noun": {
+        "type": "String"
+      }
+    }
+  },
+  "recDeleteAsk": "Delete this {noun}?",
+  "@recDeleteAsk": {
+    "description": "Reference key rec.deleteAsk",
+    "placeholders": {
+      "noun": {
+        "type": "String"
+      }
+    }
+  },
   "recDeleteFailed": "Could not delete this record",
   "@recDeleteFailed": {
     "description": "Reference key rec.deleteFailed"
+  },
+  "recDeleteTextFinal": "{name} will be removed. This action cannot be undone.",
+  "@recDeleteTextFinal": {
+    "description": "Reference key rec.deleteTextFinal",
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "recDeleteTextUndo": "{name} will be removed. You can undo this straight away.",
+  "@recDeleteTextUndo": {
+    "description": "Reference key rec.deleteTextUndo",
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "recDeleted": "{noun} deleted",
+  "@recDeleted": {
+    "description": "Reference key rec.deleted",
+    "placeholders": {
+      "noun": {
+        "type": "String"
+      }
+    }
+  },
+  "recDeletedFinal": "{noun} deleted permanently",
+  "@recDeletedFinal": {
+    "description": "Reference key rec.deletedFinal",
+    "placeholders": {
+      "noun": {
+        "type": "String"
+      }
+    }
+  },
+  "recDetailTitle": "{noun} details",
+  "@recDetailTitle": {
+    "description": "Reference key rec.detailTitle",
+    "placeholders": {
+      "noun": {
+        "type": "String"
+      }
+    }
+  },
+  "recDetails": "Details",
+  "@recDetails": {
+    "description": "Reference key rec.details"
+  },
+  "recDiscard": "Discard",
+  "@recDiscard": {
+    "description": "Reference key rec.discard"
+  },
+  "recDiscardAsk": "Discard your changes?",
+  "@recDiscardAsk": {
+    "description": "Reference key rec.discardAsk"
+  },
+  "recDiscardText": "What you typed will not be saved.",
+  "@recDiscardText": {
+    "description": "Reference key rec.discardText"
+  },
+  "recEdit": "Edit {noun}",
+  "@recEdit": {
+    "description": "Reference key rec.edit",
+    "placeholders": {
+      "noun": {
+        "type": "String"
+      }
+    }
+  },
+  "recEditing": "Editing",
+  "@recEditing": {
+    "description": "Reference key rec.editing"
+  },
+  "recErrPositive": "Enter an amount greater than zero",
+  "@recErrPositive": {
+    "description": "Reference key rec.err.positive"
+  },
+  "recErrRequired": "{field} is required",
+  "@recErrRequired": {
+    "description": "Reference key rec.err.required",
+    "placeholders": {
+      "field": {
+        "type": "String"
+      }
+    }
+  },
+  "recExpensesEmptyText": "Add a record to understand where your money goes and build useful summaries.",
+  "@recExpensesEmptyText": {
+    "description": "Reference key rec.expenses.emptyText"
+  },
+  "recExpensesEmptyTitle": "Track your first expense",
+  "@recExpensesEmptyTitle": {
+    "description": "Reference key rec.expenses.emptyTitle"
+  },
+  "recExpensesNoun": "expense",
+  "@recExpensesNoun": {
+    "description": "Reference key rec.expenses.noun — sentence-internal; a line that starts with it is capitalised where the script has case"
+  },
+  "recExpensesNounPlural": "expenses",
+  "@recExpensesNounPlural": {
+    "description": "Reference key rec.expenses.nounPlural"
+  },
+  "recExpensesPh": "What did you spend on?",
+  "@recExpensesPh": {
+    "description": "Reference key rec.expenses.ph"
+  },
+  "recFieldAmount": "Amount",
+  "@recFieldAmount": {
+    "description": "Reference key rec.f.amount"
+  },
+  "recFieldCategory": "Category",
+  "@recFieldCategory": {
+    "description": "Reference key rec.f.category"
+  },
+  "recFieldDate": "Date",
+  "@recFieldDate": {
+    "description": "Reference key rec.f.date"
+  },
+  "recFieldNotes": "Notes",
+  "@recFieldNotes": {
+    "description": "Reference key rec.f.notes"
+  },
+  "recFieldPayment": "Payment",
+  "@recFieldPayment": {
+    "description": "Reference key rec.f.payment"
+  },
+  "recFieldReceipt": "Receipt",
+  "@recFieldReceipt": {
+    "description": "Reference key rec.f.receipt"
+  },
+  "recFieldTitle": "Title",
+  "@recFieldTitle": {
+    "description": "Reference key rec.f.title"
+  },
+  "recGone": "That record is no longer here",
+  "@recGone": {
+    "description": "Reference key rec.gone"
+  },
+  "recGoneText": "It may have been deleted.",
+  "@recGoneText": {
+    "description": "Reference key rec.goneText"
+  },
+  "recImportLater": "You can import records later",
+  "@recImportLater": {
+    "description": "Reference key rec.importLater"
+  },
+  "recInformation": "{noun} information",
+  "@recInformation": {
+    "description": "Reference key rec.information",
+    "placeholders": {
+      "noun": {
+        "type": "String"
+      }
+    }
+  },
+  "recKeepEditing": "Keep editing",
+  "@recKeepEditing": {
+    "description": "Reference key rec.keepEditing"
   },
   "recLoadError": "We could not load {noun}",
   "@recLoadError": {
@@ -5254,6 +5725,30 @@
   "recLoadErrorText": "Check your connection. Your saved data is still safe on this device.",
   "@recLoadErrorText": {
     "description": "Reference key rec.loadErrorText"
+  },
+  "recNewRecord": "New record",
+  "@recNewRecord": {
+    "description": "Reference key rec.newRecord"
+  },
+  "recNoMatch": "Nothing matches",
+  "@recNoMatch": {
+    "description": "Reference key rec.noMatch"
+  },
+  "recNoMatchText": "Try a different word, or clear the filters.",
+  "@recNoMatchText": {
+    "description": "Reference key rec.noMatchText"
+  },
+  "recNone": "None",
+  "@recNone": {
+    "description": "Reference key rec.none"
+  },
+  "recNoneYet": "No records yet",
+  "@recNoneYet": {
+    "description": "Reference key rec.noneYet"
+  },
+  "recNotAttached": "Not attached",
+  "@recNotAttached": {
+    "description": "Reference key rec.notAttached"
   },
   "recNothingToUndo": "Nothing left to undo",
   "@recNothingToUndo": {
@@ -5271,6 +5766,60 @@
   "@recOfflineText": {
     "description": "Reference key rec.offlineText"
   },
+  "recOptional": "Optional",
+  "@recOptional": {
+    "description": "Reference key rec.optional"
+  },
+  "recPayCard": "Card",
+  "@recPayCard": {
+    "description": "Reference key rec.pay.card"
+  },
+  "recPayCash": "Cash",
+  "@recPayCash": {
+    "description": "Reference key rec.pay.cash"
+  },
+  "recPayTransfer": "Transfer",
+  "@recPayTransfer": {
+    "description": "Reference key rec.pay.transfer"
+  },
+  "recPayWallet": "Wallet",
+  "@recPayWallet": {
+    "description": "Reference key rec.pay.wallet"
+  },
+  "recQueued": "Queued",
+  "@recQueued": {
+    "description": "Reference key rec.queued"
+  },
+  "recRecordId": "Record ID {id}",
+  "@recRecordId": {
+    "description": "Reference key rec.recordId",
+    "placeholders": {
+      "id": {
+        "type": "String"
+      }
+    }
+  },
+  "recReload": "Reload",
+  "@recReload": {
+    "description": "Reference key rec.reload"
+  },
+  "recReloaded": "Loaded the newer version",
+  "@recReloaded": {
+    "description": "Reference key rec.reloaded"
+  },
+  "recReview": "Review",
+  "@recReview": {
+    "description": "Reference key rec.review"
+  },
+  "recSave": "Save {noun}",
+  "@recSave": {
+    "description": "Reference key rec.save",
+    "placeholders": {
+      "noun": {
+        "type": "String"
+      }
+    }
+  },
   "recSaveFailed": "Could not save changes",
   "@recSaveFailed": {
     "description": "Reference key rec.saveFailed"
@@ -5278,6 +5827,71 @@
   "recSaveFailedText": "Nothing you typed was lost. Try again.",
   "@recSaveFailedText": {
     "description": "Reference key rec.saveFailedText"
+  },
+  "recSaving": "Saving…",
+  "@recSaving": {
+    "description": "Reference key rec.saving"
+  },
+  "recSearch": "Search {noun}",
+  "@recSearch": {
+    "description": "Reference key rec.search — the plural noun",
+    "placeholders": {
+      "noun": {
+        "type": "String"
+      }
+    }
+  },
+  "recSeedCoffee": "Coffee",
+  "@recSeedCoffee": {
+    "description": "Reference key rec.seed.coffee"
+  },
+  "recSeedGroceries": "Groceries",
+  "@recSeedGroceries": {
+    "description": "Reference key rec.seed.groceries — a demonstration record"
+  },
+  "recSeedGroceriesNote": "Weekly household groceries",
+  "@recSeedGroceriesNote": {
+    "description": "Reference key rec.seed.groceriesNote"
+  },
+  "recSeedInternet": "Internet bill",
+  "@recSeedInternet": {
+    "description": "Reference key rec.seed.internet"
+  },
+  "recSeedPharmacy": "Pharmacy",
+  "@recSeedPharmacy": {
+    "description": "Reference key rec.seed.pharmacy"
+  },
+  "recSeedTaxi": "Taxi",
+  "@recSeedTaxi": {
+    "description": "Reference key rec.seed.taxi"
+  },
+  "recSelectText": "Choose one from the list to see it here.",
+  "@recSelectText": {
+    "description": "Reference key rec.selectText"
+  },
+  "recSelectTitle": "Nothing selected",
+  "@recSelectTitle": {
+    "description": "Reference key rec.selectTitle"
+  },
+  "recUndo": "Undo",
+  "@recUndo": {
+    "description": "Reference key rec.undo"
+  },
+  "recUndone": "Restored",
+  "@recUndone": {
+    "description": "Reference key rec.undone"
+  },
+  "recUpdate": "Save changes",
+  "@recUpdate": {
+    "description": "Reference key rec.update"
+  },
+  "recUpdated": "Saved",
+  "@recUpdated": {
+    "description": "Reference key rec.updated"
+  },
+  "recViewCached": "View cached records",
+  "@recViewCached": {
+    "description": "Reference key rec.viewCached"
   },
   "recipeCuisineGlobal": "Global",
   "@recipeCuisineGlobal": {

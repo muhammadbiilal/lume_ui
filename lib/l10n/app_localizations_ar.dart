@@ -1280,7 +1280,13 @@ class AppLocalizationsAr extends AppLocalizations {
   String get commonAll => 'الكل';
 
   @override
+  String get commonAmount => 'المبلغ';
+
+  @override
   String get commonChange => 'التغيّر';
+
+  @override
+  String get commonDate => 'التاريخ';
 
   @override
   String get commonDays => 'أيام';
@@ -1581,6 +1587,138 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get emergencyYourInfo => 'معلوماتك';
+
+  @override
+  String get expensesAdd => 'إضافة مصروف';
+
+  @override
+  String get expensesBalance => 'الرصيد';
+
+  @override
+  String get expensesBudgetUse => 'الميزانية المستخدمة';
+
+  @override
+  String get expensesBudgets => 'الميزانيات';
+
+  @override
+  String get expensesCatBills => 'الفواتير';
+
+  @override
+  String get expensesCatEating => 'الأكل خارجًا';
+
+  @override
+  String get expensesCatGroceries => 'البقالة';
+
+  @override
+  String get expensesCatHealth => 'الصحة';
+
+  @override
+  String get expensesCatOther => 'أخرى';
+
+  @override
+  String get expensesCatTransport => 'المواصلات';
+
+  @override
+  String get expensesCategories => 'حسب الفئة';
+
+  @override
+  String get expensesCategory => 'الفئة';
+
+  @override
+  String get expensesDailyAvg => 'المتوسط اليومي';
+
+  @override
+  String get expensesIncome => 'الدخل';
+
+  @override
+  String get expensesInsight1Text => 'مقارنةً بمتوسط الأشهر الثلاثة.';
+
+  @override
+  String get expensesInsight1Title => 'ارتفعت البقالة 12%';
+
+  @override
+  String get expensesInsight2Text =>
+      'بهذه الوتيرة ستنهي الشهر أقل من الميزانية بنحو 8%.';
+
+  @override
+  String get expensesInsight2Title => 'على المسار الصحيح لهذا الشهر';
+
+  @override
+  String get expensesInsights => 'رؤى';
+
+  @override
+  String get expensesMethodAutoDebit => 'خصم تلقائي';
+
+  @override
+  String expensesMonthlyOn(int day) {
+    return 'شهريًا، في اليوم $day';
+  }
+
+  @override
+  String get expensesNoMatch => 'لا توجد معاملات مطابقة';
+
+  @override
+  String get expensesNoMatchText => 'جرّب فئة أخرى أو امسح البحث.';
+
+  @override
+  String expensesOfBudget(String pct, String budget) {
+    return '$pct من ميزانيتك البالغة $budget';
+  }
+
+  @override
+  String get expensesRange => 'النطاق';
+
+  @override
+  String get expensesRec1 => 'الإنترنت';
+
+  @override
+  String get expensesRec2 => 'الكهرباء';
+
+  @override
+  String get expensesRecurring => 'المتكررة';
+
+  @override
+  String get expensesSpent => 'أُنفق هذا الشهر';
+
+  @override
+  String get expensesTransactions => 'المعاملات';
+
+  @override
+  String get expensesTrend => 'هذا الأسبوع';
+
+  @override
+  String expensesTrendCap(String avg) {
+    return 'بمتوسط $avg يوميًا';
+  }
+
+  @override
+  String get expensesTxAirport => 'توصيلة إلى المطار';
+
+  @override
+  String get expensesTxCoffee => 'قهوة — Chaaye Khana';
+
+  @override
+  String get expensesTxElectricity => 'فاتورة الكهرباء';
+
+  @override
+  String get expensesTxFuel => 'وقود — Shell';
+
+  @override
+  String get expensesTxInternet => 'الإنترنت';
+
+  @override
+  String get expensesTxMetro => 'Metro Cash & Carry';
+
+  @override
+  String get expensesTxPharmacy => 'الصيدلية';
+
+  @override
+  String get expensesTxSalary => 'الراتب';
+
+  @override
+  String expensesWhenTime(String day, String time) {
+    return '$day · $time';
+  }
 
   @override
   String get exploreAround => 'حولك';
@@ -3834,13 +3972,207 @@ class AppLocalizationsAr extends AppLocalizations {
   String get ratesWorth => 'القيمة';
 
   @override
+  String recAdd(String noun) {
+    return 'إضافة $noun';
+  }
+
+  @override
+  String recAddFirst(String noun) {
+    return 'أضف أول $noun';
+  }
+
+  @override
+  String recAdded(String noun) {
+    return 'تمت إضافة $noun';
+  }
+
+  @override
+  String get recAttach => 'إضافة صورة أو مستند';
+
+  @override
+  String get recAttachSoon => 'المرفقات قريبًا';
+
+  @override
+  String get recAttached => 'مرفق';
+
+  @override
+  String recBackToList(String noun) {
+    return 'العودة إلى $noun';
+  }
+
+  @override
+  String get recCheckFields => 'راجع الحقول المميزة';
+
+  @override
+  String get recConfirmNote => 'تُحفظ التغييرات بعد التأكيد فقط';
+
+  @override
   String get recConflict => 'تغيّر هذا السجل في مكان آخر';
 
   @override
   String get recConflictText => 'توجد نسخة أحدث. راجع تغييراتك أو حمّل الأحدث.';
 
   @override
+  String get recCouldNotRefresh => 'تعذّر التحديث';
+
+  @override
+  String recCount(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n سجل',
+      many: '$n سجلًا',
+      few: '$n سجلات',
+      two: 'سجلان',
+      one: 'سجل واحد',
+      zero: 'لا سجلات',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String recCreated(String when) {
+    return 'أُنشئ $when';
+  }
+
+  @override
+  String get recCreatedToday => 'أُنشئ اليوم';
+
+  @override
+  String get recCreatedYesterday => 'أُنشئ أمس';
+
+  @override
+  String recDaysAgo(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: 'قبل $n يوم',
+      many: 'قبل $n يومًا',
+      few: 'قبل $n أيام',
+      two: 'قبل يومين',
+      one: 'قبل يوم',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String recDelete(String noun) {
+    return 'حذف $noun';
+  }
+
+  @override
+  String recDeleteAsk(String noun) {
+    return 'حذف هذا $noun؟';
+  }
+
+  @override
   String get recDeleteFailed => 'تعذّر حذف هذا السجل';
+
+  @override
+  String recDeleteTextFinal(String name) {
+    return 'سيُزال $name. لا يمكن التراجع عن هذا الإجراء.';
+  }
+
+  @override
+  String recDeleteTextUndo(String name) {
+    return 'سيُزال $name. يمكنك التراجع فورًا.';
+  }
+
+  @override
+  String recDeleted(String noun) {
+    return 'تم حذف $noun';
+  }
+
+  @override
+  String recDeletedFinal(String noun) {
+    return 'تم حذف $noun نهائيًا';
+  }
+
+  @override
+  String recDetailTitle(String noun) {
+    return 'تفاصيل $noun';
+  }
+
+  @override
+  String get recDetails => 'التفاصيل';
+
+  @override
+  String get recDiscard => 'تجاهل';
+
+  @override
+  String get recDiscardAsk => 'تجاهل تغييراتك؟';
+
+  @override
+  String get recDiscardText => 'لن يُحفظ ما كتبته.';
+
+  @override
+  String recEdit(String noun) {
+    return 'تعديل $noun';
+  }
+
+  @override
+  String get recEditing => 'جارٍ التعديل';
+
+  @override
+  String get recErrPositive => 'أدخل مبلغًا أكبر من صفر';
+
+  @override
+  String recErrRequired(String field) {
+    return 'أدخل $field';
+  }
+
+  @override
+  String get recExpensesEmptyText => 'أضف سجلًا لتعرف أين يذهب مالك.';
+
+  @override
+  String get recExpensesEmptyTitle => 'سجّل أول مصروف';
+
+  @override
+  String get recExpensesNoun => 'مصروف';
+
+  @override
+  String get recExpensesNounPlural => 'المصروفات';
+
+  @override
+  String get recExpensesPh => 'على ماذا أنفقت؟';
+
+  @override
+  String get recFieldAmount => 'المبلغ';
+
+  @override
+  String get recFieldCategory => 'الفئة';
+
+  @override
+  String get recFieldDate => 'التاريخ';
+
+  @override
+  String get recFieldNotes => 'ملاحظات';
+
+  @override
+  String get recFieldPayment => 'الدفع';
+
+  @override
+  String get recFieldReceipt => 'الإيصال';
+
+  @override
+  String get recFieldTitle => 'العنوان';
+
+  @override
+  String get recGone => 'لم يعد هذا السجل موجودًا';
+
+  @override
+  String get recGoneText => 'ربما تم حذفه.';
+
+  @override
+  String get recImportLater => 'يمكنك استيراد السجلات لاحقًا';
+
+  @override
+  String recInformation(String noun) {
+    return 'معلومات $noun';
+  }
+
+  @override
+  String get recKeepEditing => 'متابعة التعديل';
 
   @override
   String recLoadError(Object noun) {
@@ -3850,6 +4182,24 @@ class AppLocalizationsAr extends AppLocalizations {
   @override
   String get recLoadErrorText =>
       'تحقق من اتصالك. بياناتك المحفوظة ما زالت آمنة على هذا الجهاز.';
+
+  @override
+  String get recNewRecord => 'سجل جديد';
+
+  @override
+  String get recNoMatch => 'لا توجد نتائج';
+
+  @override
+  String get recNoMatchText => 'جرّب كلمة أخرى، أو أزل عوامل التصفية.';
+
+  @override
+  String get recNone => 'لا شيء';
+
+  @override
+  String get recNoneYet => 'لا توجد سجلات بعد';
+
+  @override
+  String get recNotAttached => 'غير مرفق';
 
   @override
   String get recNothingToUndo => 'لا شيء للتراجع عنه';
@@ -3864,10 +4214,94 @@ class AppLocalizationsAr extends AppLocalizations {
   String get recOfflineText => 'تُعرض السجلات المحفوظة على هذا الجهاز.';
 
   @override
+  String get recOptional => 'اختياري';
+
+  @override
+  String get recPayCard => 'بطاقة';
+
+  @override
+  String get recPayCash => 'نقدًا';
+
+  @override
+  String get recPayTransfer => 'تحويل';
+
+  @override
+  String get recPayWallet => 'محفظة';
+
+  @override
+  String get recQueued => 'في الانتظار';
+
+  @override
+  String recRecordId(String id) {
+    return 'رقم السجل $id';
+  }
+
+  @override
+  String get recReload => 'إعادة التحميل';
+
+  @override
+  String get recReloaded => 'تم تحميل النسخة الأحدث';
+
+  @override
+  String get recReview => 'مراجعة';
+
+  @override
+  String recSave(String noun) {
+    return 'حفظ $noun';
+  }
+
+  @override
   String get recSaveFailed => 'تعذّر حفظ التغييرات';
 
   @override
   String get recSaveFailedText => 'لم يضع شيء مما كتبته. حاول مرة أخرى.';
+
+  @override
+  String get recSaving => 'جارٍ الحفظ…';
+
+  @override
+  String recSearch(String noun) {
+    return 'ابحث في $noun';
+  }
+
+  @override
+  String get recSeedCoffee => 'قهوة';
+
+  @override
+  String get recSeedGroceries => 'البقالة';
+
+  @override
+  String get recSeedGroceriesNote => 'مشتريات المنزل الأسبوعية';
+
+  @override
+  String get recSeedInternet => 'فاتورة الإنترنت';
+
+  @override
+  String get recSeedPharmacy => 'الصيدلية';
+
+  @override
+  String get recSeedTaxi => 'سيارة أجرة';
+
+  @override
+  String get recSelectText => 'اختر واحدًا من القائمة لعرضه هنا.';
+
+  @override
+  String get recSelectTitle => 'لم يُحدَّد شيء';
+
+  @override
+  String get recUndo => 'تراجع';
+
+  @override
+  String get recUndone => 'تمت الاستعادة';
+
+  @override
+  String get recUpdate => 'حفظ التغييرات';
+
+  @override
+  String get recUpdated => 'تم الحفظ';
+
+  @override
+  String get recViewCached => 'عرض السجلات المحفوظة';
 
   @override
   String get recipeCuisineGlobal => 'عالمي';

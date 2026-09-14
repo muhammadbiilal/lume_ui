@@ -47,6 +47,14 @@ enum LumeButtonTone {
   /// The default fill — near-black. Used where a screen has no accent action
   /// but still needs weight, as the onboarding footer does.
   solid,
+
+  /// `.btn--danger` as `account.css` and the confirmation sheet draw it —
+  /// solid rose ink, the one destructive press a sheet asks for.
+  critical,
+
+  /// `.sheet--confirm.is-warn .btn--danger` — amber, for leaving unsaved work
+  /// rather than destroying saved work.
+  warn,
 }
 
 /// `.btn`.
@@ -160,6 +168,12 @@ class LumeButton extends StatelessWidget {
         null,
       ),
       LumeButtonTone.solid => (lume.text, lume.bg, null),
+      LumeButtonTone.critical => (
+        lume.roseInk,
+        lume.onRose,
+        LumeShadows.accent(lume.roseInk, isDark: context.isDark),
+      ),
+      LumeButtonTone.warn => (lume.amber, lume.onAmber, null),
     };
 
     /// `.btn--dangerghost { border: 1px solid rose 34% }`. The only tone with
@@ -401,11 +415,15 @@ class LumeTextButton extends StatelessWidget {
     this.onPressed,
     this.icon,
     this.tone,
+    this.semanticLabel,
   });
 
   final String label;
   final VoidCallback? onPressed;
   final String? icon;
+
+  /// `aria-label` — "Add expense" for an action that reads "Add".
+  final String? semanticLabel;
 
   /// Overrides the accent ink — a destructive text action uses `roseInk`.
   final Color? tone;
@@ -447,6 +465,7 @@ class LumeTextButton extends StatelessWidget {
       enabled: enabled,
       borderRadius: LumeRadius.brXs,
       minSize: LumeSpace.tap,
+      semanticLabel: semanticLabel,
       child: row,
     );
   }

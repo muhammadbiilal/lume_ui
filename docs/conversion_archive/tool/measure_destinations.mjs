@@ -929,6 +929,79 @@ const TOOL_TARGETS = {
   'btnrow': '#toolBody .btnrow',
   'btn1': '#toolBody .btnrow .btn:nth-child(1)',
   'btn2': '#toolBody .btnrow .btn:nth-child(2)',
+  // The record layer (crud-engine.js) — the list, the detail, the form, its
+  // notices and states, the header's text action and the confirmation sheet.
+  'toolbar.textbtn': '#screen-tool .toolbar__actions .textbtn',
+  'recs': '#toolBody .rrecs',
+  'rrec1': '#toolBody .rrecs > .rrec:nth-child(1)',
+  'rrec2': '#toolBody .rrecs > .rrec:nth-child(2)',
+  'rrec.disc': '#toolBody .rrec__disc',
+  'rrec.title': '#toolBody .rrec__title',
+  'rrec.sub': '#toolBody .rrec__sub',
+  'rrec.value': '#toolBody .rrec__value',
+  'rrec.chev': '#toolBody .rrec__chev',
+  'cchips': '#toolBody .cchips',
+  'cchip1': '#toolBody .cchips .cchip:nth-child(1)',
+  'cchip2': '#toolBody .cchips .cchip:nth-child(2)',
+  'cchip.n': '#toolBody .cchips .cchip__n',
+  'recsearch': '#toolBody [data-sect="records"] .tsearch',
+  'chero': '#toolBody .chero',
+  'chero.kicker': '#toolBody .chero__kicker',
+  'chero.value': '#toolBody .chero__value',
+  'chero.title': '#toolBody .chero__title',
+  'chero.caption': '#toolBody .chero__caption',
+  'cfacts': '#toolBody .cfacts',
+  'cfact1': '#toolBody .cfact:nth-child(1)',
+  'cfact.label': '#toolBody .cfact__label',
+  'cfact.value': '#toolBody .cfact__value',
+  'cacts': '#toolBody .cacts',
+  'cact.edit': '#toolBody .cact--edit',
+  'cact.danger': '#toolBody .cact--danger',
+  'crud.id': '#toolBody .crud__id',
+  'cform': '#toolBody .cform',
+  'cfield1': '#toolBody .cform > .cfield:nth-child(1)',
+  'cfield2': '#toolBody .cform > .cfield:nth-child(2)',
+  'cfield.label': '#toolBody .cfield__label',
+  'cfield.box': '#toolBody .cfield__box',
+  'cfield.err': '#toolBody .cfield__err',
+  'cfield.select': '#toolBody .cfield__select',
+  'cfield.textarea': '#toolBody .cfield__box textarea',
+  'cattach': '#toolBody .cattach',
+  'csubmit': '#toolBody .csubmit',
+  'csubmit.btn': '#toolBody .csubmit .btn',
+  'csubmit.note': '#toolBody .csubmit__note',
+  'cnotice': '#toolBody .cnotice',
+  'cstate': '#toolBody .cstate',
+  'cstate.art': '#toolBody .cstate__art',
+  'cstate.title': '#toolBody .cstate__title',
+  'cstate.text': '#toolBody .cstate__text',
+  'cstate.cta': '#toolBody .cstate__cta',
+  'cstate.foot': '#toolBody .cstate__foot',
+  'dconfirm': '#sheet-recdelete .dconfirm',
+  'dconfirm.mark': '#sheet-recdelete .dconfirm__mark',
+  'dconfirm.title': '#sheet-recdelete .dconfirm__title',
+  'dconfirm.text': '#sheet-recdelete .dconfirm__text',
+  'dconfirm.go': '#sheet-recdelete [data-rec-go]',
+  'dconfirm.cancel': '#sheet-recdelete [data-rec-cancel]',
+  // Expenses' finance dashboard — the ring, the budget bar, the category
+  // filter, the sort, the transactions, the budgets and the recurring rows.
+  'pring.mid': '#toolBody .pring__mid b',
+  'pbar.fill': '#toolBody .summary .pbar__fill',
+  'filterbar.tool': '#toolBody .filterbar',
+  'fchip1': '#toolBody .filterbar .fchip:nth-child(1)',
+  'fchip2': '#toolBody .filterbar .fchip:nth-child(2)',
+  'sortbar': '#toolBody .sortbar',
+  'sortbar.label': '#toolBody .sortbar__label',
+  'sortopt1': '#toolBody .sortbar .sortopt:nth-child(1)',
+  'sortopt2': '#toolBody .sortbar .sortopt:nth-child(2)',
+  'rrow.icon': '#toolBody .rrow__icon',
+  'meter1': '#toolBody .meter:nth-child(1)',
+  'meter2': '#toolBody .meter:nth-child(2)',
+  'meter.label': '#toolBody .meter__label',
+  'meter.value': '#toolBody .meter__value',
+  'meter.bar': '#toolBody .meter .pbar',
+  'bars.col1': '#toolBody .bars__col:nth-child(1)',
+  'bars.label': '#toolBody .bars__label',
 };
 
 /* The instant everything is captured at: Monday 7 September 2026, 16:41:32
@@ -1081,7 +1154,26 @@ const DRIVER = (profile, screen, after, account, route, keepBanner, tool, toolst
       await waitFor('#screen-tool.is-active #toolBody .sect', 4000);
       var acts = ${JSON.stringify(ACTS)}.split(',').filter(Boolean);
       for (var a = 0; a < acts.length; a++) {
-        act(acts[a]);
+        /* click:<selector> presses the first element a selector finds, and
+           	ype:<selector>|<value> types into one and leaves it — for a state
+           whose action carries an id the page makes up, such as a record. */
+        if (acts[a].indexOf('click:') === 0) {
+          var hit = document.querySelector(acts[a].slice(6));
+          if (hit) hit.click();
+        } else if (acts[a].indexOf('type:') === 0) {
+          var bar = acts[a].indexOf('|');
+          var field = document.querySelector(acts[a].slice(5, bar));
+          if (field) {
+            field.focus();
+            field.value = acts[a].slice(bar + 1);
+            field.dispatchEvent(new Event('input', { bubbles: true }));
+            field.dispatchEvent(new Event('change', { bubbles: true }));
+            field.blur();
+            field.dispatchEvent(new Event('focusout', { bubbles: true }));
+          }
+        } else {
+          act(acts[a]);
+        }
         await wait(${JSON.stringify(ACTWAIT)});
       }
       if (${JSON.stringify(FIXBARS)}) {
@@ -1905,6 +1997,95 @@ async function main() {
                        state: st };
             }),
           buttons: texts('#toolBody .btnrow .btn')
+        } : null;
+        composition.finance = q('#toolBody .pring') && q('#toolBody .meter') ? {
+          ring: { label: q('#toolBody .pring').getAttribute('aria-label'), text: q('#toolBody .pring').getAttribute('aria-valuetext'),
+                  now: q('#toolBody .pring').getAttribute('aria-valuenow'), mid: tx('#toolBody .pring__mid b') },
+          bar: q('#toolBody .summary .pbar') ? { label: q('#toolBody .summary .pbar').getAttribute('aria-label'),
+                  now: q('#toolBody .summary .pbar').getAttribute('aria-valuenow'), cls: q('#toolBody .summary .pbar').className } : null,
+          bars: Array.prototype.map.call(document.querySelectorAll('#toolBody .bars__col'),
+            function (el) { return [(el.querySelector('.bars__label') || {}).textContent, (el.querySelector('.bars__bar') || { dataset: {} }).dataset.fill, el.classList.contains('is-on')]; }),
+          barsCaption: tx('#toolBody .bars ~ .chart__cap') || tx('#toolBody .chart:not(.chart--line) .chart__cap'),
+          filters: Array.prototype.map.call(document.querySelectorAll('#toolBody .filterbar .fchip'),
+            function (el) { return [el.firstChild && el.firstChild.nodeType === 3 ? el.firstChild.textContent : el.textContent.replace((el.querySelector('.fchip__n') || { textContent: '' }).textContent, ''), el.classList.contains('is-on'), !!el.querySelector('svg')]; }),
+          filterLabel: (q('#toolBody .filterbar__group') || { getAttribute: function () { return null; } }).getAttribute('aria-label'),
+          sortLabel: tx('#toolBody .sortbar__label'),
+          sorts: Array.prototype.map.call(document.querySelectorAll('#toolBody .sortbar .sortopt'),
+            function (el) { return [el.textContent, el.classList.contains('is-on'), el.getAttribute('data-act')]; }),
+          transactions: Array.prototype.map.call(document.querySelectorAll('#toolBody .rows > .rrow'),
+            function (el) {
+              return { title: (el.querySelector('.rrow__title') || {}).textContent || null,
+                       sub: (el.querySelector('.rrow__sub') || {}).textContent || null,
+                       meta: Array.prototype.map.call(el.querySelectorAll('.rrow__meta > span'), function (m) { return m.textContent; }),
+                       value: (el.querySelector('.rrow__value') || {}).textContent || null,
+                       income: el.classList.contains('is-income'),
+                       iconCls: (el.querySelector('.rrow__icon') || { className: null }).className };
+            }),
+          meters: Array.prototype.map.call(document.querySelectorAll('#toolBody .meter'),
+            function (el) { var b = el.querySelector('.pbar'); return [(el.querySelector('.meter__label') || {}).textContent, (el.querySelector('.meter__value') || {}).textContent, b ? b.getAttribute('aria-valuenow') : null, b ? b.className : null]; }),
+          recurring: Array.prototype.map.call(document.querySelectorAll('#toolBody .rows > .crow'),
+            function (el) { var lab = el.querySelector('.crow__label'); return [lab && lab.firstChild ? lab.firstChild.textContent : null, (el.querySelector('.crow__label i') || {}).textContent || null, (el.querySelector('.crow__value') || {}).textContent || null]; })
+        } : null;
+        composition.records = (q('#toolBody .rrec') || q('#toolBody .cform') || q('#toolBody .chero') || q('#toolBody .cstate')) ? {
+          placeholder: q('#toolBody [data-sect="records"] .tsearch input') ? q('#toolBody [data-sect="records"] .tsearch input').getAttribute('placeholder') : null,
+          chips: Array.prototype.map.call(document.querySelectorAll('#toolBody .cchip'),
+            function (el) { return [(el.querySelector('span') || {}).textContent || null, (el.querySelector('.cchip__n') || {}).textContent || null, el.classList.contains('is-on')]; }),
+          rows: Array.prototype.map.call(document.querySelectorAll('#toolBody .rrec'),
+            function (el) {
+              return { initial: (el.querySelector('.rrec__disc') || {}).textContent || null,
+                       title: (el.querySelector('.rrec__title') || {}).textContent || null,
+                       sub: (el.querySelector('.rrec__sub') || {}).textContent || null,
+                       meta: Array.prototype.map.call(el.querySelectorAll('.rrec__meta > span'), function (m) { return m.textContent; }),
+                       value: (el.querySelector('.rrec__value') || {}).textContent || null,
+                       badge: (el.querySelector('.badge') || {}).textContent || null,
+                       selected: el.classList.contains('is-selected'),
+                       done: el.classList.contains('is-done'),
+                       queued: (el.querySelector('.rrec__queued') || {}).textContent || null };
+            }),
+          states: Array.prototype.map.call(document.querySelectorAll('#toolBody .cstate'),
+            function (el) {
+              return { cls: el.className,
+                       title: (el.querySelector('.cstate__title') || {}).textContent || null,
+                       text: (el.querySelector('.cstate__text') || {}).textContent || null,
+                       ctas: Array.prototype.map.call(el.querySelectorAll('.cstate__cta'), function (b) { return b.textContent; }),
+                       foot: (el.querySelector('.cstate__foot') || {}).textContent || null };
+            }),
+          hero: q('#toolBody .chero') ? {
+            cls: q('#toolBody .chero').className,
+            kicker: tx('#toolBody .chero__kicker'), value: tx('#toolBody .chero__value'),
+            title: tx('#toolBody .chero__title'), caption: tx('#toolBody .chero__caption')
+          } : null,
+          sectionTitles: texts('#toolBody .sect__title'),
+          facts: Array.prototype.map.call(document.querySelectorAll('#toolBody .cfact'),
+            function (el) { return [(el.querySelector('.cfact__label') || {}).textContent, (el.querySelector('.cfact__value') || {}).textContent, el.classList.contains('cfact--block')]; }),
+          actions: texts('#toolBody .cact'),
+          recordId: tx('#toolBody .crud__id'),
+          fields: Array.prototype.map.call(document.querySelectorAll('#toolBody .cfield'),
+            function (el) {
+              var lab = el.querySelector('.cfield__label');
+              var ctl = el.querySelector('input, textarea, select');
+              return { label: lab && lab.firstChild ? lab.firstChild.textContent : null,
+                       optional: (el.querySelector('.cfield__opt') || {}).textContent || null,
+                       control: ctl ? (ctl.tagName.toLowerCase() === 'input' ? 'input:' + ctl.type : ctl.tagName.toLowerCase()) : (el.querySelector('.cattach') ? 'attach' : null),
+                       value: ctl ? (ctl.type === 'checkbox' ? String(ctl.checked) : ctl.value) : null,
+                       placeholder: ctl ? ctl.getAttribute('placeholder') : null,
+                       options: ctl && ctl.tagName.toLowerCase() === 'select' ? Array.prototype.map.call(ctl.options, function (o) { return o.textContent; }) : null,
+                       invalid: el.classList.contains('is-invalid'),
+                       error: (el.querySelector('.cfield__err') || {}).textContent || null,
+                       hint: (el.querySelector('.cfield__hint') || {}).textContent || null,
+                       attach: (el.querySelector('.cattach') || {}).textContent || null };
+            }),
+          submit: texts('#toolBody .csubmit .btn'),
+          submitNote: tx('#toolBody .csubmit__note'),
+          notices: Array.prototype.map.call(document.querySelectorAll('#toolBody .cnotice'),
+            function (el) { return [el.className, (el.querySelector('b') || {}).textContent, (el.querySelector('i') || {}).textContent,
+              Array.prototype.map.call(el.querySelectorAll('.cnotice__act'), function (b) { return b.textContent; })]; }),
+          sheet: q('#sheet-recdelete') ? {
+            cls: q('#sheet-recdelete').className,
+            hidden: q('#sheet-recdelete').getAttribute('aria-hidden'),
+            title: tx('#sheet-recdelete .dconfirm__title'), text: tx('#sheet-recdelete .dconfirm__text'),
+            go: tx('#sheet-recdelete [data-rec-go]'), cancel: tx('#sheet-recdelete [data-rec-cancel]')
+          } : null
         } : null;
         composition.rows = Array.prototype.map.call(
           document.querySelectorAll('#toolBody .rows > .rrow'),
