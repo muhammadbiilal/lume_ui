@@ -22,7 +22,9 @@
 library;
 
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../../core/config/lume_build_profile.dart';
 import '../../../core/icons/lume_icon.dart';
 import '../../../core/icons/lume_icons.dart';
 import '../../../core/localization/lume_format.dart';
@@ -1772,6 +1774,19 @@ LumeAccountView _about(LumeAccountRouteContext c) {
               value: c.version,
               chevron: false,
             ),
+            // F6B decision 5: the reference build says its data is sample
+            // data, because its source lines reproduce claims it cannot keep.
+            if (ProviderScope.containerOf(
+                  context,
+                  listen: false,
+                ).read(buildProfileProvider) ==
+                LumeBuildProfile.reference)
+              LumeSettingsRow(
+                icon: LumeIcons.info,
+                title: l.acctDataTitle,
+                subtitle: l.acctDataSample,
+                chevron: false,
+              ),
             LumeSettingsRow(
               icon: LumeIcons.globe,
               title: l.acctLanguageTitle,

@@ -688,7 +688,17 @@ void main() {
         gate: await bootedGate(),
         surface: kTall,
       );
-      expect(find.byType(LumeSettingsRow), findsNWidgets(3));
+      // Three facts, and — in the reference build — the fourth saying its data
+      // is sample data (F6B decision 5).
+      expect(find.byType(LumeSettingsRow), findsNWidgets(4));
+      final LumeSettingsRow data = tester.widget<LumeSettingsRow>(
+        rowTitled('Data'),
+      );
+      expect(
+        data.subtitle,
+        'Sample data — nothing is saved, synced or encrypted in this build',
+      );
+      expect(data.onTap, isNull);
       for (final String title in <String>[
         'Version',
         'Language',

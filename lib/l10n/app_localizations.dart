@@ -286,6 +286,18 @@ abstract class AppLocalizations {
   /// **'Preferences, region and language'**
   String get acctDataPrefs;
 
+  /// About, reference build only: the data is fixtures, and the claims elsewhere reproduce the reference
+  ///
+  /// In en, this message translates to:
+  /// **'Sample data — nothing is saved, synced or encrypted in this build'**
+  String get acctDataSample;
+
+  /// About: the row saying what this build’s data is
+  ///
+  /// In en, this message translates to:
+  /// **'Data'**
+  String get acctDataTitle;
+
   /// Reference: `acct.data.tools`.
   ///
   /// In en, this message translates to:
@@ -4779,6 +4791,18 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Updated {date}'**
   String freshOn(String date);
+
+  /// A release build’s source line where nothing real supports a freshness or feed claim
+  ///
+  /// In en, this message translates to:
+  /// **'Sample data'**
+  String get freshSample;
+
+  /// A release build’s word for data held only for the session; replaces "Stored on this device" without a durable store
+  ///
+  /// In en, this message translates to:
+  /// **'Kept until you close Lume'**
+  String get freshSession;
 
   /// Reference key fresh.static
   ///

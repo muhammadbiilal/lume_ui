@@ -21,6 +21,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../app/providers/personalisation.dart';
 import '../../../app/providers/platform_services.dart';
 import '../../../app/providers/shell_provider.dart';
+import '../../../core/config/lume_build_profile.dart';
 import '../../../core/fixtures/lume_clock.dart';
 import '../../../core/icons/lume_icons.dart';
 import '../../../core/localization/lume_format.dart';
@@ -38,6 +39,8 @@ import '../../catalogue/presentation/feature_strings.dart';
 import '../../onboarding/domain/onboarding_state.dart';
 import '../../share/presentation/share_sheet.dart';
 import '../../startup/application/startup_controller.dart';
+import '../domain/tool_capability.dart';
+import 'source_claims.dart';
 import 'tool_strings.dart';
 
 /// What the header's actions do for one tool, where the tool does more than
@@ -313,6 +316,17 @@ class LumeToolScreenState extends ConsumerState<LumeToolScreen> {
     );
     final LumeEligibility eligibility = ref.watch(eligibilityProvider);
     final DateTime now = LumeClockScope.of(context).now();
+    // F6B decision 5: what the source bar may claim is resolved from the
+    // tool's capability and the build, never worked out here.
+    final LumeSourceClaim claim = LumeSourceClaims.resolve(
+      l: l,
+      f: f,
+      feature: feature,
+      capability: ref.watch(dataCapabilityProvider(feature.id)),
+      profile: ref.watch(buildProfileProvider),
+      now: now,
+      city: user.city,
+    );
 
     final Widget frame = LumeToolFrame(
       title: widget.title ?? LumeFeatureStrings.name(l, feature.id),
@@ -342,22 +356,10 @@ class LumeToolScreenState extends ConsumerState<LumeToolScreen> {
       // who may not have it (§64).
       eligible: eligibility.isVisible(feature, user),
       onRetry: widget.onRetry,
-      freshness: widget.bare
-          ? null
-          : LumeToolStrings.quality(feature.freshness),
-      freshnessLabel: widget.bare
-          ? null
-          : LumeToolStrings.freshness(l, feature.freshness),
-      source: widget.bare ? null : LumeToolStrings.source(l, feature),
-      updated: widget.bare
-          ? null
-          : LumeToolStrings.updated(
-              l,
-              f,
-              feature.freshness,
-              now: now,
-              city: user.city,
-            ),
+      freshness: widget.bare ? null : claim.quality,
+      freshnessLabel: widget.bare ? null : claim.label,
+      source: widget.bare ? null : claim.source,
+      updated: widget.bare ? null : claim.updated,
       privacy: feature.sensitive && !widget.bare
           ? LumePrivateState(title: l.toolPrivateTitle, text: l.toolPrivateText)
           : null,

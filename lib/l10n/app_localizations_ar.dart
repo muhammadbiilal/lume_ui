@@ -107,6 +107,13 @@ class AppLocalizationsAr extends AppLocalizations {
   String get acctDataPrefs => 'التفضيلات والمنطقة واللغة';
 
   @override
+  String get acctDataSample =>
+      'بيانات تجريبية — لا يُحفظ شيء ولا يُزامَن ولا يُشفَّر في هذا الإصدار';
+
+  @override
+  String get acctDataTitle => 'البيانات';
+
+  @override
   String get acctDataTools => 'الأدوات والمفضلات والشاشات الأخيرة';
 
   @override
@@ -2685,6 +2692,12 @@ class AppLocalizationsAr extends AppLocalizations {
   String freshOn(String date) {
     return 'حُدّث $date';
   }
+
+  @override
+  String get freshSample => 'بيانات تجريبية';
+
+  @override
+  String get freshSession => 'محفوظ حتى تغلق Lume';
 
   @override
   String get freshStatic => 'نص مرجعي';

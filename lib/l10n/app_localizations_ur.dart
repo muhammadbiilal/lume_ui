@@ -108,6 +108,13 @@ class AppLocalizationsUr extends AppLocalizations {
   String get acctDataPrefs => 'ترجیحات، خطہ اور زبان';
 
   @override
+  String get acctDataSample =>
+      'نمونہ ڈیٹا — اس بلڈ میں کچھ بھی محفوظ، ہم آہنگ یا انکرپٹ نہیں ہوتا';
+
+  @override
+  String get acctDataTitle => 'ڈیٹا';
+
+  @override
   String get acctDataTools => 'ٹولز، پسندیدہ اور حالیہ اسکرینیں';
 
   @override
@@ -2643,6 +2650,12 @@ class AppLocalizationsUr extends AppLocalizations {
   String freshOn(String date) {
     return '$date کو اپ ڈیٹ ہوا';
   }
+
+  @override
+  String get freshSample => 'نمونہ ڈیٹا';
+
+  @override
+  String get freshSession => 'Lume بند کرنے تک محفوظ';
 
   @override
   String get freshStatic => 'حوالہ جاتی متن';

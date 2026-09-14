@@ -133,6 +133,14 @@
   "@acctDataPrefs": {
     "description": "Reference: `acct.data.prefs`."
   },
+  "acctDataSample": "Sample data — nothing is saved, synced or encrypted in this build",
+  "@acctDataSample": {
+    "description": "About, reference build only: the data is fixtures, and the claims elsewhere reproduce the reference"
+  },
+  "acctDataTitle": "Data",
+  "@acctDataTitle": {
+    "description": "About: the row saying what this build’s data is"
+  },
   "acctDataTools": "Tools, favourites and recent screens",
   "@acctDataTools": {
     "description": "Reference: `acct.data.tools`."
@@ -3539,6 +3547,14 @@
         "type": "String"
       }
     }
+  },
+  "freshSample": "Sample data",
+  "@freshSample": {
+    "description": "A release build’s source line where nothing real supports a freshness or feed claim"
+  },
+  "freshSession": "Kept until you close Lume",
+  "@freshSession": {
+    "description": "A release build’s word for data held only for the session; replaces \"Stored on this device\" without a durable store"
   },
   "freshStatic": "Reference text",
   "@freshStatic": {

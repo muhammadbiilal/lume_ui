@@ -108,6 +108,13 @@ class AppLocalizationsEn extends AppLocalizations {
   String get acctDataPrefs => 'Preferences, region and language';
 
   @override
+  String get acctDataSample =>
+      'Sample data — nothing is saved, synced or encrypted in this build';
+
+  @override
+  String get acctDataTitle => 'Data';
+
+  @override
   String get acctDataTools => 'Tools, favourites and recent screens';
 
   @override
@@ -2645,6 +2652,12 @@ class AppLocalizationsEn extends AppLocalizations {
   String freshOn(String date) {
     return 'Updated $date';
   }
+
+  @override
+  String get freshSample => 'Sample data';
+
+  @override
+  String get freshSession => 'Kept until you close Lume';
 
   @override
   String get freshStatic => 'Reference text';
