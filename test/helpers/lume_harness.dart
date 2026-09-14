@@ -29,7 +29,9 @@ import 'package:go_router/go_router.dart';
 import 'package:lume/core/fixtures/lume_clock.dart';
 import 'package:lume/core/layout/lume_breakpoint.dart';
 import 'package:lume/core/localization/lume_locales.dart';
+import 'package:lume/app/providers/platform_services.dart';
 import 'package:lume/app/providers/shell_provider.dart';
+import 'package:lume/core/platform/lume_dialer.dart';
 import 'package:lume/core/routing/app_router.dart';
 import 'package:lume/features/auth/data/fake_auth_repository.dart';
 import 'package:lume/features/auth/domain/auth_repository.dart';
@@ -101,7 +103,12 @@ Future<void> pumpLume(
 
   await tester.pumpWidget(
     ProviderScope(
-      overrides: overrides,
+      // No test reaches a device service: the recording fakes stand in, and a
+      // test that asserts on one passes its own instance in [overrides].
+      overrides: <Override>[
+        dialerProvider.overrideWithValue(LumeRecordingDialer()),
+        ...overrides,
+      ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
         theme: LumeTheme.light(),
@@ -196,6 +203,7 @@ Future<GoRouter> pumpLumeRouter(
         authRepositoryProvider.overrideWithValue(repository),
         profileRepositoryProvider.overrideWithValue(profiles),
         startupControllerProvider.overrideWithValue(gate),
+        dialerProvider.overrideWithValue(LumeRecordingDialer()),
         ...overrides,
       ],
       child: MaterialApp.router(

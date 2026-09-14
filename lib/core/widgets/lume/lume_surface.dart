@@ -290,27 +290,33 @@ class LumeNoteCard extends StatelessWidget {
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
-          LumeIcon(icon ?? _defaultIcon, size: LumeSpace.iconMd, color: glyph),
+          // `.notecard svg { width: 17px; margin-top: 1px }`.
+          Padding(
+            padding: const EdgeInsets.only(top: 1),
+            child: LumeIcon(icon ?? _defaultIcon, size: 17, color: glyph),
+          ),
           const SizedBox(width: 11),
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisSize: MainAxisSize.min,
               children: <Widget>[
+                // `.notecard b` — 13 / 700 / −.024em on the font's own line.
                 Text(
                   title,
-                  style: LumeType.fit(
-                    context,
-                    context.lumeType.cardTitle,
-                  ).copyWith(color: lume.text),
+                  style: LumeType.tracked(
+                    LumeType.natural(context, context.lumeType.body, size: 13),
+                    -0.024,
+                  ).copyWith(fontWeight: FontWeight.w700, color: lume.text),
                 ),
                 if (text != null) ...<Widget>[
-                  const SizedBox(height: 2),
+                  // `.notecard p` — 12 on a 1.5 line, 3 below.
+                  const SizedBox(height: 3),
                   Text(
                     text!,
                     style: LumeType.fit(
                       context,
-                      context.lumeType.metaSmall,
+                      context.lumeType.body.copyWith(fontSize: 12, height: 1.5),
                     ).copyWith(color: lume.text2),
                   ),
                 ],

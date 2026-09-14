@@ -12,6 +12,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:lume/core/navigation/lume_tool_frame.dart';
 import 'package:lume/core/routing/lume_routes.dart';
 import 'package:lume/features/tax/presentation/tax_tool.dart';
+import 'package:lume/features/timer/presentation/timer_tool.dart';
 
 import '../features/tax/tax_harness.dart';
 import '../helpers/capture.dart';
@@ -186,6 +187,100 @@ void main() {
           folder: 'tool_learning_default_pk_fixbars',
           cell: kCells.first,
           after: scrolledTo(offset),
+        );
+      });
+    }
+  });
+
+  // ---------------------------------------------------------------- Timer
+
+  group('Timer', () {
+    final String location = LumeRoutes.tool(LumeRoutes.tools, 'timer');
+    Finder timerPreset(String label) => find.descendant(
+      of: find.byKey(LumeTimerTool.presetsKey),
+      matching: find.text(label),
+    );
+
+    for (final Cell cell in kCells) {
+      testWidgets(cell.$1, (WidgetTester tester) async {
+        await shoot(
+          tester,
+          state: 'default_pk',
+          location: location,
+          golden: 'tool_timer_default_pk',
+          cell: cell,
+        );
+      });
+    }
+
+    testWidgets('a preset chosen · the reference cell', (
+      WidgetTester tester,
+    ) async {
+      await shoot(
+        tester,
+        state: 'default_pk',
+        location: location,
+        golden: 'tool_timer_default_pk_set300',
+        cell: kCells.first,
+        after: (WidgetTester t) async {
+          await t.tap(timerPreset('5 min'));
+          await t.pump();
+        },
+      );
+    });
+
+    testWidgets('running · the reference cell', (WidgetTester tester) async {
+      await shoot(
+        tester,
+        state: 'default_pk',
+        location: location,
+        golden: 'tool_timer_default_pk_running',
+        cell: kCells.first,
+        after: (WidgetTester t) async {
+          await t.tap(timerPreset('1 min'));
+          await t.pump();
+          await t.tap(find.text('Start'));
+          for (int i = 0; i < 3; i++) {
+            await t.pump(const Duration(seconds: 1));
+          }
+        },
+      );
+      // Stop it, so the test does not end with a live interval.
+      await tester.tap(find.text('Start'));
+      await tester.pump();
+    });
+  });
+
+  // ------------------------------------------------------------ Emergency
+
+  group('Emergency', () {
+    final String location = LumeRoutes.tool(LumeRoutes.tools, 'emergency');
+
+    for (final Cell cell in kCells) {
+      testWidgets(cell.$1, (WidgetTester tester) async {
+        await shoot(
+          tester,
+          state: 'default_pk',
+          location: location,
+          golden: 'tool_emergency_default_pk',
+          cell: cell,
+        );
+      });
+    }
+
+    for (final String state in <String>[
+      'default_us',
+      'muslim_gb',
+      'default_ae',
+      'default_jp',
+    ]) {
+      testWidgets('$state · the reference cell', (WidgetTester tester) async {
+        await shoot(
+          tester,
+          state: state,
+          location: location,
+          golden: 'tool_emergency_$state',
+          cell: kCells.first,
         );
       });
     }

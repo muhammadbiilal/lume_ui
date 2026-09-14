@@ -189,7 +189,7 @@ class LumeButton extends StatelessWidget {
           _BusyDot(color: fg),
           const SizedBox(width: 7),
         ] else if (icon != null) ...<Widget>[
-          LumeIcon(icon!, size: LumeSpace.iconMd, color: fg),
+          LumeIcon(icon!, size: 17, color: fg), // `.btn svg`
           const SizedBox(width: 7),
         ],
         Flexible(
@@ -203,7 +203,7 @@ class LumeButton extends StatelessWidget {
         ),
         if (trailingIcon != null) ...<Widget>[
           const SizedBox(width: 7),
-          LumeIcon(trailingIcon!, size: LumeSpace.iconMd, color: fg),
+          LumeIcon(trailingIcon!, size: 17, color: fg), // `.btn svg`
         ],
       ],
     );
@@ -424,7 +424,7 @@ class LumeTextButton extends StatelessWidget {
         mainAxisSize: MainAxisSize.min,
         children: <Widget>[
           if (icon != null) ...<Widget>[
-            LumeIcon(icon!, size: LumeSpace.iconMd, color: fg),
+            LumeIcon(icon!, size: 17, color: fg), // `.btn svg`
             const SizedBox(width: 6),
           ],
           Text(

@@ -11,6 +11,8 @@
 /// produces the washed, floating gradients this file exists to avoid.
 library;
 
+import 'dart:math' as math;
+
 import 'package:flutter/material.dart';
 
 /// One colourway: two stops and the ink for them.
@@ -38,6 +40,24 @@ class LumeGradient {
     end: const Alignment(0.5, 1),
     colors: <Color>[a, b],
   );
+
+  /// `linear-gradient(<degrees>deg, a, b)` on a box of [size], exactly as CSS
+  /// lays it: the gradient line runs through the centre at [degrees]
+  /// (clockwise from up) and is long enough that the corners take the end
+  /// colours. An [Alignment] is relative to each axis, so a non-square box
+  /// needs its size to land the ends where the browser does.
+  LinearGradient css(double degrees, Size size) {
+    final double t = degrees * math.pi / 180;
+    final double sx = math.sin(t), cy = -math.cos(t);
+    final double half = (size.width * sx.abs() + size.height * cy.abs()) / 2;
+    final double ax = size.width == 0 ? 0 : half * sx / (size.width / 2);
+    final double ay = size.height == 0 ? 0 : half * cy / (size.height / 2);
+    return LinearGradient(
+      begin: Alignment(-ax, -ay),
+      end: Alignment(ax, ay),
+      colors: <Color>[a, b],
+    );
+  }
 
   /// The same pair as a plain top-to-bottom fill, for surfaces that carry a
   /// gradient as a ground rather than as a shape.

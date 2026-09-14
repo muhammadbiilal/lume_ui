@@ -9,8 +9,10 @@ library;
 
 import 'package:flutter/widgets.dart';
 
+import '../../emergency/presentation/emergency_tool.dart';
 import '../../learning/presentation/learning_tool.dart';
 import '../../tax/presentation/tax_tool.dart';
+import '../../timer/presentation/timer_tool.dart';
 import 'tool_request.dart';
 
 /// Builds one converted tool for an opening the gate has allowed.
@@ -20,4 +22,6 @@ const Map<String, LumeToolBuilder> kLumeToolRegistry =
     <String, LumeToolBuilder>{
       'tax': LumeTaxTool.build,
       'learning': LumeLearningTool.open,
+      'timer': LumeTimerTool.open,
+      'emergency': LumeEmergencyTool.open,
     };

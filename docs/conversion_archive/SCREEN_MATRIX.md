@@ -144,7 +144,7 @@ run on the shared CRUD engine.
 | `converter` | Unit Converter | calculator | low | — | — | Y | — | not started |
 | `currency` | Currency | explorer | high | — | — | Y | — | not started |
 | `stopwatch` | Stopwatch | instrument | low | — | — | — | — | not started |
-| `timer` | Timer | instrument | low | — | — | Y | — | not started |
+| `timer` | Timer | instrument | low | — | — | Y | — | **built (F6A)** — reference tool for the clock-instrument archetype; clock face, preset chips, history rows (C66) |
 | `age` | Age Calculator | calculator | low | — | — | — | — | not started |
 | `focus` | Focus Timer | instrument | low | — | — | Y | — | not started |
 | `datecalc` | Date Calculator | calculator | low | — | — | — | — | not started |
@@ -215,7 +215,7 @@ run on the shared CRUD engine.
 | `flights` | Flights | tracking | veryhigh | — | — | — | — | not started |
 | `news` | News | reader | high | — | — | — | — | not started |
 | `cricket` | Cricket | dashboard | high | — | — | — | — | not started |
-| `emergency` | Emergency | action | low | — | — | Y | — | not started |
+| `emergency` | Emergency | action | low | — | — | Y | — | **built (F6A)** — reference tool for the action archetype; SOS card, call grid through the D6 dialer contract, info rows, note (C67) |
 | `qr` | QR Scanner | instrument | low | — | — | Y | — | not started |
 | `docscan` | Document Scanner | instrument | medium | — | — | Y | — | not started |
 | `passport` | Passport Photos | instrument | medium | — | — | — | — | not started |

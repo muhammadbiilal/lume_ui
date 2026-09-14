@@ -12,10 +12,19 @@ class AppLocalizationsAr extends AppLocalizations {
   String get a11yBack => 'رجوع';
 
   @override
+  String get a11yExport => 'تصدير';
+
+  @override
+  String get a11yFavourite => 'حفظ في المفضلة';
+
+  @override
   String get a11yMainNavigation => 'الرئيسية';
 
   @override
   String get a11ySearch => 'بحث';
+
+  @override
+  String get a11ySearchTool => 'بحث';
 
   @override
   String get a11yShare => 'مشاركة';
@@ -775,6 +784,39 @@ class AppLocalizationsAr extends AppLocalizations {
   String get appTagline => 'يومك في مكان واحد';
 
   @override
+  String get archetypeAction => 'إجراءات الطوارئ';
+
+  @override
+  String get archetypeCalculator => 'حاسبة';
+
+  @override
+  String get archetypeDashboard => 'لوحة المعلومات';
+
+  @override
+  String get archetypeExplorer => 'مستكشف البيانات';
+
+  @override
+  String get archetypeInstrument => 'أداة قياس';
+
+  @override
+  String get archetypeLibrary => 'مكتبة';
+
+  @override
+  String get archetypeManager => 'مدير السجلات';
+
+  @override
+  String get archetypePlanner => 'مخطِّط';
+
+  @override
+  String get archetypeReader => 'قارئ';
+
+  @override
+  String get archetypeTracker => 'متتبِّع';
+
+  @override
+  String get archetypeTracking => 'تتبُّع مباشر';
+
+  @override
   String get authAsideText =>
       'الصلاة والطقس والمال والسفر والتفاصيل الصغيرة — أينما كنت.';
 
@@ -1201,10 +1243,16 @@ class AppLocalizationsAr extends AppLocalizations {
   }
 
   @override
+  String get commonLess => 'أقل';
+
+  @override
   String get commonLocked => 'مقفل';
 
   @override
   String get commonMonth => 'شهر';
+
+  @override
+  String get commonMore => 'أكثر';
 
   @override
   String get commonNo => 'لا';
@@ -1241,6 +1289,9 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get commonStale => 'غير محدَّث';
+
+  @override
+  String get commonStart => 'ابدأ';
 
   @override
   String get commonStatus => 'الحالة';
@@ -1289,6 +1340,178 @@ class AppLocalizationsAr extends AppLocalizations {
   String docsRenewSoon(String name) {
     return 'جدّد $name';
   }
+
+  @override
+  String get emergKindAll3 => 'الشرطة · الحريق · الطوارئ الطبية';
+
+  @override
+  String get emergKindAllServices => 'جميع الخدمات';
+
+  @override
+  String get emergKindAmbRescue => 'الإسعاف والإنقاذ';
+
+  @override
+  String get emergKindAmbulance => 'الإسعاف';
+
+  @override
+  String get emergKindFire => 'الحريق';
+
+  @override
+  String get emergKindFireRescue => 'الإطفاء والإنقاذ';
+
+  @override
+  String get emergKindGas => 'تسرّب الغاز';
+
+  @override
+  String get emergKindGsm => 'يعمل على معظم شبكات GSM';
+
+  @override
+  String get emergKindHelpline => 'خط المساعدة';
+
+  @override
+  String get emergKindHighway => 'الطرق السريعة';
+
+  @override
+  String get emergKindMaritime => 'بحري';
+
+  @override
+  String get emergKindMedAdvice => 'استشارة طبية عاجلة';
+
+  @override
+  String get emergKindMedical => 'طبي';
+
+  @override
+  String get emergKindMental => 'الصحة النفسية';
+
+  @override
+  String get emergKindNonUrgent => 'غير عاجل';
+
+  @override
+  String get emergKindPoison => 'التسمّم';
+
+  @override
+  String get emergKindPolice => 'طوارئ الشرطة';
+
+  @override
+  String get emergKindRouted => 'مُوجَّه على نطاق واسع';
+
+  @override
+  String get emergKindTraffic => 'المرور';
+
+  @override
+  String get emergKindTrafficInfo => 'معلومات المرور';
+
+  @override
+  String get emergNameAmbulance => 'الإسعاف';
+
+  @override
+  String get emergNameCivilDefence => 'الدفاع المدني';
+
+  @override
+  String get emergNameCoastGuard => 'خفر السواحل';
+
+  @override
+  String get emergNameCrisisLifeline => 'خط دعم الأزمات';
+
+  @override
+  String get emergNameEdhiAmbulance => 'إسعاف إيدهي';
+
+  @override
+  String get emergNameEmergency => 'الطوارئ';
+
+  @override
+  String get emergNameFire => 'الإطفاء';
+
+  @override
+  String get emergNameFireBrigade => 'فرقة الإطفاء';
+
+  @override
+  String get emergNameFireCivilDefence => 'الإطفاء (الدفاع المدني)';
+
+  @override
+  String get emergNameGasEmergency => 'طوارئ الغاز';
+
+  @override
+  String get emergNameInternational => 'الطوارئ الدولية';
+
+  @override
+  String get emergNameLocal => 'الطوارئ المحلية';
+
+  @override
+  String get emergNameMotorwayPolice => 'شرطة الطرق السريعة';
+
+  @override
+  String get emergNameNhs111 => 'NHS 111';
+
+  @override
+  String get emergNamePoisonControl => 'مركز مكافحة السموم';
+
+  @override
+  String get emergNamePolice => 'الشرطة';
+
+  @override
+  String get emergNamePoliceNonEmergency => 'الشرطة (لغير الطوارئ)';
+
+  @override
+  String get emergNameRedCrescent => 'الهلال الأحمر';
+
+  @override
+  String get emergNameRescue1122 => 'الإنقاذ 1122';
+
+  @override
+  String get emergNameRoadside => 'المساعدة على الطريق';
+
+  @override
+  String get emergNameTraffic => 'المرور';
+
+  @override
+  String get emergNameUnifiedEmergency => 'الطوارئ الموحّدة';
+
+  @override
+  String get emergNameWomenHelpline => 'خط مساعدة المرأة';
+
+  @override
+  String emergencyCall(String service, String number) {
+    return 'اتصل بـ$service على $number';
+  }
+
+  @override
+  String emergencyDialFailed(String number) {
+    return 'تعذّر فتح تطبيق الهاتف. اطلب $number بنفسك.';
+  }
+
+  @override
+  String emergencyDialUnavailable(String number) {
+    return 'لا يمكن لهذا الجهاز إجراء مكالمات. اطلب $number من هاتف.';
+  }
+
+  @override
+  String get emergencyDocuments => 'وثائق الهوية';
+
+  @override
+  String get emergencyLocationShared => 'تم نسخ الموقع للمشاركة';
+
+  @override
+  String get emergencyMedical => 'التفاصيل الطبية';
+
+  @override
+  String get emergencyNoteText =>
+      'يمكن عادةً الاتصال بأرقام الطوارئ دون رصيد ودون شريحة. الرقم 112 مُوجَّه في معظم الدول.';
+
+  @override
+  String get emergencyNoteTitle => 'الأرقام تعمل دون إشارة';
+
+  @override
+  String get emergencyServices => 'خدمات أخرى';
+
+  @override
+  String get emergencySetUp => 'إعداد';
+
+  @override
+  String get emergencyShareLocation => 'مشاركة موقعي';
+
+  @override
+  String get emergencyYourInfo => 'معلوماتك';
 
   @override
   String get exploreAround => 'حولك';
@@ -1667,6 +1890,61 @@ class AppLocalizationsAr extends AppLocalizations {
   }
 
   @override
+  String freshAgoMin(int n) {
+    return 'حُدّث قبل $n د';
+  }
+
+  @override
+  String freshAgoSec(int n) {
+    return 'حُدّث قبل $n ث';
+  }
+
+  @override
+  String get freshAnnual => 'السنة الضريبية الحالية';
+
+  @override
+  String freshAt(String time) {
+    return 'حُدّث الساعة $time';
+  }
+
+  @override
+  String get freshCached => 'مخزّن مؤقتًا';
+
+  @override
+  String get freshComputed => 'محسوب لموقعك';
+
+  @override
+  String get freshDaily => 'حُدّث اليوم';
+
+  @override
+  String get freshDelayed => 'متأخر 15 دقيقة';
+
+  @override
+  String get freshDraw => 'أحدث سحب';
+
+  @override
+  String freshForCity(String city) {
+    return 'لـ$city';
+  }
+
+  @override
+  String get freshLive => 'مباشر';
+
+  @override
+  String get freshLocal => 'مخزّن على هذا الجهاز';
+
+  @override
+  String freshOn(String date) {
+    return 'حُدّث $date';
+  }
+
+  @override
+  String get freshStatic => 'نص مرجعي';
+
+  @override
+  String get freshWeekly => 'حُدّث هذا الأسبوع';
+
+  @override
   String get fuelPetrol => 'بنزين';
 
   @override
@@ -1703,6 +1981,18 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get habitWater => '8 أكواب';
+
+  @override
+  String get heatLevelAll => 'الكل';
+
+  @override
+  String get heatLevelMost => 'معظم';
+
+  @override
+  String get heatLevelNone => 'لا شيء';
+
+  @override
+  String get heatLevelSome => 'بعض';
 
   @override
   String get heroHighlights => 'أبرز الأمور';
@@ -1940,6 +2230,92 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get intZakat => 'الزكاة والصدقة';
+
+  @override
+  String get learningConsistency => 'الانتظام';
+
+  @override
+  String learningCourseMeta(String provider, String minutes) {
+    return '$provider · $minutes د';
+  }
+
+  @override
+  String get learningCourses => 'الدورات';
+
+  @override
+  String get learningGoal => 'الهدف الأسبوعي';
+
+  @override
+  String get learningInProgress => 'قيد التقدم';
+
+  @override
+  String get learningInsight1Text =>
+      'تُكمَل جلساتك ذات العشرين دقيقة ضعف ما تُكمَل جلساتك ذات الساعة.';
+
+  @override
+  String get learningInsight1Title => 'الجلسات القصيرة تدوم';
+
+  @override
+  String get learningInsight2Text =>
+      'تسعة أيام متتالية، متقدمة كثيرًا على دوراتك الأخرى.';
+
+  @override
+  String get learningInsight2Title => 'العربية أقوى سلاسلك';
+
+  @override
+  String get learningMilestone => 'الإنجاز التالي';
+
+  @override
+  String learningMilestoneValue(String n) {
+    return '$n د';
+  }
+
+  @override
+  String learningStreak(String n) {
+    return 'سلسلة $n أيام';
+  }
+
+  @override
+  String get learningStreakLabel => 'السلسلة';
+
+  @override
+  String get learningThisWeek => 'هذا الأسبوع';
+
+  @override
+  String get learningWeek => 'هذا الأسبوع';
+
+  @override
+  String get levyCorporate => 'ضريبة الشركات';
+
+  @override
+  String get levyEobi => 'EOBI';
+
+  @override
+  String get levyGosi => 'التأمينات الاجتماعية (GOSI)';
+
+  @override
+  String get levyGst => 'ضريبة السلع والخدمات';
+
+  @override
+  String get levyMedicare => 'ميديكير';
+
+  @override
+  String get levyNi => 'التأمين الوطني';
+
+  @override
+  String get levyPension => 'اشتراك التقاعد';
+
+  @override
+  String get levyPf => 'صندوق الادخار';
+
+  @override
+  String get levySocialSecurity => 'الضمان الاجتماعي';
+
+  @override
+  String get levyVat => 'ضريبة القيمة المضافة';
+
+  @override
+  String get levyZakatRate => 'الزكاة';
 
   @override
   String get loadshedOff => 'الكهرباء مقطوعة';
@@ -2452,12 +2828,6 @@ class AppLocalizationsAr extends AppLocalizations {
   String get notifPrefFrom => 'من';
 
   @override
-  String get notifPrefLater => 'لاحقًا';
-
-  @override
-  String get notifPrefTo => 'حتى';
-
-  @override
   String get notifPrefGeneral => 'عام';
 
   @override
@@ -2468,6 +2838,9 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get notifPrefInAppSub => 'اللافتات ومركز الإشعارات';
+
+  @override
+  String get notifPrefLater => 'لاحقًا';
 
   @override
   String get notifPrefPerTool => 'حسب الأداة';
@@ -2508,6 +2881,9 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get notifPrefSound => 'الصوت';
+
+  @override
+  String get notifPrefTo => 'حتى';
 
   @override
   String get ntypeBillDue => 'فواتير تستحق قريبًا';
@@ -3103,6 +3479,130 @@ class AppLocalizationsAr extends AppLocalizations {
   String get taskSummary => 'أنهِ ملخّص الربع الثالث';
 
   @override
+  String taxAbove(String v) {
+    return 'أكثر من $v';
+  }
+
+  @override
+  String get taxAnnual => 'سنوي';
+
+  @override
+  String get taxAuthorityFbrSalaried => 'شرائح FBR للرواتب';
+
+  @override
+  String get taxAuthorityHmrcEngland => 'ضريبة الدخل HMRC (إنجلترا)';
+
+  @override
+  String get taxAuthorityIndiaNewRegime => 'شرائح النظام الجديد';
+
+  @override
+  String get taxAuthorityIrsSingleFiler => 'IRS مُقدِّم إقرار فردي';
+
+  @override
+  String get taxAuthorityNone => 'لا ضريبة على الدخل الشخصي';
+
+  @override
+  String get taxBand => 'الشريحة';
+
+  @override
+  String get taxDeductions => 'الخصومات';
+
+  @override
+  String get taxDueAnnual => 'الضريبة سنويًا';
+
+  @override
+  String get taxDueMonthly => 'الضريبة شهريًا';
+
+  @override
+  String taxEffective(String rate) {
+    return 'المعدل الفعلي $rate';
+  }
+
+  @override
+  String get taxIncomeAnnual => 'الدخل السنوي';
+
+  @override
+  String get taxIncomeMonthly => 'الدخل الشهري';
+
+  @override
+  String get taxIncomeTax => 'ضريبة الدخل';
+
+  @override
+  String get taxLeviesNote => 'من المفيد معرفته';
+
+  @override
+  String get taxLeviesNoteText =>
+      'هذه معدلات عامة. تُدفع ضرائب الاستهلاك على ما تشتريه بدلًا من اقتطاعها من الراتب، وتُقسَّم اشتراكات الضمان الاجتماعي عادةً بينك وبين صاحب العمل.';
+
+  @override
+  String get taxLevy => 'الرسم';
+
+  @override
+  String get taxMarginal => 'المعدل الحدّي';
+
+  @override
+  String get taxMonthly => 'شهري';
+
+  @override
+  String get taxNoneCaption => 'راتبك لا يخضع لضريبة الدخل الشخصي هنا.';
+
+  @override
+  String taxNoneText(String authority) {
+    return '$authority. لا شيء لحسابه على دخل الرواتب هنا.';
+  }
+
+  @override
+  String get taxNoneTitle => 'لا ضريبة على الدخل الشخصي';
+
+  @override
+  String get taxOtherLevies => 'ما الذي ينطبق';
+
+  @override
+  String get taxPeriod => 'الفترة';
+
+  @override
+  String get taxRate => 'المعدل';
+
+  @override
+  String get taxSlabs => 'كيف تُحسب';
+
+  @override
+  String get taxSplit => 'أين يذهب المال';
+
+  @override
+  String get taxTakeHome => 'صافي الدخل';
+
+  @override
+  String get taxTax => 'الضريبة';
+
+  @override
+  String get taxTaxable => 'الدخل الخاضع للضريبة';
+
+  @override
+  String get taxTaxedHere => 'الضريبة في الشريحة';
+
+  @override
+  String get taxUnsupportedText =>
+      'قواعد الضرائب تختلف من بلد إلى آخر. غيّر البلد لاستخدام سوق أعدّه Lume، أو عد لاحقًا — تُضاف أسواق جديدة بانتظام.';
+
+  @override
+  String taxUnsupportedTitle(String country) {
+    return 'غير متاح بعد لـ$country';
+  }
+
+  @override
+  String get taxYear => 'السنة';
+
+  @override
+  String get timerDone => 'انتهى المؤقت';
+
+  @override
+  String get timerHint => 'اختر إعدادًا مسبقًا أو اضبط وقتك';
+
+  @override
+  String get timerPresets => 'إعدادات مسبقة';
+
+  @override
   String get todayAddToast => 'تمت إضافة مهمة جديدة';
 
   @override
@@ -3245,10 +3745,21 @@ class AppLocalizationsAr extends AppLocalizations {
   String get toolCategorySubPlanning => 'وقتك وقوائمك';
 
   @override
+  String get toolChangeCountry => 'تغيير البلد';
+
+  @override
   String get toolErrorText => 'تعذّر تحميل هذا. حاول مرة أخرى بعد قليل.';
 
   @override
   String get toolErrorTitle => 'حدث خطأ ما';
+
+  @override
+  String toolFavourited(String name) {
+    return 'أُضيفت $name إلى المفضلة';
+  }
+
+  @override
+  String get toolInsights => 'رؤى';
 
   @override
   String get toolLoading => 'جارٍ التحميل';
@@ -3278,6 +3789,15 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get toolPrivateTitle => 'خاص بك';
+
+  @override
+  String get toolRelated => 'أدوات ذات صلة';
+
+  @override
+  String get toolSourceOnDevice => 'على الجهاز';
+
+  @override
+  String get toolSourceTax => 'الشرائح القانونية';
 
   @override
   String get toolStatusAge => 'بالأيام بدقة';
@@ -3546,345 +4066,9 @@ class AppLocalizationsAr extends AppLocalizations {
   String get toolUnavailableTitle => 'ليست ضمن إعداداتك';
 
   @override
-  String get toolRelated => 'أدوات ذات صلة';
-
-  @override
-  String get a11yExport => 'تصدير';
-
-  @override
-  String get a11yFavourite => 'حفظ في المفضلة';
-
-  @override
-  String get a11ySearchTool => 'بحث';
-
-  @override
-  String get toolChangeCountry => 'تغيير البلد';
-
-  @override
-  String get freshLive => 'مباشر';
-
-  @override
-  String get freshCached => 'مخزّن مؤقتًا';
-
-  @override
-  String get freshDelayed => 'متأخر 15 دقيقة';
-
-  @override
-  String get freshDaily => 'حُدّث اليوم';
-
-  @override
-  String get freshWeekly => 'حُدّث هذا الأسبوع';
-
-  @override
-  String get freshAnnual => 'السنة الضريبية الحالية';
-
-  @override
-  String get freshDraw => 'أحدث سحب';
-
-  @override
-  String get freshComputed => 'محسوب لموقعك';
-
-  @override
-  String get freshStatic => 'نص مرجعي';
-
-  @override
-  String get freshLocal => 'مخزّن على هذا الجهاز';
-
-  @override
-  String freshAgoSec(int n) {
-    return 'حُدّث قبل $n ث';
-  }
-
-  @override
-  String freshAgoMin(int n) {
-    return 'حُدّث قبل $n د';
-  }
-
-  @override
-  String freshAt(String time) {
-    return 'حُدّث الساعة $time';
-  }
-
-  @override
-  String freshOn(String date) {
-    return 'حُدّث $date';
-  }
-
-  @override
-  String freshForCity(String city) {
-    return 'لـ$city';
-  }
-
-  @override
-  String get archetypeAction => 'إجراءات الطوارئ';
-
-  @override
-  String get archetypeCalculator => 'حاسبة';
-
-  @override
-  String get archetypeDashboard => 'لوحة المعلومات';
-
-  @override
-  String get archetypeExplorer => 'مستكشف البيانات';
-
-  @override
-  String get archetypeInstrument => 'أداة قياس';
-
-  @override
-  String get archetypeLibrary => 'مكتبة';
-
-  @override
-  String get archetypeManager => 'مدير السجلات';
-
-  @override
-  String get archetypePlanner => 'مخطِّط';
-
-  @override
-  String get archetypeReader => 'قارئ';
-
-  @override
-  String get archetypeTracker => 'متتبِّع';
-
-  @override
-  String get archetypeTracking => 'تتبُّع مباشر';
-
-  @override
-  String get toolSourceTax => 'الشرائح القانونية';
-
-  @override
-  String get toolSourceOnDevice => 'على الجهاز';
-
-  @override
-  String toolFavourited(String name) {
-    return 'أُضيفت $name إلى المفضلة';
-  }
-
-  @override
   String toolUnfavourited(String name) {
     return 'أُزيلت $name من المفضلة';
   }
-
-  @override
-  String get toolInsights => 'رؤى';
-
-  @override
-  String get commonLess => 'أقل';
-
-  @override
-  String get commonMore => 'أكثر';
-
-  @override
-  String get heatLevelNone => 'لا شيء';
-
-  @override
-  String get heatLevelSome => 'بعض';
-
-  @override
-  String get heatLevelMost => 'معظم';
-
-  @override
-  String get heatLevelAll => 'الكل';
-
-  @override
-  String get learningThisWeek => 'هذا الأسبوع';
-
-  @override
-  String learningStreak(String n) {
-    return 'سلسلة $n أيام';
-  }
-
-  @override
-  String get learningGoal => 'الهدف الأسبوعي';
-
-  @override
-  String get learningCourses => 'الدورات';
-
-  @override
-  String get learningStreakLabel => 'السلسلة';
-
-  @override
-  String get learningMilestone => 'الإنجاز التالي';
-
-  @override
-  String learningMilestoneValue(String n) {
-    return '$n د';
-  }
-
-  @override
-  String get learningInProgress => 'قيد التقدم';
-
-  @override
-  String get learningWeek => 'هذا الأسبوع';
-
-  @override
-  String get learningConsistency => 'الانتظام';
-
-  @override
-  String learningCourseMeta(String provider, String minutes) {
-    return '$provider · $minutes د';
-  }
-
-  @override
-  String get learningInsight1Title => 'الجلسات القصيرة تدوم';
-
-  @override
-  String get learningInsight1Text =>
-      'تُكمَل جلساتك ذات العشرين دقيقة ضعف ما تُكمَل جلساتك ذات الساعة.';
-
-  @override
-  String get learningInsight2Title => 'العربية أقوى سلاسلك';
-
-  @override
-  String get learningInsight2Text =>
-      'تسعة أيام متتالية، متقدمة كثيرًا على دوراتك الأخرى.';
-
-  @override
-  String taxAbove(String v) {
-    return 'أكثر من $v';
-  }
-
-  @override
-  String get taxAnnual => 'سنوي';
-
-  @override
-  String get taxBand => 'الشريحة';
-
-  @override
-  String get taxDeductions => 'الخصومات';
-
-  @override
-  String get taxDueAnnual => 'الضريبة سنويًا';
-
-  @override
-  String get taxDueMonthly => 'الضريبة شهريًا';
-
-  @override
-  String taxEffective(String rate) {
-    return 'المعدل الفعلي $rate';
-  }
-
-  @override
-  String get taxIncomeAnnual => 'الدخل السنوي';
-
-  @override
-  String get taxIncomeMonthly => 'الدخل الشهري';
-
-  @override
-  String get taxIncomeTax => 'ضريبة الدخل';
-
-  @override
-  String get taxLeviesNote => 'من المفيد معرفته';
-
-  @override
-  String get taxLeviesNoteText =>
-      'هذه معدلات عامة. تُدفع ضرائب الاستهلاك على ما تشتريه بدلًا من اقتطاعها من الراتب، وتُقسَّم اشتراكات الضمان الاجتماعي عادةً بينك وبين صاحب العمل.';
-
-  @override
-  String get taxLevy => 'الرسم';
-
-  @override
-  String get taxMarginal => 'المعدل الحدّي';
-
-  @override
-  String get taxMonthly => 'شهري';
-
-  @override
-  String taxNoneText(String authority) {
-    return '$authority. لا شيء لحسابه على دخل الرواتب هنا.';
-  }
-
-  @override
-  String get taxNoneTitle => 'لا ضريبة على الدخل الشخصي';
-
-  @override
-  String get taxNoneCaption => 'راتبك لا يخضع لضريبة الدخل الشخصي هنا.';
-
-  @override
-  String get taxOtherLevies => 'ما الذي ينطبق';
-
-  @override
-  String get taxPeriod => 'الفترة';
-
-  @override
-  String get taxRate => 'المعدل';
-
-  @override
-  String get taxSlabs => 'كيف تُحسب';
-
-  @override
-  String get taxSplit => 'أين يذهب المال';
-
-  @override
-  String get taxTakeHome => 'صافي الدخل';
-
-  @override
-  String get taxTax => 'الضريبة';
-
-  @override
-  String get taxTaxable => 'الدخل الخاضع للضريبة';
-
-  @override
-  String get taxTaxedHere => 'الضريبة في الشريحة';
-
-  @override
-  String get taxUnsupportedText =>
-      'قواعد الضرائب تختلف من بلد إلى آخر. غيّر البلد لاستخدام سوق أعدّه Lume، أو عد لاحقًا — تُضاف أسواق جديدة بانتظام.';
-
-  @override
-  String taxUnsupportedTitle(String country) {
-    return 'غير متاح بعد لـ$country';
-  }
-
-  @override
-  String get taxYear => 'السنة';
-
-  @override
-  String get taxAuthorityFbrSalaried => 'شرائح FBR للرواتب';
-
-  @override
-  String get taxAuthorityHmrcEngland => 'ضريبة الدخل HMRC (إنجلترا)';
-
-  @override
-  String get taxAuthorityIrsSingleFiler => 'IRS مُقدِّم إقرار فردي';
-
-  @override
-  String get taxAuthorityIndiaNewRegime => 'شرائح النظام الجديد';
-
-  @override
-  String get taxAuthorityNone => 'لا ضريبة على الدخل الشخصي';
-
-  @override
-  String get levyCorporate => 'ضريبة الشركات';
-
-  @override
-  String get levyEobi => 'EOBI';
-
-  @override
-  String get levyGosi => 'التأمينات الاجتماعية (GOSI)';
-
-  @override
-  String get levyGst => 'ضريبة السلع والخدمات';
-
-  @override
-  String get levyMedicare => 'ميديكير';
-
-  @override
-  String get levyNi => 'التأمين الوطني';
-
-  @override
-  String get levyPension => 'اشتراك التقاعد';
-
-  @override
-  String get levyPf => 'صندوق الادخار';
-
-  @override
-  String get levySocialSecurity => 'الضمان الاجتماعي';
-
-  @override
-  String get levyVat => 'ضريبة القيمة المضافة';
-
-  @override
-  String get levyZakatRate => 'الزكاة';
 
   @override
   String get toolsForYou => 'لك';
@@ -4145,6 +4329,11 @@ class AppLocalizationsAr extends AppLocalizations {
   String get unitMinutes => 'دقيقة';
 
   @override
+  String unitMinutesCount(String n) {
+    return '$n د';
+  }
+
+  @override
   String get unitMph => 'ميل/س';
 
   @override
@@ -4156,15 +4345,6 @@ class AppLocalizationsAr extends AppLocalizations {
   String get unitThousand => 'ألف';
 
   @override
-  String get weatherClear => 'صافٍ';
-
-  @override
-  String get weatherClearVeryWarm => 'صحو · حار جدًا';
-
-  @override
-  String get weatherCloudBuilding => 'تزايد الغيوم';
-
-  @override
   String get weatherBreezy => 'نسيم لطيف';
 
   @override
@@ -4174,43 +4354,22 @@ class AppLocalizationsAr extends AppLocalizations {
   String get weatherChangeable => 'متقلّب';
 
   @override
+  String get weatherClear => 'صافٍ';
+
+  @override
   String get weatherClearAndDry => 'صافٍ وجاف';
+
+  @override
+  String get weatherClearVeryWarm => 'صحو · حار جدًا';
+
+  @override
+  String get weatherCloudBuilding => 'تزايد الغيوم';
 
   @override
   String get weatherCloudy => 'غائم';
 
   @override
   String get weatherFresh => 'منعش';
-
-  @override
-  String get weatherHumid => 'رطب';
-
-  @override
-  String get weatherHumidAfternoonStorms => 'رطب · عواصف بعد الظهر';
-
-  @override
-  String get weatherHumidCloudBuilding => 'رطب · تتكوّن السحب';
-
-  @override
-  String get weatherHumidPassingShowers => 'رطب · زخّات عابرة';
-
-  @override
-  String get weatherHumidShowersLater => 'رطب · زخّات لاحقًا';
-
-  @override
-  String get weatherMildAndClear => 'معتدل وصافٍ';
-
-  @override
-  String get weatherSunnySpells => 'فترات مشمسة';
-
-  @override
-  String get weatherWarm => 'دافئ';
-
-  @override
-  String get weatherWarmAndDry => 'دافئ وجاف';
-
-  @override
-  String get weatherWarmAndHumid => 'دافئ ورطب';
 
   @override
   String get weatherHazy => 'مغبرّ';
@@ -4227,10 +4386,28 @@ class AppLocalizationsAr extends AppLocalizations {
   }
 
   @override
+  String get weatherHumid => 'رطب';
+
+  @override
+  String get weatherHumidAfternoonStorms => 'رطب · عواصف بعد الظهر';
+
+  @override
+  String get weatherHumidCloudBuilding => 'رطب · تتكوّن السحب';
+
+  @override
   String get weatherHumidLightHaze => 'رطوبة · ضباب خفيف';
 
   @override
+  String get weatherHumidPassingShowers => 'رطب · زخّات عابرة';
+
+  @override
+  String get weatherHumidShowersLater => 'رطب · زخّات لاحقًا';
+
+  @override
   String get weatherLightCloud => 'غيوم خفيفة';
+
+  @override
+  String get weatherMildAndClear => 'معتدل وصافٍ';
 
   @override
   String get weatherMostlyClear => 'صافٍ غالبًا';
@@ -4240,4 +4417,16 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get weatherRain => 'المطر';
+
+  @override
+  String get weatherSunnySpells => 'فترات مشمسة';
+
+  @override
+  String get weatherWarm => 'دافئ';
+
+  @override
+  String get weatherWarmAndDry => 'دافئ وجاف';
+
+  @override
+  String get weatherWarmAndHumid => 'دافئ ورطب';
 }

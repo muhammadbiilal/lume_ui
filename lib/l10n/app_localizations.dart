@@ -106,6 +106,18 @@ abstract class AppLocalizations {
   /// **'Back'**
   String get a11yBack;
 
+  /// Reference key a11y.export — the tool header export action
+  ///
+  /// In en, this message translates to:
+  /// **'Export'**
+  String get a11yExport;
+
+  /// Reference key a11y.favourite — the tool header favourite action. The reference has no Urdu or Arabic for it; translated here (§11).
+  ///
+  /// In en, this message translates to:
+  /// **'Save to favourites'**
+  String get a11yFavourite;
+
   /// Reference: aria-label="Main" on both navigations
   ///
   /// In en, this message translates to:
@@ -117,6 +129,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Search this tool'**
   String get a11ySearch;
+
+  /// Reference key a11y.search — the tool header search action, in the reference's own Urdu and Arabic
+  ///
+  /// In en, this message translates to:
+  /// **'Search this tool'**
+  String get a11ySearchTool;
 
   /// Reference key a11y.share
   ///
@@ -1498,6 +1516,72 @@ abstract class AppLocalizations {
   /// **'Your day, in one place'**
   String get appTagline;
 
+  /// Reference key archetype.action — the word in a tool header's sub-line
+  ///
+  /// In en, this message translates to:
+  /// **'Emergency actions'**
+  String get archetypeAction;
+
+  /// Reference key archetype.calculator
+  ///
+  /// In en, this message translates to:
+  /// **'Calculator'**
+  String get archetypeCalculator;
+
+  /// Reference key archetype.dashboard
+  ///
+  /// In en, this message translates to:
+  /// **'Dashboard'**
+  String get archetypeDashboard;
+
+  /// Reference key archetype.explorer
+  ///
+  /// In en, this message translates to:
+  /// **'Data explorer'**
+  String get archetypeExplorer;
+
+  /// Reference key archetype.instrument
+  ///
+  /// In en, this message translates to:
+  /// **'Instrument'**
+  String get archetypeInstrument;
+
+  /// Reference key archetype.library
+  ///
+  /// In en, this message translates to:
+  /// **'Library'**
+  String get archetypeLibrary;
+
+  /// Reference key archetype.manager
+  ///
+  /// In en, this message translates to:
+  /// **'Records manager'**
+  String get archetypeManager;
+
+  /// Reference key archetype.planner
+  ///
+  /// In en, this message translates to:
+  /// **'Planner'**
+  String get archetypePlanner;
+
+  /// Reference key archetype.reader
+  ///
+  /// In en, this message translates to:
+  /// **'Reader'**
+  String get archetypeReader;
+
+  /// Reference key archetype.tracker
+  ///
+  /// In en, this message translates to:
+  /// **'Tracker'**
+  String get archetypeTracker;
+
+  /// Reference key archetype.tracking
+  ///
+  /// In en, this message translates to:
+  /// **'Live tracking'**
+  String get archetypeTracking;
+
   /// Reference key auth.asideText
   ///
   /// In en, this message translates to:
@@ -2200,6 +2284,12 @@ abstract class AppLocalizations {
   /// **'in {n} days'**
   String commonInDays(Object n);
 
+  /// Reference key common.less — a heatmap key
+  ///
+  /// In en, this message translates to:
+  /// **'Less'**
+  String get commonLess;
+
   /// Reference key common.locked
   ///
   /// In en, this message translates to:
@@ -2211,6 +2301,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Month'**
   String get commonMonth;
+
+  /// Reference key common.more — a heatmap key
+  ///
+  /// In en, this message translates to:
+  /// **'More'**
+  String get commonMore;
 
   /// Reference key common.no
   ///
@@ -2283,6 +2379,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Not current'**
   String get commonStale;
+
+  /// Reference key common.start — a clock's primary action. The reference has no Urdu or Arabic for it; translated here (§11).
+  ///
+  /// In en, this message translates to:
+  /// **'Start'**
+  String get commonStart;
 
   /// Reference key common.status
   ///
@@ -2367,6 +2469,336 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Renew your {name}'**
   String docsRenewSoon(String name);
+
+  /// Reference key emerg.all3 — what a number is for
+  ///
+  /// In en, this message translates to:
+  /// **'Police · Fire · Medical'**
+  String get emergKindAll3;
+
+  /// Reference key emerg.allServices — what a number is for
+  ///
+  /// In en, this message translates to:
+  /// **'All services'**
+  String get emergKindAllServices;
+
+  /// Reference key emerg.ambRescue — what a number is for
+  ///
+  /// In en, this message translates to:
+  /// **'Ambulance & rescue'**
+  String get emergKindAmbRescue;
+
+  /// Reference key emerg.ambulance — what a number is for
+  ///
+  /// In en, this message translates to:
+  /// **'Ambulance'**
+  String get emergKindAmbulance;
+
+  /// Reference key emerg.fire — what a number is for
+  ///
+  /// In en, this message translates to:
+  /// **'Fire'**
+  String get emergKindFire;
+
+  /// Reference key emerg.fireRescue — what a number is for
+  ///
+  /// In en, this message translates to:
+  /// **'Fire & rescue'**
+  String get emergKindFireRescue;
+
+  /// Reference key emerg.gas — what a number is for
+  ///
+  /// In en, this message translates to:
+  /// **'Gas leak'**
+  String get emergKindGas;
+
+  /// Reference key emerg.gsm — what a number is for
+  ///
+  /// In en, this message translates to:
+  /// **'Works on most GSM networks'**
+  String get emergKindGsm;
+
+  /// Reference key emerg.helpline — what a number is for
+  ///
+  /// In en, this message translates to:
+  /// **'Helpline'**
+  String get emergKindHelpline;
+
+  /// Reference key emerg.highway — what a number is for
+  ///
+  /// In en, this message translates to:
+  /// **'Highway'**
+  String get emergKindHighway;
+
+  /// Reference key emerg.maritime — what a number is for
+  ///
+  /// In en, this message translates to:
+  /// **'Maritime'**
+  String get emergKindMaritime;
+
+  /// Reference key emerg.medAdvice — what a number is for
+  ///
+  /// In en, this message translates to:
+  /// **'Urgent medical advice'**
+  String get emergKindMedAdvice;
+
+  /// Reference key emerg.medical — what a number is for
+  ///
+  /// In en, this message translates to:
+  /// **'Medical'**
+  String get emergKindMedical;
+
+  /// Reference key emerg.mental — what a number is for
+  ///
+  /// In en, this message translates to:
+  /// **'Mental health'**
+  String get emergKindMental;
+
+  /// Reference key emerg.nonUrgent — what a number is for
+  ///
+  /// In en, this message translates to:
+  /// **'Non-urgent'**
+  String get emergKindNonUrgent;
+
+  /// Reference key emerg.poison — what a number is for
+  ///
+  /// In en, this message translates to:
+  /// **'Poison'**
+  String get emergKindPoison;
+
+  /// Reference key emerg.police — what a number is for
+  ///
+  /// In en, this message translates to:
+  /// **'Police emergency'**
+  String get emergKindPolice;
+
+  /// Reference key emerg.routed — what a number is for
+  ///
+  /// In en, this message translates to:
+  /// **'Widely routed'**
+  String get emergKindRouted;
+
+  /// Reference key emerg.traffic — what a number is for
+  ///
+  /// In en, this message translates to:
+  /// **'Traffic'**
+  String get emergKindTraffic;
+
+  /// Reference key emerg.trafficInfo — what a number is for
+  ///
+  /// In en, this message translates to:
+  /// **'Traffic information'**
+  String get emergKindTrafficInfo;
+
+  /// The name of an emergency service in tool-data.js EMERGENCY. The reference writes it in English in every language; named in the reader's language here (§11), proper nouns transliterated
+  ///
+  /// In en, this message translates to:
+  /// **'Ambulance'**
+  String get emergNameAmbulance;
+
+  /// The name of an emergency service in tool-data.js EMERGENCY. The reference writes it in English in every language; named in the reader's language here (§11), proper nouns transliterated
+  ///
+  /// In en, this message translates to:
+  /// **'Civil Defence'**
+  String get emergNameCivilDefence;
+
+  /// The name of an emergency service in tool-data.js EMERGENCY. The reference writes it in English in every language; named in the reader's language here (§11), proper nouns transliterated
+  ///
+  /// In en, this message translates to:
+  /// **'Coast Guard'**
+  String get emergNameCoastGuard;
+
+  /// The name of an emergency service in tool-data.js EMERGENCY. The reference writes it in English in every language; named in the reader's language here (§11), proper nouns transliterated
+  ///
+  /// In en, this message translates to:
+  /// **'Crisis Lifeline'**
+  String get emergNameCrisisLifeline;
+
+  /// The name of an emergency service in tool-data.js EMERGENCY. The reference writes it in English in every language; named in the reader's language here (§11), proper nouns transliterated
+  ///
+  /// In en, this message translates to:
+  /// **'Edhi Ambulance'**
+  String get emergNameEdhiAmbulance;
+
+  /// The name of an emergency service in tool-data.js EMERGENCY. The reference writes it in English in every language; named in the reader's language here (§11), proper nouns transliterated
+  ///
+  /// In en, this message translates to:
+  /// **'Emergency'**
+  String get emergNameEmergency;
+
+  /// The name of an emergency service in tool-data.js EMERGENCY. The reference writes it in English in every language; named in the reader's language here (§11), proper nouns transliterated
+  ///
+  /// In en, this message translates to:
+  /// **'Fire'**
+  String get emergNameFire;
+
+  /// The name of an emergency service in tool-data.js EMERGENCY. The reference writes it in English in every language; named in the reader's language here (§11), proper nouns transliterated
+  ///
+  /// In en, this message translates to:
+  /// **'Fire Brigade'**
+  String get emergNameFireBrigade;
+
+  /// The name of an emergency service in tool-data.js EMERGENCY. The reference writes it in English in every language; named in the reader's language here (§11), proper nouns transliterated
+  ///
+  /// In en, this message translates to:
+  /// **'Fire (Civil Defence)'**
+  String get emergNameFireCivilDefence;
+
+  /// The name of an emergency service in tool-data.js EMERGENCY. The reference writes it in English in every language; named in the reader's language here (§11), proper nouns transliterated
+  ///
+  /// In en, this message translates to:
+  /// **'Gas emergency'**
+  String get emergNameGasEmergency;
+
+  /// The name of an emergency service in tool-data.js EMERGENCY. The reference writes it in English in every language; named in the reader's language here (§11), proper nouns transliterated
+  ///
+  /// In en, this message translates to:
+  /// **'International Emergency'**
+  String get emergNameInternational;
+
+  /// The name of an emergency service in tool-data.js EMERGENCY. The reference writes it in English in every language; named in the reader's language here (§11), proper nouns transliterated
+  ///
+  /// In en, this message translates to:
+  /// **'Local Emergency'**
+  String get emergNameLocal;
+
+  /// The name of an emergency service in tool-data.js EMERGENCY. The reference writes it in English in every language; named in the reader's language here (§11), proper nouns transliterated
+  ///
+  /// In en, this message translates to:
+  /// **'Motorway Police'**
+  String get emergNameMotorwayPolice;
+
+  /// The name of an emergency service in tool-data.js EMERGENCY. The reference writes it in English in every language; named in the reader's language here (§11), proper nouns transliterated
+  ///
+  /// In en, this message translates to:
+  /// **'NHS 111'**
+  String get emergNameNhs111;
+
+  /// The name of an emergency service in tool-data.js EMERGENCY. The reference writes it in English in every language; named in the reader's language here (§11), proper nouns transliterated
+  ///
+  /// In en, this message translates to:
+  /// **'Poison Control'**
+  String get emergNamePoisonControl;
+
+  /// The name of an emergency service in tool-data.js EMERGENCY. The reference writes it in English in every language; named in the reader's language here (§11), proper nouns transliterated
+  ///
+  /// In en, this message translates to:
+  /// **'Police'**
+  String get emergNamePolice;
+
+  /// The name of an emergency service in tool-data.js EMERGENCY. The reference writes it in English in every language; named in the reader's language here (§11), proper nouns transliterated
+  ///
+  /// In en, this message translates to:
+  /// **'Police non-emergency'**
+  String get emergNamePoliceNonEmergency;
+
+  /// The name of an emergency service in tool-data.js EMERGENCY. The reference writes it in English in every language; named in the reader's language here (§11), proper nouns transliterated
+  ///
+  /// In en, this message translates to:
+  /// **'Red Crescent'**
+  String get emergNameRedCrescent;
+
+  /// The name of an emergency service in tool-data.js EMERGENCY. The reference writes it in English in every language; named in the reader's language here (§11), proper nouns transliterated
+  ///
+  /// In en, this message translates to:
+  /// **'Rescue 1122'**
+  String get emergNameRescue1122;
+
+  /// The name of an emergency service in tool-data.js EMERGENCY. The reference writes it in English in every language; named in the reader's language here (§11), proper nouns transliterated
+  ///
+  /// In en, this message translates to:
+  /// **'Roadside'**
+  String get emergNameRoadside;
+
+  /// The name of an emergency service in tool-data.js EMERGENCY. The reference writes it in English in every language; named in the reader's language here (§11), proper nouns transliterated
+  ///
+  /// In en, this message translates to:
+  /// **'Traffic'**
+  String get emergNameTraffic;
+
+  /// The name of an emergency service in tool-data.js EMERGENCY. The reference writes it in English in every language; named in the reader's language here (§11), proper nouns transliterated
+  ///
+  /// In en, this message translates to:
+  /// **'Unified Emergency'**
+  String get emergNameUnifiedEmergency;
+
+  /// The name of an emergency service in tool-data.js EMERGENCY. The reference writes it in English in every language; named in the reader's language here (§11), proper nouns transliterated
+  ///
+  /// In en, this message translates to:
+  /// **'Women Helpline'**
+  String get emergNameWomenHelpline;
+
+  /// The accessible name of a call tile (D6). The number is the one on the tile, isolated left to right
+  ///
+  /// In en, this message translates to:
+  /// **'Call {service} at {number}'**
+  String emergencyCall(String service, String number);
+
+  /// Said when the platform refused or failed to open the dialer. Lume has no such message; the toast is its mechanism (D6)
+  ///
+  /// In en, this message translates to:
+  /// **'Couldn’t open the phone app. Dial {number} yourself.'**
+  String emergencyDialFailed(String number);
+
+  /// Said when nothing on the device can dial (D6)
+  ///
+  /// In en, this message translates to:
+  /// **'This device can’t make calls. Dial {number} from a phone.'**
+  String emergencyDialUnavailable(String number);
+
+  /// Reference key emergency.documents
+  ///
+  /// In en, this message translates to:
+  /// **'Identity documents'**
+  String get emergencyDocuments;
+
+  /// Reference key emergency.locationShared — said only once the city and country are on the clipboard (C67)
+  ///
+  /// In en, this message translates to:
+  /// **'Location copied to share'**
+  String get emergencyLocationShared;
+
+  /// Reference key emergency.medical. The reference has no Urdu or Arabic; translated here (§11)
+  ///
+  /// In en, this message translates to:
+  /// **'Medical details'**
+  String get emergencyMedical;
+
+  /// Reference key emergency.note.text
+  ///
+  /// In en, this message translates to:
+  /// **'Emergency numbers can usually be dialled with no credit and no SIM. 112 is routed in most countries.'**
+  String get emergencyNoteText;
+
+  /// Reference key emergency.note.title
+  ///
+  /// In en, this message translates to:
+  /// **'Numbers work without signal'**
+  String get emergencyNoteTitle;
+
+  /// Reference key emergency.services
+  ///
+  /// In en, this message translates to:
+  /// **'Other services'**
+  String get emergencyServices;
+
+  /// Reference key emergency.setUp
+  ///
+  /// In en, this message translates to:
+  /// **'Set up'**
+  String get emergencySetUp;
+
+  /// Reference key emergency.shareLocation
+  ///
+  /// In en, this message translates to:
+  /// **'Share my location'**
+  String get emergencyShareLocation;
+
+  /// Reference key emergency.yourInfo
+  ///
+  /// In en, this message translates to:
+  /// **'Your information'**
+  String get emergencyYourInfo;
 
   /// Reference: the local services section
   ///
@@ -3076,6 +3508,96 @@ abstract class AppLocalizations {
   /// **'{n} min'**
   String featuredMinutes(int n);
 
+  /// Reference key fresh.agoMin — the source line of a delayed tool
+  ///
+  /// In en, this message translates to:
+  /// **'Updated {n} min ago'**
+  String freshAgoMin(int n);
+
+  /// Reference key fresh.agoSec — the source line of a live tool
+  ///
+  /// In en, this message translates to:
+  /// **'Updated {n} sec ago'**
+  String freshAgoSec(int n);
+
+  /// Reference key fresh.annual
+  ///
+  /// In en, this message translates to:
+  /// **'Current tax year'**
+  String get freshAnnual;
+
+  /// Reference key fresh.at — a daily source, in the reader's clock
+  ///
+  /// In en, this message translates to:
+  /// **'Updated at {time}'**
+  String freshAt(String time);
+
+  /// Reference key fresh.cached
+  ///
+  /// In en, this message translates to:
+  /// **'Cached'**
+  String get freshCached;
+
+  /// Reference key fresh.computed
+  ///
+  /// In en, this message translates to:
+  /// **'Calculated for your location'**
+  String get freshComputed;
+
+  /// Reference key fresh.daily
+  ///
+  /// In en, this message translates to:
+  /// **'Updated today'**
+  String get freshDaily;
+
+  /// Reference key fresh.delayed
+  ///
+  /// In en, this message translates to:
+  /// **'Delayed 15 min'**
+  String get freshDelayed;
+
+  /// Reference key fresh.draw
+  ///
+  /// In en, this message translates to:
+  /// **'Latest draw'**
+  String get freshDraw;
+
+  /// Reference key fresh.forCity — a figure computed for the reader's city
+  ///
+  /// In en, this message translates to:
+  /// **'For {city}'**
+  String freshForCity(String city);
+
+  /// Reference key fresh.live — a live source
+  ///
+  /// In en, this message translates to:
+  /// **'Live'**
+  String get freshLive;
+
+  /// Reference key fresh.local
+  ///
+  /// In en, this message translates to:
+  /// **'Stored on this device'**
+  String get freshLocal;
+
+  /// Reference key fresh.on — a weekly or annual source
+  ///
+  /// In en, this message translates to:
+  /// **'Updated {date}'**
+  String freshOn(String date);
+
+  /// Reference key fresh.static
+  ///
+  /// In en, this message translates to:
+  /// **'Reference text'**
+  String get freshStatic;
+
+  /// Reference key fresh.weekly
+  ///
+  /// In en, this message translates to:
+  /// **'Updated this week'**
+  String get freshWeekly;
+
   /// Reference key fuel.g.petrol
   ///
   /// In en, this message translates to:
@@ -3147,6 +3669,30 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'8 glasses'**
   String get habitWater;
+
+  /// A heatmap cell's level
+  ///
+  /// In en, this message translates to:
+  /// **'all'**
+  String get heatLevelAll;
+
+  /// A heatmap cell's level
+  ///
+  /// In en, this message translates to:
+  /// **'most'**
+  String get heatLevelMost;
+
+  /// A heatmap cell's level, as a screen reader hears it. The reference announces the English word in every language; translated here.
+  ///
+  /// In en, this message translates to:
+  /// **'none'**
+  String get heatLevelNone;
+
+  /// A heatmap cell's level
+  ///
+  /// In en, this message translates to:
+  /// **'some'**
+  String get heatLevelSome;
 
   /// Reference: aria-label="Highlights" on the carousel
   ///
@@ -3543,6 +4089,162 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Zakat & giving'**
   String get intZakat;
+
+  /// Reference key learning.consistency — the heatmap's section head and name
+  ///
+  /// In en, this message translates to:
+  /// **'Consistency'**
+  String get learningConsistency;
+
+  /// A course's provider and session length — `x.provider + " · " + x.mins + " " + t("unit.min")`
+  ///
+  /// In en, this message translates to:
+  /// **'{provider} · {minutes} min'**
+  String learningCourseMeta(String provider, String minutes);
+
+  /// Reference key learning.courses — a summary figure
+  ///
+  /// In en, this message translates to:
+  /// **'Courses'**
+  String get learningCourses;
+
+  /// Reference key learning.goal — the ring's accessible name
+  ///
+  /// In en, this message translates to:
+  /// **'Weekly goal'**
+  String get learningGoal;
+
+  /// Reference key learning.inProgress — a section head
+  ///
+  /// In en, this message translates to:
+  /// **'In progress'**
+  String get learningInProgress;
+
+  /// Reference key learning.insight1.text
+  ///
+  /// In en, this message translates to:
+  /// **'Your 20-minute sessions are completed twice as often as your hour-long ones.'**
+  String get learningInsight1Text;
+
+  /// Reference key learning.insight1.title
+  ///
+  /// In en, this message translates to:
+  /// **'Short sessions stick'**
+  String get learningInsight1Title;
+
+  /// Reference key learning.insight2.text
+  ///
+  /// In en, this message translates to:
+  /// **'Nine days running, well ahead of your other courses.'**
+  String get learningInsight2Text;
+
+  /// Reference key learning.insight2.title
+  ///
+  /// In en, this message translates to:
+  /// **'Arabic is your strongest streak'**
+  String get learningInsight2Title;
+
+  /// Reference key learning.milestone — a summary figure
+  ///
+  /// In en, this message translates to:
+  /// **'Next milestone'**
+  String get learningMilestone;
+
+  /// Reference key learning.milestoneValue — the reference writes the literal "200 min"; the figure is a placeholder here so its digits follow the locale
+  ///
+  /// In en, this message translates to:
+  /// **'{n} min'**
+  String learningMilestoneValue(String n);
+
+  /// Reference key learning.streak — the summary's caption
+  ///
+  /// In en, this message translates to:
+  /// **'{n}-day streak'**
+  String learningStreak(String n);
+
+  /// Reference key learning.streakLabel — a summary figure
+  ///
+  /// In en, this message translates to:
+  /// **'Streak'**
+  String get learningStreakLabel;
+
+  /// Reference key learning.thisWeek — the summary's kicker
+  ///
+  /// In en, this message translates to:
+  /// **'This week'**
+  String get learningThisWeek;
+
+  /// Reference key learning.week — the bar chart's section head and name
+  ///
+  /// In en, this message translates to:
+  /// **'This week'**
+  String get learningWeek;
+
+  /// Reference key levy.corporate
+  ///
+  /// In en, this message translates to:
+  /// **'Corporate tax'**
+  String get levyCorporate;
+
+  /// Reference key levy.eobi
+  ///
+  /// In en, this message translates to:
+  /// **'EOBI'**
+  String get levyEobi;
+
+  /// Reference key levy.gosi
+  ///
+  /// In en, this message translates to:
+  /// **'Social insurance (GOSI)'**
+  String get levyGosi;
+
+  /// Reference key levy.gst
+  ///
+  /// In en, this message translates to:
+  /// **'GST'**
+  String get levyGst;
+
+  /// Reference key levy.medicare
+  ///
+  /// In en, this message translates to:
+  /// **'Medicare'**
+  String get levyMedicare;
+
+  /// Reference key levy.ni
+  ///
+  /// In en, this message translates to:
+  /// **'National Insurance'**
+  String get levyNi;
+
+  /// Reference key levy.pension
+  ///
+  /// In en, this message translates to:
+  /// **'Pension contribution'**
+  String get levyPension;
+
+  /// Reference key levy.pf
+  ///
+  /// In en, this message translates to:
+  /// **'Provident Fund'**
+  String get levyPf;
+
+  /// Reference key levy.socialSecurity
+  ///
+  /// In en, this message translates to:
+  /// **'Social Security'**
+  String get levySocialSecurity;
+
+  /// Reference key levy.vat
+  ///
+  /// In en, this message translates to:
+  /// **'VAT'**
+  String get levyVat;
+
+  /// Reference key levy.zakatRate
+  ///
+  /// In en, this message translates to:
+  /// **'Zakat'**
+  String get levyZakatRate;
 
   /// Reference key loadshed.currentlyOff
   ///
@@ -4330,18 +5032,6 @@ abstract class AppLocalizations {
   /// **'from'**
   String get notifPrefFrom;
 
-  /// Reference: `n.pref.later`. The quiet-hours stepper's increment.
-  ///
-  /// In en, this message translates to:
-  /// **'Later'**
-  String get notifPrefLater;
-
-  /// Reference: `n.pref.to`. The second quiet-hours stepper row.
-  ///
-  /// In en, this message translates to:
-  /// **'Until'**
-  String get notifPrefTo;
-
   /// Reference: `n.pref.general`.
   ///
   /// In en, this message translates to:
@@ -4365,6 +5055,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Banners and the notification centre'**
   String get notifPrefInAppSub;
+
+  /// Reference: `n.pref.later`. The quiet-hours stepper's increment.
+  ///
+  /// In en, this message translates to:
+  /// **'Later'**
+  String get notifPrefLater;
 
   /// Reference: `n.pref.perTool`.
   ///
@@ -4443,6 +5139,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Sound'**
   String get notifPrefSound;
+
+  /// Reference: `n.pref.to`. The second quiet-hours stepper row.
+  ///
+  /// In en, this message translates to:
+  /// **'Until'**
+  String get notifPrefTo;
 
   /// Reference: `ntype.billDue`.
   ///
@@ -5548,6 +6250,234 @@ abstract class AppLocalizations {
   /// **'Finish the Q3 summary'**
   String get taskSummary;
 
+  /// Reference key tax.above — the top band's label
+  ///
+  /// In en, this message translates to:
+  /// **'Above {v}'**
+  String taxAbove(String v);
+
+  /// Reference key tax.annual — the period control
+  ///
+  /// In en, this message translates to:
+  /// **'Annual'**
+  String get taxAnnual;
+
+  /// tool-data.js TAX.PK.authority. The reference prints the data string in every language; translated here (§11).
+  ///
+  /// In en, this message translates to:
+  /// **'FBR salaried slabs'**
+  String get taxAuthorityFbrSalaried;
+
+  /// tool-data.js TAX.GB.authority
+  ///
+  /// In en, this message translates to:
+  /// **'HMRC income tax (England)'**
+  String get taxAuthorityHmrcEngland;
+
+  /// tool-data.js TAX.IN.authority
+  ///
+  /// In en, this message translates to:
+  /// **'New regime slabs'**
+  String get taxAuthorityIndiaNewRegime;
+
+  /// tool-data.js TAX.US.authority
+  ///
+  /// In en, this message translates to:
+  /// **'IRS single filer'**
+  String get taxAuthorityIrsSingleFiler;
+
+  /// tool-data.js TAX.AE/SA.authority
+  ///
+  /// In en, this message translates to:
+  /// **'No personal income tax'**
+  String get taxAuthorityNone;
+
+  /// Reference key tax.band — a table column
+  ///
+  /// In en, this message translates to:
+  /// **'Band'**
+  String get taxBand;
+
+  /// Reference key tax.deductions — a field
+  ///
+  /// In en, this message translates to:
+  /// **'Deductions'**
+  String get taxDeductions;
+
+  /// Reference key tax.dueAnnual — the result's kicker
+  ///
+  /// In en, this message translates to:
+  /// **'Tax a year'**
+  String get taxDueAnnual;
+
+  /// Reference key tax.dueMonthly — the result's kicker
+  ///
+  /// In en, this message translates to:
+  /// **'Tax a month'**
+  String get taxDueMonthly;
+
+  /// Reference key tax.effective — the result's caption
+  ///
+  /// In en, this message translates to:
+  /// **'Effective rate {rate}'**
+  String taxEffective(String rate);
+
+  /// Reference key tax.incomeAnnual — a field
+  ///
+  /// In en, this message translates to:
+  /// **'Annual income'**
+  String get taxIncomeAnnual;
+
+  /// Reference key tax.incomeMonthly — a field
+  ///
+  /// In en, this message translates to:
+  /// **'Monthly income'**
+  String get taxIncomeMonthly;
+
+  /// Reference key tax.incomeTax
+  ///
+  /// In en, this message translates to:
+  /// **'Income tax'**
+  String get taxIncomeTax;
+
+  /// Reference key tax.leviesNote — a section head
+  ///
+  /// In en, this message translates to:
+  /// **'Worth knowing'**
+  String get taxLeviesNote;
+
+  /// Reference key tax.leviesNoteText
+  ///
+  /// In en, this message translates to:
+  /// **'These are headline rates. Consumption taxes are paid on what you buy rather than deducted from pay, and social contributions are usually split between you and your employer.'**
+  String get taxLeviesNoteText;
+
+  /// Reference key tax.levy — a table column
+  ///
+  /// In en, this message translates to:
+  /// **'Levy'**
+  String get taxLevy;
+
+  /// Reference key tax.marginal
+  ///
+  /// In en, this message translates to:
+  /// **'Marginal rate'**
+  String get taxMarginal;
+
+  /// Reference key tax.monthly — the period control
+  ///
+  /// In en, this message translates to:
+  /// **'Monthly'**
+  String get taxMonthly;
+
+  /// Reference key tax.noneCaption
+  ///
+  /// In en, this message translates to:
+  /// **'Your salary is not subject to personal income tax here.'**
+  String get taxNoneCaption;
+
+  /// Reference key tax.none.text
+  ///
+  /// In en, this message translates to:
+  /// **'{authority}. Nothing to calculate for salaried income here.'**
+  String taxNoneText(String authority);
+
+  /// Reference key tax.none.title
+  ///
+  /// In en, this message translates to:
+  /// **'No personal income tax'**
+  String get taxNoneTitle;
+
+  /// Reference key tax.otherLevies — a section head
+  ///
+  /// In en, this message translates to:
+  /// **'What does apply'**
+  String get taxOtherLevies;
+
+  /// Reference key tax.period — the period control's accessible name
+  ///
+  /// In en, this message translates to:
+  /// **'Period'**
+  String get taxPeriod;
+
+  /// Reference key tax.rate — a table column
+  ///
+  /// In en, this message translates to:
+  /// **'Rate'**
+  String get taxRate;
+
+  /// Reference key tax.slabs — the breakdown's head
+  ///
+  /// In en, this message translates to:
+  /// **'How it is worked out'**
+  String get taxSlabs;
+
+  /// Reference key tax.split — the donut's accessible name
+  ///
+  /// In en, this message translates to:
+  /// **'Where it goes'**
+  String get taxSplit;
+
+  /// Reference key tax.takeHome
+  ///
+  /// In en, this message translates to:
+  /// **'Take-home'**
+  String get taxTakeHome;
+
+  /// Reference key tax.tax — the donut's tax slice
+  ///
+  /// In en, this message translates to:
+  /// **'Tax'**
+  String get taxTax;
+
+  /// Reference key tax.taxable
+  ///
+  /// In en, this message translates to:
+  /// **'Taxable income'**
+  String get taxTaxable;
+
+  /// Reference key tax.taxedHere — a table column
+  ///
+  /// In en, this message translates to:
+  /// **'Tax in band'**
+  String get taxTaxedHere;
+
+  /// Reference key tax.unsupported.text
+  ///
+  /// In en, this message translates to:
+  /// **'Tax rules are country-specific. Switch country to use a market Lume has configured, or check back — new markets are added regularly.'**
+  String get taxUnsupportedText;
+
+  /// Reference key tax.unsupported.title
+  ///
+  /// In en, this message translates to:
+  /// **'Not yet localised for {country}'**
+  String taxUnsupportedTitle(String country);
+
+  /// Reference key tax.year
+  ///
+  /// In en, this message translates to:
+  /// **'Year'**
+  String get taxYear;
+
+  /// Reference key timer.done — the toast when a countdown reaches zero
+  ///
+  /// In en, this message translates to:
+  /// **'Timer finished'**
+  String get timerDone;
+
+  /// Reference key timer.hint — under the clock face
+  ///
+  /// In en, this message translates to:
+  /// **'Choose a preset or set your own'**
+  String get timerHint;
+
+  /// Reference key timer.presets — a section head
+  ///
+  /// In en, this message translates to:
+  /// **'Presets'**
+  String get timerPresets;
+
   /// Reference: the toast behind the Add control
   ///
   /// In en, this message translates to:
@@ -5800,6 +6730,12 @@ abstract class AppLocalizations {
   /// **'Your time and your lists'**
   String get toolCategorySubPlanning;
 
+  /// Reference key settings.changeCountry — a tool that is not localised for the reader's country offers this
+  ///
+  /// In en, this message translates to:
+  /// **'Change country'**
+  String get toolChangeCountry;
+
   /// Tool host error state
   ///
   /// In en, this message translates to:
@@ -5811,6 +6747,18 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Something went wrong'**
   String get toolErrorTitle;
+
+  /// Reference key tool.favourited — the toast after the header's favourite action
+  ///
+  /// In en, this message translates to:
+  /// **'Added {name} to favourites'**
+  String toolFavourited(String name);
+
+  /// Reference key habits.insights — a tracker's insight section head
+  ///
+  /// In en, this message translates to:
+  /// **'Insights'**
+  String get toolInsights;
 
   /// Announced while a tool is still assembling
   ///
@@ -5847,6 +6795,24 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Private to you'**
   String get toolPrivateTitle;
+
+  /// Reference key tool.related — the related-tools section head
+  ///
+  /// In en, this message translates to:
+  /// **'Related tools'**
+  String get toolRelated;
+
+  /// tool-specs.js src "On device" — shared by every tool whose figures live on the device. The reference prints it in English everywhere; translated here (§11).
+  ///
+  /// In en, this message translates to:
+  /// **'On device'**
+  String get toolSourceOnDevice;
+
+  /// tool-specs.js src for tax. The reference prints this English string in every language; translated here (§11).
+  ///
+  /// In en, this message translates to:
+  /// **'Statutory slabs'**
+  String get toolSourceTax;
 
   /// The status line on the age tile. The prototype keeps it in the catalogue and renders it untranslated in every language (D22)
   ///
@@ -6376,623 +7342,11 @@ abstract class AppLocalizations {
   /// **'Not part of your setup'**
   String get toolUnavailableTitle;
 
-  /// Reference key tool.related — the related-tools section head
-  ///
-  /// In en, this message translates to:
-  /// **'Related tools'**
-  String get toolRelated;
-
-  /// Reference key a11y.export — the tool header export action
-  ///
-  /// In en, this message translates to:
-  /// **'Export'**
-  String get a11yExport;
-
-  /// Reference key a11y.favourite — the tool header favourite action. The reference has no Urdu or Arabic for it; translated here (§11).
-  ///
-  /// In en, this message translates to:
-  /// **'Save to favourites'**
-  String get a11yFavourite;
-
-  /// Reference key a11y.search — the tool header search action, in the reference's own Urdu and Arabic
-  ///
-  /// In en, this message translates to:
-  /// **'Search this tool'**
-  String get a11ySearchTool;
-
-  /// Reference key settings.changeCountry — a tool that is not localised for the reader's country offers this
-  ///
-  /// In en, this message translates to:
-  /// **'Change country'**
-  String get toolChangeCountry;
-
-  /// Reference key fresh.live — a live source
-  ///
-  /// In en, this message translates to:
-  /// **'Live'**
-  String get freshLive;
-
-  /// Reference key fresh.cached
-  ///
-  /// In en, this message translates to:
-  /// **'Cached'**
-  String get freshCached;
-
-  /// Reference key fresh.delayed
-  ///
-  /// In en, this message translates to:
-  /// **'Delayed 15 min'**
-  String get freshDelayed;
-
-  /// Reference key fresh.daily
-  ///
-  /// In en, this message translates to:
-  /// **'Updated today'**
-  String get freshDaily;
-
-  /// Reference key fresh.weekly
-  ///
-  /// In en, this message translates to:
-  /// **'Updated this week'**
-  String get freshWeekly;
-
-  /// Reference key fresh.annual
-  ///
-  /// In en, this message translates to:
-  /// **'Current tax year'**
-  String get freshAnnual;
-
-  /// Reference key fresh.draw
-  ///
-  /// In en, this message translates to:
-  /// **'Latest draw'**
-  String get freshDraw;
-
-  /// Reference key fresh.computed
-  ///
-  /// In en, this message translates to:
-  /// **'Calculated for your location'**
-  String get freshComputed;
-
-  /// Reference key fresh.static
-  ///
-  /// In en, this message translates to:
-  /// **'Reference text'**
-  String get freshStatic;
-
-  /// Reference key fresh.local
-  ///
-  /// In en, this message translates to:
-  /// **'Stored on this device'**
-  String get freshLocal;
-
-  /// Reference key fresh.agoSec — the source line of a live tool
-  ///
-  /// In en, this message translates to:
-  /// **'Updated {n} sec ago'**
-  String freshAgoSec(int n);
-
-  /// Reference key fresh.agoMin — the source line of a delayed tool
-  ///
-  /// In en, this message translates to:
-  /// **'Updated {n} min ago'**
-  String freshAgoMin(int n);
-
-  /// Reference key fresh.at — a daily source, in the reader's clock
-  ///
-  /// In en, this message translates to:
-  /// **'Updated at {time}'**
-  String freshAt(String time);
-
-  /// Reference key fresh.on — a weekly or annual source
-  ///
-  /// In en, this message translates to:
-  /// **'Updated {date}'**
-  String freshOn(String date);
-
-  /// Reference key fresh.forCity — a figure computed for the reader's city
-  ///
-  /// In en, this message translates to:
-  /// **'For {city}'**
-  String freshForCity(String city);
-
-  /// Reference key archetype.action — the word in a tool header's sub-line
-  ///
-  /// In en, this message translates to:
-  /// **'Emergency actions'**
-  String get archetypeAction;
-
-  /// Reference key archetype.calculator
-  ///
-  /// In en, this message translates to:
-  /// **'Calculator'**
-  String get archetypeCalculator;
-
-  /// Reference key archetype.dashboard
-  ///
-  /// In en, this message translates to:
-  /// **'Dashboard'**
-  String get archetypeDashboard;
-
-  /// Reference key archetype.explorer
-  ///
-  /// In en, this message translates to:
-  /// **'Data explorer'**
-  String get archetypeExplorer;
-
-  /// Reference key archetype.instrument
-  ///
-  /// In en, this message translates to:
-  /// **'Instrument'**
-  String get archetypeInstrument;
-
-  /// Reference key archetype.library
-  ///
-  /// In en, this message translates to:
-  /// **'Library'**
-  String get archetypeLibrary;
-
-  /// Reference key archetype.manager
-  ///
-  /// In en, this message translates to:
-  /// **'Records manager'**
-  String get archetypeManager;
-
-  /// Reference key archetype.planner
-  ///
-  /// In en, this message translates to:
-  /// **'Planner'**
-  String get archetypePlanner;
-
-  /// Reference key archetype.reader
-  ///
-  /// In en, this message translates to:
-  /// **'Reader'**
-  String get archetypeReader;
-
-  /// Reference key archetype.tracker
-  ///
-  /// In en, this message translates to:
-  /// **'Tracker'**
-  String get archetypeTracker;
-
-  /// Reference key archetype.tracking
-  ///
-  /// In en, this message translates to:
-  /// **'Live tracking'**
-  String get archetypeTracking;
-
-  /// tool-specs.js src for tax. The reference prints this English string in every language; translated here (§11).
-  ///
-  /// In en, this message translates to:
-  /// **'Statutory slabs'**
-  String get toolSourceTax;
-
-  /// tool-specs.js src "On device" — shared by every tool whose figures live on the device. The reference prints it in English everywhere; translated here (§11).
-  ///
-  /// In en, this message translates to:
-  /// **'On device'**
-  String get toolSourceOnDevice;
-
-  /// Reference key tool.favourited — the toast after the header's favourite action
-  ///
-  /// In en, this message translates to:
-  /// **'Added {name} to favourites'**
-  String toolFavourited(String name);
-
   /// Reference key tool.unfavourited
   ///
   /// In en, this message translates to:
   /// **'Removed {name} from favourites'**
   String toolUnfavourited(String name);
-
-  /// Reference key habits.insights — a tracker's insight section head
-  ///
-  /// In en, this message translates to:
-  /// **'Insights'**
-  String get toolInsights;
-
-  /// Reference key common.less — a heatmap key
-  ///
-  /// In en, this message translates to:
-  /// **'Less'**
-  String get commonLess;
-
-  /// Reference key common.more — a heatmap key
-  ///
-  /// In en, this message translates to:
-  /// **'More'**
-  String get commonMore;
-
-  /// A heatmap cell's level, as a screen reader hears it. The reference announces the English word in every language; translated here.
-  ///
-  /// In en, this message translates to:
-  /// **'none'**
-  String get heatLevelNone;
-
-  /// A heatmap cell's level
-  ///
-  /// In en, this message translates to:
-  /// **'some'**
-  String get heatLevelSome;
-
-  /// A heatmap cell's level
-  ///
-  /// In en, this message translates to:
-  /// **'most'**
-  String get heatLevelMost;
-
-  /// A heatmap cell's level
-  ///
-  /// In en, this message translates to:
-  /// **'all'**
-  String get heatLevelAll;
-
-  /// Reference key learning.thisWeek — the summary's kicker
-  ///
-  /// In en, this message translates to:
-  /// **'This week'**
-  String get learningThisWeek;
-
-  /// Reference key learning.streak — the summary's caption
-  ///
-  /// In en, this message translates to:
-  /// **'{n}-day streak'**
-  String learningStreak(String n);
-
-  /// Reference key learning.goal — the ring's accessible name
-  ///
-  /// In en, this message translates to:
-  /// **'Weekly goal'**
-  String get learningGoal;
-
-  /// Reference key learning.courses — a summary figure
-  ///
-  /// In en, this message translates to:
-  /// **'Courses'**
-  String get learningCourses;
-
-  /// Reference key learning.streakLabel — a summary figure
-  ///
-  /// In en, this message translates to:
-  /// **'Streak'**
-  String get learningStreakLabel;
-
-  /// Reference key learning.milestone — a summary figure
-  ///
-  /// In en, this message translates to:
-  /// **'Next milestone'**
-  String get learningMilestone;
-
-  /// Reference key learning.milestoneValue — the reference writes the literal "200 min"; the figure is a placeholder here so its digits follow the locale
-  ///
-  /// In en, this message translates to:
-  /// **'{n} min'**
-  String learningMilestoneValue(String n);
-
-  /// Reference key learning.inProgress — a section head
-  ///
-  /// In en, this message translates to:
-  /// **'In progress'**
-  String get learningInProgress;
-
-  /// Reference key learning.week — the bar chart's section head and name
-  ///
-  /// In en, this message translates to:
-  /// **'This week'**
-  String get learningWeek;
-
-  /// Reference key learning.consistency — the heatmap's section head and name
-  ///
-  /// In en, this message translates to:
-  /// **'Consistency'**
-  String get learningConsistency;
-
-  /// A course's provider and session length — `x.provider + " · " + x.mins + " " + t("unit.min")`
-  ///
-  /// In en, this message translates to:
-  /// **'{provider} · {minutes} min'**
-  String learningCourseMeta(String provider, String minutes);
-
-  /// Reference key learning.insight1.title
-  ///
-  /// In en, this message translates to:
-  /// **'Short sessions stick'**
-  String get learningInsight1Title;
-
-  /// Reference key learning.insight1.text
-  ///
-  /// In en, this message translates to:
-  /// **'Your 20-minute sessions are completed twice as often as your hour-long ones.'**
-  String get learningInsight1Text;
-
-  /// Reference key learning.insight2.title
-  ///
-  /// In en, this message translates to:
-  /// **'Arabic is your strongest streak'**
-  String get learningInsight2Title;
-
-  /// Reference key learning.insight2.text
-  ///
-  /// In en, this message translates to:
-  /// **'Nine days running, well ahead of your other courses.'**
-  String get learningInsight2Text;
-
-  /// Reference key tax.above — the top band's label
-  ///
-  /// In en, this message translates to:
-  /// **'Above {v}'**
-  String taxAbove(String v);
-
-  /// Reference key tax.annual — the period control
-  ///
-  /// In en, this message translates to:
-  /// **'Annual'**
-  String get taxAnnual;
-
-  /// Reference key tax.band — a table column
-  ///
-  /// In en, this message translates to:
-  /// **'Band'**
-  String get taxBand;
-
-  /// Reference key tax.deductions — a field
-  ///
-  /// In en, this message translates to:
-  /// **'Deductions'**
-  String get taxDeductions;
-
-  /// Reference key tax.dueAnnual — the result's kicker
-  ///
-  /// In en, this message translates to:
-  /// **'Tax a year'**
-  String get taxDueAnnual;
-
-  /// Reference key tax.dueMonthly — the result's kicker
-  ///
-  /// In en, this message translates to:
-  /// **'Tax a month'**
-  String get taxDueMonthly;
-
-  /// Reference key tax.effective — the result's caption
-  ///
-  /// In en, this message translates to:
-  /// **'Effective rate {rate}'**
-  String taxEffective(String rate);
-
-  /// Reference key tax.incomeAnnual — a field
-  ///
-  /// In en, this message translates to:
-  /// **'Annual income'**
-  String get taxIncomeAnnual;
-
-  /// Reference key tax.incomeMonthly — a field
-  ///
-  /// In en, this message translates to:
-  /// **'Monthly income'**
-  String get taxIncomeMonthly;
-
-  /// Reference key tax.incomeTax
-  ///
-  /// In en, this message translates to:
-  /// **'Income tax'**
-  String get taxIncomeTax;
-
-  /// Reference key tax.leviesNote — a section head
-  ///
-  /// In en, this message translates to:
-  /// **'Worth knowing'**
-  String get taxLeviesNote;
-
-  /// Reference key tax.leviesNoteText
-  ///
-  /// In en, this message translates to:
-  /// **'These are headline rates. Consumption taxes are paid on what you buy rather than deducted from pay, and social contributions are usually split between you and your employer.'**
-  String get taxLeviesNoteText;
-
-  /// Reference key tax.levy — a table column
-  ///
-  /// In en, this message translates to:
-  /// **'Levy'**
-  String get taxLevy;
-
-  /// Reference key tax.marginal
-  ///
-  /// In en, this message translates to:
-  /// **'Marginal rate'**
-  String get taxMarginal;
-
-  /// Reference key tax.monthly — the period control
-  ///
-  /// In en, this message translates to:
-  /// **'Monthly'**
-  String get taxMonthly;
-
-  /// Reference key tax.none.text
-  ///
-  /// In en, this message translates to:
-  /// **'{authority}. Nothing to calculate for salaried income here.'**
-  String taxNoneText(String authority);
-
-  /// Reference key tax.none.title
-  ///
-  /// In en, this message translates to:
-  /// **'No personal income tax'**
-  String get taxNoneTitle;
-
-  /// Reference key tax.noneCaption
-  ///
-  /// In en, this message translates to:
-  /// **'Your salary is not subject to personal income tax here.'**
-  String get taxNoneCaption;
-
-  /// Reference key tax.otherLevies — a section head
-  ///
-  /// In en, this message translates to:
-  /// **'What does apply'**
-  String get taxOtherLevies;
-
-  /// Reference key tax.period — the period control's accessible name
-  ///
-  /// In en, this message translates to:
-  /// **'Period'**
-  String get taxPeriod;
-
-  /// Reference key tax.rate — a table column
-  ///
-  /// In en, this message translates to:
-  /// **'Rate'**
-  String get taxRate;
-
-  /// Reference key tax.slabs — the breakdown's head
-  ///
-  /// In en, this message translates to:
-  /// **'How it is worked out'**
-  String get taxSlabs;
-
-  /// Reference key tax.split — the donut's accessible name
-  ///
-  /// In en, this message translates to:
-  /// **'Where it goes'**
-  String get taxSplit;
-
-  /// Reference key tax.takeHome
-  ///
-  /// In en, this message translates to:
-  /// **'Take-home'**
-  String get taxTakeHome;
-
-  /// Reference key tax.tax — the donut's tax slice
-  ///
-  /// In en, this message translates to:
-  /// **'Tax'**
-  String get taxTax;
-
-  /// Reference key tax.taxable
-  ///
-  /// In en, this message translates to:
-  /// **'Taxable income'**
-  String get taxTaxable;
-
-  /// Reference key tax.taxedHere — a table column
-  ///
-  /// In en, this message translates to:
-  /// **'Tax in band'**
-  String get taxTaxedHere;
-
-  /// Reference key tax.unsupported.text
-  ///
-  /// In en, this message translates to:
-  /// **'Tax rules are country-specific. Switch country to use a market Lume has configured, or check back — new markets are added regularly.'**
-  String get taxUnsupportedText;
-
-  /// Reference key tax.unsupported.title
-  ///
-  /// In en, this message translates to:
-  /// **'Not yet localised for {country}'**
-  String taxUnsupportedTitle(String country);
-
-  /// Reference key tax.year
-  ///
-  /// In en, this message translates to:
-  /// **'Year'**
-  String get taxYear;
-
-  /// tool-data.js TAX.PK.authority. The reference prints the data string in every language; translated here (§11).
-  ///
-  /// In en, this message translates to:
-  /// **'FBR salaried slabs'**
-  String get taxAuthorityFbrSalaried;
-
-  /// tool-data.js TAX.GB.authority
-  ///
-  /// In en, this message translates to:
-  /// **'HMRC income tax (England)'**
-  String get taxAuthorityHmrcEngland;
-
-  /// tool-data.js TAX.US.authority
-  ///
-  /// In en, this message translates to:
-  /// **'IRS single filer'**
-  String get taxAuthorityIrsSingleFiler;
-
-  /// tool-data.js TAX.IN.authority
-  ///
-  /// In en, this message translates to:
-  /// **'New regime slabs'**
-  String get taxAuthorityIndiaNewRegime;
-
-  /// tool-data.js TAX.AE/SA.authority
-  ///
-  /// In en, this message translates to:
-  /// **'No personal income tax'**
-  String get taxAuthorityNone;
-
-  /// Reference key levy.corporate
-  ///
-  /// In en, this message translates to:
-  /// **'Corporate tax'**
-  String get levyCorporate;
-
-  /// Reference key levy.eobi
-  ///
-  /// In en, this message translates to:
-  /// **'EOBI'**
-  String get levyEobi;
-
-  /// Reference key levy.gosi
-  ///
-  /// In en, this message translates to:
-  /// **'Social insurance (GOSI)'**
-  String get levyGosi;
-
-  /// Reference key levy.gst
-  ///
-  /// In en, this message translates to:
-  /// **'GST'**
-  String get levyGst;
-
-  /// Reference key levy.medicare
-  ///
-  /// In en, this message translates to:
-  /// **'Medicare'**
-  String get levyMedicare;
-
-  /// Reference key levy.ni
-  ///
-  /// In en, this message translates to:
-  /// **'National Insurance'**
-  String get levyNi;
-
-  /// Reference key levy.pension
-  ///
-  /// In en, this message translates to:
-  /// **'Pension contribution'**
-  String get levyPension;
-
-  /// Reference key levy.pf
-  ///
-  /// In en, this message translates to:
-  /// **'Provident Fund'**
-  String get levyPf;
-
-  /// Reference key levy.socialSecurity
-  ///
-  /// In en, this message translates to:
-  /// **'Social Security'**
-  String get levySocialSecurity;
-
-  /// Reference key levy.vat
-  ///
-  /// In en, this message translates to:
-  /// **'VAT'**
-  String get levyVat;
-
-  /// Reference key levy.zakatRate
-  ///
-  /// In en, this message translates to:
-  /// **'Zakat'**
-  String get levyZakatRate;
 
   /// Reference key tools.forYou
   ///
@@ -7347,6 +7701,12 @@ abstract class AppLocalizations {
   /// **'min'**
   String get unitMinutes;
 
+  /// A length in minutes — `n + " " + t("unit.min")`, as a preset and a history row write it
+  ///
+  /// In en, this message translates to:
+  /// **'{n} min'**
+  String unitMinutesCount(String n);
+
   /// Reference: a wind speed unit
   ///
   /// In en, this message translates to:
@@ -7364,24 +7724,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'k'**
   String get unitThousand;
-
-  /// A weather condition. The prototype stores these as English sentences in the catalogue and never translates them
-  ///
-  /// In en, this message translates to:
-  /// **'Clear'**
-  String get weatherClear;
-
-  /// Reference: WEATHER_BY_COUNTRY.AE
-  ///
-  /// In en, this message translates to:
-  /// **'Clear · very warm'**
-  String get weatherClearVeryWarm;
-
-  /// A weather condition. The prototype stores these as English sentences in the catalogue and never translates them
-  ///
-  /// In en, this message translates to:
-  /// **'Cloud building'**
-  String get weatherCloudBuilding;
 
   /// Reference: WEATHER_BY_COUNTRY / WEATHER_BY_ZONE condition phrase.
   ///
@@ -7401,11 +7743,29 @@ abstract class AppLocalizations {
   /// **'Changeable'**
   String get weatherChangeable;
 
+  /// A weather condition. The prototype stores these as English sentences in the catalogue and never translates them
+  ///
+  /// In en, this message translates to:
+  /// **'Clear'**
+  String get weatherClear;
+
   /// Reference: WEATHER_BY_COUNTRY / WEATHER_BY_ZONE condition phrase.
   ///
   /// In en, this message translates to:
   /// **'Clear and dry'**
   String get weatherClearAndDry;
+
+  /// Reference: WEATHER_BY_COUNTRY.AE
+  ///
+  /// In en, this message translates to:
+  /// **'Clear · very warm'**
+  String get weatherClearVeryWarm;
+
+  /// A weather condition. The prototype stores these as English sentences in the catalogue and never translates them
+  ///
+  /// In en, this message translates to:
+  /// **'Cloud building'**
+  String get weatherCloudBuilding;
 
   /// Reference: WEATHER_BY_COUNTRY / WEATHER_BY_ZONE condition phrase.
   ///
@@ -7418,66 +7778,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Fresh'**
   String get weatherFresh;
-
-  /// Reference: WEATHER_BY_COUNTRY / WEATHER_BY_ZONE condition phrase.
-  ///
-  /// In en, this message translates to:
-  /// **'Humid'**
-  String get weatherHumid;
-
-  /// Reference: WEATHER_BY_COUNTRY / WEATHER_BY_ZONE condition phrase.
-  ///
-  /// In en, this message translates to:
-  /// **'Humid · afternoon storms'**
-  String get weatherHumidAfternoonStorms;
-
-  /// Reference: WEATHER_BY_COUNTRY / WEATHER_BY_ZONE condition phrase.
-  ///
-  /// In en, this message translates to:
-  /// **'Humid · cloud building'**
-  String get weatherHumidCloudBuilding;
-
-  /// Reference: WEATHER_BY_COUNTRY / WEATHER_BY_ZONE condition phrase.
-  ///
-  /// In en, this message translates to:
-  /// **'Humid · passing showers'**
-  String get weatherHumidPassingShowers;
-
-  /// Reference: WEATHER_BY_COUNTRY / WEATHER_BY_ZONE condition phrase.
-  ///
-  /// In en, this message translates to:
-  /// **'Humid · showers later'**
-  String get weatherHumidShowersLater;
-
-  /// Reference: WEATHER_BY_COUNTRY / WEATHER_BY_ZONE condition phrase.
-  ///
-  /// In en, this message translates to:
-  /// **'Mild and clear'**
-  String get weatherMildAndClear;
-
-  /// Reference: WEATHER_BY_COUNTRY / WEATHER_BY_ZONE condition phrase.
-  ///
-  /// In en, this message translates to:
-  /// **'Sunny spells'**
-  String get weatherSunnySpells;
-
-  /// Reference: WEATHER_BY_COUNTRY / WEATHER_BY_ZONE condition phrase.
-  ///
-  /// In en, this message translates to:
-  /// **'Warm'**
-  String get weatherWarm;
-
-  /// Reference: WEATHER_BY_COUNTRY / WEATHER_BY_ZONE condition phrase.
-  ///
-  /// In en, this message translates to:
-  /// **'Warm and dry'**
-  String get weatherWarmAndDry;
-
-  /// Reference: WEATHER_BY_COUNTRY / WEATHER_BY_ZONE condition phrase.
-  ///
-  /// In en, this message translates to:
-  /// **'Warm and humid'**
-  String get weatherWarmAndHumid;
 
   /// A weather condition. The prototype stores these as English sentences in the catalogue and never translates them
   ///
@@ -7503,17 +7803,53 @@ abstract class AppLocalizations {
   /// **'{high} / {low}'**
   String weatherHighLow(String high, String low);
 
+  /// Reference: WEATHER_BY_COUNTRY / WEATHER_BY_ZONE condition phrase.
+  ///
+  /// In en, this message translates to:
+  /// **'Humid'**
+  String get weatherHumid;
+
+  /// Reference: WEATHER_BY_COUNTRY / WEATHER_BY_ZONE condition phrase.
+  ///
+  /// In en, this message translates to:
+  /// **'Humid · afternoon storms'**
+  String get weatherHumidAfternoonStorms;
+
+  /// Reference: WEATHER_BY_COUNTRY / WEATHER_BY_ZONE condition phrase.
+  ///
+  /// In en, this message translates to:
+  /// **'Humid · cloud building'**
+  String get weatherHumidCloudBuilding;
+
   /// Reference: WEATHER_BY_COUNTRY.IN
   ///
   /// In en, this message translates to:
   /// **'Humid · light haze'**
   String get weatherHumidLightHaze;
 
+  /// Reference: WEATHER_BY_COUNTRY / WEATHER_BY_ZONE condition phrase.
+  ///
+  /// In en, this message translates to:
+  /// **'Humid · passing showers'**
+  String get weatherHumidPassingShowers;
+
+  /// Reference: WEATHER_BY_COUNTRY / WEATHER_BY_ZONE condition phrase.
+  ///
+  /// In en, this message translates to:
+  /// **'Humid · showers later'**
+  String get weatherHumidShowersLater;
+
   /// A weather condition. The prototype stores these as English sentences in the catalogue and never translates them
   ///
   /// In en, this message translates to:
   /// **'Light cloud'**
   String get weatherLightCloud;
+
+  /// Reference: WEATHER_BY_COUNTRY / WEATHER_BY_ZONE condition phrase.
+  ///
+  /// In en, this message translates to:
+  /// **'Mild and clear'**
+  String get weatherMildAndClear;
 
   /// A weather condition. The prototype stores these as English sentences in the catalogue and never translates them
   ///
@@ -7532,6 +7868,30 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Rain'**
   String get weatherRain;
+
+  /// Reference: WEATHER_BY_COUNTRY / WEATHER_BY_ZONE condition phrase.
+  ///
+  /// In en, this message translates to:
+  /// **'Sunny spells'**
+  String get weatherSunnySpells;
+
+  /// Reference: WEATHER_BY_COUNTRY / WEATHER_BY_ZONE condition phrase.
+  ///
+  /// In en, this message translates to:
+  /// **'Warm'**
+  String get weatherWarm;
+
+  /// Reference: WEATHER_BY_COUNTRY / WEATHER_BY_ZONE condition phrase.
+  ///
+  /// In en, this message translates to:
+  /// **'Warm and dry'**
+  String get weatherWarmAndDry;
+
+  /// Reference: WEATHER_BY_COUNTRY / WEATHER_BY_ZONE condition phrase.
+  ///
+  /// In en, this message translates to:
+  /// **'Warm and humid'**
+  String get weatherWarmAndHumid;
 }
 
 class _AppLocalizationsDelegate

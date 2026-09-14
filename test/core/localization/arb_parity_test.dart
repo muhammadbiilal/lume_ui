@@ -140,6 +140,9 @@ void main() {
         // Pakistan's Employees' Old-Age Benefits Institution, by its acronym —
         // the levy is named on payslips as EOBI in Arabic text too.
         'levyEobi',
+        // The United Kingdom's non-emergency medical line, by the name printed
+        // on it: NHS 111 is dialled and signed as NHS 111 in any language.
+        'emergNameNhs111',
         // Sample data in a tool's status line: a score, a dialling code, a
         // window of hours, an index, two operators, a tax year, a tally.
         // Fixture values, not sentences.

@@ -70,7 +70,10 @@
    "meds"
   ],
   "flutterBuilt": [
-   "tax"
+   "timer",
+   "tax",
+   "emergency",
+   "learning"
   ]
  },
  "archetypes": {
@@ -550,7 +553,7 @@
    "approvedComposition": null,
    "recordFamily": false,
    "module": "assets/js/tools/everyday/timer.tool.js",
-   "flutter": "placeholder"
+   "flutter": "built"
   },
   {
    "id": "age",
@@ -2403,7 +2406,7 @@
    "approvedComposition": null,
    "recordFamily": false,
    "module": "assets/js/tools/daily/emergency.tool.js",
-   "flutter": "placeholder"
+   "flutter": "built"
   },
   {
    "id": "qr",
@@ -2909,7 +2912,7 @@
    "approvedComposition": null,
    "recordFamily": false,
    "module": "assets/js/tools/personal/learning.tool.js",
-   "flutter": "placeholder"
+   "flutter": "built"
   },
   {
    "id": "documents",

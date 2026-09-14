@@ -22,6 +22,10 @@ dependencies:
   go_router: ^14.6.2
   intl: any
   flutter_svg: ^2.3.0
+  # D6 — hands a `tel:` number to the platform dialer (never places a call,
+  # needs no CALL_PHONE permission). Used only by
+  # lib/core/platform/lume_dialer_platform.dart, behind LumeDialer.
+  url_launcher: ^6.3.2
 
 dev_dependencies:
   flutter_test:

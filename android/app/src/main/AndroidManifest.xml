@@ -41,5 +41,12 @@
             <action android:name="android.intent.action.PROCESS_TEXT"/>
             <data android:mimeType="text/plain"/>
         </intent>
+        <!-- D6: Emergency asks whether a dialer exists before handing it a
+             number (url_launcher canLaunchUrl on Android 11+). Opening the
+             dialer needs no permission; nothing here can place a call. -->
+        <intent>
+            <action android:name="android.intent.action.VIEW"/>
+            <data android:scheme="tel"/>
+        </intent>
     </queries>
 </manifest>

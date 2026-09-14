@@ -374,7 +374,8 @@ class LumeCompactRow extends StatelessWidget {
       child: Row(
         children: <Widget>[
           if (icon != null) ...<Widget>[
-            LumeIcon(icon!, size: LumeSpace.iconMd, color: lume.text3),
+            // `.crow__icon svg { width: 16px }`.
+            LumeIcon(icon!, size: LumeSpace.iconSm, color: lume.text3),
             const SizedBox(width: 12),
           ],
           Expanded(
@@ -424,7 +425,8 @@ class LumeCompactRow extends StatelessWidget {
             ),
           ],
           if (onTap != null && chevron) ...<Widget>[
-            const SizedBox(width: 6),
+            // `.crow { gap: 12px }` — the chevron is a flex item like the rest.
+            const SizedBox(width: 12),
             LumeIcon(LumeIcons.chevR, size: 14, color: lume.text3),
           ],
         ],
@@ -436,6 +438,9 @@ class LumeCompactRow extends StatelessWidget {
       onTap: onTap,
       button: false,
       semanticLabel: value == null ? label : '$label, $value',
+      // `button.crow` is 41 tall with its hairline. A pressable row keeps §9's
+      // 44 instead — an accessibility adaptation, not parity (C62): a stack of
+      // rows has no gap for a target to reach into, so the row itself grows.
       minSize: LumeSpace.tap,
       borderRadius: BorderRadius.zero,
       child: row,

@@ -1,7 +1,17 @@
 {
+  "@@locale": "en",
+  "@@context": "Lume",
   "a11yBack": "Back",
   "@a11yBack": {
     "description": "Reference key a11y.back"
+  },
+  "a11yExport": "Export",
+  "@a11yExport": {
+    "description": "Reference key a11y.export — the tool header export action"
+  },
+  "a11yFavourite": "Save to favourites",
+  "@a11yFavourite": {
+    "description": "Reference key a11y.favourite — the tool header favourite action. The reference has no Urdu or Arabic for it; translated here (§11)."
   },
   "a11yMainNavigation": "Main",
   "@a11yMainNavigation": {
@@ -10,6 +20,10 @@
   "a11ySearch": "Search this tool",
   "@a11ySearch": {
     "description": "Reference key a11y.search"
+  },
+  "a11ySearchTool": "Search this tool",
+  "@a11ySearchTool": {
+    "description": "Reference key a11y.search — the tool header search action, in the reference's own Urdu and Arabic"
   },
   "a11yShare": "Share",
   "@a11yShare": {
@@ -982,6 +996,50 @@
   "@appTagline": {
     "description": "Reference key app.tagline"
   },
+  "archetypeAction": "Emergency actions",
+  "@archetypeAction": {
+    "description": "Reference key archetype.action — the word in a tool header's sub-line"
+  },
+  "archetypeCalculator": "Calculator",
+  "@archetypeCalculator": {
+    "description": "Reference key archetype.calculator"
+  },
+  "archetypeDashboard": "Dashboard",
+  "@archetypeDashboard": {
+    "description": "Reference key archetype.dashboard"
+  },
+  "archetypeExplorer": "Data explorer",
+  "@archetypeExplorer": {
+    "description": "Reference key archetype.explorer"
+  },
+  "archetypeInstrument": "Instrument",
+  "@archetypeInstrument": {
+    "description": "Reference key archetype.instrument"
+  },
+  "archetypeLibrary": "Library",
+  "@archetypeLibrary": {
+    "description": "Reference key archetype.library"
+  },
+  "archetypeManager": "Records manager",
+  "@archetypeManager": {
+    "description": "Reference key archetype.manager"
+  },
+  "archetypePlanner": "Planner",
+  "@archetypePlanner": {
+    "description": "Reference key archetype.planner"
+  },
+  "archetypeReader": "Reader",
+  "@archetypeReader": {
+    "description": "Reference key archetype.reader"
+  },
+  "archetypeTracker": "Tracker",
+  "@archetypeTracker": {
+    "description": "Reference key archetype.tracker"
+  },
+  "archetypeTracking": "Live tracking",
+  "@archetypeTracking": {
+    "description": "Reference key archetype.tracking"
+  },
   "authAsideText": "Prayer, weather, money, travel and the small things — wherever you are.",
   "@authAsideText": {
     "description": "Reference key auth.asideText"
@@ -1516,6 +1574,10 @@
   "@commonInDays": {
     "description": "Reference key common.inDays"
   },
+  "commonLess": "Less",
+  "@commonLess": {
+    "description": "Reference key common.less — a heatmap key"
+  },
   "commonLocked": "Locked",
   "@commonLocked": {
     "description": "Reference key common.locked"
@@ -1523,6 +1585,10 @@
   "commonMonth": "Month",
   "@commonMonth": {
     "description": "Reference key common.month"
+  },
+  "commonMore": "More",
+  "@commonMore": {
+    "description": "Reference key common.more — a heatmap key"
   },
   "commonNo": "No",
   "@commonNo": {
@@ -1572,6 +1638,10 @@
   "@commonStale": {
     "description": "Shown on a section whose figures are older than they should be"
   },
+  "commonStart": "Start",
+  "@commonStart": {
+    "description": "Reference key common.start — a clock's primary action. The reference has no Urdu or Arabic for it; translated here (§11)."
+  },
   "commonStatus": "Status",
   "@commonStatus": {
     "description": "Reference key common.status"
@@ -1608,7 +1678,6 @@
   "@commonYesterday": {
     "description": "Reference key common.yesterday"
   },
-  "@@context": "Lume",
   "cricketScore": "{team} {runs}/{wickets}",
   "@cricketScore": {
     "description": "Reference: the cricket Discover card’s title. The side is a three-letter code",
@@ -1649,6 +1718,244 @@
         "type": "String"
       }
     }
+  },
+  "emergKindAll3": "Police · Fire · Medical",
+  "@emergKindAll3": {
+    "description": "Reference key emerg.all3 — what a number is for"
+  },
+  "emergKindAllServices": "All services",
+  "@emergKindAllServices": {
+    "description": "Reference key emerg.allServices — what a number is for"
+  },
+  "emergKindAmbRescue": "Ambulance & rescue",
+  "@emergKindAmbRescue": {
+    "description": "Reference key emerg.ambRescue — what a number is for"
+  },
+  "emergKindAmbulance": "Ambulance",
+  "@emergKindAmbulance": {
+    "description": "Reference key emerg.ambulance — what a number is for"
+  },
+  "emergKindFire": "Fire",
+  "@emergKindFire": {
+    "description": "Reference key emerg.fire — what a number is for"
+  },
+  "emergKindFireRescue": "Fire & rescue",
+  "@emergKindFireRescue": {
+    "description": "Reference key emerg.fireRescue — what a number is for"
+  },
+  "emergKindGas": "Gas leak",
+  "@emergKindGas": {
+    "description": "Reference key emerg.gas — what a number is for"
+  },
+  "emergKindGsm": "Works on most GSM networks",
+  "@emergKindGsm": {
+    "description": "Reference key emerg.gsm — what a number is for"
+  },
+  "emergKindHelpline": "Helpline",
+  "@emergKindHelpline": {
+    "description": "Reference key emerg.helpline — what a number is for"
+  },
+  "emergKindHighway": "Highway",
+  "@emergKindHighway": {
+    "description": "Reference key emerg.highway — what a number is for"
+  },
+  "emergKindMaritime": "Maritime",
+  "@emergKindMaritime": {
+    "description": "Reference key emerg.maritime — what a number is for"
+  },
+  "emergKindMedAdvice": "Urgent medical advice",
+  "@emergKindMedAdvice": {
+    "description": "Reference key emerg.medAdvice — what a number is for"
+  },
+  "emergKindMedical": "Medical",
+  "@emergKindMedical": {
+    "description": "Reference key emerg.medical — what a number is for"
+  },
+  "emergKindMental": "Mental health",
+  "@emergKindMental": {
+    "description": "Reference key emerg.mental — what a number is for"
+  },
+  "emergKindNonUrgent": "Non-urgent",
+  "@emergKindNonUrgent": {
+    "description": "Reference key emerg.nonUrgent — what a number is for"
+  },
+  "emergKindPoison": "Poison",
+  "@emergKindPoison": {
+    "description": "Reference key emerg.poison — what a number is for"
+  },
+  "emergKindPolice": "Police emergency",
+  "@emergKindPolice": {
+    "description": "Reference key emerg.police — what a number is for"
+  },
+  "emergKindRouted": "Widely routed",
+  "@emergKindRouted": {
+    "description": "Reference key emerg.routed — what a number is for"
+  },
+  "emergKindTraffic": "Traffic",
+  "@emergKindTraffic": {
+    "description": "Reference key emerg.traffic — what a number is for"
+  },
+  "emergKindTrafficInfo": "Traffic information",
+  "@emergKindTrafficInfo": {
+    "description": "Reference key emerg.trafficInfo — what a number is for"
+  },
+  "emergNameAmbulance": "Ambulance",
+  "@emergNameAmbulance": {
+    "description": "The name of an emergency service in tool-data.js EMERGENCY. The reference writes it in English in every language; named in the reader's language here (§11), proper nouns transliterated"
+  },
+  "emergNameCivilDefence": "Civil Defence",
+  "@emergNameCivilDefence": {
+    "description": "The name of an emergency service in tool-data.js EMERGENCY. The reference writes it in English in every language; named in the reader's language here (§11), proper nouns transliterated"
+  },
+  "emergNameCoastGuard": "Coast Guard",
+  "@emergNameCoastGuard": {
+    "description": "The name of an emergency service in tool-data.js EMERGENCY. The reference writes it in English in every language; named in the reader's language here (§11), proper nouns transliterated"
+  },
+  "emergNameCrisisLifeline": "Crisis Lifeline",
+  "@emergNameCrisisLifeline": {
+    "description": "The name of an emergency service in tool-data.js EMERGENCY. The reference writes it in English in every language; named in the reader's language here (§11), proper nouns transliterated"
+  },
+  "emergNameEdhiAmbulance": "Edhi Ambulance",
+  "@emergNameEdhiAmbulance": {
+    "description": "The name of an emergency service in tool-data.js EMERGENCY. The reference writes it in English in every language; named in the reader's language here (§11), proper nouns transliterated"
+  },
+  "emergNameEmergency": "Emergency",
+  "@emergNameEmergency": {
+    "description": "The name of an emergency service in tool-data.js EMERGENCY. The reference writes it in English in every language; named in the reader's language here (§11), proper nouns transliterated"
+  },
+  "emergNameFire": "Fire",
+  "@emergNameFire": {
+    "description": "The name of an emergency service in tool-data.js EMERGENCY. The reference writes it in English in every language; named in the reader's language here (§11), proper nouns transliterated"
+  },
+  "emergNameFireBrigade": "Fire Brigade",
+  "@emergNameFireBrigade": {
+    "description": "The name of an emergency service in tool-data.js EMERGENCY. The reference writes it in English in every language; named in the reader's language here (§11), proper nouns transliterated"
+  },
+  "emergNameFireCivilDefence": "Fire (Civil Defence)",
+  "@emergNameFireCivilDefence": {
+    "description": "The name of an emergency service in tool-data.js EMERGENCY. The reference writes it in English in every language; named in the reader's language here (§11), proper nouns transliterated"
+  },
+  "emergNameGasEmergency": "Gas emergency",
+  "@emergNameGasEmergency": {
+    "description": "The name of an emergency service in tool-data.js EMERGENCY. The reference writes it in English in every language; named in the reader's language here (§11), proper nouns transliterated"
+  },
+  "emergNameInternational": "International Emergency",
+  "@emergNameInternational": {
+    "description": "The name of an emergency service in tool-data.js EMERGENCY. The reference writes it in English in every language; named in the reader's language here (§11), proper nouns transliterated"
+  },
+  "emergNameLocal": "Local Emergency",
+  "@emergNameLocal": {
+    "description": "The name of an emergency service in tool-data.js EMERGENCY. The reference writes it in English in every language; named in the reader's language here (§11), proper nouns transliterated"
+  },
+  "emergNameMotorwayPolice": "Motorway Police",
+  "@emergNameMotorwayPolice": {
+    "description": "The name of an emergency service in tool-data.js EMERGENCY. The reference writes it in English in every language; named in the reader's language here (§11), proper nouns transliterated"
+  },
+  "emergNameNhs111": "NHS 111",
+  "@emergNameNhs111": {
+    "description": "The name of an emergency service in tool-data.js EMERGENCY. The reference writes it in English in every language; named in the reader's language here (§11), proper nouns transliterated"
+  },
+  "emergNamePoisonControl": "Poison Control",
+  "@emergNamePoisonControl": {
+    "description": "The name of an emergency service in tool-data.js EMERGENCY. The reference writes it in English in every language; named in the reader's language here (§11), proper nouns transliterated"
+  },
+  "emergNamePolice": "Police",
+  "@emergNamePolice": {
+    "description": "The name of an emergency service in tool-data.js EMERGENCY. The reference writes it in English in every language; named in the reader's language here (§11), proper nouns transliterated"
+  },
+  "emergNamePoliceNonEmergency": "Police non-emergency",
+  "@emergNamePoliceNonEmergency": {
+    "description": "The name of an emergency service in tool-data.js EMERGENCY. The reference writes it in English in every language; named in the reader's language here (§11), proper nouns transliterated"
+  },
+  "emergNameRedCrescent": "Red Crescent",
+  "@emergNameRedCrescent": {
+    "description": "The name of an emergency service in tool-data.js EMERGENCY. The reference writes it in English in every language; named in the reader's language here (§11), proper nouns transliterated"
+  },
+  "emergNameRescue1122": "Rescue 1122",
+  "@emergNameRescue1122": {
+    "description": "The name of an emergency service in tool-data.js EMERGENCY. The reference writes it in English in every language; named in the reader's language here (§11), proper nouns transliterated"
+  },
+  "emergNameRoadside": "Roadside",
+  "@emergNameRoadside": {
+    "description": "The name of an emergency service in tool-data.js EMERGENCY. The reference writes it in English in every language; named in the reader's language here (§11), proper nouns transliterated"
+  },
+  "emergNameTraffic": "Traffic",
+  "@emergNameTraffic": {
+    "description": "The name of an emergency service in tool-data.js EMERGENCY. The reference writes it in English in every language; named in the reader's language here (§11), proper nouns transliterated"
+  },
+  "emergNameUnifiedEmergency": "Unified Emergency",
+  "@emergNameUnifiedEmergency": {
+    "description": "The name of an emergency service in tool-data.js EMERGENCY. The reference writes it in English in every language; named in the reader's language here (§11), proper nouns transliterated"
+  },
+  "emergNameWomenHelpline": "Women Helpline",
+  "@emergNameWomenHelpline": {
+    "description": "The name of an emergency service in tool-data.js EMERGENCY. The reference writes it in English in every language; named in the reader's language here (§11), proper nouns transliterated"
+  },
+  "emergencyCall": "Call {service} at {number}",
+  "@emergencyCall": {
+    "description": "The accessible name of a call tile (D6). The number is the one on the tile, isolated left to right",
+    "placeholders": {
+      "service": {
+        "type": "String"
+      },
+      "number": {
+        "type": "String"
+      }
+    }
+  },
+  "emergencyDialFailed": "Couldn’t open the phone app. Dial {number} yourself.",
+  "@emergencyDialFailed": {
+    "description": "Said when the platform refused or failed to open the dialer. Lume has no such message; the toast is its mechanism (D6)",
+    "placeholders": {
+      "number": {
+        "type": "String"
+      }
+    }
+  },
+  "emergencyDialUnavailable": "This device can’t make calls. Dial {number} from a phone.",
+  "@emergencyDialUnavailable": {
+    "description": "Said when nothing on the device can dial (D6)",
+    "placeholders": {
+      "number": {
+        "type": "String"
+      }
+    }
+  },
+  "emergencyDocuments": "Identity documents",
+  "@emergencyDocuments": {
+    "description": "Reference key emergency.documents"
+  },
+  "emergencyLocationShared": "Location copied to share",
+  "@emergencyLocationShared": {
+    "description": "Reference key emergency.locationShared — said only once the city and country are on the clipboard (C67)"
+  },
+  "emergencyMedical": "Medical details",
+  "@emergencyMedical": {
+    "description": "Reference key emergency.medical. The reference has no Urdu or Arabic; translated here (§11)"
+  },
+  "emergencyNoteText": "Emergency numbers can usually be dialled with no credit and no SIM. 112 is routed in most countries.",
+  "@emergencyNoteText": {
+    "description": "Reference key emergency.note.text"
+  },
+  "emergencyNoteTitle": "Numbers work without signal",
+  "@emergencyNoteTitle": {
+    "description": "Reference key emergency.note.title"
+  },
+  "emergencyServices": "Other services",
+  "@emergencyServices": {
+    "description": "Reference key emergency.services"
+  },
+  "emergencySetUp": "Set up",
+  "@emergencySetUp": {
+    "description": "Reference key emergency.setUp"
+  },
+  "emergencyShareLocation": "Share my location",
+  "@emergencyShareLocation": {
+    "description": "Reference key emergency.shareLocation"
+  },
+  "emergencyYourInfo": "Your information",
+  "@emergencyYourInfo": {
+    "description": "Reference key emergency.yourInfo"
   },
   "exploreAround": "Around you",
   "@exploreAround": {
@@ -2181,6 +2488,91 @@
       }
     }
   },
+  "freshAgoMin": "Updated {n} min ago",
+  "@freshAgoMin": {
+    "description": "Reference key fresh.agoMin — the source line of a delayed tool",
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
+  "freshAgoSec": "Updated {n} sec ago",
+  "@freshAgoSec": {
+    "description": "Reference key fresh.agoSec — the source line of a live tool",
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
+  "freshAnnual": "Current tax year",
+  "@freshAnnual": {
+    "description": "Reference key fresh.annual"
+  },
+  "freshAt": "Updated at {time}",
+  "@freshAt": {
+    "description": "Reference key fresh.at — a daily source, in the reader's clock",
+    "placeholders": {
+      "time": {
+        "type": "String"
+      }
+    }
+  },
+  "freshCached": "Cached",
+  "@freshCached": {
+    "description": "Reference key fresh.cached"
+  },
+  "freshComputed": "Calculated for your location",
+  "@freshComputed": {
+    "description": "Reference key fresh.computed"
+  },
+  "freshDaily": "Updated today",
+  "@freshDaily": {
+    "description": "Reference key fresh.daily"
+  },
+  "freshDelayed": "Delayed 15 min",
+  "@freshDelayed": {
+    "description": "Reference key fresh.delayed"
+  },
+  "freshDraw": "Latest draw",
+  "@freshDraw": {
+    "description": "Reference key fresh.draw"
+  },
+  "freshForCity": "For {city}",
+  "@freshForCity": {
+    "description": "Reference key fresh.forCity — a figure computed for the reader's city",
+    "placeholders": {
+      "city": {
+        "type": "String"
+      }
+    }
+  },
+  "freshLive": "Live",
+  "@freshLive": {
+    "description": "Reference key fresh.live — a live source"
+  },
+  "freshLocal": "Stored on this device",
+  "@freshLocal": {
+    "description": "Reference key fresh.local"
+  },
+  "freshOn": "Updated {date}",
+  "@freshOn": {
+    "description": "Reference key fresh.on — a weekly or annual source",
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "freshStatic": "Reference text",
+  "@freshStatic": {
+    "description": "Reference key fresh.static"
+  },
+  "freshWeekly": "Updated this week",
+  "@freshWeekly": {
+    "description": "Reference key fresh.weekly"
+  },
   "fuelPetrol": "Petrol",
   "@fuelPetrol": {
     "description": "Reference key fuel.g.petrol"
@@ -2236,6 +2628,22 @@
   "habitWater": "8 glasses",
   "@habitWater": {
     "description": "Reference: a habit"
+  },
+  "heatLevelAll": "all",
+  "@heatLevelAll": {
+    "description": "A heatmap cell's level"
+  },
+  "heatLevelMost": "most",
+  "@heatLevelMost": {
+    "description": "A heatmap cell's level"
+  },
+  "heatLevelNone": "none",
+  "@heatLevelNone": {
+    "description": "A heatmap cell's level, as a screen reader hears it. The reference announces the English word in every language; translated here."
+  },
+  "heatLevelSome": "some",
+  "@heatLevelSome": {
+    "description": "A heatmap cell's level"
   },
   "heroHighlights": "Highlights",
   "@heroHighlights": {
@@ -2574,6 +2982,128 @@
   "@intZakat": {
     "description": "Interest \"zakat\". The reference hard-codes the English label and never translates it; see D12"
   },
+  "learningConsistency": "Consistency",
+  "@learningConsistency": {
+    "description": "Reference key learning.consistency — the heatmap's section head and name"
+  },
+  "learningCourseMeta": "{provider} · {minutes} min",
+  "@learningCourseMeta": {
+    "description": "A course's provider and session length — `x.provider + \" · \" + x.mins + \" \" + t(\"unit.min\")`",
+    "placeholders": {
+      "provider": {
+        "type": "String"
+      },
+      "minutes": {
+        "type": "String"
+      }
+    }
+  },
+  "learningCourses": "Courses",
+  "@learningCourses": {
+    "description": "Reference key learning.courses — a summary figure"
+  },
+  "learningGoal": "Weekly goal",
+  "@learningGoal": {
+    "description": "Reference key learning.goal — the ring's accessible name"
+  },
+  "learningInProgress": "In progress",
+  "@learningInProgress": {
+    "description": "Reference key learning.inProgress — a section head"
+  },
+  "learningInsight1Text": "Your 20-minute sessions are completed twice as often as your hour-long ones.",
+  "@learningInsight1Text": {
+    "description": "Reference key learning.insight1.text"
+  },
+  "learningInsight1Title": "Short sessions stick",
+  "@learningInsight1Title": {
+    "description": "Reference key learning.insight1.title"
+  },
+  "learningInsight2Text": "Nine days running, well ahead of your other courses.",
+  "@learningInsight2Text": {
+    "description": "Reference key learning.insight2.text"
+  },
+  "learningInsight2Title": "Arabic is your strongest streak",
+  "@learningInsight2Title": {
+    "description": "Reference key learning.insight2.title"
+  },
+  "learningMilestone": "Next milestone",
+  "@learningMilestone": {
+    "description": "Reference key learning.milestone — a summary figure"
+  },
+  "learningMilestoneValue": "{n} min",
+  "@learningMilestoneValue": {
+    "description": "Reference key learning.milestoneValue — the reference writes the literal \"200 min\"; the figure is a placeholder here so its digits follow the locale",
+    "placeholders": {
+      "n": {
+        "type": "String"
+      }
+    }
+  },
+  "learningStreak": "{n}-day streak",
+  "@learningStreak": {
+    "description": "Reference key learning.streak — the summary's caption",
+    "placeholders": {
+      "n": {
+        "type": "String"
+      }
+    }
+  },
+  "learningStreakLabel": "Streak",
+  "@learningStreakLabel": {
+    "description": "Reference key learning.streakLabel — a summary figure"
+  },
+  "learningThisWeek": "This week",
+  "@learningThisWeek": {
+    "description": "Reference key learning.thisWeek — the summary's kicker"
+  },
+  "learningWeek": "This week",
+  "@learningWeek": {
+    "description": "Reference key learning.week — the bar chart's section head and name"
+  },
+  "levyCorporate": "Corporate tax",
+  "@levyCorporate": {
+    "description": "Reference key levy.corporate"
+  },
+  "levyEobi": "EOBI",
+  "@levyEobi": {
+    "description": "Reference key levy.eobi"
+  },
+  "levyGosi": "Social insurance (GOSI)",
+  "@levyGosi": {
+    "description": "Reference key levy.gosi"
+  },
+  "levyGst": "GST",
+  "@levyGst": {
+    "description": "Reference key levy.gst"
+  },
+  "levyMedicare": "Medicare",
+  "@levyMedicare": {
+    "description": "Reference key levy.medicare"
+  },
+  "levyNi": "National Insurance",
+  "@levyNi": {
+    "description": "Reference key levy.ni"
+  },
+  "levyPension": "Pension contribution",
+  "@levyPension": {
+    "description": "Reference key levy.pension"
+  },
+  "levyPf": "Provident Fund",
+  "@levyPf": {
+    "description": "Reference key levy.pf"
+  },
+  "levySocialSecurity": "Social Security",
+  "@levySocialSecurity": {
+    "description": "Reference key levy.socialSecurity"
+  },
+  "levyVat": "VAT",
+  "@levyVat": {
+    "description": "Reference key levy.vat"
+  },
+  "levyZakatRate": "Zakat",
+  "@levyZakatRate": {
+    "description": "Reference key levy.zakatRate"
+  },
   "loadshedOff": "Power is off",
   "@loadshedOff": {
     "description": "Reference key loadshed.currentlyOff"
@@ -2587,7 +3117,6 @@
       }
     }
   },
-  "@@locale": "en",
   "marketPk": "Pakistan",
   "@marketPk": {
     "description": "The market a national pump price applies to. Only the markets whose regulator publishes one need a key"
@@ -3319,14 +3848,6 @@
   "@notifPrefFrom": {
     "description": "Reference: `n.pref.from`, lowercase as the reference renders it. The first quiet-hours stepper row."
   },
-  "notifPrefLater": "Later",
-  "@notifPrefLater": {
-    "description": "Reference: `n.pref.later`. The quiet-hours stepper's increment."
-  },
-  "notifPrefTo": "Until",
-  "@notifPrefTo": {
-    "description": "Reference: `n.pref.to`. The second quiet-hours stepper row."
-  },
   "notifPrefGeneral": "General",
   "@notifPrefGeneral": {
     "description": "Reference: `n.pref.general`."
@@ -3342,6 +3863,10 @@
   "notifPrefInAppSub": "Banners and the notification centre",
   "@notifPrefInAppSub": {
     "description": "Reference: `n.pref.inAppSub`."
+  },
+  "notifPrefLater": "Later",
+  "@notifPrefLater": {
+    "description": "Reference: `n.pref.later`. The quiet-hours stepper's increment."
   },
   "notifPrefPerTool": "By tool",
   "@notifPrefPerTool": {
@@ -3394,6 +3919,10 @@
   "notifPrefSound": "Sound",
   "@notifPrefSound": {
     "description": "Reference: `n.pref.sound`."
+  },
+  "notifPrefTo": "Until",
+  "@notifPrefTo": {
+    "description": "Reference: `n.pref.to`. The second quiet-hours stepper row."
   },
   "ntypeBillDue": "Bills due soon",
   "@ntypeBillDue": {
@@ -4222,6 +4751,178 @@
   "@taskSummary": {
     "description": "Reference: a task"
   },
+  "taxAbove": "Above {v}",
+  "@taxAbove": {
+    "description": "Reference key tax.above — the top band's label",
+    "placeholders": {
+      "v": {
+        "type": "String"
+      }
+    }
+  },
+  "taxAnnual": "Annual",
+  "@taxAnnual": {
+    "description": "Reference key tax.annual — the period control"
+  },
+  "taxAuthorityFbrSalaried": "FBR salaried slabs",
+  "@taxAuthorityFbrSalaried": {
+    "description": "tool-data.js TAX.PK.authority. The reference prints the data string in every language; translated here (§11)."
+  },
+  "taxAuthorityHmrcEngland": "HMRC income tax (England)",
+  "@taxAuthorityHmrcEngland": {
+    "description": "tool-data.js TAX.GB.authority"
+  },
+  "taxAuthorityIndiaNewRegime": "New regime slabs",
+  "@taxAuthorityIndiaNewRegime": {
+    "description": "tool-data.js TAX.IN.authority"
+  },
+  "taxAuthorityIrsSingleFiler": "IRS single filer",
+  "@taxAuthorityIrsSingleFiler": {
+    "description": "tool-data.js TAX.US.authority"
+  },
+  "taxAuthorityNone": "No personal income tax",
+  "@taxAuthorityNone": {
+    "description": "tool-data.js TAX.AE/SA.authority"
+  },
+  "taxBand": "Band",
+  "@taxBand": {
+    "description": "Reference key tax.band — a table column"
+  },
+  "taxDeductions": "Deductions",
+  "@taxDeductions": {
+    "description": "Reference key tax.deductions — a field"
+  },
+  "taxDueAnnual": "Tax a year",
+  "@taxDueAnnual": {
+    "description": "Reference key tax.dueAnnual — the result's kicker"
+  },
+  "taxDueMonthly": "Tax a month",
+  "@taxDueMonthly": {
+    "description": "Reference key tax.dueMonthly — the result's kicker"
+  },
+  "taxEffective": "Effective rate {rate}",
+  "@taxEffective": {
+    "description": "Reference key tax.effective — the result's caption",
+    "placeholders": {
+      "rate": {
+        "type": "String"
+      }
+    }
+  },
+  "taxIncomeAnnual": "Annual income",
+  "@taxIncomeAnnual": {
+    "description": "Reference key tax.incomeAnnual — a field"
+  },
+  "taxIncomeMonthly": "Monthly income",
+  "@taxIncomeMonthly": {
+    "description": "Reference key tax.incomeMonthly — a field"
+  },
+  "taxIncomeTax": "Income tax",
+  "@taxIncomeTax": {
+    "description": "Reference key tax.incomeTax"
+  },
+  "taxLeviesNote": "Worth knowing",
+  "@taxLeviesNote": {
+    "description": "Reference key tax.leviesNote — a section head"
+  },
+  "taxLeviesNoteText": "These are headline rates. Consumption taxes are paid on what you buy rather than deducted from pay, and social contributions are usually split between you and your employer.",
+  "@taxLeviesNoteText": {
+    "description": "Reference key tax.leviesNoteText"
+  },
+  "taxLevy": "Levy",
+  "@taxLevy": {
+    "description": "Reference key tax.levy — a table column"
+  },
+  "taxMarginal": "Marginal rate",
+  "@taxMarginal": {
+    "description": "Reference key tax.marginal"
+  },
+  "taxMonthly": "Monthly",
+  "@taxMonthly": {
+    "description": "Reference key tax.monthly — the period control"
+  },
+  "taxNoneCaption": "Your salary is not subject to personal income tax here.",
+  "@taxNoneCaption": {
+    "description": "Reference key tax.noneCaption"
+  },
+  "taxNoneText": "{authority}. Nothing to calculate for salaried income here.",
+  "@taxNoneText": {
+    "description": "Reference key tax.none.text",
+    "placeholders": {
+      "authority": {
+        "type": "String"
+      }
+    }
+  },
+  "taxNoneTitle": "No personal income tax",
+  "@taxNoneTitle": {
+    "description": "Reference key tax.none.title"
+  },
+  "taxOtherLevies": "What does apply",
+  "@taxOtherLevies": {
+    "description": "Reference key tax.otherLevies — a section head"
+  },
+  "taxPeriod": "Period",
+  "@taxPeriod": {
+    "description": "Reference key tax.period — the period control's accessible name"
+  },
+  "taxRate": "Rate",
+  "@taxRate": {
+    "description": "Reference key tax.rate — a table column"
+  },
+  "taxSlabs": "How it is worked out",
+  "@taxSlabs": {
+    "description": "Reference key tax.slabs — the breakdown's head"
+  },
+  "taxSplit": "Where it goes",
+  "@taxSplit": {
+    "description": "Reference key tax.split — the donut's accessible name"
+  },
+  "taxTakeHome": "Take-home",
+  "@taxTakeHome": {
+    "description": "Reference key tax.takeHome"
+  },
+  "taxTax": "Tax",
+  "@taxTax": {
+    "description": "Reference key tax.tax — the donut's tax slice"
+  },
+  "taxTaxable": "Taxable income",
+  "@taxTaxable": {
+    "description": "Reference key tax.taxable"
+  },
+  "taxTaxedHere": "Tax in band",
+  "@taxTaxedHere": {
+    "description": "Reference key tax.taxedHere — a table column"
+  },
+  "taxUnsupportedText": "Tax rules are country-specific. Switch country to use a market Lume has configured, or check back — new markets are added regularly.",
+  "@taxUnsupportedText": {
+    "description": "Reference key tax.unsupported.text"
+  },
+  "taxUnsupportedTitle": "Not yet localised for {country}",
+  "@taxUnsupportedTitle": {
+    "description": "Reference key tax.unsupported.title",
+    "placeholders": {
+      "country": {
+        "type": "String"
+      }
+    }
+  },
+  "taxYear": "Year",
+  "@taxYear": {
+    "description": "Reference key tax.year"
+  },
+  "timerDone": "Timer finished",
+  "@timerDone": {
+    "description": "Reference key timer.done — the toast when a countdown reaches zero"
+  },
+  "timerHint": "Choose a preset or set your own",
+  "@timerHint": {
+    "description": "Reference key timer.hint — under the clock face"
+  },
+  "timerPresets": "Presets",
+  "@timerPresets": {
+    "description": "Reference key timer.presets — a section head"
+  },
   "todayAddToast": "New task added",
   "@todayAddToast": {
     "description": "Reference: the toast behind the Add control"
@@ -4428,6 +5129,10 @@
   "@toolCategorySubPlanning": {
     "description": "Reference key cat.planningSub"
   },
+  "toolChangeCountry": "Change country",
+  "@toolChangeCountry": {
+    "description": "Reference key settings.changeCountry — a tool that is not localised for the reader's country offers this"
+  },
   "toolErrorText": "We couldn’t load this. Try again in a moment.",
   "@toolErrorText": {
     "description": "Tool host error state"
@@ -4435,6 +5140,19 @@
   "toolErrorTitle": "Something went wrong",
   "@toolErrorTitle": {
     "description": "Tool host error state"
+  },
+  "toolFavourited": "Added {name} to favourites",
+  "@toolFavourited": {
+    "description": "Reference key tool.favourited — the toast after the header's favourite action",
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "toolInsights": "Insights",
+  "@toolInsights": {
+    "description": "Reference key habits.insights — a tracker's insight section head"
   },
   "toolLoading": "Loading",
   "@toolLoading": {
@@ -4464,6 +5182,18 @@
   "toolPrivateTitle": "Private to you",
   "@toolPrivateTitle": {
     "description": "Reference key tool.private.title"
+  },
+  "toolRelated": "Related tools",
+  "@toolRelated": {
+    "description": "Reference key tool.related — the related-tools section head"
+  },
+  "toolSourceOnDevice": "On device",
+  "@toolSourceOnDevice": {
+    "description": "tool-specs.js src \"On device\" — shared by every tool whose figures live on the device. The reference prints it in English everywhere; translated here (§11)."
+  },
+  "toolSourceTax": "Statutory slabs",
+  "@toolSourceTax": {
+    "description": "tool-specs.js src for tax. The reference prints this English string in every language; translated here (§11)."
   },
   "toolStatusAge": "Exact days",
   "@toolStatusAge": {
@@ -4822,172 +5552,6 @@
   "@toolUnavailableTitle": {
     "description": "Tool host unavailable state"
   },
-  "toolRelated": "Related tools",
-  "@toolRelated": {
-    "description": "Reference key tool.related — the related-tools section head"
-  },
-  "a11yExport": "Export",
-  "@a11yExport": {
-    "description": "Reference key a11y.export — the tool header export action"
-  },
-  "a11yFavourite": "Save to favourites",
-  "@a11yFavourite": {
-    "description": "Reference key a11y.favourite — the tool header favourite action. The reference has no Urdu or Arabic for it; translated here (§11)."
-  },
-  "a11ySearchTool": "Search this tool",
-  "@a11ySearchTool": {
-    "description": "Reference key a11y.search — the tool header search action, in the reference's own Urdu and Arabic"
-  },
-  "toolChangeCountry": "Change country",
-  "@toolChangeCountry": {
-    "description": "Reference key settings.changeCountry — a tool that is not localised for the reader's country offers this"
-  },
-  "freshLive": "Live",
-  "@freshLive": {
-    "description": "Reference key fresh.live — a live source"
-  },
-  "freshCached": "Cached",
-  "@freshCached": {
-    "description": "Reference key fresh.cached"
-  },
-  "freshDelayed": "Delayed 15 min",
-  "@freshDelayed": {
-    "description": "Reference key fresh.delayed"
-  },
-  "freshDaily": "Updated today",
-  "@freshDaily": {
-    "description": "Reference key fresh.daily"
-  },
-  "freshWeekly": "Updated this week",
-  "@freshWeekly": {
-    "description": "Reference key fresh.weekly"
-  },
-  "freshAnnual": "Current tax year",
-  "@freshAnnual": {
-    "description": "Reference key fresh.annual"
-  },
-  "freshDraw": "Latest draw",
-  "@freshDraw": {
-    "description": "Reference key fresh.draw"
-  },
-  "freshComputed": "Calculated for your location",
-  "@freshComputed": {
-    "description": "Reference key fresh.computed"
-  },
-  "freshStatic": "Reference text",
-  "@freshStatic": {
-    "description": "Reference key fresh.static"
-  },
-  "freshLocal": "Stored on this device",
-  "@freshLocal": {
-    "description": "Reference key fresh.local"
-  },
-  "freshAgoSec": "Updated {n} sec ago",
-  "@freshAgoSec": {
-    "description": "Reference key fresh.agoSec — the source line of a live tool",
-    "placeholders": {
-      "n": {
-        "type": "int"
-      }
-    }
-  },
-  "freshAgoMin": "Updated {n} min ago",
-  "@freshAgoMin": {
-    "description": "Reference key fresh.agoMin — the source line of a delayed tool",
-    "placeholders": {
-      "n": {
-        "type": "int"
-      }
-    }
-  },
-  "freshAt": "Updated at {time}",
-  "@freshAt": {
-    "description": "Reference key fresh.at — a daily source, in the reader's clock",
-    "placeholders": {
-      "time": {
-        "type": "String"
-      }
-    }
-  },
-  "freshOn": "Updated {date}",
-  "@freshOn": {
-    "description": "Reference key fresh.on — a weekly or annual source",
-    "placeholders": {
-      "date": {
-        "type": "String"
-      }
-    }
-  },
-  "freshForCity": "For {city}",
-  "@freshForCity": {
-    "description": "Reference key fresh.forCity — a figure computed for the reader's city",
-    "placeholders": {
-      "city": {
-        "type": "String"
-      }
-    }
-  },
-  "archetypeAction": "Emergency actions",
-  "@archetypeAction": {
-    "description": "Reference key archetype.action — the word in a tool header's sub-line"
-  },
-  "archetypeCalculator": "Calculator",
-  "@archetypeCalculator": {
-    "description": "Reference key archetype.calculator"
-  },
-  "archetypeDashboard": "Dashboard",
-  "@archetypeDashboard": {
-    "description": "Reference key archetype.dashboard"
-  },
-  "archetypeExplorer": "Data explorer",
-  "@archetypeExplorer": {
-    "description": "Reference key archetype.explorer"
-  },
-  "archetypeInstrument": "Instrument",
-  "@archetypeInstrument": {
-    "description": "Reference key archetype.instrument"
-  },
-  "archetypeLibrary": "Library",
-  "@archetypeLibrary": {
-    "description": "Reference key archetype.library"
-  },
-  "archetypeManager": "Records manager",
-  "@archetypeManager": {
-    "description": "Reference key archetype.manager"
-  },
-  "archetypePlanner": "Planner",
-  "@archetypePlanner": {
-    "description": "Reference key archetype.planner"
-  },
-  "archetypeReader": "Reader",
-  "@archetypeReader": {
-    "description": "Reference key archetype.reader"
-  },
-  "archetypeTracker": "Tracker",
-  "@archetypeTracker": {
-    "description": "Reference key archetype.tracker"
-  },
-  "archetypeTracking": "Live tracking",
-  "@archetypeTracking": {
-    "description": "Reference key archetype.tracking"
-  },
-  "toolSourceTax": "Statutory slabs",
-  "@toolSourceTax": {
-    "description": "tool-specs.js src for tax. The reference prints this English string in every language; translated here (§11)."
-  },
-  "toolSourceOnDevice": "On device",
-  "@toolSourceOnDevice": {
-    "description": "tool-specs.js src \"On device\" — shared by every tool whose figures live on the device. The reference prints it in English everywhere; translated here (§11)."
-  },
-  "toolFavourited": "Added {name} to favourites",
-  "@toolFavourited": {
-    "description": "Reference key tool.favourited — the toast after the header's favourite action",
-    "placeholders": {
-      "name": {
-        "type": "String"
-      }
-    }
-  },
   "toolUnfavourited": "Removed {name} from favourites",
   "@toolUnfavourited": {
     "description": "Reference key tool.unfavourited",
@@ -4996,316 +5560,6 @@
         "type": "String"
       }
     }
-  },
-  "toolInsights": "Insights",
-  "@toolInsights": {
-    "description": "Reference key habits.insights — a tracker's insight section head"
-  },
-  "commonLess": "Less",
-  "@commonLess": {
-    "description": "Reference key common.less — a heatmap key"
-  },
-  "commonMore": "More",
-  "@commonMore": {
-    "description": "Reference key common.more — a heatmap key"
-  },
-  "heatLevelNone": "none",
-  "@heatLevelNone": {
-    "description": "A heatmap cell's level, as a screen reader hears it. The reference announces the English word in every language; translated here."
-  },
-  "heatLevelSome": "some",
-  "@heatLevelSome": {
-    "description": "A heatmap cell's level"
-  },
-  "heatLevelMost": "most",
-  "@heatLevelMost": {
-    "description": "A heatmap cell's level"
-  },
-  "heatLevelAll": "all",
-  "@heatLevelAll": {
-    "description": "A heatmap cell's level"
-  },
-  "learningThisWeek": "This week",
-  "@learningThisWeek": {
-    "description": "Reference key learning.thisWeek — the summary's kicker"
-  },
-  "learningStreak": "{n}-day streak",
-  "@learningStreak": {
-    "description": "Reference key learning.streak — the summary's caption",
-    "placeholders": {
-      "n": {
-        "type": "String"
-      }
-    }
-  },
-  "learningGoal": "Weekly goal",
-  "@learningGoal": {
-    "description": "Reference key learning.goal — the ring's accessible name"
-  },
-  "learningCourses": "Courses",
-  "@learningCourses": {
-    "description": "Reference key learning.courses — a summary figure"
-  },
-  "learningStreakLabel": "Streak",
-  "@learningStreakLabel": {
-    "description": "Reference key learning.streakLabel — a summary figure"
-  },
-  "learningMilestone": "Next milestone",
-  "@learningMilestone": {
-    "description": "Reference key learning.milestone — a summary figure"
-  },
-  "learningMilestoneValue": "{n} min",
-  "@learningMilestoneValue": {
-    "description": "Reference key learning.milestoneValue — the reference writes the literal \"200 min\"; the figure is a placeholder here so its digits follow the locale",
-    "placeholders": {
-      "n": {
-        "type": "String"
-      }
-    }
-  },
-  "learningInProgress": "In progress",
-  "@learningInProgress": {
-    "description": "Reference key learning.inProgress — a section head"
-  },
-  "learningWeek": "This week",
-  "@learningWeek": {
-    "description": "Reference key learning.week — the bar chart's section head and name"
-  },
-  "learningConsistency": "Consistency",
-  "@learningConsistency": {
-    "description": "Reference key learning.consistency — the heatmap's section head and name"
-  },
-  "learningCourseMeta": "{provider} · {minutes} min",
-  "@learningCourseMeta": {
-    "description": "A course's provider and session length — `x.provider + \" · \" + x.mins + \" \" + t(\"unit.min\")`",
-    "placeholders": {
-      "provider": {
-        "type": "String"
-      },
-      "minutes": {
-        "type": "String"
-      }
-    }
-  },
-  "learningInsight1Title": "Short sessions stick",
-  "@learningInsight1Title": {
-    "description": "Reference key learning.insight1.title"
-  },
-  "learningInsight1Text": "Your 20-minute sessions are completed twice as often as your hour-long ones.",
-  "@learningInsight1Text": {
-    "description": "Reference key learning.insight1.text"
-  },
-  "learningInsight2Title": "Arabic is your strongest streak",
-  "@learningInsight2Title": {
-    "description": "Reference key learning.insight2.title"
-  },
-  "learningInsight2Text": "Nine days running, well ahead of your other courses.",
-  "@learningInsight2Text": {
-    "description": "Reference key learning.insight2.text"
-  },
-  "taxAbove": "Above {v}",
-  "@taxAbove": {
-    "description": "Reference key tax.above — the top band's label",
-    "placeholders": {
-      "v": {
-        "type": "String"
-      }
-    }
-  },
-  "taxAnnual": "Annual",
-  "@taxAnnual": {
-    "description": "Reference key tax.annual — the period control"
-  },
-  "taxBand": "Band",
-  "@taxBand": {
-    "description": "Reference key tax.band — a table column"
-  },
-  "taxDeductions": "Deductions",
-  "@taxDeductions": {
-    "description": "Reference key tax.deductions — a field"
-  },
-  "taxDueAnnual": "Tax a year",
-  "@taxDueAnnual": {
-    "description": "Reference key tax.dueAnnual — the result's kicker"
-  },
-  "taxDueMonthly": "Tax a month",
-  "@taxDueMonthly": {
-    "description": "Reference key tax.dueMonthly — the result's kicker"
-  },
-  "taxEffective": "Effective rate {rate}",
-  "@taxEffective": {
-    "description": "Reference key tax.effective — the result's caption",
-    "placeholders": {
-      "rate": {
-        "type": "String"
-      }
-    }
-  },
-  "taxIncomeAnnual": "Annual income",
-  "@taxIncomeAnnual": {
-    "description": "Reference key tax.incomeAnnual — a field"
-  },
-  "taxIncomeMonthly": "Monthly income",
-  "@taxIncomeMonthly": {
-    "description": "Reference key tax.incomeMonthly — a field"
-  },
-  "taxIncomeTax": "Income tax",
-  "@taxIncomeTax": {
-    "description": "Reference key tax.incomeTax"
-  },
-  "taxLeviesNote": "Worth knowing",
-  "@taxLeviesNote": {
-    "description": "Reference key tax.leviesNote — a section head"
-  },
-  "taxLeviesNoteText": "These are headline rates. Consumption taxes are paid on what you buy rather than deducted from pay, and social contributions are usually split between you and your employer.",
-  "@taxLeviesNoteText": {
-    "description": "Reference key tax.leviesNoteText"
-  },
-  "taxLevy": "Levy",
-  "@taxLevy": {
-    "description": "Reference key tax.levy — a table column"
-  },
-  "taxMarginal": "Marginal rate",
-  "@taxMarginal": {
-    "description": "Reference key tax.marginal"
-  },
-  "taxMonthly": "Monthly",
-  "@taxMonthly": {
-    "description": "Reference key tax.monthly — the period control"
-  },
-  "taxNoneText": "{authority}. Nothing to calculate for salaried income here.",
-  "@taxNoneText": {
-    "description": "Reference key tax.none.text",
-    "placeholders": {
-      "authority": {
-        "type": "String"
-      }
-    }
-  },
-  "taxNoneTitle": "No personal income tax",
-  "@taxNoneTitle": {
-    "description": "Reference key tax.none.title"
-  },
-  "taxNoneCaption": "Your salary is not subject to personal income tax here.",
-  "@taxNoneCaption": {
-    "description": "Reference key tax.noneCaption"
-  },
-  "taxOtherLevies": "What does apply",
-  "@taxOtherLevies": {
-    "description": "Reference key tax.otherLevies — a section head"
-  },
-  "taxPeriod": "Period",
-  "@taxPeriod": {
-    "description": "Reference key tax.period — the period control's accessible name"
-  },
-  "taxRate": "Rate",
-  "@taxRate": {
-    "description": "Reference key tax.rate — a table column"
-  },
-  "taxSlabs": "How it is worked out",
-  "@taxSlabs": {
-    "description": "Reference key tax.slabs — the breakdown's head"
-  },
-  "taxSplit": "Where it goes",
-  "@taxSplit": {
-    "description": "Reference key tax.split — the donut's accessible name"
-  },
-  "taxTakeHome": "Take-home",
-  "@taxTakeHome": {
-    "description": "Reference key tax.takeHome"
-  },
-  "taxTax": "Tax",
-  "@taxTax": {
-    "description": "Reference key tax.tax — the donut's tax slice"
-  },
-  "taxTaxable": "Taxable income",
-  "@taxTaxable": {
-    "description": "Reference key tax.taxable"
-  },
-  "taxTaxedHere": "Tax in band",
-  "@taxTaxedHere": {
-    "description": "Reference key tax.taxedHere — a table column"
-  },
-  "taxUnsupportedText": "Tax rules are country-specific. Switch country to use a market Lume has configured, or check back — new markets are added regularly.",
-  "@taxUnsupportedText": {
-    "description": "Reference key tax.unsupported.text"
-  },
-  "taxUnsupportedTitle": "Not yet localised for {country}",
-  "@taxUnsupportedTitle": {
-    "description": "Reference key tax.unsupported.title",
-    "placeholders": {
-      "country": {
-        "type": "String"
-      }
-    }
-  },
-  "taxYear": "Year",
-  "@taxYear": {
-    "description": "Reference key tax.year"
-  },
-  "taxAuthorityFbrSalaried": "FBR salaried slabs",
-  "@taxAuthorityFbrSalaried": {
-    "description": "tool-data.js TAX.PK.authority. The reference prints the data string in every language; translated here (§11)."
-  },
-  "taxAuthorityHmrcEngland": "HMRC income tax (England)",
-  "@taxAuthorityHmrcEngland": {
-    "description": "tool-data.js TAX.GB.authority"
-  },
-  "taxAuthorityIrsSingleFiler": "IRS single filer",
-  "@taxAuthorityIrsSingleFiler": {
-    "description": "tool-data.js TAX.US.authority"
-  },
-  "taxAuthorityIndiaNewRegime": "New regime slabs",
-  "@taxAuthorityIndiaNewRegime": {
-    "description": "tool-data.js TAX.IN.authority"
-  },
-  "taxAuthorityNone": "No personal income tax",
-  "@taxAuthorityNone": {
-    "description": "tool-data.js TAX.AE/SA.authority"
-  },
-  "levyCorporate": "Corporate tax",
-  "@levyCorporate": {
-    "description": "Reference key levy.corporate"
-  },
-  "levyEobi": "EOBI",
-  "@levyEobi": {
-    "description": "Reference key levy.eobi"
-  },
-  "levyGosi": "Social insurance (GOSI)",
-  "@levyGosi": {
-    "description": "Reference key levy.gosi"
-  },
-  "levyGst": "GST",
-  "@levyGst": {
-    "description": "Reference key levy.gst"
-  },
-  "levyMedicare": "Medicare",
-  "@levyMedicare": {
-    "description": "Reference key levy.medicare"
-  },
-  "levyNi": "National Insurance",
-  "@levyNi": {
-    "description": "Reference key levy.ni"
-  },
-  "levyPension": "Pension contribution",
-  "@levyPension": {
-    "description": "Reference key levy.pension"
-  },
-  "levyPf": "Provident Fund",
-  "@levyPf": {
-    "description": "Reference key levy.pf"
-  },
-  "levySocialSecurity": "Social Security",
-  "@levySocialSecurity": {
-    "description": "Reference key levy.socialSecurity"
-  },
-  "levyVat": "VAT",
-  "@levyVat": {
-    "description": "Reference key levy.vat"
-  },
-  "levyZakatRate": "Zakat",
-  "@levyZakatRate": {
-    "description": "Reference key levy.zakatRate"
   },
   "toolsForYou": "For you",
   "@toolsForYou": {
@@ -5659,6 +5913,15 @@
   "@unitMinutes": {
     "description": "Reference: a statistic’s unit"
   },
+  "unitMinutesCount": "{n} min",
+  "@unitMinutesCount": {
+    "description": "A length in minutes — `n + \" \" + t(\"unit.min\")`, as a preset and a history row write it",
+    "placeholders": {
+      "n": {
+        "type": "String"
+      }
+    }
+  },
   "unitMph": "mph",
   "@unitMph": {
     "description": "Reference: a wind speed unit"
@@ -5676,18 +5939,6 @@
   "@unitThousand": {
     "description": "Reference: a statistic’s unit"
   },
-  "weatherClear": "Clear",
-  "@weatherClear": {
-    "description": "A weather condition. The prototype stores these as English sentences in the catalogue and never translates them"
-  },
-  "weatherClearVeryWarm": "Clear · very warm",
-  "@weatherClearVeryWarm": {
-    "description": "Reference: WEATHER_BY_COUNTRY.AE"
-  },
-  "weatherCloudBuilding": "Cloud building",
-  "@weatherCloudBuilding": {
-    "description": "A weather condition. The prototype stores these as English sentences in the catalogue and never translates them"
-  },
   "weatherBreezy": "Breezy",
   "@weatherBreezy": {
     "description": "Reference: WEATHER_BY_COUNTRY / WEATHER_BY_ZONE condition phrase."
@@ -5700,9 +5951,21 @@
   "@weatherChangeable": {
     "description": "Reference: WEATHER_BY_COUNTRY / WEATHER_BY_ZONE condition phrase."
   },
+  "weatherClear": "Clear",
+  "@weatherClear": {
+    "description": "A weather condition. The prototype stores these as English sentences in the catalogue and never translates them"
+  },
   "weatherClearAndDry": "Clear and dry",
   "@weatherClearAndDry": {
     "description": "Reference: WEATHER_BY_COUNTRY / WEATHER_BY_ZONE condition phrase."
+  },
+  "weatherClearVeryWarm": "Clear · very warm",
+  "@weatherClearVeryWarm": {
+    "description": "Reference: WEATHER_BY_COUNTRY.AE"
+  },
+  "weatherCloudBuilding": "Cloud building",
+  "@weatherCloudBuilding": {
+    "description": "A weather condition. The prototype stores these as English sentences in the catalogue and never translates them"
   },
   "weatherCloudy": "Cloudy",
   "@weatherCloudy": {
@@ -5710,46 +5973,6 @@
   },
   "weatherFresh": "Fresh",
   "@weatherFresh": {
-    "description": "Reference: WEATHER_BY_COUNTRY / WEATHER_BY_ZONE condition phrase."
-  },
-  "weatherHumid": "Humid",
-  "@weatherHumid": {
-    "description": "Reference: WEATHER_BY_COUNTRY / WEATHER_BY_ZONE condition phrase."
-  },
-  "weatherHumidAfternoonStorms": "Humid · afternoon storms",
-  "@weatherHumidAfternoonStorms": {
-    "description": "Reference: WEATHER_BY_COUNTRY / WEATHER_BY_ZONE condition phrase."
-  },
-  "weatherHumidCloudBuilding": "Humid · cloud building",
-  "@weatherHumidCloudBuilding": {
-    "description": "Reference: WEATHER_BY_COUNTRY / WEATHER_BY_ZONE condition phrase."
-  },
-  "weatherHumidPassingShowers": "Humid · passing showers",
-  "@weatherHumidPassingShowers": {
-    "description": "Reference: WEATHER_BY_COUNTRY / WEATHER_BY_ZONE condition phrase."
-  },
-  "weatherHumidShowersLater": "Humid · showers later",
-  "@weatherHumidShowersLater": {
-    "description": "Reference: WEATHER_BY_COUNTRY / WEATHER_BY_ZONE condition phrase."
-  },
-  "weatherMildAndClear": "Mild and clear",
-  "@weatherMildAndClear": {
-    "description": "Reference: WEATHER_BY_COUNTRY / WEATHER_BY_ZONE condition phrase."
-  },
-  "weatherSunnySpells": "Sunny spells",
-  "@weatherSunnySpells": {
-    "description": "Reference: WEATHER_BY_COUNTRY / WEATHER_BY_ZONE condition phrase."
-  },
-  "weatherWarm": "Warm",
-  "@weatherWarm": {
-    "description": "Reference: WEATHER_BY_COUNTRY / WEATHER_BY_ZONE condition phrase."
-  },
-  "weatherWarmAndDry": "Warm and dry",
-  "@weatherWarmAndDry": {
-    "description": "Reference: WEATHER_BY_COUNTRY / WEATHER_BY_ZONE condition phrase."
-  },
-  "weatherWarmAndHumid": "Warm and humid",
-  "@weatherWarmAndHumid": {
     "description": "Reference: WEATHER_BY_COUNTRY / WEATHER_BY_ZONE condition phrase."
   },
   "weatherHazy": "hazy",
@@ -5776,13 +5999,37 @@
       }
     }
   },
+  "weatherHumid": "Humid",
+  "@weatherHumid": {
+    "description": "Reference: WEATHER_BY_COUNTRY / WEATHER_BY_ZONE condition phrase."
+  },
+  "weatherHumidAfternoonStorms": "Humid · afternoon storms",
+  "@weatherHumidAfternoonStorms": {
+    "description": "Reference: WEATHER_BY_COUNTRY / WEATHER_BY_ZONE condition phrase."
+  },
+  "weatherHumidCloudBuilding": "Humid · cloud building",
+  "@weatherHumidCloudBuilding": {
+    "description": "Reference: WEATHER_BY_COUNTRY / WEATHER_BY_ZONE condition phrase."
+  },
   "weatherHumidLightHaze": "Humid · light haze",
   "@weatherHumidLightHaze": {
     "description": "Reference: WEATHER_BY_COUNTRY.IN"
   },
+  "weatherHumidPassingShowers": "Humid · passing showers",
+  "@weatherHumidPassingShowers": {
+    "description": "Reference: WEATHER_BY_COUNTRY / WEATHER_BY_ZONE condition phrase."
+  },
+  "weatherHumidShowersLater": "Humid · showers later",
+  "@weatherHumidShowersLater": {
+    "description": "Reference: WEATHER_BY_COUNTRY / WEATHER_BY_ZONE condition phrase."
+  },
   "weatherLightCloud": "Light cloud",
   "@weatherLightCloud": {
     "description": "A weather condition. The prototype stores these as English sentences in the catalogue and never translates them"
+  },
+  "weatherMildAndClear": "Mild and clear",
+  "@weatherMildAndClear": {
+    "description": "Reference: WEATHER_BY_COUNTRY / WEATHER_BY_ZONE condition phrase."
   },
   "weatherMostlyClear": "Mostly clear",
   "@weatherMostlyClear": {
@@ -5795,5 +6042,21 @@
   "weatherRain": "Rain",
   "@weatherRain": {
     "description": "Reference key weather.rain"
+  },
+  "weatherSunnySpells": "Sunny spells",
+  "@weatherSunnySpells": {
+    "description": "Reference: WEATHER_BY_COUNTRY / WEATHER_BY_ZONE condition phrase."
+  },
+  "weatherWarm": "Warm",
+  "@weatherWarm": {
+    "description": "Reference: WEATHER_BY_COUNTRY / WEATHER_BY_ZONE condition phrase."
+  },
+  "weatherWarmAndDry": "Warm and dry",
+  "@weatherWarmAndDry": {
+    "description": "Reference: WEATHER_BY_COUNTRY / WEATHER_BY_ZONE condition phrase."
+  },
+  "weatherWarmAndHumid": "Warm and humid",
+  "@weatherWarmAndHumid": {
+    "description": "Reference: WEATHER_BY_COUNTRY / WEATHER_BY_ZONE condition phrase."
   }
 }

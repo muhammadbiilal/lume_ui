@@ -1381,6 +1381,30 @@ strip keeps its own tap, neighbours split the gap in both directions, Urdu at
 | `LumeProgressRing` | 76 points, a track in 10 % of the text colour, no text centre | 66 (92 large), ring radius 30 and stroke 7 on a 72 view box, track in 16 % of the ring's colour; `.pring__mid` |
 | `LumeSummaryCard` | tabular figures in the value and the stats; no `<small>` | proportional figures, as the stylesheet sets none; `.summary__value small` at 17 / 700 / .6 on the baseline |
 
+**Found on Timer (reference tool 3):**
+
+| widget | was | reference, measured |
+|---|---|---|
+| `LumeButton` | a 20-point glyph beside the label (Start 99.6 wide) | `.btn svg` 17 (Start 96.63, Reset 101.42) |
+| `LumeCompactRow` | a 20-point glyph | `.crow svg` 16 at 16 in from the card edge |
+
+**Found on Emergency (reference tool 4):**
+
+| widget | was | reference, measured |
+|---|---|---|
+| `LumeCompactRow` | the chevron 6 after the value | `.crow { gap: 12px }` puts it 12 after (value at 291.05) |
+
+**Adaptation kept, not parity:** `button.crow` is 41 tall with its hairline,
+and a pressable Flutter row stays 44 (`component_responsive_test.dart` "every
+interactive component clears 44 px"). A stack of rows has no gap a widened
+target could reach into, so the row grows instead: Emergency's three rows add
+12 in total, and everything under them sits that much lower. The words inside
+each row stay centred (within 2 of the reference), and `emergency_test.dart`
+holds the note, source and related sections to the reference's own geometry
+shifted by exactly that amount.
+| `LumeNoteCard` | a 20-point glyph; title on the card-title role (20 tall); text on the 11-point role, 2 below | `.notecard svg` 17, 1 down; `b` 13 / 700 / −.024em (16 tall); `p` 12 on a 1.5 line (18), 3 below |
+| `LumeGradient` | one approximate 150° alignment for every surface | `css(degrees, size)` lays `linear-gradient(<deg>)` as the browser does on a box of that size; `.sos` is 140° |
+
 ### C64 — a bar chart whose bars never grow
 
 **Found in F6A on Learning; corrected, for ratification.** `shell.js`
@@ -1411,6 +1435,58 @@ would say otherwise — the browser is the oracle, so Flutter draws Monday
 first everywhere (`LumeFormatting.weekdayNarrowFromMonday`). **Dayroz
 obligation:** decide the product's week start per locale, and change this one
 method.
+
+### C66 — a running timer's button still says Start
+
+**Found in F6A on Timer; reproduced, for ratification.** `clock.js`
+`clockScreen` writes the primary action once, as `t('common.start')` with the
+play icon, and `tool.screen.js` `runClock` toggles on it: pressing it while
+the clock runs pauses. Nothing rewrites the label or the icon, so a running
+countdown offers "Start" to stop it
+(`tool_timer_default_pk_running_390x844_light_en` measures `00:57` beside
+"Start" and "Reset"). Flutter reproduces the label and the behaviour
+(`timer_test.dart` "start again pauses, on the same control"). **Product
+decision:** a Pause label and icon while running, which `LumeTimerController`
+already knows (`running`); the change is one conditional in `timer_tool.dart`.
+
+The source line under a timer also reads "Live · On device · Updated 30 sec
+ago" — a literal, not a clock; it is reproduced as written (C61's honesty rule
+applies when Dayroz supplies a real source).
+
+### C67 — Emergency: a toast that claims a copy, and numbers that go nowhere
+
+**Found in F6A on Emergency; corrected, for ratification.**
+
+- **"Location copied to share" copies nothing.** The reference's row is
+  `data-act="toast:…"`: it shows the sentence and touches no clipboard.
+  Production must not pretend (D7), so Flutter puts the reader's city and
+  country — the words on the context strip, nothing finer — on the clipboard
+  and says the sentence only after the copy returns. No coordinates, no
+  permission, no share sheet.
+- **A number is a `tel:` link, and nothing reports a failure.** In a browser
+  without a handler the link silently does nothing. Flutter hands the number
+  to `LumeDialer` (D6): the dialer opens with the number filled in and never
+  calls; the number dialled, drawn and announced are one string
+  (`LumeDialNumber` refuses anything but digits, spaces, hyphens and a leading
+  `+`); an unavailable or failed dialer is said in a toast
+  (`emergencyDialUnavailable`, `emergencyDialFailed` — new strings, the
+  reference has none), an opened or dismissed one says nothing, as the
+  reference says nothing. Each call is announced "Call {service} at {number}"
+  with the number isolated left to right.
+- **Service names are written in the reader's language.** `tool-data.js`
+  keeps them in English in every language; they are keyed here (§11), proper
+  nouns transliterated. The web `ur`/`ar` cells keep the profile's English, so
+  only the English cell is compared word for word.
+
+**Platform services task:** `url_launcher` is the one new dependency, used
+only by `lume_dialer_platform.dart`; Android declares a `tel:` `VIEW` query
+for `canLaunchUrl` and no permission. A device smoke test of the hand-off on
+Android and iOS belongs to Dayroz integration — no test here opens a dialer.
+
+**Dayroz obligations:** the directory is the prototype's reference data, not a
+verified source; it needs an owned, dated directory per country, the
+region-level numbers the catalogue's `reqCity` promises, and a review of each
+number before release.
 
 ### C63 — English dates written the wrong way outside the United States
 

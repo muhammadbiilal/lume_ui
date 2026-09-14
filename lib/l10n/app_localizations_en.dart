@@ -12,10 +12,19 @@ class AppLocalizationsEn extends AppLocalizations {
   String get a11yBack => 'Back';
 
   @override
+  String get a11yExport => 'Export';
+
+  @override
+  String get a11yFavourite => 'Save to favourites';
+
+  @override
   String get a11yMainNavigation => 'Main';
 
   @override
   String get a11ySearch => 'Search this tool';
+
+  @override
+  String get a11ySearchTool => 'Search this tool';
 
   @override
   String get a11yShare => 'Share';
@@ -776,6 +785,39 @@ class AppLocalizationsEn extends AppLocalizations {
   String get appTagline => 'Your day, in one place';
 
   @override
+  String get archetypeAction => 'Emergency actions';
+
+  @override
+  String get archetypeCalculator => 'Calculator';
+
+  @override
+  String get archetypeDashboard => 'Dashboard';
+
+  @override
+  String get archetypeExplorer => 'Data explorer';
+
+  @override
+  String get archetypeInstrument => 'Instrument';
+
+  @override
+  String get archetypeLibrary => 'Library';
+
+  @override
+  String get archetypeManager => 'Records manager';
+
+  @override
+  String get archetypePlanner => 'Planner';
+
+  @override
+  String get archetypeReader => 'Reader';
+
+  @override
+  String get archetypeTracker => 'Tracker';
+
+  @override
+  String get archetypeTracking => 'Live tracking';
+
+  @override
   String get authAsideText =>
       'Prayer, weather, money, travel and the small things — wherever you are.';
 
@@ -1193,10 +1235,16 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
+  String get commonLess => 'Less';
+
+  @override
   String get commonLocked => 'Locked';
 
   @override
   String get commonMonth => 'Month';
+
+  @override
+  String get commonMore => 'More';
 
   @override
   String get commonNo => 'No';
@@ -1233,6 +1281,9 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get commonStale => 'Not current';
+
+  @override
+  String get commonStart => 'Start';
 
   @override
   String get commonStatus => 'Status';
@@ -1281,6 +1332,178 @@ class AppLocalizationsEn extends AppLocalizations {
   String docsRenewSoon(String name) {
     return 'Renew your $name';
   }
+
+  @override
+  String get emergKindAll3 => 'Police · Fire · Medical';
+
+  @override
+  String get emergKindAllServices => 'All services';
+
+  @override
+  String get emergKindAmbRescue => 'Ambulance & rescue';
+
+  @override
+  String get emergKindAmbulance => 'Ambulance';
+
+  @override
+  String get emergKindFire => 'Fire';
+
+  @override
+  String get emergKindFireRescue => 'Fire & rescue';
+
+  @override
+  String get emergKindGas => 'Gas leak';
+
+  @override
+  String get emergKindGsm => 'Works on most GSM networks';
+
+  @override
+  String get emergKindHelpline => 'Helpline';
+
+  @override
+  String get emergKindHighway => 'Highway';
+
+  @override
+  String get emergKindMaritime => 'Maritime';
+
+  @override
+  String get emergKindMedAdvice => 'Urgent medical advice';
+
+  @override
+  String get emergKindMedical => 'Medical';
+
+  @override
+  String get emergKindMental => 'Mental health';
+
+  @override
+  String get emergKindNonUrgent => 'Non-urgent';
+
+  @override
+  String get emergKindPoison => 'Poison';
+
+  @override
+  String get emergKindPolice => 'Police emergency';
+
+  @override
+  String get emergKindRouted => 'Widely routed';
+
+  @override
+  String get emergKindTraffic => 'Traffic';
+
+  @override
+  String get emergKindTrafficInfo => 'Traffic information';
+
+  @override
+  String get emergNameAmbulance => 'Ambulance';
+
+  @override
+  String get emergNameCivilDefence => 'Civil Defence';
+
+  @override
+  String get emergNameCoastGuard => 'Coast Guard';
+
+  @override
+  String get emergNameCrisisLifeline => 'Crisis Lifeline';
+
+  @override
+  String get emergNameEdhiAmbulance => 'Edhi Ambulance';
+
+  @override
+  String get emergNameEmergency => 'Emergency';
+
+  @override
+  String get emergNameFire => 'Fire';
+
+  @override
+  String get emergNameFireBrigade => 'Fire Brigade';
+
+  @override
+  String get emergNameFireCivilDefence => 'Fire (Civil Defence)';
+
+  @override
+  String get emergNameGasEmergency => 'Gas emergency';
+
+  @override
+  String get emergNameInternational => 'International Emergency';
+
+  @override
+  String get emergNameLocal => 'Local Emergency';
+
+  @override
+  String get emergNameMotorwayPolice => 'Motorway Police';
+
+  @override
+  String get emergNameNhs111 => 'NHS 111';
+
+  @override
+  String get emergNamePoisonControl => 'Poison Control';
+
+  @override
+  String get emergNamePolice => 'Police';
+
+  @override
+  String get emergNamePoliceNonEmergency => 'Police non-emergency';
+
+  @override
+  String get emergNameRedCrescent => 'Red Crescent';
+
+  @override
+  String get emergNameRescue1122 => 'Rescue 1122';
+
+  @override
+  String get emergNameRoadside => 'Roadside';
+
+  @override
+  String get emergNameTraffic => 'Traffic';
+
+  @override
+  String get emergNameUnifiedEmergency => 'Unified Emergency';
+
+  @override
+  String get emergNameWomenHelpline => 'Women Helpline';
+
+  @override
+  String emergencyCall(String service, String number) {
+    return 'Call $service at $number';
+  }
+
+  @override
+  String emergencyDialFailed(String number) {
+    return 'Couldn’t open the phone app. Dial $number yourself.';
+  }
+
+  @override
+  String emergencyDialUnavailable(String number) {
+    return 'This device can’t make calls. Dial $number from a phone.';
+  }
+
+  @override
+  String get emergencyDocuments => 'Identity documents';
+
+  @override
+  String get emergencyLocationShared => 'Location copied to share';
+
+  @override
+  String get emergencyMedical => 'Medical details';
+
+  @override
+  String get emergencyNoteText =>
+      'Emergency numbers can usually be dialled with no credit and no SIM. 112 is routed in most countries.';
+
+  @override
+  String get emergencyNoteTitle => 'Numbers work without signal';
+
+  @override
+  String get emergencyServices => 'Other services';
+
+  @override
+  String get emergencySetUp => 'Set up';
+
+  @override
+  String get emergencyShareLocation => 'Share my location';
+
+  @override
+  String get emergencyYourInfo => 'Your information';
 
   @override
   String get exploreAround => 'Around you';
@@ -1659,6 +1882,61 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
+  String freshAgoMin(int n) {
+    return 'Updated $n min ago';
+  }
+
+  @override
+  String freshAgoSec(int n) {
+    return 'Updated $n sec ago';
+  }
+
+  @override
+  String get freshAnnual => 'Current tax year';
+
+  @override
+  String freshAt(String time) {
+    return 'Updated at $time';
+  }
+
+  @override
+  String get freshCached => 'Cached';
+
+  @override
+  String get freshComputed => 'Calculated for your location';
+
+  @override
+  String get freshDaily => 'Updated today';
+
+  @override
+  String get freshDelayed => 'Delayed 15 min';
+
+  @override
+  String get freshDraw => 'Latest draw';
+
+  @override
+  String freshForCity(String city) {
+    return 'For $city';
+  }
+
+  @override
+  String get freshLive => 'Live';
+
+  @override
+  String get freshLocal => 'Stored on this device';
+
+  @override
+  String freshOn(String date) {
+    return 'Updated $date';
+  }
+
+  @override
+  String get freshStatic => 'Reference text';
+
+  @override
+  String get freshWeekly => 'Updated this week';
+
+  @override
   String get fuelPetrol => 'Petrol';
 
   @override
@@ -1695,6 +1973,18 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get habitWater => '8 glasses';
+
+  @override
+  String get heatLevelAll => 'all';
+
+  @override
+  String get heatLevelMost => 'most';
+
+  @override
+  String get heatLevelNone => 'none';
+
+  @override
+  String get heatLevelSome => 'some';
 
   @override
   String get heroHighlights => 'Highlights';
@@ -1928,6 +2218,92 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get intZakat => 'Zakat & giving';
+
+  @override
+  String get learningConsistency => 'Consistency';
+
+  @override
+  String learningCourseMeta(String provider, String minutes) {
+    return '$provider · $minutes min';
+  }
+
+  @override
+  String get learningCourses => 'Courses';
+
+  @override
+  String get learningGoal => 'Weekly goal';
+
+  @override
+  String get learningInProgress => 'In progress';
+
+  @override
+  String get learningInsight1Text =>
+      'Your 20-minute sessions are completed twice as often as your hour-long ones.';
+
+  @override
+  String get learningInsight1Title => 'Short sessions stick';
+
+  @override
+  String get learningInsight2Text =>
+      'Nine days running, well ahead of your other courses.';
+
+  @override
+  String get learningInsight2Title => 'Arabic is your strongest streak';
+
+  @override
+  String get learningMilestone => 'Next milestone';
+
+  @override
+  String learningMilestoneValue(String n) {
+    return '$n min';
+  }
+
+  @override
+  String learningStreak(String n) {
+    return '$n-day streak';
+  }
+
+  @override
+  String get learningStreakLabel => 'Streak';
+
+  @override
+  String get learningThisWeek => 'This week';
+
+  @override
+  String get learningWeek => 'This week';
+
+  @override
+  String get levyCorporate => 'Corporate tax';
+
+  @override
+  String get levyEobi => 'EOBI';
+
+  @override
+  String get levyGosi => 'Social insurance (GOSI)';
+
+  @override
+  String get levyGst => 'GST';
+
+  @override
+  String get levyMedicare => 'Medicare';
+
+  @override
+  String get levyNi => 'National Insurance';
+
+  @override
+  String get levyPension => 'Pension contribution';
+
+  @override
+  String get levyPf => 'Provident Fund';
+
+  @override
+  String get levySocialSecurity => 'Social Security';
+
+  @override
+  String get levyVat => 'VAT';
+
+  @override
+  String get levyZakatRate => 'Zakat';
 
   @override
   String get loadshedOff => 'Power is off';
@@ -2434,12 +2810,6 @@ class AppLocalizationsEn extends AppLocalizations {
   String get notifPrefFrom => 'from';
 
   @override
-  String get notifPrefLater => 'Later';
-
-  @override
-  String get notifPrefTo => 'Until';
-
-  @override
   String get notifPrefGeneral => 'General';
 
   @override
@@ -2450,6 +2820,9 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get notifPrefInAppSub => 'Banners and the notification centre';
+
+  @override
+  String get notifPrefLater => 'Later';
 
   @override
   String get notifPrefPerTool => 'By tool';
@@ -2492,6 +2865,9 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get notifPrefSound => 'Sound';
+
+  @override
+  String get notifPrefTo => 'Until';
 
   @override
   String get ntypeBillDue => 'Bills due soon';
@@ -3098,6 +3474,131 @@ class AppLocalizationsEn extends AppLocalizations {
   String get taskSummary => 'Finish the Q3 summary';
 
   @override
+  String taxAbove(String v) {
+    return 'Above $v';
+  }
+
+  @override
+  String get taxAnnual => 'Annual';
+
+  @override
+  String get taxAuthorityFbrSalaried => 'FBR salaried slabs';
+
+  @override
+  String get taxAuthorityHmrcEngland => 'HMRC income tax (England)';
+
+  @override
+  String get taxAuthorityIndiaNewRegime => 'New regime slabs';
+
+  @override
+  String get taxAuthorityIrsSingleFiler => 'IRS single filer';
+
+  @override
+  String get taxAuthorityNone => 'No personal income tax';
+
+  @override
+  String get taxBand => 'Band';
+
+  @override
+  String get taxDeductions => 'Deductions';
+
+  @override
+  String get taxDueAnnual => 'Tax a year';
+
+  @override
+  String get taxDueMonthly => 'Tax a month';
+
+  @override
+  String taxEffective(String rate) {
+    return 'Effective rate $rate';
+  }
+
+  @override
+  String get taxIncomeAnnual => 'Annual income';
+
+  @override
+  String get taxIncomeMonthly => 'Monthly income';
+
+  @override
+  String get taxIncomeTax => 'Income tax';
+
+  @override
+  String get taxLeviesNote => 'Worth knowing';
+
+  @override
+  String get taxLeviesNoteText =>
+      'These are headline rates. Consumption taxes are paid on what you buy rather than deducted from pay, and social contributions are usually split between you and your employer.';
+
+  @override
+  String get taxLevy => 'Levy';
+
+  @override
+  String get taxMarginal => 'Marginal rate';
+
+  @override
+  String get taxMonthly => 'Monthly';
+
+  @override
+  String get taxNoneCaption =>
+      'Your salary is not subject to personal income tax here.';
+
+  @override
+  String taxNoneText(String authority) {
+    return '$authority. Nothing to calculate for salaried income here.';
+  }
+
+  @override
+  String get taxNoneTitle => 'No personal income tax';
+
+  @override
+  String get taxOtherLevies => 'What does apply';
+
+  @override
+  String get taxPeriod => 'Period';
+
+  @override
+  String get taxRate => 'Rate';
+
+  @override
+  String get taxSlabs => 'How it is worked out';
+
+  @override
+  String get taxSplit => 'Where it goes';
+
+  @override
+  String get taxTakeHome => 'Take-home';
+
+  @override
+  String get taxTax => 'Tax';
+
+  @override
+  String get taxTaxable => 'Taxable income';
+
+  @override
+  String get taxTaxedHere => 'Tax in band';
+
+  @override
+  String get taxUnsupportedText =>
+      'Tax rules are country-specific. Switch country to use a market Lume has configured, or check back — new markets are added regularly.';
+
+  @override
+  String taxUnsupportedTitle(String country) {
+    return 'Not yet localised for $country';
+  }
+
+  @override
+  String get taxYear => 'Year';
+
+  @override
+  String get timerDone => 'Timer finished';
+
+  @override
+  String get timerHint => 'Choose a preset or set your own';
+
+  @override
+  String get timerPresets => 'Presets';
+
+  @override
   String get todayAddToast => 'New task added';
 
   @override
@@ -3240,10 +3741,21 @@ class AppLocalizationsEn extends AppLocalizations {
   String get toolCategorySubPlanning => 'Your time and your lists';
 
   @override
+  String get toolChangeCountry => 'Change country';
+
+  @override
   String get toolErrorText => 'We couldn’t load this. Try again in a moment.';
 
   @override
   String get toolErrorTitle => 'Something went wrong';
+
+  @override
+  String toolFavourited(String name) {
+    return 'Added $name to favourites';
+  }
+
+  @override
+  String get toolInsights => 'Insights';
 
   @override
   String get toolLoading => 'Loading';
@@ -3271,6 +3783,15 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get toolPrivateTitle => 'Private to you';
+
+  @override
+  String get toolRelated => 'Related tools';
+
+  @override
+  String get toolSourceOnDevice => 'On device';
+
+  @override
+  String get toolSourceTax => 'Statutory slabs';
 
   @override
   String get toolStatusAge => 'Exact days';
@@ -3539,346 +4060,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get toolUnavailableTitle => 'Not part of your setup';
 
   @override
-  String get toolRelated => 'Related tools';
-
-  @override
-  String get a11yExport => 'Export';
-
-  @override
-  String get a11yFavourite => 'Save to favourites';
-
-  @override
-  String get a11ySearchTool => 'Search this tool';
-
-  @override
-  String get toolChangeCountry => 'Change country';
-
-  @override
-  String get freshLive => 'Live';
-
-  @override
-  String get freshCached => 'Cached';
-
-  @override
-  String get freshDelayed => 'Delayed 15 min';
-
-  @override
-  String get freshDaily => 'Updated today';
-
-  @override
-  String get freshWeekly => 'Updated this week';
-
-  @override
-  String get freshAnnual => 'Current tax year';
-
-  @override
-  String get freshDraw => 'Latest draw';
-
-  @override
-  String get freshComputed => 'Calculated for your location';
-
-  @override
-  String get freshStatic => 'Reference text';
-
-  @override
-  String get freshLocal => 'Stored on this device';
-
-  @override
-  String freshAgoSec(int n) {
-    return 'Updated $n sec ago';
-  }
-
-  @override
-  String freshAgoMin(int n) {
-    return 'Updated $n min ago';
-  }
-
-  @override
-  String freshAt(String time) {
-    return 'Updated at $time';
-  }
-
-  @override
-  String freshOn(String date) {
-    return 'Updated $date';
-  }
-
-  @override
-  String freshForCity(String city) {
-    return 'For $city';
-  }
-
-  @override
-  String get archetypeAction => 'Emergency actions';
-
-  @override
-  String get archetypeCalculator => 'Calculator';
-
-  @override
-  String get archetypeDashboard => 'Dashboard';
-
-  @override
-  String get archetypeExplorer => 'Data explorer';
-
-  @override
-  String get archetypeInstrument => 'Instrument';
-
-  @override
-  String get archetypeLibrary => 'Library';
-
-  @override
-  String get archetypeManager => 'Records manager';
-
-  @override
-  String get archetypePlanner => 'Planner';
-
-  @override
-  String get archetypeReader => 'Reader';
-
-  @override
-  String get archetypeTracker => 'Tracker';
-
-  @override
-  String get archetypeTracking => 'Live tracking';
-
-  @override
-  String get toolSourceTax => 'Statutory slabs';
-
-  @override
-  String get toolSourceOnDevice => 'On device';
-
-  @override
-  String toolFavourited(String name) {
-    return 'Added $name to favourites';
-  }
-
-  @override
   String toolUnfavourited(String name) {
     return 'Removed $name from favourites';
   }
-
-  @override
-  String get toolInsights => 'Insights';
-
-  @override
-  String get commonLess => 'Less';
-
-  @override
-  String get commonMore => 'More';
-
-  @override
-  String get heatLevelNone => 'none';
-
-  @override
-  String get heatLevelSome => 'some';
-
-  @override
-  String get heatLevelMost => 'most';
-
-  @override
-  String get heatLevelAll => 'all';
-
-  @override
-  String get learningThisWeek => 'This week';
-
-  @override
-  String learningStreak(String n) {
-    return '$n-day streak';
-  }
-
-  @override
-  String get learningGoal => 'Weekly goal';
-
-  @override
-  String get learningCourses => 'Courses';
-
-  @override
-  String get learningStreakLabel => 'Streak';
-
-  @override
-  String get learningMilestone => 'Next milestone';
-
-  @override
-  String learningMilestoneValue(String n) {
-    return '$n min';
-  }
-
-  @override
-  String get learningInProgress => 'In progress';
-
-  @override
-  String get learningWeek => 'This week';
-
-  @override
-  String get learningConsistency => 'Consistency';
-
-  @override
-  String learningCourseMeta(String provider, String minutes) {
-    return '$provider · $minutes min';
-  }
-
-  @override
-  String get learningInsight1Title => 'Short sessions stick';
-
-  @override
-  String get learningInsight1Text =>
-      'Your 20-minute sessions are completed twice as often as your hour-long ones.';
-
-  @override
-  String get learningInsight2Title => 'Arabic is your strongest streak';
-
-  @override
-  String get learningInsight2Text =>
-      'Nine days running, well ahead of your other courses.';
-
-  @override
-  String taxAbove(String v) {
-    return 'Above $v';
-  }
-
-  @override
-  String get taxAnnual => 'Annual';
-
-  @override
-  String get taxBand => 'Band';
-
-  @override
-  String get taxDeductions => 'Deductions';
-
-  @override
-  String get taxDueAnnual => 'Tax a year';
-
-  @override
-  String get taxDueMonthly => 'Tax a month';
-
-  @override
-  String taxEffective(String rate) {
-    return 'Effective rate $rate';
-  }
-
-  @override
-  String get taxIncomeAnnual => 'Annual income';
-
-  @override
-  String get taxIncomeMonthly => 'Monthly income';
-
-  @override
-  String get taxIncomeTax => 'Income tax';
-
-  @override
-  String get taxLeviesNote => 'Worth knowing';
-
-  @override
-  String get taxLeviesNoteText =>
-      'These are headline rates. Consumption taxes are paid on what you buy rather than deducted from pay, and social contributions are usually split between you and your employer.';
-
-  @override
-  String get taxLevy => 'Levy';
-
-  @override
-  String get taxMarginal => 'Marginal rate';
-
-  @override
-  String get taxMonthly => 'Monthly';
-
-  @override
-  String taxNoneText(String authority) {
-    return '$authority. Nothing to calculate for salaried income here.';
-  }
-
-  @override
-  String get taxNoneTitle => 'No personal income tax';
-
-  @override
-  String get taxNoneCaption =>
-      'Your salary is not subject to personal income tax here.';
-
-  @override
-  String get taxOtherLevies => 'What does apply';
-
-  @override
-  String get taxPeriod => 'Period';
-
-  @override
-  String get taxRate => 'Rate';
-
-  @override
-  String get taxSlabs => 'How it is worked out';
-
-  @override
-  String get taxSplit => 'Where it goes';
-
-  @override
-  String get taxTakeHome => 'Take-home';
-
-  @override
-  String get taxTax => 'Tax';
-
-  @override
-  String get taxTaxable => 'Taxable income';
-
-  @override
-  String get taxTaxedHere => 'Tax in band';
-
-  @override
-  String get taxUnsupportedText =>
-      'Tax rules are country-specific. Switch country to use a market Lume has configured, or check back — new markets are added regularly.';
-
-  @override
-  String taxUnsupportedTitle(String country) {
-    return 'Not yet localised for $country';
-  }
-
-  @override
-  String get taxYear => 'Year';
-
-  @override
-  String get taxAuthorityFbrSalaried => 'FBR salaried slabs';
-
-  @override
-  String get taxAuthorityHmrcEngland => 'HMRC income tax (England)';
-
-  @override
-  String get taxAuthorityIrsSingleFiler => 'IRS single filer';
-
-  @override
-  String get taxAuthorityIndiaNewRegime => 'New regime slabs';
-
-  @override
-  String get taxAuthorityNone => 'No personal income tax';
-
-  @override
-  String get levyCorporate => 'Corporate tax';
-
-  @override
-  String get levyEobi => 'EOBI';
-
-  @override
-  String get levyGosi => 'Social insurance (GOSI)';
-
-  @override
-  String get levyGst => 'GST';
-
-  @override
-  String get levyMedicare => 'Medicare';
-
-  @override
-  String get levyNi => 'National Insurance';
-
-  @override
-  String get levyPension => 'Pension contribution';
-
-  @override
-  String get levyPf => 'Provident Fund';
-
-  @override
-  String get levySocialSecurity => 'Social Security';
-
-  @override
-  String get levyVat => 'VAT';
-
-  @override
-  String get levyZakatRate => 'Zakat';
 
   @override
   String get toolsForYou => 'For you';
@@ -4131,6 +4315,11 @@ class AppLocalizationsEn extends AppLocalizations {
   String get unitMinutes => 'min';
 
   @override
+  String unitMinutesCount(String n) {
+    return '$n min';
+  }
+
+  @override
   String get unitMph => 'mph';
 
   @override
@@ -4142,15 +4331,6 @@ class AppLocalizationsEn extends AppLocalizations {
   String get unitThousand => 'k';
 
   @override
-  String get weatherClear => 'Clear';
-
-  @override
-  String get weatherClearVeryWarm => 'Clear · very warm';
-
-  @override
-  String get weatherCloudBuilding => 'Cloud building';
-
-  @override
   String get weatherBreezy => 'Breezy';
 
   @override
@@ -4160,43 +4340,22 @@ class AppLocalizationsEn extends AppLocalizations {
   String get weatherChangeable => 'Changeable';
 
   @override
+  String get weatherClear => 'Clear';
+
+  @override
   String get weatherClearAndDry => 'Clear and dry';
+
+  @override
+  String get weatherClearVeryWarm => 'Clear · very warm';
+
+  @override
+  String get weatherCloudBuilding => 'Cloud building';
 
   @override
   String get weatherCloudy => 'Cloudy';
 
   @override
   String get weatherFresh => 'Fresh';
-
-  @override
-  String get weatherHumid => 'Humid';
-
-  @override
-  String get weatherHumidAfternoonStorms => 'Humid · afternoon storms';
-
-  @override
-  String get weatherHumidCloudBuilding => 'Humid · cloud building';
-
-  @override
-  String get weatherHumidPassingShowers => 'Humid · passing showers';
-
-  @override
-  String get weatherHumidShowersLater => 'Humid · showers later';
-
-  @override
-  String get weatherMildAndClear => 'Mild and clear';
-
-  @override
-  String get weatherSunnySpells => 'Sunny spells';
-
-  @override
-  String get weatherWarm => 'Warm';
-
-  @override
-  String get weatherWarmAndDry => 'Warm and dry';
-
-  @override
-  String get weatherWarmAndHumid => 'Warm and humid';
 
   @override
   String get weatherHazy => 'hazy';
@@ -4213,10 +4372,28 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
+  String get weatherHumid => 'Humid';
+
+  @override
+  String get weatherHumidAfternoonStorms => 'Humid · afternoon storms';
+
+  @override
+  String get weatherHumidCloudBuilding => 'Humid · cloud building';
+
+  @override
   String get weatherHumidLightHaze => 'Humid · light haze';
 
   @override
+  String get weatherHumidPassingShowers => 'Humid · passing showers';
+
+  @override
+  String get weatherHumidShowersLater => 'Humid · showers later';
+
+  @override
   String get weatherLightCloud => 'Light cloud';
+
+  @override
+  String get weatherMildAndClear => 'Mild and clear';
 
   @override
   String get weatherMostlyClear => 'Mostly clear';
@@ -4226,4 +4403,16 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get weatherRain => 'Rain';
+
+  @override
+  String get weatherSunnySpells => 'Sunny spells';
+
+  @override
+  String get weatherWarm => 'Warm';
+
+  @override
+  String get weatherWarmAndDry => 'Warm and dry';
+
+  @override
+  String get weatherWarmAndHumid => 'Warm and humid';
 }

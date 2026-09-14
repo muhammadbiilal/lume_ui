@@ -12,10 +12,19 @@ class AppLocalizationsUr extends AppLocalizations {
   String get a11yBack => 'واپس';
 
   @override
+  String get a11yExport => 'برآمد';
+
+  @override
+  String get a11yFavourite => 'پسندیدہ میں محفوظ کریں';
+
+  @override
   String get a11yMainNavigation => 'مرکزی';
 
   @override
   String get a11ySearch => 'تلاش';
+
+  @override
+  String get a11ySearchTool => 'تلاش';
 
   @override
   String get a11yShare => 'شیئر';
@@ -775,6 +784,39 @@ class AppLocalizationsUr extends AppLocalizations {
   String get appTagline => 'آپ کا دن، ایک جگہ';
 
   @override
+  String get archetypeAction => 'ہنگامی اقدامات';
+
+  @override
+  String get archetypeCalculator => 'کیلکولیٹر';
+
+  @override
+  String get archetypeDashboard => 'ڈیش بورڈ';
+
+  @override
+  String get archetypeExplorer => 'ڈیٹا ایکسپلورر';
+
+  @override
+  String get archetypeInstrument => 'آلہ';
+
+  @override
+  String get archetypeLibrary => 'لائبریری';
+
+  @override
+  String get archetypeManager => 'ریکارڈ مینیجر';
+
+  @override
+  String get archetypePlanner => 'منصوبہ ساز';
+
+  @override
+  String get archetypeReader => 'ریڈر';
+
+  @override
+  String get archetypeTracker => 'ٹریکر';
+
+  @override
+  String get archetypeTracking => 'لائیو ٹریکنگ';
+
+  @override
   String get authAsideText =>
       'نماز، موسم، پیسہ، سفر اور چھوٹی چھوٹی باتیں — آپ جہاں بھی ہوں۔';
 
@@ -1193,10 +1235,16 @@ class AppLocalizationsUr extends AppLocalizations {
   }
 
   @override
+  String get commonLess => 'کم';
+
+  @override
   String get commonLocked => 'مقفل';
 
   @override
   String get commonMonth => 'مہینہ';
+
+  @override
+  String get commonMore => 'زیادہ';
 
   @override
   String get commonNo => 'نہیں';
@@ -1233,6 +1281,9 @@ class AppLocalizationsUr extends AppLocalizations {
 
   @override
   String get commonStale => 'تازہ نہیں';
+
+  @override
+  String get commonStart => 'شروع کریں';
 
   @override
   String get commonStatus => 'حالت';
@@ -1281,6 +1332,178 @@ class AppLocalizationsUr extends AppLocalizations {
   String docsRenewSoon(String name) {
     return 'اپنا $name تجدید کریں';
   }
+
+  @override
+  String get emergKindAll3 => 'پولیس · آتش زدگی · طبی';
+
+  @override
+  String get emergKindAllServices => 'تمام خدمات';
+
+  @override
+  String get emergKindAmbRescue => 'ایمبولینس اور ریسکیو';
+
+  @override
+  String get emergKindAmbulance => 'ایمبولینس';
+
+  @override
+  String get emergKindFire => 'آتش زدگی';
+
+  @override
+  String get emergKindFireRescue => 'آتش زدگی اور ریسکیو';
+
+  @override
+  String get emergKindGas => 'گیس کا اخراج';
+
+  @override
+  String get emergKindGsm => 'زیادہ تر GSM نیٹ ورکس پر کام کرتا ہے';
+
+  @override
+  String get emergKindHelpline => 'ہیلپ لائن';
+
+  @override
+  String get emergKindHighway => 'شاہراہ';
+
+  @override
+  String get emergKindMaritime => 'بحری';
+
+  @override
+  String get emergKindMedAdvice => 'فوری طبی مشورہ';
+
+  @override
+  String get emergKindMedical => 'طبی';
+
+  @override
+  String get emergKindMental => 'ذہنی صحت';
+
+  @override
+  String get emergKindNonUrgent => 'غیر ہنگامی';
+
+  @override
+  String get emergKindPoison => 'زہر';
+
+  @override
+  String get emergKindPolice => 'پولیس ایمرجنسی';
+
+  @override
+  String get emergKindRouted => 'بیشتر جگہوں پر منسلک';
+
+  @override
+  String get emergKindTraffic => 'ٹریفک';
+
+  @override
+  String get emergKindTrafficInfo => 'ٹریفک معلومات';
+
+  @override
+  String get emergNameAmbulance => 'ایمبولینس';
+
+  @override
+  String get emergNameCivilDefence => 'سول ڈیفنس';
+
+  @override
+  String get emergNameCoastGuard => 'کوسٹ گارڈ';
+
+  @override
+  String get emergNameCrisisLifeline => 'کرائسس لائف لائن';
+
+  @override
+  String get emergNameEdhiAmbulance => 'ایدھی ایمبولینس';
+
+  @override
+  String get emergNameEmergency => 'ایمرجنسی';
+
+  @override
+  String get emergNameFire => 'فائر';
+
+  @override
+  String get emergNameFireBrigade => 'فائر بریگیڈ';
+
+  @override
+  String get emergNameFireCivilDefence => 'آگ بجھانا (سول ڈیفنس)';
+
+  @override
+  String get emergNameGasEmergency => 'گیس ایمرجنسی';
+
+  @override
+  String get emergNameInternational => 'بین الاقوامی ایمرجنسی';
+
+  @override
+  String get emergNameLocal => 'مقامی ایمرجنسی';
+
+  @override
+  String get emergNameMotorwayPolice => 'موٹروے پولیس';
+
+  @override
+  String get emergNameNhs111 => 'NHS 111';
+
+  @override
+  String get emergNamePoisonControl => 'پوائزن کنٹرول';
+
+  @override
+  String get emergNamePolice => 'پولیس';
+
+  @override
+  String get emergNamePoliceNonEmergency => 'پولیس (غیر ہنگامی)';
+
+  @override
+  String get emergNameRedCrescent => 'ہلال احمر';
+
+  @override
+  String get emergNameRescue1122 => 'ریسکیو 1122';
+
+  @override
+  String get emergNameRoadside => 'سڑک پر مدد';
+
+  @override
+  String get emergNameTraffic => 'ٹریفک';
+
+  @override
+  String get emergNameUnifiedEmergency => 'متحدہ ایمرجنسی';
+
+  @override
+  String get emergNameWomenHelpline => 'خواتین ہیلپ لائن';
+
+  @override
+  String emergencyCall(String service, String number) {
+    return '$service کو $number پر کال کریں';
+  }
+
+  @override
+  String emergencyDialFailed(String number) {
+    return 'فون ایپ نہیں کھل سکی۔ خود $number ملائیں۔';
+  }
+
+  @override
+  String emergencyDialUnavailable(String number) {
+    return 'یہ آلہ کال نہیں کر سکتا۔ کسی فون سے $number ملائیں۔';
+  }
+
+  @override
+  String get emergencyDocuments => 'شناختی دستاویزات';
+
+  @override
+  String get emergencyLocationShared => 'مقام شیئر کرنے کے لیے کاپی ہو گیا';
+
+  @override
+  String get emergencyMedical => 'طبی تفصیلات';
+
+  @override
+  String get emergencyNoteText =>
+      'ایمرجنسی نمبر عموماً بیلنس اور سم کے بغیر بھی ملائے جا سکتے ہیں۔ 112 زیادہ تر ممالک میں کام کرتا ہے۔';
+
+  @override
+  String get emergencyNoteTitle => 'نمبر سگنل کے بغیر بھی کام کرتے ہیں';
+
+  @override
+  String get emergencyServices => 'دیگر خدمات';
+
+  @override
+  String get emergencySetUp => 'ترتیب دیں';
+
+  @override
+  String get emergencyShareLocation => 'میرا مقام شیئر کریں';
+
+  @override
+  String get emergencyYourInfo => 'آپ کی معلومات';
 
   @override
   String get exploreAround => 'آپ کے آس پاس';
@@ -1659,6 +1882,61 @@ class AppLocalizationsUr extends AppLocalizations {
   }
 
   @override
+  String freshAgoMin(int n) {
+    return '$n منٹ پہلے اپ ڈیٹ ہوا';
+  }
+
+  @override
+  String freshAgoSec(int n) {
+    return '$n سیکنڈ پہلے اپ ڈیٹ ہوا';
+  }
+
+  @override
+  String get freshAnnual => 'موجودہ ٹیکس سال';
+
+  @override
+  String freshAt(String time) {
+    return '$time پر اپ ڈیٹ ہوا';
+  }
+
+  @override
+  String get freshCached => 'محفوظ شدہ';
+
+  @override
+  String get freshComputed => 'آپ کے مقام کے لیے حساب شدہ';
+
+  @override
+  String get freshDaily => 'آج اپ ڈیٹ ہوا';
+
+  @override
+  String get freshDelayed => '15 منٹ کی تاخیر';
+
+  @override
+  String get freshDraw => 'تازہ ترین قرعہ اندازی';
+
+  @override
+  String freshForCity(String city) {
+    return '$city کے لیے';
+  }
+
+  @override
+  String get freshLive => 'لائیو';
+
+  @override
+  String get freshLocal => 'اس آلے پر محفوظ';
+
+  @override
+  String freshOn(String date) {
+    return '$date کو اپ ڈیٹ ہوا';
+  }
+
+  @override
+  String get freshStatic => 'حوالہ جاتی متن';
+
+  @override
+  String get freshWeekly => 'اس ہفتے اپ ڈیٹ ہوا';
+
+  @override
   String get fuelPetrol => 'پٹرول';
 
   @override
@@ -1695,6 +1973,18 @@ class AppLocalizationsUr extends AppLocalizations {
 
   @override
   String get habitWater => '8 گلاس';
+
+  @override
+  String get heatLevelAll => 'سب';
+
+  @override
+  String get heatLevelMost => 'زیادہ تر';
+
+  @override
+  String get heatLevelNone => 'کوئی نہیں';
+
+  @override
+  String get heatLevelSome => 'کچھ';
 
   @override
   String get heroHighlights => 'نمایاں';
@@ -1928,6 +2218,92 @@ class AppLocalizationsUr extends AppLocalizations {
 
   @override
   String get intZakat => 'زکوٰۃ اور صدقہ';
+
+  @override
+  String get learningConsistency => 'باقاعدگی';
+
+  @override
+  String learningCourseMeta(String provider, String minutes) {
+    return '$provider · $minutes منٹ';
+  }
+
+  @override
+  String get learningCourses => 'کورسز';
+
+  @override
+  String get learningGoal => 'ہفتہ وار ہدف';
+
+  @override
+  String get learningInProgress => 'جاری';
+
+  @override
+  String get learningInsight1Text =>
+      'آپ کے 20 منٹ کے سیشن ایک گھنٹے والے سیشنز کے مقابلے میں دوگنا زیادہ مکمل ہوتے ہیں۔';
+
+  @override
+  String get learningInsight1Title => 'مختصر سیشن جاری رہتے ہیں';
+
+  @override
+  String get learningInsight2Text =>
+      'مسلسل نو دن، آپ کے دوسرے کورسز سے کہیں آگے۔';
+
+  @override
+  String get learningInsight2Title => 'عربی آپ کا سب سے مضبوط تسلسل ہے';
+
+  @override
+  String get learningMilestone => 'اگلا سنگِ میل';
+
+  @override
+  String learningMilestoneValue(String n) {
+    return '$n منٹ';
+  }
+
+  @override
+  String learningStreak(String n) {
+    return '$n دن کا تسلسل';
+  }
+
+  @override
+  String get learningStreakLabel => 'تسلسل';
+
+  @override
+  String get learningThisWeek => 'اس ہفتے';
+
+  @override
+  String get learningWeek => 'اس ہفتے';
+
+  @override
+  String get levyCorporate => 'کارپوریٹ ٹیکس';
+
+  @override
+  String get levyEobi => 'ای او بی آئی';
+
+  @override
+  String get levyGosi => 'سماجی بیمہ (GOSI)';
+
+  @override
+  String get levyGst => 'جی ایس ٹی';
+
+  @override
+  String get levyMedicare => 'میڈی کیئر';
+
+  @override
+  String get levyNi => 'نیشنل انشورنس';
+
+  @override
+  String get levyPension => 'پنشن کنٹری بیوشن';
+
+  @override
+  String get levyPf => 'پراویڈنٹ فنڈ';
+
+  @override
+  String get levySocialSecurity => 'سوشل سیکیورٹی';
+
+  @override
+  String get levyVat => 'وی اے ٹی';
+
+  @override
+  String get levyZakatRate => 'زکوٰۃ';
 
   @override
   String get loadshedOff => 'بجلی بند ہے';
@@ -2435,12 +2811,6 @@ class AppLocalizationsUr extends AppLocalizations {
   String get notifPrefFrom => 'سے';
 
   @override
-  String get notifPrefLater => 'بعد میں';
-
-  @override
-  String get notifPrefTo => 'تک';
-
-  @override
   String get notifPrefGeneral => 'عمومی';
 
   @override
@@ -2451,6 +2821,9 @@ class AppLocalizationsUr extends AppLocalizations {
 
   @override
   String get notifPrefInAppSub => 'بینرز اور اطلاعات کا مرکز';
+
+  @override
+  String get notifPrefLater => 'بعد میں';
 
   @override
   String get notifPrefPerTool => 'بلحاظ ٹول';
@@ -2492,6 +2865,9 @@ class AppLocalizationsUr extends AppLocalizations {
 
   @override
   String get notifPrefSound => 'آواز';
+
+  @override
+  String get notifPrefTo => 'تک';
 
   @override
   String get ntypeBillDue => 'جلد واجب الادا بل';
@@ -3100,6 +3476,131 @@ class AppLocalizationsUr extends AppLocalizations {
   String get taskSummary => 'تیسری سہ ماہی کا خلاصہ مکمل کریں';
 
   @override
+  String taxAbove(String v) {
+    return '$v سے زیادہ';
+  }
+
+  @override
+  String get taxAnnual => 'سالانہ';
+
+  @override
+  String get taxAuthorityFbrSalaried => 'ایف بی آر تنخواہ دار سلیب';
+
+  @override
+  String get taxAuthorityHmrcEngland => 'HMRC انکم ٹیکس (انگلینڈ)';
+
+  @override
+  String get taxAuthorityIndiaNewRegime => 'نئے نظام کے سلیب';
+
+  @override
+  String get taxAuthorityIrsSingleFiler => 'IRS انفرادی فائلر';
+
+  @override
+  String get taxAuthorityNone => 'کوئی ذاتی انکم ٹیکس نہیں';
+
+  @override
+  String get taxBand => 'سلیب';
+
+  @override
+  String get taxDeductions => 'کٹوتیاں';
+
+  @override
+  String get taxDueAnnual => 'سالانہ ٹیکس';
+
+  @override
+  String get taxDueMonthly => 'ماہانہ ٹیکس';
+
+  @override
+  String taxEffective(String rate) {
+    return 'مؤثر شرح $rate';
+  }
+
+  @override
+  String get taxIncomeAnnual => 'سالانہ آمدنی';
+
+  @override
+  String get taxIncomeMonthly => 'ماہانہ آمدنی';
+
+  @override
+  String get taxIncomeTax => 'انکم ٹیکس';
+
+  @override
+  String get taxLeviesNote => 'جاننے کے لائق';
+
+  @override
+  String get taxLeviesNoteText =>
+      'یہ بنیادی شرحیں ہیں۔ صرف پر لگنے والے ٹیکس تنخواہ سے کٹنے کے بجائے خریداری پر ادا ہوتے ہیں، اور سماجی تحفظ کی ادائیگیاں عموماً آپ اور آپ کے آجر میں تقسیم ہوتی ہیں۔';
+
+  @override
+  String get taxLevy => 'محصول';
+
+  @override
+  String get taxMarginal => 'حاشیائی شرح';
+
+  @override
+  String get taxMonthly => 'ماہانہ';
+
+  @override
+  String get taxNoneCaption =>
+      'یہاں آپ کی تنخواہ پر ذاتی انکم ٹیکس لاگو نہیں ہوتا۔';
+
+  @override
+  String taxNoneText(String authority) {
+    return '$authority۔ یہاں تنخواہ دار آمدنی پر حساب کے لیے کچھ نہیں۔';
+  }
+
+  @override
+  String get taxNoneTitle => 'کوئی ذاتی انکم ٹیکس نہیں';
+
+  @override
+  String get taxOtherLevies => 'کیا لاگو ہوتا ہے';
+
+  @override
+  String get taxPeriod => 'مدت';
+
+  @override
+  String get taxRate => 'شرح';
+
+  @override
+  String get taxSlabs => 'حساب کیسے ہوتا ہے';
+
+  @override
+  String get taxSplit => 'رقم کہاں جاتی ہے';
+
+  @override
+  String get taxTakeHome => 'خالص آمدنی';
+
+  @override
+  String get taxTax => 'ٹیکس';
+
+  @override
+  String get taxTaxable => 'قابلِ ٹیکس آمدنی';
+
+  @override
+  String get taxTaxedHere => 'سلیب میں ٹیکس';
+
+  @override
+  String get taxUnsupportedText =>
+      'ٹیکس کے قواعد ہر ملک کے اپنے ہوتے ہیں۔ Lume کی ترتیب دی ہوئی مارکیٹ استعمال کرنے کے لیے ملک تبدیل کریں، یا بعد میں دیکھیں — نئی مارکیٹیں باقاعدگی سے شامل ہوتی ہیں۔';
+
+  @override
+  String taxUnsupportedTitle(String country) {
+    return '$country کے لیے ابھی دستیاب نہیں';
+  }
+
+  @override
+  String get taxYear => 'سال';
+
+  @override
+  String get timerDone => 'ٹائمر ختم ہو گیا';
+
+  @override
+  String get timerHint => 'کوئی پری سیٹ منتخب کریں یا اپنا وقت مقرر کریں';
+
+  @override
+  String get timerPresets => 'پری سیٹس';
+
+  @override
   String get todayAddToast => 'نیا کام شامل ہو گیا';
 
   @override
@@ -3242,11 +3743,22 @@ class AppLocalizationsUr extends AppLocalizations {
   String get toolCategorySubPlanning => 'آپ کا وقت اور فہرستیں';
 
   @override
+  String get toolChangeCountry => 'ملک تبدیل کریں';
+
+  @override
   String get toolErrorText =>
       'ہم اسے لوڈ نہیں کر سکے۔ ایک لمحے بعد دوبارہ کوشش کریں۔';
 
   @override
   String get toolErrorTitle => 'کچھ غلط ہو گیا';
+
+  @override
+  String toolFavourited(String name) {
+    return '$name پسندیدہ میں شامل کر دیا گیا';
+  }
+
+  @override
+  String get toolInsights => 'بصیرتیں';
 
   @override
   String get toolLoading => 'لوڈ ہو رہا ہے';
@@ -3274,6 +3786,15 @@ class AppLocalizationsUr extends AppLocalizations {
 
   @override
   String get toolPrivateTitle => 'صرف آپ کے لیے';
+
+  @override
+  String get toolRelated => 'متعلقہ ٹولز';
+
+  @override
+  String get toolSourceOnDevice => 'آلے پر';
+
+  @override
+  String get toolSourceTax => 'قانونی سلیب';
 
   @override
   String get toolStatusAge => 'دنوں تک درست';
@@ -3542,346 +4063,9 @@ class AppLocalizationsUr extends AppLocalizations {
   String get toolUnavailableTitle => 'آپ کے سیٹ اپ کا حصہ نہیں';
 
   @override
-  String get toolRelated => 'متعلقہ ٹولز';
-
-  @override
-  String get a11yExport => 'برآمد';
-
-  @override
-  String get a11yFavourite => 'پسندیدہ میں محفوظ کریں';
-
-  @override
-  String get a11ySearchTool => 'تلاش';
-
-  @override
-  String get toolChangeCountry => 'ملک تبدیل کریں';
-
-  @override
-  String get freshLive => 'لائیو';
-
-  @override
-  String get freshCached => 'محفوظ شدہ';
-
-  @override
-  String get freshDelayed => '15 منٹ کی تاخیر';
-
-  @override
-  String get freshDaily => 'آج اپ ڈیٹ ہوا';
-
-  @override
-  String get freshWeekly => 'اس ہفتے اپ ڈیٹ ہوا';
-
-  @override
-  String get freshAnnual => 'موجودہ ٹیکس سال';
-
-  @override
-  String get freshDraw => 'تازہ ترین قرعہ اندازی';
-
-  @override
-  String get freshComputed => 'آپ کے مقام کے لیے حساب شدہ';
-
-  @override
-  String get freshStatic => 'حوالہ جاتی متن';
-
-  @override
-  String get freshLocal => 'اس آلے پر محفوظ';
-
-  @override
-  String freshAgoSec(int n) {
-    return '$n سیکنڈ پہلے اپ ڈیٹ ہوا';
-  }
-
-  @override
-  String freshAgoMin(int n) {
-    return '$n منٹ پہلے اپ ڈیٹ ہوا';
-  }
-
-  @override
-  String freshAt(String time) {
-    return '$time پر اپ ڈیٹ ہوا';
-  }
-
-  @override
-  String freshOn(String date) {
-    return '$date کو اپ ڈیٹ ہوا';
-  }
-
-  @override
-  String freshForCity(String city) {
-    return '$city کے لیے';
-  }
-
-  @override
-  String get archetypeAction => 'ہنگامی اقدامات';
-
-  @override
-  String get archetypeCalculator => 'کیلکولیٹر';
-
-  @override
-  String get archetypeDashboard => 'ڈیش بورڈ';
-
-  @override
-  String get archetypeExplorer => 'ڈیٹا ایکسپلورر';
-
-  @override
-  String get archetypeInstrument => 'آلہ';
-
-  @override
-  String get archetypeLibrary => 'لائبریری';
-
-  @override
-  String get archetypeManager => 'ریکارڈ مینیجر';
-
-  @override
-  String get archetypePlanner => 'منصوبہ ساز';
-
-  @override
-  String get archetypeReader => 'ریڈر';
-
-  @override
-  String get archetypeTracker => 'ٹریکر';
-
-  @override
-  String get archetypeTracking => 'لائیو ٹریکنگ';
-
-  @override
-  String get toolSourceTax => 'قانونی سلیب';
-
-  @override
-  String get toolSourceOnDevice => 'آلے پر';
-
-  @override
-  String toolFavourited(String name) {
-    return '$name پسندیدہ میں شامل کر دیا گیا';
-  }
-
-  @override
   String toolUnfavourited(String name) {
     return '$name پسندیدہ سے ہٹا دیا گیا';
   }
-
-  @override
-  String get toolInsights => 'بصیرتیں';
-
-  @override
-  String get commonLess => 'کم';
-
-  @override
-  String get commonMore => 'زیادہ';
-
-  @override
-  String get heatLevelNone => 'کوئی نہیں';
-
-  @override
-  String get heatLevelSome => 'کچھ';
-
-  @override
-  String get heatLevelMost => 'زیادہ تر';
-
-  @override
-  String get heatLevelAll => 'سب';
-
-  @override
-  String get learningThisWeek => 'اس ہفتے';
-
-  @override
-  String learningStreak(String n) {
-    return '$n دن کا تسلسل';
-  }
-
-  @override
-  String get learningGoal => 'ہفتہ وار ہدف';
-
-  @override
-  String get learningCourses => 'کورسز';
-
-  @override
-  String get learningStreakLabel => 'تسلسل';
-
-  @override
-  String get learningMilestone => 'اگلا سنگِ میل';
-
-  @override
-  String learningMilestoneValue(String n) {
-    return '$n منٹ';
-  }
-
-  @override
-  String get learningInProgress => 'جاری';
-
-  @override
-  String get learningWeek => 'اس ہفتے';
-
-  @override
-  String get learningConsistency => 'باقاعدگی';
-
-  @override
-  String learningCourseMeta(String provider, String minutes) {
-    return '$provider · $minutes منٹ';
-  }
-
-  @override
-  String get learningInsight1Title => 'مختصر سیشن جاری رہتے ہیں';
-
-  @override
-  String get learningInsight1Text =>
-      'آپ کے 20 منٹ کے سیشن ایک گھنٹے والے سیشنز کے مقابلے میں دوگنا زیادہ مکمل ہوتے ہیں۔';
-
-  @override
-  String get learningInsight2Title => 'عربی آپ کا سب سے مضبوط تسلسل ہے';
-
-  @override
-  String get learningInsight2Text =>
-      'مسلسل نو دن، آپ کے دوسرے کورسز سے کہیں آگے۔';
-
-  @override
-  String taxAbove(String v) {
-    return '$v سے زیادہ';
-  }
-
-  @override
-  String get taxAnnual => 'سالانہ';
-
-  @override
-  String get taxBand => 'سلیب';
-
-  @override
-  String get taxDeductions => 'کٹوتیاں';
-
-  @override
-  String get taxDueAnnual => 'سالانہ ٹیکس';
-
-  @override
-  String get taxDueMonthly => 'ماہانہ ٹیکس';
-
-  @override
-  String taxEffective(String rate) {
-    return 'مؤثر شرح $rate';
-  }
-
-  @override
-  String get taxIncomeAnnual => 'سالانہ آمدنی';
-
-  @override
-  String get taxIncomeMonthly => 'ماہانہ آمدنی';
-
-  @override
-  String get taxIncomeTax => 'انکم ٹیکس';
-
-  @override
-  String get taxLeviesNote => 'جاننے کے لائق';
-
-  @override
-  String get taxLeviesNoteText =>
-      'یہ بنیادی شرحیں ہیں۔ صرف پر لگنے والے ٹیکس تنخواہ سے کٹنے کے بجائے خریداری پر ادا ہوتے ہیں، اور سماجی تحفظ کی ادائیگیاں عموماً آپ اور آپ کے آجر میں تقسیم ہوتی ہیں۔';
-
-  @override
-  String get taxLevy => 'محصول';
-
-  @override
-  String get taxMarginal => 'حاشیائی شرح';
-
-  @override
-  String get taxMonthly => 'ماہانہ';
-
-  @override
-  String taxNoneText(String authority) {
-    return '$authority۔ یہاں تنخواہ دار آمدنی پر حساب کے لیے کچھ نہیں۔';
-  }
-
-  @override
-  String get taxNoneTitle => 'کوئی ذاتی انکم ٹیکس نہیں';
-
-  @override
-  String get taxNoneCaption =>
-      'یہاں آپ کی تنخواہ پر ذاتی انکم ٹیکس لاگو نہیں ہوتا۔';
-
-  @override
-  String get taxOtherLevies => 'کیا لاگو ہوتا ہے';
-
-  @override
-  String get taxPeriod => 'مدت';
-
-  @override
-  String get taxRate => 'شرح';
-
-  @override
-  String get taxSlabs => 'حساب کیسے ہوتا ہے';
-
-  @override
-  String get taxSplit => 'رقم کہاں جاتی ہے';
-
-  @override
-  String get taxTakeHome => 'خالص آمدنی';
-
-  @override
-  String get taxTax => 'ٹیکس';
-
-  @override
-  String get taxTaxable => 'قابلِ ٹیکس آمدنی';
-
-  @override
-  String get taxTaxedHere => 'سلیب میں ٹیکس';
-
-  @override
-  String get taxUnsupportedText =>
-      'ٹیکس کے قواعد ہر ملک کے اپنے ہوتے ہیں۔ Lume کی ترتیب دی ہوئی مارکیٹ استعمال کرنے کے لیے ملک تبدیل کریں، یا بعد میں دیکھیں — نئی مارکیٹیں باقاعدگی سے شامل ہوتی ہیں۔';
-
-  @override
-  String taxUnsupportedTitle(String country) {
-    return '$country کے لیے ابھی دستیاب نہیں';
-  }
-
-  @override
-  String get taxYear => 'سال';
-
-  @override
-  String get taxAuthorityFbrSalaried => 'ایف بی آر تنخواہ دار سلیب';
-
-  @override
-  String get taxAuthorityHmrcEngland => 'HMRC انکم ٹیکس (انگلینڈ)';
-
-  @override
-  String get taxAuthorityIrsSingleFiler => 'IRS انفرادی فائلر';
-
-  @override
-  String get taxAuthorityIndiaNewRegime => 'نئے نظام کے سلیب';
-
-  @override
-  String get taxAuthorityNone => 'کوئی ذاتی انکم ٹیکس نہیں';
-
-  @override
-  String get levyCorporate => 'کارپوریٹ ٹیکس';
-
-  @override
-  String get levyEobi => 'ای او بی آئی';
-
-  @override
-  String get levyGosi => 'سماجی بیمہ (GOSI)';
-
-  @override
-  String get levyGst => 'جی ایس ٹی';
-
-  @override
-  String get levyMedicare => 'میڈی کیئر';
-
-  @override
-  String get levyNi => 'نیشنل انشورنس';
-
-  @override
-  String get levyPension => 'پنشن کنٹری بیوشن';
-
-  @override
-  String get levyPf => 'پراویڈنٹ فنڈ';
-
-  @override
-  String get levySocialSecurity => 'سوشل سیکیورٹی';
-
-  @override
-  String get levyVat => 'وی اے ٹی';
-
-  @override
-  String get levyZakatRate => 'زکوٰۃ';
 
   @override
   String get toolsForYou => 'آپ کے لیے';
@@ -4134,6 +4318,11 @@ class AppLocalizationsUr extends AppLocalizations {
   String get unitMinutes => 'منٹ';
 
   @override
+  String unitMinutesCount(String n) {
+    return '$n منٹ';
+  }
+
+  @override
   String get unitMph => 'میل/گھنٹہ';
 
   @override
@@ -4145,15 +4334,6 @@ class AppLocalizationsUr extends AppLocalizations {
   String get unitThousand => 'ہزار';
 
   @override
-  String get weatherClear => 'صاف';
-
-  @override
-  String get weatherClearVeryWarm => 'صاف · بہت گرم';
-
-  @override
-  String get weatherCloudBuilding => 'بادل بن رہے ہیں';
-
-  @override
   String get weatherBreezy => 'نسیم دار';
 
   @override
@@ -4163,43 +4343,22 @@ class AppLocalizationsUr extends AppLocalizations {
   String get weatherChangeable => 'بدلتا ہوا';
 
   @override
+  String get weatherClear => 'صاف';
+
+  @override
   String get weatherClearAndDry => 'صاف اور خشک';
+
+  @override
+  String get weatherClearVeryWarm => 'صاف · بہت گرم';
+
+  @override
+  String get weatherCloudBuilding => 'بادل بن رہے ہیں';
 
   @override
   String get weatherCloudy => 'ابر آلود';
 
   @override
   String get weatherFresh => 'خوشگوار';
-
-  @override
-  String get weatherHumid => 'مرطوب';
-
-  @override
-  String get weatherHumidAfternoonStorms => 'مرطوب · سہ پہر کو طوفان';
-
-  @override
-  String get weatherHumidCloudBuilding => 'مرطوب · بادل بن رہے ہیں';
-
-  @override
-  String get weatherHumidPassingShowers => 'مرطوب · گزرتی بوچھاڑ';
-
-  @override
-  String get weatherHumidShowersLater => 'مرطوب · بعد میں بوچھاڑ';
-
-  @override
-  String get weatherMildAndClear => 'معتدل اور صاف';
-
-  @override
-  String get weatherSunnySpells => 'وقفے وقفے سے دھوپ';
-
-  @override
-  String get weatherWarm => 'گرم';
-
-  @override
-  String get weatherWarmAndDry => 'گرم اور خشک';
-
-  @override
-  String get weatherWarmAndHumid => 'گرم اور مرطوب';
 
   @override
   String get weatherHazy => 'دھندلا';
@@ -4216,10 +4375,28 @@ class AppLocalizationsUr extends AppLocalizations {
   }
 
   @override
+  String get weatherHumid => 'مرطوب';
+
+  @override
+  String get weatherHumidAfternoonStorms => 'مرطوب · سہ پہر کو طوفان';
+
+  @override
+  String get weatherHumidCloudBuilding => 'مرطوب · بادل بن رہے ہیں';
+
+  @override
   String get weatherHumidLightHaze => 'حبس · ہلکی دھند';
 
   @override
+  String get weatherHumidPassingShowers => 'مرطوب · گزرتی بوچھاڑ';
+
+  @override
+  String get weatherHumidShowersLater => 'مرطوب · بعد میں بوچھاڑ';
+
+  @override
   String get weatherLightCloud => 'ہلکے بادل';
+
+  @override
+  String get weatherMildAndClear => 'معتدل اور صاف';
 
   @override
   String get weatherMostlyClear => 'زیادہ تر صاف';
@@ -4229,4 +4406,16 @@ class AppLocalizationsUr extends AppLocalizations {
 
   @override
   String get weatherRain => 'بارش';
+
+  @override
+  String get weatherSunnySpells => 'وقفے وقفے سے دھوپ';
+
+  @override
+  String get weatherWarm => 'گرم';
+
+  @override
+  String get weatherWarmAndDry => 'گرم اور خشک';
+
+  @override
+  String get weatherWarmAndHumid => 'گرم اور مرطوب';
 }

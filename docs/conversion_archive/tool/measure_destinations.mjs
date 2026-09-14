@@ -186,6 +186,12 @@ const STATES = {
     ...base,
     country: 'AE', region: 'Dubai', city: 'Dubai',
   },
+  /* Non-Muslim, Japan — a country with no dataset of its own, so a tool falls
+     back to what it says when it has nothing local (Emergency's 112 / 911). */
+  default_jp: {
+    ...base,
+    country: 'JP', region: 'Tokyo', city: 'Tokyo',
+  },
   /* Someone with a name, favourites and a history. */
   named_pk: {
     ...base,
@@ -788,6 +794,66 @@ const TOOL_TARGETS = {
   'rrow.icon': '#toolBody .rrow__icon',
   'rrow.title': '#toolBody .rrow__title',
   'rrow.sub': '#toolBody .rrow__sub',
+  // Timer — the clock instrument: its face, its presets, its history.
+  'clockface': '#toolBody .clockface',
+  'clockface.time': '#toolBody .clockface__time',
+  'clockface.sub': '#toolBody .clockface__sub',
+  'clockface.acts': '#toolBody .clockface__acts',
+  'clock.btn1': '#toolBody .clockface__acts > .btn:nth-child(1)',
+  'clock.btn2': '#toolBody .clockface__acts > .btn:nth-child(2)',
+  'clock.icon': '#toolBody .clockface__acts > .btn:nth-child(1) svg',
+  'chips': '#toolBody .chips',
+  'chip1': '#toolBody .chips > .chip:nth-child(1)',
+  'chip2': '#toolBody .chips > .chip:nth-child(2)',
+  'chip4': '#toolBody .chips > .chip:nth-child(4)',
+  'crow1': '#toolBody .rows > .crow:nth-child(1)',
+  'crow.icon': '#toolBody .crow__icon',
+  'crow.label': '#toolBody .crow__label',
+  'crow.value': '#toolBody .crow__value',
+  // Emergency — the action interface: one primary call, a grid of others.
+  'sos': '#toolBody .sos',
+  'sos.icon': '#toolBody .sos__icon',
+  'sos.name': '#toolBody .sos__body b',
+  'sos.kind': '#toolBody .sos__body i',
+  'sos.num': '#toolBody .sos__num',
+  'calls': '#toolBody .calls',
+  'call1': '#toolBody .calls > .call:nth-child(1)',
+  'call2': '#toolBody .calls > .call:nth-child(2)',
+  'call3': '#toolBody .calls > .call:nth-child(3)',
+  'call.icon': '#toolBody .call__icon',
+  'call.name': '#toolBody .call__name',
+  'call.num': '#toolBody .call__num',
+  'call.kind': '#toolBody .call__kind',
+  'ctx': '#toolBody .ctxbar',
+  'note': '#toolBody .note',
+  'sect3.title': '#toolBody > .sect:nth-of-type(3) .sect__title',
+  // Recipes — the library: search, cuisine chips, a strip of image cards,
+  // rich rows with art thumbnails, and the empty state a search can reach.
+  'tsearch': '#toolBody .tsearch',
+  'search': '#toolBody .tsearch .search',
+  'search.icon': '#toolBody .tsearch .search svg',
+  'search.input': '#toolBody .tsearch .search input',
+  'chip.on': '#toolBody .chips .chip.is-on',
+  'hstrip': '#toolBody .hstrip',
+  'imgcard1': '#toolBody .hstrip > .imgcard:nth-child(1)',
+  'imgcard2': '#toolBody .hstrip > .imgcard:nth-child(2)',
+  'imgcard.art': '#toolBody .imgcard__art',
+  'imgcard.body': '#toolBody .imgcard__body',
+  'imgcard.kicker': '#toolBody .imgcard__kicker',
+  'imgcard.title': '#toolBody .imgcard__title',
+  'imgcard.meta': '#toolBody .imgcard__meta',
+  'rrow1': '#toolBody .rows > .rrow:nth-child(1)',
+  'rrow2': '#toolBody .rows > .rrow:nth-child(2)',
+  'rrow.thumb': '#toolBody .rrow__thumb',
+  'rrow.title': '#toolBody .rrow__title',
+  'rrow.meta': '#toolBody .rrow__meta',
+  'rrow.dot': '#toolBody .rrow__dot',
+  'rrow.chev': '#toolBody .rrow > svg:last-child',
+  'badge': '#toolBody .rrow .badge',
+  'state': '#toolBody .state',
+  'state.art': '#toolBody .state__art',
+  'state.title': '#toolBody .state__title',
+  'state.text': '#toolBody .state__text',
 };
 
 /* The instant everything is captured at: Monday 7 September 2026, 16:41:32
@@ -1544,6 +1610,71 @@ async function main() {
           levels: Array.prototype.map.call(document.querySelectorAll('#toolBody .heat > .heat__cell'),
             function (el) { return Number((el.className.match(/--l([0-9])/) || [0, 0])[1]); }),
           key: texts('#toolBody .heat__key span')
+        } : null;
+        composition.clock = q('.clockface') ? {
+          time: tx('.clockface__time'),
+          sub: tx('.clockface__sub'),
+          buttons: texts('#toolBody .clockface__acts .btn'),
+          chips: texts('#toolBody .chips .chip'),
+          history: Array.prototype.map.call(
+            document.querySelectorAll('#toolBody .crow'),
+            function (el) {
+              return { label: (el.querySelector('.crow__label') || {}).firstChild
+                         ? el.querySelector('.crow__label').firstChild.textContent : null,
+                       value: (el.querySelector('.crow__value') || {}).textContent || null };
+            })
+        } : null;
+        composition.emergency = q('.sos') ? {
+          href: q('.sos').getAttribute('href'),
+          name: tx('.sos__body b'),
+          kind: tx('.sos__body i'),
+          num: tx('.sos__num'),
+          calls: Array.prototype.map.call(
+            document.querySelectorAll('#toolBody .calls > .call'),
+            function (el) {
+              return { href: el.getAttribute('href'),
+                       name: (el.querySelector('.call__name') || {}).textContent,
+                       num: (el.querySelector('.call__num') || {}).textContent,
+                       kind: (el.querySelector('.call__kind') || {}).textContent };
+            }),
+          info: Array.prototype.map.call(
+            document.querySelectorAll('#toolBody .crow'),
+            function (el) {
+              return { label: (el.querySelector('.crow__label') || {}).textContent || null,
+                       value: (el.querySelector('.crow__value') || {}).textContent || null,
+                       act: el.getAttribute('data-act') };
+            }),
+          note: q('#toolBody .note') ? q('#toolBody .note').textContent.replace(/\s+/g, ' ').trim() : null
+        } : null;
+        composition.library = q('.hstrip') || q('.tsearch') ? {
+          placeholder: q('#toolBody .tsearch input') ? q('#toolBody .tsearch input').getAttribute('placeholder') : null,
+          chips: texts('#toolBody .chips .chip'),
+          chipOn: tx('#toolBody .chips .chip.is-on'),
+          cards: Array.prototype.map.call(
+            document.querySelectorAll('#toolBody .hstrip > .imgcard'),
+            function (el) {
+              return { kicker: (el.querySelector('.imgcard__kicker') || {}).textContent || null,
+                       title: (el.querySelector('.imgcard__title') || {}).textContent || null,
+                       meta: (el.querySelector('.imgcard__meta') || {}).textContent || null,
+                       act: el.getAttribute('data-act') };
+            }),
+          rows: Array.prototype.map.call(
+            document.querySelectorAll('#toolBody .rows > .rrow'),
+            function (el) {
+              return { title: (el.querySelector('.rrow__title') || {}).textContent || null,
+                       sub: (el.querySelector('.rrow__sub') || {}).textContent || null,
+                       badge: (el.querySelector('.badge') || {}).textContent || null,
+                       meta: Array.prototype.map.call(el.querySelectorAll('.rrow__meta > span'),
+                         function (m) { return m.textContent; }),
+                       act: el.getAttribute('data-act') };
+            }),
+          empty: q('#toolBody .state') ? { title: tx('#toolBody .state__title'), text: tx('#toolBody .state__text') } : null,
+          links: Array.prototype.map.call(
+            document.querySelectorAll('#toolBody .rows > .crow'),
+            function (el) {
+              return { label: (el.querySelector('.crow__label') || {}).textContent || null,
+                       act: el.getAttribute('data-act') };
+            })
         } : null;
         composition.rows = Array.prototype.map.call(
           document.querySelectorAll('#toolBody .rows > .rrow'),

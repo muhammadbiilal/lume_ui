@@ -101,17 +101,17 @@ fills its column. Both start at the same x and render on the same baselines.
 | `upcoming.title` | x | 20.00 | 20.00 | = | cumulative line-box rounding (D20) |
 | `upcoming.title` | width | 101.36 | 85.48 | -15.88 | cumulative line-box rounding (D20) |
 | `upcoming.title` | height | 22.00 | 22.00 | = | cumulative line-box rounding (D20) |
-| `discover.title` | y | 1643.75 | 1641.00 | -2.75 | cumulative line-box rounding (D20) |
+| `discover.title` | y | 1643.75 | 1643.00 | -0.75 | cumulative line-box rounding (D20) |
 | `discover.title` | x | 20.00 | 20.00 | = | cumulative line-box rounding (D20) |
 | `discover.title` | width | 179.38 | 69.26 | -110.12 | cumulative line-box rounding (D20) |
 | `discover.title` | height | 22.00 | 22.00 | = | cumulative line-box rounding (D20) |
-| `discover.link` | y | 1645.75 | 1645.00 | -0.75 | the prototype measures the padded control, this the text box |
+| `discover.link` | y | 1645.75 | 1647.00 | 1.25 | the prototype measures the padded control, this the text box |
 | `discover.link` | width | 63.59 | 44.58 | -19.01 | the prototype measures the padded control, this the text box |
 | `discover.link` | height | 23.00 | 16.00 | -7.00 | the prototype measures the padded control, this the text box |
-| `hscroll` | y | 1695.75 | 1693.00 | -2.75 | the outage card is derived, not fixed, and one line taller for it (C17 / D23) |
+| `hscroll` | y | 1695.75 | 1695.00 | -0.75 | the outage card is derived, not fixed, and one line taller for it (C17 / D23) |
 | `hscroll` | width | 390.00 | 390.00 | = | the outage card is derived, not fixed, and one line taller for it (C17 / D23) |
 | `hscroll` | height | 148.25 | 164.00 | 15.75 | the outage card is derived, not fixed, and one line taller for it (C17 / D23) |
-| `minicard` | y | 1697.75 | 1695.00 | -2.75 | the outage card is derived, not fixed, and one line taller for it (C17 / D23) |
+| `minicard` | y | 1697.75 | 1697.00 | -0.75 | the outage card is derived, not fixed, and one line taller for it (C17 / D23) |
 | `minicard` | x | 20.00 | 20.00 | = | the outage card is derived, not fixed, and one line taller for it (C17 / D23) |
 | `minicard` | width | 148.00 | 148.00 | = | the outage card is derived, not fixed, and one line taller for it (C17 / D23) |
 | `minicard` | height | 140.25 | 156.00 | 15.75 | the outage card is derived, not fixed, and one line taller for it (C17 / D23) |
