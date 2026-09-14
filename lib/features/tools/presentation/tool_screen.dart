@@ -78,6 +78,7 @@ class LumeToolScreen extends ConsumerStatefulWidget {
     this.subtitle,
     this.shareCard,
     this.exportFile,
+    this.floating,
   });
 
   final LumeFeature feature;
@@ -104,6 +105,10 @@ class LumeToolScreen extends ConsumerStatefulWidget {
   /// the press. Throws [ArgumentError] only on a tool's own bug, which the
   /// reader is told as a failure.
   final LumeExportFile? Function()? exportFile;
+
+  /// `.fab` -- a floating action, 22 from the end and 96 from the bottom,
+  /// under the toast as the reference stacks them.
+  final Widget? floating;
 
   /// `toast()` — 2.1 seconds, or 6 with an action.
   static const Duration toastFor = Duration(milliseconds: 2100);
@@ -341,21 +346,28 @@ class LumeToolScreenState extends ConsumerState<LumeToolScreen> {
       body: widget.body,
     );
 
-    if (_toast == null) return frame;
+    if (_toast == null && widget.floating == null) return frame;
     return Stack(
       children: <Widget>[
         frame,
-        Positioned(
-          left: 0,
-          right: 0,
-          bottom: 92 + MediaQuery.paddingOf(context).bottom,
-          child: Align(
-            child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 24),
-              child: LumeToast(data: _toast!),
+        if (widget.floating != null)
+          PositionedDirectional(
+            end: 22,
+            bottom: 96 + MediaQuery.paddingOf(context).bottom,
+            child: widget.floating!,
+          ),
+        if (_toast != null)
+          Positioned(
+            left: 0,
+            right: 0,
+            bottom: 92 + MediaQuery.paddingOf(context).bottom,
+            child: Align(
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 24),
+                child: LumeToast(data: _toast!),
+              ),
             ),
           ),
-        ),
       ],
     );
   }

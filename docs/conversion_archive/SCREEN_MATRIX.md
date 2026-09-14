@@ -153,7 +153,7 @@ run on the shared CRUD engine.
 
 | id | Name | Archetype | Density | Gate | Record | Quick | Share | Status |
 |---|---|---|---|---|---|---|---|---|
-| `calendar` | Calendar | planner | high | — | — | Y | — | not started |
+| `calendar` | Calendar | planner | high | — | — | Y | — | **built (F6A)** — reference tool for the planner archetype; zone strip, view control, month grid with Hijri days, timeline agenda with the next prayer, holidays, add action, export record (C71) |
 | `reminders` | Reminders | manager | medium | — | **yes** | Y | — | not started |
 | `notes` | Notes | manager | medium | — | **yes** | Y | — | not started |
 | `todos` | To-dos | manager | high | — | **yes** | Y | — | not started |

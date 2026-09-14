@@ -497,7 +497,7 @@ class LumeFab extends StatelessWidget {
             children: <Widget>[
               LumeIcon(
                 icon ?? LumeIcons.plus,
-                size: LumeSpace.iconLg,
+                size: 19, // `.fab svg`
                 color: lume.onAccent,
               ),
               if (showLabel) ...<Widget>[

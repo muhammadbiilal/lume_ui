@@ -71,7 +71,9 @@
   ],
   "flutterBuilt": [
    "timer",
+   "calendar",
    "tax",
+   "news",
    "emergency",
    "recipes",
    "learning"
@@ -689,7 +691,7 @@
    "approvedComposition": null,
    "recordFamily": false,
    "module": "assets/js/tools/planning/calendar.tool.js",
-   "flutter": "placeholder"
+   "flutter": "built"
   },
   {
    "id": "reminders",
@@ -2334,7 +2336,7 @@
    "approvedComposition": null,
    "recordFamily": false,
    "module": "assets/js/tools/daily/news.tool.js",
-   "flutter": "placeholder"
+   "flutter": "built"
   },
   {
    "id": "cricket",

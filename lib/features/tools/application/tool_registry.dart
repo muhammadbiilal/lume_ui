@@ -9,6 +9,7 @@ library;
 
 import 'package:flutter/widgets.dart';
 
+import '../../calendar/presentation/calendar_tool.dart';
 import '../../emergency/presentation/emergency_tool.dart';
 import '../../learning/presentation/learning_tool.dart';
 import '../../news/presentation/news_tool.dart';
@@ -28,4 +29,5 @@ const Map<String, LumeToolBuilder> kLumeToolRegistry =
       'emergency': LumeEmergencyTool.open,
       'recipes': LumeRecipesTool.open,
       'news': LumeNewsTool.open,
+      'calendar': LumeCalendarTool.open,
     };

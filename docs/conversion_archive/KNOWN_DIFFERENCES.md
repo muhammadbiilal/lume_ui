@@ -1618,6 +1618,22 @@ tool, whatever the tool asks for.
   Kashmir Day in February); the names, kinds and dates are written in the
   reader's language.
 
+**Found on Calendar (reference tool 7), corrected or built the way C62's were:**
+
+| widget | was | reference, measured |
+|---|---|---|
+| `LumeTimeline` | a 46-point gutter; a 9-point node (12 when now) on a `--border-2` rail; the done node accent-filled; subtitles on the 11-point role's line | `.tline`: 52-point gutter, end-aligned, 1 down; a 16-point rail with a 14-point node 3 down and a 1.5-point `--border` line from 18 to the next node; done muted with a card glyph, now accent inside a 4-point tint ring, upcoming a card in `--border-2`; title 13 / 700, sub 11 / 500 2 below; 16 between items (49 each) |
+| `LumeFab` | a 24-point glyph | `.fab svg` 19 (51 × 50 with 16 either side) |
+| `LumeMonthGrid` (new) | — | `.mgrid`: 16 of padding, title 13 / 700 with 12 below, heads 10 / 700 on 12 + 4, square cells 4 apart (41.72 at 390), radius 12, today accent-filled; every day announced with its full date and today as selected, where the reference's buttons carry only the number |
+| tool host | no place for a floating action | `floating` — 22 from the end and 96 from the bottom, under the toast (`z-index` 20 under 70) |
+
+**Ports with obligations.** `LumeHijriDate` is the reference's Kuwaiti
+arithmetic, and `LumeSolar` its prayer-time calculation with its `CITIES`
+table; `lume_hijri_test.dart` and `lume_solar_test.dart` hold them to values
+the reference itself produced for the fixture day (Islamabad Maghrib 18:27,
+London 19:35). Both are labels, not religious determinations — Dayroz
+supplies the authority, method and madhab the reader follows.
+
 ### C63 — English dates written the wrong way outside the United States
 
 **Found in F6A** on the UAE Tax capture ("Mon, 7 Sep") and confirmed by

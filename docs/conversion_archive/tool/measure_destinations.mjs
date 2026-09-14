@@ -884,6 +884,21 @@ const TOOL_TARGETS = {
   'tline.sub': '#toolBody .tline__sub',
   'fab': '#screen-tool .fab',
   'fab.icon': '#screen-tool .fab svg',
+  // Currency & Gold -- the explorer: a gold summary, the metals, currencies
+  // with sparklines, a 30-day line chart, and a converter.
+  'summary.unit': '#toolBody .summary__unit',
+  'summary.delta': '#toolBody .summary__caption .delta',
+  'table.th4': '#toolBody .dtable th:nth-child(4)',
+  'table.td4': '#toolBody .dtable tbody tr:nth-child(1) td:nth-child(4)',
+  'table.delta': '#toolBody .dtable .delta',
+  'rrow.logo': '#toolBody .rrow__logo',
+  'rrow.spark': '#toolBody .rrow__spark',
+  'rrow.end': '#toolBody .rrow__end',
+  'rrow.value': '#toolBody .rrow__value',
+  'rrow.delta': '#toolBody .rrow__end .delta',
+  'chart': '#toolBody .chart--line',
+  'chart.svg': '#toolBody .chart--line svg',
+  'chart.cap': '#toolBody .chart__cap',
 };
 
 /* The instant everything is captured at: Monday 7 September 2026, 16:41:32
@@ -1767,6 +1782,46 @@ async function main() {
                        value: (el.querySelector('.crow__value') || {}).textContent || null };
             }),
           fab: q('#screen-tool .fab') ? q('#screen-tool .fab').getAttribute('aria-label') : null
+        } : null;
+        composition.explorer = q('.chart--line') ? {
+          context: texts('#toolBody .ctxbar__item'),
+          summary: q('#toolBody .summary') ? {
+            kicker: tx('#toolBody .summary__kicker'),
+            value: q('#toolBody .summary__value').firstChild.textContent,
+            unit: tx('#toolBody .summary__unit'),
+            caption: tx('#toolBody .summary__caption'),
+            stats: Array.prototype.map.call(document.querySelectorAll('#toolBody .summary__stat'),
+              function (el) { return [(el.querySelector('.summary__statv') || {}).textContent,
+                                      (el.querySelector('.summary__statl') || {}).textContent]; })
+          } : null,
+          table: {
+            head: texts('#toolBody .dtable th'),
+            rows: Array.prototype.map.call(document.querySelectorAll('#toolBody .dtable tbody tr'),
+              function (tr) { return Array.prototype.map.call(tr.querySelectorAll('td'), function (td) { return td.textContent; }); })
+          },
+          placeholder: q('#toolBody .tsearch input') ? q('#toolBody .tsearch input').getAttribute('placeholder') : null,
+          rows: Array.prototype.map.call(document.querySelectorAll('#toolBody .rows > .rrow'),
+            function (el) {
+              var line = el.querySelector('.spark__line');
+              return { logo: (el.querySelector('.rrow__logo') || {}).textContent || null,
+                       code: (el.querySelector('.rrow__title') || {}).textContent || null,
+                       name: (el.querySelector('.rrow__sub') || {}).textContent || null,
+                       meta: Array.prototype.map.call(el.querySelectorAll('.rrow__meta > span'), function (m) { return m.textContent; }),
+                       value: (el.querySelector('.rrow__value') || {}).textContent || null,
+                       delta: (el.querySelector('.rrow__end .delta') || {}).textContent || null,
+                       tone: (el.querySelector('.spark') || { getAttribute: function () { return null; } }).getAttribute('class'),
+                       spark: line ? line.getAttribute('d') : null };
+            }),
+          empty: q('#toolBody .state') ? { title: tx('#toolBody .state__title'), text: tx('#toolBody .state__text') } : null,
+          chart: {
+            label: q('#toolBody .chart--line').getAttribute('aria-label'),
+            xlabels: texts('#toolBody .chart__xlabel'),
+            caption: tx('#toolBody .chart__cap'),
+            line: q('#toolBody .chart__line').getAttribute('d'),
+            dot: [q('#toolBody .chart__dot').getAttribute('cx'), q('#toolBody .chart__dot').getAttribute('cy')]
+          },
+          fields: Array.prototype.map.call(document.querySelectorAll('#toolBody .fgrid .field'),
+            function (el) { var i = el.querySelector('input'); return [(el.querySelector('.field__label') || {}).textContent, i ? i.value : null]; })
         } : null;
         composition.rows = Array.prototype.map.call(
           document.querySelectorAll('#toolBody .rows > .rrow'),

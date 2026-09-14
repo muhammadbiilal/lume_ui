@@ -352,6 +352,56 @@ void main() {
     });
   });
 
+  // ------------------------------------------------------------- Calendar
+
+  group('Calendar', () {
+    final String location = LumeRoutes.tool(LumeRoutes.tools, 'calendar');
+
+    for (final Cell cell in kCells) {
+      testWidgets(cell.$1, (WidgetTester tester) async {
+        await shoot(
+          tester,
+          state: 'default_pk',
+          location: location,
+          golden: 'tool_calendar_default_pk',
+          cell: cell,
+        );
+      });
+    }
+
+    for (final String state in <String>[
+      'muslim_pk',
+      'default_us',
+      'muslim_gb',
+    ]) {
+      testWidgets('$state · the reference cell', (WidgetTester tester) async {
+        await shoot(
+          tester,
+          state: state,
+          location: location,
+          golden: 'tool_calendar_$state',
+          cell: kCells.first,
+        );
+      });
+    }
+
+    testWidgets('Week chosen · the reference cell', (
+      WidgetTester tester,
+    ) async {
+      await shoot(
+        tester,
+        state: 'default_pk',
+        location: location,
+        golden: 'tool_calendar_default_pk_view-week',
+        cell: kCells.first,
+        after: (WidgetTester t) async {
+          await t.tap(find.text('Week'));
+          await t.pumpAndSettle();
+        },
+      );
+    });
+  });
+
   // ----------------------------------------------------------- Share card
 
   // The share sheet over Tax (D7): the card drawn from the screen's own

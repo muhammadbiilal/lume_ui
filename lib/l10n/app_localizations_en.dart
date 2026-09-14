@@ -1180,6 +1180,48 @@ class AppLocalizationsEn extends AppLocalizations {
   String get birthdayKind => 'Birthday';
 
   @override
+  String get calendarAdd => 'Add an event';
+
+  @override
+  String get calendarAdding => 'New event';
+
+  @override
+  String get calendarAgenda => 'Today’s agenda';
+
+  @override
+  String get calendarDay => 'Day';
+
+  @override
+  String get calendarGroceries => 'Groceries';
+
+  @override
+  String get calendarGroceriesWhere => 'On the way home';
+
+  @override
+  String get calendarHolidays => 'Public holidays';
+
+  @override
+  String get calendarMonth => 'Month';
+
+  @override
+  String get calendarReview => 'Design review';
+
+  @override
+  String get calendarReviewWhere => 'Meeting room 2';
+
+  @override
+  String get calendarStandup => 'Morning standup';
+
+  @override
+  String get calendarStandupWhere => 'Team call';
+
+  @override
+  String get calendarView => 'View';
+
+  @override
+  String get calendarWeek => 'Week';
+
+  @override
   String get collectionBudget => 'Budget basics';
 
   @override
@@ -1991,6 +2033,135 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get heroHighlights => 'Highlights';
+
+  @override
+  String get hijriMonth1 => 'Muharram';
+
+  @override
+  String get hijriMonth10 => 'Shawwal';
+
+  @override
+  String get hijriMonth11 => 'Dhul-Qa‘dah';
+
+  @override
+  String get hijriMonth12 => 'Dhul-Hijjah';
+
+  @override
+  String get hijriMonth2 => 'Safar';
+
+  @override
+  String get hijriMonth3 => 'Rabi‘ al-Awwal';
+
+  @override
+  String get hijriMonth4 => 'Rabi‘ al-Thani';
+
+  @override
+  String get hijriMonth5 => 'Jumada al-Ula';
+
+  @override
+  String get hijriMonth6 => 'Jumada al-Akhirah';
+
+  @override
+  String get hijriMonth7 => 'Rajab';
+
+  @override
+  String get hijriMonth8 => 'Sha‘ban';
+
+  @override
+  String get hijriMonth9 => 'Ramadan';
+
+  @override
+  String get holidayBoxingDay => 'Boxing Day';
+
+  @override
+  String get holidayChristmas => 'Christmas';
+
+  @override
+  String get holidayChristmasDay => 'Christmas Day';
+
+  @override
+  String get holidayCommemorationDay => 'Commemoration Day';
+
+  @override
+  String get holidayDiwali => 'Diwali';
+
+  @override
+  String get holidayEarlyMay => 'Early May';
+
+  @override
+  String get holidayEidAlAdha => 'Eid al-Adha';
+
+  @override
+  String get holidayEidAlFitr => 'Eid al-Fitr';
+
+  @override
+  String get holidayFoundingDay => 'Founding Day';
+
+  @override
+  String get holidayGandhiJayanti => 'Gandhi Jayanti';
+
+  @override
+  String get holidayGoodFriday => 'Good Friday';
+
+  @override
+  String get holidayHoli => 'Holi';
+
+  @override
+  String get holidayIndependenceDay => 'Independence Day';
+
+  @override
+  String get holidayIqbalDay => 'Iqbal Day';
+
+  @override
+  String get holidayIslamicNewYear => 'Islamic New Year';
+
+  @override
+  String get holidayKashmirDay => 'Kashmir Day';
+
+  @override
+  String get holidayKindBank => 'Bank holiday';
+
+  @override
+  String get holidayKindFederal => 'Federal';
+
+  @override
+  String get holidayKindGazetted => 'Gazetted';
+
+  @override
+  String get holidayKindNational => 'National';
+
+  @override
+  String get holidayKindPublic => 'Public';
+
+  @override
+  String get holidayLaborDay => 'Labor Day';
+
+  @override
+  String get holidayLabourDay => 'Labour Day';
+
+  @override
+  String get holidayMlkDay => 'MLK Jr. Day';
+
+  @override
+  String get holidayNationalDay => 'National Day';
+
+  @override
+  String get holidayNewYearsDay => 'New Year’s Day';
+
+  @override
+  String get holidayPakistanDay => 'Pakistan Day';
+
+  @override
+  String get holidayQuaidDay => 'Quaid-e-Azam Day';
+
+  @override
+  String get holidayRepublicDay => 'Republic Day';
+
+  @override
+  String get holidaySummer => 'Summer';
+
+  @override
+  String get holidayThanksgiving => 'Thanksgiving';
 
   @override
   String homeAyahProgress(int n, int total, int min) {

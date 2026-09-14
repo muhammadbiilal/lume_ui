@@ -1188,6 +1188,48 @@ class AppLocalizationsAr extends AppLocalizations {
   String get birthdayKind => 'عيد ميلاد';
 
   @override
+  String get calendarAdd => 'أضف موعدًا';
+
+  @override
+  String get calendarAdding => 'موعد جديد';
+
+  @override
+  String get calendarAgenda => 'جدول اليوم';
+
+  @override
+  String get calendarDay => 'يوم';
+
+  @override
+  String get calendarGroceries => 'البقالة';
+
+  @override
+  String get calendarGroceriesWhere => 'في الطريق إلى البيت';
+
+  @override
+  String get calendarHolidays => 'العطل الرسمية';
+
+  @override
+  String get calendarMonth => 'شهر';
+
+  @override
+  String get calendarReview => 'مراجعة التصميم';
+
+  @override
+  String get calendarReviewWhere => 'غرفة الاجتماعات 2';
+
+  @override
+  String get calendarStandup => 'اجتماع الصباح';
+
+  @override
+  String get calendarStandupWhere => 'مكالمة الفريق';
+
+  @override
+  String get calendarView => 'العرض';
+
+  @override
+  String get calendarWeek => 'أسبوع';
+
+  @override
   String get collectionBudget => 'أساسيات الميزانية';
 
   @override
@@ -1999,6 +2041,135 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get heroHighlights => 'أبرز الأمور';
+
+  @override
+  String get hijriMonth1 => 'محرّم';
+
+  @override
+  String get hijriMonth10 => 'شوّال';
+
+  @override
+  String get hijriMonth11 => 'ذو القعدة';
+
+  @override
+  String get hijriMonth12 => 'ذو الحجة';
+
+  @override
+  String get hijriMonth2 => 'صفر';
+
+  @override
+  String get hijriMonth3 => 'ربيع الأول';
+
+  @override
+  String get hijriMonth4 => 'ربيع الآخر';
+
+  @override
+  String get hijriMonth5 => 'جمادى الأولى';
+
+  @override
+  String get hijriMonth6 => 'جمادى الآخرة';
+
+  @override
+  String get hijriMonth7 => 'رجب';
+
+  @override
+  String get hijriMonth8 => 'شعبان';
+
+  @override
+  String get hijriMonth9 => 'رمضان';
+
+  @override
+  String get holidayBoxingDay => 'يوم الملاكمة';
+
+  @override
+  String get holidayChristmas => 'عيد الميلاد';
+
+  @override
+  String get holidayChristmasDay => 'عيد الميلاد';
+
+  @override
+  String get holidayCommemorationDay => 'يوم الشهيد';
+
+  @override
+  String get holidayDiwali => 'ديوالي';
+
+  @override
+  String get holidayEarlyMay => 'عطلة أوائل مايو';
+
+  @override
+  String get holidayEidAlAdha => 'عيد الأضحى';
+
+  @override
+  String get holidayEidAlFitr => 'عيد الفطر';
+
+  @override
+  String get holidayFoundingDay => 'يوم التأسيس';
+
+  @override
+  String get holidayGandhiJayanti => 'ذكرى ميلاد غاندي';
+
+  @override
+  String get holidayGoodFriday => 'الجمعة العظيمة';
+
+  @override
+  String get holidayHoli => 'هولي';
+
+  @override
+  String get holidayIndependenceDay => 'عيد الاستقلال';
+
+  @override
+  String get holidayIqbalDay => 'يوم إقبال';
+
+  @override
+  String get holidayIslamicNewYear => 'رأس السنة الهجرية';
+
+  @override
+  String get holidayKashmirDay => 'يوم كشمير';
+
+  @override
+  String get holidayKindBank => 'عطلة مصرفية';
+
+  @override
+  String get holidayKindFederal => 'اتحادية';
+
+  @override
+  String get holidayKindGazetted => 'رسمية';
+
+  @override
+  String get holidayKindNational => 'وطنية';
+
+  @override
+  String get holidayKindPublic => 'عامة';
+
+  @override
+  String get holidayLaborDay => 'عيد العمال';
+
+  @override
+  String get holidayLabourDay => 'عيد العمال';
+
+  @override
+  String get holidayMlkDay => 'يوم مارتن لوثر كينغ';
+
+  @override
+  String get holidayNationalDay => 'اليوم الوطني';
+
+  @override
+  String get holidayNewYearsDay => 'رأس السنة';
+
+  @override
+  String get holidayPakistanDay => 'يوم باكستان';
+
+  @override
+  String get holidayQuaidDay => 'يوم القائد الأعظم';
+
+  @override
+  String get holidayRepublicDay => 'يوم الجمهورية';
+
+  @override
+  String get holidaySummer => 'عطلة الصيف';
+
+  @override
+  String get holidayThanksgiving => 'عيد الشكر';
 
   @override
   String homeAyahProgress(int n, int total, int min) {

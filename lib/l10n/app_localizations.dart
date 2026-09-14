@@ -2194,6 +2194,90 @@ abstract class AppLocalizations {
   /// **'Birthday'**
   String get birthdayKind;
 
+  /// Reference key calendar.add — the floating action's name, always announced (C71)
+  ///
+  /// In en, this message translates to:
+  /// **'Add an event'**
+  String get calendarAdd;
+
+  /// Reference key calendar.adding — the toast the floating action speaks
+  ///
+  /// In en, this message translates to:
+  /// **'New event'**
+  String get calendarAdding;
+
+  /// Reference key calendar.agenda
+  ///
+  /// In en, this message translates to:
+  /// **'Today’s agenda'**
+  String get calendarAgenda;
+
+  /// Reference key calendar.day
+  ///
+  /// In en, this message translates to:
+  /// **'Day'**
+  String get calendarDay;
+
+  /// Reference key calendar.a3
+  ///
+  /// In en, this message translates to:
+  /// **'Groceries'**
+  String get calendarGroceries;
+
+  /// Reference key calendar.a3s
+  ///
+  /// In en, this message translates to:
+  /// **'On the way home'**
+  String get calendarGroceriesWhere;
+
+  /// Reference key calendar.holidays
+  ///
+  /// In en, this message translates to:
+  /// **'Public holidays'**
+  String get calendarHolidays;
+
+  /// Reference key calendar.month
+  ///
+  /// In en, this message translates to:
+  /// **'Month'**
+  String get calendarMonth;
+
+  /// Reference key calendar.a2
+  ///
+  /// In en, this message translates to:
+  /// **'Design review'**
+  String get calendarReview;
+
+  /// Reference key calendar.a2s
+  ///
+  /// In en, this message translates to:
+  /// **'Meeting room 2'**
+  String get calendarReviewWhere;
+
+  /// Reference key calendar.a1
+  ///
+  /// In en, this message translates to:
+  /// **'Morning standup'**
+  String get calendarStandup;
+
+  /// Reference key calendar.a1s
+  ///
+  /// In en, this message translates to:
+  /// **'Team call'**
+  String get calendarStandupWhere;
+
+  /// Reference key calendar.view — the segmented control's name
+  ///
+  /// In en, this message translates to:
+  /// **'View'**
+  String get calendarView;
+
+  /// Reference key calendar.week
+  ///
+  /// In en, this message translates to:
+  /// **'Week'**
+  String get calendarWeek;
+
   /// Reference: a collection card
   ///
   /// In en, this message translates to:
@@ -3705,6 +3789,264 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Highlights'**
   String get heroHighlights;
+
+  /// tool-data.js HIJRI_MONTHS[0] — the Hijri month
+  ///
+  /// In en, this message translates to:
+  /// **'Muharram'**
+  String get hijriMonth1;
+
+  /// tool-data.js HIJRI_MONTHS[9] — the Hijri month
+  ///
+  /// In en, this message translates to:
+  /// **'Shawwal'**
+  String get hijriMonth10;
+
+  /// tool-data.js HIJRI_MONTHS[10] — the Hijri month
+  ///
+  /// In en, this message translates to:
+  /// **'Dhul-Qa‘dah'**
+  String get hijriMonth11;
+
+  /// tool-data.js HIJRI_MONTHS[11] — the Hijri month
+  ///
+  /// In en, this message translates to:
+  /// **'Dhul-Hijjah'**
+  String get hijriMonth12;
+
+  /// tool-data.js HIJRI_MONTHS[1] — the Hijri month
+  ///
+  /// In en, this message translates to:
+  /// **'Safar'**
+  String get hijriMonth2;
+
+  /// tool-data.js HIJRI_MONTHS[2] — the Hijri month
+  ///
+  /// In en, this message translates to:
+  /// **'Rabi‘ al-Awwal'**
+  String get hijriMonth3;
+
+  /// tool-data.js HIJRI_MONTHS[3] — the Hijri month
+  ///
+  /// In en, this message translates to:
+  /// **'Rabi‘ al-Thani'**
+  String get hijriMonth4;
+
+  /// tool-data.js HIJRI_MONTHS[4] — the Hijri month
+  ///
+  /// In en, this message translates to:
+  /// **'Jumada al-Ula'**
+  String get hijriMonth5;
+
+  /// tool-data.js HIJRI_MONTHS[5] — the Hijri month
+  ///
+  /// In en, this message translates to:
+  /// **'Jumada al-Akhirah'**
+  String get hijriMonth6;
+
+  /// tool-data.js HIJRI_MONTHS[6] — the Hijri month
+  ///
+  /// In en, this message translates to:
+  /// **'Rajab'**
+  String get hijriMonth7;
+
+  /// tool-data.js HIJRI_MONTHS[7] — the Hijri month
+  ///
+  /// In en, this message translates to:
+  /// **'Sha‘ban'**
+  String get hijriMonth8;
+
+  /// tool-data.js HIJRI_MONTHS[8] — the Hijri month
+  ///
+  /// In en, this message translates to:
+  /// **'Ramadan'**
+  String get hijriMonth9;
+
+  /// A public holiday in tool-data.js HOLIDAYS. The reference writes it in English in every language
+  ///
+  /// In en, this message translates to:
+  /// **'Boxing Day'**
+  String get holidayBoxingDay;
+
+  /// A public holiday in tool-data.js HOLIDAYS. The reference writes it in English in every language
+  ///
+  /// In en, this message translates to:
+  /// **'Christmas'**
+  String get holidayChristmas;
+
+  /// A public holiday in tool-data.js HOLIDAYS. The reference writes it in English in every language
+  ///
+  /// In en, this message translates to:
+  /// **'Christmas Day'**
+  String get holidayChristmasDay;
+
+  /// A public holiday in tool-data.js HOLIDAYS. The reference writes it in English in every language
+  ///
+  /// In en, this message translates to:
+  /// **'Commemoration Day'**
+  String get holidayCommemorationDay;
+
+  /// A public holiday in tool-data.js HOLIDAYS. The reference writes it in English in every language
+  ///
+  /// In en, this message translates to:
+  /// **'Diwali'**
+  String get holidayDiwali;
+
+  /// A public holiday in tool-data.js HOLIDAYS. The reference writes it in English in every language
+  ///
+  /// In en, this message translates to:
+  /// **'Early May'**
+  String get holidayEarlyMay;
+
+  /// A public holiday in tool-data.js HOLIDAYS. The reference writes it in English in every language
+  ///
+  /// In en, this message translates to:
+  /// **'Eid al-Adha'**
+  String get holidayEidAlAdha;
+
+  /// A public holiday in tool-data.js HOLIDAYS. The reference writes it in English in every language
+  ///
+  /// In en, this message translates to:
+  /// **'Eid al-Fitr'**
+  String get holidayEidAlFitr;
+
+  /// A public holiday in tool-data.js HOLIDAYS. The reference writes it in English in every language
+  ///
+  /// In en, this message translates to:
+  /// **'Founding Day'**
+  String get holidayFoundingDay;
+
+  /// A public holiday in tool-data.js HOLIDAYS. The reference writes it in English in every language
+  ///
+  /// In en, this message translates to:
+  /// **'Gandhi Jayanti'**
+  String get holidayGandhiJayanti;
+
+  /// A public holiday in tool-data.js HOLIDAYS. The reference writes it in English in every language
+  ///
+  /// In en, this message translates to:
+  /// **'Good Friday'**
+  String get holidayGoodFriday;
+
+  /// A public holiday in tool-data.js HOLIDAYS. The reference writes it in English in every language
+  ///
+  /// In en, this message translates to:
+  /// **'Holi'**
+  String get holidayHoli;
+
+  /// A public holiday in tool-data.js HOLIDAYS. The reference writes it in English in every language
+  ///
+  /// In en, this message translates to:
+  /// **'Independence Day'**
+  String get holidayIndependenceDay;
+
+  /// A public holiday in tool-data.js HOLIDAYS. The reference writes it in English in every language
+  ///
+  /// In en, this message translates to:
+  /// **'Iqbal Day'**
+  String get holidayIqbalDay;
+
+  /// A public holiday in tool-data.js HOLIDAYS. The reference writes it in English in every language
+  ///
+  /// In en, this message translates to:
+  /// **'Islamic New Year'**
+  String get holidayIslamicNewYear;
+
+  /// A public holiday in tool-data.js HOLIDAYS. The reference writes it in English in every language
+  ///
+  /// In en, this message translates to:
+  /// **'Kashmir Day'**
+  String get holidayKashmirDay;
+
+  /// The kind of a public holiday in tool-data.js HOLIDAYS
+  ///
+  /// In en, this message translates to:
+  /// **'Bank holiday'**
+  String get holidayKindBank;
+
+  /// The kind of a public holiday in tool-data.js HOLIDAYS
+  ///
+  /// In en, this message translates to:
+  /// **'Federal'**
+  String get holidayKindFederal;
+
+  /// The kind of a public holiday in tool-data.js HOLIDAYS
+  ///
+  /// In en, this message translates to:
+  /// **'Gazetted'**
+  String get holidayKindGazetted;
+
+  /// The kind of a public holiday in tool-data.js HOLIDAYS
+  ///
+  /// In en, this message translates to:
+  /// **'National'**
+  String get holidayKindNational;
+
+  /// The kind of a public holiday in tool-data.js HOLIDAYS
+  ///
+  /// In en, this message translates to:
+  /// **'Public'**
+  String get holidayKindPublic;
+
+  /// A public holiday in tool-data.js HOLIDAYS. The reference writes it in English in every language
+  ///
+  /// In en, this message translates to:
+  /// **'Labor Day'**
+  String get holidayLaborDay;
+
+  /// A public holiday in tool-data.js HOLIDAYS. The reference writes it in English in every language
+  ///
+  /// In en, this message translates to:
+  /// **'Labour Day'**
+  String get holidayLabourDay;
+
+  /// A public holiday in tool-data.js HOLIDAYS. The reference writes it in English in every language
+  ///
+  /// In en, this message translates to:
+  /// **'MLK Jr. Day'**
+  String get holidayMlkDay;
+
+  /// A public holiday in tool-data.js HOLIDAYS. The reference writes it in English in every language
+  ///
+  /// In en, this message translates to:
+  /// **'National Day'**
+  String get holidayNationalDay;
+
+  /// A public holiday in tool-data.js HOLIDAYS. The reference writes it in English in every language
+  ///
+  /// In en, this message translates to:
+  /// **'New Year’s Day'**
+  String get holidayNewYearsDay;
+
+  /// A public holiday in tool-data.js HOLIDAYS. The reference writes it in English in every language
+  ///
+  /// In en, this message translates to:
+  /// **'Pakistan Day'**
+  String get holidayPakistanDay;
+
+  /// A public holiday in tool-data.js HOLIDAYS. The reference writes it in English in every language
+  ///
+  /// In en, this message translates to:
+  /// **'Quaid-e-Azam Day'**
+  String get holidayQuaidDay;
+
+  /// A public holiday in tool-data.js HOLIDAYS. The reference writes it in English in every language
+  ///
+  /// In en, this message translates to:
+  /// **'Republic Day'**
+  String get holidayRepublicDay;
+
+  /// A public holiday in tool-data.js HOLIDAYS. The reference writes it in English in every language
+  ///
+  /// In en, this message translates to:
+  /// **'Summer'**
+  String get holidaySummer;
+
+  /// A public holiday in tool-data.js HOLIDAYS. The reference writes it in English in every language
+  ///
+  /// In en, this message translates to:
+  /// **'Thanksgiving'**
+  String get holidayThanksgiving;
 
   /// Reference key home.ayahProgress
   ///

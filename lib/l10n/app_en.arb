@@ -1491,6 +1491,62 @@
   "@birthdayKind": {
     "description": "The kind line on a birthday row"
   },
+  "calendarAdd": "Add an event",
+  "@calendarAdd": {
+    "description": "Reference key calendar.add — the floating action's name, always announced (C71)"
+  },
+  "calendarAdding": "New event",
+  "@calendarAdding": {
+    "description": "Reference key calendar.adding — the toast the floating action speaks"
+  },
+  "calendarAgenda": "Today’s agenda",
+  "@calendarAgenda": {
+    "description": "Reference key calendar.agenda"
+  },
+  "calendarDay": "Day",
+  "@calendarDay": {
+    "description": "Reference key calendar.day"
+  },
+  "calendarGroceries": "Groceries",
+  "@calendarGroceries": {
+    "description": "Reference key calendar.a3"
+  },
+  "calendarGroceriesWhere": "On the way home",
+  "@calendarGroceriesWhere": {
+    "description": "Reference key calendar.a3s"
+  },
+  "calendarHolidays": "Public holidays",
+  "@calendarHolidays": {
+    "description": "Reference key calendar.holidays"
+  },
+  "calendarMonth": "Month",
+  "@calendarMonth": {
+    "description": "Reference key calendar.month"
+  },
+  "calendarReview": "Design review",
+  "@calendarReview": {
+    "description": "Reference key calendar.a2"
+  },
+  "calendarReviewWhere": "Meeting room 2",
+  "@calendarReviewWhere": {
+    "description": "Reference key calendar.a2s"
+  },
+  "calendarStandup": "Morning standup",
+  "@calendarStandup": {
+    "description": "Reference key calendar.a1"
+  },
+  "calendarStandupWhere": "Team call",
+  "@calendarStandupWhere": {
+    "description": "Reference key calendar.a1s"
+  },
+  "calendarView": "View",
+  "@calendarView": {
+    "description": "Reference key calendar.view — the segmented control's name"
+  },
+  "calendarWeek": "Week",
+  "@calendarWeek": {
+    "description": "Reference key calendar.week"
+  },
   "collectionBudget": "Budget basics",
   "@collectionBudget": {
     "description": "Reference: a collection card"
@@ -2652,6 +2708,178 @@
   "heroHighlights": "Highlights",
   "@heroHighlights": {
     "description": "Reference: aria-label=\"Highlights\" on the carousel"
+  },
+  "hijriMonth1": "Muharram",
+  "@hijriMonth1": {
+    "description": "tool-data.js HIJRI_MONTHS[0] — the Hijri month"
+  },
+  "hijriMonth10": "Shawwal",
+  "@hijriMonth10": {
+    "description": "tool-data.js HIJRI_MONTHS[9] — the Hijri month"
+  },
+  "hijriMonth11": "Dhul-Qa‘dah",
+  "@hijriMonth11": {
+    "description": "tool-data.js HIJRI_MONTHS[10] — the Hijri month"
+  },
+  "hijriMonth12": "Dhul-Hijjah",
+  "@hijriMonth12": {
+    "description": "tool-data.js HIJRI_MONTHS[11] — the Hijri month"
+  },
+  "hijriMonth2": "Safar",
+  "@hijriMonth2": {
+    "description": "tool-data.js HIJRI_MONTHS[1] — the Hijri month"
+  },
+  "hijriMonth3": "Rabi‘ al-Awwal",
+  "@hijriMonth3": {
+    "description": "tool-data.js HIJRI_MONTHS[2] — the Hijri month"
+  },
+  "hijriMonth4": "Rabi‘ al-Thani",
+  "@hijriMonth4": {
+    "description": "tool-data.js HIJRI_MONTHS[3] — the Hijri month"
+  },
+  "hijriMonth5": "Jumada al-Ula",
+  "@hijriMonth5": {
+    "description": "tool-data.js HIJRI_MONTHS[4] — the Hijri month"
+  },
+  "hijriMonth6": "Jumada al-Akhirah",
+  "@hijriMonth6": {
+    "description": "tool-data.js HIJRI_MONTHS[5] — the Hijri month"
+  },
+  "hijriMonth7": "Rajab",
+  "@hijriMonth7": {
+    "description": "tool-data.js HIJRI_MONTHS[6] — the Hijri month"
+  },
+  "hijriMonth8": "Sha‘ban",
+  "@hijriMonth8": {
+    "description": "tool-data.js HIJRI_MONTHS[7] — the Hijri month"
+  },
+  "hijriMonth9": "Ramadan",
+  "@hijriMonth9": {
+    "description": "tool-data.js HIJRI_MONTHS[8] — the Hijri month"
+  },
+  "holidayBoxingDay": "Boxing Day",
+  "@holidayBoxingDay": {
+    "description": "A public holiday in tool-data.js HOLIDAYS. The reference writes it in English in every language"
+  },
+  "holidayChristmas": "Christmas",
+  "@holidayChristmas": {
+    "description": "A public holiday in tool-data.js HOLIDAYS. The reference writes it in English in every language"
+  },
+  "holidayChristmasDay": "Christmas Day",
+  "@holidayChristmasDay": {
+    "description": "A public holiday in tool-data.js HOLIDAYS. The reference writes it in English in every language"
+  },
+  "holidayCommemorationDay": "Commemoration Day",
+  "@holidayCommemorationDay": {
+    "description": "A public holiday in tool-data.js HOLIDAYS. The reference writes it in English in every language"
+  },
+  "holidayDiwali": "Diwali",
+  "@holidayDiwali": {
+    "description": "A public holiday in tool-data.js HOLIDAYS. The reference writes it in English in every language"
+  },
+  "holidayEarlyMay": "Early May",
+  "@holidayEarlyMay": {
+    "description": "A public holiday in tool-data.js HOLIDAYS. The reference writes it in English in every language"
+  },
+  "holidayEidAlAdha": "Eid al-Adha",
+  "@holidayEidAlAdha": {
+    "description": "A public holiday in tool-data.js HOLIDAYS. The reference writes it in English in every language"
+  },
+  "holidayEidAlFitr": "Eid al-Fitr",
+  "@holidayEidAlFitr": {
+    "description": "A public holiday in tool-data.js HOLIDAYS. The reference writes it in English in every language"
+  },
+  "holidayFoundingDay": "Founding Day",
+  "@holidayFoundingDay": {
+    "description": "A public holiday in tool-data.js HOLIDAYS. The reference writes it in English in every language"
+  },
+  "holidayGandhiJayanti": "Gandhi Jayanti",
+  "@holidayGandhiJayanti": {
+    "description": "A public holiday in tool-data.js HOLIDAYS. The reference writes it in English in every language"
+  },
+  "holidayGoodFriday": "Good Friday",
+  "@holidayGoodFriday": {
+    "description": "A public holiday in tool-data.js HOLIDAYS. The reference writes it in English in every language"
+  },
+  "holidayHoli": "Holi",
+  "@holidayHoli": {
+    "description": "A public holiday in tool-data.js HOLIDAYS. The reference writes it in English in every language"
+  },
+  "holidayIndependenceDay": "Independence Day",
+  "@holidayIndependenceDay": {
+    "description": "A public holiday in tool-data.js HOLIDAYS. The reference writes it in English in every language"
+  },
+  "holidayIqbalDay": "Iqbal Day",
+  "@holidayIqbalDay": {
+    "description": "A public holiday in tool-data.js HOLIDAYS. The reference writes it in English in every language"
+  },
+  "holidayIslamicNewYear": "Islamic New Year",
+  "@holidayIslamicNewYear": {
+    "description": "A public holiday in tool-data.js HOLIDAYS. The reference writes it in English in every language"
+  },
+  "holidayKashmirDay": "Kashmir Day",
+  "@holidayKashmirDay": {
+    "description": "A public holiday in tool-data.js HOLIDAYS. The reference writes it in English in every language"
+  },
+  "holidayKindBank": "Bank holiday",
+  "@holidayKindBank": {
+    "description": "The kind of a public holiday in tool-data.js HOLIDAYS"
+  },
+  "holidayKindFederal": "Federal",
+  "@holidayKindFederal": {
+    "description": "The kind of a public holiday in tool-data.js HOLIDAYS"
+  },
+  "holidayKindGazetted": "Gazetted",
+  "@holidayKindGazetted": {
+    "description": "The kind of a public holiday in tool-data.js HOLIDAYS"
+  },
+  "holidayKindNational": "National",
+  "@holidayKindNational": {
+    "description": "The kind of a public holiday in tool-data.js HOLIDAYS"
+  },
+  "holidayKindPublic": "Public",
+  "@holidayKindPublic": {
+    "description": "The kind of a public holiday in tool-data.js HOLIDAYS"
+  },
+  "holidayLaborDay": "Labor Day",
+  "@holidayLaborDay": {
+    "description": "A public holiday in tool-data.js HOLIDAYS. The reference writes it in English in every language"
+  },
+  "holidayLabourDay": "Labour Day",
+  "@holidayLabourDay": {
+    "description": "A public holiday in tool-data.js HOLIDAYS. The reference writes it in English in every language"
+  },
+  "holidayMlkDay": "MLK Jr. Day",
+  "@holidayMlkDay": {
+    "description": "A public holiday in tool-data.js HOLIDAYS. The reference writes it in English in every language"
+  },
+  "holidayNationalDay": "National Day",
+  "@holidayNationalDay": {
+    "description": "A public holiday in tool-data.js HOLIDAYS. The reference writes it in English in every language"
+  },
+  "holidayNewYearsDay": "New Year’s Day",
+  "@holidayNewYearsDay": {
+    "description": "A public holiday in tool-data.js HOLIDAYS. The reference writes it in English in every language"
+  },
+  "holidayPakistanDay": "Pakistan Day",
+  "@holidayPakistanDay": {
+    "description": "A public holiday in tool-data.js HOLIDAYS. The reference writes it in English in every language"
+  },
+  "holidayQuaidDay": "Quaid-e-Azam Day",
+  "@holidayQuaidDay": {
+    "description": "A public holiday in tool-data.js HOLIDAYS. The reference writes it in English in every language"
+  },
+  "holidayRepublicDay": "Republic Day",
+  "@holidayRepublicDay": {
+    "description": "A public holiday in tool-data.js HOLIDAYS. The reference writes it in English in every language"
+  },
+  "holidaySummer": "Summer",
+  "@holidaySummer": {
+    "description": "A public holiday in tool-data.js HOLIDAYS. The reference writes it in English in every language"
+  },
+  "holidayThanksgiving": "Thanksgiving",
+  "@holidayThanksgiving": {
+    "description": "A public holiday in tool-data.js HOLIDAYS. The reference writes it in English in every language"
   },
   "homeAyahProgress": "Ayah {n} of {total} · about {min} min left",
   "@homeAyahProgress": {

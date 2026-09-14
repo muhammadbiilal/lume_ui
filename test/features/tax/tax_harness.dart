@@ -38,6 +38,7 @@ LumeProfileRecord taxReader({
 /// `measure_destinations.mjs`'s states.
 final Map<String, LumeProfileRecord> kTaxStates = <String, LumeProfileRecord>{
   'default_pk': taxReader(),
+  'muslim_pk': taxReader(islamic: true),
   'default_us': taxReader(country: 'US', region: 'New York', city: 'New York'),
   'muslim_gb': taxReader(
     country: 'GB',

@@ -218,6 +218,9 @@ class LumeFormatting {
   /// "14 Sep".
   String dateMedium(DateTime d) => intl.DateFormat.MMMd(_dateTag).format(d);
 
+  /// "September 2026" — a month and its year, as a calendar titles it.
+  String monthYear(DateTime d) => intl.DateFormat.yMMMM(_dateTag).format(d);
+
   /// `weekLabels()` — the seven narrow weekday names a week chart is labelled
   /// with, in the order the reference draws them.
   ///
