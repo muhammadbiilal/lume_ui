@@ -183,28 +183,21 @@ class LumeRichRow extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisSize: MainAxisSize.min,
               children: <Widget>[
-                Row(
-                  children: <Widget>[
-                    Flexible(
-                      child: Text(
-                        title,
-                        // Measured: 14 / 700 / −0.024em on the font's own 18.
-                        style: LumeType.tracked(
-                          LumeType.natural(
-                            context,
-                            context.lumeType.body,
-                          ).copyWith(fontWeight: FontWeight.w700),
-                          -0.024,
-                        ).copyWith(color: lume.text),
-                        maxLines: 1,
-                        overflow: TextOverflow.ellipsis,
-                      ),
-                    ),
-                    if (badge != null) ...<Widget>[
-                      const SizedBox(width: 6),
-                      badge!,
-                    ],
-                  ],
+                _TitleLine(
+                  title: Text(
+                    title,
+                    // Measured: 14 / 700 / −0.024em on the font's own 18.
+                    style: LumeType.tracked(
+                      LumeType.natural(
+                        context,
+                        context.lumeType.body,
+                      ).copyWith(fontWeight: FontWeight.w700),
+                      -0.024,
+                    ).copyWith(color: lume.text),
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                  ),
+                  badge: badge,
                 ),
                 if (subtitle != null) ...<Widget>[
                   // `.rrow__body { gap: 1px }`.
@@ -305,6 +298,50 @@ class LumeRichRow extends StatelessWidget {
     value,
     valueSub,
   ].whereType<String>().join(', ');
+}
+
+/// `.rrow__titleline { display: flex; gap: 6px; min-width: 0 }` — the title
+/// ellipsizes and the badge keeps its width, on one line. That line holds
+/// while the badge and a readable scrap of title fit; when they cannot — a
+/// long value beside it at 200 % — the badge goes under the title rather than
+/// past the row's edge.
+class _TitleLine extends StatelessWidget {
+  const _TitleLine({required this.title, this.badge});
+
+  final Widget title;
+  final LumeBadge? badge;
+
+  /// The least title worth keeping beside a badge, at 1×.
+  static const double minTitle = 40;
+
+  @override
+  Widget build(BuildContext context) {
+    final LumeBadge? b = badge;
+    if (b == null) return title;
+    return LayoutBuilder(
+      builder: (BuildContext context, BoxConstraints box) {
+        final double need =
+            LumeBadge.widthOf(context, b.label, b.tone) +
+            6 +
+            MediaQuery.textScalerOf(context).scale(minTitle);
+        if (!box.hasBoundedWidth || box.maxWidth >= need) {
+          return Row(
+            children: <Widget>[
+              Flexible(child: title),
+              const SizedBox(width: 6),
+              b,
+            ],
+          );
+        }
+        return Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisSize: MainAxisSize.min,
+          spacing: 2,
+          children: <Widget>[title, b],
+        );
+      },
+    );
+  }
 }
 
 class _RowLead extends StatelessWidget {

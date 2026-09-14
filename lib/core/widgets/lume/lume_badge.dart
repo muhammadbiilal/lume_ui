@@ -71,6 +71,52 @@ class LumeBadge extends StatelessWidget {
     LumeBadgeTone.neutral => null,
   };
 
+  /// The pill's drawn width for [label] in [tone], at the reader's text size —
+  /// for a line that has to decide whether a badge still fits beside a title.
+  static double widthOf(
+    BuildContext context,
+    String label,
+    LumeBadgeTone tone,
+  ) {
+    final TextScaler scaler = MediaQuery.textScalerOf(context);
+    final TextDirection direction = Directionality.of(context);
+    double measure(String text, TextStyle style) {
+      final TextPainter p = TextPainter(
+        text: TextSpan(text: text, style: style),
+        textDirection: direction,
+        textScaler: scaler,
+        maxLines: 1,
+      )..layout();
+      final double w = p.width;
+      p.dispose();
+      return w;
+    }
+
+    final String? glyph = glyphFor(tone);
+    final double labelWidth = measure(
+      label,
+      LumeType.tracked(
+        LumeType.natural(
+          context,
+          context.lumeType.metaSmall,
+          size: 10,
+        ).copyWith(fontWeight: FontWeight.w700),
+        0.005,
+      ),
+    );
+    final double glyphWidth = glyph == null
+        ? 0
+        : measure(
+                glyph,
+                LumeType.fit(
+                  context,
+                  context.lumeType.metaSmall,
+                ).copyWith(fontSize: 11, height: 1),
+              ) +
+              4;
+    return 7 + glyphWidth + labelWidth + 7;
+  }
+
   @override
   Widget build(BuildContext context) {
     final LumeColors lume = context.lume;
@@ -114,22 +160,26 @@ class LumeBadge extends StatelessWidget {
               ),
               const SizedBox(width: 4),
             ],
-            Text(
-              label,
-              // `.badge` sets a size and leaves `line-height` alone, so the
-              // line is the font's natural 12 rather than the `--t-metasm`
-              // token's. With 2 points of padding above and below that is
-              // the pill's measured 16; the token's line made it 19. See C35.
-              style: LumeType.tracked(
-                LumeType.natural(
-                  context,
-                  context.lumeType.metaSmall,
-                  size: 10,
-                ).copyWith(fontWeight: FontWeight.w700),
-                0.005,
-              ).copyWith(color: fg),
-              maxLines: 1,
-              overflow: TextOverflow.ellipsis,
+            // Flexible, so a pill narrower than its words — a narrow row at
+            // 200 % — ellipsizes rather than running past its edge.
+            Flexible(
+              child: Text(
+                label,
+                // `.badge` sets a size and leaves `line-height` alone, so the
+                // line is the font's natural 12 rather than the `--t-metasm`
+                // token's. With 2 points of padding above and below that is
+                // the pill's measured 16; the token's line made it 19. See C35.
+                style: LumeType.tracked(
+                  LumeType.natural(
+                    context,
+                    context.lumeType.metaSmall,
+                    size: 10,
+                  ).copyWith(fontWeight: FontWeight.w700),
+                  0.005,
+                ).copyWith(color: fg),
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
+              ),
             ),
           ],
         ),

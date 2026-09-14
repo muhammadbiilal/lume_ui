@@ -604,6 +604,98 @@ void main() {
     });
   });
 
+  // ------------------------------------------------------------ Documents
+
+  group('Documents', () {
+    final String location = LumeRoutes.tool(LumeRoutes.tools, 'documents');
+
+    // The first record's own line: "Passport" alone is also a vault row.
+    Future<void> openRecord(WidgetTester t) async {
+      final Finder row = find.textContaining('Identity · Tue').first;
+      await t.ensureVisible(row);
+      await t.tap(row);
+      await t.pumpAndSettle();
+      await scrolledTo(0)(t);
+    }
+
+    for (final Cell cell in kCells) {
+      testWidgets(cell.$1, (WidgetTester tester) async {
+        await shoot(
+          tester,
+          state: 'default_pk',
+          location: location,
+          golden: 'tool_documents_default_pk',
+          cell: cell,
+        );
+      });
+    }
+
+    for (final String state in <String>['default_us', 'muslim_gb']) {
+      testWidgets('$state · the reference cell', (WidgetTester tester) async {
+        await shoot(
+          tester,
+          state: state,
+          location: location,
+          golden: 'tool_documents_$state',
+          cell: kCells.first,
+        );
+      });
+    }
+
+    for (final (String name, Future<void> Function(WidgetTester) after)
+        in <(String, Future<void> Function(WidgetTester))>[
+          ('detail', openRecord),
+          (
+            'new',
+            (WidgetTester t) async {
+              await t.tap(find.text('Add').first);
+              await t.pumpAndSettle();
+              FocusManager.instance.primaryFocus?.unfocus();
+              await t.pumpAndSettle();
+            },
+          ),
+          (
+            'q-zzz',
+            (WidgetTester t) async {
+              await t.enterText(find.byType(EditableText).first, 'zzz');
+              await t.pumpAndSettle();
+              FocusManager.instance.primaryFocus?.unfocus();
+              await t.pumpAndSettle();
+            },
+          ),
+        ]) {
+      testWidgets('$name · the reference cell', (WidgetTester tester) async {
+        await shoot(
+          tester,
+          state: 'default_pk',
+          location: location,
+          golden: 'tool_documents_default_pk_$name',
+          cell: kCells.first,
+          after: after,
+        );
+      });
+    }
+
+    testWidgets('the delete sheet · the reference cell', (
+      WidgetTester tester,
+    ) async {
+      await shoot(
+        tester,
+        state: 'default_pk',
+        location: location,
+        golden: 'tool_documents_default_pk_delete',
+        cell: kCells.first,
+        after: (WidgetTester t) async {
+          await openRecord(t);
+          final Finder delete = find.text('Delete document');
+          await t.ensureVisible(delete);
+          await t.tap(delete);
+          await t.pumpAndSettle();
+        },
+      );
+    });
+  });
+
   // ----------------------------------------------------------- Share card
 
   // The share sheet over Tax (D7): the card drawn from the screen's own

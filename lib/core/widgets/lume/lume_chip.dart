@@ -108,16 +108,30 @@ class LumeFilterChip extends StatelessWidget {
           ),
           if (count != null) ...<Widget>[
             const SizedBox(width: 5),
-            Text(
-              '$count',
-              style:
-                  LumeType.numeric(
-                    LumeType.fit(context, context.lumeType.meta),
-                  ).copyWith(
-                    color: (selected ? lume.onAccent : lume.text2).withValues(
-                      alpha: 0.7,
+            // `.fchip__n`: 10 / 700 in a full pill, `1px 5px`, on the neutral
+            // tint — white at 22 % when the chip is on.
+            Container(
+              padding: const EdgeInsets.symmetric(vertical: 1, horizontal: 5),
+              decoration: BoxDecoration(
+                color: selected
+                    ? Colors.white.withValues(alpha: 0.22)
+                    : lume.tintNeutral,
+                borderRadius: LumeRadius.full,
+              ),
+              child: Text(
+                '$count',
+                style:
+                    LumeType.numeric(
+                      LumeType.natural(
+                        context,
+                        context.lumeType.metaSmall,
+                        size: 10,
+                      ),
+                    ).copyWith(
+                      fontWeight: FontWeight.w700,
+                      color: selected ? lume.onAccent : lume.text3,
                     ),
-                  ),
+              ),
             ),
           ],
         ],

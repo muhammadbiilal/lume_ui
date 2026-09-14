@@ -1324,6 +1324,9 @@ class AppLocalizationsAr extends AppLocalizations {
   String get commonMore => 'أكثر';
 
   @override
+  String get commonName => 'الاسم';
+
+  @override
   String get commonNo => 'لا';
 
   @override
@@ -1412,9 +1415,119 @@ class AppLocalizationsAr extends AppLocalizations {
   String get discoverDuasTitle => 'أربعون دعاءً';
 
   @override
+  String get docsAdd => 'إضافة مستند';
+
+  @override
+  String get docsAllValid => 'كل شيء ساري المفعول';
+
+  @override
+  String get docsCategory => 'الفئة';
+
+  @override
+  String get docsExpired => 'منتهي';
+
+  @override
+  String get docsExpiring => 'قارب على الانتهاء';
+
+  @override
+  String docsExpiringSoon(int n) {
+    return '$n تنتهي قريبًا';
+  }
+
+  @override
+  String get docsExpiringSoonShort => 'ينتهي قريبًا';
+
+  @override
+  String get docsExpiry => 'تاريخ الانتهاء';
+
+  @override
+  String get docsFiles => 'الملفات';
+
+  @override
+  String docsFilesN(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n ملف',
+      many: '$n ملفًا',
+      few: '$n ملفات',
+      two: 'ملفان',
+      one: 'ملف واحد',
+      zero: 'لا ملفات',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get docsFxDegree => 'شهادة الدرجة العلمية';
+
+  @override
+  String get docsFxInsurance => 'التأمين الصحي';
+
+  @override
+  String get docsFxLicence => 'رخصة القيادة';
+
+  @override
+  String get docsFxNid => 'الهوية الوطنية';
+
+  @override
+  String get docsFxPassport => 'جواز السفر';
+
+  @override
+  String get docsFxRegistration => 'تسجيل السيارة';
+
+  @override
+  String get docsFxTenancy => 'عقد الإيجار';
+
+  @override
+  String get docsHolderHousehold => 'الأسرة';
+
+  @override
+  String get docsNeedsAttention => 'يحتاج إلى انتباه';
+
+  @override
+  String get docsNoExpiry => 'بلا تاريخ انتهاء';
+
+  @override
+  String get docsNoMatch => 'لا توجد مستندات مطابقة';
+
+  @override
+  String get docsNoMatchText => 'جرّب فئة أخرى أو امسح البحث.';
+
+  @override
   String docsRenewSoon(String name) {
     return 'جدّد $name';
   }
+
+  @override
+  String get docsRenewText => 'التجديد المبكر يجنّبك الطابور ورسوم التأخير.';
+
+  @override
+  String docsRenewTitle(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n مستند يحتاج إلى تجديد',
+      many: '$n مستندًا يحتاج إلى تجديد',
+      few: '$n مستندات تحتاج إلى تجديد',
+      two: 'مستندان يحتاجان إلى تجديد',
+      one: 'مستند واحد يحتاج إلى تجديد',
+      zero: 'لا مستندات تحتاج إلى تجديد',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get docsUnlockToView => 'افتح القفل بمصادقة الجهاز للعرض';
+
+  @override
+  String get docsUpdated => 'المحدَّثة مؤخرًا';
+
+  @override
+  String get docsValid => 'ساري';
+
+  @override
+  String get docsVault => 'المستندات';
 
   @override
   String get emergKindAll3 => 'الشرطة · الحريق · الطوارئ الطبية';
@@ -4106,6 +4219,40 @@ class AppLocalizationsAr extends AppLocalizations {
   String get recDiscardText => 'لن يُحفظ ما كتبته.';
 
   @override
+  String get recDocEducation => 'التعليم';
+
+  @override
+  String get recDocIdentity => 'الهوية';
+
+  @override
+  String get recDocInsurance => 'التأمين';
+
+  @override
+  String get recDocOther => 'أخرى';
+
+  @override
+  String get recDocProperty => 'العقار';
+
+  @override
+  String get recDocVehicle => 'المركبة';
+
+  @override
+  String get recDocumentsEmptyText =>
+      'أضف واحدًا وسيذكّرك Lume قبل انتهاء صلاحيته.';
+
+  @override
+  String get recDocumentsEmptyTitle => 'لا توجد مستندات بعد';
+
+  @override
+  String get recDocumentsNoun => 'مستند';
+
+  @override
+  String get recDocumentsNounPlural => 'المستندات';
+
+  @override
+  String get recDocumentsPh => 'جواز سفر، رخصة، وثيقة…';
+
+  @override
   String recEdit(String noun) {
     return 'تعديل $noun';
   }
@@ -4137,6 +4284,11 @@ class AppLocalizationsAr extends AppLocalizations {
   String get recExpensesPh => 'على ماذا أنفقت؟';
 
   @override
+  String recExpiresOn(String date) {
+    return 'ينتهي $date';
+  }
+
+  @override
   String get recFieldAmount => 'المبلغ';
 
   @override
@@ -4146,6 +4298,12 @@ class AppLocalizationsAr extends AppLocalizations {
   String get recFieldDate => 'التاريخ';
 
   @override
+  String get recFieldExpiry => 'تاريخ الانتهاء';
+
+  @override
+  String get recFieldHolder => 'الحامل';
+
+  @override
   String get recFieldNotes => 'ملاحظات';
 
   @override
@@ -4153,6 +4311,9 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get recFieldReceipt => 'الإيصال';
+
+  @override
+  String get recFieldReference => 'المرجع';
 
   @override
   String get recFieldTitle => 'العنوان';
@@ -4268,19 +4429,37 @@ class AppLocalizationsAr extends AppLocalizations {
   String get recSeedCoffee => 'قهوة';
 
   @override
+  String get recSeedFamily => 'العائلة';
+
+  @override
   String get recSeedGroceries => 'البقالة';
 
   @override
   String get recSeedGroceriesNote => 'مشتريات المنزل الأسبوعية';
 
   @override
+  String get recSeedInsurance => 'التأمين الصحي';
+
+  @override
   String get recSeedInternet => 'فاتورة الإنترنت';
+
+  @override
+  String get recSeedLicence => 'رخصة القيادة';
+
+  @override
+  String get recSeedNid => 'الهوية الوطنية';
+
+  @override
+  String get recSeedPassport => 'جواز السفر';
 
   @override
   String get recSeedPharmacy => 'الصيدلية';
 
   @override
   String get recSeedTaxi => 'سيارة أجرة';
+
+  @override
+  String get recSeedYou => 'أنت';
 
   @override
   String get recSelectText => 'اختر واحدًا من القائمة لعرضه هنا.';

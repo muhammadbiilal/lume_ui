@@ -1316,6 +1316,9 @@ class AppLocalizationsUr extends AppLocalizations {
   String get commonMore => 'زیادہ';
 
   @override
+  String get commonName => 'نام';
+
+  @override
   String get commonNo => 'نہیں';
 
   @override
@@ -1404,9 +1407,112 @@ class AppLocalizationsUr extends AppLocalizations {
   String get discoverDuasTitle => 'چالیس دعائیں';
 
   @override
+  String get docsAdd => 'دستاویز شامل کریں';
+
+  @override
+  String get docsAllValid => 'سب کچھ درست ہے';
+
+  @override
+  String get docsCategory => 'زمرہ';
+
+  @override
+  String get docsExpired => 'میعاد ختم';
+
+  @override
+  String get docsExpiring => 'ختم ہونے والی';
+
+  @override
+  String docsExpiringSoon(int n) {
+    return '$n جلد ختم ہو رہی ہیں';
+  }
+
+  @override
+  String get docsExpiringSoonShort => 'ختم ہونے کو';
+
+  @override
+  String get docsExpiry => 'میعاد';
+
+  @override
+  String get docsFiles => 'فائلیں';
+
+  @override
+  String docsFilesN(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n فائلیں',
+      one: '1 فائل',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get docsFxDegree => 'ڈگری سرٹیفکیٹ';
+
+  @override
+  String get docsFxInsurance => 'ہیلتھ انشورنس';
+
+  @override
+  String get docsFxLicence => 'ڈرائیونگ لائسنس';
+
+  @override
+  String get docsFxNid => 'قومی شناختی کارڈ';
+
+  @override
+  String get docsFxPassport => 'پاسپورٹ';
+
+  @override
+  String get docsFxRegistration => 'گاڑی کی رجسٹریشن';
+
+  @override
+  String get docsFxTenancy => 'کرایہ داری کا معاہدہ';
+
+  @override
+  String get docsHolderHousehold => 'گھرانہ';
+
+  @override
+  String get docsNeedsAttention => 'توجہ درکار';
+
+  @override
+  String get docsNoExpiry => 'کوئی میعاد نہیں';
+
+  @override
+  String get docsNoMatch => 'کوئی دستاویز نہیں ملی';
+
+  @override
+  String get docsNoMatchText => 'کوئی اور زمرہ آزمائیں یا تلاش صاف کریں۔';
+
+  @override
   String docsRenewSoon(String name) {
     return 'اپنا $name تجدید کریں';
   }
+
+  @override
+  String get docsRenewText =>
+      'جلد تجدید سے قطار اور تاخیر کی فیس دونوں سے بچت ہوتی ہے۔';
+
+  @override
+  String docsRenewTitle(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n دستاویزات کی تجدید درکار ہے',
+      one: '1 دستاویز کی تجدید درکار ہے',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get docsUnlockToView => 'دیکھنے کے لیے ڈیوائس کی تصدیق سے کھولیں';
+
+  @override
+  String get docsUpdated => 'حال ہی میں تازہ کردہ';
+
+  @override
+  String get docsValid => 'درست';
+
+  @override
+  String get docsVault => 'دستاویزات';
 
   @override
   String get emergKindAll3 => 'پولیس · آتش زدگی · طبی';
@@ -4086,6 +4192,40 @@ class AppLocalizationsUr extends AppLocalizations {
   String get recDiscardText => 'آپ کا لکھا ہوا محفوظ نہیں ہوگا۔';
 
   @override
+  String get recDocEducation => 'تعلیم';
+
+  @override
+  String get recDocIdentity => 'شناخت';
+
+  @override
+  String get recDocInsurance => 'انشورنس';
+
+  @override
+  String get recDocOther => 'دیگر';
+
+  @override
+  String get recDocProperty => 'جائیداد';
+
+  @override
+  String get recDocVehicle => 'گاڑی';
+
+  @override
+  String get recDocumentsEmptyText =>
+      'ایک شامل کریں، Lume میعاد ختم ہونے سے پہلے یاد دلائے گا۔';
+
+  @override
+  String get recDocumentsEmptyTitle => 'ابھی کوئی دستاویز نہیں';
+
+  @override
+  String get recDocumentsNoun => 'دستاویز';
+
+  @override
+  String get recDocumentsNounPlural => 'دستاویزات';
+
+  @override
+  String get recDocumentsPh => 'پاسپورٹ، لائسنس، پالیسی…';
+
+  @override
   String recEdit(String noun) {
     return '$noun میں ترمیم';
   }
@@ -4118,6 +4258,11 @@ class AppLocalizationsUr extends AppLocalizations {
   String get recExpensesPh => 'کس چیز پر خرچ ہوا؟';
 
   @override
+  String recExpiresOn(String date) {
+    return '$date کو ختم';
+  }
+
+  @override
   String get recFieldAmount => 'رقم';
 
   @override
@@ -4127,6 +4272,12 @@ class AppLocalizationsUr extends AppLocalizations {
   String get recFieldDate => 'تاریخ';
 
   @override
+  String get recFieldExpiry => 'میعاد';
+
+  @override
+  String get recFieldHolder => 'حامل';
+
+  @override
   String get recFieldNotes => 'نوٹس';
 
   @override
@@ -4134,6 +4285,9 @@ class AppLocalizationsUr extends AppLocalizations {
 
   @override
   String get recFieldReceipt => 'رسید';
+
+  @override
+  String get recFieldReference => 'حوالہ';
 
   @override
   String get recFieldTitle => 'عنوان';
@@ -4251,19 +4405,37 @@ class AppLocalizationsUr extends AppLocalizations {
   String get recSeedCoffee => 'کافی';
 
   @override
+  String get recSeedFamily => 'خاندان';
+
+  @override
   String get recSeedGroceries => 'گروسری';
 
   @override
   String get recSeedGroceriesNote => 'ہفتہ وار گھریلو سودا';
 
   @override
+  String get recSeedInsurance => 'ہیلتھ انشورنس';
+
+  @override
   String get recSeedInternet => 'انٹرنیٹ بل';
+
+  @override
+  String get recSeedLicence => 'ڈرائیونگ لائسنس';
+
+  @override
+  String get recSeedNid => 'قومی شناختی کارڈ';
+
+  @override
+  String get recSeedPassport => 'پاسپورٹ';
 
   @override
   String get recSeedPharmacy => 'فارمیسی';
 
   @override
   String get recSeedTaxi => 'ٹیکسی';
+
+  @override
+  String get recSeedYou => 'آپ';
 
   @override
   String get recSelectText => 'دیکھنے کے لیے فہرست سے ایک منتخب کریں۔';

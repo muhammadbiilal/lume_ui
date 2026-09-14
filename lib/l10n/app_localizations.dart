@@ -2446,6 +2446,12 @@ abstract class AppLocalizations {
   /// **'More'**
   String get commonMore;
 
+  /// Reference key common.name — a form field
+  ///
+  /// In en, this message translates to:
+  /// **'Name'**
+  String get commonName;
+
   /// Reference key common.no
   ///
   /// In en, this message translates to:
@@ -2614,11 +2620,179 @@ abstract class AppLocalizations {
   /// **'Forty duas'**
   String get discoverDuasTitle;
 
+  /// Reference key docs.add
+  ///
+  /// In en, this message translates to:
+  /// **'Add a document'**
+  String get docsAdd;
+
+  /// Reference key docs.allValid
+  ///
+  /// In en, this message translates to:
+  /// **'Everything is valid'**
+  String get docsAllValid;
+
+  /// Reference key docs.category
+  ///
+  /// In en, this message translates to:
+  /// **'Category'**
+  String get docsCategory;
+
+  /// Reference key docs.expired
+  ///
+  /// In en, this message translates to:
+  /// **'Expired'**
+  String get docsExpired;
+
+  /// Reference key docs.expiring — a stat label
+  ///
+  /// In en, this message translates to:
+  /// **'Expiring'**
+  String get docsExpiring;
+
+  /// Reference key docs.expiringSoon
+  ///
+  /// In en, this message translates to:
+  /// **'{n} expiring soon'**
+  String docsExpiringSoon(int n);
+
+  /// Reference key docs.expiringSoonShort — a badge
+  ///
+  /// In en, this message translates to:
+  /// **'Expiring'**
+  String get docsExpiringSoonShort;
+
+  /// Reference key docs.expiry — a sort option and a fact
+  ///
+  /// In en, this message translates to:
+  /// **'Expiry'**
+  String get docsExpiry;
+
+  /// Reference key docs.files
+  ///
+  /// In en, this message translates to:
+  /// **'Files'**
+  String get docsFiles;
+
+  /// Reference key docs.filesN. The reference writes "1 files"; this is plural
+  ///
+  /// In en, this message translates to:
+  /// **'{n, plural, =1{1 file} other{{n} files}}'**
+  String docsFilesN(int n);
+
+  /// Documents fixture name
+  ///
+  /// In en, this message translates to:
+  /// **'Degree Certificate'**
+  String get docsFxDegree;
+
+  /// Documents fixture name
+  ///
+  /// In en, this message translates to:
+  /// **'Health Insurance'**
+  String get docsFxInsurance;
+
+  /// Documents fixture name
+  ///
+  /// In en, this message translates to:
+  /// **'Driving Licence'**
+  String get docsFxLicence;
+
+  /// Documents fixture name
+  ///
+  /// In en, this message translates to:
+  /// **'National ID'**
+  String get docsFxNid;
+
+  /// Documents fixture name
+  ///
+  /// In en, this message translates to:
+  /// **'Passport'**
+  String get docsFxPassport;
+
+  /// Documents fixture name
+  ///
+  /// In en, this message translates to:
+  /// **'Car Registration'**
+  String get docsFxRegistration;
+
+  /// Documents fixture name
+  ///
+  /// In en, this message translates to:
+  /// **'Tenancy Agreement'**
+  String get docsFxTenancy;
+
+  /// Documents fixture holder
+  ///
+  /// In en, this message translates to:
+  /// **'Household'**
+  String get docsHolderHousehold;
+
+  /// Reference key docs.needsAttention — a group title
+  ///
+  /// In en, this message translates to:
+  /// **'Needs attention'**
+  String get docsNeedsAttention;
+
+  /// Reference key docs.noExpiry
+  ///
+  /// In en, this message translates to:
+  /// **'No expiry'**
+  String get docsNoExpiry;
+
+  /// Reference key docs.noMatch
+  ///
+  /// In en, this message translates to:
+  /// **'No documents match'**
+  String get docsNoMatch;
+
+  /// Reference key docs.noMatchText
+  ///
+  /// In en, this message translates to:
+  /// **'Try another category or clear the search.'**
+  String get docsNoMatchText;
+
   /// Reference key docs.renewSoon
   ///
   /// In en, this message translates to:
   /// **'Renew your {name}'**
   String docsRenewSoon(String name);
+
+  /// Reference key docs.renew.text
+  ///
+  /// In en, this message translates to:
+  /// **'Renewing early avoids the queue and the late fee.'**
+  String get docsRenewText;
+
+  /// Reference key docs.renew.title. The reference writes "{n} document needs renewing" for two as well; this is plural
+  ///
+  /// In en, this message translates to:
+  /// **'{n, plural, =1{1 document needs renewing} other{{n} documents need renewing}}'**
+  String docsRenewTitle(int n);
+
+  /// Reference key docs.unlockToView
+  ///
+  /// In en, this message translates to:
+  /// **'Unlock with device authentication to view'**
+  String get docsUnlockToView;
+
+  /// Reference key docs.updated — a sort option
+  ///
+  /// In en, this message translates to:
+  /// **'Recently updated'**
+  String get docsUpdated;
+
+  /// Reference key docs.valid — a group title and a badge
+  ///
+  /// In en, this message translates to:
+  /// **'Valid'**
+  String get docsValid;
+
+  /// Reference key docs.vault — the summary kicker
+  ///
+  /// In en, this message translates to:
+  /// **'Documents'**
+  String get docsVault;
 
   /// Reference key emerg.all3 — what a number is for
   ///
@@ -7270,6 +7444,72 @@ abstract class AppLocalizations {
   /// **'What you typed will not be saved.'**
   String get recDiscardText;
 
+  /// Reference key rec.doc.education
+  ///
+  /// In en, this message translates to:
+  /// **'Education'**
+  String get recDocEducation;
+
+  /// Reference key rec.doc.identity
+  ///
+  /// In en, this message translates to:
+  /// **'Identity'**
+  String get recDocIdentity;
+
+  /// Reference key rec.doc.insurance
+  ///
+  /// In en, this message translates to:
+  /// **'Insurance'**
+  String get recDocInsurance;
+
+  /// Reference key rec.doc.other
+  ///
+  /// In en, this message translates to:
+  /// **'Other'**
+  String get recDocOther;
+
+  /// Reference key rec.doc.property
+  ///
+  /// In en, this message translates to:
+  /// **'Property'**
+  String get recDocProperty;
+
+  /// Reference key rec.doc.vehicle
+  ///
+  /// In en, this message translates to:
+  /// **'Vehicle'**
+  String get recDocVehicle;
+
+  /// Reference key rec.documents.emptyText
+  ///
+  /// In en, this message translates to:
+  /// **'Add one and Lume will remind you before it expires.'**
+  String get recDocumentsEmptyText;
+
+  /// Reference key rec.documents.emptyTitle
+  ///
+  /// In en, this message translates to:
+  /// **'No documents yet'**
+  String get recDocumentsEmptyTitle;
+
+  /// Reference key rec.documents.noun — the noun inside a sentence
+  ///
+  /// In en, this message translates to:
+  /// **'document'**
+  String get recDocumentsNoun;
+
+  /// Reference key rec.documents.nounPlural
+  ///
+  /// In en, this message translates to:
+  /// **'documents'**
+  String get recDocumentsNounPlural;
+
+  /// Reference key rec.documents.ph
+  ///
+  /// In en, this message translates to:
+  /// **'Passport, licence, policy…'**
+  String get recDocumentsPh;
+
   /// Reference key rec.edit
   ///
   /// In en, this message translates to:
@@ -7324,6 +7564,12 @@ abstract class AppLocalizations {
   /// **'What did you spend on?'**
   String get recExpensesPh;
 
+  /// Reference key rec.expiresOn
+  ///
+  /// In en, this message translates to:
+  /// **'Expires {date}'**
+  String recExpiresOn(String date);
+
   /// Reference key rec.f.amount
   ///
   /// In en, this message translates to:
@@ -7342,6 +7588,18 @@ abstract class AppLocalizations {
   /// **'Date'**
   String get recFieldDate;
 
+  /// Reference key rec.f.expiry
+  ///
+  /// In en, this message translates to:
+  /// **'Expiry'**
+  String get recFieldExpiry;
+
+  /// Reference key rec.f.holder
+  ///
+  /// In en, this message translates to:
+  /// **'Holder'**
+  String get recFieldHolder;
+
   /// Reference key rec.f.notes
   ///
   /// In en, this message translates to:
@@ -7359,6 +7617,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Receipt'**
   String get recFieldReceipt;
+
+  /// Reference key rec.f.reference
+  ///
+  /// In en, this message translates to:
+  /// **'Reference'**
+  String get recFieldReference;
 
   /// Reference key rec.f.title
   ///
@@ -7564,6 +7828,12 @@ abstract class AppLocalizations {
   /// **'Coffee'**
   String get recSeedCoffee;
 
+  /// Reference key rec.seed.family — a sample holder
+  ///
+  /// In en, this message translates to:
+  /// **'Family'**
+  String get recSeedFamily;
+
   /// Reference key rec.seed.groceries — a demonstration record
   ///
   /// In en, this message translates to:
@@ -7576,11 +7846,35 @@ abstract class AppLocalizations {
   /// **'Weekly household groceries'**
   String get recSeedGroceriesNote;
 
+  /// Reference key rec.seed.insurance — a sample record
+  ///
+  /// In en, this message translates to:
+  /// **'Health insurance'**
+  String get recSeedInsurance;
+
   /// Reference key rec.seed.internet
   ///
   /// In en, this message translates to:
   /// **'Internet bill'**
   String get recSeedInternet;
+
+  /// Reference key rec.seed.licence — a sample record
+  ///
+  /// In en, this message translates to:
+  /// **'Driving licence'**
+  String get recSeedLicence;
+
+  /// Reference key rec.seed.nid — a sample record
+  ///
+  /// In en, this message translates to:
+  /// **'National ID'**
+  String get recSeedNid;
+
+  /// Reference key rec.seed.passport — a sample record
+  ///
+  /// In en, this message translates to:
+  /// **'Passport'**
+  String get recSeedPassport;
 
   /// Reference key rec.seed.pharmacy
   ///
@@ -7593,6 +7887,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Taxi'**
   String get recSeedTaxi;
+
+  /// Reference key rec.seed.you — a sample holder
+  ///
+  /// In en, this message translates to:
+  /// **'You'**
+  String get recSeedYou;
 
   /// Reference key rec.selectText
   ///

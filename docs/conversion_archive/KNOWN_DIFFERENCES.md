@@ -1803,6 +1803,58 @@ were:**
 | `LumeRichRow` | the value always in `text` | `valueColor` — `.rrow.is-income` in `up` |
 | `LumeToolScreen` | a feature's name and frame on every screen | `title`, `headerActions` and `bare`: a record's detail and form own the screen, with no source, privacy note or related rail |
 
+### C75 — Documents: a vault that is neither the records nor encrypted
+
+**Found in F6A on Documents, the record layer's second family.**
+
+- **"Encrypted on device" over a store that is neither — reproduced, with the
+  obligation.** The catalogue's source line is the host's, as every tool's
+  is. This build keeps records in memory (C74): nothing is written to disk,
+  encrypted or not, and nothing survives the app closing. The line is not yet
+  true; `records_provider.dart` carries Dayroz's obligation to back the
+  record interface with encrypted on-device storage before it ships. No
+  document content leaves the device: Documents is sensitive, so there is no
+  share card, and export writes only the masked references the screen shows.
+- **The vault and the records are two lists — reproduced.** The records are
+  the reader's four (passport, national ID, licence, insurance); the vault is
+  `DOCUMENTS`' seven. The summary counts seven while the header says "4
+  records", and adding or deleting a record changes neither the summary nor
+  the groups — the same shape as C74's dashboard.
+- **"Unlock with device authentication to view" — reproduced.** Every vault
+  row says it and nothing unlocks: there is no authentication to offer, and
+  the rows open nothing. Device authentication and the document viewer are
+  Dayroz's.
+- **"Add a document" leaves for the Document Scanner — reproduced.** It opens
+  `docscan` (not converted, so its fixture screen), not the record form the
+  header's Add opens.
+- **A far-off expiry has no year — reproduced.** A record's short date is
+  "Tue, 13 Mar" for a passport that expires in 2029, as `showDate` writes it.
+- **The vault's dates were a year stale — corrected.** `DOCUMENTS` writes
+  "3 Oct 2025" beside "in 25 days" on 7 September 2026. The expiry is kept as
+  days from today and the date is computed from it, so the two agree.
+- **The vault's categories are data ids — corrected.** Its chips read the
+  English ids ("Identity") in every language; they are `rec.doc.*` here, the
+  words the records already use.
+- **"2 document needs renewing", "1 files" — corrected.** Both are plurals.
+- **Expired and expiring look alike — reproduced.** Both take the amber icon
+  and fall in "Needs attention"; only the badge tells them apart.
+- **English in every language — translated.** The reference's `docs.*` has
+  no Urdu or Arabic, so its Urdu and Arabic captures are English throughout
+  (even the header). `docs.*`, `common.name` and the fixture names are keyed
+  and translated (D12); masked reference numbers stay as written.
+- **A delete is for good — reproduced as the reference means it.** The sheet
+  says "This action cannot be undone", the toast says "deleted permanently",
+  and no Undo is offered; the store forgets its undo step.
+
+**Found on Documents (reference tool 11), corrected or built the way C62's
+were:**
+
+| widget | was | reference, measured |
+|---|---|---|
+| `LumeBadge` | a label that could not shrink, so a pill narrower than its words ran past its edge | the label ellipsizes inside the pill; `widthOf` measures the pill at the reader's size for a line deciding whether it fits |
+| `LumeFilterChip` | the count as plain text at .7 | `.fchip__n`: a full pill, `1px 5px`, 10 / 700 in `text-3` on the neutral tint; white at 22 % under `on-accent` when on |
+| `LumeRichRow` | title and badge on one line that could not give way, which overflowed at 200 % beside a long value | `.rrow__titleline`: one line, the title ellipsized and the badge at its width (`LumeBadge.widthOf`), while the badge, 6 and 40 points of title fit at the reader's size; below that the badge goes 2 under the title — never reached at 1× in any built tool |
+
 ### C63 — English dates written the wrong way outside the United States
 
 **Found in F6A** on the UAE Tax capture ("Mon, 7 Sep") and confirmed by

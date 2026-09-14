@@ -1682,6 +1682,10 @@
   "@commonMore": {
     "description": "Reference key common.more — a heatmap key"
   },
+  "commonName": "Name",
+  "@commonName": {
+    "description": "Reference key common.name — a form field"
+  },
   "commonNo": "No",
   "@commonNo": {
     "description": "Reference key common.no"
@@ -1810,6 +1814,104 @@
   "@discoverDuasTitle": {
     "description": "Reference: the duas Discover card"
   },
+  "docsAdd": "Add a document",
+  "@docsAdd": {
+    "description": "Reference key docs.add"
+  },
+  "docsAllValid": "Everything is valid",
+  "@docsAllValid": {
+    "description": "Reference key docs.allValid"
+  },
+  "docsCategory": "Category",
+  "@docsCategory": {
+    "description": "Reference key docs.category"
+  },
+  "docsExpired": "Expired",
+  "@docsExpired": {
+    "description": "Reference key docs.expired"
+  },
+  "docsExpiring": "Expiring",
+  "@docsExpiring": {
+    "description": "Reference key docs.expiring — a stat label"
+  },
+  "docsExpiringSoon": "{n} expiring soon",
+  "@docsExpiringSoon": {
+    "description": "Reference key docs.expiringSoon",
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
+  "docsExpiringSoonShort": "Expiring",
+  "@docsExpiringSoonShort": {
+    "description": "Reference key docs.expiringSoonShort — a badge"
+  },
+  "docsExpiry": "Expiry",
+  "@docsExpiry": {
+    "description": "Reference key docs.expiry — a sort option and a fact"
+  },
+  "docsFiles": "Files",
+  "@docsFiles": {
+    "description": "Reference key docs.files"
+  },
+  "docsFilesN": "{n, plural, =1{1 file} other{{n} files}}",
+  "@docsFilesN": {
+    "description": "Reference key docs.filesN. The reference writes \"1 files\"; this is plural",
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
+  "docsFxDegree": "Degree Certificate",
+  "@docsFxDegree": {
+    "description": "Documents fixture name"
+  },
+  "docsFxInsurance": "Health Insurance",
+  "@docsFxInsurance": {
+    "description": "Documents fixture name"
+  },
+  "docsFxLicence": "Driving Licence",
+  "@docsFxLicence": {
+    "description": "Documents fixture name"
+  },
+  "docsFxNid": "National ID",
+  "@docsFxNid": {
+    "description": "Documents fixture name"
+  },
+  "docsFxPassport": "Passport",
+  "@docsFxPassport": {
+    "description": "Documents fixture name"
+  },
+  "docsFxRegistration": "Car Registration",
+  "@docsFxRegistration": {
+    "description": "Documents fixture name"
+  },
+  "docsFxTenancy": "Tenancy Agreement",
+  "@docsFxTenancy": {
+    "description": "Documents fixture name"
+  },
+  "docsHolderHousehold": "Household",
+  "@docsHolderHousehold": {
+    "description": "Documents fixture holder"
+  },
+  "docsNeedsAttention": "Needs attention",
+  "@docsNeedsAttention": {
+    "description": "Reference key docs.needsAttention — a group title"
+  },
+  "docsNoExpiry": "No expiry",
+  "@docsNoExpiry": {
+    "description": "Reference key docs.noExpiry"
+  },
+  "docsNoMatch": "No documents match",
+  "@docsNoMatch": {
+    "description": "Reference key docs.noMatch"
+  },
+  "docsNoMatchText": "Try another category or clear the search.",
+  "@docsNoMatchText": {
+    "description": "Reference key docs.noMatchText"
+  },
   "docsRenewSoon": "Renew your {name}",
   "@docsRenewSoon": {
     "description": "Reference key docs.renewSoon",
@@ -1818,6 +1920,35 @@
         "type": "String"
       }
     }
+  },
+  "docsRenewText": "Renewing early avoids the queue and the late fee.",
+  "@docsRenewText": {
+    "description": "Reference key docs.renew.text"
+  },
+  "docsRenewTitle": "{n, plural, =1{1 document needs renewing} other{{n} documents need renewing}}",
+  "@docsRenewTitle": {
+    "description": "Reference key docs.renew.title. The reference writes \"{n} document needs renewing\" for two as well; this is plural",
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
+  "docsUnlockToView": "Unlock with device authentication to view",
+  "@docsUnlockToView": {
+    "description": "Reference key docs.unlockToView"
+  },
+  "docsUpdated": "Recently updated",
+  "@docsUpdated": {
+    "description": "Reference key docs.updated — a sort option"
+  },
+  "docsValid": "Valid",
+  "@docsValid": {
+    "description": "Reference key docs.valid — a group title and a badge"
+  },
+  "docsVault": "Documents",
+  "@docsVault": {
+    "description": "Reference key docs.vault — the summary kicker"
   },
   "emergKindAll3": "Police · Fire · Medical",
   "@emergKindAll3": {
@@ -5619,6 +5750,50 @@
   "@recDiscardText": {
     "description": "Reference key rec.discardText"
   },
+  "recDocEducation": "Education",
+  "@recDocEducation": {
+    "description": "Reference key rec.doc.education"
+  },
+  "recDocIdentity": "Identity",
+  "@recDocIdentity": {
+    "description": "Reference key rec.doc.identity"
+  },
+  "recDocInsurance": "Insurance",
+  "@recDocInsurance": {
+    "description": "Reference key rec.doc.insurance"
+  },
+  "recDocOther": "Other",
+  "@recDocOther": {
+    "description": "Reference key rec.doc.other"
+  },
+  "recDocProperty": "Property",
+  "@recDocProperty": {
+    "description": "Reference key rec.doc.property"
+  },
+  "recDocVehicle": "Vehicle",
+  "@recDocVehicle": {
+    "description": "Reference key rec.doc.vehicle"
+  },
+  "recDocumentsEmptyText": "Add one and Lume will remind you before it expires.",
+  "@recDocumentsEmptyText": {
+    "description": "Reference key rec.documents.emptyText"
+  },
+  "recDocumentsEmptyTitle": "No documents yet",
+  "@recDocumentsEmptyTitle": {
+    "description": "Reference key rec.documents.emptyTitle"
+  },
+  "recDocumentsNoun": "document",
+  "@recDocumentsNoun": {
+    "description": "Reference key rec.documents.noun — the noun inside a sentence"
+  },
+  "recDocumentsNounPlural": "documents",
+  "@recDocumentsNounPlural": {
+    "description": "Reference key rec.documents.nounPlural"
+  },
+  "recDocumentsPh": "Passport, licence, policy…",
+  "@recDocumentsPh": {
+    "description": "Reference key rec.documents.ph"
+  },
   "recEdit": "Edit {noun}",
   "@recEdit": {
     "description": "Reference key rec.edit",
@@ -5665,6 +5840,15 @@
   "@recExpensesPh": {
     "description": "Reference key rec.expenses.ph"
   },
+  "recExpiresOn": "Expires {date}",
+  "@recExpiresOn": {
+    "description": "Reference key rec.expiresOn",
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
   "recFieldAmount": "Amount",
   "@recFieldAmount": {
     "description": "Reference key rec.f.amount"
@@ -5677,6 +5861,14 @@
   "@recFieldDate": {
     "description": "Reference key rec.f.date"
   },
+  "recFieldExpiry": "Expiry",
+  "@recFieldExpiry": {
+    "description": "Reference key rec.f.expiry"
+  },
+  "recFieldHolder": "Holder",
+  "@recFieldHolder": {
+    "description": "Reference key rec.f.holder"
+  },
   "recFieldNotes": "Notes",
   "@recFieldNotes": {
     "description": "Reference key rec.f.notes"
@@ -5688,6 +5880,10 @@
   "recFieldReceipt": "Receipt",
   "@recFieldReceipt": {
     "description": "Reference key rec.f.receipt"
+  },
+  "recFieldReference": "Reference",
+  "@recFieldReference": {
+    "description": "Reference key rec.f.reference"
   },
   "recFieldTitle": "Title",
   "@recFieldTitle": {
@@ -5845,6 +6041,10 @@
   "@recSeedCoffee": {
     "description": "Reference key rec.seed.coffee"
   },
+  "recSeedFamily": "Family",
+  "@recSeedFamily": {
+    "description": "Reference key rec.seed.family — a sample holder"
+  },
   "recSeedGroceries": "Groceries",
   "@recSeedGroceries": {
     "description": "Reference key rec.seed.groceries — a demonstration record"
@@ -5853,9 +6053,25 @@
   "@recSeedGroceriesNote": {
     "description": "Reference key rec.seed.groceriesNote"
   },
+  "recSeedInsurance": "Health insurance",
+  "@recSeedInsurance": {
+    "description": "Reference key rec.seed.insurance — a sample record"
+  },
   "recSeedInternet": "Internet bill",
   "@recSeedInternet": {
     "description": "Reference key rec.seed.internet"
+  },
+  "recSeedLicence": "Driving licence",
+  "@recSeedLicence": {
+    "description": "Reference key rec.seed.licence — a sample record"
+  },
+  "recSeedNid": "National ID",
+  "@recSeedNid": {
+    "description": "Reference key rec.seed.nid — a sample record"
+  },
+  "recSeedPassport": "Passport",
+  "@recSeedPassport": {
+    "description": "Reference key rec.seed.passport — a sample record"
   },
   "recSeedPharmacy": "Pharmacy",
   "@recSeedPharmacy": {
@@ -5864,6 +6080,10 @@
   "recSeedTaxi": "Taxi",
   "@recSeedTaxi": {
     "description": "Reference key rec.seed.taxi"
+  },
+  "recSeedYou": "You",
+  "@recSeedYou": {
+    "description": "Reference key rec.seed.you — a sample holder"
   },
   "recSelectText": "Choose one from the list to see it here.",
   "@recSelectText": {

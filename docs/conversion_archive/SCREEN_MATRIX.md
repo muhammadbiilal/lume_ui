@@ -236,7 +236,7 @@ run on the shared CRUD engine.
 | `mealplan` | Meal Planner | planner | high | — | — | — | — | not started |
 | `alarms` | Alarms | manager | medium | — | — | — | — | not started |
 | `learning` | Learning & Growth | tracker | high | — | — | — | — | **built (F6A)** — reference tool for the tracker archetype; bar chart and heatmap |
-| `documents` | Documents | manager | veryhigh | — | **yes** | — | — | not started |
+| `documents` | Documents | manager | veryhigh | — | **yes** | — | — | **built (F6A)** — the record layer's second family; records with their standing, detail, add, edit and a delete that is for good (no Undo), two panes at expanded; the vault summary, renew note, category filter, sort, grouped vault, export (C75) |
 | `vaccines` | Vaccinations | manager | high | — | — | — | — | not started |
 | `health` | Health Records | manager | veryhigh | — | **yes** | — | — | not started |
 | `play` | Play | library | medium | — | — | — | — | not started |

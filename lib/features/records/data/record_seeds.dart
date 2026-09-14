@@ -57,5 +57,35 @@ List<Map<String, Object?>>? lumeRecordSeeds(String collection, DateTime now) =>
           'method': 'card',
         },
       ],
+      'documents' => <Map<String, Object?>>[
+        <String, Object?>{
+          'name': '@passport',
+          'cat': 'identity',
+          'num': 'AB••••42',
+          'expires': lumeIsoDay(now, 918),
+          'holder': '@you',
+        },
+        <String, Object?>{
+          'name': '@nid',
+          'cat': 'identity',
+          'num': '61101-•••••••-3',
+          'expires': lumeIsoDay(now, 440),
+          'holder': '@you',
+        },
+        <String, Object?>{
+          'name': '@licence',
+          'cat': 'vehicle',
+          'num': 'DL-••••-118',
+          'expires': lumeIsoDay(now, 25),
+          'holder': '@you',
+        },
+        <String, Object?>{
+          'name': '@insurance',
+          'cat': 'insurance',
+          'num': 'POL-••••-7781',
+          'expires': lumeIsoDay(now, 115),
+          'holder': '@family',
+        },
+      ],
       _ => null,
     };

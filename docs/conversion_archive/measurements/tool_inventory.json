@@ -79,6 +79,7 @@
    "emergency",
    "recipes",
    "learning",
+   "documents",
    "expenses"
   ]
  },
@@ -2956,7 +2957,7 @@
    "approvedComposition": null,
    "recordFamily": true,
    "module": "assets/js/tools/personal/documents.tool.js",
-   "flutter": "placeholder"
+   "flutter": "built"
   },
   {
    "id": "vaccines",

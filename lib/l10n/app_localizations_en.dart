@@ -1316,6 +1316,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get commonMore => 'More';
 
   @override
+  String get commonName => 'Name';
+
+  @override
   String get commonNo => 'No';
 
   @override
@@ -1404,9 +1407,112 @@ class AppLocalizationsEn extends AppLocalizations {
   String get discoverDuasTitle => 'Forty duas';
 
   @override
+  String get docsAdd => 'Add a document';
+
+  @override
+  String get docsAllValid => 'Everything is valid';
+
+  @override
+  String get docsCategory => 'Category';
+
+  @override
+  String get docsExpired => 'Expired';
+
+  @override
+  String get docsExpiring => 'Expiring';
+
+  @override
+  String docsExpiringSoon(int n) {
+    return '$n expiring soon';
+  }
+
+  @override
+  String get docsExpiringSoonShort => 'Expiring';
+
+  @override
+  String get docsExpiry => 'Expiry';
+
+  @override
+  String get docsFiles => 'Files';
+
+  @override
+  String docsFilesN(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n files',
+      one: '1 file',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get docsFxDegree => 'Degree Certificate';
+
+  @override
+  String get docsFxInsurance => 'Health Insurance';
+
+  @override
+  String get docsFxLicence => 'Driving Licence';
+
+  @override
+  String get docsFxNid => 'National ID';
+
+  @override
+  String get docsFxPassport => 'Passport';
+
+  @override
+  String get docsFxRegistration => 'Car Registration';
+
+  @override
+  String get docsFxTenancy => 'Tenancy Agreement';
+
+  @override
+  String get docsHolderHousehold => 'Household';
+
+  @override
+  String get docsNeedsAttention => 'Needs attention';
+
+  @override
+  String get docsNoExpiry => 'No expiry';
+
+  @override
+  String get docsNoMatch => 'No documents match';
+
+  @override
+  String get docsNoMatchText => 'Try another category or clear the search.';
+
+  @override
   String docsRenewSoon(String name) {
     return 'Renew your $name';
   }
+
+  @override
+  String get docsRenewText =>
+      'Renewing early avoids the queue and the late fee.';
+
+  @override
+  String docsRenewTitle(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n documents need renewing',
+      one: '1 document needs renewing',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get docsUnlockToView => 'Unlock with device authentication to view';
+
+  @override
+  String get docsUpdated => 'Recently updated';
+
+  @override
+  String get docsValid => 'Valid';
+
+  @override
+  String get docsVault => 'Documents';
 
   @override
   String get emergKindAll3 => 'Police · Fire · Medical';
@@ -4087,6 +4193,40 @@ class AppLocalizationsEn extends AppLocalizations {
   String get recDiscardText => 'What you typed will not be saved.';
 
   @override
+  String get recDocEducation => 'Education';
+
+  @override
+  String get recDocIdentity => 'Identity';
+
+  @override
+  String get recDocInsurance => 'Insurance';
+
+  @override
+  String get recDocOther => 'Other';
+
+  @override
+  String get recDocProperty => 'Property';
+
+  @override
+  String get recDocVehicle => 'Vehicle';
+
+  @override
+  String get recDocumentsEmptyText =>
+      'Add one and Lume will remind you before it expires.';
+
+  @override
+  String get recDocumentsEmptyTitle => 'No documents yet';
+
+  @override
+  String get recDocumentsNoun => 'document';
+
+  @override
+  String get recDocumentsNounPlural => 'documents';
+
+  @override
+  String get recDocumentsPh => 'Passport, licence, policy…';
+
+  @override
   String recEdit(String noun) {
     return 'Edit $noun';
   }
@@ -4119,6 +4259,11 @@ class AppLocalizationsEn extends AppLocalizations {
   String get recExpensesPh => 'What did you spend on?';
 
   @override
+  String recExpiresOn(String date) {
+    return 'Expires $date';
+  }
+
+  @override
   String get recFieldAmount => 'Amount';
 
   @override
@@ -4128,6 +4273,12 @@ class AppLocalizationsEn extends AppLocalizations {
   String get recFieldDate => 'Date';
 
   @override
+  String get recFieldExpiry => 'Expiry';
+
+  @override
+  String get recFieldHolder => 'Holder';
+
+  @override
   String get recFieldNotes => 'Notes';
 
   @override
@@ -4135,6 +4286,9 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get recFieldReceipt => 'Receipt';
+
+  @override
+  String get recFieldReference => 'Reference';
 
   @override
   String get recFieldTitle => 'Title';
@@ -4251,19 +4405,37 @@ class AppLocalizationsEn extends AppLocalizations {
   String get recSeedCoffee => 'Coffee';
 
   @override
+  String get recSeedFamily => 'Family';
+
+  @override
   String get recSeedGroceries => 'Groceries';
 
   @override
   String get recSeedGroceriesNote => 'Weekly household groceries';
 
   @override
+  String get recSeedInsurance => 'Health insurance';
+
+  @override
   String get recSeedInternet => 'Internet bill';
+
+  @override
+  String get recSeedLicence => 'Driving licence';
+
+  @override
+  String get recSeedNid => 'National ID';
+
+  @override
+  String get recSeedPassport => 'Passport';
 
   @override
   String get recSeedPharmacy => 'Pharmacy';
 
   @override
   String get recSeedTaxi => 'Taxi';
+
+  @override
+  String get recSeedYou => 'You';
 
   @override
   String get recSelectText => 'Choose one from the list to see it here.';

@@ -10,6 +10,7 @@ library;
 import 'package:flutter/widgets.dart';
 
 import '../../calendar/presentation/calendar_tool.dart';
+import '../../documents/presentation/documents_tool.dart';
 import '../../emergency/presentation/emergency_tool.dart';
 import '../../expenses/presentation/expenses_tool.dart';
 import '../../flights/presentation/flights_tool.dart';
@@ -36,4 +37,5 @@ const Map<String, LumeToolBuilder> kLumeToolRegistry =
       'goldrates': LumeGoldratesTool.open,
       'flights': LumeFlightsTool.open,
       'expenses': LumeExpensesTool.open,
+      'documents': LumeDocumentsTool.open,
     };

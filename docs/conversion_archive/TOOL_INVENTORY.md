@@ -239,7 +239,7 @@ spec port ──► tool host adapter ──► route dispatch
 9. **Currency & Gold** (G) — sparkline, line chart, deltas; a converter that converts (C72) — *built*
 10. **Flights** (H) — map and journey; a board that lists everything, kept as the reference has it (C73) — *built*
 11. **Expenses** (C) — the record layer, first family; in memory and declared not durable, the dashboard kept as the reference has it (C74) — *built*
-12. **Documents** (B) — the record layer's second family and irreversible delete
+12. **Documents** (B) — the record layer's second family and irreversible delete; "Encrypted on device" over the in-memory store, with the obligation (C75) — *built*
 
 ## 6. Decisions this inventory raises
 
