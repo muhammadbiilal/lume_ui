@@ -1,0 +1,6320 @@
+{
+ "counts": {
+  "features": 85,
+  "modules": 85,
+  "sharedModules": 7,
+  "moduleLines": 4764,
+  "byCategory": {
+   "daily": 18,
+   "everyday": 8,
+   "islamic": 17,
+   "money": 15,
+   "personal": 22,
+   "planning": 5
+  },
+  "byArchetype": {
+   "action": 1,
+   "calculator": 12,
+   "dashboard": 12,
+   "explorer": 9,
+   "instrument": 9,
+   "library": 5,
+   "manager": 16,
+   "planner": 6,
+   "reader": 4,
+   "tracker": 6,
+   "tracking": 5
+  },
+  "byDensity": {
+   "high": 43,
+   "low": 11,
+   "medium": 25,
+   "veryhigh": 6
+  },
+  "recordFamilies": [
+   "reminders",
+   "notes",
+   "todos",
+   "events",
+   "shopping",
+   "birthdays",
+   "documents",
+   "health",
+   "habits",
+   "water",
+   "expenses",
+   "meds"
+  ],
+  "faith": 17,
+  "countryGated": [
+   "tax",
+   "natsavings",
+   "prizebonds",
+   "packages",
+   "loadshed",
+   "trains",
+   "vehicle"
+  ],
+  "androidOnly": [
+   "wastatus"
+  ],
+  "sensitive": [
+   "documents",
+   "vaccines",
+   "health",
+   "cycle",
+   "pregnancy",
+   "expenses",
+   "goals",
+   "subs",
+   "meds"
+  ],
+  "flutterBuilt": [
+   "tax"
+  ]
+ },
+ "mismatches": [
+  {
+   "kind": "catalogue feature with no module",
+   "ids": []
+  },
+  {
+   "kind": "module with no catalogue feature",
+   "ids": []
+  },
+  {
+   "kind": "module whose declared id is not its file name",
+   "ids": []
+  },
+  {
+   "kind": "catalogue act that does not open the feature’s own tool",
+   "ids": [
+    "praytrack → tool:prayer",
+    "quransearch → sheet:search"
+   ]
+  },
+  {
+   "kind": "catalogue act left empty (opened through the hub’s tool:<id>)",
+   "ids": [
+    "converter",
+    "stopwatch",
+    "timer",
+    "age",
+    "datecalc",
+    "calendar",
+    "reminders",
+    "notes",
+    "todos",
+    "events",
+    "mosques",
+    "ramadan",
+    "fasting",
+    "taraweeh",
+    "ayah",
+    "hadith",
+    "duas",
+    "names99",
+    "hijri",
+    "zakat",
+    "faraid",
+    "markets",
+    "fuelcost",
+    "natsavings",
+    "prizebonds",
+    "packages",
+    "loan",
+    "tipsplit",
+    "ledger",
+    "installments",
+    "committee",
+    "weather",
+    "trains",
+    "flights",
+    "news",
+    "qr",
+    "docscan",
+    "passport",
+    "vehicle",
+    "mediasaver",
+    "wastatus",
+    "speedtest",
+    "shopping",
+    "birthdays",
+    "streak",
+    "recipes",
+    "mealplan",
+    "alarms",
+    "learning",
+    "documents",
+    "vaccines",
+    "health",
+    "play",
+    "babybudget",
+    "habits",
+    "water",
+    "bmi",
+    "cycle",
+    "pregnancy",
+    "goals",
+    "subs",
+    "meds"
+   ]
+  },
+  {
+   "kind": "duplicate catalogue id",
+   "ids": []
+  }
+ ],
+ "sharedModules": [
+  {
+   "file": "assets/js/tools/context.js",
+   "lines": 1990
+  },
+  {
+   "file": "assets/js/tools/crud-engine.js",
+   "lines": 658
+  },
+  {
+   "file": "assets/js/tools/engine.js",
+   "lines": 306
+  },
+  {
+   "file": "assets/js/tools/registry.js",
+   "lines": 245
+  },
+  {
+   "file": "assets/js/tools/shared/clock.js",
+   "lines": 21
+  },
+  {
+   "file": "assets/js/tools/shared/direction.js",
+   "lines": 10
+  },
+  {
+   "file": "assets/js/tools/shared/scanner.js",
+   "lines": 35
+  }
+ ],
+ "features": [
+  {
+   "id": "calculator",
+   "name": "Calculator",
+   "category": "everyday",
+   "group": "daily",
+   "faith": false,
+   "countries": null,
+   "android": false,
+   "act": "tool:calculator",
+   "sensitive": false,
+   "archetype": "calculator",
+   "density": "low",
+   "source": "On device",
+   "freshness": "local",
+   "related": [
+    "converter",
+    "currency",
+    "tipsplit"
+   ],
+   "supports": [
+    "history",
+    "offline"
+   ],
+   "aware": [],
+   "needs": [],
+   "approvedComposition": null,
+   "recordFamily": false,
+   "module": "assets/js/tools/everyday/calculator.tool.js",
+   "flutter": "placeholder"
+  },
+  {
+   "id": "converter",
+   "name": "Unit Converter",
+   "category": "everyday",
+   "group": "daily",
+   "faith": false,
+   "countries": null,
+   "android": false,
+   "act": "",
+   "sensitive": false,
+   "archetype": "calculator",
+   "density": "low",
+   "source": "On device",
+   "freshness": "local",
+   "related": [
+    "calculator",
+    "currency",
+    "fuelcost"
+   ],
+   "supports": [
+    "favorites",
+    "history",
+    "offline"
+   ],
+   "aware": [
+    "locale",
+    "units"
+   ],
+   "needs": [],
+   "approvedComposition": null,
+   "recordFamily": false,
+   "module": "assets/js/tools/everyday/converter.tool.js",
+   "flutter": "placeholder"
+  },
+  {
+   "id": "currency",
+   "name": "Currency",
+   "category": "everyday",
+   "group": "money",
+   "faith": false,
+   "countries": null,
+   "android": false,
+   "act": "tool:currency",
+   "sensitive": false,
+   "archetype": "explorer",
+   "density": "high",
+   "source": "Interbank composite",
+   "freshness": "delayed",
+   "related": [
+    "goldrates",
+    "markets",
+    "expenses"
+   ],
+   "supports": [
+    "favorites",
+    "history",
+    "search",
+    "sharing"
+   ],
+   "aware": [
+    "country",
+    "currency",
+    "locale"
+   ],
+   "needs": [],
+   "approvedComposition": null,
+   "recordFamily": false,
+   "module": "assets/js/tools/everyday/currency.tool.js",
+   "flutter": "placeholder"
+  },
+  {
+   "id": "stopwatch",
+   "name": "Stopwatch",
+   "category": "everyday",
+   "group": "daily",
+   "faith": false,
+   "countries": null,
+   "android": false,
+   "act": "",
+   "sensitive": false,
+   "archetype": "instrument",
+   "density": "low",
+   "source": "On device",
+   "freshness": "live",
+   "related": [
+    "timer",
+    "focus",
+    "alarms"
+   ],
+   "supports": [
+    "history",
+    "offline"
+   ],
+   "aware": [],
+   "needs": [],
+   "approvedComposition": null,
+   "recordFamily": false,
+   "module": "assets/js/tools/everyday/stopwatch.tool.js",
+   "flutter": "placeholder"
+  },
+  {
+   "id": "timer",
+   "name": "Timer",
+   "category": "everyday",
+   "group": "daily",
+   "faith": false,
+   "countries": null,
+   "android": false,
+   "act": "",
+   "sensitive": false,
+   "archetype": "instrument",
+   "density": "low",
+   "source": "On device",
+   "freshness": "live",
+   "related": [
+    "stopwatch",
+    "focus",
+    "alarms"
+   ],
+   "supports": [
+    "history",
+    "notifications",
+    "offline"
+   ],
+   "aware": [],
+   "needs": [],
+   "approvedComposition": null,
+   "recordFamily": false,
+   "module": "assets/js/tools/everyday/timer.tool.js",
+   "flutter": "placeholder"
+  },
+  {
+   "id": "age",
+   "name": "Age Calculator",
+   "category": "everyday",
+   "group": "daily",
+   "faith": false,
+   "countries": null,
+   "android": false,
+   "act": "",
+   "sensitive": false,
+   "archetype": "calculator",
+   "density": "low",
+   "source": "On device",
+   "freshness": "local",
+   "related": [
+    "datecalc",
+    "birthdays",
+    "calendar"
+   ],
+   "supports": [
+    "history",
+    "offline",
+    "sharing"
+   ],
+   "aware": [
+    "locale"
+   ],
+   "needs": [],
+   "approvedComposition": null,
+   "recordFamily": false,
+   "module": "assets/js/tools/everyday/age.tool.js",
+   "flutter": "placeholder"
+  },
+  {
+   "id": "focus",
+   "name": "Focus Timer",
+   "category": "everyday",
+   "group": "daily",
+   "faith": false,
+   "countries": null,
+   "android": false,
+   "act": "tool:focus",
+   "sensitive": false,
+   "archetype": "instrument",
+   "density": "low",
+   "source": "On device",
+   "freshness": "live",
+   "related": [
+    "timer",
+    "habits",
+    "todos"
+   ],
+   "supports": [
+    "history",
+    "notifications",
+    "offline"
+   ],
+   "aware": [],
+   "needs": [],
+   "approvedComposition": null,
+   "recordFamily": false,
+   "module": "assets/js/tools/everyday/focus.tool.js",
+   "flutter": "placeholder"
+  },
+  {
+   "id": "datecalc",
+   "name": "Date Calculator",
+   "category": "everyday",
+   "group": "daily",
+   "faith": false,
+   "countries": null,
+   "android": false,
+   "act": "",
+   "sensitive": false,
+   "archetype": "calculator",
+   "density": "low",
+   "source": "On device",
+   "freshness": "local",
+   "related": [
+    "age",
+    "calendar",
+    "holidays"
+   ],
+   "supports": [
+    "history",
+    "offline"
+   ],
+   "aware": [
+    "locale",
+    "timezone"
+   ],
+   "needs": [],
+   "approvedComposition": null,
+   "recordFamily": false,
+   "module": "assets/js/tools/everyday/datecalc.tool.js",
+   "flutter": "placeholder"
+  },
+  {
+   "id": "calendar",
+   "name": "Calendar",
+   "category": "planning",
+   "group": "daily",
+   "faith": false,
+   "countries": null,
+   "android": false,
+   "act": "",
+   "sensitive": false,
+   "archetype": "planner",
+   "density": "high",
+   "source": "On device",
+   "freshness": "local",
+   "related": [
+    "todos",
+    "reminders",
+    "birthdays",
+    "holidays"
+   ],
+   "supports": [
+    "export",
+    "notifications",
+    "offline",
+    "search"
+   ],
+   "aware": [
+    "country",
+    "language",
+    "locale",
+    "timezone"
+   ],
+   "needs": [],
+   "approvedComposition": null,
+   "recordFamily": false,
+   "module": "assets/js/tools/planning/calendar.tool.js",
+   "flutter": "placeholder"
+  },
+  {
+   "id": "reminders",
+   "name": "Reminders",
+   "category": "planning",
+   "group": "personal",
+   "faith": false,
+   "countries": null,
+   "android": false,
+   "act": "",
+   "sensitive": false,
+   "archetype": "manager",
+   "density": "medium",
+   "source": "On device",
+   "freshness": "local",
+   "related": [
+    "todos",
+    "calendar",
+    "meds"
+   ],
+   "supports": [
+    "notifications",
+    "offline",
+    "search"
+   ],
+   "aware": [
+    "locale",
+    "timezone"
+   ],
+   "needs": [],
+   "approvedComposition": null,
+   "recordFamily": true,
+   "module": "assets/js/tools/planning/reminders.tool.js",
+   "flutter": "placeholder"
+  },
+  {
+   "id": "notes",
+   "name": "Notes",
+   "category": "planning",
+   "group": "personal",
+   "faith": false,
+   "countries": null,
+   "android": false,
+   "act": "",
+   "sensitive": false,
+   "archetype": "manager",
+   "density": "medium",
+   "source": "On device",
+   "freshness": "local",
+   "related": [
+    "todos",
+    "docscan",
+    "documents"
+   ],
+   "supports": [
+    "export",
+    "favorites",
+    "offline",
+    "search",
+    "sorting"
+   ],
+   "aware": [],
+   "needs": [],
+   "approvedComposition": null,
+   "recordFamily": true,
+   "module": "assets/js/tools/planning/notes.tool.js",
+   "flutter": "placeholder"
+  },
+  {
+   "id": "todos",
+   "name": "To-dos",
+   "category": "planning",
+   "group": "personal",
+   "faith": false,
+   "countries": null,
+   "android": false,
+   "act": "",
+   "sensitive": false,
+   "archetype": "manager",
+   "density": "high",
+   "source": "On device",
+   "freshness": "local",
+   "related": [
+    "calendar",
+    "reminders",
+    "habits"
+   ],
+   "supports": [
+    "filters",
+    "notifications",
+    "offline",
+    "search",
+    "sorting"
+   ],
+   "aware": [
+    "locale",
+    "timezone"
+   ],
+   "needs": [],
+   "approvedComposition": null,
+   "recordFamily": true,
+   "module": "assets/js/tools/planning/todos.tool.js",
+   "flutter": "placeholder"
+  },
+  {
+   "id": "events",
+   "name": "Events",
+   "category": "planning",
+   "group": "daily",
+   "faith": false,
+   "countries": null,
+   "android": false,
+   "act": "",
+   "sensitive": false,
+   "archetype": "manager",
+   "density": "medium",
+   "source": "On device",
+   "freshness": "local",
+   "related": [
+    "calendar",
+    "todos",
+    "birthdays"
+   ],
+   "supports": [
+    "filters",
+    "notifications",
+    "search"
+   ],
+   "aware": [
+    "city",
+    "locale",
+    "timezone"
+   ],
+   "needs": [],
+   "approvedComposition": null,
+   "recordFamily": true,
+   "module": "assets/js/tools/planning/events.tool.js",
+   "flutter": "placeholder"
+  },
+  {
+   "id": "prayer",
+   "name": "Prayer Times",
+   "category": "islamic",
+   "group": "islam",
+   "faith": true,
+   "countries": null,
+   "android": false,
+   "act": "tool:prayer",
+   "sensitive": false,
+   "archetype": "dashboard",
+   "density": "high",
+   "source": "Astronomical calculation",
+   "freshness": "computed",
+   "related": [
+    "qibla",
+    "mosques",
+    "praytrack",
+    "hijri"
+   ],
+   "supports": [
+    "export",
+    "notifications",
+    "offline",
+    "sharing"
+   ],
+   "aware": [
+    "city",
+    "country",
+    "language",
+    "locale",
+    "timezone"
+   ],
+   "needs": [
+    "city"
+   ],
+   "approvedComposition": null,
+   "recordFamily": false,
+   "module": "assets/js/tools/islamic/prayer.tool.js",
+   "flutter": "placeholder"
+  },
+  {
+   "id": "qibla",
+   "name": "Qibla Compass",
+   "category": "islamic",
+   "group": "islam",
+   "faith": true,
+   "countries": null,
+   "android": false,
+   "act": "tool:qibla",
+   "sensitive": false,
+   "archetype": "instrument",
+   "density": "medium",
+   "source": "Great-circle bearing",
+   "freshness": "computed",
+   "related": [
+    "prayer",
+    "mosques",
+    "quran"
+   ],
+   "supports": [
+    "offline"
+   ],
+   "aware": [
+    "city",
+    "country"
+   ],
+   "needs": [
+    "city",
+    "location"
+   ],
+   "approvedComposition": null,
+   "recordFamily": false,
+   "module": "assets/js/tools/islamic/qibla.tool.js",
+   "flutter": "placeholder"
+  },
+  {
+   "id": "mosques",
+   "name": "Nearby Mosques",
+   "category": "islamic",
+   "group": "islam",
+   "faith": true,
+   "countries": null,
+   "android": false,
+   "act": "",
+   "sensitive": false,
+   "archetype": "tracking",
+   "density": "high",
+   "source": "Places directory",
+   "freshness": "cached",
+   "related": [
+    "prayer",
+    "qibla",
+    "taraweeh"
+   ],
+   "supports": [
+    "filters",
+    "search",
+    "sorting"
+   ],
+   "aware": [
+    "city",
+    "country",
+    "units"
+   ],
+   "needs": [
+    "city",
+    "location"
+   ],
+   "approvedComposition": null,
+   "recordFamily": false,
+   "module": "assets/js/tools/islamic/mosques.tool.js",
+   "flutter": "placeholder"
+  },
+  {
+   "id": "praytrack",
+   "name": "Prayer Tracker",
+   "category": "islamic",
+   "group": "islam",
+   "faith": true,
+   "countries": null,
+   "android": false,
+   "act": "tool:prayer",
+   "sensitive": false,
+   "archetype": "tracker",
+   "density": "high",
+   "source": "On device",
+   "freshness": "local",
+   "related": [
+    "prayer",
+    "habits",
+    "fasting"
+   ],
+   "supports": [
+    "export",
+    "history",
+    "notifications",
+    "offline"
+   ],
+   "aware": [
+    "timezone"
+   ],
+   "needs": [],
+   "approvedComposition": null,
+   "recordFamily": false,
+   "module": "assets/js/tools/islamic/praytrack.tool.js",
+   "flutter": "placeholder"
+  },
+  {
+   "id": "ramadan",
+   "name": "Ramadan",
+   "category": "islamic",
+   "group": "islam",
+   "faith": true,
+   "countries": null,
+   "android": false,
+   "act": "",
+   "sensitive": false,
+   "archetype": "dashboard",
+   "density": "high",
+   "source": "Hijri calendar + solar times",
+   "freshness": "computed",
+   "related": [
+    "fasting",
+    "prayer",
+    "taraweeh",
+    "quran"
+   ],
+   "supports": [
+    "notifications",
+    "offline",
+    "sharing"
+   ],
+   "aware": [
+    "city",
+    "country",
+    "locale",
+    "timezone"
+   ],
+   "needs": [
+    "city"
+   ],
+   "approvedComposition": null,
+   "recordFamily": false,
+   "module": "assets/js/tools/islamic/ramadan.tool.js",
+   "flutter": "placeholder"
+  },
+  {
+   "id": "fasting",
+   "name": "Fasting Tracker",
+   "category": "islamic",
+   "group": "islam",
+   "faith": true,
+   "countries": null,
+   "android": false,
+   "act": "",
+   "sensitive": false,
+   "archetype": "tracker",
+   "density": "high",
+   "source": "On device",
+   "freshness": "local",
+   "related": [
+    "ramadan",
+    "praytrack",
+    "habits"
+   ],
+   "supports": [
+    "export",
+    "history",
+    "offline"
+   ],
+   "aware": [
+    "timezone"
+   ],
+   "needs": [],
+   "approvedComposition": null,
+   "recordFamily": false,
+   "module": "assets/js/tools/islamic/fasting.tool.js",
+   "flutter": "placeholder"
+  },
+  {
+   "id": "taraweeh",
+   "name": "Taraweeh",
+   "category": "islamic",
+   "group": "islam",
+   "faith": true,
+   "countries": null,
+   "android": false,
+   "act": "",
+   "sensitive": false,
+   "archetype": "tracking",
+   "density": "medium",
+   "source": "Places directory",
+   "freshness": "cached",
+   "related": [
+    "mosques",
+    "ramadan",
+    "prayer"
+   ],
+   "supports": [
+    "filters",
+    "notifications",
+    "search"
+   ],
+   "aware": [
+    "city",
+    "units"
+   ],
+   "needs": [
+    "city"
+   ],
+   "approvedComposition": null,
+   "recordFamily": false,
+   "module": "assets/js/tools/islamic/taraweeh.tool.js",
+   "flutter": "placeholder"
+  },
+  {
+   "id": "ayah",
+   "name": "Ayah of the Day",
+   "category": "islamic",
+   "group": "islam",
+   "faith": true,
+   "countries": null,
+   "android": false,
+   "act": "",
+   "sensitive": false,
+   "archetype": "reader",
+   "density": "medium",
+   "source": "Qur’an text",
+   "freshness": "daily",
+   "related": [
+    "quran",
+    "quransearch",
+    "duas"
+   ],
+   "supports": [
+    "favorites",
+    "offline",
+    "sharing"
+   ],
+   "aware": [
+    "language"
+   ],
+   "needs": [],
+   "approvedComposition": null,
+   "recordFamily": false,
+   "module": "assets/js/tools/islamic/ayah.tool.js",
+   "flutter": "placeholder"
+  },
+  {
+   "id": "quran",
+   "name": "Al-Qur’an",
+   "category": "islamic",
+   "group": "islam",
+   "faith": true,
+   "countries": null,
+   "android": false,
+   "act": "tool:quran",
+   "sensitive": false,
+   "archetype": "reader",
+   "density": "high",
+   "source": "Qur’an text",
+   "freshness": "static",
+   "related": [
+    "quransearch",
+    "ayah",
+    "prayer",
+    "ramadan"
+   ],
+   "supports": [
+    "favorites",
+    "history",
+    "offline",
+    "search",
+    "sharing"
+   ],
+   "aware": [
+    "language"
+   ],
+   "needs": [],
+   "approvedComposition": null,
+   "recordFamily": false,
+   "module": "assets/js/tools/islamic/quran.tool.js",
+   "flutter": "placeholder"
+  },
+  {
+   "id": "quransearch",
+   "name": "Search the Qur’an",
+   "category": "islamic",
+   "group": "islam",
+   "faith": true,
+   "countries": null,
+   "android": false,
+   "act": "sheet:search",
+   "sensitive": false,
+   "archetype": "explorer",
+   "density": "high",
+   "source": "Qur’an text",
+   "freshness": "static",
+   "related": [
+    "quran",
+    "hadith",
+    "ayah"
+   ],
+   "supports": [
+    "favorites",
+    "filters",
+    "history",
+    "offline",
+    "search"
+   ],
+   "aware": [
+    "language"
+   ],
+   "needs": [],
+   "approvedComposition": null,
+   "recordFamily": false,
+   "module": "assets/js/tools/islamic/quransearch.tool.js",
+   "flutter": "placeholder"
+  },
+  {
+   "id": "hadith",
+   "name": "Hadith",
+   "category": "islamic",
+   "group": "islam",
+   "faith": true,
+   "countries": null,
+   "android": false,
+   "act": "",
+   "sensitive": false,
+   "archetype": "reader",
+   "density": "high",
+   "source": "Hadith collections",
+   "freshness": "static",
+   "related": [
+    "quran",
+    "duas",
+    "names99"
+   ],
+   "supports": [
+    "favorites",
+    "filters",
+    "offline",
+    "search",
+    "sharing"
+   ],
+   "aware": [
+    "language"
+   ],
+   "needs": [],
+   "approvedComposition": null,
+   "recordFamily": false,
+   "module": "assets/js/tools/islamic/hadith.tool.js",
+   "flutter": "placeholder"
+  },
+  {
+   "id": "duas",
+   "name": "Daily Duas",
+   "category": "islamic",
+   "group": "islam",
+   "faith": true,
+   "countries": null,
+   "android": false,
+   "act": "",
+   "sensitive": false,
+   "archetype": "library",
+   "density": "high",
+   "source": "Dua collection",
+   "freshness": "static",
+   "related": [
+    "names99",
+    "tasbih",
+    "hadith"
+   ],
+   "supports": [
+    "favorites",
+    "filters",
+    "offline",
+    "search",
+    "sharing"
+   ],
+   "aware": [
+    "language"
+   ],
+   "needs": [],
+   "approvedComposition": null,
+   "recordFamily": false,
+   "module": "assets/js/tools/islamic/duas.tool.js",
+   "flutter": "placeholder"
+  },
+  {
+   "id": "names99",
+   "name": "99 Names",
+   "category": "islamic",
+   "group": "islam",
+   "faith": true,
+   "countries": null,
+   "android": false,
+   "act": "",
+   "sensitive": false,
+   "archetype": "library",
+   "density": "medium",
+   "source": "Asma ul Husna",
+   "freshness": "static",
+   "related": [
+    "duas",
+    "tasbih",
+    "quran"
+   ],
+   "supports": [
+    "favorites",
+    "history",
+    "offline",
+    "search",
+    "sharing"
+   ],
+   "aware": [
+    "language"
+   ],
+   "needs": [],
+   "approvedComposition": null,
+   "recordFamily": false,
+   "module": "assets/js/tools/islamic/names99.tool.js",
+   "flutter": "placeholder"
+  },
+  {
+   "id": "hijri",
+   "name": "Islamic Calendar",
+   "category": "islamic",
+   "group": "islam",
+   "faith": true,
+   "countries": null,
+   "android": false,
+   "act": "",
+   "sensitive": false,
+   "archetype": "planner",
+   "density": "medium",
+   "source": "Umm al-Qura calculation",
+   "freshness": "computed",
+   "related": [
+    "calendar",
+    "ramadan",
+    "holidays"
+   ],
+   "supports": [
+    "export",
+    "notifications",
+    "offline"
+   ],
+   "aware": [
+    "country",
+    "locale",
+    "timezone"
+   ],
+   "needs": [],
+   "approvedComposition": null,
+   "recordFamily": false,
+   "module": "assets/js/tools/islamic/hijri.tool.js",
+   "flutter": "placeholder"
+  },
+  {
+   "id": "tasbih",
+   "name": "Tasbih",
+   "category": "islamic",
+   "group": "islam",
+   "faith": true,
+   "countries": null,
+   "android": false,
+   "act": "tool:tasbih",
+   "sensitive": false,
+   "archetype": "instrument",
+   "density": "low",
+   "source": "On device",
+   "freshness": "local",
+   "related": [
+    "duas",
+    "names99",
+    "praytrack"
+   ],
+   "supports": [
+    "history",
+    "offline"
+   ],
+   "aware": [],
+   "needs": [],
+   "approvedComposition": null,
+   "recordFamily": false,
+   "module": "assets/js/tools/islamic/tasbih.tool.js",
+   "flutter": "placeholder"
+  },
+  {
+   "id": "zakat",
+   "name": "Zakat Calculator",
+   "category": "islamic",
+   "group": "islam",
+   "faith": true,
+   "countries": null,
+   "android": false,
+   "act": "",
+   "sensitive": false,
+   "archetype": "calculator",
+   "density": "high",
+   "source": "Nisab from live metal rates",
+   "freshness": "delayed",
+   "related": [
+    "goldrates",
+    "expenses",
+    "faraid"
+   ],
+   "supports": [
+    "export",
+    "history",
+    "offline",
+    "sharing"
+   ],
+   "aware": [
+    "country",
+    "currency",
+    "locale"
+   ],
+   "needs": [],
+   "approvedComposition": null,
+   "recordFamily": false,
+   "module": "assets/js/tools/islamic/zakat.tool.js",
+   "flutter": "placeholder"
+  },
+  {
+   "id": "faraid",
+   "name": "Faraid",
+   "category": "islamic",
+   "group": "islam",
+   "faith": true,
+   "countries": null,
+   "android": false,
+   "act": "",
+   "sensitive": false,
+   "archetype": "calculator",
+   "density": "high",
+   "source": "Classical faraid rules",
+   "freshness": "static",
+   "related": [
+    "zakat",
+    "documents",
+    "ledger"
+   ],
+   "supports": [
+    "export",
+    "history",
+    "offline",
+    "sharing"
+   ],
+   "aware": [
+    "currency",
+    "locale"
+   ],
+   "needs": [],
+   "approvedComposition": null,
+   "recordFamily": false,
+   "module": "assets/js/tools/islamic/faraid.tool.js",
+   "flutter": "placeholder"
+  },
+  {
+   "id": "compound",
+   "name": "Compound Interest",
+   "category": "money",
+   "group": "money",
+   "faith": false,
+   "countries": null,
+   "android": false,
+   "act": "tool:compound",
+   "sensitive": false,
+   "archetype": "calculator",
+   "density": "medium",
+   "source": "On device",
+   "freshness": "local",
+   "related": [
+    "goals",
+    "natsavings",
+    "loan"
+   ],
+   "supports": [
+    "history",
+    "offline",
+    "sharing"
+   ],
+   "aware": [
+    "currency",
+    "locale"
+   ],
+   "needs": [],
+   "approvedComposition": null,
+   "recordFamily": false,
+   "module": "assets/js/tools/money/compound.tool.js",
+   "flutter": "placeholder"
+  },
+  {
+   "id": "goldrates",
+   "name": "Currency & Gold",
+   "category": "money",
+   "group": "money",
+   "faith": false,
+   "countries": null,
+   "android": false,
+   "act": "tool:goldrates",
+   "sensitive": false,
+   "archetype": "explorer",
+   "density": "high",
+   "source": "Bullion + open market",
+   "freshness": "delayed",
+   "related": [
+    "currency",
+    "markets",
+    "zakat"
+   ],
+   "supports": [
+    "favorites",
+    "history",
+    "search",
+    "sharing"
+   ],
+   "aware": [
+    "country",
+    "currency",
+    "locale",
+    "units"
+   ],
+   "needs": [],
+   "approvedComposition": null,
+   "recordFamily": false,
+   "module": "assets/js/tools/money/goldrates.tool.js",
+   "flutter": "placeholder"
+  },
+  {
+   "id": "markets",
+   "name": "Markets",
+   "category": "money",
+   "group": "money",
+   "faith": false,
+   "countries": null,
+   "android": false,
+   "act": "",
+   "sensitive": false,
+   "archetype": "explorer",
+   "density": "veryhigh",
+   "source": "Exchange feed",
+   "freshness": "delayed",
+   "related": [
+    "currency",
+    "goldrates",
+    "news"
+   ],
+   "supports": [
+    "export",
+    "favorites",
+    "filters",
+    "notifications",
+    "search",
+    "sharing",
+    "sorting"
+   ],
+   "aware": [
+    "country",
+    "currency",
+    "locale"
+   ],
+   "needs": [],
+   "approvedComposition": [
+    "context",
+    "classnav",
+    "hero",
+    "assets",
+    "overview"
+   ],
+   "recordFamily": false,
+   "module": "assets/js/tools/money/markets.tool.js",
+   "flutter": "placeholder"
+  },
+  {
+   "id": "fuel",
+   "name": "Fuel Prices",
+   "category": "money",
+   "group": "money",
+   "faith": false,
+   "countries": null,
+   "android": false,
+   "act": "tool:fuel",
+   "sensitive": false,
+   "archetype": "explorer",
+   "density": "high",
+   "source": "Regulator notification",
+   "freshness": "daily",
+   "related": [
+    "fuelcost",
+    "vehicle",
+    "expenses"
+   ],
+   "supports": [
+    "history",
+    "notifications",
+    "sharing"
+   ],
+   "aware": [
+    "country",
+    "currency",
+    "locale",
+    "region",
+    "units"
+   ],
+   "needs": [],
+   "approvedComposition": null,
+   "recordFamily": false,
+   "module": "assets/js/tools/money/fuel.tool.js",
+   "flutter": "placeholder"
+  },
+  {
+   "id": "fuelcost",
+   "name": "Fuel Cost",
+   "category": "money",
+   "group": "money",
+   "faith": false,
+   "countries": null,
+   "android": false,
+   "act": "",
+   "sensitive": false,
+   "archetype": "calculator",
+   "density": "medium",
+   "source": "Current pump price",
+   "freshness": "daily",
+   "related": [
+    "fuel",
+    "vehicle",
+    "expenses"
+   ],
+   "supports": [
+    "history",
+    "offline",
+    "sharing"
+   ],
+   "aware": [
+    "country",
+    "currency",
+    "units"
+   ],
+   "needs": [],
+   "approvedComposition": null,
+   "recordFamily": false,
+   "module": "assets/js/tools/money/fuelcost.tool.js",
+   "flutter": "placeholder"
+  },
+  {
+   "id": "tax",
+   "name": "Tax Calculator",
+   "category": "money",
+   "group": "money",
+   "faith": false,
+   "countries": [
+    "PK",
+    "GB",
+    "US",
+    "IN",
+    "AE",
+    "SA"
+   ],
+   "android": false,
+   "act": "tool:tax",
+   "sensitive": false,
+   "archetype": "calculator",
+   "density": "high",
+   "source": "Statutory slabs",
+   "freshness": "annual",
+   "related": [
+    "expenses",
+    "natsavings",
+    "goals"
+   ],
+   "supports": [
+    "export",
+    "history",
+    "offline",
+    "sharing"
+   ],
+   "aware": [
+    "country",
+    "currency",
+    "locale"
+   ],
+   "needs": [],
+   "approvedComposition": null,
+   "recordFamily": false,
+   "module": "assets/js/tools/money/tax.tool.js",
+   "flutter": "built"
+  },
+  {
+   "id": "natsavings",
+   "name": "National Savings",
+   "category": "money",
+   "group": "money",
+   "faith": false,
+   "countries": [
+    "PK"
+   ],
+   "android": false,
+   "act": "",
+   "sensitive": false,
+   "archetype": "explorer",
+   "density": "high",
+   "source": "National Savings schedule",
+   "freshness": "weekly",
+   "related": [
+    "goals",
+    "markets",
+    "tax"
+   ],
+   "supports": [
+    "history",
+    "search",
+    "sorting"
+   ],
+   "aware": [
+    "country",
+    "currency",
+    "locale"
+   ],
+   "needs": [],
+   "approvedComposition": null,
+   "recordFamily": false,
+   "module": "assets/js/tools/money/natsavings.tool.js",
+   "flutter": "placeholder"
+  },
+  {
+   "id": "prizebonds",
+   "name": "Prize Bonds",
+   "category": "money",
+   "group": "money",
+   "faith": false,
+   "countries": [
+    "PK"
+   ],
+   "android": false,
+   "act": "",
+   "sensitive": false,
+   "archetype": "explorer",
+   "density": "high",
+   "source": "Official draw results",
+   "freshness": "draw",
+   "related": [
+    "natsavings",
+    "goals",
+    "ledger"
+   ],
+   "supports": [
+    "history",
+    "notifications",
+    "search"
+   ],
+   "aware": [
+    "country",
+    "currency",
+    "locale"
+   ],
+   "needs": [],
+   "approvedComposition": null,
+   "recordFamily": false,
+   "module": "assets/js/tools/money/prizebonds.tool.js",
+   "flutter": "placeholder"
+  },
+  {
+   "id": "bills",
+   "name": "Bills",
+   "category": "money",
+   "group": "money",
+   "faith": false,
+   "countries": null,
+   "android": false,
+   "act": "tool:bills",
+   "sensitive": false,
+   "archetype": "dashboard",
+   "density": "high",
+   "source": "On device + provider",
+   "freshness": "daily",
+   "related": [
+    "expenses",
+    "subs",
+    "loadshed"
+   ],
+   "supports": [
+    "export",
+    "filters",
+    "history",
+    "notifications",
+    "search",
+    "sorting"
+   ],
+   "aware": [
+    "country",
+    "currency",
+    "locale",
+    "timezone"
+   ],
+   "needs": [],
+   "approvedComposition": null,
+   "recordFamily": false,
+   "module": "assets/js/tools/money/bills.tool.js",
+   "flutter": "placeholder"
+  },
+  {
+   "id": "packages",
+   "name": "Mobile Packages",
+   "category": "money",
+   "group": "money",
+   "faith": false,
+   "countries": [
+    "PK"
+   ],
+   "android": false,
+   "act": "",
+   "sensitive": false,
+   "archetype": "explorer",
+   "density": "high",
+   "source": "Operator tariffs",
+   "freshness": "weekly",
+   "related": [
+    "bills",
+    "expenses",
+    "speedtest"
+   ],
+   "supports": [
+    "filters",
+    "search",
+    "sorting"
+   ],
+   "aware": [
+    "country",
+    "currency",
+    "locale"
+   ],
+   "needs": [],
+   "approvedComposition": null,
+   "recordFamily": false,
+   "module": "assets/js/tools/money/packages.tool.js",
+   "flutter": "placeholder"
+  },
+  {
+   "id": "loan",
+   "name": "Loan / EMI",
+   "category": "money",
+   "group": "money",
+   "faith": false,
+   "countries": null,
+   "android": false,
+   "act": "",
+   "sensitive": false,
+   "archetype": "calculator",
+   "density": "high",
+   "source": "On device",
+   "freshness": "local",
+   "related": [
+    "installments",
+    "expenses",
+    "goals"
+   ],
+   "supports": [
+    "export",
+    "history",
+    "offline",
+    "sharing"
+   ],
+   "aware": [
+    "currency",
+    "locale"
+   ],
+   "needs": [],
+   "approvedComposition": null,
+   "recordFamily": false,
+   "module": "assets/js/tools/money/loan.tool.js",
+   "flutter": "placeholder"
+  },
+  {
+   "id": "tipsplit",
+   "name": "Tip & Split",
+   "category": "money",
+   "group": "money",
+   "faith": false,
+   "countries": null,
+   "android": false,
+   "act": "",
+   "sensitive": false,
+   "archetype": "calculator",
+   "density": "low",
+   "source": "On device",
+   "freshness": "local",
+   "related": [
+    "expenses",
+    "ledger",
+    "calculator"
+   ],
+   "supports": [
+    "history",
+    "offline",
+    "sharing"
+   ],
+   "aware": [
+    "currency",
+    "locale"
+   ],
+   "needs": [],
+   "approvedComposition": null,
+   "recordFamily": false,
+   "module": "assets/js/tools/money/tipsplit.tool.js",
+   "flutter": "placeholder"
+  },
+  {
+   "id": "ledger",
+   "name": "Lending Ledger",
+   "category": "money",
+   "group": "money",
+   "faith": false,
+   "countries": null,
+   "android": false,
+   "act": "",
+   "sensitive": false,
+   "archetype": "manager",
+   "density": "high",
+   "source": "On device",
+   "freshness": "local",
+   "related": [
+    "expenses",
+    "installments",
+    "committee"
+   ],
+   "supports": [
+    "export",
+    "filters",
+    "history",
+    "notifications",
+    "search",
+    "sorting"
+   ],
+   "aware": [
+    "currency",
+    "locale"
+   ],
+   "needs": [],
+   "approvedComposition": null,
+   "recordFamily": false,
+   "module": "assets/js/tools/money/ledger.tool.js",
+   "flutter": "placeholder"
+  },
+  {
+   "id": "installments",
+   "name": "Installments",
+   "category": "money",
+   "group": "money",
+   "faith": false,
+   "countries": null,
+   "android": false,
+   "act": "",
+   "sensitive": false,
+   "archetype": "manager",
+   "density": "high",
+   "source": "On device",
+   "freshness": "local",
+   "related": [
+    "loan",
+    "expenses",
+    "subs"
+   ],
+   "supports": [
+    "filters",
+    "history",
+    "notifications",
+    "sorting"
+   ],
+   "aware": [
+    "currency",
+    "locale"
+   ],
+   "needs": [],
+   "approvedComposition": null,
+   "recordFamily": false,
+   "module": "assets/js/tools/money/installments.tool.js",
+   "flutter": "placeholder"
+  },
+  {
+   "id": "committee",
+   "name": "Committee",
+   "category": "money",
+   "group": "money",
+   "faith": false,
+   "countries": null,
+   "android": false,
+   "act": "",
+   "sensitive": false,
+   "archetype": "manager",
+   "density": "high",
+   "source": "On device",
+   "freshness": "local",
+   "related": [
+    "ledger",
+    "goals",
+    "expenses"
+   ],
+   "supports": [
+    "export",
+    "history",
+    "notifications"
+   ],
+   "aware": [
+    "currency",
+    "locale"
+   ],
+   "needs": [],
+   "approvedComposition": null,
+   "recordFamily": false,
+   "module": "assets/js/tools/money/committee.tool.js",
+   "flutter": "placeholder"
+  },
+  {
+   "id": "aqi",
+   "name": "Air Quality",
+   "category": "daily",
+   "group": "daily",
+   "faith": false,
+   "countries": null,
+   "android": false,
+   "act": "tool:aqi",
+   "sensitive": false,
+   "archetype": "dashboard",
+   "density": "high",
+   "source": "Monitoring stations",
+   "freshness": "delayed",
+   "related": [
+    "weather",
+    "health",
+    "sunmoon"
+   ],
+   "supports": [
+    "history",
+    "notifications",
+    "sharing"
+   ],
+   "aware": [
+    "city",
+    "country",
+    "locale"
+   ],
+   "needs": [
+    "city"
+   ],
+   "approvedComposition": null,
+   "recordFamily": false,
+   "module": "assets/js/tools/daily/aqi.tool.js",
+   "flutter": "placeholder"
+  },
+  {
+   "id": "sunmoon",
+   "name": "Sun & Moon",
+   "category": "daily",
+   "group": "daily",
+   "faith": false,
+   "countries": null,
+   "android": false,
+   "act": "tool:sunmoon",
+   "sensitive": false,
+   "archetype": "dashboard",
+   "density": "medium",
+   "source": "Astronomical calculation",
+   "freshness": "computed",
+   "related": [
+    "weather",
+    "prayer",
+    "calendar"
+   ],
+   "supports": [
+    "offline",
+    "sharing"
+   ],
+   "aware": [
+    "city",
+    "country",
+    "locale",
+    "timezone"
+   ],
+   "needs": [
+    "city"
+   ],
+   "approvedComposition": null,
+   "recordFamily": false,
+   "module": "assets/js/tools/daily/sunmoon.tool.js",
+   "flutter": "placeholder"
+  },
+  {
+   "id": "worldclock",
+   "name": "World Clock",
+   "category": "daily",
+   "group": "daily",
+   "faith": false,
+   "countries": null,
+   "android": false,
+   "act": "tool:worldclock",
+   "sensitive": false,
+   "archetype": "explorer",
+   "density": "medium",
+   "source": "IANA time zones",
+   "freshness": "live",
+   "related": [
+    "calendar",
+    "flights",
+    "holidays"
+   ],
+   "supports": [
+    "favorites",
+    "offline",
+    "search"
+   ],
+   "aware": [
+    "language",
+    "locale",
+    "timezone"
+   ],
+   "needs": [],
+   "approvedComposition": null,
+   "recordFamily": false,
+   "module": "assets/js/tools/daily/worldclock.tool.js",
+   "flutter": "placeholder"
+  },
+  {
+   "id": "holidays",
+   "name": "Public Holidays",
+   "category": "daily",
+   "group": "daily",
+   "faith": false,
+   "countries": null,
+   "android": false,
+   "act": "tool:holidays",
+   "sensitive": false,
+   "archetype": "planner",
+   "density": "medium",
+   "source": "National calendars",
+   "freshness": "annual",
+   "related": [
+    "calendar",
+    "hijri",
+    "worldclock"
+   ],
+   "supports": [
+    "export",
+    "filters",
+    "offline",
+    "search"
+   ],
+   "aware": [
+    "country",
+    "language",
+    "locale",
+    "region"
+   ],
+   "needs": [],
+   "approvedComposition": null,
+   "recordFamily": false,
+   "module": "assets/js/tools/daily/holidays.tool.js",
+   "flutter": "placeholder"
+  },
+  {
+   "id": "weather",
+   "name": "Weather",
+   "category": "daily",
+   "group": "daily",
+   "faith": false,
+   "countries": null,
+   "android": false,
+   "act": "",
+   "sensitive": false,
+   "archetype": "dashboard",
+   "density": "high",
+   "source": "Forecast model",
+   "freshness": "delayed",
+   "related": [
+    "aqi",
+    "sunmoon",
+    "calendar",
+    "flights"
+   ],
+   "supports": [
+    "favorites",
+    "notifications",
+    "offline",
+    "sharing"
+   ],
+   "aware": [
+    "city",
+    "country",
+    "locale",
+    "timezone",
+    "units"
+   ],
+   "needs": [
+    "city"
+   ],
+   "approvedComposition": null,
+   "recordFamily": false,
+   "module": "assets/js/tools/daily/weather.tool.js",
+   "flutter": "placeholder"
+  },
+  {
+   "id": "loadshed",
+   "name": "Loadshedding",
+   "category": "daily",
+   "group": "daily",
+   "faith": false,
+   "countries": [
+    "PK"
+   ],
+   "android": false,
+   "act": "tool:loadshed",
+   "sensitive": false,
+   "archetype": "dashboard",
+   "density": "high",
+   "source": "Distribution company",
+   "freshness": "daily",
+   "related": [
+    "bills",
+    "weather",
+    "emergency"
+   ],
+   "supports": [
+    "history",
+    "notifications",
+    "offline"
+   ],
+   "aware": [
+    "city",
+    "country",
+    "region",
+    "timezone"
+   ],
+   "needs": [
+    "city"
+   ],
+   "approvedComposition": null,
+   "recordFamily": false,
+   "module": "assets/js/tools/daily/loadshed.tool.js",
+   "flutter": "placeholder"
+  },
+  {
+   "id": "trains",
+   "name": "Trains",
+   "category": "daily",
+   "group": "daily",
+   "faith": false,
+   "countries": [
+    "PK"
+   ],
+   "android": false,
+   "act": "",
+   "sensitive": false,
+   "archetype": "tracking",
+   "density": "veryhigh",
+   "source": "Operator live feed",
+   "freshness": "live",
+   "related": [
+    "flights",
+    "weather",
+    "holidays"
+   ],
+   "supports": [
+    "filters",
+    "history",
+    "notifications",
+    "search",
+    "sharing",
+    "sorting"
+   ],
+   "aware": [
+    "city",
+    "country",
+    "currency",
+    "locale",
+    "timezone"
+   ],
+   "needs": [
+    "city"
+   ],
+   "approvedComposition": null,
+   "recordFamily": false,
+   "module": "assets/js/tools/daily/trains.tool.js",
+   "flutter": "placeholder"
+  },
+  {
+   "id": "flights",
+   "name": "Flights",
+   "category": "daily",
+   "group": "daily",
+   "faith": false,
+   "countries": null,
+   "android": false,
+   "act": "",
+   "sensitive": false,
+   "archetype": "tracking",
+   "density": "veryhigh",
+   "source": "ADS-B network",
+   "freshness": "live",
+   "related": [
+    "weather",
+    "trains",
+    "holidays"
+   ],
+   "supports": [
+    "filters",
+    "history",
+    "notifications",
+    "search",
+    "sharing",
+    "sorting"
+   ],
+   "aware": [
+    "city",
+    "country",
+    "locale",
+    "timezone",
+    "units"
+   ],
+   "needs": [],
+   "approvedComposition": null,
+   "recordFamily": false,
+   "module": "assets/js/tools/daily/flights.tool.js",
+   "flutter": "placeholder"
+  },
+  {
+   "id": "news",
+   "name": "News",
+   "category": "daily",
+   "group": "daily",
+   "faith": false,
+   "countries": null,
+   "android": false,
+   "act": "",
+   "sensitive": false,
+   "archetype": "reader",
+   "density": "high",
+   "source": "Publisher feeds",
+   "freshness": "live",
+   "related": [
+    "markets",
+    "cricket",
+    "weather"
+   ],
+   "supports": [
+    "favorites",
+    "filters",
+    "history",
+    "offline",
+    "search",
+    "sharing"
+   ],
+   "aware": [
+    "city",
+    "country",
+    "language",
+    "locale"
+   ],
+   "needs": [],
+   "approvedComposition": null,
+   "recordFamily": false,
+   "module": "assets/js/tools/daily/news.tool.js",
+   "flutter": "placeholder"
+  },
+  {
+   "id": "cricket",
+   "name": "Cricket",
+   "category": "daily",
+   "group": "daily",
+   "faith": false,
+   "countries": null,
+   "android": false,
+   "act": "tool:cricket",
+   "sensitive": false,
+   "archetype": "dashboard",
+   "density": "high",
+   "source": "Match feed",
+   "freshness": "live",
+   "related": [
+    "news",
+    "calendar",
+    "play"
+   ],
+   "supports": [
+    "filters",
+    "history",
+    "notifications",
+    "sharing"
+   ],
+   "aware": [
+    "country",
+    "language",
+    "locale"
+   ],
+   "needs": [],
+   "approvedComposition": null,
+   "recordFamily": false,
+   "module": "assets/js/tools/daily/cricket.tool.js",
+   "flutter": "placeholder"
+  },
+  {
+   "id": "emergency",
+   "name": "Emergency",
+   "category": "daily",
+   "group": "daily",
+   "faith": false,
+   "countries": null,
+   "android": false,
+   "act": "tool:emergency",
+   "sensitive": false,
+   "archetype": "action",
+   "density": "low",
+   "source": "National directory",
+   "freshness": "static",
+   "related": [
+    "health",
+    "documents",
+    "meds"
+   ],
+   "supports": [
+    "offline"
+   ],
+   "aware": [
+    "city",
+    "country",
+    "language",
+    "locale",
+    "region"
+   ],
+   "needs": [
+    "city"
+   ],
+   "approvedComposition": null,
+   "recordFamily": false,
+   "module": "assets/js/tools/daily/emergency.tool.js",
+   "flutter": "placeholder"
+  },
+  {
+   "id": "qr",
+   "name": "QR Scanner",
+   "category": "daily",
+   "group": "daily",
+   "faith": false,
+   "countries": null,
+   "android": false,
+   "act": "",
+   "sensitive": false,
+   "archetype": "instrument",
+   "density": "low",
+   "source": "Camera",
+   "freshness": "live",
+   "related": [
+    "docscan",
+    "parcel",
+    "mediasaver"
+   ],
+   "supports": [
+    "history",
+    "offline"
+   ],
+   "aware": [],
+   "needs": [
+    "permission"
+   ],
+   "approvedComposition": null,
+   "recordFamily": false,
+   "module": "assets/js/tools/daily/qr.tool.js",
+   "flutter": "placeholder"
+  },
+  {
+   "id": "docscan",
+   "name": "Document Scanner",
+   "category": "daily",
+   "group": "daily",
+   "faith": false,
+   "countries": null,
+   "android": false,
+   "act": "",
+   "sensitive": false,
+   "archetype": "instrument",
+   "density": "medium",
+   "source": "Camera",
+   "freshness": "live",
+   "related": [
+    "documents",
+    "notes",
+    "passport"
+   ],
+   "supports": [
+    "export",
+    "history",
+    "offline"
+   ],
+   "aware": [],
+   "needs": [
+    "permission"
+   ],
+   "approvedComposition": null,
+   "recordFamily": false,
+   "module": "assets/js/tools/daily/docscan.tool.js",
+   "flutter": "placeholder"
+  },
+  {
+   "id": "passport",
+   "name": "Passport Photos",
+   "category": "daily",
+   "group": "daily",
+   "faith": false,
+   "countries": null,
+   "android": false,
+   "act": "",
+   "sensitive": false,
+   "archetype": "instrument",
+   "density": "medium",
+   "source": "ICAO + national specs",
+   "freshness": "static",
+   "related": [
+    "docscan",
+    "documents",
+    "vehicle"
+   ],
+   "supports": [
+    "export",
+    "history",
+    "offline"
+   ],
+   "aware": [
+    "country",
+    "locale"
+   ],
+   "needs": [
+    "permission"
+   ],
+   "approvedComposition": null,
+   "recordFamily": false,
+   "module": "assets/js/tools/daily/passport.tool.js",
+   "flutter": "placeholder"
+  },
+  {
+   "id": "vehicle",
+   "name": "Vehicle & Fines",
+   "category": "daily",
+   "group": "daily",
+   "faith": false,
+   "countries": [
+    "PK"
+   ],
+   "android": false,
+   "act": "",
+   "sensitive": false,
+   "archetype": "manager",
+   "density": "high",
+   "source": "Excise records",
+   "freshness": "daily",
+   "related": [
+    "fuel",
+    "fuelcost",
+    "documents",
+    "emergency"
+   ],
+   "supports": [
+    "filters",
+    "history",
+    "notifications",
+    "search"
+   ],
+   "aware": [
+    "country",
+    "currency",
+    "locale",
+    "region"
+   ],
+   "needs": [],
+   "approvedComposition": null,
+   "recordFamily": false,
+   "module": "assets/js/tools/daily/vehicle.tool.js",
+   "flutter": "placeholder"
+  },
+  {
+   "id": "mediasaver",
+   "name": "Media Saver",
+   "category": "daily",
+   "group": "daily",
+   "faith": false,
+   "countries": null,
+   "android": false,
+   "act": "",
+   "sensitive": false,
+   "archetype": "manager",
+   "density": "medium",
+   "source": "On device",
+   "freshness": "local",
+   "related": [
+    "wastatus",
+    "docscan",
+    "notes"
+   ],
+   "supports": [
+    "history",
+    "offline"
+   ],
+   "aware": [],
+   "needs": [],
+   "approvedComposition": null,
+   "recordFamily": false,
+   "module": "assets/js/tools/daily/mediasaver.tool.js",
+   "flutter": "placeholder"
+  },
+  {
+   "id": "wastatus",
+   "name": "WhatsApp Status",
+   "category": "daily",
+   "group": "daily",
+   "faith": false,
+   "countries": null,
+   "android": true,
+   "act": "",
+   "sensitive": false,
+   "archetype": "library",
+   "density": "medium",
+   "source": "On device",
+   "freshness": "local",
+   "related": [
+    "mediasaver",
+    "docscan"
+   ],
+   "supports": [
+    "history",
+    "offline"
+   ],
+   "aware": [],
+   "needs": [
+    "permission"
+   ],
+   "approvedComposition": null,
+   "recordFamily": false,
+   "module": "assets/js/tools/daily/wastatus.tool.js",
+   "flutter": "placeholder"
+  },
+  {
+   "id": "speedtest",
+   "name": "Speed Test",
+   "category": "daily",
+   "group": "daily",
+   "faith": false,
+   "countries": null,
+   "android": false,
+   "act": "",
+   "sensitive": false,
+   "archetype": "instrument",
+   "density": "medium",
+   "source": "Nearest test server",
+   "freshness": "live",
+   "related": [
+    "packages",
+    "bills"
+   ],
+   "supports": [
+    "history",
+    "offline"
+   ],
+   "aware": [
+    "country",
+    "locale"
+   ],
+   "needs": [],
+   "approvedComposition": null,
+   "recordFamily": false,
+   "module": "assets/js/tools/daily/speedtest.tool.js",
+   "flutter": "placeholder"
+  },
+  {
+   "id": "parcel",
+   "name": "Parcel Tracker",
+   "category": "personal",
+   "group": "personal",
+   "faith": false,
+   "countries": null,
+   "android": false,
+   "act": "tool:parcel",
+   "sensitive": false,
+   "archetype": "tracking",
+   "density": "high",
+   "source": "Carrier tracking",
+   "freshness": "delayed",
+   "related": [
+    "shopping",
+    "expenses",
+    "notes"
+   ],
+   "supports": [
+    "history",
+    "notifications",
+    "search",
+    "sharing"
+   ],
+   "aware": [
+    "country",
+    "locale",
+    "timezone"
+   ],
+   "needs": [],
+   "approvedComposition": null,
+   "recordFamily": false,
+   "module": "assets/js/tools/personal/parcel.tool.js",
+   "flutter": "placeholder"
+  },
+  {
+   "id": "shopping",
+   "name": "Shopping List",
+   "category": "personal",
+   "group": "personal",
+   "faith": false,
+   "countries": null,
+   "android": false,
+   "act": "",
+   "sensitive": false,
+   "archetype": "manager",
+   "density": "medium",
+   "source": "On device",
+   "freshness": "local",
+   "related": [
+    "mealplan",
+    "recipes",
+    "expenses"
+   ],
+   "supports": [
+    "filters",
+    "offline",
+    "search",
+    "sharing"
+   ],
+   "aware": [
+    "currency",
+    "locale"
+   ],
+   "needs": [],
+   "approvedComposition": null,
+   "recordFamily": true,
+   "module": "assets/js/tools/personal/shopping.tool.js",
+   "flutter": "placeholder"
+  },
+  {
+   "id": "birthdays",
+   "name": "Birthdays",
+   "category": "personal",
+   "group": "personal",
+   "faith": false,
+   "countries": null,
+   "android": false,
+   "act": "",
+   "sensitive": false,
+   "archetype": "planner",
+   "density": "medium",
+   "source": "On device",
+   "freshness": "local",
+   "related": [
+    "calendar",
+    "shopping",
+    "reminders"
+   ],
+   "supports": [
+    "notifications",
+    "offline",
+    "search"
+   ],
+   "aware": [
+    "locale",
+    "timezone"
+   ],
+   "needs": [],
+   "approvedComposition": null,
+   "recordFamily": true,
+   "module": "assets/js/tools/personal/birthdays.tool.js",
+   "flutter": "placeholder"
+  },
+  {
+   "id": "streak",
+   "name": "Daily Streak",
+   "category": "personal",
+   "group": "personal",
+   "faith": false,
+   "countries": null,
+   "android": false,
+   "act": "",
+   "sensitive": false,
+   "archetype": "tracker",
+   "density": "medium",
+   "source": "On device",
+   "freshness": "local",
+   "related": [
+    "habits",
+    "praytrack",
+    "water"
+   ],
+   "supports": [
+    "history",
+    "notifications",
+    "offline"
+   ],
+   "aware": [],
+   "needs": [],
+   "approvedComposition": null,
+   "recordFamily": false,
+   "module": "assets/js/tools/personal/streak.tool.js",
+   "flutter": "placeholder"
+  },
+  {
+   "id": "recipes",
+   "name": "Recipes",
+   "category": "personal",
+   "group": "personal",
+   "faith": false,
+   "countries": null,
+   "android": false,
+   "act": "",
+   "sensitive": false,
+   "archetype": "library",
+   "density": "high",
+   "source": "Recipe library",
+   "freshness": "static",
+   "related": [
+    "mealplan",
+    "shopping",
+    "water"
+   ],
+   "supports": [
+    "favorites",
+    "filters",
+    "offline",
+    "search",
+    "sharing"
+   ],
+   "aware": [
+    "language",
+    "locale",
+    "units"
+   ],
+   "needs": [],
+   "approvedComposition": null,
+   "recordFamily": false,
+   "module": "assets/js/tools/personal/recipes.tool.js",
+   "flutter": "placeholder"
+  },
+  {
+   "id": "mealplan",
+   "name": "Meal Planner",
+   "category": "personal",
+   "group": "personal",
+   "faith": false,
+   "countries": null,
+   "android": false,
+   "act": "",
+   "sensitive": false,
+   "archetype": "planner",
+   "density": "high",
+   "source": "On device",
+   "freshness": "local",
+   "related": [
+    "recipes",
+    "shopping",
+    "expenses"
+   ],
+   "supports": [
+    "export",
+    "offline",
+    "search"
+   ],
+   "aware": [
+    "locale",
+    "units"
+   ],
+   "needs": [],
+   "approvedComposition": null,
+   "recordFamily": false,
+   "module": "assets/js/tools/personal/mealplan.tool.js",
+   "flutter": "placeholder"
+  },
+  {
+   "id": "alarms",
+   "name": "Alarms",
+   "category": "personal",
+   "group": "personal",
+   "faith": false,
+   "countries": null,
+   "android": false,
+   "act": "",
+   "sensitive": false,
+   "archetype": "manager",
+   "density": "medium",
+   "source": "On device",
+   "freshness": "local",
+   "related": [
+    "timer",
+    "focus",
+    "prayer"
+   ],
+   "supports": [
+    "notifications",
+    "offline"
+   ],
+   "aware": [
+    "locale",
+    "timezone"
+   ],
+   "needs": [],
+   "approvedComposition": null,
+   "recordFamily": false,
+   "module": "assets/js/tools/personal/alarms.tool.js",
+   "flutter": "placeholder"
+  },
+  {
+   "id": "learning",
+   "name": "Learning & Growth",
+   "category": "personal",
+   "group": "personal",
+   "faith": false,
+   "countries": null,
+   "android": false,
+   "act": "",
+   "sensitive": false,
+   "archetype": "tracker",
+   "density": "high",
+   "source": "On device",
+   "freshness": "local",
+   "related": [
+    "habits",
+    "notes",
+    "focus"
+   ],
+   "supports": [
+    "favorites",
+    "history",
+    "offline",
+    "search"
+   ],
+   "aware": [],
+   "needs": [],
+   "approvedComposition": null,
+   "recordFamily": false,
+   "module": "assets/js/tools/personal/learning.tool.js",
+   "flutter": "placeholder"
+  },
+  {
+   "id": "documents",
+   "name": "Documents",
+   "category": "personal",
+   "group": "personal",
+   "faith": false,
+   "countries": null,
+   "android": false,
+   "act": "",
+   "sensitive": true,
+   "archetype": "manager",
+   "density": "veryhigh",
+   "source": "Encrypted on device",
+   "freshness": "local",
+   "related": [
+    "vehicle",
+    "health",
+    "passport",
+    "docscan"
+   ],
+   "supports": [
+    "export",
+    "filters",
+    "notifications",
+    "offline",
+    "search",
+    "sorting"
+   ],
+   "aware": [
+    "country",
+    "locale"
+   ],
+   "needs": [],
+   "approvedComposition": null,
+   "recordFamily": true,
+   "module": "assets/js/tools/personal/documents.tool.js",
+   "flutter": "placeholder"
+  },
+  {
+   "id": "vaccines",
+   "name": "Vaccinations",
+   "category": "personal",
+   "group": "personal",
+   "faith": false,
+   "countries": null,
+   "android": false,
+   "act": "",
+   "sensitive": true,
+   "archetype": "manager",
+   "density": "high",
+   "source": "Encrypted on device",
+   "freshness": "local",
+   "related": [
+    "health",
+    "meds",
+    "documents"
+   ],
+   "supports": [
+    "export",
+    "filters",
+    "notifications",
+    "offline"
+   ],
+   "aware": [
+    "country",
+    "locale"
+   ],
+   "needs": [],
+   "approvedComposition": null,
+   "recordFamily": false,
+   "module": "assets/js/tools/personal/vaccines.tool.js",
+   "flutter": "placeholder"
+  },
+  {
+   "id": "health",
+   "name": "Health Records",
+   "category": "personal",
+   "group": "personal",
+   "faith": false,
+   "countries": null,
+   "android": false,
+   "act": "",
+   "sensitive": true,
+   "archetype": "manager",
+   "density": "veryhigh",
+   "source": "Encrypted on device",
+   "freshness": "local",
+   "related": [
+    "vaccines",
+    "meds",
+    "documents",
+    "expenses"
+   ],
+   "supports": [
+    "export",
+    "filters",
+    "notifications",
+    "offline",
+    "search",
+    "sorting"
+   ],
+   "aware": [
+    "country",
+    "currency",
+    "locale"
+   ],
+   "needs": [],
+   "approvedComposition": null,
+   "recordFamily": true,
+   "module": "assets/js/tools/personal/health.tool.js",
+   "flutter": "placeholder"
+  },
+  {
+   "id": "play",
+   "name": "Play",
+   "category": "personal",
+   "group": "personal",
+   "faith": false,
+   "countries": null,
+   "android": false,
+   "act": "",
+   "sensitive": false,
+   "archetype": "library",
+   "density": "medium",
+   "source": "On device",
+   "freshness": "local",
+   "related": [
+    "streak",
+    "focus",
+    "learning"
+   ],
+   "supports": [
+    "favorites",
+    "history",
+    "offline"
+   ],
+   "aware": [],
+   "needs": [],
+   "approvedComposition": null,
+   "recordFamily": false,
+   "module": "assets/js/tools/personal/play.tool.js",
+   "flutter": "placeholder"
+  },
+  {
+   "id": "babybudget",
+   "name": "Baby Budget",
+   "category": "personal",
+   "group": "personal",
+   "faith": false,
+   "countries": null,
+   "android": false,
+   "act": "",
+   "sensitive": false,
+   "archetype": "dashboard",
+   "density": "high",
+   "source": "On device",
+   "freshness": "local",
+   "related": [
+    "expenses",
+    "goals",
+    "pregnancy"
+   ],
+   "supports": [
+    "export",
+    "history",
+    "offline"
+   ],
+   "aware": [
+    "currency",
+    "locale"
+   ],
+   "needs": [],
+   "approvedComposition": null,
+   "recordFamily": false,
+   "module": "assets/js/tools/personal/babybudget.tool.js",
+   "flutter": "placeholder"
+  },
+  {
+   "id": "habits",
+   "name": "Habits",
+   "category": "personal",
+   "group": "personal",
+   "faith": false,
+   "countries": null,
+   "android": false,
+   "act": "",
+   "sensitive": false,
+   "archetype": "tracker",
+   "density": "high",
+   "source": "On device",
+   "freshness": "local",
+   "related": [
+    "streak",
+    "water",
+    "focus",
+    "praytrack"
+   ],
+   "supports": [
+    "export",
+    "history",
+    "notifications",
+    "offline"
+   ],
+   "aware": [
+    "locale",
+    "timezone"
+   ],
+   "needs": [],
+   "approvedComposition": null,
+   "recordFamily": true,
+   "module": "assets/js/tools/personal/habits.tool.js",
+   "flutter": "placeholder"
+  },
+  {
+   "id": "water",
+   "name": "Water",
+   "category": "personal",
+   "group": "personal",
+   "faith": false,
+   "countries": null,
+   "android": false,
+   "act": "",
+   "sensitive": false,
+   "archetype": "tracker",
+   "density": "medium",
+   "source": "On device",
+   "freshness": "local",
+   "related": [
+    "habits",
+    "health",
+    "recipes"
+   ],
+   "supports": [
+    "history",
+    "notifications",
+    "offline"
+   ],
+   "aware": [
+    "locale",
+    "units"
+   ],
+   "needs": [],
+   "approvedComposition": null,
+   "recordFamily": true,
+   "module": "assets/js/tools/personal/water.tool.js",
+   "flutter": "placeholder"
+  },
+  {
+   "id": "bmi",
+   "name": "BMI Calculator",
+   "category": "personal",
+   "group": "daily",
+   "faith": false,
+   "countries": null,
+   "android": false,
+   "act": "",
+   "sensitive": false,
+   "archetype": "calculator",
+   "density": "medium",
+   "source": "On device",
+   "freshness": "local",
+   "related": [
+    "health",
+    "water",
+    "habits"
+   ],
+   "supports": [
+    "history",
+    "offline"
+   ],
+   "aware": [
+    "locale",
+    "units"
+   ],
+   "needs": [],
+   "approvedComposition": null,
+   "recordFamily": false,
+   "module": "assets/js/tools/personal/bmi.tool.js",
+   "flutter": "placeholder"
+  },
+  {
+   "id": "cycle",
+   "name": "Cycle Tracker",
+   "category": "personal",
+   "group": "personal",
+   "faith": false,
+   "countries": null,
+   "android": false,
+   "act": "",
+   "sensitive": true,
+   "archetype": "planner",
+   "density": "high",
+   "source": "Encrypted on device",
+   "freshness": "local",
+   "related": [
+    "health",
+    "pregnancy",
+    "meds"
+   ],
+   "supports": [
+    "history",
+    "notifications",
+    "offline"
+   ],
+   "aware": [
+    "locale",
+    "timezone"
+   ],
+   "needs": [],
+   "approvedComposition": null,
+   "recordFamily": false,
+   "module": "assets/js/tools/personal/cycle.tool.js",
+   "flutter": "placeholder"
+  },
+  {
+   "id": "pregnancy",
+   "name": "Pregnancy",
+   "category": "personal",
+   "group": "personal",
+   "faith": false,
+   "countries": null,
+   "android": false,
+   "act": "",
+   "sensitive": true,
+   "archetype": "dashboard",
+   "density": "high",
+   "source": "Encrypted on device",
+   "freshness": "local",
+   "related": [
+    "health",
+    "cycle",
+    "babybudget"
+   ],
+   "supports": [
+    "history",
+    "notifications",
+    "offline"
+   ],
+   "aware": [
+    "locale",
+    "timezone",
+    "units"
+   ],
+   "needs": [],
+   "approvedComposition": null,
+   "recordFamily": false,
+   "module": "assets/js/tools/personal/pregnancy.tool.js",
+   "flutter": "placeholder"
+  },
+  {
+   "id": "expenses",
+   "name": "Expenses",
+   "category": "personal",
+   "group": "personal",
+   "faith": false,
+   "countries": null,
+   "android": false,
+   "act": "tool:expenses",
+   "sensitive": true,
+   "archetype": "dashboard",
+   "density": "veryhigh",
+   "source": "On device",
+   "freshness": "local",
+   "related": [
+    "goals",
+    "subs",
+    "bills",
+    "ledger"
+   ],
+   "supports": [
+    "export",
+    "filters",
+    "history",
+    "offline",
+    "search",
+    "sharing",
+    "sorting"
+   ],
+   "aware": [
+    "country",
+    "currency",
+    "locale",
+    "timezone"
+   ],
+   "needs": [],
+   "approvedComposition": null,
+   "recordFamily": true,
+   "module": "assets/js/tools/personal/expenses.tool.js",
+   "flutter": "placeholder"
+  },
+  {
+   "id": "goals",
+   "name": "Savings Goals",
+   "category": "personal",
+   "group": "personal",
+   "faith": false,
+   "countries": null,
+   "android": false,
+   "act": "",
+   "sensitive": true,
+   "archetype": "dashboard",
+   "density": "high",
+   "source": "On device",
+   "freshness": "local",
+   "related": [
+    "expenses",
+    "natsavings",
+    "compound"
+   ],
+   "supports": [
+    "export",
+    "history",
+    "notifications",
+    "offline",
+    "sharing"
+   ],
+   "aware": [
+    "currency",
+    "locale"
+   ],
+   "needs": [],
+   "approvedComposition": null,
+   "recordFamily": false,
+   "module": "assets/js/tools/personal/goals.tool.js",
+   "flutter": "placeholder"
+  },
+  {
+   "id": "subs",
+   "name": "Subscriptions",
+   "category": "personal",
+   "group": "personal",
+   "faith": false,
+   "countries": null,
+   "android": false,
+   "act": "",
+   "sensitive": true,
+   "archetype": "manager",
+   "density": "high",
+   "source": "On device",
+   "freshness": "local",
+   "related": [
+    "expenses",
+    "bills",
+    "installments"
+   ],
+   "supports": [
+    "export",
+    "filters",
+    "history",
+    "notifications",
+    "search",
+    "sorting"
+   ],
+   "aware": [
+    "currency",
+    "locale",
+    "timezone"
+   ],
+   "needs": [],
+   "approvedComposition": null,
+   "recordFamily": false,
+   "module": "assets/js/tools/personal/subs.tool.js",
+   "flutter": "placeholder"
+  },
+  {
+   "id": "meds",
+   "name": "Medication",
+   "category": "personal",
+   "group": "personal",
+   "faith": false,
+   "countries": null,
+   "android": false,
+   "act": "",
+   "sensitive": true,
+   "archetype": "manager",
+   "density": "high",
+   "source": "Encrypted on device",
+   "freshness": "local",
+   "related": [
+    "health",
+    "vaccines",
+    "reminders"
+   ],
+   "supports": [
+    "export",
+    "history",
+    "notifications",
+    "offline"
+   ],
+   "aware": [
+    "locale",
+    "timezone"
+   ],
+   "needs": [],
+   "approvedComposition": null,
+   "recordFamily": true,
+   "module": "assets/js/tools/personal/meds.tool.js",
+   "flutter": "placeholder"
+  }
+ ],
+ "modules": [
+  {
+   "id": "aqi",
+   "file": "assets/js/tools/daily/aqi.tool.js",
+   "lines": 36,
+   "declares": [
+    "aqi"
+   ],
+   "shared": [],
+   "ui": [
+    "card",
+    "contextBar",
+    "lineChart",
+    "noteCard",
+    "progressRing",
+    "richRow",
+    "rows",
+    "section",
+    "statusBadge",
+    "summaryCard"
+   ],
+   "charts": [
+    "lineChart"
+   ],
+   "context": [
+    "t"
+   ],
+   "data": [
+    "aqiFor",
+    "walk"
+   ],
+   "sheets": [],
+   "toolstate": [],
+   "links": [],
+   "external": [],
+   "hostHandlers": [],
+   "webTestMentions": 0
+  },
+  {
+   "id": "cricket",
+   "file": "assets/js/tools/daily/cricket.tool.js",
+   "lines": 79,
+   "declares": [
+    "cricket"
+   ],
+   "shared": [],
+   "ui": [
+    "card",
+    "freshness",
+    "metrics",
+    "richRow",
+    "rows",
+    "section",
+    "table",
+    "tabs"
+   ],
+   "charts": [],
+   "context": [
+    "num",
+    "state",
+    "t"
+   ],
+   "data": [
+    "CRICKET"
+   ],
+   "sheets": [],
+   "toolstate": [
+    "tab"
+   ],
+   "links": [],
+   "external": [],
+   "hostHandlers": [],
+   "webTestMentions": 0
+  },
+  {
+   "id": "docscan",
+   "file": "assets/js/tools/daily/docscan.tool.js",
+   "lines": 29,
+   "declares": [
+    "docscan"
+   ],
+   "shared": [
+    "scanner"
+   ],
+   "ui": [],
+   "charts": [],
+   "context": [
+    "t"
+   ],
+   "data": [],
+   "sheets": [],
+   "toolstate": [],
+   "links": [],
+   "external": [],
+   "hostHandlers": [],
+   "webTestMentions": 0
+  },
+  {
+   "id": "emergency",
+   "file": "assets/js/tools/daily/emergency.tool.js",
+   "lines": 47,
+   "declares": [
+    "emergency"
+   ],
+   "shared": [],
+   "ui": [
+    "compactRow",
+    "contextBar",
+    "noteCard",
+    "rows",
+    "section"
+   ],
+   "charts": [],
+   "context": [
+    "t"
+   ],
+   "data": [
+    "emergencyFor"
+   ],
+   "sheets": [],
+   "toolstate": [],
+   "links": [
+    "documents",
+    "health"
+   ],
+   "external": [
+    "tel:"
+   ],
+   "hostHandlers": [],
+   "webTestMentions": 0
+  },
+  {
+   "id": "flights",
+   "file": "assets/js/tools/daily/flights.tool.js",
+   "lines": 104,
+   "declares": [
+    "flights"
+   ],
+   "shared": [],
+   "ui": [
+    "buttonRow",
+    "card",
+    "emptyState",
+    "journey",
+    "map",
+    "metrics",
+    "richRow",
+    "rows",
+    "searchBar",
+    "section",
+    "segmented",
+    "table",
+    "timeline"
+   ],
+   "charts": [
+    "map",
+    "journey",
+    "timeline"
+   ],
+   "context": [
+    "filter",
+    "num",
+    "state",
+    "t"
+   ],
+   "data": [
+    "FLIGHTS"
+   ],
+   "sheets": [],
+   "toolstate": [
+    "flight",
+    "view"
+   ],
+   "links": [],
+   "external": [],
+   "hostHandlers": [],
+   "webTestMentions": 0
+  },
+  {
+   "id": "holidays",
+   "file": "assets/js/tools/daily/holidays.tool.js",
+   "lines": 48,
+   "declares": [
+    "holidays"
+   ],
+   "shared": [],
+   "ui": [
+    "compactRow",
+    "contextBar",
+    "emptyState",
+    "filterBar",
+    "richRow",
+    "rows",
+    "searchBar",
+    "section",
+    "summaryCard"
+   ],
+   "charts": [],
+   "context": [
+    "filter",
+    "monthGrid",
+    "state",
+    "t"
+   ],
+   "data": [
+    "ISLAMIC_EVENTS",
+    "holidaysFor"
+   ],
+   "sheets": [
+    "personalise"
+   ],
+   "toolstate": [
+    "kind"
+   ],
+   "links": [],
+   "external": [],
+   "hostHandlers": [],
+   "webTestMentions": 0
+  },
+  {
+   "id": "loadshed",
+   "file": "assets/js/tools/daily/loadshed.tool.js",
+   "lines": 45,
+   "declares": [
+    "loadshed"
+   ],
+   "shared": [],
+   "ui": [
+    "barChart",
+    "card",
+    "compactRow",
+    "contextBar",
+    "rows",
+    "section",
+    "summaryCard",
+    "timeline"
+   ],
+   "charts": [
+    "barChart",
+    "timeline"
+   ],
+   "context": [
+    "loadshed",
+    "t",
+    "weekLabels"
+   ],
+   "data": [],
+   "sheets": [
+    "personalise"
+   ],
+   "toolstate": [],
+   "links": [
+    "bills"
+   ],
+   "external": [],
+   "hostHandlers": [],
+   "webTestMentions": 0
+  },
+  {
+   "id": "mediasaver",
+   "file": "assets/js/tools/daily/mediasaver.tool.js",
+   "lines": 36,
+   "declares": [
+    "mediasaver"
+   ],
+   "shared": [],
+   "ui": [
+    "art",
+    "buttonRow",
+    "card",
+    "emptyState",
+    "field",
+    "formGrid",
+    "metrics",
+    "section"
+   ],
+   "charts": [],
+   "context": [
+    "savedMedia",
+    "t"
+   ],
+   "data": [],
+   "sheets": [],
+   "toolstate": [],
+   "links": [],
+   "external": [
+    "http"
+   ],
+   "hostHandlers": [],
+   "webTestMentions": 0
+  },
+  {
+   "id": "news",
+   "file": "assets/js/tools/daily/news.tool.js",
+   "lines": 61,
+   "declares": [
+    "news"
+   ],
+   "shared": [],
+   "ui": [
+    "art",
+    "compactRow",
+    "contextBar",
+    "emptyState",
+    "richRow",
+    "rows",
+    "searchBar",
+    "section"
+   ],
+   "charts": [],
+   "context": [
+    "state",
+    "t"
+   ],
+   "data": [
+    "NEWS_CATEGORIES",
+    "newsFor"
+   ],
+   "sheets": [
+    "personalise"
+   ],
+   "toolstate": [
+    "cat"
+   ],
+   "links": [],
+   "external": [],
+   "hostHandlers": [],
+   "webTestMentions": 6
+  },
+  {
+   "id": "passport",
+   "file": "assets/js/tools/daily/passport.tool.js",
+   "lines": 45,
+   "declares": [
+    "passport"
+   ],
+   "shared": [],
+   "ui": [
+    "buttonRow",
+    "card",
+    "compactRow",
+    "contextBar",
+    "rows",
+    "section",
+    "table"
+   ],
+   "charts": [],
+   "context": [
+    "passportSpecs",
+    "t"
+   ],
+   "data": [],
+   "sheets": [
+    "personalise"
+   ],
+   "toolstate": [],
+   "links": [],
+   "external": [],
+   "hostHandlers": [],
+   "webTestMentions": 0
+  },
+  {
+   "id": "qr",
+   "file": "assets/js/tools/daily/qr.tool.js",
+   "lines": 28,
+   "declares": [
+    "qr"
+   ],
+   "shared": [
+    "scanner"
+   ],
+   "ui": [],
+   "charts": [],
+   "context": [
+    "t"
+   ],
+   "data": [],
+   "sheets": [],
+   "toolstate": [],
+   "links": [],
+   "external": [],
+   "hostHandlers": [],
+   "webTestMentions": 0
+  },
+  {
+   "id": "speedtest",
+   "file": "assets/js/tools/daily/speedtest.tool.js",
+   "lines": 44,
+   "declares": [
+    "speedtest"
+   ],
+   "shared": [],
+   "ui": [
+    "buttonRow",
+    "card",
+    "compactRow",
+    "metrics",
+    "richRow",
+    "rows",
+    "section",
+    "sparkline"
+   ],
+   "charts": [
+    "sparkline"
+   ],
+   "context": [
+    "num",
+    "speedTest",
+    "t"
+   ],
+   "data": [],
+   "sheets": [],
+   "toolstate": [],
+   "links": [],
+   "external": [],
+   "hostHandlers": [],
+   "webTestMentions": 0
+  },
+  {
+   "id": "sunmoon",
+   "file": "assets/js/tools/daily/sunmoon.tool.js",
+   "lines": 33,
+   "declares": [
+    "sunmoon"
+   ],
+   "shared": [],
+   "ui": [
+    "contextBar",
+    "section",
+    "summaryCard",
+    "timeline"
+   ],
+   "charts": [
+    "timeline"
+   ],
+   "context": [
+    "num",
+    "sunTimes",
+    "t",
+    "time"
+   ],
+   "data": [],
+   "sheets": [],
+   "toolstate": [],
+   "links": [],
+   "external": [],
+   "hostHandlers": [],
+   "webTestMentions": 1
+  },
+  {
+   "id": "trains",
+   "file": "assets/js/tools/daily/trains.tool.js",
+   "lines": 96,
+   "declares": [
+    "trains"
+   ],
+   "shared": [],
+   "ui": [
+    "buttonRow",
+    "card",
+    "contextBar",
+    "emptyState",
+    "field",
+    "filterBar",
+    "formGrid",
+    "journey",
+    "map",
+    "metrics",
+    "richRow",
+    "rows",
+    "section",
+    "table",
+    "timeline"
+   ],
+   "charts": [
+    "map",
+    "journey",
+    "timeline"
+   ],
+   "context": [
+    "filter",
+    "moneyRaw",
+    "state",
+    "t"
+   ],
+   "data": [
+    "TRAINS",
+    "TRAIN_STOPS"
+   ],
+   "sheets": [
+    "personalise"
+   ],
+   "toolstate": [
+    "status",
+    "train"
+   ],
+   "links": [],
+   "external": [],
+   "hostHandlers": [],
+   "webTestMentions": 2
+  },
+  {
+   "id": "vehicle",
+   "file": "assets/js/tools/daily/vehicle.tool.js",
+   "lines": 63,
+   "declares": [
+    "vehicle"
+   ],
+   "shared": [],
+   "ui": [
+    "buttonRow",
+    "card",
+    "field",
+    "formGrid",
+    "richRow",
+    "rows",
+    "searchBar",
+    "section",
+    "summaryCard",
+    "timeline"
+   ],
+   "charts": [
+    "timeline"
+   ],
+   "context": [
+    "money",
+    "state",
+    "t",
+    "vehicleCosts"
+   ],
+   "data": [
+    "VEHICLES"
+   ],
+   "sheets": [],
+   "toolstate": [],
+   "links": [],
+   "external": [],
+   "hostHandlers": [],
+   "webTestMentions": 1
+  },
+  {
+   "id": "wastatus",
+   "file": "assets/js/tools/daily/wastatus.tool.js",
+   "lines": 20,
+   "declares": [
+    "wastatus"
+   ],
+   "shared": [],
+   "ui": [
+    "emptyState",
+    "noteCard",
+    "section"
+   ],
+   "charts": [],
+   "context": [
+    "t"
+   ],
+   "data": [],
+   "sheets": [],
+   "toolstate": [],
+   "links": [],
+   "external": [],
+   "hostHandlers": [],
+   "webTestMentions": 0
+  },
+  {
+   "id": "weather",
+   "file": "assets/js/tools/daily/weather.tool.js",
+   "lines": 98,
+   "declares": [
+    "weather"
+   ],
+   "shared": [],
+   "ui": [
+    "card",
+    "compactRow",
+    "contextBar",
+    "metrics",
+    "noteCard",
+    "richRow",
+    "rows",
+    "section",
+    "statusBadge",
+    "summaryCard"
+   ],
+   "charts": [],
+   "context": [
+    "dateLong",
+    "dayName",
+    "num",
+    "sunTimes",
+    "t",
+    "time",
+    "weather"
+   ],
+   "data": [
+    "aqiFor"
+   ],
+   "sheets": [
+    "personalise"
+   ],
+   "toolstate": [],
+   "links": [],
+   "external": [],
+   "hostHandlers": [],
+   "webTestMentions": 14
+  },
+  {
+   "id": "worldclock",
+   "file": "assets/js/tools/daily/worldclock.tool.js",
+   "lines": 43,
+   "declares": [
+    "worldclock"
+   ],
+   "shared": [],
+   "ui": [
+    "card",
+    "emptyState",
+    "formGrid",
+    "richRow",
+    "rows",
+    "searchBar",
+    "section",
+    "selectField",
+    "summaryCard"
+   ],
+   "charts": [],
+   "context": [
+    "clockNow",
+    "dateLong",
+    "state",
+    "t",
+    "worldClock"
+   ],
+   "data": [],
+   "sheets": [],
+   "toolstate": [],
+   "links": [],
+   "external": [],
+   "hostHandlers": [],
+   "webTestMentions": 0
+  },
+  {
+   "id": "age",
+   "file": "assets/js/tools/everyday/age.tool.js",
+   "lines": 35,
+   "declares": [
+    "age"
+   ],
+   "shared": [],
+   "ui": [
+    "card",
+    "compactRow",
+    "field",
+    "formGrid",
+    "meterRow",
+    "rows",
+    "section",
+    "summaryCard"
+   ],
+   "charts": [],
+   "context": [
+    "age",
+    "num",
+    "t"
+   ],
+   "data": [],
+   "sheets": [],
+   "toolstate": [],
+   "links": [],
+   "external": [],
+   "hostHandlers": [],
+   "webTestMentions": 1
+  },
+  {
+   "id": "calculator",
+   "file": "assets/js/tools/everyday/calculator.tool.js",
+   "lines": 37,
+   "declares": [
+    "calculator"
+   ],
+   "shared": [],
+   "ui": [
+    "compactRow",
+    "rows",
+    "section"
+   ],
+   "charts": [],
+   "context": [
+    "calcHistory",
+    "t"
+   ],
+   "data": [],
+   "sheets": [],
+   "toolstate": [],
+   "links": [],
+   "external": [],
+   "hostHandlers": [
+    "currentTool === 'calculator'"
+   ],
+   "webTestMentions": 5
+  },
+  {
+   "id": "converter",
+   "file": "assets/js/tools/everyday/converter.tool.js",
+   "lines": 45,
+   "declares": [
+    "converter"
+   ],
+   "shared": [],
+   "ui": [
+    "card",
+    "compactRow",
+    "rows",
+    "section"
+   ],
+   "charts": [],
+   "context": [
+    "converter",
+    "num",
+    "t"
+   ],
+   "data": [],
+   "sheets": [],
+   "toolstate": [
+    "cat"
+   ],
+   "links": [],
+   "external": [],
+   "hostHandlers": [
+    "swapConverter"
+   ],
+   "webTestMentions": 0
+  },
+  {
+   "id": "currency",
+   "file": "assets/js/tools/everyday/currency.tool.js",
+   "lines": 58,
+   "declares": [
+    "currency"
+   ],
+   "shared": [
+    "direction"
+   ],
+   "ui": [
+    "card",
+    "compactRow",
+    "emptyState",
+    "lineChart",
+    "richRow",
+    "rows",
+    "searchBar",
+    "section",
+    "sparkline"
+   ],
+   "charts": [
+    "sparkline",
+    "lineChart"
+   ],
+   "context": [
+    "currencyBoard",
+    "num",
+    "pct",
+    "state",
+    "t"
+   ],
+   "data": [
+    "walk"
+   ],
+   "sheets": [],
+   "toolstate": [],
+   "links": [],
+   "external": [],
+   "hostHandlers": [],
+   "webTestMentions": 1
+  },
+  {
+   "id": "datecalc",
+   "file": "assets/js/tools/everyday/datecalc.tool.js",
+   "lines": 40,
+   "declares": [
+    "datecalc"
+   ],
+   "shared": [],
+   "ui": [
+    "card",
+    "compactRow",
+    "field",
+    "formGrid",
+    "rows",
+    "section",
+    "segmented",
+    "summaryCard"
+   ],
+   "charts": [],
+   "context": [
+    "dateCalc",
+    "num",
+    "t"
+   ],
+   "data": [],
+   "sheets": [],
+   "toolstate": [
+    "mode"
+   ],
+   "links": [],
+   "external": [],
+   "hostHandlers": [],
+   "webTestMentions": 0
+  },
+  {
+   "id": "focus",
+   "file": "assets/js/tools/everyday/focus.tool.js",
+   "lines": 26,
+   "declares": [
+    "focus"
+   ],
+   "shared": [
+    "clock"
+   ],
+   "ui": [
+    "barChart",
+    "card",
+    "metrics",
+    "section"
+   ],
+   "charts": [
+    "barChart"
+   ],
+   "context": [
+    "focus",
+    "t",
+    "weekLabels"
+   ],
+   "data": [],
+   "sheets": [],
+   "toolstate": [],
+   "links": [],
+   "external": [],
+   "hostHandlers": [],
+   "webTestMentions": 0
+  },
+  {
+   "id": "stopwatch",
+   "file": "assets/js/tools/everyday/stopwatch.tool.js",
+   "lines": 24,
+   "declares": [
+    "stopwatch"
+   ],
+   "shared": [
+    "clock"
+   ],
+   "ui": [
+    "compactRow",
+    "emptyState",
+    "rows",
+    "section"
+   ],
+   "charts": [],
+   "context": [
+    "stopwatch",
+    "t"
+   ],
+   "data": [],
+   "sheets": [],
+   "toolstate": [],
+   "links": [],
+   "external": [],
+   "hostHandlers": [],
+   "webTestMentions": 0
+  },
+  {
+   "id": "timer",
+   "file": "assets/js/tools/everyday/timer.tool.js",
+   "lines": 26,
+   "declares": [
+    "timer"
+   ],
+   "shared": [
+    "clock"
+   ],
+   "ui": [
+    "compactRow",
+    "rows",
+    "section"
+   ],
+   "charts": [],
+   "context": [
+    "t",
+    "timer"
+   ],
+   "data": [],
+   "sheets": [],
+   "toolstate": [],
+   "links": [],
+   "external": [],
+   "hostHandlers": [],
+   "webTestMentions": 0
+  },
+  {
+   "id": "ayah",
+   "file": "assets/js/tools/islamic/ayah.tool.js",
+   "lines": 36,
+   "declares": [
+    "ayah"
+   ],
+   "shared": [],
+   "ui": [
+    "button",
+    "card",
+    "richRow",
+    "rows",
+    "section"
+   ],
+   "charts": [],
+   "context": [
+    "ayahOfDay",
+    "t"
+   ],
+   "data": [
+    "AYAT"
+   ],
+   "sheets": [],
+   "toolstate": [],
+   "links": [
+    "quran"
+   ],
+   "external": [],
+   "hostHandlers": [],
+   "webTestMentions": 1
+  },
+  {
+   "id": "duas",
+   "file": "assets/js/tools/islamic/duas.tool.js",
+   "lines": 60,
+   "declares": [
+    "duas"
+   ],
+   "shared": [],
+   "ui": [
+    "button",
+    "card",
+    "emptyState",
+    "richRow",
+    "rows",
+    "searchBar",
+    "section"
+   ],
+   "charts": [],
+   "context": [
+    "dayIndex",
+    "filter",
+    "state",
+    "t"
+   ],
+   "data": [
+    "DUAS",
+    "DUA_CATEGORIES"
+   ],
+   "sheets": [],
+   "toolstate": [
+    "cat"
+   ],
+   "links": [],
+   "external": [],
+   "hostHandlers": [],
+   "webTestMentions": 2
+  },
+  {
+   "id": "faraid",
+   "file": "assets/js/tools/islamic/faraid.tool.js",
+   "lines": 53,
+   "declares": [
+    "faraid"
+   ],
+   "shared": [],
+   "ui": [
+    "card",
+    "donut",
+    "expandRow",
+    "field",
+    "formGrid",
+    "noteCard",
+    "richRow",
+    "rows",
+    "section",
+    "stepper"
+   ],
+   "charts": [
+    "donut"
+   ],
+   "context": [
+    "faraid",
+    "moneyRaw",
+    "t"
+   ],
+   "data": [],
+   "sheets": [],
+   "toolstate": [],
+   "links": [],
+   "external": [],
+   "hostHandlers": [],
+   "webTestMentions": 0
+  },
+  {
+   "id": "fasting",
+   "file": "assets/js/tools/islamic/fasting.tool.js",
+   "lines": 49,
+   "declares": [
+    "fasting"
+   ],
+   "shared": [],
+   "ui": [
+    "buttonRow",
+    "card",
+    "filterBar",
+    "heatmap",
+    "progressRing",
+    "richRow",
+    "rows",
+    "section",
+    "statusBadge",
+    "summaryCard"
+   ],
+   "charts": [
+    "heatmap"
+   ],
+   "context": [
+    "fasting",
+    "filter",
+    "t"
+   ],
+   "data": [],
+   "sheets": [],
+   "toolstate": [],
+   "links": [],
+   "external": [],
+   "hostHandlers": [],
+   "webTestMentions": 0
+  },
+  {
+   "id": "hadith",
+   "file": "assets/js/tools/islamic/hadith.tool.js",
+   "lines": 56,
+   "declares": [
+    "hadith"
+   ],
+   "shared": [],
+   "ui": [
+    "button",
+    "card",
+    "emptyState",
+    "filterBar",
+    "richRow",
+    "rows",
+    "searchBar",
+    "section",
+    "statusBadge"
+   ],
+   "charts": [],
+   "context": [
+    "dayIndex",
+    "filter",
+    "state",
+    "t"
+   ],
+   "data": [
+    "HADITH"
+   ],
+   "sheets": [],
+   "toolstate": [
+    "collection"
+   ],
+   "links": [],
+   "external": [],
+   "hostHandlers": [],
+   "webTestMentions": 1
+  },
+  {
+   "id": "hijri",
+   "file": "assets/js/tools/islamic/hijri.tool.js",
+   "lines": 39,
+   "declares": [
+    "hijri"
+   ],
+   "shared": [],
+   "ui": [
+    "card",
+    "compactRow",
+    "field",
+    "formGrid",
+    "richRow",
+    "rows",
+    "section",
+    "summaryCard"
+   ],
+   "charts": [],
+   "context": [
+    "dateLong",
+    "hijri",
+    "isoToday",
+    "monthGrid",
+    "t"
+   ],
+   "data": [
+    "HIJRI_MONTHS",
+    "ISLAMIC_EVENTS"
+   ],
+   "sheets": [],
+   "toolstate": [],
+   "links": [],
+   "external": [],
+   "hostHandlers": [],
+   "webTestMentions": 0
+  },
+  {
+   "id": "mosques",
+   "file": "assets/js/tools/islamic/mosques.tool.js",
+   "lines": 58,
+   "declares": [
+    "mosques"
+   ],
+   "shared": [],
+   "ui": [
+    "buttonRow",
+    "contextBar",
+    "emptyState",
+    "filterBar",
+    "map",
+    "richRow",
+    "rows",
+    "searchBar",
+    "section"
+   ],
+   "charts": [
+    "map"
+   ],
+   "context": [
+    "filter",
+    "nearbyMosques",
+    "state",
+    "t",
+    "time"
+   ],
+   "data": [],
+   "sheets": [
+    "personalise"
+   ],
+   "toolstate": [
+    "radius"
+   ],
+   "links": [],
+   "external": [],
+   "hostHandlers": [],
+   "webTestMentions": 1
+  },
+  {
+   "id": "names99",
+   "file": "assets/js/tools/islamic/names99.tool.js",
+   "lines": 44,
+   "declares": [
+    "names99"
+   ],
+   "shared": [],
+   "ui": [
+    "buttonRow",
+    "emptyState",
+    "progressRing",
+    "searchBar",
+    "section",
+    "summaryCard"
+   ],
+   "charts": [],
+   "context": [
+    "state",
+    "t"
+   ],
+   "data": [
+    "NAMES99"
+   ],
+   "sheets": [],
+   "toolstate": [],
+   "links": [],
+   "external": [],
+   "hostHandlers": [],
+   "webTestMentions": 1
+  },
+  {
+   "id": "prayer",
+   "file": "assets/js/tools/islamic/prayer.tool.js",
+   "lines": 83,
+   "declares": [
+    "prayer"
+   ],
+   "shared": [],
+   "ui": [
+    "card",
+    "compactRow",
+    "contextBar",
+    "progressBar",
+    "progressRing",
+    "rows",
+    "section",
+    "statusBadge",
+    "summaryCard",
+    "table",
+    "timeline"
+   ],
+   "charts": [
+    "timeline"
+   ],
+   "context": [
+    "dateLong",
+    "hijri",
+    "prayerState",
+    "prayerTimes",
+    "sunTimes",
+    "t",
+    "time",
+    "upcomingPrayerDays"
+   ],
+   "data": [],
+   "sheets": [
+    "personalise"
+   ],
+   "toolstate": [],
+   "links": [],
+   "external": [],
+   "hostHandlers": [],
+   "webTestMentions": 2
+  },
+  {
+   "id": "praytrack",
+   "file": "assets/js/tools/islamic/praytrack.tool.js",
+   "lines": 53,
+   "declares": [
+    "praytrack"
+   ],
+   "shared": [],
+   "ui": [
+    "barChart",
+    "buttonRow",
+    "card",
+    "heatmap",
+    "meterRow",
+    "progressRing",
+    "richRow",
+    "rows",
+    "section",
+    "statusBadge",
+    "summaryCard"
+   ],
+   "charts": [
+    "barChart",
+    "heatmap"
+   ],
+   "context": [
+    "prayerTimes",
+    "prayerTracker",
+    "t",
+    "time"
+   ],
+   "data": [],
+   "sheets": [],
+   "toolstate": [],
+   "links": [],
+   "external": [],
+   "hostHandlers": [],
+   "webTestMentions": 1
+  },
+  {
+   "id": "qibla",
+   "file": "assets/js/tools/islamic/qibla.tool.js",
+   "lines": 50,
+   "declares": [
+    "qibla"
+   ],
+   "shared": [],
+   "ui": [
+    "compactRow",
+    "contextBar",
+    "metrics",
+    "noteCard",
+    "rows",
+    "section"
+   ],
+   "charts": [],
+   "context": [
+    "coords",
+    "qibla",
+    "t"
+   ],
+   "data": [],
+   "sheets": [
+    "personalise"
+   ],
+   "toolstate": [],
+   "links": [],
+   "external": [],
+   "hostHandlers": [],
+   "webTestMentions": 0
+  },
+  {
+   "id": "quran",
+   "file": "assets/js/tools/islamic/quran.tool.js",
+   "lines": 85,
+   "declares": [
+    "quran"
+   ],
+   "shared": [],
+   "ui": [
+    "buttonRow",
+    "card",
+    "compactRow",
+    "emptyState",
+    "progressBar",
+    "progressRing",
+    "richRow",
+    "rows",
+    "searchBar",
+    "section",
+    "segmented",
+    "statusBadge"
+   ],
+   "charts": [],
+   "context": [
+    "filter",
+    "quranProgress",
+    "state",
+    "t"
+   ],
+   "data": [
+    "SURAHS"
+   ],
+   "sheets": [],
+   "toolstate": [],
+   "links": [],
+   "external": [],
+   "hostHandlers": [],
+   "webTestMentions": 2
+  },
+  {
+   "id": "quransearch",
+   "file": "assets/js/tools/islamic/quransearch.tool.js",
+   "lines": 47,
+   "declares": [
+    "quransearch"
+   ],
+   "shared": [],
+   "ui": [
+    "emptyState",
+    "filterBar",
+    "richRow",
+    "rows",
+    "searchBar",
+    "section"
+   ],
+   "charts": [],
+   "context": [
+    "quranSearch",
+    "state",
+    "t"
+   ],
+   "data": [],
+   "sheets": [],
+   "toolstate": [],
+   "links": [
+    "quran"
+   ],
+   "external": [],
+   "hostHandlers": [],
+   "webTestMentions": 0
+  },
+  {
+   "id": "ramadan",
+   "file": "assets/js/tools/islamic/ramadan.tool.js",
+   "lines": 76,
+   "declares": [
+    "ramadan"
+   ],
+   "shared": [],
+   "ui": [
+    "card",
+    "compactRow",
+    "heatmap",
+    "meterRow",
+    "richRow",
+    "rows",
+    "section",
+    "summaryCard",
+    "timeline"
+   ],
+   "charts": [
+    "heatmap",
+    "timeline"
+   ],
+   "context": [
+    "money",
+    "prayerTimes",
+    "ramadan",
+    "sunTimes",
+    "t",
+    "time"
+   ],
+   "data": [
+    "ISLAMIC_EVENTS"
+   ],
+   "sheets": [],
+   "toolstate": [],
+   "links": [
+    "fasting",
+    "quran",
+    "zakat"
+   ],
+   "external": [],
+   "hostHandlers": [],
+   "webTestMentions": 0
+  },
+  {
+   "id": "taraweeh",
+   "file": "assets/js/tools/islamic/taraweeh.tool.js",
+   "lines": 61,
+   "declares": [
+    "taraweeh"
+   ],
+   "shared": [],
+   "ui": [
+    "card",
+    "contextBar",
+    "emptyState",
+    "filterBar",
+    "map",
+    "metrics",
+    "noteCard",
+    "richRow",
+    "rows",
+    "searchBar",
+    "section"
+   ],
+   "charts": [
+    "map"
+   ],
+   "context": [
+    "filter",
+    "nearbyMosques",
+    "state",
+    "t",
+    "time"
+   ],
+   "data": [],
+   "sheets": [
+    "personalise"
+   ],
+   "toolstate": [
+    "rakaat"
+   ],
+   "links": [],
+   "external": [],
+   "hostHandlers": [],
+   "webTestMentions": 1
+  },
+  {
+   "id": "tasbih",
+   "file": "assets/js/tools/islamic/tasbih.tool.js",
+   "lines": 49,
+   "declares": [
+    "tasbih"
+   ],
+   "shared": [],
+   "ui": [
+    "button",
+    "compactRow",
+    "rows",
+    "section"
+   ],
+   "charts": [],
+   "context": [
+    "t",
+    "tasbih"
+   ],
+   "data": [
+    "DHIKR"
+   ],
+   "sheets": [],
+   "toolstate": [],
+   "links": [],
+   "external": [],
+   "hostHandlers": [
+    "resetToolTasbih"
+   ],
+   "webTestMentions": 0
+  },
+  {
+   "id": "zakat",
+   "file": "assets/js/tools/islamic/zakat.tool.js",
+   "lines": 51,
+   "declares": [
+    "zakat"
+   ],
+   "shared": [],
+   "ui": [
+    "buttonRow",
+    "card",
+    "contextBar",
+    "field",
+    "formGrid",
+    "section",
+    "summaryCard",
+    "table"
+   ],
+   "charts": [],
+   "context": [
+    "moneyRaw",
+    "t",
+    "zakat"
+   ],
+   "data": [],
+   "sheets": [],
+   "toolstate": [],
+   "links": [],
+   "external": [],
+   "hostHandlers": [],
+   "webTestMentions": 1
+  },
+  {
+   "id": "bills",
+   "file": "assets/js/tools/money/bills.tool.js",
+   "lines": 63,
+   "declares": [
+    "bills"
+   ],
+   "shared": [],
+   "ui": [
+    "barChart",
+    "card",
+    "compactRow",
+    "emptyState",
+    "filterBar",
+    "noteCard",
+    "progressRing",
+    "richRow",
+    "rows",
+    "section",
+    "summaryCard"
+   ],
+   "charts": [
+    "barChart"
+   ],
+   "context": [
+    "bills",
+    "filter",
+    "money",
+    "t"
+   ],
+   "data": [],
+   "sheets": [],
+   "toolstate": [
+    "state"
+   ],
+   "links": [],
+   "external": [],
+   "hostHandlers": [],
+   "webTestMentions": 1
+  },
+  {
+   "id": "committee",
+   "file": "assets/js/tools/money/committee.tool.js",
+   "lines": 48,
+   "declares": [
+    "committee"
+   ],
+   "shared": [],
+   "ui": [
+    "barChart",
+    "card",
+    "compactRow",
+    "progressRing",
+    "richRow",
+    "rows",
+    "section",
+    "summaryCard",
+    "timeline"
+   ],
+   "charts": [
+    "barChart",
+    "timeline"
+   ],
+   "context": [
+    "committee",
+    "money",
+    "t"
+   ],
+   "data": [],
+   "sheets": [],
+   "toolstate": [],
+   "links": [],
+   "external": [],
+   "hostHandlers": [],
+   "webTestMentions": 0
+  },
+  {
+   "id": "compound",
+   "file": "assets/js/tools/money/compound.tool.js",
+   "lines": 47,
+   "declares": [
+    "compound"
+   ],
+   "shared": [],
+   "ui": [
+    "card",
+    "field",
+    "formGrid",
+    "lineChart",
+    "section",
+    "summaryCard",
+    "table"
+   ],
+   "charts": [
+    "lineChart"
+   ],
+   "context": [
+    "compound",
+    "moneyRaw",
+    "num",
+    "t"
+   ],
+   "data": [],
+   "sheets": [],
+   "toolstate": [],
+   "links": [],
+   "external": [],
+   "hostHandlers": [],
+   "webTestMentions": 0
+  },
+  {
+   "id": "fuel",
+   "file": "assets/js/tools/money/fuel.tool.js",
+   "lines": 51,
+   "declares": [
+    "fuel"
+   ],
+   "shared": [
+    "direction"
+   ],
+   "ui": [
+    "card",
+    "contextBar",
+    "delta",
+    "lineChart",
+    "richRow",
+    "rows",
+    "section",
+    "summaryCard",
+    "table"
+   ],
+   "charts": [
+    "lineChart"
+   ],
+   "context": [
+    "moneyRaw",
+    "signed",
+    "t"
+   ],
+   "data": [
+    "fuelFor",
+    "walk"
+   ],
+   "sheets": [
+    "personalise"
+   ],
+   "toolstate": [],
+   "links": [
+    "fuelcost",
+    "vehicle"
+   ],
+   "external": [],
+   "hostHandlers": [],
+   "webTestMentions": 0
+  },
+  {
+   "id": "fuelcost",
+   "file": "assets/js/tools/money/fuelcost.tool.js",
+   "lines": 50,
+   "declares": [
+    "fuelcost"
+   ],
+   "shared": [],
+   "ui": [
+    "card",
+    "compactRow",
+    "field",
+    "formGrid",
+    "rows",
+    "section",
+    "summaryCard",
+    "table"
+   ],
+   "charts": [],
+   "context": [
+    "fuelCost",
+    "moneyRaw",
+    "t"
+   ],
+   "data": [],
+   "sheets": [],
+   "toolstate": [],
+   "links": [],
+   "external": [],
+   "hostHandlers": [],
+   "webTestMentions": 1
+  },
+  {
+   "id": "goldrates",
+   "file": "assets/js/tools/money/goldrates.tool.js",
+   "lines": 73,
+   "declares": [
+    "goldrates"
+   ],
+   "shared": [
+    "direction"
+   ],
+   "ui": [
+    "card",
+    "contextBar",
+    "delta",
+    "emptyState",
+    "field",
+    "formGrid",
+    "lineChart",
+    "richRow",
+    "rows",
+    "searchBar",
+    "section",
+    "sparkline",
+    "summaryCard",
+    "table"
+   ],
+   "charts": [
+    "sparkline",
+    "lineChart"
+   ],
+   "context": [
+    "metals",
+    "moneyRaw",
+    "num",
+    "pct",
+    "signed",
+    "state",
+    "t"
+   ],
+   "data": [
+    "walk"
+   ],
+   "sheets": [
+    "personalise"
+   ],
+   "toolstate": [],
+   "links": [],
+   "external": [],
+   "hostHandlers": [],
+   "webTestMentions": 0
+  },
+  {
+   "id": "installments",
+   "file": "assets/js/tools/money/installments.tool.js",
+   "lines": 73,
+   "declares": [
+    "installments"
+   ],
+   "shared": [],
+   "ui": [
+    "barChart",
+    "card",
+    "compactRow",
+    "emptyState",
+    "filterBar",
+    "progressBar",
+    "richRow",
+    "rows",
+    "section",
+    "sortBar",
+    "summaryCard",
+    "timeline"
+   ],
+   "charts": [
+    "barChart",
+    "timeline"
+   ],
+   "context": [
+    "filter",
+    "installments",
+    "money",
+    "sortBy",
+    "sortItems",
+    "t"
+   ],
+   "data": [],
+   "sheets": [],
+   "toolstate": [
+    "state"
+   ],
+   "links": [],
+   "external": [],
+   "hostHandlers": [],
+   "webTestMentions": 0
+  },
+  {
+   "id": "ledger",
+   "file": "assets/js/tools/money/ledger.tool.js",
+   "lines": 61,
+   "declares": [
+    "ledger"
+   ],
+   "shared": [],
+   "ui": [
+    "buttonRow",
+    "compactRow",
+    "emptyState",
+    "filterBar",
+    "richRow",
+    "rows",
+    "section",
+    "summaryCard"
+   ],
+   "charts": [],
+   "context": [
+    "filter",
+    "ledger",
+    "money",
+    "t"
+   ],
+   "data": [],
+   "sheets": [],
+   "toolstate": [
+    "dir"
+   ],
+   "links": [],
+   "external": [],
+   "hostHandlers": [],
+   "webTestMentions": 0
+  },
+  {
+   "id": "loan",
+   "file": "assets/js/tools/money/loan.tool.js",
+   "lines": 55,
+   "declares": [
+    "loan"
+   ],
+   "shared": [],
+   "ui": [
+    "card",
+    "compactRow",
+    "donut",
+    "field",
+    "formGrid",
+    "rows",
+    "section",
+    "summaryCard",
+    "table"
+   ],
+   "charts": [
+    "donut"
+   ],
+   "context": [
+    "loan",
+    "moneyRaw",
+    "num",
+    "t"
+   ],
+   "data": [],
+   "sheets": [],
+   "toolstate": [],
+   "links": [],
+   "external": [],
+   "hostHandlers": [],
+   "webTestMentions": 0
+  },
+  {
+   "id": "markets",
+   "file": "assets/js/tools/money/markets.tool.js",
+   "lines": 413,
+   "declares": [
+    "markets"
+   ],
+   "shared": [
+    "direction"
+   ],
+   "ui": [
+    "buttonRow",
+    "card",
+    "contextBar",
+    "delta",
+    "emptyState",
+    "field",
+    "filterBar",
+    "formGrid",
+    "freshness",
+    "lineChart",
+    "metrics",
+    "richRow",
+    "rows",
+    "searchBar",
+    "section",
+    "sortBar",
+    "sparkline",
+    "table",
+    "tabs"
+   ],
+   "charts": [
+    "sparkline",
+    "lineChart"
+   ],
+   "context": [
+    "assetClasses",
+    "assetDetail",
+    "assetsFor",
+    "exchange",
+    "field",
+    "filter",
+    "heroAsset",
+    "marketCode",
+    "marketState",
+    "moneyRaw",
+    "num",
+    "pct",
+    "seriesFor",
+    "signed",
+    "sortBy",
+    "sortItems",
+    "state",
+    "t"
+   ],
+   "data": [
+    "COMMODITY_CATS",
+    "GLOBAL_INDICES",
+    "GLOBAL_OVERVIEW",
+    "classOverview",
+    "overviewFor",
+    "walk"
+   ],
+   "sheets": [
+    "market"
+   ],
+   "toolstate": [
+    "class",
+    "detail",
+    "range"
+   ],
+   "links": [],
+   "external": [],
+   "hostHandlers": [
+    "currentTool === 'markets'"
+   ],
+   "webTestMentions": 11
+  },
+  {
+   "id": "natsavings",
+   "file": "assets/js/tools/money/natsavings.tool.js",
+   "lines": 75,
+   "declares": [
+    "natsavings"
+   ],
+   "shared": [],
+   "ui": [
+    "card",
+    "contextBar",
+    "emptyState",
+    "field",
+    "formGrid",
+    "metrics",
+    "richRow",
+    "rows",
+    "searchBar",
+    "section",
+    "selectField",
+    "sortBar",
+    "summaryCard"
+   ],
+   "charts": [],
+   "context": [
+    "moneyRaw",
+    "num",
+    "sortBy",
+    "sortItems",
+    "state",
+    "t"
+   ],
+   "data": [
+    "NAT_SAVINGS"
+   ],
+   "sheets": [],
+   "toolstate": [],
+   "links": [],
+   "external": [],
+   "hostHandlers": [],
+   "webTestMentions": 0
+  },
+  {
+   "id": "packages",
+   "file": "assets/js/tools/money/packages.tool.js",
+   "lines": 71,
+   "declares": [
+    "packages"
+   ],
+   "shared": [],
+   "ui": [
+    "compactRow",
+    "emptyState",
+    "expandRow",
+    "filterBar",
+    "rows",
+    "searchBar",
+    "section",
+    "sortBar",
+    "table"
+   ],
+   "charts": [],
+   "context": [
+    "filter",
+    "moneyRaw",
+    "sortBy",
+    "sortItems",
+    "state",
+    "t"
+   ],
+   "data": [
+    "MOBILE_PACKAGES"
+   ],
+   "sheets": [],
+   "toolstate": [],
+   "links": [],
+   "external": [],
+   "hostHandlers": [],
+   "webTestMentions": 0
+  },
+  {
+   "id": "prizebonds",
+   "file": "assets/js/tools/money/prizebonds.tool.js",
+   "lines": 82,
+   "declares": [
+    "prizebonds"
+   ],
+   "shared": [],
+   "ui": [
+    "barChart",
+    "buttonRow",
+    "card",
+    "compactRow",
+    "contextBar",
+    "emptyState",
+    "field",
+    "formGrid",
+    "richRow",
+    "rows",
+    "section",
+    "selectField",
+    "summaryCard",
+    "table"
+   ],
+   "charts": [
+    "barChart"
+   ],
+   "context": [
+    "moneyRaw",
+    "num",
+    "state",
+    "t"
+   ],
+   "data": [
+    "PRIZE_BONDS"
+   ],
+   "sheets": [
+    "personalise"
+   ],
+   "toolstate": [],
+   "links": [],
+   "external": [],
+   "hostHandlers": [],
+   "webTestMentions": 0
+  },
+  {
+   "id": "tax",
+   "file": "assets/js/tools/money/tax.tool.js",
+   "lines": 110,
+   "declares": [
+    "tax"
+   ],
+   "shared": [],
+   "ui": [
+    "buttonRow",
+    "card",
+    "contextBar",
+    "donut",
+    "emptyState",
+    "field",
+    "formGrid",
+    "noteCard",
+    "section",
+    "segmented",
+    "summaryCard",
+    "table"
+   ],
+   "charts": [
+    "donut"
+   ],
+   "context": [
+    "field",
+    "moneyRaw",
+    "num",
+    "pct",
+    "t",
+    "tax"
+   ],
+   "data": [
+    "leviesFor"
+   ],
+   "sheets": [
+    "personalise"
+   ],
+   "toolstate": [
+    "period"
+   ],
+   "links": [],
+   "external": [],
+   "hostHandlers": [],
+   "webTestMentions": 0
+  },
+  {
+   "id": "tipsplit",
+   "file": "assets/js/tools/money/tipsplit.tool.js",
+   "lines": 41,
+   "declares": [
+    "tipsplit"
+   ],
+   "shared": [],
+   "ui": [
+    "card",
+    "compactRow",
+    "field",
+    "formGrid",
+    "rows",
+    "section",
+    "stepper",
+    "summaryCard"
+   ],
+   "charts": [],
+   "context": [
+    "moneyRaw",
+    "t",
+    "tipSplit"
+   ],
+   "data": [],
+   "sheets": [],
+   "toolstate": [
+    "tip"
+   ],
+   "links": [],
+   "external": [],
+   "hostHandlers": [],
+   "webTestMentions": 0
+  },
+  {
+   "id": "alarms",
+   "file": "assets/js/tools/personal/alarms.tool.js",
+   "lines": 29,
+   "declares": [
+    "alarms"
+   ],
+   "shared": [],
+   "ui": [
+    "fab",
+    "richRow",
+    "rows",
+    "section",
+    "summaryCard"
+   ],
+   "charts": [],
+   "context": [
+    "alarms",
+    "t"
+   ],
+   "data": [],
+   "sheets": [],
+   "toolstate": [],
+   "links": [],
+   "external": [],
+   "hostHandlers": [],
+   "webTestMentions": 0
+  },
+  {
+   "id": "babybudget",
+   "file": "assets/js/tools/personal/babybudget.tool.js",
+   "lines": 38,
+   "declares": [
+    "babybudget"
+   ],
+   "shared": [],
+   "ui": [
+    "barChart",
+    "card",
+    "compactRow",
+    "donut",
+    "progressRing",
+    "rows",
+    "section",
+    "summaryCard"
+   ],
+   "charts": [
+    "barChart",
+    "donut"
+   ],
+   "context": [
+    "babyBudget",
+    "money",
+    "t"
+   ],
+   "data": [],
+   "sheets": [],
+   "toolstate": [],
+   "links": [],
+   "external": [],
+   "hostHandlers": [],
+   "webTestMentions": 0
+  },
+  {
+   "id": "birthdays",
+   "file": "assets/js/tools/personal/birthdays.tool.js",
+   "lines": 36,
+   "declares": [
+    "birthdays"
+   ],
+   "shared": [],
+   "ui": [
+    "fab",
+    "richRow",
+    "rows",
+    "section",
+    "summaryCard"
+   ],
+   "charts": [],
+   "context": [
+    "birthdays",
+    "t"
+   ],
+   "data": [],
+   "sheets": [],
+   "toolstate": [],
+   "links": [],
+   "external": [],
+   "hostHandlers": [],
+   "webTestMentions": 0
+  },
+  {
+   "id": "bmi",
+   "file": "assets/js/tools/personal/bmi.tool.js",
+   "lines": 41,
+   "declares": [
+    "bmi"
+   ],
+   "shared": [],
+   "ui": [
+    "card",
+    "compactRow",
+    "field",
+    "formGrid",
+    "lineChart",
+    "progressRing",
+    "rows",
+    "section",
+    "statusBadge",
+    "summaryCard"
+   ],
+   "charts": [
+    "lineChart"
+   ],
+   "context": [
+    "bmi",
+    "num",
+    "t"
+   ],
+   "data": [],
+   "sheets": [],
+   "toolstate": [],
+   "links": [],
+   "external": [],
+   "hostHandlers": [],
+   "webTestMentions": 0
+  },
+  {
+   "id": "cycle",
+   "file": "assets/js/tools/personal/cycle.tool.js",
+   "lines": 30,
+   "declares": [
+    "cycle"
+   ],
+   "shared": [],
+   "ui": [
+    "compactRow",
+    "noteCard",
+    "progressRing",
+    "rows",
+    "section",
+    "summaryCard"
+   ],
+   "charts": [],
+   "context": [
+    "cycle",
+    "monthGrid",
+    "t"
+   ],
+   "data": [],
+   "sheets": [],
+   "toolstate": [],
+   "links": [],
+   "external": [],
+   "hostHandlers": [],
+   "webTestMentions": 0
+  },
+  {
+   "id": "documents",
+   "file": "assets/js/tools/personal/documents.tool.js",
+   "lines": 79,
+   "declares": [
+    "documents"
+   ],
+   "shared": [],
+   "ui": [
+    "buttonRow",
+    "emptyState",
+    "filterBar",
+    "noteCard",
+    "richRow",
+    "rows",
+    "section",
+    "sortBar",
+    "summaryCard"
+   ],
+   "charts": [],
+   "context": [
+    "documents",
+    "filter",
+    "sortBy",
+    "sortItems",
+    "state",
+    "t"
+   ],
+   "data": [],
+   "sheets": [],
+   "toolstate": [
+    "cat"
+   ],
+   "links": [
+    "docscan"
+   ],
+   "external": [],
+   "hostHandlers": [],
+   "webTestMentions": 2
+  },
+  {
+   "id": "expenses",
+   "file": "assets/js/tools/personal/expenses.tool.js",
+   "lines": 99,
+   "declares": [
+    "expenses"
+   ],
+   "shared": [],
+   "ui": [
+    "barChart",
+    "buttonRow",
+    "card",
+    "compactRow",
+    "donut",
+    "emptyState",
+    "filterBar",
+    "meterRow",
+    "progressBar",
+    "progressRing",
+    "richRow",
+    "rows",
+    "section",
+    "segmented",
+    "sortBar",
+    "summaryCard"
+   ],
+   "charts": [
+    "barChart",
+    "donut"
+   ],
+   "context": [
+    "expenses",
+    "filter",
+    "money",
+    "sortBy",
+    "sortItems",
+    "state",
+    "t"
+   ],
+   "data": [
+    "EXPENSE_CATEGORIES"
+   ],
+   "sheets": [],
+   "toolstate": [
+    "cat",
+    "range"
+   ],
+   "links": [],
+   "external": [],
+   "hostHandlers": [],
+   "webTestMentions": 17
+  },
+  {
+   "id": "goals",
+   "file": "assets/js/tools/personal/goals.tool.js",
+   "lines": 56,
+   "declares": [
+    "goals"
+   ],
+   "shared": [],
+   "ui": [
+    "barChart",
+    "buttonRow",
+    "card",
+    "emptyState",
+    "progressBar",
+    "progressRing",
+    "section",
+    "summaryCard"
+   ],
+   "charts": [
+    "barChart"
+   ],
+   "context": [
+    "goals",
+    "money",
+    "t"
+   ],
+   "data": [],
+   "sheets": [],
+   "toolstate": [],
+   "links": [],
+   "external": [],
+   "hostHandlers": [],
+   "webTestMentions": 0
+  },
+  {
+   "id": "habits",
+   "file": "assets/js/tools/personal/habits.tool.js",
+   "lines": 46,
+   "declares": [
+    "habits"
+   ],
+   "shared": [],
+   "ui": [
+    "card",
+    "heatmap",
+    "progressRing",
+    "richRow",
+    "rows",
+    "section",
+    "summaryCard"
+   ],
+   "charts": [
+    "heatmap"
+   ],
+   "context": [
+    "habits",
+    "t"
+   ],
+   "data": [],
+   "sheets": [],
+   "toolstate": [],
+   "links": [],
+   "external": [],
+   "hostHandlers": [],
+   "webTestMentions": 0
+  },
+  {
+   "id": "health",
+   "file": "assets/js/tools/personal/health.tool.js",
+   "lines": 65,
+   "declares": [
+    "health"
+   ],
+   "shared": [],
+   "ui": [
+    "buttonRow",
+    "card",
+    "compactRow",
+    "emptyState",
+    "filterBar",
+    "lineChart",
+    "rows",
+    "section",
+    "statusBadge",
+    "summaryCard",
+    "timeline"
+   ],
+   "charts": [
+    "lineChart",
+    "timeline"
+   ],
+   "context": [
+    "filter",
+    "health",
+    "money",
+    "t"
+   ],
+   "data": [],
+   "sheets": [],
+   "toolstate": [
+    "person"
+   ],
+   "links": [
+    "documents",
+    "meds",
+    "vaccines"
+   ],
+   "external": [],
+   "hostHandlers": [],
+   "webTestMentions": 0
+  },
+  {
+   "id": "learning",
+   "file": "assets/js/tools/personal/learning.tool.js",
+   "lines": 44,
+   "declares": [
+    "learning"
+   ],
+   "shared": [],
+   "ui": [
+    "barChart",
+    "card",
+    "heatmap",
+    "progressBar",
+    "progressRing",
+    "richRow",
+    "rows",
+    "section",
+    "summaryCard"
+   ],
+   "charts": [
+    "barChart",
+    "heatmap"
+   ],
+   "context": [
+    "learning",
+    "t",
+    "weekLabels"
+   ],
+   "data": [
+    "COURSES"
+   ],
+   "sheets": [],
+   "toolstate": [],
+   "links": [],
+   "external": [],
+   "hostHandlers": [],
+   "webTestMentions": 0
+  },
+  {
+   "id": "mealplan",
+   "file": "assets/js/tools/personal/mealplan.tool.js",
+   "lines": 45,
+   "declares": [
+    "mealplan"
+   ],
+   "shared": [],
+   "ui": [
+    "barChart",
+    "buttonRow",
+    "card",
+    "compactRow",
+    "expandRow",
+    "rows",
+    "section",
+    "summaryCard"
+   ],
+   "charts": [
+    "barChart"
+   ],
+   "context": [
+    "mealPlan",
+    "money",
+    "num",
+    "t",
+    "weekLabels"
+   ],
+   "data": [],
+   "sheets": [],
+   "toolstate": [],
+   "links": [
+    "recipes",
+    "shopping"
+   ],
+   "external": [],
+   "hostHandlers": [],
+   "webTestMentions": 1
+  },
+  {
+   "id": "meds",
+   "file": "assets/js/tools/personal/meds.tool.js",
+   "lines": 50,
+   "declares": [
+    "meds"
+   ],
+   "shared": [],
+   "ui": [
+    "compactRow",
+    "progressBar",
+    "progressRing",
+    "richRow",
+    "rows",
+    "section",
+    "statusBadge",
+    "summaryCard",
+    "timeline"
+   ],
+   "charts": [
+    "timeline"
+   ],
+   "context": [
+    "meds",
+    "t"
+   ],
+   "data": [
+    "MEDS"
+   ],
+   "sheets": [],
+   "toolstate": [],
+   "links": [],
+   "external": [],
+   "hostHandlers": [],
+   "webTestMentions": 1
+  },
+  {
+   "id": "parcel",
+   "file": "assets/js/tools/personal/parcel.tool.js",
+   "lines": 48,
+   "declares": [
+    "parcel"
+   ],
+   "shared": [],
+   "ui": [
+    "buttonRow",
+    "card",
+    "field",
+    "formGrid",
+    "metrics",
+    "progressBar",
+    "richRow",
+    "rows",
+    "section",
+    "timeline"
+   ],
+   "charts": [
+    "timeline"
+   ],
+   "context": [
+    "state",
+    "t"
+   ],
+   "data": [
+    "PARCELS"
+   ],
+   "sheets": [],
+   "toolstate": [
+    "parcel"
+   ],
+   "links": [],
+   "external": [],
+   "hostHandlers": [],
+   "webTestMentions": 0
+  },
+  {
+   "id": "play",
+   "file": "assets/js/tools/personal/play.tool.js",
+   "lines": 27,
+   "declares": [
+    "play"
+   ],
+   "shared": [],
+   "ui": [
+    "compactRow",
+    "rows",
+    "section"
+   ],
+   "charts": [],
+   "context": [
+    "t"
+   ],
+   "data": [
+    "GAMES"
+   ],
+   "sheets": [],
+   "toolstate": [],
+   "links": [],
+   "external": [],
+   "hostHandlers": [],
+   "webTestMentions": 0
+  },
+  {
+   "id": "pregnancy",
+   "file": "assets/js/tools/personal/pregnancy.tool.js",
+   "lines": 34,
+   "declares": [
+    "pregnancy"
+   ],
+   "shared": [],
+   "ui": [
+    "card",
+    "metrics",
+    "progressRing",
+    "section",
+    "summaryCard",
+    "timeline"
+   ],
+   "charts": [
+    "timeline"
+   ],
+   "context": [
+    "pregnancy",
+    "t"
+   ],
+   "data": [],
+   "sheets": [],
+   "toolstate": [],
+   "links": [],
+   "external": [],
+   "hostHandlers": [],
+   "webTestMentions": 0
+  },
+  {
+   "id": "recipes",
+   "file": "assets/js/tools/personal/recipes.tool.js",
+   "lines": 62,
+   "declares": [
+    "recipes"
+   ],
+   "shared": [],
+   "ui": [
+    "art",
+    "compactRow",
+    "emptyState",
+    "hscroll",
+    "imageCard",
+    "richRow",
+    "rows",
+    "searchBar",
+    "section"
+   ],
+   "charts": [],
+   "context": [
+    "num",
+    "state",
+    "t"
+   ],
+   "data": [
+    "RECIPES"
+   ],
+   "sheets": [],
+   "toolstate": [
+    "cuisine"
+   ],
+   "links": [
+    "mealplan",
+    "shopping"
+   ],
+   "external": [],
+   "hostHandlers": [],
+   "webTestMentions": 0
+  },
+  {
+   "id": "shopping",
+   "file": "assets/js/tools/personal/shopping.tool.js",
+   "lines": 46,
+   "declares": [
+    "shopping"
+   ],
+   "shared": [],
+   "ui": [
+    "buttonRow",
+    "progressRing",
+    "rows",
+    "section",
+    "summaryCard"
+   ],
+   "charts": [],
+   "context": [
+    "money",
+    "shopping",
+    "state",
+    "t"
+   ],
+   "data": [],
+   "sheets": [],
+   "toolstate": [],
+   "links": [],
+   "external": [],
+   "hostHandlers": [],
+   "webTestMentions": 1
+  },
+  {
+   "id": "streak",
+   "file": "assets/js/tools/personal/streak.tool.js",
+   "lines": 33,
+   "declares": [
+    "streak"
+   ],
+   "shared": [],
+   "ui": [
+    "card",
+    "compactRow",
+    "heatmap",
+    "rows",
+    "section",
+    "summaryCard"
+   ],
+   "charts": [
+    "heatmap"
+   ],
+   "context": [
+    "streaks",
+    "t"
+   ],
+   "data": [],
+   "sheets": [],
+   "toolstate": [],
+   "links": [],
+   "external": [],
+   "hostHandlers": [],
+   "webTestMentions": 0
+  },
+  {
+   "id": "subs",
+   "file": "assets/js/tools/personal/subs.tool.js",
+   "lines": 62,
+   "declares": [
+    "subs"
+   ],
+   "shared": [],
+   "ui": [
+    "card",
+    "donut",
+    "richRow",
+    "rows",
+    "searchBar",
+    "section",
+    "sortBar",
+    "summaryCard",
+    "timeline"
+   ],
+   "charts": [
+    "donut",
+    "timeline"
+   ],
+   "context": [
+    "money",
+    "sortBy",
+    "sortItems",
+    "state",
+    "subscriptions",
+    "t"
+   ],
+   "data": [],
+   "sheets": [],
+   "toolstate": [],
+   "links": [],
+   "external": [],
+   "hostHandlers": [],
+   "webTestMentions": 0
+  },
+  {
+   "id": "vaccines",
+   "file": "assets/js/tools/personal/vaccines.tool.js",
+   "lines": 49,
+   "declares": [
+    "vaccines"
+   ],
+   "shared": [],
+   "ui": [
+    "buttonRow",
+    "emptyState",
+    "progressRing",
+    "richRow",
+    "rows",
+    "section",
+    "summaryCard"
+   ],
+   "charts": [],
+   "context": [
+    "t",
+    "vaccines"
+   ],
+   "data": [
+    "HEALTH_PEOPLE"
+   ],
+   "sheets": [],
+   "toolstate": [
+    "person"
+   ],
+   "links": [],
+   "external": [],
+   "hostHandlers": [],
+   "webTestMentions": 1
+  },
+  {
+   "id": "water",
+   "file": "assets/js/tools/personal/water.tool.js",
+   "lines": 37,
+   "declares": [
+    "water"
+   ],
+   "shared": [],
+   "ui": [
+    "barChart",
+    "buttonRow",
+    "card",
+    "progressRing",
+    "section",
+    "summaryCard",
+    "timeline"
+   ],
+   "charts": [
+    "barChart",
+    "timeline"
+   ],
+   "context": [
+    "t",
+    "water",
+    "weekLabels"
+   ],
+   "data": [],
+   "sheets": [],
+   "toolstate": [],
+   "links": [],
+   "external": [],
+   "hostHandlers": [
+    "currentTool === 'water'"
+   ],
+   "webTestMentions": 0
+  },
+  {
+   "id": "calendar",
+   "file": "assets/js/tools/planning/calendar.tool.js",
+   "lines": 36,
+   "declares": [
+    "calendar"
+   ],
+   "shared": [],
+   "ui": [
+    "compactRow",
+    "contextBar",
+    "fab",
+    "rows",
+    "section",
+    "segmented",
+    "timeline"
+   ],
+   "charts": [
+    "timeline"
+   ],
+   "context": [
+    "calendar",
+    "hijri",
+    "monthGrid",
+    "t"
+   ],
+   "data": [],
+   "sheets": [],
+   "toolstate": [
+    "view"
+   ],
+   "links": [],
+   "external": [],
+   "hostHandlers": [],
+   "webTestMentions": 11
+  },
+  {
+   "id": "events",
+   "file": "assets/js/tools/planning/events.tool.js",
+   "lines": 27,
+   "declares": [
+    "events"
+   ],
+   "shared": [],
+   "ui": [
+    "emptyState",
+    "richRow",
+    "rows",
+    "section"
+   ],
+   "charts": [],
+   "context": [
+    "events",
+    "state",
+    "t"
+   ],
+   "data": [],
+   "sheets": [],
+   "toolstate": [],
+   "links": [],
+   "external": [],
+   "hostHandlers": [],
+   "webTestMentions": 0
+  },
+  {
+   "id": "notes",
+   "file": "assets/js/tools/planning/notes.tool.js",
+   "lines": 43,
+   "declares": [
+    "notes"
+   ],
+   "shared": [],
+   "ui": [
+    "compactRow",
+    "emptyState",
+    "fab",
+    "hscroll",
+    "metrics",
+    "richRow",
+    "rows",
+    "section"
+   ],
+   "charts": [],
+   "context": [
+    "notes",
+    "state",
+    "t"
+   ],
+   "data": [],
+   "sheets": [],
+   "toolstate": [],
+   "links": [],
+   "external": [],
+   "hostHandlers": [],
+   "webTestMentions": 15
+  },
+  {
+   "id": "reminders",
+   "file": "assets/js/tools/planning/reminders.tool.js",
+   "lines": 23,
+   "declares": [
+    "reminders"
+   ],
+   "shared": [],
+   "ui": [
+    "fab",
+    "section",
+    "summaryCard",
+    "timeline"
+   ],
+   "charts": [
+    "timeline"
+   ],
+   "context": [
+    "reminders",
+    "t"
+   ],
+   "data": [],
+   "sheets": [],
+   "toolstate": [],
+   "links": [],
+   "external": [],
+   "hostHandlers": [],
+   "webTestMentions": 0
+  },
+  {
+   "id": "todos",
+   "file": "assets/js/tools/planning/todos.tool.js",
+   "lines": 70,
+   "declares": [
+    "todos"
+   ],
+   "shared": [],
+   "ui": [
+    "compactRow",
+    "emptyState",
+    "fab",
+    "filterBar",
+    "progressRing",
+    "rows",
+    "section",
+    "statusBadge",
+    "summaryCard"
+   ],
+   "charts": [],
+   "context": [
+    "filter",
+    "state",
+    "t",
+    "todos"
+   ],
+   "data": [],
+   "sheets": [],
+   "toolstate": [],
+   "links": [],
+   "external": [],
+   "hostHandlers": [],
+   "webTestMentions": 1
+  }
+ ]
+}
