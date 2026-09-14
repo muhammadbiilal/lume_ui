@@ -15,6 +15,7 @@ import '../../emergency/presentation/emergency_tool.dart';
 import '../../expenses/presentation/expenses_tool.dart';
 import '../../flights/presentation/flights_tool.dart';
 import '../../goldrates/presentation/goldrates_tool.dart';
+import '../../hadith/presentation/hadith_tool.dart';
 import '../../learning/presentation/learning_tool.dart';
 import '../../news/presentation/news_tool.dart';
 import '../../recipes/presentation/recipes_tool.dart';
@@ -40,4 +41,5 @@ const Map<String, LumeToolBuilder> kLumeToolRegistry =
       'expenses': LumeExpensesTool.open,
       'documents': LumeDocumentsTool.open,
       'weather': LumeWeatherTool.open,
+      'hadith': LumeHadithTool.open,
     };

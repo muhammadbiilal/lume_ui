@@ -4570,6 +4570,84 @@ abstract class AppLocalizations {
   /// **'8 glasses'**
   String get habitWater;
 
+  /// Reference key hadith.browse
+  ///
+  /// In en, this message translates to:
+  /// **'Browse'**
+  String get hadithBrowse;
+
+  /// Reference key hadith.collection
+  ///
+  /// In en, this message translates to:
+  /// **'Collection'**
+  String get hadithCollection;
+
+  /// A hadith's grade: good. A term of the science of hadith, written as scholars write it in each language
+  ///
+  /// In en, this message translates to:
+  /// **'Hasan'**
+  String get hadithGradeHasan;
+
+  /// A hadith's grade: authentic. A term of the science of hadith, written as scholars write it in each language
+  ///
+  /// In en, this message translates to:
+  /// **'Sahih'**
+  String get hadithGradeSahih;
+
+  /// Reference: t("hadith.narrator") + ": " + narrator — the name is the narrator's, as the collection gives it
+  ///
+  /// In en, this message translates to:
+  /// **'Narrated by: {name}'**
+  String hadithNarratedBy(String name);
+
+  /// Reference key hadith.noMatch
+  ///
+  /// In en, this message translates to:
+  /// **'Nothing found'**
+  String get hadithNoMatch;
+
+  /// Reference key hadith.noMatchText
+  ///
+  /// In en, this message translates to:
+  /// **'Try another collection or a shorter search.'**
+  String get hadithNoMatchText;
+
+  /// The toast a browse row says: src + " " + ref
+  ///
+  /// In en, this message translates to:
+  /// **'{source} {number}'**
+  String hadithOpened(String source, String number);
+
+  /// A hadith's source and number — src + " · " + ref; both are the collection's own
+  ///
+  /// In en, this message translates to:
+  /// **'{source} · {number}'**
+  String hadithReference(String source, String number);
+
+  /// Said after Save keeps the day's hadith (C77)
+  ///
+  /// In en, this message translates to:
+  /// **'Saved to your reading'**
+  String get hadithSaved;
+
+  /// The Save button once the day's hadith is kept
+  ///
+  /// In en, this message translates to:
+  /// **'Saved'**
+  String get hadithSavedLabel;
+
+  /// Reference key hadith.search
+  ///
+  /// In en, this message translates to:
+  /// **'Search hadith'**
+  String get hadithSearch;
+
+  /// Said after Save is pressed again
+  ///
+  /// In en, this message translates to:
+  /// **'Removed from your reading'**
+  String get hadithUnsaved;
+
   /// A heatmap cell's level
   ///
   /// In en, this message translates to:

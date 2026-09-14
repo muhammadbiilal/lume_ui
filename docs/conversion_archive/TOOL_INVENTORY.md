@@ -109,7 +109,7 @@ Builders named are the `UI.*` calls the module makes (inventory `modules[].ui`).
 | G | **Data explorer** | `contextBar` → `summaryCard` → `searchBar` → `richRow`s with `sparkline`/`delta` → `lineChart` → `table` | `goldrates` `currency` `fuel` `natsavings` `prizebonds` `packages` `worldclock` `quransearch` (8); `markets` has its own approved composition | **Currency & Gold** — decision F6A-D4 |
 | H | **Live tracking** | `searchBar`/`segmented` → `metrics` → `map` → `richRow` board → `journey` → `table` → `timeline` | `flights` `trains` `parcel` `mosques` `taraweeh` (5) | **Flights** |
 | I | **Editorial reader** | `contextBar` → `searchBar` → scrolling chips → a lead article with `art` → `richRow`s with thumbnails | `news` (1) | **News** |
-| J | **Scripture reader** | a `kard--reader` card (Arabic, translation, source, share/listen) → search/filter → rows | `quran` `hadith` `ayah` `duas` `names99` (5) | none yet — decision F6A-D5 |
+| J | **Scripture reader** | a `kard--reader` card (Arabic, translation, source, share/listen) → search/filter → rows | `quran` `hadith` `ayah` `duas` `names99` (5) | **Hadith** — decision F6A-D5; *built* (C77) |
 | K | **Visual library** | `searchBar` → chips → `hscroll` of `imageCard`s → `richRow`s with `art` thumbnails | `recipes` `play` (2) | **Recipes** |
 | L | **Clock instrument** | `shared/clock.js` `clockScreen` driven by the host's `runClock` | `timer` `stopwatch` `focus` (3) | **Timer** |
 | M | **Camera instrument** | `shared/scanner.js` `scannerScreen`; a permission the user grants by acting | `qr` `docscan` (2); `passport` `wastatus` ask for a permission without the scanner | none yet — decision F6A-D5 |
@@ -241,6 +241,7 @@ spec port ──► tool host adapter ──► route dispatch
 11. **Expenses** (C) — the record layer, first family; in memory and declared not durable, the dashboard kept as the reference has it (C74) — *built*
 12. **Documents** (B) — the record layer's second family and irreversible delete; "Encrypted on device" over the in-memory store, with the obligation (C75) — *built*
 13. **Weather** (D) — the context dashboard on the reference weather port, extended to the hours, air and sun; "Delayed", never "Live" (C76) — *built*
+14. **Hadith** (J) — the scripture reader; hadith kept as written, a share that is the hadith read (C77) — *built*
 
 ## 6. Decisions this inventory raises
 

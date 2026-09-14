@@ -726,6 +726,34 @@ void main() {
     }
   });
 
+  // --------------------------------------------------------------- Hadith
+
+  group('Hadith', () {
+    final String location = LumeRoutes.tool(LumeRoutes.tools, 'hadith');
+
+    for (final Cell cell in kCells) {
+      testWidgets(cell.$1, (WidgetTester tester) async {
+        await shoot(
+          tester,
+          state: 'muslim_pk',
+          location: location,
+          golden: 'tool_hadith_muslim_pk',
+          cell: cell,
+        );
+      });
+    }
+
+    testWidgets('muslim_gb · the reference cell', (WidgetTester tester) async {
+      await shoot(
+        tester,
+        state: 'muslim_gb',
+        location: location,
+        golden: 'tool_hadith_muslim_gb',
+        cell: kCells.first,
+      );
+    });
+  });
+
   // ----------------------------------------------------------- Share card
 
   // The share sheet over Tax (D7): the card drawn from the screen's own

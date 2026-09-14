@@ -2494,6 +2494,51 @@ class AppLocalizationsAr extends AppLocalizations {
   String get habitWater => '8 أكواب';
 
   @override
+  String get hadithBrowse => 'تصفّح';
+
+  @override
+  String get hadithCollection => 'المجموعة';
+
+  @override
+  String get hadithGradeHasan => 'حسن';
+
+  @override
+  String get hadithGradeSahih => 'صحيح';
+
+  @override
+  String hadithNarratedBy(String name) {
+    return 'رواه: $name';
+  }
+
+  @override
+  String get hadithNoMatch => 'لم يُعثر على شيء';
+
+  @override
+  String get hadithNoMatchText => 'جرّب مجموعة أخرى أو بحثًا أقصر.';
+
+  @override
+  String hadithOpened(String source, String number) {
+    return '$source $number';
+  }
+
+  @override
+  String hadithReference(String source, String number) {
+    return '$source · $number';
+  }
+
+  @override
+  String get hadithSaved => 'حُفظ في قراءاتك';
+
+  @override
+  String get hadithSavedLabel => 'محفوظ';
+
+  @override
+  String get hadithSearch => 'ابحث في الأحاديث';
+
+  @override
+  String get hadithUnsaved => 'أُزيل من قراءاتك';
+
+  @override
   String get heatLevelAll => 'الكل';
 
   @override

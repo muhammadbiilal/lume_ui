@@ -1902,6 +1902,78 @@ were:**
 | `LumeSunArc` (new) | — | `.sunarc`: a 200 × 74 view stretched to the card; a dashed `border-2` arc, the passed part 2.5 in amber, a 6-radius sun ringed in the card; ends 8 below, 14 / 800 over 10 / 600 |
 | `LumeFormatting.weekdayLong` (new) | — | a forecast day past tomorrow in the reader's own date locale |
 
+### C77 — Hadith: a reader that shares what it shows
+
+**Found in F6A on Hadith, the scripture-reader reference (F6A-D5).**
+
+- **A hadith is kept as written — decided.** The reference gives each hadith,
+  its narrator and its collection in English in every language. A hadith's
+  translation has to come from a verified source, so none is made here: the
+  words, narrators, book names and numbers stay exactly as the reference has
+  them, set left to right inside a right-to-left interface, and the interface
+  around them is translated (D12). The grades "Sahih" and "Hasan" are the
+  scholars' own terms in each language. **Dayroz obligation:** sourced
+  translations and the Arabic originals, with their provenance, before a
+  hadith is shown in another language.
+- **Faith-gated — reproduced.** A reader who has not turned the Islamic
+  experience on never reaches the tool; the catalogue's gate decides, and the
+  reference refuses the same profile (its measurement never opens).
+- **Share hands over a different hadith — corrected (C68).** The reference's
+  `shareForTool` has no hadith branch, so Share falls back to the fixed card
+  for Al-Mu‘jam al-Awsat 5787 whatever is being read. Flutter's card is the
+  hadith on screen: its words and "Sahih Muslim 2609".
+- **Save does nothing — corrected.** `bookmark:hadith` has no handler in the
+  shell. Flutter keeps the day's hadith for the session, says so, and the
+  button reads "Saved"; pressed again it lets go. Nothing persists beyond the
+  session (C74's store is not involved).
+- **A browse row only names itself — reproduced.** Pressing one toasts its
+  source and number; there is no hadith page to open.
+- **The day's hadith is `dayIndex` — reproduced.** `(year × 372 + month × 31
+  + date) % 4`, the month counted from zero, so 7 September 2026 opens on
+  Sahih Muslim 2609.
+- **Collection counts are the books' sizes — reproduced.** 7563, 5362 and
+  3956, while the list holds four hadith.
+
+**Found on Hadith (reference tool 13), built the way C62's were:**
+
+| widget | was | reference, measured |
+|---|---|---|
+| `LumeReaderCard` (new) | — | `.kard--reader`: `20 18` in a one-point border at radius 16, `card` washed to `card-2` at 170°; reference 11 / 700 / .04em in capitals in the accent; words 12 below at 15 / 500 / −.012em on 1.7 (25.5 there, 25 in Flutter's metrics); metaline 14 below, 11 / 600 `text-3`, byline and badge at either end; actions 18 below, sharing the width 8 apart, 46 tall |
+
+### C78 — QR Scanner: a scanner that says it cannot scan yet
+
+**Found in F6A on QR Scanner, the camera-instrument reference (F6A-D5).**
+
+- **Scan only says "Scanning" — corrected, through a contract.** The
+  reference's Scan toasts "Scanning" and From gallery "Choosing an image";
+  neither reads anything. Flutter reaches the camera only through
+  `LumeScanner` (`lume_scanner.dart`), whose outcomes the screen says as they
+  are: read, no code found, camera refused, unavailable, failed. The camera is
+  asked for only by a press, never at launch.
+- **No camera package is chosen — open, not decided here.** A real scanner
+  needs a camera plugin, the camera and photo-library permissions and their
+  wording on each platform; that is a dependency and privacy decision, so
+  this build's `scannerProvider` is `LumeUnavailableScanner`, which answers
+  "Scanning isn't available in this version yet" and never touches the
+  device. Tests use `LumeRecordingScanner`.
+- **"Live · Camera · Updated 30 sec ago" over a camera that has seen
+  nothing — reproduced, with the obligation.** The host shows the
+  catalogue's freshness for every tool, as C73 kept Flights' "Live".
+  **Dayroz obligation:** the source line describes a scan that happened, or
+  says nothing, before the scanner ships.
+- **The history is two fixtures — reproduced.** "lume.app/tools" today and
+  "Home-WiFi" yesterday were never scanned; pressing one only names it.
+- **English in every language — translated.** `qr.*` and `scan.*` are keyed
+  and translated (D12); the fixture history's link and network name stay as
+  written.
+
+**Found on QR Scanner (reference tool 14), built the way C62's were:**
+
+| widget | was | reference, measured |
+|---|---|---|
+| viewfinder (in `qr_tool.dart`) | — | `.scanner__view`: 232 tall at radius 20 on the scan gradient; a 148 frame at radius 16 ringed in white at .55 over the rest dimmed at .28; a 148 × 2 accent-400 beam sweeping every 2.4 s, still when motion is reduced; the hint 16 up, 11 / 600 white at .82 on black at .32 in a `6 12` pill; the actions 14 below |
+| `LumeScanner` (new) | — | the device contract: `scan()` and `pickImage()` reporting a `LumeScanOutcome`, with an unavailable default and a recording fake |
+
 ### C63 — English dates written the wrong way outside the United States
 
 **Found in F6A** on the UAE Tax capture ("Mon, 7 Sep") and confirmed by

@@ -3343,6 +3343,79 @@
   "@habitWater": {
     "description": "Reference: a habit"
   },
+  "hadithBrowse": "Browse",
+  "@hadithBrowse": {
+    "description": "Reference key hadith.browse"
+  },
+  "hadithCollection": "Collection",
+  "@hadithCollection": {
+    "description": "Reference key hadith.collection"
+  },
+  "hadithGradeHasan": "Hasan",
+  "@hadithGradeHasan": {
+    "description": "A hadith's grade: good. A term of the science of hadith, written as scholars write it in each language"
+  },
+  "hadithGradeSahih": "Sahih",
+  "@hadithGradeSahih": {
+    "description": "A hadith's grade: authentic. A term of the science of hadith, written as scholars write it in each language"
+  },
+  "hadithNarratedBy": "Narrated by: {name}",
+  "@hadithNarratedBy": {
+    "description": "Reference: t(\"hadith.narrator\") + \": \" + narrator — the name is the narrator's, as the collection gives it",
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "hadithNoMatch": "Nothing found",
+  "@hadithNoMatch": {
+    "description": "Reference key hadith.noMatch"
+  },
+  "hadithNoMatchText": "Try another collection or a shorter search.",
+  "@hadithNoMatchText": {
+    "description": "Reference key hadith.noMatchText"
+  },
+  "hadithOpened": "{source} {number}",
+  "@hadithOpened": {
+    "description": "The toast a browse row says: src + \" \" + ref",
+    "placeholders": {
+      "source": {
+        "type": "String"
+      },
+      "number": {
+        "type": "String"
+      }
+    }
+  },
+  "hadithReference": "{source} · {number}",
+  "@hadithReference": {
+    "description": "A hadith's source and number — src + \" · \" + ref; both are the collection's own",
+    "placeholders": {
+      "source": {
+        "type": "String"
+      },
+      "number": {
+        "type": "String"
+      }
+    }
+  },
+  "hadithSaved": "Saved to your reading",
+  "@hadithSaved": {
+    "description": "Said after Save keeps the day's hadith (C77)"
+  },
+  "hadithSavedLabel": "Saved",
+  "@hadithSavedLabel": {
+    "description": "The Save button once the day's hadith is kept"
+  },
+  "hadithSearch": "Search hadith",
+  "@hadithSearch": {
+    "description": "Reference key hadith.search"
+  },
+  "hadithUnsaved": "Removed from your reading",
+  "@hadithUnsaved": {
+    "description": "Said after Save is pressed again"
+  },
   "heatLevelAll": "all",
   "@heatLevelAll": {
     "description": "A heatmap cell's level"

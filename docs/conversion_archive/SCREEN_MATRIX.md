@@ -173,7 +173,7 @@ run on the shared CRUD engine.
 | `ayah` | Ayah of the Day | reader | medium | faith | — | — | Y | not started |
 | `quran` | Al-Qur’an | reader | high | faith | — | Y | Y | not started |
 | `quransearch` | Search the Qur’an | explorer | high | faith | — | — | — | not started |
-| `hadith` | Hadith | reader | high | faith | — | — | Y | not started |
+| `hadith` | Hadith | reader | high | faith | — | — | Y | **built (F6A)** — reference tool for scripture readers; the day's hadith with share and save, search, collections with counts, browse rows with grades; hadith kept as written, the interface translated (C77) |
 | `duas` | Daily Duas | library | high | faith | — | — | Y | not started |
 | `names99` | 99 Names | library | medium | faith | — | — | Y | not started |
 | `hijri` | Islamic Calendar | planner | medium | faith | — | — | — | not started |
