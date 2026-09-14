@@ -28,6 +28,7 @@ import '../../theme/lume/lume_theme.dart';
 import '../../theme/lume/lume_type.dart';
 import 'lume_button.dart';
 import 'lume_pressable.dart';
+import 'lume_target.dart';
 
 /// `.toolbar` — back, title, optional subtitle, trailing actions.
 class LumeToolbar extends StatelessWidget {
@@ -326,6 +327,11 @@ class LumeContextItem {
 class _ContextItem extends StatelessWidget {
   const _ContextItem({required this.item});
 
+  /// The drawn height of a pressable item, and how far its target reaches.
+  static const double height = 18;
+  static const double slopY = 13;
+  static const double slopX = 4;
+
   final LumeContextItem item;
 
   @override
@@ -363,18 +369,25 @@ class _ContextItem extends StatelessWidget {
 
     if (!pressable) return content;
     // `min-height: 32px; padding: 7px 4px; margin: -7px -4px` — the button
-    // takes 18 of the strip's height, which is what makes the strip 22. Its
-    // drawn target reaches 7 further each way, but a Flutter hit test does not
-    // reach past the box it lands in, so the touchable area is the 18
-    // (C62).
-    return LumePressable(
-      onTap: item.onTap,
-      borderRadius: LumeRadius.full,
-      minSize: 0,
-      semanticLabel: item.label,
-      child: SizedBox(
-        height: 18,
-        child: Center(widthFactor: 1, child: content),
+    // takes 18 of the strip's height, which is what makes the strip 22, and
+    // reaches 7 past it each way. The touchable area reaches 13 above and
+    // below — §9's 44, which the section gap has room for — and 4 to each
+    // side, half the 8-point gap, so neighbours never share a point. Drawn
+    // exactly as before; see [LumeTargetSlop].
+    return LumeTargetSlop(
+      slop: const EdgeInsetsDirectional.symmetric(
+        horizontal: slopX,
+        vertical: slopY,
+      ),
+      child: LumePressable(
+        onTap: item.onTap,
+        borderRadius: LumeRadius.full,
+        minSize: 0,
+        semanticLabel: item.label,
+        child: SizedBox(
+          height: height,
+          child: Center(widthFactor: 1, child: content),
+        ),
       ),
     );
   }

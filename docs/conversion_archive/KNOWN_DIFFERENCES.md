@@ -1357,10 +1357,20 @@ All are corrected, and every one is held by `tax_bounds_test.dart`:
 | `LumeSegmented` | segments as wide as their labels | segments share the track (`flex: 1`) |
 | `LumeToolbar` / `LumeContextBar` | icon actions grew the bar to 67; strip 26 tall on a 16-point line; gutter fixed at 20 | icon targets overhang the padding (bar stays 62, D6); strip 22 on the font's 13; gutter follows the width class |
 
-**One residual.** A pressable context-strip item is drawn 32 tall in the
-reference with negative margins; a Flutter hit test does not reach outside the
-box it lands in, so its touchable height is the 18 it occupies. Both are below
-§9's 44; the reference's is too.
+**Context-strip target — corrected after F6A review, an invisible
+accessibility adaptation.** A pressable context-strip item is 18 tall in the
+layout and the reference widens its target to 32 with negative margins. A
+Flutter hit test does not reach outside the box it lands in, so at first the
+touchable height was the 18. `LumeTargetRegion` (the tool body) now hands a tap
+that lands on nothing to the nearest `LumeTargetSlop` whose widened box holds
+it: the item's target is **44 tall** — 13 above and below, inside the 24-point
+section gaps and clear of the tool bar — and 4 wider each side, half the
+8-point gap, so neighbours never share a point. Geometry, paint and semantics
+are unchanged (semantic rect 18); no golden moved. Beyond the reference's 32,
+so this is an adaptation, not parity. **Evidence:** `lume_target_test.dart` —
+taps 12 above and below open Personalise, 15 above does nothing, a fact in the
+strip keeps its own tap, neighbours split the gap in both directions, Urdu at
+200 %.
 
 ### C63 — English dates written the wrong way outside the United States
 

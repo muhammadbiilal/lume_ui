@@ -36,6 +36,7 @@ import '../widgets/lume/lume_badge.dart';
 import '../widgets/lume/lume_header.dart';
 import '../widgets/lume/lume_state.dart';
 import '../widgets/lume/lume_table.dart';
+import '../widgets/lume/lume_target.dart';
 import '../widgets/lume/lume_tool.dart';
 
 /// What a tool has to show, before it has anything to show.
@@ -237,9 +238,13 @@ class _LumeToolFrameState extends State<LumeToolFrame> {
           child: LumeMeasure(
             wide: widget.wide,
             gutters: false,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: _content(context),
+            // Sections are 24 apart, so a small control near an edge has room
+            // to be touched past its drawn box without taking anybody's tap.
+            child: LumeTargetRegion(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: _content(context),
+              ),
             ),
           ),
         ),
