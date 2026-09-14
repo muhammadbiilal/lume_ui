@@ -22,6 +22,12 @@
     <uses-permission
         android:name="android.permission.WRITE_EXTERNAL_STORAGE"
         android:maxSdkVersion="28" />
+    <!-- The manifest merger implies READ_EXTERNAL_STORAGE from the camera
+         plugin's WRITE_EXTERNAL_STORAGE. Nothing in Lume reads storage: the
+         Photo Picker grants the one image chosen. -->
+    <uses-permission
+        android:name="android.permission.READ_EXTERNAL_STORAGE"
+        tools:node="remove" />
     <application
         android:label="lume"
         android:name="${applicationName}"

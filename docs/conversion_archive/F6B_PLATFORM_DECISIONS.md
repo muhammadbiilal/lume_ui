@@ -72,8 +72,18 @@ grant the whole library (C81).
 Not added: `READ_MEDIA_IMAGES`, `READ_EXTERNAL_STORAGE`,
 `MANAGE_EXTERNAL_STORAGE`, `ACCESS_MEDIA_LOCATION`, location, contacts,
 microphone. `image_picker` merges a `FileProvider` and the Photo Picker
-back-port service, neither of which is a permission. The merged manifest is
-checked in the verification gate.
+back-port service, neither of which is a permission.
+
+**Checked in the merged debug manifest** (`manifest-merger-debug-report.txt`):
+
+| merged entry | from | outcome |
+|---|---|---|
+| `CAMERA` | app | kept |
+| `WRITE_EXTERNAL_STORAGE maxSdkVersion 28` | app and `camera_android_camerax` | kept |
+| `READ_EXTERNAL_STORAGE` | *implied* by the merger from the camera plugin's write permission | **removed** (`tools:node="remove"`) — found in the F6B device build |
+| `RECORD_AUDIO` | `camera_android_camerax` | removed |
+| `ACCESS_NETWORK_STATE` | `androidx.media3:media3-common`, brought in by a plugin | kept and recorded: a normal install-time permission; nothing in Lume opens a network data source. **Decision:** remove it once the dependency that pulls media3 is confirmed not to need it |
+| `INTERNET` | Flutter's debug manifest | debug builds only |
 
 ## 3. iOS configuration
 

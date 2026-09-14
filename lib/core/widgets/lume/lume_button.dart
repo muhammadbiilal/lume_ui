@@ -249,7 +249,11 @@ class LumeButton extends StatelessWidget {
     return Semantics(
       button: true,
       enabled: _enabled,
-      label: semanticLabel,
+      // The pressable below excludes the button's own text so it is not
+      // announced twice — so the name has to be given here, or the button has
+      // none. Found on a device in F6B (C84): TalkBack read "Button" for
+      // every one of them.
+      label: semanticLabel ?? label,
       // A screen reader should hear that a save is in progress, not just a
       // button whose label changed.
       liveRegion: busy,

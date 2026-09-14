@@ -2179,6 +2179,24 @@ state says "tap Lap". Leaving the tool stops the clock and keeps the time, as
 | `LumeFormatting` | — | `fixed` (`toFixed`), `moneyUpTo` (`moneyRaw` with a decimal cap), `dateMediumYear`, `dateNumeric` |
 | `LumeCalendarFixtures` | four holidays | `holidayCountFor`, the whole list's length |
 
+### C84 — Text buttons had no accessible name
+
+**Found in the F6B Android walk; a defect since F3, corrected.**
+
+- **What the device showed.** `uiautomator dump` on QR Scanner listed Scan
+  and From gallery as `Button` nodes with an empty description: TalkBack
+  would read "Button", and nothing else, for every `LumeButton` in the app.
+- **Why.** `LumeButton` hands its pressable `excludeSemantics: true`, so its
+  drawn text is not read a second time, and named the node only from
+  `semanticLabel` — which almost no caller passes. The widget tests find a
+  button by its text (`find.text`), which is in the widget tree whatever the
+  semantics tree says, so none of them saw it.
+- **Corrected.** The button is named `semanticLabel ?? label`. The date field
+  F6B added had the same shape (its label passed to a pressable that
+  excluded it) and now names itself "Date of birth, 18/4/1993", once.
+- **Held by a test of the platform's tree.** `control_names_test.dart`
+  asserts the semantics node's label, its button flag and its tap action.
+
 ### C63 — English dates written the wrong way outside the United States
 
 **Found in F6A** on the UAE Tax capture ("Mon, 7 Sep") and confirmed by

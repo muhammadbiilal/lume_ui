@@ -104,14 +104,15 @@ class _LumeToolFieldState extends State<LumeToolField> {
   Widget _picked(Widget box) {
     final VoidCallback? onTap = widget.onTap;
     if (onTap == null) return box;
+    // The pressable owns the name and the action; only the box's own text is
+    // excluded, so the value is not read a second time (C84).
     return LumePressable(
       onTap: widget.enabled ? onTap : null,
       enabled: widget.enabled,
       semanticLabel: '${widget.label}, ${widget.value ?? ''}',
       borderRadius: widget.boxRadius ?? LumeRadius.brXs,
       minSize: LumeToolField.boxHeight,
-      excludeSemantics: true,
-      child: box,
+      child: ExcludeSemantics(child: box),
     );
   }
 
