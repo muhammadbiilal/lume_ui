@@ -240,25 +240,19 @@ class _ViewfinderState extends State<_Viewfinder>
             child: Stack(
               alignment: Alignment.center,
               children: <Widget>[
-                ExcludeSemantics(
-                  child: Container(
-                    key: LumeQrTool.frameKey,
-                    width: frame,
-                    height: frame,
-                    decoration: BoxDecoration(
-                      borderRadius: LumeRadius.brMd,
-                      boxShadow: <BoxShadow>[
-                        BoxShadow(
-                          color: Colors.black.withValues(alpha: 0.28),
-                          spreadRadius: 999,
-                        ),
-                        BoxShadow(
-                          color: Colors.white.withValues(alpha: 0.55),
-                          spreadRadius: 2,
-                        ),
-                      ],
-                    ),
+                // `box-shadow: 0 0 0 2px white/.55, 0 0 0 999px black/.28` —
+                // a CSS shadow is never painted under its own box, so the
+                // frame is a clear window: the dimming and the ring are drawn
+                // around it, not behind it.
+                const Positioned.fill(
+                  child: ExcludeSemantics(
+                    child: CustomPaint(painter: _FrameCutout(size: frame)),
                   ),
+                ),
+                const SizedBox(
+                  key: LumeQrTool.frameKey,
+                  width: frame,
+                  height: frame,
                 ),
                 ExcludeSemantics(
                   child: AnimatedBuilder(
@@ -317,4 +311,43 @@ class _ViewfinderState extends State<_Viewfinder>
       ),
     );
   }
+}
+
+/// The viewfinder's window: everything outside a centred [size]-point square
+/// at radius 16 dimmed with black at .28, and a 2-point white ring at .55
+/// just outside its edge. The inside is left clear.
+class _FrameCutout extends CustomPainter {
+  const _FrameCutout({required this.size});
+
+  final double size;
+
+  static const double radius = 16;
+
+  @override
+  void paint(Canvas canvas, Size box) {
+    final Rect window = Rect.fromCenter(
+      center: box.center(Offset.zero),
+      width: size,
+      height: size,
+    );
+    final RRect hole = RRect.fromRectAndRadius(
+      window,
+      const Radius.circular(radius),
+    );
+    final Path dim = Path()
+      ..fillType = PathFillType.evenOdd
+      ..addRect(Offset.zero & box)
+      ..addRRect(hole);
+    canvas.drawPath(dim, Paint()..color = const Color(0x47000000));
+    canvas.drawRRect(
+      hole.inflate(1),
+      Paint()
+        ..style = PaintingStyle.stroke
+        ..strokeWidth = 2
+        ..color = const Color(0x8CFFFFFF),
+    );
+  }
+
+  @override
+  bool shouldRepaint(_FrameCutout old) => old.size != size;
 }
