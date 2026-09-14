@@ -244,6 +244,20 @@ spec port ──► tool host adapter ──► route dispatch
 14. **Hadith** (J) — the scripture reader; hadith kept as written, a share that is the hadith read (C77) — *built*
 15. **QR Scanner** (M) — the camera instrument through a scanner contract that says it cannot scan yet; the camera package left open (C78) — *built*
 
+**F6A has fourteen reference tools** — items 2 to 15; item 1 is the spec
+port. Where a tool is called "reference tool *n*", *n* counts from Tax as 1.
+
+#### Corrections to the F6A commit record
+
+The commits are left as they were written; these are the facts they got
+wrong, recorded rather than rewritten.
+
+| commit | what it says | what is true |
+|---|---|---|
+| `0b2f0a8` News | "reference tool 7" | News is reference tool **6** (Tax 1, Learning 2, Timer 3, Emergency 4, Recipes 5, News 6, Calendar 7) |
+| `5aaa445` Weather | "Corrected: the share card carries the conditions" | Weather's share card **reproduces** the reference's `shareForTool('weather')` — "Islamabad · 34° Hazy sun · humid. High 34° · Low 23°" (C76) |
+| `8436532` Hadith | carries C78 in `KNOWN_DIFFERENCES.md` | C78 is **QR Scanner's** entry; it rode in Hadith's commit because the file could not be split non-interactively. It describes nothing about Hadith |
+
 ## 6. Decisions this inventory raises
 
 | id | question | recommendation |
