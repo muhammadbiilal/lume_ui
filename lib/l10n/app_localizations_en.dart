@@ -4298,6 +4298,10 @@ class AppLocalizationsEn extends AppLocalizations {
   String get ratesWorth => 'Worth';
 
   @override
+  String get readerFallbackEnglish =>
+      'Shown in English — no verified translation in this language yet';
+
+  @override
   String recAdd(String noun) {
     return 'Add $noun';
   }

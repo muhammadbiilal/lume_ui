@@ -3,6 +3,7 @@
 library;
 
 import 'package:flutter/material.dart';
+import 'package:flutter/semantics.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:lume/core/navigation/lume_tool_frame.dart';
 import 'package:lume/core/platform/lume_share.dart';
@@ -309,6 +310,42 @@ void main() {
         expectNoOverflow(tester);
       },
     );
+
+    for (final Locale locale in <Locale>[
+      const Locale('ur'),
+      const Locale('ar'),
+    ]) {
+      testWidgets(
+        'in ${locale.languageCode} the English is labelled as English, and '
+        'spoken as English (C82)',
+        (WidgetTester tester) async {
+          final SemanticsHandle semantics = tester.ensureSemantics();
+          await pumpHadith(tester, locale: locale);
+          final Text body = tester.widget<Text>(
+            find.byKey(LumeReaderCard.bodyKey),
+          );
+          expect(body.data, startsWith('The strong is not the one'));
+          expect(find.byKey(LumeReaderCard.noteKey), findsOneWidget);
+          final SemanticsNode node = tester.getSemantics(
+            find.byKey(LumeReaderCard.bodyKey),
+          );
+          expect(
+            node.attributedLabel.attributes
+                .whereType<LocaleStringAttribute>()
+                .map((LocaleStringAttribute a) => a.locale),
+            contains(const Locale('en')),
+          );
+          semantics.dispose();
+        },
+      );
+    }
+
+    testWidgets('in English there is nothing to label', (
+      WidgetTester tester,
+    ) async {
+      await pumpHadith(tester);
+      expect(find.byKey(LumeReaderCard.noteKey), findsNothing);
+    });
 
     testWidgets('in Arabic', (WidgetTester tester) async {
       await pumpHadith(tester, locale: const Locale('ar'));

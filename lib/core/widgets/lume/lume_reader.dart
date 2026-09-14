@@ -10,6 +10,7 @@
 library;
 
 import 'package:flutter/material.dart';
+import 'package:flutter/semantics.dart';
 
 import '../../theme/lume/lume_colors.dart';
 import '../../theme/lume/lume_space.dart';
@@ -25,6 +26,8 @@ class LumeReaderCard extends StatelessWidget {
     this.badge,
     this.actions = const <Widget>[],
     this.bodyDirection,
+    this.bodyLocale,
+    this.note,
   });
 
   /// "Sahih Muslim · 2609" — drawn in capitals, read as written.
@@ -45,8 +48,18 @@ class LumeReaderCard extends StatelessWidget {
   /// passage kept in English under an Urdu interface reads left to right.
   final TextDirection? bodyDirection;
 
+  /// The language the passage is written in, so a screen reader speaks it in
+  /// that language rather than the interface's.
+  final Locale? bodyLocale;
+
+  /// A line under the passage about the passage itself — that it is shown in
+  /// a language other than the reader's, because no verified translation
+  /// exists. Never a translation of it.
+  final String? note;
+
   static const Key referenceKey = ValueKey<String>('reader.ref');
   static const Key bodyKey = ValueKey<String>('reader.body');
+  static const Key noteKey = ValueKey<String>('reader.note');
   static const Key metaKey = ValueKey<String>('reader.meta');
   static const Key actionsKey = ValueKey<String>('reader.acts');
 
@@ -71,6 +84,23 @@ class LumeReaderCard extends StatelessWidget {
     );
     if (bodyDirection != null) {
       passage = Directionality(textDirection: bodyDirection!, child: passage);
+    }
+    final Locale? spoken = bodyLocale;
+    if (spoken != null) {
+      passage = Semantics(
+        container: true,
+        attributedLabel: AttributedString(
+          body,
+          attributes: <StringAttribute>[
+            LocaleStringAttribute(
+              range: TextRange(start: 0, end: body.length),
+              locale: spoken,
+            ),
+          ],
+        ),
+        excludeSemantics: true,
+        child: passage,
+      );
     }
 
     return Container(
@@ -108,6 +138,10 @@ class LumeReaderCard extends StatelessWidget {
           ),
           const SizedBox(height: 12),
           passage,
+          if (note != null) ...<Widget>[
+            const SizedBox(height: 10),
+            Text(note!, key: noteKey, style: meta),
+          ],
           if (byline != null || badge != null) ...<Widget>[
             const SizedBox(height: 14),
             Wrap(

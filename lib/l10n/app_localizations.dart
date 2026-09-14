@@ -7702,6 +7702,12 @@ abstract class AppLocalizations {
   /// **'Worth'**
   String get ratesWorth;
 
+  /// Under a religious passage shown in its verified English because no verified translation into the interface language exists. Describes the passage; never a translation of it
+  ///
+  /// In en, this message translates to:
+  /// **'Shown in English — no verified translation in this language yet'**
+  String get readerFallbackEnglish;
+
   /// Reference key rec.add
   ///
   /// In en, this message translates to:

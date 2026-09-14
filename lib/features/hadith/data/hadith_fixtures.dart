@@ -4,8 +4,10 @@
 /// A hadith is religious text: its words, its narrator and its collection are
 /// kept exactly as the reference gives them, in every language. A translation
 /// of a hadith has to come from a verified source, so none is made here
-/// (C77); the interface around it is translated.
+/// (C77, C82); the interface around it is translated.
 library;
+
+import '../domain/religious_content.dart';
 
 /// A hadith's grade — how the scholars of hadith judge its chain.
 enum LumeHadithGrade { sahih, hasan }
@@ -51,9 +53,38 @@ class LumeHadith {
   /// `x.text.length > 58 ? x.text.slice(0, 58) + '…' : x.text` — a browse
   /// row's title. Cut by UTF-16 unit, as `slice` cuts.
   String get shortText => text.length > 58 ? '${text.substring(0, 58)}…' : text;
+
+  /// This hadith in the religious-content contract (C82): one identity, its
+  /// collection and number as cited, its narrator and the grade the
+  /// reference states, and the reference's English as the only text — a
+  /// fallback, with no original and no translation, because none has been
+  /// verified. The attribution records that it is a fixture with no licence.
+  LumeHadithRecord get record => LumeHadithRecord(
+    id: '${collection.name}-$number',
+    collection: source,
+    number: number,
+    narrator: narrator,
+    grading: grade.name,
+    fallback: LumeVerifiedTranslation(
+      language: LumeContentLanguage.english,
+      text: text,
+      translator: LumeHadithFixtures.edition,
+    ),
+    attribution: LumeHadithFixtures.attribution,
+  );
 }
 
 abstract final class LumeHadithFixtures {
+  /// Who the English is credited to: the web reference, not a verified
+  /// translation.
+  static const String edition = 'Lume web reference English (unverified)';
+
+  /// Where every fixture came from. No licence: a release must not ship it.
+  static const LumeContentAttribution attribution = LumeContentAttribution(
+    publisher: 'Lume web reference fixture',
+    sourceVersion: 'tool-data.js HADITH',
+  );
+
   /// `HADITH`, in the reference's order.
   static const List<LumeHadith> all = <LumeHadith>[
     LumeHadith(

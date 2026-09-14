@@ -32,6 +32,7 @@ import '../../tools/application/tool_request.dart';
 import '../../tools/application/tool_session.dart';
 import '../../tools/presentation/tool_screen.dart';
 import '../data/hadith_fixtures.dart';
+import '../domain/religious_content.dart';
 
 class LumeHadithTool extends ConsumerStatefulWidget {
   const LumeHadithTool({super.key, required this.request});
@@ -95,9 +96,11 @@ class _LumeHadithToolState extends ConsumerState<LumeHadithTool> {
     final String dayId = '${day.source} ${day.number}';
     final bool saved = _read('saved') == dayId;
     final double gutter = LumeLayout.pageGutter(context.measureClass);
-    // The reference's words are English in every language: in a
-    // right-to-left interface they still read from the left.
-    const TextDirection passage = TextDirection.ltr;
+    // The passage in the reader's language only if a verified one exists;
+    // otherwise its verified fallback, labelled, in its own direction (C82).
+    final LumeResolvedPassage passage = day.record.resolve(
+      LumeContentLanguage(Localizations.localeOf(context).languageCode),
+    )!;
 
     final String chosen = _read('collection') ?? 'all';
     final LumeHadithCollection? collection = LumeHadithCollection.values
@@ -119,7 +122,7 @@ class _LumeHadithToolState extends ConsumerState<LumeHadithTool> {
       shareCard: () => LumeShareCard.forFeature(
         sensitive: r.feature.sensitive,
         kind: LumeShareKind.hadith,
-        text: day.text,
+        text: passage.text,
         source: dayId,
       ),
       body: Column(
@@ -129,8 +132,12 @@ class _LumeHadithToolState extends ConsumerState<LumeHadithTool> {
             child: LumeReaderCard(
               key: LumeHadithTool.readerKey,
               reference: _ref(l, day),
-              body: day.text,
-              bodyDirection: passage,
+              body: passage.text,
+              bodyDirection: passage.language.isRightToLeft
+                  ? TextDirection.rtl
+                  : TextDirection.ltr,
+              bodyLocale: passage.language.locale,
+              note: passage.isFallback ? l.readerFallbackEnglish : null,
               byline: l.hadithNarratedBy(day.narrator),
               badge: _badge(l, day.grade),
               actions: <Widget>[

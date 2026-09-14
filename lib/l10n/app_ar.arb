@@ -1305,6 +1305,7 @@
   "ratesSilverTola": "فضة / تولة",
   "ratesWeight": "الوزن",
   "ratesWorth": "القيمة",
+  "readerFallbackEnglish": "معروض بالإنجليزية — لا توجد ترجمة موثّقة بهذه اللغة بعد",
   "recAdd": "إضافة {noun}",
   "recAddFirst": "أضف أول {noun}",
   "recAdded": "تمت إضافة {noun}",

@@ -2076,6 +2076,38 @@ were:**
 - **Unchanged.** The card is the 1080 × 1350 render of the card alone — no
   app chrome — and a sensitive tool never gets one (D7).
 
+### C82 — Hadith: English shown as English, never as Urdu or Arabic
+
+**Decided in F6B (decision 3).** Extends C77.
+
+- **A typed contract for religious text.** `religious_content.dart`:
+  `LumeHadithRecord` carries one identity, the collection and number as
+  cited, book and chapter where given, the narrator, a grading only where the
+  source states one, the original language and text only where the source
+  holds them, verified translations each with its translator, a verified
+  fallback, and the publisher, source version and licence.
+  `resolve(language)` returns the original or a verified translation in the
+  reader's language, otherwise the fallback marked as one, or nothing.
+- **This build's hadith are mapped honestly.** Each fixture becomes a record
+  whose only text is the reference's English, credited as "Lume web reference
+  English (unverified)", attributed to the web reference fixture with no
+  licence. No original, no translation, no grading beyond the reference's own
+  label is invented.
+- **What an Urdu or Arabic reader sees.** The interface is translated; the
+  hadith is the English, left to right, spoken by a screen reader as English
+  (a locale attribute on the passage), with "Shown in English — no verified
+  translation in this language yet" under it in the reader's language. An
+  English reader sees no label. The share card carries the same English.
+- **Unchanged.** Collection names and numbers, narrators and grades are
+  shown as the reference writes them; browse rows keep the English titles.
+- **Visual.** The label adds one metaline under the passage in the Urdu and
+  Arabic cells; `tool_hadith_muslim_pk_390x844_light_ur` and `_ar` were
+  re-captured for it. The English cells are unchanged.
+- **Dayroz obligation.** A licensed hadith source with authenticated Arabic,
+  verified Urdu and English translations, numbering and grading preserved,
+  licences and attribution recorded, and tests that one record identity
+  resolves to the same hadith in every language.
+
 ### C63 — English dates written the wrong way outside the United States
 
 **Found in F6A** on the UAE Tax capture ("Mon, 7 Sep") and confirmed by

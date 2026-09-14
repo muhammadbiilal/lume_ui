@@ -5881,6 +5881,10 @@
   "@ratesWorth": {
     "description": "Reference key rates.worth"
   },
+  "readerFallbackEnglish": "Shown in English — no verified translation in this language yet",
+  "@readerFallbackEnglish": {
+    "description": "Under a religious passage shown in its verified English because no verified translation into the interface language exists. Describes the passage; never a translation of it"
+  },
   "recAdd": "Add {noun}",
   "@recAdd": {
     "description": "Reference key rec.add",

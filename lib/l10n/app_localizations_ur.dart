@@ -4292,6 +4292,10 @@ class AppLocalizationsUr extends AppLocalizations {
   String get ratesWorth => 'قیمت';
 
   @override
+  String get readerFallbackEnglish =>
+      'انگریزی میں دکھایا گیا ہے — اس زبان میں ابھی کوئی تصدیق شدہ ترجمہ نہیں';
+
+  @override
   String recAdd(String noun) {
     return '$noun شامل کریں';
   }

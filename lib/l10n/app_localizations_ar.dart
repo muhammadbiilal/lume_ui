@@ -4313,6 +4313,10 @@ class AppLocalizationsAr extends AppLocalizations {
   String get ratesWorth => 'القيمة';
 
   @override
+  String get readerFallbackEnglish =>
+      'معروض بالإنجليزية — لا توجد ترجمة موثّقة بهذه اللغة بعد';
+
+  @override
   String recAdd(String noun) {
     return 'إضافة $noun';
   }
