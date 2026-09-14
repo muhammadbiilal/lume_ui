@@ -28,6 +28,7 @@ library;
 import 'package:flutter/foundation.dart';
 
 import '../icons/lume_icons.dart';
+import 'lume_reference_random.dart';
 
 /// Where a market's weather comes from.
 enum LumeWeatherProvenance {
@@ -432,13 +433,13 @@ LumeReferenceClimate? lumeReferenceClimate(String country, {String? timeZone}) {
 
 /// `daily(base, seed)`, exactly.
 List<LumeReferenceDay> lumeReferenceDaily(int base, int seed) {
-  final _SeedRand r = _SeedRand(seed + 7);
+  final LumeSeedRand r = LumeSeedRand(seed + 7);
   return <LumeReferenceDay>[for (int i = 0; i < 5; i++) _day(base, r)];
 }
 
 // Property order in the reference's object literal is evaluation order, so
 // each draw happens in the same place: hi, lo, rain, icon, desc.
-LumeReferenceDay _day(int base, _SeedRand r) {
+LumeReferenceDay _day(int base, LumeSeedRand r) {
   final int hi = _jsRound(base + 2 + (r.next() - 0.4) * 5);
   final int lo = _jsRound(hi - 8 - r.next() * 4);
   final int rain = _jsRound(r.next() * 70);
@@ -455,17 +456,3 @@ LumeReferenceDay _day(int base, _SeedRand r) {
 
 /// `Math.round`, which rounds a half up rather than away from zero.
 int _jsRound(double x) => (x + 0.5).floor();
-
-/// `seedRand(seed)` — Park–Miller, as the reference writes it.
-class _SeedRand {
-  _SeedRand(int seed) : _s = seed % 2147483647 {
-    if (_s <= 0) _s += 2147483646;
-  }
-
-  int _s;
-
-  double next() {
-    _s = _s * 16807 % 2147483647;
-    return (_s - 1) / 2147483646;
-  }
-}

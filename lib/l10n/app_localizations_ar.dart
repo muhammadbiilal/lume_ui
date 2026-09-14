@@ -3652,6 +3652,93 @@ class AppLocalizationsAr extends AppLocalizations {
   String get toolSourceTax => 'الشرائح القانونية';
 
   @override
+  String get toolSourceOnDevice => 'على الجهاز';
+
+  @override
+  String toolFavourited(String name) {
+    return 'أُضيفت $name إلى المفضلة';
+  }
+
+  @override
+  String toolUnfavourited(String name) {
+    return 'أُزيلت $name من المفضلة';
+  }
+
+  @override
+  String get toolInsights => 'رؤى';
+
+  @override
+  String get commonLess => 'أقل';
+
+  @override
+  String get commonMore => 'أكثر';
+
+  @override
+  String get heatLevelNone => 'لا شيء';
+
+  @override
+  String get heatLevelSome => 'بعض';
+
+  @override
+  String get heatLevelMost => 'معظم';
+
+  @override
+  String get heatLevelAll => 'الكل';
+
+  @override
+  String get learningThisWeek => 'هذا الأسبوع';
+
+  @override
+  String learningStreak(String n) {
+    return 'سلسلة $n أيام';
+  }
+
+  @override
+  String get learningGoal => 'الهدف الأسبوعي';
+
+  @override
+  String get learningCourses => 'الدورات';
+
+  @override
+  String get learningStreakLabel => 'السلسلة';
+
+  @override
+  String get learningMilestone => 'الإنجاز التالي';
+
+  @override
+  String learningMilestoneValue(String n) {
+    return '$n د';
+  }
+
+  @override
+  String get learningInProgress => 'قيد التقدم';
+
+  @override
+  String get learningWeek => 'هذا الأسبوع';
+
+  @override
+  String get learningConsistency => 'الانتظام';
+
+  @override
+  String learningCourseMeta(String provider, String minutes) {
+    return '$provider · $minutes د';
+  }
+
+  @override
+  String get learningInsight1Title => 'الجلسات القصيرة تدوم';
+
+  @override
+  String get learningInsight1Text =>
+      'تُكمَل جلساتك ذات العشرين دقيقة ضعف ما تُكمَل جلساتك ذات الساعة.';
+
+  @override
+  String get learningInsight2Title => 'العربية أقوى سلاسلك';
+
+  @override
+  String get learningInsight2Text =>
+      'تسعة أيام متتالية، متقدمة كثيرًا على دوراتك الأخرى.';
+
+  @override
   String taxAbove(String v) {
     return 'أكثر من $v';
   }

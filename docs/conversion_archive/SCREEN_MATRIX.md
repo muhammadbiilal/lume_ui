@@ -235,7 +235,7 @@ run on the shared CRUD engine.
 | `recipes` | Recipes | library | high | — | — | — | — | not started |
 | `mealplan` | Meal Planner | planner | high | — | — | — | — | not started |
 | `alarms` | Alarms | manager | medium | — | — | — | — | not started |
-| `learning` | Learning & Growth | tracker | high | — | — | — | — | not started |
+| `learning` | Learning & Growth | tracker | high | — | — | — | — | **built (F6A)** — reference tool for the tracker archetype; bar chart and heatmap |
 | `documents` | Documents | manager | veryhigh | — | **yes** | — | — | not started |
 | `vaccines` | Vaccinations | manager | high | — | — | — | — | not started |
 | `health` | Health Records | manager | veryhigh | — | **yes** | — | — | not started |

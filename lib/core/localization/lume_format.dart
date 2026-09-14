@@ -218,6 +218,18 @@ class LumeFormatting {
   /// "14 Sep".
   String dateMedium(DateTime d) => intl.DateFormat.MMMd(_dateTag).format(d);
 
+  /// `weekLabels()` — the seven narrow weekday names a week chart is labelled
+  /// with, in the order the reference draws them.
+  ///
+  /// The reference starts the week at `new Intl.Locale(locale).weekInfo
+  /// .firstDay`, falling back to Monday, and the Chrome it runs in has no
+  /// `weekInfo` property: every locale starts on Monday there, Pakistan and
+  /// the United States included (C65). This is that order.
+  List<String> weekdayNarrowFromMonday() => <String>[
+    for (int i = 0; i < 7; i++)
+      intl.DateFormat('EEEEE', _dateTag).format(DateTime(2024, 1, 8 + i)),
+  ];
+
   /// The clock, in the user's preference.
   ///
   /// CLDR puts a narrow no-break space before the am/pm marker. Plus Jakarta

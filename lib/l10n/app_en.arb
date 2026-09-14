@@ -4975,6 +4975,134 @@
   "@toolSourceTax": {
     "description": "tool-specs.js src for tax. The reference prints this English string in every language; translated here (§11)."
   },
+  "toolSourceOnDevice": "On device",
+  "@toolSourceOnDevice": {
+    "description": "tool-specs.js src \"On device\" — shared by every tool whose figures live on the device. The reference prints it in English everywhere; translated here (§11)."
+  },
+  "toolFavourited": "Added {name} to favourites",
+  "@toolFavourited": {
+    "description": "Reference key tool.favourited — the toast after the header's favourite action",
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "toolUnfavourited": "Removed {name} from favourites",
+  "@toolUnfavourited": {
+    "description": "Reference key tool.unfavourited",
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "toolInsights": "Insights",
+  "@toolInsights": {
+    "description": "Reference key habits.insights — a tracker's insight section head"
+  },
+  "commonLess": "Less",
+  "@commonLess": {
+    "description": "Reference key common.less — a heatmap key"
+  },
+  "commonMore": "More",
+  "@commonMore": {
+    "description": "Reference key common.more — a heatmap key"
+  },
+  "heatLevelNone": "none",
+  "@heatLevelNone": {
+    "description": "A heatmap cell's level, as a screen reader hears it. The reference announces the English word in every language; translated here."
+  },
+  "heatLevelSome": "some",
+  "@heatLevelSome": {
+    "description": "A heatmap cell's level"
+  },
+  "heatLevelMost": "most",
+  "@heatLevelMost": {
+    "description": "A heatmap cell's level"
+  },
+  "heatLevelAll": "all",
+  "@heatLevelAll": {
+    "description": "A heatmap cell's level"
+  },
+  "learningThisWeek": "This week",
+  "@learningThisWeek": {
+    "description": "Reference key learning.thisWeek — the summary's kicker"
+  },
+  "learningStreak": "{n}-day streak",
+  "@learningStreak": {
+    "description": "Reference key learning.streak — the summary's caption",
+    "placeholders": {
+      "n": {
+        "type": "String"
+      }
+    }
+  },
+  "learningGoal": "Weekly goal",
+  "@learningGoal": {
+    "description": "Reference key learning.goal — the ring's accessible name"
+  },
+  "learningCourses": "Courses",
+  "@learningCourses": {
+    "description": "Reference key learning.courses — a summary figure"
+  },
+  "learningStreakLabel": "Streak",
+  "@learningStreakLabel": {
+    "description": "Reference key learning.streakLabel — a summary figure"
+  },
+  "learningMilestone": "Next milestone",
+  "@learningMilestone": {
+    "description": "Reference key learning.milestone — a summary figure"
+  },
+  "learningMilestoneValue": "{n} min",
+  "@learningMilestoneValue": {
+    "description": "Reference key learning.milestoneValue — the reference writes the literal \"200 min\"; the figure is a placeholder here so its digits follow the locale",
+    "placeholders": {
+      "n": {
+        "type": "String"
+      }
+    }
+  },
+  "learningInProgress": "In progress",
+  "@learningInProgress": {
+    "description": "Reference key learning.inProgress — a section head"
+  },
+  "learningWeek": "This week",
+  "@learningWeek": {
+    "description": "Reference key learning.week — the bar chart's section head and name"
+  },
+  "learningConsistency": "Consistency",
+  "@learningConsistency": {
+    "description": "Reference key learning.consistency — the heatmap's section head and name"
+  },
+  "learningCourseMeta": "{provider} · {minutes} min",
+  "@learningCourseMeta": {
+    "description": "A course's provider and session length — `x.provider + \" · \" + x.mins + \" \" + t(\"unit.min\")`",
+    "placeholders": {
+      "provider": {
+        "type": "String"
+      },
+      "minutes": {
+        "type": "String"
+      }
+    }
+  },
+  "learningInsight1Title": "Short sessions stick",
+  "@learningInsight1Title": {
+    "description": "Reference key learning.insight1.title"
+  },
+  "learningInsight1Text": "Your 20-minute sessions are completed twice as often as your hour-long ones.",
+  "@learningInsight1Text": {
+    "description": "Reference key learning.insight1.text"
+  },
+  "learningInsight2Title": "Arabic is your strongest streak",
+  "@learningInsight2Title": {
+    "description": "Reference key learning.insight2.title"
+  },
+  "learningInsight2Text": "Nine days running, well ahead of your other courses.",
+  "@learningInsight2Text": {
+    "description": "Reference key learning.insight2.text"
+  },
   "taxAbove": "Above {v}",
   "@taxAbove": {
     "description": "Reference key tax.above — the top band's label",

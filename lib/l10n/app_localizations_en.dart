@@ -3645,6 +3645,93 @@ class AppLocalizationsEn extends AppLocalizations {
   String get toolSourceTax => 'Statutory slabs';
 
   @override
+  String get toolSourceOnDevice => 'On device';
+
+  @override
+  String toolFavourited(String name) {
+    return 'Added $name to favourites';
+  }
+
+  @override
+  String toolUnfavourited(String name) {
+    return 'Removed $name from favourites';
+  }
+
+  @override
+  String get toolInsights => 'Insights';
+
+  @override
+  String get commonLess => 'Less';
+
+  @override
+  String get commonMore => 'More';
+
+  @override
+  String get heatLevelNone => 'none';
+
+  @override
+  String get heatLevelSome => 'some';
+
+  @override
+  String get heatLevelMost => 'most';
+
+  @override
+  String get heatLevelAll => 'all';
+
+  @override
+  String get learningThisWeek => 'This week';
+
+  @override
+  String learningStreak(String n) {
+    return '$n-day streak';
+  }
+
+  @override
+  String get learningGoal => 'Weekly goal';
+
+  @override
+  String get learningCourses => 'Courses';
+
+  @override
+  String get learningStreakLabel => 'Streak';
+
+  @override
+  String get learningMilestone => 'Next milestone';
+
+  @override
+  String learningMilestoneValue(String n) {
+    return '$n min';
+  }
+
+  @override
+  String get learningInProgress => 'In progress';
+
+  @override
+  String get learningWeek => 'This week';
+
+  @override
+  String get learningConsistency => 'Consistency';
+
+  @override
+  String learningCourseMeta(String provider, String minutes) {
+    return '$provider · $minutes min';
+  }
+
+  @override
+  String get learningInsight1Title => 'Short sessions stick';
+
+  @override
+  String get learningInsight1Text =>
+      'Your 20-minute sessions are completed twice as often as your hour-long ones.';
+
+  @override
+  String get learningInsight2Title => 'Arabic is your strongest streak';
+
+  @override
+  String get learningInsight2Text =>
+      'Nine days running, well ahead of your other courses.';
+
+  @override
   String taxAbove(String v) {
     return 'Above $v';
   }

@@ -10,6 +10,7 @@ library;
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:lume/core/navigation/lume_tool_frame.dart';
+import 'package:lume/core/routing/lume_routes.dart';
 import 'package:lume/features/tax/presentation/tax_tool.dart';
 
 import '../features/tax/tax_harness.dart';
@@ -17,6 +18,8 @@ import '../helpers/capture.dart';
 import '../helpers/load_fonts.dart';
 
 const String kOut = '$kShotsDir/tools';
+
+final String kLearningLocation = LumeRoutes.tool(LumeRoutes.tools, 'learning');
 
 typedef Cell = (
   String name,
@@ -47,13 +50,14 @@ void main() {
     required String state,
     required String golden,
     required Cell cell,
+    String? location,
     String? folder,
     String suffix = '',
     Future<void> Function(WidgetTester tester)? after,
   }) async {
     await captureLumeRoute(
       tester,
-      location: kTaxLocation,
+      location: location ?? kTaxLocation,
       name: golden,
       folder: folder,
       outDir: kOut,
@@ -65,7 +69,7 @@ void main() {
       profile: taxProfile(state),
       after: after,
     );
-    expect(find.byType(LumeTaxTool), findsOneWidget);
+    expect(find.byType(LumeToolFrame), findsOneWidget);
     await expectLater(
       find.byType(MaterialApp),
       matchesGoldenFile('images/${golden}_${cell.$1}.png'),
@@ -153,6 +157,38 @@ void main() {
         },
       );
     });
+  });
+
+  // ------------------------------------------------------------- Learning
+
+  group('Learning & Growth', () {
+    for (final Cell cell in kCells) {
+      testWidgets(cell.$1, (WidgetTester tester) async {
+        await shoot(
+          tester,
+          state: 'default_pk',
+          location: kLearningLocation,
+          golden: 'tool_learning_default_pk_fixbars',
+          cell: cell,
+        );
+      });
+    }
+
+    for (final double offset in <double>[560, 900]) {
+      testWidgets('scrolled ${offset.round()} · the reference cell', (
+        WidgetTester tester,
+      ) async {
+        await shoot(
+          tester,
+          state: 'default_pk',
+          location: kLearningLocation,
+          golden: 'tool_learning_default_pk_fixbars_s${offset.round()}',
+          folder: 'tool_learning_default_pk_fixbars',
+          cell: kCells.first,
+          after: scrolledTo(offset),
+        );
+      });
+    }
   });
 
   for (final String state in <String>[

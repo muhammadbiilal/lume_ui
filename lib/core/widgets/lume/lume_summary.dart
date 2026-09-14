@@ -47,6 +47,7 @@ class LumeSummaryCard extends StatelessWidget {
     required this.value,
     this.kicker,
     this.unit,
+    this.valueSmall,
     this.caption,
     this.stats = const <LumeStat>[],
     this.aside,
@@ -62,6 +63,10 @@ class LumeSummaryCard extends StatelessWidget {
 
   /// A unit set beside the value at a smaller size — "PKR", "km".
   final String? unit;
+
+  /// `<small>` inside the value — "185 <small>min</small>": a quieter unit that
+  /// is part of the figure, where [unit] is a label beside it.
+  final String? valueSmall;
 
   final String? caption;
 
@@ -146,24 +151,46 @@ class LumeSummaryCard extends StatelessWidget {
                         ),
                       ),
                     const SizedBox(height: 6),
-                    Wrap(
-                      spacing: LumeSpace.x2,
-                      crossAxisAlignment: WrapCrossAlignment.end,
+                    // `display: flex; align-items: baseline; gap: 8px`.
+                    Row(
+                      crossAxisAlignment: CrossAxisAlignment.baseline,
+                      textBaseline: TextBaseline.alphabetic,
                       children: <Widget>[
-                        LumeNumerals(
-                          value,
-                          style: LumeType.numeric(
-                            LumeType.tracked(
+                        Flexible(
+                          // Proportional figures: `.summary__value` sets no
+                          // `font-variant-numeric`, and tabular digits drew
+                          // Learning's "185" five points wider.
+                          child: LumeNumerals(
+                            value,
+                            style: LumeType.tracked(
                               LumeType.fit(
                                 context,
                                 context.lumeType.display,
                               ).copyWith(fontSize: valueSize, height: 1.05),
                               -0.05,
-                            ),
-                          ).copyWith(color: ink),
-                          maxLines: 1,
-                          overflow: TextOverflow.ellipsis,
+                            ).copyWith(color: ink),
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
+                          ),
                         ),
+                        if (valueSmall != null) ...<Widget>[
+                          const SizedBox(width: LumeSpace.x2),
+                          // `.summary__value small` — 17 / 700 / −0.03em at .6.
+                          Opacity(
+                            opacity: 0.6,
+                            child: Text(
+                              valueSmall!,
+                              style: LumeType.tracked(
+                                LumeType.fit(
+                                  context,
+                                  context.lumeType.cardTitle,
+                                ).copyWith(fontSize: 17, height: 1.05),
+                                -0.03,
+                              ).copyWith(color: ink),
+                            ),
+                          ),
+                        ],
+                        if (unit != null) const SizedBox(width: LumeSpace.x2),
                         if (unit != null)
                           Opacity(
                             opacity: 0.74,
@@ -251,11 +278,10 @@ class _Stat extends StatelessWidget {
     children: <Widget>[
       LumeNumerals(
         stat.value,
-        style: LumeType.numeric(
-          LumeType.tracked(
-            LumeType.natural(context, context.lumeType.cardTitle),
-            -0.032,
-          ),
+        // Proportional, as `.summary__statv` is.
+        style: LumeType.tracked(
+          LumeType.natural(context, context.lumeType.cardTitle),
+          -0.032,
         ).copyWith(color: ink, fontWeight: FontWeight.w800),
         maxLines: 1,
         overflow: TextOverflow.ellipsis,

@@ -32,7 +32,7 @@ import 'package:lume/features/tax/presentation/tax_tool.dart';
 import '../../helpers/load_fonts.dart';
 import 'tax_harness.dart';
 
-const String kReport = 'docs/conversion_archive/TOOL_PARITY.md';
+const String kReport = 'docs/conversion_archive/parity/tool_tax.md';
 
 /// One logical pixel.
 const double kTolerance = 1;

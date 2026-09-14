@@ -101,6 +101,7 @@ abstract final class LumeToolStrings {
   static String source(AppLocalizations l, LumeFeature feature) =>
       switch (feature.id) {
         'tax' => l.toolSourceTax,
+        _ when feature.fallbackSource == 'On device' => l.toolSourceOnDevice,
         _ => feature.fallbackSource,
       };
 }

@@ -49,13 +49,13 @@ class LumeRows extends StatelessWidget {
       children: <Widget>[
         for (int i = 0; i < children.length; i++) ...<Widget>[
           if (i > 0)
+            // `.rrow { border-bottom: 1px solid var(--border) }` — the row's own
+            // edge, so the hairline runs the full width of the card. Measured
+            // on Learning's insights: 348 wide in a 350 card.
             Divider(
               height: LumeSpace.border,
               thickness: LumeSpace.border,
               color: lume.border,
-              // The hairline starts where the content does, not at the card's
-              // edge — it separates rows, it does not box them.
-              indent: LumeSpace.padCard,
             ),
           children[i],
         ],
@@ -73,7 +73,13 @@ class LumeRows extends StatelessWidget {
           border: Border.all(color: lume.border, width: LumeSpace.border),
           boxShadow: context.lumeShadows.sm,
         ),
-        child: body,
+        // The hairline is the card's own, outside its rows — a `DecoratedBox`
+        // paints it over them, which made two insight rows 121 where the
+        // reference measures 123.
+        child: Padding(
+          padding: const EdgeInsets.all(LumeSpace.border),
+          child: body,
+        ),
       ),
     );
   }
@@ -90,6 +96,7 @@ class LumeRichRow extends StatelessWidget {
     this.valueSub,
     this.icon,
     this.iconTone,
+    this.iconInk,
     this.logo,
     this.badge,
     this.delta,
@@ -110,7 +117,11 @@ class LumeRichRow extends StatelessWidget {
   final String? valueSub;
 
   final String? icon;
+
+  /// The lead tile's fill, and [iconInk] its glyph — `.rrow__icon--accent` is
+  /// `tint-accent` behind `accent`. Neither set is the neutral tile.
   final Color? iconTone;
+  final Color? iconInk;
 
   /// A short code where an icon would say less — a currency, a ticker.
   final String? logo;
@@ -124,6 +135,9 @@ class LumeRichRow extends StatelessWidget {
   final VoidCallback? onTap;
   final bool chevron;
 
+  /// The specimen's height, which has a meta line. The row has no minimum of
+  /// its own — `.rrow` sets none — so a title and a subtitle make it 60, as
+  /// Learning's insights measure.
   static const double height = 72;
 
   @override
@@ -131,12 +145,11 @@ class LumeRichRow extends StatelessWidget {
     final LumeColors lume = context.lume;
 
     final Widget row = Container(
-      constraints: const BoxConstraints(minHeight: height),
       padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 16),
       child: Row(
         children: <Widget>[
           if (icon != null || logo != null) ...<Widget>[
-            _RowLead(icon: icon, logo: logo, tone: iconTone),
+            _RowLead(icon: icon, logo: logo, tone: iconTone, ink: iconInk),
             const SizedBox(width: 12),
           ],
           Expanded(
@@ -149,9 +162,9 @@ class LumeRichRow extends StatelessWidget {
                     Flexible(
                       child: Text(
                         title,
-                        // Measured: 14 / 700 / −0.024em.
+                        // Measured: 14 / 700 / −0.024em on the font's own 18.
                         style: LumeType.tracked(
-                          LumeType.fit(
+                          LumeType.natural(
                             context,
                             context.lumeType.body,
                           ).copyWith(fontWeight: FontWeight.w700),
@@ -162,23 +175,30 @@ class LumeRichRow extends StatelessWidget {
                       ),
                     ),
                     if (badge != null) ...<Widget>[
-                      const SizedBox(width: 7),
+                      const SizedBox(width: 6),
                       badge!,
                     ],
                   ],
                 ),
-                if (subtitle != null)
+                if (subtitle != null) ...<Widget>[
+                  // `.rrow__body { gap: 1px }`.
+                  const SizedBox(height: 1),
                   Text(
                     subtitle!,
-                    // Measured: 11 / 500, `text-2`.
-                    style: LumeType.fit(
+                    // Measured: 11 / 500, `text-2`, on 13.
+                    style: LumeType.natural(
                       context,
                       context.lumeType.metaSmall,
                     ).copyWith(color: lume.text2),
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
                   ),
-                if (meta != null && meta!.isNotEmpty) _MetaLine(parts: meta!),
+                ],
+                if (meta != null && meta!.isNotEmpty) ...<Widget>[
+                  // `gap: 1px` then `.rrow__meta { margin-top: 3px }`.
+                  const SizedBox(height: 4),
+                  _MetaLine(parts: meta!),
+                ],
               ],
             ),
           ),
@@ -241,11 +261,12 @@ class LumeRichRow extends StatelessWidget {
 }
 
 class _RowLead extends StatelessWidget {
-  const _RowLead({this.icon, this.logo, this.tone});
+  const _RowLead({this.icon, this.logo, this.tone, this.ink});
 
   final String? icon;
   final String? logo;
   final Color? tone;
+  final Color? ink;
 
   /// Measured: 36 × 36, 12 px radius, `tintNeutral`.
   static const double size = 36;
@@ -269,7 +290,8 @@ class _RowLead extends StatelessWidget {
                 context.lumeType.meta,
               ).copyWith(color: lume.text2),
             )
-          : LumeIcon(icon!, size: LumeSpace.iconMd, color: lume.text2),
+          // `.rrow__icon svg { width: 17px }`.
+          : LumeIcon(icon!, size: 17, color: ink ?? lume.text2),
     );
   }
 }

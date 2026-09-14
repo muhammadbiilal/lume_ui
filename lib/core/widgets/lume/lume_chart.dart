@@ -233,6 +233,263 @@ class _Key extends StatelessWidget {
   }
 }
 
+/// `.bars` — one column per value, the highlighted one filled.
+///
+/// Measured on Learning with the bar heights the stylesheet is written for
+/// (C64): a 116-point figure; columns share it 6 apart; a bar is
+/// `fill %` of 116 tall, where `fill` is the value's share of the largest,
+/// rounded to a whole percent — but never taller than the column's room above
+/// its label (116 − 6 − 13 = 97), never shorter than 3, never wider than 30;
+/// corners 6 at the top and 3 at the base; `tint-accent`, or `accent` for the
+/// highlighted column; labels 11 / 600, muted.
+class LumeBarChart extends StatelessWidget {
+  const LumeBarChart({
+    super.key,
+    required this.values,
+    required this.labels,
+    required this.label,
+    this.highlight,
+    this.max,
+    this.valueLabels,
+    this.caption,
+  });
+
+  final List<double> values;
+  final List<String> labels;
+
+  /// The figure's accessible name.
+  final String label;
+
+  /// The index drawn in the accent.
+  final int? highlight;
+
+  /// A ceiling other than the largest value — `o.max`.
+  final double? max;
+
+  /// What each column says about itself — `title="M: 20"`. Defaults to the
+  /// label and the value.
+  final List<String>? valueLabels;
+
+  /// `.chart__cap`, under the bars.
+  final Widget? caption;
+
+  static const double height = 116;
+  static const double gap = 6;
+  static const double barMaxWidth = 30;
+  static const double barMinHeight = 3;
+
+  /// `Math.round((v / max) * 100)`.
+  int fillOf(int i) {
+    final double top = <double>[...values, max ?? 0].reduce(math.max);
+    final double m = top == 0 ? 1 : top;
+    return (values[i] / m * 100 + 0.5).floor();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final LumeColors lume = context.lume;
+    final Widget bars = SizedBox(
+      height: height,
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: <Widget>[
+          for (int i = 0; i < values.length; i++) ...<Widget>[
+            if (i > 0) const SizedBox(width: gap),
+            Expanded(
+              child: Semantics(
+                label:
+                    valueLabels?[i] ??
+                    '${labels[i]}: ${values[i].toStringAsFixed(values[i] == values[i].roundToDouble() ? 0 : 1)}',
+                selected: highlight == i,
+                child: ExcludeSemantics(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: <Widget>[
+                      // The bar takes what the label leaves, and no more.
+                      Flexible(
+                        child: ConstrainedBox(
+                          constraints: const BoxConstraints(
+                            maxWidth: barMaxWidth,
+                            minHeight: barMinHeight,
+                          ),
+                          child: Container(
+                            width: double.infinity,
+                            height: height * fillOf(i) / 100,
+                            decoration: BoxDecoration(
+                              color: highlight == i
+                                  ? lume.accent
+                                  : lume.tintAccent,
+                              borderRadius: const BorderRadius.vertical(
+                                top: Radius.circular(6),
+                                bottom: Radius.circular(3),
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                      const SizedBox(height: gap),
+                      Text(
+                        labels[i],
+                        style:
+                            LumeType.natural(
+                              context,
+                              context.lumeType.metaSmall,
+                            ).copyWith(
+                              color: lume.text3,
+                              fontWeight: FontWeight.w600,
+                            ),
+                        maxLines: 1,
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            ),
+          ],
+        ],
+      ),
+    );
+
+    return Semantics(
+      container: true,
+      label: label,
+      child: caption == null
+          ? bars
+          : Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              mainAxisSize: MainAxisSize.min,
+              children: <Widget>[bars, const SizedBox(height: 10), caption!],
+            ),
+    );
+  }
+}
+
+/// `.heat` — a consistency grid, a cell a day, and its key.
+///
+/// Measured on Learning: 15-point cells 4 apart, radius 4, wrapping; the key
+/// 12 below the last row (the grid's 4 and its own 8), 10 / 600, with four
+/// 11-point cells between "Less" and "More". Level is carried twice (§101):
+/// by intensity, and by an inset ring — none; 24 % with a one-point ring at
+/// 45 %; 55 % with a two-point ring at 75 %; solid with a two-point ring in
+/// `accent-700`.
+class LumeHeatmap extends StatelessWidget {
+  const LumeHeatmap({
+    super.key,
+    required this.levels,
+    required this.label,
+    required this.summary,
+    required this.less,
+    required this.more,
+    required this.levelLabels,
+    this.titles,
+  });
+
+  /// 0–3, one per day.
+  final List<int> levels;
+
+  final String label;
+
+  /// `.sr-only` — "29 / 35", the grid's meaning in one sentence.
+  final String summary;
+
+  final String less;
+  final String more;
+
+  /// What each level is called: none, some, most, all.
+  final List<String> levelLabels;
+
+  /// A day's own name, where the grid has one — `d.title`.
+  final List<String?>? titles;
+
+  static const double cell = 15;
+  static const double keyCell = 11;
+  static const double gap = 4;
+
+  static BoxDecoration decorationFor(LumeColors lume, int level) =>
+      switch (level.clamp(0, 3)) {
+        0 => BoxDecoration(
+          color: lume.tintNeutral,
+          borderRadius: BorderRadius.circular(4),
+        ),
+        1 => BoxDecoration(
+          color: lume.accent.withValues(alpha: 0.24),
+          borderRadius: BorderRadius.circular(4),
+          border: Border.all(color: lume.accent.withValues(alpha: 0.45)),
+        ),
+        2 => BoxDecoration(
+          color: lume.accent.withValues(alpha: 0.55),
+          borderRadius: BorderRadius.circular(4),
+          border: Border.all(
+            color: lume.accent.withValues(alpha: 0.75),
+            width: 2,
+          ),
+        ),
+        _ => BoxDecoration(
+          color: lume.accent,
+          borderRadius: BorderRadius.circular(4),
+          border: Border.all(color: lume.accent700, width: 2),
+        ),
+      };
+
+  @override
+  Widget build(BuildContext context) {
+    final LumeColors lume = context.lume;
+    final TextStyle keyStyle = LumeType.natural(
+      context,
+      context.lumeType.metaSmall,
+      size: 10,
+    ).copyWith(color: lume.text3, fontWeight: FontWeight.w600);
+
+    return Semantics(
+      container: true,
+      label: '$label, $summary',
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        mainAxisSize: MainAxisSize.min,
+        children: <Widget>[
+          Wrap(
+            spacing: gap,
+            runSpacing: gap,
+            children: <Widget>[
+              for (int i = 0; i < levels.length; i++)
+                Semantics(
+                  image: true,
+                  label: <String?>[
+                    titles?[i],
+                    levelLabels[levels[i].clamp(0, 3)],
+                  ].whereType<String>().join(' — '),
+                  child: Container(
+                    width: cell,
+                    height: cell,
+                    decoration: decorationFor(lume, levels[i]),
+                  ),
+                ),
+            ],
+          ),
+          const SizedBox(height: gap + 8),
+          ExcludeSemantics(
+            child: Row(
+              children: <Widget>[
+                Text(less, style: keyStyle),
+                for (int l = 0; l < 4; l++) ...<Widget>[
+                  const SizedBox(width: gap),
+                  Container(
+                    width: keyCell,
+                    height: keyCell,
+                    decoration: decorationFor(lume, l),
+                  ),
+                ],
+                const SizedBox(width: gap),
+                Text(more, style: keyStyle),
+              ],
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
 /// The ring: one stroked arc per slice, from twelve o'clock, clockwise.
 ///
 /// The SVG draws each slice as a whole circle whose dash is the slice's share

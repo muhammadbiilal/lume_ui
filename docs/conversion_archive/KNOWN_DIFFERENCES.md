@@ -1372,6 +1372,46 @@ taps 12 above and below open Personalise, 15 above does nothing, a fact in the
 strip keeps its own tap, neighbours split the gap in both directions, Urdu at
 200 %.
 
+**Found on Learning (reference tool 2), corrected the same way:**
+
+| widget | was | reference, measured |
+|---|---|---|
+| `LumeRows` | the card's hairline painted over its rows (two insights 121 tall); a divider indented 16 | the border outside the rows (123); the row's own full-width bottom edge |
+| `LumeRichRow` | a 72-point minimum; title and subtitle on the type roles' 22 and 16; a 20-point glyph; one tile colour | no minimum (60 for title and subtitle); the font's 18 and 13, 1 apart, meta 3 below; a 17-point glyph; tile fill and ink separately (`--accent`) |
+| `LumeProgressRing` | 76 points, a track in 10 % of the text colour, no text centre | 66 (92 large), ring radius 30 and stroke 7 on a 72 view box, track in 16 % of the ring's colour; `.pring__mid` |
+| `LumeSummaryCard` | tabular figures in the value and the stats; no `<small>` | proportional figures, as the stylesheet sets none; `.summary__value small` at 17 / 700 / .6 on the baseline |
+
+### C64 — a bar chart whose bars never grow
+
+**Found in F6A on Learning; corrected, for ratification.** `shell.js`
+`animateBars` writes `style.width = data-fill + '%'` to every `[data-fill]`
+element. A progress bar wants exactly that; a `.bars__bar` is written with
+`style="height:0"` and a `transition: height`, so its width changes and its
+height never does, and every bar in every bar chart in the running reference
+sits at its 3-point `min-height` — thirteen tools draw a row of flat stubs
+(`tool_learning_default_pk_390x844_light_en` measures all seven at 3).
+
+The intent is unambiguous in the source, so the chart is built as the
+stylesheet is written, and the geometry was taken from the reference's own
+engine rather than inferred: `measure_destinations.mjs --fixbars 1` applies
+`height: data-fill%` in Chrome and measures the result
+(`…_fixbars_…`). A bar is `fill %` of the 116-point figure, capped at the 97
+its column has above the label, never under 3, never wider than 30.
+`learning_test.dart` holds every bar's height and fill against that capture;
+the as-rendered capture is committed beside it as the evidence.
+
+### C65 — every week starts on Monday in the running reference
+
+**Found in F6A on Learning; reproduced.** `locale.js` `weekStart()` reads
+`new Intl.Locale(locale()).weekInfo.firstDay` and falls back to 1. The Chrome
+the reference runs in exposes no `weekInfo` property (only the newer
+`getWeekInfo()`), so the fallback always applies: Pakistan and the United
+States, whose CLDR weeks start on Sunday, both draw Monday first. Node's ICU
+would say otherwise — the browser is the oracle, so Flutter draws Monday
+first everywhere (`LumeFormatting.weekdayNarrowFromMonday`). **Dayroz
+obligation:** decide the product's week start per locale, and change this one
+method.
+
 ### C63 — English dates written the wrong way outside the United States
 
 **Found in F6A** on the UAE Tax capture ("Mon, 7 Sep") and confirmed by

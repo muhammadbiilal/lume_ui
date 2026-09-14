@@ -59,6 +59,17 @@ const ROUTE = args.route || '';
    separated by commas. */
 const TOOL = args.tool || '';
 const TOOLSTATE = args.toolstate || '';
+/* `animateBars` writes `width` from `data-fill` on every element that has
+   one, which is right for a progress bar and leaves a `.bars__bar` — drawn at
+   `height: 0` with a height transition — at its 3-point minimum. `--fixbars 1`
+   applies the height the stylesheet is written for, so the corrected chart can
+   be measured in the reference's own engine rather than guessed at. */
+const FIXBARS = args.fixbars === '1';
+/* Raw actions to run in an open tool, in order, each followed by `--actwait`
+   ms: `clock:timer:set:300,clock:timer:start`. The same vocabulary a control
+   carries in `data-act`, so a state is reached the way a reader reaches it. */
+const ACTS = args.acts || '';
+const ACTWAIT = Number(args.actwait || 400);
 /* What to call the cell. The default spells out the whole state, which is
    right for a destination; an account route is named after the route, so the
    web capture and the Flutter one share a basename and `compare.mjs` can put
@@ -748,6 +759,35 @@ const TOOL_TARGETS = {
   'related.icon': '#toolBody .related__icon',
   'related.label': '#toolBody .related__label',
   'privacy': '#toolBody .notecard--lock',
+  // Learning — the tracker: ring, courses, bars, heatmap, insights.
+  'summary.small': '#toolBody .summary__value small',
+  'pring': '#toolBody .pring',
+  'pring.mid': '#toolBody .pring__mid b',
+  'kard2': '#toolBody .kard:nth-of-type(2)',
+  'course': '#toolBody .course',
+  'course.icon': '#toolBody .course__icon',
+  'course.name': '#toolBody .course__name',
+  'course.meta': '#toolBody .course__meta',
+  'course.pct': '#toolBody .course__pct',
+  'pbar': '#toolBody .kard .pbar',
+  'bars': '#toolBody .bars',
+  'bars.col1': '#toolBody .bars__col:nth-child(1)',
+  'bars.bar1': '#toolBody .bars__col:nth-child(1) .bars__bar',
+  'bars.bar2': '#toolBody .bars__col:nth-child(2) .bars__bar',
+  'bars.bar3': '#toolBody .bars__col:nth-child(3) .bars__bar',
+  'bars.bar7': '#toolBody .bars__col:nth-child(7) .bars__bar',
+  'bars.label1': '#toolBody .bars__col:nth-child(1) .bars__label',
+  'heat': '#toolBody .heat',
+  'heat.cell1': '#toolBody .heat > .heat__cell:nth-of-type(1)',
+  'heat.cell2': '#toolBody .heat > .heat__cell:nth-of-type(2)',
+  'heat.cell22': '#toolBody .heat > .heat__cell:nth-of-type(22)',
+  'heat.key': '#toolBody .heat__key',
+  'heat.keycell': '#toolBody .heat__key .heat__cell',
+  'rows': '#toolBody .rows',
+  'rrow1': '#toolBody .rows > .rrow:nth-child(1)',
+  'rrow.icon': '#toolBody .rrow__icon',
+  'rrow.title': '#toolBody .rrow__title',
+  'rrow.sub': '#toolBody .rrow__sub',
 };
 
 /* The instant everything is captured at: Monday 7 September 2026, 16:41:32
@@ -898,6 +938,18 @@ const DRIVER = (profile, screen, after, account, route, keepBanner, tool, toolst
         await wait(400);
       }
       await waitFor('#screen-tool.is-active #toolBody .sect', 4000);
+      var acts = ${JSON.stringify(ACTS)}.split(',').filter(Boolean);
+      for (var a = 0; a < acts.length; a++) {
+        act(acts[a]);
+        await wait(${JSON.stringify(ACTWAIT)});
+      }
+      if (${JSON.stringify(FIXBARS)}) {
+        await wait(300);
+        Array.prototype.forEach.call(
+          document.querySelectorAll('#toolBody .bars__bar[data-fill]'),
+          function (b) { b.style.width = ''; b.style.height = b.dataset.fill + '%'; });
+        await wait(700);
+      }
     }
     ${after || ''};
     await wait(400);
@@ -1460,6 +1512,45 @@ async function main() {
         composition.buttons = texts('#toolBody .btnrow .btn');
         composition.source = { fresh: tx('.srcbar .fresh'), line: texts('#toolBody .srcline > span') };
         composition.related = texts('#toolBody .related__label');
+        composition.ring = q('.pring') ? {
+          label: q('.pring').getAttribute('aria-label'),
+          now: q('.pring').getAttribute('aria-valuenow'),
+          text: q('.pring').getAttribute('aria-valuetext'),
+          offset: (q('.pring__fg') || { getAttribute: function () { return null; } }).getAttribute('stroke-dashoffset')
+        } : null;
+        composition.courses = Array.prototype.map.call(
+          document.querySelectorAll('#toolBody .course'),
+          function (el) {
+            var bar = el.parentElement.querySelector('.pbar');
+            return { name: (el.querySelector('.course__name') || {}).textContent,
+                     meta: (el.querySelector('.course__meta') || {}).textContent,
+                     pct: (el.querySelector('.course__pct') || {}).textContent,
+                     icon: (el.querySelector('.course__icon') || {}).className,
+                     bar: bar ? { fill: (bar.querySelector('.pbar__fill') || { dataset: {} }).dataset.fill,
+                                  width: Math.round(bar.querySelector('.pbar__fill').getBoundingClientRect().width * 100) / 100 } : null };
+          });
+        composition.bars = Array.prototype.map.call(
+          document.querySelectorAll('#toolBody .bars__col'),
+          function (el) {
+            var b = el.querySelector('.bars__bar');
+            return { label: (el.querySelector('.bars__label') || {}).textContent,
+                     title: el.getAttribute('title'), on: el.classList.contains('is-on'),
+                     fill: b.dataset.fill, height: Math.round(b.getBoundingClientRect().height * 100) / 100,
+                     color: getComputedStyle(b).backgroundColor };
+          });
+        composition.heat = q('.heat') ? {
+          label: q('.heat').getAttribute('aria-label'),
+          summary: tx('.heat .sr-only'),
+          levels: Array.prototype.map.call(document.querySelectorAll('#toolBody .heat > .heat__cell'),
+            function (el) { return Number((el.className.match(/--l([0-9])/) || [0, 0])[1]); }),
+          key: texts('#toolBody .heat__key span')
+        } : null;
+        composition.rows = Array.prototype.map.call(
+          document.querySelectorAll('#toolBody .rows > .rrow'),
+          function (el) {
+            return { title: (el.querySelector('.rrow__title') || {}).textContent,
+                     sub: (el.querySelector('.rrow__sub') || {}).textContent };
+          });
       }
 
       var screenEl = active;
@@ -1488,7 +1579,9 @@ async function main() {
       `${STATE}${ACCOUNT === 'guest' ? '' : '_' + ACCOUNT}` +
       `${ROUTE ? '_' + ROUTE : ''}` +
       `${args.after ? '_' + args.after : ''}` +
-      `${TOOLSTATE ? '_' + TOOLSTATE.replace(/[^a-z0-9]+/gi, '-') : ''}`;
+      `${TOOLSTATE ? '_' + TOOLSTATE.replace(/[^a-z0-9]+/gi, '-') : ''}` +
+      `${FIXBARS ? '_fixbars' : ''}` +
+      `${args.cellsuffix ? '_' + args.cellsuffix : ''}`;
     /* A tool is named for itself, not for the tab it was opened over. */
     const BASE = CELL || (TOOL ? `tool_${TOOL}_${SUFFIX}` : `${SCREEN}_${SUFFIX}`);
     const cell =

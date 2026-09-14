@@ -6568,6 +6568,156 @@ abstract class AppLocalizations {
   /// **'Statutory slabs'**
   String get toolSourceTax;
 
+  /// tool-specs.js src "On device" — shared by every tool whose figures live on the device. The reference prints it in English everywhere; translated here (§11).
+  ///
+  /// In en, this message translates to:
+  /// **'On device'**
+  String get toolSourceOnDevice;
+
+  /// Reference key tool.favourited — the toast after the header's favourite action
+  ///
+  /// In en, this message translates to:
+  /// **'Added {name} to favourites'**
+  String toolFavourited(String name);
+
+  /// Reference key tool.unfavourited
+  ///
+  /// In en, this message translates to:
+  /// **'Removed {name} from favourites'**
+  String toolUnfavourited(String name);
+
+  /// Reference key habits.insights — a tracker's insight section head
+  ///
+  /// In en, this message translates to:
+  /// **'Insights'**
+  String get toolInsights;
+
+  /// Reference key common.less — a heatmap key
+  ///
+  /// In en, this message translates to:
+  /// **'Less'**
+  String get commonLess;
+
+  /// Reference key common.more — a heatmap key
+  ///
+  /// In en, this message translates to:
+  /// **'More'**
+  String get commonMore;
+
+  /// A heatmap cell's level, as a screen reader hears it. The reference announces the English word in every language; translated here.
+  ///
+  /// In en, this message translates to:
+  /// **'none'**
+  String get heatLevelNone;
+
+  /// A heatmap cell's level
+  ///
+  /// In en, this message translates to:
+  /// **'some'**
+  String get heatLevelSome;
+
+  /// A heatmap cell's level
+  ///
+  /// In en, this message translates to:
+  /// **'most'**
+  String get heatLevelMost;
+
+  /// A heatmap cell's level
+  ///
+  /// In en, this message translates to:
+  /// **'all'**
+  String get heatLevelAll;
+
+  /// Reference key learning.thisWeek — the summary's kicker
+  ///
+  /// In en, this message translates to:
+  /// **'This week'**
+  String get learningThisWeek;
+
+  /// Reference key learning.streak — the summary's caption
+  ///
+  /// In en, this message translates to:
+  /// **'{n}-day streak'**
+  String learningStreak(String n);
+
+  /// Reference key learning.goal — the ring's accessible name
+  ///
+  /// In en, this message translates to:
+  /// **'Weekly goal'**
+  String get learningGoal;
+
+  /// Reference key learning.courses — a summary figure
+  ///
+  /// In en, this message translates to:
+  /// **'Courses'**
+  String get learningCourses;
+
+  /// Reference key learning.streakLabel — a summary figure
+  ///
+  /// In en, this message translates to:
+  /// **'Streak'**
+  String get learningStreakLabel;
+
+  /// Reference key learning.milestone — a summary figure
+  ///
+  /// In en, this message translates to:
+  /// **'Next milestone'**
+  String get learningMilestone;
+
+  /// Reference key learning.milestoneValue — the reference writes the literal "200 min"; the figure is a placeholder here so its digits follow the locale
+  ///
+  /// In en, this message translates to:
+  /// **'{n} min'**
+  String learningMilestoneValue(String n);
+
+  /// Reference key learning.inProgress — a section head
+  ///
+  /// In en, this message translates to:
+  /// **'In progress'**
+  String get learningInProgress;
+
+  /// Reference key learning.week — the bar chart's section head and name
+  ///
+  /// In en, this message translates to:
+  /// **'This week'**
+  String get learningWeek;
+
+  /// Reference key learning.consistency — the heatmap's section head and name
+  ///
+  /// In en, this message translates to:
+  /// **'Consistency'**
+  String get learningConsistency;
+
+  /// A course's provider and session length — `x.provider + " · " + x.mins + " " + t("unit.min")`
+  ///
+  /// In en, this message translates to:
+  /// **'{provider} · {minutes} min'**
+  String learningCourseMeta(String provider, String minutes);
+
+  /// Reference key learning.insight1.title
+  ///
+  /// In en, this message translates to:
+  /// **'Short sessions stick'**
+  String get learningInsight1Title;
+
+  /// Reference key learning.insight1.text
+  ///
+  /// In en, this message translates to:
+  /// **'Your 20-minute sessions are completed twice as often as your hour-long ones.'**
+  String get learningInsight1Text;
+
+  /// Reference key learning.insight2.title
+  ///
+  /// In en, this message translates to:
+  /// **'Arabic is your strongest streak'**
+  String get learningInsight2Title;
+
+  /// Reference key learning.insight2.text
+  ///
+  /// In en, this message translates to:
+  /// **'Nine days running, well ahead of your other courses.'**
+  String get learningInsight2Text;
+
   /// Reference key tax.above — the top band's label
   ///
   /// In en, this message translates to:

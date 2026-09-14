@@ -141,33 +141,56 @@ class LumeMeterRow extends StatelessWidget {
 }
 
 /// `.pring` — a ring with a value in the middle.
+///
+/// Measured on Learning's summary: 66 × 66 (`.pring--lg` is 92), a ring of
+/// radius 30 and stroke 7 on a 72 view box, so both scale with the size; the
+/// track is the ring's own colour at 16 %, the arc has round ends and starts at
+/// twelve o'clock; the centre is 14 / 800 / −0.04em over an optional
+/// 11 / 600 line at .8.
 class LumeProgressRing extends StatelessWidget {
   const LumeProgressRing({
     super.key,
     required this.value,
     this.centre,
+    this.centreValue,
+    this.centreSub,
     this.label,
     this.valueText,
-    this.size = 76,
-    this.stroke = 7,
+    this.size = defaultSize,
+    this.stroke,
     this.tone,
+    this.centreInk,
   });
 
   final double value;
 
-  /// What sits inside the ring.
+  /// What sits inside the ring, when it is more than a figure.
   final Widget? centre;
+
+  /// `.pring__mid b` and `i` — the figure, and a word under it.
+  final String? centreValue;
+  final String? centreSub;
 
   final String? label;
   final String? valueText;
   final double size;
-  final double stroke;
+
+  /// `null` is the reference's 7 on 72, at this size.
+  final double? stroke;
   final Color? tone;
+
+  /// The centre's ink — `text` on a plain card, `--on-grad` on a gradient.
+  final Color? centreInk;
+
+  static const double defaultSize = 66;
+  static const double largeSize = 92;
 
   @override
   Widget build(BuildContext context) {
     final LumeColors lume = context.lume;
     final double v = value.clamp(0.0, 1.0);
+    final Color fill = tone ?? lume.accent;
+    final Color ink = centreInk ?? lume.text;
 
     return Semantics(
       label: label,
@@ -182,12 +205,48 @@ class LumeProgressRing extends StatelessWidget {
               size: Size.square(size),
               painter: _RingPainter(
                 value: v,
-                track: lume.text.withValues(alpha: 0.10),
-                fill: tone ?? lume.accent,
-                stroke: stroke,
+                track: fill.withValues(alpha: 0.16),
+                fill: fill,
+                stroke: stroke ?? 7 * size / 72,
+                radius: 30 * size / 72,
               ),
             ),
-            if (centre != null) ExcludeSemantics(child: centre!),
+            if (centre != null)
+              ExcludeSemantics(child: centre!)
+            else if (centreValue != null)
+              ExcludeSemantics(
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: <Widget>[
+                    LumeNumerals(
+                      centreValue!,
+                      style: LumeType.numeric(
+                        LumeType.tracked(
+                          LumeType.natural(
+                            context,
+                            context.lumeType.body,
+                          ).copyWith(fontWeight: FontWeight.w800),
+                          -0.04,
+                        ),
+                      ).copyWith(color: ink),
+                    ),
+                    if (centreSub != null)
+                      Padding(
+                        padding: const EdgeInsets.only(top: 1),
+                        child: Opacity(
+                          opacity: 0.8,
+                          child: Text(
+                            centreSub!,
+                            style: LumeType.natural(
+                              context,
+                              context.lumeType.metaSmall,
+                            ).copyWith(color: ink, fontWeight: FontWeight.w600),
+                          ),
+                        ),
+                      ),
+                  ],
+                ),
+              ),
           ],
         ),
       ),
@@ -201,17 +260,18 @@ class _RingPainter extends CustomPainter {
     required this.track,
     required this.fill,
     required this.stroke,
+    required this.radius,
   });
 
   final double value;
   final Color track;
   final Color fill;
   final double stroke;
+  final double radius;
 
   @override
   void paint(Canvas canvas, Size size) {
     final Offset centre = Offset(size.width / 2, size.height / 2);
-    final double radius = (size.shortestSide - stroke) / 2;
 
     final Paint base = Paint()
       ..color = track

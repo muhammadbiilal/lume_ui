@@ -3648,6 +3648,93 @@ class AppLocalizationsUr extends AppLocalizations {
   String get toolSourceTax => 'قانونی سلیب';
 
   @override
+  String get toolSourceOnDevice => 'آلے پر';
+
+  @override
+  String toolFavourited(String name) {
+    return '$name پسندیدہ میں شامل کر دیا گیا';
+  }
+
+  @override
+  String toolUnfavourited(String name) {
+    return '$name پسندیدہ سے ہٹا دیا گیا';
+  }
+
+  @override
+  String get toolInsights => 'بصیرتیں';
+
+  @override
+  String get commonLess => 'کم';
+
+  @override
+  String get commonMore => 'زیادہ';
+
+  @override
+  String get heatLevelNone => 'کوئی نہیں';
+
+  @override
+  String get heatLevelSome => 'کچھ';
+
+  @override
+  String get heatLevelMost => 'زیادہ تر';
+
+  @override
+  String get heatLevelAll => 'سب';
+
+  @override
+  String get learningThisWeek => 'اس ہفتے';
+
+  @override
+  String learningStreak(String n) {
+    return '$n دن کا تسلسل';
+  }
+
+  @override
+  String get learningGoal => 'ہفتہ وار ہدف';
+
+  @override
+  String get learningCourses => 'کورسز';
+
+  @override
+  String get learningStreakLabel => 'تسلسل';
+
+  @override
+  String get learningMilestone => 'اگلا سنگِ میل';
+
+  @override
+  String learningMilestoneValue(String n) {
+    return '$n منٹ';
+  }
+
+  @override
+  String get learningInProgress => 'جاری';
+
+  @override
+  String get learningWeek => 'اس ہفتے';
+
+  @override
+  String get learningConsistency => 'باقاعدگی';
+
+  @override
+  String learningCourseMeta(String provider, String minutes) {
+    return '$provider · $minutes منٹ';
+  }
+
+  @override
+  String get learningInsight1Title => 'مختصر سیشن جاری رہتے ہیں';
+
+  @override
+  String get learningInsight1Text =>
+      'آپ کے 20 منٹ کے سیشن ایک گھنٹے والے سیشنز کے مقابلے میں دوگنا زیادہ مکمل ہوتے ہیں۔';
+
+  @override
+  String get learningInsight2Title => 'عربی آپ کا سب سے مضبوط تسلسل ہے';
+
+  @override
+  String get learningInsight2Text =>
+      'مسلسل نو دن، آپ کے دوسرے کورسز سے کہیں آگے۔';
+
+  @override
   String taxAbove(String v) {
     return '$v سے زیادہ';
   }
