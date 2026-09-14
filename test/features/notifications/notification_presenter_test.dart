@@ -11,6 +11,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:go_router/go_router.dart';
+import 'package:lume/app/providers/locale_provider.dart';
 import 'package:lume/app/providers/notification_feed.dart';
 import 'package:lume/app/providers/personalisation.dart';
 import 'package:lume/features/account/data/notification_prefs_store.dart';
@@ -218,5 +219,72 @@ void main() {
     expect(r.right, 1100 - 24);
     expect(r.bottom, 900 - 24);
     expect(r.width, 400);
+  });
+
+  // F6B — the banner the Android walk found over every tool header. The walk
+  // opened each tool in a fresh process and captured it inside the first
+  // banner's life; these hold the rules that make that the only way to see it.
+
+  group('it is not brought back', () {
+    Future<void> seenAndGone(WidgetTester tester) async {
+      await past(tester, LumeNotificationPresenter.firstTick);
+      expect(inBanner('Time for your medication'), findsOneWidget);
+      await past(tester, LumeNotificationBanner.life);
+      expect(banner(), findsNothing);
+    }
+
+    testWidgets('by going into a tool, and it does not outlive its life '
+        'there', (WidgetTester tester) async {
+      final GoRouter router = await pumpLumeRouter(
+        tester,
+        initialLocation: '/home',
+      );
+      await past(tester, LumeNotificationPresenter.firstTick);
+      expect(inBanner('Time for your medication'), findsOneWidget);
+
+      // Into a tool while the banner is up: its life is not restarted.
+      router.go('/tools/tool/weather');
+      await past(tester, const Duration(seconds: 3));
+      router.go('/tools/tool/expenses');
+      await past(
+        tester,
+        LumeNotificationBanner.life - const Duration(seconds: 3),
+      );
+      expect(banner(), findsNothing);
+
+      // Around the tools for a whole tick: the medication never returns.
+      router.go('/tools/tool/documents');
+      await past(tester, LumeNotificationPresenter.interval);
+      expect(inBanner('Time for your medication'), findsNothing);
+    });
+
+    testWidgets('by leaving the app and coming back', (
+      WidgetTester tester,
+    ) async {
+      await pumpLumeRouter(tester, initialLocation: '/home');
+      await seenAndGone(tester);
+
+      tester.binding.handleAppLifecycleStateChanged(AppLifecycleState.paused);
+      await past(tester, const Duration(seconds: 10));
+      tester.binding.handleAppLifecycleStateChanged(AppLifecycleState.resumed);
+      await past(tester, LumeNotificationPresenter.interval);
+      expect(inBanner('Time for your medication'), findsNothing);
+    });
+
+    testWidgets('by changing the language', (WidgetTester tester) async {
+      await pumpLumeRouter(tester, initialLocation: '/home');
+      await seenAndGone(tester);
+
+      final ProviderContainer container = ProviderScope.containerOf(
+        tester.element(find.byType(LumeNotificationPresenter)),
+      );
+      container.read(localeProvider.notifier).state = const Locale('ur');
+      await tester.pumpAndSettle();
+      container.read(localeProvider.notifier).state = const Locale('en');
+      await tester.pumpAndSettle();
+
+      await past(tester, LumeNotificationPresenter.interval);
+      expect(inBanner('Time for your medication'), findsNothing);
+    });
   });
 }

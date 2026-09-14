@@ -51,11 +51,11 @@ class LumeNotificationPresenter extends ConsumerStatefulWidget {
 
   final Widget child;
 
-  /// `setTimeout(notifyTick, 2500)`.
-  static const Duration firstTick = Duration(milliseconds: 2500);
+  /// `setTimeout(notifyTick, 2500)` — the default [LumeNotificationSchedule].
+  static final Duration firstTick = const LumeNotificationSchedule().firstTick;
 
-  /// `setInterval(notifyTick, 45000)`.
-  static const Duration interval = Duration(seconds: 45);
+  /// `setInterval(notifyTick, 45000)` — the default [LumeNotificationSchedule].
+  static final Duration interval = const LumeNotificationSchedule().interval;
 
   @override
   ConsumerState<LumeNotificationPresenter> createState() =>
@@ -74,14 +74,12 @@ class _LumeNotificationPresenterState
   @override
   void initState() {
     super.initState();
-    _first = Timer(
-      LumeNotificationPresenter.firstTick,
-      () => unawaited(_tick()),
+    final LumeNotificationSchedule schedule = ref.read(
+      notificationScheduleProvider,
     );
-    _every = Timer.periodic(
-      LumeNotificationPresenter.interval,
-      (_) => unawaited(_tick()),
-    );
+    if (!schedule.enabled) return;
+    _first = Timer(schedule.firstTick, () => unawaited(_tick()));
+    _every = Timer.periodic(schedule.interval, (_) => unawaited(_tick()));
   }
 
   @override

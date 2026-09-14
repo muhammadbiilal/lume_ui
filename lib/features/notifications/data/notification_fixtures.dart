@@ -321,6 +321,19 @@ final List<LumeNotificationSample> kNotificationSamples =
 /// reaches either way.
 int lumeReferenceRank(LumeNotificationPriority p) => p.rank == 0 ? 1 : p.rank;
 
+/// What the reader has read, dismissed and been presented, by event id.
+///
+/// The reference keeps these on the profile (`notifySeen`, and the read and
+/// dismissed maps), so they outlive the engine that reads the feed. This
+/// build's profile is not durable (F4C), so neither is this: it lasts as long
+/// as the process, and a restart presents the first banner again. **Dayroz
+/// obligation:** persist it with the profile.
+class LumeNotificationLedger {
+  final Set<String> read = <String>{};
+  final Set<String> dismissed = <String>{};
+  final Set<String> presented = <String>{};
+}
+
 /// The feed, for as long as the process lives.
 class LumeFixtureNotificationRepository
     implements LumeNotificationRepository, LumeNotificationDurability {
@@ -334,7 +347,9 @@ class LumeFixtureNotificationRepository
     this.pushEnabled = false,
     this.failWith,
     this.delay = Duration.zero,
-  }) : samples = samples ?? kNotificationSamples;
+    LumeNotificationLedger? ledger,
+  }) : samples = samples ?? kNotificationSamples,
+       ledger = ledger ?? LumeNotificationLedger();
 
   final LumeEligibility eligibility;
   final LumeUserContext user;
@@ -354,13 +369,14 @@ class LumeFixtureNotificationRepository
   /// How long the read takes, for the skeleton.
   final Duration delay;
 
-  final Set<String> _read = <String>{};
-  final Set<String> _dismissed = <String>{};
+  /// What the reader has done to the feed. Held apart from the repository,
+  /// which is rebuilt when the interface language changes: kept here it was
+  /// forgotten, and a banner already presented came back (F6B).
+  final LumeNotificationLedger ledger;
 
-  /// What has been presented, through any surface. Nondurable, like the
-  /// rest: a restart presents the first banner again, where the reference
-  /// remembers it in the profile.
-  final Set<String> _presented = <String>{};
+  Set<String> get _read => ledger.read;
+  Set<String> get _dismissed => ledger.dismissed;
+  Set<String> get _presented => ledger.presented;
 
   @override
   bool get isDurable => false;

@@ -1975,6 +1975,38 @@ were:**
 | `LumeScanner` (new) | — | the device contract: `scan()` and `pickImage()` reporting a `LumeScanOutcome`, with an unavailable default and a recording fake |
 | `LumeTimeline` | an entry with only a title as tall as the title's line (18) | `.tline__rail` is 20 — a 14-point node 3 down — so such an entry is 20 and the next begins 36 below it; entries with a subtitle were already taller |
 
+### C79 — The medication banner over every tool header
+
+**Found in the F6A Android smoke walk; investigated and corrected in F6B.**
+
+- **What the walk showed.** "Time for your medication" covered the header of
+  every tool captured on the emulator.
+- **Why — the walk, not the banner.** Each tool was opened in a fresh
+  process by `android_tool_probe.dart` and captured six seconds after launch.
+  The presenter runs the reference schedule exactly — `notifyTick` 2.5 s
+  after launch and every 45 s, a banner withdrawing after 6 s — so every
+  capture fell inside the first banner's life (2.5–8.5 s). Timed captures of
+  one process on the emulator settle it: the banner is up at 4 s, gone at
+  12 s, and still gone at 62 s, after the next tick has shown and withdrawn
+  the next event. The presenter wraps the shell, so moving between tools
+  never recreates it; a test now drives the router into three tools across a
+  banner's life and a whole tick and finds nothing brought back.
+- **Why each fresh launch shows it — reproduced.** The reference remembers
+  what it presented on the profile (`notifySeen`) and saves it; this build's
+  profile is not durable (F4C), so a restart presents the first event again.
+  **Dayroz obligation:** persist `LumeNotificationLedger` with the profile.
+- **A real defect it uncovered — corrected.** What the reader had read,
+  dismissed and been presented lived inside the fixture repository, which is
+  rebuilt when the interface language changes; switching language forgot it
+  and the next tick presented the medication banner again. The sets now live
+  in `LumeNotificationLedger`, provided apart from the repository.
+- **The schedule is injected.** `notificationScheduleProvider` carries the
+  first tick, the interval and whether banners run; tests keep the reference
+  timing, and a device walk capturing screens passes `LUME_BANNERS=off`.
+- **Held by tests.** Once per event; withdraws after its life; never over the
+  centre or a sheet; waits while the app is away; not brought back by
+  navigation, by leaving and returning, or by a language change.
+
 ### C63 — English dates written the wrong way outside the United States
 
 **Found in F6A** on the UAE Tax capture ("Mon, 7 Sep") and confirmed by

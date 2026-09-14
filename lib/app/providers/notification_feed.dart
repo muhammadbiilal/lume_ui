@@ -38,6 +38,38 @@ final Provider<AppLocalizations> notificationStringsProvider =
       ),
     );
 
+/// What the reader has done to the feed — read, dismissed, presented. Its own
+/// provider, so a rebuilt repository (a language change) does not forget it.
+final Provider<LumeNotificationLedger> notificationLedgerProvider =
+    Provider<LumeNotificationLedger>((Ref ref) => LumeNotificationLedger());
+
+/// When the banner's tick runs. The reference's `setTimeout(notifyTick, 2500)`
+/// and `setInterval(notifyTick, 45000)`, injected so a test or a device walk
+/// decides the clock rather than inheriting it.
+final Provider<LumeNotificationSchedule> notificationScheduleProvider =
+    Provider<LumeNotificationSchedule>(
+      (Ref ref) => const LumeNotificationSchedule(),
+    );
+
+/// The banner tick's timing.
+class LumeNotificationSchedule {
+  const LumeNotificationSchedule({
+    this.firstTick = const Duration(milliseconds: 2500),
+    this.interval = const Duration(seconds: 45),
+    this.enabled = true,
+  });
+
+  /// No banner at all — a device walk capturing screens, not notifications.
+  const LumeNotificationSchedule.off()
+    : firstTick = Duration.zero,
+      interval = Duration.zero,
+      enabled = false;
+
+  final Duration firstTick;
+  final Duration interval;
+  final bool enabled;
+}
+
 /// What the centre and the banner both read.
 final Provider<LumeNotificationRepository> notificationFeedProvider =
     Provider<LumeNotificationRepository>((Ref ref) {
@@ -51,5 +83,6 @@ final Provider<LumeNotificationRepository> notificationFeedProvider =
         // true the next time the centre reads, without this provider having
         // to be rebuilt.
         readPrefs: () => ref.read(notificationPrefsProvider).prefs,
+        ledger: ref.watch(notificationLedgerProvider),
       );
     });
