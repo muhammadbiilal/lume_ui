@@ -35,6 +35,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../app/providers/personalisation.dart';
+import '../config/lume_build_profile.dart';
 import '../../app/providers/shell_provider.dart';
 import '../../features/auth/application/auth_flow_controller.dart';
 import '../../features/auth/data/fake_auth_repository.dart';
@@ -474,6 +475,8 @@ Widget _tool(BuildContext context, GoRouterState state, String root) {
           }
           return FixtureToolScreen(
             toolId: toolId,
+            reference:
+                ref.watch(buildProfileProvider) == LumeBuildProfile.reference,
             catalogueEligible: feature == null
                 ? null
                 : eligibility.isVisible(feature, user),

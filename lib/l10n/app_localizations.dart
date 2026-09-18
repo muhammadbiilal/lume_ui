@@ -4468,6 +4468,12 @@ abstract class AppLocalizations {
   /// **'{n} min'**
   String featuredMinutes(int n);
 
+  /// What a screen reader says for the "Sample data" mark at the head of a tool's source line, in development and reference builds (F6B closure)
+  ///
+  /// In en, this message translates to:
+  /// **'Sample data. The figures in this tool are examples, not your own.'**
+  String get fixtureSampleA11y;
+
   /// Reference key flights.actualDep
   ///
   /// In en, this message translates to:

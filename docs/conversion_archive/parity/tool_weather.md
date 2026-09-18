@@ -84,9 +84,9 @@ Written by the tool's bounds test. Every row is a value read from the running re
 | tool_weather_default_pk_390x844_light_en | `srcbar` | x | 20.00 | 20.00 | 0.00 |
 | tool_weather_default_pk_390x844_light_en | `srcbar` | y | 1651.08 | 1651.00 | -0.08 |
 | tool_weather_default_pk_390x844_light_en | `srcbar` | width | 350.00 | 350.00 | 0.00 |
-| tool_weather_default_pk_390x844_light_en | `srcbar` | height | 39.00 | 39.00 | 0.00 |
+| tool_weather_default_pk_390x844_light_en | `srcbar` | height (reference +24, recorded) | 63.00 | 63.00 | 0.00 |
 | tool_weather_default_pk_390x844_light_en | `related` | x | 20.00 | 20.00 | 0.00 |
-| tool_weather_default_pk_390x844_light_en | `related` | y | 1745.08 | 1745.00 | -0.08 |
+| tool_weather_default_pk_390x844_light_en | `related` | y (reference +24, recorded) | 1769.08 | 1769.00 | -0.08 |
 | tool_weather_default_pk_390x844_light_en | `related` | width | 350.00 | 350.00 | 0.00 |
 | tool_weather_default_pk_390x844_light_en | `related` | height | 81.50 | 81.00 | -0.50 |
 | tool_weather_default_pk_700x900_light_en | `toolbar` | x | 0.00 | 0.00 | 0.00 |

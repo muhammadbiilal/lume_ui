@@ -100,6 +100,8 @@ class LumeToolFrame extends StatefulWidget {
     this.source,
     this.updated,
     this.sourceNote,
+    this.sourceSample,
+    this.sourceSampleSemantics,
     this.freshness,
     this.freshnessLabel,
     this.privacy,
@@ -142,6 +144,11 @@ class LumeToolFrame extends StatefulWidget {
   final String? source;
   final String? updated;
   final String? sourceNote;
+
+  /// The sample-data mark at the head of the source line, and what a screen
+  /// reader says for it (F6B closure, `RELEASE_HONESTY.md`).
+  final String? sourceSample;
+  final String? sourceSampleSemantics;
 
   /// The live/delayed/cached marker that sits beside the subtitle.
   final LumeFreshnessQuality? freshness;
@@ -317,7 +324,8 @@ class _LumeToolFrameState extends State<LumeToolFrame> {
         if (widget.freshness != null ||
             widget.source != null ||
             widget.updated != null ||
-            widget.sourceNote != null)
+            widget.sourceNote != null ||
+            widget.sourceSample != null)
           LumeToolSection(
             child: LumeSourceBar(
               quality: widget.freshness,
@@ -325,6 +333,8 @@ class _LumeToolFrameState extends State<LumeToolFrame> {
               source: widget.source,
               updated: widget.updated,
               note: widget.sourceNote,
+              sample: widget.sourceSample,
+              sampleSemantics: widget.sourceSampleSemantics,
             ),
           ),
         if (widget.privacy != null) LumeToolSection(child: widget.privacy!),

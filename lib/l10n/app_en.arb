@@ -3242,6 +3242,10 @@
       }
     }
   },
+  "fixtureSampleA11y": "Sample data. The figures in this tool are examples, not your own.",
+  "@fixtureSampleA11y": {
+    "description": "What a screen reader says for the \"Sample data\" mark at the head of a tool's source line, in development and reference builds (F6B closure)"
+  },
   "flightsActualDep": "Actual departure",
   "@flightsActualDep": {
     "description": "Reference key flights.actualDep"

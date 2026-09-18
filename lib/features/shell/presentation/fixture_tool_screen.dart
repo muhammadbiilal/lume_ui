@@ -50,9 +50,15 @@ class FixtureToolScreen extends StatelessWidget {
     this.onBack,
     this.onOpenRelated,
     this.onOpenRecords,
+    this.reference = true,
   });
 
   final String toolId;
+
+  /// A reference or development build. The fixture tools are its harness: a
+  /// release refuses their ids as it refuses any unknown id, and a reference
+  /// build marks what they show as sample data (F6B closure).
+  final bool reference;
 
   /// What [LumeEligibility] said about this id, when the id *is* a catalogue
   /// feature. `null` means it is not one — a fixture tool, or nothing at all —
@@ -75,7 +81,9 @@ class FixtureToolScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final AppLocalizations l = AppLocalizations.of(context);
-    final LumeFixtureTool? tool = LumeFixtureTool.parse(toolId);
+    final LumeFixtureTool? tool = reference
+        ? LumeFixtureTool.parse(toolId)
+        : null;
 
     final LumeToolFrameStrings strings = LumeToolFrameStrings(
       loading: l.toolLoading,
@@ -117,6 +125,8 @@ class FixtureToolScreen extends StatelessWidget {
       freshnessLabel: l.commonNow,
       source: l.commonStatus,
       updated: l.commonToday,
+      sourceSample: l.freshSample,
+      sourceSampleSemantics: l.fixtureSampleA11y,
       privacy: LumePrivateState(
         title: l.toolPrivateTitle,
         text: l.toolPrivateText,

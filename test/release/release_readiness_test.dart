@@ -1,27 +1,100 @@
-/// The release-honesty gate (F6B decision 5, `RELEASE_HONESTY.md`).
+/// The release-honesty gate (F6B decision 5, F6B closure, `RELEASE_HONESTY.md`).
 ///
 /// Every catalogue tool's source bar is resolved as a release build would
-/// resolve it over this build's capabilities, and nothing may claim storage,
-/// encryption, liveness or an update that no capability supports. The
-/// reference build is held to drawing exactly what the reference draws, so
-/// the goldens stay as they are.
+/// resolve it over this build's capabilities: nothing may claim storage,
+/// encryption, liveness or an update that no capability supports, and every
+/// tool that shows sample data must say so *in its own source bar*. About's
+/// Data row is not looked at here on purpose — a reader who never opens About
+/// must still be told. The reference build draws what the reference draws,
+/// with the sample mark leading the source line.
 library;
 
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:lume/core/config/lume_build_profile.dart';
 import 'package:lume/core/localization/lume_format.dart';
+import 'package:lume/core/routing/lume_routes.dart';
+import 'package:lume/core/widgets/lume/lume_badge.dart';
+import 'package:lume/core/widgets/lume/lume_tool.dart';
 import 'package:lume/features/catalogue/data/feature_catalogue.dart';
 import 'package:lume/features/catalogue/domain/lume_feature.dart';
+import 'package:lume/features/tools/application/tool_registry.dart';
 import 'package:lume/features/tools/domain/tool_capability.dart';
 import 'package:lume/features/tools/presentation/source_claims.dart';
 import 'package:lume/features/tools/presentation/tool_strings.dart';
 import 'package:lume/l10n/app_localizations.dart';
 
+import '../features/tax/tax_harness.dart';
+import '../features/tools/tool_parity.dart';
+import '../features/wave1/wave1_tools_test.dart' show pumpTool;
+import '../helpers/load_fonts.dart';
 import '../helpers/lume_harness.dart';
+
+/// What is wrong with [c] as a release claim over [cap], or nothing.
+List<String> releaseFaults(
+  AppLocalizations l,
+  LumeFeature feature,
+  LumeDataCapability cap,
+  LumeSourceClaim c,
+) {
+  final List<String> out = <String>[];
+  void flag(bool bad, String what) {
+    if (bad) out.add('${feature.id}: $what');
+  }
+
+  final RegExp recency = RegExp(
+    '^(${RegExp.escape(l.freshAgoSec(0)).replaceAll('0', r'\d+')}|'
+    '${RegExp.escape(l.freshAgoMin(0)).replaceAll('0', r'\d+')})\$',
+  );
+  flag(
+    cap.isSample && !c.discloses(l),
+    'sample data with no disclosure in the source bar',
+  );
+  flag(
+    cap.isSample && (c.updated != null || c.label != l.freshSample),
+    'sample data drawn with a claim ("${c.label}", "${c.updated}")',
+  );
+  flag(
+    c.label == l.freshLocal && !cap.isDurable,
+    '"${l.freshLocal}" with nothing durable',
+  );
+  flag(
+    (c.source ?? '').contains('Encrypted') && !cap.isEncrypted,
+    'an encryption claim with nothing encrypted',
+  );
+  flag(c.label == l.freshLive && !cap.isLive, 'Live with nothing live');
+  flag(
+    c.label == l.freshDelayed && cap.observedAt == null,
+    'a delay with nothing observed',
+  );
+  flag(
+    c.updated != null &&
+        cap.observedAt == null &&
+        feature.freshness != LumeFreshnessKind.computed,
+    'an update ("${c.updated}") with nothing observed',
+  );
+  flag(
+    c.updated != null && recency.hasMatch(c.updated!) && cap.observedAt == null,
+    'a recency with nothing observed',
+  );
+  flag(
+    c.label == l.freshComputed && !cap.computedHere,
+    'a calculation with nothing calculated here',
+  );
+  flag(
+    !LumeSourceClaims.staticSources.contains(feature.fallbackSource) &&
+        feature.fallbackSource != LumeSourceClaims.encryptedSource &&
+        c.source == feature.fallbackSource,
+    'the feed name "${feature.fallbackSource}" with no feed',
+  );
+  return out;
+}
 
 void main() {
   final DateTime now = DateTime(2026, 9, 7, 16, 41);
+  LumeFeature byId(String id) =>
+      kLumeFeatures.firstWhere((LumeFeature x) => x.id == id);
 
   Future<(AppLocalizations, LumeFormatting)> strings(
     WidgetTester tester,
@@ -67,67 +140,65 @@ void main() {
     );
   });
 
-  testWidgets('a release over this build claims nothing it cannot support', (
+  test('only tools whose figures are the reader\'s own are sample-free', () {
+    expect(
+      <String>[
+        for (final LumeFeature f in kLumeFeatures)
+          if (!LumeDataCapability.fixture(f.id).isSample) f.id,
+      ]..sort(),
+      <String>['age', 'compound', 'loan', 'stopwatch', 'tipsplit'],
+    );
+  });
+
+  testWidgets('a release over this build claims nothing it cannot support, '
+      'and says "Sample data" wherever it shows it', (
     WidgetTester tester,
   ) async {
     final (AppLocalizations l, LumeFormatting f) = await strings(tester);
-    final List<String> false_ = <String>[];
-    final RegExp updated = RegExp(
-      '^(${RegExp.escape(l.freshAgoSec(0)).replaceAll('0', r'\d+')}|'
-      '${RegExp.escape(l.freshAgoMin(0)).replaceAll('0', r'\d+')})\$',
-    );
-    for (final LumeFeature feature in kLumeFeatures) {
-      final LumeDataCapability cap = LumeDataCapability.fixture(feature.id);
-      final LumeSourceClaim c = claim(l, f, feature, LumeBuildProfile.release);
-      void flag(bool bad, String what) {
-        if (bad) false_.add('${feature.id}: $what');
-      }
+    final List<String> faults = <String>[
+      for (final LumeFeature feature in kLumeFeatures)
+        ...releaseFaults(
+          l,
+          feature,
+          LumeDataCapability.fixture(feature.id),
+          claim(l, f, feature, LumeBuildProfile.release),
+        ),
+    ];
+    expect(faults, isEmpty, reason: faults.join('\n'));
+  });
 
-      flag(
-        c.label == l.freshLocal && !cap.isDurable,
-        '"${l.freshLocal}" with nothing durable',
-      );
-      flag(
-        c.source.contains('Encrypted') && !cap.isEncrypted,
-        'an encryption claim with nothing encrypted',
-      );
-      flag(c.label == l.freshLive && !cap.isLive, 'Live with nothing live');
-      flag(
-        c.label == l.freshDelayed && cap.observedAt == null,
-        'a delay with nothing observed',
-      );
-      flag(
-        c.updated != null &&
-            cap.observedAt == null &&
-            feature.freshness != LumeFreshnessKind.computed,
-        'an update ("${c.updated}") with nothing observed',
-      );
-      flag(
-        c.updated != null &&
-            updated.hasMatch(c.updated!) &&
-            cap.observedAt == null,
-        'a recency with nothing observed',
-      );
-      flag(
-        c.label == l.freshComputed && !cap.computedHere,
-        'a calculation with nothing calculated here',
-      );
-      flag(
-        !LumeSourceClaims.staticSources.contains(feature.fallbackSource) &&
-            feature.fallbackSource != LumeSourceClaims.encryptedSource &&
-            c.source == feature.fallbackSource,
-        'the feed name "${feature.fallbackSource}" with no feed',
-      );
-    }
-    expect(false_, isEmpty, reason: false_.join('\n'));
+  testWidgets('the gate catches a sample tool that does not say so', (
+    WidgetTester tester,
+  ) async {
+    final (AppLocalizations l, LumeFormatting f) = await strings(tester);
+    final LumeFeature trains = byId('trains');
+    final LumeDataCapability cap = LumeDataCapability.fixture('trains');
+    // What the reference draws, handed to a release: a live, recent feed.
+    final LumeSourceClaim reference = claim(
+      l,
+      f,
+      trains,
+      LumeBuildProfile.reference,
+    );
+    final LumeSourceClaim hidden = LumeSourceClaim(
+      quality: reference.quality,
+      label: reference.label,
+      source: reference.source,
+      updated: reference.updated,
+    );
+    expect(
+      releaseFaults(l, trains, cap, hidden),
+      containsAll(<String>[
+        'trains: sample data with no disclosure in the source bar',
+        'trains: Live with nothing live',
+      ]),
+    );
   });
 
   testWidgets('a release draws a claim once an adapter supports it', (
     WidgetTester tester,
   ) async {
     final (AppLocalizations l, LumeFormatting f) = await strings(tester);
-    LumeFeature byId(String id) =>
-        kLumeFeatures.firstWhere((LumeFeature x) => x.id == id);
 
     final LumeSourceClaim stored = claim(
       l,
@@ -137,14 +208,22 @@ void main() {
       capability: const LumeDataCapability(source: 'Dayroz', isDurable: true),
     );
     expect(stored.label, l.freshLocal);
+    expect(stored.discloses(l), isFalse, reason: 'an adapter is not sample');
 
     final LumeSourceClaim notStored = claim(
       l,
       f,
       byId('expenses'),
       LumeBuildProfile.release,
+      capability: const LumeDataCapability(source: 'Dayroz'),
     );
     expect(notStored.label, l.freshSession);
+
+    expect(
+      claim(l, f, byId('expenses'), LumeBuildProfile.release).label,
+      l.freshSample,
+      reason: 'the fixture records are sample data',
+    );
 
     final LumeSourceClaim encrypted = claim(
       l,
@@ -194,9 +273,8 @@ void main() {
     );
   });
 
-  testWidgets('the reference build draws exactly what the reference draws', (
-    WidgetTester tester,
-  ) async {
+  testWidgets('the reference build draws what the reference draws, led by '
+      'the sample mark', (WidgetTester tester) async {
     final (AppLocalizations l, LumeFormatting f) = await strings(tester);
     for (final LumeFeature feature in kLumeFeatures) {
       final LumeSourceClaim c = claim(
@@ -217,6 +295,99 @@ void main() {
           city: 'Islamabad',
         ),
       );
+      expect(
+        c.sample,
+        LumeDataCapability.fixture(feature.id).isSample ? l.freshSample : null,
+        reason: feature.id,
+      );
+    }
+  });
+
+  // What a reader actually sees: every converted tool, opened through its
+  // route, with only its own source bar looked at.
+  group('in the tool itself', () {
+    setUpAll(() async {
+      await loadLumeFonts();
+    });
+
+    for (final LumeBuildProfile profile in LumeBuildProfile.values) {
+      for (final String id in kLumeToolRegistry.keys) {
+        testWidgets('${profile.name}: $id', (WidgetTester tester) async {
+          await pumpTool(
+            tester,
+            id,
+            // Hadith is for a reader who has the Islamic experience.
+            state: id == 'hadith' ? 'muslim_pk' : 'default_pk',
+            overrides: <Override>[
+              buildProfileProvider.overrideWithValue(profile),
+            ],
+          );
+          final bool sample = LumeDataCapability.fixture(id).isSample;
+          final Finder bar = find.byType(LumeSourceBar);
+          expect(bar, findsOneWidget, reason: '$id draws no source bar');
+          final List<String> said = textsUnder(tester, bar);
+          if (profile == LumeBuildProfile.release) {
+            expect(said.contains('Sample data'), sample, reason: '$said');
+            expect(
+              find.descendant(
+                of: bar,
+                matching: find.byKey(LumeSourceLine.sampleKey),
+              ),
+              findsNothing,
+            );
+          } else {
+            final Finder mark = find.descendant(
+              of: bar,
+              matching: find.byKey(LumeSourceLine.sampleKey),
+            );
+            expect(mark, sample ? findsOneWidget : findsNothing);
+            if (sample) {
+              expect(
+                textsUnder(
+                  tester,
+                  find.descendant(
+                    of: bar,
+                    matching: find.byType(LumeSourceLine),
+                  ),
+                ).first,
+                'Sample data',
+                reason: 'it leads the source line',
+              );
+              expect(
+                tester.getSemantics(mark).label,
+                'Sample data. The figures in this tool are examples, not '
+                'your own.',
+              );
+            }
+          }
+        });
+      }
+    }
+  });
+
+  group('the fixture harness', () {
+    for (final LumeBuildProfile profile in LumeBuildProfile.values) {
+      testWidgets('${profile.name}: /tools/tool/ready', (
+        WidgetTester tester,
+      ) async {
+        await pumpLumeRouter(
+          tester,
+          initialLocation: LumeRoutes.tool(LumeRoutes.tools, 'ready'),
+          profile: taxProfile('default_pk'),
+          overrides: <Override>[
+            buildProfileProvider.overrideWithValue(profile),
+          ],
+        );
+        await tester.pumpAndSettle();
+        final Finder mark = find.byKey(LumeSourceLine.sampleKey);
+        if (profile == LumeBuildProfile.release) {
+          expect(find.byType(LumeSourceBar), findsNothing);
+          expect(find.text('Not part of your setup'), findsWidgets);
+          expect(mark, findsNothing);
+        } else {
+          expect(mark, findsOneWidget);
+        }
+      });
     }
   });
 

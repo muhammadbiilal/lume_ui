@@ -10,7 +10,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:lume/core/routing/lume_routes.dart';
-import 'package:lume/core/widgets/lume/lume_badge.dart';
 import 'package:lume/core/widgets/lume/lume_button.dart';
 import 'package:lume/core/widgets/lume/lume_chart.dart';
 import 'package:lume/core/widgets/lume/lume_header.dart';
@@ -240,13 +239,7 @@ void main() {
 
       final Map<String, dynamic> src = k['source'] as Map<String, dynamic>;
       expect(find.text(src['fresh'] as String), findsOneWidget);
-      expect(
-        textsUnder(
-          tester,
-          find.byType(LumeSourceLine),
-        ).where((String t) => t != '·'),
-        src['line'],
-      );
+      expect(referenceSourceLine(tester), src['line']);
       expect(textsUnder(tester, find.byType(LumeRelatedTools)), k['related']);
     });
 

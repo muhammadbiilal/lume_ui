@@ -49,12 +49,20 @@ Counts are of the 85 catalogue tools (`feature_catalogue.dart`).
   entry); the four About goldens were re-captured for it.
 - **A release build** (`--dart-define=LUME_BUILD=release`) resolves each
   claim against the capability and drops or replaces any it does not
-  support.
+  support. A tool whose capability is `isSample` reads "Sample data" as its
+  freshness and draws no other claim; the fixture harness ids are refused.
+- **Sample data is said where the figures are (C85).** In the reference and
+  development builds a sample-backed tool's source line leads with "Sample
+  data", read to a screen reader in full. About's row stays, but it counts
+  for nothing in the gate.
 - **The gate.** `release_readiness_test.dart` resolves every catalogue tool
   under the release profile with this build's capabilities and fails if any
   draws "Stored on this device" without durability, "Encrypted" without
   encryption, "Live" without a live source, or any "Updated …" without an
-  observation. It also fails if a freshness kind is added without a rule.
+  observation; if a sample-backed tool does not disclose it; or if a
+  freshness kind is added without a rule. It then opens every converted tool
+  through its route in both builds and reads its own source bar, and shows
+  that a claim hiding sample data would be caught.
 
 ## Dayroz obligations
 

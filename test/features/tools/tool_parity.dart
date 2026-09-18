@@ -14,6 +14,7 @@ import 'dart:io';
 
 import 'package:flutter/widgets.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:lume/core/widgets/lume/lume_badge.dart';
 import 'package:lume/core/widgets/lume/lume_header.dart';
 
 /// One logical pixel.
@@ -22,6 +23,23 @@ const double kToolTolerance = 1;
 /// Far down a long screen, where Chrome's fractional line boxes and Flutter's
 /// whole ones have added up (D20).
 const double kToolDrift = 2;
+
+/// C85: where "Sample data" leads the source line and the line no longer
+/// fits beside the freshness mark, the source bar wraps to a second run —
+/// 12 points of line and 12 of run spacing. Declared per cell with
+/// [sampleMarkGrown] and [sampleMarkShifted], and written into the report.
+const double kSampleMarkRun = 24;
+
+/// The source bar, one run taller.
+const Map<String, double> sampleMarkGrown = <String, double>{
+  'srcbar': kSampleMarkRun,
+};
+
+/// What follows the source bar, one run lower.
+const Map<String, double> sampleMarkShifted = <String, double>{
+  'related': kSampleMarkRun,
+  'related.title': kSampleMarkRun,
+};
 
 /// A committed web measurement, or `null` where it was never taken.
 Map<String, dynamic>? webToolCell(String cell) {
@@ -136,3 +154,19 @@ List<String> textsUnder(WidgetTester tester, Finder of) => tester
     .map((Text t) => (t.data ?? t.textSpan!.toPlainText()).trim())
     .where((String s) => s.isNotEmpty)
     .toList();
+
+/// The source line's words as the reference writes them: separators dropped,
+/// and Lume's own "Sample data" mark (C85) left out — the reference has no
+/// such mark. Where the mark is drawn it must lead the line;
+/// `release_readiness_test.dart` holds every sample-backed tool to drawing it.
+List<String> referenceSourceLine(WidgetTester tester) {
+  final List<String> words = textsUnder(
+    tester,
+    find.byType(LumeSourceLine),
+  ).where((String t) => t.trim() != '·').toList();
+  if (find.byKey(LumeSourceLine.sampleKey).evaluate().isNotEmpty) {
+    expect(words.first, 'Sample data', reason: 'the mark leads the line');
+    words.removeAt(0);
+  }
+  return words;
+}

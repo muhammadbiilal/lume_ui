@@ -12,7 +12,6 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:go_router/go_router.dart';
 import 'package:lume/core/navigation/lume_tool_frame.dart';
 import 'package:lume/core/routing/lume_routes.dart';
-import 'package:lume/core/widgets/lume/lume_badge.dart';
 import 'package:lume/core/widgets/lume/lume_button.dart';
 import 'package:lume/core/widgets/lume/lume_clock_face.dart';
 import 'package:lume/core/widgets/lume/lume_destination_cards.dart';
@@ -132,13 +131,7 @@ void main() {
       ]);
       final Map<String, dynamic> src = k['source'] as Map<String, dynamic>;
       expect(find.text(src['fresh'] as String), findsOneWidget);
-      expect(
-        textsUnder(
-          tester,
-          find.byType(LumeSourceLine),
-        ).where((String t) => t.trim() != '·').toList(),
-        src['line'],
-      );
+      expect(referenceSourceLine(tester), src['line']);
       expect(textsUnder(tester, find.byType(LumeRelatedTools)), k['related']);
     }
 

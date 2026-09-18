@@ -182,6 +182,8 @@ class LumeSourceBar extends StatelessWidget {
     this.source,
     this.updated,
     this.note,
+    this.sample,
+    this.sampleSemantics,
   });
 
   final LumeFreshnessQuality? quality;
@@ -189,6 +191,10 @@ class LumeSourceBar extends StatelessWidget {
   final String? source;
   final String? updated;
   final String? note;
+
+  /// See [LumeSourceLine.sample].
+  final String? sample;
+  final String? sampleSemantics;
 
   @override
   Widget build(BuildContext context) {
@@ -209,7 +215,13 @@ class LumeSourceBar extends StatelessWidget {
         children: <Widget>[
           if (quality != null && qualityLabel != null)
             LumeFreshness(label: qualityLabel!, quality: quality!),
-          LumeSourceLine(source: source, updated: updated, note: note),
+          LumeSourceLine(
+            source: source,
+            updated: updated,
+            note: note,
+            sample: sample,
+            sampleSemantics: sampleSemantics,
+          ),
         ],
       ),
     );

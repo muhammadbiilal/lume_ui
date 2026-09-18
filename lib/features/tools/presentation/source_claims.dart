@@ -2,10 +2,14 @@
 ///
 /// **The reference build** draws what the reference draws — every freshness
 /// word, "Updated 30 sec ago" and "Encrypted on device" included — because it
-/// is a reproduction, and About says its data is sample data.
+/// is a reproduction. A tool whose capability is [LumeDataCapability.isSample]
+/// also leads its source line with "Sample data", so the reader learns it
+/// where the figures are, not only in About.
 ///
-/// **A release build** draws a claim only when the tool's
-/// [LumeDataCapability] supports it:
+/// **A release build** over sample data says "Sample data" as the freshness
+/// itself and claims nothing else: no storage, encryption, liveness, update
+/// or feed. Otherwise it draws a claim only when the tool's capability
+/// supports it:
 ///
 /// | claim | needs |
 /// |---|---|
@@ -37,12 +41,20 @@ class LumeSourceClaim {
     required this.label,
     required this.source,
     this.updated,
+    this.sample,
   });
 
   final LumeFreshnessQuality quality;
   final String label;
-  final String source;
+  final String? source;
   final String? updated;
+
+  /// The reference build's sample-data mark, drawn first in the source line.
+  final String? sample;
+
+  /// This claim tells the reader the tool shows sample data.
+  bool discloses(AppLocalizations l) =>
+      sample == l.freshSample || label == l.freshSample;
 }
 
 abstract final class LumeSourceClaims {
@@ -83,6 +95,16 @@ abstract final class LumeSourceClaims {
         label: LumeToolStrings.freshness(l, kind),
         source: LumeToolStrings.source(l, feature),
         updated: LumeToolStrings.updated(l, f, kind, now: now, city: city),
+        sample: capability.isSample ? l.freshSample : null,
+      );
+    }
+
+    // Sample data in a release says so, and claims nothing it cannot keep.
+    if (capability.isSample) {
+      return LumeSourceClaim(
+        quality: LumeFreshnessQuality.cached,
+        label: l.freshSample,
+        source: _method(l, feature),
       );
     }
 
@@ -161,6 +183,16 @@ abstract final class LumeSourceClaims {
         source: _source(l, feature, capability),
       ),
     };
+  }
+
+  /// A source that names a way of working figures out — as true of sample
+  /// data as of any — or nothing.
+  static String? _method(AppLocalizations l, LumeFeature feature) {
+    final String declared = feature.fallbackSource;
+    if (declared == encryptedSource) return l.toolSourceOnDevice;
+    return staticSources.contains(declared)
+        ? LumeToolStrings.source(l, feature)
+        : null;
   }
 
   static String _source(

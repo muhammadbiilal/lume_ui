@@ -447,16 +447,33 @@ class _LumeFreshnessState extends State<LumeFreshness>
 ///
 /// §19: a number without provenance is a number the user has to trust blindly.
 class LumeSourceLine extends StatelessWidget {
-  const LumeSourceLine({super.key, this.source, this.updated, this.note});
+  const LumeSourceLine({
+    super.key,
+    this.source,
+    this.updated,
+    this.note,
+    this.sample,
+    this.sampleSemantics,
+  });
 
   final String? source;
   final String? updated;
   final String? note;
 
+  /// "Sample data", drawn first and a shade stronger than the rest, where the
+  /// figures on the screen include sample data.
+  final String? sample;
+
+  /// What a screen reader says for [sample].
+  final String? sampleSemantics;
+
+  static const Key sampleKey = ValueKey<String>('source.sample');
+
   @override
   Widget build(BuildContext context) {
     final LumeColors lume = context.lume;
     final List<String> parts = <String?>[
+      sample,
       source,
       updated,
       note,
@@ -483,7 +500,22 @@ class LumeSourceLine extends StatelessWidget {
                 Opacity(opacity: 0.55, child: Text('·', style: style)),
                 const SizedBox(width: LumeSpace.x2),
               ],
-              Text(parts[i], style: style),
+              if (i == 0 && sample != null)
+                Semantics(
+                  key: sampleKey,
+                  label: sampleSemantics ?? sample,
+                  child: ExcludeSemantics(
+                    child: Text(
+                      parts[i],
+                      style: style.copyWith(
+                        color: lume.text2,
+                        fontWeight: FontWeight.w600,
+                      ),
+                    ),
+                  ),
+                )
+              else
+                Text(parts[i], style: style),
             ],
           ),
       ],

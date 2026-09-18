@@ -149,9 +149,9 @@ Written by the tool's bounds test. Every row is a value read from the running re
 | tool_goldrates_default_pk_390x844_light_en | `srcbar` | x | 20.00 | 20.00 | 0.00 |
 | tool_goldrates_default_pk_390x844_light_en | `srcbar` | y | 1427.08 | 1427.40 | 0.32 |
 | tool_goldrates_default_pk_390x844_light_en | `srcbar` | width | 350.00 | 350.00 | 0.00 |
-| tool_goldrates_default_pk_390x844_light_en | `srcbar` | height | 39.00 | 39.00 | 0.00 |
+| tool_goldrates_default_pk_390x844_light_en | `srcbar` | height (reference +24, recorded) | 63.00 | 63.00 | 0.00 |
 | tool_goldrates_default_pk_390x844_light_en | `related` | x | 20.00 | 20.00 | 0.00 |
-| tool_goldrates_default_pk_390x844_light_en | `related` | y | 1521.08 | 1521.40 | 0.32 |
+| tool_goldrates_default_pk_390x844_light_en | `related` | y (reference +24, recorded) | 1545.08 | 1545.40 | 0.32 |
 | tool_goldrates_default_pk_390x844_light_en | `related` | width | 350.00 | 350.00 | 0.00 |
 | tool_goldrates_default_pk_390x844_light_en | `related` | height | 81.50 | 81.00 | -0.50 |
 | tool_goldrates_default_pk_700x900_light_en | `toolbar` | x | 0.00 | 0.00 | 0.00 |

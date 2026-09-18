@@ -360,6 +360,8 @@ class LumeToolScreenState extends ConsumerState<LumeToolScreen> {
       freshnessLabel: widget.bare ? null : claim.label,
       source: widget.bare ? null : claim.source,
       updated: widget.bare ? null : claim.updated,
+      sourceSample: widget.bare ? null : claim.sample,
+      sourceSampleSemantics: l.fixtureSampleA11y,
       privacy: feature.sensitive && !widget.bare
           ? LumePrivateState(title: l.toolPrivateTitle, text: l.toolPrivateText)
           : null,

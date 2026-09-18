@@ -2502,6 +2502,10 @@ class AppLocalizationsAr extends AppLocalizations {
   }
 
   @override
+  String get fixtureSampleA11y =>
+      'بيانات تجريبية. الأرقام في هذه الأداة أمثلة، وليست بياناتك.';
+
+  @override
   String get flightsActualDep => 'المغادرة الفعلية';
 
   @override

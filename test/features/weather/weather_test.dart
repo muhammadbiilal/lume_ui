@@ -130,12 +130,16 @@ void main() {
     ]) {
       testWidgets(cell, (WidgetTester tester) async {
         await pumpWeather(tester, surface: size);
+        // C85: at phone width the sample mark wraps the source line.
+        final bool wraps = size.width < 600;
         final List<String> misses = parity.bounds(
           tester,
           cell,
           elements(),
           // The rail runs past the screen; its box is the screen's width.
           noWidth: const <String>{'hourly'},
+          grown: wraps ? sampleMarkGrown : const <String, double>{},
+          shifted: wraps ? sampleMarkShifted : const <String, double>{},
           drifting: below,
         );
         expect(misses, isEmpty, reason: misses.join('\n'));

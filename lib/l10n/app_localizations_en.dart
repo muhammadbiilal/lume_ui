@@ -2461,6 +2461,10 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
+  String get fixtureSampleA11y =>
+      'Sample data. The figures in this tool are examples, not your own.';
+
+  @override
   String get flightsActualDep => 'Actual departure';
 
   @override

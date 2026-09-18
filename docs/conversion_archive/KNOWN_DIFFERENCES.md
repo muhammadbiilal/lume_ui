@@ -2242,6 +2242,34 @@ state says "tap Lap". Leaving the tool stops the clock and keeps the time, as
 - **Held by a test of the platform's tree.** `control_names_test.dart`
   asserts the semantics node's label, its button flag and its tap action.
 
+### C85 — "Sample data" where the figures are, not only in About
+
+**F6B closure.** The About row alone does not reach a reader who never opens
+About.
+
+- **Reference and development builds.** A tool whose capability says
+  `isSample` leads its source line with "Sample data" — the source bar's
+  quietest text, one shade stronger — and a screen reader hears "Sample data.
+  The figures in this tool are examples, not your own." (in Urdu and Arabic
+  too). Once per tool, never on rows or cards. Religious English fallback
+  keeps its own label (C82).
+- **Which tools.** Every tool, except Age, Tip & Split, Loan / EMI, Compound
+  Interest and Stopwatch, whose figures are only the fields on the screen or
+  a clock on the device (`LumeDataCapability.inputOnly`).
+- **Release builds.** A sample-backed tool's freshness reads "Sample data"
+  and no durability, encryption, live, update or feed claim is drawn. The
+  fixture harness (`/tools/tool/ready` and its siblings) is refused as an
+  unknown id. `release_readiness_test.dart` fails if any sample-backed tool
+  lacks the disclosure *in its own source bar* — About is not looked at — and
+  proves it would catch a claim that hides it.
+- **Visual.** The mark is not in the reference. Where the line no longer fits
+  beside the freshness mark the bar wraps to a second run, 24 points: Gold
+  rates, Weather and Tax at 390 × 844 (Pakistan and UAE), declared per cell
+  as `sampleMarkGrown` / `sampleMarkShifted` and written into each parity
+  report. Text comparisons take the reference's words with the mark left out
+  (`referenceSourceLine`). 47 goldens were re-captured; every changed region
+  was checked to be the mark or the wrap it causes.
+
 ### C63 — English dates written the wrong way outside the United States
 
 **Found in F6A** on the UAE Tax capture ("Mon, 7 Sep") and confirmed by

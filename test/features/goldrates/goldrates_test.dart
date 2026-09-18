@@ -194,11 +194,15 @@ void main() {
     ]) {
       testWidgets(cell, (WidgetTester tester) async {
         await pumpGoldrates(tester, surface: size);
+        // C85: at phone width the sample mark wraps the source line.
+        final bool wraps = size.width < 600;
         final List<String> misses = parity.bounds(
           tester,
           cell,
           elements(),
           noWidth: textBlocks,
+          grown: wraps ? sampleMarkGrown : const <String, double>{},
+          shifted: wraps ? sampleMarkShifted : const <String, double>{},
           // The pressable context item's widened target (C62), and what lies
           // far enough down for Chrome's fractional lines to add up (D20).
           drifting: <String>{

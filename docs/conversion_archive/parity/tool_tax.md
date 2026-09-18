@@ -71,17 +71,17 @@ Written by `test/features/tax/tax_bounds_test.dart`. Every row is a value read f
 | tool_tax_default_pk_390x844_light_en | `srcbar` | x | 20.00 | 20.00 | 0.00 |
 | tool_tax_default_pk_390x844_light_en | `srcbar` | y | 1155.08 | 1155.00 | -0.08 |
 | tool_tax_default_pk_390x844_light_en | `srcbar` | width | 350.00 | 350.00 | 0.00 |
-| tool_tax_default_pk_390x844_light_en | `srcbar` | height | 39.00 | 39.00 | 0.00 |
+| tool_tax_default_pk_390x844_light_en | `srcbar` | height (reference +24, recorded) | 63.00 | 63.00 | 0.00 |
 | tool_tax_default_pk_390x844_light_en | `fresh` | x | 35.00 | 35.00 | 0.00 |
 | tool_tax_default_pk_390x844_light_en | `fresh` | y | 1168.08 | 1168.00 | -0.08 |
 | tool_tax_default_pk_390x844_light_en | `fresh` | width | 97.56 | 97.56 | -0.00 |
 | tool_tax_default_pk_390x844_light_en | `fresh` | height | 13.00 | 13.00 | 0.00 |
 | tool_tax_default_pk_390x844_light_en | `related.title` | x | 20.00 | 20.00 | 0.00 |
-| tool_tax_default_pk_390x844_light_en | `related.title` | y | 1218.08 | 1218.00 | -0.08 |
+| tool_tax_default_pk_390x844_light_en | `related.title` | y (reference +24, recorded) | 1242.08 | 1242.00 | -0.08 |
 | tool_tax_default_pk_390x844_light_en | `related.title` | width | 90.75 | 90.74 | -0.01 |
 | tool_tax_default_pk_390x844_light_en | `related.title` | height | 19.00 | 19.00 | 0.00 |
 | tool_tax_default_pk_390x844_light_en | `related` | x | 20.00 | 20.00 | 0.00 |
-| tool_tax_default_pk_390x844_light_en | `related` | y | 1249.08 | 1249.00 | -0.08 |
+| tool_tax_default_pk_390x844_light_en | `related` | y (reference +24, recorded) | 1273.08 | 1273.00 | -0.08 |
 | tool_tax_default_pk_390x844_light_en | `related` | width | 350.00 | 350.00 | 0.00 |
 | tool_tax_default_pk_390x844_light_en | `related` | height | 94.00 | 93.00 | -1.00 |
 | tool_tax_default_pk_700x900_light_en | `toolbar` | x | 0.00 | 0.00 | 0.00 |
@@ -267,8 +267,8 @@ Written by `test/features/tax/tax_bounds_test.dart`. Every row is a value read f
 | tool_tax_default_ae_390x844_light_en | `srcbar` | x | 20.00 | 20.00 | 0.00 |
 | tool_tax_default_ae_390x844_light_en | `srcbar` | y | 941.64 | 941.00 | -0.64 |
 | tool_tax_default_ae_390x844_light_en | `srcbar` | width | 350.00 | 350.00 | 0.00 |
-| tool_tax_default_ae_390x844_light_en | `srcbar` | height | 39.00 | 39.00 | 0.00 |
+| tool_tax_default_ae_390x844_light_en | `srcbar` | height (reference +24, recorded) | 63.00 | 63.00 | 0.00 |
 | tool_tax_default_ae_390x844_light_en | `related` | x | 20.00 | 20.00 | 0.00 |
-| tool_tax_default_ae_390x844_light_en | `related` | y | 1035.64 | 1035.00 | -0.64 |
+| tool_tax_default_ae_390x844_light_en | `related` | y (reference +24, recorded) | 1059.64 | 1059.00 | -0.64 |
 | tool_tax_default_ae_390x844_light_en | `related` | width | 350.00 | 350.00 | 0.00 |
 | tool_tax_default_ae_390x844_light_en | `related` | height | 94.00 | 93.00 | -1.00 |

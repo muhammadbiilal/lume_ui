@@ -30,6 +30,8 @@ import 'package:lume/core/widgets/lume/lume_tool.dart';
 import 'package:lume/features/tax/presentation/tax_tool.dart';
 
 import '../../helpers/load_fonts.dart';
+import '../tools/tool_parity.dart'
+    show referenceSourceLine, sampleMarkGrown, sampleMarkShifted;
 import 'tax_harness.dart';
 
 const String kReport = 'docs/conversion_archive/parity/tool_tax.md';
@@ -71,6 +73,11 @@ void main() {
     Map<String, Finder> elements, {
     Set<String> noWidth = const <String>{},
     Set<String> drifting = const <String>{},
+
+    /// Recorded differences added to the reference's `y` and `height`, as
+    /// `ToolParity.bounds` takes them, and written into the report.
+    Map<String, double> shifted = const <String, double>{},
+    Map<String, double> grown = const <String, double>{},
   }) {
     final Map<String, dynamic> b = web['bounds'] as Map<String, dynamic>;
     final Map<String, dynamic> bar = b['toolbar'] as Map<String, dynamic>;
@@ -84,9 +91,12 @@ void main() {
       final Rect r = tester.getRect(finder.first);
       final Map<String, double> want = <String, double>{
         'x': (w['x'] as num) - (bar['x'] as num).toDouble(),
-        'y': (w['y'] as num) - (bar['y'] as num).toDouble(),
+        'y':
+            (w['y'] as num) -
+            (bar['y'] as num).toDouble() +
+            (shifted[name] ?? 0),
         if (!noWidth.contains(name)) 'width': (w['width'] as num).toDouble(),
-        'height': (w['height'] as num).toDouble(),
+        'height': (w['height'] as num).toDouble() + (grown[name] ?? 0),
       };
       final Map<String, double> got = <String, double>{
         'x': r.left - flutterBar.left,
@@ -98,8 +108,15 @@ void main() {
       want.forEach((String p, double v) {
         final double d = got[p]! - v;
         compared++;
+        final double? recorded = p == 'y'
+            ? shifted[name]
+            : p == 'height'
+            ? grown[name]
+            : null;
         report.add(
-          '| $cell | `$name` | $p | ${v.toStringAsFixed(2)} | '
+          '| $cell | `$name` | $p${recorded == null ? '' : ' (reference '
+                    '+${recorded.toStringAsFixed(0)}, recorded)'} | '
+          '${v.toStringAsFixed(2)} | '
           '${got[p]!.toStringAsFixed(2)} | ${d.toStringAsFixed(2)} |',
         );
         if (d.abs() > tolerance) {
@@ -168,6 +185,8 @@ void main() {
       final Map<String, dynamic>? web = webCell(cell);
       expect(web, isNotNull, reason: '$cell has not been measured');
       await pumpTax(tester, surface: size);
+      // C85: at phone width the sample mark wraps the source line.
+      final bool wraps = size.width < 600;
       final List<String> misses = bounds(
         tester,
         cell,
@@ -175,6 +194,8 @@ void main() {
         taxableElements('Tax Calculator', 'Rs 228,900'),
         noWidth: textBlocks,
         drifting: below,
+        grown: wraps ? sampleMarkGrown : const <String, double>{},
+        shifted: wraps ? sampleMarkShifted : const <String, double>{},
       );
       expect(misses, isEmpty, reason: misses.join('\n'));
     });
@@ -206,6 +227,9 @@ void main() {
         'related': find.byType(LumeRelatedTools),
       },
       drifting: <String>{'notecard', 'table', 'srcbar', 'related'},
+      // C85: at phone width the sample mark wraps the source line.
+      grown: sampleMarkGrown,
+      shifted: sampleMarkShifted,
     );
     expect(misses, isEmpty, reason: misses.join('\n'));
   });
@@ -307,13 +331,7 @@ void main() {
 
     final Map<String, dynamic> src = k['source'] as Map<String, dynamic>;
     expect(find.text(src['fresh'] as String), findsOneWidget);
-    expect(
-      textsIn(
-        tester,
-        find.byType(LumeSourceLine),
-      ).where((String t) => t != '·'),
-      src['line'],
-    );
+    expect(referenceSourceLine(tester), src['line']);
     expect(textsIn(tester, find.byType(LumeRelatedTools)), k['related']);
   }
 

@@ -2459,6 +2459,10 @@ class AppLocalizationsUr extends AppLocalizations {
   }
 
   @override
+  String get fixtureSampleA11y =>
+      'نمونہ ڈیٹا۔ اس ٹول کے اعداد و شمار مثالیں ہیں، آپ کے اپنے نہیں۔';
+
+  @override
   String get flightsActualDep => 'اصل روانگی';
 
   @override

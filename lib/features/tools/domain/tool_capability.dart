@@ -18,6 +18,7 @@ class LumeDataCapability {
     this.isEncrypted = false,
     this.isLive = false,
     this.computedHere = false,
+    this.isSample = false,
     this.observedAt,
   });
 
@@ -26,6 +27,7 @@ class LumeDataCapability {
   factory LumeDataCapability.fixture(String toolId) => LumeDataCapability(
     source: sampleSource,
     isLive: onDeviceClocks.contains(toolId),
+    isSample: !inputOnly.contains(toolId),
   );
 
   /// A write survives the app being closed.
@@ -42,6 +44,11 @@ class LumeDataCapability {
   /// calculation rather than read from a fixture.
   final bool computedHere;
 
+  /// What the tool shows includes sample data — records, feeds, schedules or
+  /// history that no adapter supplied. A tool that does must say so where its
+  /// figures are, in its own source bar; About alone does not count.
+  final bool isSample;
+
   /// When the source was last observed, if it ever was.
   final DateTime? observedAt;
 
@@ -50,6 +57,18 @@ class LumeDataCapability {
 
   /// The name this build's fixtures give themselves.
   static const String sampleSource = 'Lume sample data';
+
+  /// Tools whose every figure comes from the fields on the screen — prefilled
+  /// with the reference's example values, visible and editable — or from a
+  /// clock on the device. No fixture stands behind them. Date Calculator is
+  /// not one: its holiday count is fixture data.
+  static const Set<String> inputOnly = <String>{
+    'age',
+    'tipsplit',
+    'loan',
+    'compound',
+    'stopwatch',
+  };
 
   /// Tools whose "live" is a clock ticking on the device.
   static const Set<String> onDeviceClocks = <String>{
