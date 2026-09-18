@@ -97,23 +97,32 @@ back-port service, neither of which is a permission.
 **Deliberately absent:** `NSPhotoLibraryUsageDescription` (full library),
 `NSMicrophoneUsageDescription`.
 
-**Validated, not built.** This phase runs on Windows: the plist is parsed and
-its keys checked; no Xcode build, no CocoaPods install (the project has no
-`Podfile` yet — Flutter generates it on the first macOS build) and no device
-test has happened.
+**Localised (F6B closure).** `Runner/{en,ur,ar}.lproj/InfoPlist.strings`
+carry both descriptions in English, Urdu and Arabic, in one
+`InfoPlist.strings` variant group the Xcode project bundles in Runner's
+Resources phase; `knownRegions` gains `ur` and `ar`, and Info.plist declares
+`CFBundleLocalizations` en, ur, ar. `NSPhotoLibraryUsageDescription` stays
+absent: the system picker selects images and saving is add-only.
+
+**Validated, not built.** This phase runs on Windows: `ios_config_test.dart`
+parses Info.plist and each `.strings` file with a strict reader, checks the
+keys, that English matches Info.plist, that Urdu and Arabic are translated
+into their script, that no text claims broad library access, and that the
+project references all three. No Xcode build, no CocoaPods install and no iOS
+device test has happened.
 
 ## 4. Obligations and open decisions
 
 - **iOS build and device test** on macOS: the camera prompt, PHPicker, the
   add-only prompt, and a saved card appearing in Photos.
-- **Localised permission wording.** The usage strings are English. Urdu and
-  Arabic need `InfoPlist.strings` in `ur.lproj` / `ar.lproj`, added through
-  Xcode so the project file references them.
+- **Localised permission wording** — done as configuration (above); to be
+  seen on a device in Urdu and Arabic with the iOS build.
 - **App Store static analysis** can flag a binary that links
   `PHPhotoLibrary.requestAuthorization` without `NSPhotoLibraryUsageDescription`
-  — `gal`'s pre-iOS-14 path and `image_picker` both link it. Adding the key
-  grants nothing by itself but names a permission Lume never asks for; that
-  is a release decision.
+  — `gal`'s pre-iOS-14 path and `image_picker` both link it. Approved in
+  the closure: the key is **not** added speculatively; only a concrete App
+  Store validation result for the shipped binary, a library-wide reading
+  feature, or proof that add-only is insufficient would add it.
 - **Dayroz:** the same adapters and the same allowlist; a scan history, if
   Dayroz wants one, is the reader's saved data and needs its own consent and
   retention decision.

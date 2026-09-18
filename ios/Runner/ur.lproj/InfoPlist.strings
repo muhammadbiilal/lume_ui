@@ -1,0 +1,5 @@
+/* F6B closure: the camera, asked for only after Scan is pressed (C80). */
+"NSCameraUsageDescription" = "Lume کیمرا صرف اس وقت استعمال کرتا ہے جب آپ QR کوڈ اسکین کرتے ہیں۔ کچھ بھی ریکارڈ یا اپ لوڈ نہیں ہوتا۔";
+
+/* F6B closure: add-only Photos access, asked for only when Save image is pressed (C81). Lume cannot read the library. */
+"NSPhotoLibraryAddUsageDescription" = "Lume آپ کی منتخب کردہ تصویر آپ کی تصاویر میں شامل کرتا ہے۔ یہ آپ کی دوسری تصاویر نہیں دیکھ سکتا۔";
