@@ -2087,6 +2087,12 @@ were:**
   unavailable ("use Share to save it") and asks nothing.
 - **Names.** `lume-<kind>-<yyyyMMdd>-<HHmmss>`: the card kind and the moment,
   nothing from the card's words.
+- **A test flake, found and closed.** "Save image says it saved only when it
+  did" gave the render and PNG encoding a fixed real-time budget (20 × 50 ms).
+  Under a saturated CPU a render took 1 822 ms; the old helper then saw the
+  save made but no "Image saved" yet (2 of 10 stress runs). The helper now
+  awaits the sheet's own in-flight work (`LumeShareSheetState.pending`), so
+  success is still asserted only after the saver returned.
 - **Unchanged.** The card is the 1080 × 1350 render of the card alone — no
   app chrome — and a sensitive tool never gets one (D7).
 

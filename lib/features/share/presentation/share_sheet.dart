@@ -47,12 +47,19 @@ class LumeShareSheet extends ConsumerStatefulWidget {
   static const double previewWidth = 260;
 
   @override
-  ConsumerState<LumeShareSheet> createState() => _LumeShareSheetState();
+  ConsumerState<LumeShareSheet> createState() => LumeShareSheetState();
 }
 
-class _LumeShareSheetState extends ConsumerState<LumeShareSheet> {
+class LumeShareSheetState extends ConsumerState<LumeShareSheet> {
   final GlobalKey _boundary = GlobalKey();
   bool _busy = false;
+  Future<void>? _pending;
+
+  /// The render and save or share a press started, until it has said what
+  /// became of it. A test awaits this rather than guessing how long a PNG
+  /// takes to encode.
+  @visibleForTesting
+  Future<void>? get pending => _pending;
 
   /// `canvas.toBlob(cb, 'image/png')` — the card at its own 1080 × 1350.
   Future<Uint8List?> _png() async {
@@ -74,8 +81,14 @@ class _LumeShareSheetState extends ConsumerState<LumeShareSheet> {
 
   Future<void> _run(
     Future<(String, LumeToastTone)?> Function(Uint8List png) act,
+  ) {
+    if (_busy) return _pending ?? Future<void>.value();
+    return _pending = _render(act);
+  }
+
+  Future<void> _render(
+    Future<(String, LumeToastTone)?> Function(Uint8List png) act,
   ) async {
-    if (_busy) return;
     setState(() => _busy = true);
     final AppLocalizations l = AppLocalizations.of(context);
     try {

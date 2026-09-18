@@ -78,13 +78,18 @@ Finder toolbarAction(String label) => find.descendant(
 
 /// Presses a control whose work renders an image — engine work a fake-async
 /// test cannot finish — and lets the result land.
+/// Presses [control] on the share sheet and waits for exactly the work it
+/// started — the card rendered, encoded, and handed on — however long a
+/// loaded machine takes to encode it. The press is made in the real zone, so
+/// the render's own futures complete there and can be awaited.
 Future<void> pressAndRender(WidgetTester tester, Finder control) async {
   await tester.runAsync(() async {
     await tester.tap(control);
-    for (int i = 0; i < 20; i++) {
-      await Future<void>.delayed(const Duration(milliseconds: 50));
-      await tester.pump();
-    }
+    final Future<void>? work = tester
+        .state<LumeShareSheetState>(find.byType(LumeShareSheet))
+        .pending;
+    expect(work, isNotNull, reason: 'the press started no render');
+    await work;
   });
   await tester.pump();
 }
