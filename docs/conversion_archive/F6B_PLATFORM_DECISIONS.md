@@ -82,7 +82,7 @@ back-port service, neither of which is a permission.
 | `WRITE_EXTERNAL_STORAGE maxSdkVersion 28` | app and `camera_android_camerax` | kept |
 | `READ_EXTERNAL_STORAGE` | *implied* by the merger from the camera plugin's write permission | **removed** (`tools:node="remove"`) — found in the F6B device build |
 | `RECORD_AUDIO` | `camera_android_camerax` | removed |
-| `ACCESS_NETWORK_STATE` | `androidx.media3:media3-common`, brought in by a plugin | kept and recorded: a normal install-time permission; nothing in Lume opens a network data source. **Decision:** remove it once the dependency that pulls media3 is confirmed not to need it |
+| `ACCESS_NETWORK_STATE` | `androidx.media3:media3-common:1.9.0`, via `camera_android_camerax` → `androidx.camera:camera-video:1.6.2` → `media3-container` | **removed** (`tools:node="remove"`, F6B closure). media3 serves a player's bandwidth estimate; Lume records and plays no media. Scan, gallery decoding, capture lifecycle and Save image ran on API 36 and API 29 with no `SecurityException` from Lume; `android_manifest_test.dart` asserts it absent from the merged debug and release manifests |
 | `INTERNET` | Flutter's debug manifest | debug builds only |
 
 ## 3. iOS configuration
