@@ -224,12 +224,24 @@ void main() {
           (
             LumeQrTool.scanKey,
             LumeScanOutcome.denied,
-            "Lume can't use the camera. You can allow it in Settings.",
+            "Lume can't use the camera. Press Scan to be asked again.",
           ),
           (
             LumeQrTool.scanKey,
             LumeScanOutcome.blocked,
             'Camera access for Lume is off. Turn it on in Settings to scan.',
+          ),
+          (
+            LumeQrTool.scanKey,
+            LumeScanOutcome.undetermined,
+            "Lume can't use the camera. Press Scan to be asked again, or turn "
+                "it on in Settings if Android doesn't ask.",
+          ),
+          (
+            LumeQrTool.scanKey,
+            LumeScanOutcome.restricted,
+            'The camera is turned off on this device by a restriction or its '
+                'administrator.',
           ),
           (
             LumeQrTool.scanKey,
@@ -287,6 +299,105 @@ void main() {
         expect(find.byType(LumeQrResultSheet), findsNothing);
       });
     }
+
+    // C80, F6B closure: a Settings action only where Settings can change the
+    // permission, and only where the scanner can open it.
+    for (final (LumeScanOutcome outcome, bool offered)
+        in <(LumeScanOutcome, bool)>[
+          (LumeScanOutcome.blocked, true),
+          (LumeScanOutcome.undetermined, true),
+          (LumeScanOutcome.denied, false),
+          (LumeScanOutcome.restricted, false),
+          (LumeScanOutcome.failed, false),
+        ]) {
+      testWidgets('Scan: ${outcome.name} '
+          '${offered ? 'offers' : 'does not offer'} Settings', (
+        WidgetTester tester,
+      ) async {
+        final LumeRecordingScanner scanner = LumeRecordingScanner(
+          result: LumeScanResult(outcome),
+          settings: const <LumeScanOutcome>{
+            LumeScanOutcome.blocked,
+            LumeScanOutcome.undetermined,
+          },
+        );
+        await pumpQr(
+          tester,
+          surface: const Size(390, 900),
+          overrides: <Override>[scannerProvider.overrideWithValue(scanner)],
+        );
+        await tester.tap(find.byKey(LumeQrTool.scanKey));
+        await tester.pump();
+        await tester.pump(const Duration(milliseconds: 300));
+        final LumeToastData data = tester
+            .widget<LumeToast>(find.byType(LumeToast))
+            .data;
+        expect(data.actionLabel, offered ? 'Settings' : isNull);
+        if (offered) {
+          await tester.tap(
+            find.descendant(
+              of: find.byType(LumeToast),
+              matching: find.text('Settings'),
+            ),
+          );
+          await tester.pump();
+          expect(scanner.requested, <String>['scan', 'openSettings']);
+        }
+        await tester.pump(const Duration(seconds: 7));
+      });
+    }
+
+    testWidgets('a scanner that offers nothing draws no Settings action', (
+      WidgetTester tester,
+    ) async {
+      final LumeRecordingScanner scanner = LumeRecordingScanner(
+        result: const LumeScanResult(LumeScanOutcome.blocked),
+      );
+      await pumpQr(
+        tester,
+        surface: const Size(390, 900),
+        overrides: <Override>[scannerProvider.overrideWithValue(scanner)],
+      );
+      await tester.tap(find.byKey(LumeQrTool.scanKey));
+      await tester.pump();
+      expect(
+        tester.widget<LumeToast>(find.byType(LumeToast)).data.actionLabel,
+        isNull,
+      );
+      await tester.pump(const Duration(seconds: 7));
+    });
+
+    testWidgets('Settings that will not open is said', (
+      WidgetTester tester,
+    ) async {
+      final LumeRecordingScanner scanner = LumeRecordingScanner(
+        result: const LumeScanResult(LumeScanOutcome.blocked),
+        settings: const <LumeScanOutcome>{LumeScanOutcome.blocked},
+        settingsOpen: false,
+      );
+      await pumpQr(
+        tester,
+        surface: const Size(390, 900),
+        overrides: <Override>[scannerProvider.overrideWithValue(scanner)],
+      );
+      await tester.tap(find.byKey(LumeQrTool.scanKey));
+      await tester.pump();
+      await tester.pump(const Duration(milliseconds: 300));
+      await tester.tap(
+        find.descendant(
+          of: find.byType(LumeToast),
+          matching: find.text('Settings'),
+        ),
+      );
+      await tester.pump();
+      await tester.pump();
+      expect(
+        tester.widget<LumeToast>(find.byType(LumeToast)).data.message,
+        "Settings didn't open. You'll find Lume under Apps in your phone's "
+        'Settings.',
+      );
+      await tester.pump(const Duration(seconds: 7));
+    });
 
     testWidgets('the camera is never asked for at launch', (
       WidgetTester tester,

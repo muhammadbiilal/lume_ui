@@ -66,6 +66,8 @@ class LumeQrTool extends ConsumerStatefulWidget {
       camera ? l.scanBlocked : l.scanPhotosDenied,
       LumeToastTone.error,
     ),
+    LumeScanOutcome.restricted => (l.scanRestricted, LumeToastTone.error),
+    LumeScanOutcome.undetermined => (l.scanUndetermined, LumeToastTone.error),
     LumeScanOutcome.unavailable => (l.scanUnavailable, LumeToastTone.info),
     LumeScanOutcome.failed => (l.scanFailed, LumeToastTone.error),
     LumeScanOutcome.multiple => (l.scanMultiple, LumeToastTone.info),
@@ -109,7 +111,21 @@ class _LumeQrToolState extends ConsumerState<LumeQrTool> {
       result.outcome,
       camera: camera,
     );
-    if (said != null) _host.currentState?.say(said.$1, tone: said.$2);
+    if (said == null) return;
+    // Settings only where it can change the permission (C80).
+    final bool settings = camera && scanner.offersSettings(result.outcome);
+    _host.currentState?.say(
+      said.$1,
+      tone: said.$2,
+      actionLabel: settings ? l.scanOpenSettings : null,
+      onAction: settings ? () => _openSettings(scanner) : null,
+    );
+  }
+
+  Future<void> _openSettings(LumeScanner scanner) async {
+    final String failed = AppLocalizations.of(context).scanSettingsFailed;
+    if (await scanner.openSettings() || !mounted) return;
+    _host.currentState?.say(failed, tone: LumeToastTone.error);
   }
 
   @override

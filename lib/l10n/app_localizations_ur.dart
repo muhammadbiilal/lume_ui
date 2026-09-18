@@ -5112,7 +5112,7 @@ class AppLocalizationsUr extends AppLocalizations {
 
   @override
   String get scanDenied =>
-      'Lume کیمرا استعمال نہیں کر سکتا۔ آپ سیٹنگز میں اجازت دے سکتے ہیں۔';
+      'Lume کیمرا استعمال نہیں کر سکتا۔ دوبارہ پوچھے جانے کے لیے اسکین کریں دبائیں۔';
 
   @override
   String get scanEmptyText =>
@@ -5135,14 +5135,29 @@ class AppLocalizationsUr extends AppLocalizations {
   String get scanNothing => 'کوئی کوڈ نہیں ملا';
 
   @override
+  String get scanOpenSettings => 'سیٹنگز';
+
+  @override
   String get scanPhotosDenied =>
       'Lume آپ کی تصاویر نہیں کھول سکتا۔ آپ سیٹنگز میں اجازت دے سکتے ہیں۔';
+
+  @override
+  String get scanRestricted =>
+      'اس ڈیوائس پر کیمرا کسی پابندی یا اس کے منتظم کی جانب سے بند ہے۔';
+
+  @override
+  String get scanSettingsFailed =>
+      'سیٹنگز نہیں کھلیں۔ آپ کو Lume اپنے فون کی سیٹنگز میں ایپس کے تحت ملے گا۔';
 
   @override
   String get scanTooLarge => 'یہ تصویر پڑھنے کے لیے بہت بڑی ہے';
 
   @override
   String get scanUnavailable => 'اس ڈیوائس پر اسکیننگ دستیاب نہیں';
+
+  @override
+  String get scanUndetermined =>
+      'Lume کیمرا استعمال نہیں کر سکتا۔ دوبارہ پوچھے جانے کے لیے اسکین کریں دبائیں، یا اگر Android نہ پوچھے تو سیٹنگز میں اسے آن کریں۔';
 
   @override
   String get scanUnreadable => 'Lume یہ تصویر نہیں پڑھ سکا';

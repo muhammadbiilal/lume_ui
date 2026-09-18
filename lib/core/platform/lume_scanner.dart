@@ -30,13 +30,20 @@ enum LumeScanOutcome {
   /// nothing is said about it.
   cancelled,
 
-  /// The reader refused the camera or the photos this time.
+  /// The reader refused the camera or the photos, and the platform will ask
+  /// again the next time.
   denied,
 
-  /// The permission is off and the platform will not ask again — refused
-  /// for good, or restricted by the device's owner. Only Settings can change
-  /// it.
+  /// The permission is off and the platform will not ask again: refused for
+  /// good. Only Settings can change it.
   blocked,
+
+  /// A device policy has turned the camera off. Settings cannot change it.
+  restricted,
+
+  /// The camera was refused, and the platform does not say whether it will
+  /// ask again (C80): Scan may ask, and Settings certainly can.
+  undetermined,
 
   /// Nothing on this device can scan: no camera, or no scanner on this
   /// platform.
@@ -92,6 +99,13 @@ abstract interface class LumeScanner {
 
   /// Lets the reader choose one image and reads the QR code in it.
   Future<LumeScanResult> pickImage();
+
+  /// Whether Settings can change a camera [outcome], and this scanner can
+  /// open Lume's page there.
+  bool offersSettings(LumeScanOutcome outcome);
+
+  /// Opens Lume's own page in Settings; false if it did not open.
+  Future<bool> openSettings();
 }
 
 /// A scanner for a platform with no camera adapter. It never reaches the
@@ -105,17 +119,33 @@ class LumeUnavailableScanner implements LumeScanner {
   @override
   Future<LumeScanResult> pickImage() async =>
       const LumeScanResult.unavailable();
+
+  @override
+  bool offersSettings(LumeScanOutcome outcome) => false;
+
+  @override
+  Future<bool> openSettings() async => false;
 }
 
 /// Records every request and answers with [result]. Never touches the
 /// platform.
 class LumeRecordingScanner implements LumeScanner {
-  LumeRecordingScanner({this.result = const LumeScanResult.unavailable()});
+  LumeRecordingScanner({
+    this.result = const LumeScanResult.unavailable(),
+    this.settings = const <LumeScanOutcome>{},
+    this.settingsOpen = true,
+  });
 
   /// What the next request answers.
   LumeScanResult result;
 
-  /// `scan` and `pickImage`, in the order they were asked for.
+  /// The outcomes it offers Settings for.
+  Set<LumeScanOutcome> settings;
+
+  /// What opening Settings answers.
+  bool settingsOpen;
+
+  /// `scan`, `pickImage` and `openSettings`, in the order they were asked for.
   final List<String> requested = <String>[];
 
   @override
@@ -128,5 +158,14 @@ class LumeRecordingScanner implements LumeScanner {
   Future<LumeScanResult> pickImage() async {
     requested.add('pickImage');
     return result;
+  }
+
+  @override
+  bool offersSettings(LumeScanOutcome outcome) => settings.contains(outcome);
+
+  @override
+  Future<bool> openSettings() async {
+    requested.add('openSettings');
+    return settingsOpen;
   }
 }

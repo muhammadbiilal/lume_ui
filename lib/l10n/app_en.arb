@@ -6955,9 +6955,9 @@
   "@scanBlocked": {
     "description": "Said when the camera permission is off for good or restricted, and the system will not ask again"
   },
-  "scanDenied": "Lume can't use the camera. You can allow it in Settings.",
+  "scanDenied": "Lume can't use the camera. Press Scan to be asked again.",
   "@scanDenied": {
-    "description": "Said when the camera permission is refused; the permission is asked for only by a press"
+    "description": "Said when the camera permission is refused and the platform will ask again the next time Scan is pressed (C80)"
   },
   "scanEmptyText": "Anything you capture appears here and stays on this device.",
   "@scanEmptyText": {
@@ -6983,9 +6983,21 @@
   "@scanNothing": {
     "description": "Said when a scan ends without reading a code"
   },
+  "scanOpenSettings": "Settings",
+  "@scanOpenSettings": {
+    "description": "The action on a camera message that opens Lume's own page in the device's Settings; offered only where Settings can change the permission"
+  },
   "scanPhotosDenied": "Lume can't open your photos. You can allow it in Settings.",
   "@scanPhotosDenied": {
     "description": "Said when choosing an image is refused access to photos"
+  },
+  "scanRestricted": "The camera is turned off on this device by a restriction or its administrator.",
+  "@scanRestricted": {
+    "description": "Said when a device policy, Screen Time or a profile has turned the camera off; the reader's Settings page cannot change it (C80)"
+  },
+  "scanSettingsFailed": "Settings didn't open. You'll find Lume under Apps in your phone's Settings.",
+  "@scanSettingsFailed": {
+    "description": "Said when the system would not open Lume's page in Settings"
   },
   "scanTooLarge": "That image is too large to read",
   "@scanTooLarge": {
@@ -6994,6 +7006,10 @@
   "scanUnavailable": "Scanning isn't available on this device",
   "@scanUnavailable": {
     "description": "Said when Scan or From gallery is pressed and this build has no camera scanner — the reference says \"Scanning\" while nothing scans"
+  },
+  "scanUndetermined": "Lume can't use the camera. Press Scan to be asked again, or turn it on in Settings if Android doesn't ask.",
+  "@scanUndetermined": {
+    "description": "Said when the camera was refused and Android does not say whether it will ask again: Scan may ask, and Settings certainly can (C80)"
   },
   "scanUnreadable": "Lume couldn't read that image",
   "@scanUnreadable": {

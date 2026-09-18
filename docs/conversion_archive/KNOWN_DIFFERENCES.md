@@ -2025,28 +2025,53 @@ were:**
   would be asked again on every return. Nothing is kept: no frame, no image,
   no history; a scan is never added to the fixture history.
 - **Every outcome is said.** Read; no code; cancelled (said as nothing);
-  denied; blocked (off for good, or restricted); unavailable (no camera — a
+  denied (Android will ask again); blocked (off for good); restricted (a
+  device policy, Screen Time or a profile); undetermined (refused, and the
+  platform does not say whether it will ask again); unavailable (no camera — a
   camera that shows no picture within 10 s in the foreground); failed;
   multiple codes; not a QR code; unreadable or damaged; too large (over
   25 MB). A barcode that is not a QR code in front of the camera is said on
   the page and scanning continues.
-- **Android does not tell "denied" from "denied for good" — corrected after
-  the device walk.** The camera plugin answers `CameraAccessDenied` both
-  times. The first version of this entry reported a refusal with no prompt
-  shown as blocked, on the reasoning that only a real prompt makes the app
-  inactive. The emulator disproved it: Android's permission screen runs, and
-  makes Lume inactive, even when it draws nothing (inactive 0.53 s with no
-  dialog; 4.7 s for a scripted refusal of a real one). A timing threshold
-  would misjudge a quick reader or a slow phone, so the guess was removed:
-  on Android every camera refusal is said as denied — "Lume can't use the
-  camera. You can allow it in Settings." — which is true either way. Telling
-  them apart needs `shouldShowRequestPermissionRationale`, i.e. native code
-  or a permission plugin: a dependency decision left open. iOS reports its
-  own `CameraAccessDeniedWithoutPrompt` and `CameraAccessRestricted`, which
-  are said as blocked.
-- **Blocked is explained, not routed.** "Camera access for Lume is off. Turn
-  it on in Settings to scan." Opening the app's settings page would need a
-  further plugin; the sentence is the smallest Lume-styled explanation.
+- **Android's refusals are told apart from what Android reports — F6B
+  closure.** History: the camera plugin answers `CameraAccessDenied` both
+  for a refusal and for "don't ask again". F6B first guessed from whether
+  Lume went inactive; the emulator disproved that (Android's permission
+  screen makes Lume inactive even when it draws nothing: 0.53 s with no
+  dialog, 4.7 s for a scripted refusal), and the guess was removed. Approved
+  in the closure and now built: on Android the scanner asks for the camera
+  itself, before the capture page opens, through one narrow channel
+  (`lume/camera_permission`, `LumeCameraPermission.kt`) that reports facts —
+  granted, `shouldShowRequestPermissionRationale` before and after the
+  request, whether Lume has asked on this install, whether Android has said
+  since the last grant that it would ask again, a device policy
+  (`DevicePolicyManager.getCameraDisabled`), a camera at all, and an
+  interrupted request. `LumeCameraAccess.classify` (`lume_camera_gate.dart`)
+  turns them into first request, denied, blocked, restricted, undetermined,
+  interrupted, unavailable or failed. Nothing is timed. Where the facts do
+  not decide — a first dialog dismissed on Android 11+, or a refusal Lume
+  never saw Android explain — the state is **undetermined** and the message
+  says both paths. Widgets see only `LumeScanner`; the gate has a fake for
+  every state. iOS keeps the plugin's own codes: its `CameraAccessDenied`
+  answers the one prompt iOS ever shows, so it is said as blocked;
+  `…WithoutPrompt` is blocked; `…Restricted` is restricted.
+- **Settings only where it can help.** Blocked and undetermined carry a
+  Settings action; denied (Scan asks again), restricted (a policy or Screen
+  Time, which Lume's page cannot lift), a cancel, an interruption, a missing
+  camera and a failure carry none. It is its own narrow contract,
+  `LumeAppSettings` over `lume/app_settings`: Android opens
+  `ACTION_APPLICATION_DETAILS_SETTINGS` for Lume (`LumeAppSettings.kt`), iOS
+  opens `UIApplication.openSettingsURLString` (`AppDelegate.swift`), and
+  both answer whether the page opened; if it did not, Lume says where to
+  find it. The Android half ran on emulators; the iOS half is checked as
+  source only — no iOS build or device has run it.
+- **Verified on two Android levels** (emulators, F6B closure walk): API 36 —
+  first refusal "Press Scan to be asked again", second refusal blocked with
+  Settings, a third press blocked with no dialog, Settings opens App info and
+  Back returns, a dismissed dialog undetermined, allowed goes live; API 29 —
+  two plain refusals both denied (29 asks again), "Deny & don't ask again"
+  blocked, Settings opens App info, allowed goes live. On API 29 Back does
+  not dismiss the permission dialog, so the dismissed case was exercised on
+  API 36 only.
 - **The capture page sets its text in Lume's type.** A route of its own with
   no scaffold, it had no `Material` ancestor, and the device showed its
   title and status in Flutter's fallback style (yellow double underline).

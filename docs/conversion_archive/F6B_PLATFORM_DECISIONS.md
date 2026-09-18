@@ -30,7 +30,7 @@ camera dependency is declared: the scanner package covers it.
 | camera scanning | `ReaderWidget` over `camera` (CameraX on Android) |
 | gallery decoding | `readBarcodesImagePathString`, decoded in a background isolate |
 | lifecycle | `ReaderWidget` stops the stream on pause; Lume also removes the camera from the tree when hidden, paused or covered (C80) |
-| permissions | camera only, requested by the camera plugin on the page Scan opens; `enableAudio: false` |
+| permissions | camera only; on Android asked by Lume's own `lume/camera_permission` channel when Scan is pressed (F6B closure), elsewhere by the camera plugin on the page Scan opens; `enableAudio: false` |
 | analytics / network | none: zxing-cpp compiled into the app and called through FFI; the URL-reading API is never called |
 | licence | MIT; zxing-cpp is Apache-2.0 |
 | later Dayroz | same SDK floor; the NDK and CMake build the native decoder, so Dayroz's Android build needs the NDK Flutter already pins (`ndkVersion = flutter.ndkVersion`) |

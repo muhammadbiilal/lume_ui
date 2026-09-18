@@ -1,5 +1,25 @@
 package com.lume.lume
 
 import io.flutter.embedding.android.FlutterActivity
+import io.flutter.embedding.engine.FlutterEngine
+import io.flutter.plugin.common.MethodChannel
 
-class MainActivity : FlutterActivity()
+class MainActivity : FlutterActivity() {
+    private val camera = LumeCameraPermission(this)
+
+    override fun configureFlutterEngine(flutterEngine: FlutterEngine) {
+        super.configureFlutterEngine(flutterEngine)
+        val messenger = flutterEngine.dartExecutor.binaryMessenger
+        MethodChannel(messenger, LumeCameraPermission.CHANNEL).setMethodCallHandler(camera)
+        MethodChannel(messenger, LumeAppSettings.CHANNEL).setMethodCallHandler(LumeAppSettings(this))
+    }
+
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<out String>,
+        grantResults: IntArray,
+    ) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+        camera.onResult(requestCode, grantResults)
+    }
+}

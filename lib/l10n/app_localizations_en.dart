@@ -5116,7 +5116,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get scanDenied =>
-      'Lume can\'t use the camera. You can allow it in Settings.';
+      'Lume can\'t use the camera. Press Scan to be asked again.';
 
   @override
   String get scanEmptyText =>
@@ -5139,14 +5139,29 @@ class AppLocalizationsEn extends AppLocalizations {
   String get scanNothing => 'No code found';
 
   @override
+  String get scanOpenSettings => 'Settings';
+
+  @override
   String get scanPhotosDenied =>
       'Lume can\'t open your photos. You can allow it in Settings.';
+
+  @override
+  String get scanRestricted =>
+      'The camera is turned off on this device by a restriction or its administrator.';
+
+  @override
+  String get scanSettingsFailed =>
+      'Settings didn\'t open. You\'ll find Lume under Apps in your phone\'s Settings.';
 
   @override
   String get scanTooLarge => 'That image is too large to read';
 
   @override
   String get scanUnavailable => 'Scanning isn\'t available on this device';
+
+  @override
+  String get scanUndetermined =>
+      'Lume can\'t use the camera. Press Scan to be asked again, or turn it on in Settings if Android doesn\'t ask.';
 
   @override
   String get scanUnreadable => 'Lume couldn\'t read that image';

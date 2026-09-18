@@ -5173,7 +5173,7 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get scanDenied =>
-      'لا يستطيع Lume استخدام الكاميرا. يمكنك السماح بذلك من الإعدادات.';
+      'لا يستطيع Lume استخدام الكاميرا. اضغط «امسح» ليُطلب منك الإذن مرة أخرى.';
 
   @override
   String get scanEmptyText => 'كل ما تلتقطه يظهر هنا ويبقى على هذا الجهاز.';
@@ -5195,14 +5195,29 @@ class AppLocalizationsAr extends AppLocalizations {
   String get scanNothing => 'لم يُعثر على رمز';
 
   @override
+  String get scanOpenSettings => 'الإعدادات';
+
+  @override
   String get scanPhotosDenied =>
       'لا يستطيع Lume فتح صورك. يمكنك السماح بذلك من الإعدادات.';
+
+  @override
+  String get scanRestricted =>
+      'الكاميرا متوقفة على هذا الجهاز بسبب قيد أو من قِبل مسؤوله.';
+
+  @override
+  String get scanSettingsFailed =>
+      'لم تُفتح الإعدادات. ستجد Lume ضمن التطبيقات في إعدادات هاتفك.';
 
   @override
   String get scanTooLarge => 'هذه الصورة أكبر من أن تُقرأ';
 
   @override
   String get scanUnavailable => 'المسح غير متاح على هذا الجهاز';
+
+  @override
+  String get scanUndetermined =>
+      'لا يستطيع Lume استخدام الكاميرا. اضغط «امسح» ليُطلب منك الإذن مرة أخرى، أو فعّله من الإعدادات إن لم يطلبه Android.';
 
   @override
   String get scanUnreadable => 'تعذّر على Lume قراءة هذه الصورة';

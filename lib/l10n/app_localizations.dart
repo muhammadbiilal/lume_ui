@@ -8992,10 +8992,10 @@ abstract class AppLocalizations {
   /// **'Camera access for Lume is off. Turn it on in Settings to scan.'**
   String get scanBlocked;
 
-  /// Said when the camera permission is refused; the permission is asked for only by a press
+  /// Said when the camera permission is refused and the platform will ask again the next time Scan is pressed (C80)
   ///
   /// In en, this message translates to:
-  /// **'Lume can\'t use the camera. You can allow it in Settings.'**
+  /// **'Lume can\'t use the camera. Press Scan to be asked again.'**
   String get scanDenied;
 
   /// Reference key scan.empty.text
@@ -9034,11 +9034,29 @@ abstract class AppLocalizations {
   /// **'No code found'**
   String get scanNothing;
 
+  /// The action on a camera message that opens Lume's own page in the device's Settings; offered only where Settings can change the permission
+  ///
+  /// In en, this message translates to:
+  /// **'Settings'**
+  String get scanOpenSettings;
+
   /// Said when choosing an image is refused access to photos
   ///
   /// In en, this message translates to:
   /// **'Lume can\'t open your photos. You can allow it in Settings.'**
   String get scanPhotosDenied;
+
+  /// Said when a device policy, Screen Time or a profile has turned the camera off; the reader's Settings page cannot change it (C80)
+  ///
+  /// In en, this message translates to:
+  /// **'The camera is turned off on this device by a restriction or its administrator.'**
+  String get scanRestricted;
+
+  /// Said when the system would not open Lume's page in Settings
+  ///
+  /// In en, this message translates to:
+  /// **'Settings didn\'t open. You\'ll find Lume under Apps in your phone\'s Settings.'**
+  String get scanSettingsFailed;
 
   /// Said when a chosen image is larger than Lume decodes on the device
   ///
@@ -9051,6 +9069,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Scanning isn\'t available on this device'**
   String get scanUnavailable;
+
+  /// Said when the camera was refused and Android does not say whether it will ask again: Scan may ask, and Settings certainly can (C80)
+  ///
+  /// In en, this message translates to:
+  /// **'Lume can\'t use the camera. Press Scan to be asked again, or turn it on in Settings if Android doesn\'t ask.'**
+  String get scanUndetermined;
 
   /// Said when a chosen image cannot be decoded, or its code is damaged
   ///

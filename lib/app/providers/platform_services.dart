@@ -4,8 +4,11 @@
 /// so no test opens a dialer, a share sheet or a save dialog.
 library;
 
+import 'package:flutter/foundation.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../core/platform/lume_app_settings.dart';
+import '../../core/platform/lume_camera_gate.dart';
 import '../../core/platform/lume_dialer.dart';
 import '../../core/platform/lume_dialer_platform.dart';
 import '../../core/platform/lume_export.dart';
@@ -36,10 +39,21 @@ final Provider<LumeImageSaver> imageSaverProvider = Provider<LumeImageSaver>(
 
 /// C80 — reads a QR code with the camera or from one chosen image, on the
 /// device. The capture page is pushed on the root navigator, over the shell.
+/// On Android the camera is asked for through Lume's own channel first, so a
+/// refusal is told from one for good.
 final Provider<LumeScanner> scannerProvider = Provider<LumeScanner>(
   (Ref ref) => LumePlatformScanner(
     navigator: () =>
         ref.read(routerProvider).routerDelegate.navigatorKey.currentState,
+    gate: !kIsWeb && defaultTargetPlatform == TargetPlatform.android
+        ? const LumeAndroidCameraGate()
+        : null,
+    settings:
+        !kIsWeb &&
+            (defaultTargetPlatform == TargetPlatform.android ||
+                defaultTargetPlatform == TargetPlatform.iOS)
+        ? const LumeChannelAppSettings()
+        : null,
   ),
 );
 

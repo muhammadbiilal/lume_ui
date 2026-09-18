@@ -227,41 +227,44 @@ void main() {
       );
     });
 
-    test("the camera plugin's errors", () {
-      expect(
-        lumeCameraTrouble(
-          const _Exception('CameraException(CameraAccessDenied, denied)'),
-        ),
-        LumeScanOutcome.denied,
-      );
-      expect(
-        lumeCameraTrouble(
-          const _Exception(
-            'CameraException(CameraAccessDeniedWithoutPrompt, go to Settings)',
+    for (final bool promptsOnce in <bool>[true, false]) {
+      test("the camera plugin's errors, "
+          '${promptsOnce ? 'on iOS (one prompt, ever)' : 'on Android'}', () {
+        LumeScanOutcome trouble(Object e) =>
+            lumeCameraTrouble(e, promptsOnce: promptsOnce);
+        expect(
+          trouble(
+            const _Exception('CameraException(CameraAccessDenied, denied)'),
           ),
-        ),
-        LumeScanOutcome.blocked,
-      );
-      expect(
-        lumeCameraTrouble(
-          const _Exception('CameraException(CameraAccessRestricted, parental)'),
-        ),
-        LumeScanOutcome.blocked,
-      );
-      expect(
-        lumeCameraTrouble(
-          const _Exception('CameraException(cameraNotFound, none)'),
-        ),
-        LumeScanOutcome.unavailable,
-      );
-      expect(
-        lumeCameraTrouble(MissingPluginException()),
-        LumeScanOutcome.unavailable,
-      );
-      expect(
-        lumeCameraTrouble(const _Exception('CameraException(setup, broke)')),
-        LumeScanOutcome.failed,
-      );
-    });
+          promptsOnce ? LumeScanOutcome.blocked : LumeScanOutcome.denied,
+        );
+        expect(
+          trouble(
+            const _Exception(
+              'CameraException(CameraAccessDeniedWithoutPrompt, go to '
+              'Settings)',
+            ),
+          ),
+          LumeScanOutcome.blocked,
+        );
+        expect(
+          trouble(
+            const _Exception(
+              'CameraException(CameraAccessRestricted, parental)',
+            ),
+          ),
+          LumeScanOutcome.restricted,
+        );
+        expect(
+          trouble(const _Exception('CameraException(cameraNotFound, none)')),
+          LumeScanOutcome.unavailable,
+        );
+        expect(trouble(MissingPluginException()), LumeScanOutcome.unavailable);
+        expect(
+          trouble(const _Exception('CameraException(setup, broke)')),
+          LumeScanOutcome.failed,
+        );
+      });
+    }
   });
 }
