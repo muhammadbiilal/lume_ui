@@ -14,6 +14,7 @@ import '../../core/platform/lume_dialer_platform.dart';
 import '../../core/platform/lume_export.dart';
 import '../../core/platform/lume_image_saver_platform.dart';
 import '../../core/platform/lume_link_opener.dart';
+import '../../core/platform/lume_media_store_saver.dart';
 import '../../core/platform/lume_link_opener_platform.dart';
 import '../../core/platform/lume_scanner.dart';
 import '../../core/platform/lume_scanner_platform.dart';
@@ -34,7 +35,14 @@ final Provider<LumeSharer> sharerProvider = Provider<LumeSharer>(
 /// D7, F6B — puts a rendered share card in the photo library, asking for
 /// add-only access and nothing more.
 final Provider<LumeImageSaver> imageSaverProvider = Provider<LumeImageSaver>(
-  (Ref ref) => const LumePlatformImageSaver(),
+  (Ref ref) => kIsWeb
+      ? const LumeUnavailableImageSaver()
+      : switch (defaultTargetPlatform) {
+          // Lume's own MediaStore channel: a `.png` typed `image/png` (C81).
+          TargetPlatform.android => const LumeMediaStoreImageSaver(),
+          TargetPlatform.iOS => const LumeGalImageSaver(),
+          _ => const LumeUnavailableImageSaver(),
+        },
 );
 
 /// C80 — reads a QR code with the camera or from one chosen image, on the

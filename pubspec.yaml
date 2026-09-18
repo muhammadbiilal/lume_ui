@@ -49,10 +49,12 @@ dependencies:
   # and iOS PHPicker grant the one image chosen, with no library permission.
   # Used only by the scanner adapter. Pinned.
   image_picker: 1.2.3
-  # F6B — Save image: MediaStore on Android (a storage permission only on
-  # Android 10 and below) and add-only Photos access on iOS 14+. Used only by
+  # F6B — Save image on iOS: add-only Photos access on iOS 14+. Used only by
   # lib/core/platform/lume_image_saver_platform.dart, behind LumeImageSaver.
-  # Pinned.
+  # Android does not call it: it saves through Lume's own MediaStore channel
+  # (C81), because gal types a PNG `image/jpeg` on Android 10. Flutter cannot
+  # leave a plugin out of one platform, so gal's Android half is still
+  # compiled in and registered; nothing reaches it. Pinned.
   gal: 2.3.3
 
 dev_dependencies:

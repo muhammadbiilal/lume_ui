@@ -113,7 +113,7 @@ enum LumeSaveOutcome {
   noSpace,
 
   /// Nothing on this device can save an image this way — no adapter, or an
-  /// iOS older than add-only access (`LumePlatformImageSaver`).
+  /// iOS older than add-only access (`LumeGalImageSaver`).
   unavailable,
   failed,
 }

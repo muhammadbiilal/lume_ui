@@ -31,7 +31,7 @@ class _Library {
   int requested = 0;
   final List<(Uint8List, String)> written = <(Uint8List, String)>[];
 
-  LumePlatformImageSaver saver() => LumePlatformImageSaver(
+  LumeGalImageSaver saver() => LumeGalImageSaver(
     hasAccess: () async {
       asked++;
       return granted;
@@ -151,13 +151,10 @@ void main() {
   test('names are deterministic and carry nothing but the card kind', () {
     final DateTime at = DateTime(2026, 1, 2, 3, 4, 5);
     expect(
-      LumePlatformImageSaver.nameFor('lume-reminder.png', at),
+      LumePngFile.nameFor('lume-reminder.png', at),
       'lume-reminder-20260102-030405',
     );
-    expect(
-      LumePlatformImageSaver.nameFor('../a b.PNG', at),
-      '---a-b-20260102-030405',
-    );
-    expect(LumePlatformImageSaver.nameFor('', at), 'lume-20260102-030405');
+    expect(LumePngFile.nameFor('../a b.PNG', at), '---a-b-20260102-030405');
+    expect(LumePngFile.nameFor('', at), 'lume-20260102-030405');
   });
 }

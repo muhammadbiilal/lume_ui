@@ -2101,12 +2101,20 @@ were:**
 
 **Decided in F6B (decision 2).**
 
-- **Corrected.** `LumePlatformImageSaver` (`gal`) replaces the unavailable
-  saver. It checks the bytes are a PNG, asks for access only if it is not
-  held, writes once, and reports saved only when the write returns.
-- **Android.** MediaStore into Pictures; no permission from Android 10.
-  Android 6–9 need `WRITE_EXTERNAL_STORAGE` (`maxSdkVersion 28`), asked on
-  the press. A taken name gets a numbered suffix from the platform.
+- **Corrected.** A real saver replaces the unavailable one. Each checks the
+  bytes are a PNG, writes once, and reports saved only when the platform has
+  the picture: `LumeMediaStoreImageSaver` on Android, `LumeGalImageSaver`
+  (`gal`) on iOS.
+- **Android — Lume's own MediaStore channel** (`lume/image_saver`,
+  `LumeImageSaver.kt`). Android 10+: a row with `DISPLAY_NAME` ending
+  `.png`, `MIME_TYPE` `image/png`, `RELATIVE_PATH` Pictures and `IS_PENDING`
+  while the bytes are written; published, then read back, and "saved" only if
+  MediaStore holds a `.png` typed `image/png`. A taken name is renamed by
+  MediaStore (`… (1).png`), never overwritten; a row whose write fails is
+  deleted. No permission. Android 7–9: `WRITE_EXTERNAL_STORAGE`
+  (`maxSdkVersion 28`), asked on the press; a new file under a name not yet
+  taken (`… (1).png`), removed if the write fails, and "saved" only once the
+  media scanner has indexed it.
 - **iOS.** Add-only access on iOS 14+ (`NSPhotoLibraryAddUsageDescription`).
   On iOS 13 Photos can only grant the whole library, so Save image reports
   unavailable ("use Share to save it") and asks nothing.
@@ -2120,6 +2128,23 @@ were:**
   success is still asserted only after the saver returned.
 - **Unchanged.** The card is the 1080 × 1350 render of the card alone — no
   app chrome — and a sensitive tool never gets one (D7).
+- **A reproduced `gal` limitation, and why Android no longer uses it.** On
+  API 29 `gal` 2.3.3 saved the card as `lume-reminder-….png.jpg`, typed
+  `image/jpeg`, around PNG bytes (`89 50 4E 47`): it inserts a `.png` display
+  name with no MIME type, and Android 10 defaults an Images row to
+  `image/jpeg` and appends `.jpg`. `gal` stays only for iOS; its Android half
+  is still compiled in (Flutter cannot leave a plugin out of one platform)
+  and nothing calls it.
+- **Device evidence, F6B closure** (emulators; screenshots are verified PNGs;
+  the F6B save screenshots corrupted by PowerShell redirection are not
+  counted). On **API 36, 29 and 28** each: two saves, each into a name already
+  taken by a stand-in, kept both — `lume-reminder-<stamp> (1).png` — and left
+  every stand-in its own size; MediaStore types every row `image/png`, no
+  name ends `.jpg`; the pulled files start `89 50 4E 47 0D 0A 1A 0A`, decode,
+  and are 1080 × 1350 RGBA (130 410 bytes on 36 and 29, 236 428 on 28's
+  renderer). A write failed on purpose (`LUME_SIMULATE_SAVE_FAILURE`, honoured
+  only by a debuggable build) said "Couldn't save the image" and left no row
+  and no `.pending` file. API 28 asked for storage on the first press.
 
 ### C82 — Hadith: English shown as English, never as Urdu or Arabic
 

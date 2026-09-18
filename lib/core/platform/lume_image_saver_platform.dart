@@ -1,11 +1,13 @@
-/// The one file that knows how a card reaches the photo library (F6B).
+/// How a card reaches the photo library on iOS, and what every saver shares
+/// (F6B, C81).
 ///
-/// `gal` adds one picture and asks for no more than that:
+/// **Android does not use `gal`.** `gal` 2.3.3 inserts a MediaStore row with a
+/// `.png` name and no MIME type; Android 10 then types it `image/jpeg` and
+/// renames it `….png.jpg` (reproduced on API 29 in the F6B closure). Android
+/// saves through Lume's own channel instead (`lume_media_store_saver.dart`).
 ///
-/// * **Android 10 and later** — MediaStore, into Pictures. No permission at
-///   all. Android 6–9 need `WRITE_EXTERNAL_STORAGE`, declared only up to
-///   API 28 and asked when Save image is pressed. A name already taken gets a
-///   numbered suffix from the platform, never an overwrite.
+/// On iOS `gal` adds one picture and asks for no more than that:
+///
 /// * **iOS 14 and later** — add-only Photos access
 ///   (`NSPhotoLibraryAddUsageDescription`): Lume can put a picture in and can
 ///   see none. **Below iOS 14** Photos can only grant the whole library, so
@@ -22,31 +24,8 @@ import 'package:gal/gal.dart';
 
 import 'lume_share.dart';
 
-typedef LumeGalleryAccess = Future<bool> Function();
-typedef LumeGalleryPut = Future<void> Function(Uint8List bytes, String name);
-
-class LumePlatformImageSaver implements LumeImageSaver {
-  const LumePlatformImageSaver({
-    LumeGalleryAccess hasAccess = _hasAccess,
-    LumeGalleryAccess requestAccess = _requestAccess,
-    LumeGalleryPut put = _put,
-    int? Function() iosMajorVersion = _iosMajor,
-    DateTime Function() now = DateTime.now,
-  }) : _has = hasAccess,
-       _request = requestAccess,
-       _write = put,
-       _ios = iosMajorVersion,
-       _now = now;
-
-  final LumeGalleryAccess _has;
-  final LumeGalleryAccess _request;
-  final LumeGalleryPut _write;
-  final int? Function() _ios;
-  final DateTime Function() _now;
-
-  /// The first iOS with add-only access.
-  static const int addOnlyFromIos = 14;
-
+/// What every saver checks and how it names a card.
+abstract final class LumePngFile {
   static const List<int> _signature = <int>[
     0x89, 0x50, 0x4E, 0x47, 0x0D, 0x0A, 0x1A, 0x0A, //
   ];
@@ -70,6 +49,33 @@ class LumePlatformImageSaver implements LumeImageSaver {
         '${at.year}${two(at.month)}${two(at.day)}-'
         '${two(at.hour)}${two(at.minute)}${two(at.second)}';
   }
+}
+
+typedef LumeGalleryAccess = Future<bool> Function();
+typedef LumeGalleryPut = Future<void> Function(Uint8List bytes, String name);
+
+/// The iOS saver, over `gal`.
+class LumeGalImageSaver implements LumeImageSaver {
+  const LumeGalImageSaver({
+    LumeGalleryAccess hasAccess = _hasAccess,
+    LumeGalleryAccess requestAccess = _requestAccess,
+    LumeGalleryPut put = _put,
+    int? Function() iosMajorVersion = _iosMajor,
+    DateTime Function() now = DateTime.now,
+  }) : _has = hasAccess,
+       _request = requestAccess,
+       _write = put,
+       _ios = iosMajorVersion,
+       _now = now;
+
+  final LumeGalleryAccess _has;
+  final LumeGalleryAccess _request;
+  final LumeGalleryPut _write;
+  final int? Function() _ios;
+  final DateTime Function() _now;
+
+  /// The first iOS with add-only access.
+  static const int addOnlyFromIos = 14;
 
   @override
   Future<LumeSaveOutcome> saveImage(
@@ -78,10 +84,10 @@ class LumePlatformImageSaver implements LumeImageSaver {
   }) async {
     final int? ios = _ios();
     if (ios != null && ios < addOnlyFromIos) return LumeSaveOutcome.unavailable;
-    if (!isPng(png)) return LumeSaveOutcome.failed;
+    if (!LumePngFile.isPng(png)) return LumeSaveOutcome.failed;
     try {
       if (!await _has() && !await _request()) return LumeSaveOutcome.denied;
-      await _write(png, nameFor(fileName, _now()));
+      await _write(png, LumePngFile.nameFor(fileName, _now()));
       return LumeSaveOutcome.saved;
     } on GalException catch (e) {
       return switch (e.type) {
