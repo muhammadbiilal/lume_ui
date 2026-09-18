@@ -26,6 +26,7 @@ import '../../tools/application/tool_request.dart';
 import '../../tools/application/tool_session.dart';
 import '../../tools/presentation/tool_screen.dart';
 import '../domain/date_maths.dart';
+import '../domain/weekend_calendar.dart';
 
 class LumeDatecalcTool extends ConsumerStatefulWidget {
   const LumeDatecalcTool({super.key, required this.request});
@@ -98,7 +99,12 @@ class _LumeDatecalcToolState extends ConsumerState<LumeDatecalcTool> {
     final DateTime to = add
         ? LumeDateSpan.plus(from, days)
         : _date('to', today);
-    final LumeDateSpan span = LumeDateSpan.of(from, to);
+    final LumeDateSpan span = LumeDateSpan.of(
+      from,
+      to,
+      weekend: ref.watch(weekendCalendarProvider),
+      country: r.user.country,
+    );
     final String arrow = Directionality.of(context) == TextDirection.rtl
         ? '←'
         : '→';

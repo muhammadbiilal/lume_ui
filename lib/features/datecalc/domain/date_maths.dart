@@ -2,10 +2,13 @@
 ///
 /// Two modes: the days between two dates, and a date some days from another.
 /// Either way the span is walked day by day — at most 4 000 days, as the
-/// reference caps it — counting Saturdays and Sundays as the weekend.
+/// reference caps it — asking a [LumeWeekendCalendar] which days are the
+/// weekend. The reference's own rule, Saturday and Sunday, is the default.
 library;
 
 import 'package:flutter/foundation.dart';
+
+import 'weekend_calendar.dart';
 
 enum LumeDateMode { difference, add }
 
@@ -49,15 +52,19 @@ class LumeDateSpan {
   static DateTime plus(DateTime a, int n) =>
       DateTime(a.year, a.month, a.day + n);
 
-  static LumeDateSpan of(DateTime a, DateTime b) {
+  static LumeDateSpan of(
+    DateTime a,
+    DateTime b, {
+    LumeWeekendCalendar weekend = LumeFixedWeekend.reference,
+    String country = '',
+  }) {
     final DateTime x = day(a), y = day(b);
     final int diff = between(x, y);
     final int abs = diff.abs();
     int weekdays = 0, weekends = 0;
     DateTime walk = diff < 0 ? y : x;
     for (int i = 0; i < (abs < walkCap ? abs : walkCap); i++) {
-      if (walk.weekday == DateTime.saturday ||
-          walk.weekday == DateTime.sunday) {
+      if (weekend.isWeekend(country, walk)) {
         weekends++;
       } else {
         weekdays++;

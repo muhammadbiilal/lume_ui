@@ -2181,9 +2181,14 @@ says "in 0 days". A date of birth after today is refused under the field and
 the figures stay at today rather than going negative. Days are counted as
 calendar days, so a clock change cannot lose one.
 
-**Date Calculator.** The weekend is Saturday and Sunday for every country,
-as the reference counts it — **Dayroz obligation:** the country's own weekend
-(Friday and Saturday in the UAE and Saudi Arabia). The holiday count is the
+**Date Calculator.** The weekend is Saturday and Sunday, as the reference
+counts it — kept as `LumeFixedWeekend.reference`, a fixture that says it is
+one, behind `LumeWeekendCalendar` (`weekend_calendar.dart`,
+`weekendCalendarProvider`), which answers per country and per date. Friday–
+Saturday, Saturday–Sunday and a calendar that changes on a date are tested
+through fakes; no country rule is invented. **Dayroz obligation:** the
+country calendar that supplies the real rule. The tool is marked "Sample
+data" (C85) because its holiday count is fixture data. The holiday count is the
 country's whole list, as `D.holidaysFor(country).length` is, not the four the
 calendar shows. A fraction of a day to add falls to the day before it, as the
 reference's `setHours(0)` does. In a right-to-left interface the range arrow
