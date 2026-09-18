@@ -37,6 +37,21 @@ String? _maxSdk(String xml, String permission) => RegExp(
   dotAll: true,
 ).firstMatch(xml)?.group(1);
 
+/// Storage permissions Lume never declares. `apkanalyzer manifest
+/// permissions` lists `READ_EXTERNAL_STORAGE` for the APK all the same: it
+/// shows the read Android implies for any storage write. The packaged
+/// manifest (`apkanalyzer manifest print`, `aapt2 dump permissions`) does not
+/// declare it, and those are authoritative.
+const List<String> _broadStorage = <String>[
+  'android.permission.READ_EXTERNAL_STORAGE',
+  'android.permission.MANAGE_EXTERNAL_STORAGE',
+  'android.permission.READ_MEDIA_IMAGES',
+  'android.permission.READ_MEDIA_VIDEO',
+  'android.permission.READ_MEDIA_AUDIO',
+  'android.permission.READ_MEDIA_VISUAL_USER_SELECTED',
+  'android.permission.ACCESS_MEDIA_LOCATION',
+];
+
 void main() {
   test('the source manifest asks for the camera and removes the rest', () {
     final String xml = File(
@@ -67,6 +82,10 @@ void main() {
         'android.permission.RECORD_AUDIO',
       ],
     );
+    for (final String broad in _broadStorage) {
+      if (broad == 'android.permission.READ_EXTERNAL_STORAGE') continue;
+      expect(p.keys, isNot(contains(broad)), reason: broad);
+    }
   });
 
   // What the merger may add that is not a request to the reader: Flutter's
@@ -115,6 +134,11 @@ void main() {
           isNot(contains('android.permission.READ_EXTERNAL_STORAGE')),
         );
         expect(p.keys, isNot(contains('android.permission.RECORD_AUDIO')));
+        // No broad storage access of any generation: the write permission
+        // is the only storage entry, and only through API 28.
+        for (final String broad in _broadStorage) {
+          expect(p.keys, isNot(contains(broad)), reason: broad);
+        }
         expect(_maxSdk(xml, 'android.permission.WRITE_EXTERNAL_STORAGE'), '28');
       },
       skip: merged.existsSync()

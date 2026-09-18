@@ -86,6 +86,18 @@ back-port service, neither of which is a permission.
 | `ACCESS_NETWORK_STATE` | `androidx.media3:media3-common:1.9.0`, via `camera_android_camerax` → `androidx.camera:camera-video:1.6.2` → `media3-container` | **removed** (`tools:node="remove"`, F6B closure). media3 serves a player's bandwidth estimate; Lume records and plays no media. Scan, gallery decoding, capture lifecycle and Save image ran on API 36 and API 29 with no `SecurityException` from Lume; `android_manifest_test.dart` asserts it absent from the merged debug and release manifests |
 | `INTERNET` | Flutter's debug manifest | debug builds only |
 
+**Which tool is authoritative (F6B closure).** The packaged manifest is:
+`apkanalyzer manifest print` and `aapt2 dump permissions` on the release APK
+show `CAMERA`, `WRITE_EXTERNAL_STORAGE maxSdkVersion="28"` and androidx's
+`com.lume.lume.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION`, and nothing else.
+`apkanalyzer manifest permissions` also lists `READ_EXTERNAL_STORAGE`; that is
+the tool deriving the read Android implies for any storage write, not a
+declaration — the APK does not contain it, and nothing was added or removed to
+change what that tool shows. `android_manifest_test.dart` holds the merged
+debug and release manifests to: no explicit `READ_EXTERNAL_STORAGE`, the write
+only through API 28, no `READ_MEDIA_*`, `ACCESS_MEDIA_LOCATION` or
+`MANAGE_EXTERNAL_STORAGE`, and no `ACCESS_NETWORK_STATE`.
+
 ## 3. iOS configuration
 
 `ios/Runner/Info.plist`:
@@ -130,5 +142,12 @@ device test has happened.
 - **iOS Settings action and boot-time clock — written, not run.**
   `AppDelegate.swift` answers `lume/app_settings` with
   `UIApplication.openSettingsURLString`, and the stopwatch reads
-  `clock_gettime_nsec_np(CLOCK_MONOTONIC)` through dart:ffi. Both are checked
-  as source on Windows; neither has been built or run on iOS.
+  `mach_continuous_time`, scaled by a `mach_timebase_info` read once, through
+  dart:ffi (F6B closure correction: it read
+  `clock_gettime_nsec_np(CLOCK_MONOTONIC)` before, whose counting through
+  sleep had no Apple-platform evidence here). Both symbols are in libSystem
+  from iOS 10 and the deployment target is 13.0, so there is no fallback: an
+  unreachable symbol or a zero timebase throws `LumeBootClockUnavailable`
+  instead of counting on a clock that stops in sleep. Checked as source and by
+  host tests with fake ticks on Windows; neither has been built or run on iOS,
+  and **real deep sleep on an Apple device is an open obligation**.

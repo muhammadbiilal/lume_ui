@@ -34,8 +34,8 @@ dependencies:
   share_plus: ^11.1.0
   # F6B closure — the stopwatch's boot-time clock, read synchronously through
   # dart:ffi: libc `clock_gettime(CLOCK_BOOTTIME)` on Android and
-  # `clock_gettime_nsec_np(CLOCK_MONOTONIC)` on iOS, both of which count deep
-  # sleep. Already shipped as flutter_zxing's dependency; declared because
+  # `mach_continuous_time` with `mach_timebase_info` on iOS, both meant to
+  # count deep sleep. Already shipped as flutter_zxing's dependency; declared because
   # Lume now calls it. Used only by lib/core/time/lume_boot_clock.dart. Pinned.
   ffi: 2.2.0
   # F6B — QR scanning, camera and picked image, decoded on the device by

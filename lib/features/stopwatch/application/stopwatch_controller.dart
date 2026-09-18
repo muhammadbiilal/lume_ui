@@ -14,9 +14,9 @@
 /// **Policy** (F6B closure, C83):
 ///
 /// * time comes only from [LumeElapsed] — by default the boot-time clock
-///   (`lume_boot_clock.dart`: `CLOCK_BOOTTIME` on Android, Darwin's
-///   `CLOCK_MONOTONIC` on iOS), which keeps counting in deep sleep — never the
-///   wall clock, so changing the phone's time or zone moves nothing;
+///   (`lume_boot_clock.dart`: `CLOCK_BOOTTIME` on Android,
+///   `mach_continuous_time` on iOS), meant to keep counting in deep sleep —
+///   never the wall clock, so changing the phone's time or zone moves nothing;
 /// * in the background a running stopwatch keeps its start and counts on;
 ///   only the repaint ticker stops ([away]) and starts again ([back]);
 /// * leaving the tool pauses it and keeps the time;

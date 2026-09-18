@@ -2260,16 +2260,21 @@ leaving the tool pauses and keeps; nothing survives the app closing. Held by
 `stopwatch_policy_test.dart` (start, pause, resume, lap order, hundredth
 rollover, background and return, restoration, no `DateTime.now`). **The
 clock is the boot-time clock** (`lume_boot_clock.dart`, through dart:ffi):
-Android `clock_gettime(CLOCK_BOOTTIME)`, iOS `clock_gettime_nsec_np
-(CLOCK_MONOTONIC)`, both of which count deep sleep, which Dart's own
+Android `clock_gettime(CLOCK_BOOTTIME)`, iOS `mach_continuous_time` scaled
+by a cached `mach_timebase_info` (a correction: the first closure read
+`clock_gettime_nsec_np(CLOCK_MONOTONIC)`, whose counting through sleep had no
+Apple-platform evidence), both meant to count deep sleep, which Dart's own
 `Stopwatch` does not; elsewhere (the test host) Dart's `Stopwatch`. On a phone
-a clock that cannot be reached throws rather than falling back. A run that
+a clock that cannot be reached throws `LumeBootClockUnavailable` rather than
+falling back — the iOS symbols exist from iOS 10 and the target is 13.0. Tick
+conversion cannot overflow, a device reading never goes back, a run that
 seems to go backwards counts as nothing and a run past 999 days stops there.
 Nothing is kept past the process, and both clocks restart at boot, so a
 reboot cannot corrupt a time — there is none to corrupt. On API 36, 29 and 28
 a stopwatch run for 20.4 s of host time with 10 s spent at Home read 20.1–
 20.4 s. Deep sleep itself is simulated in tests (the boot clock advancing
-while Lume is away); it was not reproduced on a device, and iOS has not run.
+while Lume is away, and fake `mach_continuous_time` ticks on the host); it
+was not reproduced on a device, and iOS has not been built or run.
 
 | widget | was | now |
 |---|---|---|

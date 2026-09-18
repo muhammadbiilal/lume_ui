@@ -204,15 +204,144 @@ void main() {
       LumeBootClock.sourceFor(TargetPlatform.android, web: true),
       LumeBootClockSource.dartMonotonic,
     );
-    // The ids the native calls pass: <linux/time.h> and Darwin's <time.h>.
+    // The id Android passes, from <linux/time.h>.
     expect(LumeBootClock.linuxBootTime, 7);
-    expect(LumeBootClock.darwinMonotonic, 6);
+  });
+
+  test('iOS reads Apple continuous time — the source contract', () {
+    expect(LumeBootClock.darwinTicks, 'mach_continuous_time');
+    expect(LumeBootClock.darwinTimebase, 'mach_timebase_info');
     final String source = File(
       'lib/core/time/lume_boot_clock.dart',
     ).readAsStringSync();
-    expect(source, contains("'clock_gettime'"));
-    expect(source, contains("'clock_gettime_nsec_np'"));
-    expect(source, isNot(contains('DateTime.now')));
+    // Code only: the doc comment may name what is not used.
+    final String code = source
+        .split('\n')
+        .where((String l) => !l.trimLeft().startsWith('//'))
+        .join('\n');
+    expect(code, contains("'clock_gettime'"), reason: 'Android unchanged');
+    expect(code, contains('lookupFunction<Uint64 Function(), int Function()>'));
+    expect(code, contains('(darwinTicks)'));
+    expect(code, contains('(darwinTimebase)'));
+    expect(code, contains('Int32 Function(Pointer<_MachTimebase>)'));
+    for (final String excluded in <String>[
+      'clock_gettime_nsec_np',
+      'mach_absolute_time',
+      'CLOCK_MONOTONIC',
+      'CLOCK_UPTIME',
+      'DateTime',
+    ]) {
+      expect(code, isNot(contains(excluded)), reason: excluded);
+    }
+    // mach_continuous_time is in libSystem from iOS 10; the target is newer,
+    // so there is no fallback for the iOS clock.
+    final String project = File(
+      'ios/Runner.xcodeproj/project.pbxproj',
+    ).readAsStringSync();
+    final Iterable<double> targets = RegExp(
+      r'IPHONEOS_DEPLOYMENT_TARGET = ([\d.]+);',
+    ).allMatches(project).map((Match m) => double.parse(m[1]!));
+    expect(targets, isNotEmpty);
+    expect(targets.every((double t) => t >= 10), isTrue);
+  });
+
+  group('iOS ticks to time', () {
+    // arm64 Apple devices tick at 24 MHz: 125/3 ns a tick. Intel Macs, 1/1.
+    final LumeTimebase arm = LumeTimebase(125, 3);
+    final LumeTimebase unit = LumeTimebase(1, 1);
+
+    test('the timebase converts exactly', () {
+      expect(
+        LumeBootClock.ticksToDuration(24000000, arm),
+        const Duration(seconds: 1),
+      );
+      expect(
+        LumeBootClock.ticksToDuration(24000000 * 3600, arm),
+        const Duration(hours: 1),
+      );
+      expect(
+        LumeBootClock.ticksToDuration(1500000000, unit),
+        const Duration(milliseconds: 1500),
+      );
+      expect(LumeBootClock.ticksToDuration(0, arm), Duration.zero);
+    });
+
+    test('a product past 64 bits does not overflow; a tick count past 2⁶³ '
+        'reads as the ceiling', () {
+      const int huge = 0x7FFFFFFFFFFFFFFF;
+      expect(LumeBootClock.ticksToDuration(huge, arm), LumeBootClock.ceiling);
+      expect(
+        LumeBootClock.ticksToDuration(huge, LumeTimebase(0xFFFFFFFF, 1)),
+        LumeBootClock.ceiling,
+      );
+      expect(LumeBootClock.ticksToDuration(-1, arm), LumeBootClock.ceiling);
+      // Ninety-nine days of arm ticks times 125 fits well within int; the
+      // result is exact.
+      const int days99 = 24000000 * 86400 * 99;
+      expect(
+        LumeBootClock.ticksToDuration(days99, arm),
+        const Duration(days: 99),
+      );
+    });
+
+    test('a zero or out-of-range timebase is refused, never divided by', () {
+      for (final (int n, int d) in <(int, int)>[
+        (0, 1),
+        (1, 0),
+        (-1, 1),
+        (1, 0x100000000),
+      ]) {
+        expect(
+          () => LumeTimebase(n, d),
+          throwsA(isA<LumeBootClockUnavailable>()),
+          reason: '$n/$d',
+        );
+      }
+    });
+
+    test('readings only go forward, and are held at the ceiling', () {
+      int ticks = 24000000 * 10;
+      final LumeElapsed clock = LumeBootClock.darwin(
+        ticks: () => ticks,
+        timebase: arm,
+      );
+      expect(clock(), const Duration(seconds: 10));
+      ticks = 24000000 * 4; // a reading that seems to go back
+      expect(clock(), const Duration(seconds: 10));
+      ticks = 24000000 * 12;
+      expect(clock(), const Duration(seconds: 12));
+      ticks = -1;
+      expect(clock(), LumeBootClock.ceiling);
+      ticks = 0;
+      expect(clock(), LumeBootClock.ceiling);
+    });
+
+    test('a native read that fails is not swallowed', () {
+      final LumeElapsed clock = LumeBootClock.darwin(
+        ticks: () => throw const LumeBootClockUnavailable('test'),
+        timebase: arm,
+      );
+      expect(clock, throwsA(isA<LumeBootClockUnavailable>()));
+    });
+
+    test('a stopwatch on the continuous clock counts a simulated sleep '
+        '(host test, not an iOS device test)', () {
+      int ticks = 0;
+      final LumeStopwatchController w = LumeStopwatchController(
+        session: LumeToolSession(),
+        periodic: (Duration d, void Function(Timer) f) => _Ticker(f),
+        elapsed: LumeBootClock.darwin(ticks: () => ticks, timebase: arm),
+      )..toggle();
+      ticks += 24000000 * 5;
+      w.away();
+      ticks += 24000000 * 3600; // the device asleep: continuous time counts
+      w.back();
+      expect(
+        w.milliseconds,
+        const Duration(hours: 1, seconds: 5).inMilliseconds,
+      );
+      w.dispose();
+    });
   });
 
   test('where no device clock exists, time still only goes forward', () {
