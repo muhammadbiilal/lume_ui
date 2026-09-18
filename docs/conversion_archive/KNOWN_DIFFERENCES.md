@@ -2198,7 +2198,14 @@ points left.
 and then charges one person the whole bill. The people row is 44 tall so each
 stepper target is (D6): the card is six taller than the reference's, and
 every section under it six lower — compared as a recorded shift, not
-tolerated. Amounts show up to two decimals, none on a whole figure, as
+tolerated. **Approved in the F6B closure as an accessibility adaptation**, and
+held by `tipsplit_access_test.dart`: two targets of at least 44 × 44, at
+least 16 apart and never overlapping the label, the chips or the card's edge,
+at 200 %, in Urdu and Arabic (right to left, "fewer" at the start), on a
+320-point phone and in 640 × 360 landscape (also at 200 %); Tab reaches both
+and Enter and Space press them; switch access and TalkBack press through the
+semantics tap action, and a step that cannot happen has none; a screen
+reader meets bill, tip, the stepper, fewer and more in that order. Amounts show up to two decimals, none on a whole figure, as
 `moneyRaw(v, ccy, 2)` does.
 
 **Loan / EMI.** *A reference defect, corrected.* `loan()` declares `var
@@ -2219,7 +2226,25 @@ runs the buttons are **Pause** and **Lap**; paused, **Start** and **Reset**.
 The hint "Tap start, tap again to lap" promised what the second press never
 did (it pauses) and now reads "Start, then Lap to mark each lap"; the empty
 state says "tap Lap". Leaving the tool stops the clock and keeps the time, as
-`stopClocks` does. Timer keeps its own C66 behaviour.
+`stopClocks` does. Timer keeps its own C66 behaviour. **Approved in the F6B
+closure as corrections of broken reference behaviour**, with a stated policy
+(`stopwatch_controller.dart`): time comes only from an injected monotonic
+source, never the wall clock; in the background a running stopwatch keeps
+its start and counts on, and only its repaint ticker stops and restarts;
+leaving the tool pauses and keeps; nothing survives the app closing. Held by
+`stopwatch_policy_test.dart` (start, pause, resume, lap order, hundredth
+rollover, background and return, restoration, no `DateTime.now`). **The
+clock is the boot-time clock** (`lume_boot_clock.dart`, through dart:ffi):
+Android `clock_gettime(CLOCK_BOOTTIME)`, iOS `clock_gettime_nsec_np
+(CLOCK_MONOTONIC)`, both of which count deep sleep, which Dart's own
+`Stopwatch` does not; elsewhere (the test host) Dart's `Stopwatch`. On a phone
+a clock that cannot be reached throws rather than falling back. A run that
+seems to go backwards counts as nothing and a run past 999 days stops there.
+Nothing is kept past the process, and both clocks restart at boot, so a
+reboot cannot corrupt a time — there is none to corrupt. On API 36, 29 and 28
+a stopwatch run for 20.4 s of host time with 10 s spent at Home read 20.1–
+20.4 s. Deep sleep itself is simulated in tests (the boot clock advancing
+while Lume is away); it was not reproduced on a device, and iOS has not run.
 
 | widget | was | now |
 |---|---|---|

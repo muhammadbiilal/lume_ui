@@ -10,17 +10,33 @@
 ///
 /// What it has counted lives in the tool session, so leaving the tool and
 /// coming back finds the same time — stopped, as `stopClocks` stops it.
+///
+/// **Policy** (F6B closure, C83):
+///
+/// * time comes only from [LumeElapsed] — by default the boot-time clock
+///   (`lume_boot_clock.dart`: `CLOCK_BOOTTIME` on Android, Darwin's
+///   `CLOCK_MONOTONIC` on iOS), which keeps counting in deep sleep — never the
+///   wall clock, so changing the phone's time or zone moves nothing;
+/// * in the background a running stopwatch keeps its start and counts on;
+///   only the repaint ticker stops ([away]) and starts again ([back]);
+/// * leaving the tool pauses it and keeps the time;
+/// * nothing survives the app being closed: the session is in memory, so a
+///   new one starts at zero, stopped, with no laps. A reboot restarts the
+///   boot-time clock too, which is why no start time is ever kept past the
+///   process: a durable stopwatch would need the boot's identity stored with
+///   it, and this one does not pretend to be durable;
+/// * a clock that seems to run backwards counts as no time, and a run longer
+///   than [maxRun] stops there, so the figure is never negative and never
+///   overflows.
 library;
 
 import 'dart:async';
 
 import 'package:flutter/foundation.dart';
 
+import '../../../core/time/lume_boot_clock.dart';
 import '../../timer/application/timer_controller.dart';
 import '../../tools/application/tool_session.dart';
-
-/// Monotonic elapsed time. A parameter so a test steps it.
-typedef LumeElapsed = Duration Function();
 
 class LumeStopwatchController extends ChangeNotifier {
   LumeStopwatchController({
@@ -29,15 +45,15 @@ class LumeStopwatchController extends ChangeNotifier {
     LumeElapsed? elapsed,
   }) : _session = session,
        _periodic = periodic ?? Timer.periodic,
-       _elapsed = elapsed ?? _monotonic;
+       _elapsed = elapsed ?? LumeBootClock.platform();
 
   static const String tool = 'stopwatch';
 
   /// How often the face repaints while running.
   static const Duration frame = Duration(milliseconds: 30);
 
-  static final Stopwatch _clock = Stopwatch()..start();
-  static Duration _monotonic() => _clock.elapsed;
+  /// Longer than anyone times anything; the most a stopwatch will show.
+  static const Duration maxRun = Duration(days: 999);
 
   final LumeToolSession _session;
   final LumePeriodicTimer _periodic;
@@ -45,14 +61,21 @@ class LumeStopwatchController extends ChangeNotifier {
   Timer? _ticker;
   Duration? _startedAt;
 
-  bool get running => _ticker != null;
+  /// Started and not paused — whether or not the face is being repainted.
+  bool get running => _startedAt != null;
 
-  int get _held => int.tryParse(_session.read(tool, 'ms') ?? '') ?? 0;
+  int get _held => (int.tryParse(_session.read(tool, 'ms') ?? '') ?? 0).clamp(
+    0,
+    maxRun.inMilliseconds,
+  );
 
   /// Milliseconds counted, including the run in progress.
   int get milliseconds {
     final Duration? since = _startedAt;
-    return _held + (since == null ? 0 : (_elapsed() - since).inMilliseconds);
+    final int run = since == null
+        ? 0
+        : (_elapsed() - since).inMilliseconds.clamp(0, maxRun.inMilliseconds);
+    return (_held + run).clamp(0, maxRun.inMilliseconds);
   }
 
   /// Each lap's mark — the total at the moment Lap was pressed.
@@ -83,8 +106,22 @@ class LumeStopwatchController extends ChangeNotifier {
       _pause();
     } else {
       _startedAt = _elapsed();
-      _ticker = _periodic(frame, (_) => notifyListeners());
+      _tick();
     }
+    notifyListeners();
+  }
+
+  void _tick() => _ticker ??= _periodic(frame, (_) => notifyListeners());
+
+  /// Lume is out of sight: stop repainting, keep counting.
+  void away() {
+    _ticker?.cancel();
+    _ticker = null;
+  }
+
+  /// Lume is seen again: repaint, from the same start.
+  void back() {
+    if (running) _tick();
     notifyListeners();
   }
 

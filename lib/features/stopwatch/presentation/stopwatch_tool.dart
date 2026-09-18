@@ -16,6 +16,7 @@ import '../../../core/widgets/lume/lume_clock_face.dart';
 import '../../../core/widgets/lume/lume_row.dart';
 import '../../../core/widgets/lume/lume_state.dart';
 import '../../../core/widgets/lume/lume_tool.dart';
+import '../../../core/time/lume_boot_clock.dart';
 import '../../../l10n/app_localizations.dart';
 import '../../timer/application/timer_controller.dart';
 import '../../tools/application/tool_request.dart';
@@ -54,7 +55,8 @@ class LumeStopwatchTool extends ConsumerStatefulWidget {
   ConsumerState<LumeStopwatchTool> createState() => _LumeStopwatchToolState();
 }
 
-class _LumeStopwatchToolState extends ConsumerState<LumeStopwatchTool> {
+class _LumeStopwatchToolState extends ConsumerState<LumeStopwatchTool>
+    with WidgetsBindingObserver {
   final GlobalKey<LumeToolScreenState> _host = GlobalKey<LumeToolScreenState>();
   late final LumeStopwatchController _clock = LumeStopwatchController(
     session: ref.read(toolSessionProvider),
@@ -65,7 +67,28 @@ class _LumeStopwatchToolState extends ConsumerState<LumeStopwatchTool> {
   void _changed() => setState(() {});
 
   @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addObserver(this);
+  }
+
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    switch (state) {
+      case AppLifecycleState.resumed:
+        _clock.back();
+      case AppLifecycleState.hidden:
+      case AppLifecycleState.paused:
+      case AppLifecycleState.detached:
+        _clock.away();
+      case AppLifecycleState.inactive:
+        break;
+    }
+  }
+
+  @override
   void dispose() {
+    WidgetsBinding.instance.removeObserver(this);
     _clock
       ..removeListener(_changed)
       ..dispose();

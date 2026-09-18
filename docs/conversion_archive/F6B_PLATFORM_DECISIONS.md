@@ -12,6 +12,7 @@ by one adapter file and nothing else.
 | package | version | licence | publisher | used only by |
 |---|---|---|---|---|
 | `flutter_zxing` | 3.0.1 | MIT | khoren93 | `lib/core/platform/lume_scanner_platform.dart` |
+| `ffi` | 2.2.0 | BSD-3-Clause | dart.dev | `lib/core/time/lume_boot_clock.dart` — already shipped through `flutter_zxing`; declared because Lume calls it (F6B closure) |
 | `image_picker` | 1.2.3 | BSD-3-Clause | flutter.dev | `lib/core/platform/lume_scanner_platform.dart` |
 | `gal` | 2.3.3 | BSD-3-Clause | midoridesign.studio | `lib/core/platform/lume_image_saver_platform.dart` |
 
@@ -126,3 +127,8 @@ device test has happened.
 - **Dayroz:** the same adapters and the same allowlist; a scan history, if
   Dayroz wants one, is the reader's saved data and needs its own consent and
   retention decision.
+- **iOS Settings action and boot-time clock — written, not run.**
+  `AppDelegate.swift` answers `lume/app_settings` with
+  `UIApplication.openSettingsURLString`, and the stopwatch reads
+  `clock_gettime_nsec_np(CLOCK_MONOTONIC)` through dart:ffi. Both are checked
+  as source on Windows; neither has been built or run on iOS.
