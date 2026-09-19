@@ -2481,6 +2481,36 @@ the reader's (`memory_record_repository_test.dart`).
 
 ### C89 — "Follow my region" never picks one of a country's zones
 
+**Correction (Follow-region canonical identity and labels).** Two
+statements below are superseded:
+
+- *"The country's one civil time"* is now **the country's one canonical
+  zone**. The first version merged a country's zones when their offsets
+  agreed hour by hour from 2026 to 2031; that proved nothing about the next
+  rule change, so it is gone. A country gets a zone of its own only when
+  every zone CLDR lists for it is one canonical identity (the identifier,
+  or links to it); otherwise its city decides, or the reader chooses. This
+  moves eight countries from one zone to "choose": Argentina, Cyprus,
+  Germany (Büsingen), Kazakhstan, the Marshall Islands (`Pacific/Majuro`
+  links to Tarawa, but CLDR also lists Kwajalein), Malaysia (Sarawak),
+  Palestine and Uzbekistan — 27 in all, up from 19. Every city the country
+  table lists for them has a zone (`kLumeCityZones`), so a reader with one
+  of those cities sees no change; a reader with no city is asked.
+- *"The zones offered are canonical"* still holds for identity, but they
+  are no longer **shown** as canonical identifiers. A separate label layer
+  shows CLDR's localized location label for the reader's country, in CLDR's
+  "{0} Time" pattern — a Kuwait reader's `Asia/Riyadh` reads "Kuwait Time",
+  the Central African Republic's `Africa/Lagos` "Central African Republic
+  Time", Pakistan's "Pakistan Time" — in English, Urdu and Arabic, with the
+  identifier beside it in Account › Time and after it for screen readers.
+  Calendar's context bar (the reference writes `Asia/Karachi`; Lume writes
+  "Pakistan · Pakistan Time"), Events' Timezone fact and Sun & Moon name the
+  zone the same way; the Calendar test reads the reference's identifier
+  through the same label layer. Where CLDR has no label (UTC, `Etc/*`) the
+  identifier shows. Nothing stored changes, and no zone's behaviour
+  changes. Re-captured: Account › Time (4), Calendar (14, the reference
+  cells included) and Events' record detail and delete (3).
+
 **Approved refinement of C88.** "Follow my region" is the reader's
 preference, not an inference, and it resolves to the city's zone where the
 country has several civil times, else the country's one civil time, else

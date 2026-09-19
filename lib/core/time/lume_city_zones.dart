@@ -1,10 +1,11 @@
-/// The zone of each city the country table lists, for the countries with
-/// more than one civil time — "Follow my region"'s city policy.
+/// The zone of each city the country table lists, for the countries CLDR
+/// lists several canonical zones for — "Follow my region"'s city policy.
 ///
-/// A country with one civil time needs no entry: its zone is
-/// `kLumeCountryCivilZone`. A country with several cannot be given one
-/// (New York and Los Angeles are both "United States"), so the city decides,
-/// and a city missing here leaves the reader to choose their zone.
+/// A country with one canonical zone needs no entry: its zone is
+/// `kLumeCountryZone`. A country with several cannot be given one (New York
+/// and Los Angeles are both "United States"; Berlin and Büsingen both
+/// "Germany", whatever their clocks read today), so the city decides, and a
+/// city missing here leaves the reader to choose their zone.
 ///
 /// Reviewed by hand against IANA's `zone.tab` descriptions, and held by a
 /// test: every value is a canonical identifier CLDR lists for that country
@@ -26,6 +27,11 @@ const Map<String, String> kLumeCityZones = <String, String>{
   'AU:Perth': 'Australia/Perth',
   'AU:Adelaide': 'Australia/Adelaide',
   'AU:Hobart': 'Australia/Hobart',
+  // Argentina — Rosario is Santa Fe's, on Córdoba's zone
+  'AR:Buenos Aires': 'America/Argentina/Buenos_Aires',
+  'AR:Córdoba': 'America/Argentina/Cordoba',
+  'AR:Rosario': 'America/Argentina/Cordoba',
+  'AR:Mendoza': 'America/Argentina/Mendoza',
   // Brazil
   'BR:São Paulo': 'America/Sao_Paulo',
   'BR:Rio de Janeiro': 'America/Sao_Paulo',
@@ -57,6 +63,18 @@ const Map<String, String> kLumeCityZones = <String, String>{
   'CL:Santiago': 'America/Santiago',
   'CL:Valparaíso': 'America/Santiago',
   'CL:Concepción': 'America/Santiago',
+  // Cyprus — Asia/Famagusta is Northern Cyprus's
+  'CY:Nicosia': 'Asia/Nicosia',
+  'CY:Limassol': 'Asia/Nicosia',
+  // Germany — Europe/Busingen, a link to Zurich, is Büsingen's
+  'DE:Berlin': 'Europe/Berlin',
+  'DE:Munich': 'Europe/Berlin',
+  'DE:Hamburg': 'Europe/Berlin',
+  'DE:Frankfurt': 'Europe/Berlin',
+  'DE:Cologne': 'Europe/Berlin',
+  'DE:Stuttgart': 'Europe/Berlin',
+  'DE:Düsseldorf': 'Europe/Berlin',
+  'DE:Leipzig': 'Europe/Berlin',
   // China — Asia/Urumqi is Xinjiang's
   'CN:Shanghai': 'Asia/Shanghai',
   'CN:Beijing': 'Asia/Shanghai',
@@ -89,6 +107,12 @@ const Map<String, String> kLumeCityZones = <String, String>{
   'ID:Makassar': 'Asia/Makassar',
   // Kiribati
   'KI:Tarawa': 'Pacific/Tarawa',
+  // Kazakhstan — Asia/Almaty is most of the country
+  'KZ:Almaty': 'Asia/Almaty',
+  'KZ:Astana': 'Asia/Almaty',
+  'KZ:Shymkent': 'Asia/Almaty',
+  // Marshall Islands — Pacific/Majuro is a link to Tarawa
+  'MH:Majuro': 'Pacific/Tarawa',
   // Mongolia
   'MN:Ulaanbaatar': 'Asia/Ulaanbaatar',
   // Mexico
@@ -98,12 +122,24 @@ const Map<String, String> kLumeCityZones = <String, String>{
   'MX:Monterrey': 'America/Monterrey',
   'MX:Tijuana': 'America/Tijuana',
   'MX:Cancún': 'America/Cancun',
+  // Malaysia — Asia/Kuala_Lumpur is a link to Singapore; Kuching, Sarawak's
+  'MY:Kuala Lumpur': 'Asia/Singapore',
+  'MY:George Town': 'Asia/Singapore',
+  'MY:Johor Bahru': 'Asia/Singapore',
+  'MY:Ipoh': 'Asia/Singapore',
+  'MY:Shah Alam': 'Asia/Singapore',
+  'MY:Kuching': 'Asia/Kuching',
   // New Zealand — Pacific/Chatham is the islands'
   'NZ:Auckland': 'Pacific/Auckland',
   'NZ:Wellington': 'Pacific/Auckland',
   'NZ:Christchurch': 'Pacific/Auckland',
   // Papua New Guinea — Pacific/Bougainville is the region's
   'PG:Port Moresby': 'Pacific/Port_Moresby',
+  // Palestine — Asia/Gaza is the Gaza Strip's, Asia/Hebron the West Bank's
+  'PS:Gaza': 'Asia/Gaza',
+  'PS:Ramallah': 'Asia/Hebron',
+  'PS:Hebron': 'Asia/Hebron',
+  'PS:Nablus': 'Asia/Hebron',
   // Portugal — Atlantic/Azores and Atlantic/Madeira are the islands'
   'PT:Lisbon': 'Europe/Lisbon',
   'PT:Porto': 'Europe/Lisbon',
@@ -120,6 +156,10 @@ const Map<String, String> kLumeCityZones = <String, String>{
   'UA:Kharkiv': 'Europe/Kyiv',
   'UA:Odesa': 'Europe/Kyiv',
   'UA:Lviv': 'Europe/Kyiv',
+  // Uzbekistan — Asia/Samarkand is the west's
+  'UZ:Tashkent': 'Asia/Tashkent',
+  'UZ:Samarkand': 'Asia/Samarkand',
+  'UZ:Bukhara': 'Asia/Samarkand',
   // United States
   'US:Los Angeles': 'America/Los_Angeles',
   'US:San Francisco': 'America/Los_Angeles',

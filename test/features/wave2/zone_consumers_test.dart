@@ -54,20 +54,23 @@ void main() {
   group('Events', () {
     const LumeRecordKeys k = LumeEventsTool.keys;
 
-    testWidgets('a renamed zone is read, and shown by its current name, '
+    testWidgets('a renamed zone is read, and shown by its CLDR name, '
         'isolated', (WidgetTester t) async {
       await pumpWave2(t, 'events', profile: reader(zone: 'Europe/Kiev'));
       await tapVisible(t, find.byType(LumeRecordRow).first);
-      expect(factsOf(t), contains('Timezone: \u2068Europe/Kyiv\u2069'));
+      expect(factsOf(t), contains('Timezone: \u2068Ukraine Time\u2069'));
     });
 
     testWidgets('an event is a date and a wall time; the reader\'s zone '
         'changes how it is placed, never what it says', (WidgetTester t) async {
-      for (final String zone in <String>['Asia/Karachi', 'America/New_York']) {
+      for (final (String zone, String name) in <(String, String)>[
+        ('Asia/Karachi', 'Pakistan Time'),
+        ('America/New_York', 'New York Time'),
+      ]) {
         await pumpWave2(t, 'events', profile: reader(zone: zone));
         await tapVisible(t, find.byType(LumeRecordRow).first);
         expect(factsOf(t), containsAll(<String>['Time: 7:00 pm']));
-        expect(factsOf(t), contains('Timezone: \u2068$zone\u2069'));
+        expect(factsOf(t), contains('Timezone: \u2068$name\u2069'));
       }
       // Nothing about an event stores a zone or an instant.
       expect(

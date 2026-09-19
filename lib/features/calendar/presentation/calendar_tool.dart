@@ -113,7 +113,9 @@ class _LumeCalendarToolState extends ConsumerState<LumeCalendarTool> {
           country: r.user.country,
           city: r.user.city,
         );
-    final String? zoneLabel = zone.canonicalId ?? zone.requested;
+    final String? zoneLabel =
+        zone.label(Localizations.localeOf(context).languageCode)?.display ??
+        zone.requested;
     final LumeHijriDate? hijri = r.user.islamic ? LumeHijriDate.of(now) : null;
 
     // `monthGrid()` — this month, the locale's week (Monday, C65).

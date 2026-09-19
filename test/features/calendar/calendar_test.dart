@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:intl/intl.dart' as intl;
+import 'package:lume/core/time/lume_zone_labels.dart';
 import 'package:lume/core/time/lume_iana_zones.dart';
 import 'package:lume/app/providers/platform_services.dart';
 import 'package:lume/core/navigation/lume_tool_frame.dart';
@@ -175,12 +176,24 @@ void main() {
           webToolCell(cell)!['composition'] as Map<String, dynamic>;
       final Map<String, dynamic> c = k['calendar'] as Map<String, dynamic>;
 
-      // The zone's identifier is bidi-isolated; the isolates are invisible
-      // format characters, and what is compared is the words the reader sees.
-      expect(<String>[
-        for (final String t in textsUnder(tester, find.byType(LumeContextBar)))
-          t.replaceAll(RegExp('[\u2068\u2069]'), ''),
-      ], (c['context'] as List<dynamic>).cast<String>());
+      // The zone is bidi-isolated; the isolates are invisible format
+      // characters, and what is compared is the words the reader sees. The
+      // reference writes the zone's identifier; Lume writes CLDR's name for
+      // it (C89), so the reference's identifier is read through the same
+      // label layer — a departure named, not a comparison loosened.
+      expect(
+        <String>[
+          for (final String t in textsUnder(
+            tester,
+            find.byType(LumeContextBar),
+          ))
+            t.replaceAll(RegExp('[\u2068\u2069]'), ''),
+        ],
+        <String>[
+          for (final String w in (c['context'] as List<dynamic>).cast<String>())
+            w.contains('/') ? LumeZoneLabels.of(w, language: 'en').display : w,
+        ],
+      );
       final LumeSegmented seg = tester.widget<LumeSegmented>(
         find.byKey(LumeCalendarTool.viewKey),
       );

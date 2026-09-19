@@ -248,7 +248,10 @@ class _LumeSunmoonToolState extends ConsumerState<LumeSunmoonTool> {
       city: r.user.city,
       zone: zone,
     );
-    final String zoneLabel = zone.canonicalId ?? zone.requested ?? '';
+    final String zoneLabel =
+        zone.label(Localizations.localeOf(context).languageCode)?.display ??
+        zone.requested ??
+        '';
 
     return LumeToolScreen(
       feature: r.feature,

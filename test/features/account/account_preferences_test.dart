@@ -404,7 +404,8 @@ void main() {
         gate: gate,
         surface: kTall,
       );
-      await choose(tester, 'Dubai');
+      // Shown by CLDR's name for it, stored by its canonical identifier.
+      await choose(tester, 'United Arab Emirates Time');
       expect(gate.state.profile.timeZone, 'Asia/Dubai');
       expect(gate.state.profile.clock, LumePreference.auto);
     });

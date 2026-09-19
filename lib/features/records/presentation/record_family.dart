@@ -99,9 +99,13 @@ class LumeRecordContext {
   /// The reader's calendar date (see [dayKnown]).
   DateTime get today => DateTime(local.year, local.month, local.day);
 
-  /// The identifier to show: the canonical one, or what was asked for when
+  /// What to show for the zone: its CLDR location label for the reader's
+  /// country, else its canonical identifier, else what was asked for when
   /// nothing resolved.
-  String get zoneLabel => zone.canonicalId ?? zone.requested ?? '';
+  String get zoneLabel =>
+      zone.label(l.localeName.split('_').first)?.display ??
+      zone.requested ??
+      '';
 }
 
 /// One record, read by its family. [record] keeps the store's bookkeeping —

@@ -53,13 +53,12 @@ void main() {
     });
   }
 
-  testWidgets('New York\'s zone reads the same in English, Urdu and Arabic', (
-    WidgetTester t,
-  ) async {
-    for (final Locale locale in <Locale>[
-      const Locale('en'),
-      const Locale('ur'),
-      const Locale('ar'),
+  testWidgets('New York\'s zone is one zone in English, Urdu and Arabic, '
+      'each naming it in CLDR\'s words', (WidgetTester t) async {
+    for (final (Locale locale, String name) in <(Locale, String)>[
+      (const Locale('en'), 'New York Time'),
+      (const Locale('ur'), 'نیو یارک وقت'),
+      (const Locale('ar'), 'توقيت نيويورك'),
     ]) {
       await pumpWave2(
         t,
@@ -70,7 +69,7 @@ void main() {
       expect(find.byKey(LumeEventsTool.dayUnknownKey), findsNothing);
       await tapVisible(t, find.byType(LumeRecordRow).first);
       expect(
-        find.textContaining('\u2068America/New_York\u2069'),
+        find.textContaining('\u2068$name\u2069'),
         findsWidgets,
         reason: locale.languageCode,
       );

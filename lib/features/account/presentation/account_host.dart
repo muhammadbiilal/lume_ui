@@ -30,6 +30,7 @@ import '../../../app/providers/locale_provider.dart';
 import '../../../app/providers/theme_provider.dart';
 import '../../../app/providers/time_zone_provider.dart';
 import '../../../core/time/lume_iana_zones.dart';
+import '../../../core/time/lume_zone_labels.dart';
 import '../../../core/icons/lume_icons.dart';
 import '../../../core/layout/lume_measure.dart';
 import '../../../core/localization/lume_format.dart';
@@ -489,14 +490,32 @@ class _LumeAccountHostState extends ConsumerState<LumeAccountHost> {
             p.copyWith(clearTimeZone: true, zoneFollow: LumeZoneFollow.region),
             device,
           )
-          .canonicalId,
-      deviceZone: device.verified ? device.id : null,
-      zones: <String>{
-        ...LumeTimeZoneService.countryZones(p.country),
-        ...?table
-            ?.zonesNear(p.country)
-            .map((String z) => zones.resolveId(z).canonicalId ?? z),
-      }.toList()..sort(),
+          .label(language),
+      deviceZone: device.verified
+          ? zones
+                .readerZone(
+                  p.copyWith(
+                    clearTimeZone: true,
+                    zoneFollow: LumeZoneFollow.device,
+                  ),
+                  device,
+                )
+                .label(language)
+          : null,
+      namedZone: p.timeZone == null
+          ? null
+          : zones.readerZone(p, device).label(language),
+      // Canonical identities, each named for the reader's country: a Kuwait
+      // reader's Riyadh rules read "Kuwait".
+      zones: <LumeZoneLabel>[
+        for (final String id in <String>{
+          ...LumeTimeZoneService.countryZones(p.country),
+          ...?table
+              ?.zonesNear(p.country)
+              .map((String z) => zones.resolveId(z).canonicalId ?? z),
+        }.toList()..sort())
+          LumeZoneLabels.of(id, language: language, country: p.country),
+      ],
       version: kLumeVersion,
       favourites: _entries(l, p, p.favourites),
       recents: _entries(l, p, p.recents),

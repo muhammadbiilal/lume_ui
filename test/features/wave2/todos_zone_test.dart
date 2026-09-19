@@ -124,13 +124,14 @@ void main() {
       });
     }
 
-    test('the alias reads Kyiv\'s clock and shows Kyiv\'s name', () {
+    test('the alias reads Kyiv\'s clock and shows its CLDR label', () {
       final LumeRecordContext c = inZone(
         DateTime.utc(2026, 9, 7),
         'Europe/Kiev',
       );
       expect(c.zone.outcome, LumeZoneOutcome.alias);
-      expect(c.zoneLabel, 'Europe/Kyiv');
+      expect(c.zone.canonicalId, 'Europe/Kyiv');
+      expect(c.zoneLabel, 'Ukraine Time');
       expect(c.zone.requested, 'Europe/Kiev');
     });
 

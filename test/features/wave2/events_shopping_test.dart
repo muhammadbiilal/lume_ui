@@ -104,7 +104,7 @@ void main() {
         facts.facts.map((f) => '${f.label}: ${f.value}'),
         containsAllInOrder(<String>[
           'Time: 7:00 pm',
-          'Timezone: \u2068Europe/London\u2069',
+          'Timezone: \u2068United Kingdom Time\u2069',
         ]),
       );
     });

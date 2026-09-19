@@ -27,14 +27,16 @@ import 'lume_city_zones.dart';
 import 'lume_country_zones.dart';
 import 'lume_zone.dart';
 import 'lume_zone_aliases.dart';
+import 'lume_zone_labels.dart';
 
 /// What the reader chose when they did not name a zone (Account › Time):
 /// their region's civil time, or the device's. A preference they set and
 /// can change — never inferred from their language, religion, interests or
 /// currency.
 enum LumeZoneFollow {
-  /// "Follow my region": the city's zone, else the country's one civil time,
-  /// else nothing — a country with several is not given one.
+  /// "Follow my region": the city's zone, else the country's zone where it
+  /// has exactly one canonical zone, else nothing — a country with several
+  /// is not given one.
   region,
 
   /// "Follow this device": the zone a platform adapter verified.
@@ -52,11 +54,11 @@ enum LumeZoneSource {
   migratedAlias,
 
   /// "Follow my region", decided by the reader's city
-  /// (`kLumeCityZones`) in a country with several civil times.
+  /// (`kLumeCityZones`) in a country with several canonical zones.
   cityPolicy,
 
-  /// "Follow my region", decided by the country's one civil time
-  /// (`kLumeCountryCivilZone`).
+  /// "Follow my region", decided by the country's one canonical zone
+  /// (`kLumeCountryZone`).
   regionPolicy,
 
   /// "Follow this device": the device's zone, as a platform adapter
@@ -84,8 +86,8 @@ enum LumeZoneOutcome {
   /// "Follow this device", and no verified device zone.
   missingDevice,
 
-  /// "Follow my region" where the region has several civil times and the
-  /// city does not decide between them: the reader must choose a zone.
+  /// "Follow my region" where the region lists several canonical zones and
+  /// the city does not decide between them: the reader must choose a zone.
   selectionRequired,
 
   /// An explicit identifier the database does not hold.
@@ -122,6 +124,7 @@ class LumeZoneResolution {
     this.requested,
     this.canonicalId,
     this.zone,
+    this.country = '',
   });
 
   /// A zone a fixture or a test supplies directly — said as [source]
@@ -130,7 +133,8 @@ class LumeZoneResolution {
     : outcome = LumeZoneOutcome.canonical,
       source = LumeZoneSource.fixture,
       requested = null,
-      canonicalId = null;
+      canonicalId = null,
+      country = '';
 
   final LumeZoneOutcome outcome;
   final LumeZoneSource source;
@@ -144,6 +148,32 @@ class LumeZoneResolution {
 
   /// The zone to calculate in, or `null` when there is none.
   final LumeZone? zone;
+
+  /// The reader's country the zone was resolved for — it names the zone
+  /// ([label]), never changes it.
+  final String country;
+
+  /// How to show the zone in [language]: CLDR's location label for the
+  /// reader's country, else the identifier; `null` when nothing resolved.
+  LumeZoneLabel? label(String language) {
+    final String? id = canonicalId ?? zone?.id;
+    if (id == null) return null;
+    return LumeZoneLabels.of(
+      id,
+      language: language,
+      country: country,
+      requested: requested,
+    );
+  }
+
+  LumeZoneResolution _in(String country) => LumeZoneResolution._(
+    outcome: outcome,
+    source: source,
+    requested: requested,
+    canonicalId: canonicalId,
+    zone: zone,
+    country: country,
+  );
 
   bool get resolved => zone != null;
 
@@ -296,31 +326,41 @@ class LumeTimeZoneService implements LumeZoneDatabase {
   ///
   /// 1. the zone they named ([explicit]) — reported as it is when it cannot
   ///    be read, never replaced by another;
-  /// 2. under "Follow my region": their city's zone where the country has
-  ///    several civil times; else the country's one civil time; else
-  ///    [LumeZoneOutcome.selectionRequired] — a country with several is
-  ///    never given one of them;
+  /// 2. under "Follow my region": their city's zone where the country lists
+  ///    several canonical zones; else the country's zone where it lists
+  ///    exactly one; else [LumeZoneOutcome.selectionRequired] — a country
+  ///    with several is never given one of them, even where their clocks
+  ///    agree today (Berlin and Büsingen): offsets are not identity;
   /// 3. under "Follow this device": the verified device zone, else
   ///    [LumeZoneOutcome.missingDevice].
   ///
   /// Nothing else is an input: language, religion, interests and currency
-  /// cannot change the answer.
+  /// cannot change the answer. [country] also names the zone
+  /// ([LumeZoneResolution.label]) — Kuwait's, not Riyadh's.
   LumeZoneResolution reader({
     String? explicit,
     LumeZoneFollow follow = LumeZoneFollow.region,
     String country = '',
     String city = '',
     LumeDeviceZone device = const LumeDeviceZone.unknown(),
-  }) {
+  }) => _reader(explicit, follow, country, city, device)._in(country);
+
+  LumeZoneResolution _reader(
+    String? explicit,
+    LumeZoneFollow follow,
+    String country,
+    String city,
+    LumeDeviceZone device,
+  ) {
     if (explicit != null) return resolveId(explicit);
     if (follow == LumeZoneFollow.region) {
       final String? byCity = kLumeCityZones['$country:$city'];
       if (byCity != null) {
         return resolveId(byCity, source: LumeZoneSource.cityPolicy);
       }
-      final String? civil = kLumeCountryCivilZone[country];
-      if (civil != null) {
-        return resolveId(civil, source: LumeZoneSource.regionPolicy);
+      final String? only = kLumeCountryZone[country];
+      if (only != null) {
+        return resolveId(only, source: LumeZoneSource.regionPolicy);
       }
       return const LumeZoneResolution._(
         outcome: LumeZoneOutcome.selectionRequired,

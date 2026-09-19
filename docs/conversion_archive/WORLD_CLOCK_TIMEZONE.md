@@ -62,7 +62,7 @@ identifier exactly as asked (`requested`) and the canonical one
 | `alias` | a backward link — calculations use the canonical zone it names |
 | `device` | "Follow this device", and the verified device zone |
 | `missingDevice` | "Follow this device", and no verified device zone |
-| `selectionRequired` | "Follow my region", where the country has several civil times and the city does not decide between them |
+| `selectionRequired` | "Follow my region", where the country lists several canonical zones and the city does not decide between them |
 | `unknown` | an explicit identifier the database does not hold |
 | `malformed` | an explicit value that is not an identifier (see above) |
 | `databaseUnavailable` | the database is not loaded |
@@ -73,7 +73,7 @@ identifier exactly as asked (`requested`) and the canonical one
 | `explicit` | the zone the reader named (`profile.timeZone`) |
 | `migratedAlias` | the reader's named zone is a renamed identifier |
 | `cityPolicy` | "Follow my region", decided by the reader's city (`kLumeCityZones`) |
-| `regionPolicy` | "Follow my region", decided by the country's one civil time (`kLumeCountryCivilZone`) |
+| `regionPolicy` | "Follow my region", decided by the country's one canonical zone (`kLumeCountryZone`) |
 | `device` | "Follow this device": the device's zone, as a platform adapter verified it |
 | `fixture` | a deterministic reference or test fixture supplied the zone (`LumeZoneResolution.fixed`) — never a reader's preference |
 | `unavailable` | nothing could be used |
@@ -88,11 +88,16 @@ this device** (`profile.zoneFollow`). `reader()` resolves it in this order:
    never replaced by the region's or the device's — a task grouped on
    another zone's day would be wrong while claiming to be right. The
    identifier is kept for diagnosis and is never overwritten.
-2. **Follow my region.** The city's zone where the country has several civil
-   times (`cityPolicy`); else the country's one civil time
-   (`regionPolicy`); else **`selectionRequired`** — the United States,
-   Canada, Australia, Russia, Brazil, Mexico and the other countries with
-   several civil times are never given one of them. The device is not read.
+2. **Follow my region.** The city's zone, where the city is in the
+   profile, belongs to the country and the table maps it (`cityPolicy`);
+   else the country's zone, only where every zone CLDR lists for it is one
+   canonical identity — the identifier or links to it (`regionPolicy`);
+   else **`selectionRequired`**. The 27 countries listing several canonical
+   zones are never given one of them — not even where their clocks agree
+   today: Berlin and Büsingen (`Europe/Zurich`), or Kazakhstan's seven zones
+   since 2024, stay distinct identities, because matching offsets over any
+   window of years prove nothing about the next rule change. The device is
+   not read.
 3. **Follow this device.** The verified device zone (`device`); else
    `missingDevice`. The region is not read.
 4. Otherwise a typed unavailable result.
@@ -113,15 +118,62 @@ available.
 | table | source | held by |
 |---|---|---|
 | `kLumeCountryZones` — every canonical zone of each country | CLDR 47 (ICU 77.1), `Intl.Locale.getTimeZones`, captured by `scripts/cldr_country_zones.mjs` into `scripts/data/cldr_country_zones.json`, canonicalised against tzdb 2025c | the generator |
-| `kLumeCountryCivilZone` — the one civil time of 175 of the 194 countries | zones grouped when their offsets agree hour by hour from 2026 to 2031 (Büsingen with Berlin; Kazakhstan's zones since 2024); the country table's own zone leads its group | the generator; `lume_follow_region_test.dart` |
-| `kLumeCityZones` — the zone of each listed city in the 19 countries with several (AU BR CA CD CL CN EC ES FM ID KI MN MX NZ PG PT RU UA US) | reviewed by hand against IANA's `zone.tab` descriptions | a test: every city of every several-zone country has an entry, and every entry is one of its country's zones |
+| `kLumeCountryZoneIds` — each country's identifiers exactly as CLDR lists them, links included (`Asia/Kuwait`) | the same capture | used only to name a zone, never as its identity |
+| `kLumeCountryZone` — the zone of the 167 of 194 countries whose list is one canonical zone | a country's list, canonicalised; exactly one member, or no entry | the generator; `lume_follow_region_test.dart` |
+| `kLumeCityZones` — the zone of each listed city in the 27 countries with several (AR AU BR CA CD CL CN CY DE EC ES FM ID KI KZ MH MN MX MY NZ PG PS PT RU UA US UZ) | reviewed by hand against IANA's `zone.tab` descriptions | a test: every city of every several-zone country has an entry, every entry is one of its own country's zones, and no single-zone country has one |
 
-Countries with several civil times include some a reader might not expect:
-Spain (the Canaries), Portugal (the Azores and Madeira), China (Xinjiang's
-`Asia/Urumqi`), Ecuador (Galápagos), New Zealand (Chatham) and Ukraine
-(`Europe/Simferopol`, which tzdb lists for Crimea under both UA and RU).
-Their listed cities have zones, so a reader who picked one is unaffected; a
-reader with no city is asked to choose.
+Countries with several canonical zones include some a reader might not
+expect: Spain (the Canaries), Portugal (the Azores and Madeira), China
+(Xinjiang's `Asia/Urumqi`), Ecuador (Galápagos), New Zealand (Chatham),
+Germany (Büsingen), Malaysia (Sarawak), Cyprus, Palestine, Uzbekistan,
+Kazakhstan, Argentina and Ukraine (`Europe/Simferopol`, which CLDR lists for
+Crimea). Their listed cities have zones, so a reader who picked one is
+unaffected; a reader with no city is asked to choose. No city infers the
+Crimea zone, and nothing infers a zone — or a reader's territorial identity —
+from currency, language, religion, phone number or network location.
+
+A city decides only when it is in the profile and keyed by the profile's own
+country (`US:New York`): "New York" under Pakistan is not New York's zone,
+and a city the table does not know asks rather than borrows a neighbour's.
+
+### How a zone is shown
+
+Identity and presentation are separate layers (`lume_zone_labels.dart`).
+Selecting, storing and comparing use the canonical identifier; what a reader
+sees is **CLDR's localized location label** — the country's name for a zone
+that is its country's only or primary one ("Pakistan", "باكستان"), else the
+zone's exemplar city ("New York", "نیو یارک") — shown in CLDR's generic
+location pattern, "Pakistan Time" / "پاکستان وقت" / "توقيت باكستان", so a
+zone beside the reader's country never reads as a second "Pakistan". The
+names and the patterns are CLDR 47's own text, captured from ICU's generic
+location format by `scripts/cldr_country_zones.mjs` for English, Urdu and
+Arabic (`lume_zone_labels_data.dart`, 1,655 names, three patterns); none is
+translated by hand.
+
+- **The reader's country names the zone.** `LumeZoneLabels.of(id, country:,
+  language:)` looks first for the identifier CLDR lists for the reader's
+  country under that zone: a Kuwait reader's zone is `Asia/Riyadh` and reads
+  "Kuwait Time" / "توقيت الكويت" / "کویت وقت"; the Central African
+  Republic's is `Africa/Lagos` and reads "Central African Republic Time",
+  not Nigeria's. A
+  country listing one zone under several identifiers with different labels
+  gets no label rather than one of them.
+- **Then** a link the reader stored for the zone, then the zone's own label.
+- **No label, no invention.** The UTC and `Etc/*` family, and a handful of
+  zero-offset zones in English, have no CLDR location label; the canonical
+  identifier shows, as before.
+- **A label is never a second identity.** Changing language changes the
+  label and nothing else; tests hold that the identity is the same in every
+  language.
+- **Screen readers** hear the label and the identifier it stands for
+  (`LumeZoneLabel.semantics`: "Kuwait Time, Asia/Riyadh").
+- **Search** (`LumeZoneLabels.matches`) finds a zone by its label or its
+  canonical identifier, ignoring case, isolation marks and `_`.
+- **Where it shows.** Account › Time lists each zone by its label with the
+  identifier beneath; Follow my region, Follow this device and a named zone
+  show their labels. Calendar's zone item, Events' Timezone fact, and Sun &
+  Moon's no-zone title show the label, bidi-isolated. Migration is
+  untouched: a label never changes what is stored.
 
 ### Aliases and migration
 
@@ -134,8 +186,9 @@ links; the member the package lists as canonical is the zone. A test holds
 the tables to the data exactly: every identifier is one or the other, every
 alias names a canonical zone.
 
-- **Resolution** uses the canonical zone's rules; **labels** show the
-  canonical identifier (`Europe/Kyiv`), bidi-isolated.
+- **Resolution** uses the canonical zone's rules; **labels** show CLDR's
+  name for it ("Ukraine Time" for `Europe/Kiev` or `Europe/Kyiv`),
+  bidi-isolated, or the canonical identifier where CLDR has none.
 - **A read never rewrites** a stored identifier.
 - **Migration is a deliberate operation**: `plan(stored)` returns a
   `LumeZoneMigration` (from, to, whether it changes); the caller writes.
@@ -157,10 +210,11 @@ refresh. It requires, in one reviewed change:
 3. Regenerating `lume_zone_aliases.dart` and `lume_country_zones.dart`
    (`dart run scripts/generate_zone_aliases.dart`, then `dart format`) and
    reviewing the diff: renamed, added and removed identifiers, and any
-   country that gains or loses a civil time. A CLDR update is the same
+   country that gains or loses a canonical zone. A CLDR update is the same
    deliberate step: `node scripts/cldr_country_zones.mjs` records the ICU and
-   CLDR versions it read. Then `kLumeCityZones` is checked against the new
-   zones (its test fails on any city left without one).
+   CLDR versions it read, and its labels; the generator then writes
+   `lume_zone_labels_data.dart`. Then `kLumeCityZones` is checked against
+   the new zones (its test fails on any city left without one).
 4. Updating the version guard (`kLumeTzdbVersion`) and the tests that pin it.
 5. Renamed-zone and alias-resolution tests; DST-boundary tests; historical
    dates.

@@ -38,6 +38,7 @@ import '../../../core/widgets/lume/lume_state.dart';
 import '../../../core/widgets/lume/lume_surface.dart';
 import '../../../l10n/app_localizations.dart';
 import '../../../core/time/lume_iana_zones.dart';
+import '../../../core/time/lume_zone_labels.dart';
 import '../../auth/domain/password_policy.dart';
 import '../../auth/presentation/auth_parts.dart';
 import '../../onboarding/domain/onboarding_state.dart';
@@ -63,6 +64,7 @@ class LumeAccountRouteContext {
     required this.homeCurrency,
     required this.homeZone,
     required this.deviceZone,
+    required this.namedZone,
     required this.zones,
     required this.version,
     required this.favourites,
@@ -97,15 +99,20 @@ class LumeAccountRouteContext {
   /// The currency the reader's market uses, for the "follow my region" row.
   final String homeCurrency;
 
-  /// The zone "Follow my region" resolves to — `null` where the region has
-  /// several civil times and the city does not decide between them.
-  final String? homeZone;
+  /// The zone "Follow my region" resolves to — `null` where the region lists
+  /// several canonical zones and the city does not decide between them.
+  final LumeZoneLabel? homeZone;
 
   /// The device's verified zone — `null` where this build cannot read it.
-  final String? deviceZone;
+  final LumeZoneLabel? deviceZone;
 
-  /// The country's own zones, then the ones near it.
-  final List<String> zones;
+  /// The zone the reader named, as its canonical identity — `null` when
+  /// they follow their region or device.
+  final LumeZoneLabel? namedZone;
+
+  /// The country's own zones, then the ones near it — each shown by its
+  /// label, selected and stored by its canonical identifier.
+  final List<LumeZoneLabel> zones;
 
   final String version;
 
@@ -562,10 +569,12 @@ LumeAccountView _time(LumeAccountRouteContext c) {
   return LumeAccountView(
     title: l.acctTimeTitle,
     subtitle:
+        c.namedZone?.display ??
         c.profile.timeZone ??
         switch (c.profile.zoneFollow) {
-          LumeZoneFollow.region => c.homeZone ?? l.acctTimezoneChoose,
-          LumeZoneFollow.device => c.deviceZone ?? l.acctTimezoneNoDevice,
+          LumeZoneFollow.region => c.homeZone?.display ?? l.acctTimezoneChoose,
+          LumeZoneFollow.device =>
+            c.deviceZone?.display ?? l.acctTimezoneNoDevice,
         },
     body: (BuildContext context) => <Widget>[
       LumeAccountSection(
@@ -598,7 +607,7 @@ LumeAccountView _time(LumeAccountRouteContext c) {
           children: <LumeOptionRow>[
             LumeOptionRow(
               title: l.acctTimezoneFollowRegion,
-              subtitle: c.homeZone ?? l.acctTimezoneChoose,
+              subtitle: c.homeZone?.display ?? l.acctTimezoneChoose,
               selected:
                   c.profile.timeZone == null &&
                   c.profile.zoneFollow == LumeZoneFollow.region,
@@ -606,18 +615,18 @@ LumeAccountView _time(LumeAccountRouteContext c) {
             ),
             LumeOptionRow(
               title: l.acctTimezoneFollowDevice,
-              subtitle: c.deviceZone ?? l.acctTimezoneNoDevice,
+              subtitle: c.deviceZone?.display ?? l.acctTimezoneNoDevice,
               selected:
                   c.profile.timeZone == null &&
                   c.profile.zoneFollow == LumeZoneFollow.device,
               onTap: () => c.actions.setZoneFollow(LumeZoneFollow.device),
             ),
-            for (final String zone in c.zones)
+            for (final LumeZoneLabel zone in c.zones)
               LumeOptionRow(
-                title: zone.split('/').skip(1).join(' · ').replaceAll('_', ' '),
-                subtitle: zone,
-                selected: c.profile.timeZone == zone,
-                onTap: () => c.actions.setZone(zone),
+                title: zone.display,
+                subtitle: zone.text == null ? null : zone.id,
+                selected: c.namedZone?.id == zone.id,
+                onTap: () => c.actions.setZone(zone.id),
               ),
           ],
         ),
