@@ -54,9 +54,10 @@ class LumeListCount extends StatelessWidget {
   );
 }
 
-/// `.crud__id` — a record's provenance line.
-class LumeRecordId extends StatelessWidget {
-  const LumeRecordId({super.key, required this.label});
+/// `.crud__id` — a record's provenance line. (The identity itself is
+/// `LumeRecordId`, `core/values`.)
+class LumeRecordIdLabel extends StatelessWidget {
+  const LumeRecordIdLabel({super.key, required this.label});
 
   final String label;
 

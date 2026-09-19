@@ -642,7 +642,7 @@ void main() {
       // The reference's ids are random; these are counted (C74).
       expect(
         tester
-            .widget<LumeRecordId>(find.byKey(LumeExpensesTool.recordIdKey))
+            .widget<LumeRecordIdLabel>(find.byKey(LumeExpensesTool.recordIdKey))
             .label,
         startsWith('Record ID EXP-'),
       );

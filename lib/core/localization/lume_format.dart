@@ -20,6 +20,9 @@ library;
 import 'package:flutter/widgets.dart';
 import 'package:intl/intl.dart' as intl;
 
+import '../values/lume_currency.dart';
+import '../values/lume_money.dart';
+
 /// Which unit system a figure is expressed in.
 enum LumeUnits { metric, imperial }
 
@@ -351,6 +354,64 @@ class LumeFormatting {
           ..minimumFractionDigits = minor < maxDecimals ? minor : maxDecimals
           ..maximumFractionDigits = maxDecimals;
     return f.format(value);
+  }
+
+  /// A stored amount ([LumeMoney]) — exact, never through a `double`.
+  ///
+  /// At the currency's full ISO precision (`Rs 34,000.00`, `¥5,000`,
+  /// `KWD 1.250`) unless [compact], which leaves the fraction out **only
+  /// when every digit of it is zero** (`Rs 34,000`, but `Rs 34,000.50`):
+  /// display drops zeros and never rounds. [withCode] writes the ISO code in
+  /// place of a symbol, for a screen where two currencies share one. The
+  /// magnitude is written; direction is the caller's words, never a sign.
+  /// [isolate] wraps the result in a first-strong isolate for a sentence in
+  /// either direction.
+  String amount(
+    LumeMoney m, {
+    bool compact = false,
+    bool withCode = false,
+    bool isolate = false,
+  }) {
+    final LumeCurrency c = m.currency;
+    final int abs = m.minor.abs();
+    final int whole = abs ~/ c.scale;
+    final int fraction = abs % c.scale;
+    final int digits = c.exponent == 0 || (compact && fraction == 0)
+        ? 0
+        : c.exponent;
+    final intl.NumberFormat f = intl.NumberFormat.currency(
+      locale: _tag,
+      name: c.code,
+      symbol: withCode ? '${c.code}$_nb' : _symbol(c.code),
+      decimalDigits: digits,
+    );
+    String text = f.format(whole);
+    if (digits > 0) {
+      // The whole part formatted with a zero fraction, then the exact
+      // fraction written into it in the locale's own digits.
+      final String zero = f.symbols.ZERO_DIGIT;
+      final String sep = f.symbols.DECIMAL_SEP;
+      final String zeros = sep + zero * digits;
+      final int at = text.lastIndexOf(zeros);
+      final String exact = fraction
+          .toString()
+          .padLeft(digits, '0')
+          .split('')
+          .map(
+            (String d) => String.fromCharCode(
+              zero.codeUnitAt(0) + d.codeUnitAt(0) - 0x30,
+            ),
+          )
+          .join();
+      if (at >= 0) {
+        text =
+            text.substring(0, at) +
+            sep +
+            exact +
+            text.substring(at + zeros.length);
+      }
+    }
+    return isolate ? '\u2068$text\u2069' : text;
   }
 
   /// The symbols the reference's own screens show.

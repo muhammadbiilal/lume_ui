@@ -946,7 +946,7 @@ class _LumeRecordToolState<T extends LumeFamilyRecord>
           onDelete: () => _askDelete(x),
         ),
         const SizedBox(height: 18),
-        LumeRecordId(
+        LumeRecordIdLabel(
           key: _keys.recordId,
           label: l.recRecordId(x.id.toUpperCase()),
         ),

@@ -471,7 +471,9 @@ void main() {
       ], strings(r['actions']));
       expect(
         tester
-            .widget<LumeRecordId>(find.byKey(LumeDocumentsTool.recordIdKey))
+            .widget<LumeRecordIdLabel>(
+              find.byKey(LumeDocumentsTool.recordIdKey),
+            )
             .label,
         startsWith('Record ID DOC-'),
       );

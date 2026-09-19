@@ -1069,7 +1069,7 @@ class _ComponentGalleryState extends ConsumerState<ComponentGallery> {
     title: 'CRUD',
     children: <Widget>[
       const _Case('list count', LumeListCount(label: '34 expenses')),
-      const _Case('record id', LumeRecordId(label: 'Added 7 Sep · #1024')),
+      const _Case('record id', LumeRecordIdLabel(label: 'Added 7 Sep · #1024')),
       _Case(
         'detail actions',
         LumeDetailActions(

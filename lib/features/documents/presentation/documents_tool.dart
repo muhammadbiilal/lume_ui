@@ -998,7 +998,7 @@ class _LumeDocumentsToolState extends ConsumerState<LumeDocumentsTool> {
           onDelete: () => _askDelete(rec),
         ),
         const SizedBox(height: 18),
-        LumeRecordId(
+        LumeRecordIdLabel(
           key: LumeDocumentsTool.recordIdKey,
           label: l.recRecordId(rec.id.toUpperCase()),
         ),

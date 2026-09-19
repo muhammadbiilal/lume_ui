@@ -1125,7 +1125,7 @@ class _LumeExpensesToolState extends ConsumerState<LumeExpensesTool> {
           onDelete: () => _askDelete(rec),
         ),
         const SizedBox(height: 18),
-        LumeRecordId(
+        LumeRecordIdLabel(
           key: LumeExpensesTool.recordIdKey,
           label: l.recRecordId(rec.id.toUpperCase()),
         ),
