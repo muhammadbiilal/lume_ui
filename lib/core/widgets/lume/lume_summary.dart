@@ -567,10 +567,15 @@ class LumeFact {
     required this.label,
     required this.value,
     this.block = false,
+    this.semanticsValue,
   });
 
   final String label;
   final String value;
+
+  /// What a screen reader hears for [value], where the drawn words leave
+  /// something out — a time zone's label and the identifier it stands for.
+  final String? semanticsValue;
 
   /// Wraps the value under the label rather than beside it.
   final bool block;
@@ -604,35 +609,49 @@ class LumeFactCard extends StatelessWidget {
               thickness: LumeSpace.border,
               color: lume.border,
             ),
-          Padding(
-            padding: const EdgeInsets.symmetric(vertical: 15),
-            child: facts[i].block
-                ? Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    mainAxisSize: MainAxisSize.min,
-                    children: <Widget>[
-                      Text(facts[i].label, style: labelStyle),
-                      const SizedBox(height: LumeSpace.x1),
-                      Text(facts[i].value, style: valueStyle),
-                    ],
-                  )
-                : Row(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: <Widget>[
-                      Text(facts[i].label, style: labelStyle),
-                      const SizedBox(width: LumeSpace.x5),
-                      Expanded(
-                        child: Text(
-                          facts[i].value,
-                          style: valueStyle,
-                          textAlign: TextAlign.end,
+          _announced(
+            facts[i],
+            Padding(
+              padding: const EdgeInsets.symmetric(vertical: 15),
+              child: facts[i].block
+                  ? Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisSize: MainAxisSize.min,
+                      children: <Widget>[
+                        Text(facts[i].label, style: labelStyle),
+                        const SizedBox(height: LumeSpace.x1),
+                        Text(facts[i].value, style: valueStyle),
+                      ],
+                    )
+                  : Row(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: <Widget>[
+                        Text(facts[i].label, style: labelStyle),
+                        const SizedBox(width: LumeSpace.x5),
+                        Expanded(
+                          child: Text(
+                            facts[i].value,
+                            style: valueStyle,
+                            textAlign: TextAlign.end,
+                          ),
                         ),
-                      ),
-                    ],
-                  ),
+                      ],
+                    ),
+            ),
           ),
         ],
       ],
     );
   }
+
+  /// [row], announced as its label and [LumeFact.semanticsValue] where the
+  /// fact has one.
+  static Widget _announced(LumeFact fact, Widget row) =>
+      fact.semanticsValue == null
+      ? row
+      : Semantics(
+          label: '${fact.label}, ${fact.semanticsValue}',
+          excludeSemantics: true,
+          child: row,
+        );
 }

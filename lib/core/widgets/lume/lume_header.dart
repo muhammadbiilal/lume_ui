@@ -317,11 +317,21 @@ class LumeContextBar extends StatelessWidget {
 /// One entry in a context strip. Pressable when it opens a picker.
 @immutable
 class LumeContextItem {
-  const LumeContextItem({required this.label, this.icon, this.onTap});
+  const LumeContextItem({
+    required this.label,
+    this.icon,
+    this.onTap,
+    this.semanticsLabel,
+  });
 
   final String label;
   final String? icon;
   final VoidCallback? onTap;
+
+  /// What a screen reader hears instead of [label], where the drawn words
+  /// leave something out — a time zone's label and the identifier it
+  /// stands for.
+  final String? semanticsLabel;
 }
 
 class _ContextItem extends StatelessWidget {
@@ -367,7 +377,15 @@ class _ContextItem extends StatelessWidget {
       ],
     );
 
-    if (!pressable) return content;
+    if (!pressable) {
+      return item.semanticsLabel == null
+          ? content
+          : Semantics(
+              label: item.semanticsLabel,
+              excludeSemantics: true,
+              child: content,
+            );
+    }
     // `min-height: 32px; padding: 7px 4px; margin: -7px -4px` — the button
     // takes 18 of the strip's height, which is what makes the strip 22, and
     // reaches 7 past it each way. The touchable area reaches 13 above and
@@ -383,7 +401,7 @@ class _ContextItem extends StatelessWidget {
         onTap: item.onTap,
         borderRadius: LumeRadius.full,
         minSize: 0,
-        semanticLabel: item.label,
+        semanticLabel: item.semanticsLabel ?? item.label,
         child: SizedBox(
           height: height,
           child: Center(widthFactor: 1, child: content),

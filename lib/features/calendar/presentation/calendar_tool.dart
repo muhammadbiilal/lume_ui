@@ -24,6 +24,7 @@ import '../../../core/time/lume_hijri.dart';
 import '../../../core/time/lume_solar.dart';
 import '../../../core/time/lume_iana_zones.dart';
 import '../../../core/time/lume_zone.dart';
+import '../../../core/time/lume_zone_labels.dart';
 import '../../../core/widgets/lume/lume_button.dart';
 import '../../../core/widgets/lume/lume_chip.dart';
 import '../../../core/widgets/lume/lume_header.dart';
@@ -113,9 +114,10 @@ class _LumeCalendarToolState extends ConsumerState<LumeCalendarTool> {
           country: r.user.country,
           city: r.user.city,
         );
-    final String? zoneLabel =
-        zone.label(Localizations.localeOf(context).languageCode)?.display ??
-        zone.requested;
+    final LumeZoneLabel? label = zone.label(
+      Localizations.localeOf(context).languageCode,
+    );
+    final String? zoneLabel = label?.display ?? zone.requested;
     final LumeHijriDate? hijri = r.user.islamic ? LumeHijriDate.of(now) : null;
 
     // `monthGrid()` — this month, the locale's week (Monday, C65).
@@ -198,7 +200,12 @@ class _LumeCalendarToolState extends ConsumerState<LumeCalendarTool> {
                 // before the rename is shown by its current name. No zone
                 // (one to choose) shows none.
                 if (zoneLabel != null)
-                  LumeContextItem(label: '\u2068$zoneLabel\u2069'),
+                  LumeContextItem(
+                    label: '\u2068$zoneLabel\u2069',
+                    // "Pakistan Time, Asia/Karachi": the identifier is the
+                    // zone's identity; a label alone can be shared.
+                    semanticsLabel: label?.semantics,
+                  ),
                 if (hijri != null)
                   LumeContextItem(
                     label:

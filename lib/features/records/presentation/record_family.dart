@@ -106,6 +106,11 @@ class LumeRecordContext {
       zone.label(l.localeName.split('_').first)?.display ??
       zone.requested ??
       '';
+
+  /// What a screen reader hears for the zone: the label and the canonical
+  /// identifier it stands for, else [zoneLabel].
+  String get zoneSemantics =>
+      zone.label(l.localeName.split('_').first)?.semantics ?? zoneLabel;
 }
 
 /// One record, read by its family. [record] keeps the store's bookkeeping —

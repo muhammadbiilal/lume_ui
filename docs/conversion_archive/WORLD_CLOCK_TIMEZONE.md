@@ -166,14 +166,37 @@ translated by hand.
   label and nothing else; tests hold that the identity is the same in every
   language.
 - **Screen readers** hear the label and the identifier it stands for
-  (`LumeZoneLabel.semantics`: "Kuwait Time, Asia/Riyadh").
+  (`LumeZoneLabel.semantics`: "Kuwait Time, Asia/Riyadh"). Account › Time
+  reads each row's title and identifier; Calendar's zone item and Events'
+  Timezone fact are announced the same way ("Timezone, New York Time,
+  America/New_York").
 - **Search** (`LumeZoneLabels.matches`) finds a zone by its label or its
-  canonical identifier, ignoring case, isolation marks and `_`.
-- **Where it shows.** Account › Time lists each zone by its label with the
-  identifier beneath; Follow my region, Follow this device and a named zone
-  show their labels. Calendar's zone item, Events' Timezone fact, and Sun &
-  Moon's no-zone title show the label, bidi-isolated. Migration is
-  untouched: a label never changes what is stored.
+  canonical identifier, ignoring case, isolation marks and `_`. No screen
+  searches zones yet; World Clock will use this.
+- **Diagnostics keep the identifier.** `LumeZoneResolution.requested` and
+  `canonicalId` are identifiers, and a zone that could not be read is
+  named by what was asked for (To-dos' and Events' "Your day can't be
+  worked out", Sun & Moon's "No clock for …"). An unreadable identifier
+  has no label to show.
+- **A label never hides ambiguity.** A country with several canonical zones
+  still asks for a city or a choice; a label is only drawn for a zone that
+  resolved. Two zones never merge because their labels read alike: rows
+  are keyed by identifier, and each announces its own
+  (`lume_zone_label_policy_test.dart`).
+- **Where it shows.** Every screen that names a zone goes through this
+  layer:
+  - Account › Time lists each zone by its label with the identifier
+    beneath, and Follow my region, Follow this device and a named zone
+    show their labels.
+  - Calendar's zone item and Events' Timezone fact show the label,
+    bidi-isolated.
+  - Sun & Moon's no-zone title shows what was asked for.
+  - Weather names no zone.
+  - To-dos explains an unresolved zone without naming a resolved one.
+
+  World Clock, when built, uses the same layer. Migration is untouched: a
+  label never changes what is stored. The visible difference from the
+  reference's raw identifiers is C89.
 
 ### Aliases and migration
 

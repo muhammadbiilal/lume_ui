@@ -196,6 +196,7 @@ class LumeEventFamily extends LumeRecordFamily<LumeEvent> {
     LumeFact(
       label: c.l.recFieldTimezone,
       value: c.zoneLabel.isEmpty ? '—' : LumeFamilyText.isolate(c.zoneLabel),
+      semanticsValue: c.zoneLabel.isEmpty ? null : c.zoneSemantics,
     ),
     LumeFact(
       label: c.l.recFieldNotes,
