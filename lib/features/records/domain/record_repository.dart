@@ -15,8 +15,13 @@ library;
 import 'package:flutter/foundation.dart';
 
 import 'record_model.dart';
+import 'record_transaction.dart';
 
-abstract interface class LumeRecordRepository implements Listenable {
+/// Every store also commits several records at once
+/// ([LumeRecordTransactions]) — a family whose records depend on each other
+/// needs it, and a store that cannot must not pretend to.
+abstract interface class LumeRecordRepository
+    implements Listenable, LumeRecordTransactions {
   /// Whether a write survives the app being closed.
   bool get durable;
 
