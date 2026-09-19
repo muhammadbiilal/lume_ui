@@ -2536,6 +2536,12 @@ A lev amount already kept is still the lev:
 Changing a profile's country or currency changes only what a new amount
 defaults to.
 
+**A lev loan is repaid in lev.** A withdrawn currency is refused for a new
+principal and allowed for what services a record already kept in it: the
+repayment of a lev loan, the correction of a lev entry
+(`LumeCurrencyPolicy`, `CURRENCY_DATA.md` §1). A euro amount never pays a
+lev loan, and lev credit never opens a new lev loan.
+
 **And every country's own currency.** The Flutter formatter named 17
 markets and gave every other country US dollars, where the reference reads
 each country's currency from its table. It now reads the whole table

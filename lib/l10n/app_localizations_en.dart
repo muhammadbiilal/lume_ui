@@ -7340,7 +7340,12 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String ledgerErrWithdrawn(String code) {
-    return '$code is no longer issued. Choose a current currency.';
+    return '$code is no longer issued. Use it only to repay or correct an amount already kept in $code.';
+  }
+
+  @override
+  String currencyWithdrawnValue(String code) {
+    return '$code · no longer issued';
   }
 
   @override

@@ -13,6 +13,7 @@ import 'dart:math';
 import 'package:flutter/foundation.dart';
 
 import '../../../core/values/lume_currency.dart';
+import '../../../core/values/lume_currency_policy.dart';
 import '../../../core/values/lume_date.dart';
 import '../../../core/values/lume_money.dart';
 import '../../../core/values/lume_record_id.dart';
@@ -633,7 +634,15 @@ class LedgerRepository {
     if (draft.amount.minor > LumeMoney.maxEntryMinor) {
       throw const LedgerFailure(LedgerFailureKind.overflow);
     }
-    if (editing == null && !draft.amount.currency.active) {
+    // A withdrawn currency only for what services a record already kept in
+    // it — never for a new, unrelated obligation (LumeCurrencyPolicy).
+    if (!ledgerCurrencyAvailability(
+      d.entries,
+      partyId: draft.partyId,
+      kind: draft.kind,
+      currency: draft.amount.currency,
+      editing: editing,
+    ).usable) {
       throw const LedgerFailure.validation('currency', 'withdrawn');
     }
     if (draft.due != null) {
@@ -804,3 +813,44 @@ LumeCurrency? ledgerDefaultCurrency(String code) {
   final LumeCurrency? c = LumeCurrency.tryOf(code);
   return c != null && c.active ? c : null;
 }
+
+/// The currencies of the records an entry would service: the entry's own,
+/// when it is being corrected, and for a repayment every currency the
+/// person's active principals of the kind it discharges are kept in.
+///
+/// A new principal services nothing, so a withdrawn currency is never open
+/// to it — whatever credit the person holds in that currency.
+Set<LumeCurrency> ledgerServicedCurrencies(
+  Iterable<LedgerEntry> entries, {
+  required LumeRecordId partyId,
+  required LedgerKind kind,
+  LedgerEntry? editing,
+}) => <LumeCurrency>{
+  ?editing?.currency,
+  if (kind.isRepayment)
+    for (final LedgerEntry e in entries)
+      if (e.active &&
+          e.partyId == partyId &&
+          e.kind == kind.counterpart &&
+          e.id != editing?.id)
+        e.currency,
+};
+
+/// How [currency] stands for this entry (LumeCurrencyPolicy): current,
+/// historical because it repays or corrects a record kept in it, or not
+/// usable at all.
+LumeCurrencyAvailability ledgerCurrencyAvailability(
+  Iterable<LedgerEntry> entries, {
+  required LumeRecordId partyId,
+  required LedgerKind kind,
+  required LumeCurrency currency,
+  LedgerEntry? editing,
+}) => LumeCurrencyPolicy.of(
+  currency,
+  existing: ledgerServicedCurrencies(
+    entries,
+    partyId: partyId,
+    kind: kind,
+    editing: editing,
+  ),
+);

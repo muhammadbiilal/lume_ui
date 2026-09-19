@@ -38,6 +38,7 @@ import '../../../core/theme/lume/lume_colors.dart';
 import '../../../core/theme/lume/lume_theme.dart';
 import '../../../core/time/lume_iana_zones.dart';
 import '../../../core/values/lume_currency.dart';
+import '../../../core/values/lume_currency_policy.dart';
 import '../../../core/values/lume_date.dart';
 import '../../../core/values/lume_money.dart';
 import '../../../core/values/lume_record_id.dart';
@@ -176,6 +177,9 @@ class _EntryDraft {
   LumeRecordId? party;
   LedgerKind kind;
   LumeCurrency? currency;
+
+  /// The reader picked [currency] themselves; the form stops suggesting one.
+  bool currencyChosen = false;
   LumeDate? on;
   LumeDate? due;
   final TextEditingController amount;
@@ -363,7 +367,7 @@ class _LedgerToolState extends ConsumerState<LedgerTool> {
       currency: currency ?? _currency(),
       on: today,
       amount: amount?.toDecimalString() ?? '',
-    );
+    )..currencyChosen = currency != null;
     _go(_View.entryForm);
   }
 
@@ -519,7 +523,14 @@ class _LedgerToolState extends ConsumerState<LedgerTool> {
     final LumeCurrency? currency = d.currency;
     if (currency == null) {
       errors['currency'] = l.ledgerErrPerson;
-    } else if (!currency.active && d.id == null) {
+    } else if (party != null &&
+        !ledgerCurrencyAvailability(
+          book.entries,
+          partyId: party.id,
+          kind: d.kind,
+          currency: currency,
+          editing: d.id == null ? null : book.entry(d.id!),
+        ).usable) {
       errors['currency'] = l.ledgerErrWithdrawn(currency.code);
     } else {
       final LedgerParsedAmount p = ledgerParseAmount(
@@ -1917,7 +1928,10 @@ class _LedgerToolState extends ConsumerState<LedgerTool> {
                     for (final LedgerParty p in people) (p.id, p.name),
                   ],
                   d.party,
-                  (LumeRecordId v) => d.party = v,
+                  (LumeRecordId v) {
+                    d.party = v;
+                    _fitCurrency(d, book);
+                  },
                 ),
               ),
             ),
@@ -1938,6 +1952,7 @@ class _LedgerToolState extends ConsumerState<LedgerTool> {
                       onTap: () => setState(() {
                         d.kind = k;
                         if (!k.isPrincipal) d.due = null;
+                        _fitCurrency(d, book);
                       }),
                     ),
                 ],
@@ -1955,18 +1970,26 @@ class _LedgerToolState extends ConsumerState<LedgerTool> {
             LumeFormPicker(
               key: LumeLedgerTool.currencyField,
               label: l.ledgerFieldCurrency,
-              value: d.currency?.code ?? '—',
+              value: d.currency == null
+                  ? '—'
+                  : LedgerText.currency(l, d.currency!),
               onTap: d.id != null
                   ? null
                   : () => unawaited(
                       _pick<LumeCurrency>(
                         l.ledgerFieldCurrency,
                         <(LumeCurrency, String)>[
-                          for (final LumeCurrency c in _currencyChoices(book))
-                            (c, c.code),
+                          for (final LumeCurrency c in _currencyChoices(
+                            book,
+                            d,
+                          ))
+                            (c, LedgerText.currency(l, c)),
                         ],
                         d.currency,
-                        (LumeCurrency v) => d.currency = v,
+                        (LumeCurrency v) {
+                          d.currency = v;
+                          d.currencyChosen = true;
+                        },
                       ),
                     ),
             ),
@@ -2055,21 +2078,63 @@ class _LedgerToolState extends ConsumerState<LedgerTool> {
     ];
   }
 
-  /// The reader's currency, those already in the ledger, then every other
-  /// currency a new entry may use.
-  List<LumeCurrency> _currencyChoices(LedgerBook book) {
+  /// A withdrawn currency this entry would repay or correct in, then the
+  /// reader's currency, those already in the ledger, then every other
+  /// currency a new entry may use. A withdrawn currency appears only when
+  /// the policy allows it here (LumeCurrencyPolicy).
+  List<LumeCurrency> _currencyChoices(LedgerBook book, _EntryDraft d) {
     final LumeCurrency? mine = _currency();
     final Set<LumeCurrency> used = <LumeCurrency>{
       for (final LedgerEntry e in book.entries)
         if (e.currency.active) e.currency,
     };
     return <LumeCurrency>[
+      ..._historical(book, d),
       ?mine,
       for (final LumeCurrency c in used.toList()..sort())
         if (c != mine) c,
       for (final LumeCurrency c in LumeCurrency.offered)
         if (c != mine && !used.contains(c)) c,
     ];
+  }
+
+  /// The withdrawn currencies the draft services — a lev loan's lev, for
+  /// its repayment — and nothing else.
+  List<LumeCurrency> _historical(LedgerBook book, _EntryDraft d) =>
+      d.party == null
+      ? const <LumeCurrency>[]
+      : LumeCurrencyPolicy.historical(
+          ledgerServicedCurrencies(
+            book.entries,
+            partyId: d.party!,
+            kind: d.kind,
+            editing: d.id == null ? null : book.entry(d.id!),
+          ),
+        );
+
+  /// After the person or the kind changes: a repayment starts in the
+  /// currency of what it would repay, when everything open with that person
+  /// is in one currency; and a currency this entry may no longer use goes
+  /// back to the reader's. A currency the reader picked stays theirs.
+  void _fitCurrency(_EntryDraft d, LedgerBook book) {
+    if (d.id != null || d.party == null) return;
+    final LumeCurrency? now = d.currency;
+    if (now != null &&
+        !ledgerCurrencyAvailability(
+          book.entries,
+          partyId: d.party!,
+          kind: d.kind,
+          currency: now,
+        ).usable) {
+      d.currency = _currency();
+      d.currencyChosen = false;
+    }
+    if (d.currencyChosen || !d.kind.isRepayment) return;
+    final Set<LumeCurrency> open = <LumeCurrency>{
+      for (final LedgerBalance b in book.balancesOf(d.party!))
+        if (b.open(d.kind.counterpart).isNotEmpty) b.currency,
+    };
+    if (open.length == 1) d.currency = open.single;
   }
 
   Widget _error(BuildContext context, String text) => Semantics(

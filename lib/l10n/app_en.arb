@@ -9994,9 +9994,18 @@
   "@ledgerErrAppliedOver": {
     "description": "Validation: a manual allocation over a principal's remaining"
   },
-  "ledgerErrWithdrawn": "{code} is no longer issued. Choose a current currency.",
+  "ledgerErrWithdrawn": "{code} is no longer issued. Use it only to repay or correct an amount already kept in {code}.",
   "@ledgerErrWithdrawn": {
     "description": "Validation: a withdrawn ISO currency for a new entry",
+    "placeholders": {
+      "code": {
+        "type": "String"
+      }
+    }
+  },
+  "currencyWithdrawnValue": "{code} · no longer issued",
+  "@currencyWithdrawnValue": {
+    "description": "A withdrawn ISO currency as a picker and a form name it: offered only to repay or correct a record already kept in it",
     "placeholders": {
       "code": {
         "type": "String"

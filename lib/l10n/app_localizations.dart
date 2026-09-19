@@ -12852,8 +12852,14 @@ abstract class AppLocalizations {
   /// Validation: a withdrawn ISO currency for a new entry
   ///
   /// In en, this message translates to:
-  /// **'{code} is no longer issued. Choose a current currency.'**
+  /// **'{code} is no longer issued. Use it only to repay or correct an amount already kept in {code}.'**
   String ledgerErrWithdrawn(String code);
+
+  /// A withdrawn ISO currency as a picker and a form name it: offered only to repay or correct a record already kept in it
+  ///
+  /// In en, this message translates to:
+  /// **'{code} · no longer issued'**
+  String currencyWithdrawnValue(String code);
 
   /// Validation
   ///

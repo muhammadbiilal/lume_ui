@@ -27,6 +27,11 @@ abstract final class LedgerText {
     LedgerKind.repaidByMe => l.ledgerKindRepaidByMe,
   };
 
+  /// A currency as a picker names it: its code, and for a withdrawn one
+  /// that it is no longer issued — said, not only shown.
+  static String currency(AppLocalizations l, LumeCurrency c) =>
+      c.active ? c.code : l.currencyWithdrawnValue(c.code);
+
   static String kindShort(AppLocalizations l, LedgerKind k) => switch (k) {
     LedgerKind.lent => l.ledgerKindLentShort,
     LedgerKind.borrowed => l.ledgerKindBorrowedShort,

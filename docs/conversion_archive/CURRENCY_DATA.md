@@ -22,7 +22,41 @@ A withdrawn code:
 - **decodes** from a stored record and from an import;
 - is **displayed and exported** with its own code (`BGN`), never relabelled;
 - is **summed apart** from every other currency, including its successor;
-- is **never offered** for a new entry, and never a country's default.
+- is **never offered** for a new, unrelated obligation, and never a
+  country's default;
+- stays **usable for what services a record already kept in it**, by the
+  policy below.
+
+### Availability — `lib/core/values/lume_currency_policy.dart`
+
+One typed answer, asked by every money tool rather than written into its
+widgets:
+
+| `LumeCurrencyAvailability` | when |
+|---|---|
+| `current` | ISO lists the currency |
+| `historicalForExistingRecord` | withdrawn, and the operation services a record already kept in it |
+| `unsupported` | withdrawn, and nothing the operation touches is kept in it |
+
+The tool names the records an operation services; the policy answers. In
+Ledger (`ledgerServicedCurrencies`):
+
+- a **new principal** services nothing, so the lev is refused for it, whatever
+  lev credit the person holds;
+- a **repayment** services the person's active principals of the kind it
+  discharges, so a lev repayment of a lev loan is allowed, and a lev
+  repayment of a euro loan, or in the wrong direction, is refused;
+- a **correction** services the entry itself, so a lev entry is edited in
+  lev;
+- **void, restore, import and export** do not ask: they keep a record in the
+  currency it has.
+
+Overpaid lev is lev credit, and it can only pay a lev principal: allocations
+never cross currencies. The form offers the lev only where the policy allows
+it, first on the list, named "BGN · no longer issued" in the field and to a
+screen reader. For a repayment, it starts in the currency of what is open
+with that person when everything open is in one currency
+(`ledger_withdrawn_test.dart`).
 
 ## 2. A country's current currency — `lib/core/values/lume_country_currency.dart`
 

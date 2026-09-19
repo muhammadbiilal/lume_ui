@@ -7426,7 +7426,12 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String ledgerErrWithdrawn(String code) {
-    return 'لم تعد $code تُصدر. اختر عملة حالية.';
+    return 'لم تعد $code تُصدر. استخدمها فقط لسداد مبلغ مسجّل بها من قبل أو لتصحيحه.';
+  }
+
+  @override
+  String currencyWithdrawnValue(String code) {
+    return '$code · لم تعد تُصدر';
   }
 
   @override

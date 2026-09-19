@@ -7336,7 +7336,12 @@ class AppLocalizationsUr extends AppLocalizations {
 
   @override
   String ledgerErrWithdrawn(String code) {
-    return '$code اب جاری نہیں۔ موجودہ کرنسی منتخب کریں۔';
+    return '$code اب جاری نہیں۔ اسے صرف $code میں پہلے سے درج رقم کی واپسی یا درستی کے لیے استعمال کریں۔';
+  }
+
+  @override
+  String currencyWithdrawnValue(String code) {
+    return '$code · اب جاری نہیں';
   }
 
   @override
