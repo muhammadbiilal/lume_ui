@@ -6314,6 +6314,13 @@ class AppLocalizationsAr extends AppLocalizations {
   String get toolPrivate => 'خاص';
 
   @override
+  String get toolPrivateReviewedText =>
+      'تبقى هذه المعلومات على جهازك ولا تظهر أبدًا في الصفحة الرئيسية. لا يغادر Lume إلا ما تراجعه وتختار مشاركته بنفسك، ولا يُضمَّن أي شيء آخر.';
+
+  @override
+  String get toolPrivateReviewedTitle => 'خاص افتراضيًا';
+
+  @override
   String get toolPrivateText =>
       'تبقى هذه المعلومات على جهازك ولا تُشارك أبدًا.';
 

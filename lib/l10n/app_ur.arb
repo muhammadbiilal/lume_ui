@@ -1847,6 +1847,8 @@
   "toolLocalService": "مقامی سہولت",
   "toolNeedsAttention": "{n, plural, =1{1 پر توجہ درکار} other{{n} پر توجہ درکار}}",
   "toolPrivate": "نجی",
+  "toolPrivateReviewedText": "یہ معلومات آپ کے آلے پر رہتی ہیں اور ہوم پر کبھی نہیں دکھائی جاتیں۔ Lume سے صرف وہی باہر جاتا ہے جسے آپ دیکھ کر خود شیئر کرنا چنیں — اس کے سوا کچھ شامل نہیں ہوتا۔",
+  "toolPrivateReviewedTitle": "بطورِ طے شدہ نجی",
   "toolPrivateText": "یہ معلومات آپ کے آلے پر رہتی ہیں اور کبھی شیئر نہیں کی جاتیں۔",
   "toolPrivateTitle": "صرف آپ کے لیے",
   "toolRelated": "متعلقہ ٹولز",

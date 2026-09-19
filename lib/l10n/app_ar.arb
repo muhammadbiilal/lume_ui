@@ -1847,6 +1847,8 @@
   "toolLocalService": "خدمة محلية",
   "toolNeedsAttention": "{n, plural, =1{واحد يحتاج انتباهك} =2{اثنان يحتاجان انتباهك} few{{n} تحتاج انتباهك} other{{n} يحتاج انتباهك}}",
   "toolPrivate": "خاص",
+  "toolPrivateReviewedText": "تبقى هذه المعلومات على جهازك ولا تظهر أبدًا في الصفحة الرئيسية. لا يغادر Lume إلا ما تراجعه وتختار مشاركته بنفسك، ولا يُضمَّن أي شيء آخر.",
+  "toolPrivateReviewedTitle": "خاص افتراضيًا",
   "toolPrivateText": "تبقى هذه المعلومات على جهازك ولا تُشارك أبدًا.",
   "toolPrivateTitle": "خاص بك",
   "toolRelated": "أدوات ذات صلة",

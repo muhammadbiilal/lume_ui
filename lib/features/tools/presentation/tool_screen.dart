@@ -30,7 +30,6 @@ import '../../../core/platform/lume_export.dart';
 import '../../../core/platform/lume_share.dart';
 import '../../../core/widgets/lume/lume_button.dart';
 import '../../../core/widgets/lume/lume_overlay.dart';
-import '../../../core/widgets/lume/lume_state.dart';
 import '../../../core/widgets/lume/lume_table.dart';
 import '../../../l10n/app_localizations.dart';
 import '../../catalogue/domain/eligibility.dart';
@@ -40,6 +39,7 @@ import '../../onboarding/domain/onboarding_state.dart';
 import '../../share/presentation/share_sheet.dart';
 import '../../startup/application/startup_controller.dart';
 import '../domain/tool_capability.dart';
+import 'privacy_note.dart';
 import 'source_claims.dart';
 import 'tool_strings.dart';
 
@@ -363,9 +363,8 @@ class LumeToolScreenState extends ConsumerState<LumeToolScreen> {
       updated: widget.bare ? null : claim.updated,
       sourceSample: widget.bare ? null : claim.sample,
       sourceSampleSemantics: l.fixtureSampleA11y,
-      privacy: feature.sensitive && !widget.bare
-          ? LumePrivateState(title: l.toolPrivateTitle, text: l.toolPrivateText)
-          : null,
+      // What can leave Lume decides what the note says (§62).
+      privacy: widget.bare ? null : LumePrivacyNote.of(l, feature),
       related: <LumeRelatedTool>[
         if (!widget.bare)
           for (final String id in feature.related)

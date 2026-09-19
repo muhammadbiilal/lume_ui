@@ -6235,6 +6235,13 @@ class AppLocalizationsUr extends AppLocalizations {
   String get toolPrivate => 'نجی';
 
   @override
+  String get toolPrivateReviewedText =>
+      'یہ معلومات آپ کے آلے پر رہتی ہیں اور ہوم پر کبھی نہیں دکھائی جاتیں۔ Lume سے صرف وہی باہر جاتا ہے جسے آپ دیکھ کر خود شیئر کرنا چنیں — اس کے سوا کچھ شامل نہیں ہوتا۔';
+
+  @override
+  String get toolPrivateReviewedTitle => 'بطورِ طے شدہ نجی';
+
+  @override
   String get toolPrivateText =>
       'یہ معلومات آپ کے آلے پر رہتی ہیں اور کبھی شیئر نہیں کی جاتیں۔';
 

@@ -986,16 +986,17 @@ const List<LumeFeature> kLumeFeatures = <LumeFeature>[
     aware: <String>{'currency', 'locale'},
   ),
   LumeFeature(
+    // Financial records about named people (D8): off Home, Today, the hero and
+    // recommendations. Its reminder is reviewed, then shared.
     id: 'ledger',
     fallbackName: 'Lending Ledger',
     icon: 'list',
     category: LumeToolCategory.money,
     group: LumeFeatureGroup.money,
-    // Financial records about named people (D8): off Home, Today, the hero
-    // and recommendations; the frame adds its privacy note.
-    sensitive: true,
     interests: <String>{'expenses'},
     keywords: <String>{'borrow', 'khata', 'lend', 'owe', 'udhaar'},
+    sensitive: true,
+    outbound: LumeOutbound.reviewedShare,
     related: <String>{'expenses', 'installments', 'committee'},
     archetype: LumeToolArchetype.manager,
     density: LumeToolDensity.high,

@@ -6239,6 +6239,13 @@ class AppLocalizationsEn extends AppLocalizations {
   String get toolPrivate => 'Private';
 
   @override
+  String get toolPrivateReviewedText =>
+      'This information stays on your device and is never shown on Home. Only what you review and choose to share leaves Lume — nothing else is included.';
+
+  @override
+  String get toolPrivateReviewedTitle => 'Private by default';
+
+  @override
   String get toolPrivateText =>
       'This information stays on your device, is never shown on Home and is never included in shared content.';
 

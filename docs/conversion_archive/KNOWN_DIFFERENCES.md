@@ -2563,7 +2563,11 @@ Deliberate corrections, each measured in the reference (§17):
 - **Every string in English, Urdu and Arabic** — 158 of Ledger's own; the
   reference translates only the tool's name.
 - **Sensitive** (D8): the frame's privacy note shows, and Ledger never
-  reaches Home, Today, the hero or recommendations. The Tools tile's status
+  reaches Home, Today, the hero or recommendations. The note follows what
+  can leave (`LumeOutbound.reviewedShare`): "Private by default — … Only
+  what you review and choose to share leaves Lume". The reference's "never
+  included in shared content" would be false beside the reminder. Seven
+  state goldens, where the note is on screen, were re-captured. The Tools tile's status
   says what the tool is for ("Lend and borrow") instead of the reference's
   unrelated money figure — a count or a sum there would put private
   figures on a tile.

@@ -93,6 +93,17 @@ enum LumeToolSupport {
   export,
 }
 
+/// What of a tool's own content may leave Lume through the reader's hands —
+/// the privacy note says exactly this, so it is typed, not worded per tool.
+enum LumeOutbound {
+  /// Nothing the tool holds is ever part of shared content.
+  none,
+
+  /// Only content the reader has just reviewed, in a preview showing exactly
+  /// what leaves, and then chosen to share. Ledger's reminder is one.
+  reviewedShare,
+}
+
 /// One feature.
 @immutable
 class LumeFeature {
@@ -110,6 +121,7 @@ class LumeFeature {
     this.shareable = false,
     this.requiresCity = false,
     this.sensitive = false,
+    this.outbound = LumeOutbound.none,
     this.staple = false,
     this.androidOnly = false,
     this.homeEligible = false,
@@ -166,6 +178,10 @@ class LumeFeature {
   /// Sensitive (§61). Never promoted as a Home card; may still be a quick
   /// action, because *adding* an expense is a task and does not disclose one.
   final bool sensitive;
+
+  /// What of this tool's content can leave Lume, and how. A sensitive tool's
+  /// privacy note is chosen from this.
+  final LumeOutbound outbound;
 
   /// A tool almost everyone wants, so it survives the "For you" shortlist even
   /// when it matches none of the user's interests.

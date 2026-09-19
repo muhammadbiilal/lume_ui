@@ -18,6 +18,7 @@ import 'package:lume/core/platform/lume_share.dart';
 import 'package:lume/core/values/lume_currency.dart';
 import 'package:lume/core/values/lume_date.dart';
 import 'package:lume/core/values/lume_money.dart';
+import 'package:lume/core/values/lume_record_id.dart';
 import 'package:lume/core/widgets/lume/lume_chip.dart';
 import 'package:lume/core/widgets/lume/lume_field.dart';
 import 'package:lume/core/widgets/lume/lume_row.dart';
@@ -498,6 +499,52 @@ void main() {
         findsOneWidget,
       );
       expect(find.text('Handed to your share sheet'), findsNothing);
+      w.dispose();
+    });
+
+    testWidgets('the privacy note and the preview agree: only the reviewed '
+        'text leaves, and closing the preview hands over nothing', (
+      WidgetTester t,
+    ) async {
+      final LedgerWorld w = LedgerWorld().reference();
+      await pumpLedger(t, w);
+      // Ledger shares reviewed content, so its note never says it shares
+      // nothing (LumeOutbound.reviewedShare).
+      expect(find.text('Private by default'), findsOneWidget);
+      expect(find.textContaining('never included in shared'), findsNothing);
+      await pumpLedger(t, w, query: 'person=${w.people['Bilal']!.value}');
+
+      await tapShown(t, find.byKey(LumeLedgerTool.personRemindKey));
+      // Closed without Share: nothing handed over, nothing claimed.
+      await t.tapAt(const Offset(10, 10));
+      await t.pumpAndSettle();
+      expect(find.byKey(LedgerSheetKeys.reminderText), findsNothing);
+      expect(w.sharer.shared, isEmpty);
+      expect(find.text('Handed to your share sheet'), findsNothing);
+
+      await tapShown(t, find.byKey(LumeLedgerTool.personRemindKey));
+      final String preview = t
+          .widget<TextField>(
+            find.descendant(
+              of: find.byKey(LedgerSheetKeys.reminderText),
+              matching: find.byType(TextField),
+            ),
+          )
+          .controller!
+          .text;
+      await tapShown(t, find.byKey(LedgerSheetKeys.reminderShare));
+      // Exactly the previewed text — no note, no other person, no id.
+      expect(w.sharer.shared, <String>[preview]);
+      final String out = w.sharer.shared.single;
+      for (final String hidden in <String>[
+        'Rent share',
+        'Car repair',
+        'Ahmed',
+        'Sara',
+        for (final LumeRecordId id in w.people.values) id.value,
+      ]) {
+        expect(out.contains(hidden), isFalse, reason: hidden);
+      }
       w.dispose();
     });
 

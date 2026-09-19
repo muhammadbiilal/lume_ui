@@ -76,6 +76,33 @@ w('/// Order is meaning: the Tools hub renders a category in the order the');
 w('/// catalogue declares, so re-sorting this list re-sorts the product.');
 w('const List<LumeFeature> kLumeFeatures = <LumeFeature>[');
 
+function wrapComment(text, width) {
+  const out = [];
+  let line = '';
+  for (const word of text.split(' ')) {
+    if (line && (line + ' ' + word).length > width) {
+      out.push(line);
+      line = word;
+    } else {
+      line = line ? line + ' ' + word : word;
+    }
+  }
+  if (line) out.push(line);
+  return out;
+}
+
+/* Decisions taken for the Flutter product that the reference's registry does
+   not carry. The reference is not edited; each entry names the decision, and
+   the generated file says where it came from. */
+const DECISIONS = {
+  ledger: {
+    note: 'Financial records about named people (D8): off Home, Today, the ' +
+      'hero and recommendations. Its reminder is reviewed, then shared.',
+    sensitive: true,
+    outbound: 'reviewedShare',
+  },
+};
+
 let sensitiveCount = 0;
 let faithCount = 0;
 
@@ -86,7 +113,9 @@ for (const f of LUME.FEATURES) {
     .filter(Boolean)
     .sort();
   const ints = (f.ints || []).slice();
-  if (f.sens) sensitiveCount++;
+  const decided = DECISIONS[f.id] || {};
+  const sensitive = f.sens || decided.sensitive;
+  if (sensitive) sensitiveCount++;
   if (f.faith) faithCount++;
 
   const parts = [
@@ -103,7 +132,8 @@ for (const f of LUME.FEATURES) {
   if (f.adapts) parts.push('adapts: true');
   if (f.shareable) parts.push('shareable: true');
   if (f.reqCity) parts.push('requiresCity: true');
-  if (f.sens) parts.push('sensitive: true');
+  if (sensitive) parts.push('sensitive: true');
+  if (decided.outbound) parts.push(`outbound: LumeOutbound.${decided.outbound}`);
   if (f.staple) parts.push('staple: true');
   if (f.android) parts.push('androidOnly: true');
   if (spec.homeEligible) parts.push('homeEligible: true');
@@ -128,6 +158,9 @@ for (const f of LUME.FEATURES) {
   if (aware.length) parts.push(`aware: ${dartSet(aware)}`);
 
   w('  LumeFeature(');
+  if (decided.note) {
+    for (const line of wrapComment(decided.note, 72)) w(`    // ${line}`);
+  }
   for (const p of parts) w(`    ${p},`);
   w('  ),');
 }
