@@ -360,4 +360,115 @@ void main() {
       w.dispose();
     });
   });
+
+  // The slot opens and closes by animation. A tap must never land on
+  // something the layout moved under the finger: a transition does not
+  // start or finish while a pointer is down, and a tap made during one is
+  // taken by nothing.
+  group('transitions never retarget a tap', () {
+    double shellTop(WidgetTester t) => t.getRect(find.byType(LumeShell)).top;
+    final Finder addPerson = find.byKey(LumeLedgerTool.addPersonKey);
+    bool formOpen() =>
+        find.byKey(LumeLedgerTool.nameField).evaluate().isNotEmpty;
+
+    Future<void> ticked(WidgetTester t) async {
+      // The tick fires and its reads settle; no animation time passes yet.
+      await t.pump(LumeNotificationPresenter.firstTick);
+      for (int i = 0; i < 3; i++) {
+        await t.pump();
+      }
+    }
+
+    testWidgets('a finger down when the banner arrives: nothing moves until '
+        'it lifts, and the tap lands where it was aimed', (
+      WidgetTester t,
+    ) async {
+      final LedgerWorld w = LedgerWorld();
+      await pumpLedger(t, w, surface: const Size(390, 844), animate: true);
+      final Offset aim = t.getCenter(addPerson);
+      // The finger goes down before the first tick, whenever that is.
+      expect(banner(), findsNothing);
+      final TestGesture g = await t.startGesture(aim);
+      await t.pump(LumeNotificationPresenter.firstTick);
+      await t.pump(const Duration(milliseconds: 300));
+      for (int i = 0; i < 3; i++) {
+        await t.pump(const Duration(milliseconds: 100));
+      }
+      // The event is taken, but the layout holds still under the finger.
+      expect(shellTop(t), 0);
+      await g.up();
+      await t.pump();
+      expect(formOpen(), isTrue, reason: 'the tap landed where it was aimed');
+      await t.pumpAndSettle();
+      expect(banner(), findsOneWidget);
+      expect(shellTop(t), greaterThan(0));
+      w.dispose();
+    });
+
+    testWidgets('a press while it opens pauses it, and is taken by nothing', (
+      WidgetTester t,
+    ) async {
+      final LedgerWorld w = LedgerWorld();
+      await pumpLedger(t, w, surface: const Size(390, 844), animate: true);
+      await ticked(t);
+      await t.pump(const Duration(milliseconds: 100));
+      final double mid = shellTop(t);
+      expect(mid, greaterThan(0));
+      final TestGesture g = await t.startGesture(t.getCenter(addPerson));
+      await t.pump(const Duration(milliseconds: 200));
+      expect(shellTop(t), mid, reason: 'paused under the finger');
+      await g.up();
+      await t.pumpAndSettle();
+      expect(formOpen(), isFalse, reason: 'no control took the tap');
+      expect(shellTop(t), greaterThan(mid));
+      w.dispose();
+    });
+
+    testWidgets('a press while it closes pauses it, and is taken by nothing', (
+      WidgetTester t,
+    ) async {
+      final LedgerWorld w = LedgerWorld();
+      await pumpLedger(t, w, surface: const Size(390, 844), animate: true);
+      await ticked(t);
+      await t.pumpAndSettle();
+      final double open = shellTop(t);
+      await t.pump(LumeNotificationBanner.life);
+      await t.pump(const Duration(milliseconds: 100));
+      final double mid = shellTop(t);
+      expect(mid, lessThan(open));
+      expect(mid, greaterThan(0));
+      final TestGesture g = await t.startGesture(t.getCenter(addPerson));
+      await t.pump(const Duration(milliseconds: 200));
+      expect(shellTop(t), mid, reason: 'paused under the finger');
+      await g.up();
+      await t.pumpAndSettle();
+      expect(formOpen(), isFalse, reason: 'no control took the tap');
+      expect(banner(), findsNothing);
+      expect(shellTop(t), 0);
+      w.dispose();
+    });
+
+    testWidgets('reduced motion: it opens in one frame, and still waits for '
+        'a lifted finger', (WidgetTester t) async {
+      final LedgerWorld w = LedgerWorld();
+      await pumpLedger(t, w, surface: const Size(390, 844));
+      final Offset aim = t.getCenter(addPerson);
+      // The finger goes down before the first tick, whenever that is.
+      expect(banner(), findsNothing);
+      final TestGesture g = await t.startGesture(aim);
+      await t.pump(LumeNotificationPresenter.firstTick);
+      await t.pump(const Duration(milliseconds: 300));
+      await t.pump();
+      await t.pump();
+      expect(shellTop(t), 0);
+      await g.up();
+      await t.pump();
+      expect(formOpen(), isTrue);
+      // One frame later the slot is fully open: no in-between to tap into.
+      await t.pump();
+      final Rect b = t.getRect(banner());
+      expect(shellTop(t), b.bottom + 8);
+      w.dispose();
+    });
+  });
 }

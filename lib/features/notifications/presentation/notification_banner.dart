@@ -36,6 +36,7 @@ import '../../../core/icons/lume_icons.dart';
 import '../../../core/layout/lume_breakpoint.dart';
 import '../../../core/navigation/lume_shell.dart';
 import '../../../core/theme/lume/lume_colors.dart';
+import '../../../core/theme/lume/lume_motion.dart';
 import '../../../core/theme/lume/lume_space.dart';
 import '../../../core/theme/lume/lume_theme.dart';
 import '../../../core/theme/lume/lume_type.dart';
@@ -226,25 +227,56 @@ class LumeNotificationBannerHost extends StatefulWidget {
       _LumeNotificationBannerHostState();
 }
 
-class _LumeNotificationBannerHostState
-    extends State<LumeNotificationBannerHost> {
+class _LumeNotificationBannerHostState extends State<LumeNotificationBannerHost>
+    with SingleTickerProviderStateMixin {
   Timer? _life;
-  LumeNotification? _showing;
+
+  /// What should be showing: the notification, unless it is suppressed or
+  /// the reader dismissed it.
+  LumeNotification? _active;
+
+  /// What is laid out in the slot — kept through the closing transition.
+  LumeNotification? _shown;
+
+  /// The one the reader dismissed, so it is not brought back.
+  String? _dismissed;
 
   /// The events already announced. A banner withheld under a sheet and shown
   /// again when the sheet closes is the same event, heard once.
   final Set<String> _announced = <String>{};
 
+  /// Pointers down on the screen. While any is down, a transition does not
+  /// start and does not finish: the layout under a finger never moves.
+  int _pointers = 0;
+
+  /// 0 — no slot; 1 — the slot fully open.
+  late final AnimationController _slot = AnimationController(
+    vsync: this,
+    duration: LumeMotion.standard,
+  );
+
   /// The shell keeps its element, and every state under it, whether or not
   /// a banner is in the slot above it.
   static const Key _shellKey = ValueKey<String>('nbanner.shell');
 
-  bool get _mayShow => widget.notification != null && !widget.suppressed;
-
   @override
   void initState() {
     super.initState();
-    _sync();
+    _slot.addStatusListener((AnimationStatus s) {
+      if (s == AnimationStatus.dismissed && _active == null && mounted) {
+        setState(() => _shown = null);
+      }
+    });
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (mounted) _sync();
+    });
+  }
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    // Reduced motion: the slot opens and closes in one frame.
+    _slot.duration = LumeMotion.duration(context, LumeMotion.standard);
   }
 
   @override
@@ -259,105 +291,157 @@ class _LumeNotificationBannerHostState
   @override
   void dispose() {
     _life?.cancel();
+    _slot.dispose();
     super.dispose();
   }
 
   void _sync() {
-    _life?.cancel();
-    final LumeNotification? next = _mayShow ? widget.notification : null;
+    final LumeNotification? n = widget.notification;
+    _active = widget.suppressed || n == null || n.id == _dismissed ? null : n;
+    if (_active == null) _life?.cancel();
+    _apply();
+  }
+
+  /// Bring the slot to what should be showing — unless a pointer is down,
+  /// in which case it waits, and a transition under way pauses, until the
+  /// last pointer lifts.
+  void _apply() {
+    if (!mounted || _pointers > 0) return;
+    final LumeNotification? next = _active;
     if (next == null) {
-      if (_showing != null) {
-        WidgetsBinding.instance.addPostFrameCallback((_) {
-          if (mounted) setState(() => _showing = null);
-        });
-      }
+      if (_shown != null) _slot.reverse();
       return;
     }
-    _showing = next;
-    // Announced separately from the picture, because a banner that is only a
-    // picture is a banner a screen reader never mentions — and announced
-    // once, however often a sheet withholds it and gives it back.
-    if (_announced.add(next.id)) {
-      WidgetsBinding.instance.addPostFrameCallback((_) {
-        if (!mounted) return;
-        SemanticsService.sendAnnouncement(
-          View.of(context),
-          '${next.title}. ${next.body}',
-          Directionality.of(context),
-        );
-      });
+    if (_shown?.id != next.id) {
+      setState(() => _shown = next);
+      // Announced separately from the picture, because a banner that is
+      // only a picture is a banner a screen reader never mentions.
+      if (_announced.add(next.id)) {
+        WidgetsBinding.instance.addPostFrameCallback((_) {
+          if (!mounted) return;
+          SemanticsService.sendAnnouncement(
+            View.of(context),
+            '${next.title}. ${next.body}',
+            Directionality.of(context),
+          );
+        });
+      }
     }
-    _life = Timer(LumeNotificationBanner.life, _dismiss);
+    // Its life counts from when it begins to show, not from when it was
+    // held back: a notice deferred is not a notice used up.
+    if (_life == null || !_life!.isActive) {
+      _life = Timer(LumeNotificationBanner.life, _dismiss);
+    }
+    _slot.forward();
   }
 
   void _dismiss() {
     _life?.cancel();
-    if (mounted) setState(() => _showing = null);
+    _dismissed = _shown?.id ?? _active?.id;
+    _active = null;
+    _apply();
     widget.onDismissed?.call();
+  }
+
+  void _down(PointerDownEvent _) {
+    _pointers++;
+    if (_slot.isAnimating) _slot.stop();
+  }
+
+  void _up(PointerEvent _) {
+    if (_pointers > 0) _pointers--;
+    if (_pointers == 0) _apply();
   }
 
   @override
   Widget build(BuildContext context) {
-    final LumeNotification? n = _mayShow ? _showing : null;
+    final LumeNotification? n = _shown;
     final MediaQueryData media = MediaQuery.of(context);
 
     // The banner takes a slot of its own above the shell rather than
-    // floating over it (C92). The reference's `.nbanner` is absolutely
-    // placed over the page — over the header's Back and Save on a phone, and
-    // over the pane's bottom corner, where a form's Save sits, on a tablet.
-    // Here the shell is laid out in what the banner leaves, so nothing the
-    // reader needs is under it, and there are no invisible bounds to catch a
-    // tap meant for something else.
-    return CustomMultiChildLayout(
-      delegate: _BannerFirst(),
-      children: <Widget>[
-        // The shell first in paint order and the banner after it, as the
-        // reference stacks them: something the shell paints can hide what
-        // was painted before it from a screen reader, and the banner must
-        // not be that. The layout, not the paint order, puts it on top.
-        LayoutId(
-          key: _shellKey,
-          id: _BannerFirst.shell,
-          child: MediaQuery(
-            // The slot has taken the status-bar inset; the shell below it
-            // must not pad for it a second time.
-            data: n == null
-                ? media
-                : media
-                      .removePadding(removeTop: true)
-                      .removeViewPadding(removeTop: true),
-            child: widget.child,
-          ),
-        ),
-        if (n != null)
-          LayoutId(
-            id: _BannerFirst.banner,
-            child: _BannerSlot(
-              safeTop: media.padding.top,
-              // Escape withdraws it for a keyboard reader focused inside it.
-              child: CallbackShortcuts(
-                bindings: <ShortcutActivator, VoidCallback>{
-                  const SingleActivator(LogicalKeyboardKey.escape): _dismiss,
-                },
-                child: LumeNotificationBanner(
-                  notification: n,
-                  onOpen: () {
-                    _dismiss();
-                    widget.onOpen?.call(n);
-                  },
-                  onDismiss: _dismiss,
+    // floating over it (C92). The slot opens and closes by animation, and
+    // the shell moves with it: never under a finger that is down, and never
+    // taking a tap while it moves. A tap during a transition lands on
+    // nothing rather than on whatever slid under it.
+    return Listener(
+      behavior: HitTestBehavior.translucent,
+      onPointerDown: _down,
+      onPointerUp: _up,
+      onPointerCancel: _up,
+      child: AnimatedBuilder(
+        animation: _slot,
+        builder: (BuildContext context, Widget? _) {
+          final double t = _slot.value;
+          final bool moving = t > 0 && t < 1;
+          return AbsorbPointer(
+            absorbing: moving,
+            child: CustomMultiChildLayout(
+              delegate: _BannerFirst(_slot),
+              children: <Widget>[
+                // The shell first in paint order and the banner after it,
+                // as the reference stacks them: something the shell paints
+                // can hide what was painted before it from a screen reader,
+                // and the banner must not be that. The layout, not the
+                // paint order, puts it on top.
+                LayoutId(
+                  key: _shellKey,
+                  id: _BannerFirst.shell,
+                  child: MediaQuery(
+                    // The slot takes the status-bar inset as it opens; the
+                    // shell pads for what the slot has not yet covered.
+                    data: n == null || t == 0
+                        ? media
+                        : media.copyWith(
+                            padding: media.padding.copyWith(
+                              top: media.padding.top * (1 - t),
+                            ),
+                            viewPadding: media.viewPadding.copyWith(
+                              top: media.viewPadding.top * (1 - t),
+                            ),
+                          ),
+                    child: widget.child,
+                  ),
                 ),
-              ),
+                if (n != null)
+                  LayoutId(
+                    id: _BannerFirst.banner,
+                    child: _BannerSlot(
+                      safeTop: media.padding.top,
+                      // Escape withdraws it for a keyboard reader focused
+                      // inside it.
+                      child: CallbackShortcuts(
+                        bindings: <ShortcutActivator, VoidCallback>{
+                          const SingleActivator(LogicalKeyboardKey.escape):
+                              _dismiss,
+                        },
+                        child: LumeNotificationBanner(
+                          notification: n,
+                          onOpen: () {
+                            _dismiss();
+                            widget.onOpen?.call(n);
+                          },
+                          onDismiss: _dismiss,
+                        ),
+                      ),
+                    ),
+                  ),
+              ],
             ),
-          ),
-      ],
+          );
+        },
+      ),
     );
   }
 }
 
-/// The banner's slot is measured first, across the top; the shell takes
-/// the rest, below it.
+/// The banner's slot is measured first, across the top, and opened by
+/// [progress]: the slot slides down from above, and the shell takes the
+/// rest of the screen below what is open of it.
 class _BannerFirst extends MultiChildLayoutDelegate {
+  _BannerFirst(this.progress) : super(relayout: progress);
+
+  final Animation<double> progress;
+
   static const String shell = 'shell';
   static const String banner = 'banner';
 
@@ -365,11 +449,12 @@ class _BannerFirst extends MultiChildLayoutDelegate {
   void performLayout(Size size) {
     double top = 0;
     if (hasChild(banner)) {
-      top = layoutChild(
+      final double h = layoutChild(
         banner,
         BoxConstraints(minWidth: size.width, maxWidth: size.width),
       ).height;
-      positionChild(banner, Offset.zero);
+      top = h * progress.value;
+      positionChild(banner, Offset(0, top - h));
     }
     layoutChild(
       shell,
@@ -381,7 +466,8 @@ class _BannerFirst extends MultiChildLayoutDelegate {
   }
 
   @override
-  bool shouldRelayout(_BannerFirst oldDelegate) => false;
+  bool shouldRelayout(_BannerFirst oldDelegate) =>
+      oldDelegate.progress != progress;
 }
 
 /// The measured room a banner takes: under the status bar and 8 from it on

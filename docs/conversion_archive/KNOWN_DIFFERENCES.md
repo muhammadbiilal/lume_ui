@@ -2570,6 +2570,22 @@ keyboard open:
   gives it back, and a language change or a return from the background does
   not bring a second one.
 
+**It moves, and never under a finger.** The slot opens and closes by
+animation (260 ms, and one frame when motion is reduced), and the shell
+moves with it. The transition is not held back because a reader might be
+about to touch the screen; that guess is unreliable and could hold a
+notice indefinitely. Instead:
+
+- it does not start, and pauses if it has started, only while a pointer is
+  actually down;
+- while the slot is moving, taps are taken by nothing.
+
+A tap therefore lands where it was aimed, or nowhere. It never lands on a
+control that slid under it. The banner's six seconds count from when it
+begins to show, so a deferred notice is not used up
+(`notification_banner_layout_test.dart`, *transitions never retarget a
+tap*).
+
 It still never appears over a sheet, a dialog or the notification centre.
 The six banner goldens are re-captured: the header that used to be under
 the banner is now visible below it.

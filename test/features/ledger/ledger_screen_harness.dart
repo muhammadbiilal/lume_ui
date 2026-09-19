@@ -137,6 +137,7 @@ Future<GoRouter> pumpLedger(
   ThemeMode theme = ThemeMode.light,
   String query = '',
   List<Override> overrides = const <Override>[],
+  bool animate = false,
 }) async {
   final GoRouter router = await pumpLumeRouter(
     tester,
@@ -147,6 +148,7 @@ Future<GoRouter> pumpLedger(
     locale: locale,
     textScale: textScale,
     theme: theme,
+    animate: animate,
     overrides: <Override>[...world.overrides, ...overrides],
   );
   await tester.pumpAndSettle();
