@@ -833,6 +833,7 @@
   "freshLocal": "اس آلے پر محفوظ",
   "freshOn": "{date} کو اپ ڈیٹ ہوا",
   "freshSample": "نمونہ ڈیٹا",
+  "freshReferenceCopy": "{claim}۔ حوالہ جاتی نقل، اس بلڈ کا دعویٰ نہیں",
   "freshSession": "Lume بند کرنے تک محفوظ",
   "freshStatic": "حوالہ جاتی متن",
   "freshWeekly": "اس ہفتے اپ ڈیٹ ہوا",

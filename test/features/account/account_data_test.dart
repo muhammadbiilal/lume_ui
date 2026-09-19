@@ -688,8 +688,8 @@ void main() {
         gate: await bootedGate(),
         surface: kTall,
       );
-      // Three facts, and — in the reference build — the fourth saying its data
-      // is sample data (F6B decision 5).
+      // Three facts, and — in a parity or development build — the fourth
+      // saying its data is sample data (F6B decision 5).
       expect(find.byType(LumeSettingsRow), findsNWidgets(4));
       final LumeSettingsRow data = tester.widget<LumeSettingsRow>(
         rowTitled('Data'),

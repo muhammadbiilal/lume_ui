@@ -2746,6 +2746,11 @@ class AppLocalizationsAr extends AppLocalizations {
   String get freshSample => 'بيانات تجريبية';
 
   @override
+  String freshReferenceCopy(String claim) {
+    return '$claim. نسخة من النص المرجعي، وليست ادعاءً عن هذا الإصدار';
+  }
+
+  @override
   String get freshSession => 'محفوظ حتى تغلق Lume';
 
   @override

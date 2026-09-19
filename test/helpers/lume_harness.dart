@@ -26,6 +26,7 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:go_router/go_router.dart';
+import 'package:lume/core/config/lume_build_profile.dart';
 import 'package:lume/core/fixtures/lume_clock.dart';
 import 'package:lume/core/layout/lume_breakpoint.dart';
 import 'package:lume/core/localization/lume_locales.dart';
@@ -119,6 +120,10 @@ Future<void> pumpLume(
         exporterProvider.overrideWithValue(LumeRecordingExporter()),
         scannerProvider.overrideWithValue(LumeRecordingScanner()),
         linkOpenerProvider.overrideWithValue(LumeRecordingLinkOpener()),
+        // Tests are the parity captures: the reference's own source-line
+        // copy, stated explicitly rather than inherited from a missing
+        // define. A test about another flavor overrides this.
+        buildProfileProvider.overrideWithValue(LumeBuildProfile.parity),
         // Records on the fixture day, read at once: a test that is about
         // loading builds its own store with a delay.
         recordRepositoryProvider.overrideWith((Ref ref) {
@@ -232,6 +237,10 @@ Future<GoRouter> pumpLumeRouter(
         exporterProvider.overrideWithValue(LumeRecordingExporter()),
         scannerProvider.overrideWithValue(LumeRecordingScanner()),
         linkOpenerProvider.overrideWithValue(LumeRecordingLinkOpener()),
+        // Tests are the parity captures: the reference's own source-line
+        // copy, stated explicitly rather than inherited from a missing
+        // define. A test about another flavor overrides this.
+        buildProfileProvider.overrideWithValue(LumeBuildProfile.parity),
         // Records on the fixture day, read at once: a test that is about
         // loading builds its own store with a delay.
         recordRepositoryProvider.overrideWith((Ref ref) {

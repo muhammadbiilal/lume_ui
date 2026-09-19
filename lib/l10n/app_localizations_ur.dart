@@ -2700,6 +2700,11 @@ class AppLocalizationsUr extends AppLocalizations {
   String get freshSample => 'نمونہ ڈیٹا';
 
   @override
+  String freshReferenceCopy(String claim) {
+    return '$claim۔ حوالہ جاتی نقل، اس بلڈ کا دعویٰ نہیں';
+  }
+
+  @override
   String get freshSession => 'Lume بند کرنے تک محفوظ';
 
   @override

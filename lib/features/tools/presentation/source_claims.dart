@@ -1,15 +1,20 @@
-/// What a tool's source bar may say (F6B decision 5).
+/// What a tool's source bar may say (F6B decision 5), by build flavor
+/// ([LumeBuildProfile]).
 ///
-/// **The reference build** draws what the reference draws — every freshness
-/// word, "Updated 30 sec ago" and "Encrypted on device" included — because it
-/// is a reproduction. A tool whose capability is [LumeDataCapability.isSample]
-/// also leads its source line with "Sample data", so the reader learns it
-/// where the figures are, not only in About.
+/// **A parity build** draws what the reference draws — every freshness word,
+/// "Stored on this device", "Updated 30 sec ago" and "Encrypted on device"
+/// included — because it is a controlled reproduction for visual comparison.
+/// A screen reader hears each reproduced claim as reference copy
+/// (`freshReferenceCopy`), and a parity build never ships
+/// ([lumeRefuseUnshippable]). A tool whose capability is
+/// [LumeDataCapability.isSample] also leads its source line with "Sample
+/// data", so the reader learns it where the figures are, not only in About.
 ///
-/// **A release build** over sample data says "Sample data" as the freshness
-/// itself and claims nothing else: no storage, encryption, liveness, update
-/// or feed. Otherwise it draws a claim only when the tool's capability
-/// supports it:
+/// **A development or a release build** derives every claim from capability
+/// metadata, never from the build type. Over sample data it says "Sample
+/// data" as the freshness itself and claims nothing else: no storage,
+/// encryption, liveness, update or feed. Otherwise it draws a claim only
+/// when the tool's capability supports it:
 ///
 /// | claim | needs |
 /// |---|---|
@@ -21,7 +26,8 @@
 /// | "Calculated for your location" | `computedHere` |
 /// | a feed's name as the source | the capability's own `source` replaces it |
 ///
-/// Anything a release cannot support reads "Sample data", which is what it is.
+/// Anything such a build cannot support reads "Sample data", which is what it
+/// is.
 library;
 
 import 'package:flutter/foundation.dart';
@@ -42,14 +48,19 @@ class LumeSourceClaim {
     required this.source,
     this.updated,
     this.sample,
+    this.labelSemantics,
   });
 
   final LumeFreshnessQuality quality;
   final String label;
+
+  /// What a screen reader hears for [label], where it differs: a parity
+  /// build's reproduced claim is announced as reference copy.
+  final String? labelSemantics;
   final String? source;
   final String? updated;
 
-  /// The reference build's sample-data mark, drawn first in the source line.
+  /// The parity build’s sample-data mark, drawn first in the source line.
   final String? sample;
 
   /// This claim tells the reader the tool shows sample data.
@@ -89,10 +100,13 @@ abstract final class LumeSourceClaims {
     required String city,
   }) {
     final LumeFreshnessKind kind = feature.freshness;
-    if (profile == LumeBuildProfile.reference) {
+    if (profile.reproducesReference) {
+      final String label = LumeToolStrings.freshness(l, kind);
       return LumeSourceClaim(
         quality: LumeToolStrings.quality(kind),
-        label: LumeToolStrings.freshness(l, kind),
+        label: label,
+        // Heard as what it is: the reference's words, not this build's.
+        labelSemantics: l.freshReferenceCopy(label),
         source: LumeToolStrings.source(l, feature),
         updated: LumeToolStrings.updated(l, f, kind, now: now, city: city),
         sample: capability.isSample ? l.freshSample : null,

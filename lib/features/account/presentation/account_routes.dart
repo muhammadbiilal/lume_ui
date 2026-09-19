@@ -1810,13 +1810,12 @@ LumeAccountView _about(LumeAccountRouteContext c) {
               value: c.version,
               chevron: false,
             ),
-            // F6B decision 5: the reference build says its data is sample
-            // data, because its source lines reproduce claims it cannot keep.
-            if (ProviderScope.containerOf(
-                  context,
-                  listen: false,
-                ).read(buildProfileProvider) ==
-                LumeBuildProfile.reference)
+            // F6B decision 5: a build that is not a release runs on
+            // fixtures, and says so here as well as in each tool.
+            if (!ProviderScope.containerOf(
+              context,
+              listen: false,
+            ).read(buildProfileProvider).shippable)
               LumeSettingsRow(
                 icon: LumeIcons.info,
                 title: l.acctDataTitle,

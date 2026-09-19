@@ -2702,6 +2702,11 @@ class AppLocalizationsEn extends AppLocalizations {
   String get freshSample => 'Sample data';
 
   @override
+  String freshReferenceCopy(String claim) {
+    return '$claim. Reference copy, not a claim about this build';
+  }
+
+  @override
   String get freshSession => 'Kept until you close Lume';
 
   @override

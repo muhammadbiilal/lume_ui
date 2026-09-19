@@ -104,6 +104,7 @@ class LumeToolFrame extends StatefulWidget {
     this.sourceSampleSemantics,
     this.freshness,
     this.freshnessLabel,
+    this.freshnessSemantics,
     this.privacy,
     this.related = const <LumeRelatedTool>[],
     this.onOpenRelated,
@@ -153,6 +154,9 @@ class LumeToolFrame extends StatefulWidget {
   /// The live/delayed/cached marker that sits beside the subtitle.
   final LumeFreshnessQuality? freshness;
   final String? freshnessLabel;
+
+  /// What a screen reader hears for [freshnessLabel], where it differs.
+  final String? freshnessSemantics;
 
   /// §61: what this tool holds and what leaves the device. Shown for the
   /// sensitive families, above the related rail.
@@ -330,6 +334,7 @@ class _LumeToolFrameState extends State<LumeToolFrame> {
             child: LumeSourceBar(
               quality: widget.freshness,
               qualityLabel: widget.freshnessLabel,
+              qualitySemantics: widget.freshnessSemantics,
               source: widget.source,
               updated: widget.updated,
               note: widget.sourceNote,

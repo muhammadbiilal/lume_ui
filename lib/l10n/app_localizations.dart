@@ -286,7 +286,7 @@ abstract class AppLocalizations {
   /// **'Preferences, region and language'**
   String get acctDataPrefs;
 
-  /// About, reference build only: the data is fixtures, and the claims elsewhere reproduce the reference
+  /// About, parity and development builds only: the data is fixtures
   ///
   /// In en, this message translates to:
   /// **'Sample data — nothing is saved, synced or encrypted in this build'**
@@ -4534,7 +4534,7 @@ abstract class AppLocalizations {
   /// **'{n} min'**
   String featuredMinutes(int n);
 
-  /// What a screen reader says for the "Sample data" mark at the head of a tool's source line, in development and reference builds (F6B closure)
+  /// What a screen reader says for the "Sample data" mark at the head of a tool's source line, in the parity build (F6B closure)
   ///
   /// In en, this message translates to:
   /// **'Sample data. The figures in this tool are examples, not your own.'**
@@ -4870,7 +4870,13 @@ abstract class AppLocalizations {
   /// **'Sample data'**
   String get freshSample;
 
-  /// A release build’s word for data held only for the session; replaces "Stored on this device" without a durable store
+  /// What a screen reader hears for a source-line claim a parity (visual-reference) build reproduces from the web reference, such as "Stored on this device"
+  ///
+  /// In en, this message translates to:
+  /// **'{claim}. Reference copy, not a claim about this build'**
+  String freshReferenceCopy(String claim);
+
+  /// A development or release build’s word for data held only for the session; replaces "Stored on this device" without a durable store
   ///
   /// In en, this message translates to:
   /// **'Kept until you close Lume'**

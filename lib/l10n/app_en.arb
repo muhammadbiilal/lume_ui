@@ -135,7 +135,7 @@
   },
   "acctDataSample": "Sample data — nothing is saved, synced or encrypted in this build",
   "@acctDataSample": {
-    "description": "About, reference build only: the data is fixtures, and the claims elsewhere reproduce the reference"
+    "description": "About, parity and development builds only: the data is fixtures"
   },
   "acctDataTitle": "Data",
   "@acctDataTitle": {
@@ -3293,7 +3293,7 @@
   },
   "fixtureSampleA11y": "Sample data. The figures in this tool are examples, not your own.",
   "@fixtureSampleA11y": {
-    "description": "What a screen reader says for the \"Sample data\" mark at the head of a tool's source line, in development and reference builds (F6B closure)"
+    "description": "What a screen reader says for the \"Sample data\" mark at the head of a tool's source line, in the parity build (F6B closure)"
   },
   "flightsActualDep": "Actual departure",
   "@flightsActualDep": {
@@ -3605,9 +3605,18 @@
   "@freshSample": {
     "description": "A release build’s source line where nothing real supports a freshness or feed claim"
   },
+  "freshReferenceCopy": "{claim}. Reference copy, not a claim about this build",
+  "@freshReferenceCopy": {
+    "description": "What a screen reader hears for a source-line claim a parity (visual-reference) build reproduces from the web reference, such as \"Stored on this device\"",
+    "placeholders": {
+      "claim": {
+        "type": "String"
+      }
+    }
+  },
   "freshSession": "Kept until you close Lume",
   "@freshSession": {
-    "description": "A release build’s word for data held only for the session; replaces \"Stored on this device\" without a durable store"
+    "description": "A development or release build’s word for data held only for the session; replaces \"Stored on this device\" without a durable store"
   },
   "freshStatic": "Reference text",
   "@freshStatic": {

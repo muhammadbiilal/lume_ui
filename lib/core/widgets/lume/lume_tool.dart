@@ -184,10 +184,14 @@ class LumeSourceBar extends StatelessWidget {
     this.note,
     this.sample,
     this.sampleSemantics,
+    this.qualitySemantics,
   });
 
   final LumeFreshnessQuality? quality;
   final String? qualityLabel;
+
+  /// What a screen reader hears for [qualityLabel], where it differs.
+  final String? qualitySemantics;
   final String? source;
   final String? updated;
   final String? note;
@@ -214,7 +218,16 @@ class LumeSourceBar extends StatelessWidget {
         runSpacing: LumeSpace.x3,
         children: <Widget>[
           if (quality != null && qualityLabel != null)
-            LumeFreshness(label: qualityLabel!, quality: quality!),
+            qualitySemantics == null
+                ? LumeFreshness(label: qualityLabel!, quality: quality!)
+                : Semantics(
+                    label: qualitySemantics,
+                    excludeSemantics: true,
+                    child: LumeFreshness(
+                      label: qualityLabel!,
+                      quality: quality!,
+                    ),
+                  ),
           LumeSourceLine(
             source: source,
             updated: updated,

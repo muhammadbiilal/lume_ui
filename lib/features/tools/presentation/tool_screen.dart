@@ -358,6 +358,7 @@ class LumeToolScreenState extends ConsumerState<LumeToolScreen> {
       onRetry: widget.onRetry,
       freshness: widget.bare ? null : claim.quality,
       freshnessLabel: widget.bare ? null : claim.label,
+      freshnessSemantics: widget.bare ? null : claim.labelSemantics,
       source: widget.bare ? null : claim.source,
       updated: widget.bare ? null : claim.updated,
       sourceSample: widget.bare ? null : claim.sample,

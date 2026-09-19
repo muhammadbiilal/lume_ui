@@ -833,6 +833,7 @@
   "freshLocal": "مخزّن على هذا الجهاز",
   "freshOn": "حُدّث {date}",
   "freshSample": "بيانات تجريبية",
+  "freshReferenceCopy": "{claim}. نسخة من النص المرجعي، وليست ادعاءً عن هذا الإصدار",
   "freshSession": "محفوظ حتى تغلق Lume",
   "freshStatic": "نص مرجعي",
   "freshWeekly": "حُدّث هذا الأسبوع",

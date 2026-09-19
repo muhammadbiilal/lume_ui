@@ -8,13 +8,21 @@
 /// integrated into.
 library;
 
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'app/app.dart';
+import 'core/config/lume_build_profile.dart';
 import 'core/time/lume_iana_zones.dart';
 
 void main() {
+  // A parity build reproduces the reference's claims for visual comparison
+  // and must never run as a product.
+  lumeRefuseUnshippable(
+    profile: lumeBuildProfileFrom(kLumeBuildName),
+    releaseMode: kReleaseMode,
+  );
   LumeTimeZoneService.shared;
   runApp(const ProviderScope(child: LumeApp()));
 }

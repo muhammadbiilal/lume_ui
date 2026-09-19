@@ -476,8 +476,7 @@ Widget _tool(BuildContext context, GoRouterState state, String root) {
           }
           return FixtureToolScreen(
             toolId: toolId,
-            reference:
-                ref.watch(buildProfileProvider) == LumeBuildProfile.reference,
+            reference: ref.watch(buildProfileProvider).hasFixtureHarness,
             catalogueEligible: feature == null
                 ? null
                 : eligibility.isVisible(feature, user),

@@ -5,8 +5,9 @@
 /// encryption, liveness or an update that no capability supports, and every
 /// tool that shows sample data must say so *in its own source bar*. About's
 /// Data row is not looked at here on purpose — a reader who never opens About
-/// must still be told. The reference build draws what the reference draws,
-/// with the sample mark leading the source line.
+/// must still be told. The parity build draws what the reference draws,
+/// with the sample mark leading the source line; a development build is held
+/// to the release rule, and a parity build never ships.
 library;
 
 import 'package:flutter/material.dart';
@@ -129,14 +130,163 @@ void main() {
     city: 'Islamabad',
   );
 
-  test('the build is the reference build unless it is told otherwise', () {
-    expect(lumeBuildProfileFrom(''), LumeBuildProfile.reference);
-    expect(lumeBuildProfileFrom('debug'), LumeBuildProfile.reference);
+  test('a build is a development build unless it is told otherwise', () {
+    expect(lumeBuildProfileFrom(''), LumeBuildProfile.development);
+    expect(lumeBuildProfileFrom('debug'), LumeBuildProfile.development);
+    expect(lumeBuildProfileFrom('reference'), LumeBuildProfile.development);
+    expect(lumeBuildProfileFrom('parity'), LumeBuildProfile.parity);
     expect(lumeBuildProfileFrom('release'), LumeBuildProfile.release);
     expect(
       lumeBuildProfileFrom(kLumeBuildName),
-      LumeBuildProfile.reference,
-      reason: 'the test run is not a release build',
+      LumeBuildProfile.development,
+      reason: 'the test run names no flavor; its harness chooses parity',
+    );
+  });
+
+  test('only a release ships; a parity build refuses to run as one', () {
+    expect(
+      <LumeBuildProfile>[
+        for (final LumeBuildProfile p in LumeBuildProfile.values)
+          if (p.shippable) p,
+      ],
+      <LumeBuildProfile>[LumeBuildProfile.release],
+    );
+    expect(
+      () => lumeRefuseUnshippable(
+        profile: LumeBuildProfile.parity,
+        releaseMode: true,
+      ),
+      throwsA(isA<LumeUnshippableBuild>()),
+    );
+    // A parity capture in debug mode, and every other flavor, runs.
+    lumeRefuseUnshippable(profile: LumeBuildProfile.parity, releaseMode: false);
+    for (final LumeBuildProfile p in <LumeBuildProfile>[
+      LumeBuildProfile.development,
+      LumeBuildProfile.release,
+    ]) {
+      lumeRefuseUnshippable(profile: p, releaseMode: true);
+    }
+    // Only parity reproduces the reference; only a release hides the
+    // fixture harness.
+    expect(LumeBuildProfile.parity.reproducesReference, isTrue);
+    expect(LumeBuildProfile.development.reproducesReference, isFalse);
+    expect(LumeBuildProfile.release.reproducesReference, isFalse);
+    expect(LumeBuildProfile.release.hasFixtureHarness, isFalse);
+    expect(LumeBuildProfile.development.hasFixtureHarness, isTrue);
+  });
+
+  testWidgets('a development build derives every claim as a release does — '
+      'never the reference’s words because it is not a release', (
+    WidgetTester tester,
+  ) async {
+    final (AppLocalizations l, LumeFormatting f) = await strings(tester);
+    final List<String> faults = <String>[];
+    for (final LumeFeature feature in kLumeFeatures) {
+      final LumeSourceClaim dev = claim(
+        l,
+        f,
+        feature,
+        LumeBuildProfile.development,
+      );
+      final LumeSourceClaim rel = claim(
+        l,
+        f,
+        feature,
+        LumeBuildProfile.release,
+      );
+      expect(
+        (dev.label, dev.source, dev.updated, dev.sample, dev.quality),
+        (rel.label, rel.source, rel.updated, rel.sample, rel.quality),
+        reason: feature.id,
+      );
+      expect(dev.labelSemantics, isNull);
+      faults.addAll(
+        releaseFaults(l, feature, LumeDataCapability.fixture(feature.id), dev),
+      );
+    }
+    expect(faults, isEmpty, reason: faults.join('\n'));
+    // The in-memory store: a session claim, never "Stored on this device".
+    for (final String id in LumeDataCapability.readerRecords) {
+      expect(
+        claim(l, f, byId(id), LumeBuildProfile.development).label,
+        l.freshSession,
+      );
+    }
+  });
+
+  testWidgets('storage is claimed from the adapter’s capability, in '
+      'development and release alike', (WidgetTester tester) async {
+    final (AppLocalizations l, LumeFormatting f) = await strings(tester);
+    for (final LumeBuildProfile p in <LumeBuildProfile>[
+      LumeBuildProfile.development,
+      LumeBuildProfile.release,
+    ]) {
+      // A future durable adapter.
+      expect(
+        claim(
+          l,
+          f,
+          byId('ledger'),
+          p,
+          capability: const LumeDataCapability(
+            source: 'Dayroz',
+            isDurable: true,
+          ),
+        ).label,
+        l.freshLocal,
+        reason: p.name,
+      );
+      // A future encrypted adapter.
+      final LumeSourceClaim sealed = claim(
+        l,
+        f,
+        byId('documents'),
+        p,
+        capability: const LumeDataCapability(
+          source: 'Dayroz',
+          isDurable: true,
+          isEncrypted: true,
+        ),
+      );
+      expect(sealed.label, l.freshLocal);
+      expect(sealed.source, LumeToolStrings.source(l, byId('documents')));
+      // Today's store.
+      expect(
+        claim(
+          l,
+          f,
+          byId('ledger'),
+          p,
+          capability: const LumeDataCapability(source: 'Lume'),
+        ).label,
+        l.freshSession,
+      );
+    }
+  });
+
+  testWidgets('the gate refuses a durability claim nothing supports', (
+    WidgetTester tester,
+  ) async {
+    final (AppLocalizations l, LumeFormatting f) = await strings(tester);
+    final LumeFeature ledger = byId('ledger');
+    final LumeSourceClaim parity = claim(l, f, ledger, LumeBuildProfile.parity);
+    expect(parity.label, l.freshLocal, reason: 'the reference’s words');
+    expect(
+      releaseFaults(l, ledger, LumeDataCapability.fixture('ledger'), parity),
+      contains('ledger: "${l.freshLocal}" with nothing durable'),
+    );
+  });
+
+  testWidgets('a parity build’s reproduced claim is heard as reference '
+      'copy', (WidgetTester tester) async {
+    final (AppLocalizations l, LumeFormatting f) = await strings(tester);
+    for (final LumeFeature feature in kLumeFeatures) {
+      final LumeSourceClaim c = claim(l, f, feature, LumeBuildProfile.parity);
+      expect(c.labelSemantics, l.freshReferenceCopy(c.label));
+    }
+    expect(
+      l.freshReferenceCopy(l.freshLocal),
+      'Stored on this device. Reference copy, not a claim about this build',
     );
   });
 
@@ -210,7 +360,7 @@ void main() {
       l,
       f,
       trains,
-      LumeBuildProfile.reference,
+      LumeBuildProfile.parity,
     );
     final LumeSourceClaim hidden = LumeSourceClaim(
       quality: reference.quality,
@@ -305,16 +455,11 @@ void main() {
     );
   });
 
-  testWidgets('the reference build draws what the reference draws, led by '
+  testWidgets('the parity build draws what the reference draws, led by '
       'the sample mark', (WidgetTester tester) async {
     final (AppLocalizations l, LumeFormatting f) = await strings(tester);
     for (final LumeFeature feature in kLumeFeatures) {
-      final LumeSourceClaim c = claim(
-        l,
-        f,
-        feature,
-        LumeBuildProfile.reference,
-      );
+      final LumeSourceClaim c = claim(l, f, feature, LumeBuildProfile.parity);
       expect(c.label, LumeToolStrings.freshness(l, feature.freshness));
       expect(c.source, LumeToolStrings.source(l, feature));
       expect(
@@ -358,8 +503,13 @@ void main() {
           final Finder bar = find.byType(LumeSourceBar);
           expect(bar, findsOneWidget, reason: '$id draws no source bar');
           final List<String> said = textsUnder(tester, bar);
-          if (profile == LumeBuildProfile.release) {
+          if (!profile.reproducesReference) {
             expect(said.contains('Sample data'), sample, reason: '$said');
+            expect(
+              said,
+              isNot(contains('Stored on this device')),
+              reason: 'nothing here is durable',
+            );
             expect(
               find.descendant(
                 of: bar,

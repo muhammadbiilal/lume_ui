@@ -2567,9 +2567,11 @@ Deliberate corrections, each measured in the reference (§17):
   says what the tool is for ("Lend and borrow") instead of the reference's
   unrelated money figure — a count or a sum there would put private
   figures on a tile.
-- **A truthful source claim.** A release build says "Kept until you close
-  Lume": nothing is durable yet (C74). The reference build still draws the
-  reference's own words, as every reproduced tool does.
+- **A truthful source claim.** A development or release build says "Kept
+  until you close Lume": nothing is durable yet (C74). Only the parity
+  build, which exists for visual comparison and never ships, draws the
+  reference's own words, and a screen reader hears them as reference copy
+  (`RELEASE_HONESTY.md`, Build flavors).
 - **Nothing is seeded** (D11). A reader's Ledger starts empty; the three
   reference people exist only as a test fixture, entered through the
   repository as a reader would.
