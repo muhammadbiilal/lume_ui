@@ -210,6 +210,10 @@ class _LedgerToolState extends ConsumerState<LedgerTool> {
   );
   final FocusNode _searchFocus = FocusNode();
 
+  /// The body, to find the frame's scroll from: a new view opens at its top,
+  /// as Installments' do; a filter or a sort keeps the reader's place.
+  final GlobalKey _body = GlobalKey();
+
   _View _view = _View.list;
   LumeRecordId? _person;
   LumeRecordId? _entry;
@@ -303,11 +307,23 @@ class _LedgerToolState extends ConsumerState<LedgerTool> {
   // ------------------------------------------------------------ navigation
 
   void _go(_View v, {LumeRecordId? person, LumeRecordId? entry}) {
+    final bool moved =
+        v != _view ||
+        (person != null && person != _person) ||
+        (entry != null && entry != _entry);
     setState(() {
       _view = v;
       if (person != null) _person = person;
       if (entry != null) _entry = entry;
       _write('person', v == _View.list ? '' : (_person?.value ?? ''));
+    });
+    if (!moved) return;
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      final BuildContext? c = _body.currentContext;
+      final ScrollPosition? p = c == null
+          ? null
+          : Scrollable.maybeOf(c)?.position;
+      if (p != null && p.pixels != 0) p.jumpTo(0);
     });
   }
 
@@ -1040,6 +1056,7 @@ class _LedgerToolState extends ConsumerState<LedgerTool> {
               ]
             : null,
         body: Column(
+          key: _body,
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: body,
         ),
