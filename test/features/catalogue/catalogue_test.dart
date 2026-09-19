@@ -101,7 +101,8 @@ void main() {
     test('the counts are what the catalogue says', () {
       int by(bool Function(LumeFeature) p) => kLumeFeatures.where(p).length;
       expect(by((LumeFeature f) => f.faith), 17, reason: '§21 lists 17');
-      expect(by((LumeFeature f) => f.sensitive), 9);
+      // Lending Ledger joined the eight the reference marks (D8).
+      expect(by((LumeFeature f) => f.sensitive), 10);
       expect(by((LumeFeature f) => f.isCountryRestricted), 7);
       expect(by((LumeFeature f) => f.homeEligible), 28);
       expect(by((LumeFeature f) => f.quickEligible), 24);

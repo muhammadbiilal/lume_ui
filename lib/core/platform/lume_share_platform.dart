@@ -54,6 +54,29 @@ class LumePlatformSharer implements LumeSharer {
   }
 }
 
+/// A message, as text, through the same sheet.
+class LumePlatformTextSharer implements LumeTextSharer {
+  const LumePlatformTextSharer({LumeShareSheet sheet = _sheet}) : _open = sheet;
+
+  final LumeShareSheet _open;
+
+  @override
+  Future<LumeShareOutcome> shareText(String text) async {
+    try {
+      final ShareResultStatus status = await _open(ShareParams(text: text));
+      return switch (status) {
+        ShareResultStatus.success => LumeShareOutcome.shared,
+        ShareResultStatus.dismissed => LumeShareOutcome.dismissed,
+        ShareResultStatus.unavailable => LumeShareOutcome.unavailable,
+      };
+    } on MissingPluginException {
+      return LumeShareOutcome.unavailable;
+    } on PlatformException {
+      return LumeShareOutcome.failed;
+    }
+  }
+}
+
 /// Export through the same sheet: on a phone, "Save to Files", Drive and mail
 /// are destinations of the share sheet, and a download folder is not a place a
 /// reader can find again. [LumeExportOutcome.saved] only when the reader chose

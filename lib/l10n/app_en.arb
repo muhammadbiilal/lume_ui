@@ -8630,9 +8630,9 @@
   "@toolStatusLearning": {
     "description": "The status line on the learning tile. The prototype keeps it in the catalogue and renders it untranslated in every language (D22)"
   },
-  "toolStatusLedger": "3 people",
+  "toolStatusLedger": "Lend and borrow",
   "@toolStatusLedger": {
-    "description": "The status line on the ledger tile. The prototype keeps it in the catalogue and renders it untranslated in every language (D22)"
+    "description": "The status line on the ledger tile: what the tool is for, never a figure from the reader's own ledger (sensitive; C90)"
   },
   "toolStatusLoadshed": "14:00–16:00",
   "@toolStatusLoadshed": {
@@ -9484,5 +9484,797 @@
   "weatherWind": "Wind",
   "@weatherWind": {
     "description": "Reference key weather.wind"
+  },
+  "ledgerNet": "Net position",
+  "@ledgerNet": {
+    "description": "Summary kicker (reference ledger.net)"
+  },
+  "ledgerOwedOverall": "owed to you overall",
+  "@ledgerOwedOverall": {
+    "description": "Summary caption when the net is owed to the reader (reference ledger.owedToYou)"
+  },
+  "ledgerOweOverall": "you owe overall",
+  "@ledgerOweOverall": {
+    "description": "Summary caption when the reader owes overall (reference ledger.youOwe)"
+  },
+  "ledgerEvenOverall": "even overall",
+  "@ledgerEvenOverall": {
+    "description": "Summary caption when the net is exactly zero"
+  },
+  "ledgerOwedToYou": "Owed to you",
+  "@ledgerOwedToYou": {
+    "description": "Summary stat: the sum of positive balances"
+  },
+  "ledgerYouOwe": "You owe",
+  "@ledgerYouOwe": {
+    "description": "Summary stat and filter: the sum of negative balances"
+  },
+  "ledgerPeople": "People",
+  "@ledgerPeople": {
+    "description": "Summary stat and section title (reference ledger.people)"
+  },
+  "ledgerSummaryCurrency": "In {code}",
+  "@ledgerSummaryCurrency": {
+    "description": "Heading of a per-currency summary when there are several currencies",
+    "placeholders": {
+      "code": {
+        "type": "String"
+      }
+    }
+  },
+  "ledgerFilterLabel": "Show people by their current balance",
+  "@ledgerFilterLabel": {
+    "description": "Accessibility label of the filter bar (D4)"
+  },
+  "ledgerFilterOwesYou": "Owes you",
+  "@ledgerFilterOwesYou": {
+    "description": "Filter: people whose balance is owed to the reader"
+  },
+  "ledgerOwesYou": "owes you",
+  "@ledgerOwesYou": {
+    "description": "Under a row amount (reference ledger.owesYou)"
+  },
+  "ledgerYouOweShort": "you owe",
+  "@ledgerYouOweShort": {
+    "description": "Under a row amount (reference ledger.youOweShort)"
+  },
+  "ledgerEvenRow": "open both ways",
+  "@ledgerEvenRow": {
+    "description": "Under a row whose net is zero but which is not settled"
+  },
+  "ledgerSettledRow": "settled",
+  "@ledgerSettledRow": {
+    "description": "Under a settled row"
+  },
+  "ledgerCreditToThem": "{amount} credit to them",
+  "@ledgerCreditToThem": {
+    "description": "A person overpaid; the reader holds it as credit and owes it back",
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "ledgerCreditFromThem": "{amount} your credit",
+  "@ledgerCreditFromThem": {
+    "description": "The reader overpaid; the person holds it as the reader's credit",
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "ledgerDue": "due {date}",
+  "@ledgerDue": {
+    "description": "Row meta (reference ledger.due)",
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "ledgerNoEntries": "No entries yet",
+  "@ledgerNoEntries": {
+    "description": "A person with no entries"
+  },
+  "ledgerNeedsReconcile": "Needs reconciling",
+  "@ledgerNeedsReconcile": {
+    "description": "Badge on a person and currency whose stored allocations break the rules"
+  },
+  "ledgerArchivedBadge": "Archived",
+  "@ledgerArchivedBadge": {
+    "description": "Badge on an archived person"
+  },
+  "ledgerRecent": "Recent",
+  "@ledgerRecent": {
+    "description": "Section title: the latest entries"
+  },
+  "ledgerAdd": "Add an entry",
+  "@ledgerAdd": {
+    "description": "Button (reference ledger.add)"
+  },
+  "ledgerRemind": "Send a reminder",
+  "@ledgerRemind": {
+    "description": "Button (reference ledger.remind); opens a preview, never sends by itself"
+  },
+  "ledgerAddPerson": "Add a person",
+  "@ledgerAddPerson": {
+    "description": "Button"
+  },
+  "ledgerEmptyTitle": "Money lent and borrowed, in one place",
+  "@ledgerEmptyTitle": {
+    "description": "First use: title (D11 — no sample people)"
+  },
+  "ledgerEmptyText": "Add a person, then record what you lend, borrow and get back. Balances, overdue dates and credit are worked out from your entries.",
+  "@ledgerEmptyText": {
+    "description": "First use: text"
+  },
+  "ledgerNoMatch": "Nobody here",
+  "@ledgerNoMatch": {
+    "description": "Filter or search with no match (reference ledger.noMatch)"
+  },
+  "ledgerNoMatchText": "No one matches this filter or search.",
+  "@ledgerNoMatchText": {
+    "description": "Filter or search with no match"
+  },
+  "ledgerShowAll": "Show all",
+  "@ledgerShowAll": {
+    "description": "Clears the filter and the search"
+  },
+  "ledgerSearch": "Search people and notes",
+  "@ledgerSearch": {
+    "description": "Search field placeholder"
+  },
+  "ledgerSortDue": "Due date",
+  "@ledgerSortDue": {
+    "description": "Sort option (default)"
+  },
+  "ledgerSortName": "Name",
+  "@ledgerSortName": {
+    "description": "Sort option"
+  },
+  "ledgerSortRecent": "Recent activity",
+  "@ledgerSortRecent": {
+    "description": "Sort option"
+  },
+  "ledgerShowArchived": "Include archived",
+  "@ledgerShowArchived": {
+    "description": "Switch: show archived people"
+  },
+  "ledgerOverdueUnknown": "Overdue needs your day, and it can't be worked out. Dates are written out in full.",
+  "@ledgerOverdueUnknown": {
+    "description": "The Overdue filter when the reader's day is unknown"
+  },
+  "ledgerMoneyOut": "Money out",
+  "@ledgerMoneyOut": {
+    "description": "Accessibility: the icon of an entry where money left the reader"
+  },
+  "ledgerMoneyIn": "Money in",
+  "@ledgerMoneyIn": {
+    "description": "Accessibility: the icon of an entry where money came to the reader"
+  },
+  "ledgerKindLent": "You lent",
+  "@ledgerKindLent": {
+    "description": "Entry kind, in a sentence"
+  },
+  "ledgerKindBorrowed": "You borrowed",
+  "@ledgerKindBorrowed": {
+    "description": "Entry kind, in a sentence"
+  },
+  "ledgerKindRepaidToMe": "They paid you back",
+  "@ledgerKindRepaidToMe": {
+    "description": "Entry kind, in a sentence"
+  },
+  "ledgerKindRepaidByMe": "You paid them back",
+  "@ledgerKindRepaidByMe": {
+    "description": "Entry kind, in a sentence"
+  },
+  "ledgerKindLentShort": "Lent",
+  "@ledgerKindLentShort": {
+    "description": "Entry kind, segmented control"
+  },
+  "ledgerKindBorrowedShort": "Borrowed",
+  "@ledgerKindBorrowedShort": {
+    "description": "Entry kind, segmented control"
+  },
+  "ledgerKindRepaidToMeShort": "Got back",
+  "@ledgerKindRepaidToMeShort": {
+    "description": "Entry kind, segmented control"
+  },
+  "ledgerKindRepaidByMeShort": "Paid back",
+  "@ledgerKindRepaidByMeShort": {
+    "description": "Entry kind, segmented control"
+  },
+  "ledgerVoided": "Voided",
+  "@ledgerVoided": {
+    "description": "Badge on a voided entry"
+  },
+  "ledgerHistory": "History",
+  "@ledgerHistory": {
+    "description": "Person detail: every entry"
+  },
+  "ledgerOpenLoans": "Open",
+  "@ledgerOpenLoans": {
+    "description": "Person detail: principals with something remaining"
+  },
+  "ledgerLeftOf": "{left} left of {total}",
+  "@ledgerLeftOf": {
+    "description": "A principal's remaining",
+    "placeholders": {
+      "left": {
+        "type": "String"
+      },
+      "total": {
+        "type": "String"
+      }
+    }
+  },
+  "ledgerAppliedTo": "{amount} to the {date} entry",
+  "@ledgerAppliedTo": {
+    "description": "An allocation, on a repayment",
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      },
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "ledgerPaidFrom": "{amount} from the {date} repayment",
+  "@ledgerPaidFrom": {
+    "description": "An allocation, on a principal",
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      },
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "ledgerKeptAsCredit": "{amount} kept as credit",
+  "@ledgerKeptAsCredit": {
+    "description": "A repayment's confirmed excess, still unapplied",
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "ledgerManualBadge": "Chosen",
+  "@ledgerManualBadge": {
+    "description": "An allocation the reader chose rather than oldest-due-first"
+  },
+  "ledgerSettleUp": "Settle up",
+  "@ledgerSettleUp": {
+    "description": "Person detail action"
+  },
+  "ledgerSettleOwes": "Record {name} paying back {amount}",
+  "@ledgerSettleOwes": {
+    "description": "Settle-up preview title, when they owe the reader",
+    "placeholders": {
+      "name": {
+        "type": "String"
+      },
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "ledgerSettleOwe": "Record paying {name} back {amount}",
+  "@ledgerSettleOwe": {
+    "description": "Settle-up preview title, when the reader owes",
+    "placeholders": {
+      "name": {
+        "type": "String"
+      },
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "ledgerSettleText": "One repayment, dated today, that clears:",
+  "@ledgerSettleText": {
+    "description": "Settle-up preview: the principals it discharges follow"
+  },
+  "ledgerSettleConfirm": "Record it",
+  "@ledgerSettleConfirm": {
+    "description": "Settle-up confirm"
+  },
+  "ledgerRename": "Edit person",
+  "@ledgerRename": {
+    "description": "Person action"
+  },
+  "ledgerArchive": "Archive",
+  "@ledgerArchive": {
+    "description": "Person action"
+  },
+  "ledgerUnarchive": "Unarchive",
+  "@ledgerUnarchive": {
+    "description": "Person action"
+  },
+  "ledgerDeletePerson": "Delete person",
+  "@ledgerDeletePerson": {
+    "description": "Person action"
+  },
+  "ledgerArchiveOpen": "Only a settled person can be archived.",
+  "@ledgerArchiveOpen": {
+    "description": "Archive refused"
+  },
+  "ledgerPersonReferenced": "{n, plural, =1{1 entry still names this person. Delete it first — nothing is deleted with them.} other{{n} entries still name this person. Delete them first — nothing is deleted with them.}}",
+  "@ledgerPersonReferenced": {
+    "description": "Delete person refused while entries reference them (no cascade)",
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
+  "ledgerDeletePersonTitle": "Delete this person?",
+  "@ledgerDeletePersonTitle": {
+    "description": "Delete person confirmation"
+  },
+  "ledgerDeletePersonText": "They have no entries. This can't be undone.",
+  "@ledgerDeletePersonText": {
+    "description": "Delete person confirmation"
+  },
+  "ledgerReconcile": "Reconcile",
+  "@ledgerReconcile": {
+    "description": "Rebuild a damaged person's allocations, on the reader's request"
+  },
+  "ledgerDamagedText": "The allocations on file for this person don't add up. Nothing is recalculated until you reconcile.",
+  "@ledgerDamagedText": {
+    "description": "Damaged scope notice"
+  },
+  "ledgerDefects": "{n, plural, =1{1 record can't be read and is shown as damaged.} other{{n} records can't be read and are shown as damaged.}}",
+  "@ledgerDefects": {
+    "description": "Records that failed to decode — never dropped",
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
+  "ledgerVoid": "Void",
+  "@ledgerVoid": {
+    "description": "Entry action: the normal correction"
+  },
+  "ledgerRestore": "Restore",
+  "@ledgerRestore": {
+    "description": "Entry action: undo a void"
+  },
+  "ledgerVoidText": "Voiding keeps the entry and its history, and takes it out of every figure.",
+  "@ledgerVoidText": {
+    "description": "Entry detail note"
+  },
+  "ledgerNewPerson": "New person",
+  "@ledgerNewPerson": {
+    "description": "Person form title"
+  },
+  "ledgerPersonName": "Name",
+  "@ledgerPersonName": {
+    "description": "Person form field"
+  },
+  "ledgerNote": "Note",
+  "@ledgerNote": {
+    "description": "Form field"
+  },
+  "ledgerOptional": "Optional",
+  "@ledgerOptional": {
+    "description": "Beside an optional field"
+  },
+  "ledgerNewEntry": "New entry",
+  "@ledgerNewEntry": {
+    "description": "Entry form title"
+  },
+  "ledgerEditEntry": "Edit entry",
+  "@ledgerEditEntry": {
+    "description": "Entry form title"
+  },
+  "ledgerFieldPerson": "Person",
+  "@ledgerFieldPerson": {
+    "description": "Entry form field"
+  },
+  "ledgerFieldKind": "What happened",
+  "@ledgerFieldKind": {
+    "description": "Entry form field"
+  },
+  "ledgerFieldAmount": "Amount",
+  "@ledgerFieldAmount": {
+    "description": "Entry form field"
+  },
+  "ledgerFieldCurrency": "Currency",
+  "@ledgerFieldCurrency": {
+    "description": "Entry form field"
+  },
+  "ledgerFieldDate": "Date",
+  "@ledgerFieldDate": {
+    "description": "Entry form field"
+  },
+  "ledgerFieldDue": "Due",
+  "@ledgerFieldDue": {
+    "description": "Entry form field, principals only"
+  },
+  "ledgerNoDue": "No due date",
+  "@ledgerNoDue": {
+    "description": "Due picker value when none"
+  },
+  "ledgerChooseDate": "Choose a date",
+  "@ledgerChooseDate": {
+    "description": "Date picker value when none (no today)"
+  },
+  "ledgerFieldApply": "Apply to",
+  "@ledgerFieldApply": {
+    "description": "Repayment allocation mode"
+  },
+  "ledgerApplyAuto": "Oldest due first",
+  "@ledgerApplyAuto": {
+    "description": "Automatic allocation"
+  },
+  "ledgerApplyManual": "Choose",
+  "@ledgerApplyManual": {
+    "description": "Manual allocation"
+  },
+  "ledgerApplyNone": "Nothing is open in {code} for this person.",
+  "@ledgerApplyNone": {
+    "description": "Manual allocation with no open principal",
+    "placeholders": {
+      "code": {
+        "type": "String"
+      }
+    }
+  },
+  "ledgerErrName": "Enter a name",
+  "@ledgerErrName": {
+    "description": "Validation"
+  },
+  "ledgerErrLong": "That's too long",
+  "@ledgerErrLong": {
+    "description": "Validation"
+  },
+  "ledgerErrPerson": "Choose a person",
+  "@ledgerErrPerson": {
+    "description": "Validation"
+  },
+  "ledgerErrAmount": "Enter an amount above zero",
+  "@ledgerErrAmount": {
+    "description": "Validation"
+  },
+  "ledgerErrNumber": "Enter a number, like 1500 or 1500.50",
+  "@ledgerErrNumber": {
+    "description": "Validation"
+  },
+  "ledgerErrPrecision": "{code} takes {n, plural, =0{no decimal places} =1{one decimal place} other{{n} decimal places}}",
+  "@ledgerErrPrecision": {
+    "description": "Validation: more decimals than the currency's ISO exponent — never rounded",
+    "placeholders": {
+      "code": {
+        "type": "String"
+      },
+      "n": {
+        "type": "int"
+      }
+    }
+  },
+  "ledgerErrTooLarge": "That amount is larger than a ledger entry can hold",
+  "@ledgerErrTooLarge": {
+    "description": "Validation: past 10^15 minor units, or a sum past 2^53 − 1"
+  },
+  "ledgerErrDate": "Choose a date",
+  "@ledgerErrDate": {
+    "description": "Validation"
+  },
+  "ledgerErrDueBefore": "Due can't be before the date",
+  "@ledgerErrDueBefore": {
+    "description": "Validation"
+  },
+  "ledgerErrApplied": "The amounts you apply can't add up to more than the repayment",
+  "@ledgerErrApplied": {
+    "description": "Validation: manual allocations over the repayment"
+  },
+  "ledgerErrAppliedOver": "More than is open on this entry",
+  "@ledgerErrAppliedOver": {
+    "description": "Validation: a manual allocation over a principal's remaining"
+  },
+  "ledgerErrWithdrawn": "{code} is no longer issued. Choose a current currency.",
+  "@ledgerErrWithdrawn": {
+    "description": "Validation: a withdrawn ISO currency for a new entry",
+    "placeholders": {
+      "code": {
+        "type": "String"
+      }
+    }
+  },
+  "ledgerErrArchived": "This person is archived. Unarchive them to add entries.",
+  "@ledgerErrArchived": {
+    "description": "Validation"
+  },
+  "ledgerOverpayTitle": "More than is open",
+  "@ledgerOverpayTitle": {
+    "description": "Overpayment sheet title"
+  },
+  "ledgerOverpayToMe": "{name} has paid back {amount} more than is open. Keep it as credit to {name}? It will count against the next loan to them.",
+  "@ledgerOverpayToMe": {
+    "description": "Overpayment sheet, a repayment to the reader",
+    "placeholders": {
+      "name": {
+        "type": "String"
+      },
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "ledgerOverpayByMe": "You're paying {name} back {amount} more than is open. Keep it as your credit with {name}? It will count against the next time you borrow from them.",
+  "@ledgerOverpayByMe": {
+    "description": "Overpayment sheet, a repayment by the reader",
+    "placeholders": {
+      "name": {
+        "type": "String"
+      },
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "ledgerKeepCredit": "Keep as credit",
+  "@ledgerKeepCredit": {
+    "description": "Overpayment confirm"
+  },
+  "ledgerConflictTitle": "Your chosen allocation no longer fits",
+  "@ledgerConflictTitle": {
+    "description": "Allocation conflict sheet title"
+  },
+  "ledgerConflictText": "This change leaves less open than you applied by hand. Nothing was saved. Switch those to oldest due first and save?",
+  "@ledgerConflictText": {
+    "description": "Allocation conflict sheet text"
+  },
+  "ledgerDeleteEntryTitle": "Delete this entry?",
+  "@ledgerDeleteEntryTitle": {
+    "description": "Hard delete confirmation — void is the normal correction"
+  },
+  "ledgerDeleteEntryText": "Only for a mistake — to correct history, void it instead. It's removed with its allocations, and you can undo for a few seconds.",
+  "@ledgerDeleteEntryText": {
+    "description": "Hard delete confirmation text"
+  },
+  "ledgerOrphanTitle": "Repayments paid this entry",
+  "@ledgerOrphanTitle": {
+    "description": "Delete principal with repayments (E8)"
+  },
+  "ledgerOrphanText": "{amount} was paid back against it. Keep that as credit, or delete those repayments too?",
+  "@ledgerOrphanText": {
+    "description": "E8 sheet text",
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "ledgerOrphanDelete": "Delete them too",
+  "@ledgerOrphanDelete": {
+    "description": "E8 choice"
+  },
+  "ledgerSaved": "Saved",
+  "@ledgerSaved": {
+    "description": "Toast"
+  },
+  "ledgerDeleted": "Entry deleted",
+  "@ledgerDeleted": {
+    "description": "Toast, with Undo"
+  },
+  "ledgerRestoredToast": "Brought back",
+  "@ledgerRestoredToast": {
+    "description": "Toast after Undo"
+  },
+  "ledgerVoidedToast": "Entry voided",
+  "@ledgerVoidedToast": {
+    "description": "Toast"
+  },
+  "ledgerUnvoidedToast": "Entry restored",
+  "@ledgerUnvoidedToast": {
+    "description": "Toast"
+  },
+  "ledgerArchivedToast": "Archived",
+  "@ledgerArchivedToast": {
+    "description": "Toast"
+  },
+  "ledgerUnarchivedToast": "Unarchived",
+  "@ledgerUnarchivedToast": {
+    "description": "Toast"
+  },
+  "ledgerPersonDeleted": "Person deleted",
+  "@ledgerPersonDeleted": {
+    "description": "Toast"
+  },
+  "ledgerReconciled": "Reconciled",
+  "@ledgerReconciled": {
+    "description": "Toast"
+  },
+  "ledgerWriteFailed": "Couldn't save. Nothing was changed.",
+  "@ledgerWriteFailed": {
+    "description": "Toast: storage failure, rolled back"
+  },
+  "ledgerWriteConflict": "This changed while you were editing. Nothing was saved.",
+  "@ledgerWriteConflict": {
+    "description": "Toast: a stale version"
+  },
+  "ledgerWriteDamaged": "This person's records need reconciling first. Nothing was saved.",
+  "@ledgerWriteDamaged": {
+    "description": "Toast: write refused over a damaged scope"
+  },
+  "ledgerNotFound": "That person isn't in your Ledger.",
+  "@ledgerNotFound": {
+    "description": "A deep link to a person who is not there"
+  },
+  "ledgerRemindTitle": "Reminder",
+  "@ledgerRemindTitle": {
+    "description": "Reminder sheet title"
+  },
+  "ledgerRemindChoose": "Who to remind",
+  "@ledgerRemindChoose": {
+    "description": "Reminder: choose a balance"
+  },
+  "ledgerRemindNone": "No one owes you anything to remind them about.",
+  "@ledgerRemindNone": {
+    "description": "Reminder: nothing eligible"
+  },
+  "ledgerRemindBody": "Hi {name}, a reminder about {amount} from {date}.",
+  "@ledgerRemindBody": {
+    "description": "Reminder text, no due date",
+    "placeholders": {
+      "name": {
+        "type": "String"
+      },
+      "amount": {
+        "type": "String"
+      },
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "ledgerRemindBodyDue": "Hi {name}, a reminder about {amount} from {date}, due {due}.",
+  "@ledgerRemindBodyDue": {
+    "description": "Reminder text with the shown due date",
+    "placeholders": {
+      "name": {
+        "type": "String"
+      },
+      "amount": {
+        "type": "String"
+      },
+      "date": {
+        "type": "String"
+      },
+      "due": {
+        "type": "String"
+      }
+    }
+  },
+  "ledgerRemindMessage": "Message",
+  "@ledgerRemindMessage": {
+    "description": "Reminder: the editable text"
+  },
+  "ledgerRemindFields": "Included: name, amount and currency, date.",
+  "@ledgerRemindFields": {
+    "description": "Reminder: the fields in the text"
+  },
+  "ledgerRemindFieldsDue": "Included: name, amount and currency, date, due date.",
+  "@ledgerRemindFieldsDue": {
+    "description": "Reminder: the fields in the text"
+  },
+  "ledgerRemindExcluded": "Not included: notes, other people, other currencies, record ids.",
+  "@ledgerRemindExcluded": {
+    "description": "Reminder: what is left out"
+  },
+  "ledgerRemindHow": "Lume doesn't send this. Your share sheet does, to whoever you choose there.",
+  "@ledgerRemindHow": {
+    "description": "Reminder: honesty about delivery"
+  },
+  "ledgerRemindShare": "Share",
+  "@ledgerRemindShare": {
+    "description": "Reminder: the explicit second action"
+  },
+  "ledgerRemindHanded": "Handed to your share sheet",
+  "@ledgerRemindHanded": {
+    "description": "Reminder result — never \"sent\" or \"delivered\""
+  },
+  "ledgerRemindUnavailable": "Sharing isn't available on this device",
+  "@ledgerRemindUnavailable": {
+    "description": "Reminder: no share adapter"
+  },
+  "ledgerRemindFailed": "The share sheet couldn't open",
+  "@ledgerRemindFailed": {
+    "description": "Reminder: the platform threw"
+  },
+  "ledgerExportTitle": "Export your Ledger",
+  "@ledgerExportTitle": {
+    "description": "Export sheet title"
+  },
+  "ledgerExportJson": "Full backup (JSON)",
+  "@ledgerExportJson": {
+    "description": "Export format"
+  },
+  "ledgerExportJsonSub": "Every entry and allocation. It can be imported again.",
+  "@ledgerExportJsonSub": {
+    "description": "Export format"
+  },
+  "ledgerExportCsv": "Spreadsheet (CSV)",
+  "@ledgerExportCsv": {
+    "description": "Export format"
+  },
+  "ledgerExportCsvSub": "One row per entry. It can't be imported — use the full backup for that.",
+  "@ledgerExportCsvSub": {
+    "description": "Export format"
+  },
+  "ledgerIncludeNames": "Include names and notes",
+  "@ledgerIncludeNames": {
+    "description": "Export option, off by default"
+  },
+  "ledgerIncludeNamesOn": "This file will contain the names and notes you typed. Anyone you give it to can read them.",
+  "@ledgerIncludeNamesOn": {
+    "description": "Export option on: the privacy line"
+  },
+  "ledgerIncludeNamesOff": "People are written as Person 1, Person 2… and notes are left out.",
+  "@ledgerIncludeNamesOff": {
+    "description": "Export option off"
+  },
+  "ledgerExportAction": "Export",
+  "@ledgerExportAction": {
+    "description": "Export confirm"
+  },
+  "ledgerImport": "Import a backup",
+  "@ledgerImport": {
+    "description": "Import action"
+  },
+  "ledgerImportPaste": "Paste the contents of a lume.ledger/1 backup",
+  "@ledgerImportPaste": {
+    "description": "Import field"
+  },
+  "ledgerImportCheck": "Check",
+  "@ledgerImportCheck": {
+    "description": "Import: validate before anything is written"
+  },
+  "ledgerImportReady": "Ready: {c} to add, {u} to update, {s} already here. Nothing is written until you import.",
+  "@ledgerImportReady": {
+    "description": "Import preview",
+    "placeholders": {
+      "c": {
+        "type": "int"
+      },
+      "u": {
+        "type": "int"
+      },
+      "s": {
+        "type": "int"
+      }
+    }
+  },
+  "ledgerImportIssues": "{n, plural, =1{1 problem. Nothing will be imported.} other{{n} problems. Nothing will be imported.}}",
+  "@ledgerImportIssues": {
+    "description": "Import report: all or nothing",
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
+  "ledgerImportNoNames": "This backup has no names: people will be named Person 1, Person 2…",
+  "@ledgerImportNoNames": {
+    "description": "Import preview of a redacted backup"
+  },
+  "ledgerImportAction": "Import",
+  "@ledgerImportAction": {
+    "description": "Import confirm"
+  },
+  "ledgerImported": "{n, plural, =1{Imported 1 record} other{Imported {n} records}}",
+  "@ledgerImported": {
+    "description": "Import toast",
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
   }
 }

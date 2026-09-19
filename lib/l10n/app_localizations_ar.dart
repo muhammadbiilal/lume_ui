@@ -6439,7 +6439,7 @@ class AppLocalizationsAr extends AppLocalizations {
   String get toolStatusLearning => '3 دورات';
 
   @override
-  String get toolStatusLedger => '3 أشخاص';
+  String get toolStatusLedger => 'الإقراض والاقتراض';
 
   @override
   String get toolStatusLoadshed => '14:00–16:00';
@@ -7049,4 +7049,589 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get weatherWind => 'الرياح';
+
+  @override
+  String get ledgerNet => 'صافي الموقف';
+
+  @override
+  String get ledgerOwedOverall => 'مستحق لك إجمالًا';
+
+  @override
+  String get ledgerOweOverall => 'مستحق عليك إجمالًا';
+
+  @override
+  String get ledgerEvenOverall => 'متعادل إجمالًا';
+
+  @override
+  String get ledgerOwedToYou => 'مستحق لك';
+
+  @override
+  String get ledgerYouOwe => 'عليك';
+
+  @override
+  String get ledgerPeople => 'الأشخاص';
+
+  @override
+  String ledgerSummaryCurrency(String code) {
+    return 'بعملة $code';
+  }
+
+  @override
+  String get ledgerFilterLabel => 'عرض الأشخاص حسب رصيدهم الحالي';
+
+  @override
+  String get ledgerFilterOwesYou => 'مدين لك';
+
+  @override
+  String get ledgerOwesYou => 'مدين لك';
+
+  @override
+  String get ledgerYouOweShort => 'عليك';
+
+  @override
+  String get ledgerEvenRow => 'مفتوح في الاتجاهين';
+
+  @override
+  String get ledgerSettledRow => 'مُسدّد';
+
+  @override
+  String ledgerCreditToThem(String amount) {
+    return 'رصيد دائن له $amount';
+  }
+
+  @override
+  String ledgerCreditFromThem(String amount) {
+    return 'رصيدك الدائن $amount';
+  }
+
+  @override
+  String ledgerDue(String date) {
+    return 'مستحق في $date';
+  }
+
+  @override
+  String get ledgerNoEntries => 'لا قيود بعد';
+
+  @override
+  String get ledgerNeedsReconcile => 'يحتاج إلى تسوية';
+
+  @override
+  String get ledgerArchivedBadge => 'مؤرشف';
+
+  @override
+  String get ledgerRecent => 'الأحدث';
+
+  @override
+  String get ledgerAdd => 'أضف قيدًا';
+
+  @override
+  String get ledgerRemind => 'أرسل تذكيرًا';
+
+  @override
+  String get ledgerAddPerson => 'أضف شخصًا';
+
+  @override
+  String get ledgerEmptyTitle => 'ما أقرضته واقترضته في مكان واحد';
+
+  @override
+  String get ledgerEmptyText =>
+      'أضف شخصًا، ثم سجّل ما تقرضه وتقترضه وما يُرد إليك. تُحسب الأرصدة والمواعيد المتأخرة والرصيد الدائن من قيودك.';
+
+  @override
+  String get ledgerNoMatch => 'لا أحد هنا';
+
+  @override
+  String get ledgerNoMatchText => 'لا أحد يطابق هذا التصفية أو البحث.';
+
+  @override
+  String get ledgerShowAll => 'عرض الكل';
+
+  @override
+  String get ledgerSearch => 'ابحث في الأشخاص والملاحظات';
+
+  @override
+  String get ledgerSortDue => 'تاريخ الاستحقاق';
+
+  @override
+  String get ledgerSortName => 'الاسم';
+
+  @override
+  String get ledgerSortRecent => 'آخر نشاط';
+
+  @override
+  String get ledgerShowArchived => 'تضمين المؤرشف';
+
+  @override
+  String get ledgerOverdueUnknown =>
+      'يحتاج «المتأخر» إلى يومك، ولا يمكن تحديده. التواريخ مكتوبة كاملة.';
+
+  @override
+  String get ledgerMoneyOut => 'مال خارج';
+
+  @override
+  String get ledgerMoneyIn => 'مال وارد';
+
+  @override
+  String get ledgerKindLent => 'أقرضت';
+
+  @override
+  String get ledgerKindBorrowed => 'اقترضت';
+
+  @override
+  String get ledgerKindRepaidToMe => 'ردّ لك';
+
+  @override
+  String get ledgerKindRepaidByMe => 'رددت له';
+
+  @override
+  String get ledgerKindLentShort => 'أقرضت';
+
+  @override
+  String get ledgerKindBorrowedShort => 'اقترضت';
+
+  @override
+  String get ledgerKindRepaidToMeShort => 'استرددت';
+
+  @override
+  String get ledgerKindRepaidByMeShort => 'سددت';
+
+  @override
+  String get ledgerVoided => 'ملغى';
+
+  @override
+  String get ledgerHistory => 'السجل';
+
+  @override
+  String get ledgerOpenLoans => 'مفتوح';
+
+  @override
+  String ledgerLeftOf(String left, String total) {
+    return 'متبقٍ $left من $total';
+  }
+
+  @override
+  String ledgerAppliedTo(String amount, String date) {
+    return '$amount إلى قيد $date';
+  }
+
+  @override
+  String ledgerPaidFrom(String amount, String date) {
+    return '$amount من ردّ $date';
+  }
+
+  @override
+  String ledgerKeptAsCredit(String amount) {
+    return 'أُبقي $amount رصيدًا دائنًا';
+  }
+
+  @override
+  String get ledgerManualBadge => 'مُختار';
+
+  @override
+  String get ledgerSettleUp => 'تسوية';
+
+  @override
+  String ledgerSettleOwes(String name, String amount) {
+    return 'سجّل ردّ $name مبلغ $amount';
+  }
+
+  @override
+  String ledgerSettleOwe(String name, String amount) {
+    return 'سجّل ردّك إلى $name مبلغ $amount';
+  }
+
+  @override
+  String get ledgerSettleText => 'ردّ واحد بتاريخ اليوم يسدد:';
+
+  @override
+  String get ledgerSettleConfirm => 'سجّله';
+
+  @override
+  String get ledgerRename => 'تعديل الشخص';
+
+  @override
+  String get ledgerArchive => 'أرشفة';
+
+  @override
+  String get ledgerUnarchive => 'إلغاء الأرشفة';
+
+  @override
+  String get ledgerDeletePerson => 'حذف الشخص';
+
+  @override
+  String get ledgerArchiveOpen => 'لا يمكن أرشفة إلا الشخص المُسدّد.';
+
+  @override
+  String ledgerPersonReferenced(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: 'لا يزال $n قيد يذكر هذا الشخص. احذفها أولًا — لا يُحذف شيء معه.',
+      many: 'لا يزال $n قيدًا يذكر هذا الشخص. احذفها أولًا — لا يُحذف شيء معه.',
+      few: 'لا تزال $n قيود تذكر هذا الشخص. احذفها أولًا — لا يُحذف شيء معه.',
+      two: 'لا يزال قيدان يذكران هذا الشخص. احذفهما أولًا — لا يُحذف شيء معه.',
+      one: 'لا يزال قيد واحد يذكر هذا الشخص. احذفه أولًا — لا يُحذف شيء معه.',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get ledgerDeletePersonTitle => 'حذف هذا الشخص؟';
+
+  @override
+  String get ledgerDeletePersonText => 'لا قيود له. لا يمكن التراجع عن هذا.';
+
+  @override
+  String get ledgerReconcile => 'تسوية';
+
+  @override
+  String get ledgerDamagedText =>
+      'التوزيعات المحفوظة لهذا الشخص لا تتطابق. لا يُعاد حساب شيء حتى تجري التسوية.';
+
+  @override
+  String ledgerDefects(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: 'تعذّرت قراءة $n سجل وتظهر تالفة.',
+      many: 'تعذّرت قراءة $n سجلًا وتظهر تالفة.',
+      few: 'تعذّرت قراءة $n سجلات وتظهر تالفة.',
+      two: 'تعذّرت قراءة سجلين ويظهران تالفين.',
+      one: 'تعذّرت قراءة سجل واحد ويظهر تالفًا.',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get ledgerVoid => 'إلغاء';
+
+  @override
+  String get ledgerRestore => 'استعادة';
+
+  @override
+  String get ledgerVoidText => 'الإلغاء يبقي القيد وسجله، ويخرجه من كل رقم.';
+
+  @override
+  String get ledgerNewPerson => 'شخص جديد';
+
+  @override
+  String get ledgerPersonName => 'الاسم';
+
+  @override
+  String get ledgerNote => 'ملاحظة';
+
+  @override
+  String get ledgerOptional => 'اختياري';
+
+  @override
+  String get ledgerNewEntry => 'قيد جديد';
+
+  @override
+  String get ledgerEditEntry => 'تعديل القيد';
+
+  @override
+  String get ledgerFieldPerson => 'الشخص';
+
+  @override
+  String get ledgerFieldKind => 'ماذا حدث';
+
+  @override
+  String get ledgerFieldAmount => 'المبلغ';
+
+  @override
+  String get ledgerFieldCurrency => 'العملة';
+
+  @override
+  String get ledgerFieldDate => 'التاريخ';
+
+  @override
+  String get ledgerFieldDue => 'الاستحقاق';
+
+  @override
+  String get ledgerNoDue => 'بلا تاريخ استحقاق';
+
+  @override
+  String get ledgerChooseDate => 'اختر تاريخًا';
+
+  @override
+  String get ledgerFieldApply => 'تطبيق على';
+
+  @override
+  String get ledgerApplyAuto => 'الأقدم استحقاقًا أولًا';
+
+  @override
+  String get ledgerApplyManual => 'اختر بنفسك';
+
+  @override
+  String ledgerApplyNone(String code) {
+    return 'لا شيء مفتوح بعملة $code لهذا الشخص.';
+  }
+
+  @override
+  String get ledgerErrName => 'أدخل اسمًا';
+
+  @override
+  String get ledgerErrLong => 'هذا طويل جدًا';
+
+  @override
+  String get ledgerErrPerson => 'اختر شخصًا';
+
+  @override
+  String get ledgerErrAmount => 'أدخل مبلغًا أكبر من صفر';
+
+  @override
+  String get ledgerErrNumber => 'أدخل رقمًا مثل 1500 أو 1500.50';
+
+  @override
+  String ledgerErrPrecision(String code, int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: 'بـ$n منزلة عشرية',
+      many: 'بـ$n منزلة عشرية',
+      few: 'بـ$n منازل عشرية',
+      two: 'بمنزلتين عشريتين',
+      one: 'بمنزلة عشرية واحدة',
+      zero: 'بلا منازل عشرية',
+    );
+    return '$code $_temp0';
+  }
+
+  @override
+  String get ledgerErrTooLarge => 'هذا المبلغ أكبر مما يتسع له قيد';
+
+  @override
+  String get ledgerErrDate => 'اختر تاريخًا';
+
+  @override
+  String get ledgerErrDueBefore => 'لا يمكن أن يسبق الاستحقاق التاريخ';
+
+  @override
+  String get ledgerErrApplied => 'لا يمكن أن يتجاوز مجموع ما تطبّقه مبلغ الردّ';
+
+  @override
+  String get ledgerErrAppliedOver => 'أكثر من المفتوح على هذا القيد';
+
+  @override
+  String ledgerErrWithdrawn(String code) {
+    return 'لم تعد $code تُصدر. اختر عملة حالية.';
+  }
+
+  @override
+  String get ledgerErrArchived => 'هذا الشخص مؤرشف. ألغِ الأرشفة لإضافة قيود.';
+
+  @override
+  String get ledgerOverpayTitle => 'أكثر من المفتوح';
+
+  @override
+  String ledgerOverpayToMe(String name, String amount) {
+    return 'ردّ $name مبلغ $amount أكثر من المفتوح. هل تبقيه رصيدًا دائنًا لـ$name؟ سيُحتسب من القرض التالي له.';
+  }
+
+  @override
+  String ledgerOverpayByMe(String name, String amount) {
+    return 'تردّ إلى $name مبلغ $amount أكثر من المفتوح. هل تبقيه رصيدًا دائنًا لك لدى $name؟ سيُحتسب في المرة القادمة التي تقترض فيها منه.';
+  }
+
+  @override
+  String get ledgerKeepCredit => 'أبقه رصيدًا دائنًا';
+
+  @override
+  String get ledgerConflictTitle => 'التوزيع الذي اخترته لم يعد مناسبًا';
+
+  @override
+  String get ledgerConflictText =>
+      'يترك هذا التغيير مبلغًا مفتوحًا أقل مما طبّقته يدويًا. لم يُحفظ شيء. هل تحوّلها إلى الأقدم استحقاقًا أولًا وتحفظ؟';
+
+  @override
+  String get ledgerDeleteEntryTitle => 'حذف هذا القيد؟';
+
+  @override
+  String get ledgerDeleteEntryText =>
+      'للأخطاء فقط — لتصحيح السجل ألغِه بدلًا من ذلك. يُزال مع توزيعاته، ويمكنك التراجع لبضع ثوانٍ.';
+
+  @override
+  String get ledgerOrphanTitle => 'رُدّت مبالغ على هذا القيد';
+
+  @override
+  String ledgerOrphanText(String amount) {
+    return 'رُدّ عليه $amount. أتبقيه رصيدًا دائنًا أم تحذف تلك المبالغ المردودة أيضًا؟';
+  }
+
+  @override
+  String get ledgerOrphanDelete => 'احذفها أيضًا';
+
+  @override
+  String get ledgerSaved => 'حُفظ';
+
+  @override
+  String get ledgerDeleted => 'حُذف القيد';
+
+  @override
+  String get ledgerRestoredToast => 'أُعيد';
+
+  @override
+  String get ledgerVoidedToast => 'أُلغي القيد';
+
+  @override
+  String get ledgerUnvoidedToast => 'استُعيد القيد';
+
+  @override
+  String get ledgerArchivedToast => 'أُرشف';
+
+  @override
+  String get ledgerUnarchivedToast => 'أُلغيت الأرشفة';
+
+  @override
+  String get ledgerPersonDeleted => 'حُذف الشخص';
+
+  @override
+  String get ledgerReconciled => 'تمت التسوية';
+
+  @override
+  String get ledgerWriteFailed => 'تعذّر الحفظ. لم يتغير شيء.';
+
+  @override
+  String get ledgerWriteConflict => 'تغيّر هذا أثناء تعديلك. لم يُحفظ شيء.';
+
+  @override
+  String get ledgerWriteDamaged =>
+      'يجب تسوية سجلات هذا الشخص أولًا. لم يُحفظ شيء.';
+
+  @override
+  String get ledgerNotFound => 'هذا الشخص ليس في دفترك.';
+
+  @override
+  String get ledgerRemindTitle => 'تذكير';
+
+  @override
+  String get ledgerRemindChoose => 'من تذكّر';
+
+  @override
+  String get ledgerRemindNone => 'لا أحد مدين لك لتذكيره.';
+
+  @override
+  String ledgerRemindBody(String name, String amount, String date) {
+    return 'مرحبًا $name، تذكير بمبلغ $amount منذ $date.';
+  }
+
+  @override
+  String ledgerRemindBodyDue(
+    String name,
+    String amount,
+    String date,
+    String due,
+  ) {
+    return 'مرحبًا $name، تذكير بمبلغ $amount منذ $date، المستحق في $due.';
+  }
+
+  @override
+  String get ledgerRemindMessage => 'الرسالة';
+
+  @override
+  String get ledgerRemindFields => 'مُضمَّن: الاسم، المبلغ والعملة، التاريخ.';
+
+  @override
+  String get ledgerRemindFieldsDue =>
+      'مُضمَّن: الاسم، المبلغ والعملة، التاريخ، تاريخ الاستحقاق.';
+
+  @override
+  String get ledgerRemindExcluded =>
+      'غير مُضمَّن: الملاحظات، أشخاص آخرون، عملات أخرى، معرّفات السجلات.';
+
+  @override
+  String get ledgerRemindHow =>
+      'لا يرسل Lume هذه الرسالة. ترسلها نافذة المشاركة إلى من تختاره هناك.';
+
+  @override
+  String get ledgerRemindShare => 'مشاركة';
+
+  @override
+  String get ledgerRemindHanded => 'سُلّم إلى نافذة المشاركة';
+
+  @override
+  String get ledgerRemindUnavailable => 'المشاركة غير متاحة على هذا الجهاز';
+
+  @override
+  String get ledgerRemindFailed => 'تعذّر فتح نافذة المشاركة';
+
+  @override
+  String get ledgerExportTitle => 'صدّر دفترك';
+
+  @override
+  String get ledgerExportJson => 'نسخة احتياطية كاملة (JSON)';
+
+  @override
+  String get ledgerExportJsonSub =>
+      'كل القيود والتوزيعات. يمكن استيرادها مجددًا.';
+
+  @override
+  String get ledgerExportCsv => 'جدول بيانات (CSV)';
+
+  @override
+  String get ledgerExportCsvSub =>
+      'صف لكل قيد. لا يمكن استيراده — استخدم النسخة الكاملة لذلك.';
+
+  @override
+  String get ledgerIncludeNames => 'تضمين الأسماء والملاحظات';
+
+  @override
+  String get ledgerIncludeNamesOn =>
+      'سيحتوي هذا الملف على الأسماء والملاحظات التي كتبتها. يستطيع قراءتها كل من تعطيه إياه.';
+
+  @override
+  String get ledgerIncludeNamesOff =>
+      'يُكتب الأشخاص Person 1 وPerson 2… وتُستبعد الملاحظات.';
+
+  @override
+  String get ledgerExportAction => 'تصدير';
+
+  @override
+  String get ledgerImport => 'استيراد نسخة احتياطية';
+
+  @override
+  String get ledgerImportPaste => 'الصق محتوى نسخة lume.ledger/1';
+
+  @override
+  String get ledgerImportCheck => 'تحقّق';
+
+  @override
+  String ledgerImportReady(int c, int u, int s) {
+    return 'جاهز: $c للإضافة، $u للتحديث، $s موجودة. لا يُكتب شيء حتى تستورد.';
+  }
+
+  @override
+  String ledgerImportIssues(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n مشكلة. لن يُستورد شيء.',
+      many: '$n مشكلة. لن يُستورد شيء.',
+      few: '$n مشكلات. لن يُستورد شيء.',
+      two: 'مشكلتان. لن يُستورد شيء.',
+      one: 'مشكلة واحدة. لن يُستورد شيء.',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get ledgerImportNoNames =>
+      'لا أسماء في هذه النسخة: سيُسمّى الأشخاص Person 1 وPerson 2…';
+
+  @override
+  String get ledgerImportAction => 'استيراد';
+
+  @override
+  String ledgerImported(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: 'استُورد $n سجل',
+      many: 'استُورد $n سجلًا',
+      few: 'استُوردت $n سجلات',
+      two: 'استُورد سجلان',
+      one: 'استُورد سجل واحد',
+    );
+    return '$_temp0';
+  }
 }

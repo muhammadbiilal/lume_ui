@@ -21,6 +21,7 @@ import '../../flights/presentation/flights_tool.dart';
 import '../../goldrates/presentation/goldrates_tool.dart';
 import '../../hadith/presentation/hadith_tool.dart';
 import '../../learning/presentation/learning_tool.dart';
+import '../../ledger/presentation/ledger_tool.dart';
 import '../../loan/presentation/loan_tool.dart';
 import '../../news/presentation/news_tool.dart';
 import '../../notes/presentation/notes_tool.dart';
@@ -68,4 +69,6 @@ const Map<String, LumeToolBuilder> kLumeToolRegistry =
       'events': LumeEventsTool.open,
       'shopping': LumeShoppingTool.open,
       'sunmoon': LumeSunmoonTool.open,
+      // Lending Ledger, on its own host (`LEDGER_PROPOSAL.md`, D10).
+      'ledger': LumeLedgerTool.open,
     };

@@ -6360,7 +6360,7 @@ class AppLocalizationsUr extends AppLocalizations {
   String get toolStatusLearning => '3 کورس';
 
   @override
-  String get toolStatusLedger => '3 افراد';
+  String get toolStatusLedger => 'ادھار دیں اور لیں';
 
   @override
   String get toolStatusLoadshed => '14:00–16:00';
@@ -6962,4 +6962,583 @@ class AppLocalizationsUr extends AppLocalizations {
 
   @override
   String get weatherWind => 'ہوا';
+
+  @override
+  String get ledgerNet => 'مجموعی صورتحال';
+
+  @override
+  String get ledgerOwedOverall => 'مجموعی طور پر آپ کو واجب';
+
+  @override
+  String get ledgerOweOverall => 'مجموعی طور پر آپ پر واجب';
+
+  @override
+  String get ledgerEvenOverall => 'مجموعی طور پر برابر';
+
+  @override
+  String get ledgerOwedToYou => 'آپ کو واجب';
+
+  @override
+  String get ledgerYouOwe => 'آپ پر واجب';
+
+  @override
+  String get ledgerPeople => 'لوگ';
+
+  @override
+  String ledgerSummaryCurrency(String code) {
+    return 'بحساب $code';
+  }
+
+  @override
+  String get ledgerFilterLabel => 'لوگوں کو ان کے موجودہ حساب کے مطابق دکھائیں';
+
+  @override
+  String get ledgerFilterOwesYou => 'آپ کے مقروض';
+
+  @override
+  String get ledgerOwesYou => 'آپ کا مقروض';
+
+  @override
+  String get ledgerYouOweShort => 'آپ پر واجب';
+
+  @override
+  String get ledgerEvenRow => 'دونوں طرف کھلا';
+
+  @override
+  String get ledgerSettledRow => 'بیباق';
+
+  @override
+  String ledgerCreditToThem(String amount) {
+    return '$amount ان کا کریڈٹ';
+  }
+
+  @override
+  String ledgerCreditFromThem(String amount) {
+    return '$amount آپ کا کریڈٹ';
+  }
+
+  @override
+  String ledgerDue(String date) {
+    return 'واجب الادا $date';
+  }
+
+  @override
+  String get ledgerNoEntries => 'ابھی کوئی اندراج نہیں';
+
+  @override
+  String get ledgerNeedsReconcile => 'ملانا ضروری ہے';
+
+  @override
+  String get ledgerArchivedBadge => 'محفوظ شدہ';
+
+  @override
+  String get ledgerRecent => 'حالیہ';
+
+  @override
+  String get ledgerAdd => 'اندراج شامل کریں';
+
+  @override
+  String get ledgerRemind => 'یاد دہانی بھیجیں';
+
+  @override
+  String get ledgerAddPerson => 'شخص شامل کریں';
+
+  @override
+  String get ledgerEmptyTitle => 'دیا اور لیا ادھار، ایک جگہ';
+
+  @override
+  String get ledgerEmptyText =>
+      'کسی شخص کو شامل کریں، پھر جو دیا، لیا اور واپس ملا وہ درج کریں۔ حساب، مقررہ تاریخیں اور کریڈٹ آپ کے اندراجات سے نکالے جاتے ہیں۔';
+
+  @override
+  String get ledgerNoMatch => 'یہاں کوئی نہیں';
+
+  @override
+  String get ledgerNoMatchText => 'اس فلٹر یا تلاش سے کوئی میل نہیں کھاتا۔';
+
+  @override
+  String get ledgerShowAll => 'سب دکھائیں';
+
+  @override
+  String get ledgerSearch => 'لوگ اور نوٹس تلاش کریں';
+
+  @override
+  String get ledgerSortDue => 'مقررہ تاریخ';
+
+  @override
+  String get ledgerSortName => 'نام';
+
+  @override
+  String get ledgerSortRecent => 'حالیہ سرگرمی';
+
+  @override
+  String get ledgerShowArchived => 'محفوظ شدہ بھی دکھائیں';
+
+  @override
+  String get ledgerOverdueUnknown =>
+      'تاخیر جاننے کے لیے آپ کا دن درکار ہے، جو معلوم نہیں ہو سکا۔ تاریخیں پوری لکھی گئی ہیں۔';
+
+  @override
+  String get ledgerMoneyOut => 'رقم گئی';
+
+  @override
+  String get ledgerMoneyIn => 'رقم آئی';
+
+  @override
+  String get ledgerKindLent => 'آپ نے ادھار دیا';
+
+  @override
+  String get ledgerKindBorrowed => 'آپ نے ادھار لیا';
+
+  @override
+  String get ledgerKindRepaidToMe => 'انہوں نے واپس کیا';
+
+  @override
+  String get ledgerKindRepaidByMe => 'آپ نے واپس کیا';
+
+  @override
+  String get ledgerKindLentShort => 'دیا';
+
+  @override
+  String get ledgerKindBorrowedShort => 'لیا';
+
+  @override
+  String get ledgerKindRepaidToMeShort => 'واپس ملا';
+
+  @override
+  String get ledgerKindRepaidByMeShort => 'واپس کیا';
+
+  @override
+  String get ledgerVoided => 'منسوخ';
+
+  @override
+  String get ledgerHistory => 'تاریخچہ';
+
+  @override
+  String get ledgerOpenLoans => 'کھلا';
+
+  @override
+  String ledgerLeftOf(String left, String total) {
+    return '$total میں سے $left باقی';
+  }
+
+  @override
+  String ledgerAppliedTo(String amount, String date) {
+    return '$amount — $date کے اندراج کی طرف';
+  }
+
+  @override
+  String ledgerPaidFrom(String amount, String date) {
+    return '$amount — $date کی واپسی سے';
+  }
+
+  @override
+  String ledgerKeptAsCredit(String amount) {
+    return '$amount کریڈٹ کے طور پر رکھا';
+  }
+
+  @override
+  String get ledgerManualBadge => 'منتخب';
+
+  @override
+  String get ledgerSettleUp => 'حساب برابر کریں';
+
+  @override
+  String ledgerSettleOwes(String name, String amount) {
+    return '$name کی طرف سے $amount کی واپسی درج کریں';
+  }
+
+  @override
+  String ledgerSettleOwe(String name, String amount) {
+    return '$name کو $amount کی واپسی درج کریں';
+  }
+
+  @override
+  String get ledgerSettleText => 'آج کی تاریخ کی ایک واپسی، جو یہ صاف کرے گی:';
+
+  @override
+  String get ledgerSettleConfirm => 'درج کریں';
+
+  @override
+  String get ledgerRename => 'شخص میں ترمیم';
+
+  @override
+  String get ledgerArchive => 'محفوظ کریں';
+
+  @override
+  String get ledgerUnarchive => 'واپس لائیں';
+
+  @override
+  String get ledgerDeletePerson => 'شخص حذف کریں';
+
+  @override
+  String get ledgerArchiveOpen => 'صرف بیباق شخص کو محفوظ کیا جا سکتا ہے۔';
+
+  @override
+  String ledgerPersonReferenced(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other:
+          '$n اندراجات ابھی اس شخص کے ہیں۔ پہلے انہیں حذف کریں — ان کے ساتھ کچھ حذف نہیں ہوتا۔',
+      one:
+          'ایک اندراج ابھی اس شخص کا ہے۔ پہلے اسے حذف کریں — ان کے ساتھ کچھ حذف نہیں ہوتا۔',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get ledgerDeletePersonTitle => 'اس شخص کو حذف کریں؟';
+
+  @override
+  String get ledgerDeletePersonText =>
+      'ان کا کوئی اندراج نہیں۔ یہ واپس نہیں ہو سکتا۔';
+
+  @override
+  String get ledgerReconcile => 'ملائیں';
+
+  @override
+  String get ledgerDamagedText =>
+      'اس شخص کی محفوظ تقسیم درست نہیں بیٹھتی۔ جب تک آپ نہ ملائیں، کچھ دوبارہ حساب نہیں ہوتا۔';
+
+  @override
+  String ledgerDefects(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n ریکارڈ پڑھے نہیں جا سکتے اور خراب دکھائے گئے ہیں۔',
+      one: 'ایک ریکارڈ پڑھا نہیں جا سکتا اور خراب دکھایا گیا ہے۔',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get ledgerVoid => 'منسوخ کریں';
+
+  @override
+  String get ledgerRestore => 'بحال کریں';
+
+  @override
+  String get ledgerVoidText =>
+      'منسوخ کرنے سے اندراج اور اس کا تاریخچہ باقی رہتا ہے، مگر یہ ہر حساب سے نکل جاتا ہے۔';
+
+  @override
+  String get ledgerNewPerson => 'نیا شخص';
+
+  @override
+  String get ledgerPersonName => 'نام';
+
+  @override
+  String get ledgerNote => 'نوٹ';
+
+  @override
+  String get ledgerOptional => 'اختیاری';
+
+  @override
+  String get ledgerNewEntry => 'نیا اندراج';
+
+  @override
+  String get ledgerEditEntry => 'اندراج میں ترمیم';
+
+  @override
+  String get ledgerFieldPerson => 'شخص';
+
+  @override
+  String get ledgerFieldKind => 'کیا ہوا';
+
+  @override
+  String get ledgerFieldAmount => 'رقم';
+
+  @override
+  String get ledgerFieldCurrency => 'کرنسی';
+
+  @override
+  String get ledgerFieldDate => 'تاریخ';
+
+  @override
+  String get ledgerFieldDue => 'مقررہ تاریخ';
+
+  @override
+  String get ledgerNoDue => 'کوئی مقررہ تاریخ نہیں';
+
+  @override
+  String get ledgerChooseDate => 'تاریخ منتخب کریں';
+
+  @override
+  String get ledgerFieldApply => 'کس پر لاگو کریں';
+
+  @override
+  String get ledgerApplyAuto => 'پہلے سب سے پرانی مقررہ';
+
+  @override
+  String get ledgerApplyManual => 'خود منتخب کریں';
+
+  @override
+  String ledgerApplyNone(String code) {
+    return 'اس شخص کا $code میں کچھ کھلا نہیں۔';
+  }
+
+  @override
+  String get ledgerErrName => 'نام درج کریں';
+
+  @override
+  String get ledgerErrLong => 'یہ بہت طویل ہے';
+
+  @override
+  String get ledgerErrPerson => 'شخص منتخب کریں';
+
+  @override
+  String get ledgerErrAmount => 'صفر سے زیادہ رقم درج کریں';
+
+  @override
+  String get ledgerErrNumber => 'عدد درج کریں، جیسے 1500 یا 1500.50';
+
+  @override
+  String ledgerErrPrecision(String code, int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n اعشاریہ مقامات',
+      one: 'ایک اعشاریہ مقام',
+      zero: 'کوئی اعشاریہ نہیں',
+    );
+    return '$code میں $_temp0';
+  }
+
+  @override
+  String get ledgerErrTooLarge => 'یہ رقم کھاتے کے اندراج کی حد سے زیادہ ہے';
+
+  @override
+  String get ledgerErrDate => 'تاریخ منتخب کریں';
+
+  @override
+  String get ledgerErrDueBefore =>
+      'مقررہ تاریخ اندراج کی تاریخ سے پہلے نہیں ہو سکتی';
+
+  @override
+  String get ledgerErrApplied =>
+      'لاگو کی گئی رقمیں واپسی سے زیادہ نہیں ہو سکتیں';
+
+  @override
+  String get ledgerErrAppliedOver => 'اس اندراج پر کھلی رقم سے زیادہ';
+
+  @override
+  String ledgerErrWithdrawn(String code) {
+    return '$code اب جاری نہیں۔ موجودہ کرنسی منتخب کریں۔';
+  }
+
+  @override
+  String get ledgerErrArchived =>
+      'یہ شخص محفوظ شدہ ہے۔ اندراج کے لیے واپس لائیں۔';
+
+  @override
+  String get ledgerOverpayTitle => 'کھلی رقم سے زیادہ';
+
+  @override
+  String ledgerOverpayToMe(String name, String amount) {
+    return '$name نے کھلی رقم سے $amount زیادہ واپس کیا ہے۔ کیا اسے $name کے کریڈٹ کے طور پر رکھیں؟ یہ انہیں اگلے ادھار میں شمار ہوگا۔';
+  }
+
+  @override
+  String ledgerOverpayByMe(String name, String amount) {
+    return 'آپ $name کو کھلی رقم سے $amount زیادہ واپس کر رہے ہیں۔ کیا اسے $name کے پاس اپنے کریڈٹ کے طور پر رکھیں؟ یہ اگلی بار ادھار لینے میں شمار ہوگا۔';
+  }
+
+  @override
+  String get ledgerKeepCredit => 'کریڈٹ کے طور پر رکھیں';
+
+  @override
+  String get ledgerConflictTitle => 'آپ کی منتخب تقسیم اب پوری نہیں بیٹھتی';
+
+  @override
+  String get ledgerConflictText =>
+      'اس تبدیلی کے بعد کھلی رقم اس سے کم ہے جو آپ نے خود لاگو کی تھی۔ کچھ محفوظ نہیں ہوا۔ انہیں سب سے پرانی مقررہ پر منتقل کر کے محفوظ کریں؟';
+
+  @override
+  String get ledgerDeleteEntryTitle => 'یہ اندراج حذف کریں؟';
+
+  @override
+  String get ledgerDeleteEntryText =>
+      'صرف غلطی کے لیے — تاریخچہ درست کرنے کے لیے منسوخ کریں۔ یہ اپنی تقسیم سمیت ہٹ جائے گا، اور چند سیکنڈ تک واپس لایا جا سکتا ہے۔';
+
+  @override
+  String get ledgerOrphanTitle => 'اس اندراج کی ادائیگیاں ہو چکی ہیں';
+
+  @override
+  String ledgerOrphanText(String amount) {
+    return 'اس کے مقابل $amount واپس ہو چکا ہے۔ اسے کریڈٹ کے طور پر رکھیں، یا وہ واپسیاں بھی حذف کریں؟';
+  }
+
+  @override
+  String get ledgerOrphanDelete => 'انہیں بھی حذف کریں';
+
+  @override
+  String get ledgerSaved => 'محفوظ ہو گیا';
+
+  @override
+  String get ledgerDeleted => 'اندراج حذف ہو گیا';
+
+  @override
+  String get ledgerRestoredToast => 'واپس آ گیا';
+
+  @override
+  String get ledgerVoidedToast => 'اندراج منسوخ ہو گیا';
+
+  @override
+  String get ledgerUnvoidedToast => 'اندراج بحال ہو گیا';
+
+  @override
+  String get ledgerArchivedToast => 'محفوظ ہو گیا';
+
+  @override
+  String get ledgerUnarchivedToast => 'واپس آ گیا';
+
+  @override
+  String get ledgerPersonDeleted => 'شخص حذف ہو گیا';
+
+  @override
+  String get ledgerReconciled => 'مل گیا';
+
+  @override
+  String get ledgerWriteFailed => 'محفوظ نہیں ہو سکا۔ کچھ تبدیل نہیں ہوا۔';
+
+  @override
+  String get ledgerWriteConflict =>
+      'آپ کی ترمیم کے دوران یہ بدل گیا۔ کچھ محفوظ نہیں ہوا۔';
+
+  @override
+  String get ledgerWriteDamaged =>
+      'پہلے اس شخص کا حساب ملانا ہوگا۔ کچھ محفوظ نہیں ہوا۔';
+
+  @override
+  String get ledgerNotFound => 'یہ شخص آپ کے کھاتے میں نہیں۔';
+
+  @override
+  String get ledgerRemindTitle => 'یاد دہانی';
+
+  @override
+  String get ledgerRemindChoose => 'کسے یاد دلائیں';
+
+  @override
+  String get ledgerRemindNone => 'کوئی آپ کا مقروض نہیں جسے یاد دلایا جائے۔';
+
+  @override
+  String ledgerRemindBody(String name, String amount, String date) {
+    return 'السلام علیکم $name، $date کے $amount کی یاد دہانی۔';
+  }
+
+  @override
+  String ledgerRemindBodyDue(
+    String name,
+    String amount,
+    String date,
+    String due,
+  ) {
+    return 'السلام علیکم $name، $date کے $amount کی یاد دہانی، جو $due کو واجب الادا تھے۔';
+  }
+
+  @override
+  String get ledgerRemindMessage => 'پیغام';
+
+  @override
+  String get ledgerRemindFields => 'شامل: نام، رقم اور کرنسی، تاریخ۔';
+
+  @override
+  String get ledgerRemindFieldsDue =>
+      'شامل: نام، رقم اور کرنسی، تاریخ، مقررہ تاریخ۔';
+
+  @override
+  String get ledgerRemindExcluded =>
+      'شامل نہیں: نوٹس، دوسرے لوگ، دوسری کرنسیاں، ریکارڈ آئی ڈی۔';
+
+  @override
+  String get ledgerRemindHow =>
+      'لومے یہ نہیں بھیجتا۔ آپ کی شیئر شیٹ بھیجتی ہے، جسے آپ وہاں منتخب کریں۔';
+
+  @override
+  String get ledgerRemindShare => 'شیئر کریں';
+
+  @override
+  String get ledgerRemindHanded => 'آپ کی شیئر شیٹ کو دے دیا';
+
+  @override
+  String get ledgerRemindUnavailable => 'اس ڈیوائس پر شیئر کرنا دستیاب نہیں';
+
+  @override
+  String get ledgerRemindFailed => 'شیئر شیٹ نہیں کھل سکی';
+
+  @override
+  String get ledgerExportTitle => 'اپنا کھاتہ ایکسپورٹ کریں';
+
+  @override
+  String get ledgerExportJson => 'مکمل بیک اپ (JSON)';
+
+  @override
+  String get ledgerExportJsonSub =>
+      'ہر اندراج اور تقسیم۔ اسے دوبارہ امپورٹ کیا جا سکتا ہے۔';
+
+  @override
+  String get ledgerExportCsv => 'اسپریڈشیٹ (CSV)';
+
+  @override
+  String get ledgerExportCsvSub =>
+      'ہر اندراج کی ایک قطار۔ اسے امپورٹ نہیں کیا جا سکتا — اس کے لیے مکمل بیک اپ استعمال کریں۔';
+
+  @override
+  String get ledgerIncludeNames => 'نام اور نوٹس شامل کریں';
+
+  @override
+  String get ledgerIncludeNamesOn =>
+      'اس فائل میں آپ کے لکھے نام اور نوٹس ہوں گے۔ جسے بھی دیں، وہ پڑھ سکے گا۔';
+
+  @override
+  String get ledgerIncludeNamesOff =>
+      'لوگ Person 1، Person 2… لکھے جائیں گے اور نوٹس شامل نہیں ہوں گے۔';
+
+  @override
+  String get ledgerExportAction => 'ایکسپورٹ';
+
+  @override
+  String get ledgerImport => 'بیک اپ امپورٹ کریں';
+
+  @override
+  String get ledgerImportPaste =>
+      'lume.ledger/1 بیک اپ کا مواد یہاں چسپاں کریں';
+
+  @override
+  String get ledgerImportCheck => 'جانچیں';
+
+  @override
+  String ledgerImportReady(int c, int u, int s) {
+    return 'تیار: $c شامل، $u تازہ، $s پہلے سے موجود۔ امپورٹ کرنے تک کچھ نہیں لکھا جاتا۔';
+  }
+
+  @override
+  String ledgerImportIssues(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n مسائل۔ کچھ امپورٹ نہیں ہوگا۔',
+      one: 'ایک مسئلہ۔ کچھ امپورٹ نہیں ہوگا۔',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get ledgerImportNoNames =>
+      'اس بیک اپ میں نام نہیں: لوگ Person 1، Person 2… کہلائیں گے۔';
+
+  @override
+  String get ledgerImportAction => 'امپورٹ';
+
+  @override
+  String ledgerImported(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n ریکارڈ امپورٹ ہوئے',
+      one: '1 ریکارڈ امپورٹ ہوا',
+    );
+    return '$_temp0';
+  }
 }

@@ -28,7 +28,10 @@ class LumeDataCapability {
     source: sampleSource,
     isLive: onDeviceClocks.contains(toolId),
     computedHere: computed.contains(toolId),
-    isSample: !inputOnly.contains(toolId) && !computed.contains(toolId),
+    isSample:
+        !inputOnly.contains(toolId) &&
+        !computed.contains(toolId) &&
+        !readerRecords.contains(toolId),
   );
 
   /// A write survives the app being closed.
@@ -75,6 +78,10 @@ class LumeDataCapability {
   /// city — a calculation, not a fixture. Sun & Moon: the sun from the
   /// city's coordinates and the day, the moon from the instant.
   static const Set<String> computed = <String>{'sunmoon'};
+
+  /// Tools that show only what the reader wrote — nothing seeded, nothing
+  /// fetched (Ledger, D11). Their storage claim is still the store's.
+  static const Set<String> readerRecords = <String>{'ledger'};
 
   /// Tools whose "live" is a clock ticking on the device.
   static const Set<String> onDeviceClocks = <String>{

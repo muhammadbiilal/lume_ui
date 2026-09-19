@@ -11206,10 +11206,10 @@ abstract class AppLocalizations {
   /// **'3 courses'**
   String get toolStatusLearning;
 
-  /// The status line on the ledger tile. The prototype keeps it in the catalogue and renders it untranslated in every language (D22)
+  /// The status line on the ledger tile: what the tool is for, never a figure from the reader's own ledger (sensitive; C90)
   ///
   /// In en, this message translates to:
-  /// **'3 people'**
+  /// **'Lend and borrow'**
   String get toolStatusLedger;
 
   /// The status line on the loadshed tile. The prototype keeps it in the catalogue and renders it untranslated in every language (D22)
@@ -12224,6 +12224,959 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Wind'**
   String get weatherWind;
+
+  /// Summary kicker (reference ledger.net)
+  ///
+  /// In en, this message translates to:
+  /// **'Net position'**
+  String get ledgerNet;
+
+  /// Summary caption when the net is owed to the reader (reference ledger.owedToYou)
+  ///
+  /// In en, this message translates to:
+  /// **'owed to you overall'**
+  String get ledgerOwedOverall;
+
+  /// Summary caption when the reader owes overall (reference ledger.youOwe)
+  ///
+  /// In en, this message translates to:
+  /// **'you owe overall'**
+  String get ledgerOweOverall;
+
+  /// Summary caption when the net is exactly zero
+  ///
+  /// In en, this message translates to:
+  /// **'even overall'**
+  String get ledgerEvenOverall;
+
+  /// Summary stat: the sum of positive balances
+  ///
+  /// In en, this message translates to:
+  /// **'Owed to you'**
+  String get ledgerOwedToYou;
+
+  /// Summary stat and filter: the sum of negative balances
+  ///
+  /// In en, this message translates to:
+  /// **'You owe'**
+  String get ledgerYouOwe;
+
+  /// Summary stat and section title (reference ledger.people)
+  ///
+  /// In en, this message translates to:
+  /// **'People'**
+  String get ledgerPeople;
+
+  /// Heading of a per-currency summary when there are several currencies
+  ///
+  /// In en, this message translates to:
+  /// **'In {code}'**
+  String ledgerSummaryCurrency(String code);
+
+  /// Accessibility label of the filter bar (D4)
+  ///
+  /// In en, this message translates to:
+  /// **'Show people by their current balance'**
+  String get ledgerFilterLabel;
+
+  /// Filter: people whose balance is owed to the reader
+  ///
+  /// In en, this message translates to:
+  /// **'Owes you'**
+  String get ledgerFilterOwesYou;
+
+  /// Under a row amount (reference ledger.owesYou)
+  ///
+  /// In en, this message translates to:
+  /// **'owes you'**
+  String get ledgerOwesYou;
+
+  /// Under a row amount (reference ledger.youOweShort)
+  ///
+  /// In en, this message translates to:
+  /// **'you owe'**
+  String get ledgerYouOweShort;
+
+  /// Under a row whose net is zero but which is not settled
+  ///
+  /// In en, this message translates to:
+  /// **'open both ways'**
+  String get ledgerEvenRow;
+
+  /// Under a settled row
+  ///
+  /// In en, this message translates to:
+  /// **'settled'**
+  String get ledgerSettledRow;
+
+  /// A person overpaid; the reader holds it as credit and owes it back
+  ///
+  /// In en, this message translates to:
+  /// **'{amount} credit to them'**
+  String ledgerCreditToThem(String amount);
+
+  /// The reader overpaid; the person holds it as the reader's credit
+  ///
+  /// In en, this message translates to:
+  /// **'{amount} your credit'**
+  String ledgerCreditFromThem(String amount);
+
+  /// Row meta (reference ledger.due)
+  ///
+  /// In en, this message translates to:
+  /// **'due {date}'**
+  String ledgerDue(String date);
+
+  /// A person with no entries
+  ///
+  /// In en, this message translates to:
+  /// **'No entries yet'**
+  String get ledgerNoEntries;
+
+  /// Badge on a person and currency whose stored allocations break the rules
+  ///
+  /// In en, this message translates to:
+  /// **'Needs reconciling'**
+  String get ledgerNeedsReconcile;
+
+  /// Badge on an archived person
+  ///
+  /// In en, this message translates to:
+  /// **'Archived'**
+  String get ledgerArchivedBadge;
+
+  /// Section title: the latest entries
+  ///
+  /// In en, this message translates to:
+  /// **'Recent'**
+  String get ledgerRecent;
+
+  /// Button (reference ledger.add)
+  ///
+  /// In en, this message translates to:
+  /// **'Add an entry'**
+  String get ledgerAdd;
+
+  /// Button (reference ledger.remind); opens a preview, never sends by itself
+  ///
+  /// In en, this message translates to:
+  /// **'Send a reminder'**
+  String get ledgerRemind;
+
+  /// Button
+  ///
+  /// In en, this message translates to:
+  /// **'Add a person'**
+  String get ledgerAddPerson;
+
+  /// First use: title (D11 — no sample people)
+  ///
+  /// In en, this message translates to:
+  /// **'Money lent and borrowed, in one place'**
+  String get ledgerEmptyTitle;
+
+  /// First use: text
+  ///
+  /// In en, this message translates to:
+  /// **'Add a person, then record what you lend, borrow and get back. Balances, overdue dates and credit are worked out from your entries.'**
+  String get ledgerEmptyText;
+
+  /// Filter or search with no match (reference ledger.noMatch)
+  ///
+  /// In en, this message translates to:
+  /// **'Nobody here'**
+  String get ledgerNoMatch;
+
+  /// Filter or search with no match
+  ///
+  /// In en, this message translates to:
+  /// **'No one matches this filter or search.'**
+  String get ledgerNoMatchText;
+
+  /// Clears the filter and the search
+  ///
+  /// In en, this message translates to:
+  /// **'Show all'**
+  String get ledgerShowAll;
+
+  /// Search field placeholder
+  ///
+  /// In en, this message translates to:
+  /// **'Search people and notes'**
+  String get ledgerSearch;
+
+  /// Sort option (default)
+  ///
+  /// In en, this message translates to:
+  /// **'Due date'**
+  String get ledgerSortDue;
+
+  /// Sort option
+  ///
+  /// In en, this message translates to:
+  /// **'Name'**
+  String get ledgerSortName;
+
+  /// Sort option
+  ///
+  /// In en, this message translates to:
+  /// **'Recent activity'**
+  String get ledgerSortRecent;
+
+  /// Switch: show archived people
+  ///
+  /// In en, this message translates to:
+  /// **'Include archived'**
+  String get ledgerShowArchived;
+
+  /// The Overdue filter when the reader's day is unknown
+  ///
+  /// In en, this message translates to:
+  /// **'Overdue needs your day, and it can\'t be worked out. Dates are written out in full.'**
+  String get ledgerOverdueUnknown;
+
+  /// Accessibility: the icon of an entry where money left the reader
+  ///
+  /// In en, this message translates to:
+  /// **'Money out'**
+  String get ledgerMoneyOut;
+
+  /// Accessibility: the icon of an entry where money came to the reader
+  ///
+  /// In en, this message translates to:
+  /// **'Money in'**
+  String get ledgerMoneyIn;
+
+  /// Entry kind, in a sentence
+  ///
+  /// In en, this message translates to:
+  /// **'You lent'**
+  String get ledgerKindLent;
+
+  /// Entry kind, in a sentence
+  ///
+  /// In en, this message translates to:
+  /// **'You borrowed'**
+  String get ledgerKindBorrowed;
+
+  /// Entry kind, in a sentence
+  ///
+  /// In en, this message translates to:
+  /// **'They paid you back'**
+  String get ledgerKindRepaidToMe;
+
+  /// Entry kind, in a sentence
+  ///
+  /// In en, this message translates to:
+  /// **'You paid them back'**
+  String get ledgerKindRepaidByMe;
+
+  /// Entry kind, segmented control
+  ///
+  /// In en, this message translates to:
+  /// **'Lent'**
+  String get ledgerKindLentShort;
+
+  /// Entry kind, segmented control
+  ///
+  /// In en, this message translates to:
+  /// **'Borrowed'**
+  String get ledgerKindBorrowedShort;
+
+  /// Entry kind, segmented control
+  ///
+  /// In en, this message translates to:
+  /// **'Got back'**
+  String get ledgerKindRepaidToMeShort;
+
+  /// Entry kind, segmented control
+  ///
+  /// In en, this message translates to:
+  /// **'Paid back'**
+  String get ledgerKindRepaidByMeShort;
+
+  /// Badge on a voided entry
+  ///
+  /// In en, this message translates to:
+  /// **'Voided'**
+  String get ledgerVoided;
+
+  /// Person detail: every entry
+  ///
+  /// In en, this message translates to:
+  /// **'History'**
+  String get ledgerHistory;
+
+  /// Person detail: principals with something remaining
+  ///
+  /// In en, this message translates to:
+  /// **'Open'**
+  String get ledgerOpenLoans;
+
+  /// A principal's remaining
+  ///
+  /// In en, this message translates to:
+  /// **'{left} left of {total}'**
+  String ledgerLeftOf(String left, String total);
+
+  /// An allocation, on a repayment
+  ///
+  /// In en, this message translates to:
+  /// **'{amount} to the {date} entry'**
+  String ledgerAppliedTo(String amount, String date);
+
+  /// An allocation, on a principal
+  ///
+  /// In en, this message translates to:
+  /// **'{amount} from the {date} repayment'**
+  String ledgerPaidFrom(String amount, String date);
+
+  /// A repayment's confirmed excess, still unapplied
+  ///
+  /// In en, this message translates to:
+  /// **'{amount} kept as credit'**
+  String ledgerKeptAsCredit(String amount);
+
+  /// An allocation the reader chose rather than oldest-due-first
+  ///
+  /// In en, this message translates to:
+  /// **'Chosen'**
+  String get ledgerManualBadge;
+
+  /// Person detail action
+  ///
+  /// In en, this message translates to:
+  /// **'Settle up'**
+  String get ledgerSettleUp;
+
+  /// Settle-up preview title, when they owe the reader
+  ///
+  /// In en, this message translates to:
+  /// **'Record {name} paying back {amount}'**
+  String ledgerSettleOwes(String name, String amount);
+
+  /// Settle-up preview title, when the reader owes
+  ///
+  /// In en, this message translates to:
+  /// **'Record paying {name} back {amount}'**
+  String ledgerSettleOwe(String name, String amount);
+
+  /// Settle-up preview: the principals it discharges follow
+  ///
+  /// In en, this message translates to:
+  /// **'One repayment, dated today, that clears:'**
+  String get ledgerSettleText;
+
+  /// Settle-up confirm
+  ///
+  /// In en, this message translates to:
+  /// **'Record it'**
+  String get ledgerSettleConfirm;
+
+  /// Person action
+  ///
+  /// In en, this message translates to:
+  /// **'Edit person'**
+  String get ledgerRename;
+
+  /// Person action
+  ///
+  /// In en, this message translates to:
+  /// **'Archive'**
+  String get ledgerArchive;
+
+  /// Person action
+  ///
+  /// In en, this message translates to:
+  /// **'Unarchive'**
+  String get ledgerUnarchive;
+
+  /// Person action
+  ///
+  /// In en, this message translates to:
+  /// **'Delete person'**
+  String get ledgerDeletePerson;
+
+  /// Archive refused
+  ///
+  /// In en, this message translates to:
+  /// **'Only a settled person can be archived.'**
+  String get ledgerArchiveOpen;
+
+  /// Delete person refused while entries reference them (no cascade)
+  ///
+  /// In en, this message translates to:
+  /// **'{n, plural, =1{1 entry still names this person. Delete it first — nothing is deleted with them.} other{{n} entries still name this person. Delete them first — nothing is deleted with them.}}'**
+  String ledgerPersonReferenced(int n);
+
+  /// Delete person confirmation
+  ///
+  /// In en, this message translates to:
+  /// **'Delete this person?'**
+  String get ledgerDeletePersonTitle;
+
+  /// Delete person confirmation
+  ///
+  /// In en, this message translates to:
+  /// **'They have no entries. This can\'t be undone.'**
+  String get ledgerDeletePersonText;
+
+  /// Rebuild a damaged person's allocations, on the reader's request
+  ///
+  /// In en, this message translates to:
+  /// **'Reconcile'**
+  String get ledgerReconcile;
+
+  /// Damaged scope notice
+  ///
+  /// In en, this message translates to:
+  /// **'The allocations on file for this person don\'t add up. Nothing is recalculated until you reconcile.'**
+  String get ledgerDamagedText;
+
+  /// Records that failed to decode — never dropped
+  ///
+  /// In en, this message translates to:
+  /// **'{n, plural, =1{1 record can\'t be read and is shown as damaged.} other{{n} records can\'t be read and are shown as damaged.}}'**
+  String ledgerDefects(int n);
+
+  /// Entry action: the normal correction
+  ///
+  /// In en, this message translates to:
+  /// **'Void'**
+  String get ledgerVoid;
+
+  /// Entry action: undo a void
+  ///
+  /// In en, this message translates to:
+  /// **'Restore'**
+  String get ledgerRestore;
+
+  /// Entry detail note
+  ///
+  /// In en, this message translates to:
+  /// **'Voiding keeps the entry and its history, and takes it out of every figure.'**
+  String get ledgerVoidText;
+
+  /// Person form title
+  ///
+  /// In en, this message translates to:
+  /// **'New person'**
+  String get ledgerNewPerson;
+
+  /// Person form field
+  ///
+  /// In en, this message translates to:
+  /// **'Name'**
+  String get ledgerPersonName;
+
+  /// Form field
+  ///
+  /// In en, this message translates to:
+  /// **'Note'**
+  String get ledgerNote;
+
+  /// Beside an optional field
+  ///
+  /// In en, this message translates to:
+  /// **'Optional'**
+  String get ledgerOptional;
+
+  /// Entry form title
+  ///
+  /// In en, this message translates to:
+  /// **'New entry'**
+  String get ledgerNewEntry;
+
+  /// Entry form title
+  ///
+  /// In en, this message translates to:
+  /// **'Edit entry'**
+  String get ledgerEditEntry;
+
+  /// Entry form field
+  ///
+  /// In en, this message translates to:
+  /// **'Person'**
+  String get ledgerFieldPerson;
+
+  /// Entry form field
+  ///
+  /// In en, this message translates to:
+  /// **'What happened'**
+  String get ledgerFieldKind;
+
+  /// Entry form field
+  ///
+  /// In en, this message translates to:
+  /// **'Amount'**
+  String get ledgerFieldAmount;
+
+  /// Entry form field
+  ///
+  /// In en, this message translates to:
+  /// **'Currency'**
+  String get ledgerFieldCurrency;
+
+  /// Entry form field
+  ///
+  /// In en, this message translates to:
+  /// **'Date'**
+  String get ledgerFieldDate;
+
+  /// Entry form field, principals only
+  ///
+  /// In en, this message translates to:
+  /// **'Due'**
+  String get ledgerFieldDue;
+
+  /// Due picker value when none
+  ///
+  /// In en, this message translates to:
+  /// **'No due date'**
+  String get ledgerNoDue;
+
+  /// Date picker value when none (no today)
+  ///
+  /// In en, this message translates to:
+  /// **'Choose a date'**
+  String get ledgerChooseDate;
+
+  /// Repayment allocation mode
+  ///
+  /// In en, this message translates to:
+  /// **'Apply to'**
+  String get ledgerFieldApply;
+
+  /// Automatic allocation
+  ///
+  /// In en, this message translates to:
+  /// **'Oldest due first'**
+  String get ledgerApplyAuto;
+
+  /// Manual allocation
+  ///
+  /// In en, this message translates to:
+  /// **'Choose'**
+  String get ledgerApplyManual;
+
+  /// Manual allocation with no open principal
+  ///
+  /// In en, this message translates to:
+  /// **'Nothing is open in {code} for this person.'**
+  String ledgerApplyNone(String code);
+
+  /// Validation
+  ///
+  /// In en, this message translates to:
+  /// **'Enter a name'**
+  String get ledgerErrName;
+
+  /// Validation
+  ///
+  /// In en, this message translates to:
+  /// **'That\'s too long'**
+  String get ledgerErrLong;
+
+  /// Validation
+  ///
+  /// In en, this message translates to:
+  /// **'Choose a person'**
+  String get ledgerErrPerson;
+
+  /// Validation
+  ///
+  /// In en, this message translates to:
+  /// **'Enter an amount above zero'**
+  String get ledgerErrAmount;
+
+  /// Validation
+  ///
+  /// In en, this message translates to:
+  /// **'Enter a number, like 1500 or 1500.50'**
+  String get ledgerErrNumber;
+
+  /// Validation: more decimals than the currency's ISO exponent — never rounded
+  ///
+  /// In en, this message translates to:
+  /// **'{code} takes {n, plural, =0{no decimal places} =1{one decimal place} other{{n} decimal places}}'**
+  String ledgerErrPrecision(String code, int n);
+
+  /// Validation: past 10^15 minor units, or a sum past 2^53 − 1
+  ///
+  /// In en, this message translates to:
+  /// **'That amount is larger than a ledger entry can hold'**
+  String get ledgerErrTooLarge;
+
+  /// Validation
+  ///
+  /// In en, this message translates to:
+  /// **'Choose a date'**
+  String get ledgerErrDate;
+
+  /// Validation
+  ///
+  /// In en, this message translates to:
+  /// **'Due can\'t be before the date'**
+  String get ledgerErrDueBefore;
+
+  /// Validation: manual allocations over the repayment
+  ///
+  /// In en, this message translates to:
+  /// **'The amounts you apply can\'t add up to more than the repayment'**
+  String get ledgerErrApplied;
+
+  /// Validation: a manual allocation over a principal's remaining
+  ///
+  /// In en, this message translates to:
+  /// **'More than is open on this entry'**
+  String get ledgerErrAppliedOver;
+
+  /// Validation: a withdrawn ISO currency for a new entry
+  ///
+  /// In en, this message translates to:
+  /// **'{code} is no longer issued. Choose a current currency.'**
+  String ledgerErrWithdrawn(String code);
+
+  /// Validation
+  ///
+  /// In en, this message translates to:
+  /// **'This person is archived. Unarchive them to add entries.'**
+  String get ledgerErrArchived;
+
+  /// Overpayment sheet title
+  ///
+  /// In en, this message translates to:
+  /// **'More than is open'**
+  String get ledgerOverpayTitle;
+
+  /// Overpayment sheet, a repayment to the reader
+  ///
+  /// In en, this message translates to:
+  /// **'{name} has paid back {amount} more than is open. Keep it as credit to {name}? It will count against the next loan to them.'**
+  String ledgerOverpayToMe(String name, String amount);
+
+  /// Overpayment sheet, a repayment by the reader
+  ///
+  /// In en, this message translates to:
+  /// **'You\'re paying {name} back {amount} more than is open. Keep it as your credit with {name}? It will count against the next time you borrow from them.'**
+  String ledgerOverpayByMe(String name, String amount);
+
+  /// Overpayment confirm
+  ///
+  /// In en, this message translates to:
+  /// **'Keep as credit'**
+  String get ledgerKeepCredit;
+
+  /// Allocation conflict sheet title
+  ///
+  /// In en, this message translates to:
+  /// **'Your chosen allocation no longer fits'**
+  String get ledgerConflictTitle;
+
+  /// Allocation conflict sheet text
+  ///
+  /// In en, this message translates to:
+  /// **'This change leaves less open than you applied by hand. Nothing was saved. Switch those to oldest due first and save?'**
+  String get ledgerConflictText;
+
+  /// Hard delete confirmation — void is the normal correction
+  ///
+  /// In en, this message translates to:
+  /// **'Delete this entry?'**
+  String get ledgerDeleteEntryTitle;
+
+  /// Hard delete confirmation text
+  ///
+  /// In en, this message translates to:
+  /// **'Only for a mistake — to correct history, void it instead. It\'s removed with its allocations, and you can undo for a few seconds.'**
+  String get ledgerDeleteEntryText;
+
+  /// Delete principal with repayments (E8)
+  ///
+  /// In en, this message translates to:
+  /// **'Repayments paid this entry'**
+  String get ledgerOrphanTitle;
+
+  /// E8 sheet text
+  ///
+  /// In en, this message translates to:
+  /// **'{amount} was paid back against it. Keep that as credit, or delete those repayments too?'**
+  String ledgerOrphanText(String amount);
+
+  /// E8 choice
+  ///
+  /// In en, this message translates to:
+  /// **'Delete them too'**
+  String get ledgerOrphanDelete;
+
+  /// Toast
+  ///
+  /// In en, this message translates to:
+  /// **'Saved'**
+  String get ledgerSaved;
+
+  /// Toast, with Undo
+  ///
+  /// In en, this message translates to:
+  /// **'Entry deleted'**
+  String get ledgerDeleted;
+
+  /// Toast after Undo
+  ///
+  /// In en, this message translates to:
+  /// **'Brought back'**
+  String get ledgerRestoredToast;
+
+  /// Toast
+  ///
+  /// In en, this message translates to:
+  /// **'Entry voided'**
+  String get ledgerVoidedToast;
+
+  /// Toast
+  ///
+  /// In en, this message translates to:
+  /// **'Entry restored'**
+  String get ledgerUnvoidedToast;
+
+  /// Toast
+  ///
+  /// In en, this message translates to:
+  /// **'Archived'**
+  String get ledgerArchivedToast;
+
+  /// Toast
+  ///
+  /// In en, this message translates to:
+  /// **'Unarchived'**
+  String get ledgerUnarchivedToast;
+
+  /// Toast
+  ///
+  /// In en, this message translates to:
+  /// **'Person deleted'**
+  String get ledgerPersonDeleted;
+
+  /// Toast
+  ///
+  /// In en, this message translates to:
+  /// **'Reconciled'**
+  String get ledgerReconciled;
+
+  /// Toast: storage failure, rolled back
+  ///
+  /// In en, this message translates to:
+  /// **'Couldn\'t save. Nothing was changed.'**
+  String get ledgerWriteFailed;
+
+  /// Toast: a stale version
+  ///
+  /// In en, this message translates to:
+  /// **'This changed while you were editing. Nothing was saved.'**
+  String get ledgerWriteConflict;
+
+  /// Toast: write refused over a damaged scope
+  ///
+  /// In en, this message translates to:
+  /// **'This person\'s records need reconciling first. Nothing was saved.'**
+  String get ledgerWriteDamaged;
+
+  /// A deep link to a person who is not there
+  ///
+  /// In en, this message translates to:
+  /// **'That person isn\'t in your Ledger.'**
+  String get ledgerNotFound;
+
+  /// Reminder sheet title
+  ///
+  /// In en, this message translates to:
+  /// **'Reminder'**
+  String get ledgerRemindTitle;
+
+  /// Reminder: choose a balance
+  ///
+  /// In en, this message translates to:
+  /// **'Who to remind'**
+  String get ledgerRemindChoose;
+
+  /// Reminder: nothing eligible
+  ///
+  /// In en, this message translates to:
+  /// **'No one owes you anything to remind them about.'**
+  String get ledgerRemindNone;
+
+  /// Reminder text, no due date
+  ///
+  /// In en, this message translates to:
+  /// **'Hi {name}, a reminder about {amount} from {date}.'**
+  String ledgerRemindBody(String name, String amount, String date);
+
+  /// Reminder text with the shown due date
+  ///
+  /// In en, this message translates to:
+  /// **'Hi {name}, a reminder about {amount} from {date}, due {due}.'**
+  String ledgerRemindBodyDue(
+    String name,
+    String amount,
+    String date,
+    String due,
+  );
+
+  /// Reminder: the editable text
+  ///
+  /// In en, this message translates to:
+  /// **'Message'**
+  String get ledgerRemindMessage;
+
+  /// Reminder: the fields in the text
+  ///
+  /// In en, this message translates to:
+  /// **'Included: name, amount and currency, date.'**
+  String get ledgerRemindFields;
+
+  /// Reminder: the fields in the text
+  ///
+  /// In en, this message translates to:
+  /// **'Included: name, amount and currency, date, due date.'**
+  String get ledgerRemindFieldsDue;
+
+  /// Reminder: what is left out
+  ///
+  /// In en, this message translates to:
+  /// **'Not included: notes, other people, other currencies, record ids.'**
+  String get ledgerRemindExcluded;
+
+  /// Reminder: honesty about delivery
+  ///
+  /// In en, this message translates to:
+  /// **'Lume doesn\'t send this. Your share sheet does, to whoever you choose there.'**
+  String get ledgerRemindHow;
+
+  /// Reminder: the explicit second action
+  ///
+  /// In en, this message translates to:
+  /// **'Share'**
+  String get ledgerRemindShare;
+
+  /// Reminder result — never "sent" or "delivered"
+  ///
+  /// In en, this message translates to:
+  /// **'Handed to your share sheet'**
+  String get ledgerRemindHanded;
+
+  /// Reminder: no share adapter
+  ///
+  /// In en, this message translates to:
+  /// **'Sharing isn\'t available on this device'**
+  String get ledgerRemindUnavailable;
+
+  /// Reminder: the platform threw
+  ///
+  /// In en, this message translates to:
+  /// **'The share sheet couldn\'t open'**
+  String get ledgerRemindFailed;
+
+  /// Export sheet title
+  ///
+  /// In en, this message translates to:
+  /// **'Export your Ledger'**
+  String get ledgerExportTitle;
+
+  /// Export format
+  ///
+  /// In en, this message translates to:
+  /// **'Full backup (JSON)'**
+  String get ledgerExportJson;
+
+  /// Export format
+  ///
+  /// In en, this message translates to:
+  /// **'Every entry and allocation. It can be imported again.'**
+  String get ledgerExportJsonSub;
+
+  /// Export format
+  ///
+  /// In en, this message translates to:
+  /// **'Spreadsheet (CSV)'**
+  String get ledgerExportCsv;
+
+  /// Export format
+  ///
+  /// In en, this message translates to:
+  /// **'One row per entry. It can\'t be imported — use the full backup for that.'**
+  String get ledgerExportCsvSub;
+
+  /// Export option, off by default
+  ///
+  /// In en, this message translates to:
+  /// **'Include names and notes'**
+  String get ledgerIncludeNames;
+
+  /// Export option on: the privacy line
+  ///
+  /// In en, this message translates to:
+  /// **'This file will contain the names and notes you typed. Anyone you give it to can read them.'**
+  String get ledgerIncludeNamesOn;
+
+  /// Export option off
+  ///
+  /// In en, this message translates to:
+  /// **'People are written as Person 1, Person 2… and notes are left out.'**
+  String get ledgerIncludeNamesOff;
+
+  /// Export confirm
+  ///
+  /// In en, this message translates to:
+  /// **'Export'**
+  String get ledgerExportAction;
+
+  /// Import action
+  ///
+  /// In en, this message translates to:
+  /// **'Import a backup'**
+  String get ledgerImport;
+
+  /// Import field
+  ///
+  /// In en, this message translates to:
+  /// **'Paste the contents of a lume.ledger/1 backup'**
+  String get ledgerImportPaste;
+
+  /// Import: validate before anything is written
+  ///
+  /// In en, this message translates to:
+  /// **'Check'**
+  String get ledgerImportCheck;
+
+  /// Import preview
+  ///
+  /// In en, this message translates to:
+  /// **'Ready: {c} to add, {u} to update, {s} already here. Nothing is written until you import.'**
+  String ledgerImportReady(int c, int u, int s);
+
+  /// Import report: all or nothing
+  ///
+  /// In en, this message translates to:
+  /// **'{n, plural, =1{1 problem. Nothing will be imported.} other{{n} problems. Nothing will be imported.}}'**
+  String ledgerImportIssues(int n);
+
+  /// Import preview of a redacted backup
+  ///
+  /// In en, this message translates to:
+  /// **'This backup has no names: people will be named Person 1, Person 2…'**
+  String get ledgerImportNoNames;
+
+  /// Import confirm
+  ///
+  /// In en, this message translates to:
+  /// **'Import'**
+  String get ledgerImportAction;
+
+  /// Import toast
+  ///
+  /// In en, this message translates to:
+  /// **'{n, plural, =1{Imported 1 record} other{Imported {n} records}}'**
+  String ledgerImported(int n);
 }
 
 class _AppLocalizationsDelegate

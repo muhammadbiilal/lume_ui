@@ -187,3 +187,34 @@ class LumeUnavailableImageSaver implements LumeImageSaver {
     required String fileName,
   }) async => LumeSaveOutcome.unavailable;
 }
+
+/// Hands a short message the reader has read and may have edited to the
+/// platform's share sheet — a Ledger reminder. Lume chooses no recipient and
+/// learns nothing about delivery: [LumeShareOutcome.shared] means only that
+/// the reader picked a destination in the sheet.
+abstract interface class LumeTextSharer {
+  Future<LumeShareOutcome> shareText(String text);
+}
+
+/// Records each message and never touches the platform.
+class LumeRecordingTextSharer implements LumeTextSharer {
+  LumeRecordingTextSharer({this.outcome = LumeShareOutcome.shared});
+
+  LumeShareOutcome outcome;
+  final List<String> shared = <String>[];
+
+  @override
+  Future<LumeShareOutcome> shareText(String text) async {
+    shared.add(text);
+    return outcome;
+  }
+}
+
+/// A platform with no share sheet: said, never faked.
+class LumeUnavailableTextSharer implements LumeTextSharer {
+  const LumeUnavailableTextSharer();
+
+  @override
+  Future<LumeShareOutcome> shareText(String text) async =>
+      LumeShareOutcome.unavailable;
+}

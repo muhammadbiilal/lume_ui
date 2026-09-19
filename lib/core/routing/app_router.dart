@@ -470,6 +470,7 @@ Widget _tool(BuildContext context, GoRouterState state, String root) {
                 onBack: () => context.go(root),
                 onOpenRelated: (String id) =>
                     context.replace(LumeRoutes.tool(root, id)),
+                query: state.uri.queryParameters,
               ),
             );
           }

@@ -6364,7 +6364,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get toolStatusLearning => '3 courses';
 
   @override
-  String get toolStatusLedger => '3 people';
+  String get toolStatusLedger => 'Lend and borrow';
 
   @override
   String get toolStatusLoadshed => '14:00–16:00';
@@ -6966,4 +6966,585 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get weatherWind => 'Wind';
+
+  @override
+  String get ledgerNet => 'Net position';
+
+  @override
+  String get ledgerOwedOverall => 'owed to you overall';
+
+  @override
+  String get ledgerOweOverall => 'you owe overall';
+
+  @override
+  String get ledgerEvenOverall => 'even overall';
+
+  @override
+  String get ledgerOwedToYou => 'Owed to you';
+
+  @override
+  String get ledgerYouOwe => 'You owe';
+
+  @override
+  String get ledgerPeople => 'People';
+
+  @override
+  String ledgerSummaryCurrency(String code) {
+    return 'In $code';
+  }
+
+  @override
+  String get ledgerFilterLabel => 'Show people by their current balance';
+
+  @override
+  String get ledgerFilterOwesYou => 'Owes you';
+
+  @override
+  String get ledgerOwesYou => 'owes you';
+
+  @override
+  String get ledgerYouOweShort => 'you owe';
+
+  @override
+  String get ledgerEvenRow => 'open both ways';
+
+  @override
+  String get ledgerSettledRow => 'settled';
+
+  @override
+  String ledgerCreditToThem(String amount) {
+    return '$amount credit to them';
+  }
+
+  @override
+  String ledgerCreditFromThem(String amount) {
+    return '$amount your credit';
+  }
+
+  @override
+  String ledgerDue(String date) {
+    return 'due $date';
+  }
+
+  @override
+  String get ledgerNoEntries => 'No entries yet';
+
+  @override
+  String get ledgerNeedsReconcile => 'Needs reconciling';
+
+  @override
+  String get ledgerArchivedBadge => 'Archived';
+
+  @override
+  String get ledgerRecent => 'Recent';
+
+  @override
+  String get ledgerAdd => 'Add an entry';
+
+  @override
+  String get ledgerRemind => 'Send a reminder';
+
+  @override
+  String get ledgerAddPerson => 'Add a person';
+
+  @override
+  String get ledgerEmptyTitle => 'Money lent and borrowed, in one place';
+
+  @override
+  String get ledgerEmptyText =>
+      'Add a person, then record what you lend, borrow and get back. Balances, overdue dates and credit are worked out from your entries.';
+
+  @override
+  String get ledgerNoMatch => 'Nobody here';
+
+  @override
+  String get ledgerNoMatchText => 'No one matches this filter or search.';
+
+  @override
+  String get ledgerShowAll => 'Show all';
+
+  @override
+  String get ledgerSearch => 'Search people and notes';
+
+  @override
+  String get ledgerSortDue => 'Due date';
+
+  @override
+  String get ledgerSortName => 'Name';
+
+  @override
+  String get ledgerSortRecent => 'Recent activity';
+
+  @override
+  String get ledgerShowArchived => 'Include archived';
+
+  @override
+  String get ledgerOverdueUnknown =>
+      'Overdue needs your day, and it can\'t be worked out. Dates are written out in full.';
+
+  @override
+  String get ledgerMoneyOut => 'Money out';
+
+  @override
+  String get ledgerMoneyIn => 'Money in';
+
+  @override
+  String get ledgerKindLent => 'You lent';
+
+  @override
+  String get ledgerKindBorrowed => 'You borrowed';
+
+  @override
+  String get ledgerKindRepaidToMe => 'They paid you back';
+
+  @override
+  String get ledgerKindRepaidByMe => 'You paid them back';
+
+  @override
+  String get ledgerKindLentShort => 'Lent';
+
+  @override
+  String get ledgerKindBorrowedShort => 'Borrowed';
+
+  @override
+  String get ledgerKindRepaidToMeShort => 'Got back';
+
+  @override
+  String get ledgerKindRepaidByMeShort => 'Paid back';
+
+  @override
+  String get ledgerVoided => 'Voided';
+
+  @override
+  String get ledgerHistory => 'History';
+
+  @override
+  String get ledgerOpenLoans => 'Open';
+
+  @override
+  String ledgerLeftOf(String left, String total) {
+    return '$left left of $total';
+  }
+
+  @override
+  String ledgerAppliedTo(String amount, String date) {
+    return '$amount to the $date entry';
+  }
+
+  @override
+  String ledgerPaidFrom(String amount, String date) {
+    return '$amount from the $date repayment';
+  }
+
+  @override
+  String ledgerKeptAsCredit(String amount) {
+    return '$amount kept as credit';
+  }
+
+  @override
+  String get ledgerManualBadge => 'Chosen';
+
+  @override
+  String get ledgerSettleUp => 'Settle up';
+
+  @override
+  String ledgerSettleOwes(String name, String amount) {
+    return 'Record $name paying back $amount';
+  }
+
+  @override
+  String ledgerSettleOwe(String name, String amount) {
+    return 'Record paying $name back $amount';
+  }
+
+  @override
+  String get ledgerSettleText => 'One repayment, dated today, that clears:';
+
+  @override
+  String get ledgerSettleConfirm => 'Record it';
+
+  @override
+  String get ledgerRename => 'Edit person';
+
+  @override
+  String get ledgerArchive => 'Archive';
+
+  @override
+  String get ledgerUnarchive => 'Unarchive';
+
+  @override
+  String get ledgerDeletePerson => 'Delete person';
+
+  @override
+  String get ledgerArchiveOpen => 'Only a settled person can be archived.';
+
+  @override
+  String ledgerPersonReferenced(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other:
+          '$n entries still name this person. Delete them first — nothing is deleted with them.',
+      one:
+          '1 entry still names this person. Delete it first — nothing is deleted with them.',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get ledgerDeletePersonTitle => 'Delete this person?';
+
+  @override
+  String get ledgerDeletePersonText =>
+      'They have no entries. This can\'t be undone.';
+
+  @override
+  String get ledgerReconcile => 'Reconcile';
+
+  @override
+  String get ledgerDamagedText =>
+      'The allocations on file for this person don\'t add up. Nothing is recalculated until you reconcile.';
+
+  @override
+  String ledgerDefects(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n records can\'t be read and are shown as damaged.',
+      one: '1 record can\'t be read and is shown as damaged.',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get ledgerVoid => 'Void';
+
+  @override
+  String get ledgerRestore => 'Restore';
+
+  @override
+  String get ledgerVoidText =>
+      'Voiding keeps the entry and its history, and takes it out of every figure.';
+
+  @override
+  String get ledgerNewPerson => 'New person';
+
+  @override
+  String get ledgerPersonName => 'Name';
+
+  @override
+  String get ledgerNote => 'Note';
+
+  @override
+  String get ledgerOptional => 'Optional';
+
+  @override
+  String get ledgerNewEntry => 'New entry';
+
+  @override
+  String get ledgerEditEntry => 'Edit entry';
+
+  @override
+  String get ledgerFieldPerson => 'Person';
+
+  @override
+  String get ledgerFieldKind => 'What happened';
+
+  @override
+  String get ledgerFieldAmount => 'Amount';
+
+  @override
+  String get ledgerFieldCurrency => 'Currency';
+
+  @override
+  String get ledgerFieldDate => 'Date';
+
+  @override
+  String get ledgerFieldDue => 'Due';
+
+  @override
+  String get ledgerNoDue => 'No due date';
+
+  @override
+  String get ledgerChooseDate => 'Choose a date';
+
+  @override
+  String get ledgerFieldApply => 'Apply to';
+
+  @override
+  String get ledgerApplyAuto => 'Oldest due first';
+
+  @override
+  String get ledgerApplyManual => 'Choose';
+
+  @override
+  String ledgerApplyNone(String code) {
+    return 'Nothing is open in $code for this person.';
+  }
+
+  @override
+  String get ledgerErrName => 'Enter a name';
+
+  @override
+  String get ledgerErrLong => 'That\'s too long';
+
+  @override
+  String get ledgerErrPerson => 'Choose a person';
+
+  @override
+  String get ledgerErrAmount => 'Enter an amount above zero';
+
+  @override
+  String get ledgerErrNumber => 'Enter a number, like 1500 or 1500.50';
+
+  @override
+  String ledgerErrPrecision(String code, int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n decimal places',
+      one: 'one decimal place',
+      zero: 'no decimal places',
+    );
+    return '$code takes $_temp0';
+  }
+
+  @override
+  String get ledgerErrTooLarge =>
+      'That amount is larger than a ledger entry can hold';
+
+  @override
+  String get ledgerErrDate => 'Choose a date';
+
+  @override
+  String get ledgerErrDueBefore => 'Due can\'t be before the date';
+
+  @override
+  String get ledgerErrApplied =>
+      'The amounts you apply can\'t add up to more than the repayment';
+
+  @override
+  String get ledgerErrAppliedOver => 'More than is open on this entry';
+
+  @override
+  String ledgerErrWithdrawn(String code) {
+    return '$code is no longer issued. Choose a current currency.';
+  }
+
+  @override
+  String get ledgerErrArchived =>
+      'This person is archived. Unarchive them to add entries.';
+
+  @override
+  String get ledgerOverpayTitle => 'More than is open';
+
+  @override
+  String ledgerOverpayToMe(String name, String amount) {
+    return '$name has paid back $amount more than is open. Keep it as credit to $name? It will count against the next loan to them.';
+  }
+
+  @override
+  String ledgerOverpayByMe(String name, String amount) {
+    return 'You\'re paying $name back $amount more than is open. Keep it as your credit with $name? It will count against the next time you borrow from them.';
+  }
+
+  @override
+  String get ledgerKeepCredit => 'Keep as credit';
+
+  @override
+  String get ledgerConflictTitle => 'Your chosen allocation no longer fits';
+
+  @override
+  String get ledgerConflictText =>
+      'This change leaves less open than you applied by hand. Nothing was saved. Switch those to oldest due first and save?';
+
+  @override
+  String get ledgerDeleteEntryTitle => 'Delete this entry?';
+
+  @override
+  String get ledgerDeleteEntryText =>
+      'Only for a mistake — to correct history, void it instead. It\'s removed with its allocations, and you can undo for a few seconds.';
+
+  @override
+  String get ledgerOrphanTitle => 'Repayments paid this entry';
+
+  @override
+  String ledgerOrphanText(String amount) {
+    return '$amount was paid back against it. Keep that as credit, or delete those repayments too?';
+  }
+
+  @override
+  String get ledgerOrphanDelete => 'Delete them too';
+
+  @override
+  String get ledgerSaved => 'Saved';
+
+  @override
+  String get ledgerDeleted => 'Entry deleted';
+
+  @override
+  String get ledgerRestoredToast => 'Brought back';
+
+  @override
+  String get ledgerVoidedToast => 'Entry voided';
+
+  @override
+  String get ledgerUnvoidedToast => 'Entry restored';
+
+  @override
+  String get ledgerArchivedToast => 'Archived';
+
+  @override
+  String get ledgerUnarchivedToast => 'Unarchived';
+
+  @override
+  String get ledgerPersonDeleted => 'Person deleted';
+
+  @override
+  String get ledgerReconciled => 'Reconciled';
+
+  @override
+  String get ledgerWriteFailed => 'Couldn\'t save. Nothing was changed.';
+
+  @override
+  String get ledgerWriteConflict =>
+      'This changed while you were editing. Nothing was saved.';
+
+  @override
+  String get ledgerWriteDamaged =>
+      'This person\'s records need reconciling first. Nothing was saved.';
+
+  @override
+  String get ledgerNotFound => 'That person isn\'t in your Ledger.';
+
+  @override
+  String get ledgerRemindTitle => 'Reminder';
+
+  @override
+  String get ledgerRemindChoose => 'Who to remind';
+
+  @override
+  String get ledgerRemindNone =>
+      'No one owes you anything to remind them about.';
+
+  @override
+  String ledgerRemindBody(String name, String amount, String date) {
+    return 'Hi $name, a reminder about $amount from $date.';
+  }
+
+  @override
+  String ledgerRemindBodyDue(
+    String name,
+    String amount,
+    String date,
+    String due,
+  ) {
+    return 'Hi $name, a reminder about $amount from $date, due $due.';
+  }
+
+  @override
+  String get ledgerRemindMessage => 'Message';
+
+  @override
+  String get ledgerRemindFields => 'Included: name, amount and currency, date.';
+
+  @override
+  String get ledgerRemindFieldsDue =>
+      'Included: name, amount and currency, date, due date.';
+
+  @override
+  String get ledgerRemindExcluded =>
+      'Not included: notes, other people, other currencies, record ids.';
+
+  @override
+  String get ledgerRemindHow =>
+      'Lume doesn\'t send this. Your share sheet does, to whoever you choose there.';
+
+  @override
+  String get ledgerRemindShare => 'Share';
+
+  @override
+  String get ledgerRemindHanded => 'Handed to your share sheet';
+
+  @override
+  String get ledgerRemindUnavailable =>
+      'Sharing isn\'t available on this device';
+
+  @override
+  String get ledgerRemindFailed => 'The share sheet couldn\'t open';
+
+  @override
+  String get ledgerExportTitle => 'Export your Ledger';
+
+  @override
+  String get ledgerExportJson => 'Full backup (JSON)';
+
+  @override
+  String get ledgerExportJsonSub =>
+      'Every entry and allocation. It can be imported again.';
+
+  @override
+  String get ledgerExportCsv => 'Spreadsheet (CSV)';
+
+  @override
+  String get ledgerExportCsvSub =>
+      'One row per entry. It can\'t be imported — use the full backup for that.';
+
+  @override
+  String get ledgerIncludeNames => 'Include names and notes';
+
+  @override
+  String get ledgerIncludeNamesOn =>
+      'This file will contain the names and notes you typed. Anyone you give it to can read them.';
+
+  @override
+  String get ledgerIncludeNamesOff =>
+      'People are written as Person 1, Person 2… and notes are left out.';
+
+  @override
+  String get ledgerExportAction => 'Export';
+
+  @override
+  String get ledgerImport => 'Import a backup';
+
+  @override
+  String get ledgerImportPaste =>
+      'Paste the contents of a lume.ledger/1 backup';
+
+  @override
+  String get ledgerImportCheck => 'Check';
+
+  @override
+  String ledgerImportReady(int c, int u, int s) {
+    return 'Ready: $c to add, $u to update, $s already here. Nothing is written until you import.';
+  }
+
+  @override
+  String ledgerImportIssues(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n problems. Nothing will be imported.',
+      one: '1 problem. Nothing will be imported.',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get ledgerImportNoNames =>
+      'This backup has no names: people will be named Person 1, Person 2…';
+
+  @override
+  String get ledgerImportAction => 'Import';
+
+  @override
+  String ledgerImported(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: 'Imported $n records',
+      one: 'Imported 1 record',
+    );
+    return '$_temp0';
+  }
 }

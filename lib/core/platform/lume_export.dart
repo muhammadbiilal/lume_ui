@@ -94,6 +94,26 @@ class LumeExportFile {
     return RegExp(r'[",\r\n]').hasMatch(v) ? '"${v.replaceAll('"', '""')}"' : v;
   }
 
+  /// A document the tool has already written in full — Ledger's
+  /// `lume.ledger/1` backup, or its CSV (which carries its own byte-order
+  /// mark; one is added only if it is missing).
+  factory LumeExportFile.document({
+    required String tool,
+    required DateTime day,
+    required LumeExportFormat format,
+    required String text,
+  }) {
+    final String body =
+        format == LumeExportFormat.csv && !text.startsWith('\ufeff')
+        ? '\ufeff$text'
+        : text;
+    return LumeExportFile._(
+      '${_stem(tool, day)}.${format.extension}',
+      format,
+      Uint8List.fromList(utf8.encode(body)),
+    );
+  }
+
   final String fileName;
   final LumeExportFormat format;
   final Uint8List bytes;

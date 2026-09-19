@@ -32,6 +32,12 @@ final Provider<LumeSharer> sharerProvider = Provider<LumeSharer>(
   (Ref ref) => const LumePlatformSharer(),
 );
 
+/// A message the reader has previewed, handed to the share sheet as text
+/// (a Ledger reminder). Never a delivery.
+final Provider<LumeTextSharer> textSharerProvider = Provider<LumeTextSharer>(
+  (Ref ref) => const LumePlatformTextSharer(),
+);
+
 /// D7, F6B — puts a rendered share card in the photo library, asking for
 /// add-only access and nothing more.
 final Provider<LumeImageSaver> imageSaverProvider = Provider<LumeImageSaver>(

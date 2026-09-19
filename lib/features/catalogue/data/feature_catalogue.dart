@@ -991,6 +991,9 @@ const List<LumeFeature> kLumeFeatures = <LumeFeature>[
     icon: 'list',
     category: LumeToolCategory.money,
     group: LumeFeatureGroup.money,
+    // Financial records about named people (D8): off Home, Today, the hero
+    // and recommendations; the frame adds its privacy note.
+    sensitive: true,
     interests: <String>{'expenses'},
     keywords: <String>{'borrow', 'khata', 'lend', 'owe', 'udhaar'},
     related: <String>{'expenses', 'installments', 'committee'},

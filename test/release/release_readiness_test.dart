@@ -147,7 +147,16 @@ void main() {
         for (final LumeFeature f in kLumeFeatures)
           if (!LumeDataCapability.fixture(f.id).isSample) f.id,
       ]..sort(),
-      <String>['age', 'compound', 'loan', 'stopwatch', 'sunmoon', 'tipsplit'],
+      // Ledger shows only what the reader wrote: nothing is seeded (D11).
+      <String>[
+        'age',
+        'compound',
+        'ledger',
+        'loan',
+        'stopwatch',
+        'sunmoon',
+        'tipsplit',
+      ],
     );
     // Sun & Moon is the one computed tool: a calculation for the reader's
     // city, never live and never stored (C86).

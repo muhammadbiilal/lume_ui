@@ -19,6 +19,7 @@ class LumeToolRequest {
     required this.branch,
     this.onBack,
     this.onOpenRelated,
+    this.query = const <String, String>{},
   });
 
   final LumeFeature feature;
@@ -31,4 +32,8 @@ class LumeToolRequest {
 
   /// A related tool replaces this one rather than stacking on it.
   final ValueChanged<String>? onOpenRelated;
+
+  /// The location's query — a tool's own deep link (Ledger's `person`).
+  /// Untrusted: a tool validates what it reads here.
+  final Map<String, String> query;
 }
