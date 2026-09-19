@@ -1,13 +1,13 @@
 # Lending Ledger — approval package
 
-**Proposal only. Nothing here is implemented.** The first version was
-approved in direction with required corrections; this revision incorporates
-the approved decisions (D1–D13) and the corrections: repayment allocations,
-overdue derivation, the party lifecycle, display precision, reminders,
-export, the multi-currency People count, and the Follow-region zone
-resolution Ledger inherits. It supersedes the Ledger section of
-`FINANCIAL_RECORD_FAMILIES.md`. Ledger stays blocked until this revision is
-approved.
+**Approved and implemented — the authoritative Ledger specification.**
+This revision incorporates the approved decisions (D1–D13), the corrections
+to repayment allocations, overdue derivation, the party lifecycle, display
+precision, reminders, export and the multi-currency People count, and the
+five final decisions (§18). It supersedes the Ledger section of
+`FINANCIAL_RECORD_FAMILIES.md`. The implementation is `lib/features/ledger/`
+over `lib/core/values/` and the record layer's transactions; what it draws
+differently from the reference is C90.
 
 **How the reference was read.** `assets/js/tools/money/ledger.tool.js`,
 `context.js` `ledger()`, the engine's header actions and `exportRows`, the
@@ -107,7 +107,7 @@ LedgerAllocation {
 LedgerPrincipalState { entry, remaining: LumeMoney, overdue: bool }
 LedgerBalance {
   party, currency, amount: LumeMoney (≥ 0),
-  direction: owesYou | youOwe | settled,
+  direction: owesYou | youOwe | even | settled,   // even: net zero, open
   credit: LumeMoney, overdue: bool, shownDue: LumeDate?
 }
 LedgerSummary {
@@ -297,7 +297,8 @@ balance       = owedToYou − youOwe
 ```
 
 Positive balance: owes you; negative: you owe; zero with nothing remaining
-and no credit: settled.
+and no credit: settled. Net zero with anything still open (a `lent` and a
+`borrowed` of equal size) is **even** — not settled.
 
 Summary, per currency: **Owed to you** = Σ positive balances; **You owe**
 = Σ |negative balances|; **Net** = Owed to you − You owe.
@@ -639,18 +640,35 @@ first, hard delete with Undo, archive, no cascade · D10 a dedicated host ·
 D11 empty by default · D12 primitives first · D13 Follow region as an
 explicit preference (implemented in the time-zone service; `WORLD_CLOCK_TIMEZONE.md`, C89).
 
-**Still to decide before implementation:**
+**Final decisions** (approved; implemented):
 
-1. **Credit carried forward.** §5.4 applies credit automatically to the
-   next compatible principal. The alternative is to hold it until the
-   reader applies it.
-2. **Opposite principals with one person.** A `lent` and a `borrowed` in
-   the same currency net in the balance but never discharge each other
-   (allocation only joins repayments to principals), so the person is not
-   settled while both are open. An explicit "offset" operation would close
-   both; approve it or leave them open.
-3. **Import scope.** All-or-nothing is proposed. The alternative is to
-   offer importing the valid records while listing the invalid ones.
-4. **Multi-record transactions** in the record layer (§13), which Ledger
-   needs and which today's in-memory repository does not yet offer.
-5. **Amount bounds** (§4): 10^15 minor units per entry, 2^53 − 1 per sum.
+1. **Credit carried forward — automatic.** Credit exists only after the
+   reader confirms an overpayment, stays visible while unapplied, and is
+   applied to the next compatible principal (same person, same currency,
+   the direction it discharges) by the ordinary FIFO order, as normal
+   allocation records, in the same transaction as that principal. Voiding,
+   restoring, editing or deleting the source repayment reconciles every
+   allocation it made; historical entries are not rewritten.
+2. **Opposite principals — never offset.** A `lent` and a `borrowed` with one
+   person in one currency both stay open with their own due dates and
+   overdue state; the net may be shown, and a net of zero is "even", not
+   settled. **Settled** means every principal has nothing remaining and no
+   unapplied credit remains, in every currency. There is no Offset action.
+   A future explicit Offset would be its own product decision, with its own
+   typed adjustment and audit model, and must never masquerade as a
+   repayment.
+3. **Import — all or nothing.** The whole document is decoded and checked
+   (schema and version, every party, entry and allocation, ids and
+   references, currencies and bounds, versions, every allocation scope,
+   every invariant, conflicts with what the Ledger holds) and reported in
+   full with stable paths; then applied in one transaction after
+   confirmation, or not at all. No "valid records only" path; nothing is
+   repaired, discarded or renumbered.
+4. **Multi-record transactions** are in the record layer
+   (`record_transaction.dart`): one snapshot, optimistic version checks,
+   commit all or none, one notification, typed failures, idempotency keys,
+   and `revert` for Undo by the same ids.
+5. **Amount bounds.** 10^15 minor units per entry and 2^53 − 1 per sum —
+   exact on every platform, the web included — enforced at construction,
+   import, every projection and every reconciliation, as a typed overflow
+   that rolls the whole write back. Never clamped, wrapped or rounded.

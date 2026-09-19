@@ -197,7 +197,7 @@ run on the shared CRUD engine.
 | `packages` | Mobile Packages | explorer | high | PK | — | — | — | not started |
 | `loan` | Loan / EMI | calculator | high | — | — | — | — | not started |
 | `tipsplit` | Tip & Split | calculator | low | — | — | Y | — | not started |
-| `ledger` | Lending Ledger | manager | high | — | — | — | — | not started |
+| `ledger` | Lending Ledger | manager | high | — | **yes** | Y | — | **built** — its own host over record-layer transactions; people, entries and allocations; FIFO-by-obligation, manual allocation, credit, void and restore, delete with Undo, archive; filters by balance, search, sort; reminder preview; `lume.ledger/1` export and import, CSV export; sensitive; nothing seeded (C90) |
 | `installments` | Installments | manager | high | — | — | — | — | not started |
 | `committee` | Committee | manager | high | — | — | — | — | not started |
 

@@ -2479,6 +2479,77 @@ sample record ticked from its row would have shown its raw `@key`.
 `update(…, claim: false)` keeps it; a form's save still claims the record as
 the reader's (`memory_record_repository_test.dart`).
 
+### C90 — Lending Ledger: the reader's own records, figures that agree
+
+**Built** on its own host (`LEDGER_PROPOSAL.md`, D10) over the record layer's
+transactions. The reference's composition is kept, in its order — summary
+card, filter bar, People, Recent, the two buttons, the frame's source line
+and related tools — and parity is claimed for the populated, filtered and
+filter-empty states only (`shots/tools/tool_ledger_default_pk/`, seven
+side-by-sides). Every other state is Lume's own.
+
+Kept from the reference: the summary's composition (kicker "Net position",
+the net, its caption, three stats), the filter bar's shape and placement,
+each person's rich row (tinted initials disc, name, what it was for, the
+start date and "due {date}", the Overdue badge, the amount and its direction
+in words, a chevron), the Recent compact rows, "Add an entry" and "Send a
+reminder", the source area and related tools, the layout at every captured
+width, dark mode, and Urdu and Arabic set right to left.
+
+Deliberate corrections, each measured in the reference (§17):
+
+- **Figures agree.** The reference rounds each figure on its own: its rows
+  owed to the reader add to Rs 51,000 while "Lent" says Rs 50,900, and its
+  net is Rs 38,200. Here every figure is derived from integer minor units:
+  Rs 51,000 owed, Rs 12,700 owed by the reader, Rs 38,300 net. The stats
+  read "Owed to you" and "You owe" — balances, not entry kinds.
+- **Overdue is derived** from each loan's due date and the reader's own day
+  in their resolved zone; with no day (a region with several zones and no
+  city) nothing is marked overdue or not, and the Overdue filter says why.
+  People are ordered overdue first, oldest shown due first (§7) — so Bilal
+  leads, where the reference keeps its fixture order.
+- **Real history.** Recent lists entries — loans, borrowings and repayments
+  — not each person's balance repeated at a "since" date.
+- **Direction in words and icons, never a sign.** Money out and money in
+  have different icons (the reference uses one arrow for both) and each row
+  says what happened ("They paid you back"); amounts carry no "+" or "−".
+- **Working CRUD.** Add a person, add, edit, void and restore an entry,
+  delete one made by mistake with Undo by the same ids, rename, archive
+  once settled, delete a person only when no entry names them. The
+  reference's Add, Remind and row press only toast.
+- **Working search and sort.** A search field (names and notes, case- and
+  diacritic-insensitive, Arabic and Urdu letter forms folded) and a sort
+  bar (due date, amount, name, recent activity) sit under the filter bar.
+  The reference's search focuses an element the tool never renders.
+- **Filters by balance, named for it** (D4): All · Owes you · You owe ·
+  Overdue, with the accessibility label "Show people by their current
+  balance". The reference's "Lent" and "Borrowed" filter by balance while
+  naming entry kinds.
+- **A truthful reminder** (D6): the exact text previewed and editable, the
+  fields in it and those left out listed, then a second, explicit Share that
+  hands the text to the share sheet. It says "Handed to your share sheet" —
+  never "Reminder sent" — and says so when sharing is unavailable.
+- **A complete export** (D7): the lossless `lume.ledger/1` backup or a CSV
+  view, names and notes left out unless the reader turns them on; the
+  reference's export writes no ledger data. Import (JSON only) is checked in
+  full and applied all or nothing.
+- **Every string in English, Urdu and Arabic** — 158 of Ledger's own; the
+  reference translates only the tool's name.
+- **Sensitive** (D8): the frame's privacy note shows, and Ledger never
+  reaches Home, Today, the hero or recommendations. The Tools tile's status
+  says what the tool is for ("Lend and borrow") instead of the reference's
+  unrelated money figure — a count or a sum there would put private
+  figures on a tile.
+- **A truthful source claim.** A release build says "Kept until you close
+  Lume": nothing is durable yet (C74). The reference build still draws the
+  reference's own words, as every reproduced tool does.
+- **Nothing is seeded** (D11). A reader's Ledger starts empty; the three
+  reference people exist only as a test fixture, entered through the
+  repository as a reader would.
+- **Initials** are the first letter of up to two words ("A" for Ahmed, "AK"
+  for Ahmed Khan), so Urdu and Arabic names get a disc; the reference's
+  "AH" is a fixture field.
+
 ### C89 — "Follow my region" never picks one of a country's zones
 
 **Correction (Follow-region canonical identity and labels).** Two

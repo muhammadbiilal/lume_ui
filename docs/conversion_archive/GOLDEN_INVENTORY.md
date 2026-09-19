@@ -48,6 +48,28 @@ twenty-one routes are shot at four cells each — the reference cell, Urdu,
 Arabic and 200% type — which is 84, plus the refusal a guest meets on a
 protected route.
 
+### Lending Ledger (`test/goldens/ledger_golden_test.dart`)
+
+| | count |
+|---|---:|
+| golden test cases | 33 |
+| unique committed Flutter PNGs (`tool_ledger_*`) | 33 |
+| Flutter captures (`shots/tools/tool_ledger_default_pk/*.flutter.png`) | 8 |
+| web captures (`*.web.png`, the same folder) | 7 |
+| side-by-sides | 7 |
+| diff images | 7 |
+
+Eight cells of the reference composition (390×844 light, dark, Urdu,
+Arabic, 200% type; 700×900; 1100×900; 852×393) and twenty-five states:
+first use (English, Urdu), each filter, settled and archived, credit, mixed
+currencies, search, no results, a person, an entry, validation failure,
+the keyboard open on the form, the allocation picker, the overpayment
+sheet, deleting a paid loan, Undo, the reminder, sharing unavailable,
+export, day unknown, a damaged scope, loading and a storage failure. The
+200% cell has no web capture: the browser cannot set the reader's text
+scale. The diff images are for a person to look at; no percentage in them
+is claimed as parity (C90).
+
 ---
 
 ## 3. Reconciling 526 and 462
