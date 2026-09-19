@@ -340,6 +340,7 @@ class _LumeDocumentsToolState extends ConsumerState<LumeDocumentsTool> {
       barrierLabel: title,
       child: Builder(
         builder: (BuildContext sheet) => LumeSheet(
+          confirm: true,
           child: LumeDeleteConfirmation(
             title: title,
             consequence: text,

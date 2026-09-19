@@ -522,8 +522,8 @@ class LumeRecordHero extends StatelessWidget {
                 -0.035,
               ),
             ).copyWith(color: g.on),
-            maxLines: 1,
-            overflow: TextOverflow.ellipsis,
+            // `.chero__value` wraps: a record's name is the reader's words,
+            // and the hero is where it is read whole.
           ),
           if (title != null) ...<Widget>[
             const SizedBox(height: 4),

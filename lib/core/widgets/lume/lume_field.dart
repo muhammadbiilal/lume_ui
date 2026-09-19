@@ -292,6 +292,7 @@ class LumeFormField extends StatefulWidget {
     this.wide = false,
     this.autofocus = false,
     this.focusNode,
+    this.rows = 3,
   });
 
   final String label;
@@ -321,6 +322,9 @@ class LumeFormField extends StatefulWidget {
   final bool wide;
   final bool autofocus;
   final FocusNode? focusNode;
+
+  /// A multiline field's `rows` — the lines it opens at before it grows.
+  final int rows;
 
   /// Measured: 48 px.
   static const double boxHeight = 48;
@@ -454,6 +458,7 @@ class _LumeFormFieldState extends State<LumeFormField> {
                     enabled: widget.enabled,
                     focusNode: _node,
                     autofocus: widget.autofocus,
+                    rows: widget.rows,
                     style: LumeType.fit(context, context.lumeType.bodyStrong)
                         .copyWith(
                           color: lume.text,
@@ -519,6 +524,7 @@ class _RawInput extends StatefulWidget {
     this.focusNode,
     this.autofocus = false,
     this.onSubmitted,
+    this.rows = 3,
   });
 
   final TextEditingController? controller;
@@ -531,6 +537,7 @@ class _RawInput extends StatefulWidget {
   final FocusNode? focusNode;
   final bool autofocus;
   final ValueChanged<String>? onSubmitted;
+  final int rows;
 
   @override
   State<_RawInput> createState() => _RawInputState();
@@ -594,7 +601,7 @@ class _RawInputState extends State<_RawInput> {
             : TextInputAction.search,
         keyboardType: _keyboard,
         maxLines: widget.kind == LumeFieldKind.multiline ? null : 1,
-        minLines: widget.kind == LumeFieldKind.multiline ? 3 : 1,
+        minLines: widget.kind == LumeFieldKind.multiline ? widget.rows : 1,
         style: widget.style,
         cursorColor: lume.accent,
         inputFormatters: widget.kind == LumeFieldKind.number

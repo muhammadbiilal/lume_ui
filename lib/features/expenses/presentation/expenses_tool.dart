@@ -353,6 +353,7 @@ class _LumeExpensesToolState extends ConsumerState<LumeExpensesTool> {
       barrierLabel: title,
       child: Builder(
         builder: (BuildContext sheet) => LumeSheet(
+          confirm: true,
           child: LumeDeleteConfirmation(
             title: title,
             consequence: text,

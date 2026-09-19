@@ -2330,6 +2330,25 @@ About.
   (`referenceSourceLine`). 47 goldens were re-captured; every changed region
   was checked to be the mark or the wrap it causes.
 
+### C87 — Shared record widgets, measured by rollout wave 2
+
+Found while measuring wave 2 against the running reference; they are shared,
+so Documents, Expenses and the component gallery change with them.
+
+| widget | was | reference, measured |
+|---|---|---|
+| `LumeRecordRow` meta | `.rrow`'s 10-point wrapping meta (12 tall) | `.rrec__meta`: the sub-line's 11 / 500 on 16, one line — record rows with meta are 84, not 80. The component gallery's rows goldens move with it |
+| `LumeRecordRow` check | spoke "Done" / "Not done" in English | the family's word and the row's title ("Completed, Send the quarterly summary"), its state as checked |
+| `LumeRecordHero` value | one line, ellipsized | `.chero__value` wraps: "Send the quarterly summary" is two lines, the hero 164 |
+| `LumeSheet` for a confirmation | the sheet's 18-point body padding around `.dconfirm`, 18 below | `#sheet-recdelete`: `.dconfirm` straight under the grab, 20 below — buttons 348 wide, not 312. Documents' and Expenses' delete sheets change with it, and now match their reference captures |
+| `LumeFormField` textarea | always three lines | `rows` — Notes' body opens at six |
+
+**A tick keeps a sample record a sample.** `records.js` keeps `_seed` on an
+update the form did not make; the store here cleared it on any write, so a
+sample record ticked from its row would have shown its raw `@key`.
+`update(…, claim: false)` keeps it; a form's save still claims the record as
+the reader's (`memory_record_repository_test.dart`).
+
 ### C63 — English dates written the wrong way outside the United States
 
 **Found in F6A** on the UAE Tax capture ("Mon, 7 Sep") and confirmed by

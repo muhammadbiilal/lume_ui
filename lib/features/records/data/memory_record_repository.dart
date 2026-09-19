@@ -184,6 +184,7 @@ class LumeMemoryRecordRepository extends ChangeNotifier
     String id,
     Map<String, Object?> fields, {
     int? expectVersion,
+    bool claim = true,
   }) {
     final int at = _indexOf(collection, id);
     if (at == -1) return const LumeWriteResult.failed(LumeWriteFailure.missing);
@@ -202,8 +203,9 @@ class LumeMemoryRecordRepository extends ChangeNotifier
       version: before.version + 1,
       updatedAt: _now(),
       queued: offline,
-      // A record the reader has saved is theirs from here on (`_seed = 0`).
-      seeded: fields.isEmpty ? before.seeded : false,
+      // A record the reader has saved is theirs from here on (`_seed = 0`);
+      // a tick writes no words and leaves it as it was.
+      seeded: fields.isEmpty || !claim ? before.seeded : false,
     );
     _cache[collection]![at] = after;
     _undo = _UndoEntry.update(collection, id, before);

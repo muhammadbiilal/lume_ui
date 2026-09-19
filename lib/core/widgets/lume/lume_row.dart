@@ -561,6 +561,7 @@ class LumeRecordRow extends StatelessWidget {
     this.queuedLabel,
     this.onTap,
     this.onToggle,
+    this.checkLabel,
   });
 
   final String title;
@@ -589,6 +590,11 @@ class LumeRecordRow extends StatelessWidget {
   /// Fast optimistic logging — ticking writes immediately, with no form.
   final ValueChanged<bool>? onToggle;
 
+  /// What the checkbox says it is — the family's own word ("Completed",
+  /// "In basket"), with the row's title, so a screen reader hears which
+  /// row's box it is on. Its state is carried as checked, not as words.
+  final String? checkLabel;
+
   @override
   Widget build(BuildContext context) {
     final LumeColors lume = context.lume;
@@ -610,7 +616,11 @@ class LumeRecordRow extends StatelessWidget {
       child: Row(
         children: <Widget>[
           if (onToggle != null)
-            _RecordCheck(checked: done, onChanged: onToggle!)
+            _RecordCheck(
+              checked: done,
+              label: checkLabel == null ? title : '$checkLabel, $title',
+              onChanged: onToggle!,
+            )
           else
             _RecordDisc(initial: initial ?? '·', dim: done),
           const SizedBox(width: 12),
@@ -658,7 +668,7 @@ class LumeRecordRow extends StatelessWidget {
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
                   ),
-                if (meta != null && meta!.isNotEmpty) _MetaLine(parts: meta!),
+                if (meta != null && meta!.isNotEmpty) _RecordMeta(parts: meta!),
               ],
             ),
           ),
@@ -713,6 +723,52 @@ class LumeRecordRow extends StatelessWidget {
       <String?>[title, subtitle, value].whereType<String>().join(', ');
 }
 
+/// `.rrec__meta` — the record row's meta: the sub-line's 11 / 500 on its
+/// 16-point line, one line, parts 5 apart with a dot between. Not `.rrow`'s
+/// 10-point meta, which wraps.
+class _RecordMeta extends StatelessWidget {
+  const _RecordMeta({required this.parts});
+
+  final List<String> parts;
+
+  @override
+  Widget build(BuildContext context) {
+    final LumeColors lume = context.lume;
+    final TextStyle style = LumeType.fit(
+      context,
+      context.lumeType.metaSmall,
+    ).copyWith(color: lume.text3);
+    final Widget dot = Container(
+      width: 2.5,
+      height: 2.5,
+      decoration: BoxDecoration(
+        color: lume.text3.withValues(alpha: 0.5),
+        shape: BoxShape.circle,
+      ),
+    );
+    return Row(
+      mainAxisSize: MainAxisSize.min,
+      children: <Widget>[
+        for (int i = 0; i < parts.length; i++) ...<Widget>[
+          if (i > 0) ...<Widget>[
+            const SizedBox(width: 5),
+            dot,
+            const SizedBox(width: 5),
+          ],
+          Flexible(
+            child: Text(
+              parts[i],
+              style: style,
+              maxLines: 1,
+              overflow: TextOverflow.ellipsis,
+            ),
+          ),
+        ],
+      ],
+    );
+  }
+}
+
 /// The initial disc. Measured: 38 × 38, circle, `tintAccent`, `accent-700`
 /// ink at 15 / 700.
 class _RecordDisc extends StatelessWidget {
@@ -753,9 +809,14 @@ class _RecordDisc extends StatelessWidget {
 /// The checkbox a checkable family logs from. 38 px, so the row's own target
 /// and the checkbox's do not fight each other.
 class _RecordCheck extends StatelessWidget {
-  const _RecordCheck({required this.checked, required this.onChanged});
+  const _RecordCheck({
+    required this.checked,
+    required this.label,
+    required this.onChanged,
+  });
 
   final bool checked;
+  final String label;
   final ValueChanged<bool> onChanged;
 
   static const double size = 38;
@@ -766,7 +827,7 @@ class _RecordCheck extends StatelessWidget {
 
     return Semantics(
       checked: checked,
-      label: checked ? 'Done' : 'Not done',
+      label: label,
       child: LumePressable(
         onTap: () => onChanged(!checked),
         borderRadius: LumeRadius.full,

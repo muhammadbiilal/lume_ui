@@ -41,6 +41,7 @@ class LumeSheet extends StatelessWidget {
     this.onClose,
     this.closeLabel,
     this.tall = false,
+    this.confirm = false,
   });
 
   final Widget child;
@@ -54,6 +55,14 @@ class LumeSheet extends StatelessWidget {
   /// `.sheet--tall` — search and Personalisation, which are lists rather than
   /// decisions and are given six more per cent of the viewport for them.
   final bool tall;
+
+  /// `.sheet--confirm` — the destructive confirmation (`#sheet-recdelete`):
+  /// no head and no body padding, the `.dconfirm` block straight under the
+  /// grab, and 20 below it rather than 18.
+  final bool confirm;
+
+  /// `.sheet--confirm { padding-bottom: max(20px, …) }`.
+  static const double confirmFloor = 20;
 
   /// `.sheet { max-height: 86% }`.
   static const double heightFraction = 0.86;
@@ -73,6 +82,7 @@ class LumeSheet extends StatelessWidget {
     final LumeColors lume = context.lume;
     final bool compact = context.isCompact;
     final double inset = MediaQuery.paddingOf(context).bottom;
+    final double floor = confirm ? confirmFloor : bottomFloor;
 
     return Container(
       constraints: BoxConstraints(
@@ -101,9 +111,7 @@ class LumeSheet extends StatelessWidget {
       ),
       child: Padding(
         padding: EdgeInsets.only(
-          bottom: compact
-              ? (inset > bottomFloor ? inset : bottomFloor)
-              : bottomFloor,
+          bottom: compact ? (inset > floor ? inset : floor) : floor,
         ),
         child: Column(
           mainAxisSize: MainAxisSize.min,
@@ -217,7 +225,9 @@ class LumeSheet extends StatelessWidget {
               // `.sheet__body { padding: 0 18px 8px }` — no top padding,
               // because the head above it already ends with ten.
               child: Padding(
-                padding: const EdgeInsets.fromLTRB(18, 0, 18, 8),
+                padding: confirm
+                    ? EdgeInsets.zero
+                    : const EdgeInsets.fromLTRB(18, 0, 18, 8),
                 child: child,
               ),
             ),

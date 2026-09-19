@@ -43,6 +43,7 @@ class LumeRecordField {
     this.optional = false,
     this.wide = false,
     this.rule,
+    this.rows = 3,
   });
 
   final String name;
@@ -56,6 +57,9 @@ class LumeRecordField {
   final bool wide;
 
   final LumeFieldRule? rule;
+
+  /// A textarea's `rows` — Notes' body opens at six.
+  final int rows;
 
   /// `defaultFor()` for kinds with no context: an unticked box, an empty
   /// string. Dates, times and selects take theirs from the tool.

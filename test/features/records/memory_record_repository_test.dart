@@ -123,4 +123,21 @@ void main() {
     r.unreadable.clear();
     expect(r.retry('expenses').status, LumeCollectionStatus.ready);
   });
+
+  test('a tick keeps a sample record a sample; a saved form claims it', () {
+    // `records.js` keeps `_seed` unless the form's save clears it, so a sample
+    // record ticked from its row is still read in the reader's language.
+    final LumeMemoryRecordRepository r = store();
+    final LumeRecord seeded = r.open('expenses').items.first;
+    expect(seeded.seeded, isTrue);
+    final LumeRecord ticked = r.update('expenses', seeded.id, <String, Object?>{
+      'done': true,
+    }, claim: false).record!;
+    expect(ticked.seeded, isTrue);
+    expect(ticked.version, 2);
+    final LumeRecord saved = r.update('expenses', seeded.id, <String, Object?>{
+      'title': 'Milk',
+    }).record!;
+    expect(saved.seeded, isFalse);
+  });
 }

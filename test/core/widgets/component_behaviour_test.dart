@@ -272,9 +272,13 @@ void main() {
       bool? wrote;
       await show(
         t,
-        LumeRecordRow(title: 'Water', onToggle: (bool v) => wrote = v),
+        LumeRecordRow(
+          title: 'Water',
+          checkLabel: 'Completed',
+          onToggle: (bool v) => wrote = v,
+        ),
       );
-      await t.tap(find.bySemanticsLabel('Not done'));
+      await t.tap(find.bySemanticsLabel('Completed, Water'));
       await t.pump();
       expect(wrote, isTrue);
     });
@@ -282,11 +286,22 @@ void main() {
     testWidgets('the checkbox exposes a checked state, not just a tick', (
       WidgetTester t,
     ) async {
+      // The family's own word and the row's title, in the reader's
+      // language, never a fixed English "Done" (C86); the state is the
+      // checked flag, not the words.
       await show(
         t,
-        LumeRecordRow(title: 'Water', done: true, onToggle: (_) {}),
+        LumeRecordRow(
+          title: 'Water',
+          checkLabel: 'Completed',
+          done: true,
+          onToggle: (_) {},
+        ),
       );
-      expect(find.bySemanticsLabel('Done'), findsOneWidget);
+      expect(
+        t.getSemantics(find.bySemanticsLabel('Completed, Water')),
+        isSemantics(hasCheckedState: true, isChecked: true),
+      );
     });
 
     testWidgets('a row with no callback is inert', (WidgetTester t) async {

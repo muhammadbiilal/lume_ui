@@ -39,11 +39,18 @@ abstract interface class LumeRecordRepository implements Listenable {
 
   /// [expectVersion] is the version the form was opened against. Passing it is
   /// what makes a conflict detectable; omitting it is a deliberate overwrite.
+  ///
+  /// [claim] says the reader has written the record's words — a form's save —
+  /// so a sample record becomes theirs and is never re-translated. A tick on
+  /// a row writes no words and passes `false`, keeping a sample record's
+  /// text in the reader's language (`records.js` `update` keeps `_seed`
+  /// unless the form clears it).
   LumeWriteResult update(
     String collection,
     String id,
     Map<String, Object?> fields, {
     int? expectVersion,
+    bool claim = true,
   });
 
   LumeWriteResult remove(String collection, String id);
