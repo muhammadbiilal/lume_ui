@@ -12,7 +12,8 @@
 /// ```bash
 /// flutter build apk --debug \
 ///   -t docs/conversion_archive/tool/android_tool_probe.dart \
-///   --dart-define=LUME_ROUTE=/tools/tool/weather
+///   --dart-define=LUME_ROUTE=/tools/tool/weather \
+///   --dart-define=LUME_COUNTRY=PK --dart-define=LUME_CITY=Islamabad
 /// flutter install -d emulator-5554 --debug
 /// flutter screenshot -d emulator-5554 -o weather.png
 /// ```
@@ -35,12 +36,24 @@ const String _route = String.fromEnvironment('LUME_ROUTE');
 /// the reference schedule, for a walk that is about the banner.
 const String _banners = String.fromEnvironment('LUME_BANNERS');
 
+/// The seeded reader's country and city — `LUME_COUNTRY=BG`,
+/// `LUME_CITY=Sofia` for a walk about another market. Pakistan and
+/// Islamabad by default.
+const String _country = String.fromEnvironment(
+  'LUME_COUNTRY',
+  defaultValue: 'PK',
+);
+const String _city = String.fromEnvironment(
+  'LUME_CITY',
+  defaultValue: 'Islamabad',
+);
+
 /// The `muslim_pk` fixture, in the form the gate reads — Muslim, so the
 /// faith-gated Hadith is reachable too.
 const LumeProfileRecord _seed = LumeProfileRecord(
-  country: 'PK',
-  region: 'Islamabad Capital Territory',
-  city: 'Islamabad',
+  country: _country,
+  region: _country == 'PK' ? 'Islamabad Capital Territory' : '',
+  city: _city,
   islamic: true,
   interests: <String>[
     'weather',
