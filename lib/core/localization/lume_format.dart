@@ -20,6 +20,7 @@ library;
 import 'package:flutter/widgets.dart';
 import 'package:intl/intl.dart' as intl;
 
+import '../values/lume_country_currency.dart';
 import '../values/lume_currency.dart';
 import '../values/lume_money.dart';
 
@@ -160,29 +161,11 @@ class LumeFormatting {
     'AE',
   }.contains(country);
 
-  /// The currency this user's amounts are in.
+  /// The currency this user's amounts are in: theirs where set, else their
+  /// country's current one ([LumeCountryCurrency], dated). A code no table
+  /// carries reads USD, as the reference's own fallback does.
   String get currency =>
-      currencyCode ??
-      switch (countryCode) {
-        'PK' => 'PKR',
-        'IN' => 'INR',
-        'GB' => 'GBP',
-        'US' => 'USD',
-        'AE' => 'AED',
-        'SA' => 'SAR',
-        'BD' => 'BDT',
-        'TR' => 'TRY',
-        'ID' => 'IDR',
-        'MY' => 'MYR',
-        'JP' => 'JPY',
-        'CN' => 'CNY',
-        'NG' => 'NGN',
-        'ZA' => 'ZAR',
-        'BR' => 'BRL',
-        'CA' => 'CAD',
-        'AU' => 'AUD',
-        _ => 'USD',
-      };
+      currencyCode ?? LumeCountryCurrency.current(countryCode) ?? 'USD';
 
   // ---- dates and times ---------------------------------------------------
 

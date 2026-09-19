@@ -2479,6 +2479,33 @@ sample record ticked from its row would have shown its raw `@key`.
 `update(…, claim: false)` keeps it; a form's save still claims the record as
 the reader's (`memory_record_repository_test.dart`).
 
+### C91 — A country's currency: Bulgaria's euro, and every country's own
+
+**Correction to the reference's data, dated.** The reference's country
+table (`geo.js`) still gives Bulgaria the lev (`BGN`). Bulgaria adopted the
+euro on 1 January 2026, so a new Bulgarian profile follows the euro:
+"Automatic (EUR)" in Account › Currency, and new Ledger entries start in
+EUR. The reference is not edited. The correction is a dated entry in
+`LumeCountryCurrency.changes` over a copy of the reference's table, with
+its legal source and the fixed rate (1.95583 lev per euro), which is
+recorded and never applied (`CURRENCY_DATA.md`).
+
+A lev amount already kept is still the lev:
+
+- it decodes and imports;
+- it is summed apart from the euro;
+- it exports as `BGN`;
+- nothing converts it.
+
+Changing a profile's country or currency changes only what a new amount
+defaults to.
+
+**And every country's own currency.** The Flutter formatter named 17
+markets and gave every other country US dollars, where the reference reads
+each country's currency from its table. It now reads the whole table
+through the same corrections: a reader in Germany or Nepal sees "Automatic
+(EUR)" or "Automatic (NPR)", not USD.
+
 ### C90 — Lending Ledger: the reader's own records, figures that agree
 
 **Built** on its own host (`LEDGER_PROPOSAL.md`, D10) over the record layer's

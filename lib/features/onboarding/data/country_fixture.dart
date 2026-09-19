@@ -17,6 +17,7 @@ import 'dart:convert';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart' show rootBundle;
 
+import '../../../core/values/lume_country_currency.dart';
 import '../domain/country_picker_model.dart';
 
 /// A country's cities, and its region table where it has one.
@@ -128,7 +129,12 @@ class LumeCountryFixture {
       // could not name; this second one only fires for a language the table
       // was not generated for.
       name: (names[lang] ?? names['en']) as String,
-      currency: e['currency'] as String,
+      // The reference's code, with every dated change since applied: a
+      // Bulgarian reader's is the euro from 1 January 2026, never the lev.
+      currency: LumeCountryCurrency.correct(
+        e['code'] as String,
+        e['currency'] as String,
+      ),
       timeZone: (e['timezone'] as String?) ?? 'UTC',
       popular: e['popular'] as bool,
     );

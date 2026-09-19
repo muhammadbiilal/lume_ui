@@ -305,6 +305,37 @@ void main() {
       expect(titles[1], 'GBP');
       expect(titles.toSet(), hasLength(titles.length));
     });
+
+    testWidgets('a new Bulgarian profile follows the euro, never the lev', (
+      WidgetTester tester,
+    ) async {
+      // Bulgaria adopted the euro on 1 January 2026; the reference's table
+      // still says BGN, and the dated correction (`LumeCountryCurrency`)
+      // is what a reader sees.
+      final LumeStartupController gate = await bootedGate(
+        profile: const LumeProfileRecord(
+          country: 'BG',
+          city: 'Sofia',
+          region: '',
+        ),
+      );
+      await pumpAccountHost(
+        tester,
+        route: LumeAccountRoute.currency,
+        gate: gate,
+        surface: kTall,
+      );
+      final List<String> titles = <String>[
+        for (final LumeOptionRow row in tester.widgetList<LumeOptionRow>(
+          find.byType(LumeOptionRow),
+        ))
+          row.title,
+      ];
+      expect(titles[1], 'EUR');
+      expect(titles, isNot(contains('BGN')));
+      expect(find.textContaining('Automatic (EUR)'), findsWidgets);
+      expect(gate.state.profile.currency, LumePreference.auto);
+    });
   });
 
   // ----------------------------------------------------------------- units
