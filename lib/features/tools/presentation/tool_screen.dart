@@ -241,8 +241,6 @@ class LumeToolScreenState extends ConsumerState<LumeToolScreen> {
     }
   }
 
-  static void _inert() {}
-
   /// `toggleFavourite(id)` — the reader's own saved list, then the sentence.
   void _toggleFavourite(AppLocalizations l) {
     final LumeStartupController gate = ref.read(startupControllerProvider);
@@ -269,9 +267,9 @@ class LumeToolScreenState extends ConsumerState<LumeToolScreen> {
   /// A control that cannot do what it says is never drawn as though it
   /// could. Where a tool declares Share but has nothing typed to share
   /// (Expenses, Goals), or declares search but has no field, the parity
-  /// flavor draws the reference's control — Share disabled, announced as
-  /// unavailable, with no handler; Search as inert as the reference's — and
-  /// development and release leave it out (`RELEASE_HONESTY.md`).
+  /// flavor draws the reference's control disabled — announced as
+  /// unavailable, unfocusable, with no handler — and development and
+  /// release leave it out (`RELEASE_HONESTY.md`).
   List<Widget> _actions(AppLocalizations l, LumeBuildProfile profile) {
     if (widget.headerActions case final List<Widget> own) return own;
     final Set<LumeToolSupport> s = widget.feature.supports;
@@ -309,7 +307,9 @@ class LumeToolScreenState extends ConsumerState<LumeToolScreen> {
         LumeIconButton(
           icon: LumeIcons.search,
           label: l.a11ySearchTool,
-          onPressed: a.onSearch ?? _inert,
+          // Parity keeps the reference's control, but never as a live one:
+          // without a field to search, it is disabled and says so.
+          onPressed: a.onSearch,
         ),
       );
     }

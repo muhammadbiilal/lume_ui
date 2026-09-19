@@ -33,12 +33,12 @@ only where it is evidence, and never as though it worked:
 | control | parity | development and release |
 |---|---|---|
 | **Share** on a tool with no typed card, privacy filter or share adapter (Expenses; Goals once converted) | drawn **disabled**: announced "Share", a button, not enabled, with no tap action, no focus and no handler; a tap opens nothing | **left out** |
-| **Search** on a tool with no field to focus | drawn as the reference draws it: it does nothing | **left out** |
+| **Search** on a tool with no field to focus | drawn **disabled**, like Share: not focusable, announced as unavailable, no handler — the reference's live-but-inert control is not reproduced | **left out** |
 | **Share** on a tool with a real card (Age, Loan, Hadith …) | live | live |
 
-`share_visibility_test.dart` holds the table, including a sweep: in
-development and release, every tool that declares Share draws it live or
-not at all. Installments draws no notification control in any flavor
+`share_visibility_test.dart` holds the table, including two sweeps over
+every tool in the catalogue: one for Share and one for Search, which is
+live, absent, or — in parity only — genuinely disabled. Installments draws no notification control in any flavor
 (`INSTALLMENTS_PROPOSAL.md` §14).
 
 ### The privacy note, by flavor

@@ -130,4 +130,44 @@ void main() {
       }
     });
   }
+
+  // Every tool that declares search: in development and release its Search
+  // works or is not there; in parity it may stay only disabled — no
+  // handler, no focus, announced as unavailable. Never inert.
+  final List<String> searching = <String>[
+    for (final LumeFeature f in kLumeFeatures)
+      if (f.supports.contains(LumeToolSupport.search)) f.id,
+  ];
+  for (final LumeBuildProfile p in LumeBuildProfile.values) {
+    testWidgets('${p.name}: no tool draws a Search that does nothing', (
+      WidgetTester t,
+    ) async {
+      final SemanticsHandle h = t.ensureSemantics();
+      int disabled = 0;
+      for (final String id in searching) {
+        await pumpTool(t, id, overrides: flavor(p));
+        final Finder search = toolbarAction('Search this tool');
+        for (final Element e in search.evaluate()) {
+          final LumeIconButton b = e.widget as LumeIconButton;
+          if (b.onPressed != null) continue;
+          expect(p, LumeBuildProfile.parity, reason: '$id: a dead Search');
+          disabled++;
+          final Finder one = find.byElementPredicate((Element x) => x == e);
+          expect(
+            find.descendant(
+              of: one,
+              matching: find.byType(FocusableActionDetector),
+            ),
+            findsNothing,
+            reason: id,
+          );
+          final SemanticsData s = t.getSemantics(one).getSemanticsData();
+          expect(s.flagsCollection.isEnabled, Tristate.isFalse, reason: id);
+          expect(s.hasAction(SemanticsAction.tap), isFalse, reason: id);
+        }
+      }
+      if (p != LumeBuildProfile.parity) expect(disabled, 0);
+      h.dispose();
+    });
+  }
 }
