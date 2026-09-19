@@ -2093,16 +2093,21 @@ class _LedgerToolState extends ConsumerState<LedgerTool> {
         builder: (BuildContext sheet) => LumeSheet(
           title: label,
           tall: options.length > 8,
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: <Widget>[
-              for (final (T value, String text) in options)
-                LumeRadioRow(
-                  label: text,
-                  selected: value == current,
-                  onTap: () => Navigator.of(sheet).pop(value),
-                ),
-            ],
+          // The currency list is every active ISO code — far taller than
+          // the sheet — so it scrolls rather than overflowing.
+          child: SingleChildScrollView(
+            primary: false,
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: <Widget>[
+                for (final (T value, String text) in options)
+                  LumeRadioRow(
+                    label: text,
+                    selected: value == current,
+                    onTap: () => Navigator.of(sheet).pop(value),
+                  ),
+              ],
+            ),
           ),
         ),
       ),
