@@ -7834,6 +7834,84 @@ class AppLocalizationsAr extends AppLocalizations {
   String get instNotFound => 'هذه الخطة لم تعد هنا.';
 
   @override
+  String get instExportTitle => 'تصدير الخطط';
+
+  @override
+  String get instExportJson => 'نسخة احتياطية (JSON)';
+
+  @override
+  String get instExportJsonSub => 'كل شيء كما هو تمامًا. يمكن استيراده مجددًا.';
+
+  @override
+  String get instExportCsv => 'جدول بيانات (CSV)';
+
+  @override
+  String get instExportCsvSub => 'صف لكل قسط. لا يمكن استيراده.';
+
+  @override
+  String get instIncludeNames => 'تضمين الأصناف والتجار والملاحظات';
+
+  @override
+  String get instIncludeNamesOff =>
+      'تُكتب الخطط بعناوين مرقّمة (“Plan 1”). لا يُضمَّن التجار ولا الملاحظات.';
+
+  @override
+  String get instIncludeNamesOn =>
+      'تُكتب الأصناف والتجار والملاحظات كما أدخلتها.';
+
+  @override
+  String get instExportAction => 'تصدير';
+
+  @override
+  String get instImport => 'استيراد نسخة احتياطية';
+
+  @override
+  String get instImportPaste => 'الصق نسخة احتياطية لأقساط Lume (JSON)';
+
+  @override
+  String get instImportCheck => 'تحقّق';
+
+  @override
+  String instImportReady(String create, String update, String unchanged) {
+    return '$create جديد · $update محدَّث · $unchanged دون تغيير. لا يُكتب شيء حتى تستورد.';
+  }
+
+  @override
+  String instImportIssues(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n مشكلة — لن يُستورد شيء',
+      many: '$n مشكلة — لن يُستورد شيء',
+      few: '$n مشكلات — لن يُستورد شيء',
+      two: 'مشكلتان — لن يُستورد شيء',
+      one: 'مشكلة واحدة — لن يُستورد شيء',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get instImportAction => 'استيراد';
+
+  @override
+  String instImported(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: 'استُورد $n سجل',
+      many: 'استُورد $n سجلًا',
+      few: 'استُوردت $n سجلات',
+      two: 'استُورد سجلان',
+      one: 'استُورد سجل واحد',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get instImportNoNames =>
+      'لا تتضمن هذه النسخة أسماء؛ ستصل الخطط باسم “Plan 1” و“Plan 2”.';
+
+  @override
   String get ledgerErrArchived => 'هذا الشخص مؤرشف. ألغِ الأرشفة لإضافة قيود.';
 
   @override

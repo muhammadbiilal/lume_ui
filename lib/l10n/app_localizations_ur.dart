@@ -7743,6 +7743,80 @@ class AppLocalizationsUr extends AppLocalizations {
   String get instNotFound => 'یہ منصوبہ اب یہاں نہیں۔';
 
   @override
+  String get instExportTitle => 'منصوبے ایکسپورٹ کریں';
+
+  @override
+  String get instExportJson => 'بیک اپ (JSON)';
+
+  @override
+  String get instExportJsonSub =>
+      'سب کچھ، بالکل ویسا۔ اسے واپس امپورٹ کیا جا سکتا ہے۔';
+
+  @override
+  String get instExportCsv => 'اسپریڈشیٹ (CSV)';
+
+  @override
+  String get instExportCsvSub =>
+      'ہر قسط کی ایک قطار۔ اسے امپورٹ نہیں کیا جا سکتا۔';
+
+  @override
+  String get instIncludeNames => 'اشیاء، دکاندار اور نوٹس شامل کریں';
+
+  @override
+  String get instIncludeNamesOff =>
+      'منصوبے نمبر والے لیبل (“Plan 1”) کے طور پر لکھے جائیں گے۔ دکاندار اور نوٹس شامل نہیں ہوں گے۔';
+
+  @override
+  String get instIncludeNamesOn =>
+      'اشیاء، دکاندار اور نوٹس ویسے ہی لکھے جائیں گے جیسے آپ نے درج کیے۔';
+
+  @override
+  String get instExportAction => 'ایکسپورٹ';
+
+  @override
+  String get instImport => 'بیک اپ امپورٹ کریں';
+
+  @override
+  String get instImportPaste => 'Lume اقساط کا بیک اپ (JSON) یہاں چسپاں کریں';
+
+  @override
+  String get instImportCheck => 'جانچیں';
+
+  @override
+  String instImportReady(String create, String update, String unchanged) {
+    return '$create نئے · $update تازہ · $unchanged بغیر تبدیلی۔ امپورٹ کرنے تک کچھ نہیں لکھا جاتا۔';
+  }
+
+  @override
+  String instImportIssues(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n مسائل — کچھ امپورٹ نہیں ہوگا',
+      one: 'ایک مسئلہ — کچھ امپورٹ نہیں ہوگا',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get instImportAction => 'امپورٹ';
+
+  @override
+  String instImported(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n ریکارڈ امپورٹ ہوئے',
+      one: '1 ریکارڈ امپورٹ ہوا',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get instImportNoNames =>
+      'اس بیک اپ میں نام نہیں؛ منصوبے “Plan 1”، “Plan 2” کے طور پر آئیں گے۔';
+
+  @override
   String get ledgerErrArchived =>
       'یہ شخص محفوظ شدہ ہے۔ اندراج کے لیے واپس لائیں۔';
 

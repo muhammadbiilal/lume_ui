@@ -7747,6 +7747,80 @@ class AppLocalizationsEn extends AppLocalizations {
   String get instNotFound => 'That plan isn\'t here any more.';
 
   @override
+  String get instExportTitle => 'Export plans';
+
+  @override
+  String get instExportJson => 'Backup (JSON)';
+
+  @override
+  String get instExportJsonSub =>
+      'Everything, exactly. It can be imported back.';
+
+  @override
+  String get instExportCsv => 'Spreadsheet (CSV)';
+
+  @override
+  String get instExportCsvSub =>
+      'One row per instalment. It can\'t be imported.';
+
+  @override
+  String get instIncludeNames => 'Include items, merchants and notes';
+
+  @override
+  String get instIncludeNamesOff =>
+      'Plans are written as numbered labels (“Plan 1”). Merchants and notes are left out.';
+
+  @override
+  String get instIncludeNamesOn =>
+      'Items, merchants and notes are written as you entered them.';
+
+  @override
+  String get instExportAction => 'Export';
+
+  @override
+  String get instImport => 'Import a backup';
+
+  @override
+  String get instImportPaste => 'Paste a Lume installments backup (JSON)';
+
+  @override
+  String get instImportCheck => 'Check';
+
+  @override
+  String instImportReady(String create, String update, String unchanged) {
+    return '$create new · $update updated · $unchanged unchanged. Nothing is written until you import.';
+  }
+
+  @override
+  String instImportIssues(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n problems — nothing will be imported',
+      one: '1 problem — nothing will be imported',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get instImportAction => 'Import';
+
+  @override
+  String instImported(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: 'Imported $n records',
+      one: 'Imported 1 record',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get instImportNoNames =>
+      'This backup has no names; plans come in as “Plan 1”, “Plan 2”.';
+
+  @override
   String get ledgerErrArchived =>
       'This person is archived. Unarchive them to add entries.';
 

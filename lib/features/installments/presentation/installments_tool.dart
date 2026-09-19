@@ -24,12 +24,16 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart' as intl;
 
+import '../../../app/providers/platform_services.dart';
+import '../../../app/providers/records_provider.dart';
 import '../../../app/providers/shell_provider.dart';
 import '../../../app/providers/time_zone_provider.dart';
 import '../../../core/fixtures/lume_clock.dart';
 import '../../../core/icons/lume_icons.dart';
 import '../../../core/localization/lume_format.dart';
+import '../../../core/lume_build.dart';
 import '../../../core/navigation/lume_tool_frame.dart';
+import '../../../core/platform/lume_export.dart';
 import '../../../core/theme/lume/lume_colors.dart';
 import '../../../core/theme/lume/lume_theme.dart';
 import '../../../core/time/lume_iana_zones.dart';
@@ -54,6 +58,7 @@ import '../../../core/widgets/lume/lume_tool.dart';
 import '../../../l10n/app_localizations.dart';
 import '../../ledger/presentation/ledger_text.dart';
 import '../../onboarding/domain/onboarding_state.dart';
+import '../../records/domain/record_transaction.dart';
 import '../../startup/domain/startup_state.dart';
 import '../../tools/application/tool_request.dart';
 import '../../tools/application/tool_session.dart';
@@ -63,8 +68,10 @@ import '../domain/installments_book.dart';
 import '../domain/installments_failure.dart';
 import '../domain/installments_model.dart';
 import '../domain/installments_repository.dart';
+import '../domain/installments_transfer.dart';
 import 'installments_sheets.dart';
 import 'installments_text.dart';
+import 'installments_transfer_sheets.dart';
 
 enum InstallmentsFilter { active, late, completed, cancelled, all }
 
@@ -213,6 +220,9 @@ class _InstallmentsToolState extends ConsumerState<InstallmentsTool> {
   );
   final FocusNode _searchFocus = FocusNode();
 
+  /// The body, to find the frame's scroll from: a new view opens at its top.
+  final GlobalKey _body = GlobalKey();
+
   _View _view = _View.list;
   LumeRecordId? _plan;
   _PlanDraft? _draft;
@@ -311,10 +321,20 @@ class _InstallmentsToolState extends ConsumerState<InstallmentsTool> {
   // ------------------------------------------------------------ navigation
 
   void _go(_View v, {LumeRecordId? plan}) {
+    final bool moved = v != _view || (plan != null && plan != _plan);
     setState(() {
       _view = v;
       if (plan != null) _plan = plan;
       _write('plan', v == _View.list ? '' : (_plan?.value ?? ''));
+    });
+    if (!moved) return;
+    // A new view opens at its top, not where the last one was scrolled to.
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      final BuildContext? c = _body.currentContext;
+      final ScrollPosition? p = c == null
+          ? null
+          : Scrollable.maybeOf(c)?.position;
+      if (p != null && p.pixels != 0) p.jumpTo(0);
     });
   }
 
@@ -660,6 +680,78 @@ class _InstallmentsToolState extends ConsumerState<InstallmentsTool> {
     );
   }
 
+  // --------------------------------------------------------- export, import
+
+  Future<void> _export(
+    AppLocalizations l,
+    LumeFormatting f,
+    InstallmentsBook book,
+  ) async {
+    final InstallmentsExportChoice? choice =
+        await showLumeSheet<InstallmentsExportChoice>(
+          context: context,
+          barrierLabel: l.instExportTitle,
+          child: InstallmentsExportSheet(
+            onImport: () => unawaited(_import(l, f)),
+          ),
+        );
+    if (choice == null || !mounted) return;
+    final DateTime now = LumeClockScope.of(context).now();
+    final InstallmentsSnapshot s = _repo.view();
+    final LumeExportFile file = LumeExportFile.document(
+      tool: _id,
+      day: now,
+      format: choice.json ? LumeExportFormat.json : LumeExportFormat.csv,
+      text: choice.json
+          ? installmentsExportJson(
+              plans: s.plans,
+              schedule: s.schedule,
+              payments: s.payments,
+              exportedAt: now,
+              build: kLumeVersion,
+              durable: _repo.durable,
+              includeNames: choice.includeNames,
+            )
+          : installmentsExportCsv(book, includeNames: choice.includeNames),
+    );
+    final LumeExportOutcome outcome = await ref
+        .read(exporterProvider)
+        .export(file);
+    if (!mounted) return;
+    switch (outcome) {
+      case LumeExportOutcome.saved:
+        _say(l.toolExportedAs(file.fileName));
+      case LumeExportOutcome.cancelled:
+        break;
+      case LumeExportOutcome.unavailable:
+        _say(l.toolExportUnavailable, tone: LumeToastTone.info);
+      case LumeExportOutcome.failed:
+        _say(l.toolExportFailed, tone: LumeToastTone.error);
+    }
+  }
+
+  Future<void> _import(AppLocalizations l, LumeFormatting f) async {
+    final InstallmentsImportReport? report =
+        await showLumeSheet<InstallmentsImportReport>(
+          context: context,
+          barrierLabel: l.instImport,
+          child: InstallmentsImportSheet(
+            store: ref.read(recordRepositoryProvider),
+            f: f,
+          ),
+        );
+    if (report == null || !mounted) return;
+    final LumeTxResult<int> r = installmentsImportApply(
+      report,
+      ref.read(recordRepositoryProvider),
+    );
+    if (!r.ok) {
+      _say(l.instErrFailed, tone: LumeToastTone.error);
+      return;
+    }
+    _say(l.instImported(r.value!));
+  }
+
   // ------------------------------------------------------------------ build
 
   @override
@@ -724,6 +816,9 @@ class _InstallmentsToolState extends ConsumerState<InstallmentsTool> {
         title: title,
         bare: bare,
         actions: LumeToolActions(
+          onExport: book == null || book.isEmpty
+              ? null
+              : () => unawaited(_export(l, f, book!)),
           onSearch: () {
             if (_view != _View.list) _go(_View.list);
             _searchFocus.requestFocus();
@@ -739,6 +834,7 @@ class _InstallmentsToolState extends ConsumerState<InstallmentsTool> {
               ]
             : null,
         body: Column(
+          key: _body,
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: body,
         ),
@@ -1252,7 +1348,11 @@ class _InstallmentsToolState extends ConsumerState<InstallmentsTool> {
     bool withCode,
   ) {
     final (Color tone, Color ink) = _tone(context, v.plan.id);
-    final String? initials = LedgerText.initials(v.plan.item);
+    // The reference's disc carries the merchant's initials ("TM" for
+    // TechMart); the item's where there is no merchant.
+    final String? initials = LedgerText.initials(
+      v.plan.merchant ?? v.plan.item,
+    );
     final InstallmentRow? next = v.status == InstallmentPlanStatus.active
         ? v.next
         : null;
@@ -1344,7 +1444,7 @@ class _InstallmentsToolState extends ConsumerState<InstallmentsTool> {
         LumeToolSection(
           child: LumeSummaryCard(
             kicker: l.instRemaining,
-            value: money(v.remaining),
+            value: f.amount(v.remaining, compact: true, withCode: withCode),
             caption: <String>[
               InstallmentsText.planStatus(l, v.status),
               l.instPaidOf(f.integer(v.paidCount), f.integer(p.count)),
@@ -1353,9 +1453,24 @@ class _InstallmentsToolState extends ConsumerState<InstallmentsTool> {
                   InstallmentsText.date(f, next.row.due, today: today),
                 ),
             ].join(' · '),
+            // Compact on the card; exact, to the minor unit, in the facts.
             stats: <LumeStat>[
-              LumeStat(value: money(v.paidToDate), label: l.instPaidToDate),
-              LumeStat(value: money(v.totalPayable), label: l.instTotalPayable),
+              LumeStat(
+                value: f.amount(
+                  v.paidToDate,
+                  compact: true,
+                  withCode: withCode,
+                ),
+                label: l.instPaidToDate,
+              ),
+              LumeStat(
+                value: f.amount(
+                  v.totalPayable,
+                  compact: true,
+                  withCode: withCode,
+                ),
+                label: l.instTotalPayable,
+              ),
             ],
           ),
         ),

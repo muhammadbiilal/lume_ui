@@ -942,3 +942,40 @@ Added as documented product extensions, not reference parity:
   - partial and extra payments;
   - rescheduling after a payment;
   - a grace period.
+
+## 43. Evidence
+
+- **Reference composition:**
+  - Web captures: 7 (390×844 light, dark, Urdu and Arabic; 700×900;
+    1100×900; 852×393). The browser cannot set 200% text.
+  - Flutter captures: 8, the same seven plus 200% text.
+  - Side-by-sides and diffs: 7 of each. They stay in the local
+    `shots/tools/tool_installments_default_pk/` folder, which is not
+    committed.
+  - Web measurements: 7, committed under `measurements/`.
+- **Values compared mechanically: 68** (`installments_parity_test.dart`).
+  For each cell: the header, the headline figure, and every row's item and
+  merchant in the reference's order. In English, the reference's
+  "Remaining" (Rs 427,000) is held against Lume's Rs 427,300, which is
+  what the rows add to. In Urdu and Arabic, the reference's English header
+  is held against Lume's translation.
+- **Goldens: 33 cases, 33 unique committed PNGs**
+  (`installments_golden_test.dart`):
+  - the composition in 8 cells;
+  - first use in English and Urdu;
+  - the Late, Completed, Cancelled and All filters;
+  - two currencies;
+  - no match;
+  - the add form, its validation, and the keyboard open;
+  - a plan in light and dark;
+  - a plan with a deposit, a cash price and a late instalment;
+  - the payment sheet;
+  - locked terms;
+  - the cancel and delete confirmations;
+  - Undo;
+  - export and the import check;
+  - the day unavailable;
+  - a damaged record;
+  - loading and a storage failure.
+- No pixel percentage is claimed as parity. The side-by-sides differ
+  wherever C94 corrects the reference.

@@ -14,6 +14,7 @@ import 'package:lume/core/navigation/lume_tool_frame.dart';
 import 'package:lume/core/values/lume_currency.dart';
 import 'package:lume/core/values/lume_date.dart';
 import 'package:lume/core/values/lume_money.dart';
+import 'package:lume/core/widgets/lume/lume_button.dart';
 import 'package:lume/core/widgets/lume/lume_chart.dart';
 import 'package:lume/core/widgets/lume/lume_chip.dart';
 import 'package:lume/core/widgets/lume/lume_crud.dart';
@@ -25,7 +26,10 @@ import 'package:lume/core/widgets/lume/lume_summary.dart';
 import 'package:lume/features/installments/domain/installments_book.dart';
 import 'package:lume/features/installments/domain/installments_model.dart';
 import 'package:lume/features/installments/presentation/installments_sheets.dart';
+import 'package:lume/features/installments/domain/installments_repository.dart';
+import 'package:lume/features/installments/domain/installments_transfer.dart';
 import 'package:lume/features/installments/presentation/installments_tool.dart';
+import 'package:lume/features/installments/presentation/installments_transfer_sheets.dart';
 import 'package:lume/features/onboarding/domain/profile_repository.dart';
 import 'package:lume/l10n/app_localizations_ar.dart';
 import 'package:lume/l10n/app_localizations_ur.dart';
@@ -693,6 +697,80 @@ void main() {
       await t.pumpAndSettle();
       expect(find.byKey(LumeInstallmentsTool.formKey), findsOneWidget);
       h.dispose();
+      w.dispose();
+    });
+  });
+
+  group('export and import', () {
+    testWidgets('export: names left out by default, in by choice; CSV too', (
+      WidgetTester t,
+    ) async {
+      final InstallmentsWorld w = InstallmentsWorld().reference();
+      await pumpInstallments(t, w, surface: const Size(390, 844));
+      Future<void> exportWith({bool csv = false, bool names = false}) async {
+        await tapShown(t, find.bySemanticsLabel('Export').first);
+        if (csv) await tapShown(t, find.byKey(InstallmentsTransferKeys.csv));
+        if (names) {
+          await tapShown(t, find.byKey(InstallmentsTransferKeys.names));
+        }
+        await tapShown(t, find.byKey(InstallmentsTransferKeys.go));
+      }
+
+      await exportWith();
+      final String json = w.exporter.exported.last.text;
+      expect(json, contains('"schema": "lume.installments/1"'));
+      expect(json, isNot(contains('Laptop')));
+      expect(json, isNot(contains('TechMart')));
+      await exportWith(names: true);
+      expect(w.exporter.exported.last.text, contains('"item": "Laptop"'));
+      await exportWith(csv: true);
+      final String csv = w.exporter.exported.last.text;
+      expect(csv, contains('plan_id,plan,plan_state'));
+      expect(csv, isNot(contains('Laptop')));
+      w.dispose();
+    });
+
+    testWidgets('import: every problem listed, nothing written; a good file '
+        'all at once', (WidgetTester t) async {
+      final InstallmentsWorld source = InstallmentsWorld().reference();
+      final InstallmentsSnapshot snap = source.repo.view();
+      final String good = installmentsExportJson(
+        plans: snap.plans,
+        schedule: snap.schedule,
+        payments: snap.payments,
+        exportedAt: DateTime.utc(2026, 9, 7),
+        build: 'test',
+        durable: false,
+        includeNames: true,
+      );
+      final InstallmentsWorld w = InstallmentsWorld(seed: 7);
+      w.add('Bike', rs(5000), 6, LumeDate(2026, 10, 1));
+      await pumpInstallments(t, w);
+      await tapShown(t, find.bySemanticsLabel('Export').first);
+      await tapShown(t, find.byKey(InstallmentsTransferKeys.importOpen));
+      await t.enterText(
+        find.byKey(InstallmentsTransferKeys.importText),
+        good.replaceFirst('"frequency": "monthly"', '"frequency": "weekly"'),
+      );
+      // The field scrolls its caret into view; let it settle before a tap.
+      await t.pumpAndSettle();
+      await tapShown(t, find.byKey(InstallmentsTransferKeys.importCheck));
+      expect(find.textContaining('nothing will be imported'), findsOneWidget);
+      expect(find.textContaining('frequency: unsupported'), findsOneWidget);
+      expect(
+        t
+            .widget<LumeButton>(find.byKey(InstallmentsTransferKeys.importGo))
+            .onPressed,
+        isNull,
+      );
+      expect(w.book().plans, hasLength(1));
+      await t.enterText(find.byKey(InstallmentsTransferKeys.importText), good);
+      await t.pumpAndSettle();
+      await tapShown(t, find.byKey(InstallmentsTransferKeys.importCheck));
+      await tapShown(t, find.byKey(InstallmentsTransferKeys.importGo));
+      expect(w.book().plans, hasLength(4));
+      expect(find.textContaining('Imported'), findsOneWidget);
+      source.dispose();
       w.dispose();
     });
   });

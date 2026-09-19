@@ -103,11 +103,11 @@ const DECISIONS = {
   },
   installments: {
     note: 'Financial records (D-I1): off Home, Today, the hero and ' +
-      'recommendations; nothing leaves it. Search is its own; ' +
+      'recommendations; nothing leaves it. Export and search are its own; ' +
       'the reference declares notifications and implements none (D-I11).',
     sensitive: true,
     outbound: 'none',
-    supportsAdd: ['search'],
+    supportsAdd: ['export', 'search'],
     supportsRemove: ['notifications'],
   },
 };

@@ -294,6 +294,7 @@ class LumeFormField extends StatefulWidget {
     this.focusNode,
     this.rows = 3,
     this.localDigits = false,
+    this.maxRows,
   });
 
   final String label;
@@ -330,6 +331,10 @@ class LumeFormField extends StatefulWidget {
   /// A number field that also takes the reader's Arabic-Indic digits; the
   /// caller reads them (Installments' count).
   final bool localDigits;
+
+  /// A multiline field's tallest, in lines — a pasted backup scrolls inside
+  /// the field rather than pushing its sheet's buttons away.
+  final int? maxRows;
 
   /// Measured: 48 px.
   static const double boxHeight = 48;
@@ -461,6 +466,7 @@ class _LumeFormFieldState extends State<LumeFormField> {
                     placeholder: widget.placeholder,
                     kind: widget.kind,
                     localDigits: widget.localDigits,
+                    maxRows: widget.maxRows,
                     enabled: widget.enabled,
                     focusNode: _node,
                     autofocus: widget.autofocus,
@@ -532,6 +538,7 @@ class _RawInput extends StatefulWidget {
     this.onSubmitted,
     this.rows = 3,
     this.localDigits = false,
+    this.maxRows,
   });
 
   final TextEditingController? controller;
@@ -543,6 +550,9 @@ class _RawInput extends StatefulWidget {
   /// A number field that also takes Arabic-Indic and Extended Arabic-Indic
   /// digits, for a caller that reads them itself.
   final bool localDigits;
+
+  /// A multiline field's tallest, in lines; it scrolls inside past that.
+  final int? maxRows;
   final bool enabled;
   final TextStyle style;
   final FocusNode? focusNode;
@@ -611,7 +621,7 @@ class _RawInputState extends State<_RawInput> {
             ? null
             : TextInputAction.search,
         keyboardType: _keyboard,
-        maxLines: widget.kind == LumeFieldKind.multiline ? null : 1,
+        maxLines: widget.kind == LumeFieldKind.multiline ? widget.maxRows : 1,
         minLines: widget.kind == LumeFieldKind.multiline ? widget.rows : 1,
         style: widget.style,
         cursorColor: lume.accent,

@@ -13533,6 +13533,108 @@ abstract class AppLocalizations {
   /// **'That plan isn\'t here any more.'**
   String get instNotFound;
 
+  /// Installments export sheet title
+  ///
+  /// In en, this message translates to:
+  /// **'Export plans'**
+  String get instExportTitle;
+
+  /// Installments export format
+  ///
+  /// In en, this message translates to:
+  /// **'Backup (JSON)'**
+  String get instExportJson;
+
+  /// Installments export format
+  ///
+  /// In en, this message translates to:
+  /// **'Everything, exactly. It can be imported back.'**
+  String get instExportJsonSub;
+
+  /// Installments export format
+  ///
+  /// In en, this message translates to:
+  /// **'Spreadsheet (CSV)'**
+  String get instExportCsv;
+
+  /// Installments export format: a view, not a backup
+  ///
+  /// In en, this message translates to:
+  /// **'One row per instalment. It can\'t be imported.'**
+  String get instExportCsvSub;
+
+  /// Installments export: off by default
+  ///
+  /// In en, this message translates to:
+  /// **'Include items, merchants and notes'**
+  String get instIncludeNames;
+
+  /// Installments export: what the default writes
+  ///
+  /// In en, this message translates to:
+  /// **'Plans are written as numbered labels (“Plan 1”). Merchants and notes are left out.'**
+  String get instIncludeNamesOff;
+
+  /// Installments export: what the reader turned on
+  ///
+  /// In en, this message translates to:
+  /// **'Items, merchants and notes are written as you entered them.'**
+  String get instIncludeNamesOn;
+
+  /// Installments export sheet action
+  ///
+  /// In en, this message translates to:
+  /// **'Export'**
+  String get instExportAction;
+
+  /// Installments import
+  ///
+  /// In en, this message translates to:
+  /// **'Import a backup'**
+  String get instImport;
+
+  /// Installments import field
+  ///
+  /// In en, this message translates to:
+  /// **'Paste a Lume installments backup (JSON)'**
+  String get instImportPaste;
+
+  /// Installments import: check, write nothing
+  ///
+  /// In en, this message translates to:
+  /// **'Check'**
+  String get instImportCheck;
+
+  /// Installments import check result
+  ///
+  /// In en, this message translates to:
+  /// **'{create} new · {update} updated · {unchanged} unchanged. Nothing is written until you import.'**
+  String instImportReady(String create, String update, String unchanged);
+
+  /// Installments import: all or nothing
+  ///
+  /// In en, this message translates to:
+  /// **'{n, plural, =1{1 problem — nothing will be imported} other{{n} problems — nothing will be imported}}'**
+  String instImportIssues(int n);
+
+  /// Installments import action
+  ///
+  /// In en, this message translates to:
+  /// **'Import'**
+  String get instImportAction;
+
+  /// Installments import toast
+  ///
+  /// In en, this message translates to:
+  /// **'{n, plural, =1{Imported 1 record} other{Imported {n} records}}'**
+  String instImported(int n);
+
+  /// Installments import: names left out of the file
+  ///
+  /// In en, this message translates to:
+  /// **'This backup has no names; plans come in as “Plan 1”, “Plan 2”.'**
+  String get instImportNoNames;
+
   /// Validation
   ///
   /// In en, this message translates to:

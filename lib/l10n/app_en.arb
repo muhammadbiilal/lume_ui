@@ -10566,6 +10566,95 @@
   "@instNotFound": {
     "description": "Installments deep link to a plan that is gone"
   },
+  "instExportTitle": "Export plans",
+  "@instExportTitle": {
+    "description": "Installments export sheet title"
+  },
+  "instExportJson": "Backup (JSON)",
+  "@instExportJson": {
+    "description": "Installments export format"
+  },
+  "instExportJsonSub": "Everything, exactly. It can be imported back.",
+  "@instExportJsonSub": {
+    "description": "Installments export format"
+  },
+  "instExportCsv": "Spreadsheet (CSV)",
+  "@instExportCsv": {
+    "description": "Installments export format"
+  },
+  "instExportCsvSub": "One row per instalment. It can't be imported.",
+  "@instExportCsvSub": {
+    "description": "Installments export format: a view, not a backup"
+  },
+  "instIncludeNames": "Include items, merchants and notes",
+  "@instIncludeNames": {
+    "description": "Installments export: off by default"
+  },
+  "instIncludeNamesOff": "Plans are written as numbered labels (“Plan 1”). Merchants and notes are left out.",
+  "@instIncludeNamesOff": {
+    "description": "Installments export: what the default writes"
+  },
+  "instIncludeNamesOn": "Items, merchants and notes are written as you entered them.",
+  "@instIncludeNamesOn": {
+    "description": "Installments export: what the reader turned on"
+  },
+  "instExportAction": "Export",
+  "@instExportAction": {
+    "description": "Installments export sheet action"
+  },
+  "instImport": "Import a backup",
+  "@instImport": {
+    "description": "Installments import"
+  },
+  "instImportPaste": "Paste a Lume installments backup (JSON)",
+  "@instImportPaste": {
+    "description": "Installments import field"
+  },
+  "instImportCheck": "Check",
+  "@instImportCheck": {
+    "description": "Installments import: check, write nothing"
+  },
+  "instImportReady": "{create} new · {update} updated · {unchanged} unchanged. Nothing is written until you import.",
+  "@instImportReady": {
+    "description": "Installments import check result",
+    "placeholders": {
+      "create": {
+        "type": "String"
+      },
+      "update": {
+        "type": "String"
+      },
+      "unchanged": {
+        "type": "String"
+      }
+    }
+  },
+  "instImportIssues": "{n, plural, =1{1 problem — nothing will be imported} other{{n} problems — nothing will be imported}}",
+  "@instImportIssues": {
+    "description": "Installments import: all or nothing",
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
+  "instImportAction": "Import",
+  "@instImportAction": {
+    "description": "Installments import action"
+  },
+  "instImported": "{n, plural, =1{Imported 1 record} other{Imported {n} records}}",
+  "@instImported": {
+    "description": "Installments import toast",
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
+  "instImportNoNames": "This backup has no names; plans come in as “Plan 1”, “Plan 2”.",
+  "@instImportNoNames": {
+    "description": "Installments import: names left out of the file"
+  },
   "ledgerErrArchived": "This person is archived. Unarchive them to add entries.",
   "@ledgerErrArchived": {
     "description": "Validation"

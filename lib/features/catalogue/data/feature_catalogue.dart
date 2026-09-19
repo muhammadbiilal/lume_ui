@@ -1014,7 +1014,7 @@ const List<LumeFeature> kLumeFeatures = <LumeFeature>[
   ),
   LumeFeature(
     // Financial records (D-I1): off Home, Today, the hero and recommendations;
-    // nothing leaves it. Search is its own; the reference declares
+    // nothing leaves it. Export and search are its own; the reference declares
     // notifications and implements none (D-I11).
     id: 'installments',
     fallbackName: 'Installments',
@@ -1029,6 +1029,7 @@ const List<LumeFeature> kLumeFeatures = <LumeFeature>[
     fallbackSource: 'On device',
     freshness: LumeFreshnessKind.local,
     supports: <LumeToolSupport>{
+      LumeToolSupport.export,
       LumeToolSupport.filters,
       LumeToolSupport.history,
       LumeToolSupport.search,
