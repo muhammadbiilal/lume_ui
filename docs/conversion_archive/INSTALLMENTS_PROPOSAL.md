@@ -1,9 +1,13 @@
-# Installments — proposal for approval
+# Installments — proposal, and the approved model
 
-**Status: proposal. Nothing here is implemented.** Everything below is read
-from the reference source and from the running reference. Every rule the
-source does not contain is marked **Proposed** and listed in §39 for
-approval. No financial formula is taken from outside the source.
+**Status: approved, 19 September 2026.** Sections 0–39 are the source audit
+and the proposal as submitted. They are kept as written, because they record
+what the reference does and why. **§40 is the approved model and overrides
+anything earlier it contradicts** — search, the filters and sorts, deposit
+dates, payment voiding, locked fields, redaction on export, and the
+day-unavailable state. §41 lists the reference defects the build corrects,
+and §42 the obligations left for later. No financial formula is taken from
+outside the source, and none is invented.
 
 ## 0. Source inventory
 
@@ -672,3 +676,269 @@ Measured or read in the source:
 | D-I13 | Cancellation keeps history; delete removes everything with Undo | **yes** (§21) |
 | D-I14 | Tools tile status: purpose text, not "3 running" | **yes**, as for Ledger |
 | D-I15 | Composition: add "Add a plan", a plan detail and a Cancelled filter to the reference's order | **yes**, recorded as a C-entry on build |
+
+## 40. Approved model (final)
+
+### 40.1 Classification
+
+- **Sensitive**, with `outbound: none`: off Home, Today, the hero,
+  recommendations and sensitive activity previews. No merchant, item,
+  payment or balance leaves the tool. Set through the catalogue generator's
+  `DECISIONS`, not a hand edit.
+- The Tools tile states a purpose, "Track fixed payment plans", never a
+  count.
+- It starts empty. Sample plans exist only in tests, goldens, the
+  visual-reference cells, and explicitly labelled development fixtures.
+
+### 40.2 What a plan is
+
+A fixed-payment plan quoted to the reader. Nothing is invented: no interest
+rate, APR, flat markup, reducing balance, amortisation, penalty or exchange
+rate.
+
+**Stored:** the instalment amount, the count, the currency, the first due
+date, the frequency (monthly only), an optional deposit with its date, and
+an optional cash price.
+
+**Derived:**
+
+```text
+scheduledTotal = instalmentAmount × instalmentCount
+totalPayable   = deposit + scheduledTotal
+paidToDate     = deposit + Σ active scheduled payments
+remaining      = totalPayable − paidToDate
+```
+
+The cash price is informational. Its difference from the total payable is
+shown as "Difference from cash price", never as interest or markup.
+
+### 40.3 Stored records
+
+Three collections through the record envelope and the transaction layer,
+schema `lume.installments/1`:
+
+| record | collection | fields |
+|---|---|---|
+| `InstallmentPlan` | `installments.plan` | id, item (1–80), merchant (≤80, optional), note (≤500, optional), currency, amountMinor, count (1–600), frequency `monthly`, firstDue, depositMinor + depositOn (both or neither), cashPriceMinor (optional), state `active`/`cancelled`, createdAt, version |
+| `ScheduledInstallment` | `installments.schedule` | id, plan, seq (1..count), due, amountMinor, currency, createdAt, version |
+| `InstallmentPayment` | `installments.payment` | id, plan, installment, amountMinor, currency, paidOn, state `active`/`voided`, createdAt, version |
+
+Each decodes strictly. A record that fails is a typed defect, listed and
+shown. It is never dropped or repaired. An unsupported frequency is reported
+as `frequency:unsupported`, not read as monthly.
+
+### 40.4 Deposit
+
+Optional. It is money already paid, with its own date. It counts in total
+payable and in paid to date. It is never instalment zero and never spread
+across the schedule. A deposit larger than the total payable is refused.
+Once any payment exists, the deposit is locked.
+
+### 40.5 The schedule
+
+It is generated once, when the plan is created, and stored. Every row has a
+stable id.
+
+- The due date of row n is the first due date's day, in the month n − 1
+  months after the first due month, clamped to the month's last day. It is
+  computed from the anchor each time, never from the previous row. For
+  example, 31 Jan → 28/29 Feb → 31 Mar, and 30 Jan → end of Feb → 30 Mar.
+- It uses `LumeDate` calendar arithmetic, with no durations and no clock.
+- The count of rows equals the count, every amount equals the instalment
+  amount, and there is no variable last row.
+- A stored schedule is never recomputed. A calendar library that later
+  changes cannot move a stored due date.
+- Before any payment exists, an explicit edit of the terms replaces the
+  schedule with new ids, in one transaction. That is the reader's edit, not
+  a silent regeneration.
+
+### 40.6 Payments
+
+- One payment pays exactly one scheduled instalment, in full, at its amount.
+- Payments are made in order. An earlier unpaid instalment is paid first,
+  and the form names it.
+- At most one active payment exists per instalment.
+- A payment can be voided and restored. A restore is refused if the
+  instalment has been paid again since.
+- None of these exist: partial, extra or multiple-instalment payments,
+  overpayment, a grace period, penalties, interest accrual or Ledger
+  allocation.
+
+### 40.7 Derived states
+
+| state | rule |
+|---|---|
+| paid | one active payment references it |
+| due today | unpaid, and due on the reader's local date |
+| late | unpaid, and due before the reader's local date |
+| upcoming | unpaid, and due after the reader's local date |
+| completed (plan) | every instalment is paid |
+| cancelled (plan) | the reader cancelled it; its history is kept |
+
+Without the reader's day, no relative state is guessed. Rows show their
+dates, the Late filter and "due this month" say the day is unavailable, and
+nothing is marked late.
+
+### 40.8 Locked fields
+
+Once any payment exists, active or voided, the following are locked:
+
+- the amount;
+- the count;
+- the currency;
+- the first due date;
+- the frequency;
+- the deposit amount and date.
+
+Item, merchant and note stay editable. To change locked terms, the reader
+cancels the plan and adds a new one. Earlier payments are never rewritten.
+
+### 40.9 The list
+
+- **Filters:** Active, Late, Completed, Cancelled and All. All is the
+  reference's own chip and its empty state's action. Each chip carries its
+  count.
+- **Sorts:**
+  - Next due;
+  - Payments left (the reference's mislabelled "Remaining");
+  - Monthly amount;
+  - Name;
+  - Recent activity, from the plan's and its payments' creation instants.
+- **Search** covers the item, the merchant and the note.
+- Search, filter and sort never change the summaries.
+
+### 40.10 Summaries
+
+One summary per currency. Currencies are never added together. Each shows:
+
+- due this month;
+- paid to date;
+- remaining;
+- active plans;
+- late instalments.
+
+"Due this month" is the sum of the scheduled instalments of plans that are
+not cancelled, due in the reader's calendar month, paid or not. It is not
+each plan's amount added up. The plan count counts each plan once.
+
+The reference's "Monthly commitment" chart becomes "Due by month": for each
+of the next six calendar months, the instalments of plans that are not
+cancelled that fall due in that month, in the reader's currency first. Its
+screen-reader text names each month and amount in that currency.
+
+### 40.11 Notifications
+
+None in v1, in any flavor. The reference draws no notification control for
+this tool, so nothing is reproduced. The `notifications` support flag is
+removed through the generator's `DECISIONS`. A due-soon reminder is a
+future typed delivery-adapter obligation (§42).
+
+### 40.12 Cancellation and deletion
+
+- **Cancel:** a confirmation first. The plan, its schedule and its payments
+  are kept. The plan leaves Active, appears under Cancelled, and fabricates
+  no refund. Undo is offered, and Reinstate brings it back.
+- **Delete:** only for a plan made by mistake. The destructive confirmation
+  lists what goes (the plan, n scheduled instalments, m payments). It is
+  removed in one transaction. Undo restores identical ids and versions. It
+  leaves no orphans and rolls back whole on failure.
+
+### 40.13 Import and export
+
+- **JSON** `lume.installments/1`: lossless. It carries every id, the ISO
+  code, integer minor units, the deposit, the cash price, the anchor, due
+  dates, state, void state, versions and creation instants.
+- **Import** checks the whole file first. Every error is listed by stable
+  path. References and every invariant are checked. The file is applied in
+  one transaction, or not at all.
+- **CSV** is export only, one row per scheduled instalment. It is marked not
+  importable, because it cannot carry the relationships.
+- **Item and merchant names are redacted by default**, because a purchase can
+  reveal health, family or debt. They are written as "Plan 1". Notes are left
+  out. Names are written only on the reader's explicit choice.
+
+### 40.14 Invariants
+
+These are checked on the staged state after every write. Any failure rolls
+back the whole transaction.
+
+1. schedule rows = count;
+2. every row belongs to exactly one plan;
+3. every payment to one row and one plan;
+4. at most one active payment per row;
+5. payment amount = row amount;
+6. schedule total = amount × count;
+7. total payable = deposit + schedule total;
+8. paid to date = deposit + active payments;
+9. remaining = total payable − paid to date;
+10. remaining ≥ 0;
+11. no arithmetic across currencies;
+12. completed ⇔ every row paid;
+13. cancelled is not completed;
+14. void then restore reproduces every projection;
+15. search, filter and sort leave the summaries unchanged;
+16. import is all or nothing;
+17. every amount and sum within 10¹⁵ and 2⁵³ − 1;
+18. no stored schedule regenerates silently;
+19. no locked field changes once payments exist;
+20. no observer sees a partial transaction.
+
+### 40.15 The screens
+
+The reference's composition, kept where it defines one, in this order:
+
+1. the summary card (one per currency);
+2. the filter bar;
+3. the sort bar;
+4. the plans, each a rich row with its progress meter;
+5. the schedule timeline;
+6. the chart;
+7. History;
+8. the frame's source line and related tools.
+
+Added as documented product extensions, not reference parity:
+
+- the first-use state;
+- "Add a plan";
+- the plan detail;
+- the payment sheet;
+- the metadata and terms forms;
+- the cancel and delete confirmations with Undo;
+- search;
+- the Cancelled and Late filters;
+- export and import;
+- validation;
+- the day-unavailable, damaged, loading and storage-failure states;
+- deep links (`?plan=<id>`) and session restoration.
+
+## 41. Reference defects corrected
+
+| defect (§38) | correction |
+|---|---|
+| sums that disagree | every figure is a sum of stored minor units; totals equal their rows |
+| "Next payment" always `relDate(7)` | the earliest unpaid due date of an active plan |
+| "Remaining" sorting payments left | named "Payments left"; "Next due" added |
+| every plan counted as running | counts by derived state |
+| "instalment 7 of 9" | "7 of 9 paid", and "next: instalment 8" |
+| schedule and history as summary rows | real rows: every instalment and every payment |
+| month-end drift and skipped months | anchored clamping; labels from `LumeDate` months |
+| bars that never grow | the corrected chart (C64) |
+| raw USD chart titles | amounts in the plan's currency, formatted for the reader |
+| English in Urdu and Arabic | every string in en, ur and ar |
+| no CRUD | add, pay, void, edit, cancel, delete, import, export |
+| declared notifications with nothing behind them | removed; no control is drawn |
+| not sensitive | sensitive, `outbound: none` |
+| "Stored on this device" over no store | the build-flavor source line (C90) |
+
+## 42. Obligations left
+
+- **Dayroz:**
+  - a durable, encrypted store implementing the transaction contract;
+  - the three collections through these codecs;
+  - a typed delivery adapter for opt-in due-soon reminders. It must never
+    claim delivery.
+- **Product decisions, not scheduled:**
+  - weekly or fortnightly frequency;
+  - partial and extra payments;
+  - rescheduling after a payment;
+  - a grace period.
