@@ -506,6 +506,45 @@ void main() {
       h.dispose();
     });
 
+    test('reinstate brings back the same plan and the same stored schedule '
+        '— no new ids, no new dates', () {
+      final InstallmentsHarness h = InstallmentsHarness();
+      final InstallmentPlan p = h.add(firstDue: LumeDate(2026, 1, 31));
+      h.payNext(p.id, 2);
+      List<String> rows() => <String>[
+        for (final ScheduledInstallment r in h.repo.view().schedule)
+          '${r.id} ${r.seq} ${r.due} ${r.amount.minor} v${r.version}',
+      ]..sort();
+      final List<String> before = rows();
+      final List<InstallmentPayment> paid = h.plan(p.id).payments;
+      final InstallmentsResult<InstallmentsWrite> c = h.repo.setCancelled(
+        p.id,
+        true,
+        version: p.version,
+      );
+      expect(c.failure, isNull);
+      final InstallmentsResult<InstallmentsWrite> r = h.repo.setCancelled(
+        p.id,
+        false,
+        version: c.value!.plan!.version,
+      );
+      expect(r.failure, isNull);
+      final InstallmentPlanView v = h.plan(p.id);
+      expect(v.plan.id, p.id);
+      expect(v.status, InstallmentPlanStatus.active);
+      expect(rows(), before);
+      expect(
+        v.payments.map((InstallmentPayment x) => x.id),
+        paid.map((InstallmentPayment x) => x.id),
+      );
+      expect(v.rows[1].row.due, LumeDate(2026, 2, 28));
+      // And it takes payments again, from where it was.
+      h.payNext(p.id);
+      expect(h.plan(p.id).paidCount, 3);
+      h.expectSound();
+      h.dispose();
+    });
+
     test('delete removes the plan, its schedule and its payments at once; '
         'Undo restores the same ids and versions', () {
       final InstallmentsHarness h = InstallmentsHarness();

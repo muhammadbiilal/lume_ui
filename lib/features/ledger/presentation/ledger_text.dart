@@ -5,9 +5,8 @@
 /// only in compact places. Direction is always words, never a sign.
 library;
 
-import 'package:flutter/widgets.dart' show StringCharacters;
-
 import '../../../core/localization/lume_format.dart';
+import '../../../core/localization/lume_initials.dart';
 import '../../../core/values/lume_currency.dart';
 import '../../../core/values/lume_date.dart';
 import '../../../core/values/lume_money.dart';
@@ -58,17 +57,10 @@ abstract final class LedgerText {
         : f.dateLongYear(t);
   }
 
-  /// Up to two letters from the first grapheme of up to two words; `null`
-  /// for a name with no letters, which gets a neutral icon instead.
-  static String? initials(String name) {
-    final RegExp letter = RegExp(r'\p{L}', unicode: true);
-    final String out = <String>[
-      for (final String w in name.trim().split(RegExp(r'\s+')))
-        if (w.isNotEmpty && letter.hasMatch(w.characters.first))
-          w.characters.first,
-    ].take(2).join();
-    return out.isEmpty ? null : out.toUpperCase();
-  }
+  /// The shared initials rule ([lumeInitials]): up to two, one per word or
+  /// camel-case part; `null` for a name with no letters, which gets a
+  /// neutral icon instead.
+  static String? initials(String name) => lumeInitials(name);
 
   /// Folds text for search: case, Latin accents, Arabic diacritics and
   /// tatweel, the Arabic and Urdu letter variants a reader types either way,

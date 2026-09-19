@@ -31,6 +31,7 @@ import '../../../app/providers/time_zone_provider.dart';
 import '../../../core/fixtures/lume_clock.dart';
 import '../../../core/icons/lume_icons.dart';
 import '../../../core/localization/lume_format.dart';
+import '../../../core/localization/lume_initials.dart';
 import '../../../core/lume_build.dart';
 import '../../../core/navigation/lume_tool_frame.dart';
 import '../../../core/platform/lume_export.dart';
@@ -1350,9 +1351,7 @@ class _InstallmentsToolState extends ConsumerState<InstallmentsTool> {
     final (Color tone, Color ink) = _tone(context, v.plan.id);
     // The reference's disc carries the merchant's initials ("TM" for
     // TechMart); the item's where there is no merchant.
-    final String? initials = LedgerText.initials(
-      v.plan.merchant ?? v.plan.item,
-    );
+    final String? initials = lumeInitials(v.plan.merchant ?? v.plan.item);
     final InstallmentRow? next = v.status == InstallmentPlanStatus.active
         ? v.next
         : null;
