@@ -21,6 +21,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../app/providers/records_provider.dart';
 import '../../../app/providers/shell_provider.dart';
+import '../../../app/providers/time_zone_provider.dart';
 import '../../../core/fixtures/lume_clock.dart';
 import '../../../core/icons/lume_icons.dart';
 import '../../../core/layout/lume_breakpoint.dart';
@@ -107,6 +108,28 @@ class LumeRecordScope<T extends LumeFamilyRecord> {
   void say(String message, {LumeToastTone tone = LumeToastTone.success}) =>
       _host._say?.say(message, tone: tone);
   Future<void> share() async => _host._host.currentState?.share();
+}
+
+/// What a tool that groups by the reader's day shows instead, when that day
+/// cannot be worked out ([LumeRecordContext.dayKnown] is false): which zone
+/// could not be read, and where to set one. The records are still listed
+/// above it; nothing is grouped on another zone's day.
+class LumeRecordDayUnknown extends StatelessWidget {
+  const LumeRecordDayUnknown({super.key, required this.c});
+
+  final LumeRecordContext c;
+
+  @override
+  Widget build(BuildContext context) {
+    final String? asked = c.zone.requested;
+    return LumeToolState(
+      icon: LumeIcons.clock,
+      title: c.l.recZoneUnknownTitle,
+      text: asked == null || asked.isEmpty
+          ? c.l.recZoneMissingText
+          : c.l.recZoneUnknownText(LumeFamilyText.isolate(asked)),
+    );
+  }
 }
 
 typedef LumeRecordComposition<T extends LumeFamilyRecord> =
@@ -222,11 +245,9 @@ class _LumeRecordToolState<T extends LumeFamilyRecord>
       l: AppLocalizations.of(context),
       f: LumeFormatting.of(context, countryCode: r.user.country),
       now: LumeClockScope.of(context).now(),
-      // `L.timezone()` — the reader's own choice, or the country's.
-      zoneId:
-          startup.profile.timeZone ??
-          startup.countries?.zoneOf(r.user.country) ??
-          'UTC',
+      zone: ref
+          .read(timeZoneServiceProvider)
+          .readerZone(startup, r.user.country, ref.read(deviceZoneProvider)),
       currency: startup.countries?.currencyOf(r.user.country) ?? '',
     );
   }

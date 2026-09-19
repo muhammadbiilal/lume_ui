@@ -8,6 +8,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:lume/core/fixtures/lume_clock.dart';
 import 'package:lume/core/localization/lume_format.dart';
+import 'package:lume/core/time/lume_iana_zones.dart';
 import 'package:lume/core/widgets/lume/lume_agenda.dart';
 import 'package:lume/core/widgets/lume/lume_chip.dart';
 import 'package:lume/core/widgets/lume/lume_row.dart';
@@ -29,7 +30,7 @@ LumeRecordContext ctx(DateTime now) => LumeRecordContext(
   l: AppLocalizationsEn(),
   f: const LumeFormatting(locale: Locale('en'), countryCode: 'PK'),
   now: now,
-  zoneId: 'Asia/Karachi',
+  zone: LumeTimeZoneService.shared.resolveId('Asia/Karachi'),
   currency: 'PKR',
 );
 

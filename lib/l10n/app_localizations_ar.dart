@@ -5311,6 +5311,18 @@ class AppLocalizationsAr extends AppLocalizations {
   String get recViewCached => 'عرض السجلات المحفوظة';
 
   @override
+  String get recZoneMissingText =>
+      'لم تُحدَّد منطقة زمنية ولا تُعرف منطقة هذا الجهاز، لذا لا يُجمَّع شيء هنا حسب اليوم. سجلاتك كلها مدرجة أعلاه. اختر منطقة زمنية من الملف الشخصي › الوقت.';
+
+  @override
+  String recZoneUnknownText(String zone) {
+    return 'لا يستطيع Lume قراءة المنطقة الزمنية $zone، لذا لا يُجمَّع شيء هنا حسب اليوم. سجلاتك كلها مدرجة أعلاه. اختر منطقة زمنية من الملف الشخصي › الوقت.';
+  }
+
+  @override
+  String get recZoneUnknownTitle => 'لا يمكن تحديد يومك';
+
+  @override
   String get recipeCuisineGlobal => 'عالمي';
 
   @override

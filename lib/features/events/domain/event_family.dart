@@ -131,8 +131,11 @@ class LumeEventFamily extends LumeRecordFamily<LumeEvent> {
   /// `defaultFor(f)` — today, and the time now.
   @override
   Map<String, Object?> defaults(LumeRecordContext c) => <String, Object?>{
-    'date': lumeIsoDay(c.today, 0),
-    'at': LumeFamilyText.isoClock(c.local.hour, c.local.minute),
+    // Only a day and a time the reader's zone gives; none otherwise.
+    'date': c.dayKnown ? lumeIsoDay(c.today, 0) : '',
+    'at': c.dayKnown
+        ? LumeFamilyText.isoClock(c.local.hour, c.local.minute)
+        : '',
   };
 
   @override
@@ -190,7 +193,10 @@ class LumeEventFamily extends LumeRecordFamily<LumeEvent> {
       value: x.people == null ? '—' : c.f.integer(x.people!),
     ),
     // §16 — a time-sensitive record says which clock it is on.
-    LumeFact(label: c.l.recFieldTimezone, value: c.zoneId),
+    LumeFact(
+      label: c.l.recFieldTimezone,
+      value: c.zoneLabel.isEmpty ? '—' : LumeFamilyText.isolate(c.zoneLabel),
+    ),
     LumeFact(
       label: c.l.recFieldNotes,
       value: x.notes.isEmpty ? c.l.recNone : x.notes,

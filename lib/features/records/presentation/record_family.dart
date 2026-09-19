@@ -13,7 +13,7 @@ import 'package:flutter/widgets.dart';
 
 import '../../../core/localization/lume_format.dart';
 import '../../../core/theme/lume/lume_gradients.dart';
-import '../../../core/time/lume_time_zone.dart';
+import '../../../core/time/lume_iana_zones.dart';
 import '../../../core/time/lume_zone.dart';
 import '../../../core/widgets/lume/lume_badge.dart';
 import '../../../core/widgets/lume/lume_summary.dart';
@@ -26,31 +26,44 @@ import '../domain/record_schema.dart';
 ///
 /// **The reader's day.** A due date or an event's date is a calendar date
 /// with no zone of its own, so "today" is the reader's calendar date: the
-/// injected instant read on the clock of the reader's zone ([zoneId],
-/// through [LumeZoneDatabase]). Every day count — overdue, "in 3 days",
-/// To-dos' Week — counts calendar dates from [today], never elapsed hours,
-/// so a daylight-saving change cannot move a task in or out of a day. A zone
-/// the database cannot read falls back to the device's own calendar date,
-/// and [zoneKnown] says so.
+/// injected instant read on the wall clock of the reader's resolved zone
+/// ([zone], from `LumeTimeZoneService`). Every day count — overdue, "in 3
+/// days", To-dos' Week — counts calendar dates from [today], never elapsed
+/// hours, so a daylight-saving change cannot move a task in or out of a day.
+///
+/// **No silent substitute.** When the reader's zone cannot be resolved — an
+/// explicit identifier that is unknown or malformed, no zone at all, or no
+/// database — [dayKnown] is false. Nothing that groups by the reader's day
+/// may use [today] then: To-dos and Events say the day cannot be worked out,
+/// and relative labels ("Today", "in 2 days") give way to the date itself.
+/// [today] still holds the device's date, for what is not a grouping — the
+/// starting day of a date picker.
 @immutable
 class LumeRecordContext {
   factory LumeRecordContext({
     required AppLocalizations l,
     required LumeFormatting f,
     required DateTime now,
-    required String zoneId,
+    required LumeZoneResolution zone,
     required String currency,
-    LumeZoneDatabase zones = const LumeRuleTableZones(),
   }) {
-    final LumeZone? zone = zones.zoneFor(zoneId);
+    DateTime? local;
+    final LumeZone? z = zone.zone;
+    if (z != null) {
+      try {
+        local = z.wallClockAt(now);
+      } on Object {
+        local = null;
+      }
+    }
     return LumeRecordContext._(
       l: l,
       f: f,
       now: now,
-      zoneId: zoneId,
+      zone: zone,
       currency: currency,
-      zoneKnown: zone != null,
-      local: zone?.wallClockAt(now) ?? now,
+      dayKnown: local != null,
+      local: local ?? now,
     );
   }
 
@@ -58,9 +71,9 @@ class LumeRecordContext {
     required this.l,
     required this.f,
     required this.now,
-    required this.zoneId,
+    required this.zone,
     required this.currency,
-    required this.zoneKnown,
+    required this.dayKnown,
     required this.local,
   });
 
@@ -70,20 +83,25 @@ class LumeRecordContext {
   /// The instant, from the injected clock — never the device's directly.
   final DateTime now;
 
-  /// The reader's IANA zone — their own choice, or their country's.
-  final String zoneId;
+  /// The reader's zone, resolved, with where it came from.
+  final LumeZoneResolution zone;
 
   /// The reader's currency code; empty when the country has none on file.
   final String currency;
 
-  /// Whether [zoneId] was read; if not, [local] is the device's own clock.
-  final bool zoneKnown;
+  /// Whether [local] and [today] are the reader's own; if not, they are the
+  /// device's, and nothing may group by them.
+  final bool dayKnown;
 
-  /// [now] on the reader's wall clock.
+  /// [now] on the reader's wall clock (see [dayKnown]).
   final DateTime local;
 
-  /// The reader's calendar date.
+  /// The reader's calendar date (see [dayKnown]).
   DateTime get today => DateTime(local.year, local.month, local.day);
+
+  /// The identifier to show: the canonical one, or what was asked for when
+  /// nothing resolved.
+  String get zoneLabel => zone.canonicalId ?? zone.requested ?? '';
 }
 
 /// One record, read by its family. [record] keeps the store's bookkeeping —
@@ -300,6 +318,8 @@ abstract final class LumeFamilyText {
   /// or the short date beyond a month either way.
   static String when(LumeRecordContext c, DateTime? d) {
     if (d == null) return '—';
+    // Relative to a day that is not the reader's would be wrong.
+    if (!c.dayKnown) return c.f.dateShort(d);
     final int n = daysFrom(d, c.today)!;
     if (n == 0) return c.l.commonToday;
     if (n == 1) return c.l.commonTomorrow;
@@ -318,6 +338,10 @@ abstract final class LumeFamilyText {
     if (h > 23 || min > 59) return null;
     return (h, min);
   }
+
+  /// [s] bidi-isolated (FSI … PDI), so an identifier such as `Asia/Karachi`
+  /// keeps its own order inside a right-to-left sentence.
+  static String isolate(String s) => '\u2068$s\u2069';
 
   static String isoClock(int h, int m) =>
       '${h.toString().padLeft(2, '0')}:${m.toString().padLeft(2, '0')}';

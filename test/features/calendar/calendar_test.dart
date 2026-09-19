@@ -21,6 +21,7 @@ import 'package:lume/core/widgets/lume/lume_progress.dart';
 import 'package:lume/core/widgets/lume/lume_row.dart';
 import 'package:lume/core/widgets/lume/lume_table.dart';
 import 'package:lume/core/widgets/lume/lume_tool.dart';
+import 'package:lume/core/time/lume_solar.dart';
 import 'package:lume/features/calendar/presentation/calendar_tool.dart';
 
 import '../../helpers/capture.dart';
@@ -173,10 +174,12 @@ void main() {
           webToolCell(cell)!['composition'] as Map<String, dynamic>;
       final Map<String, dynamic> c = k['calendar'] as Map<String, dynamic>;
 
-      expect(
-        textsUnder(tester, find.byType(LumeContextBar)),
-        (c['context'] as List<dynamic>).cast<String>(),
-      );
+      // The zone's identifier is bidi-isolated; the isolates are invisible
+      // format characters, and what is compared is the words the reader sees.
+      expect(<String>[
+        for (final String t in textsUnder(tester, find.byType(LumeContextBar)))
+          t.replaceAll(RegExp('[\u2068\u2069]'), ''),
+      ], (c['context'] as List<dynamic>).cast<String>());
       final LumeSegmented seg = tester.widget<LumeSegmented>(
         find.byKey(LumeCalendarTool.viewKey),
       );
@@ -283,14 +286,33 @@ void main() {
       );
     });
 
-    testWidgets('a Muslim reader in London — Maghrib at 7:35 pm', (
-      WidgetTester tester,
-    ) async {
-      await pumpCalendar(tester, state: 'muslim_gb');
-      await expectWords(
-        tester,
-        'tool_calendar_muslim_gb_390x844_light_en',
-        chronological: true,
+    // The reference compares its machine's own clock (16:41 in Karachi when
+    // it was captured) with London's prayer times, and so shows Maghrib to a
+    // reader for whom it is 11:41. The next prayer is read on London's own
+    // clock here (C88): at 11:41 it is Dhuhr, at 16:41 — the moment the
+    // reference meant — Maghrib at 7:35 pm, as it shows.
+    test('a Muslim reader in London — the next prayer on London\'s clock', () {
+      String next(DateTime instant) {
+        final LumeSolarTime t = LumeCalendarTool.nextPrayer(
+          now: instant,
+          country: 'GB',
+          city: 'London',
+          zoneId: 'Europe/London',
+        )!;
+        return '${t.key} ${t.hour}:${t.minute.toString().padLeft(2, '0')}';
+      }
+
+      expect(next(DateTime.utc(2026, 9, 7, 10, 41)), startsWith('dhuhr 13:'));
+      expect(next(DateTime.utc(2026, 9, 7, 15, 41)), 'maghrib 19:35');
+      // A renamed identifier reads the same clock as its canonical zone.
+      expect(
+        LumeCalendarTool.nextPrayer(
+          now: DateTime.utc(2026, 9, 7, 15, 41),
+          country: 'GB',
+          city: 'London',
+          zoneId: 'Europe/Belfast',
+        )?.key,
+        'maghrib',
       );
     });
 

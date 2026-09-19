@@ -19,13 +19,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../app/providers/shell_provider.dart';
+import '../../../app/providers/time_zone_provider.dart';
 import '../../../core/fixtures/lume_clock.dart';
 import '../../../core/icons/lume_icons.dart';
 import '../../../core/localization/lume_format.dart';
 import '../../../core/platform/lume_share.dart';
+import '../../../core/time/lume_iana_zones.dart';
 import '../../../core/time/lume_sky.dart';
 import '../../../core/time/lume_solar.dart';
-import '../../../core/time/lume_time_zone.dart';
 import '../../../core/time/lume_zone.dart';
 import '../../../core/widgets/lume/lume_header.dart';
 import '../../../core/widgets/lume/lume_progress.dart';
@@ -53,17 +54,27 @@ class LumeSkyBoard {
   final double minute;
 
   /// `null` with [missing] set when it cannot be worked out.
+  /// The place ([country], [city]) and the zone are separate inputs: the
+  /// sun is worked out at the city's coordinates, and read on the reader's
+  /// resolved zone — never a zone guessed from the place.
   static (LumeSkyBoard?, LumeSkyMissing?) at({
     required DateTime now,
     required String country,
     required String city,
-    required String zoneId,
-    LumeZoneDatabase zones = const LumeRuleTableZones(),
+    required LumeZoneResolution zone,
   }) {
     final (double, double)? at = LumeSolar.coordsFor(country, city);
     if (at == null) return (null, LumeSkyMissing.city);
-    final LumeZone? zone = zones.zoneFor(zoneId);
-    if (zone == null) return (null, LumeSkyMissing.zone);
+    final LumeZone? z = zone.zone;
+    if (z == null) return (null, LumeSkyMissing.zone);
+    return _on(now, at, z);
+  }
+
+  static (LumeSkyBoard?, LumeSkyMissing?) _on(
+    DateTime now,
+    (double, double) at,
+    LumeZone zone,
+  ) {
     final DateTime local = zone.wallClockAt(now);
     return (
       LumeSkyBoard(
@@ -223,17 +234,16 @@ class _LumeSunmoonToolState extends ConsumerState<LumeSunmoonTool> {
     );
     final DateTime now = LumeClockScope.of(context).now();
     final LumeStartupState startup = ref.watch(startupControllerProvider).state;
-    // `L.timezone()` — the reader's own choice, or the country's.
-    final String zoneId =
-        startup.profile.timeZone ??
-        startup.countries?.zoneOf(r.user.country) ??
-        'UTC';
+    final LumeZoneResolution zone = ref
+        .watch(timeZoneServiceProvider)
+        .readerZone(startup, r.user.country, ref.watch(deviceZoneProvider));
     final (LumeSkyBoard? board, LumeSkyMissing? missing) = LumeSkyBoard.at(
       now: now,
       country: r.user.country,
       city: r.user.city,
-      zoneId: zoneId,
+      zone: zone,
     );
+    final String zoneLabel = zone.canonicalId ?? zone.requested ?? '';
 
     return LumeToolScreen(
       feature: r.feature,
@@ -267,12 +277,16 @@ class _LumeSunmoonToolState extends ConsumerState<LumeSunmoonTool> {
               child: LumeToolState(
                 key: LumeSunmoonTool.missingKey,
                 icon: LumeIcons.sun,
-                title: missing == LumeSkyMissing.city
-                    ? l.sunNoCityTitle(r.user.city)
-                    : l.sunNoZoneTitle(zoneId),
-                text: missing == LumeSkyMissing.city
-                    ? l.sunNoCityText
-                    : l.sunNoZoneText,
+                title: switch (missing) {
+                  LumeSkyMissing.city => l.sunNoCityTitle(r.user.city),
+                  _ when zoneLabel.isEmpty => l.recZoneUnknownTitle,
+                  _ => l.sunNoZoneTitle('\u2068$zoneLabel\u2069'),
+                },
+                text: switch (missing) {
+                  LumeSkyMissing.city => l.sunNoCityText,
+                  _ when zoneLabel.isEmpty => l.recZoneMissingText,
+                  _ => l.sunNoZoneText,
+                },
               ),
             )
           else

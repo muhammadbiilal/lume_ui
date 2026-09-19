@@ -12,6 +12,7 @@ import 'package:lume/core/routing/lume_routes.dart';
 import 'package:lume/core/widgets/lume/lume_header.dart';
 import 'package:lume/core/widgets/lume/lume_button.dart';
 import 'package:lume/features/records/data/memory_record_repository.dart';
+import 'package:lume/features/onboarding/domain/profile_repository.dart';
 import 'package:lume/features/records/data/record_seeds.dart';
 
 import '../../helpers/lume_harness.dart';
@@ -33,17 +34,20 @@ Future<GoRouter> pumpWave2(
   double textScale = 1,
   LumeMemoryRecordRepository? store,
   ThemeMode theme = ThemeMode.light,
+  LumeProfileRepository? profile,
+  List<Override> overrides = const <Override>[],
 }) async {
   final GoRouter router = await pumpLumeRouter(
     tester,
     initialLocation: LumeRoutes.tool(LumeRoutes.tools, id),
-    profile: taxProfile(state),
+    profile: profile ?? taxProfile(state),
     surface: surface,
     locale: locale,
     textScale: textScale,
     theme: theme,
     overrides: <Override>[
       if (store != null) recordRepositoryProvider.overrideWithValue(store),
+      ...overrides,
     ],
   );
   await tester.pumpAndSettle();

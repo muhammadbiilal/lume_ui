@@ -27,6 +27,7 @@ abstract final class LumeEventsTool {
 
   static const Key upcomingKey = ValueKey<String>('events.upcoming');
   static const Key emptyKey = ValueKey<String>('events.empty');
+  static const Key dayUnknownKey = ValueKey<String>('events.dayUnknown');
 
   static Widget open(LumeToolRequest request) => LumeRecordTool<LumeEvent>(
     request: request,
@@ -56,6 +57,14 @@ abstract final class LumeEventsTool {
     LumeRecordScope<LumeEvent> s,
   ) {
     final LumeRecordContext c = s.c;
+    if (!c.dayKnown) {
+      return <Widget>[
+        LumeToolSection(
+          title: c.l.eventsUpcoming,
+          child: LumeRecordDayUnknown(key: dayUnknownKey, c: c),
+        ),
+      ];
+    }
     final LumeColors lume = context.lume;
     const LumeEventFamily family = LumeEventFamily();
     final List<LumeEvent> rows = upcoming(s.items, s.query, c.today);

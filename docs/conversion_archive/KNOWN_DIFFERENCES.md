@@ -2479,6 +2479,42 @@ sample record ticked from its row would have shown its raw `@key`.
 `update(…, claim: false)` keeps it; a form's save still claims the record as
 the reader's (`memory_record_repository_test.dart`).
 
+### C88 — The IANA time-zone foundation, and what it changes on screen
+
+**`timezone` 0.11.1, `latest_all`, tzdb 2025c**, behind
+`LumeTimeZoneService` (`WORLD_CLOCK_TIMEZONE.md`). The reader's zone is
+their explicit choice; else, under Account › Time's "Follow region", the
+country table's zone (source `fixture`); else a verified device zone (none
+in this build). An explicit zone that is unknown or malformed is reported,
+kept as written, and never replaced by another zone.
+
+- **Every IANA zone resolves — corrected.** The six-zone table could not read
+  Tokyo, so Sun & Moon said "No clock for Asia/Tokyo" and To-dos fell back to
+  the device's date. Both now read Tokyo's own clock (the Sun & Moon Tokyo
+  golden is re-captured: 05:17 to 18:02 on 7 September).
+- **An unreadable zone is said, not guessed — corrected.** To-dos and Events
+  no longer group on the device's day when the reader's zone cannot be read:
+  To-dos shows "Your day can't be worked out" in place of its summary,
+  filters and lists; Events in place of Upcoming; the zone as written is in
+  the text, bidi-isolated; the records stay listed, their dates written out
+  rather than "Today" or "in 2 days"; a new task or event opens with no date
+  to guess. English, Urdu and Arabic.
+- **A renamed zone is read, and shown by its current name.** `Europe/Kiev`
+  resolves through `Europe/Kyiv`, which is what Events' detail and
+  Calendar's context bar show. Nothing stored is rewritten by a read.
+- **Calendar's next prayer is read on the reader's clock — corrected
+  (reference defect).** The reference compares its machine's own time with
+  the city's prayer times: captured in Karachi at 16:41, it shows a London
+  reader Maghrib at 7:35 pm when it is 11:41 in London. The instant is read
+  on the zone's wall clock here, so at that instant the next prayer is Dhuhr
+  at 1:00 pm (the Calendar London golden is re-captured). At 16:41 London
+  time it is Maghrib at 7:35 pm, as the reference means.
+- **Weather's sunrise is worked out for the zone's own date — corrected.**
+  It used the device's date; across midnight the two differ.
+- **Events hold a wall time, not an instant.** The schema has no zone field;
+  an event reads as written in any zone (02:30 on New York's spring-forward
+  day stays "2:30 am"), and editing leaves its date and time as they were.
+
 ### C63 — English dates written the wrong way outside the United States
 
 **Found in F6A** on the UAE Tax capture ("Mon, 7 Sep") and confirmed by

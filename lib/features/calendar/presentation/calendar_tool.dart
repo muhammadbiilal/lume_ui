@@ -21,7 +21,7 @@ import '../../../core/localization/lume_format.dart';
 import '../../../core/platform/lume_export.dart';
 import '../../../core/time/lume_hijri.dart';
 import '../../../core/time/lume_solar.dart';
-import '../../../core/time/lume_time_zone.dart';
+import '../../../core/time/lume_iana_zones.dart';
 import '../../../core/time/lume_zone.dart';
 import '../../../core/widgets/lume/lume_button.dart';
 import '../../../core/widgets/lume/lume_chip.dart';
@@ -62,19 +62,25 @@ class LumeCalendarTool extends ConsumerStatefulWidget {
     required String country,
     required String city,
     required String zoneId,
+    LumeZoneDatabase? zones,
   }) {
     final (double, double)? at = LumeSolar.coordsFor(country, city);
-    final LumeZone? zone = const LumeRuleTableZones().zoneFor(zoneId);
+    final LumeZone? zone = (zones ?? LumeTimeZoneService.shared).zoneFor(
+      zoneId,
+    );
     if (at == null || zone == null) return null;
+    // The zone's own date and minute: the instant read on its wall clock,
+    // not the device's.
+    final DateTime local = zone.wallClockAt(now);
     final List<LumeSolarTime> day = LumeSolar.prayerTimes(
-      date: now,
+      date: local,
       lat: at.$1,
       lon: at.$2,
       offsetHours: zone.offsetAt(now).inMinutes / 60,
     );
     return LumeSolar.nextPrayer(
       day,
-      now.hour * 60 + now.minute + now.second / 60,
+      local.hour * 60 + local.minute + local.second / 60,
     );
   }
 
@@ -184,7 +190,12 @@ class _LumeCalendarToolState extends ConsumerState<LumeCalendarTool> {
                   ),
                   icon: LumeIcons.globe,
                 ),
-                LumeContextItem(label: zoneId),
+                // The canonical identifier: a renamed zone the reader chose
+                // before the rename is shown by its current name.
+                LumeContextItem(
+                  label:
+                      '\u2068${LumeTimeZoneService.shared.resolveId(zoneId).canonicalId ?? zoneId}\u2069',
+                ),
                 if (hijri != null)
                   LumeContextItem(
                     label:

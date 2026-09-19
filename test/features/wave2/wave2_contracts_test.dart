@@ -9,6 +9,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:lume/core/fixtures/lume_clock.dart';
 import 'package:lume/core/localization/lume_format.dart';
+import 'package:lume/core/time/lume_iana_zones.dart';
 import 'package:lume/core/widgets/lume/lume_chip.dart';
 import 'package:lume/core/widgets/lume/lume_crud.dart';
 import 'package:lume/core/widgets/lume/lume_header.dart';
@@ -59,7 +60,7 @@ LumeRecordContext ctxAt(DateTime instant, String zone) => LumeRecordContext(
   l: AppLocalizationsEn(),
   f: const LumeFormatting(locale: Locale('en'), countryCode: 'US'),
   now: instant,
-  zoneId: zone,
+  zone: LumeTimeZoneService.shared.resolveId(zone),
   currency: 'USD',
 );
 
@@ -340,7 +341,7 @@ void main() {
       final LumeRecordContext khi = ctxAt(instant, 'Asia/Karachi');
       expect(ny.today, DateTime(2026, 9, 7));
       expect(khi.today, DateTime(2026, 9, 8));
-      expect(ny.zoneKnown && khi.zoneKnown, isTrue);
+      expect(ny.dayKnown && khi.dayKnown, isTrue);
       final LumeTodo due14 = task(s, DateTime(2026, 9, 14));
       expect(LumeTodoWhen.week.holds(due14, ny.today), isFalse);
       expect(LumeTodoWhen.week.holds(due14, khi.today), isTrue);
@@ -382,11 +383,15 @@ void main() {
       );
     });
 
-    test('a zone the database cannot read falls back to the device\'s date, '
-        'and says so', () {
-      final LumeRecordContext c = ctxAt(kFixtureInstant, 'Asia/Tokyo');
-      expect(c.zoneKnown, isFalse);
-      expect(c.today, DateTime(2026, 9, 7));
+    test('Tokyo is a zone like any other: its own date, no fallback', () {
+      // 16:00 UTC is already the 8th in Tokyo.
+      final LumeRecordContext c = ctxAt(
+        DateTime.utc(2026, 9, 7, 16),
+        'Asia/Tokyo',
+      );
+      expect(c.dayKnown, isTrue);
+      expect(c.zone.outcome, LumeZoneOutcome.canonical);
+      expect(c.today, DateTime(2026, 9, 8));
     });
 
     for (final (Locale locale, String spoken, TextDirection dir)

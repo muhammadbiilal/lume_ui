@@ -43,6 +43,7 @@ abstract final class LumeTodosTool {
   static const Key upcomingKey = ValueKey<String>('todos.upcoming');
   static const Key listsKey = ValueKey<String>('todos.lists');
   static const Key fabKey = ValueKey<String>('todos.fab');
+  static const Key dayUnknownKey = ValueKey<String>('todos.dayUnknown');
 
   static Key taskKey(String id) => ValueKey<String>('todos.task.$id');
   static Key whenChip(LumeTodoWhen w) =>
@@ -94,6 +95,15 @@ abstract final class LumeTodosTool {
   ) {
     final LumeRecordContext c = s.c;
     final AppLocalizations l = c.l;
+    // Today and Week are the reader's calendar dates; with no day to count
+    // from, say so rather than group on another zone's day.
+    if (!c.dayKnown) {
+      return <Widget>[
+        LumeToolSection(
+          child: LumeRecordDayUnknown(key: dayUnknownKey, c: c),
+        ),
+      ];
+    }
     final LumeTodoBoard board = LumeTodoBoard(s.items, c.today);
     final LumeTodoWhen when = LumeTodoWhen.values.firstWhere(
       (LumeTodoWhen w) => w.name == s.read('when'),

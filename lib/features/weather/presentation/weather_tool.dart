@@ -21,7 +21,7 @@ import '../../../core/platform/lume_share.dart';
 import '../../../core/theme/lume/lume_gradients.dart';
 import '../../../core/theme/lume/lume_theme.dart';
 import '../../../core/time/lume_solar.dart';
-import '../../../core/time/lume_time_zone.dart';
+import '../../../core/time/lume_iana_zones.dart';
 import '../../../core/time/lume_zone.dart';
 import '../../../core/widgets/lume/lume_badge.dart';
 import '../../../core/widgets/lume/lume_header.dart';
@@ -71,12 +71,16 @@ class LumeWeatherTool extends ConsumerStatefulWidget {
     required String country,
     required String city,
     required String zoneId,
+    LumeZoneDatabase? zones,
   }) {
     final (double, double)? at = LumeSolar.coordsFor(country, city);
-    final LumeZone? zone = const LumeRuleTableZones().zoneFor(zoneId);
+    final LumeZone? zone = (zones ?? LumeTimeZoneService.shared).zoneFor(
+      zoneId,
+    );
     if (at == null || zone == null) return fallbackSun;
     final List<LumeSolarTime> day = LumeSolar.prayerTimes(
-      date: now,
+      // The zone's own date, not the device's.
+      date: zone.wallClockAt(now),
       lat: at.$1,
       lon: at.$2,
       offsetHours: zone.offsetAt(now).inMinutes / 60,

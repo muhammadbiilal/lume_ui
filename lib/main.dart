@@ -1,7 +1,8 @@
 /// Lume — a global daily-life super-app.
 ///
-/// The entry point does one thing: install the provider scope and run the app.
-/// There is no backend to initialise, no push registration and no remote
+/// The entry point installs the provider scope and runs the app, after
+/// loading the IANA time-zone database once at this boundary — so no screen
+/// is the first to pay for it, and none ever loads it. There is no backend to initialise, no push registration and no remote
 /// configuration — this project is the interface, driven by deterministic
 /// fixtures, and the production wiring belongs to the application it is
 /// integrated into.
@@ -11,7 +12,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'app/app.dart';
+import 'core/time/lume_iana_zones.dart';
 
 void main() {
+  LumeTimeZoneService.shared;
   runApp(const ProviderScope(child: LumeApp()));
 }

@@ -1,36 +1,138 @@
-# World Clock — the time-zone dependency, documented before it is added
+# The IANA time-zone foundation
 
-**F6B closure. Nothing is added yet.** World Clock needs the wall-clock time
-of cities in zones other than the device's. Dart's `DateTime` knows UTC and
-the device's own zone only, and this build's `LumeTimeZone`
-(`lib/core/time/lume_time_zone.dart`) is a six-zone reference table that says
-it is not a time-zone authority. Fixed UTC offsets are not a substitute: they
-are wrong across daylight saving and across any rule change. This is the
-dependency that would replace them, with the facts read from the package
-itself (fetched into the pub cache for inspection; `pubspec.yaml` unchanged).
+**Added and approved** (the IANA foundation commit). World Clock itself is
+**not** built: it waits on its own source-derived proposal. This file records
+the dependency, the service every tool reads zones through, and the policy
+for updating the database.
+
+Dart's `DateTime` knows UTC and the device's own zone only. The conversion's
+six-zone rule table (`lib/core/time/lume_time_zone.dart`) stays as fixture
+infrastructure for the market sessions it was written for; every reader-zone
+calculation now goes through the IANA database. Fixed UTC offsets are never a
+substitute: they are wrong across daylight saving and across rule changes.
+
+## The dependency
 
 | question | answer |
 |---|---|
-| **Package, version** | `timezone` **0.11.1**, pinned exactly (`timezone: 0.11.1`), as every F6B platform package is |
-| **Source** | `dart-lang/labs`, `pkgs/timezone` — the Dart team's labs monorepo; published on pub.dev |
-| **Licence** | BSD 2-clause (`Copyright (c) 2014, timezone project authors`; two redistribution clauses, no endorsement clause), compatible with the project's other BSD/MIT dependencies |
-| **tzdb version bundled** | **2025c** (the generated `lib/data/latest.dart` header says `Timezone data version: 2025c`; CHANGELOG: "the databases to 2025c") |
-| **Its own dependencies** | `http` and `path`. `http` is used only by `browser.dart`/`standalone.dart` for loading a database from a URL; a mobile build that imports `data/latest_10y.dart` or `data/latest.dart` never calls it, but the package is still resolved — recorded, not hidden |
-| **Data sets and size** | `latest_10y` (current and ±5 years of rules): 290 508 B of Dart source / 66 072 B `.tzf`; `latest` (canonical zones, full history): 1 114 252 B / 253 760 B; `latest_all` (with backward links): 1 956 531 B / 445 672 B. The Dart-source form is compiled into the binary; the `.tzf` form can ship as an asset instead. **Measured impact on the APK is to be recorded when it is added**, by building before and after — the source sizes above are an upper bound, not the answer |
-| **Offline** | Fully offline: the database is compiled in (or an asset); nothing is fetched at run time |
-| **DST and history** | Full IANA rules: daylight-saving transitions, historical offsets and the zones' own abbreviations, for every instant the chosen data set covers. `latest_10y` is enough for a clock that shows "now"; conversion of old dates needs `latest` |
-| **Update process** | A new tzdb reaches Lume only as a new `timezone` release (the package's `tool/refresh.sh` fetches `tzdata-latest` from IANA and regenerates), taken as a deliberate version bump with its own test run. Between releases a rule change in a jurisdiction is wrong in Lume until then — the same gap every app with an embedded database has; Dayroz may instead ship the `.tzf` as an updatable asset |
-| **Injectable clock** | The instant stays Lume's: `LumeClockScope` supplies `now`, and `TZDateTime.from(now, location)` turns it into a wall clock. The package's own `now()` is never called by widgets. It sits behind the existing `LumeZoneDatabase` boundary (`lume_zone.dart`), so World Clock and the market session never name the package |
-| **Deterministic tests** | Tests fix the instant and assert known transitions (e.g. New York 2026-03-08 02:00 → 03:00, London 2026-03-29 01:00 → 02:00, Karachi and Tokyo with none). A guard test asserts the bundled data version string equals the pinned **2025c**, so a package update that changes rules fails loudly and is taken on purpose, with the expectations reviewed |
-| **Maintenance status** | Maintained by the Dart team in `dart-lang/labs` — the repository for packages it maintains below the support level of `dart-lang/core` — with releases following IANA: 0.10.1 took 2025b, 0.10.2 took 2025c, 0.11.0 moved it into the labs monorepo, 0.11.1 made `Etc/UTC` the default. No release date is recorded here: it was read offline from the pub cache |
-| **Flutter and Dart versions** | `environment: sdk: ^3.10.0`; Lume builds with Dart 3.12.2 (Flutter 3.44.8). Pure Dart — no platform code, so the same on Android, iOS and the web |
-| **Initialisation** | Synchronous: `initializeTimeZones()` from `package:timezone/data/latest_all.dart` (or `latest_10y.dart`) once at start-up, before the zone database is first read; or `initializeDatabase(bytes)` with a `.tzf` asset loaded at start. Either happens inside the `LumeZoneDatabase` adapter, never in a widget |
-| **A zone renamed or removed** | `getLocation(id)` throws `LocationNotFoundException` for an id the data set does not hold. Only `latest_all` carries IANA's backward links — `Asia/Calcutta`, `Europe/Kiev`, `US/Eastern` resolve there and not in `latest_10y` or `latest` (checked in the `.tzf` files). A clock a reader saved before a rename (Kiev became Kyiv in 2022) keeps working with `latest_all`; with the others it disappears. The adapter catches the exception and returns `null`, and World Clock says "no clock for" that id, as Sun & Moon does today — never the device's zone in its place. Stored ids are written canonical |
-| **Localisation limits** | The package holds rules, not names: no localised city or zone names, and tzdb abbreviations ("PKT", "BST") are English and ambiguous. City names come from Lume's own city data and the zone's display from CLDR through `intl` (or Lume's ARBs); offsets are formatted by `LumeFormatting` in the reader's numerals and direction |
-| **Device's own zone** | Not needed for World Clock (cities are chosen); if a feature needs the device's IANA id, that is a platform read (`flutter_timezone` or a channel) and a separate decision |
+| **Package, version** | `timezone` **0.11.1**, pinned exactly in `pubspec.yaml` (`timezone: 0.11.1` — no caret) |
+| **Data variant** | **`latest_all`**, imported as `package:timezone/data/latest_all.dart` |
+| **Bundled IANA database** | **2025c** (the generated data header; `lib/core/time/lume_zone_aliases.dart` carries the same version and a test holds it) |
+| **Licence** | BSD-2-Clause (`Copyright (c) 2014, timezone project authors`) |
+| **Source** | `dart-lang/labs`, `pkgs/timezone`, published on pub.dev |
+| **Size** | Approved as approximately 443 KB. Measured in the package: `latest_all.tzf` is 445 672 bytes (435 KiB); the default `latest.tzf` is 253 760 bytes. **Measured APK impact:** the release APK is 77 410 165 bytes with the database against 75 853 621 without it (the wave 2 commit), **+1 556 544 bytes** (72.3 → 73.8 MB) — the `latest_all` data compiled into the Dart snapshot of each of the APK's three architectures, and the alias tables |
+| **Why `latest_all`** | It is the complete bundled database. The default variant is smaller but omits IANA's deprecated and historical identifiers (the backward links): a record holding `Europe/Kiev`, `Asia/Calcutta` or `US/Eastern` would stop resolving. Migration compatibility is worth more here than the size saving |
+| **Its own dependencies** | `http` and `path`, already resolved; `http` is used only by the package's URL loaders, which Lume never imports |
+| **Maintenance** | Maintained by the Dart team in `dart-lang/labs`, releases following IANA (0.10.1 → 2025b, 0.10.2 → 2025c, 0.11.0 into the labs monorepo, 0.11.1 `Etc/UTC` as the default) |
+| **SDK** | `sdk: ^3.10.0`; Lume builds with Dart 3.12.2 (Flutter 3.44.8). Pure Dart — the same on Android, iOS and the web |
+| **Offline** | Entirely: the database is compiled in; nothing is fetched at run time |
 
-**Decision requested:** add `timezone: 0.11.1` behind `LumeZoneDatabase`,
-with **`latest_all`** (backward links, so a renamed zone a reader saved still
-resolves; 445 672 B as `.tzf`) rather than `latest_10y`, and record the
-measured APK size change when it is added. Nothing is implemented until this
-is approved, and no fixed offset stands in meanwhile.
+## The service
+
+`LumeTimeZoneService` (`lib/core/time/lume_iana_zones.dart`) is the one place
+`package:timezone` is used.
+
+- **Loaded once.** `LumeTimeZoneService.shared` calls `initializeTimeZones()`
+  on first use; `main()` touches it before `runApp`, so the application
+  boundary pays for it and no screen does. Providers
+  (`lib/app/providers/time_zone_provider.dart`) hand the service and the
+  device zone to screens; tests may override either.
+- **No global state from screens.** Widgets and view models never import the
+  package. Nothing calls `setLocalLocation`; the package's own `local` stays
+  UTC, and every calculation names its zone.
+- **Injected clock.** Instants come from `LumeClockScope`; the service reads
+  no clock and guesses no zone.
+- **Identities.** A zone is its IANA identifier. Refused as identities, and
+  reported `malformed`: abbreviations (`PKT`, `EST`, `CST` — two to five
+  capitals; `UTC`, `UCT` and `GMT` excepted), fixed offsets (`+05:00`,
+  `UTC+5`, and IANA's own `Etc/GMT+5` family), empty or badly shaped strings.
+- **The same instant.** Reading an instant through a second zone changes the
+  wall-clock fields and never the moment (`LumeZoneClock` carries the local
+  time and the offset; the instant is recoverable from either).
+
+### Typed outcomes
+
+Every resolution (`LumeZoneResolution`) carries its outcome, its source, the
+identifier exactly as asked (`requested`) and the canonical one
+(`canonicalId`) — in the value, not only in logs.
+
+| outcome | when |
+|---|---|
+| `canonical` | a canonical IANA identifier |
+| `alias` | a backward link — calculations use the canonical zone it names |
+| `device` | nothing configured and no region zone: the verified device zone |
+| `missingDevice` | nothing configured, no region zone, no verified device zone |
+| `unknown` | an explicit identifier the database does not hold |
+| `malformed` | an explicit value that is not an identifier (see above) |
+| `databaseUnavailable` | the database is not loaded |
+| `conversionFailed` | a zone resolved, but reading an instant through it failed |
+
+| source | meaning |
+|---|---|
+| `configured` | the reader's own zone (`profile.timeZone`) |
+| `migratedAlias` | the reader's stored zone is a renamed identifier |
+| `fixture` | the country table's zone, under Account › Time's "Follow region" — reference data (decision recorded below) |
+| `device` | the device's zone, as a platform adapter verified it |
+| `unavailable` | nothing could be used |
+
+### The reader's zone
+
+`reader()` takes, in order: the explicit zone; else, under "Follow region",
+the country table's zone; else a verified device zone. **An explicit zone
+that is unknown or malformed is reported as it is and never replaced** by the
+region's or the device's — a task grouped on another zone's day would be
+wrong while claiming to be right. The identifier is kept for diagnosis and
+is never overwritten.
+
+Device-zone detection is a platform concern: this build has no adapter, so
+`deviceZoneProvider` is `LumeDeviceZone.unknown()` until Dayroz supplies one.
+
+**Decision recorded:** the brief says a zone is not to be inferred from the
+country. Account › Time (accepted in F5C) offers "Follow region" as the
+default, which takes the country table's zone. It is kept, as the `fixture`
+source, rather than removing an accepted setting in this step; approval is
+requested to keep it, to relabel it, or to replace it with the device zone.
+
+### Aliases and migration
+
+The alias and canonical tables are Lume's own, generated from the pinned data
+(`scripts/generate_zone_aliases.dart`, output
+`lib/core/time/lume_zone_aliases.dart`: **341 canonical identifiers, 257
+aliases, 598 in all**). In the compiled database a link is a copy of its
+target's rules, so the identifiers sharing one set of rules are a zone and its
+links; the member the package lists as canonical is the zone. A test holds
+the tables to the data exactly: every identifier is one or the other, every
+alias names a canonical zone.
+
+- **Resolution** uses the canonical zone's rules; **labels** show the
+  canonical identifier (`Europe/Kyiv`), bidi-isolated.
+- **A read never rewrites** a stored identifier.
+- **Migration is a deliberate operation**: `plan(stored)` returns a
+  `LumeZoneMigration` (from, to, whether it changes); the caller writes.
+  An alias plans to its canonical zone, a canonical identifier to itself
+  (idempotent), an unreadable one to nothing. The represented instant is
+  unchanged: an alias and its canonical zone read every instant identically
+  (tested across DST changes and a 1990 date).
+- **New selections** store canonical identifiers (`ids` lists only those).
+
+## Updating the database
+
+A tzdb update is a deliberate change, never an incidental dependency
+refresh. It requires, in one reviewed change:
+
+1. An explicit version bump of `timezone` in `pubspec.yaml`, with the new
+   package version and IANA release named in the commit.
+2. Review of the package changelog and of IANA's announcement for every
+   release in between.
+3. Regenerating `lume_zone_aliases.dart` and reviewing its diff: renamed,
+   added and removed identifiers.
+4. Updating the version guard (`kLumeTzdbVersion`) and the tests that pin it.
+5. Renamed-zone and alias-resolution tests; DST-boundary tests; historical
+   dates.
+6. Regressions: To-dos' rolling window (`todos_zone_test.dart`), Events
+   (`zone_consumers_test.dart`), Sun & Moon's local date, Weather and
+   Calendar where they read a zone, and World Clock once it exists.
+7. Golden review wherever a visible label or time changes.
+8. A migration review for any removed or renamed identifier: records holding
+   it must still resolve, or a migration must be planned for them.
+9. A release-note entry.

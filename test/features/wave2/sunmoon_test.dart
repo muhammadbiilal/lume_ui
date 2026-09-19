@@ -335,11 +335,21 @@ void main() {
 
     testWidgets('a zone this build cannot read is said, and nothing is shown '
         'on a guessed clock', (WidgetTester tester) async {
-      await pumpWave2(tester, 'sunmoon', state: 'default_jp');
+      // Tokyo is read now (the IANA database); an identifier the database
+      // does not hold is not.
+      await pumpLumeRouter(
+        tester,
+        initialLocation: LumeRoutes.tool(LumeRoutes.tools, 'sunmoon'),
+        profile: LumeMemoryProfileRepository(
+          initial: taxReader().copyWith(timeZone: 'Mars/Olympus_Mons'),
+        ),
+        surface: const Size(390, 2000),
+      );
+      await tester.pumpAndSettle();
       final LumeToolState s = tester.widget(
         find.byKey(LumeSunmoonTool.missingKey),
       );
-      expect(s.title, 'No clock for Asia/Tokyo');
+      expect(s.title, 'No clock for \u2068Mars/Olympus_Mons\u2069');
       expect(find.byKey(LumeSunmoonTool.summaryKey), findsNothing);
     });
 

@@ -9250,6 +9250,24 @@ abstract class AppLocalizations {
   /// **'View cached records'**
   String get recViewCached;
 
+  /// No configured zone and no verified device zone
+  ///
+  /// In en, this message translates to:
+  /// **'No time zone is set and this device’s isn’t known, so nothing here is grouped by day. Your records are all listed above. Choose a time zone in Profile › Time.'**
+  String get recZoneMissingText;
+
+  /// An explicit time zone that is unknown or malformed; {zone} is the identifier as stored, isolated for direction
+  ///
+  /// In en, this message translates to:
+  /// **'Lume can’t read the time zone {zone}, so nothing here is grouped by day. Your records are all listed above. Choose a time zone in Profile › Time.'**
+  String recZoneUnknownText(String zone);
+
+  /// Tools that group by the reader’s day, when their time zone cannot be resolved
+  ///
+  /// In en, this message translates to:
+  /// **'Your day can’t be worked out'**
+  String get recZoneUnknownTitle;
+
   /// A cuisine in tool-data.js RECIPES. The reference writes it in English in every language
   ///
   /// In en, this message translates to:

@@ -5243,6 +5243,18 @@ class AppLocalizationsUr extends AppLocalizations {
   String get recViewCached => 'محفوظ شدہ ریکارڈ دیکھیں';
 
   @override
+  String get recZoneMissingText =>
+      'کوئی ٹائم زون مقرر نہیں اور اس ڈیوائس کا معلوم نہیں، اس لیے یہاں کچھ بھی دن کے لحاظ سے ترتیب نہیں دیا گیا۔ آپ کے تمام ریکارڈ اوپر موجود ہیں۔ پروفائل › وقت میں ٹائم زون منتخب کریں۔';
+
+  @override
+  String recZoneUnknownText(String zone) {
+    return 'Lume ٹائم زون $zone نہیں پڑھ سکتا، اس لیے یہاں کچھ بھی دن کے لحاظ سے ترتیب نہیں دیا گیا۔ آپ کے تمام ریکارڈ اوپر موجود ہیں۔ پروفائل › وقت میں ٹائم زون منتخب کریں۔';
+  }
+
+  @override
+  String get recZoneUnknownTitle => 'آپ کا دن معلوم نہیں کیا جا سکتا';
+
+  @override
   String get recipeCuisineGlobal => 'عالمی';
 
   @override

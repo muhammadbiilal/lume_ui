@@ -9,6 +9,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:lume/core/fixtures/lume_clock.dart';
 import 'package:lume/core/localization/lume_format.dart';
+import 'package:lume/core/time/lume_iana_zones.dart';
 import 'package:lume/core/platform/lume_share.dart';
 import 'package:lume/core/widgets/lume/lume_agenda.dart';
 import 'package:lume/core/widgets/lume/lume_button.dart';
@@ -33,7 +34,7 @@ LumeRecordContext ctx({String zone = 'Asia/Karachi'}) => LumeRecordContext(
   l: AppLocalizationsEn(),
   f: const LumeFormatting(locale: Locale('en'), countryCode: 'PK'),
   now: kFixtureInstant,
-  zoneId: zone,
+  zone: LumeTimeZoneService.shared.resolveId(zone),
   currency: 'PKR',
 );
 
@@ -103,7 +104,7 @@ void main() {
         facts.facts.map((f) => '${f.label}: ${f.value}'),
         containsAllInOrder(<String>[
           'Time: 7:00 pm',
-          'Timezone: Europe/London',
+          'Timezone: \u2068Europe/London\u2069',
         ]),
       );
     });

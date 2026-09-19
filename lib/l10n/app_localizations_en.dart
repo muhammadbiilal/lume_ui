@@ -5249,6 +5249,18 @@ class AppLocalizationsEn extends AppLocalizations {
   String get recViewCached => 'View cached records';
 
   @override
+  String get recZoneMissingText =>
+      'No time zone is set and this device’s isn’t known, so nothing here is grouped by day. Your records are all listed above. Choose a time zone in Profile › Time.';
+
+  @override
+  String recZoneUnknownText(String zone) {
+    return 'Lume can’t read the time zone $zone, so nothing here is grouped by day. Your records are all listed above. Choose a time zone in Profile › Time.';
+  }
+
+  @override
+  String get recZoneUnknownTitle => 'Your day can’t be worked out';
+
+  @override
   String get recipeCuisineGlobal => 'Global';
 
   @override

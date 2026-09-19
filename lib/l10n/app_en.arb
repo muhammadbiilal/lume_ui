@@ -7121,6 +7121,23 @@
   "@recViewCached": {
     "description": "Reference key rec.viewCached"
   },
+  "recZoneMissingText": "No time zone is set and this device’s isn’t known, so nothing here is grouped by day. Your records are all listed above. Choose a time zone in Profile › Time.",
+  "@recZoneMissingText": {
+    "description": "No configured zone and no verified device zone"
+  },
+  "recZoneUnknownText": "Lume can’t read the time zone {zone}, so nothing here is grouped by day. Your records are all listed above. Choose a time zone in Profile › Time.",
+  "@recZoneUnknownText": {
+    "description": "An explicit time zone that is unknown or malformed; {zone} is the identifier as stored, isolated for direction",
+    "placeholders": {
+      "zone": {
+        "type": "String"
+      }
+    }
+  },
+  "recZoneUnknownTitle": "Your day can’t be worked out",
+  "@recZoneUnknownTitle": {
+    "description": "Tools that group by the reader’s day, when their time zone cannot be resolved"
+  },
   "recipeCuisineGlobal": "Global",
   "@recipeCuisineGlobal": {
     "description": "A cuisine in tool-data.js RECIPES. The reference writes it in English in every language"

@@ -144,7 +144,7 @@ class LumeTodoFamily extends LumeRecordFamily<LumeTodo> {
   @override
   Map<String, Object?> defaults(LumeRecordContext c) => <String, Object?>{
     'list': LumeTodoList.values.first.name,
-    'due': lumeIsoDay(c.today, 0),
+    'due': c.dayKnown ? lumeIsoDay(c.today, 0) : '',
     'priority': LumeTodoPriority.normal.name,
     'done': false,
   };

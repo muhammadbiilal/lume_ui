@@ -13,6 +13,7 @@ by one adapter file and nothing else.
 |---|---|---|---|---|
 | `flutter_zxing` | 3.0.1 | MIT | khoren93 | `lib/core/platform/lume_scanner_platform.dart` |
 | `ffi` | 2.2.0 | BSD-3-Clause | dart.dev | `lib/core/time/lume_boot_clock.dart` — already shipped through `flutter_zxing`; declared because Lume calls it (F6B closure) |
+| `timezone` | 0.11.1 | BSD-2-Clause | dart.dev (`dart-lang/labs`) | `lib/core/time/lume_iana_zones.dart` only (and the alias generator, `scripts/generate_zone_aliases.dart`) — IANA tzdb 2025c, `latest_all` (approved after wave 2; `WORLD_CLOCK_TIMEZONE.md`) |
 | `image_picker` | 1.2.3 | BSD-3-Clause | flutter.dev | `lib/core/platform/lume_scanner_platform.dart` |
 | `gal` | 2.3.3 | BSD-3-Clause | midoridesign.studio | `lib/core/platform/lume_image_saver_platform.dart` — **iOS only** since the F6B closure; Android saves through Lume's MediaStore channel (C81) |
 
