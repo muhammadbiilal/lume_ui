@@ -69,7 +69,8 @@ void main() {
         '2026-09-03',
         '2026-09-01',
       ]);
-      expect(lumeRecordSeeds('notes', DateTime(2026, 9, 7)), isNull);
+      // A collection this build has not converted opens empty.
+      expect(lumeRecordSeeds('reminders', DateTime(2026, 9, 7)), isNull);
     },
   );
 }

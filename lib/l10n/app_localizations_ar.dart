@@ -1994,6 +1994,42 @@ class AppLocalizationsAr extends AppLocalizations {
   String get emergencyYourInfo => 'معلوماتك';
 
   @override
+  String get eventsNoMatch => 'لا فعاليات مطابقة';
+
+  @override
+  String get eventsNoMatchText => 'جرّب كلمة أخرى.';
+
+  @override
+  String eventsPeople(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n شخص',
+      many: '$n شخصًا',
+      few: '$n أشخاص',
+      two: 'شخصان',
+      one: 'شخص واحد',
+      zero: 'لا أحد',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get eventsSeedE2 => 'غداء الفريق';
+
+  @override
+  String get eventsSeedE3 => 'طبيب الأسنان';
+
+  @override
+  String get eventsSeedW2 => 'المطعم عند الزاوية';
+
+  @override
+  String get eventsSeedW3 => 'Smile Studio';
+
+  @override
+  String get eventsUpcoming => 'القادمة';
+
+  @override
   String get expensesAdd => 'إضافة مصروف';
 
   @override
@@ -3971,6 +4007,62 @@ class AppLocalizationsAr extends AppLocalizations {
   String get newsTop => 'أبرز خبر';
 
   @override
+  String get notesFolderIdeas => 'أفكار';
+
+  @override
+  String get notesFolderPersonal => 'شخصي';
+
+  @override
+  String get notesFolderWork => 'العمل';
+
+  @override
+  String get notesFolders => 'المجلدات';
+
+  @override
+  String get notesNew => 'ملاحظة جديدة';
+
+  @override
+  String get notesNoMatch => 'لا ملاحظات مطابقة';
+
+  @override
+  String get notesNoMatchText => 'جرّب كلمة أخرى أو اسم مجلد.';
+
+  @override
+  String get notesPinned => 'المثبّتة';
+
+  @override
+  String get notesRecent => 'الأحدث';
+
+  @override
+  String get notesSeedN1 => 'نقاط مراجعة الدورة';
+
+  @override
+  String get notesSeedN1x =>
+      'أطلق إصلاح التهيئة أولًا، ثم عُد إلى الحالات الفارغة…';
+
+  @override
+  String get notesSeedN2 => 'قائمة القراءة';
+
+  @override
+  String get notesSeedN2x => 'ثلاثة كتب اقتُرحت على العشاء — ابدأ بالأقصر…';
+
+  @override
+  String get notesSeedN3 => 'فكرة تطبيق';
+
+  @override
+  String get notesSeedN3x => 'أداة تتتبّع بهدوء ما تعيد قراءته فعلًا…';
+
+  @override
+  String get notesSeedN4 => 'ملاحظات الاجتماع';
+
+  @override
+  String get notesSeedN4x =>
+      'اعتُمدت الميزانية، ويُعاد النظر في عدد الموظفين في نوفمبر…';
+
+  @override
+  String get notesTotal => 'الملاحظات';
+
+  @override
   String get notifPrefBadge => 'عدّاد الشارة';
 
   @override
@@ -4659,6 +4751,21 @@ class AppLocalizationsAr extends AppLocalizations {
   String get recCheckFields => 'راجع الحقول المميزة';
 
   @override
+  String recCleared(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: 'تمت إزالة $n صنف',
+      many: 'تمت إزالة $n صنفًا',
+      few: 'تمت إزالة $n أصناف',
+      two: 'تمت إزالة صنفين',
+      one: 'تمت إزالة صنف واحد',
+      zero: 'لم تُزل أي أصناف',
+    );
+    return '$_temp0';
+  }
+
+  @override
   String get recConfirmNote => 'تُحفظ التغييرات بعد التأكيد فقط';
 
   @override
@@ -4795,6 +4902,9 @@ class AppLocalizationsAr extends AppLocalizations {
   String get recDocumentsPh => 'جواز سفر، رخصة، وثيقة…';
 
   @override
+  String get recDone => 'منجز';
+
+  @override
   String recEdit(String noun) {
     return 'تعديل $noun';
   }
@@ -4809,6 +4919,21 @@ class AppLocalizationsAr extends AppLocalizations {
   String recErrRequired(String field) {
     return 'أدخل $field';
   }
+
+  @override
+  String get recEventsEmptyText => 'أضف فعالية وستظهر هنا.';
+
+  @override
+  String get recEventsEmptyTitle => 'لا شيء مخطط';
+
+  @override
+  String get recEventsNoun => 'فعالية';
+
+  @override
+  String get recEventsNounPlural => 'الفعاليات';
+
+  @override
+  String get recEventsPh => 'ما الذي سيحدث؟';
 
   @override
   String get recExpensesEmptyText => 'أضف سجلًا لتعرف أين يذهب مالك.';
@@ -4831,19 +4956,46 @@ class AppLocalizationsAr extends AppLocalizations {
   }
 
   @override
+  String get recFieldAisle => 'القسم';
+
+  @override
   String get recFieldAmount => 'المبلغ';
 
   @override
   String get recFieldCategory => 'الفئة';
 
   @override
+  String get recFieldCompleted => 'منجزة';
+
+  @override
   String get recFieldDate => 'التاريخ';
+
+  @override
+  String get recFieldDue => 'الاستحقاق';
+
+  @override
+  String get recFieldEstimate => 'التقدير';
 
   @override
   String get recFieldExpiry => 'تاريخ الانتهاء';
 
   @override
+  String get recFieldFolder => 'المجلد';
+
+  @override
   String get recFieldHolder => 'الحامل';
+
+  @override
+  String get recFieldInBasket => 'في السلة';
+
+  @override
+  String get recFieldItem => 'الصنف';
+
+  @override
+  String get recFieldList => 'القائمة';
+
+  @override
+  String get recFieldNote => 'ملاحظة';
 
   @override
   String get recFieldNotes => 'ملاحظات';
@@ -4852,13 +5004,37 @@ class AppLocalizationsAr extends AppLocalizations {
   String get recFieldPayment => 'الدفع';
 
   @override
+  String get recFieldPeople => 'الأشخاص';
+
+  @override
+  String get recFieldPinned => 'مثبّت';
+
+  @override
+  String get recFieldPriority => 'الأولوية';
+
+  @override
+  String get recFieldQuantity => 'الكمية';
+
+  @override
   String get recFieldReceipt => 'الإيصال';
 
   @override
   String get recFieldReference => 'المرجع';
 
   @override
+  String get recFieldTask => 'المهمة';
+
+  @override
+  String get recFieldTime => 'الوقت';
+
+  @override
+  String get recFieldTimezone => 'المنطقة الزمنية';
+
+  @override
   String get recFieldTitle => 'العنوان';
+
+  @override
+  String get recFieldWhere => 'المكان';
 
   @override
   String get recGone => 'لم يعد هذا السجل موجودًا';
@@ -4887,13 +5063,24 @@ class AppLocalizationsAr extends AppLocalizations {
       'تحقق من اتصالك. بياناتك المحفوظة ما زالت آمنة على هذا الجهاز.';
 
   @override
+  String recModified(String when) {
+    return 'عُدّل $when';
+  }
+
+  @override
   String get recNewRecord => 'سجل جديد';
+
+  @override
+  String get recNoDue => 'بدون تاريخ';
 
   @override
   String get recNoMatch => 'لا توجد نتائج';
 
   @override
   String get recNoMatchText => 'جرّب كلمة أخرى، أو أزل عوامل التصفية.';
+
+  @override
+  String get recNoTime => 'بلا وقت';
 
   @override
   String get recNone => 'لا شيء';
@@ -4903,6 +5090,21 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get recNotAttached => 'غير مرفق';
+
+  @override
+  String get recNotesEmptyText => 'تصبح الملاحظات قابلة للبحث فور حفظها.';
+
+  @override
+  String get recNotesEmptyTitle => 'لم تُكتب أي ملاحظة';
+
+  @override
+  String get recNotesNoun => 'ملاحظة';
+
+  @override
+  String get recNotesNounPlural => 'الملاحظات';
+
+  @override
+  String get recNotesPh => 'اكتب عنوانًا';
 
   @override
   String get recNothingToUndo => 'لا شيء للتراجع عنه';
@@ -4915,6 +5117,9 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get recOfflineText => 'تُعرض السجلات المحفوظة على هذا الجهاز.';
+
+  @override
+  String get recOpen => 'مفتوح';
 
   @override
   String get recOptional => 'اختياري';
@@ -4930,6 +5135,15 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get recPayWallet => 'محفظة';
+
+  @override
+  String get recPinned => 'مثبّت';
+
+  @override
+  String get recPriorityHigh => 'عالية';
+
+  @override
+  String get recPriorityNormal => 'عادية';
 
   @override
   String get recQueued => 'في الانتظار';
@@ -5008,6 +5222,72 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get recSelectTitle => 'لم يُحدَّد شيء';
+
+  @override
+  String recShoppingClear(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: 'إزالة $n صنف من السلة',
+      many: 'إزالة $n صنفًا من السلة',
+      few: 'إزالة $n أصناف من السلة',
+      two: 'إزالة صنفين من السلة',
+      one: 'إزالة صنف واحد من السلة',
+      zero: 'إزالة $n من السلة',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String recShoppingClearConfirm(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: 'سيُزال $n صنف من القائمة. لا يمكن التراجع.',
+      many: 'سيُزال $n صنفًا من القائمة. لا يمكن التراجع.',
+      few: 'ستُزال $n أصناف من القائمة. لا يمكن التراجع.',
+      two: 'سيُزال صنفان من القائمة. لا يمكن التراجع.',
+      one: 'سيُزال صنف واحد من القائمة. لا يمكن التراجع.',
+      zero: 'لن يُزال أي صنف.',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get recShoppingEmptyText => 'أضف ما تحتاجه وعلّم عليه أثناء التسوق.';
+
+  @override
+  String get recShoppingEmptyTitle => 'قائمتك فارغة';
+
+  @override
+  String get recShoppingNoun => 'صنف';
+
+  @override
+  String get recShoppingNounPlural => 'قائمة التسوق';
+
+  @override
+  String get recShoppingPh => 'ما الذي تحتاجه؟';
+
+  @override
+  String get recShoppingQtyPh => '2 كجم';
+
+  @override
+  String get recToBuy => 'للشراء';
+
+  @override
+  String get recTodosEmptyText => 'أضف مهمة وستظهر هنا.';
+
+  @override
+  String get recTodosEmptyTitle => 'لا شيء في قائمتك';
+
+  @override
+  String get recTodosNoun => 'مهمة';
+
+  @override
+  String get recTodosNounPlural => 'المهام';
+
+  @override
+  String get recTodosPh => 'ما الذي يجب فعله؟';
 
   @override
   String get recUndo => 'تراجع';
@@ -5305,6 +5585,52 @@ class AppLocalizationsAr extends AppLocalizations {
   String get shareUnavailable => 'المشاركة غير متاحة على هذا الجهاز';
 
   @override
+  String get shopAisleDairy => 'الألبان';
+
+  @override
+  String get shopAisleHousehold => 'المنزل';
+
+  @override
+  String get shopAisleProduce => 'الخضار والفواكه';
+
+  @override
+  String get shopSeedI1 => 'طماطم';
+
+  @override
+  String get shopSeedI2 => 'حليب';
+
+  @override
+  String get shopSeedI3 => 'زبادي';
+
+  @override
+  String get shopSeedI4 => 'ليمون';
+
+  @override
+  String get shopSeedI5 => 'مسحوق الغسيل';
+
+  @override
+  String get shoppingClear => 'إزالة المؤشَّر عليها';
+
+  @override
+  String shoppingEstimated(String amount) {
+    return 'نحو $amount';
+  }
+
+  @override
+  String get shoppingList => 'ما زال مطلوبًا';
+
+  @override
+  String get shoppingProgress => 'تم التأشير';
+
+  @override
+  String get shoppingShare => 'شارك القائمة';
+
+  @override
+  String shoppingShareSource(String date) {
+    return 'قائمة التسوق · $date';
+  }
+
+  @override
   String get slideMoneyCta => 'عرض المال';
 
   @override
@@ -5413,10 +5739,65 @@ class AppLocalizationsAr extends AppLocalizations {
   }
 
   @override
+  String get sunDawn => 'الفجر';
+
+  @override
+  String get sunDawnNote => 'أول الضوء';
+
+  @override
   String get sunDaylength => 'ساعات النهار';
 
   @override
+  String get sunDusk => 'الغسق';
+
+  @override
+  String get sunDuskNote => 'آخر الضوء';
+
+  @override
+  String get sunIllumination => 'المُضاء';
+
+  @override
   String get sunMoon => 'طور القمر';
+
+  @override
+  String get sunNoCityText =>
+      'تُحسب أوقات الشمس والقمر من إحداثيات المدينة، ولا يملك Lume إحداثيات لهذه المدينة. اختر مدينة أخرى في الملف الشخصي لعرضها.';
+
+  @override
+  String sunNoCityTitle(String city) {
+    return 'لا إحداثيات لـ$city';
+  }
+
+  @override
+  String get sunNoTwilight => 'لن يحلّ الظلام بما يكفي الليلة';
+
+  @override
+  String get sunNoZoneText =>
+      'لا يمكن عرض الأوقات بتوقيتك المحلي من دون منطقتك الزمنية، لذا لا تُعرض.';
+
+  @override
+  String sunNoZoneTitle(String zone) {
+    return 'لا توقيت لـ$zone';
+  }
+
+  @override
+  String get sunNoon => 'الظهيرة الشمسية';
+
+  @override
+  String get sunPolarDay => 'لا تغيب الشمس طوال اليوم';
+
+  @override
+  String get sunPolarNight => 'تبقى الشمس تحت الأفق طوال اليوم';
+
+  @override
+  String sunRange(String a, String b) {
+    return 'من $a إلى $b';
+  }
+
+  @override
+  String sunShareSource(String city, String date) {
+    return '$city · $date';
+  }
 
   @override
   String get sunSunrise => 'الشروق';
@@ -5426,6 +5807,9 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get sunTitle => 'الشمس والقمر';
+
+  @override
+  String get sunToday => 'اليوم';
 
   @override
   String get surahAlKahf => 'الكهف';
@@ -5709,6 +6093,93 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get todayYourDay => 'يومك';
+
+  @override
+  String get todosAdd => 'أضف مهمة';
+
+  @override
+  String get todosClear => 'لم يتبقَّ شيء';
+
+  @override
+  String get todosClearText => 'لا مهام تطابق هذا المرشّح.';
+
+  @override
+  String get todosDone7 => 'أُنجز هذا الأسبوع';
+
+  @override
+  String get todosHigh => 'عالية';
+
+  @override
+  String get todosListHome => 'المنزل';
+
+  @override
+  String get todosListPersonal => 'شخصي';
+
+  @override
+  String get todosListWork => 'العمل';
+
+  @override
+  String get todosLists => 'القوائم';
+
+  @override
+  String get todosNormal => 'عادية';
+
+  @override
+  String get todosOnTrack => 'لا شيء متأخر';
+
+  @override
+  String todosOpenN(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n مهمة مفتوحة',
+      many: '$n مهمة مفتوحة',
+      few: '$n مهام مفتوحة',
+      two: 'مهمتان مفتوحتان',
+      one: 'مهمة مفتوحة',
+      zero: 'لا شيء مفتوح',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String todosOverdueN(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n مهمة متأخرة',
+      many: '$n مهمة متأخرة',
+      few: '$n مهام متأخرة',
+      two: 'مهمتان متأخرتان',
+      one: 'مهمة متأخرة',
+      zero: 'لا متأخرات',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get todosPriority => 'الأولوية';
+
+  @override
+  String get todosSeedItem1 => 'أرسل الملخص الفصلي';
+
+  @override
+  String get todosSeedItem2 => 'استلم الوصفة الطبية';
+
+  @override
+  String get todosSeedItem3 => 'راجع ملاحظات التصميم';
+
+  @override
+  String get todosSeedItem4 => 'احجز صيانة السيارة';
+
+  @override
+  String get todosToday => 'اليوم';
+
+  @override
+  String get todosUpcoming => 'القادمة';
+
+  @override
+  String get todosWhen => 'متى';
 
   @override
   String get toolCategoryDaily => 'الحياة اليومية';

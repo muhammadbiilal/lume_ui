@@ -1,0 +1,90 @@
+# events — measured against the reference
+
+Written by the tool's bounds test. Every row is a value read from the running reference and the same value read from Flutter, relative to the tool bar's top-left.
+
+**82 values compared.**
+
+| cell | element | property | reference | Flutter | Δ |
+|---|---|---|---:|---:|---:|
+| tool_events_default_pk_390x844_light_en | `toolbar` | x | 0.00 | 0.00 | 0.00 |
+| tool_events_default_pk_390x844_light_en | `toolbar` | y | 0.00 | 0.00 | 0.00 |
+| tool_events_default_pk_390x844_light_en | `toolbar` | width | 390.00 | 390.00 | 0.00 |
+| tool_events_default_pk_390x844_light_en | `toolbar` | height | 67.00 | 67.00 | 0.00 |
+| tool_events_default_pk_390x844_light_en | `toolbar.textbtn` | x | 253.45 | 252.46 | -0.99 |
+| tool_events_default_pk_390x844_light_en | `toolbar.textbtn` | y | 10.00 | 10.00 | 0.00 |
+| tool_events_default_pk_390x844_light_en | `toolbar.textbtn` | width | 72.55 | 73.54 | 0.99 |
+| tool_events_default_pk_390x844_light_en | `toolbar.textbtn` | height | 44.00 | 44.00 | 0.00 |
+| tool_events_default_pk_390x844_light_en | `search` | x | 40.00 | 40.00 | 0.00 |
+| tool_events_default_pk_390x844_light_en | `search` | y | 83.00 | 83.00 | 0.00 |
+| tool_events_default_pk_390x844_light_en | `search` | width | 310.00 | 310.00 | 0.00 |
+| tool_events_default_pk_390x844_light_en | `search` | height | 44.00 | 44.00 | 0.00 |
+| tool_events_default_pk_390x844_light_en | `recs` | x | 20.00 | 20.00 | 0.00 |
+| tool_events_default_pk_390x844_light_en | `recs` | y | 127.00 | 127.00 | 0.00 |
+| tool_events_default_pk_390x844_light_en | `recs` | width | 350.00 | 350.00 | 0.00 |
+| tool_events_default_pk_390x844_light_en | `recs` | height | 142.00 | 142.00 | 0.00 |
+| tool_events_default_pk_390x844_light_en | `rrec1` | x | 20.00 | 20.00 | 0.00 |
+| tool_events_default_pk_390x844_light_en | `rrec1` | y | 127.00 | 127.00 | 0.00 |
+| tool_events_default_pk_390x844_light_en | `rrec1` | width | 350.00 | 350.00 | 0.00 |
+| tool_events_default_pk_390x844_light_en | `rrec1` | height | 66.00 | 66.00 | 0.00 |
+| tool_events_default_pk_390x844_light_en | `rrec2` | x | 20.00 | 20.00 | 0.00 |
+| tool_events_default_pk_390x844_light_en | `rrec2` | y | 203.00 | 203.00 | 0.00 |
+| tool_events_default_pk_390x844_light_en | `rrec2` | width | 350.00 | 350.00 | 0.00 |
+| tool_events_default_pk_390x844_light_en | `rrec2` | height | 66.00 | 66.00 | 0.00 |
+| tool_events_default_pk_390x844_light_en | `rrow1` | x | 21.00 | 21.00 | 0.00 |
+| tool_events_default_pk_390x844_light_en | `rrow1` | y | 325.00 | 325.00 | 0.00 |
+| tool_events_default_pk_390x844_light_en | `rrow1` | width | 348.00 | 348.00 | 0.00 |
+| tool_events_default_pk_390x844_light_en | `rrow1` | height | 73.00 | 72.00 | -1.00 |
+| tool_events_default_pk_1100x900_light_en | `toolbar` | x | 0.00 | 0.00 | 0.00 |
+| tool_events_default_pk_1100x900_light_en | `toolbar` | y | 0.00 | 0.00 | 0.00 |
+| tool_events_default_pk_1100x900_light_en | `toolbar` | width | 806.00 | 806.00 | 0.00 |
+| tool_events_default_pk_1100x900_light_en | `toolbar` | height | 67.00 | 67.00 | 0.00 |
+| tool_events_default_pk_1100x900_light_en | `recs` | x | 32.00 | 32.00 | 0.00 |
+| tool_events_default_pk_1100x900_light_en | `recs` | y | 127.00 | 127.00 | 0.00 |
+| tool_events_default_pk_1100x900_light_en | `recs` | width | 380.00 | 380.00 | 0.00 |
+| tool_events_default_pk_1100x900_light_en | `recs` | height | 142.00 | 142.00 | 0.00 |
+| tool_events_default_pk_1100x900_light_en | `rrec1` | x | 32.00 | 32.00 | 0.00 |
+| tool_events_default_pk_1100x900_light_en | `rrec1` | y | 127.00 | 127.00 | 0.00 |
+| tool_events_default_pk_1100x900_light_en | `rrec1` | width | 380.00 | 380.00 | 0.00 |
+| tool_events_default_pk_1100x900_light_en | `rrec1` | height | 66.00 | 66.00 | 0.00 |
+| tool_events_default_pk_1100x900_light_en | `cstate` | x | 432.00 | 432.00 | 0.00 |
+| tool_events_default_pk_1100x900_light_en | `cstate` | y | 83.00 | 83.00 | 0.00 |
+| tool_events_default_pk_1100x900_light_en | `cstate` | width | 342.00 | 342.00 | 0.00 |
+| tool_events_default_pk_1100x900_light_en | `cstate` | height | 320.00 | 320.00 | 0.00 |
+| tool_events_default_pk_detail_390x844_light_en | `toolbar` | x | 0.00 | 0.00 | 0.00 |
+| tool_events_default_pk_detail_390x844_light_en | `toolbar` | y | 0.00 | 0.00 | 0.00 |
+| tool_events_default_pk_detail_390x844_light_en | `toolbar` | width | 390.00 | 390.00 | 0.00 |
+| tool_events_default_pk_detail_390x844_light_en | `toolbar` | height | 62.00 | 62.00 | 0.00 |
+| tool_events_default_pk_detail_390x844_light_en | `chero` | x | 20.00 | 20.00 | 0.00 |
+| tool_events_default_pk_detail_390x844_light_en | `chero` | y | 86.00 | 86.00 | 0.00 |
+| tool_events_default_pk_detail_390x844_light_en | `chero` | width | 350.00 | 350.00 | 0.00 |
+| tool_events_default_pk_detail_390x844_light_en | `chero` | height | 158.00 | 158.00 | 0.00 |
+| tool_events_default_pk_detail_390x844_light_en | `cfacts` | x | 20.00 | 20.00 | 0.00 |
+| tool_events_default_pk_detail_390x844_light_en | `cfacts` | y | 275.00 | 275.00 | 0.00 |
+| tool_events_default_pk_detail_390x844_light_en | `cfacts` | width | 350.00 | 350.00 | 0.00 |
+| tool_events_default_pk_detail_390x844_light_en | `cfacts` | height | 327.00 | 327.00 | 0.00 |
+| tool_events_default_pk_detail_390x844_light_en | `cacts` | x | 20.00 | 20.00 | 0.00 |
+| tool_events_default_pk_detail_390x844_light_en | `cacts` | y | 622.00 | 622.00 | 0.00 |
+| tool_events_default_pk_detail_390x844_light_en | `cacts` | width | 350.00 | 350.00 | 0.00 |
+| tool_events_default_pk_detail_390x844_light_en | `cacts` | height | 114.00 | 114.00 | 0.00 |
+| tool_events_default_pk_detail_390x844_light_en | `crud.id` | x | 20.00 | 20.00 | 0.00 |
+| tool_events_default_pk_detail_390x844_light_en | `crud.id` | y | 754.00 | 754.00 | 0.00 |
+| tool_events_default_pk_detail_390x844_light_en | `crud.id` | height | 16.00 | 16.00 | 0.00 |
+| tool_events_default_pk_new_390x844_light_en | `toolbar` | x | 0.00 | 0.00 | 0.00 |
+| tool_events_default_pk_new_390x844_light_en | `toolbar` | y | 0.00 | 0.00 | 0.00 |
+| tool_events_default_pk_new_390x844_light_en | `toolbar` | width | 390.00 | 390.00 | 0.00 |
+| tool_events_default_pk_new_390x844_light_en | `toolbar` | height | 67.00 | 67.00 | 0.00 |
+| tool_events_default_pk_new_390x844_light_en | `cform` | x | 20.00 | 20.00 | 0.00 |
+| tool_events_default_pk_new_390x844_light_en | `cform` | y | 91.00 | 91.00 | 0.00 |
+| tool_events_default_pk_new_390x844_light_en | `cform` | width | 350.00 | 350.00 | 0.00 |
+| tool_events_default_pk_new_390x844_light_en | `cfield1` | x | 20.00 | 20.00 | 0.00 |
+| tool_events_default_pk_new_390x844_light_en | `cfield1` | y | 91.00 | 91.00 | 0.00 |
+| tool_events_default_pk_new_390x844_light_en | `cfield1` | width | 350.00 | 350.00 | 0.00 |
+| tool_events_default_pk_new_390x844_light_en | `cfield1` | height | 71.00 | 71.00 | 0.00 |
+| tool_events_default_pk_new_390x844_light_en | `csubmit` | x | 20.00 | 20.00 | 0.00 |
+| tool_events_default_pk_new_390x844_light_en | `csubmit` | y (reference +40, recorded) | 722.06 | 723.41 | 1.35 |
+| tool_events_default_pk_new_390x844_light_en | `csubmit` | width | 350.00 | 350.00 | 0.00 |
+| tool_events_default_pk_new_390x844_light_en | `csubmit` | height | 72.00 | 74.00 | 2.00 |
+| tool_events_default_pk_delete_390x844_light_en | `dconfirm` | x | 1.00 | 1.00 | 0.00 |
+| tool_events_default_pk_delete_390x844_light_en | `dconfirm` | y | 476.00 | 476.00 | 0.00 |
+| tool_events_default_pk_delete_390x844_light_en | `dconfirm` | width | 388.00 | 388.00 | 0.00 |
+| tool_events_default_pk_delete_390x844_light_en | `dconfirm` | height | 320.00 | 320.00 | 0.00 |

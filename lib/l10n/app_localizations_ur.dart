@@ -1951,6 +1951,38 @@ class AppLocalizationsUr extends AppLocalizations {
   String get emergencyYourInfo => 'آپ کی معلومات';
 
   @override
+  String get eventsNoMatch => 'کوئی تقریب نہیں ملی';
+
+  @override
+  String get eventsNoMatchText => 'کوئی اور لفظ آزمائیں۔';
+
+  @override
+  String eventsPeople(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n شریک',
+      one: '1 شریک',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get eventsSeedE2 => 'ٹیم کا دوپہر کا کھانا';
+
+  @override
+  String get eventsSeedE3 => 'دندان ساز';
+
+  @override
+  String get eventsSeedW2 => 'کونے والی جگہ';
+
+  @override
+  String get eventsSeedW3 => 'Smile Studio';
+
+  @override
+  String get eventsUpcoming => 'آنے والی';
+
+  @override
   String get expensesAdd => 'خرچ شامل کریں';
 
   @override
@@ -3910,6 +3942,64 @@ class AppLocalizationsUr extends AppLocalizations {
   String get newsTop => 'اہم خبر';
 
   @override
+  String get notesFolderIdeas => 'خیالات';
+
+  @override
+  String get notesFolderPersonal => 'ذاتی';
+
+  @override
+  String get notesFolderWork => 'کام';
+
+  @override
+  String get notesFolders => 'فولڈر';
+
+  @override
+  String get notesNew => 'نیا نوٹ';
+
+  @override
+  String get notesNoMatch => 'کوئی نوٹ نہیں ملا';
+
+  @override
+  String get notesNoMatchText => 'کوئی اور لفظ یا فولڈر کا نام آزمائیں۔';
+
+  @override
+  String get notesPinned => 'پن شدہ';
+
+  @override
+  String get notesRecent => 'حالیہ';
+
+  @override
+  String get notesSeedN1 => 'اسپرنٹ جائزے کے نکات';
+
+  @override
+  String get notesSeedN1x =>
+      'پہلے آن بورڈنگ کی درستی جاری کریں، پھر خالی حالتوں پر دوبارہ نظر ڈالیں…';
+
+  @override
+  String get notesSeedN2 => 'پڑھنے کی فہرست';
+
+  @override
+  String get notesSeedN2x =>
+      'رات کے کھانے پر تین کتابیں تجویز ہوئیں — چھوٹی سے شروع کریں…';
+
+  @override
+  String get notesSeedN3 => 'ایپ کا خیال';
+
+  @override
+  String get notesSeedN3x =>
+      'ایک ٹول جو خاموشی سے دیکھے کہ آپ واقعی کیا دوبارہ پڑھتے ہیں…';
+
+  @override
+  String get notesSeedN4 => 'میٹنگ کے نوٹس';
+
+  @override
+  String get notesSeedN4x =>
+      'بجٹ منظور، نومبر میں عملے کی تعداد پر دوبارہ غور…';
+
+  @override
+  String get notesTotal => 'نوٹس';
+
+  @override
   String get notifPrefBadge => 'بیج کی گنتی';
 
   @override
@@ -4607,6 +4697,17 @@ class AppLocalizationsUr extends AppLocalizations {
   String get recCheckFields => 'نشان زد خانے دیکھیں';
 
   @override
+  String recCleared(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n ہٹا دیے گئے',
+      one: '1 ہٹا دیا گیا',
+    );
+    return '$_temp0';
+  }
+
+  @override
   String get recConfirmNote => 'تبدیلیاں تصدیق کے بعد ہی محفوظ ہوتی ہیں';
 
   @override
@@ -4737,6 +4838,9 @@ class AppLocalizationsUr extends AppLocalizations {
   String get recDocumentsPh => 'پاسپورٹ، لائسنس، پالیسی…';
 
   @override
+  String get recDone => 'مکمل';
+
+  @override
   String recEdit(String noun) {
     return '$noun میں ترمیم';
   }
@@ -4751,6 +4855,21 @@ class AppLocalizationsUr extends AppLocalizations {
   String recErrRequired(String field) {
     return '$field درج کریں';
   }
+
+  @override
+  String get recEventsEmptyText => 'تقریب شامل کریں، وہ یہاں نظر آئے گی۔';
+
+  @override
+  String get recEventsEmptyTitle => 'کچھ طے نہیں';
+
+  @override
+  String get recEventsNoun => 'تقریب';
+
+  @override
+  String get recEventsNounPlural => 'تقریبات';
+
+  @override
+  String get recEventsPh => 'کیا ہو رہا ہے؟';
 
   @override
   String get recExpensesEmptyText =>
@@ -4774,19 +4893,46 @@ class AppLocalizationsUr extends AppLocalizations {
   }
 
   @override
+  String get recFieldAisle => 'شعبہ';
+
+  @override
   String get recFieldAmount => 'رقم';
 
   @override
   String get recFieldCategory => 'زمرہ';
 
   @override
+  String get recFieldCompleted => 'مکمل';
+
+  @override
   String get recFieldDate => 'تاریخ';
+
+  @override
+  String get recFieldDue => 'مقررہ تاریخ';
+
+  @override
+  String get recFieldEstimate => 'تخمینہ';
 
   @override
   String get recFieldExpiry => 'میعاد';
 
   @override
+  String get recFieldFolder => 'فولڈر';
+
+  @override
   String get recFieldHolder => 'حامل';
+
+  @override
+  String get recFieldInBasket => 'ٹوکری میں';
+
+  @override
+  String get recFieldItem => 'شے';
+
+  @override
+  String get recFieldList => 'فہرست';
+
+  @override
+  String get recFieldNote => 'نوٹ';
 
   @override
   String get recFieldNotes => 'نوٹس';
@@ -4795,13 +4941,37 @@ class AppLocalizationsUr extends AppLocalizations {
   String get recFieldPayment => 'ادائیگی';
 
   @override
+  String get recFieldPeople => 'لوگ';
+
+  @override
+  String get recFieldPinned => 'پن شدہ';
+
+  @override
+  String get recFieldPriority => 'ترجیح';
+
+  @override
+  String get recFieldQuantity => 'مقدار';
+
+  @override
   String get recFieldReceipt => 'رسید';
 
   @override
   String get recFieldReference => 'حوالہ';
 
   @override
+  String get recFieldTask => 'کام';
+
+  @override
+  String get recFieldTime => 'وقت';
+
+  @override
+  String get recFieldTimezone => 'ٹائم زون';
+
+  @override
   String get recFieldTitle => 'عنوان';
+
+  @override
+  String get recFieldWhere => 'کہاں';
 
   @override
   String get recGone => 'یہ ریکارڈ اب موجود نہیں';
@@ -4830,13 +5000,24 @@ class AppLocalizationsUr extends AppLocalizations {
       'اپنا کنیکشن دیکھیں۔ آپ کا محفوظ ڈیٹا اسی ڈیوائس پر موجود ہے۔';
 
   @override
+  String recModified(String when) {
+    return '$when میں ترمیم';
+  }
+
+  @override
   String get recNewRecord => 'نیا ریکارڈ';
+
+  @override
+  String get recNoDue => 'کوئی تاریخ نہیں';
 
   @override
   String get recNoMatch => 'کچھ نہیں ملا';
 
   @override
   String get recNoMatchText => 'کوئی اور لفظ آزمائیں، یا فلٹر ہٹا دیں۔';
+
+  @override
+  String get recNoTime => 'وقت مقرر نہیں';
 
   @override
   String get recNone => 'کوئی نہیں';
@@ -4846,6 +5027,21 @@ class AppLocalizationsUr extends AppLocalizations {
 
   @override
   String get recNotAttached => 'منسلک نہیں';
+
+  @override
+  String get recNotesEmptyText => 'نوٹس محفوظ کرتے ہی قابلِ تلاش ہو جاتے ہیں۔';
+
+  @override
+  String get recNotesEmptyTitle => 'ابھی کچھ نہیں لکھا';
+
+  @override
+  String get recNotesNoun => 'نوٹ';
+
+  @override
+  String get recNotesNounPlural => 'نوٹس';
+
+  @override
+  String get recNotesPh => 'ایک عنوان دیں';
 
   @override
   String get recNothingToUndo => 'واپس لانے کو کچھ نہیں';
@@ -4861,6 +5057,9 @@ class AppLocalizationsUr extends AppLocalizations {
   String get recOfflineText => 'اس ڈیوائس پر محفوظ ریکارڈ دکھائے جا رہے ہیں۔';
 
   @override
+  String get recOpen => 'باقی';
+
+  @override
   String get recOptional => 'اختیاری';
 
   @override
@@ -4874,6 +5073,15 @@ class AppLocalizationsUr extends AppLocalizations {
 
   @override
   String get recPayWallet => 'والٹ';
+
+  @override
+  String get recPinned => 'پن شدہ';
+
+  @override
+  String get recPriorityHigh => 'زیادہ';
+
+  @override
+  String get recPriorityNormal => 'عام';
 
   @override
   String get recQueued => 'قطار میں';
@@ -4953,6 +5161,65 @@ class AppLocalizationsUr extends AppLocalizations {
 
   @override
   String get recSelectTitle => 'کچھ منتخب نہیں';
+
+  @override
+  String recShoppingClear(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: 'ٹوکری کی $n اشیاء ہٹائیں',
+      one: 'ٹوکری کی 1 شے ہٹائیں',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String recShoppingClearConfirm(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n اشیاء فہرست سے ہٹ جائیں گی۔ یہ واپس نہیں ہو سکتا۔',
+      one: '1 شے فہرست سے ہٹ جائے گی۔ یہ واپس نہیں ہو سکتا۔',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get recShoppingEmptyText =>
+      'جو چاہیے شامل کریں اور خریداری کے دوران نشان لگاتے جائیں۔';
+
+  @override
+  String get recShoppingEmptyTitle => 'فہرست خالی ہے';
+
+  @override
+  String get recShoppingNoun => 'شے';
+
+  @override
+  String get recShoppingNounPlural => 'خریداری کی فہرست';
+
+  @override
+  String get recShoppingPh => 'کیا چاہیے؟';
+
+  @override
+  String get recShoppingQtyPh => '2 کلو';
+
+  @override
+  String get recToBuy => 'خریدنا ہے';
+
+  @override
+  String get recTodosEmptyText => 'کوئی کام شامل کریں، وہ یہاں نظر آئے گا۔';
+
+  @override
+  String get recTodosEmptyTitle => 'فہرست میں کچھ نہیں';
+
+  @override
+  String get recTodosNoun => 'کام';
+
+  @override
+  String get recTodosNounPlural => 'کام';
+
+  @override
+  String get recTodosPh => 'کیا کرنا ہے؟';
 
   @override
   String get recUndo => 'واپس';
@@ -5245,6 +5512,52 @@ class AppLocalizationsUr extends AppLocalizations {
   String get shareUnavailable => 'اس آلے پر شیئر کرنا دستیاب نہیں';
 
   @override
+  String get shopAisleDairy => 'دودھ کی اشیاء';
+
+  @override
+  String get shopAisleHousehold => 'گھریلو سامان';
+
+  @override
+  String get shopAisleProduce => 'سبزی و پھل';
+
+  @override
+  String get shopSeedI1 => 'ٹماٹر';
+
+  @override
+  String get shopSeedI2 => 'دودھ';
+
+  @override
+  String get shopSeedI3 => 'دہی';
+
+  @override
+  String get shopSeedI4 => 'لیموں';
+
+  @override
+  String get shopSeedI5 => 'کپڑے دھونے کا پاؤڈر';
+
+  @override
+  String get shoppingClear => 'نشان زدہ ہٹائیں';
+
+  @override
+  String shoppingEstimated(String amount) {
+    return 'تقریباً $amount';
+  }
+
+  @override
+  String get shoppingList => 'ابھی لینا ہے';
+
+  @override
+  String get shoppingProgress => 'نشان زدہ';
+
+  @override
+  String get shoppingShare => 'فہرست شیئر کریں';
+
+  @override
+  String shoppingShareSource(String date) {
+    return 'خریداری کی فہرست · $date';
+  }
+
+  @override
   String get slideMoneyCta => 'پیسہ دیکھیں';
 
   @override
@@ -5355,10 +5668,65 @@ class AppLocalizationsUr extends AppLocalizations {
   }
 
   @override
+  String get sunDawn => 'فجر';
+
+  @override
+  String get sunDawnNote => 'پہلی روشنی';
+
+  @override
   String get sunDaylength => 'دن کی روشنی';
 
   @override
+  String get sunDusk => 'شام';
+
+  @override
+  String get sunDuskNote => 'آخری روشنی';
+
+  @override
+  String get sunIllumination => 'روشن حصہ';
+
+  @override
   String get sunMoon => 'چاند کی حالت';
+
+  @override
+  String get sunNoCityText =>
+      'سورج اور چاند کے اوقات شہر کے محلِ وقوع سے نکالے جاتے ہیں، اور Lume کے پاس اس شہر کا نہیں ہے۔ انہیں دیکھنے کے لیے پروفائل میں کوئی اور شہر چنیں۔';
+
+  @override
+  String sunNoCityTitle(String city) {
+    return '$city کا محلِ وقوع دستیاب نہیں';
+  }
+
+  @override
+  String get sunNoTwilight => 'آج رات اتنا اندھیرا نہیں ہوگا';
+
+  @override
+  String get sunNoZoneText =>
+      'آپ کے ٹائم زون کے بغیر مقامی وقت نہیں دکھایا جا سکتا، اس لیے کوئی وقت نہیں دکھایا گیا۔';
+
+  @override
+  String sunNoZoneTitle(String zone) {
+    return 'ٹائم زون $zone دستیاب نہیں';
+  }
+
+  @override
+  String get sunNoon => 'شمسی دوپہر';
+
+  @override
+  String get sunPolarDay => 'سورج سارا دن نہیں ڈوبتا';
+
+  @override
+  String get sunPolarNight => 'سورج سارا دن افق سے نیچے رہتا ہے';
+
+  @override
+  String sunRange(String a, String b) {
+    return '$a سے $b';
+  }
+
+  @override
+  String sunShareSource(String city, String date) {
+    return '$city · $date';
+  }
 
   @override
   String get sunSunrise => 'طلوع';
@@ -5368,6 +5736,9 @@ class AppLocalizationsUr extends AppLocalizations {
 
   @override
   String get sunTitle => 'سورج اور چاند';
+
+  @override
+  String get sunToday => 'آج';
 
   @override
   String get surahAlKahf => 'الکہف';
@@ -5652,6 +6023,85 @@ class AppLocalizationsUr extends AppLocalizations {
 
   @override
   String get todayYourDay => 'آپ کا دن';
+
+  @override
+  String get todosAdd => 'کام شامل کریں';
+
+  @override
+  String get todosClear => 'کچھ باقی نہیں';
+
+  @override
+  String get todosClearText => 'اس فلٹر سے کوئی کام نہیں ملتا۔';
+
+  @override
+  String get todosDone7 => 'اس ہفتے مکمل';
+
+  @override
+  String get todosHigh => 'زیادہ';
+
+  @override
+  String get todosListHome => 'گھر';
+
+  @override
+  String get todosListPersonal => 'ذاتی';
+
+  @override
+  String get todosListWork => 'کام';
+
+  @override
+  String get todosLists => 'فہرستیں';
+
+  @override
+  String get todosNormal => 'عام';
+
+  @override
+  String get todosOnTrack => 'کچھ تاخیر میں نہیں';
+
+  @override
+  String todosOpenN(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n باقی',
+      one: '1 باقی',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String todosOverdueN(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n تاخیر میں',
+      one: '1 تاخیر میں',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get todosPriority => 'ترجیح';
+
+  @override
+  String get todosSeedItem1 => 'سہ ماہی خلاصہ بھیجیں';
+
+  @override
+  String get todosSeedItem2 => 'نسخے کی دوا لے آئیں';
+
+  @override
+  String get todosSeedItem3 => 'ڈیزائن پر آراء دیکھیں';
+
+  @override
+  String get todosSeedItem4 => 'گاڑی کی سروس بک کریں';
+
+  @override
+  String get todosToday => 'آج';
+
+  @override
+  String get todosUpcoming => 'آنے والے';
+
+  @override
+  String get todosWhen => 'کب';
 
   @override
   String get toolCategoryDaily => 'روزمرہ زندگی';

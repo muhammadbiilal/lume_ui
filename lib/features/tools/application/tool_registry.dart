@@ -15,6 +15,7 @@ import '../../compound/presentation/compound_tool.dart';
 import '../../datecalc/presentation/datecalc_tool.dart';
 import '../../documents/presentation/documents_tool.dart';
 import '../../emergency/presentation/emergency_tool.dart';
+import '../../events/presentation/events_tool.dart';
 import '../../expenses/presentation/expenses_tool.dart';
 import '../../flights/presentation/flights_tool.dart';
 import '../../goldrates/presentation/goldrates_tool.dart';
@@ -22,12 +23,16 @@ import '../../hadith/presentation/hadith_tool.dart';
 import '../../learning/presentation/learning_tool.dart';
 import '../../loan/presentation/loan_tool.dart';
 import '../../news/presentation/news_tool.dart';
+import '../../notes/presentation/notes_tool.dart';
 import '../../qr/presentation/qr_tool.dart';
 import '../../recipes/presentation/recipes_tool.dart';
+import '../../shopping/presentation/shopping_tool.dart';
 import '../../stopwatch/presentation/stopwatch_tool.dart';
+import '../../sunmoon/presentation/sunmoon_tool.dart';
 import '../../tax/presentation/tax_tool.dart';
 import '../../timer/presentation/timer_tool.dart';
 import '../../tipsplit/presentation/tipsplit_tool.dart';
+import '../../todos/presentation/todos_tool.dart';
 import '../../weather/presentation/weather_tool.dart';
 import 'tool_request.dart';
 
@@ -57,4 +62,10 @@ const Map<String, LumeToolBuilder> kLumeToolRegistry =
       'loan': LumeLoanTool.open,
       'compound': LumeCompoundTool.open,
       'stopwatch': LumeStopwatchTool.open,
+      // Rollout wave 2 (`ROLLOUT_WAVE_2.md`).
+      'notes': LumeNotesTool.open,
+      'todos': LumeTodosTool.open,
+      'events': LumeEventsTool.open,
+      'shopping': LumeShoppingTool.open,
+      'sunmoon': LumeSunmoonTool.open,
     };

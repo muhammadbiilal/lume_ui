@@ -1,8 +1,10 @@
-# F6B closure: rollout wave 2 — provisionally approved, not built
+# Rollout wave 2 — approved and built
 
-Published before any of it is written, as wave 1 was, and **provisionally
-approved** — to be built only once the corrected F6B gate is green. **Nothing
-here is implemented.** Membership is derived mechanically from
+Published before any of it was written, as wave 1 was; approved after the
+F6B closure, and **built** — Notes, To-dos, Events, Shopping List and Sun &
+Moon are in `tool_registry.dart`. What each differs in is C86 in
+`KNOWN_DIFFERENCES.md`; the section at the end says how it was built and held.
+Membership is derived mechanically from
 `measurements/tool_inventory.json` (the data behind `TOOL_INVENTORY.md`):
 each of the 65 tools not yet built is put through the rules below in order,
 and the first rule it fails is recorded. A tool that fails none is in the
@@ -52,10 +54,10 @@ each is inspected and converted on its own.
   age from a known new moon (6 Jan 2000 18:14 UTC) and the synodic month; no
   location is read and nothing is live. Lume computes the same for the
   reader's city with `LumeSolar`, and says so where the city is not in its
-  table. **To decide in the wave:** the reference puts dawn one hour before
+  table. **Decided in the wave:** the reference puts dawn one hour before
   sunrise and dusk one hour after sunset — fixed offsets, not twilight. Lume
-  either computes civil twilight (sun 6° below the horizon) or keeps the
-  offsets and labels them; it will not show an offset as a measurement.
+  computes civil twilight (the sun 6° below the horizon), and says so where
+  it never comes (C86).
 
 **Dependencies.** Nothing native, no package, no network. The record layer
 (`LumeRecordRepository`, in memory and declared not durable, C74) takes four
@@ -150,3 +152,26 @@ computed), and an Android emulator walk.
   `cycle`, `birthdays`, `passport`, `wastatus`) are not chosen by rule;
   Calculator and Unit Converter look dependency-safe and are the obvious
   first inspections.
+
+## How it was built
+
+- **One record host, typed families.** The four record tools share
+  `lib/features/records/presentation/record_tool.dart` — the lifecycle
+  Documents and Expenses each carry inline, drawn once — and each family is a
+  typed model (`LumeNote`, `LumeTodo`, `LumeEvent`, `LumeShopItem`) over the
+  store's record. Documents and Expenses keep their own hosts; moving them
+  onto the shared one changes nothing for the reader, and is left for when
+  either is next touched.
+- **The composition reads the records** (C86): each tool's own sections are
+  computed from the same records as its list, with the reference's
+  formulas, not drawn from a fixture beside them.
+- **Sun & Moon** is `LumeSky` (`lib/core/time/lume_sky.dart`): the solar
+  position `LumeSolar` uses, civil twilight, polar day and night, and the
+  reference's mean-month moon; computed for the reader's city and zone,
+  `computedHere` and not sample.
+- **Held:** 462 values compared against the running reference
+  (`parity/tool_notes.md` 107, `tool_todos.md` 91, `tool_events.md` 82,
+  `tool_shopping.md` 102, `tool_sunmoon.md` 80); 57 goldens; behaviour,
+  validation, restoration, RTL and accessibility tests in
+  `test/features/wave2/`; the astronomy against NOAA's algorithm and
+  published moon phases.

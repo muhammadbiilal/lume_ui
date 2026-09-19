@@ -27,7 +27,8 @@ class LumeDataCapability {
   factory LumeDataCapability.fixture(String toolId) => LumeDataCapability(
     source: sampleSource,
     isLive: onDeviceClocks.contains(toolId),
-    isSample: !inputOnly.contains(toolId),
+    computedHere: computed.contains(toolId),
+    isSample: !inputOnly.contains(toolId) && !computed.contains(toolId),
   );
 
   /// A write survives the app being closed.
@@ -69,6 +70,11 @@ class LumeDataCapability {
     'compound',
     'stopwatch',
   };
+
+  /// Tools whose every figure is worked out on the device for the reader's
+  /// city — a calculation, not a fixture. Sun & Moon: the sun from the
+  /// city's coordinates and the day, the moon from the instant.
+  static const Set<String> computed = <String>{'sunmoon'};
 
   /// Tools whose "live" is a clock ticking on the device.
   static const Set<String> onDeviceClocks = <String>{

@@ -2330,6 +2330,112 @@ About.
   (`referenceSourceLine`). 47 goldens were re-captured; every changed region
   was checked to be the mark or the wrap it causes.
 
+### C86 — Rollout wave 2: five tools and what differs in each
+
+**Wave 2** (`ROLLOUT_WAVE_2.md`): Notes, To-dos, Events and Shopping List on
+the record layer, Sun & Moon on Weather's context dashboard. Each reproduces
+its module's composition, labels and order; what follows is every place it
+does not, and every shared widget the wave measured and corrected.
+
+**One host for the record tools.** Documents and Expenses each carry the CRUD
+lifecycle inline; the four new families share it (`record_tool.dart`,
+`record_family.dart`): list states, search, chips, two panes, detail, form,
+validation, dirty guard, save, undo, delete, tick and bulk clear. A family is
+a typed model read from the store's record — `LumeNote`, `LumeTodo`,
+`LumeEvent`, `LumeShopItem` — never a map of display strings. Selects are
+stored by name (`work`, `high`, `produce`); the reference's own `@key`
+values are read too, so a record written by the web build migrates.
+
+**The composition reads the records — corrected, all four.** The reference
+draws each tool's composition from a fixture beside the records: four notes
+with folder counts of 5, 4 and 3; six tasks with "1 overdue" and "12 done
+this week" whatever the reader does, and ticks that write nowhere the list
+can see; three events, one not in the records; six shopping items and a
+basket the list does not share. Here the composition reads the same records
+as the list, with the reference's own formulas (remaining and checked,
+`reduce(a + i.price)`, done of today, overdue as `!done && due < today`), so
+a tick, an add or a delete changes every figure, and no figure invents the
+reader's history.
+
+- **To-dos "Done this week"** counts done tasks last changed in the past
+  seven days: the store keeps no separate completion time.
+- **To-dos' When filter** — the reference's Week and All pick the same list;
+  Week is today's and the next seven days' here, All everything.
+- **The section under the filters** is titled by the filter chosen (Today,
+  Week, All) rather than "Today" whatever it holds.
+- **Events' upcoming** is the records from today on, soonest first; past
+  events stay in the records.
+
+**Buttons that only toasted — corrected.** New note and Add a task open the
+form (Expenses' precedent, C74); a pinned card and a recent row open their
+note; an upcoming row opens its event or task. Shopping's Share the list makes
+a card of what is still to get (and is not offered with nothing left), and
+Clear checked is the same confirmed bulk clear the list offers (and is not
+offered with nothing ticked). The reference says "Sharing your list" and
+"Checked items cleared" and does neither.
+
+**Empty states that promised too much — corrected.** "Add a task and it will
+show up here and on Today" and "…on your calendar and on Today": neither
+build shows tasks or events there, so the text says "here". "Notes stay on
+this device": this build keeps records only while Lume is open (C74), so the
+text says they are searchable once saved.
+
+**No notification.** To-dos and Events declare `notifications` in
+`tool-specs.js`; neither schema has a reminder, repeat or alert field, and
+nothing here schedules or delivers one. Events' detail says which zone its
+time is on — the reader's (`Asia/Karachi`, `Europe/London`), never an offset.
+
+**Sun & Moon — computed, not fixture.** Worked out for the reader's city at
+the coordinates in `LumeSolar`'s table and on the reader's zone
+(`LumeSky`); its capability is `computedHere`, not sample. Where the table
+has no city, or this build's zone table has no zone (Tokyo), it says which
+and shows nothing on a guessed clock. No position is read from the device.
+
+- **Dawn and dusk are civil twilight** (the sun 6° below) — the reference
+  puts them an hour either side of sunrise and sunset. In Islamabad on 7
+  September: 5:20 and 6:52 against the reference's 4:45 and 7:27. Sunrise,
+  sunset, noon, day length, moon phase and illumination agree with the
+  reference's to the minute and the per cent.
+- **Polar day and night are said.** The prayer schedule's 06:00 / 18:00
+  fallback is not used: a day with no sunrise or sunset says so, and a night
+  that never reaches −6° has no dawn or dusk.
+- **The timeline's states** — the reference marks dawn done at every hour
+  and only noon as now. Past stops are done here, and the next is now.
+- **Accuracy.** Held within three minutes (four for twilight) of NOAA's
+  solar-calculator algorithm, run independently, in four cities and both
+  hemispheres; the moon's mean month is held to the named phase at five
+  published phases. A calculation, never a live observation.
+
+**Measured against the reference, and corrected** (the shared widgets the
+wave measured are C87):
+
+| widget | was | reference, measured |
+|---|---|---|
+| `LumeRecordRow` width | — | the reference's cards run past the column when a line does not fit: Notes 452, To-dos 353 in a 350 column. Flutter keeps the column and ellipsizes |
+| `LumeCheckRow` (new) | — | `.taskrow`: a 21-point box, 1.7 border, radius 7; 13 / 600 label, 11 / 500 meta 2 below, 12 / 700 value; 12 × 16 padding |
+| `LumeNoteTile` (new) | — | `.notecardx`: 168 wide, at least 116, 14 in; 13 / 700 title, three lines of 11 on 1.45, 10 / 600 meta |
+| bulk clear | — | `.cbulk`: 14 below the records, the button the column's width |
+| Notes' pinned strip | — | the reference's strip bleeds twice (a flush section and its own negative margin), so its first card touches the screen's edge; here it starts at the gutter |
+
+**Recorded differences, not corrected:**
+
+- **Two rows of filter chips.** To-dos' When and Priority rows are 8 apart;
+  their 44-point targets cannot both overhang the gap, so the Today section
+  sits 5 lower (declared in the report).
+- **Clearing an optional date or time.** A set due day, or an event's time,
+  offers Clear under the picker — a native input empties itself, a picker
+  cannot. The form's Save sits 44 lower (Events 40: Chrome's date and time
+  inputs are 73 tall, the pickers 71).
+- **Urdu and Arabic.** The reference has no Urdu or Arabic for these tools'
+  own strings and shows them in English; they are translated here (D12).
+  Bounds are compared in English for that reason.
+- **The FAB** floats 22 from the end and 96 from the bottom, as the
+  stylesheet places it (`position: fixed`) and as Calendar's does (C71); the
+  web capture shows it at the end of the scroll.
+- **Sample prices.** Shopping's seeded estimates are the reference's numbers
+  in the reader's currency ("Rs 4" for tomatoes), as Expenses' are (C74);
+  the tool says "Sample data" where the figures are (C85).
+
 ### C87 — Shared record widgets, measured by rollout wave 2
 
 Found while measuring wave 2 against the running reference; they are shared,

@@ -140,14 +140,37 @@ void main() {
     );
   });
 
-  test('only tools whose figures are the reader\'s own are sample-free', () {
+  test('only tools whose figures are the reader\'s own, or worked out on '
+      'the device, are sample-free', () {
     expect(
       <String>[
         for (final LumeFeature f in kLumeFeatures)
           if (!LumeDataCapability.fixture(f.id).isSample) f.id,
       ]..sort(),
-      <String>['age', 'compound', 'loan', 'stopwatch', 'tipsplit'],
+      <String>['age', 'compound', 'loan', 'stopwatch', 'sunmoon', 'tipsplit'],
     );
+    // Sun & Moon is the one computed tool: a calculation for the reader's
+    // city, never live and never stored (C86).
+    final LumeDataCapability sky = LumeDataCapability.fixture('sunmoon');
+    expect(sky.computedHere, isTrue);
+    expect(sky.isLive || sky.isDurable || sky.isEncrypted, isFalse);
+  });
+
+  testWidgets('a release says Sun & Moon is calculated for the reader\'s '
+      'place, and claims no sample, feed or storage', (
+    WidgetTester tester,
+  ) async {
+    final (AppLocalizations l, LumeFormatting f) = await strings(tester);
+    final LumeSourceClaim c = claim(
+      l,
+      f,
+      byId('sunmoon'),
+      LumeBuildProfile.release,
+    );
+    expect(c.label, l.freshComputed);
+    expect(c.discloses(l), isFalse);
+    // The place it was worked out for, never an "Updated …" time.
+    expect(c.updated, l.freshForCity('Islamabad'));
   });
 
   testWidgets('a release over this build claims nothing it cannot support, '

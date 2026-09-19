@@ -138,6 +138,9 @@ void main() {
         'unitHpa',
         // A shop's own name.
         'expensesTxMetro',
+        // Events' sample dentist: a practice's own name, written as it is on
+        // its door (C86).
+        'eventsSeedW3',
         // A sample address is a technical token.
         'authEmailPlaceholder',
         // An organisation's acronym. ISNA is ISNA in every language.

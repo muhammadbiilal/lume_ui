@@ -2521,6 +2521,43 @@
   "@emergencyYourInfo": {
     "description": "Reference key emergency.yourInfo"
   },
+  "eventsNoMatch": "No events match",
+  "@eventsNoMatch": {
+    "description": "Reference key events.noMatch"
+  },
+  "eventsNoMatchText": "Try a different word.",
+  "@eventsNoMatchText": {
+    "description": "Reference key events.noMatchText"
+  },
+  "eventsPeople": "{n, plural, =1{1 going} other{{n} going}}",
+  "@eventsPeople": {
+    "description": "Reference key events.people",
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
+  "eventsSeedE2": "Team lunch",
+  "@eventsSeedE2": {
+    "description": "Reference key events.e2 — a sample event"
+  },
+  "eventsSeedE3": "Dentist",
+  "@eventsSeedE3": {
+    "description": "Reference key events.e3"
+  },
+  "eventsSeedW2": "The corner place",
+  "@eventsSeedW2": {
+    "description": "Reference key events.w2"
+  },
+  "eventsSeedW3": "Smile Studio",
+  "@eventsSeedW3": {
+    "description": "Reference key events.w3 — a business name, kept as written"
+  },
+  "eventsUpcoming": "Upcoming",
+  "@eventsUpcoming": {
+    "description": "Reference key events.upcoming"
+  },
   "expensesAdd": "Add expense",
   "@expensesAdd": {
     "description": "Reference key expenses.add"
@@ -5325,6 +5362,78 @@
   "@newsTop": {
     "description": "Reference key news.top"
   },
+  "notesFolderIdeas": "Ideas",
+  "@notesFolderIdeas": {
+    "description": "Reference key notes.fIdeas"
+  },
+  "notesFolderPersonal": "Personal",
+  "@notesFolderPersonal": {
+    "description": "Reference key notes.fPersonal"
+  },
+  "notesFolderWork": "Work",
+  "@notesFolderWork": {
+    "description": "Reference key notes.fWork"
+  },
+  "notesFolders": "Folders",
+  "@notesFolders": {
+    "description": "Reference key notes.folders"
+  },
+  "notesNew": "New note",
+  "@notesNew": {
+    "description": "Reference key notes.new — the button that opens the form"
+  },
+  "notesNoMatch": "No notes match",
+  "@notesNoMatch": {
+    "description": "Reference key notes.noMatch"
+  },
+  "notesNoMatchText": "Try a different word, or a folder name.",
+  "@notesNoMatchText": {
+    "description": "Reference key notes.noMatchText"
+  },
+  "notesPinned": "Pinned",
+  "@notesPinned": {
+    "description": "Reference key notes.pinned"
+  },
+  "notesRecent": "Recent",
+  "@notesRecent": {
+    "description": "Reference key notes.recent"
+  },
+  "notesSeedN1": "Sprint retro points",
+  "@notesSeedN1": {
+    "description": "Reference key notes.n1 — a sample note"
+  },
+  "notesSeedN1x": "Ship the onboarding fix first, then revisit the empty states…",
+  "@notesSeedN1x": {
+    "description": "Reference key notes.n1x"
+  },
+  "notesSeedN2": "Reading list",
+  "@notesSeedN2": {
+    "description": "Reference key notes.n2"
+  },
+  "notesSeedN2x": "Three books recommended over dinner — start with the shorter one…",
+  "@notesSeedN2x": {
+    "description": "Reference key notes.n2x"
+  },
+  "notesSeedN3": "App idea",
+  "@notesSeedN3": {
+    "description": "Reference key notes.n3"
+  },
+  "notesSeedN3x": "A tool that quietly tracks what you actually reread…",
+  "@notesSeedN3x": {
+    "description": "Reference key notes.n3x"
+  },
+  "notesSeedN4": "Meeting notes",
+  "@notesSeedN4": {
+    "description": "Reference key notes.n4"
+  },
+  "notesSeedN4x": "Budget signed off, revisit headcount in November…",
+  "@notesSeedN4x": {
+    "description": "Reference key notes.n4x"
+  },
+  "notesTotal": "Notes",
+  "@notesTotal": {
+    "description": "Reference key notes.total"
+  },
   "notifPrefBadge": "Badge count",
   "@notifPrefBadge": {
     "description": "Reference: `n.pref.badge`."
@@ -6287,6 +6396,15 @@
   "@recCheckFields": {
     "description": "Reference key rec.checkFields"
   },
+  "recCleared": "{n, plural, =1{1 removed} other{{n} removed}}",
+  "@recCleared": {
+    "description": "Reference key rec.cleared, after a bulk clear",
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
   "recConfirmNote": "Changes are saved only after confirmation",
   "@recConfirmNote": {
     "description": "Reference key rec.confirmNote"
@@ -6465,6 +6583,10 @@
   "@recDocumentsPh": {
     "description": "Reference key rec.documents.ph"
   },
+  "recDone": "Done",
+  "@recDone": {
+    "description": "Reference key rec.done"
+  },
   "recEdit": "Edit {noun}",
   "@recEdit": {
     "description": "Reference key rec.edit",
@@ -6490,6 +6612,26 @@
         "type": "String"
       }
     }
+  },
+  "recEventsEmptyText": "Add an event and it will appear here.",
+  "@recEventsEmptyText": {
+    "description": "Reference key rec.events.emptyText, without its promise of the calendar and Today: neither build shows events there (C86)"
+  },
+  "recEventsEmptyTitle": "Nothing planned",
+  "@recEventsEmptyTitle": {
+    "description": "Reference key rec.events.emptyTitle"
+  },
+  "recEventsNoun": "event",
+  "@recEventsNoun": {
+    "description": "Reference key rec.events.noun"
+  },
+  "recEventsNounPlural": "events",
+  "@recEventsNounPlural": {
+    "description": "Reference key rec.events.nounPlural"
+  },
+  "recEventsPh": "What is happening?",
+  "@recEventsPh": {
+    "description": "Reference key rec.events.ph"
   },
   "recExpensesEmptyText": "Add a record to understand where your money goes and build useful summaries.",
   "@recExpensesEmptyText": {
@@ -6520,6 +6662,10 @@
       }
     }
   },
+  "recFieldAisle": "Aisle",
+  "@recFieldAisle": {
+    "description": "Reference key rec.f.aisle"
+  },
   "recFieldAmount": "Amount",
   "@recFieldAmount": {
     "description": "Reference key rec.f.amount"
@@ -6528,17 +6674,49 @@
   "@recFieldCategory": {
     "description": "Reference key rec.f.category"
   },
+  "recFieldCompleted": "Completed",
+  "@recFieldCompleted": {
+    "description": "Reference key rec.f.completed"
+  },
   "recFieldDate": "Date",
   "@recFieldDate": {
     "description": "Reference key rec.f.date"
+  },
+  "recFieldDue": "Due",
+  "@recFieldDue": {
+    "description": "Reference key rec.f.due"
+  },
+  "recFieldEstimate": "Estimate",
+  "@recFieldEstimate": {
+    "description": "Reference key rec.f.estimate"
   },
   "recFieldExpiry": "Expiry",
   "@recFieldExpiry": {
     "description": "Reference key rec.f.expiry"
   },
+  "recFieldFolder": "Folder",
+  "@recFieldFolder": {
+    "description": "Reference key rec.f.folder"
+  },
   "recFieldHolder": "Holder",
   "@recFieldHolder": {
     "description": "Reference key rec.f.holder"
+  },
+  "recFieldInBasket": "In basket",
+  "@recFieldInBasket": {
+    "description": "Reference key rec.f.inBasket"
+  },
+  "recFieldItem": "Item",
+  "@recFieldItem": {
+    "description": "Reference key rec.f.item"
+  },
+  "recFieldList": "List",
+  "@recFieldList": {
+    "description": "Reference key rec.f.list"
+  },
+  "recFieldNote": "Note",
+  "@recFieldNote": {
+    "description": "Reference key rec.f.note"
   },
   "recFieldNotes": "Notes",
   "@recFieldNotes": {
@@ -6548,6 +6726,22 @@
   "@recFieldPayment": {
     "description": "Reference key rec.f.payment"
   },
+  "recFieldPeople": "People",
+  "@recFieldPeople": {
+    "description": "Reference key rec.f.people"
+  },
+  "recFieldPinned": "Pinned",
+  "@recFieldPinned": {
+    "description": "Reference key rec.f.pinned"
+  },
+  "recFieldPriority": "Priority",
+  "@recFieldPriority": {
+    "description": "Reference key rec.f.priority"
+  },
+  "recFieldQuantity": "Quantity",
+  "@recFieldQuantity": {
+    "description": "Reference key rec.f.quantity"
+  },
   "recFieldReceipt": "Receipt",
   "@recFieldReceipt": {
     "description": "Reference key rec.f.receipt"
@@ -6556,9 +6750,25 @@
   "@recFieldReference": {
     "description": "Reference key rec.f.reference"
   },
+  "recFieldTask": "Task",
+  "@recFieldTask": {
+    "description": "Reference key rec.f.task"
+  },
+  "recFieldTime": "Time",
+  "@recFieldTime": {
+    "description": "Reference key rec.f.time"
+  },
+  "recFieldTimezone": "Timezone",
+  "@recFieldTimezone": {
+    "description": "Reference key rec.f.timezone"
+  },
   "recFieldTitle": "Title",
   "@recFieldTitle": {
     "description": "Reference key rec.f.title"
+  },
+  "recFieldWhere": "Where",
+  "@recFieldWhere": {
+    "description": "Reference key rec.f.where"
   },
   "recGone": "That record is no longer here",
   "@recGone": {
@@ -6593,9 +6803,22 @@
   "@recLoadErrorText": {
     "description": "Reference key rec.loadErrorText"
   },
+  "recModified": "Edited {when}",
+  "@recModified": {
+    "description": "Reference key rec.modified",
+    "placeholders": {
+      "when": {
+        "type": "String"
+      }
+    }
+  },
   "recNewRecord": "New record",
   "@recNewRecord": {
     "description": "Reference key rec.newRecord"
+  },
+  "recNoDue": "No due date",
+  "@recNoDue": {
+    "description": "Reference key rec.noDue"
   },
   "recNoMatch": "Nothing matches",
   "@recNoMatch": {
@@ -6604,6 +6827,10 @@
   "recNoMatchText": "Try a different word, or clear the filters.",
   "@recNoMatchText": {
     "description": "Reference key rec.noMatchText"
+  },
+  "recNoTime": "No time set",
+  "@recNoTime": {
+    "description": "An event saved without a time; the reference stores an empty string and shows a dash"
   },
   "recNone": "None",
   "@recNone": {
@@ -6616,6 +6843,26 @@
   "recNotAttached": "Not attached",
   "@recNotAttached": {
     "description": "Reference key rec.notAttached"
+  },
+  "recNotesEmptyText": "Notes are searchable the moment you save them.",
+  "@recNotesEmptyText": {
+    "description": "Reference key rec.notes.emptyText, without \"stay on this device\": this build keeps records only while Lume is open (C74, C86)"
+  },
+  "recNotesEmptyTitle": "Nothing written down yet",
+  "@recNotesEmptyTitle": {
+    "description": "Reference key rec.notes.emptyTitle"
+  },
+  "recNotesNoun": "note",
+  "@recNotesNoun": {
+    "description": "Reference key rec.notes.noun"
+  },
+  "recNotesNounPlural": "notes",
+  "@recNotesNounPlural": {
+    "description": "Reference key rec.notes.nounPlural"
+  },
+  "recNotesPh": "Give it a title",
+  "@recNotesPh": {
+    "description": "Reference key rec.notes.ph"
   },
   "recNothingToUndo": "Nothing left to undo",
   "@recNothingToUndo": {
@@ -6632,6 +6879,10 @@
   "recOfflineText": "Showing records saved on this device.",
   "@recOfflineText": {
     "description": "Reference key rec.offlineText"
+  },
+  "recOpen": "Open",
+  "@recOpen": {
+    "description": "Reference key rec.open"
   },
   "recOptional": "Optional",
   "@recOptional": {
@@ -6652,6 +6903,18 @@
   "recPayWallet": "Wallet",
   "@recPayWallet": {
     "description": "Reference key rec.pay.wallet"
+  },
+  "recPinned": "Pinned",
+  "@recPinned": {
+    "description": "Reference key rec.pinned — a badge"
+  },
+  "recPriorityHigh": "High",
+  "@recPriorityHigh": {
+    "description": "Reference key rec.priority.high"
+  },
+  "recPriorityNormal": "Normal",
+  "@recPriorityNormal": {
+    "description": "Reference key rec.priority.normal"
   },
   "recQueued": "Queued",
   "@recQueued": {
@@ -6763,6 +7026,72 @@
   "recSelectTitle": "Nothing selected",
   "@recSelectTitle": {
     "description": "Reference key rec.selectTitle"
+  },
+  "recShoppingClear": "{n, plural, =1{Clear 1 in the basket} other{Clear {n} in the basket}}",
+  "@recShoppingClear": {
+    "description": "Reference key rec.shopping.clear — the bulk clear of ticked items",
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
+  "recShoppingClearConfirm": "{n, plural, =1{1 item will be removed from the list. This cannot be undone.} other{{n} items will be removed from the list. This cannot be undone.}}",
+  "@recShoppingClearConfirm": {
+    "description": "Reference key rec.shopping.clearConfirm",
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
+  "recShoppingEmptyText": "Add what you need and tick it off as you shop.",
+  "@recShoppingEmptyText": {
+    "description": "Reference key rec.shopping.emptyText"
+  },
+  "recShoppingEmptyTitle": "Your list is empty",
+  "@recShoppingEmptyTitle": {
+    "description": "Reference key rec.shopping.emptyTitle"
+  },
+  "recShoppingNoun": "item",
+  "@recShoppingNoun": {
+    "description": "Reference key rec.shopping.noun"
+  },
+  "recShoppingNounPlural": "shopping list",
+  "@recShoppingNounPlural": {
+    "description": "Reference key rec.shopping.nounPlural"
+  },
+  "recShoppingPh": "What do you need?",
+  "@recShoppingPh": {
+    "description": "Reference key rec.shopping.ph"
+  },
+  "recShoppingQtyPh": "2 kg",
+  "@recShoppingQtyPh": {
+    "description": "Reference key rec.shopping.qtyPh"
+  },
+  "recToBuy": "To buy",
+  "@recToBuy": {
+    "description": "Reference key rec.toBuy"
+  },
+  "recTodosEmptyText": "Add a task and it will show up here.",
+  "@recTodosEmptyText": {
+    "description": "Reference key rec.todos.emptyText, without its promise of Today: neither build shows tasks there (C86)"
+  },
+  "recTodosEmptyTitle": "Nothing on your list",
+  "@recTodosEmptyTitle": {
+    "description": "Reference key rec.todos.emptyTitle"
+  },
+  "recTodosNoun": "task",
+  "@recTodosNoun": {
+    "description": "Reference key rec.todos.noun"
+  },
+  "recTodosNounPlural": "tasks",
+  "@recTodosNounPlural": {
+    "description": "Reference key rec.todos.nounPlural"
+  },
+  "recTodosPh": "What needs doing?",
+  "@recTodosPh": {
+    "description": "Reference key rec.todos.ph"
   },
   "recUndo": "Undo",
   "@recUndo": {
@@ -7134,6 +7463,72 @@
   "@shareUnavailable": {
     "description": "Said when the platform has no share sheet (D7). The reference has none"
   },
+  "shopAisleDairy": "Dairy",
+  "@shopAisleDairy": {
+    "description": "Reference key shop.gDairy"
+  },
+  "shopAisleHousehold": "Household",
+  "@shopAisleHousehold": {
+    "description": "Reference key shop.gHousehold"
+  },
+  "shopAisleProduce": "Produce",
+  "@shopAisleProduce": {
+    "description": "Reference key shop.gProduce"
+  },
+  "shopSeedI1": "Tomatoes",
+  "@shopSeedI1": {
+    "description": "Reference key shop.i1 — a sample item"
+  },
+  "shopSeedI2": "Milk",
+  "@shopSeedI2": {
+    "description": "Reference key shop.i2"
+  },
+  "shopSeedI3": "Yoghurt",
+  "@shopSeedI3": {
+    "description": "Reference key shop.i3"
+  },
+  "shopSeedI4": "Lemons",
+  "@shopSeedI4": {
+    "description": "Reference key shop.i4"
+  },
+  "shopSeedI5": "Washing powder",
+  "@shopSeedI5": {
+    "description": "Reference key shop.i5"
+  },
+  "shoppingClear": "Clear checked",
+  "@shoppingClear": {
+    "description": "Reference key shopping.clear"
+  },
+  "shoppingEstimated": "about {amount}",
+  "@shoppingEstimated": {
+    "description": "Reference key shopping.estimated",
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "shoppingList": "Still to get",
+  "@shoppingList": {
+    "description": "Reference key shopping.list"
+  },
+  "shoppingProgress": "Checked off",
+  "@shoppingProgress": {
+    "description": "Reference key shopping.progress"
+  },
+  "shoppingShare": "Share the list",
+  "@shoppingShare": {
+    "description": "Reference key shopping.share"
+  },
+  "shoppingShareSource": "Shopping list · {date}",
+  "@shoppingShareSource": {
+    "description": "The source line of a shared shopping list: the day it was shared",
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
   "slideMoneyCta": "See money",
   "@slideMoneyCta": {
     "description": "Reference key slide.money.cta"
@@ -7292,13 +7687,99 @@
       }
     }
   },
+  "sunDawn": "Dawn",
+  "@sunDawn": {
+    "description": "Reference key sun.dawn — here civil dawn, the sun 6° below the horizon (C86)"
+  },
+  "sunDawnNote": "First light",
+  "@sunDawnNote": {
+    "description": "Reference key sun.dawnNote"
+  },
   "sunDaylength": "Daylight",
   "@sunDaylength": {
     "description": "Reference key sun.daylength"
   },
+  "sunDusk": "Dusk",
+  "@sunDusk": {
+    "description": "Reference key sun.dusk — here civil dusk"
+  },
+  "sunDuskNote": "Last light",
+  "@sunDuskNote": {
+    "description": "Reference key sun.duskNote"
+  },
+  "sunIllumination": "Illuminated",
+  "@sunIllumination": {
+    "description": "Reference key sun.illumination"
+  },
   "sunMoon": "Moon phase",
   "@sunMoon": {
     "description": "Reference key sun.moon"
+  },
+  "sunNoCityText": "Sun and moon times are worked out from a city’s coordinates, and Lume has none for this one. Choose another city in Profile to see them.",
+  "@sunNoCityText": {
+    "description": "Sun & Moon: the text under the missing-city title"
+  },
+  "sunNoCityTitle": "No position for {city}",
+  "@sunNoCityTitle": {
+    "description": "Sun & Moon: the city has no coordinates in Lume’s table",
+    "placeholders": {
+      "city": {
+        "type": "String"
+      }
+    }
+  },
+  "sunNoTwilight": "Not dark enough tonight",
+  "@sunNoTwilight": {
+    "description": "Civil twilight lasts all night, so there is no dawn or dusk to show"
+  },
+  "sunNoZoneText": "Times can’t be shown on your local clock without its time zone, so none are shown.",
+  "@sunNoZoneText": {
+    "description": "Sun & Moon: the text under the missing-zone title"
+  },
+  "sunNoZoneTitle": "No clock for {zone}",
+  "@sunNoZoneTitle": {
+    "description": "Sun & Moon: the reader’s time zone is not in this build’s zone table",
+    "placeholders": {
+      "zone": {
+        "type": "String"
+      }
+    }
+  },
+  "sunNoon": "Solar noon",
+  "@sunNoon": {
+    "description": "Reference key sun.noon"
+  },
+  "sunPolarDay": "The sun stays up all day",
+  "@sunPolarDay": {
+    "description": "The sun does not set on this date at this latitude"
+  },
+  "sunPolarNight": "The sun stays below the horizon all day",
+  "@sunPolarNight": {
+    "description": "The sun does not rise on this date at this latitude"
+  },
+  "sunRange": "{a} to {b}",
+  "@sunRange": {
+    "description": "Reference key sun.range",
+    "placeholders": {
+      "a": {
+        "type": "String"
+      },
+      "b": {
+        "type": "String"
+      }
+    }
+  },
+  "sunShareSource": "{city} · {date}",
+  "@sunShareSource": {
+    "description": "The source line of a shared sun card",
+    "placeholders": {
+      "city": {
+        "type": "String"
+      },
+      "date": {
+        "type": "String"
+      }
+    }
   },
   "sunSunrise": "Sunrise",
   "@sunSunrise": {
@@ -7311,6 +7792,10 @@
   "sunTitle": "Sun & moon",
   "@sunTitle": {
     "description": "Reference key sun.title"
+  },
+  "sunToday": "Today",
+  "@sunToday": {
+    "description": "Reference key sun.today"
   },
   "surahAlKahf": "Al-Kahf",
   "@surahAlKahf": {
@@ -7714,6 +8199,100 @@
   "todayYourDay": "Your day",
   "@todayYourDay": {
     "description": "Reference: the agenda section"
+  },
+  "todosAdd": "Add a task",
+  "@todosAdd": {
+    "description": "Reference key todos.add — the button that opens the form"
+  },
+  "todosClear": "Nothing left",
+  "@todosClear": {
+    "description": "Reference key todos.clear"
+  },
+  "todosClearText": "No tasks match this filter.",
+  "@todosClearText": {
+    "description": "Reference key todos.clearText"
+  },
+  "todosDone7": "Done this week",
+  "@todosDone7": {
+    "description": "Reference key todos.done7 — tasks ticked in the last seven days"
+  },
+  "todosHigh": "High",
+  "@todosHigh": {
+    "description": "Reference key todos.high"
+  },
+  "todosListHome": "Home",
+  "@todosListHome": {
+    "description": "Reference key todos.listHome"
+  },
+  "todosListPersonal": "Personal",
+  "@todosListPersonal": {
+    "description": "Reference key todos.listPersonal"
+  },
+  "todosListWork": "Work",
+  "@todosListWork": {
+    "description": "Reference key todos.listWork"
+  },
+  "todosLists": "Lists",
+  "@todosLists": {
+    "description": "Reference key todos.lists"
+  },
+  "todosNormal": "Normal",
+  "@todosNormal": {
+    "description": "Reference key todos.normal"
+  },
+  "todosOnTrack": "Nothing overdue",
+  "@todosOnTrack": {
+    "description": "Reference key todos.onTrack"
+  },
+  "todosOpenN": "{n, plural, =1{1 open} other{{n} open}}",
+  "@todosOpenN": {
+    "description": "Reference: the count and todos.open composed; a plural here",
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
+  "todosOverdueN": "{n, plural, =1{1 overdue} other{{n} overdue}}",
+  "@todosOverdueN": {
+    "description": "Reference key todos.overdueN",
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
+  "todosPriority": "Priority",
+  "@todosPriority": {
+    "description": "Reference key todos.priority"
+  },
+  "todosSeedItem1": "Send the quarterly summary",
+  "@todosSeedItem1": {
+    "description": "Reference key todos.item1 — a sample task"
+  },
+  "todosSeedItem2": "Pick up the prescription",
+  "@todosSeedItem2": {
+    "description": "Reference key todos.item2"
+  },
+  "todosSeedItem3": "Review the design feedback",
+  "@todosSeedItem3": {
+    "description": "Reference key todos.item3"
+  },
+  "todosSeedItem4": "Book the car service",
+  "@todosSeedItem4": {
+    "description": "Reference key todos.item4"
+  },
+  "todosToday": "Today",
+  "@todosToday": {
+    "description": "Reference key todos.today"
+  },
+  "todosUpcoming": "Coming up",
+  "@todosUpcoming": {
+    "description": "Reference key todos.upcoming"
+  },
+  "todosWhen": "When",
+  "@todosWhen": {
+    "description": "Reference key todos.when"
   },
   "toolCategoryDaily": "Daily Life",
   "@toolCategoryDaily": {

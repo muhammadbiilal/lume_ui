@@ -75,17 +75,22 @@
    "age",
    "datecalc",
    "calendar",
+   "notes",
+   "todos",
+   "events",
    "hadith",
    "compound",
    "goldrates",
    "tax",
    "loan",
    "tipsplit",
+   "sunmoon",
    "weather",
    "flights",
    "news",
    "emergency",
    "qr",
+   "shopping",
    "recipes",
    "learning",
    "documents",
@@ -771,7 +776,7 @@
    "approvedComposition": null,
    "recordFamily": true,
    "module": "assets/js/tools/planning/notes.tool.js",
-   "flutter": "placeholder"
+   "flutter": "built"
   },
   {
    "id": "todos",
@@ -807,7 +812,7 @@
    "approvedComposition": null,
    "recordFamily": true,
    "module": "assets/js/tools/planning/todos.tool.js",
-   "flutter": "placeholder"
+   "flutter": "built"
   },
   {
    "id": "events",
@@ -842,7 +847,7 @@
    "approvedComposition": null,
    "recordFamily": true,
    "module": "assets/js/tools/planning/events.tool.js",
-   "flutter": "placeholder"
+   "flutter": "built"
   },
   {
    "id": "prayer",
@@ -2073,7 +2078,7 @@
    "approvedComposition": null,
    "recordFamily": false,
    "module": "assets/js/tools/daily/sunmoon.tool.js",
-   "flutter": "placeholder"
+   "flutter": "built"
   },
   {
    "id": "worldclock",
@@ -2727,7 +2732,7 @@
    "approvedComposition": null,
    "recordFamily": true,
    "module": "assets/js/tools/personal/shopping.tool.js",
-   "flutter": "placeholder"
+   "flutter": "built"
   },
   {
    "id": "birthdays",

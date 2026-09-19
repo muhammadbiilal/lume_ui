@@ -1953,6 +1953,38 @@ class AppLocalizationsEn extends AppLocalizations {
   String get emergencyYourInfo => 'Your information';
 
   @override
+  String get eventsNoMatch => 'No events match';
+
+  @override
+  String get eventsNoMatchText => 'Try a different word.';
+
+  @override
+  String eventsPeople(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n going',
+      one: '1 going',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get eventsSeedE2 => 'Team lunch';
+
+  @override
+  String get eventsSeedE3 => 'Dentist';
+
+  @override
+  String get eventsSeedW2 => 'The corner place';
+
+  @override
+  String get eventsSeedW3 => 'Smile Studio';
+
+  @override
+  String get eventsUpcoming => 'Upcoming';
+
+  @override
   String get expensesAdd => 'Add expense';
 
   @override
@@ -3911,6 +3943,64 @@ class AppLocalizationsEn extends AppLocalizations {
   String get newsTop => 'Top story';
 
   @override
+  String get notesFolderIdeas => 'Ideas';
+
+  @override
+  String get notesFolderPersonal => 'Personal';
+
+  @override
+  String get notesFolderWork => 'Work';
+
+  @override
+  String get notesFolders => 'Folders';
+
+  @override
+  String get notesNew => 'New note';
+
+  @override
+  String get notesNoMatch => 'No notes match';
+
+  @override
+  String get notesNoMatchText => 'Try a different word, or a folder name.';
+
+  @override
+  String get notesPinned => 'Pinned';
+
+  @override
+  String get notesRecent => 'Recent';
+
+  @override
+  String get notesSeedN1 => 'Sprint retro points';
+
+  @override
+  String get notesSeedN1x =>
+      'Ship the onboarding fix first, then revisit the empty states…';
+
+  @override
+  String get notesSeedN2 => 'Reading list';
+
+  @override
+  String get notesSeedN2x =>
+      'Three books recommended over dinner — start with the shorter one…';
+
+  @override
+  String get notesSeedN3 => 'App idea';
+
+  @override
+  String get notesSeedN3x =>
+      'A tool that quietly tracks what you actually reread…';
+
+  @override
+  String get notesSeedN4 => 'Meeting notes';
+
+  @override
+  String get notesSeedN4x =>
+      'Budget signed off, revisit headcount in November…';
+
+  @override
+  String get notesTotal => 'Notes';
+
+  @override
   String get notifPrefBadge => 'Badge count';
 
   @override
@@ -4613,6 +4703,17 @@ class AppLocalizationsEn extends AppLocalizations {
   String get recCheckFields => 'Check the highlighted fields';
 
   @override
+  String recCleared(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n removed',
+      one: '1 removed',
+    );
+    return '$_temp0';
+  }
+
+  @override
   String get recConfirmNote => 'Changes are saved only after confirmation';
 
   @override
@@ -4743,6 +4844,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get recDocumentsPh => 'Passport, licence, policy…';
 
   @override
+  String get recDone => 'Done';
+
+  @override
   String recEdit(String noun) {
     return 'Edit $noun';
   }
@@ -4757,6 +4861,21 @@ class AppLocalizationsEn extends AppLocalizations {
   String recErrRequired(String field) {
     return '$field is required';
   }
+
+  @override
+  String get recEventsEmptyText => 'Add an event and it will appear here.';
+
+  @override
+  String get recEventsEmptyTitle => 'Nothing planned';
+
+  @override
+  String get recEventsNoun => 'event';
+
+  @override
+  String get recEventsNounPlural => 'events';
+
+  @override
+  String get recEventsPh => 'What is happening?';
 
   @override
   String get recExpensesEmptyText =>
@@ -4780,19 +4899,46 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
+  String get recFieldAisle => 'Aisle';
+
+  @override
   String get recFieldAmount => 'Amount';
 
   @override
   String get recFieldCategory => 'Category';
 
   @override
+  String get recFieldCompleted => 'Completed';
+
+  @override
   String get recFieldDate => 'Date';
+
+  @override
+  String get recFieldDue => 'Due';
+
+  @override
+  String get recFieldEstimate => 'Estimate';
 
   @override
   String get recFieldExpiry => 'Expiry';
 
   @override
+  String get recFieldFolder => 'Folder';
+
+  @override
   String get recFieldHolder => 'Holder';
+
+  @override
+  String get recFieldInBasket => 'In basket';
+
+  @override
+  String get recFieldItem => 'Item';
+
+  @override
+  String get recFieldList => 'List';
+
+  @override
+  String get recFieldNote => 'Note';
 
   @override
   String get recFieldNotes => 'Notes';
@@ -4801,13 +4947,37 @@ class AppLocalizationsEn extends AppLocalizations {
   String get recFieldPayment => 'Payment';
 
   @override
+  String get recFieldPeople => 'People';
+
+  @override
+  String get recFieldPinned => 'Pinned';
+
+  @override
+  String get recFieldPriority => 'Priority';
+
+  @override
+  String get recFieldQuantity => 'Quantity';
+
+  @override
   String get recFieldReceipt => 'Receipt';
 
   @override
   String get recFieldReference => 'Reference';
 
   @override
+  String get recFieldTask => 'Task';
+
+  @override
+  String get recFieldTime => 'Time';
+
+  @override
+  String get recFieldTimezone => 'Timezone';
+
+  @override
   String get recFieldTitle => 'Title';
+
+  @override
+  String get recFieldWhere => 'Where';
 
   @override
   String get recGone => 'That record is no longer here';
@@ -4836,13 +5006,24 @@ class AppLocalizationsEn extends AppLocalizations {
       'Check your connection. Your saved data is still safe on this device.';
 
   @override
+  String recModified(String when) {
+    return 'Edited $when';
+  }
+
+  @override
   String get recNewRecord => 'New record';
+
+  @override
+  String get recNoDue => 'No due date';
 
   @override
   String get recNoMatch => 'Nothing matches';
 
   @override
   String get recNoMatchText => 'Try a different word, or clear the filters.';
+
+  @override
+  String get recNoTime => 'No time set';
 
   @override
   String get recNone => 'None';
@@ -4852,6 +5033,22 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get recNotAttached => 'Not attached';
+
+  @override
+  String get recNotesEmptyText =>
+      'Notes are searchable the moment you save them.';
+
+  @override
+  String get recNotesEmptyTitle => 'Nothing written down yet';
+
+  @override
+  String get recNotesNoun => 'note';
+
+  @override
+  String get recNotesNounPlural => 'notes';
+
+  @override
+  String get recNotesPh => 'Give it a title';
 
   @override
   String get recNothingToUndo => 'Nothing left to undo';
@@ -4867,6 +5064,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get recOfflineText => 'Showing records saved on this device.';
 
   @override
+  String get recOpen => 'Open';
+
+  @override
   String get recOptional => 'Optional';
 
   @override
@@ -4880,6 +5080,15 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get recPayWallet => 'Wallet';
+
+  @override
+  String get recPinned => 'Pinned';
+
+  @override
+  String get recPriorityHigh => 'High';
+
+  @override
+  String get recPriorityNormal => 'Normal';
 
   @override
   String get recQueued => 'Queued';
@@ -4958,6 +5167,65 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get recSelectTitle => 'Nothing selected';
+
+  @override
+  String recShoppingClear(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: 'Clear $n in the basket',
+      one: 'Clear 1 in the basket',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String recShoppingClearConfirm(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n items will be removed from the list. This cannot be undone.',
+      one: '1 item will be removed from the list. This cannot be undone.',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get recShoppingEmptyText =>
+      'Add what you need and tick it off as you shop.';
+
+  @override
+  String get recShoppingEmptyTitle => 'Your list is empty';
+
+  @override
+  String get recShoppingNoun => 'item';
+
+  @override
+  String get recShoppingNounPlural => 'shopping list';
+
+  @override
+  String get recShoppingPh => 'What do you need?';
+
+  @override
+  String get recShoppingQtyPh => '2 kg';
+
+  @override
+  String get recToBuy => 'To buy';
+
+  @override
+  String get recTodosEmptyText => 'Add a task and it will show up here.';
+
+  @override
+  String get recTodosEmptyTitle => 'Nothing on your list';
+
+  @override
+  String get recTodosNoun => 'task';
+
+  @override
+  String get recTodosNounPlural => 'tasks';
+
+  @override
+  String get recTodosPh => 'What needs doing?';
 
   @override
   String get recUndo => 'Undo';
@@ -5249,6 +5517,52 @@ class AppLocalizationsEn extends AppLocalizations {
   String get shareUnavailable => 'Sharing isn’t available on this device';
 
   @override
+  String get shopAisleDairy => 'Dairy';
+
+  @override
+  String get shopAisleHousehold => 'Household';
+
+  @override
+  String get shopAisleProduce => 'Produce';
+
+  @override
+  String get shopSeedI1 => 'Tomatoes';
+
+  @override
+  String get shopSeedI2 => 'Milk';
+
+  @override
+  String get shopSeedI3 => 'Yoghurt';
+
+  @override
+  String get shopSeedI4 => 'Lemons';
+
+  @override
+  String get shopSeedI5 => 'Washing powder';
+
+  @override
+  String get shoppingClear => 'Clear checked';
+
+  @override
+  String shoppingEstimated(String amount) {
+    return 'about $amount';
+  }
+
+  @override
+  String get shoppingList => 'Still to get';
+
+  @override
+  String get shoppingProgress => 'Checked off';
+
+  @override
+  String get shoppingShare => 'Share the list';
+
+  @override
+  String shoppingShareSource(String date) {
+    return 'Shopping list · $date';
+  }
+
+  @override
   String get slideMoneyCta => 'See money';
 
   @override
@@ -5358,10 +5672,65 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
+  String get sunDawn => 'Dawn';
+
+  @override
+  String get sunDawnNote => 'First light';
+
+  @override
   String get sunDaylength => 'Daylight';
 
   @override
+  String get sunDusk => 'Dusk';
+
+  @override
+  String get sunDuskNote => 'Last light';
+
+  @override
+  String get sunIllumination => 'Illuminated';
+
+  @override
   String get sunMoon => 'Moon phase';
+
+  @override
+  String get sunNoCityText =>
+      'Sun and moon times are worked out from a city’s coordinates, and Lume has none for this one. Choose another city in Profile to see them.';
+
+  @override
+  String sunNoCityTitle(String city) {
+    return 'No position for $city';
+  }
+
+  @override
+  String get sunNoTwilight => 'Not dark enough tonight';
+
+  @override
+  String get sunNoZoneText =>
+      'Times can’t be shown on your local clock without its time zone, so none are shown.';
+
+  @override
+  String sunNoZoneTitle(String zone) {
+    return 'No clock for $zone';
+  }
+
+  @override
+  String get sunNoon => 'Solar noon';
+
+  @override
+  String get sunPolarDay => 'The sun stays up all day';
+
+  @override
+  String get sunPolarNight => 'The sun stays below the horizon all day';
+
+  @override
+  String sunRange(String a, String b) {
+    return '$a to $b';
+  }
+
+  @override
+  String sunShareSource(String city, String date) {
+    return '$city · $date';
+  }
 
   @override
   String get sunSunrise => 'Sunrise';
@@ -5371,6 +5740,9 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get sunTitle => 'Sun & moon';
+
+  @override
+  String get sunToday => 'Today';
 
   @override
   String get surahAlKahf => 'Al-Kahf';
@@ -5655,6 +6027,85 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get todayYourDay => 'Your day';
+
+  @override
+  String get todosAdd => 'Add a task';
+
+  @override
+  String get todosClear => 'Nothing left';
+
+  @override
+  String get todosClearText => 'No tasks match this filter.';
+
+  @override
+  String get todosDone7 => 'Done this week';
+
+  @override
+  String get todosHigh => 'High';
+
+  @override
+  String get todosListHome => 'Home';
+
+  @override
+  String get todosListPersonal => 'Personal';
+
+  @override
+  String get todosListWork => 'Work';
+
+  @override
+  String get todosLists => 'Lists';
+
+  @override
+  String get todosNormal => 'Normal';
+
+  @override
+  String get todosOnTrack => 'Nothing overdue';
+
+  @override
+  String todosOpenN(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n open',
+      one: '1 open',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String todosOverdueN(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n overdue',
+      one: '1 overdue',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get todosPriority => 'Priority';
+
+  @override
+  String get todosSeedItem1 => 'Send the quarterly summary';
+
+  @override
+  String get todosSeedItem2 => 'Pick up the prescription';
+
+  @override
+  String get todosSeedItem3 => 'Review the design feedback';
+
+  @override
+  String get todosSeedItem4 => 'Book the car service';
+
+  @override
+  String get todosToday => 'Today';
+
+  @override
+  String get todosUpcoming => 'Coming up';
+
+  @override
+  String get todosWhen => 'When';
 
   @override
   String get toolCategoryDaily => 'Daily Life';

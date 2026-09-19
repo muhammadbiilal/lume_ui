@@ -3514,6 +3514,54 @@ abstract class AppLocalizations {
   /// **'Your information'**
   String get emergencyYourInfo;
 
+  /// Reference key events.noMatch
+  ///
+  /// In en, this message translates to:
+  /// **'No events match'**
+  String get eventsNoMatch;
+
+  /// Reference key events.noMatchText
+  ///
+  /// In en, this message translates to:
+  /// **'Try a different word.'**
+  String get eventsNoMatchText;
+
+  /// Reference key events.people
+  ///
+  /// In en, this message translates to:
+  /// **'{n, plural, =1{1 going} other{{n} going}}'**
+  String eventsPeople(int n);
+
+  /// Reference key events.e2 — a sample event
+  ///
+  /// In en, this message translates to:
+  /// **'Team lunch'**
+  String get eventsSeedE2;
+
+  /// Reference key events.e3
+  ///
+  /// In en, this message translates to:
+  /// **'Dentist'**
+  String get eventsSeedE3;
+
+  /// Reference key events.w2
+  ///
+  /// In en, this message translates to:
+  /// **'The corner place'**
+  String get eventsSeedW2;
+
+  /// Reference key events.w3 — a business name, kept as written
+  ///
+  /// In en, this message translates to:
+  /// **'Smile Studio'**
+  String get eventsSeedW3;
+
+  /// Reference key events.upcoming
+  ///
+  /// In en, this message translates to:
+  /// **'Upcoming'**
+  String get eventsUpcoming;
+
   /// Reference key expenses.add
   ///
   /// In en, this message translates to:
@@ -6886,6 +6934,114 @@ abstract class AppLocalizations {
   /// **'Top story'**
   String get newsTop;
 
+  /// Reference key notes.fIdeas
+  ///
+  /// In en, this message translates to:
+  /// **'Ideas'**
+  String get notesFolderIdeas;
+
+  /// Reference key notes.fPersonal
+  ///
+  /// In en, this message translates to:
+  /// **'Personal'**
+  String get notesFolderPersonal;
+
+  /// Reference key notes.fWork
+  ///
+  /// In en, this message translates to:
+  /// **'Work'**
+  String get notesFolderWork;
+
+  /// Reference key notes.folders
+  ///
+  /// In en, this message translates to:
+  /// **'Folders'**
+  String get notesFolders;
+
+  /// Reference key notes.new — the button that opens the form
+  ///
+  /// In en, this message translates to:
+  /// **'New note'**
+  String get notesNew;
+
+  /// Reference key notes.noMatch
+  ///
+  /// In en, this message translates to:
+  /// **'No notes match'**
+  String get notesNoMatch;
+
+  /// Reference key notes.noMatchText
+  ///
+  /// In en, this message translates to:
+  /// **'Try a different word, or a folder name.'**
+  String get notesNoMatchText;
+
+  /// Reference key notes.pinned
+  ///
+  /// In en, this message translates to:
+  /// **'Pinned'**
+  String get notesPinned;
+
+  /// Reference key notes.recent
+  ///
+  /// In en, this message translates to:
+  /// **'Recent'**
+  String get notesRecent;
+
+  /// Reference key notes.n1 — a sample note
+  ///
+  /// In en, this message translates to:
+  /// **'Sprint retro points'**
+  String get notesSeedN1;
+
+  /// Reference key notes.n1x
+  ///
+  /// In en, this message translates to:
+  /// **'Ship the onboarding fix first, then revisit the empty states…'**
+  String get notesSeedN1x;
+
+  /// Reference key notes.n2
+  ///
+  /// In en, this message translates to:
+  /// **'Reading list'**
+  String get notesSeedN2;
+
+  /// Reference key notes.n2x
+  ///
+  /// In en, this message translates to:
+  /// **'Three books recommended over dinner — start with the shorter one…'**
+  String get notesSeedN2x;
+
+  /// Reference key notes.n3
+  ///
+  /// In en, this message translates to:
+  /// **'App idea'**
+  String get notesSeedN3;
+
+  /// Reference key notes.n3x
+  ///
+  /// In en, this message translates to:
+  /// **'A tool that quietly tracks what you actually reread…'**
+  String get notesSeedN3x;
+
+  /// Reference key notes.n4
+  ///
+  /// In en, this message translates to:
+  /// **'Meeting notes'**
+  String get notesSeedN4;
+
+  /// Reference key notes.n4x
+  ///
+  /// In en, this message translates to:
+  /// **'Budget signed off, revisit headcount in November…'**
+  String get notesSeedN4x;
+
+  /// Reference key notes.total
+  ///
+  /// In en, this message translates to:
+  /// **'Notes'**
+  String get notesTotal;
+
   /// Reference: `n.pref.badge`.
   ///
   /// In en, this message translates to:
@@ -8164,6 +8320,12 @@ abstract class AppLocalizations {
   /// **'Check the highlighted fields'**
   String get recCheckFields;
 
+  /// Reference key rec.cleared, after a bulk clear
+  ///
+  /// In en, this message translates to:
+  /// **'{n, plural, =1{1 removed} other{{n} removed}}'**
+  String recCleared(int n);
+
   /// Reference key rec.confirmNote
   ///
   /// In en, this message translates to:
@@ -8356,6 +8518,12 @@ abstract class AppLocalizations {
   /// **'Passport, licence, policy…'**
   String get recDocumentsPh;
 
+  /// Reference key rec.done
+  ///
+  /// In en, this message translates to:
+  /// **'Done'**
+  String get recDone;
+
   /// Reference key rec.edit
   ///
   /// In en, this message translates to:
@@ -8379,6 +8547,36 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'{field} is required'**
   String recErrRequired(String field);
+
+  /// Reference key rec.events.emptyText, without its promise of the calendar and Today: neither build shows events there (C86)
+  ///
+  /// In en, this message translates to:
+  /// **'Add an event and it will appear here.'**
+  String get recEventsEmptyText;
+
+  /// Reference key rec.events.emptyTitle
+  ///
+  /// In en, this message translates to:
+  /// **'Nothing planned'**
+  String get recEventsEmptyTitle;
+
+  /// Reference key rec.events.noun
+  ///
+  /// In en, this message translates to:
+  /// **'event'**
+  String get recEventsNoun;
+
+  /// Reference key rec.events.nounPlural
+  ///
+  /// In en, this message translates to:
+  /// **'events'**
+  String get recEventsNounPlural;
+
+  /// Reference key rec.events.ph
+  ///
+  /// In en, this message translates to:
+  /// **'What is happening?'**
+  String get recEventsPh;
 
   /// Reference key rec.expenses.emptyText
   ///
@@ -8416,6 +8614,12 @@ abstract class AppLocalizations {
   /// **'Expires {date}'**
   String recExpiresOn(String date);
 
+  /// Reference key rec.f.aisle
+  ///
+  /// In en, this message translates to:
+  /// **'Aisle'**
+  String get recFieldAisle;
+
   /// Reference key rec.f.amount
   ///
   /// In en, this message translates to:
@@ -8428,11 +8632,29 @@ abstract class AppLocalizations {
   /// **'Category'**
   String get recFieldCategory;
 
+  /// Reference key rec.f.completed
+  ///
+  /// In en, this message translates to:
+  /// **'Completed'**
+  String get recFieldCompleted;
+
   /// Reference key rec.f.date
   ///
   /// In en, this message translates to:
   /// **'Date'**
   String get recFieldDate;
+
+  /// Reference key rec.f.due
+  ///
+  /// In en, this message translates to:
+  /// **'Due'**
+  String get recFieldDue;
+
+  /// Reference key rec.f.estimate
+  ///
+  /// In en, this message translates to:
+  /// **'Estimate'**
+  String get recFieldEstimate;
 
   /// Reference key rec.f.expiry
   ///
@@ -8440,11 +8662,41 @@ abstract class AppLocalizations {
   /// **'Expiry'**
   String get recFieldExpiry;
 
+  /// Reference key rec.f.folder
+  ///
+  /// In en, this message translates to:
+  /// **'Folder'**
+  String get recFieldFolder;
+
   /// Reference key rec.f.holder
   ///
   /// In en, this message translates to:
   /// **'Holder'**
   String get recFieldHolder;
+
+  /// Reference key rec.f.inBasket
+  ///
+  /// In en, this message translates to:
+  /// **'In basket'**
+  String get recFieldInBasket;
+
+  /// Reference key rec.f.item
+  ///
+  /// In en, this message translates to:
+  /// **'Item'**
+  String get recFieldItem;
+
+  /// Reference key rec.f.list
+  ///
+  /// In en, this message translates to:
+  /// **'List'**
+  String get recFieldList;
+
+  /// Reference key rec.f.note
+  ///
+  /// In en, this message translates to:
+  /// **'Note'**
+  String get recFieldNote;
 
   /// Reference key rec.f.notes
   ///
@@ -8458,6 +8710,30 @@ abstract class AppLocalizations {
   /// **'Payment'**
   String get recFieldPayment;
 
+  /// Reference key rec.f.people
+  ///
+  /// In en, this message translates to:
+  /// **'People'**
+  String get recFieldPeople;
+
+  /// Reference key rec.f.pinned
+  ///
+  /// In en, this message translates to:
+  /// **'Pinned'**
+  String get recFieldPinned;
+
+  /// Reference key rec.f.priority
+  ///
+  /// In en, this message translates to:
+  /// **'Priority'**
+  String get recFieldPriority;
+
+  /// Reference key rec.f.quantity
+  ///
+  /// In en, this message translates to:
+  /// **'Quantity'**
+  String get recFieldQuantity;
+
   /// Reference key rec.f.receipt
   ///
   /// In en, this message translates to:
@@ -8470,11 +8746,35 @@ abstract class AppLocalizations {
   /// **'Reference'**
   String get recFieldReference;
 
+  /// Reference key rec.f.task
+  ///
+  /// In en, this message translates to:
+  /// **'Task'**
+  String get recFieldTask;
+
+  /// Reference key rec.f.time
+  ///
+  /// In en, this message translates to:
+  /// **'Time'**
+  String get recFieldTime;
+
+  /// Reference key rec.f.timezone
+  ///
+  /// In en, this message translates to:
+  /// **'Timezone'**
+  String get recFieldTimezone;
+
   /// Reference key rec.f.title
   ///
   /// In en, this message translates to:
   /// **'Title'**
   String get recFieldTitle;
+
+  /// Reference key rec.f.where
+  ///
+  /// In en, this message translates to:
+  /// **'Where'**
+  String get recFieldWhere;
 
   /// Reference key rec.gone
   ///
@@ -8518,11 +8818,23 @@ abstract class AppLocalizations {
   /// **'Check your connection. Your saved data is still safe on this device.'**
   String get recLoadErrorText;
 
+  /// Reference key rec.modified
+  ///
+  /// In en, this message translates to:
+  /// **'Edited {when}'**
+  String recModified(String when);
+
   /// Reference key rec.newRecord
   ///
   /// In en, this message translates to:
   /// **'New record'**
   String get recNewRecord;
+
+  /// Reference key rec.noDue
+  ///
+  /// In en, this message translates to:
+  /// **'No due date'**
+  String get recNoDue;
 
   /// Reference key rec.noMatch
   ///
@@ -8535,6 +8847,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Try a different word, or clear the filters.'**
   String get recNoMatchText;
+
+  /// An event saved without a time; the reference stores an empty string and shows a dash
+  ///
+  /// In en, this message translates to:
+  /// **'No time set'**
+  String get recNoTime;
 
   /// Reference key rec.none
   ///
@@ -8553,6 +8871,36 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Not attached'**
   String get recNotAttached;
+
+  /// Reference key rec.notes.emptyText, without "stay on this device": this build keeps records only while Lume is open (C74, C86)
+  ///
+  /// In en, this message translates to:
+  /// **'Notes are searchable the moment you save them.'**
+  String get recNotesEmptyText;
+
+  /// Reference key rec.notes.emptyTitle
+  ///
+  /// In en, this message translates to:
+  /// **'Nothing written down yet'**
+  String get recNotesEmptyTitle;
+
+  /// Reference key rec.notes.noun
+  ///
+  /// In en, this message translates to:
+  /// **'note'**
+  String get recNotesNoun;
+
+  /// Reference key rec.notes.nounPlural
+  ///
+  /// In en, this message translates to:
+  /// **'notes'**
+  String get recNotesNounPlural;
+
+  /// Reference key rec.notes.ph
+  ///
+  /// In en, this message translates to:
+  /// **'Give it a title'**
+  String get recNotesPh;
 
   /// Reference key rec.nothingToUndo
   ///
@@ -8577,6 +8925,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Showing records saved on this device.'**
   String get recOfflineText;
+
+  /// Reference key rec.open
+  ///
+  /// In en, this message translates to:
+  /// **'Open'**
+  String get recOpen;
 
   /// Reference key rec.optional
   ///
@@ -8607,6 +8961,24 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Wallet'**
   String get recPayWallet;
+
+  /// Reference key rec.pinned — a badge
+  ///
+  /// In en, this message translates to:
+  /// **'Pinned'**
+  String get recPinned;
+
+  /// Reference key rec.priority.high
+  ///
+  /// In en, this message translates to:
+  /// **'High'**
+  String get recPriorityHigh;
+
+  /// Reference key rec.priority.normal
+  ///
+  /// In en, this message translates to:
+  /// **'Normal'**
+  String get recPriorityNormal;
 
   /// Reference key rec.queued
   ///
@@ -8751,6 +9123,90 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Nothing selected'**
   String get recSelectTitle;
+
+  /// Reference key rec.shopping.clear — the bulk clear of ticked items
+  ///
+  /// In en, this message translates to:
+  /// **'{n, plural, =1{Clear 1 in the basket} other{Clear {n} in the basket}}'**
+  String recShoppingClear(int n);
+
+  /// Reference key rec.shopping.clearConfirm
+  ///
+  /// In en, this message translates to:
+  /// **'{n, plural, =1{1 item will be removed from the list. This cannot be undone.} other{{n} items will be removed from the list. This cannot be undone.}}'**
+  String recShoppingClearConfirm(int n);
+
+  /// Reference key rec.shopping.emptyText
+  ///
+  /// In en, this message translates to:
+  /// **'Add what you need and tick it off as you shop.'**
+  String get recShoppingEmptyText;
+
+  /// Reference key rec.shopping.emptyTitle
+  ///
+  /// In en, this message translates to:
+  /// **'Your list is empty'**
+  String get recShoppingEmptyTitle;
+
+  /// Reference key rec.shopping.noun
+  ///
+  /// In en, this message translates to:
+  /// **'item'**
+  String get recShoppingNoun;
+
+  /// Reference key rec.shopping.nounPlural
+  ///
+  /// In en, this message translates to:
+  /// **'shopping list'**
+  String get recShoppingNounPlural;
+
+  /// Reference key rec.shopping.ph
+  ///
+  /// In en, this message translates to:
+  /// **'What do you need?'**
+  String get recShoppingPh;
+
+  /// Reference key rec.shopping.qtyPh
+  ///
+  /// In en, this message translates to:
+  /// **'2 kg'**
+  String get recShoppingQtyPh;
+
+  /// Reference key rec.toBuy
+  ///
+  /// In en, this message translates to:
+  /// **'To buy'**
+  String get recToBuy;
+
+  /// Reference key rec.todos.emptyText, without its promise of Today: neither build shows tasks there (C86)
+  ///
+  /// In en, this message translates to:
+  /// **'Add a task and it will show up here.'**
+  String get recTodosEmptyText;
+
+  /// Reference key rec.todos.emptyTitle
+  ///
+  /// In en, this message translates to:
+  /// **'Nothing on your list'**
+  String get recTodosEmptyTitle;
+
+  /// Reference key rec.todos.noun
+  ///
+  /// In en, this message translates to:
+  /// **'task'**
+  String get recTodosNoun;
+
+  /// Reference key rec.todos.nounPlural
+  ///
+  /// In en, this message translates to:
+  /// **'tasks'**
+  String get recTodosNounPlural;
+
+  /// Reference key rec.todos.ph
+  ///
+  /// In en, this message translates to:
+  /// **'What needs doing?'**
+  String get recTodosPh;
 
   /// Reference key rec.undo
   ///
@@ -9232,6 +9688,90 @@ abstract class AppLocalizations {
   /// **'Sharing isn’t available on this device'**
   String get shareUnavailable;
 
+  /// Reference key shop.gDairy
+  ///
+  /// In en, this message translates to:
+  /// **'Dairy'**
+  String get shopAisleDairy;
+
+  /// Reference key shop.gHousehold
+  ///
+  /// In en, this message translates to:
+  /// **'Household'**
+  String get shopAisleHousehold;
+
+  /// Reference key shop.gProduce
+  ///
+  /// In en, this message translates to:
+  /// **'Produce'**
+  String get shopAisleProduce;
+
+  /// Reference key shop.i1 — a sample item
+  ///
+  /// In en, this message translates to:
+  /// **'Tomatoes'**
+  String get shopSeedI1;
+
+  /// Reference key shop.i2
+  ///
+  /// In en, this message translates to:
+  /// **'Milk'**
+  String get shopSeedI2;
+
+  /// Reference key shop.i3
+  ///
+  /// In en, this message translates to:
+  /// **'Yoghurt'**
+  String get shopSeedI3;
+
+  /// Reference key shop.i4
+  ///
+  /// In en, this message translates to:
+  /// **'Lemons'**
+  String get shopSeedI4;
+
+  /// Reference key shop.i5
+  ///
+  /// In en, this message translates to:
+  /// **'Washing powder'**
+  String get shopSeedI5;
+
+  /// Reference key shopping.clear
+  ///
+  /// In en, this message translates to:
+  /// **'Clear checked'**
+  String get shoppingClear;
+
+  /// Reference key shopping.estimated
+  ///
+  /// In en, this message translates to:
+  /// **'about {amount}'**
+  String shoppingEstimated(String amount);
+
+  /// Reference key shopping.list
+  ///
+  /// In en, this message translates to:
+  /// **'Still to get'**
+  String get shoppingList;
+
+  /// Reference key shopping.progress
+  ///
+  /// In en, this message translates to:
+  /// **'Checked off'**
+  String get shoppingProgress;
+
+  /// Reference key shopping.share
+  ///
+  /// In en, this message translates to:
+  /// **'Share the list'**
+  String get shoppingShare;
+
+  /// The source line of a shared shopping list: the day it was shared
+  ///
+  /// In en, this message translates to:
+  /// **'Shopping list · {date}'**
+  String shoppingShareSource(String date);
+
   /// Reference key slide.money.cta
   ///
   /// In en, this message translates to:
@@ -9430,17 +9970,107 @@ abstract class AppLocalizations {
   /// **'renews {date}'**
   String subsRenews(String date);
 
+  /// Reference key sun.dawn — here civil dawn, the sun 6° below the horizon (C86)
+  ///
+  /// In en, this message translates to:
+  /// **'Dawn'**
+  String get sunDawn;
+
+  /// Reference key sun.dawnNote
+  ///
+  /// In en, this message translates to:
+  /// **'First light'**
+  String get sunDawnNote;
+
   /// Reference key sun.daylength
   ///
   /// In en, this message translates to:
   /// **'Daylight'**
   String get sunDaylength;
 
+  /// Reference key sun.dusk — here civil dusk
+  ///
+  /// In en, this message translates to:
+  /// **'Dusk'**
+  String get sunDusk;
+
+  /// Reference key sun.duskNote
+  ///
+  /// In en, this message translates to:
+  /// **'Last light'**
+  String get sunDuskNote;
+
+  /// Reference key sun.illumination
+  ///
+  /// In en, this message translates to:
+  /// **'Illuminated'**
+  String get sunIllumination;
+
   /// Reference key sun.moon
   ///
   /// In en, this message translates to:
   /// **'Moon phase'**
   String get sunMoon;
+
+  /// Sun & Moon: the text under the missing-city title
+  ///
+  /// In en, this message translates to:
+  /// **'Sun and moon times are worked out from a city’s coordinates, and Lume has none for this one. Choose another city in Profile to see them.'**
+  String get sunNoCityText;
+
+  /// Sun & Moon: the city has no coordinates in Lume’s table
+  ///
+  /// In en, this message translates to:
+  /// **'No position for {city}'**
+  String sunNoCityTitle(String city);
+
+  /// Civil twilight lasts all night, so there is no dawn or dusk to show
+  ///
+  /// In en, this message translates to:
+  /// **'Not dark enough tonight'**
+  String get sunNoTwilight;
+
+  /// Sun & Moon: the text under the missing-zone title
+  ///
+  /// In en, this message translates to:
+  /// **'Times can’t be shown on your local clock without its time zone, so none are shown.'**
+  String get sunNoZoneText;
+
+  /// Sun & Moon: the reader’s time zone is not in this build’s zone table
+  ///
+  /// In en, this message translates to:
+  /// **'No clock for {zone}'**
+  String sunNoZoneTitle(String zone);
+
+  /// Reference key sun.noon
+  ///
+  /// In en, this message translates to:
+  /// **'Solar noon'**
+  String get sunNoon;
+
+  /// The sun does not set on this date at this latitude
+  ///
+  /// In en, this message translates to:
+  /// **'The sun stays up all day'**
+  String get sunPolarDay;
+
+  /// The sun does not rise on this date at this latitude
+  ///
+  /// In en, this message translates to:
+  /// **'The sun stays below the horizon all day'**
+  String get sunPolarNight;
+
+  /// Reference key sun.range
+  ///
+  /// In en, this message translates to:
+  /// **'{a} to {b}'**
+  String sunRange(String a, String b);
+
+  /// The source line of a shared sun card
+  ///
+  /// In en, this message translates to:
+  /// **'{city} · {date}'**
+  String sunShareSource(String city, String date);
 
   /// Reference key sun.sunrise
   ///
@@ -9459,6 +10089,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Sun & moon'**
   String get sunTitle;
+
+  /// Reference key sun.today
+  ///
+  /// In en, this message translates to:
+  /// **'Today'**
+  String get sunToday;
 
   /// The surah the reading fixture is open at
   ///
@@ -9969,6 +10605,132 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Your day'**
   String get todayYourDay;
+
+  /// Reference key todos.add — the button that opens the form
+  ///
+  /// In en, this message translates to:
+  /// **'Add a task'**
+  String get todosAdd;
+
+  /// Reference key todos.clear
+  ///
+  /// In en, this message translates to:
+  /// **'Nothing left'**
+  String get todosClear;
+
+  /// Reference key todos.clearText
+  ///
+  /// In en, this message translates to:
+  /// **'No tasks match this filter.'**
+  String get todosClearText;
+
+  /// Reference key todos.done7 — tasks ticked in the last seven days
+  ///
+  /// In en, this message translates to:
+  /// **'Done this week'**
+  String get todosDone7;
+
+  /// Reference key todos.high
+  ///
+  /// In en, this message translates to:
+  /// **'High'**
+  String get todosHigh;
+
+  /// Reference key todos.listHome
+  ///
+  /// In en, this message translates to:
+  /// **'Home'**
+  String get todosListHome;
+
+  /// Reference key todos.listPersonal
+  ///
+  /// In en, this message translates to:
+  /// **'Personal'**
+  String get todosListPersonal;
+
+  /// Reference key todos.listWork
+  ///
+  /// In en, this message translates to:
+  /// **'Work'**
+  String get todosListWork;
+
+  /// Reference key todos.lists
+  ///
+  /// In en, this message translates to:
+  /// **'Lists'**
+  String get todosLists;
+
+  /// Reference key todos.normal
+  ///
+  /// In en, this message translates to:
+  /// **'Normal'**
+  String get todosNormal;
+
+  /// Reference key todos.onTrack
+  ///
+  /// In en, this message translates to:
+  /// **'Nothing overdue'**
+  String get todosOnTrack;
+
+  /// Reference: the count and todos.open composed; a plural here
+  ///
+  /// In en, this message translates to:
+  /// **'{n, plural, =1{1 open} other{{n} open}}'**
+  String todosOpenN(int n);
+
+  /// Reference key todos.overdueN
+  ///
+  /// In en, this message translates to:
+  /// **'{n, plural, =1{1 overdue} other{{n} overdue}}'**
+  String todosOverdueN(int n);
+
+  /// Reference key todos.priority
+  ///
+  /// In en, this message translates to:
+  /// **'Priority'**
+  String get todosPriority;
+
+  /// Reference key todos.item1 — a sample task
+  ///
+  /// In en, this message translates to:
+  /// **'Send the quarterly summary'**
+  String get todosSeedItem1;
+
+  /// Reference key todos.item2
+  ///
+  /// In en, this message translates to:
+  /// **'Pick up the prescription'**
+  String get todosSeedItem2;
+
+  /// Reference key todos.item3
+  ///
+  /// In en, this message translates to:
+  /// **'Review the design feedback'**
+  String get todosSeedItem3;
+
+  /// Reference key todos.item4
+  ///
+  /// In en, this message translates to:
+  /// **'Book the car service'**
+  String get todosSeedItem4;
+
+  /// Reference key todos.today
+  ///
+  /// In en, this message translates to:
+  /// **'Today'**
+  String get todosToday;
+
+  /// Reference key todos.upcoming
+  ///
+  /// In en, this message translates to:
+  /// **'Coming up'**
+  String get todosUpcoming;
+
+  /// Reference key todos.when
+  ///
+  /// In en, this message translates to:
+  /// **'When'**
+  String get todosWhen;
 
   /// Reference key cat.daily
   ///
