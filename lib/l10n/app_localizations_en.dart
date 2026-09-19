@@ -6374,7 +6374,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get toolStatusHolidays => 'This year';
 
   @override
-  String get toolStatusInstallments => '3 running';
+  String get toolStatusInstallments => 'Track fixed payment plans';
 
   @override
   String get toolStatusLearning => '3 courses';
@@ -7351,6 +7351,400 @@ class AppLocalizationsEn extends AppLocalizations {
   String currencyWithdrawnValue(String code) {
     return '$code · no longer issued';
   }
+
+  @override
+  String get instEmptyTitle => 'No payment plans yet';
+
+  @override
+  String get instEmptyText =>
+      'Add something you are paying for in fixed monthly instalments. Lume keeps its schedule and works out what is paid, due and left.';
+
+  @override
+  String get instAdd => 'Add a plan';
+
+  @override
+  String get instDueThisMonth => 'Due this month';
+
+  @override
+  String get instPaidToDate => 'Paid so far';
+
+  @override
+  String get instRemaining => 'Remaining';
+
+  @override
+  String instActivePlans(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n active plans',
+      one: '1 active plan',
+      zero: 'No active plans',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get instLateInstalments => 'Late instalments';
+
+  @override
+  String instSummaryCurrency(String code) {
+    return 'In $code';
+  }
+
+  @override
+  String get instDayUnknown => 'Day unknown';
+
+  @override
+  String get instDayUnknownText =>
+      'Your time zone can\'t be worked out, so no instalment is marked late or due this month. Set your city in Account › Time.';
+
+  @override
+  String get instFilterLabel => 'Plans shown';
+
+  @override
+  String get instFilterActive => 'Active';
+
+  @override
+  String get instFilterLate => 'Late';
+
+  @override
+  String get instFilterCompleted => 'Completed';
+
+  @override
+  String get instFilterCancelled => 'Cancelled';
+
+  @override
+  String get instSortNext => 'Next due';
+
+  @override
+  String get instSortLeft => 'Payments left';
+
+  @override
+  String get instSortAmount => 'Monthly amount';
+
+  @override
+  String get instSortName => 'Name';
+
+  @override
+  String get instSortRecent => 'Recent activity';
+
+  @override
+  String get instSearch => 'Search plans';
+
+  @override
+  String get instPlans => 'Plans';
+
+  @override
+  String get instComingUp => 'Coming up';
+
+  @override
+  String get instDueByMonth => 'Due by month';
+
+  @override
+  String instDueByMonthCap(String code) {
+    return 'What falls due each month on plans still running, in $code.';
+  }
+
+  @override
+  String get instOtherCurrencies =>
+      'Plans in other currencies are counted separately above.';
+
+  @override
+  String instChartEntry(String month, String amount) {
+    return '$month: $amount';
+  }
+
+  @override
+  String instPaidOf(String paid, String count) {
+    return '$paid of $count paid';
+  }
+
+  @override
+  String instNextOn(String date) {
+    return 'next $date';
+  }
+
+  @override
+  String get instPerMonth => 'a month';
+
+  @override
+  String instProgressValue(String percent) {
+    return '$percent paid';
+  }
+
+  @override
+  String get instPaid => 'Paid';
+
+  @override
+  String get instDueToday => 'Due today';
+
+  @override
+  String get instUpcoming => 'Upcoming';
+
+  @override
+  String get instVoided => 'Voided';
+
+  @override
+  String get instNeedsAttention => 'Needs attention';
+
+  @override
+  String get instDamagedText =>
+      'This plan\'s records don\'t agree. Its figures are left out of the totals, and nothing is written over it. You can delete it.';
+
+  @override
+  String instDefects(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other:
+          '$n records can\'t be read. They are kept as they are, and their plans are left out of the totals.',
+      one:
+          '1 record can\'t be read. It is kept as it is, and its plan is left out of the totals.',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String instInstalment(String n) {
+    return 'Instalment $n';
+  }
+
+  @override
+  String instInstalmentOf(String n, String count) {
+    return 'Instalment $n of $count';
+  }
+
+  @override
+  String instDueOn(String date) {
+    return 'Due $date';
+  }
+
+  @override
+  String instPaidOn(String date) {
+    return 'Paid $date';
+  }
+
+  @override
+  String get instFieldItem => 'What you bought';
+
+  @override
+  String get instFieldMerchant => 'Merchant';
+
+  @override
+  String get instFieldNote => 'Note';
+
+  @override
+  String get instFieldCurrency => 'Currency';
+
+  @override
+  String get instFieldAmount => 'Instalment amount';
+
+  @override
+  String get instFieldCount => 'Number of instalments';
+
+  @override
+  String get instFieldFirstDue => 'First instalment due';
+
+  @override
+  String get instFieldDeposit => 'Deposit already paid';
+
+  @override
+  String get instFieldDepositOn => 'Deposit paid on';
+
+  @override
+  String get instFieldCashPrice => 'Cash price';
+
+  @override
+  String get instFrequency => 'How often';
+
+  @override
+  String get instMonthly => 'Monthly';
+
+  @override
+  String get instNone => 'None';
+
+  @override
+  String get instTotalPayable => 'Total payable';
+
+  @override
+  String get instScheduledTotal => 'Instalments total';
+
+  @override
+  String get instCashDifference => 'Difference from cash price';
+
+  @override
+  String get instCashDifferenceNote =>
+      'Total payable less the cash price you entered. Lume works out no interest.';
+
+  @override
+  String get instSchedule => 'Schedule';
+
+  @override
+  String get instPayments => 'Payments';
+
+  @override
+  String get instNoPayments => 'No payments yet';
+
+  @override
+  String instPayNext(String n) {
+    return 'Pay instalment $n';
+  }
+
+  @override
+  String get instEdit => 'Edit';
+
+  @override
+  String get instCancelPlan => 'Cancel plan';
+
+  @override
+  String get instReinstate => 'Reinstate';
+
+  @override
+  String get instDeletePlan => 'Delete plan';
+
+  @override
+  String get instVoidPayment => 'Void payment';
+
+  @override
+  String get instRestorePayment => 'Restore payment';
+
+  @override
+  String get instPayTitle => 'Record a payment';
+
+  @override
+  String instPayText(String n, String count, String amount, String date) {
+    return 'Instalment $n of $count: $amount, due $date. It is recorded as paid in full.';
+  }
+
+  @override
+  String get instPaidOnLabel => 'Paid on';
+
+  @override
+  String get instPayConfirm => 'Record payment';
+
+  @override
+  String get instPaidToast => 'Payment recorded';
+
+  @override
+  String get instVoidedToast => 'Payment voided';
+
+  @override
+  String get instRestoredToast => 'Payment restored';
+
+  @override
+  String get instCancelTitle => 'Cancel this plan?';
+
+  @override
+  String get instCancelText =>
+      'The plan, its schedule and its payments are kept. It moves to Cancelled and no longer counts in what is due or left. Nothing is refunded.';
+
+  @override
+  String get instKeepPlan => 'Keep plan';
+
+  @override
+  String get instCancelledToast => 'Plan cancelled';
+
+  @override
+  String get instReinstatedToast => 'Plan reinstated';
+
+  @override
+  String get instDeleteTitle => 'Delete this plan?';
+
+  @override
+  String instDeleteText(String rows, String payments) {
+    return 'This removes the plan, all $rows of its scheduled instalments and $payments recorded payments. It is for a plan added by mistake — to stop a real plan, cancel it.';
+  }
+
+  @override
+  String get instDeletedToast => 'Plan deleted';
+
+  @override
+  String get instRestoredPlanToast => 'Plan restored';
+
+  @override
+  String get instNewPlan => 'New plan';
+
+  @override
+  String get instEditPlan => 'Edit plan';
+
+  @override
+  String get instLockedTitle => 'Terms are fixed';
+
+  @override
+  String get instLockedText =>
+      'Payments are recorded, so the amount, number of instalments, currency, dates and deposit are fixed. To change them, cancel this plan and add a new one.';
+
+  @override
+  String get instRebuildText =>
+      'Changing the amount, count, currency or dates rebuilds the schedule.';
+
+  @override
+  String get instSaved => 'Saved';
+
+  @override
+  String get instErrItem => 'Enter what you bought';
+
+  @override
+  String get instErrLong => 'That is too long';
+
+  @override
+  String get instErrCount => 'Enter a whole number from 1 to 600';
+
+  @override
+  String get instErrDate => 'Choose a date';
+
+  @override
+  String get instErrDepositPair => 'A deposit needs both an amount and a date';
+
+  @override
+  String get instErrRange => 'That schedule runs past the calendar';
+
+  @override
+  String get instErrTooLarge => 'That total is too large';
+
+  @override
+  String instErrWithdrawn(String code) {
+    return '$code is no longer issued. Choose a current currency.';
+  }
+
+  @override
+  String get instErrFailed => 'Couldn\'t save. Nothing was changed.';
+
+  @override
+  String get instErrConflict =>
+      'This plan changed somewhere else. Nothing was saved.';
+
+  @override
+  String get instErrDamaged =>
+      'This plan\'s records don\'t agree, so nothing was written.';
+
+  @override
+  String instErrOutOfOrder(String n) {
+    return 'Pay instalment $n first.';
+  }
+
+  @override
+  String get instErrCancelled =>
+      'This plan is cancelled. Reinstate it to record a payment.';
+
+  @override
+  String get instErrCompleted =>
+      'Every instalment is paid; there is nothing to cancel.';
+
+  @override
+  String get instErrAlreadyPaid => 'That instalment is already paid.';
+
+  @override
+  String get instNoMatch => 'No plans here';
+
+  @override
+  String get instNoMatchText => 'Nothing matches this filter or search.';
+
+  @override
+  String get instShowAll => 'Show all';
+
+  @override
+  String get instNotFound => 'That plan isn\'t here any more.';
 
   @override
   String get ledgerErrArchived =>

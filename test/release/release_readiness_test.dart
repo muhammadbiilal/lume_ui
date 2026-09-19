@@ -301,6 +301,7 @@ void main() {
       <String>[
         'age',
         'compound',
+        'installments',
         'ledger',
         'loan',
         'stopwatch',

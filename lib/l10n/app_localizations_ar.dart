@@ -6449,7 +6449,7 @@ class AppLocalizationsAr extends AppLocalizations {
   String get toolStatusHolidays => 'هذا العام';
 
   @override
-  String get toolStatusInstallments => '3 جارية';
+  String get toolStatusInstallments => 'تتبّع خطط الدفع الثابتة';
 
   @override
   String get toolStatusLearning => '3 دورات';
@@ -7437,6 +7437,401 @@ class AppLocalizationsAr extends AppLocalizations {
   String currencyWithdrawnValue(String code) {
     return '$code · لم تعد تُصدر';
   }
+
+  @override
+  String get instEmptyTitle => 'لا توجد خطط دفع بعد';
+
+  @override
+  String get instEmptyText =>
+      'أضف ما تدفع ثمنه على أقساط شهرية ثابتة. يحفظ Lume جدوله ويحسب ما دُفع وما يستحق وما تبقى.';
+
+  @override
+  String get instAdd => 'أضف خطة';
+
+  @override
+  String get instDueThisMonth => 'المستحق هذا الشهر';
+
+  @override
+  String get instPaidToDate => 'المدفوع حتى الآن';
+
+  @override
+  String get instRemaining => 'المتبقي';
+
+  @override
+  String instActivePlans(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n خطة نشطة',
+      many: '$n خطة نشطة',
+      few: '$n خطط نشطة',
+      two: 'خطتان نشطتان',
+      one: 'خطة نشطة واحدة',
+      zero: 'لا خطط نشطة',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get instLateInstalments => 'أقساط متأخرة';
+
+  @override
+  String instSummaryCurrency(String code) {
+    return 'بعملة $code';
+  }
+
+  @override
+  String get instDayUnknown => 'اليوم غير معروف';
+
+  @override
+  String get instDayUnknownText =>
+      'تعذّر تحديد منطقتك الزمنية، لذا لا يُعلَّم أي قسط بأنه متأخر أو مستحق هذا الشهر. اختر مدينتك في الحساب › الوقت.';
+
+  @override
+  String get instFilterLabel => 'الخطط المعروضة';
+
+  @override
+  String get instFilterActive => 'نشطة';
+
+  @override
+  String get instFilterLate => 'متأخرة';
+
+  @override
+  String get instFilterCompleted => 'مكتملة';
+
+  @override
+  String get instFilterCancelled => 'ملغاة';
+
+  @override
+  String get instSortNext => 'الاستحقاق التالي';
+
+  @override
+  String get instSortLeft => 'الدفعات المتبقية';
+
+  @override
+  String get instSortAmount => 'المبلغ الشهري';
+
+  @override
+  String get instSortName => 'الاسم';
+
+  @override
+  String get instSortRecent => 'آخر نشاط';
+
+  @override
+  String get instSearch => 'ابحث في الخطط';
+
+  @override
+  String get instPlans => 'الخطط';
+
+  @override
+  String get instComingUp => 'القادم';
+
+  @override
+  String get instDueByMonth => 'المستحق حسب الشهر';
+
+  @override
+  String instDueByMonthCap(String code) {
+    return 'ما يستحق كل شهر على الخطط الجارية، بعملة $code.';
+  }
+
+  @override
+  String get instOtherCurrencies =>
+      'تُحسب الخطط بالعملات الأخرى على حدة أعلاه.';
+
+  @override
+  String instChartEntry(String month, String amount) {
+    return '$month: $amount';
+  }
+
+  @override
+  String instPaidOf(String paid, String count) {
+    return 'دُفع $paid من $count';
+  }
+
+  @override
+  String instNextOn(String date) {
+    return 'التالي $date';
+  }
+
+  @override
+  String get instPerMonth => 'شهريًا';
+
+  @override
+  String instProgressValue(String percent) {
+    return 'دُفع $percent';
+  }
+
+  @override
+  String get instPaid => 'مدفوع';
+
+  @override
+  String get instDueToday => 'مستحق اليوم';
+
+  @override
+  String get instUpcoming => 'قادم';
+
+  @override
+  String get instVoided => 'مُبطلة';
+
+  @override
+  String get instNeedsAttention => 'يحتاج إلى انتباه';
+
+  @override
+  String get instDamagedText =>
+      'سجلات هذه الخطة غير متسقة. أرقامها مستبعدة من الإجماليات، ولا يُكتب فوقها شيء. يمكنك حذفها.';
+
+  @override
+  String instDefects(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: 'تعذّرت قراءة $n سجل. بقيت كما هي، واستُبعدت خططها من الإجماليات.',
+      many:
+          'تعذّرت قراءة $n سجلًا. بقيت كما هي، واستُبعدت خططها من الإجماليات.',
+      few: 'تعذّرت قراءة $n سجلات. بقيت كما هي، واستُبعدت خططها من الإجماليات.',
+      two: 'تعذّرت قراءة سجلين. بقيا كما هما، واستُبعدت خطتاهما من الإجماليات.',
+      one: 'تعذّرت قراءة سجل واحد. بقي كما هو، واستُبعدت خطته من الإجماليات.',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String instInstalment(String n) {
+    return 'القسط $n';
+  }
+
+  @override
+  String instInstalmentOf(String n, String count) {
+    return 'القسط $n من $count';
+  }
+
+  @override
+  String instDueOn(String date) {
+    return 'يستحق $date';
+  }
+
+  @override
+  String instPaidOn(String date) {
+    return 'دُفع $date';
+  }
+
+  @override
+  String get instFieldItem => 'ما اشتريته';
+
+  @override
+  String get instFieldMerchant => 'التاجر';
+
+  @override
+  String get instFieldNote => 'ملاحظة';
+
+  @override
+  String get instFieldCurrency => 'العملة';
+
+  @override
+  String get instFieldAmount => 'مبلغ القسط';
+
+  @override
+  String get instFieldCount => 'عدد الأقساط';
+
+  @override
+  String get instFieldFirstDue => 'استحقاق القسط الأول';
+
+  @override
+  String get instFieldDeposit => 'الدفعة المقدمة المدفوعة';
+
+  @override
+  String get instFieldDepositOn => 'تاريخ الدفعة المقدمة';
+
+  @override
+  String get instFieldCashPrice => 'السعر نقدًا';
+
+  @override
+  String get instFrequency => 'التكرار';
+
+  @override
+  String get instMonthly => 'شهريًا';
+
+  @override
+  String get instNone => 'لا يوجد';
+
+  @override
+  String get instTotalPayable => 'إجمالي المستحق';
+
+  @override
+  String get instScheduledTotal => 'مجموع الأقساط';
+
+  @override
+  String get instCashDifference => 'الفرق عن السعر نقدًا';
+
+  @override
+  String get instCashDifferenceNote =>
+      'إجمالي المستحق ناقص السعر نقدًا الذي أدخلته. لا يحسب Lume أي فائدة.';
+
+  @override
+  String get instSchedule => 'الجدول';
+
+  @override
+  String get instPayments => 'الدفعات';
+
+  @override
+  String get instNoPayments => 'لا دفعات بعد';
+
+  @override
+  String instPayNext(String n) {
+    return 'ادفع القسط $n';
+  }
+
+  @override
+  String get instEdit => 'تعديل';
+
+  @override
+  String get instCancelPlan => 'إلغاء الخطة';
+
+  @override
+  String get instReinstate => 'إعادة التفعيل';
+
+  @override
+  String get instDeletePlan => 'حذف الخطة';
+
+  @override
+  String get instVoidPayment => 'إبطال الدفعة';
+
+  @override
+  String get instRestorePayment => 'استعادة الدفعة';
+
+  @override
+  String get instPayTitle => 'تسجيل دفعة';
+
+  @override
+  String instPayText(String n, String count, String amount, String date) {
+    return 'القسط $n من $count: $amount، يستحق $date. يُسجَّل مدفوعًا بالكامل.';
+  }
+
+  @override
+  String get instPaidOnLabel => 'تاريخ الدفع';
+
+  @override
+  String get instPayConfirm => 'سجّل الدفعة';
+
+  @override
+  String get instPaidToast => 'سُجّلت الدفعة';
+
+  @override
+  String get instVoidedToast => 'أُبطلت الدفعة';
+
+  @override
+  String get instRestoredToast => 'استُعيدت الدفعة';
+
+  @override
+  String get instCancelTitle => 'إلغاء هذه الخطة؟';
+
+  @override
+  String get instCancelText =>
+      'تبقى الخطة وجدولها ودفعاتها محفوظة. تنتقل إلى الملغاة ولا تُحتسب ضمن المستحق أو المتبقي. لا يُسترد شيء.';
+
+  @override
+  String get instKeepPlan => 'الإبقاء على الخطة';
+
+  @override
+  String get instCancelledToast => 'أُلغيت الخطة';
+
+  @override
+  String get instReinstatedToast => 'أُعيد تفعيل الخطة';
+
+  @override
+  String get instDeleteTitle => 'حذف هذه الخطة؟';
+
+  @override
+  String instDeleteText(String rows, String payments) {
+    return 'سيزيل هذا الخطة وكل أقساطها المجدولة ($rows) ودفعاتها المسجلة ($payments). هذا لخطة أُضيفت خطأً — لإيقاف خطة حقيقية ألغِها.';
+  }
+
+  @override
+  String get instDeletedToast => 'حُذفت الخطة';
+
+  @override
+  String get instRestoredPlanToast => 'استُعيدت الخطة';
+
+  @override
+  String get instNewPlan => 'خطة جديدة';
+
+  @override
+  String get instEditPlan => 'تعديل الخطة';
+
+  @override
+  String get instLockedTitle => 'الشروط ثابتة';
+
+  @override
+  String get instLockedText =>
+      'سُجّلت دفعات، لذا فالمبلغ وعدد الأقساط والعملة والتواريخ والدفعة المقدمة ثابتة. لتغييرها ألغِ هذه الخطة وأضف خطة جديدة.';
+
+  @override
+  String get instRebuildText =>
+      'تغيير المبلغ أو العدد أو العملة أو التواريخ يعيد بناء الجدول.';
+
+  @override
+  String get instSaved => 'حُفظ';
+
+  @override
+  String get instErrItem => 'اكتب ما اشتريته';
+
+  @override
+  String get instErrLong => 'هذا طويل جدًا';
+
+  @override
+  String get instErrCount => 'أدخل عددًا صحيحًا من 1 إلى 600';
+
+  @override
+  String get instErrDate => 'اختر تاريخًا';
+
+  @override
+  String get instErrDepositPair => 'تحتاج الدفعة المقدمة إلى مبلغ وتاريخ معًا';
+
+  @override
+  String get instErrRange => 'يتجاوز هذا الجدول حدود التقويم';
+
+  @override
+  String get instErrTooLarge => 'هذا الإجمالي كبير جدًا';
+
+  @override
+  String instErrWithdrawn(String code) {
+    return 'لم تعد $code تُصدر. اختر عملة حالية.';
+  }
+
+  @override
+  String get instErrFailed => 'تعذّر الحفظ. لم يتغير شيء.';
+
+  @override
+  String get instErrConflict => 'تغيّرت هذه الخطة في مكان آخر. لم يُحفظ شيء.';
+
+  @override
+  String get instErrDamaged => 'سجلات هذه الخطة غير متسقة، لذا لم يُكتب شيء.';
+
+  @override
+  String instErrOutOfOrder(String n) {
+    return 'ادفع القسط $n أولًا.';
+  }
+
+  @override
+  String get instErrCancelled => 'هذه الخطة ملغاة. أعد تفعيلها لتسجيل دفعة.';
+
+  @override
+  String get instErrCompleted => 'دُفعت كل الأقساط؛ لا شيء لإلغائه.';
+
+  @override
+  String get instErrAlreadyPaid => 'هذا القسط مدفوع بالفعل.';
+
+  @override
+  String get instNoMatch => 'لا خطط هنا';
+
+  @override
+  String get instNoMatchText => 'لا شيء يطابق هذا الفلتر أو البحث.';
+
+  @override
+  String get instShowAll => 'اعرض الكل';
+
+  @override
+  String get instNotFound => 'هذه الخطة لم تعد هنا.';
 
   @override
   String get ledgerErrArchived => 'هذا الشخص مؤرشف. ألغِ الأرشفة لإضافة قيود.';

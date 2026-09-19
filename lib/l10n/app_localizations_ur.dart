@@ -6370,7 +6370,7 @@ class AppLocalizationsUr extends AppLocalizations {
   String get toolStatusHolidays => 'اس سال';
 
   @override
-  String get toolStatusInstallments => '3 جاری';
+  String get toolStatusInstallments => 'مقررہ اقساط کا حساب رکھیں';
 
   @override
   String get toolStatusLearning => '3 کورس';
@@ -7347,6 +7347,400 @@ class AppLocalizationsUr extends AppLocalizations {
   String currencyWithdrawnValue(String code) {
     return '$code · اب جاری نہیں';
   }
+
+  @override
+  String get instEmptyTitle => 'ابھی کوئی قسطوں کا منصوبہ نہیں';
+
+  @override
+  String get instEmptyText =>
+      'وہ چیز شامل کریں جس کی ادائیگی آپ مقررہ ماہانہ اقساط میں کر رہے ہیں۔ Lume اس کا شیڈول رکھتا ہے اور حساب کرتا ہے کہ کتنا ادا ہوا، کتنا واجب ہے اور کتنا باقی ہے۔';
+
+  @override
+  String get instAdd => 'منصوبہ شامل کریں';
+
+  @override
+  String get instDueThisMonth => 'اس مہینے واجب';
+
+  @override
+  String get instPaidToDate => 'اب تک ادا';
+
+  @override
+  String get instRemaining => 'باقی';
+
+  @override
+  String instActivePlans(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n فعال منصوبے',
+      one: '1 فعال منصوبہ',
+      zero: 'کوئی فعال منصوبہ نہیں',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get instLateInstalments => 'تاخیر والی اقساط';
+
+  @override
+  String instSummaryCurrency(String code) {
+    return '$code میں';
+  }
+
+  @override
+  String get instDayUnknown => 'دن نامعلوم';
+
+  @override
+  String get instDayUnknownText =>
+      'آپ کا ٹائم زون معلوم نہیں ہو سکا، اس لیے کوئی قسط تاخیر والی یا اس مہینے واجب نہیں دکھائی گئی۔ اکاؤنٹ › وقت میں اپنا شہر منتخب کریں۔';
+
+  @override
+  String get instFilterLabel => 'دکھائے گئے منصوبے';
+
+  @override
+  String get instFilterActive => 'فعال';
+
+  @override
+  String get instFilterLate => 'تاخیر';
+
+  @override
+  String get instFilterCompleted => 'مکمل';
+
+  @override
+  String get instFilterCancelled => 'منسوخ';
+
+  @override
+  String get instSortNext => 'اگلی واجب';
+
+  @override
+  String get instSortLeft => 'باقی ادائیگیاں';
+
+  @override
+  String get instSortAmount => 'ماہانہ رقم';
+
+  @override
+  String get instSortName => 'نام';
+
+  @override
+  String get instSortRecent => 'حالیہ سرگرمی';
+
+  @override
+  String get instSearch => 'منصوبے تلاش کریں';
+
+  @override
+  String get instPlans => 'منصوبے';
+
+  @override
+  String get instComingUp => 'آنے والی اقساط';
+
+  @override
+  String get instDueByMonth => 'مہینہ وار واجب';
+
+  @override
+  String instDueByMonthCap(String code) {
+    return 'ہر مہینے جاری منصوبوں پر واجب رقم، $code میں۔';
+  }
+
+  @override
+  String get instOtherCurrencies =>
+      'دوسری کرنسیوں کے منصوبے اوپر الگ گنے گئے ہیں۔';
+
+  @override
+  String instChartEntry(String month, String amount) {
+    return '$month: $amount';
+  }
+
+  @override
+  String instPaidOf(String paid, String count) {
+    return '$count میں سے $paid ادا';
+  }
+
+  @override
+  String instNextOn(String date) {
+    return 'اگلی $date';
+  }
+
+  @override
+  String get instPerMonth => 'ماہانہ';
+
+  @override
+  String instProgressValue(String percent) {
+    return '$percent ادا';
+  }
+
+  @override
+  String get instPaid => 'ادا شدہ';
+
+  @override
+  String get instDueToday => 'آج واجب';
+
+  @override
+  String get instUpcoming => 'آنے والی';
+
+  @override
+  String get instVoided => 'کالعدم';
+
+  @override
+  String get instNeedsAttention => 'توجہ درکار';
+
+  @override
+  String get instDamagedText =>
+      'اس منصوبے کے ریکارڈ آپس میں نہیں ملتے۔ اس کے اعداد مجموعوں میں شامل نہیں، اور اس پر کچھ نہیں لکھا جاتا۔ آپ اسے حذف کر سکتے ہیں۔';
+
+  @override
+  String instDefects(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other:
+          '$n ریکارڈ پڑھے نہیں جا سکتے۔ یہ ویسے ہی رکھے گئے ہیں، اور ان کے منصوبے مجموعوں میں شامل نہیں۔',
+      one:
+          'ایک ریکارڈ پڑھا نہیں جا سکتا۔ یہ ویسا ہی رکھا گیا ہے، اور اس کا منصوبہ مجموعوں میں شامل نہیں۔',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String instInstalment(String n) {
+    return 'قسط $n';
+  }
+
+  @override
+  String instInstalmentOf(String n, String count) {
+    return '$count میں سے قسط $n';
+  }
+
+  @override
+  String instDueOn(String date) {
+    return 'واجب $date';
+  }
+
+  @override
+  String instPaidOn(String date) {
+    return 'ادا $date';
+  }
+
+  @override
+  String get instFieldItem => 'آپ نے کیا خریدا';
+
+  @override
+  String get instFieldMerchant => 'دکاندار';
+
+  @override
+  String get instFieldNote => 'نوٹ';
+
+  @override
+  String get instFieldCurrency => 'کرنسی';
+
+  @override
+  String get instFieldAmount => 'قسط کی رقم';
+
+  @override
+  String get instFieldCount => 'اقساط کی تعداد';
+
+  @override
+  String get instFieldFirstDue => 'پہلی قسط کی تاریخ';
+
+  @override
+  String get instFieldDeposit => 'پہلے سے ادا شدہ ایڈوانس';
+
+  @override
+  String get instFieldDepositOn => 'ایڈوانس کی تاریخ';
+
+  @override
+  String get instFieldCashPrice => 'نقد قیمت';
+
+  @override
+  String get instFrequency => 'کتنی بار';
+
+  @override
+  String get instMonthly => 'ماہانہ';
+
+  @override
+  String get instNone => 'کوئی نہیں';
+
+  @override
+  String get instTotalPayable => 'کل واجب الادا';
+
+  @override
+  String get instScheduledTotal => 'اقساط کا مجموعہ';
+
+  @override
+  String get instCashDifference => 'نقد قیمت سے فرق';
+
+  @override
+  String get instCashDifferenceNote =>
+      'کل واجب الادا میں سے آپ کی درج کردہ نقد قیمت منفی۔ Lume کوئی سود نہیں نکالتا۔';
+
+  @override
+  String get instSchedule => 'شیڈول';
+
+  @override
+  String get instPayments => 'ادائیگیاں';
+
+  @override
+  String get instNoPayments => 'ابھی کوئی ادائیگی نہیں';
+
+  @override
+  String instPayNext(String n) {
+    return 'قسط $n ادا کریں';
+  }
+
+  @override
+  String get instEdit => 'ترمیم';
+
+  @override
+  String get instCancelPlan => 'منصوبہ منسوخ کریں';
+
+  @override
+  String get instReinstate => 'بحال کریں';
+
+  @override
+  String get instDeletePlan => 'منصوبہ حذف کریں';
+
+  @override
+  String get instVoidPayment => 'ادائیگی کالعدم کریں';
+
+  @override
+  String get instRestorePayment => 'ادائیگی بحال کریں';
+
+  @override
+  String get instPayTitle => 'ادائیگی درج کریں';
+
+  @override
+  String instPayText(String n, String count, String amount, String date) {
+    return '$count میں سے قسط $n: $amount، واجب $date۔ یہ پوری ادا شدہ درج ہوگی۔';
+  }
+
+  @override
+  String get instPaidOnLabel => 'ادائیگی کی تاریخ';
+
+  @override
+  String get instPayConfirm => 'ادائیگی درج کریں';
+
+  @override
+  String get instPaidToast => 'ادائیگی درج ہو گئی';
+
+  @override
+  String get instVoidedToast => 'ادائیگی کالعدم ہو گئی';
+
+  @override
+  String get instRestoredToast => 'ادائیگی بحال ہو گئی';
+
+  @override
+  String get instCancelTitle => 'یہ منصوبہ منسوخ کریں؟';
+
+  @override
+  String get instCancelText =>
+      'منصوبہ، اس کا شیڈول اور ادائیگیاں محفوظ رہتی ہیں۔ یہ منسوخ میں چلا جاتا ہے اور واجب یا باقی رقم میں شمار نہیں ہوتا۔ کچھ واپس نہیں ہوتا۔';
+
+  @override
+  String get instKeepPlan => 'منصوبہ رکھیں';
+
+  @override
+  String get instCancelledToast => 'منصوبہ منسوخ ہو گیا';
+
+  @override
+  String get instReinstatedToast => 'منصوبہ بحال ہو گیا';
+
+  @override
+  String get instDeleteTitle => 'یہ منصوبہ حذف کریں؟';
+
+  @override
+  String instDeleteText(String rows, String payments) {
+    return 'اس سے منصوبہ، اس کی تمام $rows طے شدہ اقساط اور $payments درج ادائیگیاں ہٹ جائیں گی۔ یہ غلطی سے شامل منصوبے کے لیے ہے — اصل منصوبہ روکنے کے لیے اسے منسوخ کریں۔';
+  }
+
+  @override
+  String get instDeletedToast => 'منصوبہ حذف ہو گیا';
+
+  @override
+  String get instRestoredPlanToast => 'منصوبہ واپس آ گیا';
+
+  @override
+  String get instNewPlan => 'نیا منصوبہ';
+
+  @override
+  String get instEditPlan => 'منصوبے میں ترمیم';
+
+  @override
+  String get instLockedTitle => 'شرائط طے ہیں';
+
+  @override
+  String get instLockedText =>
+      'ادائیگیاں درج ہیں، اس لیے رقم، اقساط کی تعداد، کرنسی، تاریخیں اور ایڈوانس طے ہیں۔ انہیں بدلنے کے لیے یہ منصوبہ منسوخ کر کے نیا شامل کریں۔';
+
+  @override
+  String get instRebuildText =>
+      'رقم، تعداد، کرنسی یا تاریخیں بدلنے سے شیڈول دوبارہ بنتا ہے۔';
+
+  @override
+  String get instSaved => 'محفوظ ہو گیا';
+
+  @override
+  String get instErrItem => 'لکھیں آپ نے کیا خریدا';
+
+  @override
+  String get instErrLong => 'یہ بہت لمبا ہے';
+
+  @override
+  String get instErrCount => '1 سے 600 تک کوئی پورا عدد لکھیں';
+
+  @override
+  String get instErrDate => 'تاریخ منتخب کریں';
+
+  @override
+  String get instErrDepositPair => 'ایڈوانس کے لیے رقم اور تاریخ دونوں چاہئیں';
+
+  @override
+  String get instErrRange => 'یہ شیڈول کیلنڈر سے آگے جاتا ہے';
+
+  @override
+  String get instErrTooLarge => 'یہ مجموعہ بہت بڑا ہے';
+
+  @override
+  String instErrWithdrawn(String code) {
+    return '$code اب جاری نہیں۔ موجودہ کرنسی منتخب کریں۔';
+  }
+
+  @override
+  String get instErrFailed => 'محفوظ نہیں ہو سکا۔ کچھ نہیں بدلا۔';
+
+  @override
+  String get instErrConflict =>
+      'یہ منصوبہ کہیں اور بدل گیا۔ کچھ محفوظ نہیں ہوا۔';
+
+  @override
+  String get instErrDamaged =>
+      'اس منصوبے کے ریکارڈ آپس میں نہیں ملتے، اس لیے کچھ نہیں لکھا گیا۔';
+
+  @override
+  String instErrOutOfOrder(String n) {
+    return 'پہلے قسط $n ادا کریں۔';
+  }
+
+  @override
+  String get instErrCancelled =>
+      'یہ منصوبہ منسوخ ہے۔ ادائیگی درج کرنے کے لیے اسے بحال کریں۔';
+
+  @override
+  String get instErrCompleted =>
+      'تمام اقساط ادا ہو چکی ہیں؛ منسوخ کرنے کو کچھ نہیں۔';
+
+  @override
+  String get instErrAlreadyPaid => 'یہ قسط پہلے ہی ادا ہو چکی ہے۔';
+
+  @override
+  String get instNoMatch => 'یہاں کوئی منصوبہ نہیں';
+
+  @override
+  String get instNoMatchText => 'اس فلٹر یا تلاش سے کچھ نہیں ملتا۔';
+
+  @override
+  String get instShowAll => 'سب دکھائیں';
+
+  @override
+  String get instNotFound => 'یہ منصوبہ اب یہاں نہیں۔';
 
   @override
   String get ledgerErrArchived =>

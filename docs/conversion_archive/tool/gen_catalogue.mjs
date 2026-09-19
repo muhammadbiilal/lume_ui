@@ -101,6 +101,15 @@ const DECISIONS = {
     sensitive: true,
     outbound: 'reviewedShare',
   },
+  installments: {
+    note: 'Financial records (D-I1): off Home, Today, the hero and ' +
+      'recommendations; nothing leaves it. Search is its own; ' +
+      'the reference declares notifications and implements none (D-I11).',
+    sensitive: true,
+    outbound: 'none',
+    supportsAdd: ['search'],
+    supportsRemove: ['notifications'],
+  },
 };
 
 let sensitiveCount = 0;
@@ -133,7 +142,9 @@ for (const f of LUME.FEATURES) {
   if (f.shareable) parts.push('shareable: true');
   if (f.reqCity) parts.push('requiresCity: true');
   if (sensitive) parts.push('sensitive: true');
-  if (decided.outbound) parts.push(`outbound: LumeOutbound.${decided.outbound}`);
+  if (decided.outbound && decided.outbound !== 'none') {
+    parts.push(`outbound: LumeOutbound.${decided.outbound}`);
+  }
   if (f.staple) parts.push('staple: true');
   if (f.android) parts.push('androidOnly: true');
   if (spec.homeEligible) parts.push('homeEligible: true');
@@ -146,7 +157,11 @@ for (const f of LUME.FEATURES) {
   parts.push(`density: LumeToolDensity.${spec.density}`);
   parts.push(`fallbackSource: ${dartString(spec.source)}`);
   parts.push(`freshness: LumeFreshnessKind.${spec.freshness === 'static' ? 'reference' : spec.freshness}`);
-  const supports = Object.keys(spec.supports).sort();
+  const supports = Object.keys(spec.supports)
+    .concat(decided.supportsAdd || [])
+    .filter((x) => !(decided.supportsRemove || []).includes(x))
+    .filter((x, i, all) => all.indexOf(x) === i)
+    .sort();
   if (supports.length) {
     parts.push(
       'supports: <LumeToolSupport>{' +

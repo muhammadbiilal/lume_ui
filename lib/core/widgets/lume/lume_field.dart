@@ -293,6 +293,7 @@ class LumeFormField extends StatefulWidget {
     this.autofocus = false,
     this.focusNode,
     this.rows = 3,
+    this.localDigits = false,
   });
 
   final String label;
@@ -325,6 +326,10 @@ class LumeFormField extends StatefulWidget {
 
   /// A multiline field's `rows` — the lines it opens at before it grows.
   final int rows;
+
+  /// A number field that also takes the reader's Arabic-Indic digits; the
+  /// caller reads them (Installments' count).
+  final bool localDigits;
 
   /// Measured: 48 px.
   static const double boxHeight = 48;
@@ -455,6 +460,7 @@ class _LumeFormFieldState extends State<LumeFormField> {
                     onChanged: widget.onChanged,
                     placeholder: widget.placeholder,
                     kind: widget.kind,
+                    localDigits: widget.localDigits,
                     enabled: widget.enabled,
                     focusNode: _node,
                     autofocus: widget.autofocus,
@@ -525,6 +531,7 @@ class _RawInput extends StatefulWidget {
     this.autofocus = false,
     this.onSubmitted,
     this.rows = 3,
+    this.localDigits = false,
   });
 
   final TextEditingController? controller;
@@ -532,6 +539,10 @@ class _RawInput extends StatefulWidget {
   final ValueChanged<String>? onChanged;
   final String? placeholder;
   final LumeFieldKind kind;
+
+  /// A number field that also takes Arabic-Indic and Extended Arabic-Indic
+  /// digits, for a caller that reads them itself.
+  final bool localDigits;
   final bool enabled;
   final TextStyle style;
   final FocusNode? focusNode;
@@ -605,7 +616,14 @@ class _RawInputState extends State<_RawInput> {
         style: widget.style,
         cursorColor: lume.accent,
         inputFormatters: widget.kind == LumeFieldKind.number
-            ? <TextInputFormatter>[FilteringTextInputFormatter.digitsOnly]
+            ? <TextInputFormatter>[
+                if (widget.localDigits)
+                  FilteringTextInputFormatter.allow(
+                    RegExp('[0-9\u0660-\u0669\u06F0-\u06F9]'),
+                  )
+                else
+                  FilteringTextInputFormatter.digitsOnly,
+              ]
             : null,
         decoration: InputDecoration(
           isDense: true,

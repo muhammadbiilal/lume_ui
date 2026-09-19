@@ -2479,6 +2479,46 @@ sample record ticked from its row would have shown its raw `@key`.
 `update(…, claim: false)` keeps it; a form's save still claims the record as
 the reader's (`memory_record_repository_test.dart`).
 
+### C94 — Installments: the reader's own plans, figures that agree
+
+**Product correction and extension (`INSTALLMENTS_PROPOSAL.md` §40–41).**
+The reference draws three fixture plans in USD, converts each figure at an
+approximate rate and rounds it on its own. Its sums therefore disagree with
+its rows: in PKR, History adds to Rs 297,800 while "Paid so far" says
+Rs 298,000. Its "Next payment" is always seven days away, its "Remaining"
+sort orders by payments left, and no plan can be added.
+
+Lume keeps the composition in the reference's order and makes it the
+reader's own:
+
+- **Records.** Plans, their stored schedules and their payments are records
+  written in transactions. Nothing is seeded, and the tool starts empty.
+- **Summaries.** Each figure is a sum of stored minor units, per currency.
+  With the reference's plans entered as a reader would enter them, "Due this
+  month" is Rs 58,000, as the reference shows. "Remaining" is Rs 427,300
+  and "Paid so far" Rs 297,800, which is what the rows add to.
+- **Filters and sorts.** The filters are Active, Late, Completed, Cancelled
+  and All. The sorts are Next due, Payments left (the reference's
+  "Remaining", correctly named), Monthly amount, Name and Recent activity.
+  Search covers the item, merchant and note.
+- **Rows.** A row reads "5 of 12 paid · next 14 Sept". The reference's
+  "instalment 5 of 12" read as if the fifth were next.
+- **Coming up.** The timeline shows each running plan's real next unpaid
+  instalment, by date.
+- **The chart.** It becomes "Due by month" for the next six calendar
+  months. Its bars grow, and a screen reader hears each month and its
+  amount.
+- **Added screens.** A plan's detail, the add and edit form, the payment
+  sheet, cancel with Undo and Reinstate, delete with Undo, and the
+  day-unavailable, damaged, loading and failure states.
+- **Classification.** Installments is sensitive, shares nothing and sends
+  no notification. The tile says "Track fixed payment plans", not
+  "3 running".
+
+No rate, markup, amortisation or conversion exists anywhere. The cash
+price is informational, and its difference from the total payable is
+labelled as a difference.
+
 ### C93 — Reference-only controls and the short privacy sentence, by flavor
 
 **Honesty correction outside the parity flavor.** Two things the reference
@@ -2785,6 +2825,7 @@ deleted row invites the same question again.
 
 | Date | Change | Reason |
 |---|---|---|
+| 2026-09-19 | **C94 raised** — Installments built as a record-backed tool; the reference's contradictory sums, constant next payment, mislabelled sort and fixture-only composition corrected | Approved model, `INSTALLMENTS_PROPOSAL.md` §40 |
 | 2026-09-19 | **C93 raised and corrected** — a Share with nothing behind it, and a Search with no field, are left out of development and release; the whole privacy sentence outside parity | A control that cannot do what it says must not look as though it can |
 | 2026-09-19 | **C92 raised and corrected** — the notification banner takes a measured slot above the shell instead of lying over the header or a form's Save | Found in the Ledger closure: the banner covered the header Save after the first tick |
 | 2026-09-13 (F5C-C) | **C41 decided: reproduce.** An option row's title and its description run together on one line, exactly as the prototype draws them | The rendered Lume interface wins; the Dayroz obligation is recorded rather than the defect silently repaired |

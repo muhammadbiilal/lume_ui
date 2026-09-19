@@ -217,6 +217,13 @@ class LumeFormatting {
   /// "September 2026" — a month and its year, as a calendar titles it.
   String monthYear(DateTime d) => intl.DateFormat.yMMMM(_dateTag).format(d);
 
+  /// A month on its own, narrowest: "S" for September — a chart's axis.
+  String monthNarrow(DateTime d) =>
+      intl.DateFormat('LLLLL', _dateTag).format(d);
+
+  /// A month on its own, in full: "September" — what a screen reader hears.
+  String monthLong(DateTime d) => intl.DateFormat('LLLL', _dateTag).format(d);
+
   /// `weekLabels()` — the seven narrow weekday names a week chart is labelled
   /// with, in the order the reference draws them.
   ///

@@ -1013,12 +1013,16 @@ const List<LumeFeature> kLumeFeatures = <LumeFeature>[
     aware: <String>{'currency', 'locale'},
   ),
   LumeFeature(
+    // Financial records (D-I1): off Home, Today, the hero and recommendations;
+    // nothing leaves it. Search is its own; the reference declares
+    // notifications and implements none (D-I11).
     id: 'installments',
     fallbackName: 'Installments',
     icon: 'calendar',
     category: LumeToolCategory.money,
     group: LumeFeatureGroup.money,
     interests: <String>{'expenses'},
+    sensitive: true,
     related: <String>{'loan', 'expenses', 'subs'},
     archetype: LumeToolArchetype.manager,
     density: LumeToolDensity.high,
@@ -1027,7 +1031,7 @@ const List<LumeFeature> kLumeFeatures = <LumeFeature>[
     supports: <LumeToolSupport>{
       LumeToolSupport.filters,
       LumeToolSupport.history,
-      LumeToolSupport.notifications,
+      LumeToolSupport.search,
       LumeToolSupport.sorting,
     },
     aware: <String>{'currency', 'locale'},

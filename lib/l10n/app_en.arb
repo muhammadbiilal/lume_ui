@@ -8643,7 +8643,7 @@
   "@toolStatusHolidays": {
     "description": "The status line on the holidays tile. The prototype keeps it in the catalogue and renders it untranslated in every language (D22)"
   },
-  "toolStatusInstallments": "3 running",
+  "toolStatusInstallments": "Track fixed payment plans",
   "@toolStatusInstallments": {
     "description": "The status line on the installments tile. The prototype keeps it in the catalogue and renders it untranslated in every language (D22)"
   },
@@ -10015,6 +10015,556 @@
         "type": "String"
       }
     }
+  },
+  "instEmptyTitle": "No payment plans yet",
+  "@instEmptyTitle": {
+    "description": "Installments first use: nothing seeded"
+  },
+  "instEmptyText": "Add something you are paying for in fixed monthly instalments. Lume keeps its schedule and works out what is paid, due and left.",
+  "@instEmptyText": {
+    "description": "Installments first use: what the tool is for"
+  },
+  "instAdd": "Add a plan",
+  "@instAdd": {
+    "description": "Installments: add a payment plan"
+  },
+  "instDueThisMonth": "Due this month",
+  "@instDueThisMonth": {
+    "description": "Installments summary kicker: instalments due in the reader's calendar month"
+  },
+  "instPaidToDate": "Paid so far",
+  "@instPaidToDate": {
+    "description": "Installments summary stat: deposits and active payments"
+  },
+  "instRemaining": "Remaining",
+  "@instRemaining": {
+    "description": "Installments summary stat: what is left on plans not cancelled"
+  },
+  "instActivePlans": "{n, plural, =0{No active plans} =1{1 active plan} other{{n} active plans}}",
+  "@instActivePlans": {
+    "description": "Installments summary caption: each plan counted once",
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
+  "instLateInstalments": "Late instalments",
+  "@instLateInstalments": {
+    "description": "Installments summary stat label"
+  },
+  "instSummaryCurrency": "In {code}",
+  "@instSummaryCurrency": {
+    "description": "Installments: one summary per currency",
+    "placeholders": {
+      "code": {
+        "type": "String"
+      }
+    }
+  },
+  "instDayUnknown": "Day unknown",
+  "@instDayUnknown": {
+    "description": "Installments: a state or figure that needs the reader's day, which cannot be worked out"
+  },
+  "instDayUnknownText": "Your time zone can't be worked out, so no instalment is marked late or due this month. Set your city in Account › Time.",
+  "@instDayUnknownText": {
+    "description": "Installments day-unavailable state"
+  },
+  "instFilterLabel": "Plans shown",
+  "@instFilterLabel": {
+    "description": "Installments filter bar, for a screen reader"
+  },
+  "instFilterActive": "Active",
+  "@instFilterActive": {
+    "description": "Installments filter and plan state"
+  },
+  "instFilterLate": "Late",
+  "@instFilterLate": {
+    "description": "Installments filter, and an unpaid instalment due before today"
+  },
+  "instFilterCompleted": "Completed",
+  "@instFilterCompleted": {
+    "description": "Installments filter and plan state: every instalment paid"
+  },
+  "instFilterCancelled": "Cancelled",
+  "@instFilterCancelled": {
+    "description": "Installments filter and plan state"
+  },
+  "instSortNext": "Next due",
+  "@instSortNext": {
+    "description": "Installments sort: earliest unpaid due date"
+  },
+  "instSortLeft": "Payments left",
+  "@instSortLeft": {
+    "description": "Installments sort: the reference's mislabelled 'Remaining'"
+  },
+  "instSortAmount": "Monthly amount",
+  "@instSortAmount": {
+    "description": "Installments sort"
+  },
+  "instSortName": "Name",
+  "@instSortName": {
+    "description": "Installments sort"
+  },
+  "instSortRecent": "Recent activity",
+  "@instSortRecent": {
+    "description": "Installments sort, from creation instants"
+  },
+  "instSearch": "Search plans",
+  "@instSearch": {
+    "description": "Installments search: item, merchant and note"
+  },
+  "instPlans": "Plans",
+  "@instPlans": {
+    "description": "Installments section title"
+  },
+  "instComingUp": "Coming up",
+  "@instComingUp": {
+    "description": "Installments section: the next unpaid instalment of each running plan"
+  },
+  "instDueByMonth": "Due by month",
+  "@instDueByMonth": {
+    "description": "Installments chart title"
+  },
+  "instDueByMonthCap": "What falls due each month on plans still running, in {code}.",
+  "@instDueByMonthCap": {
+    "description": "Installments chart caption",
+    "placeholders": {
+      "code": {
+        "type": "String"
+      }
+    }
+  },
+  "instOtherCurrencies": "Plans in other currencies are counted separately above.",
+  "@instOtherCurrencies": {
+    "description": "Installments chart: it shows one currency"
+  },
+  "instChartEntry": "{month}: {amount}",
+  "@instChartEntry": {
+    "description": "Installments chart bar, for a screen reader",
+    "placeholders": {
+      "month": {
+        "type": "String"
+      },
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "instPaidOf": "{paid} of {count} paid",
+  "@instPaidOf": {
+    "description": "Installments row: instalments paid of the count — not which is next",
+    "placeholders": {
+      "paid": {
+        "type": "String"
+      },
+      "count": {
+        "type": "String"
+      }
+    }
+  },
+  "instNextOn": "next {date}",
+  "@instNextOn": {
+    "description": "Installments row: the next unpaid due date",
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "instPerMonth": "a month",
+  "@instPerMonth": {
+    "description": "Installments row: under the instalment amount"
+  },
+  "instProgressValue": "{percent} paid",
+  "@instProgressValue": {
+    "description": "Installments progress bar, for a screen reader",
+    "placeholders": {
+      "percent": {
+        "type": "String"
+      }
+    }
+  },
+  "instPaid": "Paid",
+  "@instPaid": {
+    "description": "Installments instalment state"
+  },
+  "instDueToday": "Due today",
+  "@instDueToday": {
+    "description": "Installments instalment state"
+  },
+  "instUpcoming": "Upcoming",
+  "@instUpcoming": {
+    "description": "Installments instalment state"
+  },
+  "instVoided": "Voided",
+  "@instVoided": {
+    "description": "Installments payment state: kept, counted nowhere"
+  },
+  "instNeedsAttention": "Needs attention",
+  "@instNeedsAttention": {
+    "description": "Installments: a damaged plan"
+  },
+  "instDamagedText": "This plan's records don't agree. Its figures are left out of the totals, and nothing is written over it. You can delete it.",
+  "@instDamagedText": {
+    "description": "Installments damaged plan"
+  },
+  "instDefects": "{n, plural, =1{1 record can't be read. It is kept as it is, and its plan is left out of the totals.} other{{n} records can't be read. They are kept as they are, and their plans are left out of the totals.}}",
+  "@instDefects": {
+    "description": "Installments: records that failed to decode — never dropped",
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
+  "instInstalment": "Instalment {n}",
+  "@instInstalment": {
+    "description": "Installments: one scheduled instalment",
+    "placeholders": {
+      "n": {
+        "type": "String"
+      }
+    }
+  },
+  "instInstalmentOf": "Instalment {n} of {count}",
+  "@instInstalmentOf": {
+    "description": "Installments: one scheduled instalment, with the count",
+    "placeholders": {
+      "n": {
+        "type": "String"
+      },
+      "count": {
+        "type": "String"
+      }
+    }
+  },
+  "instDueOn": "Due {date}",
+  "@instDueOn": {
+    "description": "Installments: an instalment's due date",
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "instPaidOn": "Paid {date}",
+  "@instPaidOn": {
+    "description": "Installments: a payment's date",
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "instFieldItem": "What you bought",
+  "@instFieldItem": {
+    "description": "Installments form field"
+  },
+  "instFieldMerchant": "Merchant",
+  "@instFieldMerchant": {
+    "description": "Installments form field"
+  },
+  "instFieldNote": "Note",
+  "@instFieldNote": {
+    "description": "Installments form field"
+  },
+  "instFieldCurrency": "Currency",
+  "@instFieldCurrency": {
+    "description": "Installments form field"
+  },
+  "instFieldAmount": "Instalment amount",
+  "@instFieldAmount": {
+    "description": "Installments form field: every instalment is this"
+  },
+  "instFieldCount": "Number of instalments",
+  "@instFieldCount": {
+    "description": "Installments form field"
+  },
+  "instFieldFirstDue": "First instalment due",
+  "@instFieldFirstDue": {
+    "description": "Installments form field: the schedule's anchor"
+  },
+  "instFieldDeposit": "Deposit already paid",
+  "@instFieldDeposit": {
+    "description": "Installments form field: money paid before the schedule"
+  },
+  "instFieldDepositOn": "Deposit paid on",
+  "@instFieldDepositOn": {
+    "description": "Installments form field"
+  },
+  "instFieldCashPrice": "Cash price",
+  "@instFieldCashPrice": {
+    "description": "Installments form field: informational only"
+  },
+  "instFrequency": "How often",
+  "@instFrequency": {
+    "description": "Installments fact label"
+  },
+  "instMonthly": "Monthly",
+  "@instMonthly": {
+    "description": "Installments frequency"
+  },
+  "instNone": "None",
+  "@instNone": {
+    "description": "Installments: no deposit"
+  },
+  "instTotalPayable": "Total payable",
+  "@instTotalPayable": {
+    "description": "Installments: deposit plus every instalment"
+  },
+  "instScheduledTotal": "Instalments total",
+  "@instScheduledTotal": {
+    "description": "Installments: amount times count"
+  },
+  "instCashDifference": "Difference from cash price",
+  "@instCashDifference": {
+    "description": "Installments: total payable less the cash price — never called interest"
+  },
+  "instCashDifferenceNote": "Total payable less the cash price you entered. Lume works out no interest.",
+  "@instCashDifferenceNote": {
+    "description": "Installments: what the difference is, and is not"
+  },
+  "instSchedule": "Schedule",
+  "@instSchedule": {
+    "description": "Installments plan detail section"
+  },
+  "instPayments": "Payments",
+  "@instPayments": {
+    "description": "Installments plan detail section"
+  },
+  "instNoPayments": "No payments yet",
+  "@instNoPayments": {
+    "description": "Installments plan detail"
+  },
+  "instPayNext": "Pay instalment {n}",
+  "@instPayNext": {
+    "description": "Installments action: the earliest unpaid instalment",
+    "placeholders": {
+      "n": {
+        "type": "String"
+      }
+    }
+  },
+  "instEdit": "Edit",
+  "@instEdit": {
+    "description": "Installments action"
+  },
+  "instCancelPlan": "Cancel plan",
+  "@instCancelPlan": {
+    "description": "Installments action: keeps everything"
+  },
+  "instReinstate": "Reinstate",
+  "@instReinstate": {
+    "description": "Installments action: a cancelled plan back to active"
+  },
+  "instDeletePlan": "Delete plan",
+  "@instDeletePlan": {
+    "description": "Installments action: for a plan added by mistake"
+  },
+  "instVoidPayment": "Void payment",
+  "@instVoidPayment": {
+    "description": "Installments action"
+  },
+  "instRestorePayment": "Restore payment",
+  "@instRestorePayment": {
+    "description": "Installments action"
+  },
+  "instPayTitle": "Record a payment",
+  "@instPayTitle": {
+    "description": "Installments payment sheet title"
+  },
+  "instPayText": "Instalment {n} of {count}: {amount}, due {date}. It is recorded as paid in full.",
+  "@instPayText": {
+    "description": "Installments payment sheet: exactly what is recorded",
+    "placeholders": {
+      "n": {
+        "type": "String"
+      },
+      "count": {
+        "type": "String"
+      },
+      "amount": {
+        "type": "String"
+      },
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "instPaidOnLabel": "Paid on",
+  "@instPaidOnLabel": {
+    "description": "Installments payment sheet field"
+  },
+  "instPayConfirm": "Record payment",
+  "@instPayConfirm": {
+    "description": "Installments payment sheet confirm"
+  },
+  "instPaidToast": "Payment recorded",
+  "@instPaidToast": {
+    "description": "Installments toast"
+  },
+  "instVoidedToast": "Payment voided",
+  "@instVoidedToast": {
+    "description": "Installments toast"
+  },
+  "instRestoredToast": "Payment restored",
+  "@instRestoredToast": {
+    "description": "Installments toast"
+  },
+  "instCancelTitle": "Cancel this plan?",
+  "@instCancelTitle": {
+    "description": "Installments cancel confirmation"
+  },
+  "instCancelText": "The plan, its schedule and its payments are kept. It moves to Cancelled and no longer counts in what is due or left. Nothing is refunded.",
+  "@instCancelText": {
+    "description": "Installments cancel confirmation: what it does, and does not"
+  },
+  "instKeepPlan": "Keep plan",
+  "@instKeepPlan": {
+    "description": "Installments cancel confirmation: the way out"
+  },
+  "instCancelledToast": "Plan cancelled",
+  "@instCancelledToast": {
+    "description": "Installments toast"
+  },
+  "instReinstatedToast": "Plan reinstated",
+  "@instReinstatedToast": {
+    "description": "Installments toast"
+  },
+  "instDeleteTitle": "Delete this plan?",
+  "@instDeleteTitle": {
+    "description": "Installments destructive confirmation"
+  },
+  "instDeleteText": "This removes the plan, all {rows} of its scheduled instalments and {payments} recorded payments. It is for a plan added by mistake — to stop a real plan, cancel it.",
+  "@instDeleteText": {
+    "description": "Installments destructive confirmation: exactly what goes",
+    "placeholders": {
+      "rows": {
+        "type": "String"
+      },
+      "payments": {
+        "type": "String"
+      }
+    }
+  },
+  "instDeletedToast": "Plan deleted",
+  "@instDeletedToast": {
+    "description": "Installments toast, with Undo"
+  },
+  "instRestoredPlanToast": "Plan restored",
+  "@instRestoredPlanToast": {
+    "description": "Installments toast after Undo"
+  },
+  "instNewPlan": "New plan",
+  "@instNewPlan": {
+    "description": "Installments form title"
+  },
+  "instEditPlan": "Edit plan",
+  "@instEditPlan": {
+    "description": "Installments form title"
+  },
+  "instLockedTitle": "Terms are fixed",
+  "@instLockedTitle": {
+    "description": "Installments form: payments exist"
+  },
+  "instLockedText": "Payments are recorded, so the amount, number of instalments, currency, dates and deposit are fixed. To change them, cancel this plan and add a new one.",
+  "@instLockedText": {
+    "description": "Installments form: why the terms cannot change"
+  },
+  "instRebuildText": "Changing the amount, count, currency or dates rebuilds the schedule.",
+  "@instRebuildText": {
+    "description": "Installments form before any payment"
+  },
+  "instSaved": "Saved",
+  "@instSaved": {
+    "description": "Installments toast"
+  },
+  "instErrItem": "Enter what you bought",
+  "@instErrItem": {
+    "description": "Installments validation"
+  },
+  "instErrLong": "That is too long",
+  "@instErrLong": {
+    "description": "Installments validation"
+  },
+  "instErrCount": "Enter a whole number from 1 to 600",
+  "@instErrCount": {
+    "description": "Installments validation"
+  },
+  "instErrDate": "Choose a date",
+  "@instErrDate": {
+    "description": "Installments validation"
+  },
+  "instErrDepositPair": "A deposit needs both an amount and a date",
+  "@instErrDepositPair": {
+    "description": "Installments validation"
+  },
+  "instErrRange": "That schedule runs past the calendar",
+  "@instErrRange": {
+    "description": "Installments validation"
+  },
+  "instErrTooLarge": "That total is too large",
+  "@instErrTooLarge": {
+    "description": "Installments validation: past 2^53 − 1 minor units"
+  },
+  "instErrWithdrawn": "{code} is no longer issued. Choose a current currency.",
+  "@instErrWithdrawn": {
+    "description": "Installments validation: a new plan in a withdrawn currency",
+    "placeholders": {
+      "code": {
+        "type": "String"
+      }
+    }
+  },
+  "instErrFailed": "Couldn't save. Nothing was changed.",
+  "@instErrFailed": {
+    "description": "Installments storage failure"
+  },
+  "instErrConflict": "This plan changed somewhere else. Nothing was saved.",
+  "@instErrConflict": {
+    "description": "Installments conflict"
+  },
+  "instErrDamaged": "This plan's records don't agree, so nothing was written.",
+  "@instErrDamaged": {
+    "description": "Installments damaged scope"
+  },
+  "instErrOutOfOrder": "Pay instalment {n} first.",
+  "@instErrOutOfOrder": {
+    "description": "Installments: payments are made in order",
+    "placeholders": {
+      "n": {
+        "type": "String"
+      }
+    }
+  },
+  "instErrCancelled": "This plan is cancelled. Reinstate it to record a payment.",
+  "@instErrCancelled": {
+    "description": "Installments"
+  },
+  "instErrCompleted": "Every instalment is paid; there is nothing to cancel.",
+  "@instErrCompleted": {
+    "description": "Installments"
+  },
+  "instErrAlreadyPaid": "That instalment is already paid.",
+  "@instErrAlreadyPaid": {
+    "description": "Installments"
+  },
+  "instNoMatch": "No plans here",
+  "@instNoMatch": {
+    "description": "Installments filtered list is empty"
+  },
+  "instNoMatchText": "Nothing matches this filter or search.",
+  "@instNoMatchText": {
+    "description": "Installments filtered list is empty"
+  },
+  "instShowAll": "Show all",
+  "@instShowAll": {
+    "description": "Installments: clear the filter and search"
+  },
+  "instNotFound": "That plan isn't here any more.",
+  "@instNotFound": {
+    "description": "Installments deep link to a plan that is gone"
   },
   "ledgerErrArchived": "This person is archived. Unarchive them to add entries.",
   "@ledgerErrArchived": {

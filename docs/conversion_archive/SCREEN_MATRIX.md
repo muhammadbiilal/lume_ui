@@ -198,7 +198,7 @@ run on the shared CRUD engine.
 | `loan` | Loan / EMI | calculator | high | — | — | — | — | not started |
 | `tipsplit` | Tip & Split | calculator | low | — | — | Y | — | not started |
 | `ledger` | Lending Ledger | manager | high | — | **yes** | Y | — | **built** — its own host over record-layer transactions; people, entries and allocations; FIFO-by-obligation, manual allocation, credit, void and restore, delete with Undo, archive; filters by balance, search, sort; reminder preview; `lume.ledger/1` export and import, CSV export; sensitive; nothing seeded (C90) |
-| `installments` | Installments | manager | high | — | — | — | — | not started |
+| `installments` | Installments | manager | high | — | **yes** | Y | — | **built** — its own host over record-layer transactions; plans, stored anchored monthly schedules and payments; deposit; payments in order with void and restore; locked terms once paid; cancel and reinstate; delete with Undo; filters, search and five sorts; per-currency summaries; due by month; sensitive; no notifications; nothing seeded (C94) |
 | `committee` | Committee | manager | high | — | — | — | — | not started |
 
 ### Daily Life — 18

@@ -11221,7 +11221,7 @@ abstract class AppLocalizations {
   /// The status line on the installments tile. The prototype keeps it in the catalogue and renders it untranslated in every language (D22)
   ///
   /// In en, this message translates to:
-  /// **'3 running'**
+  /// **'Track fixed payment plans'**
   String get toolStatusInstallments;
 
   /// The status line on the learning tile. The prototype keeps it in the catalogue and renders it untranslated in every language (D22)
@@ -12866,6 +12866,672 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'{code} · no longer issued'**
   String currencyWithdrawnValue(String code);
+
+  /// Installments first use: nothing seeded
+  ///
+  /// In en, this message translates to:
+  /// **'No payment plans yet'**
+  String get instEmptyTitle;
+
+  /// Installments first use: what the tool is for
+  ///
+  /// In en, this message translates to:
+  /// **'Add something you are paying for in fixed monthly instalments. Lume keeps its schedule and works out what is paid, due and left.'**
+  String get instEmptyText;
+
+  /// Installments: add a payment plan
+  ///
+  /// In en, this message translates to:
+  /// **'Add a plan'**
+  String get instAdd;
+
+  /// Installments summary kicker: instalments due in the reader's calendar month
+  ///
+  /// In en, this message translates to:
+  /// **'Due this month'**
+  String get instDueThisMonth;
+
+  /// Installments summary stat: deposits and active payments
+  ///
+  /// In en, this message translates to:
+  /// **'Paid so far'**
+  String get instPaidToDate;
+
+  /// Installments summary stat: what is left on plans not cancelled
+  ///
+  /// In en, this message translates to:
+  /// **'Remaining'**
+  String get instRemaining;
+
+  /// Installments summary caption: each plan counted once
+  ///
+  /// In en, this message translates to:
+  /// **'{n, plural, =0{No active plans} =1{1 active plan} other{{n} active plans}}'**
+  String instActivePlans(int n);
+
+  /// Installments summary stat label
+  ///
+  /// In en, this message translates to:
+  /// **'Late instalments'**
+  String get instLateInstalments;
+
+  /// Installments: one summary per currency
+  ///
+  /// In en, this message translates to:
+  /// **'In {code}'**
+  String instSummaryCurrency(String code);
+
+  /// Installments: a state or figure that needs the reader's day, which cannot be worked out
+  ///
+  /// In en, this message translates to:
+  /// **'Day unknown'**
+  String get instDayUnknown;
+
+  /// Installments day-unavailable state
+  ///
+  /// In en, this message translates to:
+  /// **'Your time zone can\'t be worked out, so no instalment is marked late or due this month. Set your city in Account › Time.'**
+  String get instDayUnknownText;
+
+  /// Installments filter bar, for a screen reader
+  ///
+  /// In en, this message translates to:
+  /// **'Plans shown'**
+  String get instFilterLabel;
+
+  /// Installments filter and plan state
+  ///
+  /// In en, this message translates to:
+  /// **'Active'**
+  String get instFilterActive;
+
+  /// Installments filter, and an unpaid instalment due before today
+  ///
+  /// In en, this message translates to:
+  /// **'Late'**
+  String get instFilterLate;
+
+  /// Installments filter and plan state: every instalment paid
+  ///
+  /// In en, this message translates to:
+  /// **'Completed'**
+  String get instFilterCompleted;
+
+  /// Installments filter and plan state
+  ///
+  /// In en, this message translates to:
+  /// **'Cancelled'**
+  String get instFilterCancelled;
+
+  /// Installments sort: earliest unpaid due date
+  ///
+  /// In en, this message translates to:
+  /// **'Next due'**
+  String get instSortNext;
+
+  /// Installments sort: the reference's mislabelled 'Remaining'
+  ///
+  /// In en, this message translates to:
+  /// **'Payments left'**
+  String get instSortLeft;
+
+  /// Installments sort
+  ///
+  /// In en, this message translates to:
+  /// **'Monthly amount'**
+  String get instSortAmount;
+
+  /// Installments sort
+  ///
+  /// In en, this message translates to:
+  /// **'Name'**
+  String get instSortName;
+
+  /// Installments sort, from creation instants
+  ///
+  /// In en, this message translates to:
+  /// **'Recent activity'**
+  String get instSortRecent;
+
+  /// Installments search: item, merchant and note
+  ///
+  /// In en, this message translates to:
+  /// **'Search plans'**
+  String get instSearch;
+
+  /// Installments section title
+  ///
+  /// In en, this message translates to:
+  /// **'Plans'**
+  String get instPlans;
+
+  /// Installments section: the next unpaid instalment of each running plan
+  ///
+  /// In en, this message translates to:
+  /// **'Coming up'**
+  String get instComingUp;
+
+  /// Installments chart title
+  ///
+  /// In en, this message translates to:
+  /// **'Due by month'**
+  String get instDueByMonth;
+
+  /// Installments chart caption
+  ///
+  /// In en, this message translates to:
+  /// **'What falls due each month on plans still running, in {code}.'**
+  String instDueByMonthCap(String code);
+
+  /// Installments chart: it shows one currency
+  ///
+  /// In en, this message translates to:
+  /// **'Plans in other currencies are counted separately above.'**
+  String get instOtherCurrencies;
+
+  /// Installments chart bar, for a screen reader
+  ///
+  /// In en, this message translates to:
+  /// **'{month}: {amount}'**
+  String instChartEntry(String month, String amount);
+
+  /// Installments row: instalments paid of the count — not which is next
+  ///
+  /// In en, this message translates to:
+  /// **'{paid} of {count} paid'**
+  String instPaidOf(String paid, String count);
+
+  /// Installments row: the next unpaid due date
+  ///
+  /// In en, this message translates to:
+  /// **'next {date}'**
+  String instNextOn(String date);
+
+  /// Installments row: under the instalment amount
+  ///
+  /// In en, this message translates to:
+  /// **'a month'**
+  String get instPerMonth;
+
+  /// Installments progress bar, for a screen reader
+  ///
+  /// In en, this message translates to:
+  /// **'{percent} paid'**
+  String instProgressValue(String percent);
+
+  /// Installments instalment state
+  ///
+  /// In en, this message translates to:
+  /// **'Paid'**
+  String get instPaid;
+
+  /// Installments instalment state
+  ///
+  /// In en, this message translates to:
+  /// **'Due today'**
+  String get instDueToday;
+
+  /// Installments instalment state
+  ///
+  /// In en, this message translates to:
+  /// **'Upcoming'**
+  String get instUpcoming;
+
+  /// Installments payment state: kept, counted nowhere
+  ///
+  /// In en, this message translates to:
+  /// **'Voided'**
+  String get instVoided;
+
+  /// Installments: a damaged plan
+  ///
+  /// In en, this message translates to:
+  /// **'Needs attention'**
+  String get instNeedsAttention;
+
+  /// Installments damaged plan
+  ///
+  /// In en, this message translates to:
+  /// **'This plan\'s records don\'t agree. Its figures are left out of the totals, and nothing is written over it. You can delete it.'**
+  String get instDamagedText;
+
+  /// Installments: records that failed to decode — never dropped
+  ///
+  /// In en, this message translates to:
+  /// **'{n, plural, =1{1 record can\'t be read. It is kept as it is, and its plan is left out of the totals.} other{{n} records can\'t be read. They are kept as they are, and their plans are left out of the totals.}}'**
+  String instDefects(int n);
+
+  /// Installments: one scheduled instalment
+  ///
+  /// In en, this message translates to:
+  /// **'Instalment {n}'**
+  String instInstalment(String n);
+
+  /// Installments: one scheduled instalment, with the count
+  ///
+  /// In en, this message translates to:
+  /// **'Instalment {n} of {count}'**
+  String instInstalmentOf(String n, String count);
+
+  /// Installments: an instalment's due date
+  ///
+  /// In en, this message translates to:
+  /// **'Due {date}'**
+  String instDueOn(String date);
+
+  /// Installments: a payment's date
+  ///
+  /// In en, this message translates to:
+  /// **'Paid {date}'**
+  String instPaidOn(String date);
+
+  /// Installments form field
+  ///
+  /// In en, this message translates to:
+  /// **'What you bought'**
+  String get instFieldItem;
+
+  /// Installments form field
+  ///
+  /// In en, this message translates to:
+  /// **'Merchant'**
+  String get instFieldMerchant;
+
+  /// Installments form field
+  ///
+  /// In en, this message translates to:
+  /// **'Note'**
+  String get instFieldNote;
+
+  /// Installments form field
+  ///
+  /// In en, this message translates to:
+  /// **'Currency'**
+  String get instFieldCurrency;
+
+  /// Installments form field: every instalment is this
+  ///
+  /// In en, this message translates to:
+  /// **'Instalment amount'**
+  String get instFieldAmount;
+
+  /// Installments form field
+  ///
+  /// In en, this message translates to:
+  /// **'Number of instalments'**
+  String get instFieldCount;
+
+  /// Installments form field: the schedule's anchor
+  ///
+  /// In en, this message translates to:
+  /// **'First instalment due'**
+  String get instFieldFirstDue;
+
+  /// Installments form field: money paid before the schedule
+  ///
+  /// In en, this message translates to:
+  /// **'Deposit already paid'**
+  String get instFieldDeposit;
+
+  /// Installments form field
+  ///
+  /// In en, this message translates to:
+  /// **'Deposit paid on'**
+  String get instFieldDepositOn;
+
+  /// Installments form field: informational only
+  ///
+  /// In en, this message translates to:
+  /// **'Cash price'**
+  String get instFieldCashPrice;
+
+  /// Installments fact label
+  ///
+  /// In en, this message translates to:
+  /// **'How often'**
+  String get instFrequency;
+
+  /// Installments frequency
+  ///
+  /// In en, this message translates to:
+  /// **'Monthly'**
+  String get instMonthly;
+
+  /// Installments: no deposit
+  ///
+  /// In en, this message translates to:
+  /// **'None'**
+  String get instNone;
+
+  /// Installments: deposit plus every instalment
+  ///
+  /// In en, this message translates to:
+  /// **'Total payable'**
+  String get instTotalPayable;
+
+  /// Installments: amount times count
+  ///
+  /// In en, this message translates to:
+  /// **'Instalments total'**
+  String get instScheduledTotal;
+
+  /// Installments: total payable less the cash price — never called interest
+  ///
+  /// In en, this message translates to:
+  /// **'Difference from cash price'**
+  String get instCashDifference;
+
+  /// Installments: what the difference is, and is not
+  ///
+  /// In en, this message translates to:
+  /// **'Total payable less the cash price you entered. Lume works out no interest.'**
+  String get instCashDifferenceNote;
+
+  /// Installments plan detail section
+  ///
+  /// In en, this message translates to:
+  /// **'Schedule'**
+  String get instSchedule;
+
+  /// Installments plan detail section
+  ///
+  /// In en, this message translates to:
+  /// **'Payments'**
+  String get instPayments;
+
+  /// Installments plan detail
+  ///
+  /// In en, this message translates to:
+  /// **'No payments yet'**
+  String get instNoPayments;
+
+  /// Installments action: the earliest unpaid instalment
+  ///
+  /// In en, this message translates to:
+  /// **'Pay instalment {n}'**
+  String instPayNext(String n);
+
+  /// Installments action
+  ///
+  /// In en, this message translates to:
+  /// **'Edit'**
+  String get instEdit;
+
+  /// Installments action: keeps everything
+  ///
+  /// In en, this message translates to:
+  /// **'Cancel plan'**
+  String get instCancelPlan;
+
+  /// Installments action: a cancelled plan back to active
+  ///
+  /// In en, this message translates to:
+  /// **'Reinstate'**
+  String get instReinstate;
+
+  /// Installments action: for a plan added by mistake
+  ///
+  /// In en, this message translates to:
+  /// **'Delete plan'**
+  String get instDeletePlan;
+
+  /// Installments action
+  ///
+  /// In en, this message translates to:
+  /// **'Void payment'**
+  String get instVoidPayment;
+
+  /// Installments action
+  ///
+  /// In en, this message translates to:
+  /// **'Restore payment'**
+  String get instRestorePayment;
+
+  /// Installments payment sheet title
+  ///
+  /// In en, this message translates to:
+  /// **'Record a payment'**
+  String get instPayTitle;
+
+  /// Installments payment sheet: exactly what is recorded
+  ///
+  /// In en, this message translates to:
+  /// **'Instalment {n} of {count}: {amount}, due {date}. It is recorded as paid in full.'**
+  String instPayText(String n, String count, String amount, String date);
+
+  /// Installments payment sheet field
+  ///
+  /// In en, this message translates to:
+  /// **'Paid on'**
+  String get instPaidOnLabel;
+
+  /// Installments payment sheet confirm
+  ///
+  /// In en, this message translates to:
+  /// **'Record payment'**
+  String get instPayConfirm;
+
+  /// Installments toast
+  ///
+  /// In en, this message translates to:
+  /// **'Payment recorded'**
+  String get instPaidToast;
+
+  /// Installments toast
+  ///
+  /// In en, this message translates to:
+  /// **'Payment voided'**
+  String get instVoidedToast;
+
+  /// Installments toast
+  ///
+  /// In en, this message translates to:
+  /// **'Payment restored'**
+  String get instRestoredToast;
+
+  /// Installments cancel confirmation
+  ///
+  /// In en, this message translates to:
+  /// **'Cancel this plan?'**
+  String get instCancelTitle;
+
+  /// Installments cancel confirmation: what it does, and does not
+  ///
+  /// In en, this message translates to:
+  /// **'The plan, its schedule and its payments are kept. It moves to Cancelled and no longer counts in what is due or left. Nothing is refunded.'**
+  String get instCancelText;
+
+  /// Installments cancel confirmation: the way out
+  ///
+  /// In en, this message translates to:
+  /// **'Keep plan'**
+  String get instKeepPlan;
+
+  /// Installments toast
+  ///
+  /// In en, this message translates to:
+  /// **'Plan cancelled'**
+  String get instCancelledToast;
+
+  /// Installments toast
+  ///
+  /// In en, this message translates to:
+  /// **'Plan reinstated'**
+  String get instReinstatedToast;
+
+  /// Installments destructive confirmation
+  ///
+  /// In en, this message translates to:
+  /// **'Delete this plan?'**
+  String get instDeleteTitle;
+
+  /// Installments destructive confirmation: exactly what goes
+  ///
+  /// In en, this message translates to:
+  /// **'This removes the plan, all {rows} of its scheduled instalments and {payments} recorded payments. It is for a plan added by mistake — to stop a real plan, cancel it.'**
+  String instDeleteText(String rows, String payments);
+
+  /// Installments toast, with Undo
+  ///
+  /// In en, this message translates to:
+  /// **'Plan deleted'**
+  String get instDeletedToast;
+
+  /// Installments toast after Undo
+  ///
+  /// In en, this message translates to:
+  /// **'Plan restored'**
+  String get instRestoredPlanToast;
+
+  /// Installments form title
+  ///
+  /// In en, this message translates to:
+  /// **'New plan'**
+  String get instNewPlan;
+
+  /// Installments form title
+  ///
+  /// In en, this message translates to:
+  /// **'Edit plan'**
+  String get instEditPlan;
+
+  /// Installments form: payments exist
+  ///
+  /// In en, this message translates to:
+  /// **'Terms are fixed'**
+  String get instLockedTitle;
+
+  /// Installments form: why the terms cannot change
+  ///
+  /// In en, this message translates to:
+  /// **'Payments are recorded, so the amount, number of instalments, currency, dates and deposit are fixed. To change them, cancel this plan and add a new one.'**
+  String get instLockedText;
+
+  /// Installments form before any payment
+  ///
+  /// In en, this message translates to:
+  /// **'Changing the amount, count, currency or dates rebuilds the schedule.'**
+  String get instRebuildText;
+
+  /// Installments toast
+  ///
+  /// In en, this message translates to:
+  /// **'Saved'**
+  String get instSaved;
+
+  /// Installments validation
+  ///
+  /// In en, this message translates to:
+  /// **'Enter what you bought'**
+  String get instErrItem;
+
+  /// Installments validation
+  ///
+  /// In en, this message translates to:
+  /// **'That is too long'**
+  String get instErrLong;
+
+  /// Installments validation
+  ///
+  /// In en, this message translates to:
+  /// **'Enter a whole number from 1 to 600'**
+  String get instErrCount;
+
+  /// Installments validation
+  ///
+  /// In en, this message translates to:
+  /// **'Choose a date'**
+  String get instErrDate;
+
+  /// Installments validation
+  ///
+  /// In en, this message translates to:
+  /// **'A deposit needs both an amount and a date'**
+  String get instErrDepositPair;
+
+  /// Installments validation
+  ///
+  /// In en, this message translates to:
+  /// **'That schedule runs past the calendar'**
+  String get instErrRange;
+
+  /// Installments validation: past 2^53 − 1 minor units
+  ///
+  /// In en, this message translates to:
+  /// **'That total is too large'**
+  String get instErrTooLarge;
+
+  /// Installments validation: a new plan in a withdrawn currency
+  ///
+  /// In en, this message translates to:
+  /// **'{code} is no longer issued. Choose a current currency.'**
+  String instErrWithdrawn(String code);
+
+  /// Installments storage failure
+  ///
+  /// In en, this message translates to:
+  /// **'Couldn\'t save. Nothing was changed.'**
+  String get instErrFailed;
+
+  /// Installments conflict
+  ///
+  /// In en, this message translates to:
+  /// **'This plan changed somewhere else. Nothing was saved.'**
+  String get instErrConflict;
+
+  /// Installments damaged scope
+  ///
+  /// In en, this message translates to:
+  /// **'This plan\'s records don\'t agree, so nothing was written.'**
+  String get instErrDamaged;
+
+  /// Installments: payments are made in order
+  ///
+  /// In en, this message translates to:
+  /// **'Pay instalment {n} first.'**
+  String instErrOutOfOrder(String n);
+
+  /// Installments
+  ///
+  /// In en, this message translates to:
+  /// **'This plan is cancelled. Reinstate it to record a payment.'**
+  String get instErrCancelled;
+
+  /// Installments
+  ///
+  /// In en, this message translates to:
+  /// **'Every instalment is paid; there is nothing to cancel.'**
+  String get instErrCompleted;
+
+  /// Installments
+  ///
+  /// In en, this message translates to:
+  /// **'That instalment is already paid.'**
+  String get instErrAlreadyPaid;
+
+  /// Installments filtered list is empty
+  ///
+  /// In en, this message translates to:
+  /// **'No plans here'**
+  String get instNoMatch;
+
+  /// Installments filtered list is empty
+  ///
+  /// In en, this message translates to:
+  /// **'Nothing matches this filter or search.'**
+  String get instNoMatchText;
+
+  /// Installments: clear the filter and search
+  ///
+  /// In en, this message translates to:
+  /// **'Show all'**
+  String get instShowAll;
+
+  /// Installments deep link to a plan that is gone
+  ///
+  /// In en, this message translates to:
+  /// **'That plan isn\'t here any more.'**
+  String get instNotFound;
 
   /// Validation
   ///
