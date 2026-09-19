@@ -25,6 +25,33 @@ parity captures. That is why no golden changed when an ordinary debug build
 stopped drawing the reference's claims. A test about another flavor
 overrides it.
 
+### Controls that cannot do what they say
+
+A header control the reference draws with nothing behind it is reproduced
+only where it is evidence, and never as though it worked:
+
+| control | parity | development and release |
+|---|---|---|
+| **Share** on a tool with no typed card, privacy filter or share adapter (Expenses; Goals once converted) | drawn **disabled**: announced "Share", a button, not enabled, with no tap action, no focus and no handler; a tap opens nothing | **left out** |
+| **Search** on a tool with no field to focus | drawn as the reference draws it: it does nothing | **left out** |
+| **Share** on a tool with a real card (Age, Loan, Hadith …) | live | live |
+
+`share_visibility_test.dart` holds the table, including a sweep: in
+development and release, every tool that declares Share draws it live or
+not at all. Installments draws no notification control in any flavor
+(`INSTALLMENTS_PROPOSAL.md` §14).
+
+### The privacy note, by flavor
+
+| outbound | parity | development and release |
+|---|---|---|
+| `none` | the reference's `toolPrivateText`. Its Urdu and Arabic say only "never shared" and leave Home out; the parity captures keep them | `toolPrivateFullText` in every language: stays on the device, never on Home or its suggestions, never in shared content |
+| `reviewedShare` | Lume's own sentence (there is no reference one): private by default; only what the reader reviews and chooses leaves; notes, record ids and anything not reviewed never do | the same |
+
+The sentence is chosen from the catalogue's typed `outbound` and the build
+profile, never from a tool id (`privacy_note.dart`), and a screen reader
+hears the same sentence as the page shows (`privacy_note_test.dart`).
+
 ## Classifications
 
 | class | meaning |

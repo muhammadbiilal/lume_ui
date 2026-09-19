@@ -2479,6 +2479,25 @@ sample record ticked from its row would have shown its raw `@key`.
 `update(…, claim: false)` keeps it; a form's save still claims the record as
 the reader's (`memory_record_repository_test.dart`).
 
+### C93 — Reference-only controls and the short privacy sentence, by flavor
+
+**Honesty correction outside the parity flavor.** Two things the reference
+draws are true only as pictures:
+
+- Expenses (and Goals, once converted) declare Share with nothing to share:
+  there is no card, privacy filter or adapter. A tool that declares search
+  and has no field has a Search that does nothing.
+- The Urdu and Arabic of `toolPrivateText` say only "never shared" and
+  leave out that the tool is never shown on Home.
+
+The parity flavor keeps both, so its captures stay the reference's. The
+Share it draws is disabled and says so, with no handler. Development and
+release leave the controls out and say the whole privacy contract in every
+language (`RELEASE_HONESTY.md`, *Controls that cannot do what they say* and
+*The privacy note, by flavor*). Ledger's reviewed-share sentence now also
+names what never leaves: notes, record ids and anything not reviewed. Five
+Ledger state goldens are re-captured for it.
+
 ### C92 — The notification banner takes a slot of its own
 
 **Accessibility and platform adaptation.** The reference's `.nbanner` is
@@ -2766,6 +2785,7 @@ deleted row invites the same question again.
 
 | Date | Change | Reason |
 |---|---|---|
+| 2026-09-19 | **C93 raised and corrected** — a Share with nothing behind it, and a Search with no field, are left out of development and release; the whole privacy sentence outside parity | A control that cannot do what it says must not look as though it can |
 | 2026-09-19 | **C92 raised and corrected** — the notification banner takes a measured slot above the shell instead of lying over the header or a form's Save | Found in the Ledger closure: the banner covered the header Save after the first tick |
 | 2026-09-13 (F5C-C) | **C41 decided: reproduce.** An option row's title and its description run together on one line, exactly as the prototype draws them | The rendered Lume interface wins; the Dayroz obligation is recorded rather than the defect silently repaired |
 | 2026-09-13 (F5C-C) | **C44 decided: carry the engine's `SOURCES` as a fixture**, and the Notifications route finished — five sections, not two | The table is what the category filter and the By tool section both need, and neither is an engine |

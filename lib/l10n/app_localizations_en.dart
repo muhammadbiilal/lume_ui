@@ -6240,7 +6240,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get toolPrivateReviewedText =>
-      'This information stays on your device and is never shown on Home. Only what you review and choose to share leaves Lume — nothing else is included.';
+      'This information stays on your device and is never shown on Home. Only what you review and choose to share leaves Lume. Notes, record IDs and anything you did not review are never included.';
 
   @override
   String get toolPrivateReviewedTitle => 'Private by default';
@@ -6248,6 +6248,10 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get toolPrivateText =>
       'This information stays on your device, is never shown on Home and is never included in shared content.';
+
+  @override
+  String get toolPrivateFullText =>
+      'This information stays on your device. It is never shown on Home or in its suggestions, and never included in shared content.';
 
   @override
   String get toolPrivateTitle => 'Private to you';

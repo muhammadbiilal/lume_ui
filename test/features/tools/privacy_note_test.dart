@@ -6,6 +6,7 @@
 /// is chosen from typed catalogue metadata ([LumeOutbound]), not a tool id.
 library;
 
+import 'package:flutter/widgets.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:lume/core/config/lume_build_profile.dart';
@@ -57,56 +58,120 @@ void main() {
 
   group('the note', () {
     final AppLocalizations l = langs['en']!;
+    const LumeBuildProfile parity = LumeBuildProfile.parity;
+    const List<LumeBuildProfile> shipped = <LumeBuildProfile>[
+      LumeBuildProfile.development,
+      LumeBuildProfile.release,
+    ];
 
     test('a tool that is not sensitive has none', () {
-      expect(LumePrivacyNote.of(l, byId('calculator')), isNull);
+      for (final LumeBuildProfile p in LumeBuildProfile.values) {
+        expect(LumePrivacyNote.of(l, byId('calculator'), profile: p), isNull);
+      }
     });
 
-    test('a sensitive tool that shares nothing: never in shared content', () {
-      final LumePrivateState n = LumePrivacyNote.of(l, byId('expenses'))!;
+    test('parity: a tool that shares nothing keeps the reference sentence', () {
+      final LumePrivateState n = LumePrivacyNote.of(
+        l,
+        byId('expenses'),
+        profile: parity,
+      )!;
       expect(n.title, 'Private to you');
       expect(
         n.text,
         'This information stays on your device, is never shown on Home and '
         'is never included in shared content.',
       );
-    });
-
-    test('a sensitive tool that shares reviewed content: only that leaves', () {
-      final LumePrivateState n = LumePrivacyNote.of(l, byId('ledger'))!;
-      expect(n.title, 'Private by default');
+      // Urdu and Arabic keep the reference's shorter sentence here.
       expect(
-        n.text,
-        'This information stays on your device and is never shown on Home. '
-        'Only what you review and choose to share leaves Lume — nothing else '
-        'is included.',
+        LumePrivacyNote.of(
+          langs['ur']!,
+          byId('expenses'),
+          profile: parity,
+        )!.text,
+        langs['ur']!.toolPrivateText,
       );
-      expect(n.text, isNot(contains('never included in shared content')));
     });
 
-    test('English, Urdu and Arabic say the same thing', () {
-      // Each language names Home, names the reader's review and choice, and
-      // never says nothing is shared.
-      const Map<String, (String, List<String>, String)> meaning =
-          <String, (String, List<String>, String)>{
-            'en': ('Home', <String>['review', 'choose'], 'never included'),
-            'ur': ('ہوم', <String>['دیکھ', 'چنیں'], 'کبھی شیئر نہیں'),
-            'ar': ('الرئيسية', <String>['تراجعه', 'تختار'], 'لا تُشارك'),
+    test('development and release: the whole contract', () {
+      for (final LumeBuildProfile p in shipped) {
+        final LumePrivateState n = LumePrivacyNote.of(
+          l,
+          byId('expenses'),
+          profile: p,
+        )!;
+        expect(n.title, 'Private to you');
+        expect(
+          n.text,
+          'This information stays on your device. It is never shown on Home '
+          'or in its suggestions, and never included in shared content.',
+        );
+      }
+    });
+
+    test('a tool that shares reviewed content: only that leaves, in every '
+        'flavor', () {
+      for (final LumeBuildProfile p in LumeBuildProfile.values) {
+        final LumePrivateState n = LumePrivacyNote.of(
+          l,
+          byId('ledger'),
+          profile: p,
+        )!;
+        expect(n.title, 'Private by default');
+        expect(
+          n.text,
+          'This information stays on your device and is never shown on Home. '
+          'Only what you review and choose to share leaves Lume. Notes, '
+          'record IDs and anything you did not review are never included.',
+        );
+        expect(n.text, isNot(contains('never included in shared content')));
+      }
+    });
+
+    test('shipped: English, Urdu and Arabic say the same thing', () {
+      // (home, suggestions, device, shared content) for a tool that shares
+      // nothing; (home, review, choose, notes, ids) for reviewed sharing.
+      const Map<String, (String, String, String, String)> none =
+          <String, (String, String, String, String)>{
+            'en': ('Home', 'suggestions', 'device', 'shared content'),
+            'ur': ('ہوم', 'تجاویز', 'آلے', 'شیئر کیے گئے مواد'),
+            'ar': ('الرئيسية', 'اقتراحاتها', 'جهازك', 'المحتوى الذي تشاركه'),
           };
+      const Map<String, List<String>> reviewed = <String, List<String>>{
+        'en': <String>['Home', 'review', 'choose', 'Notes', 'record IDs'],
+        'ur': <String>['ہوم', 'دیکھ', 'چنیں', 'نوٹس', 'ریکارڈ کی شناخت'],
+        'ar': <String>['الرئيسية', 'تراجعه', 'تختار', 'الملاحظات', 'معرّفات'],
+      };
       for (final MapEntry<String, AppLocalizations> e in langs.entries) {
-        final (String home, List<String> review, String never) =
-            meaning[e.key]!;
-        final String text = e.value.toolPrivateReviewedText;
-        expect(text, contains(home), reason: e.key);
-        for (final String word in review) {
-          expect(text, contains(word), reason: '${e.key}: $word');
+        final (String home, String sugg, String device, String shared) =
+            none[e.key]!;
+        final String full = e.value.toolPrivateFullText;
+        for (final String w in <String>[home, sugg, device, shared]) {
+          expect(full, contains(w), reason: '${e.key}: $w');
         }
-        expect(text, isNot(contains(never)), reason: e.key);
-        expect(e.value.toolPrivateReviewedTitle, isNotEmpty);
+        final String rev = e.value.toolPrivateReviewedText;
+        for (final String w in reviewed[e.key]!) {
+          expect(rev, contains(w), reason: '${e.key}: $w');
+        }
         expect(
           e.value.toolPrivateReviewedTitle,
           isNot(e.value.toolPrivateTitle),
         );
+        if (e.key != 'en') {
+          // No English in Urdu or Arabic, beyond the product's name.
+          for (final String t in <String>[
+            full,
+            rev,
+            e.value.toolPrivateTitle,
+            e.value.toolPrivateReviewedTitle,
+          ]) {
+            expect(
+              t.replaceAll('Lume', ''),
+              isNot(matches(RegExp('[A-Za-z]'))),
+              reason: '${e.key}: $t',
+            );
+          }
+        }
       }
     });
   });
@@ -150,6 +215,37 @@ void main() {
         );
         h.dispose();
       });
+    }
+
+    for (final (String code, AppLocalizations l)
+        in <(String, AppLocalizations)>[
+          ('ur', AppLocalizationsUr()),
+          ('ar', AppLocalizationsAr()),
+        ]) {
+      for (final LumeBuildProfile profile in LumeBuildProfile.values) {
+        testWidgets('$code · ${profile.name}: heard in full outside parity', (
+          WidgetTester t,
+        ) async {
+          final SemanticsHandle h = t.ensureSemantics();
+          await pumpTool(
+            t,
+            'expenses',
+            locale: Locale(code),
+            overrides: <Override>[
+              buildProfileProvider.overrideWithValue(profile),
+            ],
+          );
+          final String said = profile.reproducesReference
+              ? l.toolPrivateText
+              : l.toolPrivateFullText;
+          expect(find.text(said), findsOneWidget);
+          expect(
+            find.bySemanticsLabel(RegExp(RegExp.escape(said))),
+            findsOneWidget,
+          );
+          h.dispose();
+        });
+      }
     }
   });
 }

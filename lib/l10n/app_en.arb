@@ -8467,7 +8467,7 @@
   "@toolPrivate": {
     "description": "Reference: aria-label on a sensitive tool’s lock marker"
   },
-  "toolPrivateReviewedText": "This information stays on your device and is never shown on Home. Only what you review and choose to share leaves Lume — nothing else is included.",
+  "toolPrivateReviewedText": "This information stays on your device and is never shown on Home. Only what you review and choose to share leaves Lume. Notes, record IDs and anything you did not review are never included.",
   "@toolPrivateReviewedText": {
     "description": "Privacy note for a sensitive tool that can share content the reader has reviewed in a preview, such as Ledger's reminder. Must not claim the content is never shared."
   },
@@ -8478,6 +8478,10 @@
   "toolPrivateText": "This information stays on your device, is never shown on Home and is never included in shared content.",
   "@toolPrivateText": {
     "description": "Reference key tool.private.text"
+  },
+  "toolPrivateFullText": "This information stays on your device. It is never shown on Home or in its suggestions, and never included in shared content.",
+  "@toolPrivateFullText": {
+    "description": "Privacy note of a sensitive tool that shares nothing, in development and release builds: private to the reader, never on Home or its suggestions, never in shared content. The parity flavor shows toolPrivateText, the reference's own wording."
   },
   "toolPrivateTitle": "Private to you",
   "@toolPrivateTitle": {

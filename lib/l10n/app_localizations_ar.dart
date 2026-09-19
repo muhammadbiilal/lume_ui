@@ -6315,7 +6315,7 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get toolPrivateReviewedText =>
-      'تبقى هذه المعلومات على جهازك ولا تظهر أبدًا في الصفحة الرئيسية. لا يغادر Lume إلا ما تراجعه وتختار مشاركته بنفسك، ولا يُضمَّن أي شيء آخر.';
+      'تبقى هذه المعلومات على جهازك ولا تظهر أبدًا في الصفحة الرئيسية. لا يغادر Lume إلا ما تراجعه وتختار مشاركته بنفسك. لا تُضمَّن الملاحظات ولا معرّفات السجلات ولا أي شيء لم تراجعه.';
 
   @override
   String get toolPrivateReviewedTitle => 'خاص افتراضيًا';
@@ -6323,6 +6323,10 @@ class AppLocalizationsAr extends AppLocalizations {
   @override
   String get toolPrivateText =>
       'تبقى هذه المعلومات على جهازك ولا تُشارك أبدًا.';
+
+  @override
+  String get toolPrivateFullText =>
+      'تبقى هذه المعلومات على جهازك. لا تظهر أبدًا في الصفحة الرئيسية أو في اقتراحاتها، ولا تُضمَّن أبدًا في المحتوى الذي تشاركه.';
 
   @override
   String get toolPrivateTitle => 'خاص بك';

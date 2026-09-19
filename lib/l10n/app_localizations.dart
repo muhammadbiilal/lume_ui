@@ -10957,7 +10957,7 @@ abstract class AppLocalizations {
   /// Privacy note for a sensitive tool that can share content the reader has reviewed in a preview, such as Ledger's reminder. Must not claim the content is never shared.
   ///
   /// In en, this message translates to:
-  /// **'This information stays on your device and is never shown on Home. Only what you review and choose to share leaves Lume — nothing else is included.'**
+  /// **'This information stays on your device and is never shown on Home. Only what you review and choose to share leaves Lume. Notes, record IDs and anything you did not review are never included.'**
   String get toolPrivateReviewedText;
 
   /// Title of the privacy note for a sensitive tool that shares only reviewed content
@@ -10971,6 +10971,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'This information stays on your device, is never shown on Home and is never included in shared content.'**
   String get toolPrivateText;
+
+  /// Privacy note of a sensitive tool that shares nothing, in development and release builds: private to the reader, never on Home or its suggestions, never in shared content. The parity flavor shows toolPrivateText, the reference's own wording.
+  ///
+  /// In en, this message translates to:
+  /// **'This information stays on your device. It is never shown on Home or in its suggestions, and never included in shared content.'**
+  String get toolPrivateFullText;
 
   /// Reference key tool.private.title
   ///

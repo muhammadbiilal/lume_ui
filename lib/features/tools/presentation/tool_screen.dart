@@ -265,16 +265,26 @@ class LumeToolScreenState extends ConsumerState<LumeToolScreen> {
 
   /// `headerActions()` — share, export, then favourite and search while there
   /// is room, at most three.
-  List<Widget> _actions(AppLocalizations l) {
+  ///
+  /// A control that cannot do what it says is never drawn as though it
+  /// could. Where a tool declares Share but has nothing typed to share
+  /// (Expenses, Goals), or declares search but has no field, the parity
+  /// flavor draws the reference's control — Share disabled, announced as
+  /// unavailable, with no handler; Search as inert as the reference's — and
+  /// development and release leave it out (`RELEASE_HONESTY.md`).
+  List<Widget> _actions(AppLocalizations l, LumeBuildProfile profile) {
     if (widget.headerActions case final List<Widget> own) return own;
     final Set<LumeToolSupport> s = widget.feature.supports;
     final LumeToolActions a = widget.actions;
+    final bool reference = profile.reproducesReference;
+    final VoidCallback? onShare =
+        a.onShare ?? (widget.shareCard == null ? null : share);
     final List<Widget> out = <Widget>[
-      if (s.contains(LumeToolSupport.sharing))
+      if (s.contains(LumeToolSupport.sharing) && (reference || onShare != null))
         LumeIconButton(
           icon: LumeIcons.share,
           label: l.a11yShare,
-          onPressed: a.onShare ?? (widget.shareCard == null ? null : share),
+          onPressed: onShare,
         ),
       if (s.contains(LumeToolSupport.export))
         LumeIconButton(
@@ -292,7 +302,9 @@ class LumeToolScreenState extends ConsumerState<LumeToolScreen> {
         ),
       );
     }
-    if (s.contains(LumeToolSupport.search) && out.length < 3) {
+    if (s.contains(LumeToolSupport.search) &&
+        (reference || a.onSearch != null) &&
+        out.length < 3) {
       out.add(
         LumeIconButton(
           icon: LumeIcons.search,
@@ -349,7 +361,7 @@ class LumeToolScreenState extends ConsumerState<LumeToolScreen> {
         relatedTitle: l.toolRelated,
       ),
       onBack: widget.onBack,
-      actions: _actions(l),
+      actions: _actions(l, ref.watch(buildProfileProvider)),
       status: widget.status,
       // The route has already asked; asking again here is the frame's own
       // gate, so a tool built some other way still cannot draw for a reader
@@ -364,7 +376,13 @@ class LumeToolScreenState extends ConsumerState<LumeToolScreen> {
       sourceSample: widget.bare ? null : claim.sample,
       sourceSampleSemantics: l.fixtureSampleA11y,
       // What can leave Lume decides what the note says (§62).
-      privacy: widget.bare ? null : LumePrivacyNote.of(l, feature),
+      privacy: widget.bare
+          ? null
+          : LumePrivacyNote.of(
+              l,
+              feature,
+              profile: ref.watch(buildProfileProvider),
+            ),
       related: <LumeRelatedTool>[
         if (!widget.bare)
           for (final String id in feature.related)
