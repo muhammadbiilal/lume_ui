@@ -630,6 +630,9 @@ void main() {
       expect(row.open(borrowed), hasLength(1));
       expect(h.book().settled(ali), isFalse);
       expect(h.book().people, 1);
+      // No fictional repayment or adjustment settles them: two entries,
+      // no allocation between them.
+      expect(h.book().entries, hasLength(2));
       expect(h.book().allocations, isEmpty);
       expect(
         h.repo.setArchived(ali, true, version: 1).failure?.kind,
