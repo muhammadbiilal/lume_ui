@@ -144,7 +144,7 @@ class LumeTodoFamily extends LumeRecordFamily<LumeTodo> {
   @override
   Map<String, Object?> defaults(LumeRecordContext c) => <String, Object?>{
     'list': LumeTodoList.values.first.name,
-    'due': lumeIsoDay(c.now, 0),
+    'due': lumeIsoDay(c.today, 0),
     'priority': LumeTodoPriority.normal.name,
     'done': false,
   };
@@ -212,7 +212,11 @@ class LumeTodoFamily extends LumeRecordFamily<LumeTodo> {
           LumeFamilyOption(x.name, x.label(c.l)),
       ],
     ),
-    LumeFamilyField(name: 'due', label: c.l.recFieldDue),
+    LumeFamilyField(
+      name: 'due',
+      label: c.l.recFieldDue,
+      clearLabel: c.l.recClearDueDate,
+    ),
     LumeFamilyField(
       name: 'priority',
       label: c.l.recFieldPriority,
@@ -244,46 +248,87 @@ class LumeTodoFamily extends LumeRecordFamily<LumeTodo> {
       <String, Object?>{'done': !x.done};
 }
 
-/// The composition's figures, from the records (`c.todos()`'s shape).
+/// Which tasks each When segment holds — the contract, stated once.
+///
+/// Days are **calendar dates** counted from the reader's [today]
+/// (`LumeRecordContext.today`: the injected instant on the reader's zone),
+/// never elapsed hours, so a daylight-saving change or a zone change moves a
+/// task only by the date it falls on.
+///
+/// | task | Today | Week | All |
+/// |---|---|---|---|
+/// | due today, open or done | yes | yes | yes |
+/// | open, due before today (overdue) | yes | yes | yes |
+/// | done, due before today | — | — | yes |
+/// | undated, open or done | yes | yes | yes |
+/// | due 1 to 6 dates after today, open or done | — | yes | yes |
+/// | due 7 or more dates after today | — | — | yes |
+///
+/// Week is shown as "Week", as the reference labels it, and spoken as "Next
+/// seven days": today and the six calendar dates after it — never the
+/// current Monday-to-Sunday week (C86).
+enum LumeTodoWhen {
+  today,
+  week,
+  all;
+
+  /// The last date after today that [week] holds.
+  static const int weekSpan = 6;
+
+  bool holds(LumeTodo x, DateTime today) {
+    final int? d = LumeFamilyText.daysFrom(x.due, today);
+    final bool onToday = d == null || d == 0 || (d < 0 && !x.done);
+    return switch (this) {
+      LumeTodoWhen.today => onToday,
+      LumeTodoWhen.week => onToday || (d >= 1 && d <= weekSpan),
+      LumeTodoWhen.all => true,
+    };
+  }
+}
+
+/// The composition's figures, from the records (`c.todos()`'s shape). Every
+/// figure is the whole collection's: the When and Priority filters and the
+/// search narrow only the list under them.
 class LumeTodoBoard {
-  LumeTodoBoard(this.all, DateTime now)
-    : today = <LumeTodo>[
+  LumeTodoBoard(this.all, this.today)
+    : upcoming = <LumeTodo>[
         for (final LumeTodo x in all)
-          if (x.due == null || LumeFamilyText.daysFrom(x.due, now)! <= 0) x,
-      ],
-      upcoming = <LumeTodo>[
-        for (final LumeTodo x in all)
-          if (!x.done &&
-              x.due != null &&
-              LumeFamilyText.daysFrom(x.due, now)! > 0)
-            x,
+          if (!x.done && (LumeFamilyText.daysFrom(x.due, today) ?? 0) > 0) x,
       ]..sort((LumeTodo a, LumeTodo b) => a.due!.compareTo(b.due!)),
-      overdue = all.where((LumeTodo x) => x.overdueOn(now)).length,
-      done7 = all
-          .where(
-            (LumeTodo x) =>
-                x.done &&
-                now.difference(x.record.updatedAt) < const Duration(days: 7),
-          )
-          .length;
+      overdue = all.where((LumeTodo x) => x.overdueOn(today)).length;
 
   final List<LumeTodo> all;
 
-  /// What is on today: due today or before, or undated.
-  final List<LumeTodo> today;
+  /// The reader's calendar date.
+  final DateTime today;
 
   /// Open and due after today, soonest first.
   final List<LumeTodo> upcoming;
 
   final int overdue;
 
-  /// Done, and last changed within seven days — the store keeps no separate
-  /// completion time, so a done task edited this week counts too.
-  final int done7;
+  /// What is on today — [LumeTodoWhen.today]'s tasks.
+  List<LumeTodo> get onToday => <LumeTodo>[
+    for (final LumeTodo x in all)
+      if (LumeTodoWhen.today.holds(x, today)) x,
+  ];
 
-  int get doneToday => today.where((LumeTodo x) => x.done).length;
+  /// Done, and last changed within seven days of now — the store keeps no
+  /// separate completion time, so a done task edited this week counts too.
+  int done7(DateTime now) => all
+      .where(
+        (LumeTodo x) =>
+            x.done &&
+            now.difference(x.record.updatedAt) < const Duration(days: 7),
+      )
+      .length;
 
-  double get share => today.isEmpty ? 0 : doneToday / today.length;
+  int get doneToday => onToday.where((LumeTodo x) => x.done).length;
+
+  double get share {
+    final List<LumeTodo> t = onToday;
+    return t.isEmpty ? 0 : t.where((LumeTodo x) => x.done).length / t.length;
+  }
 
   int openIn(LumeTodoList list) =>
       all.where((LumeTodo x) => !x.done && x.list == list).length;

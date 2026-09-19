@@ -58,7 +58,7 @@ abstract final class LumeEventsTool {
     final LumeRecordContext c = s.c;
     final LumeColors lume = context.lume;
     const LumeEventFamily family = LumeEventFamily();
-    final List<LumeEvent> rows = upcoming(s.items, s.query, c.now);
+    final List<LumeEvent> rows = upcoming(s.items, s.query, c.today);
 
     return <Widget>[
       LumeToolSection(

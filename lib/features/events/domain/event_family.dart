@@ -131,8 +131,8 @@ class LumeEventFamily extends LumeRecordFamily<LumeEvent> {
   /// `defaultFor(f)` — today, and the time now.
   @override
   Map<String, Object?> defaults(LumeRecordContext c) => <String, Object?>{
-    'date': lumeIsoDay(c.now, 0),
-    'at': LumeFamilyText.isoClock(c.now.hour, c.now.minute),
+    'date': lumeIsoDay(c.today, 0),
+    'at': LumeFamilyText.isoClock(c.local.hour, c.local.minute),
   };
 
   @override
@@ -205,7 +205,11 @@ class LumeEventFamily extends LumeRecordFamily<LumeEvent> {
       placeholder: c.l.recEventsPh,
     ),
     LumeFamilyField(name: 'date', label: c.l.recFieldDate),
-    LumeFamilyField(name: 'at', label: c.l.recFieldTime),
+    LumeFamilyField(
+      name: 'at',
+      label: c.l.recFieldTime,
+      clearLabel: c.l.recClearEventTime,
+    ),
     LumeFamilyField(name: 'where', label: c.l.recFieldWhere),
     LumeFamilyField(name: 'people', label: c.l.recFieldPeople),
     LumeFamilyField(name: 'notes', label: c.l.recFieldNotes),

@@ -128,21 +128,17 @@ void main() {
     final LumeTodoBoard board = LumeTodoBoard(read(store, now), now);
     expect(board.overdue, 1);
     expect(
-      board.today.map((LumeTodo x) => x.label),
+      board.onToday.map((LumeTodo x) => x.label),
       contains('Renew the licence'),
     );
     expect(board.upcoming.map((LumeTodo x) => x.label), <String>[
       'Review the design feedback',
       'Plan the trip',
     ]);
-    expect(board.done7, 1);
+    expect(board.done7(now), 1);
     expect(board.openIn(LumeTodoList.work), 2);
     // A done task last changed eight days ago is not this week's.
-    final LumeTodoBoard later = LumeTodoBoard(
-      read(store, now),
-      now.add(const Duration(days: 8)),
-    );
-    expect(later.done7, 0);
+    expect(board.done7(now.add(const Duration(days: 8))), 0);
   });
 
   testWidgets('When: Today, the week ahead, or everything; Priority narrows '

@@ -8320,6 +8320,18 @@ abstract class AppLocalizations {
   /// **'Check the highlighted fields'**
   String get recCheckFields;
 
+  /// Spoken label of the Clear action under a task's optional due date
+  ///
+  /// In en, this message translates to:
+  /// **'Clear due date'**
+  String get recClearDueDate;
+
+  /// Spoken label of the Clear action under an event's optional time
+  ///
+  /// In en, this message translates to:
+  /// **'Clear event time'**
+  String get recClearEventTime;
+
   /// Reference key rec.cleared, after a bulk clear
   ///
   /// In en, this message translates to:
@@ -10725,6 +10737,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Coming up'**
   String get todosUpcoming;
+
+  /// Spoken for To-dos' Week chip: today and the six calendar dates after it (C86)
+  ///
+  /// In en, this message translates to:
+  /// **'Next seven days'**
+  String get todosWeekSpoken;
 
   /// Reference key todos.when
   ///

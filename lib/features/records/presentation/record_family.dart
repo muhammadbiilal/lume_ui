@@ -13,6 +13,8 @@ import 'package:flutter/widgets.dart';
 
 import '../../../core/localization/lume_format.dart';
 import '../../../core/theme/lume/lume_gradients.dart';
+import '../../../core/time/lume_time_zone.dart';
+import '../../../core/time/lume_zone.dart';
 import '../../../core/widgets/lume/lume_badge.dart';
 import '../../../core/widgets/lume/lume_summary.dart';
 import '../../../l10n/app_localizations.dart';
@@ -21,20 +23,51 @@ import '../domain/record_schema.dart';
 
 /// What every reading needs: the words, the formats, the day, and which
 /// clock the reader is on.
+///
+/// **The reader's day.** A due date or an event's date is a calendar date
+/// with no zone of its own, so "today" is the reader's calendar date: the
+/// injected instant read on the clock of the reader's zone ([zoneId],
+/// through [LumeZoneDatabase]). Every day count — overdue, "in 3 days",
+/// To-dos' Week — counts calendar dates from [today], never elapsed hours,
+/// so a daylight-saving change cannot move a task in or out of a day. A zone
+/// the database cannot read falls back to the device's own calendar date,
+/// and [zoneKnown] says so.
 @immutable
 class LumeRecordContext {
-  const LumeRecordContext({
+  factory LumeRecordContext({
+    required AppLocalizations l,
+    required LumeFormatting f,
+    required DateTime now,
+    required String zoneId,
+    required String currency,
+    LumeZoneDatabase zones = const LumeRuleTableZones(),
+  }) {
+    final LumeZone? zone = zones.zoneFor(zoneId);
+    return LumeRecordContext._(
+      l: l,
+      f: f,
+      now: now,
+      zoneId: zoneId,
+      currency: currency,
+      zoneKnown: zone != null,
+      local: zone?.wallClockAt(now) ?? now,
+    );
+  }
+
+  const LumeRecordContext._({
     required this.l,
     required this.f,
     required this.now,
     required this.zoneId,
     required this.currency,
+    required this.zoneKnown,
+    required this.local,
   });
 
   final AppLocalizations l;
   final LumeFormatting f;
 
-  /// From the injected clock — never the device's directly.
+  /// The instant, from the injected clock — never the device's directly.
   final DateTime now;
 
   /// The reader's IANA zone — their own choice, or their country's.
@@ -43,7 +76,14 @@ class LumeRecordContext {
   /// The reader's currency code; empty when the country has none on file.
   final String currency;
 
-  DateTime get today => DateTime(now.year, now.month, now.day);
+  /// Whether [zoneId] was read; if not, [local] is the device's own clock.
+  final bool zoneKnown;
+
+  /// [now] on the reader's wall clock.
+  final DateTime local;
+
+  /// The reader's calendar date.
+  DateTime get today => DateTime(local.year, local.month, local.day);
 }
 
 /// One record, read by its family. [record] keeps the store's bookkeeping —
@@ -145,11 +185,16 @@ class LumeFamilyField {
     required this.label,
     this.placeholder,
     this.options = const <LumeFamilyOption>[],
+    this.clearLabel,
   });
 
   final String name;
   final String label;
   final String? placeholder;
+
+  /// What the Clear under an optional date or time says it clears — "Clear
+  /// due date", "Clear event time" — so a screen reader hears which one.
+  final String? clearLabel;
 
   /// For a select.
   final List<LumeFamilyOption> options;
@@ -255,7 +300,7 @@ abstract final class LumeFamilyText {
   /// or the short date beyond a month either way.
   static String when(LumeRecordContext c, DateTime? d) {
     if (d == null) return '—';
-    final int n = daysFrom(d, c.now)!;
+    final int n = daysFrom(d, c.today)!;
     if (n == 0) return c.l.commonToday;
     if (n == 1) return c.l.commonTomorrow;
     if (n == -1) return c.l.commonYesterday;

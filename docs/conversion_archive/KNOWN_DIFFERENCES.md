@@ -2359,8 +2359,25 @@ reader's history.
 
 - **To-dos "Done this week"** counts done tasks last changed in the past
   seven days: the store keeps no separate completion time.
-- **To-dos' When filter** — the reference's Week and All pick the same list;
-  Week is today's and the next seven days' here, All everything.
+- **Every figure is the whole collection's.** When, Priority and the search
+  narrow only the list under them; no summary is recomputed over a filter,
+  because the reference defines none (`wave2_contracts_test.dart`: create,
+  edit, delete, Undo and the bulk clear each move the figures, a filter does
+  not, and with no records no figure remains).
+- **"Today" is the reader's date.** The injected instant read on the clock
+  of the reader's zone (`LumeRecordContext.today`); every day count is in
+  calendar dates, never elapsed hours. A zone this build's table cannot read
+  falls back to the device's calendar date, and the context says so.
+- **To-dos' When filter — approved contract.** The reference's Week and All
+  pick the same list. Here **Today** holds tasks due today (open or done),
+  open overdue tasks and undated tasks; **Week** adds tasks due on the six
+  calendar dates after today — a rolling seven-date window, never the
+  current Monday-to-Sunday week and never 168 hours, so a daylight-saving
+  change moves nothing; **All** is every task. A done task due before today
+  is in All only. The chip still reads "Week", as the reference labels it,
+  and is spoken "Next seven days" in each language. Tested at the window's
+  edges, across New York's spring and autumn changes, and across a zone
+  change that moves the reader's date.
 - **The section under the filters** is titled by the filter chosen (Today,
   Week, All) rather than "Today" whatever it holds.
 - **Events' upcoming** is the records from today on, soonest first; past
@@ -2422,10 +2439,17 @@ wave measured are C87):
 - **Two rows of filter chips.** To-dos' When and Priority rows are 8 apart;
   their 44-point targets cannot both overhang the gap, so the Today section
   sits 5 lower (declared in the report).
-- **Clearing an optional date or time.** A set due day, or an event's time,
-  offers Clear under the picker — a native input empties itself, a picker
-  cannot. The form's Save sits 44 lower (Events 40: Chrome's date and time
-  inputs are 73 tall, the pickers 71).
+- **Clearing an optional date or time — approved.** A set due day, or an
+  event's time, offers Clear under the picker — a native input empties
+  itself, a picker cannot. Shown only while there is a value; a 44 × 44
+  target at least; reached with Tab and pressed with Enter, or through the
+  accessibility action switch access uses; spoken "Clear due date" / "Clear
+  event time" in each language. Clearing an event's time leaves its date,
+  and a cleared field makes the form changed, so leaving it asks first.
+  Checked at 200 %, in 852 × 393 landscape and right to left. The form's
+  Save sits 44 lower (Events 40: Chrome's date and time inputs are 73 tall,
+  the pickers 71), declared in the parity report rather than absorbed into a
+  tolerance.
 - **Urdu and Arabic.** The reference has no Urdu or Arabic for these tools'
   own strings and shows them in English; they are translated here (D12).
   Bounds are compared in English for that reason.

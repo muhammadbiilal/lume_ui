@@ -6396,6 +6396,14 @@
   "@recCheckFields": {
     "description": "Reference key rec.checkFields"
   },
+  "recClearDueDate": "Clear due date",
+  "@recClearDueDate": {
+    "description": "Spoken label of the Clear action under a task's optional due date"
+  },
+  "recClearEventTime": "Clear event time",
+  "@recClearEventTime": {
+    "description": "Spoken label of the Clear action under an event's optional time"
+  },
   "recCleared": "{n, plural, =1{1 removed} other{{n} removed}}",
   "@recCleared": {
     "description": "Reference key rec.cleared, after a bulk clear",
@@ -8289,6 +8297,10 @@
   "todosUpcoming": "Coming up",
   "@todosUpcoming": {
     "description": "Reference key todos.upcoming"
+  },
+  "todosWeekSpoken": "Next seven days",
+  "@todosWeekSpoken": {
+    "description": "Spoken for To-dos' Week chip: today and the six calendar dates after it (C86)"
   },
   "todosWhen": "When",
   "@todosWhen": {

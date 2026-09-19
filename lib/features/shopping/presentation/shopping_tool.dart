@@ -62,7 +62,7 @@ abstract final class LumeShoppingTool {
     return LumeShareCard.tryCreate(
       kind: LumeShareKind.reminder,
       text: left.join(' · '),
-      source: s.c.l.shoppingShareSource(s.c.f.dateShort(s.c.now)),
+      source: s.c.l.shoppingShareSource(s.c.f.dateShort(s.c.today)),
     );
   }
 

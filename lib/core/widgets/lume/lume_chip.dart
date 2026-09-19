@@ -56,6 +56,7 @@ class LumeFilterChip extends StatelessWidget {
     this.icon,
     this.count,
     this.muted = false,
+    this.semanticLabel,
   });
 
   final String label;
@@ -63,6 +64,10 @@ class LumeFilterChip extends StatelessWidget {
   final VoidCallback? onTap;
   final String? icon;
   final int? count;
+
+  /// What a screen reader hears when the visible word alone is ambiguous —
+  /// To-dos' "Week" is spoken as "Next seven days".
+  final String? semanticLabel;
 
   /// Dimmed because a selection limit has been reached — the interest picker's
   /// `.is-muted`. Still pressable: pressing it says why.
@@ -143,7 +148,7 @@ class LumeFilterChip extends StatelessWidget {
     return Semantics(
       button: true,
       toggled: selected,
-      label: label,
+      label: semanticLabel ?? label,
       child: LumePressable(
         onTap: onTap,
         borderRadius: LumeRadius.full,

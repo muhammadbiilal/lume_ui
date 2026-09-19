@@ -527,7 +527,7 @@ class _LumeRecordToolState<T extends LumeFamilyRecord>
   }
 
   Future<void> _chooseDay(String name) async {
-    final DateTime now = LumeClockScope.of(context).now();
+    final DateTime now = _context().today;
     final DateTime initial = LumeFamilyText.day(_form?.value(name)) ?? now;
     final DateTime? picked = await showDatePicker(
       context: context,
@@ -546,7 +546,7 @@ class _LumeRecordToolState<T extends LumeFamilyRecord>
     final TimeOfDay? picked = await showTimePicker(
       context: context,
       initialTime: t == null
-          ? TimeOfDay.fromDateTime(LumeClockScope.of(context).now())
+          ? TimeOfDay.fromDateTime(_context().local)
           : TimeOfDay(hour: t.$1, minute: t.$2),
     );
     if (picked != null) {
@@ -1042,7 +1042,8 @@ class _LumeRecordToolState<T extends LumeFamilyRecord>
                 child: LumeTextButton(
                   key: _keys.clearField(name),
                   label: l.actionClear,
-                  semanticLabel: '${l.actionClear} ${field.label}',
+                  semanticLabel:
+                      field.clearLabel ?? '${l.actionClear} ${field.label}',
                   onPressed: () {
                     form.setValue(name, '');
                     form.touch(name);

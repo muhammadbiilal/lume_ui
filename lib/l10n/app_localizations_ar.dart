@@ -4751,6 +4751,12 @@ class AppLocalizationsAr extends AppLocalizations {
   String get recCheckFields => 'راجع الحقول المميزة';
 
   @override
+  String get recClearDueDate => 'مسح تاريخ الاستحقاق';
+
+  @override
+  String get recClearEventTime => 'مسح وقت الفعالية';
+
+  @override
   String recCleared(int n) {
     String _temp0 = intl.Intl.pluralLogic(
       n,
@@ -6177,6 +6183,9 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get todosUpcoming => 'القادمة';
+
+  @override
+  String get todosWeekSpoken => 'الأيام السبعة القادمة';
 
   @override
   String get todosWhen => 'متى';

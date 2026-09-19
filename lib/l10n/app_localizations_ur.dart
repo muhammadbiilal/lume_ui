@@ -4697,6 +4697,12 @@ class AppLocalizationsUr extends AppLocalizations {
   String get recCheckFields => 'نشان زد خانے دیکھیں';
 
   @override
+  String get recClearDueDate => 'مقررہ تاریخ ہٹائیں';
+
+  @override
+  String get recClearEventTime => 'تقریب کا وقت ہٹائیں';
+
+  @override
   String recCleared(int n) {
     String _temp0 = intl.Intl.pluralLogic(
       n,
@@ -6099,6 +6105,9 @@ class AppLocalizationsUr extends AppLocalizations {
 
   @override
   String get todosUpcoming => 'آنے والے';
+
+  @override
+  String get todosWeekSpoken => 'اگلے سات دن';
 
   @override
   String get todosWhen => 'کب';

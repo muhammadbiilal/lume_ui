@@ -4703,6 +4703,12 @@ class AppLocalizationsEn extends AppLocalizations {
   String get recCheckFields => 'Check the highlighted fields';
 
   @override
+  String get recClearDueDate => 'Clear due date';
+
+  @override
+  String get recClearEventTime => 'Clear event time';
+
+  @override
   String recCleared(int n) {
     String _temp0 = intl.Intl.pluralLogic(
       n,
@@ -6103,6 +6109,9 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get todosUpcoming => 'Coming up';
+
+  @override
+  String get todosWeekSpoken => 'Next seven days';
 
   @override
   String get todosWhen => 'When';

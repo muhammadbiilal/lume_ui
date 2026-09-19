@@ -31,9 +31,6 @@ import '../../records/presentation/record_tool.dart';
 import '../../tools/application/tool_request.dart';
 import '../domain/todo_family.dart';
 
-/// `c.filter('when')`.
-enum LumeTodoWhen { today, week, all }
-
 abstract final class LumeTodosTool {
   static const String id = 'todos';
   static const LumeRecordKeys keys = LumeRecordKeys(id);
@@ -64,7 +61,7 @@ abstract final class LumeTodosTool {
     ),
   );
 
-  /// The tasks the chosen filters and the shared query keep.
+  /// The tasks the chosen When and Priority and the shared query keep.
   static List<LumeTodo> visible(
     LumeTodoBoard board,
     LumeTodoWhen when,
@@ -72,22 +69,11 @@ abstract final class LumeTodosTool {
     String query,
     LumeRecordContext c,
   ) {
-    final Iterable<LumeTodo> pool = switch (when) {
-      LumeTodoWhen.today => board.today,
-      // The reference's Week and All pick the same tasks; a week here is
-      // today's and the next seven days' (C86).
-      LumeTodoWhen.week => <LumeTodo>[
-        ...board.today,
-        ...board.upcoming.where(
-          (LumeTodo x) => LumeFamilyText.daysFrom(x.due, c.now)! <= 7,
-        ),
-      ],
-      LumeTodoWhen.all => <LumeTodo>[...board.today, ...board.upcoming],
-    };
     final String q = query.trim().toLowerCase();
     return <LumeTodo>[
-      for (final LumeTodo x in pool)
-        if ((priority == 'any' || x.priority.name == priority) &&
+      for (final LumeTodo x in board.all)
+        if (when.holds(x, board.today) &&
+            (priority == 'any' || x.priority.name == priority) &&
             (q.isEmpty ||
                 '${x.label} ${x.list?.label(c.l) ?? ''}'.toLowerCase().contains(
                   q,
@@ -108,7 +94,7 @@ abstract final class LumeTodosTool {
   ) {
     final LumeRecordContext c = s.c;
     final AppLocalizations l = c.l;
-    final LumeTodoBoard board = LumeTodoBoard(s.items, c.now);
+    final LumeTodoBoard board = LumeTodoBoard(s.items, c.today);
     final LumeTodoWhen when = LumeTodoWhen.values.firstWhere(
       (LumeTodoWhen w) => w.name == s.read('when'),
       orElse: () => LumeTodoWhen.today,
@@ -128,7 +114,7 @@ abstract final class LumeTodosTool {
           key: summaryKey,
           kicker: l.todosToday,
           value: c.f.integer(board.doneToday),
-          valueSmall: '/ ${c.f.integer(board.today.length)}',
+          valueSmall: '/ ${c.f.integer(board.onToday.length)}',
           caption: board.overdue > 0
               ? l.todosOverdueN(board.overdue)
               : l.todosOnTrack,
@@ -143,7 +129,10 @@ abstract final class LumeTodosTool {
               value: c.f.integer(board.upcoming.length),
               label: l.todosUpcoming,
             ),
-            LumeStat(value: c.f.integer(board.done7), label: l.todosDone7),
+            LumeStat(
+              value: c.f.integer(board.done7(c.now)),
+              label: l.todosDone7,
+            ),
           ],
         ),
       ),
@@ -163,6 +152,9 @@ abstract final class LumeTodosTool {
                     LumeFilterChip(
                       key: whenChip(w),
                       label: _whenLabel(l, w),
+                      semanticLabel: w == LumeTodoWhen.week
+                          ? l.todosWeekSpoken
+                          : null,
                       selected: w == when,
                       onTap: () => s.write('when', w.name),
                     ),
