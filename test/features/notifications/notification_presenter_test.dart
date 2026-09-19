@@ -14,6 +14,7 @@ import 'package:go_router/go_router.dart';
 import 'package:lume/app/providers/locale_provider.dart';
 import 'package:lume/app/providers/notification_feed.dart';
 import 'package:lume/app/providers/personalisation.dart';
+import 'package:lume/core/navigation/lume_shell.dart';
 import 'package:lume/features/account/data/notification_prefs_store.dart';
 import 'package:lume/features/account/domain/notification_prefs.dart';
 import 'package:lume/features/notifications/data/notification_fixtures.dart';
@@ -191,9 +192,8 @@ void main() {
     );
   });
 
-  testWidgets('on a phone it drops in from the top', (
-    WidgetTester tester,
-  ) async {
+  testWidgets('on a phone it drops in from the top, and the shell moves '
+      'down for it', (WidgetTester tester) async {
     await pumpLumeRouter(tester, initialLocation: '/home');
     await past(tester, LumeNotificationPresenter.firstTick);
     await tester.pumpAndSettle();
@@ -202,11 +202,12 @@ void main() {
     expect(r.left, 12);
     expect(r.right, 390 - 12);
     expect(r.top, 8);
+    // Its own slot (C92): the shell starts 8 below it, never under it.
+    expect(tester.getRect(find.byType(LumeShell)).top, r.bottom + 8);
   });
 
-  testWidgets('at tablet width it settles into the trailing corner', (
-    WidgetTester tester,
-  ) async {
+  testWidgets('at tablet width it keeps the reference size at the end of '
+      'its own slot', (WidgetTester tester) async {
     await pumpLumeRouter(
       tester,
       initialLocation: '/home',
@@ -215,10 +216,12 @@ void main() {
     await past(tester, LumeNotificationPresenter.firstTick);
     await tester.pumpAndSettle();
     final Rect r = tester.getRect(banner());
-    // `bottom: 24px; inset-inline-end: 24px; width: min(400px, …)`.
+    // `inset-inline-end: 24px; width: min(400px, …)` — and above the shell,
+    // not over the pane's bottom corner, where a form's Save sits (C92).
     expect(r.right, 1100 - 24);
-    expect(r.bottom, 900 - 24);
     expect(r.width, 400);
+    expect(r.top, 8);
+    expect(tester.getRect(find.byType(LumeShell)).top, r.bottom + 8);
   });
 
   // F6B — the banner the Android walk found over every tool header. The walk

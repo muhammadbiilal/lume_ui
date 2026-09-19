@@ -37,7 +37,7 @@ import '../../account/domain/notification_prefs.dart';
 import '../domain/notification_model.dart';
 import 'notification_banner.dart';
 
-/// Ticks, and holds the banner over [child].
+/// Ticks, and holds the banner above [child].
 class LumeNotificationPresenter extends ConsumerStatefulWidget {
   const LumeNotificationPresenter({
     super.key,

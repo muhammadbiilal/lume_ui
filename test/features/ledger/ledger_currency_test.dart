@@ -212,13 +212,9 @@ void main() {
       await tapShown(t, find.byKey(LumeLedgerTool.personField));
       await tapShown(t, find.widgetWithText(LumeRadioRow, 'Ivan'));
       await t.enterText(find.byKey(LumeLedgerTool.amountField), '25.50');
-      await tapShown(
-        t,
-        find.descendant(
-          of: find.byType(LumeSubmitBar),
-          matching: find.text('Save'),
-        ),
-      );
+      // The header's Save: the banner that used to lie over it by now has a
+      // slot of its own (C92).
+      await tapShown(t, find.byKey(LumeLedgerTool.saveKey));
       final LedgerEntry e = w.repo
           .view()
           .book(LumeDate(2026, 9, 7))

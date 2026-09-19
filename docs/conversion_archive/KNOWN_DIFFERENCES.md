@@ -2479,6 +2479,42 @@ sample record ticked from its row would have shown its raw `@key`.
 `update(…, claim: false)` keeps it; a form's save still claims the record as
 the reader's (`memory_record_repository_test.dart`).
 
+### C92 — The notification banner takes a slot of its own
+
+**Accessibility and platform adaptation.** The reference's `.nbanner` is
+`position: absolute; top: 8px; inset-inline: 12px; z-index: 70`
+(`notifications.css`). On a phone it lies over the page header — Back, the
+tool's title, and a form's Save. At medium and expanded it moves to the
+pane's bottom-end corner (`responsive.css`), where a form's submit bar sits.
+While it is up for six seconds, the control under it cannot be reached.
+
+In Lume the banner is laid out first, in a measured slot across the top,
+and the shell takes the rest of the screen below it:
+
+- on a phone: 8 below the status bar, inset 12, as the reference places it;
+- at medium and expanded: 400 wide at the end, 24 from the edge, as the
+  reference sizes it, above the shell rather than over the pane's corner.
+
+What this guarantees, each held by `notification_banner_layout_test.dart`
+at 390×844, 852×393, 1100×900, 200% text, Urdu and Arabic, and with the
+keyboard open:
+
+- Back, the title and Save are never under it, and a tap on them reaches
+  them;
+- nothing invisible catches a tap: beside the banner there is only
+  background, and when it goes the slot goes;
+- the shell keeps its element, so a half-typed form keeps its text and its
+  focus when the banner comes and goes;
+- it is painted after the shell, so a screen reader can reach it and its
+  close control, which Enter, Escape and a switch's tap action all work;
+- it is announced once, however often a sheet or a dialog withholds it and
+  gives it back, and a language change or a return from the background does
+  not bring a second one.
+
+It still never appears over a sheet, a dialog or the notification centre.
+The six banner goldens are re-captured: the header that used to be under
+the banner is now visible below it.
+
 ### C91 — A country's currency: Bulgaria's euro, and every country's own
 
 **Correction to the reference's data, dated.** The reference's country
@@ -2724,6 +2760,7 @@ deleted row invites the same question again.
 
 | Date | Change | Reason |
 |---|---|---|
+| 2026-09-19 | **C92 raised and corrected** — the notification banner takes a measured slot above the shell instead of lying over the header or a form's Save | Found in the Ledger closure: the banner covered the header Save after the first tick |
 | 2026-09-13 (F5C-C) | **C41 decided: reproduce.** An option row's title and its description run together on one line, exactly as the prototype draws them | The rendered Lume interface wins; the Dayroz obligation is recorded rather than the defect silently repaired |
 | 2026-09-13 (F5C-C) | **C44 decided: carry the engine's `SOURCES` as a fixture**, and the Notifications route finished — five sections, not two | The table is what the category filter and the By tool section both need, and neither is an engine |
 | 2026-09-13 (F5C-C) | **All twenty-one routes measured against the prototype** — a web capture, a Flutter capture, a side-by-side and a structural comparison each, in `ACCOUNT_PARITY.md` | A settings section fails quietly; a route that renders an empty body throws nothing |

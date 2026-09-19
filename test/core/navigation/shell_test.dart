@@ -370,7 +370,6 @@ void main() {
 
   group('the overlay host', () {
     const Key toast = Key('toast');
-    const Key banner = Key('banner');
 
     Future<void> pumpOverlay(WidgetTester tester, Size surface) => pumpLume(
       tester,
@@ -380,7 +379,6 @@ void main() {
         onSelected: (_) {},
         overlay: const LumeOverlayHost(
           toast: SizedBox(key: toast, height: 36, width: 200),
-          banner: SizedBox(key: banner, height: 52, width: 280),
         ),
         child: const SizedBox.expand(),
       ),
@@ -398,24 +396,6 @@ void main() {
         lessThanOrEqualTo(bar.top),
         reason: 'a confirmation under the bar is a confirmation nobody reads',
       );
-    });
-
-    testWidgets('the banner drops in from the top at compact', (
-      WidgetTester tester,
-    ) async {
-      await pumpOverlay(tester, LumeViewport.phone);
-      final Rect b = tester.getRect(find.byKey(banner));
-      expect(b.top, LumeShellMetrics.bannerTopCompact);
-      expect(b.left, LumeShellMetrics.bannerInsetCompact);
-    });
-
-    testWidgets('the banner settles into the end corner at expanded', (
-      WidgetTester tester,
-    ) async {
-      await pumpOverlay(tester, LumeViewport.expanded);
-      final Rect b = tester.getRect(find.byKey(banner));
-      expect(b.top, greaterThan(400), reason: 'no longer at the top');
-      expect(1100 - b.right, LumeShellMetrics.bannerInsetPane);
     });
 
     testWidgets('overlays sit above the navigation', (

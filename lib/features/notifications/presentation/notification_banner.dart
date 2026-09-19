@@ -1,11 +1,11 @@
-/// `.nbanner` — a notification over whatever is showing.
+/// `.nbanner` — a notification above whatever is showing.
 ///
 /// The third surface, and the rule that makes it a surface at all: **an event
 /// reaches the reader through exactly one of them**. Push when they are away,
 /// a banner when they are here and it is worth interrupting for, the centre
 /// otherwise. Never two for one event.
 ///
-/// Two things follow from that and are enforced here rather than hoped for:
+/// Three things follow from that and are enforced here rather than hoped for:
 ///
 /// * it never appears while the notification centre is the screen — the
 ///   reader is already looking at the list it would be duplicating;
@@ -13,6 +13,11 @@
 ///   z-index 50 and the banner 70, which would put it *above* a blocking
 ///   question; but the reference also only ticks while no sheet is up, so the
 ///   case never arises there. Here it is a condition rather than an accident.
+///
+/// * it never lies over anything. The reference places it absolutely, over
+///   the header on a phone and the pane's bottom corner on a tablet; here it
+///   takes a measured slot of its own and the shell is laid out below it
+///   (C92).
 ///
 /// It withholds exactly what a row in the centre withholds, because it is
 /// given the same already-resolved [LumeNotification]: there is nothing on
@@ -24,9 +29,11 @@ import 'dart:ui' show ImageFilter;
 
 import 'package:flutter/material.dart';
 import 'package:flutter/semantics.dart';
+import 'package:flutter/services.dart';
 
 import '../../../core/icons/lume_icon.dart';
 import '../../../core/icons/lume_icons.dart';
+import '../../../core/layout/lume_breakpoint.dart';
 import '../../../core/navigation/lume_shell.dart';
 import '../../../core/theme/lume/lume_colors.dart';
 import '../../../core/theme/lume/lume_space.dart';
@@ -189,7 +196,7 @@ class LumeNotificationBanner extends StatelessWidget {
   }
 }
 
-/// Holds one banner over [child], and decides when it may be there.
+/// Holds one banner above [child], and decides when it may be there.
 class LumeNotificationBannerHost extends StatefulWidget {
   const LumeNotificationBannerHost({
     super.key,
@@ -223,6 +230,14 @@ class _LumeNotificationBannerHostState
     extends State<LumeNotificationBannerHost> {
   Timer? _life;
   LumeNotification? _showing;
+
+  /// The events already announced. A banner withheld under a sheet and shown
+  /// again when the sheet closes is the same event, heard once.
+  final Set<String> _announced = <String>{};
+
+  /// The shell keeps its element, and every state under it, whether or not
+  /// a banner is in the slot above it.
+  static const Key _shellKey = ValueKey<String>('nbanner.shell');
 
   bool get _mayShow => widget.notification != null && !widget.suppressed;
 
@@ -260,15 +275,18 @@ class _LumeNotificationBannerHostState
     }
     _showing = next;
     // Announced separately from the picture, because a banner that is only a
-    // picture is a banner a screen reader never mentions.
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      if (!mounted) return;
-      SemanticsService.sendAnnouncement(
-        View.of(context),
-        '${next.title}. ${next.body}',
-        Directionality.of(context),
-      );
-    });
+    // picture is a banner a screen reader never mentions — and announced
+    // once, however often a sheet withholds it and gives it back.
+    if (_announced.add(next.id)) {
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        if (!mounted) return;
+        SemanticsService.sendAnnouncement(
+          View.of(context),
+          '${next.title}. ${next.body}',
+          Directionality.of(context),
+        );
+      });
+    }
     _life = Timer(LumeNotificationBanner.life, _dismiss);
   }
 
@@ -281,22 +299,47 @@ class _LumeNotificationBannerHostState
   @override
   Widget build(BuildContext context) {
     final LumeNotification? n = _mayShow ? _showing : null;
+    final MediaQueryData media = MediaQuery.of(context);
 
-    return Stack(
+    // The banner takes a slot of its own above the shell rather than
+    // floating over it (C92). The reference's `.nbanner` is absolutely
+    // placed over the page — over the header's Back and Save on a phone, and
+    // over the pane's bottom corner, where a form's Save sits, on a tablet.
+    // Here the shell is laid out in what the banner leaves, so nothing the
+    // reader needs is under it, and there are no invisible bounds to catch a
+    // tap meant for something else.
+    return CustomMultiChildLayout(
+      delegate: _BannerFirst(),
       children: <Widget>[
-        widget.child,
+        // The shell first in paint order and the banner after it, as the
+        // reference stacks them: something the shell paints can hide what
+        // was painted before it from a screen reader, and the banner must
+        // not be that. The layout, not the paint order, puts it on top.
+        LayoutId(
+          key: _shellKey,
+          id: _BannerFirst.shell,
+          child: MediaQuery(
+            // The slot has taken the status-bar inset; the shell below it
+            // must not pad for it a second time.
+            data: n == null
+                ? media
+                : media
+                      .removePadding(removeTop: true)
+                      .removeViewPadding(removeTop: true),
+            child: widget.child,
+          ),
+        ),
         if (n != null)
-          // The shell's own banner slot, so the banner sits where the shell
-          // measured it at every width: dropped in from the top on a phone,
-          // settled into the trailing corner at medium and expanded
-          // (`responsive.css`), where the top belongs to the status strip.
-          Positioned.fill(
-            // Above the shell's own `Scaffold`, so it brings its own
-            // material: without one, text has no default style to inherit.
-            child: Material(
-              type: MaterialType.transparency,
-              child: LumeOverlayHost(
-                banner: LumeNotificationBanner(
+          LayoutId(
+            id: _BannerFirst.banner,
+            child: _BannerSlot(
+              safeTop: media.padding.top,
+              // Escape withdraws it for a keyboard reader focused inside it.
+              child: CallbackShortcuts(
+                bindings: <ShortcutActivator, VoidCallback>{
+                  const SingleActivator(LogicalKeyboardKey.escape): _dismiss,
+                },
+                child: LumeNotificationBanner(
                   notification: n,
                   onOpen: () {
                     _dismiss();
@@ -308,6 +351,80 @@ class _LumeNotificationBannerHostState
             ),
           ),
       ],
+    );
+  }
+}
+
+/// The banner's slot is measured first, across the top; the shell takes
+/// the rest, below it.
+class _BannerFirst extends MultiChildLayoutDelegate {
+  static const String shell = 'shell';
+  static const String banner = 'banner';
+
+  @override
+  void performLayout(Size size) {
+    double top = 0;
+    if (hasChild(banner)) {
+      top = layoutChild(
+        banner,
+        BoxConstraints(minWidth: size.width, maxWidth: size.width),
+      ).height;
+      positionChild(banner, Offset.zero);
+    }
+    layoutChild(
+      shell,
+      BoxConstraints.tight(
+        Size(size.width, (size.height - top).clamp(0, size.height)),
+      ),
+    );
+    positionChild(shell, Offset(0, top));
+  }
+
+  @override
+  bool shouldRelayout(_BannerFirst oldDelegate) => false;
+}
+
+/// The measured room a banner takes: under the status bar and 8 from it on
+/// a phone, inset 12 from each edge; at medium and expanded, 400 wide at the
+/// end, as the reference sizes it, with 24 of air.
+class _BannerSlot extends StatelessWidget {
+  const _BannerSlot({required this.safeTop, required this.child});
+
+  final double safeTop;
+  final Widget child;
+
+  @override
+  Widget build(BuildContext context) {
+    final bool compact = context.widthClass == LumeWidthClass.compact;
+    final double inset = compact
+        ? LumeShellMetrics.bannerInsetCompact
+        : LumeShellMetrics.bannerInsetPane;
+    return ColoredBox(
+      color: context.lume.bg,
+      // Above the shell's own `Scaffold`, so it brings its own material:
+      // without one, text has no default style to inherit.
+      child: Material(
+        type: MaterialType.transparency,
+        child: Padding(
+          padding: EdgeInsetsDirectional.fromSTEB(
+            inset,
+            safeTop + LumeShellMetrics.bannerTopCompact,
+            inset,
+            LumeShellMetrics.bannerTopCompact,
+          ),
+          child: compact
+              ? child
+              : Align(
+                  alignment: AlignmentDirectional.centerEnd,
+                  child: ConstrainedBox(
+                    constraints: const BoxConstraints(
+                      maxWidth: LumeShellMetrics.bannerWidthPane,
+                    ),
+                    child: child,
+                  ),
+                ),
+        ),
+      ),
     );
   }
 }

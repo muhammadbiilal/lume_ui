@@ -77,13 +77,14 @@ abstract final class LumeShellMetrics {
   static const double bannerInsetCompact = 12;
   static const double bannerTopCompact = 8;
 
-  /// At expanded the banner leaves the top and settles into the end corner:
-  /// `bottom: 24; inset-inline-end: 24; width: min(400px, …)`.
+  /// The reference's banner at medium and expanded: 24 from the end,
+  /// `width: min(400px, …)`. Lume keeps the size and the inset, and gives it
+  /// a slot of its own rather than the pane's bottom corner (C92).
   static const double bannerInsetPane = 24;
   static const double bannerWidthPane = 400;
 }
 
-/// Where a sheet, a toast and a notification banner are raised.
+/// Where a sheet and a toast are raised.
 ///
 /// They belong to the shell rather than to whichever screen opened one —
 /// `index.html` puts `#overlay-root`, `.toast` and `.nbanner` outside
@@ -92,8 +93,8 @@ abstract final class LumeShellMetrics {
 ///
 /// Positions are the measured ones, and they move with the width class: the
 /// toast clears the floating bar at compact and does not need to at medium or
-/// expanded; the banner drops in from the top on a phone and settles into the
-/// end corner on a tablet.
+/// expanded. The notification banner is not raised here: it takes a slot of
+/// its own above the shell, so it can never lie over a control (C92).
 class LumeOverlayHost extends StatelessWidget {
   const LumeOverlayHost({
     super.key,
@@ -101,7 +102,6 @@ class LumeOverlayHost extends StatelessWidget {
     this.onDismissScrim,
     this.scrimLabel,
     this.sheet,
-    this.banner,
     this.toast,
   });
 
@@ -112,9 +112,6 @@ class LumeOverlayHost extends StatelessWidget {
 
   /// A bottom sheet or a dialog, already built. Raised above the scrim.
   final Widget? sheet;
-
-  /// The in-app notification banner, z-70.
-  final Widget? banner;
 
   /// A confirmation, z-70. Never blocks the next action.
   final Widget? toast;
@@ -135,25 +132,6 @@ class LumeOverlayHost extends StatelessWidget {
             ),
           ),
         if (sheet != null) Positioned.fill(child: sheet!),
-        if (banner != null)
-          if (compact)
-            PositionedDirectional(
-              start: LumeShellMetrics.bannerInsetCompact,
-              end: LumeShellMetrics.bannerInsetCompact,
-              top: safe.top + LumeShellMetrics.bannerTopCompact,
-              child: banner!,
-            )
-          else
-            PositionedDirectional(
-              end: LumeShellMetrics.bannerInsetPane,
-              bottom: LumeShellMetrics.bannerInsetPane,
-              child: ConstrainedBox(
-                constraints: const BoxConstraints(
-                  maxWidth: LumeShellMetrics.bannerWidthPane,
-                ),
-                child: banner!,
-              ),
-            ),
         if (toast != null)
           Positioned(
             left: 0,
