@@ -29,6 +29,7 @@ import '../../theme/lume/lume_space.dart';
 import '../../theme/lume/lume_theme.dart';
 import '../../theme/lume/lume_type.dart';
 import 'lume_button.dart';
+import 'lume_field.dart' show LumeLockGlyph;
 import 'lume_pressable.dart';
 
 /// `.crud__count` — the collection's condition, under its title.
@@ -553,8 +554,11 @@ class LumeFormPicker extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final LumeColors lume = context.lume;
+    // Locked when there is nothing to pick: shown as such, not only said.
+    final bool locked = onTap == null;
     return Semantics(
       button: true,
+      enabled: !locked,
       label: label,
       value: value,
       child: ExcludeSemantics(
@@ -572,10 +576,10 @@ class LumeFormPicker extends StatelessWidget {
                 constraints: const BoxConstraints(minHeight: boxHeight),
                 padding: const EdgeInsets.symmetric(horizontal: 14),
                 decoration: BoxDecoration(
-                  color: lume.card,
+                  color: locked ? lume.bgSunk : lume.card,
                   borderRadius: LumeRadius.brSm,
                   border: Border.all(
-                    color: lume.border2,
+                    color: locked ? lume.border : lume.border2,
                     width: LumeSpace.border,
                   ),
                 ),
@@ -588,13 +592,16 @@ class LumeFormPicker extends StatelessWidget {
                         overflow: TextOverflow.ellipsis,
                         style: LumeType.fit(context, context.lumeType.body)
                             .copyWith(
-                              color: lume.text,
+                              color: locked ? lume.text2 : lume.text,
                               fontWeight: FontWeight.w500,
                             ),
                       ),
                     ),
                     const SizedBox(width: 8),
-                    LumeIcon(icon, size: 15, color: lume.text3),
+                    if (locked)
+                      const LumeLockGlyph()
+                    else
+                      LumeIcon(icon, size: 15, color: lume.text3),
                   ],
                 ),
               ),

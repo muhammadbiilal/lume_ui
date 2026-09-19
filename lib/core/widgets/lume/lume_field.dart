@@ -376,11 +376,17 @@ class _LumeFormFieldState extends State<LumeFormField> {
     final LumeColors lume = context.lume;
     final bool invalid = widget.error != null;
     final bool multiline = widget.kind == LumeFieldKind.multiline;
+    // Locked: a field that shows a value the reader cannot change. It looks
+    // it — a sunk box, a quieter border, secondary text and a lock — and it
+    // is never red: locked is not wrong.
+    final bool locked = !widget.enabled;
 
     final Color borderColour = invalid
         ? lume.roseInk
         : _focused
         ? lume.accent
+        : locked
+        ? lume.border
         : lume.border2;
 
     return Semantics(
@@ -434,7 +440,7 @@ class _LumeFormFieldState extends State<LumeFormField> {
               vertical: multiline ? 12 : 0,
             ),
             decoration: BoxDecoration(
-              color: lume.card,
+              color: locked ? lume.bgSunk : lume.card,
               borderRadius: LumeRadius.brSm,
               border: Border.all(color: borderColour, width: LumeSpace.border),
               // The focus and invalid rings, measured as `0 0 0 3px`.
@@ -473,12 +479,16 @@ class _LumeFormFieldState extends State<LumeFormField> {
                     rows: widget.rows,
                     style: LumeType.fit(context, context.lumeType.bodyStrong)
                         .copyWith(
-                          color: lume.text,
+                          color: locked ? lume.text2 : lume.text,
                           fontWeight: FontWeight.w500,
                           height: multiline ? 1.55 : null,
                         ),
                   ),
                 ),
+                if (locked) ...<Widget>[
+                  const SizedBox(width: 8),
+                  const LumeLockGlyph(),
+                ],
               ],
             ),
           ),
@@ -1590,4 +1600,14 @@ class _LumeInputFieldState extends State<LumeInputField> {
       ],
     );
   }
+}
+
+/// The lock a locked field and picker carry, beside the value — in the
+/// secondary text colour, so it reads without shouting.
+class LumeLockGlyph extends StatelessWidget {
+  const LumeLockGlyph({super.key});
+
+  @override
+  Widget build(BuildContext context) =>
+      LumeIcon(LumeIcons.lock, size: 14, color: context.lume.text2);
 }
