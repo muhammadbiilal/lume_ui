@@ -2479,6 +2479,28 @@ sample record ticked from its row would have shown its raw `@key`.
 `update(…, claim: false)` keeps it; a form's save still claims the record as
 the reader's (`memory_record_repository_test.dart`).
 
+### C95 — Arabic amounts in Arabic order
+
+**Intentional parity difference.** The reference writes every amount in
+English order in every language: "Rs 58,000" under Arabic too. Lume uses
+the Arabic locale's own form. It opens with a right-to-left mark and puts
+the digits first and the symbol after them: "‏58,000 Rs". English and
+Urdu keep the symbol first.
+
+These are the same in both:
+
+- the amount, to the minor unit;
+- the currency, named by its symbol or, with a second currency on screen,
+  its code.
+
+Inside a sentence the amount is bidi-isolated (FSI … PDI), and a screen
+reader hears the same text the page shows.
+
+`installments_parity_test.dart` compares the figure's digits against the
+reference's Arabic capture. The *Arabic amount* tests beside it hold the
+placement, the right-to-left mark, the isolation and the semantics, so the
+digit comparison never stands alone.
+
 ### C94 — Installments: the reader's own plans, figures that agree
 
 **Product correction and extension (`INSTALLMENTS_PROPOSAL.md` §40–41).**
@@ -2841,6 +2863,7 @@ deleted row invites the same question again.
 
 | Date | Change | Reason |
 |---|---|---|
+| 2026-09-20 | **C95 recorded** — Arabic amounts in the Arabic locale's order, not the reference's English order | Approved: locale-correct presentation, with exact values, currency identity, isolation and semantics tested |
 | 2026-09-19 | **C94 raised** — Installments built as a record-backed tool; the reference's contradictory sums, constant next payment, mislabelled sort and fixture-only composition corrected | Approved model, `INSTALLMENTS_PROPOSAL.md` §40 |
 | 2026-09-19 | **C93 raised and corrected** — a Share with nothing behind it, and a Search with no field, are left out of development and release; the whole privacy sentence outside parity | A control that cannot do what it says must not look as though it can |
 | 2026-09-19 | **C92 raised and corrected** — the notification banner takes a measured slot above the shell instead of lying over the header or a form's Save | Found in the Ledger closure: the banner covered the header Save after the first tick |
