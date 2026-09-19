@@ -61,7 +61,7 @@ void main() {
     test('a canonical zone', () {
       final LumeZoneResolution r = zones.resolveId('Asia/Karachi');
       expect(r.outcome, LumeZoneOutcome.canonical);
-      expect(r.source, LumeZoneSource.configured);
+      expect(r.source, LumeZoneSource.explicit);
       expect(r.canonicalId, 'Asia/Karachi');
       expect(r.resolved, isTrue);
     });
@@ -148,14 +148,15 @@ void main() {
       () {
         expect(
           zones
-              .reader(configured: 'Asia/Tokyo', regionZone: 'Asia/Karachi')
+              .reader(explicit: 'Asia/Tokyo', country: 'PK', city: 'Lahore')
               .canonicalId,
           'Asia/Tokyo',
         );
         for (final String bad in <String>['Mars/Olympus_Mons', 'PKT']) {
           final LumeZoneResolution r = zones.reader(
-            configured: bad,
-            regionZone: 'Asia/Karachi',
+            explicit: bad,
+            country: 'PK',
+            city: 'Lahore',
             device: const LumeDeviceZone('Asia/Karachi'),
           );
           expect(r.resolved, isFalse, reason: bad);
@@ -164,21 +165,31 @@ void main() {
       },
     );
 
-    test('"Follow region": the country table\'s zone, said as fixture', () {
-      final LumeZoneResolution r = zones.reader(regionZone: 'Asia/Karachi');
-      expect(r.source, LumeZoneSource.fixture);
-      expect(r.canonicalId, 'Asia/Karachi');
-    });
-
-    test('the device\'s zone only when nothing is set, and only verified', () {
+    test('the device\'s zone only under "Follow this device", and only '
+        'verified', () {
       final LumeZoneResolution d = zones.reader(
+        follow: LumeZoneFollow.device,
+        country: 'PK',
         device: const LumeDeviceZone('Asia/Karachi'),
       );
       expect(d.outcome, LumeZoneOutcome.device);
       expect(d.source, LumeZoneSource.device);
-      final LumeZoneResolution none = zones.reader();
+      final LumeZoneResolution none = zones.reader(
+        follow: LumeZoneFollow.device,
+        country: 'PK',
+      );
       expect(none.outcome, LumeZoneOutcome.missingDevice);
       expect(none.resolved, isFalse);
+      // Follow region never reads the device, even a verified one.
+      expect(
+        zones
+            .reader(
+              country: 'US',
+              device: const LumeDeviceZone('America/Denver'),
+            )
+            .outcome,
+        LumeZoneOutcome.selectionRequired,
+      );
     });
 
     test('a second zone reads the same instant, never another', () {

@@ -10,7 +10,7 @@ library;
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../core/time/lume_iana_zones.dart';
-import '../../features/startup/domain/startup_state.dart';
+import '../../features/onboarding/domain/onboarding_state.dart';
 
 final Provider<LumeTimeZoneService> timeZoneServiceProvider =
     Provider<LumeTimeZoneService>((Ref ref) => LumeTimeZoneService.shared);
@@ -20,16 +20,19 @@ final Provider<LumeDeviceZone> deviceZoneProvider = Provider<LumeDeviceZone>(
 );
 
 extension LumeReaderZone on LumeTimeZoneService {
-  /// The reader's zone from what they set: their explicit zone; else, under
-  /// Account › Time's "Follow region", their country's zone from the country
-  /// table; else the verified device zone.
+  /// The reader's zone from what they set in Account › Time: the zone they
+  /// named; else "Follow my region" (their city, else their country's one
+  /// civil time) or "Follow this device".
   LumeZoneResolution readerZone(
-    LumeStartupState startup,
-    String country,
-    LumeDeviceZone device,
-  ) => reader(
-    configured: startup.profile.timeZone,
-    regionZone: startup.countries?.zoneOf(country),
+    LumeProfileRecord profile,
+    LumeDeviceZone device, {
+    String? country,
+    String? city,
+  }) => reader(
+    explicit: profile.timeZone,
+    follow: profile.zoneFollow,
+    country: country ?? profile.country,
+    city: city ?? profile.city,
     device: device,
   );
 }

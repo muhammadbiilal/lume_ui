@@ -15,6 +15,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../app/providers/shell_provider.dart';
+import '../../../app/providers/time_zone_provider.dart';
 import '../../../core/fixtures/lume_clock.dart';
 import '../../../core/icons/lume_icons.dart';
 import '../../../core/localization/lume_format.dart';
@@ -55,19 +56,15 @@ class LumeCalendarTool extends ConsumerStatefulWidget {
   static const Key addKey = ValueKey<String>('calendar.add');
 
   /// The next prayer at [now] for a reader in [country] and [city], in the
-  /// zone [zoneId] — or `null` where the city or the zone is not known, which
-  /// shows no prayer rather than a guessed one.
+  /// reader's [zone] — or `null` where the city or the zone is not known,
+  /// which shows no prayer rather than a guessed one.
   static LumeSolarTime? nextPrayer({
     required DateTime now,
     required String country,
     required String city,
-    required String zoneId,
-    LumeZoneDatabase? zones,
+    required LumeZone? zone,
   }) {
     final (double, double)? at = LumeSolar.coordsFor(country, city);
-    final LumeZone? zone = (zones ?? LumeTimeZoneService.shared).zoneFor(
-      zoneId,
-    );
     if (at == null || zone == null) return null;
     // The zone's own date and minute: the instant read on its wall clock,
     // not the device's.
@@ -107,11 +104,16 @@ class _LumeCalendarToolState extends ConsumerState<LumeCalendarTool> {
     );
     final DateTime now = LumeClockScope.of(context).now();
     final LumeStartupState startup = ref.watch(startupControllerProvider).state;
-    // `L.timezone()` — the reader's own choice, or the country's.
-    final String zoneId =
-        startup.profile.timeZone ??
-        startup.countries?.zoneOf(r.user.country) ??
-        'UTC';
+    // `L.timezone()` — the reader's zone as Account › Time resolves it.
+    final LumeZoneResolution zone = ref
+        .watch(timeZoneServiceProvider)
+        .readerZone(
+          startup.profile,
+          ref.watch(deviceZoneProvider),
+          country: r.user.country,
+          city: r.user.city,
+        );
+    final String? zoneLabel = zone.canonicalId ?? zone.requested;
     final LumeHijriDate? hijri = r.user.islamic ? LumeHijriDate.of(now) : null;
 
     // `monthGrid()` — this month, the locale's week (Monday, C65).
@@ -133,7 +135,7 @@ class _LumeCalendarToolState extends ConsumerState<LumeCalendarTool> {
         now: now,
         country: r.user.country,
         city: r.user.city,
-        zoneId: zoneId,
+        zone: zone.zone,
       );
       if (next != null) {
         agenda.add((
@@ -191,11 +193,10 @@ class _LumeCalendarToolState extends ConsumerState<LumeCalendarTool> {
                   icon: LumeIcons.globe,
                 ),
                 // The canonical identifier: a renamed zone the reader chose
-                // before the rename is shown by its current name.
-                LumeContextItem(
-                  label:
-                      '\u2068${LumeTimeZoneService.shared.resolveId(zoneId).canonicalId ?? zoneId}\u2069',
-                ),
+                // before the rename is shown by its current name. No zone
+                // (one to choose) shows none.
+                if (zoneLabel != null)
+                  LumeContextItem(label: '\u2068$zoneLabel\u2069'),
                 if (hijri != null)
                   LumeContextItem(
                     label:

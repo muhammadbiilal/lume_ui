@@ -27,6 +27,7 @@ library;
 
 import 'package:flutter/foundation.dart';
 
+import '../../../core/time/lume_iana_zones.dart';
 import '../../../l10n/app_localizations.dart';
 
 export 'onboarding_steps_ids.dart';
@@ -144,7 +145,7 @@ class LumeOnboardingDraft {
       other.wantsReminders == wantsReminders;
 
   @override
-  int get hashCode => Object.hash(
+  int get hashCode => Object.hashAll(<Object?>[
     country,
     region,
     city,
@@ -154,7 +155,7 @@ class LumeOnboardingDraft {
     method,
     wantsLocation,
     wantsReminders,
-  );
+  ]);
 }
 
 /// A preference that has not been set, and follows the market instead.
@@ -202,6 +203,7 @@ class LumeProfileRecord {
     this.currency = LumePreference.auto,
     this.clock = LumePreference.auto,
     this.timeZone,
+    this.zoneFollow = LumeZoneFollow.region,
     this.photo = '',
     this.accountEmail,
   });
@@ -257,8 +259,14 @@ class LumeProfileRecord {
   /// `profile.clock` — [LumePreference.auto], `'12'` or `'24'`.
   final String clock;
 
-  /// `profile.tz` — an IANA zone, or `null` to follow the region.
+  /// `profile.tz` — the IANA zone the reader named, or `null` to follow
+  /// [zoneFollow].
   final String? timeZone;
+
+  /// With no [timeZone]: follow the region (the reference's default, which
+  /// Account › Time shows selected) or the device. A preference the reader
+  /// sets — nothing else changes it.
+  final LumeZoneFollow zoneFollow;
 
   /// A data URI or a path. Empty means "none", which is not the same as a
   /// photo that failed to load.
@@ -292,6 +300,7 @@ class LumeProfileRecord {
     String? clock,
     String? timeZone,
     bool clearTimeZone = false,
+    LumeZoneFollow? zoneFollow,
     String? photo,
     String? accountEmail,
     bool clearAccountEmail = false,
@@ -314,6 +323,7 @@ class LumeProfileRecord {
     currency: currency ?? this.currency,
     clock: clock ?? this.clock,
     timeZone: clearTimeZone ? null : (timeZone ?? this.timeZone),
+    zoneFollow: zoneFollow ?? this.zoneFollow,
     photo: photo ?? this.photo,
     accountEmail: clearAccountEmail
         ? null
@@ -341,11 +351,12 @@ class LumeProfileRecord {
       other.currency == currency &&
       other.clock == clock &&
       other.timeZone == timeZone &&
+      other.zoneFollow == zoneFollow &&
       other.photo == photo &&
       other.accountEmail == accountEmail;
 
   @override
-  int get hashCode => Object.hash(
+  int get hashCode => Object.hashAll(<Object?>[
     country,
     region,
     city,
@@ -364,9 +375,10 @@ class LumeProfileRecord {
     currency,
     clock,
     timeZone,
+    zoneFollow,
     photo,
     accountEmail,
-  );
+  ]);
 
   /// Note a tool as just used. Most-recent-first, no duplicates, and capped —
   /// `noteRecent` keeps eight and Home and the hub both read a prefix of it.

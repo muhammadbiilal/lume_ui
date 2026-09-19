@@ -800,9 +800,21 @@
   "@acctTimezoneAuto": {
     "description": "Reference: `acct.timezoneAuto`."
   },
+  "acctTimezoneChoose": "Choose a time zone",
+  "@acctTimezoneChoose": {
+    "description": "Follow my region, where the region has several time zones and the city does not decide"
+  },
+  "acctTimezoneFollowDevice": "Follow this device",
+  "@acctTimezoneFollowDevice": {
+    "description": "Time zone preference: the device’s own zone"
+  },
   "acctTimezoneFollowRegion": "Follow my region",
   "@acctTimezoneFollowRegion": {
     "description": "Reference: `acct.timezoneFollowRegion`."
+  },
+  "acctTimezoneNoDevice": "This device’s time zone isn’t available",
+  "@acctTimezoneNoDevice": {
+    "description": "Follow this device, where the build cannot read the device’s zone"
   },
   "acctTimezoneNote": "Markets, flights and trains always use their own timezone.",
   "@acctTimezoneNote": {
@@ -7121,6 +7133,10 @@
   "@recViewCached": {
     "description": "Reference key rec.viewCached"
   },
+  "recZoneChooseText": "Your region has more than one time zone, so nothing here is grouped by day. Your records are all listed above. Choose a time zone in Profile › Time.",
+  "@recZoneChooseText": {
+    "description": "Follow my region, where the region has several time zones and the city does not decide"
+  },
   "recZoneMissingText": "No time zone is set and this device’s isn’t known, so nothing here is grouped by day. Your records are all listed above. Choose a time zone in Profile › Time.",
   "@recZoneMissingText": {
     "description": "No configured zone and no verified device zone"
@@ -7821,6 +7837,10 @@
   "sunToday": "Today",
   "@sunToday": {
     "description": "Reference key sun.today"
+  },
+  "sunZoneChooseText": "Sunrise and sunset are worked out on your clock, so they need your time zone. Choose one in Profile › Time.",
+  "@sunZoneChooseText": {
+    "description": "Sun & Moon, when the reader’s zone is missing or must be chosen"
   },
   "surahAlKahf": "Al-Kahf",
   "@surahAlKahf": {

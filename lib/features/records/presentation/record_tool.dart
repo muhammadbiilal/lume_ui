@@ -25,6 +25,7 @@ import '../../../app/providers/time_zone_provider.dart';
 import '../../../core/fixtures/lume_clock.dart';
 import '../../../core/icons/lume_icons.dart';
 import '../../../core/layout/lume_breakpoint.dart';
+import '../../../core/time/lume_iana_zones.dart';
 import '../../../core/layout/lume_measure.dart';
 import '../../../core/localization/lume_format.dart';
 import '../../../core/navigation/lume_back_intercept.dart';
@@ -125,9 +126,11 @@ class LumeRecordDayUnknown extends StatelessWidget {
     return LumeToolState(
       icon: LumeIcons.clock,
       title: c.l.recZoneUnknownTitle,
-      text: asked == null || asked.isEmpty
-          ? c.l.recZoneMissingText
-          : c.l.recZoneUnknownText(LumeFamilyText.isolate(asked)),
+      text: switch (c.zone.outcome) {
+        LumeZoneOutcome.selectionRequired => c.l.recZoneChooseText,
+        _ when asked == null || asked.isEmpty => c.l.recZoneMissingText,
+        _ => c.l.recZoneUnknownText(LumeFamilyText.isolate(asked)),
+      },
     );
   }
 }
@@ -247,7 +250,12 @@ class _LumeRecordToolState<T extends LumeFamilyRecord>
       now: LumeClockScope.of(context).now(),
       zone: ref
           .read(timeZoneServiceProvider)
-          .readerZone(startup, r.user.country, ref.read(deviceZoneProvider)),
+          .readerZone(
+            startup.profile,
+            ref.read(deviceZoneProvider),
+            country: r.user.country,
+            city: r.user.city,
+          ),
       currency: startup.countries?.currencyOf(r.user.country) ?? '',
     );
   }

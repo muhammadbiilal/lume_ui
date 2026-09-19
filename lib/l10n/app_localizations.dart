@@ -1234,11 +1234,29 @@ abstract class AppLocalizations {
   /// **'Follow this device'**
   String get acctTimezoneAuto;
 
+  /// Follow my region, where the region has several time zones and the city does not decide
+  ///
+  /// In en, this message translates to:
+  /// **'Choose a time zone'**
+  String get acctTimezoneChoose;
+
+  /// Time zone preference: the device’s own zone
+  ///
+  /// In en, this message translates to:
+  /// **'Follow this device'**
+  String get acctTimezoneFollowDevice;
+
   /// Reference: `acct.timezoneFollowRegion`.
   ///
   /// In en, this message translates to:
   /// **'Follow my region'**
   String get acctTimezoneFollowRegion;
+
+  /// Follow this device, where the build cannot read the device’s zone
+  ///
+  /// In en, this message translates to:
+  /// **'This device’s time zone isn’t available'**
+  String get acctTimezoneNoDevice;
 
   /// Reference: `acct.timezoneNote`.
   ///
@@ -9250,6 +9268,12 @@ abstract class AppLocalizations {
   /// **'View cached records'**
   String get recViewCached;
 
+  /// Follow my region, where the region has several time zones and the city does not decide
+  ///
+  /// In en, this message translates to:
+  /// **'Your region has more than one time zone, so nothing here is grouped by day. Your records are all listed above. Choose a time zone in Profile › Time.'**
+  String get recZoneChooseText;
+
   /// No configured zone and no verified device zone
   ///
   /// In en, this message translates to:
@@ -10125,6 +10149,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Today'**
   String get sunToday;
+
+  /// Sun & Moon, when the reader’s zone is missing or must be chosen
+  ///
+  /// In en, this message translates to:
+  /// **'Sunrise and sunset are worked out on your clock, so they need your time zone. Choose one in Profile › Time.'**
+  String get sunZoneChooseText;
 
   /// The surah the reading fixture is open at
   ///

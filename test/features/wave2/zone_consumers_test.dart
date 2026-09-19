@@ -248,7 +248,7 @@ void main() {
         now: instant,
         country: 'JP',
         city: 'Tokyo',
-        zoneId: 'Asia/Tokyo',
+        zone: LumeTimeZoneService.shared.zoneFor('Asia/Tokyo'),
       );
       final List<LumeSolarTime> want = LumeSolar.prayerTimes(
         date: DateTime(2027, 1, 1),
@@ -269,7 +269,7 @@ void main() {
           now: kFixtureInstant,
           country: 'JP',
           city: 'Tokyo',
-          zoneId: 'Mars/Olympus_Mons',
+          zone: LumeTimeZoneService.shared.zoneFor('Mars/Olympus_Mons'),
         ),
         LumeWeatherTool.fallbackSun,
       );

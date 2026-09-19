@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:intl/intl.dart' as intl;
+import 'package:lume/core/time/lume_iana_zones.dart';
 import 'package:lume/app/providers/platform_services.dart';
 import 'package:lume/core/navigation/lume_tool_frame.dart';
 import 'package:lume/core/platform/lume_export.dart';
@@ -297,7 +298,7 @@ void main() {
           now: instant,
           country: 'GB',
           city: 'London',
-          zoneId: 'Europe/London',
+          zone: LumeTimeZoneService.shared.zoneFor('Europe/London'),
         )!;
         return '${t.key} ${t.hour}:${t.minute.toString().padLeft(2, '0')}';
       }
@@ -310,7 +311,7 @@ void main() {
           now: DateTime.utc(2026, 9, 7, 15, 41),
           country: 'GB',
           city: 'London',
-          zoneId: 'Europe/Belfast',
+          zone: LumeTimeZoneService.shared.zoneFor('Europe/Belfast'),
         )?.key,
         'maghrib',
       );

@@ -37,6 +37,7 @@ import '../../../core/widgets/lume/lume_settings.dart';
 import '../../../core/widgets/lume/lume_state.dart';
 import '../../../core/widgets/lume/lume_surface.dart';
 import '../../../l10n/app_localizations.dart';
+import '../../../core/time/lume_iana_zones.dart';
 import '../../auth/domain/password_policy.dart';
 import '../../auth/presentation/auth_parts.dart';
 import '../../onboarding/domain/onboarding_state.dart';
@@ -61,6 +62,7 @@ class LumeAccountRouteContext {
     required this.regionValue,
     required this.homeCurrency,
     required this.homeZone,
+    required this.deviceZone,
     required this.zones,
     required this.version,
     required this.favourites,
@@ -95,8 +97,14 @@ class LumeAccountRouteContext {
   /// The currency the reader's market uses, for the "follow my region" row.
   final String homeCurrency;
 
-  /// The zone the reader's region implies, and the zones near it.
-  final String homeZone;
+  /// The zone "Follow my region" resolves to — `null` where the region has
+  /// several civil times and the city does not decide between them.
+  final String? homeZone;
+
+  /// The device's verified zone — `null` where this build cannot read it.
+  final String? deviceZone;
+
+  /// The country's own zones, then the ones near it.
   final List<String> zones;
 
   final String version;
@@ -162,6 +170,7 @@ class LumeAccountActions {
     required this.setUnits,
     required this.setClock,
     required this.setZone,
+    required this.setZoneFollow,
     required this.setTheme,
     required this.toggleCategory,
     required this.toggleGeneral,
@@ -192,7 +201,10 @@ class LumeAccountActions {
   final void Function(String code) setCurrency;
   final void Function(LumeUnitsPreference units) setUnits;
   final void Function(String clock) setClock;
-  final void Function(String? zone) setZone;
+  final void Function(String zone) setZone;
+
+  /// Clears a named zone and follows the region or the device.
+  final void Function(LumeZoneFollow follow) setZoneFollow;
   final void Function(ThemeMode mode) setTheme;
 
   final void Function(String categoryId, bool on) toggleCategory;
@@ -549,7 +561,12 @@ LumeAccountView _time(LumeAccountRouteContext c) {
   final AppLocalizations l = c.l;
   return LumeAccountView(
     title: l.acctTimeTitle,
-    subtitle: c.profile.timeZone ?? c.homeZone,
+    subtitle:
+        c.profile.timeZone ??
+        switch (c.profile.zoneFollow) {
+          LumeZoneFollow.region => c.homeZone ?? l.acctTimezoneChoose,
+          LumeZoneFollow.device => c.deviceZone ?? l.acctTimezoneNoDevice,
+        },
     body: (BuildContext context) => <Widget>[
       LumeAccountSection(
         title: l.acctClockFormat,
@@ -581,9 +598,19 @@ LumeAccountView _time(LumeAccountRouteContext c) {
           children: <LumeOptionRow>[
             LumeOptionRow(
               title: l.acctTimezoneFollowRegion,
-              subtitle: c.homeZone,
-              selected: c.profile.timeZone == null,
-              onTap: () => c.actions.setZone(null),
+              subtitle: c.homeZone ?? l.acctTimezoneChoose,
+              selected:
+                  c.profile.timeZone == null &&
+                  c.profile.zoneFollow == LumeZoneFollow.region,
+              onTap: () => c.actions.setZoneFollow(LumeZoneFollow.region),
+            ),
+            LumeOptionRow(
+              title: l.acctTimezoneFollowDevice,
+              subtitle: c.deviceZone ?? l.acctTimezoneNoDevice,
+              selected:
+                  c.profile.timeZone == null &&
+                  c.profile.zoneFollow == LumeZoneFollow.device,
+              onTap: () => c.actions.setZoneFollow(LumeZoneFollow.device),
             ),
             for (final String zone in c.zones)
               LumeOptionRow(

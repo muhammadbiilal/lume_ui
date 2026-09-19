@@ -225,21 +225,27 @@ void main() {
     test('a valid configured zone', () {
       final LumeRecordContext c = at(
         instant,
-        zones.reader(configured: 'Asia/Tokyo', regionZone: 'Asia/Karachi'),
+        zones.reader(explicit: 'Asia/Tokyo', country: 'PK'),
       );
       expect(c.dayKnown, isTrue);
-      expect(c.zone.source, LumeZoneSource.configured);
+      expect(c.zone.source, LumeZoneSource.explicit);
     });
 
-    test('none configured, none for the region: the verified device zone, '
+    test('"Follow this device": the verified device zone, '
         'and only then', () {
       final LumeRecordContext withDevice = at(
         instant,
-        zones.reader(device: const LumeDeviceZone('America/New_York')),
+        zones.reader(
+          follow: LumeZoneFollow.device,
+          device: const LumeDeviceZone('America/New_York'),
+        ),
       );
       expect(withDevice.zone.source, LumeZoneSource.device);
       expect(withDevice.today, DateTime(2026, 9, 7));
-      final LumeRecordContext without = at(instant, zones.reader());
+      final LumeRecordContext without = at(
+        instant,
+        zones.reader(follow: LumeZoneFollow.device),
+      );
       expect(without.dayKnown, isFalse);
       expect(without.zone.outcome, LumeZoneOutcome.missingDevice);
     });
@@ -253,8 +259,8 @@ void main() {
         final LumeRecordContext c = at(
           instant,
           zones.reader(
-            configured: bad,
-            regionZone: 'Asia/Karachi',
+            explicit: bad,
+            country: 'PK',
             device: const LumeDeviceZone('Asia/Karachi'),
           ),
         );

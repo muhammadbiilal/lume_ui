@@ -271,6 +271,10 @@ void main() {
           tolerance: route == LumeAccountRoute.time ? 8 : kDrift,
           open: switch (route) {
             LumeAccountRoute.phone => 'C43',
+            // C89: the zones offered are canonical identifiers, so the
+            // reference's aliases (Asia/Kuwait, Asia/Muscat …) fold into
+            // the zones they name and the list is shorter.
+            LumeAccountRoute.time => 'C89',
             LumeAccountRoute.sessions || _ => null,
           },
         );

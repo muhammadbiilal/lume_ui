@@ -28,6 +28,8 @@ import '../../../app/providers/personalisation.dart';
 import '../../../app/providers/shell_provider.dart';
 import '../../../app/providers/locale_provider.dart';
 import '../../../app/providers/theme_provider.dart';
+import '../../../app/providers/time_zone_provider.dart';
+import '../../../core/time/lume_iana_zones.dart';
 import '../../../core/icons/lume_icons.dart';
 import '../../../core/layout/lume_measure.dart';
 import '../../../core/localization/lume_format.dart';
@@ -459,6 +461,8 @@ class _LumeAccountHostState extends ConsumerState<LumeAccountHost> {
     final String countryName = table?.nameOf(p.country, language) ?? p.country;
     final LumeFormatting f = LumeFormatting.of(context, countryCode: p.country);
     final LumeAccountRepository repo = ref.read(accountRepositoryProvider);
+    final LumeTimeZoneService zones = ref.read(timeZoneServiceProvider);
+    final LumeDeviceZone device = ref.watch(deviceZoneProvider);
 
     return LumeAccountRouteContext(
       l: l,
@@ -480,8 +484,19 @@ class _LumeAccountHostState extends ConsumerState<LumeAccountHost> {
       // launch read — not the formatter's resolved one, which is already
       // the reader's override where they have set one.
       homeCurrency: table?.currencyOf(p.country) ?? '',
-      homeZone: table?.zoneOf(p.country) ?? 'UTC',
-      zones: table?.zonesNear(p.country) ?? const <String>[],
+      homeZone: zones
+          .readerZone(
+            p.copyWith(clearTimeZone: true, zoneFollow: LumeZoneFollow.region),
+            device,
+          )
+          .canonicalId,
+      deviceZone: device.verified ? device.id : null,
+      zones: <String>{
+        ...LumeTimeZoneService.countryZones(p.country),
+        ...?table
+            ?.zonesNear(p.country)
+            .map((String z) => zones.resolveId(z).canonicalId ?? z),
+      }.toList()..sort(),
       version: kLumeVersion,
       favourites: _entries(l, p, p.favourites),
       recents: _entries(l, p, p.recents),
@@ -515,8 +530,10 @@ class _LumeAccountHostState extends ConsumerState<LumeAccountHost> {
         _writeProfile(_gate.state.profile.copyWith(units: units)),
     setClock: (String clock) =>
         _writeProfile(_gate.state.profile.copyWith(clock: clock)),
-    setZone: (String? zone) => _writeProfile(
-      _gate.state.profile.copyWith(timeZone: zone, clearTimeZone: zone == null),
+    setZone: (String zone) =>
+        _writeProfile(_gate.state.profile.copyWith(timeZone: zone)),
+    setZoneFollow: (LumeZoneFollow follow) => _writeProfile(
+      _gate.state.profile.copyWith(clearTimeZone: true, zoneFollow: follow),
     ),
     setTheme: (ThemeMode mode) =>
         ref.read(themeModeProvider.notifier).state = mode,

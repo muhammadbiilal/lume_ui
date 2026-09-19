@@ -2479,13 +2479,48 @@ sample record ticked from its row would have shown its raw `@key`.
 `update(…, claim: false)` keeps it; a form's save still claims the record as
 the reader's (`memory_record_repository_test.dart`).
 
+### C89 — "Follow my region" never picks one of a country's zones
+
+**Approved refinement of C88.** "Follow my region" is the reader's
+preference, not an inference, and it resolves to the city's zone where the
+country has several civil times, else the country's one civil time, else
+nothing: the reader is asked to choose (`WORLD_CLOCK_TIMEZONE.md`).
+
+- **A country with several zones asks — corrected.** The reference's
+  country table gives the United States New York's zone, Australia Sydney's,
+  Russia Moscow's; a reader in Los Angeles or Perth following their region
+  was on the wrong clock. Their city now decides (Los Angeles, Perth); with
+  no city, To-dos and Events show "Your day can't be worked out" with
+  "Your region has more than one time zone … Choose a time zone in Profile ›
+  Time", Sun & Moon says sunrise and sunset need a zone, Calendar shows no
+  zone and no next prayer, and Weather's sun falls to the reference's own
+  fallback. English, Urdu and Arabic.
+- **"Follow this device" is offered — new row.** Account › Time lists it
+  under "Follow my region". This build cannot read the device's zone, so
+  choosing it says "This device's time zone isn't available" and tools
+  show the day-unknown state rather than the region's clock. "Follow my
+  region" names the zone it resolves to, or "Choose a time zone".
+- **The zones offered are canonical — departure.** The reference offers
+  every zone in the country table's area, aliases included (`Asia/Kuwait`,
+  `Asia/Muscat`, `Asia/Vientiane`); a new selection stores the canonical
+  identifier, so those fold into the zones they name (`Asia/Riyadh`,
+  `Asia/Dubai`, `Asia/Bangkok`), and the reader's own country's zones are
+  listed too (New York, Chicago, Denver, Los Angeles … for the United
+  States). The Time route's list is shorter, and its note card sits higher
+  (254 points on a 390-point phone in Pakistan); the account bounds test
+  marks it open against this entry. The Time goldens are re-captured.
+- **Sources say what decided the zone.** `explicit`, `migratedAlias`,
+  `cityPolicy`, `regionPolicy`, `device`, `unavailable`; `fixture` is kept
+  for zones a test or reference fixture supplies.
+
 ### C88 — The IANA time-zone foundation, and what it changes on screen
 
 **`timezone` 0.11.1, `latest_all`, tzdb 2025c**, behind
 `LumeTimeZoneService` (`WORLD_CLOCK_TIMEZONE.md`). The reader's zone is
 their explicit choice; else, under Account › Time's "Follow region", the
-country table's zone (source `fixture`); else a verified device zone (none
-in this build). An explicit zone that is unknown or malformed is reported,
+country table's zone; else a verified device zone (none in this build).
+Refined by C89: the region is now a policy with its own sources, and a
+country with several zones is never given one. An explicit zone that is unknown or malformed is reported,
 kept as written, and never replaced by another zone.
 
 - **Every IANA zone resolves — corrected.** The six-zone table could not read

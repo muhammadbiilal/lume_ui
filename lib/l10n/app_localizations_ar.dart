@@ -633,7 +633,16 @@ class AppLocalizationsAr extends AppLocalizations {
   String get acctTimezoneAuto => 'حسب هذا الجهاز';
 
   @override
+  String get acctTimezoneChoose => 'اختر منطقة زمنية';
+
+  @override
+  String get acctTimezoneFollowDevice => 'حسب هذا الجهاز';
+
+  @override
   String get acctTimezoneFollowRegion => 'حسب منطقتي';
+
+  @override
+  String get acctTimezoneNoDevice => 'المنطقة الزمنية لهذا الجهاز غير متاحة';
 
   @override
   String get acctTimezoneNote =>
@@ -5311,6 +5320,10 @@ class AppLocalizationsAr extends AppLocalizations {
   String get recViewCached => 'عرض السجلات المحفوظة';
 
   @override
+  String get recZoneChooseText =>
+      'في منطقتك أكثر من منطقة زمنية، لذا لا يُجمَّع شيء هنا حسب اليوم. سجلاتك كلها مدرجة أعلاه. اختر منطقة زمنية من الملف الشخصي › الوقت.';
+
+  @override
   String get recZoneMissingText =>
       'لم تُحدَّد منطقة زمنية ولا تُعرف منطقة هذا الجهاز، لذا لا يُجمَّع شيء هنا حسب اليوم. سجلاتك كلها مدرجة أعلاه. اختر منطقة زمنية من الملف الشخصي › الوقت.';
 
@@ -5828,6 +5841,10 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get sunToday => 'اليوم';
+
+  @override
+  String get sunZoneChooseText =>
+      'يُحسب الشروق والغروب على ساعتك، لذا يلزمهما منطقتك الزمنية. اختر واحدة من الملف الشخصي › الوقت.';
 
   @override
   String get surahAlKahf => 'الكهف';

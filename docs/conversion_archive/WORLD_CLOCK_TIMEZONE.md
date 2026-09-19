@@ -60,8 +60,9 @@ identifier exactly as asked (`requested`) and the canonical one
 |---|---|
 | `canonical` | a canonical IANA identifier |
 | `alias` | a backward link — calculations use the canonical zone it names |
-| `device` | nothing configured and no region zone: the verified device zone |
-| `missingDevice` | nothing configured, no region zone, no verified device zone |
+| `device` | "Follow this device", and the verified device zone |
+| `missingDevice` | "Follow this device", and no verified device zone |
+| `selectionRequired` | "Follow my region", where the country has several civil times and the city does not decide between them |
 | `unknown` | an explicit identifier the database does not hold |
 | `malformed` | an explicit value that is not an identifier (see above) |
 | `databaseUnavailable` | the database is not loaded |
@@ -69,29 +70,58 @@ identifier exactly as asked (`requested`) and the canonical one
 
 | source | meaning |
 |---|---|
-| `configured` | the reader's own zone (`profile.timeZone`) |
-| `migratedAlias` | the reader's stored zone is a renamed identifier |
-| `fixture` | the country table's zone, under Account › Time's "Follow region" — reference data (decision recorded below) |
-| `device` | the device's zone, as a platform adapter verified it |
+| `explicit` | the zone the reader named (`profile.timeZone`) |
+| `migratedAlias` | the reader's named zone is a renamed identifier |
+| `cityPolicy` | "Follow my region", decided by the reader's city (`kLumeCityZones`) |
+| `regionPolicy` | "Follow my region", decided by the country's one civil time (`kLumeCountryCivilZone`) |
+| `device` | "Follow this device": the device's zone, as a platform adapter verified it |
+| `fixture` | a deterministic reference or test fixture supplied the zone (`LumeZoneResolution.fixed`) — never a reader's preference |
 | `unavailable` | nothing could be used |
 
 ### The reader's zone
 
-`reader()` takes, in order: the explicit zone; else, under "Follow region",
-the country table's zone; else a verified device zone. **An explicit zone
-that is unknown or malformed is reported as it is and never replaced** by the
-region's or the device's — a task grouped on another zone's day would be
-wrong while claiming to be right. The identifier is kept for diagnosis and
-is never overwritten.
+Account › Time holds one preference: a zone the reader names
+(`profile.timeZone`), or, with none named, **Follow my region** or **Follow
+this device** (`profile.zoneFollow`). `reader()` resolves it in this order:
 
-Device-zone detection is a platform concern: this build has no adapter, so
-`deviceZoneProvider` is `LumeDeviceZone.unknown()` until Dayroz supplies one.
+1. **The named zone.** An unknown or malformed one is reported as it is and
+   never replaced by the region's or the device's — a task grouped on
+   another zone's day would be wrong while claiming to be right. The
+   identifier is kept for diagnosis and is never overwritten.
+2. **Follow my region.** The city's zone where the country has several civil
+   times (`cityPolicy`); else the country's one civil time
+   (`regionPolicy`); else **`selectionRequired`** — the United States,
+   Canada, Australia, Russia, Brazil, Mexico and the other countries with
+   several civil times are never given one of them. The device is not read.
+3. **Follow this device.** The verified device zone (`device`); else
+   `missingDevice`. The region is not read.
+4. Otherwise a typed unavailable result.
 
-**Decision recorded:** the brief says a zone is not to be inferred from the
-country. Account › Time (accepted in F5C) offers "Follow region" as the
-default, which takes the country table's zone. It is kept, as the `fixture`
-source, rather than removing an accepted setting in this step; approval is
-requested to keep it, to relabel it, or to replace it with the device zone.
+Nothing else is an input: interface language, religion, interests,
+currency, units, phone number and network location cannot change the
+answer, and tests hold that.
+
+**The default.** A profile that has never set a zone follows its region —
+the reference's default, which Account › Time shows selected, and the only
+one this build can honour: device-zone detection is a platform concern with
+no adapter yet, so `deviceZoneProvider` is `LumeDeviceZone.unknown()` until
+Dayroz supplies one, and "Follow this device" says the device's zone is not
+available.
+
+**Where the region's zones come from.**
+
+| table | source | held by |
+|---|---|---|
+| `kLumeCountryZones` — every canonical zone of each country | CLDR 47 (ICU 77.1), `Intl.Locale.getTimeZones`, captured by `scripts/cldr_country_zones.mjs` into `scripts/data/cldr_country_zones.json`, canonicalised against tzdb 2025c | the generator |
+| `kLumeCountryCivilZone` — the one civil time of 175 of the 194 countries | zones grouped when their offsets agree hour by hour from 2026 to 2031 (Büsingen with Berlin; Kazakhstan's zones since 2024); the country table's own zone leads its group | the generator; `lume_follow_region_test.dart` |
+| `kLumeCityZones` — the zone of each listed city in the 19 countries with several (AU BR CA CD CL CN EC ES FM ID KI MN MX NZ PG PT RU UA US) | reviewed by hand against IANA's `zone.tab` descriptions | a test: every city of every several-zone country has an entry, and every entry is one of its country's zones |
+
+Countries with several civil times include some a reader might not expect:
+Spain (the Canaries), Portugal (the Azores and Madeira), China (Xinjiang's
+`Asia/Urumqi`), Ecuador (Galápagos), New Zealand (Chatham) and Ukraine
+(`Europe/Simferopol`, which tzdb lists for Crimea under both UA and RU).
+Their listed cities have zones, so a reader who picked one is unaffected; a
+reader with no city is asked to choose.
 
 ### Aliases and migration
 
@@ -124,8 +154,13 @@ refresh. It requires, in one reviewed change:
    package version and IANA release named in the commit.
 2. Review of the package changelog and of IANA's announcement for every
    release in between.
-3. Regenerating `lume_zone_aliases.dart` and reviewing its diff: renamed,
-   added and removed identifiers.
+3. Regenerating `lume_zone_aliases.dart` and `lume_country_zones.dart`
+   (`dart run scripts/generate_zone_aliases.dart`, then `dart format`) and
+   reviewing the diff: renamed, added and removed identifiers, and any
+   country that gains or loses a civil time. A CLDR update is the same
+   deliberate step: `node scripts/cldr_country_zones.mjs` records the ICU and
+   CLDR versions it read. Then `kLumeCityZones` is checked against the new
+   zones (its test fails on any city left without one).
 4. Updating the version guard (`kLumeTzdbVersion`) and the tests that pin it.
 5. Renamed-zone and alias-resolution tests; DST-boundary tests; historical
    dates.

@@ -635,7 +635,16 @@ class AppLocalizationsUr extends AppLocalizations {
   String get acctTimezoneAuto => 'اس ڈیوائس کے مطابق';
 
   @override
+  String get acctTimezoneChoose => 'ٹائم زون منتخب کریں';
+
+  @override
+  String get acctTimezoneFollowDevice => 'اس ڈیوائس کے مطابق';
+
+  @override
   String get acctTimezoneFollowRegion => 'میرے خطے کے مطابق';
+
+  @override
+  String get acctTimezoneNoDevice => 'اس ڈیوائس کا ٹائم زون دستیاب نہیں';
 
   @override
   String get acctTimezoneNote =>
@@ -5243,6 +5252,10 @@ class AppLocalizationsUr extends AppLocalizations {
   String get recViewCached => 'محفوظ شدہ ریکارڈ دیکھیں';
 
   @override
+  String get recZoneChooseText =>
+      'آپ کے خطے میں ایک سے زیادہ ٹائم زون ہیں، اس لیے یہاں کچھ بھی دن کے لحاظ سے ترتیب نہیں دیا گیا۔ آپ کے تمام ریکارڈ اوپر موجود ہیں۔ پروفائل › وقت میں ٹائم زون منتخب کریں۔';
+
+  @override
   String get recZoneMissingText =>
       'کوئی ٹائم زون مقرر نہیں اور اس ڈیوائس کا معلوم نہیں، اس لیے یہاں کچھ بھی دن کے لحاظ سے ترتیب نہیں دیا گیا۔ آپ کے تمام ریکارڈ اوپر موجود ہیں۔ پروفائل › وقت میں ٹائم زون منتخب کریں۔';
 
@@ -5757,6 +5770,10 @@ class AppLocalizationsUr extends AppLocalizations {
 
   @override
   String get sunToday => 'آج';
+
+  @override
+  String get sunZoneChooseText =>
+      'طلوع اور غروب آپ کی گھڑی پر نکالے جاتے ہیں، اس لیے ان کے لیے آپ کا ٹائم زون ضروری ہے۔ پروفائل › وقت میں ایک منتخب کریں۔';
 
   @override
   String get surahAlKahf => 'الکہف';

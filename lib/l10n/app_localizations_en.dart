@@ -636,7 +636,16 @@ class AppLocalizationsEn extends AppLocalizations {
   String get acctTimezoneAuto => 'Follow this device';
 
   @override
+  String get acctTimezoneChoose => 'Choose a time zone';
+
+  @override
+  String get acctTimezoneFollowDevice => 'Follow this device';
+
+  @override
   String get acctTimezoneFollowRegion => 'Follow my region';
+
+  @override
+  String get acctTimezoneNoDevice => 'This device’s time zone isn’t available';
 
   @override
   String get acctTimezoneNote =>
@@ -5249,6 +5258,10 @@ class AppLocalizationsEn extends AppLocalizations {
   String get recViewCached => 'View cached records';
 
   @override
+  String get recZoneChooseText =>
+      'Your region has more than one time zone, so nothing here is grouped by day. Your records are all listed above. Choose a time zone in Profile › Time.';
+
+  @override
   String get recZoneMissingText =>
       'No time zone is set and this device’s isn’t known, so nothing here is grouped by day. Your records are all listed above. Choose a time zone in Profile › Time.';
 
@@ -5761,6 +5774,10 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get sunToday => 'Today';
+
+  @override
+  String get sunZoneChooseText =>
+      'Sunrise and sunset are worked out on your clock, so they need your time zone. Choose one in Profile › Time.';
 
   @override
   String get surahAlKahf => 'Al-Kahf';

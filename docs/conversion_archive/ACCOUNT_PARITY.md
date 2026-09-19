@@ -179,10 +179,10 @@ A row marked **open** is a difference that has been found, measured and put to a
 | `optrow` | width | 348.00 | 346.00 | -2.00 | **open — C41** |
 | `optrow` | height | 46.00 | 46.00 | = | **open — C41** |
 | `field` | — | — | — | — | not measured |
-| `notecard` | y | 2490.00 | 2496.00 | 6.00 | cumulative line-box rounding (D20) |
-| `notecard` | x | 20.00 | 20.00 | = | cumulative line-box rounding (D20) |
-| `notecard` | width | 350.00 | 350.00 | = | cumulative line-box rounding (D20) |
-| `notecard` | height | 85.00 | 85.00 | = | cumulative line-box rounding (D20) |
+| `notecard` | y | 2490.00 | 2236.00 | -254.00 | **open — C89** |
+| `notecard` | x | 20.00 | 20.00 | = | **open — C89** |
+| `notecard` | width | 350.00 | 350.00 | = | **open — C89** |
+| `notecard` | height | 85.00 | 85.00 | = | **open — C89** |
 
 ### appearance
 

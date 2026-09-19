@@ -236,7 +236,12 @@ class _LumeSunmoonToolState extends ConsumerState<LumeSunmoonTool> {
     final LumeStartupState startup = ref.watch(startupControllerProvider).state;
     final LumeZoneResolution zone = ref
         .watch(timeZoneServiceProvider)
-        .readerZone(startup, r.user.country, ref.watch(deviceZoneProvider));
+        .readerZone(
+          startup.profile,
+          ref.watch(deviceZoneProvider),
+          country: r.user.country,
+          city: r.user.city,
+        );
     final (LumeSkyBoard? board, LumeSkyMissing? missing) = LumeSkyBoard.at(
       now: now,
       country: r.user.country,
@@ -284,7 +289,7 @@ class _LumeSunmoonToolState extends ConsumerState<LumeSunmoonTool> {
                 },
                 text: switch (missing) {
                   LumeSkyMissing.city => l.sunNoCityText,
-                  _ when zoneLabel.isEmpty => l.recZoneMissingText,
+                  _ when zoneLabel.isEmpty => l.sunZoneChooseText,
                   _ => l.sunNoZoneText,
                 },
               ),

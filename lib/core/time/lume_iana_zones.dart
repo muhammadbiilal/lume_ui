@@ -23,25 +23,48 @@ import 'package:flutter/foundation.dart';
 import 'package:timezone/data/latest_all.dart' as tz_data;
 import 'package:timezone/timezone.dart' as tz;
 
+import 'lume_city_zones.dart';
+import 'lume_country_zones.dart';
 import 'lume_zone.dart';
 import 'lume_zone_aliases.dart';
+
+/// What the reader chose when they did not name a zone (Account › Time):
+/// their region's civil time, or the device's. A preference they set and
+/// can change — never inferred from their language, religion, interests or
+/// currency.
+enum LumeZoneFollow {
+  /// "Follow my region": the city's zone, else the country's one civil time,
+  /// else nothing — a country with several is not given one.
+  region,
+
+  /// "Follow this device": the zone a platform adapter verified.
+  device,
+}
 
 /// Where a zone came from — carried with every resolution, never only
 /// logged.
 enum LumeZoneSource {
-  /// The reader chose it (`profile.timeZone`).
-  configured,
+  /// The reader named it (`profile.timeZone`).
+  explicit,
 
-  /// The reader's stored choice is a renamed identifier, resolved through
-  /// its alias.
+  /// The reader's named zone is a renamed identifier, resolved through its
+  /// alias.
   migratedAlias,
 
-  /// The country table's zone, under the reader's "Follow region" setting
-  /// (Account › Time) — reference data, not a measurement.
-  fixture,
+  /// "Follow my region", decided by the reader's city
+  /// (`kLumeCityZones`) in a country with several civil times.
+  cityPolicy,
 
-  /// The device's own zone, as a platform adapter verified it.
+  /// "Follow my region", decided by the country's one civil time
+  /// (`kLumeCountryCivilZone`).
+  regionPolicy,
+
+  /// "Follow this device": the device's zone, as a platform adapter
+  /// verified it.
   device,
+
+  /// A deterministic reference or test fixture supplied the zone directly.
+  fixture,
 
   /// No zone could be used.
   unavailable,
@@ -55,11 +78,15 @@ enum LumeZoneOutcome {
   /// A backward link; calculations use the zone it names.
   alias,
 
-  /// Nothing configured, so the verified device zone.
+  /// "Follow this device", and the verified device zone.
   device,
 
-  /// Nothing configured, and no verified device zone.
+  /// "Follow this device", and no verified device zone.
   missingDevice,
+
+  /// "Follow my region" where the region has several civil times and the
+  /// city does not decide between them: the reader must choose a zone.
+  selectionRequired,
 
   /// An explicit identifier the database does not hold.
   unknown,
@@ -215,6 +242,10 @@ class LumeTimeZoneService implements LumeZoneDatabase {
   @override
   Iterable<String> get ids => kLumeCanonicalZones;
 
+  /// The canonical zones of [country] (CLDR's list), for a picker.
+  static List<String> countryZones(String country) =>
+      kLumeCountryZones[country] ?? const <String>[];
+
   /// [LumeZoneDatabase]: the zone for [id], canonical or alias, or `null`.
   @override
   LumeZone? zoneFor(String id) => resolveId(id).zone;
@@ -222,7 +253,7 @@ class LumeTimeZoneService implements LumeZoneDatabase {
   /// Resolve a stored or configured identifier.
   LumeZoneResolution resolveId(
     String id, {
-    LumeZoneSource source = LumeZoneSource.configured,
+    LumeZoneSource source = LumeZoneSource.explicit,
   }) {
     if (!isWellFormed(id)) {
       return LumeZoneResolution._(
@@ -252,7 +283,7 @@ class LumeTimeZoneService implements LumeZoneDatabase {
     final bool alias = target != id;
     return LumeZoneResolution._(
       outcome: alias ? LumeZoneOutcome.alias : LumeZoneOutcome.canonical,
-      source: alias && source == LumeZoneSource.configured
+      source: alias && source == LumeZoneSource.explicit
           ? LumeZoneSource.migratedAlias
           : source,
       requested: id,
@@ -261,18 +292,40 @@ class LumeTimeZoneService implements LumeZoneDatabase {
     );
   }
 
-  /// The reader's zone: their explicit choice; else, under "Follow region",
-  /// the country table's zone; else a verified device zone. An explicit
-  /// choice that cannot be read is reported as it is — never replaced by
-  /// another zone.
+  /// The reader's zone, in this order:
+  ///
+  /// 1. the zone they named ([explicit]) — reported as it is when it cannot
+  ///    be read, never replaced by another;
+  /// 2. under "Follow my region": their city's zone where the country has
+  ///    several civil times; else the country's one civil time; else
+  ///    [LumeZoneOutcome.selectionRequired] — a country with several is
+  ///    never given one of them;
+  /// 3. under "Follow this device": the verified device zone, else
+  ///    [LumeZoneOutcome.missingDevice].
+  ///
+  /// Nothing else is an input: language, religion, interests and currency
+  /// cannot change the answer.
   LumeZoneResolution reader({
-    String? configured,
-    String? regionZone,
+    String? explicit,
+    LumeZoneFollow follow = LumeZoneFollow.region,
+    String country = '',
+    String city = '',
     LumeDeviceZone device = const LumeDeviceZone.unknown(),
   }) {
-    if (configured != null) return resolveId(configured);
-    if (regionZone != null && regionZone.isNotEmpty) {
-      return resolveId(regionZone, source: LumeZoneSource.fixture);
+    if (explicit != null) return resolveId(explicit);
+    if (follow == LumeZoneFollow.region) {
+      final String? byCity = kLumeCityZones['$country:$city'];
+      if (byCity != null) {
+        return resolveId(byCity, source: LumeZoneSource.cityPolicy);
+      }
+      final String? civil = kLumeCountryCivilZone[country];
+      if (civil != null) {
+        return resolveId(civil, source: LumeZoneSource.regionPolicy);
+      }
+      return const LumeZoneResolution._(
+        outcome: LumeZoneOutcome.selectionRequired,
+        source: LumeZoneSource.unavailable,
+      );
     }
     if (device.verified && device.id != null) {
       final LumeZoneResolution r = resolveId(

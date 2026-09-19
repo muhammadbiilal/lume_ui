@@ -12,6 +12,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../app/providers/shell_provider.dart';
+import '../../../app/providers/time_zone_provider.dart';
 import '../../../core/fixtures/lume_clock.dart';
 import '../../../core/fixtures/lume_reference_weather.dart';
 import '../../../core/icons/lume_icon.dart';
@@ -70,13 +71,9 @@ class LumeWeatherTool extends ConsumerStatefulWidget {
     required DateTime now,
     required String country,
     required String city,
-    required String zoneId,
-    LumeZoneDatabase? zones,
+    required LumeZone? zone,
   }) {
     final (double, double)? at = LumeSolar.coordsFor(country, city);
-    final LumeZone? zone = (zones ?? LumeTimeZoneService.shared).zoneFor(
-      zoneId,
-    );
     if (at == null || zone == null) return fallbackSun;
     final List<LumeSolarTime> day = LumeSolar.prayerTimes(
       // The zone's own date, not the device's.
@@ -115,15 +112,22 @@ class _LumeWeatherToolState extends ConsumerState<LumeWeatherTool> {
     );
     final DateTime now = LumeClockScope.of(context).now();
     final LumeStartupState startup = ref.watch(startupControllerProvider).state;
-    // `L.timezone()` — the reader's own choice, or the country's.
-    final String zoneId =
-        startup.profile.timeZone ??
-        startup.countries?.zoneOf(r.user.country) ??
-        'UTC';
+    // `L.timezone()` — the reader's zone as Account › Time resolves it.
+    final LumeZoneResolution zone = ref
+        .watch(timeZoneServiceProvider)
+        .readerZone(
+          startup.profile,
+          ref.watch(deviceZoneProvider),
+          country: r.user.country,
+          city: r.user.city,
+        );
     final LumeWeatherBoard? board = LumeWeatherBoard.forMarket(
       country: r.user.country,
       city: r.user.city,
-      timeZone: zoneId,
+      // The reference's climate table is keyed by the zone's continent for a
+      // market it does not name — a fixture key, not a clock: the country
+      // table's zone stands in when the reader's is not known.
+      timeZone: zone.canonicalId ?? startup.countries?.zoneOf(r.user.country),
       nowHour: now.hour,
     );
     final String country = LumeToolScreen.countryName(
@@ -168,7 +172,7 @@ class _LumeWeatherToolState extends ConsumerState<LumeWeatherTool> {
               ],
             ),
           ),
-          if (board != null) ..._dashboard(l, f, now, zoneId, board),
+          if (board != null) ..._dashboard(l, f, now, zone.zone, board),
         ],
       ),
     );
@@ -186,7 +190,7 @@ class _LumeWeatherToolState extends ConsumerState<LumeWeatherTool> {
     AppLocalizations l,
     LumeFormatting f,
     DateTime now,
-    String zoneId,
+    LumeZone? zone,
     LumeWeatherBoard board,
   ) {
     final LumeToolRequest r = widget.request;
@@ -196,7 +200,7 @@ class _LumeWeatherToolState extends ConsumerState<LumeWeatherTool> {
       now: now,
       country: r.user.country,
       city: r.user.city,
-      zoneId: zoneId,
+      zone: zone,
     );
     DateTime clock(int minute) =>
         DateTime(now.year, now.month, now.day, minute ~/ 60, minute % 60);
