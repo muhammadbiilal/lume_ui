@@ -608,6 +608,25 @@ class _MemoryTx implements LumeRecordTx {
     return record;
   }
 
+  @override
+  LumeRecord insert(String collection, LumeRecord record) {
+    if (get(collection, record.id) != null ||
+        (_store._used[collection]?.contains(record.id) ?? false)) {
+      throw LumeTxFailure(
+        LumeTxFailureKind.duplicateId,
+        collection: collection,
+        id: record.id,
+      );
+    }
+    final LumeRecord copy = record.copyWith(
+      fields: Map<String, Object?>.unmodifiable(record.fields),
+      seeded: false,
+      queued: _store.offline,
+    );
+    _stage(collection, record.id, copy);
+    return copy;
+  }
+
   LumeRecord _current(String collection, String id, int expectVersion) {
     final LumeRecord? current = get(collection, id);
     if (current == null) {

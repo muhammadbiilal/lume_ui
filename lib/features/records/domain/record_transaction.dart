@@ -143,6 +143,11 @@ abstract interface class LumeRecordTx {
   /// A new record with the caller's [id] — made once, never reused.
   LumeRecord create(String collection, String id, Map<String, Object?> fields);
 
+  /// A record carried in from elsewhere — an import — with its own id,
+  /// version and times, refused like [create] when the id is held or has
+  /// ever been held.
+  LumeRecord insert(String collection, LumeRecord record);
+
   /// Replace a record's fields; [expectVersion] must be the version this
   /// transaction sees.
   LumeRecord update(

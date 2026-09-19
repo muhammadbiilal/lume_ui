@@ -243,6 +243,28 @@ void main() {
     });
   });
 
+  test('insert carries a record in with its own id, version and times; '
+      'a held or once-held id is refused', () {
+    final LumeRecord carried = LumeRecord(
+      id: 'x1',
+      fields: const <String, Object?>{'n': 1},
+      version: 4,
+      createdAt: DateTime.utc(2020),
+      updatedAt: DateTime.utc(2021),
+    );
+    expect(
+      store.run<void>((LumeRecordTx tx) => tx.insert('entries', carried)).ok,
+      isTrue,
+    );
+    final LumeRecord got = store.get('entries', 'x1')!;
+    expect(got.version, 4);
+    expect(got.createdAt, DateTime.utc(2020));
+    expect(
+      kind(store.run<void>((LumeRecordTx tx) => tx.insert('entries', carried))),
+      LumeTxFailureKind.duplicateId,
+    );
+  });
+
   group('undo', () {
     test('reverting a delete restores the same ids, exactly', () {
       final LumeTxReceipt made = seed();
