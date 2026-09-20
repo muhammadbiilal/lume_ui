@@ -8539,7 +8539,7 @@
   "@toolStatusCalendar": {
     "description": "The status line on the calendar tile. The prototype keeps it in the catalogue and renders it untranslated in every language (D22)"
   },
-  "toolStatusCommittee": "Month 4 of 10",
+  "toolStatusCommittee": "Track a savings committee",
   "@toolStatusCommittee": {
     "description": "The status line on the committee tile. The prototype keeps it in the catalogue and renders it untranslated in every language (D22)"
   },
@@ -10945,5 +10945,859 @@
         "type": "int"
       }
     }
+  },
+  "commEmptyTitle": "No committees yet",
+  "@commEmptyTitle": {
+    "description": "Committee first use: nothing seeded"
+  },
+  "commEmptyText": "Add a savings committee you are part of. Lume keeps its members, its turns and its cycles, and works out what is collected, paid out and still owed.",
+  "@commEmptyText": {
+    "description": "Committee first use: what the tool is for"
+  },
+  "commAdd": "Add a committee",
+  "@commAdd": {
+    "description": "Committee: add action"
+  },
+  "commCommittees": "Committees",
+  "@commCommittees": {
+    "description": "Committee: the list's section title"
+  },
+  "commSearch": "Search committees",
+  "@commSearch": {
+    "description": "Committee: search placeholder"
+  },
+  "commFilterLabel": "Filter committees",
+  "@commFilterLabel": {
+    "description": "Committee: the filter bar, for a screen reader"
+  },
+  "commFilterRunning": "Running",
+  "@commFilterRunning": {
+    "description": "Committee filter: still collecting"
+  },
+  "commFilterLate": "Late",
+  "@commFilterLate": {
+    "description": "Committee filter: something is owed past its day"
+  },
+  "commFilterCompleted": "Completed",
+  "@commFilterCompleted": {
+    "description": "Committee filter: every cycle paid out"
+  },
+  "commFilterCancelled": "Cancelled",
+  "@commFilterCancelled": {
+    "description": "Committee filter: stopped by the reader"
+  },
+  "commSortNext": "Next cycle",
+  "@commSortNext": {
+    "description": "Committee sort: by the next cycle's day"
+  },
+  "commSortName": "Name",
+  "@commSortName": {
+    "description": "Committee sort"
+  },
+  "commSortAmount": "Contribution",
+  "@commSortAmount": {
+    "description": "Committee sort: what one share pays a cycle"
+  },
+  "commSortRecent": "Recent activity",
+  "@commSortRecent": {
+    "description": "Committee sort"
+  },
+  "commNoMatch": "Nothing matches",
+  "@commNoMatch": {
+    "description": "Committee: no committee matches the filter and search"
+  },
+  "commNoMatchText": "No committee matches this filter and search.",
+  "@commNoMatchText": {
+    "description": "Committee: no match, what to do"
+  },
+  "commShowAll": "Show all",
+  "@commShowAll": {
+    "description": "Committee: clear the filter and the search"
+  },
+  "commNotFound": "That committee is not here",
+  "@commNotFound": {
+    "description": "Committee: a link to a committee that is not there"
+  },
+  "commInThePot": "Collected, not paid out",
+  "@commInThePot": {
+    "description": "Committee summary kicker: what the committees hold"
+  },
+  "commCollected": "Collected",
+  "@commCollected": {
+    "description": "Committee summary stat: every contribution recorded"
+  },
+  "commPaidOut": "Paid out",
+  "@commPaidOut": {
+    "description": "Committee summary stat: every payout recorded"
+  },
+  "commOutstanding": "Outstanding",
+  "@commOutstanding": {
+    "description": "Committee summary stat: owed and unpaid to the day"
+  },
+  "commRunning": "{n, plural, =0{No running committees} =1{1 running committee} other{{n} running committees}}",
+  "@commRunning": {
+    "description": "Committee summary caption: each committee counted once",
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
+  "commSummaryCurrency": "In {code}",
+  "@commSummaryCurrency": {
+    "description": "Committee: a summary's currency, when there is more than one",
+    "placeholders": {
+      "code": {
+        "type": "String"
+      }
+    }
+  },
+  "commPoolEachCycle": "Pool each cycle",
+  "@commPoolEachCycle": {
+    "description": "Committee summary kicker: the contribution times the shares"
+  },
+  "commCycleOf": "Cycle {n} of {total}",
+  "@commCycleOf": {
+    "description": "Committee: which cycle the committee is in",
+    "placeholders": {
+      "n": {
+        "type": "String"
+      },
+      "total": {
+        "type": "String"
+      }
+    }
+  },
+  "commBeforeStart": "Starts {date}",
+  "@commBeforeStart": {
+    "description": "Committee: it has not reached its first cycle",
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "commYourContribution": "Your contribution",
+  "@commYourContribution": {
+    "description": "Committee stat: what the reader pays each cycle, for all their shares"
+  },
+  "commPeople": "People",
+  "@commPeople": {
+    "description": "Committee stat: distinct members, however many shares they hold"
+  },
+  "commShares": "Shares",
+  "@commShares": {
+    "description": "Committee stat: positions in the payout order"
+  },
+  "commYourTurn": "Your turn",
+  "@commYourTurn": {
+    "description": "Committee stat label: the cycle the reader receives"
+  },
+  "commTurnCycle": "Cycle {n}",
+  "@commTurnCycle": {
+    "description": "Committee: a cycle by its number",
+    "placeholders": {
+      "n": {
+        "type": "String"
+      }
+    }
+  },
+  "commTurnDone": "Received",
+  "@commTurnDone": {
+    "description": "Committee stat: the reader's payout is already recorded"
+  },
+  "commTurnNone": "No turn",
+  "@commTurnNone": {
+    "description": "Committee stat: the reader holds no share"
+  },
+  "commThisCycle": "This cycle",
+  "@commThisCycle": {
+    "description": "Committee section: who has paid into the current cycle"
+  },
+  "commPayoutOrder": "Payout order",
+  "@commPayoutOrder": {
+    "description": "Committee section: which cycle each share receives, settled when it was created"
+  },
+  "commPayoutOrderCap": "Settled when the committee was created. The order records are entered in does not change it.",
+  "@commPayoutOrderCap": {
+    "description": "Committee: the payout order is fixed, unlike the order things are recorded"
+  },
+  "commCollectedEachCycle": "Collected each cycle",
+  "@commCollectedEachCycle": {
+    "description": "Committee chart title"
+  },
+  "commCollectedCap": "What each cycle has collected of its pool, in {code}.",
+  "@commCollectedCap": {
+    "description": "Committee chart caption",
+    "placeholders": {
+      "code": {
+        "type": "String"
+      }
+    }
+  },
+  "commOtherCurrencies": "Committees in other currencies are counted on their own.",
+  "@commOtherCurrencies": {
+    "description": "Committee chart: it shows one currency"
+  },
+  "commChartEntry": "{cycle}: {amount}",
+  "@commChartEntry": {
+    "description": "Committee chart bar, for a screen reader",
+    "placeholders": {
+      "cycle": {
+        "type": "String"
+      },
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "commMembersSection": "Members",
+  "@commMembersSection": {
+    "description": "Committee section: the people in it"
+  },
+  "commReceivesCycle": "Receives cycle {n}",
+  "@commReceivesCycle": {
+    "description": "Committee row: the cycle this share is paid",
+    "placeholders": {
+      "n": {
+        "type": "String"
+      }
+    }
+  },
+  "commReceivesCycles": "Receives cycles {list}",
+  "@commReceivesCycles": {
+    "description": "Committee row: a member holding several shares",
+    "placeholders": {
+      "list": {
+        "type": "String"
+      }
+    }
+  },
+  "commShareCount": "{n, plural, =1{1 share} other{{n} shares}}",
+  "@commShareCount": {
+    "description": "Committee row: how many shares a member holds",
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
+  "commYouLabel": "You",
+  "@commYouLabel": {
+    "description": "Committee: the member who is the reader"
+  },
+  "commPaidOn": "Paid {date}",
+  "@commPaidOn": {
+    "description": "Committee: the day a contribution was handed over",
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "commDueOn": "Due {date}",
+  "@commDueOn": {
+    "description": "Committee: the day a cycle falls due",
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "commCollectedOf": "{collected} of {pool}",
+  "@commCollectedOf": {
+    "description": "Committee: a cycle's collection against its pool",
+    "placeholders": {
+      "collected": {
+        "type": "String"
+      },
+      "pool": {
+        "type": "String"
+      }
+    }
+  },
+  "commShortBy": "Short {amount}",
+  "@commShortBy": {
+    "description": "Committee: what a cycle still needs before a payout",
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "commCyclesPaidOut": "{done} of {total} cycles paid out",
+  "@commCyclesPaidOut": {
+    "description": "Committee progress bar, for a screen reader",
+    "placeholders": {
+      "done": {
+        "type": "String"
+      },
+      "total": {
+        "type": "String"
+      }
+    }
+  },
+  "commNoHistory": "Nothing recorded yet",
+  "@commNoHistory": {
+    "description": "Committee: the history list is empty"
+  },
+  "commFactContribution": "Contribution a cycle",
+  "@commFactContribution": {
+    "description": "Committee fact"
+  },
+  "commFactCycles": "Cycles",
+  "@commFactCycles": {
+    "description": "Committee fact: how many cycles, which is how many shares"
+  },
+  "commFactFrequency": "How often",
+  "@commFactFrequency": {
+    "description": "Committee fact"
+  },
+  "commMonthly": "Monthly",
+  "@commMonthly": {
+    "description": "Committee: the only frequency this build keeps"
+  },
+  "commFactFirstDue": "First cycle due",
+  "@commFactFirstDue": {
+    "description": "Committee fact: the anchor every cycle is worked out from"
+  },
+  "commFactPool": "Pool a cycle",
+  "@commFactPool": {
+    "description": "Committee fact: contribution times shares"
+  },
+  "commFactExpected": "Over the committee",
+  "@commFactExpected": {
+    "description": "Committee fact: contribution times shares times cycles"
+  },
+  "commFactRole": "Your part",
+  "@commFactRole": {
+    "description": "Committee fact: what the reader is in this committee"
+  },
+  "commFactCancelledOn": "Cancelled on",
+  "@commFactCancelledOn": {
+    "description": "Committee fact: the day it stopped"
+  },
+  "commUnpaidAtCancelTotal": "Unpaid at cancellation",
+  "@commUnpaidAtCancelTotal": {
+    "description": "Committee fact: what was owed when it stopped, and does not grow"
+  },
+  "commRoleMember": "A member",
+  "@commRoleMember": {
+    "description": "Committee role: the reader pays and receives"
+  },
+  "commRoleOrganiser": "The organiser",
+  "@commRoleOrganiser": {
+    "description": "Committee role: the reader runs it and holds no share"
+  },
+  "commRoleBoth": "Organiser and member",
+  "@commRoleBoth": {
+    "description": "Committee role: both"
+  },
+  "commRoleHelp": "Lume keeps your own record of this committee. It holds no money and moves none.",
+  "@commRoleHelp": {
+    "description": "Committee: what the tool does and does not do"
+  },
+  "commPaid": "Paid",
+  "@commPaid": {
+    "description": "Committee: a share's contribution for a cycle is recorded"
+  },
+  "commDueToday": "Due today",
+  "@commDueToday": {
+    "description": "Committee: the cycle falls due on the reader's day"
+  },
+  "commLate": "Late",
+  "@commLate": {
+    "description": "Committee: the cycle fell due before the reader's day"
+  },
+  "commUpcoming": "Upcoming",
+  "@commUpcoming": {
+    "description": "Committee: the cycle falls due later"
+  },
+  "commUnpaidAtCancel": "Unpaid at cancellation",
+  "@commUnpaidAtCancel": {
+    "description": "Committee: owed when the committee stopped, and not growing"
+  },
+  "commNotDue": "Not due",
+  "@commNotDue": {
+    "description": "Committee: the cycle fell after the committee was cancelled"
+  },
+  "commDayUnknown": "Not known",
+  "@commDayUnknown": {
+    "description": "Committee: without the reader's day no state is claimed"
+  },
+  "commDayUnknownText": "Lume cannot work out your day, so it does not say what is late or due. The dates themselves are shown as they are.",
+  "@commDayUnknownText": {
+    "description": "Committee: the reader's zone could not be resolved"
+  },
+  "commPayoutRecorded": "Payout recorded",
+  "@commPayoutRecorded": {
+    "description": "Committee: the reader recorded that this cycle's pool was handed over"
+  },
+  "commPayoutReady": "Ready to pay out",
+  "@commPayoutReady": {
+    "description": "Committee: fully collected, so a payout can be recorded"
+  },
+  "commPayoutWaiting": "Waiting on contributions",
+  "@commPayoutWaiting": {
+    "description": "Committee: part collected, so nothing may be paid out yet"
+  },
+  "commRecordContribution": "Record contribution",
+  "@commRecordContribution": {
+    "description": "Committee action"
+  },
+  "commRecordPayout": "Record payout",
+  "@commRecordPayout": {
+    "description": "Committee action: the reader's note that the pool was handed over outside Lume"
+  },
+  "commEdit": "Edit",
+  "@commEdit": {
+    "description": "Committee action"
+  },
+  "commCancelCommittee": "Cancel committee",
+  "@commCancelCommittee": {
+    "description": "Committee action"
+  },
+  "commKeepCommittee": "Keep it running",
+  "@commKeepCommittee": {
+    "description": "Committee: the way out of cancelling"
+  },
+  "commReinstate": "Reinstate",
+  "@commReinstate": {
+    "description": "Committee action: undo a cancellation"
+  },
+  "commDeleteCommittee": "Delete committee",
+  "@commDeleteCommittee": {
+    "description": "Committee action"
+  },
+  "commPayTitle": "Record contribution",
+  "@commPayTitle": {
+    "description": "Committee sheet title"
+  },
+  "commPayText": "{name} pays {amount} for cycle {n}, due {due}.",
+  "@commPayText": {
+    "description": "Committee sheet: what is about to be recorded",
+    "placeholders": {
+      "name": {
+        "type": "String"
+      },
+      "amount": {
+        "type": "String"
+      },
+      "n": {
+        "type": "String"
+      },
+      "due": {
+        "type": "String"
+      }
+    }
+  },
+  "commPayShares": "{n, plural, =1{One share} other{{n} shares, recorded together}}",
+  "@commPayShares": {
+    "description": "Committee sheet: a member holding several shares pays for each",
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
+  "commPaidOnLabel": "Day it was paid",
+  "@commPaidOnLabel": {
+    "description": "Committee sheet: the date field"
+  },
+  "commPayGo": "Record",
+  "@commPayGo": {
+    "description": "Committee sheet: confirm"
+  },
+  "commPayoutTitle": "Record payout",
+  "@commPayoutTitle": {
+    "description": "Committee sheet title"
+  },
+  "commPayoutText": "{name} receives {amount} for cycle {n}. Lume records it; it moves no money.",
+  "@commPayoutText": {
+    "description": "Committee sheet: what a payout record means",
+    "placeholders": {
+      "name": {
+        "type": "String"
+      },
+      "amount": {
+        "type": "String"
+      },
+      "n": {
+        "type": "String"
+      }
+    }
+  },
+  "commPaidToast": "Contribution recorded",
+  "@commPaidToast": {
+    "description": "Committee toast"
+  },
+  "commPayoutToast": "Payout recorded",
+  "@commPayoutToast": {
+    "description": "Committee toast: what the reader recorded, not what Lume did"
+  },
+  "commVoidContribution": "Void this contribution",
+  "@commVoidContribution": {
+    "description": "Committee: take a contribution out of the figures"
+  },
+  "commRestoreContribution": "Restore this contribution",
+  "@commRestoreContribution": {
+    "description": "Committee: put it back"
+  },
+  "commVoidPayout": "Void this payout",
+  "@commVoidPayout": {
+    "description": "Committee: take a payout out of the figures"
+  },
+  "commRestorePayout": "Restore this payout",
+  "@commRestorePayout": {
+    "description": "Committee: put it back"
+  },
+  "commVoided": "Voided",
+  "@commVoided": {
+    "description": "Committee: a record kept but out of the figures"
+  },
+  "commVoidedToast": "Taken out of the figures",
+  "@commVoidedToast": {
+    "description": "Committee toast"
+  },
+  "commRestoredToast": "Put back",
+  "@commRestoredToast": {
+    "description": "Committee toast"
+  },
+  "commCancelTitle": "Cancel this committee?",
+  "@commCancelTitle": {
+    "description": "Committee: cancel confirmation title"
+  },
+  "commCancelText": "Every record is kept. Cycles after today raise nothing; what was already owed stays as unpaid at cancellation. No refund is worked out, and nothing is paid back.",
+  "@commCancelText": {
+    "description": "Committee: what cancelling does and does not do"
+  },
+  "commCancelledToast": "Committee cancelled",
+  "@commCancelledToast": {
+    "description": "Committee toast"
+  },
+  "commReinstatedToast": "Committee reinstated",
+  "@commReinstatedToast": {
+    "description": "Committee toast"
+  },
+  "commDeleteTitle": "Delete this committee?",
+  "@commDeleteTitle": {
+    "description": "Committee: delete confirmation title"
+  },
+  "commDeleteText": "This removes the committee, {members} members, {positions} shares, {cycles} cycles, {contributions} contributions and {payouts} payouts.",
+  "@commDeleteText": {
+    "description": "Committee: exactly what deleting removes",
+    "placeholders": {
+      "members": {
+        "type": "String"
+      },
+      "positions": {
+        "type": "String"
+      },
+      "cycles": {
+        "type": "String"
+      },
+      "contributions": {
+        "type": "String"
+      },
+      "payouts": {
+        "type": "String"
+      }
+    }
+  },
+  "commDeletedToast": "Committee deleted",
+  "@commDeletedToast": {
+    "description": "Committee toast"
+  },
+  "commRestoredCommitteeToast": "Committee restored",
+  "@commRestoredCommitteeToast": {
+    "description": "Committee toast after Undo"
+  },
+  "commNeedsAttention": "Needs attention",
+  "@commNeedsAttention": {
+    "description": "Committee: a record cannot be read"
+  },
+  "commDefects": "{n, plural, =1{1 record can't be read. It is kept as it is, and its committee is left out of the totals.} other{{n} records can't be read. They are kept as they are, and their committees are left out of the totals.}}",
+  "@commDefects": {
+    "description": "Committee: stored records that cannot be decoded",
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
+  "commDamagedText": "Some of this committee's records do not hold together, so its figures are left out. You can look at it and delete it; nothing else will write over it.",
+  "@commDamagedText": {
+    "description": "Committee: a damaged committee"
+  },
+  "commNewCommittee": "New committee",
+  "@commNewCommittee": {
+    "description": "Committee form title"
+  },
+  "commEditCommittee": "Edit committee",
+  "@commEditCommittee": {
+    "description": "Committee form title"
+  },
+  "commFieldName": "Name",
+  "@commFieldName": {
+    "description": "Committee form field: the reader's own label"
+  },
+  "commFieldNote": "Note",
+  "@commFieldNote": {
+    "description": "Committee form field"
+  },
+  "commFieldCurrency": "Currency",
+  "@commFieldCurrency": {
+    "description": "Committee form field"
+  },
+  "commFieldContribution": "Contribution a cycle",
+  "@commFieldContribution": {
+    "description": "Committee form field: what one share pays each cycle"
+  },
+  "commFieldFirstDue": "First cycle due",
+  "@commFieldFirstDue": {
+    "description": "Committee form field: the anchor every cycle is worked out from"
+  },
+  "commFieldRole": "Your part",
+  "@commFieldRole": {
+    "description": "Committee form field"
+  },
+  "commFieldMembers": "Members and turns",
+  "@commFieldMembers": {
+    "description": "Committee form section: the people and the order they are paid in"
+  },
+  "commMembersHelp": "They are paid in this order: the first receives cycle 1. A member with two shares pays twice a cycle and is paid twice.",
+  "@commMembersHelp": {
+    "description": "Committee form: how the order and shares work"
+  },
+  "commMemberName": "Member {n}",
+  "@commMemberName": {
+    "description": "Committee form: a member row's label",
+    "placeholders": {
+      "n": {
+        "type": "String"
+      }
+    }
+  },
+  "commAddMember": "Add a member",
+  "@commAddMember": {
+    "description": "Committee form action"
+  },
+  "commRemoveMember": "Remove",
+  "@commRemoveMember": {
+    "description": "Committee form action"
+  },
+  "commMoveUp": "Move up",
+  "@commMoveUp": {
+    "description": "Committee form: earlier in the payout order"
+  },
+  "commMoveDown": "Move down",
+  "@commMoveDown": {
+    "description": "Committee form: later in the payout order"
+  },
+  "commFieldShares": "Shares",
+  "@commFieldShares": {
+    "description": "Committee form field: how many turns this member holds"
+  },
+  "commThisIsYou": "This is you",
+  "@commThisIsYou": {
+    "description": "Committee form: mark the member who is the reader"
+  },
+  "commLockedTitle": "The terms are fixed",
+  "@commLockedTitle": {
+    "description": "Committee form: once a contribution or payout exists"
+  },
+  "commLockedText": "A contribution or a payout has been recorded, so the amount, the currency, the shares, the first day and the order stay as they are. The names and the note can still be changed.",
+  "@commLockedText": {
+    "description": "Committee form: what is locked, and what is not"
+  },
+  "commSaved": "Committee saved",
+  "@commSaved": {
+    "description": "Committee toast"
+  },
+  "commErrName": "Give the committee a name",
+  "@commErrName": {
+    "description": "Committee form error"
+  },
+  "commErrMemberName": "Give every member a name",
+  "@commErrMemberName": {
+    "description": "Committee form error"
+  },
+  "commErrLong": "That is too long",
+  "@commErrLong": {
+    "description": "Committee form error"
+  },
+  "commErrDate": "Choose a date",
+  "@commErrDate": {
+    "description": "Committee form error"
+  },
+  "commErrMembers": "A committee needs at least two shares",
+  "@commErrMembers": {
+    "description": "Committee form error"
+  },
+  "commErrShares": "Shares must be a whole number of at least one",
+  "@commErrShares": {
+    "description": "Committee form error"
+  },
+  "commErrReader": "Mark exactly one member as you, or say you are the organiser only",
+  "@commErrReader": {
+    "description": "Committee form error: the role and the reader must agree"
+  },
+  "commErrReaderNone": "An organiser who holds no share has no member to mark",
+  "@commErrReaderNone": {
+    "description": "Committee form error: organiser only"
+  },
+  "commErrRange": "That is outside what this can hold",
+  "@commErrRange": {
+    "description": "Committee form error"
+  },
+  "commErrTooLarge": "That figure is too large to work with",
+  "@commErrTooLarge": {
+    "description": "Committee error"
+  },
+  "commErrWithdrawn": "{code} is no longer in use for a new committee",
+  "@commErrWithdrawn": {
+    "description": "Committee form error",
+    "placeholders": {
+      "code": {
+        "type": "String"
+      }
+    }
+  },
+  "commErrFuture": "A payment cannot be dated after today",
+  "@commErrFuture": {
+    "description": "Committee form error"
+  },
+  "commErrDuplicate": "That is already recorded",
+  "@commErrDuplicate": {
+    "description": "Committee error"
+  },
+  "commErrIncomplete": "Cycle {n} is still short {amount}. A payout is recorded once it is fully collected.",
+  "@commErrIncomplete": {
+    "description": "Committee error: a payout before the cycle is collected",
+    "placeholders": {
+      "n": {
+        "type": "String"
+      },
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "commErrPaidOut": "Void this cycle's payout first",
+  "@commErrPaidOut": {
+    "description": "Committee error"
+  },
+  "commErrCancelled": "This committee is cancelled",
+  "@commErrCancelled": {
+    "description": "Committee error"
+  },
+  "commErrConflict": "It changed while you were working. Open it again.",
+  "@commErrConflict": {
+    "description": "Committee error"
+  },
+  "commErrDamaged": "This committee's records do not hold together",
+  "@commErrDamaged": {
+    "description": "Committee error"
+  },
+  "commErrFailed": "That could not be saved. Nothing was changed.",
+  "@commErrFailed": {
+    "description": "Committee error"
+  },
+  "commExportTitle": "Export committees",
+  "@commExportTitle": {
+    "description": "Committee export sheet title"
+  },
+  "commExportJson": "Backup file (JSON)",
+  "@commExportJson": {
+    "description": "Committee export: the lossless format"
+  },
+  "commExportJsonHelp": "Everything, and it can be imported again.",
+  "@commExportJsonHelp": {
+    "description": "Committee export: what JSON is for"
+  },
+  "commExportCsv": "Spreadsheet (CSV)",
+  "@commExportCsv": {
+    "description": "Committee export: the view format"
+  },
+  "commExportCsvHelp": "One row per share per cycle. It cannot be imported.",
+  "@commExportCsvHelp": {
+    "description": "Committee export: what CSV is and is not"
+  },
+  "commExportNames": "Include names",
+  "@commExportNames": {
+    "description": "Committee export: the privacy switch"
+  },
+  "commExportNamesHelp": "Off, the file says Committee 1 and Member 2, and leaves notes out. On, it carries the names of everyone in your committees.",
+  "@commExportNamesHelp": {
+    "description": "Committee export: what including names means"
+  },
+  "commExportGo": "Export",
+  "@commExportGo": {
+    "description": "Committee export: confirm"
+  },
+  "commImport": "Import a backup",
+  "@commImport": {
+    "description": "Committee import: open the sheet"
+  },
+  "commImportText": "Paste a Lume committee backup file",
+  "@commImportText": {
+    "description": "Committee import: the field's label"
+  },
+  "commImportCheck": "Check it",
+  "@commImportCheck": {
+    "description": "Committee import: check without writing"
+  },
+  "commImportReady": "Ready: {c} to add, {u} to update, {s} already here. Nothing is written until you import.",
+  "@commImportReady": {
+    "description": "Committee import: what a good file would do",
+    "placeholders": {
+      "c": {
+        "type": "String"
+      },
+      "u": {
+        "type": "String"
+      },
+      "s": {
+        "type": "String"
+      }
+    }
+  },
+  "commImportIssues": "{n, plural, =1{1 problem. Nothing will be imported.} other{{n} problems. Nothing will be imported.}}",
+  "@commImportIssues": {
+    "description": "Committee import: the file is refused whole",
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
+  "commImportNoNames": "No names in this backup: members will be called Member 1, Member 2…",
+  "@commImportNoNames": {
+    "description": "Committee import: a redacted file"
+  },
+  "commImportAction": "Import",
+  "@commImportAction": {
+    "description": "Committee import: confirm"
+  },
+  "commImported": "{n, plural, =1{Imported 1 record} other{Imported {n} records}}",
+  "@commImported": {
+    "description": "Committee import toast",
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
+  "commMemberPaidLabel": "Paid in",
+  "@commMemberPaidLabel": {
+    "description": "Committee member: what this member has contributed over the committee"
+  },
+  "commMemberExpected": "Owed over the committee",
+  "@commMemberExpected": {
+    "description": "Committee member: contribution times cycles times their shares"
+  },
+  "commTheirCycles": "Their cycles",
+  "@commTheirCycles": {
+    "description": "Committee member section: every cycle, and whether this member paid it"
   }
 }

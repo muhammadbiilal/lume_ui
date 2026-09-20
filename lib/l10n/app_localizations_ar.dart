@@ -6371,7 +6371,7 @@ class AppLocalizationsAr extends AppLocalizations {
   String get toolStatusCalendar => '3 أحداث';
 
   @override
-  String get toolStatusCommittee => 'الشهر 4 من 10';
+  String get toolStatusCommittee => 'تتبّع جمعية ادخار';
 
   @override
   String get toolStatusCompound => 'توقّع النمو';
@@ -8128,4 +8128,638 @@ class AppLocalizationsAr extends AppLocalizations {
     );
     return '$_temp0';
   }
+
+  @override
+  String get commEmptyTitle => 'لا توجد جمعيات بعد';
+
+  @override
+  String get commEmptyText =>
+      'أضف جمعية ادخار تشارك فيها. يحفظ Lume أعضاءها وأدوارها ودوراتها، ويحسب ما جُمع وما صُرف وما بقي.';
+
+  @override
+  String get commAdd => 'أضف جمعية';
+
+  @override
+  String get commCommittees => 'الجمعيات';
+
+  @override
+  String get commSearch => 'ابحث في الجمعيات';
+
+  @override
+  String get commFilterLabel => 'تصفية الجمعيات';
+
+  @override
+  String get commFilterRunning => 'جارية';
+
+  @override
+  String get commFilterLate => 'متأخرة';
+
+  @override
+  String get commFilterCompleted => 'مكتملة';
+
+  @override
+  String get commFilterCancelled => 'ملغاة';
+
+  @override
+  String get commSortNext => 'الدورة التالية';
+
+  @override
+  String get commSortName => 'الاسم';
+
+  @override
+  String get commSortAmount => 'الاشتراك';
+
+  @override
+  String get commSortRecent => 'أحدث نشاط';
+
+  @override
+  String get commNoMatch => 'لا نتائج';
+
+  @override
+  String get commNoMatchText => 'لا توجد جمعية تطابق هذه التصفية والبحث.';
+
+  @override
+  String get commShowAll => 'أظهر الكل';
+
+  @override
+  String get commNotFound => 'تلك الجمعية غير موجودة';
+
+  @override
+  String get commInThePot => 'مجموع لم يُصرف';
+
+  @override
+  String get commCollected => 'المجموع';
+
+  @override
+  String get commPaidOut => 'المصروف';
+
+  @override
+  String get commOutstanding => 'المستحق';
+
+  @override
+  String commRunning(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n جمعية جارية',
+      many: '$n جمعية جارية',
+      few: '$n جمعيات جارية',
+      two: 'جمعيتان جاريتان',
+      one: 'جمعية جارية واحدة',
+      zero: 'لا جمعيات جارية',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String commSummaryCurrency(String code) {
+    return 'بـ $code';
+  }
+
+  @override
+  String get commPoolEachCycle => 'مجموع كل دورة';
+
+  @override
+  String commCycleOf(String n, String total) {
+    return 'الدورة $n من $total';
+  }
+
+  @override
+  String commBeforeStart(String date) {
+    return 'تبدأ في $date';
+  }
+
+  @override
+  String get commYourContribution => 'اشتراكك';
+
+  @override
+  String get commPeople => 'الأشخاص';
+
+  @override
+  String get commShares => 'الحصص';
+
+  @override
+  String get commYourTurn => 'دورك';
+
+  @override
+  String commTurnCycle(String n) {
+    return 'الدورة $n';
+  }
+
+  @override
+  String get commTurnDone => 'استُلم';
+
+  @override
+  String get commTurnNone => 'لا دور';
+
+  @override
+  String get commThisCycle => 'هذه الدورة';
+
+  @override
+  String get commPayoutOrder => 'ترتيب الصرف';
+
+  @override
+  String get commPayoutOrderCap =>
+      'تحدَّد عند إنشاء الجمعية. ولا يغيّرها ترتيب إدخال السجلات.';
+
+  @override
+  String get commCollectedEachCycle => 'المجموع في كل دورة';
+
+  @override
+  String commCollectedCap(String code) {
+    return 'ما جمعته كل دورة من مجموعها، بـ $code.';
+  }
+
+  @override
+  String get commOtherCurrencies => 'تُحسب جمعيات العملات الأخرى على حدة.';
+
+  @override
+  String commChartEntry(String cycle, String amount) {
+    return '$cycle: $amount';
+  }
+
+  @override
+  String get commMembersSection => 'الأعضاء';
+
+  @override
+  String commReceivesCycle(String n) {
+    return 'يستلم الدورة $n';
+  }
+
+  @override
+  String commReceivesCycles(String list) {
+    return 'يستلم الدورات $list';
+  }
+
+  @override
+  String commShareCount(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n حصة',
+      many: '$n حصة',
+      few: '$n حصص',
+      two: 'حصتان',
+      one: 'حصة واحدة',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get commYouLabel => 'أنت';
+
+  @override
+  String commPaidOn(String date) {
+    return 'دُفع في $date';
+  }
+
+  @override
+  String commDueOn(String date) {
+    return 'يُستحق في $date';
+  }
+
+  @override
+  String commCollectedOf(String collected, String pool) {
+    return '$collected من $pool';
+  }
+
+  @override
+  String commShortBy(String amount) {
+    return 'ناقص $amount';
+  }
+
+  @override
+  String commCyclesPaidOut(String done, String total) {
+    return 'صُرفت $done من $total دورات';
+  }
+
+  @override
+  String get commNoHistory => 'لم يُسجَّل شيء بعد';
+
+  @override
+  String get commFactContribution => 'الاشتراك لكل دورة';
+
+  @override
+  String get commFactCycles => 'الدورات';
+
+  @override
+  String get commFactFrequency => 'التكرار';
+
+  @override
+  String get commMonthly => 'شهريًا';
+
+  @override
+  String get commFactFirstDue => 'موعد الدورة الأولى';
+
+  @override
+  String get commFactPool => 'مجموع الدورة';
+
+  @override
+  String get commFactExpected => 'إجمالي الجمعية';
+
+  @override
+  String get commFactRole => 'دورك فيها';
+
+  @override
+  String get commFactCancelledOn => 'تاريخ الإلغاء';
+
+  @override
+  String get commUnpaidAtCancelTotal => 'غير مدفوع عند الإلغاء';
+
+  @override
+  String get commRoleMember => 'عضو';
+
+  @override
+  String get commRoleOrganiser => 'المنظّم';
+
+  @override
+  String get commRoleBoth => 'منظّم وعضو';
+
+  @override
+  String get commRoleHelp =>
+      'يحفظ Lume سجلك الخاص بهذه الجمعية. لا يحتفظ بأي مال ولا ينقله.';
+
+  @override
+  String get commPaid => 'مدفوع';
+
+  @override
+  String get commDueToday => 'مستحق اليوم';
+
+  @override
+  String get commLate => 'متأخر';
+
+  @override
+  String get commUpcoming => 'قادم';
+
+  @override
+  String get commUnpaidAtCancel => 'غير مدفوع عند الإلغاء';
+
+  @override
+  String get commNotDue => 'غير مستحق';
+
+  @override
+  String get commDayUnknown => 'غير معروف';
+
+  @override
+  String get commDayUnknownText =>
+      'تعذّر على Lume تحديد يومك، لذا لا يقول ما المتأخر أو المستحق. تُعرض التواريخ كما هي.';
+
+  @override
+  String get commPayoutRecorded => 'صُرف مسجَّل';
+
+  @override
+  String get commPayoutReady => 'جاهز للصرف';
+
+  @override
+  String get commPayoutWaiting => 'بانتظار الاشتراكات';
+
+  @override
+  String get commRecordContribution => 'سجّل اشتراكًا';
+
+  @override
+  String get commRecordPayout => 'سجّل الصرف';
+
+  @override
+  String get commEdit => 'تعديل';
+
+  @override
+  String get commCancelCommittee => 'ألغِ الجمعية';
+
+  @override
+  String get commKeepCommittee => 'أبقها جارية';
+
+  @override
+  String get commReinstate => 'أعِد تفعيلها';
+
+  @override
+  String get commDeleteCommittee => 'احذف الجمعية';
+
+  @override
+  String get commPayTitle => 'تسجيل اشتراك';
+
+  @override
+  String commPayText(String name, String amount, String n, String due) {
+    return 'يدفع $name مبلغ $amount عن الدورة $n، المستحقة في $due.';
+  }
+
+  @override
+  String commPayShares(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n حصة تُسجَّل معًا',
+      many: '$n حصة تُسجَّل معًا',
+      few: '$n حصص تُسجَّل معًا',
+      two: 'حصتان تُسجَّلان معًا',
+      one: 'حصة واحدة',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get commPaidOnLabel => 'يوم الدفع';
+
+  @override
+  String get commPayGo => 'سجّل';
+
+  @override
+  String get commPayoutTitle => 'تسجيل الصرف';
+
+  @override
+  String commPayoutText(String name, String amount, String n) {
+    return 'يستلم $name مبلغ $amount عن الدورة $n. يسجّل Lume ذلك ولا ينقل أي مال.';
+  }
+
+  @override
+  String get commPaidToast => 'سُجّل الاشتراك';
+
+  @override
+  String get commPayoutToast => 'سُجّل الصرف';
+
+  @override
+  String get commVoidContribution => 'ألغِ هذا الاشتراك';
+
+  @override
+  String get commRestoreContribution => 'أعِد هذا الاشتراك';
+
+  @override
+  String get commVoidPayout => 'ألغِ هذا الصرف';
+
+  @override
+  String get commRestorePayout => 'أعِد هذا الصرف';
+
+  @override
+  String get commVoided => 'ملغى';
+
+  @override
+  String get commVoidedToast => 'أُخرج من الحساب';
+
+  @override
+  String get commRestoredToast => 'أُعيد';
+
+  @override
+  String get commCancelTitle => 'إلغاء هذه الجمعية؟';
+
+  @override
+  String get commCancelText =>
+      'تُحفظ كل السجلات. الدورات بعد اليوم لا تُنشئ التزامًا؛ وما كان مستحقًا يبقى غير مدفوع عند الإلغاء. لا يُحتسب أي ردّ ولا يُعاد شيء.';
+
+  @override
+  String get commCancelledToast => 'أُلغيت الجمعية';
+
+  @override
+  String get commReinstatedToast => 'أُعيد تفعيل الجمعية';
+
+  @override
+  String get commDeleteTitle => 'حذف هذه الجمعية؟';
+
+  @override
+  String commDeleteText(
+    String members,
+    String positions,
+    String cycles,
+    String contributions,
+    String payouts,
+  ) {
+    return 'سيحذف هذا الجمعية و$members أعضاء و$positions حصص و$cycles دورات و$contributions اشتراكات و$payouts عمليات صرف.';
+  }
+
+  @override
+  String get commDeletedToast => 'حُذفت الجمعية';
+
+  @override
+  String get commRestoredCommitteeToast => 'استُعيدت الجمعية';
+
+  @override
+  String get commNeedsAttention => 'يحتاج انتباهًا';
+
+  @override
+  String commDefects(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n سجل تعذّرت قراءته. يُحفظ كما هو، وتُستثنى جمعيته من المجاميع.',
+      many:
+          '$n سجلًا تعذّرت قراءتها. تُحفظ كما هي، وتُستثنى جمعياتها من المجاميع.',
+      few:
+          '$n سجلات تعذّرت قراءتها. تُحفظ كما هي، وتُستثنى جمعياتها من المجاميع.',
+      two:
+          'سجلان تعذّرت قراءتهما. يُحفظان كما هما، وتُستثنى جمعيتاهما من المجاميع.',
+      one: 'سجل واحد تعذّرت قراءته. يُحفظ كما هو، وتُستثنى جمعيته من المجاميع.',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get commDamagedText =>
+      'بعض سجلات هذه الجمعية غير متسقة، لذا استُثنيت أرقامها. يمكنك الاطلاع عليها وحذفها؛ ولن يكتب شيء آخر فوقها.';
+
+  @override
+  String get commNewCommittee => 'جمعية جديدة';
+
+  @override
+  String get commEditCommittee => 'تعديل الجمعية';
+
+  @override
+  String get commFieldName => 'الاسم';
+
+  @override
+  String get commFieldNote => 'ملاحظة';
+
+  @override
+  String get commFieldCurrency => 'العملة';
+
+  @override
+  String get commFieldContribution => 'الاشتراك لكل دورة';
+
+  @override
+  String get commFieldFirstDue => 'موعد الدورة الأولى';
+
+  @override
+  String get commFieldRole => 'دورك';
+
+  @override
+  String get commFieldMembers => 'الأعضاء والأدوار';
+
+  @override
+  String get commMembersHelp =>
+      'يُصرف لهم بهذا الترتيب: الأول يستلم الدورة 1. ومن يملك حصتين يدفع مرتين في الدورة ويستلم مرتين.';
+
+  @override
+  String commMemberName(String n) {
+    return 'العضو $n';
+  }
+
+  @override
+  String get commAddMember => 'أضف عضوًا';
+
+  @override
+  String get commRemoveMember => 'احذف';
+
+  @override
+  String get commMoveUp => 'حرّك لأعلى';
+
+  @override
+  String get commMoveDown => 'حرّك لأسفل';
+
+  @override
+  String get commFieldShares => 'الحصص';
+
+  @override
+  String get commThisIsYou => 'هذا أنت';
+
+  @override
+  String get commLockedTitle => 'الشروط ثابتة';
+
+  @override
+  String get commLockedText =>
+      'سُجّل اشتراك أو صرف، لذا يبقى المبلغ والعملة والحصص واليوم الأول والترتيب كما هي. ولا يزال بالإمكان تغيير الأسماء والملاحظة.';
+
+  @override
+  String get commSaved => 'حُفظت الجمعية';
+
+  @override
+  String get commErrName => 'أعطِ الجمعية اسمًا';
+
+  @override
+  String get commErrMemberName => 'أعطِ كل عضو اسمًا';
+
+  @override
+  String get commErrLong => 'هذا طويل جدًا';
+
+  @override
+  String get commErrDate => 'اختر تاريخًا';
+
+  @override
+  String get commErrMembers => 'تحتاج الجمعية إلى حصتين على الأقل';
+
+  @override
+  String get commErrShares => 'يجب أن تكون الحصص عددًا صحيحًا لا يقل عن واحد';
+
+  @override
+  String get commErrReader =>
+      'حدّد عضوًا واحدًا فقط بأنه أنت، أو اذكر أنك المنظّم فقط';
+
+  @override
+  String get commErrReaderNone => 'المنظّم الذي لا يملك حصة لا يُحدَّد له عضو';
+
+  @override
+  String get commErrRange => 'هذا خارج النطاق الممكن';
+
+  @override
+  String get commErrTooLarge => 'هذا الرقم أكبر من أن يُحسب';
+
+  @override
+  String commErrWithdrawn(String code) {
+    return 'لم تعد $code مستعملة لجمعية جديدة';
+  }
+
+  @override
+  String get commErrFuture => 'لا يمكن تأريخ الدفع بعد اليوم';
+
+  @override
+  String get commErrDuplicate => 'هذا مسجَّل بالفعل';
+
+  @override
+  String commErrIncomplete(String n, String amount) {
+    return 'ما زالت الدورة $n ناقصة $amount. يُسجَّل الصرف بعد اكتمال التحصيل.';
+  }
+
+  @override
+  String get commErrPaidOut => 'ألغِ صرف هذه الدورة أولًا';
+
+  @override
+  String get commErrCancelled => 'هذه الجمعية ملغاة';
+
+  @override
+  String get commErrConflict => 'تغيّرت أثناء عملك. افتحها من جديد.';
+
+  @override
+  String get commErrDamaged => 'سجلات هذه الجمعية غير متسقة';
+
+  @override
+  String get commErrFailed => 'تعذّر الحفظ. لم يتغيّر شيء.';
+
+  @override
+  String get commExportTitle => 'تصدير الجمعيات';
+
+  @override
+  String get commExportJson => 'ملف نسخة احتياطية (JSON)';
+
+  @override
+  String get commExportJsonHelp => 'كل شيء، ويمكن استيراده مرة أخرى.';
+
+  @override
+  String get commExportCsv => 'جدول بيانات (CSV)';
+
+  @override
+  String get commExportCsvHelp => 'سطر لكل حصة في كل دورة. لا يمكن استيراده.';
+
+  @override
+  String get commExportNames => 'أدرج الأسماء';
+
+  @override
+  String get commExportNamesHelp =>
+      'عند الإيقاف يكتب الملف Committee 1 وMember 2 ويحذف الملاحظات. وعند التشغيل يحمل أسماء كل من في جمعياتك.';
+
+  @override
+  String get commExportGo => 'صدّر';
+
+  @override
+  String get commImport => 'استيراد نسخة';
+
+  @override
+  String get commImportText => 'ألصق ملف نسخة جمعيات Lume';
+
+  @override
+  String get commImportCheck => 'افحصه';
+
+  @override
+  String commImportReady(String c, String u, String s) {
+    return 'جاهز: $c للإضافة، $u للتحديث، $s موجودة. لا يُكتب شيء حتى تستورد.';
+  }
+
+  @override
+  String commImportIssues(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n مشكلة. لن يُستورد شيء.',
+      many: '$n مشكلة. لن يُستورد شيء.',
+      few: '$n مشكلات. لن يُستورد شيء.',
+      two: 'مشكلتان. لن يُستورد شيء.',
+      one: 'مشكلة واحدة. لن يُستورد شيء.',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get commImportNoNames =>
+      'لا أسماء في هذه النسخة: سيُسمّى الأعضاء Member 1 وMember 2…';
+
+  @override
+  String get commImportAction => 'استيراد';
+
+  @override
+  String commImported(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: 'استُورد $n سجل',
+      many: 'استُورد $n سجلًا',
+      few: 'استُوردت $n سجلات',
+      two: 'استُورد سجلان',
+      one: 'استُورد سجل واحد',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get commMemberPaidLabel => 'المدفوع منه';
+
+  @override
+  String get commMemberExpected => 'المستحق عبر الجمعية';
+
+  @override
+  String get commTheirCycles => 'دوراتهم';
 }

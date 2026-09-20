@@ -6292,7 +6292,7 @@ class AppLocalizationsUr extends AppLocalizations {
   String get toolStatusCalendar => '3 مصروفیات';
 
   @override
-  String get toolStatusCommittee => '10 میں سے مہینہ 4';
+  String get toolStatusCommittee => 'بچت کمیٹی کا حساب رکھیں';
 
   @override
   String get toolStatusCompound => 'نمو کا اندازہ';
@@ -8030,4 +8030,622 @@ class AppLocalizationsUr extends AppLocalizations {
     );
     return '$_temp0';
   }
+
+  @override
+  String get commEmptyTitle => 'ابھی کوئی کمیٹی نہیں';
+
+  @override
+  String get commEmptyText =>
+      'کوئی بچت کمیٹی شامل کریں جس کا آپ حصہ ہیں۔ Lume اس کے اراکین، باریاں اور اقساط رکھتا ہے اور حساب لگاتا ہے کہ کتنا جمع ہوا، کتنا ادا ہوا اور کتنا باقی ہے۔';
+
+  @override
+  String get commAdd => 'کمیٹی شامل کریں';
+
+  @override
+  String get commCommittees => 'کمیٹیاں';
+
+  @override
+  String get commSearch => 'کمیٹیاں تلاش کریں';
+
+  @override
+  String get commFilterLabel => 'کمیٹیاں چھانٹیں';
+
+  @override
+  String get commFilterRunning => 'جاری';
+
+  @override
+  String get commFilterLate => 'تاخیر';
+
+  @override
+  String get commFilterCompleted => 'مکمل';
+
+  @override
+  String get commFilterCancelled => 'منسوخ';
+
+  @override
+  String get commSortNext => 'اگلی قسط';
+
+  @override
+  String get commSortName => 'نام';
+
+  @override
+  String get commSortAmount => 'حصہ';
+
+  @override
+  String get commSortRecent => 'حالیہ سرگرمی';
+
+  @override
+  String get commNoMatch => 'کچھ نہیں ملا';
+
+  @override
+  String get commNoMatchText => 'اس چھانٹ اور تلاش سے کوئی کمیٹی نہیں ملی۔';
+
+  @override
+  String get commShowAll => 'سب دکھائیں';
+
+  @override
+  String get commNotFound => 'وہ کمیٹی یہاں نہیں';
+
+  @override
+  String get commInThePot => 'جمع، ادا نہیں ہوا';
+
+  @override
+  String get commCollected => 'جمع شدہ';
+
+  @override
+  String get commPaidOut => 'ادا شدہ';
+
+  @override
+  String get commOutstanding => 'واجب الادا';
+
+  @override
+  String commRunning(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n جاری کمیٹیاں',
+      one: '1 جاری کمیٹی',
+      zero: 'کوئی جاری کمیٹی نہیں',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String commSummaryCurrency(String code) {
+    return '$code میں';
+  }
+
+  @override
+  String get commPoolEachCycle => 'ہر قسط کا پول';
+
+  @override
+  String commCycleOf(String n, String total) {
+    return 'قسط $n از $total';
+  }
+
+  @override
+  String commBeforeStart(String date) {
+    return '$date کو شروع';
+  }
+
+  @override
+  String get commYourContribution => 'آپ کا حصہ';
+
+  @override
+  String get commPeople => 'افراد';
+
+  @override
+  String get commShares => 'حصے';
+
+  @override
+  String get commYourTurn => 'آپ کی باری';
+
+  @override
+  String commTurnCycle(String n) {
+    return 'قسط $n';
+  }
+
+  @override
+  String get commTurnDone => 'وصول ہو چکا';
+
+  @override
+  String get commTurnNone => 'کوئی باری نہیں';
+
+  @override
+  String get commThisCycle => 'یہ قسط';
+
+  @override
+  String get commPayoutOrder => 'ادائیگی کی ترتیب';
+
+  @override
+  String get commPayoutOrderCap =>
+      'کمیٹی بناتے وقت طے ہوئی۔ ریکارڈ درج کرنے کی ترتیب اسے نہیں بدلتی۔';
+
+  @override
+  String get commCollectedEachCycle => 'ہر قسط کی وصولی';
+
+  @override
+  String commCollectedCap(String code) {
+    return 'ہر قسط نے اپنے پول میں سے کتنا جمع کیا، $code میں۔';
+  }
+
+  @override
+  String get commOtherCurrencies =>
+      'دوسری کرنسیوں کی کمیٹیاں الگ شمار ہوتی ہیں۔';
+
+  @override
+  String commChartEntry(String cycle, String amount) {
+    return '$cycle: $amount';
+  }
+
+  @override
+  String get commMembersSection => 'اراکین';
+
+  @override
+  String commReceivesCycle(String n) {
+    return 'قسط $n وصول کرتا ہے';
+  }
+
+  @override
+  String commReceivesCycles(String list) {
+    return 'اقساط $list وصول کرتا ہے';
+  }
+
+  @override
+  String commShareCount(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n حصے',
+      one: '1 حصہ',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get commYouLabel => 'آپ';
+
+  @override
+  String commPaidOn(String date) {
+    return '$date کو ادا';
+  }
+
+  @override
+  String commDueOn(String date) {
+    return '$date کو واجب';
+  }
+
+  @override
+  String commCollectedOf(String collected, String pool) {
+    return '$pool میں سے $collected';
+  }
+
+  @override
+  String commShortBy(String amount) {
+    return '$amount کم';
+  }
+
+  @override
+  String commCyclesPaidOut(String done, String total) {
+    return '$total میں سے $done اقساط ادا ہوئیں';
+  }
+
+  @override
+  String get commNoHistory => 'ابھی کچھ درج نہیں';
+
+  @override
+  String get commFactContribution => 'فی قسط حصہ';
+
+  @override
+  String get commFactCycles => 'اقساط';
+
+  @override
+  String get commFactFrequency => 'کتنی بار';
+
+  @override
+  String get commMonthly => 'ماہانہ';
+
+  @override
+  String get commFactFirstDue => 'پہلی قسط کی تاریخ';
+
+  @override
+  String get commFactPool => 'فی قسط پول';
+
+  @override
+  String get commFactExpected => 'پوری کمیٹی میں';
+
+  @override
+  String get commFactRole => 'آپ کی حیثیت';
+
+  @override
+  String get commFactCancelledOn => 'منسوخی کی تاریخ';
+
+  @override
+  String get commUnpaidAtCancelTotal => 'منسوخی پر غیر ادا شدہ';
+
+  @override
+  String get commRoleMember => 'ایک رکن';
+
+  @override
+  String get commRoleOrganiser => 'منتظم';
+
+  @override
+  String get commRoleBoth => 'منتظم اور رکن';
+
+  @override
+  String get commRoleHelp =>
+      'Lume اس کمیٹی کا آپ کا اپنا ریکارڈ رکھتا ہے۔ یہ نہ رقم رکھتا ہے نہ منتقل کرتا ہے۔';
+
+  @override
+  String get commPaid => 'ادا';
+
+  @override
+  String get commDueToday => 'آج واجب';
+
+  @override
+  String get commLate => 'تاخیر';
+
+  @override
+  String get commUpcoming => 'آئندہ';
+
+  @override
+  String get commUnpaidAtCancel => 'منسوخی پر غیر ادا';
+
+  @override
+  String get commNotDue => 'واجب نہیں';
+
+  @override
+  String get commDayUnknown => 'معلوم نہیں';
+
+  @override
+  String get commDayUnknownText =>
+      'Lume آپ کا دن معلوم نہیں کر سکا، اس لیے یہ نہیں بتاتا کہ کیا تاخیر یا واجب ہے۔ تاریخیں جیسی ہیں ویسی دکھائی گئی ہیں۔';
+
+  @override
+  String get commPayoutRecorded => 'ادائیگی درج';
+
+  @override
+  String get commPayoutReady => 'ادائیگی کے لیے تیار';
+
+  @override
+  String get commPayoutWaiting => 'حصوں کا انتظار';
+
+  @override
+  String get commRecordContribution => 'حصہ درج کریں';
+
+  @override
+  String get commRecordPayout => 'ادائیگی درج کریں';
+
+  @override
+  String get commEdit => 'ترمیم';
+
+  @override
+  String get commCancelCommittee => 'کمیٹی منسوخ کریں';
+
+  @override
+  String get commKeepCommittee => 'جاری رکھیں';
+
+  @override
+  String get commReinstate => 'بحال کریں';
+
+  @override
+  String get commDeleteCommittee => 'کمیٹی حذف کریں';
+
+  @override
+  String get commPayTitle => 'حصہ درج کریں';
+
+  @override
+  String commPayText(String name, String amount, String n, String due) {
+    return '$name قسط $n کے لیے $amount ادا کرتے ہیں، واجب $due۔';
+  }
+
+  @override
+  String commPayShares(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n حصے، ایک ساتھ درج',
+      one: 'ایک حصہ',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get commPaidOnLabel => 'ادائیگی کا دن';
+
+  @override
+  String get commPayGo => 'درج کریں';
+
+  @override
+  String get commPayoutTitle => 'ادائیگی درج کریں';
+
+  @override
+  String commPayoutText(String name, String amount, String n) {
+    return '$name قسط $n کے لیے $amount وصول کرتے ہیں۔ Lume اسے درج کرتا ہے؛ رقم منتقل نہیں کرتا۔';
+  }
+
+  @override
+  String get commPaidToast => 'حصہ درج ہو گیا';
+
+  @override
+  String get commPayoutToast => 'ادائیگی درج ہو گئی';
+
+  @override
+  String get commVoidContribution => 'یہ حصہ کالعدم کریں';
+
+  @override
+  String get commRestoreContribution => 'یہ حصہ بحال کریں';
+
+  @override
+  String get commVoidPayout => 'یہ ادائیگی کالعدم کریں';
+
+  @override
+  String get commRestorePayout => 'یہ ادائیگی بحال کریں';
+
+  @override
+  String get commVoided => 'کالعدم';
+
+  @override
+  String get commVoidedToast => 'حساب سے نکال دیا گیا';
+
+  @override
+  String get commRestoredToast => 'واپس شامل';
+
+  @override
+  String get commCancelTitle => 'یہ کمیٹی منسوخ کریں؟';
+
+  @override
+  String get commCancelText =>
+      'ہر ریکارڈ محفوظ رہتا ہے۔ آج کے بعد کی اقساط کا کوئی تقاضا نہیں؛ جو پہلے واجب تھا وہ منسوخی پر غیر ادا شدہ رہتا ہے۔ کوئی واپسی حساب نہیں ہوتی اور کچھ لوٹایا نہیں جاتا۔';
+
+  @override
+  String get commCancelledToast => 'کمیٹی منسوخ ہو گئی';
+
+  @override
+  String get commReinstatedToast => 'کمیٹی بحال ہو گئی';
+
+  @override
+  String get commDeleteTitle => 'یہ کمیٹی حذف کریں؟';
+
+  @override
+  String commDeleteText(
+    String members,
+    String positions,
+    String cycles,
+    String contributions,
+    String payouts,
+  ) {
+    return 'اس سے کمیٹی، $members اراکین، $positions حصے، $cycles اقساط، $contributions حصے اور $payouts ادائیگیاں حذف ہو جائیں گی۔';
+  }
+
+  @override
+  String get commDeletedToast => 'کمیٹی حذف ہو گئی';
+
+  @override
+  String get commRestoredCommitteeToast => 'کمیٹی بحال ہو گئی';
+
+  @override
+  String get commNeedsAttention => 'توجہ درکار';
+
+  @override
+  String commDefects(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other:
+          '$n ریکارڈ پڑھے نہیں جا سکتے۔ وہ جوں کے توں رکھے ہیں، اور ان کی کمیٹیاں کل میں شامل نہیں۔',
+      one:
+          '1 ریکارڈ پڑھا نہیں جا سکتا۔ وہ جوں کا توں رکھا ہے، اور اس کی کمیٹی کل میں شامل نہیں۔',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get commDamagedText =>
+      'اس کمیٹی کے کچھ ریکارڈ آپس میں میل نہیں کھاتے، اس لیے اس کے اعداد شامل نہیں۔ آپ اسے دیکھ اور حذف کر سکتے ہیں؛ اور کچھ اس پر نہیں لکھے گا۔';
+
+  @override
+  String get commNewCommittee => 'نئی کمیٹی';
+
+  @override
+  String get commEditCommittee => 'کمیٹی میں ترمیم';
+
+  @override
+  String get commFieldName => 'نام';
+
+  @override
+  String get commFieldNote => 'نوٹ';
+
+  @override
+  String get commFieldCurrency => 'کرنسی';
+
+  @override
+  String get commFieldContribution => 'فی قسط حصہ';
+
+  @override
+  String get commFieldFirstDue => 'پہلی قسط کی تاریخ';
+
+  @override
+  String get commFieldRole => 'آپ کی حیثیت';
+
+  @override
+  String get commFieldMembers => 'اراکین اور باریاں';
+
+  @override
+  String get commMembersHelp =>
+      'ادائیگی اسی ترتیب سے ہوتی ہے: پہلا رکن قسط 1 وصول کرتا ہے۔ دو حصوں والا رکن ہر قسط دو بار ادا کرتا ہے اور دو بار وصول کرتا ہے۔';
+
+  @override
+  String commMemberName(String n) {
+    return 'رکن $n';
+  }
+
+  @override
+  String get commAddMember => 'رکن شامل کریں';
+
+  @override
+  String get commRemoveMember => 'ہٹائیں';
+
+  @override
+  String get commMoveUp => 'اوپر لے جائیں';
+
+  @override
+  String get commMoveDown => 'نیچے لے جائیں';
+
+  @override
+  String get commFieldShares => 'حصے';
+
+  @override
+  String get commThisIsYou => 'یہ آپ ہیں';
+
+  @override
+  String get commLockedTitle => 'شرائط طے ہو چکیں';
+
+  @override
+  String get commLockedText =>
+      'ایک حصہ یا ادائیگی درج ہو چکی ہے، اس لیے رقم، کرنسی، حصے، پہلا دن اور ترتیب جوں کے توں رہیں گے۔ نام اور نوٹ اب بھی بدلے جا سکتے ہیں۔';
+
+  @override
+  String get commSaved => 'کمیٹی محفوظ ہو گئی';
+
+  @override
+  String get commErrName => 'کمیٹی کو نام دیں';
+
+  @override
+  String get commErrMemberName => 'ہر رکن کو نام دیں';
+
+  @override
+  String get commErrLong => 'یہ بہت طویل ہے';
+
+  @override
+  String get commErrDate => 'تاریخ منتخب کریں';
+
+  @override
+  String get commErrMembers => 'کمیٹی کے لیے کم از کم دو حصے چاہئیں';
+
+  @override
+  String get commErrShares => 'حصے کم از کم ایک کا صحیح عدد ہوں';
+
+  @override
+  String get commErrReader =>
+      'بالکل ایک رکن کو \'آپ\' نشان زد کریں، یا کہیں کہ آپ صرف منتظم ہیں';
+
+  @override
+  String get commErrReaderNone =>
+      'حصہ نہ رکھنے والے منتظم کے لیے کوئی رکن نشان زد نہیں ہوتا';
+
+  @override
+  String get commErrRange => 'یہ گنجائش سے باہر ہے';
+
+  @override
+  String get commErrTooLarge => 'یہ عدد حساب کے لیے بہت بڑا ہے';
+
+  @override
+  String commErrWithdrawn(String code) {
+    return '$code اب نئی کمیٹی کے لیے استعمال نہیں ہوتی';
+  }
+
+  @override
+  String get commErrFuture => 'ادائیگی کی تاریخ آج کے بعد کی نہیں ہو سکتی';
+
+  @override
+  String get commErrDuplicate => 'یہ پہلے ہی درج ہے';
+
+  @override
+  String commErrIncomplete(String n, String amount) {
+    return 'قسط $n میں ابھی $amount کم ہے۔ ادائیگی مکمل وصولی کے بعد درج ہوتی ہے۔';
+  }
+
+  @override
+  String get commErrPaidOut => 'پہلے اس قسط کی ادائیگی کالعدم کریں';
+
+  @override
+  String get commErrCancelled => 'یہ کمیٹی منسوخ ہے';
+
+  @override
+  String get commErrConflict => 'کام کے دوران یہ بدل گئی۔ دوبارہ کھولیں۔';
+
+  @override
+  String get commErrDamaged => 'اس کمیٹی کے ریکارڈ آپس میں میل نہیں کھاتے';
+
+  @override
+  String get commErrFailed => 'یہ محفوظ نہ ہو سکا۔ کچھ نہیں بدلا۔';
+
+  @override
+  String get commExportTitle => 'کمیٹیاں برآمد کریں';
+
+  @override
+  String get commExportJson => 'بیک اپ فائل (JSON)';
+
+  @override
+  String get commExportJsonHelp => 'سب کچھ، اور دوبارہ امپورٹ بھی ہو سکتی ہے۔';
+
+  @override
+  String get commExportCsv => 'اسپریڈشیٹ (CSV)';
+
+  @override
+  String get commExportCsvHelp =>
+      'ہر قسط کے ہر حصے کی ایک سطر۔ یہ امپورٹ نہیں ہو سکتی۔';
+
+  @override
+  String get commExportNames => 'نام شامل کریں';
+
+  @override
+  String get commExportNamesHelp =>
+      'بند ہو تو فائل میں Committee 1 اور Member 2 لکھا جاتا ہے اور نوٹ شامل نہیں ہوتے۔ کھلا ہو تو اس میں آپ کی کمیٹیوں کے سب لوگوں کے نام ہوتے ہیں۔';
+
+  @override
+  String get commExportGo => 'برآمد کریں';
+
+  @override
+  String get commImport => 'بیک اپ درآمد کریں';
+
+  @override
+  String get commImportText => 'Lume کمیٹی بیک اپ فائل یہاں چسپاں کریں';
+
+  @override
+  String get commImportCheck => 'جانچیں';
+
+  @override
+  String commImportReady(String c, String u, String s) {
+    return 'تیار: $c شامل، $u تازہ، $s پہلے سے موجود۔ درآمد تک کچھ نہیں لکھا جاتا۔';
+  }
+
+  @override
+  String commImportIssues(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n مسائل۔ کچھ درآمد نہیں ہوگا۔',
+      one: 'ایک مسئلہ۔ کچھ درآمد نہیں ہوگا۔',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get commImportNoNames =>
+      'اس بیک اپ میں نام نہیں: اراکین Member 1، Member 2… کہلائیں گے۔';
+
+  @override
+  String get commImportAction => 'درآمد';
+
+  @override
+  String commImported(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n ریکارڈ درآمد ہوئے',
+      one: '1 ریکارڈ درآمد ہوا',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get commMemberPaidLabel => 'جمع کرایا';
+
+  @override
+  String get commMemberExpected => 'پوری کمیٹی میں واجب';
+
+  @override
+  String get commTheirCycles => 'ان کی اقساط';
 }

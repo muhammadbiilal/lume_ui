@@ -1038,6 +1038,10 @@ const List<LumeFeature> kLumeFeatures = <LumeFeature>[
     aware: <String>{'currency', 'locale'},
   ),
   LumeFeature(
+    // Financial records about named people (D-C9): off Home, Today, the hero
+    // and recommendations; nothing leaves it. Filters, search, sorting and
+    // export are its own; the reference declares notifications and implements
+    // none (D-C10).
     id: 'committee',
     fallbackName: 'Committee',
     icon: 'users',
@@ -1045,6 +1049,7 @@ const List<LumeFeature> kLumeFeatures = <LumeFeature>[
     group: LumeFeatureGroup.money,
     interests: <String>{'savings'},
     keywords: <String>{'bisi', 'circle', 'kameti', 'pool', 'rosca'},
+    sensitive: true,
     related: <String>{'ledger', 'goals', 'expenses'},
     archetype: LumeToolArchetype.manager,
     density: LumeToolDensity.high,
@@ -1052,8 +1057,10 @@ const List<LumeFeature> kLumeFeatures = <LumeFeature>[
     freshness: LumeFreshnessKind.local,
     supports: <LumeToolSupport>{
       LumeToolSupport.export,
+      LumeToolSupport.filters,
       LumeToolSupport.history,
-      LumeToolSupport.notifications,
+      LumeToolSupport.search,
+      LumeToolSupport.sorting,
     },
     aware: <String>{'currency', 'locale'},
   ),

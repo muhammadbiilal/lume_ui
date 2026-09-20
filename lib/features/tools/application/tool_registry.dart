@@ -17,6 +17,7 @@ import '../../documents/presentation/documents_tool.dart';
 import '../../emergency/presentation/emergency_tool.dart';
 import '../../events/presentation/events_tool.dart';
 import '../../expenses/presentation/expenses_tool.dart';
+import '../../committee/presentation/committee_tool.dart';
 import '../../flights/presentation/flights_tool.dart';
 import '../../goldrates/presentation/goldrates_tool.dart';
 import '../../hadith/presentation/hadith_tool.dart';
@@ -74,4 +75,6 @@ const Map<String, LumeToolBuilder> kLumeToolRegistry =
       'ledger': LumeLedgerTool.open,
       // Installments, on its own host (`INSTALLMENTS_PROPOSAL.md` §40).
       'installments': LumeInstallmentsTool.open,
+      // Committee, on its own host (`COMMITTEE_PROPOSAL.md` D-C13).
+      'committee': LumeCommitteeTool.open,
     };

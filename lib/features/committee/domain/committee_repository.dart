@@ -367,24 +367,38 @@ class _Data {
     return decoded;
   }
 
+  void _sweep(String collection, bool Function(LumeRecord) mine) {
+    for (final LumeRecord r in tx.all(collection)) {
+      if (mine(r)) {
+        tx.delete(collection, r.id, expectVersion: r.version);
+      }
+    }
+  }
+
+  /// Remove a committee's members, positions and cycles — everything the
+  /// payout order is made of — leaving the committee record itself. Only
+  /// for a committee with no financial record at all.
+  void removeBelow(LumeRecordId id) {
+    final String key = id.value;
+    bool owned(LumeRecord r) => r['committee'] == key;
+    _sweep(CommitteeCollections.cycles, owned);
+    _sweep(CommitteeCollections.positions, owned);
+    _sweep(CommitteeCollections.members, owned);
+    members.removeWhere((CommitteeMember x) => x.committeeId == id);
+    positions.removeWhere((CommitteePosition x) => x.committeeId == id);
+    cycles.removeWhere((CommitteeCycle x) => x.committeeId == id);
+  }
+
   /// Remove a committee and everything belonging to it, damaged records
   /// included, in this one transaction.
   void removeCommittee(LumeRecordId id, int version) {
     final String key = id.value;
-    void sweep(String collection, bool Function(LumeRecord) mine) {
-      for (final LumeRecord r in tx.all(collection)) {
-        if (mine(r)) {
-          tx.delete(collection, r.id, expectVersion: r.version);
-        }
-      }
-    }
-
     bool owned(LumeRecord r) => r['committee'] == key;
-    sweep(CommitteeCollections.payouts, owned);
-    sweep(CommitteeCollections.contributions, owned);
-    sweep(CommitteeCollections.cycles, owned);
-    sweep(CommitteeCollections.positions, owned);
-    sweep(CommitteeCollections.members, owned);
+    _sweep(CommitteeCollections.payouts, owned);
+    _sweep(CommitteeCollections.contributions, owned);
+    _sweep(CommitteeCollections.cycles, owned);
+    _sweep(CommitteeCollections.positions, owned);
+    _sweep(CommitteeCollections.members, owned);
     tx.delete(CommitteeCollections.committees, key, expectVersion: version);
 
     committees.removeWhere((Committee x) => x.id == id);
@@ -537,9 +551,109 @@ class CommitteeRepository {
     fingerprint: draft.fingerprint,
   );
 
+  /// Change a committee's terms while nothing financial has happened yet
+  /// (D-C6): the contribution, the currency, the anchor, the members and
+  /// the payout order.
+  ///
+  /// The members, positions and cycles are replaced with new ones in the
+  /// same transaction, so the committee is never half old and half new.
+  /// Once any contribution or payout exists — active or voided — this is
+  /// refused as [CommitteeFailureKind.locked] and the reader is told which
+  /// term is fixed.
+  CommitteeResult<CommitteeWrite> editTerms(
+    LumeRecordId id,
+    CommitteeDraft draft, {
+    required int version,
+  }) => _write<Committee>((_Data d) {
+    final Committee was = d.committeeRecord(id);
+    final CommitteeView v = d.sound(id);
+    if (was.version != version) {
+      throw CommitteeFailure(
+        CommitteeFailureKind.conflict,
+        ids: <LumeRecordId>[id],
+      );
+    }
+    if (v.contributions.isNotEmpty || v.payouts.isNotEmpty) {
+      throw const CommitteeFailure(
+        CommitteeFailureKind.locked,
+        field: 'contribution',
+      );
+    }
+    if (was.cancelled) {
+      throw CommitteeFailure(
+        CommitteeFailureKind.cancelled,
+        ids: <LumeRecordId>[id],
+      );
+    }
+    _validate(draft);
+    if (!LumeCurrencyPolicy.of(
+      draft.currency,
+      existing: <LumeCurrency>[was.currency],
+    ).usable) {
+      throw const CommitteeFailure.validation('currency', 'withdrawn');
+    }
+    final List<LumeDate>? dues = lumeMonthlyDues(
+      draft.firstDue,
+      draft.positions,
+    );
+    if (dues == null) {
+      throw const CommitteeFailure.validation('firstDue', 'range');
+    }
+    final DateTime at = _now();
+    // Out with the old shares and cycles, in with the new — one write.
+    d.removeBelow(id);
+    for (final CommitteeMemberDraft m in draft.members) {
+      final CommitteeMember member = CommitteeMember(
+        id: _newId(),
+        committeeId: id,
+        name: m.name.trim(),
+        isReader: m.isReader,
+        note: _optional(m.note),
+        createdAt: at,
+      );
+      d.putMember(member, isNew: true);
+      for (final int cycle in m.cycles) {
+        d.addPosition(
+          CommitteePosition(
+            id: _newId(),
+            committeeId: id,
+            memberId: member.id,
+            cycle: cycle,
+            createdAt: at,
+          ),
+        );
+      }
+    }
+    for (int n = 1; n <= draft.positions; n++) {
+      d.addCycle(
+        CommitteeCycle(
+          id: _newId(),
+          committeeId: id,
+          n: n,
+          due: dues[n - 1],
+          createdAt: at,
+        ),
+      );
+    }
+    return d.putCommittee(
+      Committee(
+        id: id,
+        name: draft.name.trim(),
+        note: _optional(draft.note),
+        contribution: draft.contribution,
+        positions: draft.positions,
+        firstDue: draft.firstDue,
+        readerRole: draft.readerRole,
+        createdAt: was.createdAt,
+        version: was.version,
+      ),
+      isNew: false,
+    );
+  });
+
   /// Rename a committee, or change its note. Terms are not editable here:
-  /// before any financial record the committee is rebuilt, and after one
-  /// they are locked (D-C6).
+  /// before any financial record [editTerms] rebuilds the committee, and
+  /// after one they are locked (D-C6).
   CommitteeResult<CommitteeWrite> editCommittee(
     LumeRecordId id, {
     required String name,

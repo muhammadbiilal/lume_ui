@@ -297,9 +297,11 @@ void main() {
         for (final LumeFeature f in kLumeFeatures)
           if (!LumeDataCapability.fixture(f.id).isSample) f.id,
       ]..sort(),
-      // Ledger shows only what the reader wrote: nothing is seeded (D11).
+      // Ledger, Installments and Committee show only what the reader
+      // wrote: nothing is seeded (D11, §40.1, §11).
       <String>[
         'age',
+        'committee',
         'compound',
         'installments',
         'ledger',

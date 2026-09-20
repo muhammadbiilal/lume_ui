@@ -110,6 +110,16 @@ const DECISIONS = {
     supportsAdd: ['export', 'search'],
     supportsRemove: ['notifications'],
   },
+  committee: {
+    note: 'Financial records about named people (D-C9): off Home, Today, ' +
+      'the hero and recommendations; nothing leaves it. Filters, search, ' +
+      'sorting and export are its own; the reference declares ' +
+      'notifications and implements none (D-C10).',
+    sensitive: true,
+    outbound: 'none',
+    supportsAdd: ['export', 'filters', 'search', 'sorting'],
+    supportsRemove: ['notifications'],
+  },
 };
 
 let sensitiveCount = 0;

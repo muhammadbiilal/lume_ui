@@ -820,6 +820,86 @@ void main() {
       expect(v.committee.firstDue, d(6, 7));
     });
 
+    test('before anything financial, the terms and the order can be '
+        'rebuilt — new shares, new cycles, one write', () {
+      final Committee c = h.add();
+      final CommitteeResult<CommitteeWrite> r = h.repo.editTerms(
+        c.id,
+        CommitteeDraft(
+          name: 'Office committee',
+          contribution: rs(30000),
+          firstDue: d(7, 1),
+          members: <CommitteeMemberDraft>[
+            const CommitteeMemberDraft(
+              name: 'You',
+              isReader: true,
+              cycles: <int>[1, 3],
+            ),
+            const CommitteeMemberDraft(name: 'Sara', cycles: <int>[2]),
+          ],
+        ),
+        version: h.view(c.id).committee.version,
+      );
+      expect(r.failure, isNull);
+      final CommitteeView v = h.view(c.id);
+      expect(v.positionCount, 3);
+      expect(v.memberCount, 2);
+      expect(v.cycles, hasLength(3));
+      expect(v.contribution.minor, 3000000);
+      expect(v.pool.minor, 9000000);
+      expect(v.cycles.first.due, d(7, 1));
+      expect(h.member(c.id, 'You').turns, <int>[1, 3]);
+      // The old members and cycles are gone, not left behind.
+      expect(h.recordLines(), hasLength(1 + 2 + 3 + 3));
+      h.expectSound();
+    });
+
+    test('once a contribution exists the terms are locked, and the refusal '
+        'names one', () {
+      final Committee c = h.add();
+      h.collect(c.id, 1);
+      final String before = h.records();
+      final CommitteeResult<CommitteeWrite> r = h.repo.editTerms(
+        c.id,
+        CommitteeDraft(
+          name: 'Office committee',
+          contribution: rs(30000),
+          firstDue: d(7, 1),
+          members: CommitteeHarness.reference(),
+        ),
+        version: h.view(c.id).committee.version,
+      );
+      expect(r.failure!.kind, CommitteeFailureKind.locked);
+      expect(r.failure!.field, 'contribution');
+      expect(h.records(), before);
+    });
+
+    test('a voided contribution locks the terms too', () {
+      final Committee c = h.add();
+      final CommitteeResult<CommitteeWrite> paid = h.pay(c.id, 1, 'Ahmed');
+      final CommitteeContribution x = paid.value!.contributions.single;
+      expect(
+        h.repo.setContributionVoided(x.id, true, version: x.version).failure,
+        isNull,
+      );
+      expect(
+        h.repo
+            .editTerms(
+              c.id,
+              CommitteeDraft(
+                name: 'Office committee',
+                contribution: rs(30000),
+                firstDue: d(7, 1),
+                members: CommitteeHarness.reference(),
+              ),
+              version: h.view(c.id).committee.version,
+            )
+            .failure!
+            .kind,
+        CommitteeFailureKind.locked,
+      );
+    });
+
     test('a stale version is a conflict, and nothing is written', () {
       final Committee c = h.add();
       final String before = h.records();

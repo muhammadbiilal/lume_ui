@@ -6296,7 +6296,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get toolStatusCalendar => '3 events';
 
   @override
-  String get toolStatusCommittee => 'Month 4 of 10';
+  String get toolStatusCommittee => 'Track a savings committee';
 
   @override
   String get toolStatusCompound => 'Project growth';
@@ -8036,4 +8036,623 @@ class AppLocalizationsEn extends AppLocalizations {
     );
     return '$_temp0';
   }
+
+  @override
+  String get commEmptyTitle => 'No committees yet';
+
+  @override
+  String get commEmptyText =>
+      'Add a savings committee you are part of. Lume keeps its members, its turns and its cycles, and works out what is collected, paid out and still owed.';
+
+  @override
+  String get commAdd => 'Add a committee';
+
+  @override
+  String get commCommittees => 'Committees';
+
+  @override
+  String get commSearch => 'Search committees';
+
+  @override
+  String get commFilterLabel => 'Filter committees';
+
+  @override
+  String get commFilterRunning => 'Running';
+
+  @override
+  String get commFilterLate => 'Late';
+
+  @override
+  String get commFilterCompleted => 'Completed';
+
+  @override
+  String get commFilterCancelled => 'Cancelled';
+
+  @override
+  String get commSortNext => 'Next cycle';
+
+  @override
+  String get commSortName => 'Name';
+
+  @override
+  String get commSortAmount => 'Contribution';
+
+  @override
+  String get commSortRecent => 'Recent activity';
+
+  @override
+  String get commNoMatch => 'Nothing matches';
+
+  @override
+  String get commNoMatchText => 'No committee matches this filter and search.';
+
+  @override
+  String get commShowAll => 'Show all';
+
+  @override
+  String get commNotFound => 'That committee is not here';
+
+  @override
+  String get commInThePot => 'Collected, not paid out';
+
+  @override
+  String get commCollected => 'Collected';
+
+  @override
+  String get commPaidOut => 'Paid out';
+
+  @override
+  String get commOutstanding => 'Outstanding';
+
+  @override
+  String commRunning(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n running committees',
+      one: '1 running committee',
+      zero: 'No running committees',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String commSummaryCurrency(String code) {
+    return 'In $code';
+  }
+
+  @override
+  String get commPoolEachCycle => 'Pool each cycle';
+
+  @override
+  String commCycleOf(String n, String total) {
+    return 'Cycle $n of $total';
+  }
+
+  @override
+  String commBeforeStart(String date) {
+    return 'Starts $date';
+  }
+
+  @override
+  String get commYourContribution => 'Your contribution';
+
+  @override
+  String get commPeople => 'People';
+
+  @override
+  String get commShares => 'Shares';
+
+  @override
+  String get commYourTurn => 'Your turn';
+
+  @override
+  String commTurnCycle(String n) {
+    return 'Cycle $n';
+  }
+
+  @override
+  String get commTurnDone => 'Received';
+
+  @override
+  String get commTurnNone => 'No turn';
+
+  @override
+  String get commThisCycle => 'This cycle';
+
+  @override
+  String get commPayoutOrder => 'Payout order';
+
+  @override
+  String get commPayoutOrderCap =>
+      'Settled when the committee was created. The order records are entered in does not change it.';
+
+  @override
+  String get commCollectedEachCycle => 'Collected each cycle';
+
+  @override
+  String commCollectedCap(String code) {
+    return 'What each cycle has collected of its pool, in $code.';
+  }
+
+  @override
+  String get commOtherCurrencies =>
+      'Committees in other currencies are counted on their own.';
+
+  @override
+  String commChartEntry(String cycle, String amount) {
+    return '$cycle: $amount';
+  }
+
+  @override
+  String get commMembersSection => 'Members';
+
+  @override
+  String commReceivesCycle(String n) {
+    return 'Receives cycle $n';
+  }
+
+  @override
+  String commReceivesCycles(String list) {
+    return 'Receives cycles $list';
+  }
+
+  @override
+  String commShareCount(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n shares',
+      one: '1 share',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get commYouLabel => 'You';
+
+  @override
+  String commPaidOn(String date) {
+    return 'Paid $date';
+  }
+
+  @override
+  String commDueOn(String date) {
+    return 'Due $date';
+  }
+
+  @override
+  String commCollectedOf(String collected, String pool) {
+    return '$collected of $pool';
+  }
+
+  @override
+  String commShortBy(String amount) {
+    return 'Short $amount';
+  }
+
+  @override
+  String commCyclesPaidOut(String done, String total) {
+    return '$done of $total cycles paid out';
+  }
+
+  @override
+  String get commNoHistory => 'Nothing recorded yet';
+
+  @override
+  String get commFactContribution => 'Contribution a cycle';
+
+  @override
+  String get commFactCycles => 'Cycles';
+
+  @override
+  String get commFactFrequency => 'How often';
+
+  @override
+  String get commMonthly => 'Monthly';
+
+  @override
+  String get commFactFirstDue => 'First cycle due';
+
+  @override
+  String get commFactPool => 'Pool a cycle';
+
+  @override
+  String get commFactExpected => 'Over the committee';
+
+  @override
+  String get commFactRole => 'Your part';
+
+  @override
+  String get commFactCancelledOn => 'Cancelled on';
+
+  @override
+  String get commUnpaidAtCancelTotal => 'Unpaid at cancellation';
+
+  @override
+  String get commRoleMember => 'A member';
+
+  @override
+  String get commRoleOrganiser => 'The organiser';
+
+  @override
+  String get commRoleBoth => 'Organiser and member';
+
+  @override
+  String get commRoleHelp =>
+      'Lume keeps your own record of this committee. It holds no money and moves none.';
+
+  @override
+  String get commPaid => 'Paid';
+
+  @override
+  String get commDueToday => 'Due today';
+
+  @override
+  String get commLate => 'Late';
+
+  @override
+  String get commUpcoming => 'Upcoming';
+
+  @override
+  String get commUnpaidAtCancel => 'Unpaid at cancellation';
+
+  @override
+  String get commNotDue => 'Not due';
+
+  @override
+  String get commDayUnknown => 'Not known';
+
+  @override
+  String get commDayUnknownText =>
+      'Lume cannot work out your day, so it does not say what is late or due. The dates themselves are shown as they are.';
+
+  @override
+  String get commPayoutRecorded => 'Payout recorded';
+
+  @override
+  String get commPayoutReady => 'Ready to pay out';
+
+  @override
+  String get commPayoutWaiting => 'Waiting on contributions';
+
+  @override
+  String get commRecordContribution => 'Record contribution';
+
+  @override
+  String get commRecordPayout => 'Record payout';
+
+  @override
+  String get commEdit => 'Edit';
+
+  @override
+  String get commCancelCommittee => 'Cancel committee';
+
+  @override
+  String get commKeepCommittee => 'Keep it running';
+
+  @override
+  String get commReinstate => 'Reinstate';
+
+  @override
+  String get commDeleteCommittee => 'Delete committee';
+
+  @override
+  String get commPayTitle => 'Record contribution';
+
+  @override
+  String commPayText(String name, String amount, String n, String due) {
+    return '$name pays $amount for cycle $n, due $due.';
+  }
+
+  @override
+  String commPayShares(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n shares, recorded together',
+      one: 'One share',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get commPaidOnLabel => 'Day it was paid';
+
+  @override
+  String get commPayGo => 'Record';
+
+  @override
+  String get commPayoutTitle => 'Record payout';
+
+  @override
+  String commPayoutText(String name, String amount, String n) {
+    return '$name receives $amount for cycle $n. Lume records it; it moves no money.';
+  }
+
+  @override
+  String get commPaidToast => 'Contribution recorded';
+
+  @override
+  String get commPayoutToast => 'Payout recorded';
+
+  @override
+  String get commVoidContribution => 'Void this contribution';
+
+  @override
+  String get commRestoreContribution => 'Restore this contribution';
+
+  @override
+  String get commVoidPayout => 'Void this payout';
+
+  @override
+  String get commRestorePayout => 'Restore this payout';
+
+  @override
+  String get commVoided => 'Voided';
+
+  @override
+  String get commVoidedToast => 'Taken out of the figures';
+
+  @override
+  String get commRestoredToast => 'Put back';
+
+  @override
+  String get commCancelTitle => 'Cancel this committee?';
+
+  @override
+  String get commCancelText =>
+      'Every record is kept. Cycles after today raise nothing; what was already owed stays as unpaid at cancellation. No refund is worked out, and nothing is paid back.';
+
+  @override
+  String get commCancelledToast => 'Committee cancelled';
+
+  @override
+  String get commReinstatedToast => 'Committee reinstated';
+
+  @override
+  String get commDeleteTitle => 'Delete this committee?';
+
+  @override
+  String commDeleteText(
+    String members,
+    String positions,
+    String cycles,
+    String contributions,
+    String payouts,
+  ) {
+    return 'This removes the committee, $members members, $positions shares, $cycles cycles, $contributions contributions and $payouts payouts.';
+  }
+
+  @override
+  String get commDeletedToast => 'Committee deleted';
+
+  @override
+  String get commRestoredCommitteeToast => 'Committee restored';
+
+  @override
+  String get commNeedsAttention => 'Needs attention';
+
+  @override
+  String commDefects(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other:
+          '$n records can\'t be read. They are kept as they are, and their committees are left out of the totals.',
+      one:
+          '1 record can\'t be read. It is kept as it is, and its committee is left out of the totals.',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get commDamagedText =>
+      'Some of this committee\'s records do not hold together, so its figures are left out. You can look at it and delete it; nothing else will write over it.';
+
+  @override
+  String get commNewCommittee => 'New committee';
+
+  @override
+  String get commEditCommittee => 'Edit committee';
+
+  @override
+  String get commFieldName => 'Name';
+
+  @override
+  String get commFieldNote => 'Note';
+
+  @override
+  String get commFieldCurrency => 'Currency';
+
+  @override
+  String get commFieldContribution => 'Contribution a cycle';
+
+  @override
+  String get commFieldFirstDue => 'First cycle due';
+
+  @override
+  String get commFieldRole => 'Your part';
+
+  @override
+  String get commFieldMembers => 'Members and turns';
+
+  @override
+  String get commMembersHelp =>
+      'They are paid in this order: the first receives cycle 1. A member with two shares pays twice a cycle and is paid twice.';
+
+  @override
+  String commMemberName(String n) {
+    return 'Member $n';
+  }
+
+  @override
+  String get commAddMember => 'Add a member';
+
+  @override
+  String get commRemoveMember => 'Remove';
+
+  @override
+  String get commMoveUp => 'Move up';
+
+  @override
+  String get commMoveDown => 'Move down';
+
+  @override
+  String get commFieldShares => 'Shares';
+
+  @override
+  String get commThisIsYou => 'This is you';
+
+  @override
+  String get commLockedTitle => 'The terms are fixed';
+
+  @override
+  String get commLockedText =>
+      'A contribution or a payout has been recorded, so the amount, the currency, the shares, the first day and the order stay as they are. The names and the note can still be changed.';
+
+  @override
+  String get commSaved => 'Committee saved';
+
+  @override
+  String get commErrName => 'Give the committee a name';
+
+  @override
+  String get commErrMemberName => 'Give every member a name';
+
+  @override
+  String get commErrLong => 'That is too long';
+
+  @override
+  String get commErrDate => 'Choose a date';
+
+  @override
+  String get commErrMembers => 'A committee needs at least two shares';
+
+  @override
+  String get commErrShares => 'Shares must be a whole number of at least one';
+
+  @override
+  String get commErrReader =>
+      'Mark exactly one member as you, or say you are the organiser only';
+
+  @override
+  String get commErrReaderNone =>
+      'An organiser who holds no share has no member to mark';
+
+  @override
+  String get commErrRange => 'That is outside what this can hold';
+
+  @override
+  String get commErrTooLarge => 'That figure is too large to work with';
+
+  @override
+  String commErrWithdrawn(String code) {
+    return '$code is no longer in use for a new committee';
+  }
+
+  @override
+  String get commErrFuture => 'A payment cannot be dated after today';
+
+  @override
+  String get commErrDuplicate => 'That is already recorded';
+
+  @override
+  String commErrIncomplete(String n, String amount) {
+    return 'Cycle $n is still short $amount. A payout is recorded once it is fully collected.';
+  }
+
+  @override
+  String get commErrPaidOut => 'Void this cycle\'s payout first';
+
+  @override
+  String get commErrCancelled => 'This committee is cancelled';
+
+  @override
+  String get commErrConflict =>
+      'It changed while you were working. Open it again.';
+
+  @override
+  String get commErrDamaged => 'This committee\'s records do not hold together';
+
+  @override
+  String get commErrFailed => 'That could not be saved. Nothing was changed.';
+
+  @override
+  String get commExportTitle => 'Export committees';
+
+  @override
+  String get commExportJson => 'Backup file (JSON)';
+
+  @override
+  String get commExportJsonHelp => 'Everything, and it can be imported again.';
+
+  @override
+  String get commExportCsv => 'Spreadsheet (CSV)';
+
+  @override
+  String get commExportCsvHelp =>
+      'One row per share per cycle. It cannot be imported.';
+
+  @override
+  String get commExportNames => 'Include names';
+
+  @override
+  String get commExportNamesHelp =>
+      'Off, the file says Committee 1 and Member 2, and leaves notes out. On, it carries the names of everyone in your committees.';
+
+  @override
+  String get commExportGo => 'Export';
+
+  @override
+  String get commImport => 'Import a backup';
+
+  @override
+  String get commImportText => 'Paste a Lume committee backup file';
+
+  @override
+  String get commImportCheck => 'Check it';
+
+  @override
+  String commImportReady(String c, String u, String s) {
+    return 'Ready: $c to add, $u to update, $s already here. Nothing is written until you import.';
+  }
+
+  @override
+  String commImportIssues(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n problems. Nothing will be imported.',
+      one: '1 problem. Nothing will be imported.',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get commImportNoNames =>
+      'No names in this backup: members will be called Member 1, Member 2…';
+
+  @override
+  String get commImportAction => 'Import';
+
+  @override
+  String commImported(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: 'Imported $n records',
+      one: 'Imported 1 record',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get commMemberPaidLabel => 'Paid in';
+
+  @override
+  String get commMemberExpected => 'Owed over the committee';
+
+  @override
+  String get commTheirCycles => 'Their cycles';
 }

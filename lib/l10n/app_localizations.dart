@@ -11065,7 +11065,7 @@ abstract class AppLocalizations {
   /// The status line on the committee tile. The prototype keeps it in the catalogue and renders it untranslated in every language (D22)
   ///
   /// In en, this message translates to:
-  /// **'Month 4 of 10'**
+  /// **'Track a savings committee'**
   String get toolStatusCommittee;
 
   /// The status line on the compound tile. The prototype keeps it in the catalogue and renders it untranslated in every language (D22)
@@ -13975,6 +13975,1026 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'{n, plural, =1{Imported 1 record} other{Imported {n} records}}'**
   String ledgerImported(int n);
+
+  /// Committee first use: nothing seeded
+  ///
+  /// In en, this message translates to:
+  /// **'No committees yet'**
+  String get commEmptyTitle;
+
+  /// Committee first use: what the tool is for
+  ///
+  /// In en, this message translates to:
+  /// **'Add a savings committee you are part of. Lume keeps its members, its turns and its cycles, and works out what is collected, paid out and still owed.'**
+  String get commEmptyText;
+
+  /// Committee: add action
+  ///
+  /// In en, this message translates to:
+  /// **'Add a committee'**
+  String get commAdd;
+
+  /// Committee: the list's section title
+  ///
+  /// In en, this message translates to:
+  /// **'Committees'**
+  String get commCommittees;
+
+  /// Committee: search placeholder
+  ///
+  /// In en, this message translates to:
+  /// **'Search committees'**
+  String get commSearch;
+
+  /// Committee: the filter bar, for a screen reader
+  ///
+  /// In en, this message translates to:
+  /// **'Filter committees'**
+  String get commFilterLabel;
+
+  /// Committee filter: still collecting
+  ///
+  /// In en, this message translates to:
+  /// **'Running'**
+  String get commFilterRunning;
+
+  /// Committee filter: something is owed past its day
+  ///
+  /// In en, this message translates to:
+  /// **'Late'**
+  String get commFilterLate;
+
+  /// Committee filter: every cycle paid out
+  ///
+  /// In en, this message translates to:
+  /// **'Completed'**
+  String get commFilterCompleted;
+
+  /// Committee filter: stopped by the reader
+  ///
+  /// In en, this message translates to:
+  /// **'Cancelled'**
+  String get commFilterCancelled;
+
+  /// Committee sort: by the next cycle's day
+  ///
+  /// In en, this message translates to:
+  /// **'Next cycle'**
+  String get commSortNext;
+
+  /// Committee sort
+  ///
+  /// In en, this message translates to:
+  /// **'Name'**
+  String get commSortName;
+
+  /// Committee sort: what one share pays a cycle
+  ///
+  /// In en, this message translates to:
+  /// **'Contribution'**
+  String get commSortAmount;
+
+  /// Committee sort
+  ///
+  /// In en, this message translates to:
+  /// **'Recent activity'**
+  String get commSortRecent;
+
+  /// Committee: no committee matches the filter and search
+  ///
+  /// In en, this message translates to:
+  /// **'Nothing matches'**
+  String get commNoMatch;
+
+  /// Committee: no match, what to do
+  ///
+  /// In en, this message translates to:
+  /// **'No committee matches this filter and search.'**
+  String get commNoMatchText;
+
+  /// Committee: clear the filter and the search
+  ///
+  /// In en, this message translates to:
+  /// **'Show all'**
+  String get commShowAll;
+
+  /// Committee: a link to a committee that is not there
+  ///
+  /// In en, this message translates to:
+  /// **'That committee is not here'**
+  String get commNotFound;
+
+  /// Committee summary kicker: what the committees hold
+  ///
+  /// In en, this message translates to:
+  /// **'Collected, not paid out'**
+  String get commInThePot;
+
+  /// Committee summary stat: every contribution recorded
+  ///
+  /// In en, this message translates to:
+  /// **'Collected'**
+  String get commCollected;
+
+  /// Committee summary stat: every payout recorded
+  ///
+  /// In en, this message translates to:
+  /// **'Paid out'**
+  String get commPaidOut;
+
+  /// Committee summary stat: owed and unpaid to the day
+  ///
+  /// In en, this message translates to:
+  /// **'Outstanding'**
+  String get commOutstanding;
+
+  /// Committee summary caption: each committee counted once
+  ///
+  /// In en, this message translates to:
+  /// **'{n, plural, =0{No running committees} =1{1 running committee} other{{n} running committees}}'**
+  String commRunning(int n);
+
+  /// Committee: a summary's currency, when there is more than one
+  ///
+  /// In en, this message translates to:
+  /// **'In {code}'**
+  String commSummaryCurrency(String code);
+
+  /// Committee summary kicker: the contribution times the shares
+  ///
+  /// In en, this message translates to:
+  /// **'Pool each cycle'**
+  String get commPoolEachCycle;
+
+  /// Committee: which cycle the committee is in
+  ///
+  /// In en, this message translates to:
+  /// **'Cycle {n} of {total}'**
+  String commCycleOf(String n, String total);
+
+  /// Committee: it has not reached its first cycle
+  ///
+  /// In en, this message translates to:
+  /// **'Starts {date}'**
+  String commBeforeStart(String date);
+
+  /// Committee stat: what the reader pays each cycle, for all their shares
+  ///
+  /// In en, this message translates to:
+  /// **'Your contribution'**
+  String get commYourContribution;
+
+  /// Committee stat: distinct members, however many shares they hold
+  ///
+  /// In en, this message translates to:
+  /// **'People'**
+  String get commPeople;
+
+  /// Committee stat: positions in the payout order
+  ///
+  /// In en, this message translates to:
+  /// **'Shares'**
+  String get commShares;
+
+  /// Committee stat label: the cycle the reader receives
+  ///
+  /// In en, this message translates to:
+  /// **'Your turn'**
+  String get commYourTurn;
+
+  /// Committee: a cycle by its number
+  ///
+  /// In en, this message translates to:
+  /// **'Cycle {n}'**
+  String commTurnCycle(String n);
+
+  /// Committee stat: the reader's payout is already recorded
+  ///
+  /// In en, this message translates to:
+  /// **'Received'**
+  String get commTurnDone;
+
+  /// Committee stat: the reader holds no share
+  ///
+  /// In en, this message translates to:
+  /// **'No turn'**
+  String get commTurnNone;
+
+  /// Committee section: who has paid into the current cycle
+  ///
+  /// In en, this message translates to:
+  /// **'This cycle'**
+  String get commThisCycle;
+
+  /// Committee section: which cycle each share receives, settled when it was created
+  ///
+  /// In en, this message translates to:
+  /// **'Payout order'**
+  String get commPayoutOrder;
+
+  /// Committee: the payout order is fixed, unlike the order things are recorded
+  ///
+  /// In en, this message translates to:
+  /// **'Settled when the committee was created. The order records are entered in does not change it.'**
+  String get commPayoutOrderCap;
+
+  /// Committee chart title
+  ///
+  /// In en, this message translates to:
+  /// **'Collected each cycle'**
+  String get commCollectedEachCycle;
+
+  /// Committee chart caption
+  ///
+  /// In en, this message translates to:
+  /// **'What each cycle has collected of its pool, in {code}.'**
+  String commCollectedCap(String code);
+
+  /// Committee chart: it shows one currency
+  ///
+  /// In en, this message translates to:
+  /// **'Committees in other currencies are counted on their own.'**
+  String get commOtherCurrencies;
+
+  /// Committee chart bar, for a screen reader
+  ///
+  /// In en, this message translates to:
+  /// **'{cycle}: {amount}'**
+  String commChartEntry(String cycle, String amount);
+
+  /// Committee section: the people in it
+  ///
+  /// In en, this message translates to:
+  /// **'Members'**
+  String get commMembersSection;
+
+  /// Committee row: the cycle this share is paid
+  ///
+  /// In en, this message translates to:
+  /// **'Receives cycle {n}'**
+  String commReceivesCycle(String n);
+
+  /// Committee row: a member holding several shares
+  ///
+  /// In en, this message translates to:
+  /// **'Receives cycles {list}'**
+  String commReceivesCycles(String list);
+
+  /// Committee row: how many shares a member holds
+  ///
+  /// In en, this message translates to:
+  /// **'{n, plural, =1{1 share} other{{n} shares}}'**
+  String commShareCount(int n);
+
+  /// Committee: the member who is the reader
+  ///
+  /// In en, this message translates to:
+  /// **'You'**
+  String get commYouLabel;
+
+  /// Committee: the day a contribution was handed over
+  ///
+  /// In en, this message translates to:
+  /// **'Paid {date}'**
+  String commPaidOn(String date);
+
+  /// Committee: the day a cycle falls due
+  ///
+  /// In en, this message translates to:
+  /// **'Due {date}'**
+  String commDueOn(String date);
+
+  /// Committee: a cycle's collection against its pool
+  ///
+  /// In en, this message translates to:
+  /// **'{collected} of {pool}'**
+  String commCollectedOf(String collected, String pool);
+
+  /// Committee: what a cycle still needs before a payout
+  ///
+  /// In en, this message translates to:
+  /// **'Short {amount}'**
+  String commShortBy(String amount);
+
+  /// Committee progress bar, for a screen reader
+  ///
+  /// In en, this message translates to:
+  /// **'{done} of {total} cycles paid out'**
+  String commCyclesPaidOut(String done, String total);
+
+  /// Committee: the history list is empty
+  ///
+  /// In en, this message translates to:
+  /// **'Nothing recorded yet'**
+  String get commNoHistory;
+
+  /// Committee fact
+  ///
+  /// In en, this message translates to:
+  /// **'Contribution a cycle'**
+  String get commFactContribution;
+
+  /// Committee fact: how many cycles, which is how many shares
+  ///
+  /// In en, this message translates to:
+  /// **'Cycles'**
+  String get commFactCycles;
+
+  /// Committee fact
+  ///
+  /// In en, this message translates to:
+  /// **'How often'**
+  String get commFactFrequency;
+
+  /// Committee: the only frequency this build keeps
+  ///
+  /// In en, this message translates to:
+  /// **'Monthly'**
+  String get commMonthly;
+
+  /// Committee fact: the anchor every cycle is worked out from
+  ///
+  /// In en, this message translates to:
+  /// **'First cycle due'**
+  String get commFactFirstDue;
+
+  /// Committee fact: contribution times shares
+  ///
+  /// In en, this message translates to:
+  /// **'Pool a cycle'**
+  String get commFactPool;
+
+  /// Committee fact: contribution times shares times cycles
+  ///
+  /// In en, this message translates to:
+  /// **'Over the committee'**
+  String get commFactExpected;
+
+  /// Committee fact: what the reader is in this committee
+  ///
+  /// In en, this message translates to:
+  /// **'Your part'**
+  String get commFactRole;
+
+  /// Committee fact: the day it stopped
+  ///
+  /// In en, this message translates to:
+  /// **'Cancelled on'**
+  String get commFactCancelledOn;
+
+  /// Committee fact: what was owed when it stopped, and does not grow
+  ///
+  /// In en, this message translates to:
+  /// **'Unpaid at cancellation'**
+  String get commUnpaidAtCancelTotal;
+
+  /// Committee role: the reader pays and receives
+  ///
+  /// In en, this message translates to:
+  /// **'A member'**
+  String get commRoleMember;
+
+  /// Committee role: the reader runs it and holds no share
+  ///
+  /// In en, this message translates to:
+  /// **'The organiser'**
+  String get commRoleOrganiser;
+
+  /// Committee role: both
+  ///
+  /// In en, this message translates to:
+  /// **'Organiser and member'**
+  String get commRoleBoth;
+
+  /// Committee: what the tool does and does not do
+  ///
+  /// In en, this message translates to:
+  /// **'Lume keeps your own record of this committee. It holds no money and moves none.'**
+  String get commRoleHelp;
+
+  /// Committee: a share's contribution for a cycle is recorded
+  ///
+  /// In en, this message translates to:
+  /// **'Paid'**
+  String get commPaid;
+
+  /// Committee: the cycle falls due on the reader's day
+  ///
+  /// In en, this message translates to:
+  /// **'Due today'**
+  String get commDueToday;
+
+  /// Committee: the cycle fell due before the reader's day
+  ///
+  /// In en, this message translates to:
+  /// **'Late'**
+  String get commLate;
+
+  /// Committee: the cycle falls due later
+  ///
+  /// In en, this message translates to:
+  /// **'Upcoming'**
+  String get commUpcoming;
+
+  /// Committee: owed when the committee stopped, and not growing
+  ///
+  /// In en, this message translates to:
+  /// **'Unpaid at cancellation'**
+  String get commUnpaidAtCancel;
+
+  /// Committee: the cycle fell after the committee was cancelled
+  ///
+  /// In en, this message translates to:
+  /// **'Not due'**
+  String get commNotDue;
+
+  /// Committee: without the reader's day no state is claimed
+  ///
+  /// In en, this message translates to:
+  /// **'Not known'**
+  String get commDayUnknown;
+
+  /// Committee: the reader's zone could not be resolved
+  ///
+  /// In en, this message translates to:
+  /// **'Lume cannot work out your day, so it does not say what is late or due. The dates themselves are shown as they are.'**
+  String get commDayUnknownText;
+
+  /// Committee: the reader recorded that this cycle's pool was handed over
+  ///
+  /// In en, this message translates to:
+  /// **'Payout recorded'**
+  String get commPayoutRecorded;
+
+  /// Committee: fully collected, so a payout can be recorded
+  ///
+  /// In en, this message translates to:
+  /// **'Ready to pay out'**
+  String get commPayoutReady;
+
+  /// Committee: part collected, so nothing may be paid out yet
+  ///
+  /// In en, this message translates to:
+  /// **'Waiting on contributions'**
+  String get commPayoutWaiting;
+
+  /// Committee action
+  ///
+  /// In en, this message translates to:
+  /// **'Record contribution'**
+  String get commRecordContribution;
+
+  /// Committee action: the reader's note that the pool was handed over outside Lume
+  ///
+  /// In en, this message translates to:
+  /// **'Record payout'**
+  String get commRecordPayout;
+
+  /// Committee action
+  ///
+  /// In en, this message translates to:
+  /// **'Edit'**
+  String get commEdit;
+
+  /// Committee action
+  ///
+  /// In en, this message translates to:
+  /// **'Cancel committee'**
+  String get commCancelCommittee;
+
+  /// Committee: the way out of cancelling
+  ///
+  /// In en, this message translates to:
+  /// **'Keep it running'**
+  String get commKeepCommittee;
+
+  /// Committee action: undo a cancellation
+  ///
+  /// In en, this message translates to:
+  /// **'Reinstate'**
+  String get commReinstate;
+
+  /// Committee action
+  ///
+  /// In en, this message translates to:
+  /// **'Delete committee'**
+  String get commDeleteCommittee;
+
+  /// Committee sheet title
+  ///
+  /// In en, this message translates to:
+  /// **'Record contribution'**
+  String get commPayTitle;
+
+  /// Committee sheet: what is about to be recorded
+  ///
+  /// In en, this message translates to:
+  /// **'{name} pays {amount} for cycle {n}, due {due}.'**
+  String commPayText(String name, String amount, String n, String due);
+
+  /// Committee sheet: a member holding several shares pays for each
+  ///
+  /// In en, this message translates to:
+  /// **'{n, plural, =1{One share} other{{n} shares, recorded together}}'**
+  String commPayShares(int n);
+
+  /// Committee sheet: the date field
+  ///
+  /// In en, this message translates to:
+  /// **'Day it was paid'**
+  String get commPaidOnLabel;
+
+  /// Committee sheet: confirm
+  ///
+  /// In en, this message translates to:
+  /// **'Record'**
+  String get commPayGo;
+
+  /// Committee sheet title
+  ///
+  /// In en, this message translates to:
+  /// **'Record payout'**
+  String get commPayoutTitle;
+
+  /// Committee sheet: what a payout record means
+  ///
+  /// In en, this message translates to:
+  /// **'{name} receives {amount} for cycle {n}. Lume records it; it moves no money.'**
+  String commPayoutText(String name, String amount, String n);
+
+  /// Committee toast
+  ///
+  /// In en, this message translates to:
+  /// **'Contribution recorded'**
+  String get commPaidToast;
+
+  /// Committee toast: what the reader recorded, not what Lume did
+  ///
+  /// In en, this message translates to:
+  /// **'Payout recorded'**
+  String get commPayoutToast;
+
+  /// Committee: take a contribution out of the figures
+  ///
+  /// In en, this message translates to:
+  /// **'Void this contribution'**
+  String get commVoidContribution;
+
+  /// Committee: put it back
+  ///
+  /// In en, this message translates to:
+  /// **'Restore this contribution'**
+  String get commRestoreContribution;
+
+  /// Committee: take a payout out of the figures
+  ///
+  /// In en, this message translates to:
+  /// **'Void this payout'**
+  String get commVoidPayout;
+
+  /// Committee: put it back
+  ///
+  /// In en, this message translates to:
+  /// **'Restore this payout'**
+  String get commRestorePayout;
+
+  /// Committee: a record kept but out of the figures
+  ///
+  /// In en, this message translates to:
+  /// **'Voided'**
+  String get commVoided;
+
+  /// Committee toast
+  ///
+  /// In en, this message translates to:
+  /// **'Taken out of the figures'**
+  String get commVoidedToast;
+
+  /// Committee toast
+  ///
+  /// In en, this message translates to:
+  /// **'Put back'**
+  String get commRestoredToast;
+
+  /// Committee: cancel confirmation title
+  ///
+  /// In en, this message translates to:
+  /// **'Cancel this committee?'**
+  String get commCancelTitle;
+
+  /// Committee: what cancelling does and does not do
+  ///
+  /// In en, this message translates to:
+  /// **'Every record is kept. Cycles after today raise nothing; what was already owed stays as unpaid at cancellation. No refund is worked out, and nothing is paid back.'**
+  String get commCancelText;
+
+  /// Committee toast
+  ///
+  /// In en, this message translates to:
+  /// **'Committee cancelled'**
+  String get commCancelledToast;
+
+  /// Committee toast
+  ///
+  /// In en, this message translates to:
+  /// **'Committee reinstated'**
+  String get commReinstatedToast;
+
+  /// Committee: delete confirmation title
+  ///
+  /// In en, this message translates to:
+  /// **'Delete this committee?'**
+  String get commDeleteTitle;
+
+  /// Committee: exactly what deleting removes
+  ///
+  /// In en, this message translates to:
+  /// **'This removes the committee, {members} members, {positions} shares, {cycles} cycles, {contributions} contributions and {payouts} payouts.'**
+  String commDeleteText(
+    String members,
+    String positions,
+    String cycles,
+    String contributions,
+    String payouts,
+  );
+
+  /// Committee toast
+  ///
+  /// In en, this message translates to:
+  /// **'Committee deleted'**
+  String get commDeletedToast;
+
+  /// Committee toast after Undo
+  ///
+  /// In en, this message translates to:
+  /// **'Committee restored'**
+  String get commRestoredCommitteeToast;
+
+  /// Committee: a record cannot be read
+  ///
+  /// In en, this message translates to:
+  /// **'Needs attention'**
+  String get commNeedsAttention;
+
+  /// Committee: stored records that cannot be decoded
+  ///
+  /// In en, this message translates to:
+  /// **'{n, plural, =1{1 record can\'t be read. It is kept as it is, and its committee is left out of the totals.} other{{n} records can\'t be read. They are kept as they are, and their committees are left out of the totals.}}'**
+  String commDefects(int n);
+
+  /// Committee: a damaged committee
+  ///
+  /// In en, this message translates to:
+  /// **'Some of this committee\'s records do not hold together, so its figures are left out. You can look at it and delete it; nothing else will write over it.'**
+  String get commDamagedText;
+
+  /// Committee form title
+  ///
+  /// In en, this message translates to:
+  /// **'New committee'**
+  String get commNewCommittee;
+
+  /// Committee form title
+  ///
+  /// In en, this message translates to:
+  /// **'Edit committee'**
+  String get commEditCommittee;
+
+  /// Committee form field: the reader's own label
+  ///
+  /// In en, this message translates to:
+  /// **'Name'**
+  String get commFieldName;
+
+  /// Committee form field
+  ///
+  /// In en, this message translates to:
+  /// **'Note'**
+  String get commFieldNote;
+
+  /// Committee form field
+  ///
+  /// In en, this message translates to:
+  /// **'Currency'**
+  String get commFieldCurrency;
+
+  /// Committee form field: what one share pays each cycle
+  ///
+  /// In en, this message translates to:
+  /// **'Contribution a cycle'**
+  String get commFieldContribution;
+
+  /// Committee form field: the anchor every cycle is worked out from
+  ///
+  /// In en, this message translates to:
+  /// **'First cycle due'**
+  String get commFieldFirstDue;
+
+  /// Committee form field
+  ///
+  /// In en, this message translates to:
+  /// **'Your part'**
+  String get commFieldRole;
+
+  /// Committee form section: the people and the order they are paid in
+  ///
+  /// In en, this message translates to:
+  /// **'Members and turns'**
+  String get commFieldMembers;
+
+  /// Committee form: how the order and shares work
+  ///
+  /// In en, this message translates to:
+  /// **'They are paid in this order: the first receives cycle 1. A member with two shares pays twice a cycle and is paid twice.'**
+  String get commMembersHelp;
+
+  /// Committee form: a member row's label
+  ///
+  /// In en, this message translates to:
+  /// **'Member {n}'**
+  String commMemberName(String n);
+
+  /// Committee form action
+  ///
+  /// In en, this message translates to:
+  /// **'Add a member'**
+  String get commAddMember;
+
+  /// Committee form action
+  ///
+  /// In en, this message translates to:
+  /// **'Remove'**
+  String get commRemoveMember;
+
+  /// Committee form: earlier in the payout order
+  ///
+  /// In en, this message translates to:
+  /// **'Move up'**
+  String get commMoveUp;
+
+  /// Committee form: later in the payout order
+  ///
+  /// In en, this message translates to:
+  /// **'Move down'**
+  String get commMoveDown;
+
+  /// Committee form field: how many turns this member holds
+  ///
+  /// In en, this message translates to:
+  /// **'Shares'**
+  String get commFieldShares;
+
+  /// Committee form: mark the member who is the reader
+  ///
+  /// In en, this message translates to:
+  /// **'This is you'**
+  String get commThisIsYou;
+
+  /// Committee form: once a contribution or payout exists
+  ///
+  /// In en, this message translates to:
+  /// **'The terms are fixed'**
+  String get commLockedTitle;
+
+  /// Committee form: what is locked, and what is not
+  ///
+  /// In en, this message translates to:
+  /// **'A contribution or a payout has been recorded, so the amount, the currency, the shares, the first day and the order stay as they are. The names and the note can still be changed.'**
+  String get commLockedText;
+
+  /// Committee toast
+  ///
+  /// In en, this message translates to:
+  /// **'Committee saved'**
+  String get commSaved;
+
+  /// Committee form error
+  ///
+  /// In en, this message translates to:
+  /// **'Give the committee a name'**
+  String get commErrName;
+
+  /// Committee form error
+  ///
+  /// In en, this message translates to:
+  /// **'Give every member a name'**
+  String get commErrMemberName;
+
+  /// Committee form error
+  ///
+  /// In en, this message translates to:
+  /// **'That is too long'**
+  String get commErrLong;
+
+  /// Committee form error
+  ///
+  /// In en, this message translates to:
+  /// **'Choose a date'**
+  String get commErrDate;
+
+  /// Committee form error
+  ///
+  /// In en, this message translates to:
+  /// **'A committee needs at least two shares'**
+  String get commErrMembers;
+
+  /// Committee form error
+  ///
+  /// In en, this message translates to:
+  /// **'Shares must be a whole number of at least one'**
+  String get commErrShares;
+
+  /// Committee form error: the role and the reader must agree
+  ///
+  /// In en, this message translates to:
+  /// **'Mark exactly one member as you, or say you are the organiser only'**
+  String get commErrReader;
+
+  /// Committee form error: organiser only
+  ///
+  /// In en, this message translates to:
+  /// **'An organiser who holds no share has no member to mark'**
+  String get commErrReaderNone;
+
+  /// Committee form error
+  ///
+  /// In en, this message translates to:
+  /// **'That is outside what this can hold'**
+  String get commErrRange;
+
+  /// Committee error
+  ///
+  /// In en, this message translates to:
+  /// **'That figure is too large to work with'**
+  String get commErrTooLarge;
+
+  /// Committee form error
+  ///
+  /// In en, this message translates to:
+  /// **'{code} is no longer in use for a new committee'**
+  String commErrWithdrawn(String code);
+
+  /// Committee form error
+  ///
+  /// In en, this message translates to:
+  /// **'A payment cannot be dated after today'**
+  String get commErrFuture;
+
+  /// Committee error
+  ///
+  /// In en, this message translates to:
+  /// **'That is already recorded'**
+  String get commErrDuplicate;
+
+  /// Committee error: a payout before the cycle is collected
+  ///
+  /// In en, this message translates to:
+  /// **'Cycle {n} is still short {amount}. A payout is recorded once it is fully collected.'**
+  String commErrIncomplete(String n, String amount);
+
+  /// Committee error
+  ///
+  /// In en, this message translates to:
+  /// **'Void this cycle\'s payout first'**
+  String get commErrPaidOut;
+
+  /// Committee error
+  ///
+  /// In en, this message translates to:
+  /// **'This committee is cancelled'**
+  String get commErrCancelled;
+
+  /// Committee error
+  ///
+  /// In en, this message translates to:
+  /// **'It changed while you were working. Open it again.'**
+  String get commErrConflict;
+
+  /// Committee error
+  ///
+  /// In en, this message translates to:
+  /// **'This committee\'s records do not hold together'**
+  String get commErrDamaged;
+
+  /// Committee error
+  ///
+  /// In en, this message translates to:
+  /// **'That could not be saved. Nothing was changed.'**
+  String get commErrFailed;
+
+  /// Committee export sheet title
+  ///
+  /// In en, this message translates to:
+  /// **'Export committees'**
+  String get commExportTitle;
+
+  /// Committee export: the lossless format
+  ///
+  /// In en, this message translates to:
+  /// **'Backup file (JSON)'**
+  String get commExportJson;
+
+  /// Committee export: what JSON is for
+  ///
+  /// In en, this message translates to:
+  /// **'Everything, and it can be imported again.'**
+  String get commExportJsonHelp;
+
+  /// Committee export: the view format
+  ///
+  /// In en, this message translates to:
+  /// **'Spreadsheet (CSV)'**
+  String get commExportCsv;
+
+  /// Committee export: what CSV is and is not
+  ///
+  /// In en, this message translates to:
+  /// **'One row per share per cycle. It cannot be imported.'**
+  String get commExportCsvHelp;
+
+  /// Committee export: the privacy switch
+  ///
+  /// In en, this message translates to:
+  /// **'Include names'**
+  String get commExportNames;
+
+  /// Committee export: what including names means
+  ///
+  /// In en, this message translates to:
+  /// **'Off, the file says Committee 1 and Member 2, and leaves notes out. On, it carries the names of everyone in your committees.'**
+  String get commExportNamesHelp;
+
+  /// Committee export: confirm
+  ///
+  /// In en, this message translates to:
+  /// **'Export'**
+  String get commExportGo;
+
+  /// Committee import: open the sheet
+  ///
+  /// In en, this message translates to:
+  /// **'Import a backup'**
+  String get commImport;
+
+  /// Committee import: the field's label
+  ///
+  /// In en, this message translates to:
+  /// **'Paste a Lume committee backup file'**
+  String get commImportText;
+
+  /// Committee import: check without writing
+  ///
+  /// In en, this message translates to:
+  /// **'Check it'**
+  String get commImportCheck;
+
+  /// Committee import: what a good file would do
+  ///
+  /// In en, this message translates to:
+  /// **'Ready: {c} to add, {u} to update, {s} already here. Nothing is written until you import.'**
+  String commImportReady(String c, String u, String s);
+
+  /// Committee import: the file is refused whole
+  ///
+  /// In en, this message translates to:
+  /// **'{n, plural, =1{1 problem. Nothing will be imported.} other{{n} problems. Nothing will be imported.}}'**
+  String commImportIssues(int n);
+
+  /// Committee import: a redacted file
+  ///
+  /// In en, this message translates to:
+  /// **'No names in this backup: members will be called Member 1, Member 2…'**
+  String get commImportNoNames;
+
+  /// Committee import: confirm
+  ///
+  /// In en, this message translates to:
+  /// **'Import'**
+  String get commImportAction;
+
+  /// Committee import toast
+  ///
+  /// In en, this message translates to:
+  /// **'{n, plural, =1{Imported 1 record} other{Imported {n} records}}'**
+  String commImported(int n);
+
+  /// Committee member: what this member has contributed over the committee
+  ///
+  /// In en, this message translates to:
+  /// **'Paid in'**
+  String get commMemberPaidLabel;
+
+  /// Committee member: contribution times cycles times their shares
+  ///
+  /// In en, this message translates to:
+  /// **'Owed over the committee'**
+  String get commMemberExpected;
+
+  /// Committee member section: every cycle, and whether this member paid it
+  ///
+  /// In en, this message translates to:
+  /// **'Their cycles'**
+  String get commTheirCycles;
 }
 
 class _AppLocalizationsDelegate
