@@ -226,7 +226,7 @@ String committeeExportCsv(CommitteeBook book, {bool includeNames = false}) {
       (CommitteeView a, CommitteeView b) =>
           a.committee.id.compareTo(b.committee.id),
     );
-  final StringBuffer out = StringBuffer('﻿')
+  final StringBuffer out = StringBuffer('\uFEFF')
     ..write(kCommitteeCsvColumns.join(','))
     ..write('\r\n');
   for (int i = 0; i < vs.length; i++) {
