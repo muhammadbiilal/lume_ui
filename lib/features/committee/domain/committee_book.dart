@@ -216,6 +216,7 @@ class CommitteeView {
     required this.collected,
     required this.paidOut,
     required this.dueToCutoff,
+    required this.cutoff,
     required this.lastActivity,
   });
 
@@ -244,6 +245,10 @@ class CommitteeView {
   /// What was owed up to the cutoff — the day it was cancelled, or today —
   /// or `null` when there is no day to work from.
   final LumeMoney? dueToCutoff;
+
+  /// The day the figures are worked out to: the day it was cancelled, or
+  /// the reader's day. `null` when there is no day to work from.
+  final LumeDate? cutoff;
 
   final DateTime lastActivity;
 
@@ -345,10 +350,12 @@ class CommitteeView {
     return null;
   }
 
+  /// Whether a cycle had fallen due by the cutoff. A cycle that has not —
+  /// one a member chose to pay early — owes nothing yet, and what was
+  /// paid into it does not cancel out what an earlier cycle is short.
   bool _withinCutoff(CommitteeCycleView c) {
-    final LumeDate? cut = committee.cancelledOn;
-    if (cut != null) return !c.due.isAfter(cut);
-    return true;
+    final LumeDate? cut = cutoff;
+    return cut != null && !c.due.isAfter(cut);
   }
 }
 
@@ -881,6 +888,7 @@ class CommitteeBook {
           if (o.active) o.amount,
       ], cur),
       dueToCutoff: dueToCutoff,
+      cutoff: cutoff,
       lastActivity: last,
     );
   }

@@ -456,6 +456,23 @@ void main() {
       );
     });
 
+    test('paying a later cycle early does not cover what an earlier one is '
+        'short', () {
+      final Committee c = h.add();
+      // Cycle 1 (7 June) is unpaid; Ahmed pays cycle 5 (7 October) early.
+      expect(
+        h.pay(c.id, 5, 'Ahmed', on: kToday, today: kToday).failure,
+        isNull,
+      );
+      final CommitteeView v = h.view(c.id);
+      expect(v.collected.minor, 2830000, reason: 'it is collected');
+      // Four cycles are due on 7 September: 4 pools are owed, and none of
+      // that has been paid.
+      expect(v.dueToCutoff!.minor, 56600000);
+      expect(v.outstanding!.minor, 56600000);
+      h.expectSound();
+    });
+
     test('a paidOn after the reader\'s day is refused on the field', () {
       final Committee c = h.add();
       final CommitteeResult<CommitteeWrite> r = h.pay(
