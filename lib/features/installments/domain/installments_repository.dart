@@ -25,7 +25,7 @@ import '../../records/domain/record_transaction.dart';
 import 'installments_book.dart';
 import 'installments_failure.dart';
 import 'installments_model.dart';
-import 'installments_schedule.dart';
+import '../../../core/values/lume_month_anchor.dart';
 
 /// What the reader filled in for a plan.
 @immutable
@@ -531,7 +531,7 @@ class InstallmentsRepository {
 
   /// The whole schedule of [p], once: one stored row per instalment.
   void _schedule(_Data d, InstallmentPlan p) {
-    final List<LumeDate> dues = installmentDues(p.firstDue, p.count)!;
+    final List<LumeDate> dues = lumeMonthlyDues(p.firstDue, p.count)!;
     final DateTime at = _now();
     for (int n = 1; n <= p.count; n++) {
       final ScheduledInstallment row = ScheduledInstallment(
@@ -591,7 +591,7 @@ class InstallmentsRepository {
         field: 'amount',
       );
     }
-    if (installmentDues(draft.firstDue, draft.count) == null) {
+    if (lumeMonthlyDues(draft.firstDue, draft.count) == null) {
       throw const InstallmentsFailure.validation('firstDue', 'range');
     }
     final LumeMoney scheduled = LumeMoney.sum(

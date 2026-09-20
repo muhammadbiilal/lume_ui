@@ -25,7 +25,7 @@ import '../../../core/values/lume_date.dart';
 import '../../../core/values/lume_money.dart';
 import '../../../core/values/lume_record_id.dart';
 import 'installments_model.dart';
-import 'installments_schedule.dart';
+import '../../../core/values/lume_month_anchor.dart';
 
 /// Where one scheduled instalment stands on the reader's day.
 enum InstallmentStatus {
@@ -354,7 +354,7 @@ class InstallmentsBook {
       if (late != null) late += p.lateCount ?? 0;
       if (due != null) {
         for (final InstallmentRow r in p.rows) {
-          if (sameMonth(r.row.due, today!)) due = due! + r.row.amount;
+          if (lumeSameMonth(r.row.due, today!)) due = due! + r.row.amount;
         }
       }
     }
@@ -376,7 +376,7 @@ class InstallmentsBook {
     return <InstallmentsMonth>[
       for (int m = 0; m < count; m++)
         () {
-          final LumeDate start = monthStart(day, m);
+          final LumeDate start = lumeMonthStart(day, m);
           LumeMoney sum = LumeMoney.zero(c);
           for (final InstallmentPlanView p in plans) {
             if (p.currency != c ||
@@ -385,7 +385,7 @@ class InstallmentsBook {
               continue;
             }
             for (final InstallmentRow r in p.rows) {
-              if (sameMonth(r.row.due, start)) sum += r.row.amount;
+              if (lumeSameMonth(r.row.due, start)) sum += r.row.amount;
             }
           }
           return InstallmentsMonth(start, sum);

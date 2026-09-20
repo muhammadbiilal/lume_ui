@@ -14,14 +14,14 @@ import 'package:lume/features/installments/domain/installments_book.dart';
 import 'package:lume/features/installments/domain/installments_failure.dart';
 import 'package:lume/features/installments/domain/installments_model.dart';
 import 'package:lume/features/installments/domain/installments_repository.dart';
-import 'package:lume/features/installments/domain/installments_schedule.dart';
+import 'package:lume/core/values/lume_month_anchor.dart';
 
 import 'installments_harness.dart';
 
 void main() {
   group('the schedule', () {
     List<String> dues(LumeDate first, int n) =>
-        installmentDues(first, n)!.map((LumeDate x) => x.toIso()).toList();
+        lumeMonthlyDues(first, n)!.map((LumeDate x) => x.toIso()).toList();
 
     test('31 January: the February clamp does not carry into March', () {
       expect(dues(LumeDate(2026, 1, 31), 4), <String>[
@@ -50,9 +50,9 @@ void main() {
 
     test('anchored on 29 February: each year its own February', () {
       final LumeDate first = LumeDate(2028, 2, 29);
-      expect(installmentDue(first, 13)!.toIso(), '2029-02-28');
-      expect(installmentDue(first, 49)!.toIso(), '2032-02-29');
-      expect(installmentDue(first, 2)!.toIso(), '2028-03-29');
+      expect(lumeMonthlyDue(first, 13)!.toIso(), '2029-02-28');
+      expect(lumeMonthlyDue(first, 49)!.toIso(), '2032-02-29');
+      expect(lumeMonthlyDue(first, 2)!.toIso(), '2028-03-29');
     });
 
     test('across a year end, and past the calendar there is none', () {
@@ -61,7 +61,7 @@ void main() {
         '2026-12-15',
         '2027-01-15',
       ]);
-      expect(installmentDues(LumeDate(9999, 6, 1), 12), isNull);
+      expect(lumeMonthlyDues(LumeDate(9999, 6, 1), 12), isNull);
     });
 
     test('stored once: count rows, each the quoted amount, total exact', () {
