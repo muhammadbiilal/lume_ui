@@ -853,12 +853,13 @@ class _CommitteeToolState extends ConsumerState<CommitteeTool> {
     if (!await committeeConfirmDelete(
       context,
       title: l.commDeleteTitle,
+      // Each count in its own grammar: "1 payout", not "1 payouts".
       text: l.commDeleteText(
-        f.integer(counts.members),
-        f.integer(counts.positions),
-        f.integer(counts.cycles),
-        f.integer(counts.contributions),
-        f.integer(counts.payouts),
+        l.commCountMembers(counts.members),
+        l.commCountShares(counts.positions),
+        l.commCountCycles(counts.cycles),
+        l.commCountContributions(counts.contributions),
+        l.commCountPayouts(counts.payouts),
       ),
     )) {
       return;

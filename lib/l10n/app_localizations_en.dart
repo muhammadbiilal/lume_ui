@@ -8416,12 +8416,12 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String commDeleteText(
     String members,
-    String positions,
+    String shares,
     String cycles,
     String contributions,
     String payouts,
   ) {
-    return 'This removes the committee, $members members, $positions shares, $cycles cycles, $contributions contributions and $payouts payouts.';
+    return 'This removes the committee, $members, $shares, $cycles, $contributions and $payouts.';
   }
 
   @override
@@ -8655,4 +8655,61 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get commTheirCycles => 'Their cycles';
+
+  @override
+  String commCountMembers(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n members',
+      one: '1 member',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String commCountShares(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n shares',
+      one: '1 share',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String commCountCycles(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n cycles',
+      one: '1 cycle',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String commCountContributions(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n contributions',
+      one: '1 contribution',
+      zero: 'no contributions',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String commCountPayouts(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n payouts',
+      one: '1 payout',
+      zero: 'no payouts',
+    );
+    return '$_temp0';
+  }
 }

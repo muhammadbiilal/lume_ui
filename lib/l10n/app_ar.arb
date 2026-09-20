@@ -2453,7 +2453,7 @@
   "commCancelledToast": "أُلغيت الجمعية",
   "commReinstatedToast": "أُعيد تفعيل الجمعية",
   "commDeleteTitle": "حذف هذه الجمعية؟",
-  "commDeleteText": "سيحذف هذا الجمعية و{members} أعضاء و{positions} حصص و{cycles} دورات و{contributions} اشتراكات و{payouts} عمليات صرف.",
+  "commDeleteText": "سيحذف هذا الجمعية و{members} و{shares} و{cycles} و{contributions} و{payouts}.",
   "commDeletedToast": "حُذفت الجمعية",
   "commRestoredCommitteeToast": "استُعيدت الجمعية",
   "commNeedsAttention": "يحتاج انتباهًا",
@@ -2516,5 +2516,10 @@
   "commImported": "{n, plural, =1{استُورد سجل واحد} =2{استُورد سجلان} few{استُوردت {n} سجلات} many{استُورد {n} سجلًا} other{استُورد {n} سجل}}",
   "commMemberPaidLabel": "المدفوع منه",
   "commMemberExpected": "المستحق عبر الجمعية",
-  "commTheirCycles": "دوراتهم"
+  "commTheirCycles": "دوراتهم",
+  "commCountMembers": "{n, plural, =1{عضو واحد} =2{عضوان} few{{n} أعضاء} many{{n} عضوًا} other{{n} عضو}}",
+  "commCountShares": "{n, plural, =1{حصة واحدة} =2{حصتان} few{{n} حصص} many{{n} حصة} other{{n} حصة}}",
+  "commCountCycles": "{n, plural, =1{دورة واحدة} =2{دورتان} few{{n} دورات} many{{n} دورة} other{{n} دورة}}",
+  "commCountContributions": "{n, plural, =0{لا اشتراكات} =1{اشتراك واحد} =2{اشتراكان} few{{n} اشتراكات} many{{n} اشتراكًا} other{{n} اشتراك}}",
+  "commCountPayouts": "{n, plural, =0{لا عمليات صرف} =1{عملية صرف واحدة} =2{عمليتا صرف} few{{n} عمليات صرف} many{{n} عملية صرف} other{{n} عملية صرف}}"
 }

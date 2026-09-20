@@ -11,6 +11,7 @@ import 'package:lume/core/widgets/lume/lume_row.dart';
 import 'package:lume/core/widgets/lume/lume_summary.dart';
 import 'package:lume/features/committee/domain/committee_book.dart';
 import 'package:lume/features/committee/domain/committee_model.dart';
+import 'package:lume/features/committee/domain/committee_repository.dart';
 import 'package:lume/features/committee/presentation/committee_sheets.dart';
 import 'package:lume/features/committee/presentation/committee_tool.dart';
 import 'package:lume/features/onboarding/domain/profile_repository.dart';
@@ -308,6 +309,59 @@ void main() {
       expect(w.repo.view().committees, hasLength(1));
       expect(w.repo.view().contributions, hasLength(14));
       expect(w.book().damage, isEmpty);
+      w.dispose();
+    });
+  });
+
+  group('the delete confirmation counts in words', () {
+    testWidgets('one of a thing reads as one, not as "1 payouts"', (
+      WidgetTester t,
+    ) async {
+      final CommitteeWorld w = CommitteeWorld();
+      final Committee c = w.add(
+        name: 'Two of us',
+        members: <CommitteeMemberDraft>[
+          const CommitteeMemberDraft(
+            name: 'You',
+            isReader: true,
+            cycles: <int>[1],
+          ),
+          const CommitteeMemberDraft(name: 'Ahmed', cycles: <int>[2]),
+        ],
+      );
+      w.collect(c.id, 1);
+      w.payout(c.id, 1);
+      await pumpCommittee(t, w, query: 'committee=${c.id.value}');
+      await press(t, find.byKey(LumeCommitteeTool.deleteKey));
+      expect(
+        find.textContaining(
+          'the committee, 2 members, 2 shares, 2 cycles, '
+          '2 contributions and 1 payout.',
+        ),
+        findsOneWidget,
+      );
+      w.dispose();
+    });
+
+    testWidgets('none of a thing says so', (WidgetTester t) async {
+      final CommitteeWorld w = CommitteeWorld();
+      final Committee c = w.add(
+        name: 'Fresh',
+        members: <CommitteeMemberDraft>[
+          const CommitteeMemberDraft(
+            name: 'You',
+            isReader: true,
+            cycles: <int>[1],
+          ),
+          const CommitteeMemberDraft(name: 'Ahmed', cycles: <int>[2]),
+        ],
+      );
+      await pumpCommittee(t, w, query: 'committee=${c.id.value}');
+      await press(t, find.byKey(LumeCommitteeTool.deleteKey));
+      expect(
+        find.textContaining('no contributions and no payouts.'),
+        findsOneWidget,
+      );
       w.dispose();
     });
   });

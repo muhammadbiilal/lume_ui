@@ -2453,7 +2453,7 @@
   "commCancelledToast": "کمیٹی منسوخ ہو گئی",
   "commReinstatedToast": "کمیٹی بحال ہو گئی",
   "commDeleteTitle": "یہ کمیٹی حذف کریں؟",
-  "commDeleteText": "اس سے کمیٹی، {members} اراکین، {positions} حصے، {cycles} اقساط، {contributions} حصے اور {payouts} ادائیگیاں حذف ہو جائیں گی۔",
+  "commDeleteText": "اس سے کمیٹی، {members}، {shares}، {cycles}، {contributions} اور {payouts} حذف ہو جائیں گے۔",
   "commDeletedToast": "کمیٹی حذف ہو گئی",
   "commRestoredCommitteeToast": "کمیٹی بحال ہو گئی",
   "commNeedsAttention": "توجہ درکار",
@@ -2516,5 +2516,10 @@
   "commImported": "{n, plural, =1{1 ریکارڈ درآمد ہوا} other{{n} ریکارڈ درآمد ہوئے}}",
   "commMemberPaidLabel": "جمع کرایا",
   "commMemberExpected": "پوری کمیٹی میں واجب",
-  "commTheirCycles": "ان کی اقساط"
+  "commTheirCycles": "ان کی اقساط",
+  "commCountMembers": "{n, plural, =1{1 رکن} other{{n} اراکین}}",
+  "commCountShares": "{n, plural, =1{1 حصہ} other{{n} حصے}}",
+  "commCountCycles": "{n, plural, =1{1 قسط} other{{n} اقساط}}",
+  "commCountContributions": "{n, plural, =0{کوئی حصہ نہیں} =1{1 حصہ} other{{n} حصے}}",
+  "commCountPayouts": "{n, plural, =0{کوئی ادائیگی نہیں} =1{1 ادائیگی} other{{n} ادائیگیاں}}"
 }

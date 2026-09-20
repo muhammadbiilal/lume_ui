@@ -14609,10 +14609,10 @@ abstract class AppLocalizations {
   /// Committee: exactly what deleting removes
   ///
   /// In en, this message translates to:
-  /// **'This removes the committee, {members} members, {positions} shares, {cycles} cycles, {contributions} contributions and {payouts} payouts.'**
+  /// **'This removes the committee, {members}, {shares}, {cycles}, {contributions} and {payouts}.'**
   String commDeleteText(
     String members,
-    String positions,
+    String shares,
     String cycles,
     String contributions,
     String payouts,
@@ -14995,6 +14995,36 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Their cycles'**
   String get commTheirCycles;
+
+  /// Committee delete confirmation: how many members would go
+  ///
+  /// In en, this message translates to:
+  /// **'{n, plural, =1{1 member} other{{n} members}}'**
+  String commCountMembers(int n);
+
+  /// Committee delete confirmation: how many shares would go
+  ///
+  /// In en, this message translates to:
+  /// **'{n, plural, =1{1 share} other{{n} shares}}'**
+  String commCountShares(int n);
+
+  /// Committee delete confirmation: how many cycles would go
+  ///
+  /// In en, this message translates to:
+  /// **'{n, plural, =1{1 cycle} other{{n} cycles}}'**
+  String commCountCycles(int n);
+
+  /// Committee delete confirmation: how many contributions would go
+  ///
+  /// In en, this message translates to:
+  /// **'{n, plural, =0{no contributions} =1{1 contribution} other{{n} contributions}}'**
+  String commCountContributions(int n);
+
+  /// Committee delete confirmation: how many payouts would go
+  ///
+  /// In en, this message translates to:
+  /// **'{n, plural, =0{no payouts} =1{1 payout} other{{n} payouts}}'**
+  String commCountPayouts(int n);
 }
 
 class _AppLocalizationsDelegate

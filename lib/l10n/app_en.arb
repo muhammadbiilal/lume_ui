@@ -11483,14 +11483,14 @@
   "@commDeleteTitle": {
     "description": "Committee: delete confirmation title"
   },
-  "commDeleteText": "This removes the committee, {members} members, {positions} shares, {cycles} cycles, {contributions} contributions and {payouts} payouts.",
+  "commDeleteText": "This removes the committee, {members}, {shares}, {cycles}, {contributions} and {payouts}.",
   "@commDeleteText": {
     "description": "Committee: exactly what deleting removes",
     "placeholders": {
       "members": {
         "type": "String"
       },
-      "positions": {
+      "shares": {
         "type": "String"
       },
       "cycles": {
@@ -11799,5 +11799,50 @@
   "commTheirCycles": "Their cycles",
   "@commTheirCycles": {
     "description": "Committee member section: every cycle, and whether this member paid it"
+  },
+  "commCountMembers": "{n, plural, =1{1 member} other{{n} members}}",
+  "@commCountMembers": {
+    "description": "Committee delete confirmation: how many members would go",
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
+  "commCountShares": "{n, plural, =1{1 share} other{{n} shares}}",
+  "@commCountShares": {
+    "description": "Committee delete confirmation: how many shares would go",
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
+  "commCountCycles": "{n, plural, =1{1 cycle} other{{n} cycles}}",
+  "@commCountCycles": {
+    "description": "Committee delete confirmation: how many cycles would go",
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
+  "commCountContributions": "{n, plural, =0{no contributions} =1{1 contribution} other{{n} contributions}}",
+  "@commCountContributions": {
+    "description": "Committee delete confirmation: how many contributions would go",
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
+  "commCountPayouts": "{n, plural, =0{no payouts} =1{1 payout} other{{n} payouts}}",
+  "@commCountPayouts": {
+    "description": "Committee delete confirmation: how many payouts would go",
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
   }
 }

@@ -8516,12 +8516,12 @@ class AppLocalizationsAr extends AppLocalizations {
   @override
   String commDeleteText(
     String members,
-    String positions,
+    String shares,
     String cycles,
     String contributions,
     String payouts,
   ) {
-    return 'سيحذف هذا الجمعية و$members أعضاء و$positions حصص و$cycles دورات و$contributions اشتراكات و$payouts عمليات صرف.';
+    return 'سيحذف هذا الجمعية و$members و$shares و$cycles و$contributions و$payouts.';
   }
 
   @override
@@ -8762,4 +8762,76 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get commTheirCycles => 'دوراتهم';
+
+  @override
+  String commCountMembers(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n عضو',
+      many: '$n عضوًا',
+      few: '$n أعضاء',
+      two: 'عضوان',
+      one: 'عضو واحد',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String commCountShares(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n حصة',
+      many: '$n حصة',
+      few: '$n حصص',
+      two: 'حصتان',
+      one: 'حصة واحدة',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String commCountCycles(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n دورة',
+      many: '$n دورة',
+      few: '$n دورات',
+      two: 'دورتان',
+      one: 'دورة واحدة',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String commCountContributions(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n اشتراك',
+      many: '$n اشتراكًا',
+      few: '$n اشتراكات',
+      two: 'اشتراكان',
+      one: 'اشتراك واحد',
+      zero: 'لا اشتراكات',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String commCountPayouts(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n عملية صرف',
+      many: '$n عملية صرف',
+      few: '$n عمليات صرف',
+      two: 'عمليتا صرف',
+      one: 'عملية صرف واحدة',
+      zero: 'لا عمليات صرف',
+    );
+    return '$_temp0';
+  }
 }
