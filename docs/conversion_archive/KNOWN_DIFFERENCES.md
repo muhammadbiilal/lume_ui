@@ -2479,6 +2479,80 @@ sample record ticked from its row would have shown its raw `@key`.
 `update(…, claim: false)` keeps it; a form's save still claims the record as
 the reader's (`memory_record_repository_test.dart`).
 
+### C96 — Committee: a circle that balances, and figures that agree
+
+**Product correction and extension (`COMMITTEE_PROPOSAL.md`).** The
+reference draws one fixture committee that cannot hold together. It runs
+ten months for five turns, so months 3, 5, 6, 8 and 10 have no recipient
+and, over the committee, 5,000 USD is paid in against 2,500 paid out.
+Month 3 collects 400 of 500 and nothing says who is short. Month 4 is
+marked "now" for a member who has not paid, while only 300 of 500 is
+collected, and she is shown receiving the whole pool. "Done" is the
+comparison `turn < 4`, not a record of anything. Converted, its own
+figures disagree: the pool reads Rs 142,000 where five contributions of
+Rs 28,300 are Rs 141,500, and AED 1,840 against AED 1,835 — each figure
+rounded on its own after conversion. Its dates come from the device's
+clock, its Export writes a JSON stub with no committee data in it and
+says "Saved", it declares notifications and implements none, it is not
+marked sensitive although it lists named people's finances, and no row
+or button does anything.
+
+Lume keeps the composition in the reference's order and makes it the
+reader's own:
+
+- **Records.** A committee, its members, its shares, its stored monthly
+  cycles, its contributions and its payouts are records written in
+  transactions under `lume.committee/1`. Nothing is seeded, and the tool
+  starts empty.
+- **It balances.** There are as many cycles as shares, so every cycle has
+  exactly one recipient and every share receives exactly once. A share
+  pays contribution × N over the committee and receives one pool of
+  contribution × N, so each nets to nothing.
+- **Summaries.** Every figure is a sum of stored minor units, per
+  currency. With the reference's people entered as a reader would enter
+  them, the pool is **Rs 141,500** — not Rs 142,000 — and the whole
+  committee is Rs 707,500.
+- **People and shares are different counts.** One member may hold several
+  shares: they pay for each one every cycle and receive each one's cycle,
+  without being counted twice as a person.
+- **A payout is a record.** It is recorded only when its own cycle is
+  fully collected, for exactly the pool, to the share that holds that
+  cycle. Cycles are independent: a later one may be recorded first, and
+  voiding one changes no other. The fixed payout order and the order the
+  reader enters things are shown as the two different things they are.
+- **States come from the day.** Paid, due today, late and upcoming are
+  worked out from the stored due dates and the reader's own day. Without
+  that day nothing is called late, and no figure is guessed.
+- **Cancelling has a date.** It records the day it happened, keeps every
+  record, stops obligations after that day, and shows what was collected
+  and not paid out and what was unpaid at cancellation — which then does
+  not grow. Reinstate clears the date and derives the states again from
+  the same schedule.
+- **A payment date is never in the future.** A cycle may be paid early,
+  on the day the money changed hands; a date after the reader's day is
+  refused on the field.
+- **Added screens.** A committee list, the committee, a member, the create
+  and edit form, the contribution and payout sheets, cancel with
+  Reinstate, delete with Undo, import and export, and the
+  day-unavailable, damaged, loading and failure states.
+- **Classification.** Committee is sensitive, shares nothing and sends no
+  notification. Export writes a real file and redacts names by default.
+  The tile says "Track a savings committee", not "Month 4 of 10". All 169
+  strings are in English, Urdu and Arabic.
+
+No fee, profit, interest, penalty, bid or exchange rate exists anywhere in
+it. A payout is the reader's own note that money changed hands outside
+Lume, and is worded that way.
+
+**On the side-by-side captures.** The seven cells differ from the
+reference by 33–61 % of their pixels, and that number is not evidence
+either way: the corrected committee has five cycles where the reference
+draws ten months, real states where it draws fixture ones, and different
+figures for the reasons above. The comparison that counts is
+`committee_parity_test.dart`, which reads the browser's own measurements
+and checks 63 named values across the seven cells, naming each of the 9
+it deliberately does not match.
+
 ### C95 — Arabic amounts in Arabic order
 
 **Intentional parity difference.** The reference writes every amount in
@@ -2863,6 +2937,7 @@ deleted row invites the same question again.
 
 | Date | Change | Reason |
 |---|---|---|
+| 2026-09-20 | **C96 raised** — Committee built as a record-backed tool; the reference's unbalanced circle, contradictory pool, recordless "done", wall-clock dates, stub export and unmarked sensitivity corrected | Approved model, `COMMITTEE_PROPOSAL.md` |
 | 2026-09-20 | **C95 recorded** — Arabic amounts in the Arabic locale's order, not the reference's English order | Approved: locale-correct presentation, with exact values, currency identity, isolation and semantics tested |
 | 2026-09-19 | **C94 raised** — Installments built as a record-backed tool; the reference's contradictory sums, constant next payment, mislabelled sort and fixture-only composition corrected | Approved model, `INSTALLMENTS_PROPOSAL.md` §40 |
 | 2026-09-19 | **C93 raised and corrected** — a Share with nothing behind it, and a Search with no field, are left out of development and release; the whole privacy sentence outside parity | A control that cannot do what it says must not look as though it can |

@@ -70,6 +70,36 @@ export, day unknown, a damaged scope, loading and a storage failure. The
 scale. The diff images are for a person to look at; no percentage in them
 is claimed as parity (C90).
 
+### Committee (`test/goldens/committee_golden_test.dart`)
+
+| | count |
+|---|---:|
+| golden test cases | 27 |
+| unique committed Flutter PNGs (`tool_committee_*`) | 27 |
+| Flutter captures (`shots/tools/tool_committee_default_pk/*.flutter.png`) | 8 |
+| web captures (`*.web.png`, the same folder) | 7 |
+| side-by-sides | 7 |
+| diff images | 7 |
+
+Eight cells of the reference composition (390×844 light, dark, Urdu,
+Arabic, 200% type; 700×900; 1100×900; 852×393) and nineteen states: first
+use, the list, the Late filter, no match, a completed committee, a
+cancelled one with what was unpaid at cancellation, a member and their
+cycles, one member holding two shares, the form, the form refusing what
+cannot be saved, the form with the terms locked, the contribution sheet,
+the payout sheet, the cancel confirmation, the delete confirmation naming
+every record, the day unavailable, a record that cannot be read, loading
+and a storage failure. The 200% cell has no web capture: the browser
+cannot set the reader's text scale.
+
+The diff images are for a person to look at. Committee's differ by 33–61 %
+of their pixels because the tool is functionally corrected — five cycles
+where the reference draws ten months, real states, and a pool of
+Rs 141,500 rather than Rs 142,000 (C96) — and no percentage in them is
+claimed as parity either way. The measured comparison is
+`committee_parity_test.dart`: 63 named values across seven cells, with the
+9 deliberate differences named.
+
 ---
 
 ## 3. Reconciling 526 and 462

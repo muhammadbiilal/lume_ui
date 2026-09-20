@@ -199,7 +199,7 @@ run on the shared CRUD engine.
 | `tipsplit` | Tip & Split | calculator | low | — | — | Y | — | not started |
 | `ledger` | Lending Ledger | manager | high | — | **yes** | Y | — | **built** — its own host over record-layer transactions; people, entries and allocations; FIFO-by-obligation, manual allocation, credit, void and restore, delete with Undo, archive; filters by balance, search, sort; reminder preview; `lume.ledger/1` export and import, CSV export; sensitive; nothing seeded (C90) |
 | `installments` | Installments | manager | high | — | **yes** | Y | — | **built** — its own host over record-layer transactions; plans, stored anchored monthly schedules and payments; deposit; payments in order with void and restore; locked terms once paid; cancel and reinstate; delete with Undo; filters, search and five sorts; per-currency summaries; due by month; sensitive; no notifications; nothing seeded (C94) |
-| `committee` | Committee | manager | high | — | — | — | — | not started |
+| `committee` | Committee | manager | high | — | **yes** | Y | — | **built** — its own host over record-layer transactions; a committee, its members, its shares, its stored monthly cycles, contributions and payouts; as many cycles as shares, so every cycle has one recipient; a payout only when its own cycle is fully collected, in any order; one member may hold several shares; locked terms once anything financial exists; cancel on a day with Reinstate; delete with Undo; filters, search and four sorts; `lume.committee/1` export and import, CSV export; sensitive; no notifications; nothing seeded (C96) |
 
 ### Daily Life — 18
 

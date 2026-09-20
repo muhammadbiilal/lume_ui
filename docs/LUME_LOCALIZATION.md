@@ -12,7 +12,7 @@ own string tables are in [`conversion_archive/`](conversion_archive/).
 |---|---|---|---|
 | code | `en` | `ur` | `ar` |
 | direction | left to right | right to left | right to left |
-| messages | 1037 | 1037 | 1037 |
+| messages | 2479 | 2479 | 2479 |
 
 `lib/l10n/app_en.arb` is the template and the only file carrying `@key`
 metadata. `l10n.yaml` writes `l10n_untranslated.json` on every
