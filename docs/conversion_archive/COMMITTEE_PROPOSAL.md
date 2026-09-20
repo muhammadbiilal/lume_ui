@@ -1,9 +1,17 @@
 # Committee — proposal for approval
 
-**Status: proposal. Nothing here is implemented.** Everything below is
-read from the reference source and the running reference, or is marked
-**Proposed**. No financial rule is taken from the tool's name. Every
-proposed rule is listed as a decision in §17.
+**Status: approved.** Decisions D-C1 to D-C18 were approved as proposed
+in `8ca3c93`, subject to four corrections, which this revision applies:
+
+| correction | what changed | where |
+|---|---|---|
+| 2.1 | cancellation is a **date**, `cancelledOn`, and the obligation cutoff; unpaid contributions at that date stay visible as **"Unpaid at cancellation"**; Reinstate clears it | §5, §6 F and G, §7 (16), §8, §9 |
+| 2.2 | the reader's role and the `isReader` flag must agree exactly, and change atomically | §5, §7 (3) |
+| 2.3 | an upcoming cycle may be paid early, but `paidOn` is never in the future | §6 H, §7 (17), §8 |
+| 2.4 | payouts are per cycle and independent of each other; the fixed payout order is not the order records are entered | §6 J, §7 (6, 7), §15 |
+
+Everything else below is read from the reference source and the running
+reference. No financial rule is taken from the tool's name.
 
 ## 0. Sources inspected
 
@@ -199,7 +207,7 @@ Committee            committee.committee
   positions           int 2–120                (N; also the number of cycles)
   firstDue            LumeDate                 (cycle 1's due date; the anchor)
   readerRole          member | organiser | organiserMember
-  state               active | cancelled
+  cancelledOn         LumeDate?                (null while active; the obligation cutoff)
   createdAt, version
 
 CommitteeMember      committee.member
@@ -239,6 +247,24 @@ CommitteePayout      committee.payout
   state               active | voided
   createdAt, version
 ```
+
+**Why cancellation is a date, not a flag** (correction 2.1). A committee
+is cancelled *on a day*, and that day decides which obligations already
+existed:
+
+- active means `cancelledOn == null`; cancelled means `cancelledOn != null`;
+- cycles due **on or before** `cancelledOn` keep their obligation, and a
+  missing contribution among them stays visible;
+- cycles due **after** `cancelledOn` raise no obligation at all;
+- nothing is erased, refunded, reversed or paid out by cancelling;
+- Reinstate clears `cancelledOn`, and every state is derived again from
+  the unchanged stored schedule and the reader's day today.
+
+**Why the reader's role is a field and a flag** (correction 2.2). The
+role says what the reader is; the flag says which member they are. The
+two must agree, and §7 makes that exact. Changing either is one atomic
+transaction: if it fails, the previous role and the previous reader both
+stand.
 
 **Why positions are separate from members.** A member may hold more than
 one share: two positions means two contributions a cycle and two payouts.
@@ -357,17 +383,61 @@ equals contribution × positions, exactly.
 - Allowing partial payments would need a remainder rule and a "part-paid"
   state. The reference has neither.
 
-### Example F — cancelled committee with history
+### Example F — cancelled committee with an unpaid contribution
 
-- Example A is cancelled on 8 September after cycles 1–3 were paid out
-  and 4 cycles collected.
-- Everything is kept. Collected stays 56,600,000 and paid out stays
-  42,450,000.
-- Held in the pot: 14,150,000, which is cycle 4's collection, never paid
-  out. It is shown as "collected, not paid out". No refund is invented.
-- No figure is due and nothing is late after cancellation.
+Example B (Hina never paid cycle 3), cancelled on **8 September 2026**.
+Cycles 1–4 are due on or before the cutoff; cycle 5 (7 Oct) is not.
+Cycles 1 and 2 were paid out; cycle 3 could not be, being short.
 
-### Example G — void and restore
+| figure | minor units | Rs |
+|---|---:|---:|
+| expected to the cutoff (4 cycles) | 56,600,000 | 566,000 |
+| collected | 53,770,000 | 537,700 |
+| **unpaid at cancellation** | 2,830,000 | 28,300 |
+| paid out (cycles 1, 2) | 28,300,000 | 283,000 |
+| **collected, not paid out** | 25,470,000 | 254,700 |
+
+- 25,470,000 is cycle 3's part collection (11,320,000) plus cycle 4's
+  full collection (14,150,000).
+- Hina's cycle-3 contribution is shown as **"Unpaid at cancellation"**,
+  not as a late payment still mounting up. The obligation existed; the
+  committee has stopped.
+- Cycle 5 raises nothing. It is neither due, late nor outstanding.
+- No refund, reversal or payout is invented. The two figures above are
+  what the records say, and Lume says nothing about who owes whom now.
+
+### Example G — Reinstate
+
+Example F is reinstated on **9 October 2026**. `cancelledOn` is cleared,
+and every state is derived again from the same stored schedule:
+
+- cycle 5 (due 7 Oct) is now due, and unpaid;
+- expected to date, 5 cycles: 70,750,000;
+- collected is unchanged: 53,770,000;
+- outstanding: 16,980,000 — Hina's 2,830,000, now late again, and the
+  whole of cycle 5, 14,150,000;
+- paid out is unchanged: 28,300,000; cycle 4 is "ready" and cycle 3
+  "waiting", exactly as before the cancellation.
+
+Every record id and version survives cancellation, Undo and Reinstate
+untouched. No cycle, contribution or payout is rewritten; only
+`cancelledOn` changes, and only on the committee record.
+
+### Example H — a future payment date is refused
+
+- The reader's day is 7 September 2026. They record a contribution for
+  cycle 5 (due 7 October) with `paidOn` 1 October.
+- **Refused**, as a field-level error on the date: a payment cannot
+  already have happened on a day that has not arrived.
+- Recording the same contribution with `paidOn` 7 September **is
+  allowed**: the cycle is upcoming, and the money was handed over early.
+  Paying early is a real thing; a future payment date is not.
+- The entered date is never quietly replaced with today.
+- The same rule applies to a payout's `paidOn`.
+- If the reader's day cannot be resolved, a valid entered date is
+  accepted and is not classified as future, due, today or late.
+
+### Example I — void and restore
 
 - Voiding Bilal's cycle-4 contribution: collected in cycle 4 falls from
   14,150,000 to 11,320,000, and outstanding rises by 2,830,000.
@@ -380,7 +450,29 @@ equals contribution × positions, exactly.
   until that payout is voided. Otherwise the payout would exceed what was
   collected (invariant 7).
 
-### Example H — import with an invalid relationship
+### Example J — payouts recorded out of order
+
+Example B again: cycle 3 is short by one contribution, and cycles 1, 2
+and 4 are fully collected.
+
+- The reader records the payout for **cycle 4** while cycle 3 has none.
+  **Allowed**: cycle 4 is fully collected, and that is the whole test.
+- Cycle 3 is untouched. It stays "waiting", with the same shortfall, and
+  its recipient is still the position that holds cycle 3.
+- Paid out becomes 3 × 14,150,000 = 42,450,000, against 53,770,000
+  collected. No cycle is paid out beyond its own collection.
+- Later, Hina pays cycle 3. Cycle 3 becomes "ready", and its payout may
+  then be recorded. Recording it changes no other cycle.
+- Voiding cycle 4's payout returns cycle 4 to "ready" and leaves cycles
+  1, 2 and 3 exactly as they were.
+
+The **payout order** (which position receives which cycle) is fixed at
+creation and never changes. The **order in which the reader records
+things** is free. The screens must not let one be mistaken for the
+other: the timeline shows the fixed order; History shows what was
+entered, newest first.
+
+### Example K — import with an invalid relationship
 
 - A file's payout for cycle 3 names Ahmed's position, which holds cycle 1.
 - The import check reports `payouts.<id>.position: notRecipient`, and
@@ -390,7 +482,7 @@ equals contribution × positions, exactly.
     `contributions.<id>.cycle: reference`;
   - two positions claiming cycle 2 give `positions: duplicateCycle`.
 
-### Example I — transaction failure midway
+### Example L — transaction failure midway
 
 - Creating Example A writes 16 records.
 - If the store fails at the 9th, the transaction publishes nothing: no
@@ -408,14 +500,27 @@ whole write back.
    positions and exactly once in cycles.
 2. Every position, cycle, contribution and payout belongs to exactly one
    committee. Every position's member belongs to the same committee.
-3. At most one member per committee has `isReader`.
+3. **The role and the reader agree** (correction 2.2), exactly:
+   - `member` — exactly one member has `isReader`;
+   - `organiserMember` — exactly one member has `isReader`;
+   - `organiser` — no member has `isReader`.
+
+   No committee ever has two reader members. A `member` or
+   `organiserMember` committee with no reader is **damaged**, and so is an
+   `organiser` committee that has one. Changing the role, or moving the
+   reader from one member to another, is one transaction that ends with
+   this invariant true; if it fails, the previous role and the previous
+   reader both stand.
 4. Contribution amount = the committee's contribution. Payout amount =
    contribution × N. Both are in the committee's currency.
 5. At most one active contribution per (cycle, position). At most one
    active payout per cycle.
-6. A payout's position holds that cycle.
-7. A payout is recorded only when its cycle is fully collected (if D-C3 is
-   approved as proposed).
+6. A payout's position holds that cycle. Recording, voiding or restoring
+   one payout changes no other cycle (correction 2.4): cycles are
+   independent, and payouts may be recorded in any order.
+7. A payout is recorded only when its own cycle is fully collected, and
+   never exceeds that cycle's collection. No payout creates credit, a
+   loan, a negative pot, or any movement of money.
 8. Collected in cycle k ≤ c × N. Paid out ≤ collected over the cycles paid
    out.
 9. Σ over cycles of collected = total collected. Σ over members = total
@@ -446,8 +551,21 @@ whole write back.
 14. Void then restore reproduces every projection exactly.
 15. Completed means every cycle has an active payout. Cancelled is not
     completed.
-16. Import writes everything or nothing.
-17. No observer sees a partial transaction.
+16. **Cancellation** (correction 2.1): active is `cancelledOn == null`,
+    cancelled is `cancelledOn != null`. A cancelled committee raises no
+    obligation for a cycle due after `cancelledOn`; cycles due on or
+    before it keep theirs, and anything missing among them is **unpaid at
+    cancellation**, not a mounting late payment. Cancelling writes nothing
+    but that date; Reinstate clears it and nothing else. Cancel, Undo and
+    Reinstate preserve every record id, version, cycle, contribution and
+    payout.
+17. **A payment date is never in the future** (correction 2.3). When the
+    reader's day is known, a contribution's or payout's `paidOn` is on or
+    before it; a later date is refused on the field. An earlier date is
+    accepted. When the day is unknown, a valid entered date is stored and
+    left unclassified. An entered date is never replaced with today.
+18. Import writes everything or nothing.
+19. No observer sees a partial transaction.
 
 ## 8. States, dates and the reader's day — Proposed
 
@@ -460,20 +578,33 @@ whole write back.
 | payout: done | an active payout exists for the cycle |
 | payout: ready | none, the cycle is fully collected, and the committee is active |
 | payout: waiting | none, and the cycle is not fully collected |
-| committee: active, completed, cancelled | cancelled by the reader; completed when every cycle is paid out; active otherwise |
+| payout: upcoming | none, and nothing is collected for the cycle yet |
+| contribution: unpaid at cancellation | none, the committee is cancelled, and the cycle was due on or before `cancelledOn` |
+| day unavailable | the reader's day cannot be resolved, so no state is claimed |
+| committee: active | `cancelledOn == null`, and not every cycle is paid out |
+| committee: completed | every cycle has an active payout |
+| committee: cancelled | `cancelledOn != null` |
+| committee: damaged | a record cannot be decoded, or an invariant is broken |
 
 - "Today" is the reader's calendar date in their resolved zone, as in
-  Ledger and Installments.
+  Ledger and Installments. There is no fallback to a guessed device date.
 - The **current cycle** is the latest cycle due on or before today, or
   cycle 1 before it starts.
 - **Day unavailable:** no late, due or upcoming state, and no current
   cycle. Dates are shown, and "outstanding to date" says the day cannot be
   worked out. Nothing is guessed.
 - There is no grace period (D-C8).
+- **After cancellation** (correction 2.1) the cutoff is `cancelledOn`, not
+  today. Cycles due after it show as "not due"; cycles due on or before it
+  keep what they were owed, and a gap reads "Unpaid at cancellation". No
+  figure keeps growing.
 - **Backdated entries are allowed.** A contribution's `paidOn` may be any
-  valid date; a real committee is often entered after the fact.
-  **Advance entries** (a future cycle) are allowed too; they are simply
-  paid early.
+  valid date on or before the reader's day; a real committee is often
+  entered after the fact.
+- **Paying an upcoming cycle early is allowed** — with the day the money
+  actually changed hands. A `paidOn` in the future is refused
+  (correction 2.3). The two are different things: an early cycle is not a
+  future date.
 - **One record covers one cycle.** There are no multi-cycle payments,
   overpayments or credit (D-C2).
 
@@ -482,21 +613,29 @@ whole write back.
 - **Before any financial record:** every field is editable. Changing N,
   firstDue or the order replaces positions and cycles with new ids, in one
   transaction.
-- **After the first contribution or payout:** names and notes stay
-  editable. Reader flags and role stay editable, unless marking a different
-  member as the reader would break invariant 3. Everything in invariant 13
-  is locked; the reader cancels the committee and starts a new one to
-  change terms.
+- **After the first contribution or payout** (active or voided): names and
+  notes stay editable. Everything in invariant 13 is locked, with the
+  shared visible locked style and disabled semantics; to change terms the
+  reader cancels and starts a new committee.
+- **The reader's role** stays editable at any time, as one atomic
+  transaction that ends with invariant 3 true. Moving the reader from one
+  member to another clears the old flag and sets the new one in the same
+  write; a failure leaves both as they were. Switching to `organiser`
+  clears the flag; switching away from it requires a member to carry it.
 - **Cancel:**
   - asks for confirmation first;
-  - keeps every record and invents no refund;
-  - shows what was collected and not paid out;
-  - can be undone, and Reinstate brings the same records back.
+  - records `cancelledOn`, the reader's day, and writes nothing else;
+  - keeps every record and invents no refund, reversal or payout;
+  - reports **collected, not paid out** and **unpaid at cancellation**;
+  - stops obligations after the cutoff, and stops late amounts growing;
+  - can be undone, and **Reinstate** clears `cancelledOn` so every state
+    is derived again from the unchanged schedule and today.
 - **Delete:** for a committee added by mistake.
   - The destructive confirmation lists the counts: the committee, n
     members, n positions, n cycles, n contributions, n payouts.
-  - Everything is removed in one transaction.
+  - Everything is removed in one transaction, damaged records included.
   - Undo restores the same ids and versions, and leaves no orphans.
+  - If any part fails, nothing changes.
 - **Members:** a member is added and removed only while no financial
   record exists. After that, a person leaving is represented by cancelling
   the committee. Changing hands of a position is decision D-C6.
@@ -675,7 +814,7 @@ anyone's reliability).
 | header "Committee" / "Records manager", Export | `LumeToolScreen` toolbar; Export via the header rules | matched. Export becomes real (redacted JSON/CSV). The title is translated in ur and ar |
 | summary card: pool, "Month 4 of 10", ring, three stats | `LumeSummaryCard` with the progress-ring aside | the pool is `c × N`. The caption reads "Cycle 4 of 5" from the reader's day. The ring is cycles paid out ÷ N. The stats are the reader's contribution per cycle (× shares), People (distinct members) and your turn (the reader's next payout cycle, or "Received") |
 | "This month" rows | `LumeRichRow` per member: disc (`lumeInitials`), name, "Paid 31 Aug" or "Not yet paid" or "Late", "Turn: cycle 3" (or "Turns: 2, 4"), badge in words and colour, amount × shares | the badge comes from the reader's day, never guessed. Pressing a row opens the member |
-| "Payout order" timeline | `LumeTimeline`: each cycle with due date, recipient and payout state (done, ready, waiting, upcoming) | every cycle has exactly one recipient (N = cycles). "Done" only with a payout record. "Now" is the current cycle |
+| "Payout order" timeline | `LumeTimeline`: each cycle with due date, recipient and payout state (recorded, ready, waiting, upcoming) | every cycle has exactly one recipient (N = cycles). "Recorded" only with a payout record. "Now" is the current cycle. This is the **fixed** order, set at creation; History, separately, shows what was entered and when (correction 2.4). A cancelled committee shows the cutoff, and unpaid cycles before it read "Unpaid at cancellation" |
 | "Collected each month" chart | the corrected `LumeBarChart` (C64): collected in each cycle, the pool as the maximum | the bars grow. A screen reader hears amounts in the committee's currency, not USD |
 | "History" | `LumeCompactRow` list: contributions and payouts, newest first, with dates; voided ones marked | real records |
 | source bar, related tools, privacy note | the frame | per policy (§11) |
@@ -734,8 +873,8 @@ implementation evidence.
 | D-C4 | Multiple positions per member | **Allowed**, as separate positions of one member | People ≠ shares; the member owes and receives per share |
 | D-C5 | Organiser participation | **A `readerRole` field (member, organiser or both); no organiser fee** | the reader may track a committee they run without being a member; no fee maths |
 | D-C6 | Edits after activity begins | **Lock** contribution, currency, N, firstDue, frequency and payout order; names and notes stay editable; no member swaps in v1 | history never rewritten; to change terms, cancel and start again |
-| D-C7 | Cancellation | **Keeps everything**, shows collected-not-paid-out, no refund; Undo and Reinstate | honest record of an abandoned committee |
-| D-C8 | Late and grace | **Late the day after due; no grace; nothing without the reader's day** | deterministic states |
+| D-C7 | Cancellation | **Keeps everything**; `cancelledOn` is the obligation cutoff; shows collected-not-paid-out and unpaid-at-cancellation; no refund; Undo and Reinstate | honest record of an abandoned committee |
+| D-C8 | Late and grace | **Late the day after due; no grace; nothing without the reader's day**; `paidOn` never in the future | deterministic states |
 | D-C9 | Sensitive | **Yes**, `outbound: none` | off Home, Today, hero and recommendations |
 | D-C10 | Reminders in v1 | **None**; a reviewed text reminder or notifications later, through a delivery adapter | no false "sent" claims |
 | D-C11 | JSON/CSV transfer | **Yes**: lossless JSON with all-or-nothing import; CSV export-only; names and notes redacted by default | the reader can back up and move data without leaking names |
