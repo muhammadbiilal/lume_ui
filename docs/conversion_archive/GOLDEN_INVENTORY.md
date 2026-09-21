@@ -70,6 +70,40 @@ export, day unknown, a damaged scope, loading and a storage failure. The
 scale. The diff images are for a person to look at; no percentage in them
 is claimed as parity (C90).
 
+### Baby Budget (`test/goldens/babybudget_golden_test.dart`)
+
+| | count |
+|---|---:|
+| golden test cases | 31 |
+| unique committed Flutter PNGs (`tool_babybudget_*`) | 31 |
+| Flutter captures (`shots/tools/tool_babybudget_default_pk/*.flutter.png`) | 8 |
+| web captures (`*.web.png`, the same folder) | 7 |
+| side-by-sides | 7 |
+| diff images | 7 |
+
+Eight cells of the reference composition (390×844 light, dark, Urdu,
+Arabic, 200% type; 700×900; 1100×900; 852×393) and twenty-three states:
+first use, the list, the Archived filter, no match, a budget with no plan
+at all, a month over its plan, a budget whose start has not arrived, an
+archived budget keeping its figures, a category and its own spends, a
+month's spending with its month picker, the budget form, the form
+refusing a plan of zero, the form with its currency fixed by a spend,
+the spend form, the planned-purchase form whose day may be empty, the
+sheet that turns a plan into a spend, the archive confirmation, the
+delete confirmation saying what would go, the day unavailable, a record
+that cannot be read, loading, a storage failure, and two budgets in two
+currencies. The 200% cell has no web capture: the browser cannot set the
+reader's text scale.
+
+The diff images are for a person to look at. Baby Budget's differ by
+41–56 % of their pixels because the tool is functionally corrected — a
+reader's own records where the reference converts one USD fixture, real
+dates where it prints weekday names off the device clock, and a donut
+that adds to 100 rather than 101 (C97) — and no percentage in them is
+claimed as parity either way. The measured comparison is
+`babybudget_parity_test.dart`: 352 named values across all eleven
+measured cells, with the 59 deliberate differences named.
+
 ### Committee (`test/goldens/committee_golden_test.dart`)
 
 | | count |

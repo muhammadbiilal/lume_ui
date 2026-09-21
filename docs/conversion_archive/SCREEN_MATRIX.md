@@ -240,7 +240,7 @@ run on the shared CRUD engine.
 | `vaccines` | Vaccinations | manager | high | — | — | — | — | not started |
 | `health` | Health Records | manager | veryhigh | — | **yes** | — | — | not started |
 | `play` | Play | library | medium | — | — | — | — | not started |
-| `babybudget` | Baby Budget | dashboard | high | — | — | — | — | not started |
+| `babybudget` | Baby Budget | dashboard | high | — | **yes** | Y | — | **built** — its own host over record-layer transactions; a budget, its categories and its spends; the reader's own monthly plan or none at all, so a ratio is never invented; donut shares by largest remainder, totalling 100; one record type for a planned purchase and the spend it becomes, moved in a single write; Coming up ordered overdue-first; the six months ending with the reader's own, in their language and the budget's currency; a start date nothing may predate; archive with Bring back; delete with Undo; filters, search and three sorts; `lume.babybudget/1` export and import, CSV export; sensitive; no notifications; nothing seeded (C97) |
 | `habits` | Habits | tracker | high | — | **yes** | Y | — | not started |
 | `water` | Water | tracker | medium | — | **yes** | Y | — | not started |
 | `bmi` | BMI Calculator | calculator | medium | — | — | — | — | not started |

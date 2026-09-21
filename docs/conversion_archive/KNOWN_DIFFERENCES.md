@@ -2479,6 +2479,91 @@ sample record ticked from its row would have shown its raw `@key`.
 `update(…, claim: false)` keeps it; a form's save still claims the record as
 the reader's (`memory_record_repository_test.dart`).
 
+### C97 — Baby Budget: a month that is the reader's, and a donut that adds up
+
+**Product correction and extension (`BABY_BUDGET_PROPOSAL.md`).** The
+reference draws one static poster over a single USD fixture, and nothing
+in it holds together. "82% of plan" is the literal constant
+`ratio: 0.82`; no plan exists anywhere, and 320 ÷ 0.82 is 390.24, a
+number the reference never shows and could not have rounded from. Its
+donut reads 38 + 25 + 22 + 16 = **101%**, because each share is rounded
+on its own. "Six months" is labelled with the hard-coded English strings
+Apr…Sep in every language, its bar titles quote raw USD while the page
+shows another currency, and every bar is drawn 3 points tall whatever
+its value (C64). "Coming up" prints weekday names taken from the device
+clock — `dayName(+6)`, `dayName(+14)` — so the same poster says
+something different tomorrow, and the one-off purchases carry no date at
+all. Nothing is ever totalled: the month, the planned purchases and the
+one-offs never meet. Export declares support, writes a stub and says
+"Saved". `history` is declared and nothing is stored. A record of what a
+family spends on a baby is not marked sensitive. Its 17 strings are
+English-only and are laid out right-to-left under Urdu and Arabic. No
+row, button or card does anything.
+
+Lume keeps the composition in the reference's order and makes it the
+reader's own:
+
+- **Records.** A budget, its categories and its spends are records
+  written in transactions under `lume.babybudget/1`. Nothing is seeded,
+  and the tool starts empty.
+- **The plan is the reader's, or there is none.** With a plan, the ratio
+  is this month's spends ÷ the plan, in integers, rounded half up; it is
+  never clamped, and over the plan the card says "over by" with the
+  exact amount. Without a plan there is no ratio, no ring and no
+  percentage anywhere — not a percentage of a number nobody entered.
+- **The donut adds to 100.** Shares come from largest remainder over
+  minor units, with ties broken by the reader's own category order, then
+  by id, and spends with no category of their own take a real slice that
+  sorts last. The reference's four amounts read **37 / 25 / 22 / 16**
+  here, not 38 / 25 / 22 / 16.
+- **Spent or planned, never between.** One record type carries both: while
+  it is planned it has an expected day and no spent day; marking it
+  bought moves every one of those fields in a single write and may take
+  what it actually cost. Nothing planned is counted in any month, and
+  moving a spend back to planned is its own deliberate action.
+- **Coming up is ordered by what needs doing.** Overdue first and oldest
+  first, then what is soonest to come, each row carrying its stored date
+  against the reader's own day. Planned purchases with no day keep their
+  own section.
+- **The months are real months.** The six calendar months ending with the
+  reader's own, in their language, in the budget's currency, with the
+  bars grown to their values; a month before the budget began is not
+  shown as a zero, and a budget whose start has not arrived says so
+  instead of showing a month of nothing.
+- **Things are totalled.** Spent to date and the planned total sit on the
+  card, per currency, and a budget's currency is fixed once it holds a
+  spend.
+- **Archiving is truthful.** It records the day it happened, which is
+  never in the future; an archived budget takes no new record and keeps
+  every figure, id and version, and bringing it back restores all of them.
+- **Added screens.** A budget list with filters, search and three sorts,
+  the dashboard, a category, a month's spending with its month picker,
+  the budget form, the spend and planned-purchase forms, the
+  mark-bought, archive and delete sheets, import and export, and the
+  day-unavailable, damaged, loading and failure states.
+- **Classification.** Baby Budget is sensitive, shares nothing and sends
+  no notification. Export writes a real file and leaves out the budget's
+  name, its categories, its note and every label by default. All 178
+  strings are in English, Urdu and Arabic.
+
+**One difference from the proposal's visual mapping.** §15 said the
+donut's legend would show each slice's exact amount beside its
+percentage. It does not: the shared legend gives a slice one short
+figure, and an amount beside a percentage overflows it at 200% text. The
+legend shows the share alone, as the reference's does, and each
+category's exact amount is on its own row in the Categories section
+directly below.
+
+**On the side-by-side captures.** The eight cells differ from the
+reference by a large share of their pixels, and that number is not
+evidence either way: the corrected dashboard shows a reader's own
+records where the reference shows one converted fixture, real dates
+where it shows weekday names, and different percentages for the reason
+above. The comparison that counts is `babybudget_parity_test.dart`,
+which reads the browser's own measurements and checks **352 named values
+across all eleven cells**, naming each of the 59 it deliberately does
+not match.
+
 ### C96 — Committee: a circle that balances, and figures that agree
 
 **Product correction and extension (`COMMITTEE_PROPOSAL.md`).** The
@@ -2937,6 +3022,7 @@ deleted row invites the same question again.
 
 | Date | Change | Reason |
 |---|---|---|
+| 2026-09-21 | **C97 raised** — Baby Budget built as a record-backed tool; the reference's plan-less ratio, 101% donut, hard-coded English months, raw-USD bar titles, floor-height bars, wall-clock weekday dates, absent totals, stub export and unmarked sensitivity corrected | Approved model, `BABY_BUDGET_PROPOSAL.md` |
 | 2026-09-20 | **C96 raised** — Committee built as a record-backed tool; the reference's unbalanced circle, contradictory pool, recordless "done", wall-clock dates, stub export and unmarked sensitivity corrected | Approved model, `COMMITTEE_PROPOSAL.md` |
 | 2026-09-20 | **C95 recorded** — Arabic amounts in the Arabic locale's order, not the reference's English order | Approved: locale-correct presentation, with exact values, currency identity, isolation and semantics tested |
 | 2026-09-19 | **C94 raised** — Installments built as a record-backed tool; the reference's contradictory sums, constant next payment, mislabelled sort and fixture-only composition corrected | Approved model, `INSTALLMENTS_PROPOSAL.md` §40 |

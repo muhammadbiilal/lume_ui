@@ -1,7 +1,10 @@
 # Financial record families — design before implementation
 
-**F6B closure. Not implemented, and not in wave 2.** Ledger, Installments,
-Committee and Baby Budget pass every wave rule but the last: the reference
+**F6B closure. Written before any of these were built; Ledger (C90),
+Installments (C94), Committee (C96) and Baby Budget (C97) have since
+shipped, each with the deviations its own proposal records.** Ledger,
+Installments, Committee and Baby Budget pass every wave rule but the last:
+the reference
 keeps them in tool state (`c.ledger()`, `c.installments()`, `c.committee()`,
 `c.babyBudget()` over fixtures), not in its record layer. Putting them on
 Lume's record layer is a data-model decision, and this is that design.
@@ -84,18 +87,31 @@ sees the map.
 
 ## Baby Budget
 
-- **Types.** `BabyBudget { id, currency, monthlyPlan: LumeMoney,
-  categories: [BudgetCategory { id, name, plan: LumeMoney }] }`;
-  `BabyExpense { id, categoryId, amount, on: LumeDate, kind: recurring |
-  oneOff, recurrence? }`.
-- **Derived.** Month spend by category, ratio to plan, trend by month,
-  upcoming recurring items.
-- **Status.** An expense is `planned` (a future recurring instance, derived)
-  or `spent`; only `spent` is stored.
-- **Relation to Expenses.** Baby Budget is a *view* over expense records
-  tagged to it, not a second ledger of the same money: a spend recorded in
-  Expenses with the baby category appears here once, never twice. That tag
-  is part of the Expenses family's schema change, decided with this one.
+**Built, and one thing below was decided against** — see
+`BABY_BUDGET_PROPOSAL.md` and C97. What shipped:
+
+- **Types.** `BabyBudget { id, name, note?, currency, monthlyPlan?,
+  startedOn, archivedOn? }`; `BabyCategory { id, budgetId, name,
+  monthlyPlan?, order, colour }`; `BabySpend { id, budgetId, categoryId?,
+  label?, amount, planned, spentOn?, expectedOn?, state }`.
+- **Derived.** Month spend by category, the ratio to the plan, the six
+  months ending with the reader's own, the planned total and what the plan
+  has not handed out. Nothing derived is stored.
+- **Status.** A spend is `planned` or it is spent, and never half of each:
+  while `planned` is true there is no `spentOn` and only `expectedOn` may
+  be set; once false, the reverse. Both are stored, and a record holding
+  both is read as damage. Marking something bought moves every one of
+  those fields in one write.
+- **The plan is optional.** Without one there is no ratio and no ring.
+  With one it is never zero, a category plan needs it, and the category
+  plans may total less than it but never more.
+- **Relation to Expenses — decided against (D-B1).** The design above made
+  Baby Budget a *view* over Expenses records tagged to it. Expenses is a
+  generic record family with a fixed category enum that has no baby
+  category and seeded rows, so the tag would have meant migrating Expenses
+  before Baby Budget could exist. Baby Budget keeps its own spends in v1.
+  Nothing claims a combined total with Expenses, so nothing is counted
+  twice; sharing the two later is a migration with its own approval.
 
 ## What approval of this design unlocks
 
