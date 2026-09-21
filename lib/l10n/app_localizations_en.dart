@@ -8712,4 +8712,675 @@ class AppLocalizationsEn extends AppLocalizations {
     );
     return '$_temp0';
   }
+
+  @override
+  String get babyBudgets => 'Budgets';
+
+  @override
+  String get babyAdd => 'New budget';
+
+  @override
+  String get babyEmptyTitle => 'No budgets yet';
+
+  @override
+  String get babyEmptyText =>
+      'Start a budget to see what a month costs, where it goes and what is coming up. Everything stays on this device.';
+
+  @override
+  String get babySearch => 'Search budgets and categories';
+
+  @override
+  String get babyNoMatch => 'Nothing matches';
+
+  @override
+  String get babyNoMatchText => 'Try another word, or show every budget.';
+
+  @override
+  String get babyShowAll => 'Show all';
+
+  @override
+  String get babyFilterLabel => 'Filter budgets';
+
+  @override
+  String get babyFilterInUse => 'In use';
+
+  @override
+  String get babyFilterNotStarted => 'Not started';
+
+  @override
+  String get babyFilterArchived => 'Archived';
+
+  @override
+  String get babySortName => 'Name';
+
+  @override
+  String get babySortSpend => 'This month';
+
+  @override
+  String get babySortRecent => 'Recent';
+
+  @override
+  String get babyNeedsAttention => 'Needs attention';
+
+  @override
+  String babyDefects(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n records could not be read. Nothing was changed.',
+      one: '1 record could not be read. Nothing was changed.',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get babyDamagedText =>
+      'Part of this budget could not be read, so its figures are left out. You can still delete it.';
+
+  @override
+  String get babyNotFound => 'That budget is no longer here.';
+
+  @override
+  String babySummaryCurrency(String code) {
+    return 'In $code';
+  }
+
+  @override
+  String get babyThisMonth => 'This month';
+
+  @override
+  String get babySpentToDate => 'Spent to date';
+
+  @override
+  String get babyPlannedTotal => 'Planned';
+
+  @override
+  String babyBudgetCount(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n budgets',
+      one: '1 budget',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get babyPlanLabel => 'Plan';
+
+  @override
+  String babyOfPlan(String percent) {
+    return '$percent of plan';
+  }
+
+  @override
+  String babyOverBy(String amount) {
+    return 'Over by $amount';
+  }
+
+  @override
+  String get babyNoPlan => 'No plan set';
+
+  @override
+  String get babyNotStartedTitle => 'Not started yet';
+
+  @override
+  String babyNotStartedText(String date) {
+    return 'This budget starts on $date. Nothing is counted before then.';
+  }
+
+  @override
+  String babyArchivedOn(String date) {
+    return 'Archived on $date';
+  }
+
+  @override
+  String babyStartedOn(String date) {
+    return 'Started on $date';
+  }
+
+  @override
+  String babyUnallocated(String amount) {
+    return '$amount unallocated';
+  }
+
+  @override
+  String get babyWhereItGoes => 'Where it goes';
+
+  @override
+  String get babyAMonth => 'a month';
+
+  @override
+  String get babyDonutLabel => 'Where this month’s spending goes';
+
+  @override
+  String get babySixMonths => 'Six months';
+
+  @override
+  String babySixMonthsCap(String code) {
+    return 'Monthly spending in $code, without planned purchases';
+  }
+
+  @override
+  String babyChartEntry(String month, String amount) {
+    return '$month: $amount';
+  }
+
+  @override
+  String get babyComingUp => 'Coming up';
+
+  @override
+  String get babyOneOff => 'One-off purchases';
+
+  @override
+  String get babyNothingPlanned => 'Nothing planned.';
+
+  @override
+  String get babyNothingThisMonth => 'Nothing recorded this month.';
+
+  @override
+  String get babyUncategorised => 'Uncategorised';
+
+  @override
+  String get babyCategories => 'Categories';
+
+  @override
+  String get babyNoCategories =>
+      'No categories yet. Spends without one are counted together.';
+
+  @override
+  String get babyMonthSpending => 'Spending';
+
+  @override
+  String get babyEveryMonth => 'Every month';
+
+  @override
+  String get babyMonthLabel => 'Month';
+
+  @override
+  String get babyCategorySpending => 'In this category';
+
+  @override
+  String babyShareOfMonth(String percent) {
+    return '$percent of this month';
+  }
+
+  @override
+  String get babyCategoryPlan => 'Category plan';
+
+  @override
+  String babySpendCount(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n spends',
+      one: '1 spend',
+      zero: 'nothing recorded',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get babyOverdue => 'Overdue';
+
+  @override
+  String get babyExpected => 'Expected';
+
+  @override
+  String get babyUndated => 'No date';
+
+  @override
+  String get babyPlannedBadge => 'Planned';
+
+  @override
+  String get babyVoidedBadge => 'Voided';
+
+  @override
+  String get babyDayUnknown => 'Day unknown';
+
+  @override
+  String get babyDayUnknownText =>
+      'Your time zone could not be worked out, so nothing is called overdue and no month is shown.';
+
+  @override
+  String babyExpectedOn(String date) {
+    return 'Expected $date';
+  }
+
+  @override
+  String babySpentOn(String date) {
+    return 'Spent $date';
+  }
+
+  @override
+  String get babyRecordSpend => 'Record a spend';
+
+  @override
+  String get babyPlanPurchase => 'Plan a purchase';
+
+  @override
+  String get babyMarkBought => 'Mark as bought';
+
+  @override
+  String get babyMarkPlanned => 'Move back to planned';
+
+  @override
+  String get babyEditBudget => 'Edit budget';
+
+  @override
+  String get babyEditSpend => 'Edit';
+
+  @override
+  String get babyArchive => 'Archive';
+
+  @override
+  String get babyUnarchive => 'Bring back';
+
+  @override
+  String get babyDeleteBudget => 'Delete budget';
+
+  @override
+  String get babyAddCategory => 'Add category';
+
+  @override
+  String get babyEditCategoryTitle => 'Edit category';
+
+  @override
+  String get babyDeleteCategory => 'Delete category';
+
+  @override
+  String get babyVoidSpend => 'Void';
+
+  @override
+  String get babyRestoreSpend => 'Restore';
+
+  @override
+  String get babyOpenCategory => 'Open category';
+
+  @override
+  String get babyNewBudget => 'New budget';
+
+  @override
+  String get babyEditBudgetTitle => 'Edit budget';
+
+  @override
+  String get babyFieldName => 'Name';
+
+  @override
+  String get babyNameHint =>
+      'Whatever you call it. Nothing here has to name a child.';
+
+  @override
+  String get babyFieldCurrency => 'Currency';
+
+  @override
+  String get babyFieldPlan => 'Monthly plan';
+
+  @override
+  String get babyPlanHint =>
+      'Leave it empty for no plan. Without one there is no percentage.';
+
+  @override
+  String get babyFieldStartedOn => 'Started on';
+
+  @override
+  String get babyStartHint => 'Nothing may be recorded before this day.';
+
+  @override
+  String get babyFieldNote => 'Note';
+
+  @override
+  String get babyFieldCategories => 'Categories';
+
+  @override
+  String get babyCategoriesHint =>
+      'Name the things you spend on. Anything without a category is counted on its own.';
+
+  @override
+  String babyCategoryName(String n) {
+    return 'Category $n';
+  }
+
+  @override
+  String get babyRemoveCategory => 'Remove';
+
+  @override
+  String get babyMoveUp => 'Move up';
+
+  @override
+  String get babyMoveDown => 'Move down';
+
+  @override
+  String get babyFieldColour => 'Colour';
+
+  @override
+  String babyColourName(String n) {
+    return 'Colour $n';
+  }
+
+  @override
+  String get babyFieldAmount => 'Amount';
+
+  @override
+  String get babyFieldCategory => 'Category';
+
+  @override
+  String get babyFieldLabel => 'What it is';
+
+  @override
+  String get babyFieldDay => 'Day';
+
+  @override
+  String get babyFieldExpected => 'Expected on';
+
+  @override
+  String get babyNoDate => 'No date';
+
+  @override
+  String get babyClearDate => 'Clear the date';
+
+  @override
+  String get babyLockedTitle => 'The currency is fixed';
+
+  @override
+  String babyLockedText(String code) {
+    return 'This budget already has records in $code. To use another currency, archive it and start a new one.';
+  }
+
+  @override
+  String get babySpendTitle => 'Record a spend';
+
+  @override
+  String get babyPlanTitle => 'Plan a purchase';
+
+  @override
+  String get babyEditSpendTitle => 'Edit spend';
+
+  @override
+  String get babyEditPlanTitle => 'Edit planned purchase';
+
+  @override
+  String get babyActualAmount => 'What it actually cost';
+
+  @override
+  String get babyBoughtTitle => 'Mark as bought';
+
+  @override
+  String babyBoughtText(String label, String amount) {
+    return '$label was planned at $amount. Record it as spent, and change the amount if it cost something else.';
+  }
+
+  @override
+  String get babyBoughtGo => 'Record it';
+
+  @override
+  String get babyPlannedAgainTitle => 'Move back to planned';
+
+  @override
+  String babyPlannedAgainText(String amount) {
+    return 'This takes $amount out of the month’s figures and puts it back on the planned list. The record itself is kept.';
+  }
+
+  @override
+  String get babyPlannedAgainGo => 'Move it back';
+
+  @override
+  String get babyArchiveTitle => 'Archive this budget?';
+
+  @override
+  String get babyArchiveText =>
+      'Every record is kept and every figure stays. Nothing new can be added until you bring it back.';
+
+  @override
+  String get babyArchiveGo => 'Archive it';
+
+  @override
+  String get babyKeepBudget => 'Keep it open';
+
+  @override
+  String get babyDeleteTitle => 'Delete this budget?';
+
+  @override
+  String babyDeleteText(String categories, String spends, String planned) {
+    return 'This removes the budget, $categories, $spends and $planned.';
+  }
+
+  @override
+  String babyCountCategories(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n categories',
+      one: '1 category',
+      zero: 'no categories',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String babyCountSpends(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n spends',
+      one: '1 spend',
+      zero: 'no spends',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String babyCountPlanned(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n planned purchases',
+      one: '1 planned purchase',
+      zero: 'no planned purchases',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get babyDeleteCategoryTitle => 'Delete this category?';
+
+  @override
+  String babyDeleteCategoryText(String spends) {
+    return 'Its $spends are kept. Choose where they should go.';
+  }
+
+  @override
+  String get babyMoveToNone => 'Leave them uncategorised';
+
+  @override
+  String babyMoveTo(String name) {
+    return 'Move them to $name';
+  }
+
+  @override
+  String get babySaved => 'Budget saved.';
+
+  @override
+  String get babySpendSaved => 'Spend recorded.';
+
+  @override
+  String get babyPlanSaved => 'Purchase planned.';
+
+  @override
+  String get babyBoughtToast => 'Recorded as bought.';
+
+  @override
+  String get babyPlannedAgainToast => 'Moved back to planned.';
+
+  @override
+  String get babyVoidedToast => 'Spend voided.';
+
+  @override
+  String get babyRestoredToast => 'Spend restored.';
+
+  @override
+  String get babyCategorySaved => 'Category saved.';
+
+  @override
+  String get babyCategoryDeletedToast => 'Category deleted.';
+
+  @override
+  String get babyArchivedToast => 'Budget archived.';
+
+  @override
+  String get babyUnarchivedToast => 'Budget brought back.';
+
+  @override
+  String get babyDeletedToast => 'Budget deleted.';
+
+  @override
+  String get babyRestoredBudgetToast => 'Budget restored.';
+
+  @override
+  String get babyErrName => 'Give the budget a name.';
+
+  @override
+  String get babyErrCategoryName => 'Give every category a name.';
+
+  @override
+  String get babyErrLong => 'That is too long.';
+
+  @override
+  String get babyErrAmount => 'Enter an amount above zero.';
+
+  @override
+  String get babyErrDate => 'Choose a date.';
+
+  @override
+  String get babyErrFuture => 'A spend cannot be dated after today.';
+
+  @override
+  String get babyErrArchivedFuture =>
+      'A budget cannot be archived on a day that has not arrived.';
+
+  @override
+  String babyErrBeforeStart(String date) {
+    return 'This budget starts on $date. Nothing can be recorded before then.';
+  }
+
+  @override
+  String babyErrStartAfter(String label, String date) {
+    return '$label is dated $date. Move or remove it before changing the start.';
+  }
+
+  @override
+  String get babyErrZeroPlan =>
+      'A plan has to be above zero. Leave it empty for no plan.';
+
+  @override
+  String get babyErrNoBudgetPlan =>
+      'Set a monthly plan for the budget before giving a category one.';
+
+  @override
+  String get babyErrOverPlan =>
+      'The category plans add up to more than the budget’s plan.';
+
+  @override
+  String get babyErrBelowCategories =>
+      'That is less than the categories already hold. Lower them first.';
+
+  @override
+  String babyErrCategoryLimit(String n) {
+    return 'A budget can hold $n categories.';
+  }
+
+  @override
+  String get babyErrDuplicate => 'There is already a category with that name.';
+
+  @override
+  String get babyErrArchived =>
+      'This budget is archived. Bring it back to change anything.';
+
+  @override
+  String get babyErrConflict => 'This changed somewhere else. Open it again.';
+
+  @override
+  String get babyErrDamaged =>
+      'Part of this budget could not be read, so nothing was changed.';
+
+  @override
+  String get babyErrTooLarge => 'That number is too large to store.';
+
+  @override
+  String get babyErrFailed => 'That could not be saved.';
+
+  @override
+  String get babyExportTitle => 'Export this budget';
+
+  @override
+  String get babyExportText =>
+      'A file saved to this device. Names and notes are left out unless you keep them.';
+
+  @override
+  String get babyExportJson => 'Full backup (JSON)';
+
+  @override
+  String get babyExportJsonText =>
+      'Everything, so it can be brought back into Lume.';
+
+  @override
+  String get babyExportCsv => 'Spreadsheet (CSV)';
+
+  @override
+  String get babyExportCsvText =>
+      'One row per spend. It cannot be brought back in.';
+
+  @override
+  String get babyKeepNames => 'Keep names and notes';
+
+  @override
+  String get babyKeepNamesText =>
+      'Off, the budget is called Budget 1 and categories Category 1, Category 2 and so on.';
+
+  @override
+  String get babyImport => 'Import a backup';
+
+  @override
+  String get babyImportText =>
+      'Choose a Lume budget file. Nothing already here is touched, and nothing is written unless the whole file reads cleanly.';
+
+  @override
+  String get babyImportNoNames =>
+      'This backup has no names: budgets will be called Budget 1, Budget 2 and so on.';
+
+  @override
+  String get babyImportAction => 'Import';
+
+  @override
+  String babyImported(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n records imported',
+      one: '1 record imported',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get babyExportGo => 'Export';
+
+  @override
+  String get babyImportCheck => 'Check it';
+
+  @override
+  String babyImportReady(String c, String u, String s) {
+    return 'Ready: $c to add, $u to update, $s already here. Nothing is written until you import.';
+  }
+
+  @override
+  String babyImportIssues(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n problems. Nothing will be imported.',
+      one: '1 problem. Nothing will be imported.',
+    );
+    return '$_temp0';
+  }
 }

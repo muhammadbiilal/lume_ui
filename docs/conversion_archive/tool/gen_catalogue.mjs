@@ -110,6 +110,15 @@ const DECISIONS = {
     supportsAdd: ['export', 'search'],
     supportsRemove: ['notifications'],
   },
+  babybudget: {
+    note: 'A record of what a family spends on a baby (D-B15): off Home, ' +
+      'Today, the hero and recommendations; nothing leaves it. Filters, ' +
+      'search, sorting and export are its own; the reference declares ' +
+      'notifications and implements none (D-B16).',
+    sensitive: true,
+    outbound: 'none',
+    supportsAdd: ['filters', 'search', 'sorting'],
+  },
   committee: {
     note: 'Financial records about named people (D-C9): off Home, Today, ' +
       'the hero and recommendations; nothing leaves it. Filters, search, ' +

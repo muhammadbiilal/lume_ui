@@ -1733,12 +1733,17 @@ const List<LumeFeature> kLumeFeatures = <LumeFeature>[
     },
   ),
   LumeFeature(
+    // A record of what a family spends on a baby (D-B15): off Home, Today, the
+    // hero and recommendations; nothing leaves it. Filters, search, sorting
+    // and export are its own; the reference declares notifications and
+    // implements none (D-B16).
     id: 'babybudget',
     fallbackName: 'Baby Budget',
     icon: 'baby',
     category: LumeToolCategory.personal,
     group: LumeFeatureGroup.personal,
     interests: <String>{'expenses'},
+    sensitive: true,
     related: <String>{'expenses', 'goals', 'pregnancy'},
     archetype: LumeToolArchetype.dashboard,
     density: LumeToolDensity.high,
@@ -1746,8 +1751,11 @@ const List<LumeFeature> kLumeFeatures = <LumeFeature>[
     freshness: LumeFreshnessKind.local,
     supports: <LumeToolSupport>{
       LumeToolSupport.export,
+      LumeToolSupport.filters,
       LumeToolSupport.history,
       LumeToolSupport.offline,
+      LumeToolSupport.search,
+      LumeToolSupport.sorting,
     },
     aware: <String>{'currency', 'locale'},
   ),

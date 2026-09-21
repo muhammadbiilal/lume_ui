@@ -11844,5 +11844,898 @@
         "type": "int"
       }
     }
+  },
+  "babyBudgets": "Budgets",
+  "@babyBudgets": {
+    "description": "Baby Budget: the list of the reader’s own budgets"
+  },
+  "babyAdd": "New budget",
+  "@babyAdd": {
+    "description": "Baby Budget: start a budget"
+  },
+  "babyEmptyTitle": "No budgets yet",
+  "@babyEmptyTitle": {
+    "description": "Baby Budget: the empty state title"
+  },
+  "babyEmptyText": "Start a budget to see what a month costs, where it goes and what is coming up. Everything stays on this device.",
+  "@babyEmptyText": {
+    "description": "Baby Budget: the empty state body"
+  },
+  "babySearch": "Search budgets and categories",
+  "@babySearch": {
+    "description": "Baby Budget: the search placeholder"
+  },
+  "babyNoMatch": "Nothing matches",
+  "@babyNoMatch": {
+    "description": "Baby Budget: no budget matched the filter or search"
+  },
+  "babyNoMatchText": "Try another word, or show every budget.",
+  "@babyNoMatchText": {
+    "description": "Baby Budget: what to do when nothing matched"
+  },
+  "babyShowAll": "Show all",
+  "@babyShowAll": {
+    "description": "Baby Budget: clear the filter and the search"
+  },
+  "babyFilterLabel": "Filter budgets",
+  "@babyFilterLabel": {
+    "description": "Baby Budget: the filter bar’s accessible name"
+  },
+  "babyFilterInUse": "In use",
+  "@babyFilterInUse": {
+    "description": "Baby Budget: budgets that are running"
+  },
+  "babyFilterNotStarted": "Not started",
+  "@babyFilterNotStarted": {
+    "description": "Baby Budget: budgets whose start date has not arrived"
+  },
+  "babyFilterArchived": "Archived",
+  "@babyFilterArchived": {
+    "description": "Baby Budget: budgets put away"
+  },
+  "babySortName": "Name",
+  "@babySortName": {
+    "description": "Baby Budget: sort by name"
+  },
+  "babySortSpend": "This month",
+  "@babySortSpend": {
+    "description": "Baby Budget: sort by what the month has cost"
+  },
+  "babySortRecent": "Recent",
+  "@babySortRecent": {
+    "description": "Baby Budget: sort by last activity"
+  },
+  "babyNeedsAttention": "Needs attention",
+  "@babyNeedsAttention": {
+    "description": "Baby Budget: a record could not be read"
+  },
+  "babyDefects": "{n, plural, =1{1 record could not be read. Nothing was changed.} other{{n} records could not be read. Nothing was changed.}}",
+  "@babyDefects": {
+    "description": "Baby Budget: how many stored records failed to decode",
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
+  "babyDamagedText": "Part of this budget could not be read, so its figures are left out. You can still delete it.",
+  "@babyDamagedText": {
+    "description": "Baby Budget: the damaged-budget notice"
+  },
+  "babyNotFound": "That budget is no longer here.",
+  "@babyNotFound": {
+    "description": "Baby Budget: a deep link pointed at a budget that has gone"
+  },
+  "babySummaryCurrency": "In {code}",
+  "@babySummaryCurrency": {
+    "description": "Baby Budget: which currency a summary card covers",
+    "placeholders": {
+      "code": {
+        "type": "String"
+      }
+    }
+  },
+  "babyThisMonth": "This month",
+  "@babyThisMonth": {
+    "description": "Baby Budget: what the current month has cost"
+  },
+  "babySpentToDate": "Spent to date",
+  "@babySpentToDate": {
+    "description": "Baby Budget: everything recorded since the budget started"
+  },
+  "babyPlannedTotal": "Planned",
+  "@babyPlannedTotal": {
+    "description": "Baby Budget: what the planned purchases add up to"
+  },
+  "babyBudgetCount": "{n, plural, =1{1 budget} other{{n} budgets}}",
+  "@babyBudgetCount": {
+    "description": "Baby Budget: how many budgets a summary covers",
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
+  "babyPlanLabel": "Plan",
+  "@babyPlanLabel": {
+    "description": "Baby Budget: the progress ring’s label"
+  },
+  "babyOfPlan": "{percent} of plan",
+  "@babyOfPlan": {
+    "description": "Baby Budget: how much of the monthly plan the month has used",
+    "placeholders": {
+      "percent": {
+        "type": "String"
+      }
+    }
+  },
+  "babyOverBy": "Over by {amount}",
+  "@babyOverBy": {
+    "description": "Baby Budget: the month has passed the plan",
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "babyNoPlan": "No plan set",
+  "@babyNoPlan": {
+    "description": "Baby Budget: the budget has no monthly plan, so there is no ratio"
+  },
+  "babyNotStartedTitle": "Not started yet",
+  "@babyNotStartedTitle": {
+    "description": "Baby Budget: the budget starts on a day that has not arrived"
+  },
+  "babyNotStartedText": "This budget starts on {date}. Nothing is counted before then.",
+  "@babyNotStartedText": {
+    "description": "Baby Budget: when the budget begins",
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "babyArchivedOn": "Archived on {date}",
+  "@babyArchivedOn": {
+    "description": "Baby Budget: the day the reader put the budget away",
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "babyStartedOn": "Started on {date}",
+  "@babyStartedOn": {
+    "description": "Baby Budget: the first day the budget covers",
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "babyUnallocated": "{amount} unallocated",
+  "@babyUnallocated": {
+    "description": "Baby Budget: the part of the plan no category holds",
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "babyWhereItGoes": "Where it goes",
+  "@babyWhereItGoes": {
+    "description": "Baby Budget: the donut of categories"
+  },
+  "babyAMonth": "a month",
+  "@babyAMonth": {
+    "description": "Baby Budget: the word under the figure in the donut"
+  },
+  "babyDonutLabel": "Where this month’s spending goes",
+  "@babyDonutLabel": {
+    "description": "Baby Budget: the donut’s accessible name"
+  },
+  "babySixMonths": "Six months",
+  "@babySixMonths": {
+    "description": "Baby Budget: the bar chart of recent months"
+  },
+  "babySixMonthsCap": "Monthly spending in {code}, without planned purchases",
+  "@babySixMonthsCap": {
+    "description": "Baby Budget: what the bars count",
+    "placeholders": {
+      "code": {
+        "type": "String"
+      }
+    }
+  },
+  "babyChartEntry": "{month}: {amount}",
+  "@babyChartEntry": {
+    "description": "Baby Budget: one bar, for a screen reader",
+    "placeholders": {
+      "month": {
+        "type": "String"
+      },
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "babyComingUp": "Coming up",
+  "@babyComingUp": {
+    "description": "Baby Budget: planned purchases with an expected day"
+  },
+  "babyOneOff": "One-off purchases",
+  "@babyOneOff": {
+    "description": "Baby Budget: planned purchases with no day"
+  },
+  "babyNothingPlanned": "Nothing planned.",
+  "@babyNothingPlanned": {
+    "description": "Baby Budget: no planned purchases"
+  },
+  "babyNothingThisMonth": "Nothing recorded this month.",
+  "@babyNothingThisMonth": {
+    "description": "Baby Budget: the month has no spends"
+  },
+  "babyUncategorised": "Uncategorised",
+  "@babyUncategorised": {
+    "description": "Baby Budget: spends with no category of their own"
+  },
+  "babyCategories": "Categories",
+  "@babyCategories": {
+    "description": "Baby Budget: the reader’s own categories"
+  },
+  "babyNoCategories": "No categories yet. Spends without one are counted together.",
+  "@babyNoCategories": {
+    "description": "Baby Budget: the budget has no categories"
+  },
+  "babyMonthSpending": "Spending",
+  "@babyMonthSpending": {
+    "description": "Baby Budget: the list of a month’s spends"
+  },
+  "babyEveryMonth": "Every month",
+  "@babyEveryMonth": {
+    "description": "Baby Budget: the month picker option that drops the filter"
+  },
+  "babyMonthLabel": "Month",
+  "@babyMonthLabel": {
+    "description": "Baby Budget: the month picker’s label"
+  },
+  "babyCategorySpending": "In this category",
+  "@babyCategorySpending": {
+    "description": "Baby Budget: one category’s own spends"
+  },
+  "babyShareOfMonth": "{percent} of this month",
+  "@babyShareOfMonth": {
+    "description": "Baby Budget: how much of the month a category holds",
+    "placeholders": {
+      "percent": {
+        "type": "String"
+      }
+    }
+  },
+  "babyCategoryPlan": "Category plan",
+  "@babyCategoryPlan": {
+    "description": "Baby Budget: what a category means to spend a month"
+  },
+  "babySpendCount": "{n, plural, =0{nothing recorded} =1{1 spend} other{{n} spends}}",
+  "@babySpendCount": {
+    "description": "Baby Budget: how many spends a category holds",
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
+  "babyOverdue": "Overdue",
+  "@babyOverdue": {
+    "description": "Baby Budget: a planned purchase whose expected day has passed"
+  },
+  "babyExpected": "Expected",
+  "@babyExpected": {
+    "description": "Baby Budget: a planned purchase still to come"
+  },
+  "babyUndated": "No date",
+  "@babyUndated": {
+    "description": "Baby Budget: a planned purchase with no expected day"
+  },
+  "babyPlannedBadge": "Planned",
+  "@babyPlannedBadge": {
+    "description": "Baby Budget: this is an intention, not a spend"
+  },
+  "babyVoidedBadge": "Voided",
+  "@babyVoidedBadge": {
+    "description": "Baby Budget: a spend the reader took out of the figures"
+  },
+  "babyDayUnknown": "Day unknown",
+  "@babyDayUnknown": {
+    "description": "Baby Budget: the reader’s calendar day could not be worked out"
+  },
+  "babyDayUnknownText": "Your time zone could not be worked out, so nothing is called overdue and no month is shown.",
+  "@babyDayUnknownText": {
+    "description": "Baby Budget: what is missing without the reader’s day"
+  },
+  "babyExpectedOn": "Expected {date}",
+  "@babyExpectedOn": {
+    "description": "Baby Budget: when a planned purchase is expected",
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "babySpentOn": "Spent {date}",
+  "@babySpentOn": {
+    "description": "Baby Budget: the day money went",
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "babyRecordSpend": "Record a spend",
+  "@babyRecordSpend": {
+    "description": "Baby Budget: add money that went"
+  },
+  "babyPlanPurchase": "Plan a purchase",
+  "@babyPlanPurchase": {
+    "description": "Baby Budget: add something the reader means to buy"
+  },
+  "babyMarkBought": "Mark as bought",
+  "@babyMarkBought": {
+    "description": "Baby Budget: turn a planned purchase into a spend"
+  },
+  "babyMarkPlanned": "Move back to planned",
+  "@babyMarkPlanned": {
+    "description": "Baby Budget: turn a spend back into an intention"
+  },
+  "babyEditBudget": "Edit budget",
+  "@babyEditBudget": {
+    "description": "Baby Budget: change the budget’s name, plan or start"
+  },
+  "babyEditSpend": "Edit",
+  "@babyEditSpend": {
+    "description": "Baby Budget: change one spend"
+  },
+  "babyArchive": "Archive",
+  "@babyArchive": {
+    "description": "Baby Budget: put a budget away, keeping everything"
+  },
+  "babyUnarchive": "Bring back",
+  "@babyUnarchive": {
+    "description": "Baby Budget: take a budget out of the archive"
+  },
+  "babyDeleteBudget": "Delete budget",
+  "@babyDeleteBudget": {
+    "description": "Baby Budget: remove a budget and everything it holds"
+  },
+  "babyAddCategory": "Add category",
+  "@babyAddCategory": {
+    "description": "Baby Budget: name a new category"
+  },
+  "babyEditCategoryTitle": "Edit category",
+  "@babyEditCategoryTitle": {
+    "description": "Baby Budget: the category form’s title"
+  },
+  "babyDeleteCategory": "Delete category",
+  "@babyDeleteCategory": {
+    "description": "Baby Budget: remove a category"
+  },
+  "babyVoidSpend": "Void",
+  "@babyVoidSpend": {
+    "description": "Baby Budget: take a spend out of the figures without deleting it"
+  },
+  "babyRestoreSpend": "Restore",
+  "@babyRestoreSpend": {
+    "description": "Baby Budget: put a voided spend back"
+  },
+  "babyOpenCategory": "Open category",
+  "@babyOpenCategory": {
+    "description": "Baby Budget: see one category’s own spends"
+  },
+  "babyNewBudget": "New budget",
+  "@babyNewBudget": {
+    "description": "Baby Budget: the create form’s title"
+  },
+  "babyEditBudgetTitle": "Edit budget",
+  "@babyEditBudgetTitle": {
+    "description": "Baby Budget: the edit form’s title"
+  },
+  "babyFieldName": "Name",
+  "@babyFieldName": {
+    "description": "Baby Budget: what the reader calls this budget"
+  },
+  "babyNameHint": "Whatever you call it. Nothing here has to name a child.",
+  "@babyNameHint": {
+    "description": "Baby Budget: how to fill the name"
+  },
+  "babyFieldCurrency": "Currency",
+  "@babyFieldCurrency": {
+    "description": "Baby Budget: the one currency this budget uses"
+  },
+  "babyFieldPlan": "Monthly plan",
+  "@babyFieldPlan": {
+    "description": "Baby Budget: what the reader means to spend a month"
+  },
+  "babyPlanHint": "Leave it empty for no plan. Without one there is no percentage.",
+  "@babyPlanHint": {
+    "description": "Baby Budget: the monthly plan is optional"
+  },
+  "babyFieldStartedOn": "Started on",
+  "@babyFieldStartedOn": {
+    "description": "Baby Budget: the first day the budget covers"
+  },
+  "babyStartHint": "Nothing may be recorded before this day.",
+  "@babyStartHint": {
+    "description": "Baby Budget: what the start date does"
+  },
+  "babyFieldNote": "Note",
+  "@babyFieldNote": {
+    "description": "Baby Budget: a free note on the budget"
+  },
+  "babyFieldCategories": "Categories",
+  "@babyFieldCategories": {
+    "description": "Baby Budget: the categories form section"
+  },
+  "babyCategoriesHint": "Name the things you spend on. Anything without a category is counted on its own.",
+  "@babyCategoriesHint": {
+    "description": "Baby Budget: how categories are used"
+  },
+  "babyCategoryName": "Category {n}",
+  "@babyCategoryName": {
+    "description": "Baby Budget: one category name field",
+    "placeholders": {
+      "n": {
+        "type": "String"
+      }
+    }
+  },
+  "babyRemoveCategory": "Remove",
+  "@babyRemoveCategory": {
+    "description": "Baby Budget: take a category out of the form"
+  },
+  "babyMoveUp": "Move up",
+  "@babyMoveUp": {
+    "description": "Baby Budget: move a category earlier"
+  },
+  "babyMoveDown": "Move down",
+  "@babyMoveDown": {
+    "description": "Baby Budget: move a category later"
+  },
+  "babyFieldColour": "Colour",
+  "@babyFieldColour": {
+    "description": "Baby Budget: which tone a category’s slice takes"
+  },
+  "babyColourName": "Colour {n}",
+  "@babyColourName": {
+    "description": "Baby Budget: one of the category tones",
+    "placeholders": {
+      "n": {
+        "type": "String"
+      }
+    }
+  },
+  "babyFieldAmount": "Amount",
+  "@babyFieldAmount": {
+    "description": "Baby Budget: how much a spend was"
+  },
+  "babyFieldCategory": "Category",
+  "@babyFieldCategory": {
+    "description": "Baby Budget: which category a spend belongs to"
+  },
+  "babyFieldLabel": "What it is",
+  "@babyFieldLabel": {
+    "description": "Baby Budget: a spend’s own label"
+  },
+  "babyFieldDay": "Day",
+  "@babyFieldDay": {
+    "description": "Baby Budget: the day money went"
+  },
+  "babyFieldExpected": "Expected on",
+  "@babyFieldExpected": {
+    "description": "Baby Budget: the day a planned purchase is expected"
+  },
+  "babyNoDate": "No date",
+  "@babyNoDate": {
+    "description": "Baby Budget: a planned purchase without an expected day"
+  },
+  "babyClearDate": "Clear the date",
+  "@babyClearDate": {
+    "description": "Baby Budget: drop the expected day"
+  },
+  "babyLockedTitle": "The currency is fixed",
+  "@babyLockedTitle": {
+    "description": "Baby Budget: the currency cannot change once a spend exists"
+  },
+  "babyLockedText": "This budget already has records in {code}. To use another currency, archive it and start a new one.",
+  "@babyLockedText": {
+    "description": "Baby Budget: why the currency is locked",
+    "placeholders": {
+      "code": {
+        "type": "String"
+      }
+    }
+  },
+  "babySpendTitle": "Record a spend",
+  "@babySpendTitle": {
+    "description": "Baby Budget: the spend form’s title"
+  },
+  "babyPlanTitle": "Plan a purchase",
+  "@babyPlanTitle": {
+    "description": "Baby Budget: the planned purchase form’s title"
+  },
+  "babyEditSpendTitle": "Edit spend",
+  "@babyEditSpendTitle": {
+    "description": "Baby Budget: the edit form’s title for a spend"
+  },
+  "babyEditPlanTitle": "Edit planned purchase",
+  "@babyEditPlanTitle": {
+    "description": "Baby Budget: the edit form’s title for a plan"
+  },
+  "babyActualAmount": "What it actually cost",
+  "@babyActualAmount": {
+    "description": "Baby Budget: the real amount, replacing the estimate"
+  },
+  "babyBoughtTitle": "Mark as bought",
+  "@babyBoughtTitle": {
+    "description": "Baby Budget: the sheet that turns a plan into a spend"
+  },
+  "babyBoughtText": "{label} was planned at {amount}. Record it as spent, and change the amount if it cost something else.",
+  "@babyBoughtText": {
+    "description": "Baby Budget: what marking bought does",
+    "placeholders": {
+      "label": {
+        "type": "String"
+      },
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "babyBoughtGo": "Record it",
+  "@babyBoughtGo": {
+    "description": "Baby Budget: confirm marking a purchase bought"
+  },
+  "babyPlannedAgainTitle": "Move back to planned",
+  "@babyPlannedAgainTitle": {
+    "description": "Baby Budget: the sheet that turns a spend back into a plan"
+  },
+  "babyPlannedAgainText": "This takes {amount} out of the month’s figures and puts it back on the planned list. The record itself is kept.",
+  "@babyPlannedAgainText": {
+    "description": "Baby Budget: what moving back to planned does",
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "babyPlannedAgainGo": "Move it back",
+  "@babyPlannedAgainGo": {
+    "description": "Baby Budget: confirm moving a spend back to planned"
+  },
+  "babyArchiveTitle": "Archive this budget?",
+  "@babyArchiveTitle": {
+    "description": "Baby Budget: the archive confirmation’s title"
+  },
+  "babyArchiveText": "Every record is kept and every figure stays. Nothing new can be added until you bring it back.",
+  "@babyArchiveText": {
+    "description": "Baby Budget: what archiving does"
+  },
+  "babyArchiveGo": "Archive it",
+  "@babyArchiveGo": {
+    "description": "Baby Budget: confirm archiving"
+  },
+  "babyKeepBudget": "Keep it open",
+  "@babyKeepBudget": {
+    "description": "Baby Budget: do not archive"
+  },
+  "babyDeleteTitle": "Delete this budget?",
+  "@babyDeleteTitle": {
+    "description": "Baby Budget: the delete confirmation’s title"
+  },
+  "babyDeleteText": "This removes the budget, {categories}, {spends} and {planned}.",
+  "@babyDeleteText": {
+    "description": "Baby Budget: exactly what deleting removes",
+    "placeholders": {
+      "categories": {
+        "type": "String"
+      },
+      "spends": {
+        "type": "String"
+      },
+      "planned": {
+        "type": "String"
+      }
+    }
+  },
+  "babyCountCategories": "{n, plural, =0{no categories} =1{1 category} other{{n} categories}}",
+  "@babyCountCategories": {
+    "description": "Baby Budget delete confirmation: how many categories would go",
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
+  "babyCountSpends": "{n, plural, =0{no spends} =1{1 spend} other{{n} spends}}",
+  "@babyCountSpends": {
+    "description": "Baby Budget delete confirmation: how many spends would go",
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
+  "babyCountPlanned": "{n, plural, =0{no planned purchases} =1{1 planned purchase} other{{n} planned purchases}}",
+  "@babyCountPlanned": {
+    "description": "Baby Budget delete confirmation: how many planned purchases would go",
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
+  "babyDeleteCategoryTitle": "Delete this category?",
+  "@babyDeleteCategoryTitle": {
+    "description": "Baby Budget: the category delete confirmation’s title"
+  },
+  "babyDeleteCategoryText": "Its {spends} are kept. Choose where they should go.",
+  "@babyDeleteCategoryText": {
+    "description": "Baby Budget: what happens to a deleted category’s spends",
+    "placeholders": {
+      "spends": {
+        "type": "String"
+      }
+    }
+  },
+  "babyMoveToNone": "Leave them uncategorised",
+  "@babyMoveToNone": {
+    "description": "Baby Budget: do not move a deleted category’s spends"
+  },
+  "babyMoveTo": "Move them to {name}",
+  "@babyMoveTo": {
+    "description": "Baby Budget: move a deleted category’s spends into another",
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "babySaved": "Budget saved.",
+  "@babySaved": {
+    "description": "Baby Budget: the budget was written"
+  },
+  "babySpendSaved": "Spend recorded.",
+  "@babySpendSaved": {
+    "description": "Baby Budget: a spend was written"
+  },
+  "babyPlanSaved": "Purchase planned.",
+  "@babyPlanSaved": {
+    "description": "Baby Budget: a planned purchase was written"
+  },
+  "babyBoughtToast": "Recorded as bought.",
+  "@babyBoughtToast": {
+    "description": "Baby Budget: a plan became a spend"
+  },
+  "babyPlannedAgainToast": "Moved back to planned.",
+  "@babyPlannedAgainToast": {
+    "description": "Baby Budget: a spend became a plan again"
+  },
+  "babyVoidedToast": "Spend voided.",
+  "@babyVoidedToast": {
+    "description": "Baby Budget: a spend was taken out of the figures"
+  },
+  "babyRestoredToast": "Spend restored.",
+  "@babyRestoredToast": {
+    "description": "Baby Budget: a voided spend was put back"
+  },
+  "babyCategorySaved": "Category saved.",
+  "@babyCategorySaved": {
+    "description": "Baby Budget: a category was written"
+  },
+  "babyCategoryDeletedToast": "Category deleted.",
+  "@babyCategoryDeletedToast": {
+    "description": "Baby Budget: a category was removed"
+  },
+  "babyArchivedToast": "Budget archived.",
+  "@babyArchivedToast": {
+    "description": "Baby Budget: the budget was put away"
+  },
+  "babyUnarchivedToast": "Budget brought back.",
+  "@babyUnarchivedToast": {
+    "description": "Baby Budget: the budget is in use again"
+  },
+  "babyDeletedToast": "Budget deleted.",
+  "@babyDeletedToast": {
+    "description": "Baby Budget: the budget and its records were removed"
+  },
+  "babyRestoredBudgetToast": "Budget restored.",
+  "@babyRestoredBudgetToast": {
+    "description": "Baby Budget: an undone delete brought the budget back"
+  },
+  "babyErrName": "Give the budget a name.",
+  "@babyErrName": {
+    "description": "Baby Budget: the name is missing"
+  },
+  "babyErrCategoryName": "Give every category a name.",
+  "@babyErrCategoryName": {
+    "description": "Baby Budget: a category name is missing"
+  },
+  "babyErrLong": "That is too long.",
+  "@babyErrLong": {
+    "description": "Baby Budget: a field is over its limit"
+  },
+  "babyErrAmount": "Enter an amount above zero.",
+  "@babyErrAmount": {
+    "description": "Baby Budget: the amount is missing or zero"
+  },
+  "babyErrDate": "Choose a date.",
+  "@babyErrDate": {
+    "description": "Baby Budget: a date is missing"
+  },
+  "babyErrFuture": "A spend cannot be dated after today.",
+  "@babyErrFuture": {
+    "description": "Baby Budget: the spend date is in the future"
+  },
+  "babyErrArchivedFuture": "A budget cannot be archived on a day that has not arrived.",
+  "@babyErrArchivedFuture": {
+    "description": "Baby Budget: the archive date is in the future"
+  },
+  "babyErrBeforeStart": "This budget starts on {date}. Nothing can be recorded before then.",
+  "@babyErrBeforeStart": {
+    "description": "Baby Budget: the date precedes the start",
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "babyErrStartAfter": "{label} is dated {date}. Move or remove it before changing the start.",
+  "@babyErrStartAfter": {
+    "description": "Baby Budget: the new start would orphan a record",
+    "placeholders": {
+      "label": {
+        "type": "String"
+      },
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "babyErrZeroPlan": "A plan has to be above zero. Leave it empty for no plan.",
+  "@babyErrZeroPlan": {
+    "description": "Baby Budget: the plan is zero"
+  },
+  "babyErrNoBudgetPlan": "Set a monthly plan for the budget before giving a category one.",
+  "@babyErrNoBudgetPlan": {
+    "description": "Baby Budget: a category plan needs a budget plan"
+  },
+  "babyErrOverPlan": "The category plans add up to more than the budget’s plan.",
+  "@babyErrOverPlan": {
+    "description": "Baby Budget: the category plans exceed the budget"
+  },
+  "babyErrBelowCategories": "That is less than the categories already hold. Lower them first.",
+  "@babyErrBelowCategories": {
+    "description": "Baby Budget: the new plan is under the sum of its categories"
+  },
+  "babyErrCategoryLimit": "A budget can hold {n} categories.",
+  "@babyErrCategoryLimit": {
+    "description": "Baby Budget: too many categories",
+    "placeholders": {
+      "n": {
+        "type": "String"
+      }
+    }
+  },
+  "babyErrDuplicate": "There is already a category with that name.",
+  "@babyErrDuplicate": {
+    "description": "Baby Budget: two categories share a name"
+  },
+  "babyErrArchived": "This budget is archived. Bring it back to change anything.",
+  "@babyErrArchived": {
+    "description": "Baby Budget: an archived budget takes no writes"
+  },
+  "babyErrConflict": "This changed somewhere else. Open it again.",
+  "@babyErrConflict": {
+    "description": "Baby Budget: the stored version moved on"
+  },
+  "babyErrDamaged": "Part of this budget could not be read, so nothing was changed.",
+  "@babyErrDamaged": {
+    "description": "Baby Budget: a damaged budget takes no writes"
+  },
+  "babyErrTooLarge": "That number is too large to store.",
+  "@babyErrTooLarge": {
+    "description": "Baby Budget: an amount would overflow"
+  },
+  "babyErrFailed": "That could not be saved.",
+  "@babyErrFailed": {
+    "description": "Baby Budget: the write failed"
+  },
+  "babyExportTitle": "Export this budget",
+  "@babyExportTitle": {
+    "description": "Baby Budget: the export sheet’s title"
+  },
+  "babyExportText": "A file saved to this device. Names and notes are left out unless you keep them.",
+  "@babyExportText": {
+    "description": "Baby Budget: what export writes"
+  },
+  "babyExportJson": "Full backup (JSON)",
+  "@babyExportJson": {
+    "description": "Baby Budget: the lossless export"
+  },
+  "babyExportJsonText": "Everything, so it can be brought back into Lume.",
+  "@babyExportJsonText": {
+    "description": "Baby Budget: what the JSON holds"
+  },
+  "babyExportCsv": "Spreadsheet (CSV)",
+  "@babyExportCsv": {
+    "description": "Baby Budget: the readable export"
+  },
+  "babyExportCsvText": "One row per spend. It cannot be brought back in.",
+  "@babyExportCsvText": {
+    "description": "Baby Budget: what the CSV holds"
+  },
+  "babyKeepNames": "Keep names and notes",
+  "@babyKeepNames": {
+    "description": "Baby Budget: do not redact the export"
+  },
+  "babyKeepNamesText": "Off, the budget is called Budget 1 and categories Category 1, Category 2 and so on.",
+  "@babyKeepNamesText": {
+    "description": "Baby Budget: what redaction does"
+  },
+  "babyImport": "Import a backup",
+  "@babyImport": {
+    "description": "Baby Budget: read a JSON file back in"
+  },
+  "babyImportText": "Choose a Lume budget file. Nothing already here is touched, and nothing is written unless the whole file reads cleanly.",
+  "@babyImportText": {
+    "description": "Baby Budget: what import does"
+  },
+  "babyImportNoNames": "This backup has no names: budgets will be called Budget 1, Budget 2 and so on.",
+  "@babyImportNoNames": {
+    "description": "Baby Budget: the file was exported redacted"
+  },
+  "babyImportAction": "Import",
+  "@babyImportAction": {
+    "description": "Baby Budget: confirm the import"
+  },
+  "babyImported": "{n, plural, =1{1 record imported} other{{n} records imported}}",
+  "@babyImported": {
+    "description": "Baby Budget: how many records came in",
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
+  "babyExportGo": "Export",
+  "@babyExportGo": {
+    "description": "Baby Budget: write the file"
+  },
+  "babyImportCheck": "Check it",
+  "@babyImportCheck": {
+    "description": "Baby Budget: read the file without writing anything"
+  },
+  "babyImportReady": "Ready: {c} to add, {u} to update, {s} already here. Nothing is written until you import.",
+  "@babyImportReady": {
+    "description": "Baby Budget: what a checked file would do",
+    "placeholders": {
+      "c": {
+        "type": "String"
+      },
+      "u": {
+        "type": "String"
+      },
+      "s": {
+        "type": "String"
+      }
+    }
+  },
+  "babyImportIssues": "{n, plural, =1{1 problem. Nothing will be imported.} other{{n} problems. Nothing will be imported.}}",
+  "@babyImportIssues": {
+    "description": "Baby Budget: the file was refused whole",
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
   }
 }

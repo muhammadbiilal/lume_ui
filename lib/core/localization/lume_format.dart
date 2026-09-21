@@ -221,6 +221,10 @@ class LumeFormatting {
   String monthNarrow(DateTime d) =>
       intl.DateFormat('LLLLL', _dateTag).format(d);
 
+  /// A month on its own, abbreviated: "Sep" — a bar chart's label, where
+  /// a single letter would not tell June from July.
+  String monthShort(DateTime d) => intl.DateFormat('LLL', _dateTag).format(d);
+
   /// A month on its own, in full: "September" — what a screen reader hears.
   String monthLong(DateTime d) => intl.DateFormat('LLLL', _dateTag).format(d);
 

@@ -80,12 +80,13 @@ class LumeDataCapability {
   static const Set<String> computed = <String>{'sunmoon'};
 
   /// Tools that show only what the reader wrote — nothing seeded, nothing
-  /// fetched (Ledger D11, Installments §40.1, Committee §11). Their storage
-  /// claim is still the store's.
+  /// fetched (Ledger D11, Installments §40.1, Committee §11, Baby Budget
+  /// §11). Their storage claim is still the store's.
   static const Set<String> readerRecords = <String>{
     'ledger',
     'installments',
     'committee',
+    'babybudget',
   };
 
   /// Tools whose "live" is a clock ticking on the device.

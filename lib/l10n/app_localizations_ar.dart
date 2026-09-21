@@ -8834,4 +8834,693 @@ class AppLocalizationsAr extends AppLocalizations {
     );
     return '$_temp0';
   }
+
+  @override
+  String get babyBudgets => 'الميزانيات';
+
+  @override
+  String get babyAdd => 'ميزانية جديدة';
+
+  @override
+  String get babyEmptyTitle => 'لا توجد ميزانيات بعد';
+
+  @override
+  String get babyEmptyText =>
+      'ابدأ ميزانية لترى تكلفة الشهر، وأين تذهب النفقات، وما هو قادم. يبقى كل شيء على هذا الجهاز.';
+
+  @override
+  String get babySearch => 'ابحث في الميزانيات والفئات';
+
+  @override
+  String get babyNoMatch => 'لا شيء مطابق';
+
+  @override
+  String get babyNoMatchText => 'جرّب كلمة أخرى، أو اعرض كل الميزانيات.';
+
+  @override
+  String get babyShowAll => 'اعرض الكل';
+
+  @override
+  String get babyFilterLabel => 'تصفية الميزانيات';
+
+  @override
+  String get babyFilterInUse => 'قيد الاستخدام';
+
+  @override
+  String get babyFilterNotStarted => 'لم تبدأ';
+
+  @override
+  String get babyFilterArchived => 'مؤرشفة';
+
+  @override
+  String get babySortName => 'الاسم';
+
+  @override
+  String get babySortSpend => 'هذا الشهر';
+
+  @override
+  String get babySortRecent => 'الأحدث';
+
+  @override
+  String get babyNeedsAttention => 'يحتاج إلى انتباه';
+
+  @override
+  String babyDefects(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: 'تعذّرت قراءة $n سجل. لم يتغير شيء.',
+      many: 'تعذّرت قراءة $n سجلًا. لم يتغير شيء.',
+      few: 'تعذّرت قراءة $n سجلات. لم يتغير شيء.',
+      two: 'تعذّرت قراءة سجلين. لم يتغير شيء.',
+      one: 'تعذّرت قراءة سجل واحد. لم يتغير شيء.',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get babyDamagedText =>
+      'تعذّرت قراءة جزء من هذه الميزانية، لذا استُبعدت أرقامها. ما زال بإمكانك حذفها.';
+
+  @override
+  String get babyNotFound => 'هذه الميزانية لم تعد هنا.';
+
+  @override
+  String babySummaryCurrency(String code) {
+    return 'بعملة $code';
+  }
+
+  @override
+  String get babyThisMonth => 'هذا الشهر';
+
+  @override
+  String get babySpentToDate => 'المُنفق حتى الآن';
+
+  @override
+  String get babyPlannedTotal => 'المخطط';
+
+  @override
+  String babyBudgetCount(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n ميزانية',
+      many: '$n ميزانية',
+      few: '$n ميزانيات',
+      two: 'ميزانيتان',
+      one: 'ميزانية واحدة',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get babyPlanLabel => 'الخطة';
+
+  @override
+  String babyOfPlan(String percent) {
+    return '$percent من الخطة';
+  }
+
+  @override
+  String babyOverBy(String amount) {
+    return 'زيادة $amount';
+  }
+
+  @override
+  String get babyNoPlan => 'لم تُحدَّد خطة';
+
+  @override
+  String get babyNotStartedTitle => 'لم تبدأ بعد';
+
+  @override
+  String babyNotStartedText(String date) {
+    return 'تبدأ هذه الميزانية في $date. لا يُحتسب شيء قبل ذلك.';
+  }
+
+  @override
+  String babyArchivedOn(String date) {
+    return 'أُرشفت في $date';
+  }
+
+  @override
+  String babyStartedOn(String date) {
+    return 'بدأت في $date';
+  }
+
+  @override
+  String babyUnallocated(String amount) {
+    return '$amount غير موزّع';
+  }
+
+  @override
+  String get babyWhereItGoes => 'أين تذهب النفقات';
+
+  @override
+  String get babyAMonth => 'شهريًا';
+
+  @override
+  String get babyDonutLabel => 'أين يذهب إنفاق هذا الشهر';
+
+  @override
+  String get babySixMonths => 'ستة أشهر';
+
+  @override
+  String babySixMonthsCap(String code) {
+    return 'الإنفاق الشهري بعملة $code، دون المشتريات المخططة';
+  }
+
+  @override
+  String babyChartEntry(String month, String amount) {
+    return '$month: $amount';
+  }
+
+  @override
+  String get babyComingUp => 'القادم';
+
+  @override
+  String get babyOneOff => 'مشتريات لمرة واحدة';
+
+  @override
+  String get babyNothingPlanned => 'لا شيء مخطط.';
+
+  @override
+  String get babyNothingThisMonth => 'لم يُسجَّل شيء هذا الشهر.';
+
+  @override
+  String get babyUncategorised => 'بلا فئة';
+
+  @override
+  String get babyCategories => 'الفئات';
+
+  @override
+  String get babyNoCategories => 'لا فئات بعد. تُحتسب المصروفات بلا فئة معًا.';
+
+  @override
+  String get babyMonthSpending => 'الإنفاق';
+
+  @override
+  String get babyEveryMonth => 'كل شهر';
+
+  @override
+  String get babyMonthLabel => 'شهر';
+
+  @override
+  String get babyCategorySpending => 'في هذه الفئة';
+
+  @override
+  String babyShareOfMonth(String percent) {
+    return '$percent من هذا الشهر';
+  }
+
+  @override
+  String get babyCategoryPlan => 'خطة الفئة';
+
+  @override
+  String babySpendCount(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n مصروف',
+      many: '$n مصروفًا',
+      few: '$n مصروفات',
+      two: 'مصروفان',
+      one: 'مصروف واحد',
+      zero: 'لم يُسجَّل شيء',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get babyOverdue => 'متأخر';
+
+  @override
+  String get babyExpected => 'متوقع';
+
+  @override
+  String get babyUndated => 'بلا تاريخ';
+
+  @override
+  String get babyPlannedBadge => 'مخطط';
+
+  @override
+  String get babyVoidedBadge => 'مُبطل';
+
+  @override
+  String get babyDayUnknown => 'اليوم غير معروف';
+
+  @override
+  String get babyDayUnknownText =>
+      'تعذّر تحديد منطقتك الزمنية، لذا لا يُعدّ شيء متأخرًا ولا يُعرض أي شهر.';
+
+  @override
+  String babyExpectedOn(String date) {
+    return 'متوقع $date';
+  }
+
+  @override
+  String babySpentOn(String date) {
+    return 'أُنفق في $date';
+  }
+
+  @override
+  String get babyRecordSpend => 'تسجيل مصروف';
+
+  @override
+  String get babyPlanPurchase => 'التخطيط لشراء';
+
+  @override
+  String get babyMarkBought => 'تعليمه كمُشترى';
+
+  @override
+  String get babyMarkPlanned => 'إعادته إلى المخطط';
+
+  @override
+  String get babyEditBudget => 'تعديل الميزانية';
+
+  @override
+  String get babyEditSpend => 'تعديل';
+
+  @override
+  String get babyArchive => 'أرشفة';
+
+  @override
+  String get babyUnarchive => 'إعادتها';
+
+  @override
+  String get babyDeleteBudget => 'حذف الميزانية';
+
+  @override
+  String get babyAddCategory => 'إضافة فئة';
+
+  @override
+  String get babyEditCategoryTitle => 'تعديل الفئة';
+
+  @override
+  String get babyDeleteCategory => 'حذف الفئة';
+
+  @override
+  String get babyVoidSpend => 'إبطال';
+
+  @override
+  String get babyRestoreSpend => 'استعادة';
+
+  @override
+  String get babyOpenCategory => 'فتح الفئة';
+
+  @override
+  String get babyNewBudget => 'ميزانية جديدة';
+
+  @override
+  String get babyEditBudgetTitle => 'تعديل الميزانية';
+
+  @override
+  String get babyFieldName => 'الاسم';
+
+  @override
+  String get babyNameHint => 'أيّ اسم تختاره. لا يلزم أن يُذكر اسم طفل هنا.';
+
+  @override
+  String get babyFieldCurrency => 'العملة';
+
+  @override
+  String get babyFieldPlan => 'الخطة الشهرية';
+
+  @override
+  String get babyPlanHint =>
+      'اتركها فارغة إن لم ترد خطة. وبدونها لا تُعرض أي نسبة.';
+
+  @override
+  String get babyFieldStartedOn => 'تاريخ البدء';
+
+  @override
+  String get babyStartHint => 'لا يمكن تسجيل شيء قبل هذا اليوم.';
+
+  @override
+  String get babyFieldNote => 'ملاحظة';
+
+  @override
+  String get babyFieldCategories => 'الفئات';
+
+  @override
+  String get babyCategoriesHint =>
+      'سمِّ الأشياء التي تُنفق عليها. وما لا فئة له يُحتسب على حدة.';
+
+  @override
+  String babyCategoryName(String n) {
+    return 'الفئة $n';
+  }
+
+  @override
+  String get babyRemoveCategory => 'إزالة';
+
+  @override
+  String get babyMoveUp => 'تحريك لأعلى';
+
+  @override
+  String get babyMoveDown => 'تحريك لأسفل';
+
+  @override
+  String get babyFieldColour => 'اللون';
+
+  @override
+  String babyColourName(String n) {
+    return 'اللون $n';
+  }
+
+  @override
+  String get babyFieldAmount => 'المبلغ';
+
+  @override
+  String get babyFieldCategory => 'الفئة';
+
+  @override
+  String get babyFieldLabel => 'ما هو';
+
+  @override
+  String get babyFieldDay => 'اليوم';
+
+  @override
+  String get babyFieldExpected => 'التاريخ المتوقع';
+
+  @override
+  String get babyNoDate => 'بلا تاريخ';
+
+  @override
+  String get babyClearDate => 'مسح التاريخ';
+
+  @override
+  String get babyLockedTitle => 'العملة ثابتة';
+
+  @override
+  String babyLockedText(String code) {
+    return 'تحتوي هذه الميزانية بالفعل على سجلات بعملة $code. لاستخدام عملة أخرى، أرشفها وابدأ ميزانية جديدة.';
+  }
+
+  @override
+  String get babySpendTitle => 'تسجيل مصروف';
+
+  @override
+  String get babyPlanTitle => 'التخطيط لشراء';
+
+  @override
+  String get babyEditSpendTitle => 'تعديل المصروف';
+
+  @override
+  String get babyEditPlanTitle => 'تعديل الشراء المخطط';
+
+  @override
+  String get babyActualAmount => 'ما كلّفه فعلًا';
+
+  @override
+  String get babyBoughtTitle => 'تعليمه كمُشترى';
+
+  @override
+  String babyBoughtText(String label, String amount) {
+    return 'كان $label مخططًا بمبلغ $amount. سجّله كمصروف، وغيّر المبلغ إن كلّف غير ذلك.';
+  }
+
+  @override
+  String get babyBoughtGo => 'سجّله';
+
+  @override
+  String get babyPlannedAgainTitle => 'إعادته إلى المخطط';
+
+  @override
+  String babyPlannedAgainText(String amount) {
+    return 'يُخرج هذا $amount من أرقام الشهر ويعيده إلى قائمة المخطط. ويبقى السجل نفسه محفوظًا.';
+  }
+
+  @override
+  String get babyPlannedAgainGo => 'أعِده';
+
+  @override
+  String get babyArchiveTitle => 'أرشفة هذه الميزانية؟';
+
+  @override
+  String get babyArchiveText =>
+      'يُحفظ كل سجل وتبقى كل الأرقام. ولا يمكن إضافة شيء جديد حتى تعيدها.';
+
+  @override
+  String get babyArchiveGo => 'أرشفها';
+
+  @override
+  String get babyKeepBudget => 'أبقِها مفتوحة';
+
+  @override
+  String get babyDeleteTitle => 'حذف هذه الميزانية؟';
+
+  @override
+  String babyDeleteText(String categories, String spends, String planned) {
+    return 'يزيل هذا الميزانية و$categories و$spends و$planned.';
+  }
+
+  @override
+  String babyCountCategories(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n فئة',
+      many: '$n فئة',
+      few: '$n فئات',
+      two: 'فئتان',
+      one: 'فئة واحدة',
+      zero: 'لا فئات',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String babyCountSpends(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n مصروف',
+      many: '$n مصروفًا',
+      few: '$n مصروفات',
+      two: 'مصروفان',
+      one: 'مصروف واحد',
+      zero: 'لا مصروفات',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String babyCountPlanned(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n عملية شراء مخططة',
+      many: '$n عملية شراء مخططة',
+      few: '$n عمليات شراء مخططة',
+      two: 'عمليتا شراء مخططتان',
+      one: 'عملية شراء مخططة واحدة',
+      zero: 'لا مشتريات مخططة',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get babyDeleteCategoryTitle => 'حذف هذه الفئة؟';
+
+  @override
+  String babyDeleteCategoryText(String spends) {
+    return 'تبقى $spends محفوظة. اختر أين تذهب.';
+  }
+
+  @override
+  String get babyMoveToNone => 'اتركها بلا فئة';
+
+  @override
+  String babyMoveTo(String name) {
+    return 'انقلها إلى $name';
+  }
+
+  @override
+  String get babySaved => 'حُفظت الميزانية.';
+
+  @override
+  String get babySpendSaved => 'سُجّل المصروف.';
+
+  @override
+  String get babyPlanSaved => 'خُطّط للشراء.';
+
+  @override
+  String get babyBoughtToast => 'سُجّل كمُشترى.';
+
+  @override
+  String get babyPlannedAgainToast => 'أُعيد إلى المخطط.';
+
+  @override
+  String get babyVoidedToast => 'أُبطل المصروف.';
+
+  @override
+  String get babyRestoredToast => 'استُعيد المصروف.';
+
+  @override
+  String get babyCategorySaved => 'حُفظت الفئة.';
+
+  @override
+  String get babyCategoryDeletedToast => 'حُذفت الفئة.';
+
+  @override
+  String get babyArchivedToast => 'أُرشفت الميزانية.';
+
+  @override
+  String get babyUnarchivedToast => 'أُعيدت الميزانية.';
+
+  @override
+  String get babyDeletedToast => 'حُذفت الميزانية.';
+
+  @override
+  String get babyRestoredBudgetToast => 'استُعيدت الميزانية.';
+
+  @override
+  String get babyErrName => 'أعطِ الميزانية اسمًا.';
+
+  @override
+  String get babyErrCategoryName => 'أعطِ كل فئة اسمًا.';
+
+  @override
+  String get babyErrLong => 'هذا طويل جدًا.';
+
+  @override
+  String get babyErrAmount => 'أدخل مبلغًا أكبر من صفر.';
+
+  @override
+  String get babyErrDate => 'اختر تاريخًا.';
+
+  @override
+  String get babyErrFuture => 'لا يمكن تأريخ مصروف بعد اليوم.';
+
+  @override
+  String get babyErrArchivedFuture =>
+      'لا يمكن أرشفة ميزانية في يوم لم يأتِ بعد.';
+
+  @override
+  String babyErrBeforeStart(String date) {
+    return 'تبدأ هذه الميزانية في $date. لا يمكن تسجيل شيء قبل ذلك.';
+  }
+
+  @override
+  String babyErrStartAfter(String label, String date) {
+    return '$label مؤرخ في $date. انقله أو أزله قبل تغيير تاريخ البدء.';
+  }
+
+  @override
+  String get babyErrZeroPlan =>
+      'يجب أن تكون الخطة أكبر من صفر. اتركها فارغة إن لم ترد خطة.';
+
+  @override
+  String get babyErrNoBudgetPlan =>
+      'حدّد خطة شهرية للميزانية قبل أن تضع خطة لفئة.';
+
+  @override
+  String get babyErrOverPlan => 'مجموع خطط الفئات أكبر من خطة الميزانية.';
+
+  @override
+  String get babyErrBelowCategories =>
+      'هذا أقل مما تحمله الفئات بالفعل. خفّضها أولًا.';
+
+  @override
+  String babyErrCategoryLimit(String n) {
+    return 'يمكن أن تضم الميزانية $n فئة.';
+  }
+
+  @override
+  String get babyErrDuplicate => 'توجد فئة بهذا الاسم بالفعل.';
+
+  @override
+  String get babyErrArchived => 'هذه الميزانية مؤرشفة. أعِدها لتغيير أي شيء.';
+
+  @override
+  String get babyErrConflict => 'تغيّر هذا في مكان آخر. افتحه مرة أخرى.';
+
+  @override
+  String get babyErrDamaged =>
+      'تعذّرت قراءة جزء من هذه الميزانية، لذا لم يتغير شيء.';
+
+  @override
+  String get babyErrTooLarge => 'هذا الرقم أكبر من أن يُخزَّن.';
+
+  @override
+  String get babyErrFailed => 'تعذّر حفظ ذلك.';
+
+  @override
+  String get babyExportTitle => 'تصدير هذه الميزانية';
+
+  @override
+  String get babyExportText =>
+      'ملف يُحفظ على هذا الجهاز. تُستبعد الأسماء والملاحظات ما لم تُبقِها.';
+
+  @override
+  String get babyExportJson => 'نسخة احتياطية كاملة (JSON)';
+
+  @override
+  String get babyExportJsonText => 'كل شيء، بحيث يمكن إعادته إلى Lume.';
+
+  @override
+  String get babyExportCsv => 'جدول بيانات (CSV)';
+
+  @override
+  String get babyExportCsvText => 'صف لكل مصروف. لا يمكن إعادته.';
+
+  @override
+  String get babyKeepNames => 'الإبقاء على الأسماء والملاحظات';
+
+  @override
+  String get babyKeepNamesText =>
+      'عند إيقافه، تُسمّى الميزانية Budget 1 وتُسمّى الفئات Category 1 وCategory 2 وهكذا.';
+
+  @override
+  String get babyImport => 'استيراد نسخة احتياطية';
+
+  @override
+  String get babyImportText =>
+      'اختر ملف ميزانية من Lume. لا يُمَس شيء مما هو موجود هنا، ولا يُكتب شيء ما لم يُقرأ الملف كاملًا دون خطأ.';
+
+  @override
+  String get babyImportNoNames =>
+      'لا تتضمن هذه النسخة أسماء: ستُسمّى الميزانيات Budget 1 وBudget 2 وهكذا.';
+
+  @override
+  String get babyImportAction => 'استيراد';
+
+  @override
+  String babyImported(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: 'استُورد $n سجل',
+      many: 'استُورد $n سجلًا',
+      few: 'استُوردت $n سجلات',
+      two: 'استُورد سجلان',
+      one: 'استُورد سجل واحد',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get babyExportGo => 'صدّر';
+
+  @override
+  String get babyImportCheck => 'افحصه';
+
+  @override
+  String babyImportReady(String c, String u, String s) {
+    return 'جاهز: $c للإضافة، $u للتحديث، $s موجودة. لا يُكتب شيء حتى تستورد.';
+  }
+
+  @override
+  String babyImportIssues(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n مشكلة. لن يُستورد شيء.',
+      many: '$n مشكلة. لن يُستورد شيء.',
+      few: '$n مشكلات. لن يُستورد شيء.',
+      two: 'مشكلتان. لن يُستورد شيء.',
+      one: 'مشكلة واحدة. لن يُستورد شيء.',
+    );
+    return '$_temp0';
+  }
 }

@@ -170,7 +170,11 @@ class BabyBudgetView {
   }
 
   /// Whether the budget has begun, so figures may be drawn at all
-  /// (correction 3).
+  /// (correction 3). Archiving does not un-begin it: every figure an
+  /// archived budget had, it keeps (correction 4).
+  bool get begun => budget.startedBy(today) ?? false;
+
+  /// Whether it is open to new records.
   bool get running => status == BabyBudgetStatus.inUse;
 
   /// What was spent in the calendar month [month] is in.
@@ -185,7 +189,7 @@ class BabyBudgetView {
   /// not a month of nothing.
   LumeMoney? get thisMonth {
     final LumeDate? day = today;
-    if (day == null || !running) return null;
+    if (day == null || !begun) return null;
     return spentIn(day);
   }
 
@@ -283,7 +287,7 @@ class BabyBudgetView {
   /// This month's slices, or empty when there is no month to look at.
   List<BabyCategoryView> get slices {
     final LumeDate? day = today;
-    if (day == null || !running) return const <BabyCategoryView>[];
+    if (day == null || !begun) return const <BabyCategoryView>[];
     return slicesIn(day);
   }
 
@@ -293,7 +297,7 @@ class BabyBudgetView {
   /// `null` without a day, or before the budget starts.
   List<BabyMonth>? get trend {
     final LumeDate? day = today;
-    if (day == null || !running) return null;
+    if (day == null || !begun) return null;
     final List<BabyMonth> out = <BabyMonth>[];
     for (int i = kBabyTrendMonths - 1; i >= 0; i--) {
       final LumeDate month = lumeMonthStart(day, -i);

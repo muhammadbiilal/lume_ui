@@ -103,7 +103,7 @@ void main() {
       expect(by((LumeFeature f) => f.faith), 17, reason: '§21 lists 17');
       // Lending Ledger (D8), Installments (D-I1) and Committee (D-C9)
       // joined the tools the reference marks.
-      expect(by((LumeFeature f) => f.sensitive), 12);
+      expect(by((LumeFeature f) => f.sensitive), 13);
       expect(by((LumeFeature f) => f.isCountryRestricted), 7);
       expect(by((LumeFeature f) => f.homeEligible), 28);
       expect(by((LumeFeature f) => f.quickEligible), 24);

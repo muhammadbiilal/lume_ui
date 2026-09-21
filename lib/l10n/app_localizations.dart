@@ -15025,6 +15025,1074 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'{n, plural, =0{no payouts} =1{1 payout} other{{n} payouts}}'**
   String commCountPayouts(int n);
+
+  /// Baby Budget: the list of the reader’s own budgets
+  ///
+  /// In en, this message translates to:
+  /// **'Budgets'**
+  String get babyBudgets;
+
+  /// Baby Budget: start a budget
+  ///
+  /// In en, this message translates to:
+  /// **'New budget'**
+  String get babyAdd;
+
+  /// Baby Budget: the empty state title
+  ///
+  /// In en, this message translates to:
+  /// **'No budgets yet'**
+  String get babyEmptyTitle;
+
+  /// Baby Budget: the empty state body
+  ///
+  /// In en, this message translates to:
+  /// **'Start a budget to see what a month costs, where it goes and what is coming up. Everything stays on this device.'**
+  String get babyEmptyText;
+
+  /// Baby Budget: the search placeholder
+  ///
+  /// In en, this message translates to:
+  /// **'Search budgets and categories'**
+  String get babySearch;
+
+  /// Baby Budget: no budget matched the filter or search
+  ///
+  /// In en, this message translates to:
+  /// **'Nothing matches'**
+  String get babyNoMatch;
+
+  /// Baby Budget: what to do when nothing matched
+  ///
+  /// In en, this message translates to:
+  /// **'Try another word, or show every budget.'**
+  String get babyNoMatchText;
+
+  /// Baby Budget: clear the filter and the search
+  ///
+  /// In en, this message translates to:
+  /// **'Show all'**
+  String get babyShowAll;
+
+  /// Baby Budget: the filter bar’s accessible name
+  ///
+  /// In en, this message translates to:
+  /// **'Filter budgets'**
+  String get babyFilterLabel;
+
+  /// Baby Budget: budgets that are running
+  ///
+  /// In en, this message translates to:
+  /// **'In use'**
+  String get babyFilterInUse;
+
+  /// Baby Budget: budgets whose start date has not arrived
+  ///
+  /// In en, this message translates to:
+  /// **'Not started'**
+  String get babyFilterNotStarted;
+
+  /// Baby Budget: budgets put away
+  ///
+  /// In en, this message translates to:
+  /// **'Archived'**
+  String get babyFilterArchived;
+
+  /// Baby Budget: sort by name
+  ///
+  /// In en, this message translates to:
+  /// **'Name'**
+  String get babySortName;
+
+  /// Baby Budget: sort by what the month has cost
+  ///
+  /// In en, this message translates to:
+  /// **'This month'**
+  String get babySortSpend;
+
+  /// Baby Budget: sort by last activity
+  ///
+  /// In en, this message translates to:
+  /// **'Recent'**
+  String get babySortRecent;
+
+  /// Baby Budget: a record could not be read
+  ///
+  /// In en, this message translates to:
+  /// **'Needs attention'**
+  String get babyNeedsAttention;
+
+  /// Baby Budget: how many stored records failed to decode
+  ///
+  /// In en, this message translates to:
+  /// **'{n, plural, =1{1 record could not be read. Nothing was changed.} other{{n} records could not be read. Nothing was changed.}}'**
+  String babyDefects(int n);
+
+  /// Baby Budget: the damaged-budget notice
+  ///
+  /// In en, this message translates to:
+  /// **'Part of this budget could not be read, so its figures are left out. You can still delete it.'**
+  String get babyDamagedText;
+
+  /// Baby Budget: a deep link pointed at a budget that has gone
+  ///
+  /// In en, this message translates to:
+  /// **'That budget is no longer here.'**
+  String get babyNotFound;
+
+  /// Baby Budget: which currency a summary card covers
+  ///
+  /// In en, this message translates to:
+  /// **'In {code}'**
+  String babySummaryCurrency(String code);
+
+  /// Baby Budget: what the current month has cost
+  ///
+  /// In en, this message translates to:
+  /// **'This month'**
+  String get babyThisMonth;
+
+  /// Baby Budget: everything recorded since the budget started
+  ///
+  /// In en, this message translates to:
+  /// **'Spent to date'**
+  String get babySpentToDate;
+
+  /// Baby Budget: what the planned purchases add up to
+  ///
+  /// In en, this message translates to:
+  /// **'Planned'**
+  String get babyPlannedTotal;
+
+  /// Baby Budget: how many budgets a summary covers
+  ///
+  /// In en, this message translates to:
+  /// **'{n, plural, =1{1 budget} other{{n} budgets}}'**
+  String babyBudgetCount(int n);
+
+  /// Baby Budget: the progress ring’s label
+  ///
+  /// In en, this message translates to:
+  /// **'Plan'**
+  String get babyPlanLabel;
+
+  /// Baby Budget: how much of the monthly plan the month has used
+  ///
+  /// In en, this message translates to:
+  /// **'{percent} of plan'**
+  String babyOfPlan(String percent);
+
+  /// Baby Budget: the month has passed the plan
+  ///
+  /// In en, this message translates to:
+  /// **'Over by {amount}'**
+  String babyOverBy(String amount);
+
+  /// Baby Budget: the budget has no monthly plan, so there is no ratio
+  ///
+  /// In en, this message translates to:
+  /// **'No plan set'**
+  String get babyNoPlan;
+
+  /// Baby Budget: the budget starts on a day that has not arrived
+  ///
+  /// In en, this message translates to:
+  /// **'Not started yet'**
+  String get babyNotStartedTitle;
+
+  /// Baby Budget: when the budget begins
+  ///
+  /// In en, this message translates to:
+  /// **'This budget starts on {date}. Nothing is counted before then.'**
+  String babyNotStartedText(String date);
+
+  /// Baby Budget: the day the reader put the budget away
+  ///
+  /// In en, this message translates to:
+  /// **'Archived on {date}'**
+  String babyArchivedOn(String date);
+
+  /// Baby Budget: the first day the budget covers
+  ///
+  /// In en, this message translates to:
+  /// **'Started on {date}'**
+  String babyStartedOn(String date);
+
+  /// Baby Budget: the part of the plan no category holds
+  ///
+  /// In en, this message translates to:
+  /// **'{amount} unallocated'**
+  String babyUnallocated(String amount);
+
+  /// Baby Budget: the donut of categories
+  ///
+  /// In en, this message translates to:
+  /// **'Where it goes'**
+  String get babyWhereItGoes;
+
+  /// Baby Budget: the word under the figure in the donut
+  ///
+  /// In en, this message translates to:
+  /// **'a month'**
+  String get babyAMonth;
+
+  /// Baby Budget: the donut’s accessible name
+  ///
+  /// In en, this message translates to:
+  /// **'Where this month’s spending goes'**
+  String get babyDonutLabel;
+
+  /// Baby Budget: the bar chart of recent months
+  ///
+  /// In en, this message translates to:
+  /// **'Six months'**
+  String get babySixMonths;
+
+  /// Baby Budget: what the bars count
+  ///
+  /// In en, this message translates to:
+  /// **'Monthly spending in {code}, without planned purchases'**
+  String babySixMonthsCap(String code);
+
+  /// Baby Budget: one bar, for a screen reader
+  ///
+  /// In en, this message translates to:
+  /// **'{month}: {amount}'**
+  String babyChartEntry(String month, String amount);
+
+  /// Baby Budget: planned purchases with an expected day
+  ///
+  /// In en, this message translates to:
+  /// **'Coming up'**
+  String get babyComingUp;
+
+  /// Baby Budget: planned purchases with no day
+  ///
+  /// In en, this message translates to:
+  /// **'One-off purchases'**
+  String get babyOneOff;
+
+  /// Baby Budget: no planned purchases
+  ///
+  /// In en, this message translates to:
+  /// **'Nothing planned.'**
+  String get babyNothingPlanned;
+
+  /// Baby Budget: the month has no spends
+  ///
+  /// In en, this message translates to:
+  /// **'Nothing recorded this month.'**
+  String get babyNothingThisMonth;
+
+  /// Baby Budget: spends with no category of their own
+  ///
+  /// In en, this message translates to:
+  /// **'Uncategorised'**
+  String get babyUncategorised;
+
+  /// Baby Budget: the reader’s own categories
+  ///
+  /// In en, this message translates to:
+  /// **'Categories'**
+  String get babyCategories;
+
+  /// Baby Budget: the budget has no categories
+  ///
+  /// In en, this message translates to:
+  /// **'No categories yet. Spends without one are counted together.'**
+  String get babyNoCategories;
+
+  /// Baby Budget: the list of a month’s spends
+  ///
+  /// In en, this message translates to:
+  /// **'Spending'**
+  String get babyMonthSpending;
+
+  /// Baby Budget: the month picker option that drops the filter
+  ///
+  /// In en, this message translates to:
+  /// **'Every month'**
+  String get babyEveryMonth;
+
+  /// Baby Budget: the month picker’s label
+  ///
+  /// In en, this message translates to:
+  /// **'Month'**
+  String get babyMonthLabel;
+
+  /// Baby Budget: one category’s own spends
+  ///
+  /// In en, this message translates to:
+  /// **'In this category'**
+  String get babyCategorySpending;
+
+  /// Baby Budget: how much of the month a category holds
+  ///
+  /// In en, this message translates to:
+  /// **'{percent} of this month'**
+  String babyShareOfMonth(String percent);
+
+  /// Baby Budget: what a category means to spend a month
+  ///
+  /// In en, this message translates to:
+  /// **'Category plan'**
+  String get babyCategoryPlan;
+
+  /// Baby Budget: how many spends a category holds
+  ///
+  /// In en, this message translates to:
+  /// **'{n, plural, =0{nothing recorded} =1{1 spend} other{{n} spends}}'**
+  String babySpendCount(int n);
+
+  /// Baby Budget: a planned purchase whose expected day has passed
+  ///
+  /// In en, this message translates to:
+  /// **'Overdue'**
+  String get babyOverdue;
+
+  /// Baby Budget: a planned purchase still to come
+  ///
+  /// In en, this message translates to:
+  /// **'Expected'**
+  String get babyExpected;
+
+  /// Baby Budget: a planned purchase with no expected day
+  ///
+  /// In en, this message translates to:
+  /// **'No date'**
+  String get babyUndated;
+
+  /// Baby Budget: this is an intention, not a spend
+  ///
+  /// In en, this message translates to:
+  /// **'Planned'**
+  String get babyPlannedBadge;
+
+  /// Baby Budget: a spend the reader took out of the figures
+  ///
+  /// In en, this message translates to:
+  /// **'Voided'**
+  String get babyVoidedBadge;
+
+  /// Baby Budget: the reader’s calendar day could not be worked out
+  ///
+  /// In en, this message translates to:
+  /// **'Day unknown'**
+  String get babyDayUnknown;
+
+  /// Baby Budget: what is missing without the reader’s day
+  ///
+  /// In en, this message translates to:
+  /// **'Your time zone could not be worked out, so nothing is called overdue and no month is shown.'**
+  String get babyDayUnknownText;
+
+  /// Baby Budget: when a planned purchase is expected
+  ///
+  /// In en, this message translates to:
+  /// **'Expected {date}'**
+  String babyExpectedOn(String date);
+
+  /// Baby Budget: the day money went
+  ///
+  /// In en, this message translates to:
+  /// **'Spent {date}'**
+  String babySpentOn(String date);
+
+  /// Baby Budget: add money that went
+  ///
+  /// In en, this message translates to:
+  /// **'Record a spend'**
+  String get babyRecordSpend;
+
+  /// Baby Budget: add something the reader means to buy
+  ///
+  /// In en, this message translates to:
+  /// **'Plan a purchase'**
+  String get babyPlanPurchase;
+
+  /// Baby Budget: turn a planned purchase into a spend
+  ///
+  /// In en, this message translates to:
+  /// **'Mark as bought'**
+  String get babyMarkBought;
+
+  /// Baby Budget: turn a spend back into an intention
+  ///
+  /// In en, this message translates to:
+  /// **'Move back to planned'**
+  String get babyMarkPlanned;
+
+  /// Baby Budget: change the budget’s name, plan or start
+  ///
+  /// In en, this message translates to:
+  /// **'Edit budget'**
+  String get babyEditBudget;
+
+  /// Baby Budget: change one spend
+  ///
+  /// In en, this message translates to:
+  /// **'Edit'**
+  String get babyEditSpend;
+
+  /// Baby Budget: put a budget away, keeping everything
+  ///
+  /// In en, this message translates to:
+  /// **'Archive'**
+  String get babyArchive;
+
+  /// Baby Budget: take a budget out of the archive
+  ///
+  /// In en, this message translates to:
+  /// **'Bring back'**
+  String get babyUnarchive;
+
+  /// Baby Budget: remove a budget and everything it holds
+  ///
+  /// In en, this message translates to:
+  /// **'Delete budget'**
+  String get babyDeleteBudget;
+
+  /// Baby Budget: name a new category
+  ///
+  /// In en, this message translates to:
+  /// **'Add category'**
+  String get babyAddCategory;
+
+  /// Baby Budget: the category form’s title
+  ///
+  /// In en, this message translates to:
+  /// **'Edit category'**
+  String get babyEditCategoryTitle;
+
+  /// Baby Budget: remove a category
+  ///
+  /// In en, this message translates to:
+  /// **'Delete category'**
+  String get babyDeleteCategory;
+
+  /// Baby Budget: take a spend out of the figures without deleting it
+  ///
+  /// In en, this message translates to:
+  /// **'Void'**
+  String get babyVoidSpend;
+
+  /// Baby Budget: put a voided spend back
+  ///
+  /// In en, this message translates to:
+  /// **'Restore'**
+  String get babyRestoreSpend;
+
+  /// Baby Budget: see one category’s own spends
+  ///
+  /// In en, this message translates to:
+  /// **'Open category'**
+  String get babyOpenCategory;
+
+  /// Baby Budget: the create form’s title
+  ///
+  /// In en, this message translates to:
+  /// **'New budget'**
+  String get babyNewBudget;
+
+  /// Baby Budget: the edit form’s title
+  ///
+  /// In en, this message translates to:
+  /// **'Edit budget'**
+  String get babyEditBudgetTitle;
+
+  /// Baby Budget: what the reader calls this budget
+  ///
+  /// In en, this message translates to:
+  /// **'Name'**
+  String get babyFieldName;
+
+  /// Baby Budget: how to fill the name
+  ///
+  /// In en, this message translates to:
+  /// **'Whatever you call it. Nothing here has to name a child.'**
+  String get babyNameHint;
+
+  /// Baby Budget: the one currency this budget uses
+  ///
+  /// In en, this message translates to:
+  /// **'Currency'**
+  String get babyFieldCurrency;
+
+  /// Baby Budget: what the reader means to spend a month
+  ///
+  /// In en, this message translates to:
+  /// **'Monthly plan'**
+  String get babyFieldPlan;
+
+  /// Baby Budget: the monthly plan is optional
+  ///
+  /// In en, this message translates to:
+  /// **'Leave it empty for no plan. Without one there is no percentage.'**
+  String get babyPlanHint;
+
+  /// Baby Budget: the first day the budget covers
+  ///
+  /// In en, this message translates to:
+  /// **'Started on'**
+  String get babyFieldStartedOn;
+
+  /// Baby Budget: what the start date does
+  ///
+  /// In en, this message translates to:
+  /// **'Nothing may be recorded before this day.'**
+  String get babyStartHint;
+
+  /// Baby Budget: a free note on the budget
+  ///
+  /// In en, this message translates to:
+  /// **'Note'**
+  String get babyFieldNote;
+
+  /// Baby Budget: the categories form section
+  ///
+  /// In en, this message translates to:
+  /// **'Categories'**
+  String get babyFieldCategories;
+
+  /// Baby Budget: how categories are used
+  ///
+  /// In en, this message translates to:
+  /// **'Name the things you spend on. Anything without a category is counted on its own.'**
+  String get babyCategoriesHint;
+
+  /// Baby Budget: one category name field
+  ///
+  /// In en, this message translates to:
+  /// **'Category {n}'**
+  String babyCategoryName(String n);
+
+  /// Baby Budget: take a category out of the form
+  ///
+  /// In en, this message translates to:
+  /// **'Remove'**
+  String get babyRemoveCategory;
+
+  /// Baby Budget: move a category earlier
+  ///
+  /// In en, this message translates to:
+  /// **'Move up'**
+  String get babyMoveUp;
+
+  /// Baby Budget: move a category later
+  ///
+  /// In en, this message translates to:
+  /// **'Move down'**
+  String get babyMoveDown;
+
+  /// Baby Budget: which tone a category’s slice takes
+  ///
+  /// In en, this message translates to:
+  /// **'Colour'**
+  String get babyFieldColour;
+
+  /// Baby Budget: one of the category tones
+  ///
+  /// In en, this message translates to:
+  /// **'Colour {n}'**
+  String babyColourName(String n);
+
+  /// Baby Budget: how much a spend was
+  ///
+  /// In en, this message translates to:
+  /// **'Amount'**
+  String get babyFieldAmount;
+
+  /// Baby Budget: which category a spend belongs to
+  ///
+  /// In en, this message translates to:
+  /// **'Category'**
+  String get babyFieldCategory;
+
+  /// Baby Budget: a spend’s own label
+  ///
+  /// In en, this message translates to:
+  /// **'What it is'**
+  String get babyFieldLabel;
+
+  /// Baby Budget: the day money went
+  ///
+  /// In en, this message translates to:
+  /// **'Day'**
+  String get babyFieldDay;
+
+  /// Baby Budget: the day a planned purchase is expected
+  ///
+  /// In en, this message translates to:
+  /// **'Expected on'**
+  String get babyFieldExpected;
+
+  /// Baby Budget: a planned purchase without an expected day
+  ///
+  /// In en, this message translates to:
+  /// **'No date'**
+  String get babyNoDate;
+
+  /// Baby Budget: drop the expected day
+  ///
+  /// In en, this message translates to:
+  /// **'Clear the date'**
+  String get babyClearDate;
+
+  /// Baby Budget: the currency cannot change once a spend exists
+  ///
+  /// In en, this message translates to:
+  /// **'The currency is fixed'**
+  String get babyLockedTitle;
+
+  /// Baby Budget: why the currency is locked
+  ///
+  /// In en, this message translates to:
+  /// **'This budget already has records in {code}. To use another currency, archive it and start a new one.'**
+  String babyLockedText(String code);
+
+  /// Baby Budget: the spend form’s title
+  ///
+  /// In en, this message translates to:
+  /// **'Record a spend'**
+  String get babySpendTitle;
+
+  /// Baby Budget: the planned purchase form’s title
+  ///
+  /// In en, this message translates to:
+  /// **'Plan a purchase'**
+  String get babyPlanTitle;
+
+  /// Baby Budget: the edit form’s title for a spend
+  ///
+  /// In en, this message translates to:
+  /// **'Edit spend'**
+  String get babyEditSpendTitle;
+
+  /// Baby Budget: the edit form’s title for a plan
+  ///
+  /// In en, this message translates to:
+  /// **'Edit planned purchase'**
+  String get babyEditPlanTitle;
+
+  /// Baby Budget: the real amount, replacing the estimate
+  ///
+  /// In en, this message translates to:
+  /// **'What it actually cost'**
+  String get babyActualAmount;
+
+  /// Baby Budget: the sheet that turns a plan into a spend
+  ///
+  /// In en, this message translates to:
+  /// **'Mark as bought'**
+  String get babyBoughtTitle;
+
+  /// Baby Budget: what marking bought does
+  ///
+  /// In en, this message translates to:
+  /// **'{label} was planned at {amount}. Record it as spent, and change the amount if it cost something else.'**
+  String babyBoughtText(String label, String amount);
+
+  /// Baby Budget: confirm marking a purchase bought
+  ///
+  /// In en, this message translates to:
+  /// **'Record it'**
+  String get babyBoughtGo;
+
+  /// Baby Budget: the sheet that turns a spend back into a plan
+  ///
+  /// In en, this message translates to:
+  /// **'Move back to planned'**
+  String get babyPlannedAgainTitle;
+
+  /// Baby Budget: what moving back to planned does
+  ///
+  /// In en, this message translates to:
+  /// **'This takes {amount} out of the month’s figures and puts it back on the planned list. The record itself is kept.'**
+  String babyPlannedAgainText(String amount);
+
+  /// Baby Budget: confirm moving a spend back to planned
+  ///
+  /// In en, this message translates to:
+  /// **'Move it back'**
+  String get babyPlannedAgainGo;
+
+  /// Baby Budget: the archive confirmation’s title
+  ///
+  /// In en, this message translates to:
+  /// **'Archive this budget?'**
+  String get babyArchiveTitle;
+
+  /// Baby Budget: what archiving does
+  ///
+  /// In en, this message translates to:
+  /// **'Every record is kept and every figure stays. Nothing new can be added until you bring it back.'**
+  String get babyArchiveText;
+
+  /// Baby Budget: confirm archiving
+  ///
+  /// In en, this message translates to:
+  /// **'Archive it'**
+  String get babyArchiveGo;
+
+  /// Baby Budget: do not archive
+  ///
+  /// In en, this message translates to:
+  /// **'Keep it open'**
+  String get babyKeepBudget;
+
+  /// Baby Budget: the delete confirmation’s title
+  ///
+  /// In en, this message translates to:
+  /// **'Delete this budget?'**
+  String get babyDeleteTitle;
+
+  /// Baby Budget: exactly what deleting removes
+  ///
+  /// In en, this message translates to:
+  /// **'This removes the budget, {categories}, {spends} and {planned}.'**
+  String babyDeleteText(String categories, String spends, String planned);
+
+  /// Baby Budget delete confirmation: how many categories would go
+  ///
+  /// In en, this message translates to:
+  /// **'{n, plural, =0{no categories} =1{1 category} other{{n} categories}}'**
+  String babyCountCategories(int n);
+
+  /// Baby Budget delete confirmation: how many spends would go
+  ///
+  /// In en, this message translates to:
+  /// **'{n, plural, =0{no spends} =1{1 spend} other{{n} spends}}'**
+  String babyCountSpends(int n);
+
+  /// Baby Budget delete confirmation: how many planned purchases would go
+  ///
+  /// In en, this message translates to:
+  /// **'{n, plural, =0{no planned purchases} =1{1 planned purchase} other{{n} planned purchases}}'**
+  String babyCountPlanned(int n);
+
+  /// Baby Budget: the category delete confirmation’s title
+  ///
+  /// In en, this message translates to:
+  /// **'Delete this category?'**
+  String get babyDeleteCategoryTitle;
+
+  /// Baby Budget: what happens to a deleted category’s spends
+  ///
+  /// In en, this message translates to:
+  /// **'Its {spends} are kept. Choose where they should go.'**
+  String babyDeleteCategoryText(String spends);
+
+  /// Baby Budget: do not move a deleted category’s spends
+  ///
+  /// In en, this message translates to:
+  /// **'Leave them uncategorised'**
+  String get babyMoveToNone;
+
+  /// Baby Budget: move a deleted category’s spends into another
+  ///
+  /// In en, this message translates to:
+  /// **'Move them to {name}'**
+  String babyMoveTo(String name);
+
+  /// Baby Budget: the budget was written
+  ///
+  /// In en, this message translates to:
+  /// **'Budget saved.'**
+  String get babySaved;
+
+  /// Baby Budget: a spend was written
+  ///
+  /// In en, this message translates to:
+  /// **'Spend recorded.'**
+  String get babySpendSaved;
+
+  /// Baby Budget: a planned purchase was written
+  ///
+  /// In en, this message translates to:
+  /// **'Purchase planned.'**
+  String get babyPlanSaved;
+
+  /// Baby Budget: a plan became a spend
+  ///
+  /// In en, this message translates to:
+  /// **'Recorded as bought.'**
+  String get babyBoughtToast;
+
+  /// Baby Budget: a spend became a plan again
+  ///
+  /// In en, this message translates to:
+  /// **'Moved back to planned.'**
+  String get babyPlannedAgainToast;
+
+  /// Baby Budget: a spend was taken out of the figures
+  ///
+  /// In en, this message translates to:
+  /// **'Spend voided.'**
+  String get babyVoidedToast;
+
+  /// Baby Budget: a voided spend was put back
+  ///
+  /// In en, this message translates to:
+  /// **'Spend restored.'**
+  String get babyRestoredToast;
+
+  /// Baby Budget: a category was written
+  ///
+  /// In en, this message translates to:
+  /// **'Category saved.'**
+  String get babyCategorySaved;
+
+  /// Baby Budget: a category was removed
+  ///
+  /// In en, this message translates to:
+  /// **'Category deleted.'**
+  String get babyCategoryDeletedToast;
+
+  /// Baby Budget: the budget was put away
+  ///
+  /// In en, this message translates to:
+  /// **'Budget archived.'**
+  String get babyArchivedToast;
+
+  /// Baby Budget: the budget is in use again
+  ///
+  /// In en, this message translates to:
+  /// **'Budget brought back.'**
+  String get babyUnarchivedToast;
+
+  /// Baby Budget: the budget and its records were removed
+  ///
+  /// In en, this message translates to:
+  /// **'Budget deleted.'**
+  String get babyDeletedToast;
+
+  /// Baby Budget: an undone delete brought the budget back
+  ///
+  /// In en, this message translates to:
+  /// **'Budget restored.'**
+  String get babyRestoredBudgetToast;
+
+  /// Baby Budget: the name is missing
+  ///
+  /// In en, this message translates to:
+  /// **'Give the budget a name.'**
+  String get babyErrName;
+
+  /// Baby Budget: a category name is missing
+  ///
+  /// In en, this message translates to:
+  /// **'Give every category a name.'**
+  String get babyErrCategoryName;
+
+  /// Baby Budget: a field is over its limit
+  ///
+  /// In en, this message translates to:
+  /// **'That is too long.'**
+  String get babyErrLong;
+
+  /// Baby Budget: the amount is missing or zero
+  ///
+  /// In en, this message translates to:
+  /// **'Enter an amount above zero.'**
+  String get babyErrAmount;
+
+  /// Baby Budget: a date is missing
+  ///
+  /// In en, this message translates to:
+  /// **'Choose a date.'**
+  String get babyErrDate;
+
+  /// Baby Budget: the spend date is in the future
+  ///
+  /// In en, this message translates to:
+  /// **'A spend cannot be dated after today.'**
+  String get babyErrFuture;
+
+  /// Baby Budget: the archive date is in the future
+  ///
+  /// In en, this message translates to:
+  /// **'A budget cannot be archived on a day that has not arrived.'**
+  String get babyErrArchivedFuture;
+
+  /// Baby Budget: the date precedes the start
+  ///
+  /// In en, this message translates to:
+  /// **'This budget starts on {date}. Nothing can be recorded before then.'**
+  String babyErrBeforeStart(String date);
+
+  /// Baby Budget: the new start would orphan a record
+  ///
+  /// In en, this message translates to:
+  /// **'{label} is dated {date}. Move or remove it before changing the start.'**
+  String babyErrStartAfter(String label, String date);
+
+  /// Baby Budget: the plan is zero
+  ///
+  /// In en, this message translates to:
+  /// **'A plan has to be above zero. Leave it empty for no plan.'**
+  String get babyErrZeroPlan;
+
+  /// Baby Budget: a category plan needs a budget plan
+  ///
+  /// In en, this message translates to:
+  /// **'Set a monthly plan for the budget before giving a category one.'**
+  String get babyErrNoBudgetPlan;
+
+  /// Baby Budget: the category plans exceed the budget
+  ///
+  /// In en, this message translates to:
+  /// **'The category plans add up to more than the budget’s plan.'**
+  String get babyErrOverPlan;
+
+  /// Baby Budget: the new plan is under the sum of its categories
+  ///
+  /// In en, this message translates to:
+  /// **'That is less than the categories already hold. Lower them first.'**
+  String get babyErrBelowCategories;
+
+  /// Baby Budget: too many categories
+  ///
+  /// In en, this message translates to:
+  /// **'A budget can hold {n} categories.'**
+  String babyErrCategoryLimit(String n);
+
+  /// Baby Budget: two categories share a name
+  ///
+  /// In en, this message translates to:
+  /// **'There is already a category with that name.'**
+  String get babyErrDuplicate;
+
+  /// Baby Budget: an archived budget takes no writes
+  ///
+  /// In en, this message translates to:
+  /// **'This budget is archived. Bring it back to change anything.'**
+  String get babyErrArchived;
+
+  /// Baby Budget: the stored version moved on
+  ///
+  /// In en, this message translates to:
+  /// **'This changed somewhere else. Open it again.'**
+  String get babyErrConflict;
+
+  /// Baby Budget: a damaged budget takes no writes
+  ///
+  /// In en, this message translates to:
+  /// **'Part of this budget could not be read, so nothing was changed.'**
+  String get babyErrDamaged;
+
+  /// Baby Budget: an amount would overflow
+  ///
+  /// In en, this message translates to:
+  /// **'That number is too large to store.'**
+  String get babyErrTooLarge;
+
+  /// Baby Budget: the write failed
+  ///
+  /// In en, this message translates to:
+  /// **'That could not be saved.'**
+  String get babyErrFailed;
+
+  /// Baby Budget: the export sheet’s title
+  ///
+  /// In en, this message translates to:
+  /// **'Export this budget'**
+  String get babyExportTitle;
+
+  /// Baby Budget: what export writes
+  ///
+  /// In en, this message translates to:
+  /// **'A file saved to this device. Names and notes are left out unless you keep them.'**
+  String get babyExportText;
+
+  /// Baby Budget: the lossless export
+  ///
+  /// In en, this message translates to:
+  /// **'Full backup (JSON)'**
+  String get babyExportJson;
+
+  /// Baby Budget: what the JSON holds
+  ///
+  /// In en, this message translates to:
+  /// **'Everything, so it can be brought back into Lume.'**
+  String get babyExportJsonText;
+
+  /// Baby Budget: the readable export
+  ///
+  /// In en, this message translates to:
+  /// **'Spreadsheet (CSV)'**
+  String get babyExportCsv;
+
+  /// Baby Budget: what the CSV holds
+  ///
+  /// In en, this message translates to:
+  /// **'One row per spend. It cannot be brought back in.'**
+  String get babyExportCsvText;
+
+  /// Baby Budget: do not redact the export
+  ///
+  /// In en, this message translates to:
+  /// **'Keep names and notes'**
+  String get babyKeepNames;
+
+  /// Baby Budget: what redaction does
+  ///
+  /// In en, this message translates to:
+  /// **'Off, the budget is called Budget 1 and categories Category 1, Category 2 and so on.'**
+  String get babyKeepNamesText;
+
+  /// Baby Budget: read a JSON file back in
+  ///
+  /// In en, this message translates to:
+  /// **'Import a backup'**
+  String get babyImport;
+
+  /// Baby Budget: what import does
+  ///
+  /// In en, this message translates to:
+  /// **'Choose a Lume budget file. Nothing already here is touched, and nothing is written unless the whole file reads cleanly.'**
+  String get babyImportText;
+
+  /// Baby Budget: the file was exported redacted
+  ///
+  /// In en, this message translates to:
+  /// **'This backup has no names: budgets will be called Budget 1, Budget 2 and so on.'**
+  String get babyImportNoNames;
+
+  /// Baby Budget: confirm the import
+  ///
+  /// In en, this message translates to:
+  /// **'Import'**
+  String get babyImportAction;
+
+  /// Baby Budget: how many records came in
+  ///
+  /// In en, this message translates to:
+  /// **'{n, plural, =1{1 record imported} other{{n} records imported}}'**
+  String babyImported(int n);
+
+  /// Baby Budget: write the file
+  ///
+  /// In en, this message translates to:
+  /// **'Export'**
+  String get babyExportGo;
+
+  /// Baby Budget: read the file without writing anything
+  ///
+  /// In en, this message translates to:
+  /// **'Check it'**
+  String get babyImportCheck;
+
+  /// Baby Budget: what a checked file would do
+  ///
+  /// In en, this message translates to:
+  /// **'Ready: {c} to add, {u} to update, {s} already here. Nothing is written until you import.'**
+  String babyImportReady(String c, String u, String s);
+
+  /// Baby Budget: the file was refused whole
+  ///
+  /// In en, this message translates to:
+  /// **'{n, plural, =1{1 problem. Nothing will be imported.} other{{n} problems. Nothing will be imported.}}'**
+  String babyImportIssues(int n);
 }
 
 class _AppLocalizationsDelegate
