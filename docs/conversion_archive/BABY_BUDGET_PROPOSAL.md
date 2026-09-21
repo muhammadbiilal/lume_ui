@@ -1,9 +1,20 @@
 # Baby Budget — proposal for approval
 
-**Status: proposal. Nothing here is implemented.** Everything below is
-read from the reference source and the running reference, or is marked
-**Proposed**. No figure is taken from the tool's name, and no spending
-rule is invented. Every proposed rule is a decision in §17.
+**Status: approved.** Decisions D-B1 to D-B17 were approved as proposed
+in `9929160`, subject to six corrections, which this revision applies:
+
+| correction | what changed | where |
+|---|---|---|
+| 1 | `spentOn` is **nullable**: planned has no spent day, spent has no expected day; marking bought is one atomic write, and reverting is its own confirmed action | §5, §6 E, §7 (3), D-B18 |
+| 2 | a plan is **greater than zero**; a category plan needs a budget plan, is positive, may total less than it but never more; removing the budget plan clears them in the same confirmed write | §7 (8), §9 |
+| 3 | `startedOn` **means something**: nothing predates it, moving it is refused with a typed conflict naming the earliest record, and a budget that has not started says so instead of showing a zero month | §7 (9), §8, D-B19 |
+| 4 | `archivedOn` is **never future-dated** when the day is known; archived takes no ordinary write; archive, un-archive and Undo preserve everything | §7 (12), §8 |
+| 5 | every percentage is **integer arithmetic** with fixed tie-breaks, and uncategorised is a real slice | §6, §7 (7) |
+| 6 | "Coming up" is ordered by **when things need attention**, not newest first | §8, §15, D-B20 |
+
+Everything else below is read from the reference source and the running
+reference. No figure is taken from the tool's name, and no spending rule
+is invented.
 
 ## 0. Sources inspected
 
@@ -199,20 +210,44 @@ BabySpend            babybudget.spend
   category            → BabyCategory?    (absent means uncategorised)
   label               String? ≤80
   amount              LumeMoney          (> 0, the budget's currency)
-  spentOn             LumeDate           (the day the money went)
   planned             bool               (false: it happened; true: it is intended)
-  expectedOn          LumeDate?          (only for a planned one, and optional)
+  spentOn             LumeDate?          (the day the money went; null while planned)
+  expectedOn          LumeDate?          (the day it is expected; only while planned)
   state               active | voided
   createdAt, version
 ```
+
+**A spend is either spent or planned, never half of each** (correction 1):
+
+| `planned` | `spentOn` | `expectedOn` | what it is |
+|---|---|---|---|
+| `false` | **required** | **must be null** | money that went |
+| `true` | **must be null** | optional | money the reader means to spend |
+
+A planned purchase has no `spentOn`, because nothing was spent. That is
+not a detail of presentation: a nullable `spentOn` is what stops a
+planned item ever being counted as a month's spending by a query that
+forgets to check the flag.
 
 **Why one record type for spends and plans.** The reference draws
 "Coming up" and "One-off purchases" as two lists, but they are the same
 thing twice: something the reader means to buy. The only difference is
 whether a day is expected. One record with `planned` and an optional
 `expectedOn` gives both lists, and — more importantly — lets a planned
-purchase **become** a spend by clearing the flag and setting the day,
-without a second record and without double counting (D-B4).
+purchase **become** a spend without a second record and without double
+counting (D-B4).
+
+**Marking one bought is one atomic write** (correction 1). It sets
+`planned` false, sets `spentOn` to the day the money actually went,
+clears `expectedOn`, and — where the reader says so — replaces the
+estimate with what was actually paid. All of that is one transaction:
+there is no moment at which the record is bought with no date, or
+planned with one.
+
+**Going back is a decision, not a slip.** Turning a spend back into a
+plan is its own action, confirmed, which clears `spentOn` and may set
+`expectedOn` again. It is never a side effect of editing an amount or a
+label, and the edit form cannot do it (D-B18).
 
 **Why a category is a record, not an enum.** The reference's four
 categories are fixture labels. A reader's categories are their own:
@@ -251,14 +286,37 @@ PKR has two minor digits, so Rs 12,000 is `1,200,000`.
 | spent per category, in a month | the same, per category |
 | spent to date | Σ active, unplanned spends |
 | plan for a month | the budget's `monthlyPlan` |
-| ratio | spent in the month ÷ plan, as a whole percentage, or **none** when there is no plan |
+| ratio | spent in the month ÷ plan, as a whole percentage, worked out in integers (correction 5), or **none** when there is no plan |
 | over by | spent − plan, when spent exceeds plan |
 | planned total | Σ active spends with `planned` true |
-| category share | its month's spend ÷ the month's spend, by largest remainder (D-B3) |
+| category share | its month's spend ÷ the month's spend, by largest remainder in integers (D-B3, correction 5) |
 | six months | the month's spend for this month and the five before it |
 
 **No forecast, no average, no projection.** Every figure is a sum of
 stored amounts in one currency.
+
+**Every percentage is integer arithmetic** (correction 5). No `double`
+appears anywhere in these figures — a rounding that depends on binary
+floating point is a rounding nobody can predict or test.
+
+- **The ratio** is `(spent × 100 + plan ~/ 2) ~/ plan` on minor units:
+  the percentage rounded half up, from two integers.
+- **A share** is worked out by largest remainder on integers. For each
+  category, `floor = spent × 100 ~/ month` and
+  `remainder = spent × 100 − floor × month`. The floors are handed out
+  first; the `100 − Σ floors` points left over go to the largest
+  remainders.
+- **Ties are broken in a fixed order**, so the same records always give
+  the same picture:
+  1. the larger remainder;
+  2. then the category's display order;
+  3. then the category's id.
+- **Uncategorised is a real slice**, not a remainder bucket: it takes its
+  floor and competes for the leftover points like any other. It sorts
+  **last** in a tie, after every named category, which is its stable
+  final position.
+- The shares total exactly 100 whenever the month's spend is not zero.
+  When it is zero there are no slices and no percentages at all.
 
 ### Example A — the reference's month, as a reader would enter it
 
@@ -296,6 +354,18 @@ each on its own they make 101% (§3.2). By largest remainder:
 The two largest remainders take the two points left over. The amounts
 themselves are always shown exactly; the percentage is a reading aid.
 
+In integers, with the month at `3,200,000`: nappies
+`1,200,000 × 100 ~/ 3,200,000 = 37` remainder `120,000,000 − 118,400,000
+= 1,600,000`; formula `25` remainder `0`; clothing `21` remainder
+`2,800,000`; health `15` remainder `2,000,000`. The floors make 98, and
+the two points go to clothing and health, the two largest remainders. No
+division to a `double` happens anywhere.
+
+Were two remainders equal — say two categories each at `1,600,000` — the
+earlier display order takes the point, and if the reader somehow gave
+them the same order, the smaller id does. Uncategorised, with the same
+remainder as a named category, yields to it.
+
 ### Example C — over the plan
 
 The plan is Rs 39,000; the month's spends come to Rs 44,850
@@ -320,12 +390,19 @@ The same spends, `monthlyPlan` absent.
 A pram is planned at Rs 73,600 (`7,360,000`), expected 10 October.
 
 - planned total: 7,360,000. Spent this month: unchanged.
-- It is **not** in the month's spend, the trend or the donut.
+- It is **not** in the month's spend, the trend or the donut, and it has
+  **no `spentOn` at all** (correction 1) — nothing was spent.
 - On 3 October the reader buys it for Rs 71,000 (`7,100,000`). Marking it
-  bought sets `planned` false, `spentOn` 3 October, and the amount to
-  what was actually paid — **one record, edited in one transaction**.
+  bought is **one write** that sets `planned` false, sets `spentOn` to
+  3 October, clears `expectedOn`, and replaces the estimate with what was
+  actually paid. There is no instant in between at which the record is
+  half one thing and half the other.
 - Planned total falls to 0; October's spend rises by 7,100,000. Nothing
   is counted twice, and September is untouched.
+- Were the reader to have marked it bought by mistake, turning it back
+  into a plan is its own confirmed action: it clears `spentOn` and may
+  set `expectedOn` again. Editing the amount or the label can never do
+  it (D-B18).
 
 ### Example F — six months, with a month that has nothing
 
@@ -381,27 +458,46 @@ write back.
    category belongs to the same budget.
 2. Amounts are in the budget's currency, and every spend's amount is
    greater than zero.
-3. `planned` false requires `spentOn`; `expectedOn` is only set when
-   `planned` is true.
+3. **Spent or planned, never between** (correction 1). `planned` false
+   requires `spentOn` and forbids `expectedOn`; `planned` true forbids
+   `spentOn` and allows `expectedOn`. Marking bought and reverting to
+   planned each move every one of those fields in a single write.
 4. Category `order` is unique within a budget, and 0..49.
 5. Σ per-category spend in a month, plus uncategorised, equals the
    month's spend. The donut equals the card.
 6. Σ every month's spend equals spent to date.
-7. Percentages shown by largest remainder sum to exactly 100 when at
-   least one category has a spend.
-8. A category's own plan, where set, is ≤ the budget's monthly plan, and
-   the categories' plans sum to ≤ the monthly plan.
-9. No arithmetic crosses currencies; summaries are per currency.
-10. Bounds: every amount ≤ 10¹⁵ minor units as an entry, and every sum
+7. Percentages by largest remainder sum to exactly 100 whenever the
+   month's spend is not zero (correction 5).
+8. **Plans are positive, and a category plan needs a budget plan**
+   (correction 2):
+   - `monthlyPlan`, where present, is **greater than zero**; a plan of
+     nothing is no plan, and is stored as absent.
+   - A category plan is allowed **only** while the budget has a monthly
+     plan, and is itself greater than zero.
+   - The categories' plans may total **less** than the monthly plan: what
+     is left is unallocated, and the screens name it.
+   - They may **never** total more than the monthly plan.
+   - Removing the monthly plan clears every category plan **in the same
+     transaction**, which the reader confirms; a removal that does not
+     is refused. No category plan ever outlives the budget plan it was a
+     share of.
+9. **Nothing predates the start** (correction 3). Every spend's
+   `spentOn`, and every planned purchase's `expectedOn`, is on or after
+   the budget's `startedOn`.
+10. No arithmetic crosses currencies; summaries are per currency.
+11. Bounds: every amount ≤ 10¹⁵ minor units as an entry, and every sum
     ≤ 2⁵³ − 1. A budget's spends are summed with `LumeMoney.total`, which
     refuses an overflow; creation refuses a monthly plan that could not
     be compared against a year of spending (12 × plan ≤ 2⁵³ − 1, checked
     by division).
-11. An archived budget takes no new spend, and no edit but un-archiving
-    and deletion.
-12. Void then restore reproduces every projection exactly.
-13. Import writes everything or nothing.
-14. No observer sees a partial transaction.
+12. **Archiving is truthful** (correction 4). `archivedOn` is not after
+    the reader's day when that day is known; an archived budget takes no
+    ordinary write; un-archiving clears the date; and archiving,
+    un-archiving and their Undo preserve every record, id, version and
+    projection exactly.
+13. Void then restore reproduces every projection exactly.
+14. Import writes everything or nothing.
+15. No observer sees a partial transaction.
 
 ## 8. States, dates and the reader's day — Proposed
 
@@ -412,7 +508,8 @@ write back.
 | planned: expected | `planned` true, `expectedOn` set and on or after today |
 | planned: overdue | `planned` true, `expectedOn` before today |
 | planned: undated | `planned` true, no `expectedOn` |
-| budget: in use | `archivedOn` null |
+| budget: not started | `startedOn` is after today: no month figures, no trend |
+| budget: in use | started, and `archivedOn` null |
 | budget: archived | `archivedOn` set |
 | budget: damaged | a record cannot be read, or an invariant is broken |
 | day unavailable | the reader's day cannot be resolved |
@@ -425,10 +522,54 @@ write back.
   the day could not be worked out. Nothing is guessed. This is the
   correction of §3.5, where the reference shows weekday names from the
   device clock with no date at all.
-- A spend may be dated in the past freely. A spend dated **after** the
-  reader's day is refused: it has not happened yet, and that is what
-  `planned` is for (D-B5).
-- A planned purchase may be dated in the future; that is its purpose.
+- A spend may be dated in the past freely, but never before the budget's
+  `startedOn` (correction 3). A spend dated **after** the reader's day is
+  refused: it has not happened yet, and that is what `planned` is for
+  (D-B5).
+- A planned purchase may be dated in the future; that is its purpose. It
+  may not be expected before the budget starts either.
+
+**The order of "Coming up"** (correction 6, D-B20). A list of things to
+do is ordered by when they need doing, never by when they were typed:
+
+1. **overdue first**, the one expected longest ago at the top;
+2. then those still to come, the soonest first;
+3. ties broken by when the record was created, then by its id, so the
+   order never wobbles between reads.
+
+Undated planned purchases are not in this list at all: they are the
+"One-off purchases" section, which has no order to derive and keeps the
+reader's own — newest first.
+
+**Where the budget starts** (correction 3, D-B19).
+
+- `startedOn` is the first day the budget covers. Before it, the budget
+  has no month figures and no trend values at all — not zeroes.
+- **A budget that has not started says so.** With `startedOn` in the
+  future the dashboard reads "Starts 1 November" and shows the plan and
+  the categories; it does not draw a month of zero, a ring at 0%, or six
+  empty bars, because none of that has happened.
+- The six-month trend covers only months from `startedOn` onward. A month
+  inside that range with no records is a true zero (§6 F); a month before
+  it is not shown.
+- **Changing `startedOn`** is allowed only while every record stays
+  valid. Moving it later than the earliest record is refused with a typed
+  conflict that **names that record** — its date and its label — so the
+  reader can correct or delete it first. Nothing is moved or deleted for
+  them.
+
+**Archiving on a day** (correction 4, D-B6).
+
+- `archivedOn` is a day, and when the reader's day is known it may not be
+  after it: a budget cannot have been archived tomorrow.
+- An archived budget takes no ordinary write: no spend, no edit, no
+  category change. Un-archiving clears the date and everything resumes.
+- Archive, un-archive and Undo keep every record, id, version and derived
+  figure exactly as they were.
+- **When the reader's day cannot be resolved**, an explicitly entered,
+  valid calendar date is accepted and stored as given. Lume does not then
+  claim it is in the past or the future, and shows it without that
+  judgement.
 
 ## 9. Editing, archiving and deletion — Proposed
 
@@ -438,6 +579,10 @@ write back.
   corrected. Corrections are how a household budget is kept.
 - **Changing the currency** is refused once any spend exists; the reader
   archives the budget and starts another (D-B7).
+- **Removing the monthly plan** takes every category plan with it, in one
+  confirmed transaction (correction 2). The confirmation says how many
+  category plans will go. A removal that would leave a category plan
+  behind is refused: a share of nothing is not a plan.
 - **Deleting a category** with spends asks what to do with them and does
   the chosen thing in one transaction: move them to another category, or
   leave them uncategorised. It never deletes a reader's spends silently.
@@ -603,7 +748,7 @@ Adding the tag means migrating Expenses, which is out of scope. So:
 | summary card: "This month", amount, "82% of plan", ring | `LumeSummaryCard` with a ring aside | the amount is the month's spends; the caption is the ratio to the reader's own plan, "over by …" when it exceeds it, and "no plan set" when there is none. Stats added: spent to date, planned total |
 | "Where it goes" donut | `LumeDonut` | slices are the reader's categories; shares by largest remainder so they total 100 (§6 B); the legend shows the exact amount beside the percentage; a screen reader hears amounts, not raw numbers |
 | "Six months" bars | the corrected `LumeBarChart` (C64) | the six calendar months ending with the reader's current month, labelled in their language; a month with nothing reads Rs 0; bars grow with their values |
-| "Coming up" | `LumeCompactRow` list | planned purchases with an expected day, **with a real date**, newest first, overdue ones marked. Pressing one opens it |
+| "Coming up" | `LumeCompactRow` list | planned purchases with an expected day, **with a real date**, in the order they need attention (correction 6): overdue first, oldest first; then the rest, soonest first. Pressing one opens it |
 | "One-off purchases" | the same list, undated | the same record type without a day (D-B4) |
 | source bar, related, privacy note | the frame | per policy (§11) |
 | **Added** | the budgets list and empty state; the budget form (name, currency, plan, categories); the category editor; a spend form; the spend list for a month with a month picker; a category's own view; void/restore; archive and un-archive; delete with Undo; import and export sheets; loading, failure, damaged and day-unknown states | documented product extensions |
@@ -663,6 +808,9 @@ evidence. The next free number is C97.
 | D-B15 | uncategorised spends | **Allowed**, and shown as their own slice | a reader is never forced to classify |
 | D-B16 | the trend window | **Six calendar months ending with the reader's current month**; a month with nothing reads zero | the caption "Six months" becomes true |
 | D-B17 | parity evidence | **The reference composition in 8 cells against the corrected fixture**, with the values that must differ named in the test | evidence of correction, not false parity |
+| D-B18 | turning a spend back into a plan | **Its own confirmed action**, never an edit | a recorded spend cannot quietly stop being one |
+| D-B19 | `startedOn` | **Binding**: nothing predates it; moving it is refused with a conflict naming the earliest record; before it there are no figures, and a future start says so | the start date means what it says |
+| D-B20 | the order of "Coming up" | **Overdue first, oldest first; then soonest first**; undated stay in their own section | the list is ordered by what needs doing |
 
 ## 18. Future Dayroz obligations
 
