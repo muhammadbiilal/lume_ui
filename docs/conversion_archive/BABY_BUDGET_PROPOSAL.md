@@ -13,7 +13,7 @@ rule is invented. Every proposed rule is a decision in §17.
 | `assets/js/tools/context.js` `babyBudget()` (l. 1691–1712) | the data: one fixture month |
 | `assets/js/tools/context.js` `dayName` (l. 204–208) | weekday names off the device's wall clock |
 | `assets/js/tools/context.js` `exportRows` (l. 1905–1983) | the per-tool export table — **no case for babybudget** |
-| `assets/js/services/locale.js` `RATES` (l. 18–44), `tidy` (l. 46–54), `money` (l. 131–142) | USD fixtures converted and rounded, then rounded again by `Intl` |
+| `assets/js/services/locale.js` `RATES` (l. 21–44), `tidy` (l. 47–54), `money` (l. 132–142) | USD fixtures converted and rounded, then rounded again by `Intl` |
 | `assets/js/data/catalogue.js` l. 179 | `{ id: 'babybudget', n: 'Baby Budget', i: 'i-baby', c: 'personal', g: 'personal', ints: ['expenses'], m: 'Plan costs', act: '' }`, not `sens` |
 | `assets/js/data/tool-specs.js` l. 266–267 | `a: 'dashboard', d: 'high', aware: 'currency locale', supports: 'history export offline', src: 'On device', fresh: 'local', rel: ['expenses', 'goals', 'pregnancy']` |
 | `assets/js/tools/registry.js` l. 104, 192 | registration |
@@ -42,7 +42,8 @@ Driven with `measure_destinations.mjs --tool babybudget`, on
 | medium | 700×900 | light | en | PK |
 | expanded | 1100×900 | light | en | PK |
 | landscape | 852×393 | light | en | PK |
-| US, GB, AE, JP | 390×844 | light | en | US, GB, AE, JP |
+| US, AE, JP | 390×844 | light | en | US, AE, JP |
+| GB | 390×844 | light | en | GB, on the `muslim_gb` profile |
 
 These states **do not exist** and could not be driven: empty, adding,
 editing, a month other than the fixture's, a category detail, a year
@@ -79,6 +80,12 @@ oneOff:     Cot and mattress 420 ("Planned")  ·  Pram 260 ("Planned")
 | — | related | Expenses · Savings Goals · Pregnancy |
 
 ### 2.3 Values measured in five markets
+
+"This month" is the capture's `composition.summary.value`; the four item
+figures are the captured text of the two row sections,
+`bounds.sect4.text` and `bounds.sect5.text`. The capture's
+`composition.rows` is empty for this tool, because its rows are
+`compactRow`s rather than the rich rows that key fills.
 
 | market | this month | nappy restock | cot mattress | cot and mattress | pram |
 |---|---:|---:|---:|---:|---:|
@@ -510,7 +517,7 @@ delivery-adapter obligation (§18).
 | `LumeRecordId`, the record envelope and transaction layer, `revert` for Undo | several records written together |
 | the strict-codec, `_Data`/`damagedBefore`/`_verify` and projection patterns of Committee and Installments | the same honesty rules; the pattern is copied, not the code |
 | the transfer pattern (JSON envelope, check then apply, redaction, CSV view) | D-B11 |
-| `LumeDonut` and `LumeBarChart` (`lume_chart.dart`) | both already exist, and the donut's own doc names Baby Budget as one of the tools that proved it |
+| `LumeDonut` and `LumeBarChart` (`lume_chart.dart`) | both already exist, and the chart library's own doc (`lume_chart.dart` l. 7) names Baby Budget as one of the tools that proved the donut |
 | `LumeSummaryCard`, `LumeProgressBar`/ring, `LumeCompactRow`, `LumeRichRow`, `LumeFormCard`, the sheets, the privacy note, the source lines, the scroll reset | shared presentation |
 
 **Not reused:**
@@ -550,8 +557,10 @@ proposal keeps its shape and departs in three places:
   the largest thing in Installments and Committee. A planned purchase
   with an optional expected day covers both of the reference's lists
   (D-B4); recurring items are a named future decision.
-- **Categories are records**, so a reader can name them and give each a
-  plan.
+- **Categories become records of their own**, rather than a list nested
+  inside the budget. The draft already gave a `BudgetCategory` a name and
+  its own plan; making each one a record is what lets a reader reorder,
+  rename and retire them without rewriting the budget.
 - **`kind: recurring | oneOff` becomes `planned` plus `expectedOn`**,
   which is what the two lists actually differ by.
 - **A planned purchase is stored, not derived.** The draft says "only
