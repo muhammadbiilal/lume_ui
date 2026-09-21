@@ -715,91 +715,36 @@ class _BabyBudgetToolState extends ConsumerState<BabyBudgetTool> {
     _go(_View.budget, budget: id);
   }
 
-  /// An existing budget's edit, as the writes the repository offers: the
-  /// name and note, then the plan, then the start, then each category.
-  /// Every one of them is checked where it is written, so a refusal
-  /// leaves the rest as they were.
+  /// An existing budget's edit, as one transaction: a refusal leaves the
+  /// budget exactly as the reader found it, never half-changed.
   BabyBudgetResult<BabyBudgetWrite> _editExisting(
     _BudgetDraft d,
     String name,
     LumeMoney? plan,
     List<BabyCategoryDraft> categories,
   ) {
-    final BabyBudgetView? before = _repo.view().book(null).budget(d.id!);
-    if (before == null) {
-      return const BabyBudgetResult<BabyBudgetWrite>.failed(
-        BabyBudgetFailure(BabyBudgetFailureKind.notFound),
-      );
-    }
-    BabyBudgetResult<BabyBudgetWrite> r = _repo.editBudget(
+    final List<_CategoryDraft> kept = <_CategoryDraft>[
+      for (final _CategoryDraft c in d.categories)
+        if (c.name.text.trim().isNotEmpty || c.plan.text.trim().isNotEmpty) c,
+    ];
+    return _repo.reviseBudget(
       d.id!,
       name: name,
       note: d.note.text.trim().isEmpty ? null : d.note.text,
+      monthlyPlan: plan,
+      startedOn: d.startedOn!,
+      categories: <BabyCategoryEdit>[
+        for (final (int i, BabyCategoryDraft c) in categories.indexed)
+          BabyCategoryEdit(
+            id: i < kept.length ? kept[i].id : null,
+            version: i < kept.length ? kept[i].version : null,
+            name: c.name,
+            monthlyPlan: c.monthlyPlan,
+            colour: c.colour,
+          ),
+      ],
       version: d.version!,
     );
-    if (r.failure != null) return r;
-
-    BabyBudgetView now() => _repo.view().book(null).budget(d.id!)!;
-
-    // The plan is set before the categories when it grows, and after
-    // them when it shrinks, so a valid end state is never refused on the
-    // way there (correction 2).
-    final LumeMoney? was = before.plan;
-    final bool growing =
-        plan != null && (was == null || plan.compareTo(was) >= 0);
-    if (growing && plan != was) {
-      r = _repo.setPlan(d.id!, plan, version: now().budget.version);
-      if (r.failure != null) return r;
-    }
-
-    // Categories the reader took out of the form: their spends stay, and
-    // become uncategorised.
-    final Set<String> keptIds = <String>{
-      for (final _CategoryDraft c in d.categories)
-        if (c.id != null) c.id!.value,
-    };
-    for (final BabyCategory c in before.categories) {
-      if (keptIds.contains(c.id.value)) continue;
-      r = _repo.deleteCategory(c.id, version: c.version);
-      if (r.failure != null) return r;
-    }
-    for (final (int i, _CategoryDraft c) in d.categories.indexed) {
-      if (i >= categories.length) break;
-      final BabyCategoryDraft want = categories[i];
-      final LumeRecordId? id = c.id;
-      if (id == null) {
-        r = _repo.addCategory(d.id!, want);
-      } else {
-        final BabyCategory? current = now().categoryOf(id);
-        if (current == null) continue;
-        if (current.name == want.name &&
-            current.monthlyPlan == want.monthlyPlan) {
-          continue;
-        }
-        r = _repo.editCategory(
-          id,
-          name: want.name,
-          monthlyPlan: want.monthlyPlan,
-          clearPlan: want.monthlyPlan == null,
-          version: current.version,
-        );
-      }
-      if (r.failure != null) return r;
-    }
-
-    if (!growing && plan != was) {
-      r = _repo.setPlan(d.id!, plan, version: now().budget.version);
-      if (r.failure != null) return r;
-    }
-    if (d.startedOn != null && d.startedOn != before.budget.startedOn) {
-      r = _repo.setStartedOn(
-        d.id!,
-        d.startedOn!,
-        version: now().budget.version,
-      );
-      if (r.failure != null) return r;
-    }
-    return r;
   }
 
   Future<void> _saveSpend(AppLocalizations l, BabyBudgetView v) async {

@@ -370,6 +370,139 @@ void main() {
     });
   });
 
+  group('an edit is one transaction', () {
+    test('name, plan, start and categories move together', () {
+      final BabyBudget b = h.add(
+        plan: rs(39000),
+        categories: <BabyCategoryDraft>[
+          BabyCategoryDraft(name: 'Nappies', monthlyPlan: rs(12000)),
+          const BabyCategoryDraft(name: 'Formula'),
+        ],
+      );
+      final BabyCategory nappies = h.category(b.id, 'Nappies');
+      final BabyBudgetResult<BabyBudgetWrite> r = h.repo.reviseBudget(
+        b.id,
+        name: 'Ayaan',
+        note: 'ours',
+        monthlyPlan: rs(50000),
+        startedOn: d(2, 1),
+        categories: <BabyCategoryEdit>[
+          BabyCategoryEdit(
+            id: nappies.id,
+            version: nappies.version,
+            name: 'Nappies & wipes',
+            monthlyPlan: rs(20000),
+          ),
+          const BabyCategoryEdit(name: 'Clothing', colour: 2),
+        ],
+        version: h.view(b.id).budget.version,
+      );
+      expect(r.failure, isNull);
+      final BabyBudgetView v = h.view(b.id);
+      expect(v.name, 'Ayaan');
+      expect(v.budget.note, 'ours');
+      expect(v.plan!.minor, 5000000);
+      expect(v.budget.startedOn, d(2, 1));
+      expect(
+        <String>[for (final BabyCategory c in v.categories) c.name],
+        <String>['Nappies & wipes', 'Clothing'],
+        reason: 'Formula was left out, so it went',
+      );
+      expect(v.categories.first.monthlyPlan!.minor, 2000000);
+      expect(v.categories.first.id, nappies.id, reason: 'renamed, not remade');
+      h.expectSound();
+    });
+
+    test('lowering the plan and the categories at once is allowed, where '
+        'one at a time would not be', () {
+      final BabyBudget b = h.add(
+        plan: rs(39000),
+        categories: <BabyCategoryDraft>[
+          BabyCategoryDraft(name: 'Nappies', monthlyPlan: rs(30000)),
+        ],
+      );
+      final BabyCategory c = h.category(b.id, 'Nappies');
+      // Lowering the budget plan alone is refused, because the category
+      // would hold more than it.
+      expect(
+        h.repo
+            .setPlan(b.id, rs(20000), version: h.view(b.id).budget.version)
+            .failure!
+            .reason,
+        'belowCategories',
+      );
+      // Both together are fine: the transaction is checked once, at the
+      // end, over the state it leaves behind.
+      expect(
+        h.repo
+            .reviseBudget(
+              b.id,
+              name: 'The baby',
+              monthlyPlan: rs(20000),
+              startedOn: b.startedOn,
+              categories: <BabyCategoryEdit>[
+                BabyCategoryEdit(
+                  id: c.id,
+                  version: c.version,
+                  name: 'Nappies',
+                  monthlyPlan: rs(15000),
+                ),
+              ],
+              version: h.view(b.id).budget.version,
+            )
+            .failure,
+        isNull,
+      );
+      expect(h.view(b.id).plan!.minor, 2000000);
+      expect(h.view(b.id).categories.single.monthlyPlan!.minor, 1500000);
+      h.expectSound();
+    });
+
+    test('a refusal leaves the budget exactly as it was', () {
+      final BabyBudget b = h.referenceMonth();
+      final String before = h.records();
+      final BabyCategory health = h.category(b.id, 'Health');
+      // A start after an existing spend, and a rename, in one call.
+      final BabyBudgetResult<BabyBudgetWrite> r = h.repo.reviseBudget(
+        b.id,
+        name: 'Renamed',
+        startedOn: d(9, 30),
+        monthlyPlan: rs(39000),
+        categories: <BabyCategoryEdit>[
+          BabyCategoryEdit(
+            id: health.id,
+            version: health.version,
+            name: 'Renamed too',
+          ),
+        ],
+        version: h.view(b.id).budget.version,
+      );
+      expect(r.failure!.kind, BabyBudgetFailureKind.beforeStart);
+      expect(h.records(), before, reason: 'nothing half-applied');
+      expect(h.view(b.id).name, 'The baby');
+      expect(h.view(b.id).categories, hasLength(4));
+    });
+
+    test('a category whose version moved on is a conflict, and nothing '
+        'else is written either', () {
+      final BabyBudget b = h.add();
+      final BabyCategory c = h.category(b.id, 'Health');
+      final String before = h.records();
+      final BabyBudgetResult<BabyBudgetWrite> r = h.repo.reviseBudget(
+        b.id,
+        name: 'Renamed',
+        monthlyPlan: rs(39000),
+        startedOn: b.startedOn,
+        categories: <BabyCategoryEdit>[
+          BabyCategoryEdit(id: c.id, version: c.version + 5, name: 'Nope'),
+        ],
+        version: h.view(b.id).budget.version,
+      );
+      expect(r.failure!.kind, BabyBudgetFailureKind.conflict);
+      expect(h.records(), before);
+    });
+  });
+
   group('correction 3 — the start means something', () {
     test('a spend before the start is refused', () {
       final BabyBudget b = h.add(startedOn: d(9, 1));

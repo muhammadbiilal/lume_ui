@@ -83,6 +83,28 @@ class BabyBudgetDraft {
 
 /// What a committed write did, and what it made.
 @immutable
+/// One category as an edit describes it: an existing one, carrying its
+/// id and the version the reader had, or a new one with neither.
+@immutable
+class BabyCategoryEdit {
+  const BabyCategoryEdit({
+    this.id,
+    this.version,
+    required this.name,
+    this.monthlyPlan,
+    this.colour = 0,
+  });
+
+  final LumeRecordId? id;
+  final int? version;
+  final String name;
+  final LumeMoney? monthlyPlan;
+  final int colour;
+
+  BabyCategoryDraft get draft =>
+      BabyCategoryDraft(name: name, monthlyPlan: monthlyPlan, colour: colour);
+}
+
 class BabyBudgetWrite {
   const BabyBudgetWrite(this.receipt, {this.budget, this.spend});
 
@@ -495,6 +517,131 @@ class BabyBudgetRepository {
         name: trimmed,
         note: _optional(note),
         clearNote: note == null,
+      ),
+      isNew: false,
+    );
+  });
+
+  /// Everything a budget's form can change, in **one** transaction: its
+  /// name, note, plan and start, and the whole list of its categories.
+  ///
+  /// This exists because the pieces cannot be applied one at a time
+  /// without passing through states none of them allows — lowering the
+  /// plan before lowering the categories under it, say — and because a
+  /// refusal must leave the budget exactly as the reader found it, not
+  /// half-edited. Categories the list leaves out are removed and their
+  /// spends kept, uncategorised; the rest are renamed, re-planned and
+  /// re-ordered in the order given.
+  BabyBudgetResult<BabyBudgetWrite> reviseBudget(
+    LumeRecordId id, {
+    required String name,
+    String? note,
+    LumeMoney? monthlyPlan,
+    required LumeDate startedOn,
+    required List<BabyCategoryEdit> categories,
+    required int version,
+  }) => _write<BabyBudget>((_Data d) {
+    final BabyBudget was = d.budgetRecord(id);
+    final BabyBudgetView v = d.live(id);
+    _expect(was.version, version, id);
+
+    _validateDraft(
+      BabyBudgetDraft(
+        name: name,
+        note: note,
+        currency: was.currency,
+        monthlyPlan: monthlyPlan,
+        startedOn: startedOn,
+        categories: <BabyCategoryDraft>[
+          for (final BabyCategoryEdit c in categories) c.draft,
+        ],
+      ),
+    );
+    // Nothing the budget holds may predate its new first day
+    // (correction 3), and the refusal names the record that stops it.
+    for (final BabySpend s in v.spends) {
+      final LumeDate? day = s.day;
+      if (day != null && day.isBefore(startedOn)) {
+        throw BabyBudgetFailure(
+          BabyBudgetFailureKind.beforeStart,
+          field: 'startedOn',
+          reason: 'recordEarlier',
+          ids: <LumeRecordId>[s.id],
+          day: day,
+          label: s.label,
+        );
+      }
+    }
+
+    // Categories the list no longer holds. Their spends stay, and become
+    // uncategorised — a category is removed, never its money.
+    final Set<String> kept = <String>{
+      for (final BabyCategoryEdit c in categories)
+        if (c.id != null) c.id!.value,
+    };
+    for (final BabyCategory c in v.categories) {
+      if (kept.contains(c.id.value)) continue;
+      for (final BabySpend s in v.spends) {
+        if (s.categoryId != c.id) continue;
+        d.putSpend(s.copyWith(clearCategory: true), isNew: false);
+      }
+      d.removeCategory(c);
+    }
+
+    // The rest, in the order the reader put them in.
+    for (final (int order, BabyCategoryEdit c) in categories.indexed) {
+      final LumeRecordId? existing = c.id;
+      if (existing == null) {
+        d.putCategory(
+          BabyCategory(
+            id: _newId(),
+            budgetId: id,
+            name: c.name.trim(),
+            monthlyPlan: c.monthlyPlan,
+            order: order,
+            colour: c.colour,
+            createdAt: _now(),
+          ),
+          isNew: true,
+          currency: was.currency,
+        );
+        continue;
+      }
+      final BabyCategory before = d.category(existing);
+      if (before.budgetId != id) {
+        throw BabyBudgetFailure(
+          BabyBudgetFailureKind.notFound,
+          ids: <LumeRecordId>[existing],
+        );
+      }
+      if (c.version != null) _expect(before.version, c.version!, existing);
+      d.putCategory(
+        BabyCategory(
+          id: before.id,
+          budgetId: id,
+          name: c.name.trim(),
+          monthlyPlan: c.monthlyPlan,
+          order: order,
+          colour: c.colour,
+          createdAt: before.createdAt,
+          version: before.version,
+        ),
+        isNew: false,
+        currency: was.currency,
+      );
+    }
+
+    return d.putBudget(
+      BabyBudget(
+        id: was.id,
+        name: name.trim(),
+        note: _optional(note),
+        currency: was.currency,
+        monthlyPlan: monthlyPlan,
+        startedOn: startedOn,
+        archivedOn: was.archivedOn,
+        createdAt: was.createdAt,
+        version: was.version,
       ),
       isNew: false,
     );
