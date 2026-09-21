@@ -648,6 +648,97 @@ void main() {
       h.expectSound();
     });
 
+    test('a member with two shares is paid out share by share, not member '
+        'by member', () {
+      // You hold cycles 2 and 4; the order is by cycle, so you appear
+      // twice in it, as two separate shares.
+      final Committee c = h.add(
+        members: <CommitteeMemberDraft>[
+          const CommitteeMemberDraft(name: 'Ahmed', cycles: <int>[1]),
+          const CommitteeMemberDraft(
+            name: 'You',
+            isReader: true,
+            cycles: <int>[2, 4],
+          ),
+          const CommitteeMemberDraft(name: 'Sara', cycles: <int>[3]),
+          const CommitteeMemberDraft(name: 'Hina', cycles: <int>[5]),
+        ],
+      );
+      final CommitteeView v = h.view(c.id);
+      final CommitteeMemberView me = h.member(c.id, 'You');
+      expect(me.shares, 2);
+      // The payout order is a list of positions: the same person holds two
+      // of them, and they are different records.
+      final LumeRecordId two = v.cycles[1].recipient.id;
+      final LumeRecordId four = v.cycles[3].recipient.id;
+      expect(two, isNot(four));
+      expect(v.cycles[1].recipient.memberId, me.member.id);
+      expect(v.cycles[3].recipient.memberId, me.member.id);
+      expect(
+        <String>[
+          for (final CommitteeCycleView x in v.cycles) x.recipientMember.name,
+        ],
+        <String>['Ahmed', 'You', 'Sara', 'You', 'Hina'],
+      );
+
+      for (int n = 1; n <= 4; n++) {
+        h.collect(c.id, n);
+      }
+      // Paying out cycle 2 pays that share alone.
+      final CommitteeResult<CommitteeWrite> first = h.payout(c.id, 2);
+      expect(first.failure, isNull);
+      expect(first.value!.payout!.positionId, two);
+      expect(h.cycle(c.id, 2).paidOut, isTrue);
+      expect(h.cycle(c.id, 4).paidOut, isFalse, reason: 'the other share');
+      expect(h.member(c.id, 'You').received.minor, 14150000);
+
+      // And cycle 4 is its own record, to the other share.
+      final CommitteeResult<CommitteeWrite> second = h.payout(c.id, 4);
+      expect(second.failure, isNull);
+      expect(second.value!.payout!.positionId, four);
+      expect(h.member(c.id, 'You').received.minor, 28300000);
+
+      // Voiding one leaves the other alone: one share, one payout.
+      final CommitteePayout x = h.cycle(c.id, 2).payout!;
+      expect(
+        h.repo.setPayoutVoided(x.id, true, version: x.version).failure,
+        isNull,
+      );
+      expect(h.cycle(c.id, 2).paidOut, isFalse);
+      expect(h.cycle(c.id, 4).paidOut, isTrue);
+      expect(h.member(c.id, 'You').received.minor, 14150000);
+      h.expectSound();
+    });
+
+    test('two shares owe separately in a cycle: one is paid, one is still '
+        'owed, and no payout may be recorded', () {
+      final Committee c = h.add(
+        members: <CommitteeMemberDraft>[
+          const CommitteeMemberDraft(
+            name: 'You',
+            isReader: true,
+            cycles: <int>[1, 2],
+          ),
+          const CommitteeMemberDraft(name: 'Ahmed', cycles: <int>[3]),
+        ],
+      );
+      // The reader's own action records both shares at once.
+      final CommitteeResult<CommitteeWrite> mine = h.pay(c.id, 1, 'You');
+      expect(mine.value!.contributions, hasLength(2));
+      expect(
+        mine.value!.contributions
+            .map((CommitteeContribution x) => x.positionId)
+            .toSet(),
+        hasLength(2),
+        reason: 'one record per share',
+      );
+      expect(h.cycle(c.id, 1).collected.minor, 5660000);
+      expect(h.cycle(c.id, 1).paidCount, 2, reason: 'two of three shares');
+      // Ahmed has not paid, so the cycle is short and nothing is paid out.
+      expect(h.payout(c.id, 1).failure!.shortfall!.minor, 2830000);
+      h.expectSound();
+    });
+
     test('the recipient is the position that holds the cycle, and a second '
         'payout is refused', () {
       final Committee c = h.add();
