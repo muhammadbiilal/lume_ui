@@ -21,6 +21,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:lume/core/fixtures/lume_clock.dart';
 import 'package:lume/core/layout/lume_breakpoint.dart';
 import 'package:lume/features/onboarding/domain/profile_repository.dart';
 
@@ -212,6 +213,13 @@ Future<Map<String, Object?>> captureLumeRoute(
   /// The saved profile the launch reads — another market, another faith
   /// setting — where the default Pakistani reader is not the cell.
   LumeProfileRepository? profile,
+
+  /// The clock the tree reads. [kFixtureInstant] is a local `DateTime`,
+  /// so a tool that converts it into another zone draws a different
+  /// figure on a machine in a different zone. A cell whose content
+  /// depends on the instant pins a UTC one here and is then the same
+  /// picture everywhere.
+  LumeClock? clock,
 }) async {
   await tester.runAsync(loadLumeFonts);
 
@@ -224,6 +232,7 @@ Future<Map<String, Object?>> captureLumeRoute(
     textScale: textScale,
     overrides: overrides,
     profile: profile,
+    clock: clock,
   );
   await tester.pumpAndSettle();
   if (after != null) {
