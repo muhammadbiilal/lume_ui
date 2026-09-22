@@ -15,6 +15,7 @@ import 'package:lume/core/widgets/lume/lume_overlay.dart';
 import 'package:lume/features/focus/application/focus_controller.dart';
 import 'package:lume/features/focus/presentation/focus_tool.dart';
 
+import '../../helpers/lifecycle.dart';
 import '../../helpers/capture.dart';
 import '../../helpers/load_fonts.dart';
 import '../tools/tool_parity.dart';
@@ -206,14 +207,7 @@ void main() {
       await tester.pump(const Duration(seconds: 1));
       expect(focusTime(tester), '24:00');
 
-      for (final AppLifecycleState s in <AppLifecycleState>[
-        AppLifecycleState.inactive,
-        AppLifecycleState.hidden,
-        AppLifecycleState.paused,
-      ]) {
-        tester.binding.handleAppLifecycleStateChanged(s);
-      }
-      await tester.pump();
+      await lumeGoAway(tester);
       expect(tester.binding.hasScheduledFrame, isFalse);
 
       // Nine minutes with the screen off.
@@ -239,25 +233,11 @@ void main() {
       // The framework only allows inactive -> hidden -> paused on the way
       // out and hidden -> inactive -> resumed on the way back; a direct
       // hop trips its own assertion once a real router is mounted.
-      for (final AppLifecycleState s in <AppLifecycleState>[
-        AppLifecycleState.inactive,
-        AppLifecycleState.hidden,
-        AppLifecycleState.paused,
-      ]) {
-        tester.binding.handleAppLifecycleStateChanged(s);
-      }
-      await tester.pump();
+      await lumeGoAway(tester);
       world.advance(const Duration(minutes: 40));
       expect(find.text('Focus finished'), findsNothing);
 
-      for (final AppLifecycleState s in <AppLifecycleState>[
-        AppLifecycleState.hidden,
-        AppLifecycleState.inactive,
-        AppLifecycleState.resumed,
-      ]) {
-        tester.binding.handleAppLifecycleStateChanged(s);
-      }
-      await tester.pump();
+      await lumeComeBack(tester);
       expect(find.text('Focus finished'), findsOneWidget);
       expect(focusTime(tester), '05:00');
       await tester.pump(const Duration(seconds: 3));

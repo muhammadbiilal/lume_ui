@@ -32,6 +32,7 @@ import 'package:lume/features/play/data/play_fixtures.dart';
 import 'package:lume/features/play/presentation/play_tool.dart';
 import 'package:lume/l10n/app_localizations.dart';
 
+import '../../helpers/lifecycle.dart';
 import '../../helpers/capture.dart';
 import '../../helpers/load_fonts.dart';
 import '../../helpers/lume_harness.dart';
@@ -420,19 +421,7 @@ void main() {
       // working, not Play reflowing.
       final Size grid = tester.getSize(find.byKey(LumePlayTool.gridKey));
 
-      for (final AppLifecycleState state in <AppLifecycleState>[
-        AppLifecycleState.inactive,
-        // `hidden` sits between inactive and paused; skipping it trips
-        // the framework's own assertion on a real router.
-        AppLifecycleState.hidden,
-        AppLifecycleState.paused,
-        AppLifecycleState.hidden,
-        AppLifecycleState.inactive,
-        AppLifecycleState.resumed,
-      ]) {
-        tester.binding.handleAppLifecycleStateChanged(state);
-        await tester.pump();
-      }
+      await lumeRoundTrip(tester);
       await tester.pump(const Duration(minutes: 5));
 
       expect(toolText(tester), before);

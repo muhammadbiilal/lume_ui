@@ -19,6 +19,7 @@ import '../../events/presentation/events_tool.dart';
 import '../../expenses/presentation/expenses_tool.dart';
 import '../../babybudget/presentation/babybudget_tool.dart';
 import '../../focus/presentation/focus_tool.dart';
+import '../../tasbih/presentation/tasbih_tool.dart';
 import '../../play/presentation/play_tool.dart';
 import '../../committee/presentation/committee_tool.dart';
 import '../../flights/presentation/flights_tool.dart';
@@ -85,4 +86,5 @@ const Map<String, LumeToolBuilder> kLumeToolRegistry =
       // Wave 3 (`ROLLOUT_WAVE_3.md`).
       'focus': LumeFocusTool.open,
       'play': LumePlayTool.open,
+      'tasbih': LumeTasbihTool.open,
     };

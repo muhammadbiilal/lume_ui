@@ -72,6 +72,10 @@ class LumeDataCapability {
     'loan',
     'compound',
     'stopwatch',
+    // Tasbih: the count, the round and the rounds are the reader's own
+    // taps. Its five phrases are reference content, not a fixture
+    // standing in for anything of theirs (wave 3).
+    'tasbih',
   };
 
   /// Tools whose every figure is worked out on the device for the reader's
