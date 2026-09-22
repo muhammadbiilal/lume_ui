@@ -13299,7 +13299,7 @@
   },
   "tasbihMeaning": "Meaning",
   "@tasbihMeaning": {
-    "description": "Tasbih: the English gloss’s label"
+    "description": "Tasbih: the label above the phrase’s plain meaning, in the reader’s own language"
   },
   "playGames": "Games",
   "@playGames": {
@@ -13345,7 +13345,7 @@
   "@playNotYet": {
     "description": "Play: the reference draws the tile and nothing opens"
   },
-  "playNotYetText": "These are the games Lume plans to carry. None of them can be played yet, and nothing here is a score of yours.",
+  "playNotYetText": "None of these can be played yet, and nothing here is a score of yours.",
   "@playNotYetText": {
     "description": "Play: why nothing opens, said plainly"
   },

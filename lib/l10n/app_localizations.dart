@@ -16747,7 +16747,7 @@ abstract class AppLocalizations {
   /// **'Round of {n}'**
   String tasbihTargetLabel(String n);
 
-  /// Tasbih: the English gloss’s label
+  /// Tasbih: the label above the phrase’s plain meaning, in the reader’s own language
   ///
   /// In en, this message translates to:
   /// **'Meaning'**
@@ -16822,7 +16822,7 @@ abstract class AppLocalizations {
   /// Play: why nothing opens, said plainly
   ///
   /// In en, this message translates to:
-  /// **'These are the games Lume plans to carry. None of them can be played yet, and nothing here is a score of yours.'**
+  /// **'None of these can be played yet, and nothing here is a score of yours.'**
   String get playNotYetText;
 
   /// Play: how many games the grid holds

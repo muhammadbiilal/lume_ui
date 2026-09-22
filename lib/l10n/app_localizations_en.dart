@@ -9819,7 +9819,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get playNotYetText =>
-      'These are the games Lume plans to carry. None of them can be played yet, and nothing here is a score of yours.';
+      'None of these can be played yet, and nothing here is a score of yours.';
 
   @override
   String playCount(int n) {

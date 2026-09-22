@@ -9525,74 +9525,77 @@ class AppLocalizationsAr extends AppLocalizations {
   }
 
   @override
-  String get clockYourTime => 'Your time';
+  String get clockYourTime => 'وقتك';
 
   @override
-  String get clockYourZone => 'Your time zone';
+  String get clockYourZone => 'منطقتك الزمنية';
 
   @override
-  String get clockCities => 'Clocks';
+  String get clockCities => 'الساعات';
 
   @override
-  String get clockAdd => 'Add a place';
+  String get clockAdd => 'إضافة مكان';
 
   @override
-  String get clockAddTitle => 'Add a place';
+  String get clockAddTitle => 'إضافة مكان';
 
   @override
-  String get clockSearch => 'Search cities and time zones';
+  String get clockSearch => 'ابحث في المدن والمناطق الزمنية';
 
   @override
-  String get clockNoMatch => 'Nothing matches';
+  String get clockNoMatch => 'لا شيء مطابق';
 
   @override
-  String get clockNoMatchText => 'Try a city, a country or a time zone name.';
+  String get clockNoMatchText => 'جرّب اسم مدينة أو بلد أو منطقة زمنية.';
 
   @override
-  String get clockShowAll => 'Show all';
+  String get clockShowAll => 'عرض الكل';
 
   @override
-  String get clockEmptyTitle => 'No places yet';
+  String get clockEmptyTitle => 'لا أماكن بعد';
 
   @override
   String get clockEmptyText =>
-      'Add a city to see its time beside yours. Your own time is always here.';
+      'أضف مدينة لترى وقتها إلى جانب وقتك. ووقتك أنت موجود هنا دائمًا.';
 
   @override
   String clockCount(int n) {
     String _temp0 = intl.Intl.pluralLogic(
       n,
       locale: localeName,
-      other: '$n places',
-      one: '1 place',
+      other: '$n مكان',
+      many: '$n مكانًا',
+      few: '$n أماكن',
+      two: 'مكانان',
+      one: 'مكان واحد',
     );
     return '$_temp0';
   }
 
   @override
-  String get clockSameTime => 'Same time';
+  String get clockSameTime => 'الوقت نفسه';
 
   @override
   String clockAhead(String offset) {
-    return '$offset ahead';
+    return 'يتقدّم بـ $offset';
   }
 
   @override
   String clockBehind(String offset) {
-    return '$offset behind';
+    return 'يتأخّر بـ $offset';
   }
 
   @override
-  String get clockYesterday => 'Yesterday';
+  String get clockYesterday => 'أمس';
 
   @override
-  String get clockToday => 'Today';
+  String get clockToday => 'اليوم';
 
   @override
-  String get clockTomorrow => 'Tomorrow';
+  String get clockTomorrow => 'غدًا';
 
   @override
-  String get clockSummerTime => 'Summer time';
+  String get clockSummerTime => 'التوقيت الصيفي';
 
   @override
   String clockRowSemantics(
@@ -9601,156 +9604,155 @@ class AppLocalizationsAr extends AppLocalizations {
     String day,
     String offset,
   ) {
-    return '$place, $time, $day, $offset';
+    return '$place، $time، $day، $offset';
   }
 
   @override
-  String get clockConvert => 'Convert a time';
+  String get clockConvert => 'تحويل وقت';
 
   @override
-  String get clockConvertFrom => 'From';
+  String get clockConvertFrom => 'من';
 
   @override
-  String get clockConvertTo => 'To';
+  String get clockConvertTo => 'إلى';
 
   @override
-  String get clockConvertAt => 'At';
+  String get clockConvertAt => 'عند الساعة';
 
   @override
   String clockConvertResult(String time, String day) {
-    return '$time on $day';
+    return '$time يوم $day';
   }
 
   @override
-  String get clockConvertSame => 'Pick two different places';
+  String get clockConvertSame => 'اختر مكانين مختلفين';
 
   @override
-  String get clockRemove => 'Remove';
+  String get clockRemove => 'إزالة';
 
   @override
-  String get clockMoveUp => 'Move up';
+  String get clockMoveUp => 'تحريك لأعلى';
 
   @override
-  String get clockMoveDown => 'Move down';
+  String get clockMoveDown => 'تحريك لأسفل';
 
   @override
   String clockAdded(String place) {
-    return '$place added';
+    return 'أُضيف $place';
   }
 
   @override
   String clockRemovedToast(String place) {
-    return '$place removed';
+    return 'أُزيل $place';
   }
 
   @override
   String clockAlready(String place) {
-    return '$place is already on the list';
+    return '$place موجود في القائمة بالفعل';
   }
 
   @override
-  String get clockZoneUnknownTitle => 'That time zone is not known';
+  String get clockZoneUnknownTitle => 'هذه المنطقة الزمنية غير معروفة';
 
   @override
   String clockZoneUnknownText(String id) {
-    return 'Lume could not find “$id” in the time-zone database it carries. Nothing has been guessed in its place.';
+    return 'لم يجد Lume “$id” في قاعدة بيانات المناطق الزمنية التي يحملها. ولم يُخمَّن شيء مكانها.';
   }
 
   @override
-  String get clockDatabaseTitle => 'The time-zone database is unavailable';
+  String get clockDatabaseTitle => 'قاعدة بيانات المناطق الزمنية غير متاحة';
 
   @override
   String get clockDatabaseText =>
-      'Without it no time anywhere can be worked out, and none is shown.';
+      'من دونها لا يمكن حساب وقت أي مكان، فلا يُعرض أي وقت.';
 
   @override
-  String get clockDeviceTitle => 'This device has not said where it is';
+  String get clockDeviceTitle => 'لم يذكر هذا الجهاز أين هو';
 
   @override
   String get clockDeviceText =>
-      'Choose your time zone in Settings, and your own clock will appear here.';
+      'اختر منطقتك الزمنية من الإعدادات، وستظهر ساعتك هنا.';
 
   @override
-  String get clockChooseTitle => 'Your country has more than one time zone';
+  String get clockChooseTitle => 'في بلدك أكثر من منطقة زمنية';
 
   @override
-  String get clockChooseText =>
-      'Choose the one you are in, and your own clock will appear here.';
+  String get clockChooseText => 'اختر التي أنت فيها، وستظهر ساعتك هنا.';
 
   @override
   String clockAliasNote(String stored, String canonical) {
-    return '$stored is now called $canonical';
+    return '$stored يُسمّى الآن $canonical';
   }
 
   @override
   String clockDatabaseVersion(String version) {
-    return 'IANA time-zone database $version';
+    return 'قاعدة بيانات المناطق الزمنية IANA $version';
   }
 
   @override
-  String get calcKeypad => 'Calculator keypad';
+  String get calcKeypad => 'لوحة مفاتيح الآلة الحاسبة';
 
   @override
-  String get calcDisplay => 'Result';
+  String get calcDisplay => 'النتيجة';
 
   @override
-  String get calcExpression => 'Expression';
+  String get calcExpression => 'العملية الحسابية';
 
   @override
-  String get calcHistory => 'History';
+  String get calcHistory => 'السجل';
 
   @override
-  String get calcNoHistory => 'Nothing worked out yet.';
+  String get calcNoHistory => 'لم يُحسب شيء بعد.';
 
   @override
-  String get calcClear => 'Clear';
+  String get calcClear => 'مسح';
 
   @override
-  String get calcClearEntry => 'Clear entry';
+  String get calcClearEntry => 'مسح المُدخل';
 
   @override
-  String get calcBackspace => 'Backspace';
+  String get calcBackspace => 'مسح للخلف';
 
   @override
-  String get calcEquals => 'Equals';
+  String get calcEquals => 'يساوي';
 
   @override
-  String get calcPlus => 'Plus';
+  String get calcPlus => 'زائد';
 
   @override
-  String get calcMinus => 'Minus';
+  String get calcMinus => 'ناقص';
 
   @override
-  String get calcTimes => 'Times';
+  String get calcTimes => 'ضرب';
 
   @override
-  String get calcDivide => 'Divided by';
+  String get calcDivide => 'مقسومًا على';
 
   @override
-  String get calcPercent => 'Per cent';
+  String get calcPercent => 'بالمئة';
 
   @override
-  String get calcDecimal => 'Decimal point';
+  String get calcDecimal => 'الفاصلة العشرية';
 
   @override
-  String get calcSign => 'Change sign';
+  String get calcSign => 'تغيير الإشارة';
 
   @override
   String calcDigit(String n) {
-    return 'Digit $n';
+    return 'الرقم $n';
   }
 
   @override
-  String get calcErrDivZero => 'Nothing can be divided by zero';
+  String get calcErrDivZero => 'لا يمكن قسمة شيء على صفر';
 
   @override
-  String get calcErrTooLong => 'That is as many digits as this can hold';
+  String get calcErrTooLong => 'هذا أقصى عدد من الأرقام يمكن أن تحمله';
 
   @override
-  String get calcErrOverflow => 'That number is too large to work with';
+  String get calcErrOverflow => 'هذا العدد أكبر من أن يُعمل عليه';
 
   @override
-  String get calcErrPrecision => 'That division does not end';
+  String get calcErrPrecision => 'هذه القسمة لا تنتهي';
 
   @override
   String calcHistoryRow(String expression, String result) {
@@ -9758,79 +9760,82 @@ class AppLocalizationsAr extends AppLocalizations {
   }
 
   @override
-  String get calcCleared => 'Cleared';
+  String get calcCleared => 'مُسح';
 
   @override
   String calcPrecisionNote(String places) {
-    return 'Worked out exactly, to $places decimal places.';
+    return 'حُسب بالضبط، حتى $places منزلة عشرية.';
   }
 
   @override
-  String get focusFocus => 'Focus';
+  String get focusFocus => 'تركيز';
 
   @override
-  String get focusBreak => 'Break';
+  String get focusBreak => 'استراحة';
 
   @override
-  String get focusStart => 'Start focus';
+  String get focusStart => 'ابدأ التركيز';
 
   @override
-  String get focusPause => 'Pause';
+  String get focusPause => 'إيقاف مؤقت';
 
   @override
-  String get focusResume => 'Resume';
+  String get focusResume => 'متابعة';
 
   @override
-  String get focusReset => 'Reset';
+  String get focusReset => 'إعادة';
 
   @override
-  String get focusSkip => 'Skip';
+  String get focusSkip => 'تخطٍ';
 
   @override
-  String get focusDone => 'Focus finished';
+  String get focusDone => 'انتهى التركيز';
 
   @override
-  String get focusBreakOver => 'Break over';
+  String get focusBreakOver => 'انتهت الاستراحة';
 
   @override
   String focusSession(String n, String of) {
-    return 'Session $n of $of';
+    return 'الجلسة $n من $of';
   }
 
   @override
-  String get focusRunning => 'Running';
+  String get focusRunning => 'جارية';
 
   @override
-  String get focusPaused => 'Paused';
+  String get focusPaused => 'متوقفة مؤقتًا';
 
   @override
-  String get focusReady => 'Ready';
+  String get focusReady => 'جاهزة';
 
   @override
-  String get focusLength => 'Focus length';
+  String get focusLength => 'مدة التركيز';
 
   @override
-  String get focusBreakLength => 'Break length';
+  String get focusBreakLength => 'مدة الاستراحة';
 
   @override
-  String get focusToday => 'Minutes today';
+  String get focusToday => 'دقائق اليوم';
 
   @override
-  String get focusStreakLabel => 'Day streak';
+  String get focusStreakLabel => 'تتابع الأيام';
 
   @override
-  String get focusSessionsLabel => 'Sessions';
+  String get focusSessionsLabel => 'الجلسات';
 
   @override
-  String get focusThisWeek => 'This week';
+  String get focusThisWeek => 'هذا الأسبوع';
 
   @override
   String focusMinutes(int n) {
     String _temp0 = intl.Intl.pluralLogic(
       n,
       locale: localeName,
-      other: '$n minutes',
-      one: '1 minute',
+      other: '$n دقيقة',
+      many: '$n دقيقة',
+      few: '$n دقائق',
+      two: 'دقيقتان',
+      one: 'دقيقة واحدة',
     );
     return '$_temp0';
   }
@@ -9841,25 +9846,24 @@ class AppLocalizationsAr extends AppLocalizations {
   }
 
   @override
-  String get focusThisSession => 'This session';
+  String get focusThisSession => 'هذه الجلسة';
 
   @override
-  String get focusNothingYet =>
-      'Nothing yet — start a session and it will count here.';
+  String get focusNothingYet => 'لا شيء بعد — ابدأ جلسة وستُحسب هنا.';
 
   @override
   String get focusKeptSession =>
-      'Counted since you opened Lume. Nothing here survives closing it.';
+      'محسوب منذ فتحك Lume. ولا يبقى شيء هنا بعد إغلاقه.';
 
   @override
-  String get tasbihCounter => 'Counter';
+  String get tasbihCounter => 'عدّاد';
 
   @override
-  String get tasbihTap => 'Tap to count';
+  String get tasbihTap => 'انقر للعد';
 
   @override
   String tasbihOf(String count, String target) {
-    return '$count of $target';
+    return '$count من $target';
   }
 
   @override
@@ -9867,107 +9871,111 @@ class AppLocalizationsAr extends AppLocalizations {
     String _temp0 = intl.Intl.pluralLogic(
       n,
       locale: localeName,
-      other: '$n rounds',
-      one: '1 round',
-      zero: 'No rounds',
+      other: '$n جولة',
+      many: '$n جولة',
+      few: '$n جولات',
+      two: 'جولتان',
+      one: 'جولة واحدة',
+      zero: 'لا جولات',
     );
     return '$_temp0';
   }
 
   @override
-  String get tasbihReset => 'Reset';
+  String get tasbihReset => 'إعادة';
 
   @override
-  String get tasbihResetAsk => 'Reset the counter?';
+  String get tasbihResetAsk => 'إعادة العدّاد إلى الصفر؟';
 
   @override
-  String get tasbihResetText =>
-      'The count and the rounds go back to zero. Nothing is kept.';
+  String get tasbihResetText => 'يعود العدد والجولات إلى الصفر. ولا يُحفظ شيء.';
 
   @override
-  String get tasbihResetGo => 'Reset it';
+  String get tasbihResetGo => 'أعِده';
 
   @override
-  String get tasbihKeepCount => 'Keep counting';
+  String get tasbihKeepCount => 'تابع العد';
 
   @override
-  String get tasbihComplete => 'Round complete';
+  String get tasbihComplete => 'اكتملت الجولة';
 
   @override
-  String get tasbihPhrase => 'Phrase';
+  String get tasbihPhrase => 'العبارة';
 
   @override
-  String get tasbihPickTitle => 'Choose a phrase';
+  String get tasbihPickTitle => 'اختر عبارة';
 
   @override
-  String get tasbihSwitchAsk => 'Change the phrase?';
+  String get tasbihSwitchAsk => 'تغيير العبارة؟';
 
   @override
   String get tasbihSwitchText =>
-      'The count goes back to zero. The rounds you have finished are kept.';
+      'يعود العدد إلى الصفر. وتبقى الجولات التي أتممتها.';
 
   @override
-  String get tasbihSwitchGo => 'Change it';
+  String get tasbihSwitchGo => 'غيّرها';
 
   @override
-  String get tasbihMax => 'That is as high as the counter goes';
+  String get tasbihMax => 'هذا أقصى ما يصل إليه العدّاد';
 
   @override
-  String get tasbihNotKept =>
-      'The count is here while Lume is open. Nothing is written down.';
+  String get tasbihNotKept => 'العدد هنا ما دام Lume مفتوحًا. ولا يُكتب شيء.';
 
   @override
   String tasbihTargetLabel(String n) {
-    return 'Round of $n';
+    return 'جولة من $n';
   }
 
   @override
-  String get tasbihMeaning => 'Meaning';
+  String get tasbihMeaning => 'المعنى';
 
   @override
-  String get playGames => 'Games';
+  String get playGames => 'الألعاب';
 
   @override
-  String get playKind => 'Kind';
+  String get playKind => 'النوع';
 
   @override
-  String get playKindPuzzle => 'Puzzle';
+  String get playKindPuzzle => 'ألغاز';
 
   @override
-  String get playKindWord => 'Word';
+  String get playKindWord => 'كلمات';
 
   @override
-  String get playKindMemory => 'Memory';
+  String get playKindMemory => 'ذاكرة';
 
   @override
-  String get playKindArithmetic => 'Arithmetic';
+  String get playKindArithmetic => 'حساب';
 
   @override
-  String get playGameNumberGrid => 'Number Grid';
+  String get playGameNumberGrid => 'شبكة الأرقام';
 
   @override
-  String get playGameWordChain => 'Word Chain';
+  String get playGameWordChain => 'سلسلة الكلمات';
 
   @override
-  String get playGameMemoryMatch => 'Memory Match';
+  String get playGameMemoryMatch => 'مطابقة الذاكرة';
 
   @override
-  String get playGameQuickMaths => 'Quick Maths';
+  String get playGameQuickMaths => 'حساب سريع';
 
   @override
-  String get playNotYet => 'Not playable yet';
+  String get playNotYet => 'غير قابلة للعب بعد';
 
   @override
   String get playNotYetText =>
-      'These are the games Lume plans to carry. None of them can be played yet, and nothing here is a score of yours.';
+      'لا يمكن لعب أيٍّ من هذه الألعاب بعد، ولا شيء هنا نتيجة تخصّك.';
 
   @override
   String playCount(int n) {
     String _temp0 = intl.Intl.pluralLogic(
       n,
       locale: localeName,
-      other: '$n games',
-      one: '1 game',
+      other: '$n لعبة',
+      many: '$n لعبة',
+      few: '$n ألعاب',
+      two: 'لعبتان',
+      one: 'لعبة واحدة',
     );
     return '$_temp0';
   }

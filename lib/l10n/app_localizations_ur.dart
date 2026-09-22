@@ -9378,74 +9378,74 @@ class AppLocalizationsUr extends AppLocalizations {
   }
 
   @override
-  String get clockYourTime => 'Your time';
+  String get clockYourTime => 'آپ کا وقت';
 
   @override
-  String get clockYourZone => 'Your time zone';
+  String get clockYourZone => 'آپ کا ٹائم زون';
 
   @override
-  String get clockCities => 'Clocks';
+  String get clockCities => 'گھڑیاں';
 
   @override
-  String get clockAdd => 'Add a place';
+  String get clockAdd => 'جگہ شامل کریں';
 
   @override
-  String get clockAddTitle => 'Add a place';
+  String get clockAddTitle => 'جگہ شامل کریں';
 
   @override
-  String get clockSearch => 'Search cities and time zones';
+  String get clockSearch => 'شہر اور ٹائم زون تلاش کریں';
 
   @override
-  String get clockNoMatch => 'Nothing matches';
+  String get clockNoMatch => 'کچھ نہیں ملا';
 
   @override
-  String get clockNoMatchText => 'Try a city, a country or a time zone name.';
+  String get clockNoMatchText => 'کوئی شہر، ملک یا ٹائم زون کا نام آزمائیں۔';
 
   @override
-  String get clockShowAll => 'Show all';
+  String get clockShowAll => 'سب دکھائیں';
 
   @override
-  String get clockEmptyTitle => 'No places yet';
+  String get clockEmptyTitle => 'ابھی کوئی جگہ نہیں';
 
   @override
   String get clockEmptyText =>
-      'Add a city to see its time beside yours. Your own time is always here.';
+      'کوئی شہر شامل کریں تاکہ اس کا وقت آپ کے وقت کے ساتھ نظر آئے۔ آپ کا اپنا وقت ہمیشہ یہاں رہتا ہے۔';
 
   @override
   String clockCount(int n) {
     String _temp0 = intl.Intl.pluralLogic(
       n,
       locale: localeName,
-      other: '$n places',
-      one: '1 place',
+      other: '$n جگہیں',
+      one: '1 جگہ',
     );
     return '$_temp0';
   }
 
   @override
-  String get clockSameTime => 'Same time';
+  String get clockSameTime => 'وہی وقت';
 
   @override
   String clockAhead(String offset) {
-    return '$offset ahead';
+    return '$offset آگے';
   }
 
   @override
   String clockBehind(String offset) {
-    return '$offset behind';
+    return '$offset پیچھے';
   }
 
   @override
-  String get clockYesterday => 'Yesterday';
+  String get clockYesterday => 'گزشتہ کل';
 
   @override
-  String get clockToday => 'Today';
+  String get clockToday => 'آج';
 
   @override
-  String get clockTomorrow => 'Tomorrow';
+  String get clockTomorrow => 'کل';
 
   @override
-  String get clockSummerTime => 'Summer time';
+  String get clockSummerTime => 'سمر ٹائم';
 
   @override
   String clockRowSemantics(
@@ -9454,156 +9454,156 @@ class AppLocalizationsUr extends AppLocalizations {
     String day,
     String offset,
   ) {
-    return '$place, $time, $day, $offset';
+    return '$place، $time، $day، $offset';
   }
 
   @override
-  String get clockConvert => 'Convert a time';
+  String get clockConvert => 'وقت تبدیل کریں';
 
   @override
-  String get clockConvertFrom => 'From';
+  String get clockConvertFrom => 'کہاں سے';
 
   @override
-  String get clockConvertTo => 'To';
+  String get clockConvertTo => 'کہاں تک';
 
   @override
-  String get clockConvertAt => 'At';
+  String get clockConvertAt => 'کس وقت';
 
   @override
   String clockConvertResult(String time, String day) {
-    return '$time on $day';
+    return '$day کو $time';
   }
 
   @override
-  String get clockConvertSame => 'Pick two different places';
+  String get clockConvertSame => 'دو مختلف جگہیں منتخب کریں';
 
   @override
-  String get clockRemove => 'Remove';
+  String get clockRemove => 'ہٹائیں';
 
   @override
-  String get clockMoveUp => 'Move up';
+  String get clockMoveUp => 'اوپر لے جائیں';
 
   @override
-  String get clockMoveDown => 'Move down';
+  String get clockMoveDown => 'نیچے لے جائیں';
 
   @override
   String clockAdded(String place) {
-    return '$place added';
+    return '$place شامل ہو گیا';
   }
 
   @override
   String clockRemovedToast(String place) {
-    return '$place removed';
+    return '$place ہٹا دیا گیا';
   }
 
   @override
   String clockAlready(String place) {
-    return '$place is already on the list';
+    return '$place پہلے سے فہرست میں ہے';
   }
 
   @override
-  String get clockZoneUnknownTitle => 'That time zone is not known';
+  String get clockZoneUnknownTitle => 'یہ ٹائم زون معلوم نہیں';
 
   @override
   String clockZoneUnknownText(String id) {
-    return 'Lume could not find “$id” in the time-zone database it carries. Nothing has been guessed in its place.';
+    return 'Lume کو اپنے ساتھ موجود ٹائم زون ڈیٹابیس میں “$id” نہیں ملا۔ اس کی جگہ کوئی اندازہ نہیں لگایا گیا۔';
   }
 
   @override
-  String get clockDatabaseTitle => 'The time-zone database is unavailable';
+  String get clockDatabaseTitle => 'ٹائم زون ڈیٹابیس دستیاب نہیں';
 
   @override
   String get clockDatabaseText =>
-      'Without it no time anywhere can be worked out, and none is shown.';
+      'اس کے بغیر کہیں کا وقت نہیں نکالا جا سکتا، اس لیے کوئی وقت نہیں دکھایا گیا۔';
 
   @override
-  String get clockDeviceTitle => 'This device has not said where it is';
+  String get clockDeviceTitle => 'اس آلے نے نہیں بتایا کہ وہ کہاں ہے';
 
   @override
   String get clockDeviceText =>
-      'Choose your time zone in Settings, and your own clock will appear here.';
+      'ترتیبات میں اپنا ٹائم زون منتخب کریں، آپ کی اپنی گھڑی یہاں آ جائے گی۔';
 
   @override
-  String get clockChooseTitle => 'Your country has more than one time zone';
+  String get clockChooseTitle => 'آپ کے ملک میں ایک سے زیادہ ٹائم زون ہیں';
 
   @override
   String get clockChooseText =>
-      'Choose the one you are in, and your own clock will appear here.';
+      'جس میں آپ ہیں اسے منتخب کریں، آپ کی اپنی گھڑی یہاں آ جائے گی۔';
 
   @override
   String clockAliasNote(String stored, String canonical) {
-    return '$stored is now called $canonical';
+    return '$stored اب $canonical کہلاتا ہے';
   }
 
   @override
   String clockDatabaseVersion(String version) {
-    return 'IANA time-zone database $version';
+    return 'IANA ٹائم زون ڈیٹابیس $version';
   }
 
   @override
-  String get calcKeypad => 'Calculator keypad';
+  String get calcKeypad => 'کیلکولیٹر کی پیڈ';
 
   @override
-  String get calcDisplay => 'Result';
+  String get calcDisplay => 'نتیجہ';
 
   @override
-  String get calcExpression => 'Expression';
+  String get calcExpression => 'حسابی عبارت';
 
   @override
-  String get calcHistory => 'History';
+  String get calcHistory => 'تاریخچہ';
 
   @override
-  String get calcNoHistory => 'Nothing worked out yet.';
+  String get calcNoHistory => 'ابھی کچھ حل نہیں کیا گیا۔';
 
   @override
-  String get calcClear => 'Clear';
+  String get calcClear => 'صاف کریں';
 
   @override
-  String get calcClearEntry => 'Clear entry';
+  String get calcClearEntry => 'درج شدہ عدد صاف کریں';
 
   @override
-  String get calcBackspace => 'Backspace';
+  String get calcBackspace => 'بیک اسپیس';
 
   @override
-  String get calcEquals => 'Equals';
+  String get calcEquals => 'برابر';
 
   @override
-  String get calcPlus => 'Plus';
+  String get calcPlus => 'جمع';
 
   @override
-  String get calcMinus => 'Minus';
+  String get calcMinus => 'تفریق';
 
   @override
-  String get calcTimes => 'Times';
+  String get calcTimes => 'ضرب';
 
   @override
-  String get calcDivide => 'Divided by';
+  String get calcDivide => 'تقسیم';
 
   @override
-  String get calcPercent => 'Per cent';
+  String get calcPercent => 'فیصد';
 
   @override
-  String get calcDecimal => 'Decimal point';
+  String get calcDecimal => 'اعشاریہ';
 
   @override
-  String get calcSign => 'Change sign';
+  String get calcSign => 'علامت بدلیں';
 
   @override
   String calcDigit(String n) {
-    return 'Digit $n';
+    return 'ہندسہ $n';
   }
 
   @override
-  String get calcErrDivZero => 'Nothing can be divided by zero';
+  String get calcErrDivZero => 'کسی چیز کو صفر سے تقسیم نہیں کیا جا سکتا';
 
   @override
-  String get calcErrTooLong => 'That is as many digits as this can hold';
+  String get calcErrTooLong => 'یہ اتنے ہی ہندسے رکھ سکتا ہے';
 
   @override
-  String get calcErrOverflow => 'That number is too large to work with';
+  String get calcErrOverflow => 'یہ عدد اتنا بڑا ہے کہ اس پر کام نہیں ہو سکتا';
 
   @override
-  String get calcErrPrecision => 'That division does not end';
+  String get calcErrPrecision => 'یہ تقسیم ختم نہیں ہوتی';
 
   @override
   String calcHistoryRow(String expression, String result) {
@@ -9611,79 +9611,79 @@ class AppLocalizationsUr extends AppLocalizations {
   }
 
   @override
-  String get calcCleared => 'Cleared';
+  String get calcCleared => 'صاف ہو گیا';
 
   @override
   String calcPrecisionNote(String places) {
-    return 'Worked out exactly, to $places decimal places.';
+    return 'بالکل ٹھیک نکالا گیا، $places اعشاریہ مقامات تک۔';
   }
 
   @override
-  String get focusFocus => 'Focus';
+  String get focusFocus => 'فوکس';
 
   @override
-  String get focusBreak => 'Break';
+  String get focusBreak => 'وقفہ';
 
   @override
-  String get focusStart => 'Start focus';
+  String get focusStart => 'فوکس شروع کریں';
 
   @override
-  String get focusPause => 'Pause';
+  String get focusPause => 'روکیں';
 
   @override
-  String get focusResume => 'Resume';
+  String get focusResume => 'جاری رکھیں';
 
   @override
-  String get focusReset => 'Reset';
+  String get focusReset => 'دوبارہ ترتیب';
 
   @override
-  String get focusSkip => 'Skip';
+  String get focusSkip => 'چھوڑ دیں';
 
   @override
-  String get focusDone => 'Focus finished';
+  String get focusDone => 'فوکس مکمل';
 
   @override
-  String get focusBreakOver => 'Break over';
+  String get focusBreakOver => 'وقفہ ختم';
 
   @override
   String focusSession(String n, String of) {
-    return 'Session $n of $of';
+    return '$of میں سے سیشن $n';
   }
 
   @override
-  String get focusRunning => 'Running';
+  String get focusRunning => 'جاری';
 
   @override
-  String get focusPaused => 'Paused';
+  String get focusPaused => 'رکا ہوا';
 
   @override
-  String get focusReady => 'Ready';
+  String get focusReady => 'تیار';
 
   @override
-  String get focusLength => 'Focus length';
+  String get focusLength => 'فوکس کا دورانیہ';
 
   @override
-  String get focusBreakLength => 'Break length';
+  String get focusBreakLength => 'وقفے کا دورانیہ';
 
   @override
-  String get focusToday => 'Minutes today';
+  String get focusToday => 'آج کے منٹ';
 
   @override
-  String get focusStreakLabel => 'Day streak';
+  String get focusStreakLabel => 'دنوں کا تسلسل';
 
   @override
-  String get focusSessionsLabel => 'Sessions';
+  String get focusSessionsLabel => 'سیشنز';
 
   @override
-  String get focusThisWeek => 'This week';
+  String get focusThisWeek => 'اس ہفتے';
 
   @override
   String focusMinutes(int n) {
     String _temp0 = intl.Intl.pluralLogic(
       n,
       locale: localeName,
-      other: '$n minutes',
-      one: '1 minute',
+      other: '$n منٹ',
+      one: '1 منٹ',
     );
     return '$_temp0';
   }
@@ -9694,25 +9694,25 @@ class AppLocalizationsUr extends AppLocalizations {
   }
 
   @override
-  String get focusThisSession => 'This session';
+  String get focusThisSession => 'اس سیشن میں';
 
   @override
   String get focusNothingYet =>
-      'Nothing yet — start a session and it will count here.';
+      'ابھی کچھ نہیں — کوئی سیشن شروع کریں، یہاں شمار ہو جائے گا۔';
 
   @override
   String get focusKeptSession =>
-      'Counted since you opened Lume. Nothing here survives closing it.';
+      'Lume کھولنے کے بعد سے شمار ہو رہا ہے۔ اسے بند کرنے پر یہاں کچھ باقی نہیں رہتا۔';
 
   @override
-  String get tasbihCounter => 'Counter';
+  String get tasbihCounter => 'شمار';
 
   @override
-  String get tasbihTap => 'Tap to count';
+  String get tasbihTap => 'شمار کے لیے ٹیپ کریں';
 
   @override
   String tasbihOf(String count, String target) {
-    return '$count of $target';
+    return '$target میں سے $count';
   }
 
   @override
@@ -9720,107 +9720,107 @@ class AppLocalizationsUr extends AppLocalizations {
     String _temp0 = intl.Intl.pluralLogic(
       n,
       locale: localeName,
-      other: '$n rounds',
-      one: '1 round',
-      zero: 'No rounds',
+      other: '$n راؤنڈ',
+      one: '1 راؤنڈ',
+      zero: 'کوئی راؤنڈ نہیں',
     );
     return '$_temp0';
   }
 
   @override
-  String get tasbihReset => 'Reset';
+  String get tasbihReset => 'دوبارہ ترتیب';
 
   @override
-  String get tasbihResetAsk => 'Reset the counter?';
+  String get tasbihResetAsk => 'شمار صفر کر دیں؟';
 
   @override
   String get tasbihResetText =>
-      'The count and the rounds go back to zero. Nothing is kept.';
+      'شمار اور راؤنڈ دونوں صفر ہو جاتے ہیں۔ کچھ محفوظ نہیں رہتا۔';
 
   @override
-  String get tasbihResetGo => 'Reset it';
+  String get tasbihResetGo => 'صفر کر دیں';
 
   @override
-  String get tasbihKeepCount => 'Keep counting';
+  String get tasbihKeepCount => 'شمار جاری رکھیں';
 
   @override
-  String get tasbihComplete => 'Round complete';
+  String get tasbihComplete => 'راؤنڈ مکمل';
 
   @override
-  String get tasbihPhrase => 'Phrase';
+  String get tasbihPhrase => 'فقرہ';
 
   @override
-  String get tasbihPickTitle => 'Choose a phrase';
+  String get tasbihPickTitle => 'فقرہ منتخب کریں';
 
   @override
-  String get tasbihSwitchAsk => 'Change the phrase?';
+  String get tasbihSwitchAsk => 'فقرہ بدلیں؟';
 
   @override
   String get tasbihSwitchText =>
-      'The count goes back to zero. The rounds you have finished are kept.';
+      'شمار صفر ہو جاتا ہے۔ مکمل کیے گئے راؤنڈ باقی رہتے ہیں۔';
 
   @override
-  String get tasbihSwitchGo => 'Change it';
+  String get tasbihSwitchGo => 'بدل دیں';
 
   @override
-  String get tasbihMax => 'That is as high as the counter goes';
+  String get tasbihMax => 'شمار اس سے آگے نہیں جاتا';
 
   @override
   String get tasbihNotKept =>
-      'The count is here while Lume is open. Nothing is written down.';
+      'شمار اُس وقت تک یہاں ہے جب تک Lume کھلا ہے۔ کچھ لکھا نہیں جاتا۔';
 
   @override
   String tasbihTargetLabel(String n) {
-    return 'Round of $n';
+    return '$n کا راؤنڈ';
   }
 
   @override
-  String get tasbihMeaning => 'Meaning';
+  String get tasbihMeaning => 'مطلب';
 
   @override
-  String get playGames => 'Games';
+  String get playGames => 'گیمز';
 
   @override
-  String get playKind => 'Kind';
+  String get playKind => 'قسم';
 
   @override
-  String get playKindPuzzle => 'Puzzle';
+  String get playKindPuzzle => 'پزل';
 
   @override
-  String get playKindWord => 'Word';
+  String get playKindWord => 'الفاظ';
 
   @override
-  String get playKindMemory => 'Memory';
+  String get playKindMemory => 'یادداشت';
 
   @override
-  String get playKindArithmetic => 'Arithmetic';
+  String get playKindArithmetic => 'حساب';
 
   @override
-  String get playGameNumberGrid => 'Number Grid';
+  String get playGameNumberGrid => 'نمبر گرڈ';
 
   @override
-  String get playGameWordChain => 'Word Chain';
+  String get playGameWordChain => 'ورڈ چین';
 
   @override
-  String get playGameMemoryMatch => 'Memory Match';
+  String get playGameMemoryMatch => 'میموری میچ';
 
   @override
-  String get playGameQuickMaths => 'Quick Maths';
+  String get playGameQuickMaths => 'کوئک میتھس';
 
   @override
-  String get playNotYet => 'Not playable yet';
+  String get playNotYet => 'ابھی کھیلا نہیں جا سکتا';
 
   @override
   String get playNotYetText =>
-      'These are the games Lume plans to carry. None of them can be played yet, and nothing here is a score of yours.';
+      'ان میں سے کوئی گیم ابھی کھیلا نہیں جا سکتا، اور یہاں کوئی عدد آپ کا اسکور نہیں ہے۔';
 
   @override
   String playCount(int n) {
     String _temp0 = intl.Intl.pluralLogic(
       n,
       locale: localeName,
-      other: '$n games',
-      one: '1 game',
+      other: '$n گیمز',
+      one: '1 گیم',
     );
     return '$_temp0';
   }
