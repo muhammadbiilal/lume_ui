@@ -2,33 +2,20 @@
 /// service the test can detach, and a clock the test can step.
 ///
 /// The tool is opened through `/tools/tool/worldclock` as a reader would open
-/// it. Until `tool_registry.dart` names it — that file belongs to the
-/// integration commit, not to this feature — the route falls through to the
-/// fixture screen, so [pumpWorldClock] hosts the same widget in the same
-/// environment instead, with the same providers, the same clock scope and the
-/// same startup state the route would have handed it. The moment the registry
-/// names the tool, every screen test here runs through the router with no
-/// change to a single test.
+/// it: `tool_registry.dart` names it, so the route builds the tool itself,
+/// inside the shell, over the profile and the clock the test hands the router.
 library;
 
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:go_router/go_router.dart';
-import 'package:lume/app/providers/shell_provider.dart';
 import 'package:lume/app/providers/time_zone_provider.dart';
 import 'package:lume/core/fixtures/lume_clock.dart';
 import 'package:lume/core/routing/lume_routes.dart';
-import 'package:lume/features/auth/data/fake_auth_repository.dart';
-import 'package:lume/features/catalogue/data/feature_catalogue.dart';
-import 'package:lume/features/catalogue/domain/eligibility.dart';
-import 'package:lume/features/catalogue/domain/lume_feature.dart';
 import 'package:lume/core/time/lume_iana_zones.dart';
 import 'package:lume/features/onboarding/domain/onboarding_state.dart';
 import 'package:lume/features/onboarding/domain/profile_repository.dart';
-import 'package:lume/features/startup/application/startup_controller.dart';
-import 'package:lume/features/tools/application/tool_registry.dart';
-import 'package:lume/features/tools/application/tool_request.dart';
 import 'package:lume/features/tools/application/tool_session.dart';
 import 'package:lume/features/worldclock/presentation/worldclock_tool.dart';
 
@@ -39,11 +26,6 @@ import '../tax/tax_harness.dart';
 final String kWorldClockLocation = LumeRoutes.tool(
   LumeRoutes.tools,
   LumeWorldClockTool.id,
-);
-
-/// The catalogue's own entry — the one the route would hand the tool.
-final LumeFeature kWorldClockFeature = kLumeFeatures.firstWhere(
-  (LumeFeature f) => f.id == LumeWorldClockTool.id,
 );
 
 /// A clock a test moves by hand. Nothing here reads the wall clock.
@@ -77,7 +59,7 @@ LumeProfileRecord worldClockReader({
 /// [session] is handed in so a test can seed the list the reader would have
 /// built up, or read back what the tool wrote — which is the only thing it
 /// ever writes anywhere.
-Future<GoRouter?> pumpWorldClock(
+Future<GoRouter> pumpWorldClock(
   WidgetTester tester, {
   LumeProfileRecord? profile,
   LumeToolSession? session,
@@ -90,69 +72,32 @@ Future<GoRouter?> pumpWorldClock(
   ThemeMode theme = ThemeMode.light,
   List<Override> extra = const <Override>[],
 }) async {
-  final LumeProfileRepository profiles = LumeMemoryProfileRepository(
-    initial: profile ?? worldClockReader(),
-  );
-  final List<Override> overrides = <Override>[
-    toolSessionProvider.overrideWithValue(session ?? LumeToolSession()),
-    if (service != null) timeZoneServiceProvider.overrideWithValue(service),
-    deviceZoneProvider.overrideWithValue(device),
-    ...extra,
-  ];
-
   // A pending minute tick would outlive the test; the tree is taken down
   // first so `dispose` cancels it.
   addTearDown(() async => tester.pumpWidget(const SizedBox.shrink()));
 
-  if (kLumeToolRegistry.containsKey(LumeWorldClockTool.id)) {
-    final GoRouter router = await pumpLumeRouter(
-      tester,
-      initialLocation: kWorldClockLocation,
-      profile: profiles,
-      surface: surface,
-      locale: locale,
-      textScale: textScale,
-      theme: theme,
-      overrides: overrides,
-      // The test's own instant, through the router as through the direct
-      // host: a clock tool that read the wall clock would be untestable.
-      clock: clock,
-    );
-    await tester.pumpAndSettle();
-    return router;
-  }
-
-  final LumeStartupController gate = LumeStartupController(
-    authRepository: LumeFakeAuthRepository.withAccount(),
-    profileRepository: profiles,
-  );
-  addTearDown(gate.dispose);
-  await gate.boot();
-
-  final Widget tool = LumeWorldClockTool(
-    request: LumeToolRequest(
-      feature: kWorldClockFeature,
-      user: LumeUserContext.from(gate.state.profile),
-      branch: LumeRoutes.tools,
-    ),
-  );
-  await pumpLume(
+  final GoRouter router = await pumpLumeRouter(
     tester,
-    // A clock the test steps is published under the harness's fixed one, so
-    // the tool reads the test's instant and nothing reads the wall clock.
-    clock == null ? tool : LumeClockScope(clock: clock, child: tool),
+    initialLocation: kWorldClockLocation,
+    profile: LumeMemoryProfileRepository(
+      initial: profile ?? worldClockReader(),
+    ),
     surface: surface,
     locale: locale,
     textScale: textScale,
     theme: theme,
     overrides: <Override>[
-      startupControllerProvider.overrideWithValue(gate),
-      profileRepositoryProvider.overrideWithValue(profiles),
-      ...overrides,
+      toolSessionProvider.overrideWithValue(session ?? LumeToolSession()),
+      if (service != null) timeZoneServiceProvider.overrideWithValue(service),
+      deviceZoneProvider.overrideWithValue(device),
+      ...extra,
     ],
+    // The test's own instant: a clock tool that read the wall clock would be
+    // untestable.
+    clock: clock,
   );
   await tester.pumpAndSettle();
-  return null;
+  return router;
 }
 
 /// Everything drawn under [of], trimmed, with the isolation marks the screen

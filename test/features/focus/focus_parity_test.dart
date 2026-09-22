@@ -66,10 +66,7 @@ void main() {
       ('tool_focus_default_pk_700x900_light_en', const Size(650, 5000)),
       ('tool_focus_default_pk_1100x900_light_en', const Size(1050, 5000)),
     ]) {
-      final bool needsShell = !kFocusRouted && size.width > 390;
-      testWidgets('$cell${needsShell ? ' — skipped: $kFocusUnrouted' : ''}', (
-        WidgetTester tester,
-      ) async {
+      testWidgets(cell, (WidgetTester tester) async {
         await pumpFocus(
           tester,
           FocusWorld(),
@@ -89,7 +86,7 @@ void main() {
           drifting: const <String>{'srcbar', 'related', 'kard', 'bars'},
         );
         expect(misses, isEmpty, reason: misses.join('\n'));
-      }, skip: needsShell);
+      });
     }
   });
 

@@ -125,33 +125,23 @@ void main() {
           ),
         ]) {
       // Above a phone the reference puts the app on a stage beside a rail,
-      // and the tool bar is narrower than the window by exactly the rail. The
-      // rail belongs to the shell, which only the router builds, so these two
-      // cells need `tasbih` in the tool registry — and say so rather than
-      // passing on a geometry that was never compared.
-      final bool needsShell = size.width > 400 && !tasbihIsRegistered;
-      testWidgets(
-        needsShell
-            ? '$cell — not compared: the shell rail needs tasbih in '
-                  'kLumeToolRegistry'
-            : cell,
-        skip: needsShell,
-        (WidgetTester tester) async {
-          final Map<String, dynamic>? web = webToolCell(cell);
-          expect(web, isNotNull, reason: '$cell has not been measured');
-          await pumpTasbih(tester, state: state, surface: size, theme: theme);
+      // and the tool bar is narrower than the window by exactly the rail —
+      // which the router draws, because the tool route is inside the shell.
+      testWidgets(cell, (WidgetTester tester) async {
+        final Map<String, dynamic>? web = webToolCell(cell);
+        expect(web, isNotNull, reason: '$cell has not been measured');
+        await pumpTasbih(tester, state: state, surface: size, theme: theme);
 
-          final List<String> misses = parity.bounds(
-            tester,
-            cell,
-            elements(),
-            noWidth: boxed,
-            drifting: below.toSet(),
-            shifted: _shift(tester, web!, below),
-          );
-          expect(misses, isEmpty, reason: misses.join('\n'));
-        },
-      );
+        final List<String> misses = parity.bounds(
+          tester,
+          cell,
+          elements(),
+          noWidth: boxed,
+          drifting: below.toSet(),
+          shifted: _shift(tester, web!, below),
+        );
+        expect(misses, isEmpty, reason: misses.join('\n'));
+      });
     }
   });
 

@@ -1,14 +1,13 @@
 /// Calculator, held against the running reference.
 ///
-/// Seven cells were captured. Five of them — the four at 390 and the
-/// landscape one — the harness reproduces whole, because at those widths the
-/// screen *is* the surface. At 700 and 1100 the reference's screen is
-/// narrower than its viewport by the shell's own navigation, which this
-/// harness does not host (`calculator_harness.dart`); there the `.calc`
-/// block is pumped at the reference's own content width and its geometry
-/// compared, which is the part this tool owns. The block's height is a pure
-/// function of that width, and it is checked at all four the reference
-/// recorded: 350, 518, 670 and 742.
+/// Seven cells were captured, and each is reproduced on its own surface: the
+/// reference's viewport less the 25-point stage margin either side, which is
+/// a frame Lume never draws. What the reference *does* share is the
+/// navigation beside the screen above compact width, and the tool route is
+/// inside the shell that draws it, so the screen inside each surface is the
+/// reference's own — 390, 566, 718 and 806. The `.calc` block's height is a
+/// pure function of that width, and it is checked at all four widths the
+/// reference recorded it at: 350, 518, 670 and 742.
 ///
 /// Two recorded differences, both written into the report rather than
 /// absorbed by a tolerance:
@@ -35,11 +34,7 @@ import 'package:lume/core/widgets/lume/lume_tool.dart';
 import 'package:lume/features/calculator/presentation/calculator_tool.dart';
 import 'package:lume/features/tools/application/tool_registry.dart';
 
-import 'package:lume/core/routing/lume_routes.dart';
-
 import '../../helpers/load_fonts.dart';
-import '../../helpers/lume_harness.dart';
-import '../tax/tax_harness.dart';
 import '../tools/tool_parity.dart';
 import 'calculator_harness.dart';
 
@@ -120,23 +115,22 @@ void main() {
   group(
     'the `.calc` block is the reference\'s, at every width it recorded',
     () {
-      for (final MapEntry<String, Size> c in <String, Size>{
-        // 350 wide, the phone.
-        'tool_calculator_default_pk_390x844_light_en': const Size(390, 5000),
-        'tool_calculator_default_pk_390x844_light_ur': const Size(390, 5000),
-        'tool_calculator_default_pk_390x844_light_ar': const Size(390, 5000),
-        // 670 wide, the landscape phone.
-        'tool_calculator_default_pk_852x393_light_en': const Size(718, 5000),
-        // 518 and 742 wide: the reference's content, reached without the
-        // shell's navigation, so the page gutter is the harness's own.
-        'tool_calculator_default_pk_700x900_light_en': const Size(558, 5000),
-        'tool_calculator_default_pk_1100x900_light_en': const Size(790, 5000),
-      }.entries) {
-        testWidgets(c.key, (WidgetTester tester) async {
-          final String language = c.key.split('_').last;
+      // 350, 670, 518 and 742 wide — the four the reference recorded, each
+      // reached on the cell's own surface, because the shell now puts the
+      // same navigation beside the screen that the reference did.
+      for (final String cell in <String>[
+        'tool_calculator_default_pk_390x844_light_en',
+        'tool_calculator_default_pk_390x844_light_ur',
+        'tool_calculator_default_pk_390x844_light_ar',
+        'tool_calculator_default_pk_852x393_light_en',
+        'tool_calculator_default_pk_700x900_light_en',
+        'tool_calculator_default_pk_1100x900_light_en',
+      ]) {
+        testWidgets(cell, (WidgetTester tester) async {
+          final String language = cell.split('_').last;
           await pumpCalculator(
             tester,
-            surface: c.value,
+            surface: kCalculatorCells[cell]!,
             locale: Locale(language),
           );
           final Rect block = tester.getRect(
@@ -144,8 +138,8 @@ void main() {
           );
           expect(
             block.height,
-            closeTo(webCalcHeight(c.key), kToolTolerance),
-            reason: '${c.key}: the readout and the nineteen keys',
+            closeTo(webCalcHeight(cell), kToolTolerance),
+            reason: '$cell: the readout and the nineteen keys',
           );
           // The pad is the reference's grid: four columns, nine between, each
           // key 1.15 as wide as it is tall.
@@ -209,27 +203,9 @@ void main() {
     });
   });
 
-  testWidgets('the route reaches the tool once the wave registers it', (
-    WidgetTester tester,
-  ) async {
-    if (!calculatorIsRegistered) {
-      // The registry is one file the whole wave edits, and this tool does not
-      // own it. Said out loud rather than passed over: the line owed is
-      // `'calculator': LumeCalculatorTool.open`.
-      markTestSkipped(
-        "kLumeToolRegistry has no 'calculator' entry yet - the deep link "
-        'falls through to the fixture screen until it does',
-      );
-      return;
-    }
+  testWidgets('the route reaches the tool', (WidgetTester tester) async {
     expect(kLumeToolRegistry[LumeCalculatorTool.id], isNotNull);
-    await pumpLumeRouter(
-      tester,
-      initialLocation: LumeRoutes.tool(LumeRoutes.tools, LumeCalculatorTool.id),
-      profile: taxProfile('default_pk'),
-      surface: const Size(390, 5000),
-    );
-    await tester.pumpAndSettle();
+    await pumpCalculator(tester);
     expect(find.byType(LumeCalculatorTool), findsOneWidget);
   });
 }

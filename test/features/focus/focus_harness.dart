@@ -4,9 +4,9 @@
 /// tool's notion of elapsed time: a test moves it, then pumps, and the face
 /// repaints from the new reading.
 ///
-/// The route serves the tool only once `tool_registry.dart` names it —
-/// [kFocusRouted]. Until then the same screen is hosted directly, inside the
-/// same environment, so every test but the bounds comparison runs either way.
+/// The tool is reached through `/tools/tool/focus`, which `tool_registry.dart`
+/// names — so every test here runs against the screen the router builds,
+/// inside the shell that draws around it.
 library;
 
 import 'package:flutter/material.dart';
@@ -15,33 +15,14 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:lume/core/config/lume_build_profile.dart';
 import 'package:lume/core/routing/lume_routes.dart';
 import 'package:lume/core/time/lume_boot_clock.dart';
-import 'package:lume/features/catalogue/data/feature_catalogue.dart';
-import 'package:lume/features/catalogue/domain/eligibility.dart';
-import 'package:lume/features/catalogue/domain/lume_feature.dart';
 import 'package:lume/features/focus/application/focus_clock.dart';
 import 'package:lume/features/focus/presentation/focus_tool.dart';
-import 'package:lume/features/tools/application/tool_registry.dart';
-import 'package:lume/features/tools/application/tool_request.dart';
 
 import '../../helpers/lume_harness.dart';
 import '../tax/tax_harness.dart';
 
 /// `/tools/tool/focus`.
 final String kFocus = LumeRoutes.tool(LumeRoutes.tools, LumeFocusTool.id);
-
-/// Whether the tool route builds Focus. `tool_registry.dart` owns the entry
-/// and is not this feature's to edit.
-final bool kFocusRouted = kLumeToolRegistry.containsKey(LumeFocusTool.id);
-
-/// Why a cell that needs the shell around the tool cannot be compared yet.
-const String kFocusUnrouted =
-    'the rail and sidebar come from the shell, which only the tool route is '
-    'inside: tool_registry.dart has no focus entry yet';
-
-/// `focus` as the catalogue holds it.
-final LumeFeature kFocusFeature = kLumeFeatures.firstWhere(
-  (LumeFeature f) => f.id == LumeFocusTool.id,
-);
 
 /// The elapsed-time source the tool reads, under the test's hand.
 class FocusWorld {
@@ -66,8 +47,7 @@ class FocusWorld {
   ];
 }
 
-/// Pump Focus for [state], on the router where it is routed and directly
-/// where it is not.
+/// Pump Focus for [state], through the tool route.
 Future<void> pumpFocus(
   WidgetTester tester,
   FocusWorld world, {
@@ -79,52 +59,21 @@ Future<void> pumpFocus(
   LumeBuildProfile profile = LumeBuildProfile.parity,
   List<Override> overrides = const <Override>[],
 }) async {
-  final List<Override> all = <Override>[
-    buildProfileProvider.overrideWithValue(profile),
-    ...world.overrides,
-    ...overrides,
-  ];
-  if (kFocusRouted) {
-    await pumpLumeRouter(
-      tester,
-      initialLocation: kFocus,
-      profile: taxProfile(state),
-      surface: surface,
-      locale: locale,
-      theme: theme,
-      textScale: textScale,
-      overrides: all,
-    );
-    await tester.pumpAndSettle();
-    return;
-  }
-  await pumpLume(
+  await pumpLumeRouter(
     tester,
-    _FocusHost(state: state),
+    initialLocation: kFocus,
+    profile: taxProfile(state),
     surface: surface,
     locale: locale,
     theme: theme,
     textScale: textScale,
-    overrides: all,
+    overrides: <Override>[
+      buildProfileProvider.overrideWithValue(profile),
+      ...world.overrides,
+      ...overrides,
+    ],
   );
   await tester.pumpAndSettle();
-}
-
-/// The tool as the route would build it: the catalogue's feature, the
-/// state's reader, and the Tools branch under it.
-class _FocusHost extends StatelessWidget {
-  const _FocusHost({required this.state});
-
-  final String state;
-
-  @override
-  Widget build(BuildContext context) => LumeFocusTool(
-    request: LumeToolRequest(
-      feature: kFocusFeature,
-      user: LumeUserContext.from(kTaxStates[state]!),
-      branch: LumeRoutes.tools,
-    ),
-  );
 }
 
 /// The time on the face.

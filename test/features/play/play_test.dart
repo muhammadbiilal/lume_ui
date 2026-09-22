@@ -20,6 +20,7 @@ library;
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
+import 'package:go_router/go_router.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:lume/core/icons/lume_icon.dart';
 import 'package:lume/core/icons/lume_icons.dart';
@@ -272,7 +273,7 @@ void main() {
     testWidgets('pressing a tile navigates nowhere and claims nothing', (
       WidgetTester tester,
     ) async {
-      await pumpPlay(tester);
+      final GoRouter router = await pumpPlay(tester);
       final List<String> before = toolText(tester);
 
       for (final LumePlayGame g in kReferencePlayGames) {
@@ -287,8 +288,13 @@ void main() {
         );
       }
       await tester.pump(const Duration(seconds: 6));
-      expect(playOpened, isEmpty, reason: 'no tool was opened');
-      expect(playBacks, isEmpty);
+      // The route is what a press would have moved: `onOpenRelated` replaces
+      // the location, `onBack` goes to the branch root. Neither happened.
+      expect(
+        locationOf(router),
+        kPlayLocation,
+        reason: 'no tool was opened, and nothing went back',
+      );
       expect(toolText(tester), before, reason: 'the screen is unchanged');
     });
 
