@@ -140,13 +140,13 @@ run on the shared CRUD engine.
 
 | id | Name | Archetype | Density | Gate | Record | Quick | Share | Status |
 |---|---|---|---|---|---|---|---|---|
-| `calculator` | Calculator | calculator | low | — | — | Y | — | not started |
+| `calculator` | Calculator | calculator | low | — | — | Y | — | **built** — exact scaled-integer decimal, bounded at 2^53−1 so a number means the same on every platform; division decided rather than approximated, and a non-terminating one refused and said; divide-by-zero refused where the reference returned 0; algebraic precedence; locale digits and separators in and out; history with an empty state; input-only (C98) |
 | `converter` | Unit Converter | calculator | low | — | — | Y | — | not started |
 | `currency` | Currency | explorer | high | — | — | Y | — | not started |
 | `stopwatch` | Stopwatch | instrument | low | — | — | — | — | not started |
 | `timer` | Timer | instrument | low | — | — | Y | — | **built (F6A)** — reference tool for the clock-instrument archetype; clock face, preset chips, history rows (C66) |
 | `age` | Age Calculator | calculator | low | — | — | — | — | not started |
-| `focus` | Focus Timer | instrument | low | — | — | Y | — | not started |
+| `focus` | Focus Timer | instrument | low | — | — | Y | — | **built** — elapsed time from a boot clock and a start instant, so no drift from accumulated ticks; backgrounding stops the repaint, not the elapsing; a break phase the reference lacks, offered rather than auto-started; the reference's fabricated figures drawn only where the build reproduces it, under the sample mark, and never in development or release; no notification claim (C98) |
 | `datecalc` | Date Calculator | calculator | low | — | — | — | — | not started |
 
 ### Planning — 5
@@ -177,7 +177,7 @@ run on the shared CRUD engine.
 | `duas` | Daily Duas | library | high | faith | — | — | Y | not started |
 | `names99` | 99 Names | library | medium | faith | — | — | Y | not started |
 | `hijri` | Islamic Calendar | planner | medium | faith | — | — | — | not started |
-| `tasbih` | Tasbih | instrument | low | faith | — | Y | — | not started |
+| `tasbih` | Tasbih | instrument | low | faith | — | Y | — | **built** — counts and resets, nothing prescriptive; the five phrases exactly as the reference holds them, with the conventional count stated as a fact about the round; the fixture history dropped and replaced by a line saying nothing is written down; switching phrase asks first; a live region that announces once per burst, not once per tap; input-only (C98) |
 | `zakat` | Zakat Calculator | calculator | high | faith | — | — | — | not started |
 | `faraid` | Faraid | calculator | high | faith | — | — | — | not started |
 
@@ -207,7 +207,7 @@ run on the shared CRUD engine.
 |---|---|---|---|---|---|---|---|---|
 | `aqi` | Air Quality | dashboard | high | — | — | — | — | not started |
 | `sunmoon` | Sun & Moon | dashboard | medium | — | — | — | — | not started |
-| `worldclock` | World Clock | explorer | medium | — | — | — | — | not started |
+| `worldclock` | World Clock | explorer | medium | — | — | — | — | **built** — the reader's own zone leads the list, with offsets exact to the minute and the direction in words; days read Yesterday/Today/Tomorrow, falling back to the date two days out; any of the 341 canonical zones or 577 cities can be added, searched by CLDR label; a converter that converts; ticks on the minute with no drift; aliases read, never rewritten; every failure typed and said; computed, so its source bar names the IANA database rather than claiming an update (C98) |
 | `holidays` | Public Holidays | planner | medium | — | — | — | — | not started |
 | `weather` | Weather | dashboard | high | — | — | Y | — | **built (F6A)** — reference tool for context dashboards; context bar, conditions summary, heat advisory, next 12 hours, five days with temperature bars, air quality, sun and moon, conditions; generated figures under "Delayed", never "Live" (C76) |
 | `loadshed` | Loadshedding | dashboard | high | PK | — | — | — | not started |
@@ -239,7 +239,7 @@ run on the shared CRUD engine.
 | `documents` | Documents | manager | veryhigh | — | **yes** | — | — | **built (F6A)** — the record layer's second family; records with their standing, detail, add, edit and a delete that is for good (no Undo), two panes at expanded; the vault summary, renew note, category filter, sort, grouped vault, export (C75) |
 | `vaccines` | Vaccinations | manager | high | — | — | — | — | not started |
 | `health` | Health Records | manager | veryhigh | — | **yes** | — | — | not started |
-| `play` | Play | library | medium | — | — | — | — | not started |
+| `play` | Play | library | medium | — | — | — | — | **built** — the four games it lists and a statement that none can be played yet; the reference ships no game, only tiles that toast their own names. Personal bests and play counts removed as records nobody set, and the "Recently played" section with them; the tiles are not controls (C98) |
 | `babybudget` | Baby Budget | dashboard | high | — | **yes** | Y | — | **built** — its own host over record-layer transactions; a budget, its categories and its spends; the reader's own monthly plan or none at all, so a ratio is never invented; donut shares by largest remainder, totalling 100; one record type for a planned purchase and the spend it becomes, moved in a single write; Coming up ordered overdue-first; the six months ending with the reader's own, in their language and the budget's currency; a start date nothing may predate; archive with Bring back; delete with Undo; filters, search and three sorts; `lume.babybudget/1` export and import, CSV export; sensitive; no notifications; nothing seeded (C97) |
 | `habits` | Habits | tracker | high | — | **yes** | Y | — | not started |
 | `water` | Water | tracker | medium | — | **yes** | Y | — | not started |

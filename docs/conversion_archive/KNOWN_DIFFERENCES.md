@@ -2479,6 +2479,122 @@ sample record ticked from its row would have shown its raw `@key`.
 `update(…, claim: false)` keeps it; a form's save still claims the record as
 the reader's (`memory_record_repository_test.dart`).
 
+### C98 — Wave 3: five tools, and what each of them stopped claiming
+
+**Product corrections and extensions (`ROLLOUT_WAVE_3.md`).** Five tools
+converted together. What they share is that each reference asserts
+something about the reader that it has no way to know, and each
+correction is the same shape: say only what the build can back.
+
+**World Clock.** Its headline is the *device's* clock captioned with the
+*reader's configured zone*, so a Karachi profile on a London phone reads
+London's time labelled Karachi; its headline date has no zone applied at
+all. Offsets are `Math.round((there − local) / 3600000)`, which is wrong
+for every reader in India, Nepal, Iran, Afghanistan, Myanmar, central
+Australia and the Chatham Islands. A failed lookup leaves the offset at
+zero, which the next line renders as **"Same time"** — a total failure
+and a true zero are indistinguishable. There is no yesterday or tomorrow
+anywhere. Its city list is eight hard-coded rows, identical for every
+reader on earth, and the reader's own zone never appears. "Convert a
+time" is two `<select>`s whose names occur nowhere else in the codebase,
+defaulting to Karachi for everyone. Nothing ticks, and every string is
+English under Urdu and Arabic.
+
+Lume: the headline is the reader's zone and that zone's date; offsets
+are exact to the minute with the direction in words, so Kolkata reads
+0:30 ahead and Kathmandu 0:45; "Same time" appears only at a true zero
+and an unresolvable zone is *said*, keeping its row and showing the
+identifier that was asked for; days read Yesterday, Today or Tomorrow,
+falling back to the date where a place is two days off; the list leads
+with the reader's own clock and any of the 341 canonical zones or 577
+cities can be added, searched by CLDR label; the converter converts; and
+the list ticks on the minute from a timer whose delay is recomputed from
+the clock each time, so five hundred ticks arriving 3.4 seconds late
+still land on the minute. Aliases are read and never rewritten. Only
+identifiers and their order are stored.
+
+**Calculator.** It divides by zero and returns **zero**. Its per-cent key
+bypasses every guard, so `1.1 %` renders `0.011000000000000001`. Its
+`1e10` rounding stops working above 900,719.925, so `10000000 ÷ 3` shows
+`3333333.3333333335`. Its readout never meets a formatter, so every
+reader in every language gets ASCII digits and an ASCII point. Its
+History section renders unconditionally with no rows and no empty state.
+
+Lume: a scaled-integer decimal bounded at 2⁵³−1, so a number means the
+same on every platform; addition, subtraction and multiplication exact
+by construction and bounds-checked, overflow typed, nothing clamped.
+Division is decided rather than approximated — reduce by the gcd, strip
+the divisor's twos and fives, and if anything remains the expansion
+never ends, so it is refused and said. One third is refused.
+`10000000 ÷ 3` is refused. `1 ÷ 8` is exactly 0.125 and `1.1 %` exactly
+0.011. Precedence is algebraic — `2 + 3 × 4 = 14`, not 20 — because the
+expression line draws the whole sum as written.
+
+**Focus Timer.** It counts down by subtracting one from a variable every
+time `setInterval` fires, and prints "75 Minutes today", "5 Day streak",
+"3 Sessions" and a seven-bar week from constants. Its `session` field is
+read as "Session 1 of 4" and written nowhere, so it is permanently 1.
+
+Lume: elapsed time from a boot clock and a start instant, recomputed on
+every read — 3,000 steps of ten milliseconds reads exactly thirty
+seconds where a tick-counting implementation would be thirty thousand
+out. The fabricated figures are drawn **only** where the build
+reproduces the reference, under the sample mark in the reader's own
+language; development and release show what has happened since Lume was
+opened, under a line saying nothing survives closing it. A break phase
+is new, and completion offers it rather than starting it: with no
+background delivery, a clock running on a screen the reader cannot see
+would be a claim we cannot keep.
+
+**Tasbih.** Its "Recent sessions" are two literal rows presented as the
+reader's own past dhikr; nothing records a session. Switching phrase
+discards a part-finished count silently. Its rounds read-out is a button
+with no action. Its counter has no live region, so a screen-reader user
+taps and hears nothing.
+
+Lume: the five phrases exactly as the reference holds them — Arabic,
+transliteration, plain gloss, and the conventional 33/33/34/100/100 —
+with no sixth phrase, no commentary, no virtue, no obligation and no
+citation; the count appears as a fact about the round, never as a
+ruling. The fixture history is gone and a line says the count is here
+while Lume is open and nothing is written down. Switching asks first and
+keeps finished rounds. The tap target is a live region whose spoken
+value trails the count by 700 ms, so a burst moves the figure every tap
+but announces once.
+
+**Play.** It ships no game: every tile's only action is
+`data-act="toast:<its own name>"`, so pressing "Number Grid" shows a
+toast reading "Number Grid". It draws personal bests — `01:42`,
+`182 pts`, `24 moves`, `96%` — and a "Recently played" list with play
+counts, over a tool that stores nothing; and that heading is false about
+its own ordering either way, since array order is not recency and the
+counts run descending.
+
+Lume: the four games and a sentence saying none can be played yet. The
+bests and the counts are gone, the section with them, and the tiles are
+not controls at all — echoing a title back reads as a failed navigation.
+
+**Three shared corrections came out of building these.**
+`pumpLumeRouter` hard-coded the fixture instant and silently ignored any
+clock a test passed, so a tool that ticks could only be tested away from
+the router; `captureLumeRoute` did not forward a clock either, which
+made World Clock's goldens a function of the host machine's own time
+zone. Both now take one. And `LumeSourceClaims.staticSources` did not
+list `'IANA time zones'`, so a tool computed from a database compiled
+into the binary fell through to "Sample data" despite its capability
+saying otherwise — the same entry `'Astronomical calculation'` already
+had.
+
+**On the side-by-side captures.** No percentage of differing pixels is
+offered as evidence for any of the five. The comparison that counts is
+`docs/conversion_archive/parity/tool_<id>.md`, written by the shared
+`ToolParity` harness from the browser's own `getBoundingClientRect`:
+**877 named values across the five tools**, with every deliberate
+subtraction — Tasbih's dropped history section, Play's dropped figures,
+Calculator's history empty state — measured per cell and printed beside
+the value rather than absorbed into a tolerance. `kToolTolerance` was
+not touched.
+
 ### C97 — Baby Budget: a month that is the reader's, and a donut that adds up
 
 **Product correction and extension (`BABY_BUDGET_PROPOSAL.md`).** The
@@ -3022,6 +3138,7 @@ deleted row invites the same question again.
 
 | Date | Change | Reason |
 |---|---|---|
+| 2026-09-22 | **C98 raised** — wave 3 built: World Clock, Calculator, Focus Timer, Tasbih and Play, each corrected where its reference asserted something about the reader it could not know; three shared fixes to the test harness and the source-claim allowlist | Approved wave, `ROLLOUT_WAVE_3.md` |
 | 2026-09-21 | **C97 raised** — Baby Budget built as a record-backed tool; the reference's plan-less ratio, 101% donut, hard-coded English months, raw-USD bar titles, floor-height bars, wall-clock weekday dates, absent totals, stub export and unmarked sensitivity corrected | Approved model, `BABY_BUDGET_PROPOSAL.md` |
 | 2026-09-20 | **C96 raised** — Committee built as a record-backed tool; the reference's unbalanced circle, contradictory pool, recordless "done", wall-clock dates, stub export and unmarked sensitivity corrected | Approved model, `COMMITTEE_PROPOSAL.md` |
 | 2026-09-20 | **C95 recorded** — Arabic amounts in the Arabic locale's order, not the reference's English order | Approved: locale-correct presentation, with exact values, currency identity, isolation and semantics tested |

@@ -70,6 +70,66 @@ export, day unknown, a damaged scope, loading and a storage failure. The
 scale. The diff images are for a person to look at; no percentage in them
 is claimed as parity (C90).
 
+### Wave 3 — World Clock, Calculator, Focus Timer, Tasbih, Play
+
+| tool | golden cases | committed PNGs | composition cells | states |
+|---|---:|---:|---:|---:|
+| World Clock | 18 | 18 | 8 | 10 |
+| Calculator | 16 | 16 | 8 | 8 |
+| Focus Timer | 15 | 15 | 8 | 7 |
+| Tasbih | 14 | 14 | 8 | 6 |
+| Play | 9 | 9 | 8 | 1 |
+| **total** | **72** | **72** | | |
+
+Each tool's composition is captured in the same eight cells: 390×844
+light, dark, Urdu, Arabic and at 200% type; 700×900; 1100×900; 852×393.
+Tasbih's are all for a Muslim reader, because the tool is faith-gated and
+a default profile is refused at the route.
+
+The states are reached by driving the tool's own controls, not by
+building a widget to force one. World Clock: the converter with an
+answer, a place added by search, a place removed, an alias row showing
+both names, an unknown zone, the database unavailable, the device zone
+missing, a country needing a selection, no match, and the empty list.
+Calculator: digits, a pending operator, a finished sum in History, the
+empty History, divide by zero, a non-terminating division, overflow and
+the entry-length refusal. Focus Timer: ready, running, paused, a
+finished stretch offering the break, the break running, and the honest
+"this session" state with nothing counted and with a session counted —
+its **composition cells are the parity/sample state**, which is the only
+place the reference's fabricated figures appear. Tasbih: part-way
+through a round, a completed round, the reset confirmation, the phrase
+picker, the switch confirmation and the ceiling.
+
+**World Clock's goldens are pinned to a UTC instant**, not to
+`kFixtureInstant`. That constant is a local `DateTime`, and every row is
+it converted into another zone, so the whole list would have drawn
+different times on a machine in a different zone. `captureLumeRoute` now
+forwards a clock for exactly this; the set is verified green under
+`TZ=America/New_York` as well as the host zone.
+
+Play's "not playable yet" state is captured at the 200% cell rather than
+the phone cell: at ordinary text size the notice already sits on the
+390×844 screen, so a phone capture was byte-identical to the
+composition. No duplicate images in the 72.
+
+The notification presenter is turned off in all five files. It fires at
+2.5 seconds and every 45 thereafter, and any state that takes several
+pumps to drive was landing under a banner covering the tool header. The
+cell is then of the tool, which is what it is for.
+
+`LumeNotificationSchedule.off()` is **declared** in
+`lib/app/providers/notification_feed.dart` and **called** nowhere in
+`lib/` — its only five call sites are the five golden files above, and
+no integration or widget test that is not taking a picture uses it. `notificationScheduleProvider` still defaults to
+`const LumeNotificationSchedule()`, which is enabled, first tick at
+2,500 ms, every 45 seconds after. Production is unchanged, and so is
+every test that exercises the feed.
+
+**No percentage of differing pixels is offered as parity evidence for
+any of the five.** The measured comparison is
+`docs/conversion_archive/parity/tool_<id>.md` — 877 named values.
+
 ### Baby Budget (`test/goldens/babybudget_golden_test.dart`)
 
 | | count |
