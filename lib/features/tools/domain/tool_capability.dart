@@ -81,7 +81,12 @@ class LumeDataCapability {
   /// Tools whose every figure is worked out on the device for the reader's
   /// city — a calculation, not a fixture. Sun & Moon: the sun from the
   /// city's coordinates and the day, the moon from the instant.
-  static const Set<String> computed = <String>{'sunmoon'};
+  static const Set<String> computed = <String>{
+    'sunmoon',
+    // World Clock: every time is worked out from the compiled-in
+    // IANA database and the device's own clock (D-W8, wave 3).
+    'worldclock',
+  };
 
   /// Tools that show only what the reader wrote — nothing seeded, nothing
   /// fetched (Ledger D11, Installments §40.1, Committee §11, Baby Budget

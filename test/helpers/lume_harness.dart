@@ -195,6 +195,12 @@ Future<GoRouter> pumpLumeRouter(
   /// Off for a test that wants to see the frames a slow launch draws. Settling
   /// would run the boot to completion and there would be no splash to find.
   bool settle = true,
+
+  /// The clock the whole tree reads, for a test that has to move time —
+  /// a tool that ticks, or one whose figures depend on the instant.
+  /// Defaults to the pinned fixture instant, so every other test is
+  /// unaffected and nothing reads the wall clock either way.
+  LumeClock? clock,
 }) async {
   // One set of objects, shared by the router's gate and by the widgets that
   // read them through Riverpod. Two sets would be a split brain: the gate
@@ -274,7 +280,7 @@ Future<GoRouter> pumpLumeRouter(
             disableAnimations: !animate,
           ),
           child: LumeClockScope(
-            clock: LumeClock.fixed(kFixtureInstant),
+            clock: clock ?? LumeClock.fixed(kFixtureInstant),
             child: LumeBreakpointScope(
               child: navigator ?? const SizedBox.shrink(),
             ),
