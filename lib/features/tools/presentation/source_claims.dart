@@ -76,6 +76,10 @@ abstract final class LumeSourceClaims {
     'Statutory slabs',
     'Great-circle bearing',
     'Astronomical calculation',
+    // Compiled into the binary and named by its version, exactly as the
+    // astronomical tables are. Without it here a tool worked out from a
+    // static database is called sample data (wave 3).
+    'IANA time zones',
     'Places directory',
     'Hijri calendar + solar times',
     'Qur’an text',

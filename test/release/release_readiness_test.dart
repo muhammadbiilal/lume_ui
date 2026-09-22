@@ -299,9 +299,13 @@ void main() {
       ]..sort(),
       // Ledger, Installments, Committee and Baby Budget show only what
       // the reader wrote: nothing is seeded (D11, §40.1, §11, D-B18).
+      // Wave 3 adds three: Calculator and Tasbih show only what the
+      // reader pressed or tapped, and World Clock is worked out from a
+      // compiled-in database and the device's clock (D-W8).
       <String>[
         'age',
         'babybudget',
+        'calculator',
         'committee',
         'compound',
         'installments',
@@ -309,7 +313,9 @@ void main() {
         'loan',
         'stopwatch',
         'sunmoon',
+        'tasbih',
         'tipsplit',
+        'worldclock',
       ],
     );
     // Sun & Moon is the one computed tool: a calculation for the reader's
@@ -497,8 +503,12 @@ void main() {
           await pumpTool(
             tester,
             id,
-            // Hadith is for a reader who has the Islamic experience.
-            state: id == 'hadith' ? 'muslim_pk' : 'default_pk',
+            // A faith-gated tool needs a reader who has the Islamic
+            // experience, or the route refuses it and there is no
+            // screen to inspect. Read the flag rather than listing ids.
+            state: kLumeFeatures.any((LumeFeature f) => f.id == id && f.faith)
+                ? 'muslim_pk'
+                : 'default_pk',
             overrides: <Override>[
               buildProfileProvider.overrideWithValue(profile),
             ],

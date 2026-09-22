@@ -157,6 +157,10 @@ const List<LumeFeature> kLumeFeatures = <LumeFeature>[
     aware: <String>{'locale'},
   ),
   LumeFeature(
+    // Nothing is delivered: the reference declares notifications and
+    // implements none, and neither does this (wave 3). Its fixture figures are
+    // drawn only where the build reproduces the reference, and are marked
+    // sample there.
     id: 'focus',
     fallbackName: 'Focus Timer',
     icon: 'timer',
@@ -172,7 +176,6 @@ const List<LumeFeature> kLumeFeatures = <LumeFeature>[
     freshness: LumeFreshnessKind.live,
     supports: <LumeToolSupport>{
       LumeToolSupport.history,
-      LumeToolSupport.notifications,
       LumeToolSupport.offline,
     },
   ),
@@ -626,6 +629,9 @@ const List<LumeFeature> kLumeFeatures = <LumeFeature>[
     aware: <String>{'country', 'locale', 'timezone'},
   ),
   LumeFeature(
+    // The reference lists two past sessions from a literal fixture. Nothing
+    // records a session, so none is listed back and the history support goes
+    // with it (wave 3).
     id: 'tasbih',
     fallbackName: 'Tasbih',
     icon: 'beads',
@@ -641,10 +647,7 @@ const List<LumeFeature> kLumeFeatures = <LumeFeature>[
     density: LumeToolDensity.low,
     fallbackSource: 'On device',
     freshness: LumeFreshnessKind.local,
-    supports: <LumeToolSupport>{
-      LumeToolSupport.history,
-      LumeToolSupport.offline,
-    },
+    supports: <LumeToolSupport>{LumeToolSupport.offline},
   ),
   LumeFeature(
     id: 'zakat',
@@ -1715,6 +1718,9 @@ const List<LumeFeature> kLumeFeatures = <LumeFeature>[
     aware: <String>{'country', 'currency', 'locale'},
   ),
   LumeFeature(
+    // No game is playable and nothing is stored, so there is no history to
+    // offer: the best times and play counts the reference draws are records
+    // nobody set (wave 3).
     id: 'play',
     fallbackName: 'Play',
     icon: 'play',
@@ -1728,7 +1734,6 @@ const List<LumeFeature> kLumeFeatures = <LumeFeature>[
     freshness: LumeFreshnessKind.local,
     supports: <LumeToolSupport>{
       LumeToolSupport.favourites,
-      LumeToolSupport.history,
       LumeToolSupport.offline,
     },
   ),

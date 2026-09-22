@@ -72,6 +72,9 @@ class LumeDataCapability {
     'loan',
     'compound',
     'stopwatch',
+    // Calculator: every figure is what the reader pressed, worked out
+    // exactly. Its history holds only sums they finished (wave 3).
+    'calculator',
     // Tasbih: the count, the round and the rounds are the reader's own
     // taps. Its five phrases are reference content, not a fixture
     // standing in for anything of theirs (wave 3).

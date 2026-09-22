@@ -110,6 +110,25 @@ const DECISIONS = {
     supportsAdd: ['export', 'search'],
     supportsRemove: ['notifications'],
   },
+  focus: {
+    note: 'Nothing is delivered: the reference declares notifications and ' +
+      'implements none, and neither does this (wave 3). Its fixture ' +
+      'figures are drawn only where the build reproduces the reference, ' +
+      'and are marked sample there.',
+    supportsRemove: ['notifications'],
+  },
+  tasbih: {
+    note: 'The reference lists two past sessions from a literal fixture. ' +
+      'Nothing records a session, so none is listed back and the history ' +
+      'support goes with it (wave 3).',
+    supportsRemove: ['history'],
+  },
+  play: {
+    note: 'No game is playable and nothing is stored, so there is no ' +
+      'history to offer: the best times and play counts the reference ' +
+      'draws are records nobody set (wave 3).',
+    supportsRemove: ['history'],
+  },
   babybudget: {
     note: 'A record of what a family spends on a baby (D-B15): off Home, ' +
       'Today, the hero and recommendations; nothing leaves it. Filters, ' +
