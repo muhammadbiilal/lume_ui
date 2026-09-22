@@ -825,6 +825,7 @@
   "freshAt": "{time} پر اپ ڈیٹ ہوا",
   "freshCached": "محفوظ شدہ",
   "freshComputed": "آپ کے مقام کے لیے حساب شدہ",
+  "freshComputedLive": "براہِ راست حساب شدہ",
   "freshDaily": "آج اپ ڈیٹ ہوا",
   "freshDelayed": "15 منٹ کی تاخیر",
   "freshDraw": "تازہ ترین قرعہ اندازی",

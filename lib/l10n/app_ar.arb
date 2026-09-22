@@ -825,6 +825,7 @@
   "freshAt": "حُدّث الساعة {time}",
   "freshCached": "مخزّن مؤقتًا",
   "freshComputed": "محسوب لموقعك",
+  "freshComputedLive": "محسوب مباشرةً",
   "freshDaily": "حُدّث اليوم",
   "freshDelayed": "متأخر 15 دقيقة",
   "freshDraw": "أحدث سحب",

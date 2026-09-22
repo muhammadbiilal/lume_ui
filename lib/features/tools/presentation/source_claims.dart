@@ -21,6 +21,7 @@
 /// | "Stored on this device" | `isDurable` — otherwise "Kept until you close Lume" |
 /// | "Encrypted on device" | `isEncrypted` — otherwise "On device" |
 /// | "Live" | `isLive` |
+/// | "Calculated live" | `isLive` **and** `computedHere` — the figure moves, but it is worked out here from data compiled in, not fetched |
 /// | any "Updated …" | `observedAt`, and it is worked out from it |
 /// | "Delayed 15 min" | `isLive` and `observedAt` |
 /// | "Calculated for your location" | `computedHere` |
@@ -148,11 +149,18 @@ abstract final class LumeSourceClaims {
         label: capability.isDurable ? l.freshLocal : l.freshSession,
         source: _source(l, feature, capability),
       ),
+      // "Live" over a figure worked out here would read as a feed. World
+      // Clock's clock is running — the row ticks on the minute — but the
+      // zone rules behind it are compiled into the binary and named by
+      // their version, and nothing is fetched. So a tool that is both live
+      // and computed says which kind of live it is.
       LumeFreshnessKind.live =>
         capability.isLive
             ? LumeSourceClaim(
                 quality: LumeFreshnessQuality.live,
-                label: l.freshLive,
+                label: capability.computedHere
+                    ? l.freshComputedLive
+                    : l.freshLive,
                 source: _source(l, feature, capability),
                 updated: ago(),
               )

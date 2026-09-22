@@ -4822,6 +4822,12 @@ abstract class AppLocalizations {
   /// **'Calculated for your location'**
   String get freshComputed;
 
+  /// The freshness word for a figure that moves but is worked out on the device from data compiled into the app rather than fetched, as World Clock is. Distinguishes it from the plain live label, which reads as a feed.
+  ///
+  /// In en, this message translates to:
+  /// **'Calculated live'**
+  String get freshComputedLive;
+
   /// Reference key fresh.daily
   ///
   /// In en, this message translates to:

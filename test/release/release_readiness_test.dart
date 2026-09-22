@@ -301,13 +301,17 @@ void main() {
       // the reader wrote: nothing is seeded (D11, §40.1, §11, D-B18).
       // Wave 3 adds three: Calculator and Tasbih show only what the
       // reader pressed or tapped, and World Clock is worked out from a
-      // compiled-in database and the device's clock (D-W8).
+      // compiled-in database and the device's clock (D-W8). C99 adds
+      // Focus Timer — in a build that ships. The default here is that
+      // build; the parity reproduction is asserted separately, and
+      // `source_flavor_test.dart` holds the two apart.
       <String>[
         'age',
         'babybudget',
         'calculator',
         'committee',
         'compound',
+        'focus',
         'installments',
         'ledger',
         'loan',
@@ -317,6 +321,11 @@ void main() {
         'tipsplit',
         'worldclock',
       ],
+    );
+    expect(
+      LumeDataCapability.fixture('focus', reproducesReference: true).isSample,
+      isTrue,
+      reason: 'the parity reproduction still discloses what it invents',
     );
     // Sun & Moon is the one computed tool: a calculation for the reader's
     // city, never live and never stored (C86).
@@ -513,7 +522,14 @@ void main() {
               buildProfileProvider.overrideWithValue(profile),
             ],
           );
-          final bool sample = LumeDataCapability.fixture(id).isSample;
+          // The build's own answer, not the default: Focus Timer's sample
+          // data exists only in the reproduction, so asking without the
+          // profile would assert the parity mark on a shipping screen
+          // that has nothing to mark (C99).
+          final bool sample = LumeDataCapability.fixture(
+            id,
+            reproducesReference: profile.reproducesReference,
+          ).isSample;
           final Finder bar = find.byType(LumeSourceBar);
           expect(bar, findsOneWidget, reason: '$id draws no source bar');
           final List<String> said = textsUnder(tester, bar);

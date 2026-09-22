@@ -2479,6 +2479,50 @@ sample record ticked from its row would have shown its raw `@key`.
 `update(…, claim: false)` keeps it; a form's save still claims the record as
 the reader's (`memory_record_repository_test.dart`).
 
+### C99 — Two source lines that were not true of the screen under them
+
+**Release-honesty corrections, wave 3 closure.** Both were one word chosen
+once for a tool with two faces, and both were found by reading the shipped
+screen rather than the test.
+
+**Focus Timer said "Sample data" over the reader's own session.** The tool
+has two compositions: the parity build draws the reference's invented
+history — 75 minutes today, a five-day streak, three sessions, a seven-bar
+week, all constants in `context.js` — and development and release draw what
+has happened since Lume was opened, which is nothing until the reader runs
+a stretch. `isSample` was derived from set membership alone, so the mark
+followed the tool rather than the screen, and a reader whose own 25 minutes
+were on display was told they were a sample.
+
+`LumeDataCapability.sampleInParityOnly` now holds the one tool this is true
+of, and `fixture` takes the build's own `reproducesReference`. Focus joins
+`inputOnly`, which is what it is in every build that ships. Parity is
+unchanged and still discloses, in the reader's language, exactly where the
+invented figures are; a test asserts that no other tool's classification
+moves with the build type, because a claim that does is the defect itself.
+
+**World Clock said "Live".** Its clock does run — the list ticks on the
+minute — but "Live" beside a named source reads as a feed, and nothing in
+this tool is fetched: the zone rules are compiled into the binary and named
+by their version, `IANA time-zone database 2025c`. A shipping build now
+reads **"Calculated live · IANA time zones"**, from a general rule — a tool
+that is both `isLive` and `computedHere` says which kind of live it is —
+whose only current member is World Clock. `computed` membership is
+unchanged. Stopwatch and Focus, live but not computed, still say "Live".
+
+The parity build still says "Live", because a parity capture reproduces the
+reference and is announced to a screen reader as reference copy. The
+correction is therefore invisible in the eight composition cells, so it has
+a cell of its own: `tool_worldclock_calculated_live_390x844_light_en`,
+taken at the development profile.
+
+**What moved.** Seven Focus images — the development-build states, where
+the source line lost "Sample data ·" and now reads "On device" — and one
+new World Clock image. Nothing else in the 1,015 changed, and the orphan
+inventory is clean at 1,016. The source *name* stays "IANA time zones" in
+all three languages: it names a database, and the parity capture reproduces
+the reference's own source string.
+
 ### C98 — Wave 3: five tools, and what each of them stopped claiming
 
 **Product corrections and extensions (`ROLLOUT_WAVE_3.md`).** Five tools
@@ -3138,6 +3182,7 @@ deleted row invites the same question again.
 
 | Date | Change | Reason |
 |---|---|---|
+| 2026-09-22 | **C99 raised** — Focus Timer stops calling the reader's own session sample data, and World Clock says "Calculated live" rather than "Live"; both corrected at wave 3 closure, parity captures unchanged | Closure correction |
 | 2026-09-22 | **C98 raised** — wave 3 built: World Clock, Calculator, Focus Timer, Tasbih and Play, each corrected where its reference asserted something about the reader it could not know; three shared fixes to the test harness and the source-claim allowlist | Approved wave, `ROLLOUT_WAVE_3.md` |
 | 2026-09-21 | **C97 raised** — Baby Budget built as a record-backed tool; the reference's plan-less ratio, 101% donut, hard-coded English months, raw-USD bar titles, floor-height bars, wall-clock weekday dates, absent totals, stub export and unmarked sensitivity corrected | Approved model, `BABY_BUDGET_PROPOSAL.md` |
 | 2026-09-20 | **C96 raised** — Committee built as a record-backed tool; the reference's unbalanced circle, contradictory pool, recordless "done", wall-clock dates, stub export and unmarked sensitivity corrected | Approved model, `COMMITTEE_PROPOSAL.md` |

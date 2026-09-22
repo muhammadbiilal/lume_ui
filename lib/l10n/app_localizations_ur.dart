@@ -2672,6 +2672,9 @@ class AppLocalizationsUr extends AppLocalizations {
   String get freshComputed => 'آپ کے مقام کے لیے حساب شدہ';
 
   @override
+  String get freshComputedLive => 'براہِ راست حساب شدہ';
+
+  @override
   String get freshDaily => 'آج اپ ڈیٹ ہوا';
 
   @override

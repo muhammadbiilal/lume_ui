@@ -74,12 +74,12 @@ is claimed as parity (C90).
 
 | tool | golden cases | committed PNGs | composition cells | states |
 |---|---:|---:|---:|---:|
-| World Clock | 18 | 18 | 8 | 10 |
+| World Clock | 19 | 19 | 8 | 11 |
 | Calculator | 16 | 16 | 8 | 8 |
 | Focus Timer | 15 | 15 | 8 | 7 |
 | Tasbih | 14 | 14 | 8 | 6 |
 | Play | 9 | 9 | 8 | 1 |
-| **total** | **72** | **72** | | |
+| **total** | **73** | **73** | | |
 
 Each tool's composition is captured in the same eight cells: 390×844
 light, dark, Urdu, Arabic and at 200% type; 700×900; 1100×900; 852×393.
@@ -107,6 +107,15 @@ it converted into another zone, so the whole list would have drawn
 different times on a machine in a different zone. `captureLumeRoute` now
 forwards a clock for exactly this; the set is verified green under
 `TZ=America/New_York` as well as the host zone.
+
+**C99 added one cell and moved seven.** World Clock's correction — "Live"
+became "Calculated live" — shows only in a build that ships, and all eight
+composition cells are parity captures, so it would have been invisible:
+`tool_worldclock_calculated_live_390x844_light_en` is taken at the
+development profile for that one reason. The seven Focus Timer state cells
+were recaptured because their source line lost "Sample data ·" and now
+reads "On device"; those seven are development-build captures, and the
+eight parity composition cells still disclose and did not change.
 
 Play's "not playable yet" state is captured at the 200% cell rather than
 the phone cell: at ordinary text size the notice already sits on the

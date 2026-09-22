@@ -2718,6 +2718,9 @@ class AppLocalizationsAr extends AppLocalizations {
   String get freshComputed => 'محسوب لموقعك';
 
   @override
+  String get freshComputedLive => 'محسوب مباشرةً';
+
+  @override
   String get freshDaily => 'حُدّث اليوم';
 
   @override

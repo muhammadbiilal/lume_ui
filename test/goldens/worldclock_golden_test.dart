@@ -24,6 +24,7 @@ library;
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:lume/core/config/lume_build_profile.dart';
 import 'package:lume/core/fixtures/lume_clock.dart';
 import 'package:lume/app/providers/notification_feed.dart';
 import 'package:lume/app/providers/time_zone_provider.dart';
@@ -91,6 +92,7 @@ void main() {
     LumeToolSession? session,
     LumeTimeZoneService? service,
     Future<void> Function(WidgetTester tester)? after,
+    LumeBuildProfile build = LumeBuildProfile.parity,
   }) async {
     // A minute tick outliving the test would be reported as a pending timer,
     // so the tree comes down first and `dispose` cancels it.
@@ -127,6 +129,7 @@ void main() {
         notificationScheduleProvider.overrideWithValue(
           const LumeNotificationSchedule.off(),
         ),
+        buildProfileProvider.overrideWithValue(build),
       ],
       after: after,
     );
@@ -143,6 +146,23 @@ void main() {
         await shoot(t, golden: 'tool_worldclock_list', cell: cell);
       });
     }
+  });
+
+  // The source bar a reader actually gets. A parity capture reproduces the
+  // reference's own word, "Live", which beside a named source reads as a
+  // feed; a shipping build says what is true of this tool — the clock runs
+  // here, and the zone rules are compiled in and named by their version.
+  // The correction is invisible in every cell above, so it gets one of its
+  // own rather than only a test that reads the string.
+  testWidgets('World Clock — the source bar a reader gets', (
+    WidgetTester t,
+  ) async {
+    await shoot(
+      t,
+      golden: 'tool_worldclock_calculated_live',
+      cell: kPhone,
+      build: LumeBuildProfile.development,
+    );
   });
 
   group('World Clock — the states a reader reaches', () {

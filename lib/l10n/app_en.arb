@@ -3563,6 +3563,10 @@
   "@freshComputed": {
     "description": "Reference key fresh.computed"
   },
+  "freshComputedLive": "Calculated live",
+  "@freshComputedLive": {
+    "description": "The freshness word for a figure that moves but is worked out on the device from data compiled into the app rather than fetched, as World Clock is. Distinguishes it from the plain live label, which reads as a feed."
+  },
   "freshDaily": "Updated today",
   "@freshDaily": {
     "description": "Reference key fresh.daily"

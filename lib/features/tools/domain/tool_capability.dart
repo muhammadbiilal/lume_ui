@@ -10,6 +10,8 @@ library;
 import 'package:flutter/foundation.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../../core/config/lume_build_profile.dart';
+
 @immutable
 class LumeDataCapability {
   const LumeDataCapability({
@@ -24,14 +26,26 @@ class LumeDataCapability {
 
   /// This build's capability for [toolId]: fixtures and the session, and
   /// nothing more. The only live thing is a clock running on the device.
-  factory LumeDataCapability.fixture(String toolId) => LumeDataCapability(
+  ///
+  /// [reproducesReference] is the build's own answer to
+  /// `LumeBuildProfile.reproducesReference`. It matters for exactly one
+  /// thing: a tool in [sampleInParityOnly] draws invented figures only in
+  /// the parity reproduction, so only there does it have sample data to
+  /// disclose. Every other tool's classification is the same in every
+  /// build, which is the point of deriving claims from capability rather
+  /// than from the build type.
+  factory LumeDataCapability.fixture(
+    String toolId, {
+    bool reproducesReference = false,
+  }) => LumeDataCapability(
     source: sampleSource,
     isLive: onDeviceClocks.contains(toolId),
     computedHere: computed.contains(toolId),
     isSample:
-        !inputOnly.contains(toolId) &&
-        !computed.contains(toolId) &&
-        !readerRecords.contains(toolId),
+        (reproducesReference && sampleInParityOnly.contains(toolId)) ||
+        (!inputOnly.contains(toolId) &&
+            !computed.contains(toolId) &&
+            !readerRecords.contains(toolId)),
   );
 
   /// A write survives the app being closed.
@@ -79,7 +93,24 @@ class LumeDataCapability {
     // taps. Its five phrases are reference content, not a fixture
     // standing in for anything of theirs (wave 3).
     'tasbih',
+    // Focus Timer: the lengths the reader chose and the stretches they
+    // actually ran, counted from a boot clock. True of every build that
+    // ships; the parity reproduction is the exception, and it is named in
+    // [sampleInParityOnly] rather than left to change what this set means.
+    'focus',
   };
+
+  /// Tools that have sample data **only** where the build reproduces the
+  /// reference.
+  ///
+  /// Focus Timer's reference prints "75 Minutes today", a five-day streak,
+  /// three sessions and a seven-bar week from constants in `context.js`.
+  /// The parity build draws them, so the parity build says "Sample data"
+  /// over them. Development and release draw the reader's own session and
+  /// nothing else, so there is no sample data there to disclose, and
+  /// saying otherwise was a claim about the reader's screen that was not
+  /// true of it.
+  static const Set<String> sampleInParityOnly = <String>{'focus'};
 
   /// Tools whose every figure is worked out on the device for the reader's
   /// city — a calculation, not a fixture. Sun & Moon: the sun from the
@@ -113,5 +144,10 @@ class LumeDataCapability {
 /// Each tool's capability. Dayroz overrides this with its adapters'.
 final ProviderFamily<LumeDataCapability, String> dataCapabilityProvider =
     Provider.family<LumeDataCapability, String>(
-      (Ref ref, String toolId) => LumeDataCapability.fixture(toolId),
+      (Ref ref, String toolId) => LumeDataCapability.fixture(
+        toolId,
+        reproducesReference: ref
+            .watch(buildProfileProvider)
+            .reproducesReference,
+      ),
     );
