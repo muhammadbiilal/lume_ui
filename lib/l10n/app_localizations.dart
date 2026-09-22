@@ -16093,6 +16093,743 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'{n, plural, =1{1 problem. Nothing will be imported.} other{{n} problems. Nothing will be imported.}}'**
   String babyImportIssues(int n);
+
+  /// World Clock: the reader’s own clock
+  ///
+  /// In en, this message translates to:
+  /// **'Your time'**
+  String get clockYourTime;
+
+  /// World Clock: the label under it
+  ///
+  /// In en, this message translates to:
+  /// **'Your time zone'**
+  String get clockYourZone;
+
+  /// World Clock: the list of places
+  ///
+  /// In en, this message translates to:
+  /// **'Clocks'**
+  String get clockCities;
+
+  /// World Clock: add a zone to the list
+  ///
+  /// In en, this message translates to:
+  /// **'Add a place'**
+  String get clockAdd;
+
+  /// World Clock: the picker’s title
+  ///
+  /// In en, this message translates to:
+  /// **'Add a place'**
+  String get clockAddTitle;
+
+  /// World Clock: the search placeholder
+  ///
+  /// In en, this message translates to:
+  /// **'Search cities and time zones'**
+  String get clockSearch;
+
+  /// World Clock: no zone matched
+  ///
+  /// In en, this message translates to:
+  /// **'Nothing matches'**
+  String get clockNoMatch;
+
+  /// World Clock: what to do when nothing matched
+  ///
+  /// In en, this message translates to:
+  /// **'Try a city, a country or a time zone name.'**
+  String get clockNoMatchText;
+
+  /// World Clock: clear the search
+  ///
+  /// In en, this message translates to:
+  /// **'Show all'**
+  String get clockShowAll;
+
+  /// World Clock: the empty list
+  ///
+  /// In en, this message translates to:
+  /// **'No places yet'**
+  String get clockEmptyTitle;
+
+  /// World Clock: the empty state body
+  ///
+  /// In en, this message translates to:
+  /// **'Add a city to see its time beside yours. Your own time is always here.'**
+  String get clockEmptyText;
+
+  /// World Clock: how many places the list holds
+  ///
+  /// In en, this message translates to:
+  /// **'{n, plural, =1{1 place} other{{n} places}}'**
+  String clockCount(int n);
+
+  /// World Clock: the place keeps the reader’s own time
+  ///
+  /// In en, this message translates to:
+  /// **'Same time'**
+  String get clockSameTime;
+
+  /// World Clock: the place is ahead of the reader
+  ///
+  /// In en, this message translates to:
+  /// **'{offset} ahead'**
+  String clockAhead(String offset);
+
+  /// World Clock: the place is behind the reader
+  ///
+  /// In en, this message translates to:
+  /// **'{offset} behind'**
+  String clockBehind(String offset);
+
+  /// World Clock: the place is on the day before the reader’s
+  ///
+  /// In en, this message translates to:
+  /// **'Yesterday'**
+  String get clockYesterday;
+
+  /// World Clock: the place is on the reader’s own day
+  ///
+  /// In en, this message translates to:
+  /// **'Today'**
+  String get clockToday;
+
+  /// World Clock: the place is on the day after the reader’s
+  ///
+  /// In en, this message translates to:
+  /// **'Tomorrow'**
+  String get clockTomorrow;
+
+  /// World Clock: the place is currently on daylight saving time
+  ///
+  /// In en, this message translates to:
+  /// **'Summer time'**
+  String get clockSummerTime;
+
+  /// World Clock: what a screen reader hears for one row
+  ///
+  /// In en, this message translates to:
+  /// **'{place}, {time}, {day}, {offset}'**
+  String clockRowSemantics(
+    String place,
+    String time,
+    String day,
+    String offset,
+  );
+
+  /// World Clock: the converter section
+  ///
+  /// In en, this message translates to:
+  /// **'Convert a time'**
+  String get clockConvert;
+
+  /// World Clock: the zone converted from
+  ///
+  /// In en, this message translates to:
+  /// **'From'**
+  String get clockConvertFrom;
+
+  /// World Clock: the zone converted to
+  ///
+  /// In en, this message translates to:
+  /// **'To'**
+  String get clockConvertTo;
+
+  /// World Clock: the time being converted
+  ///
+  /// In en, this message translates to:
+  /// **'At'**
+  String get clockConvertAt;
+
+  /// World Clock: the converted time and its day
+  ///
+  /// In en, this message translates to:
+  /// **'{time} on {day}'**
+  String clockConvertResult(String time, String day);
+
+  /// World Clock: both sides of the converter are the same zone
+  ///
+  /// In en, this message translates to:
+  /// **'Pick two different places'**
+  String get clockConvertSame;
+
+  /// World Clock: take a place off the list
+  ///
+  /// In en, this message translates to:
+  /// **'Remove'**
+  String get clockRemove;
+
+  /// World Clock: move a place earlier
+  ///
+  /// In en, this message translates to:
+  /// **'Move up'**
+  String get clockMoveUp;
+
+  /// World Clock: move a place later
+  ///
+  /// In en, this message translates to:
+  /// **'Move down'**
+  String get clockMoveDown;
+
+  /// World Clock: a place joined the list
+  ///
+  /// In en, this message translates to:
+  /// **'{place} added'**
+  String clockAdded(String place);
+
+  /// World Clock: a place left the list
+  ///
+  /// In en, this message translates to:
+  /// **'{place} removed'**
+  String clockRemovedToast(String place);
+
+  /// World Clock: the same zone twice is refused
+  ///
+  /// In en, this message translates to:
+  /// **'{place} is already on the list'**
+  String clockAlready(String place);
+
+  /// World Clock: a stored identifier the database does not hold
+  ///
+  /// In en, this message translates to:
+  /// **'That time zone is not known'**
+  String get clockZoneUnknownTitle;
+
+  /// World Clock: the unknown-zone body
+  ///
+  /// In en, this message translates to:
+  /// **'Lume could not find “{id}” in the time-zone database it carries. Nothing has been guessed in its place.'**
+  String clockZoneUnknownText(String id);
+
+  /// World Clock: the database did not load
+  ///
+  /// In en, this message translates to:
+  /// **'The time-zone database is unavailable'**
+  String get clockDatabaseTitle;
+
+  /// World Clock: the database-unavailable body
+  ///
+  /// In en, this message translates to:
+  /// **'Without it no time anywhere can be worked out, and none is shown.'**
+  String get clockDatabaseText;
+
+  /// World Clock: the device zone is unknown
+  ///
+  /// In en, this message translates to:
+  /// **'This device has not said where it is'**
+  String get clockDeviceTitle;
+
+  /// World Clock: the missing-device-zone body
+  ///
+  /// In en, this message translates to:
+  /// **'Choose your time zone in Settings, and your own clock will appear here.'**
+  String get clockDeviceText;
+
+  /// World Clock: the country needs a city or an explicit zone
+  ///
+  /// In en, this message translates to:
+  /// **'Your country has more than one time zone'**
+  String get clockChooseTitle;
+
+  /// World Clock: the selection-required body
+  ///
+  /// In en, this message translates to:
+  /// **'Choose the one you are in, and your own clock will appear here.'**
+  String get clockChooseText;
+
+  /// World Clock: a stored identifier that the database has renamed
+  ///
+  /// In en, this message translates to:
+  /// **'{stored} is now called {canonical}'**
+  String clockAliasNote(String stored, String canonical);
+
+  /// World Clock: which database the times come from
+  ///
+  /// In en, this message translates to:
+  /// **'IANA time-zone database {version}'**
+  String clockDatabaseVersion(String version);
+
+  /// Calculator: the keypad’s name
+  ///
+  /// In en, this message translates to:
+  /// **'Calculator keypad'**
+  String get calcKeypad;
+
+  /// Calculator: the readout’s name
+  ///
+  /// In en, this message translates to:
+  /// **'Result'**
+  String get calcDisplay;
+
+  /// Calculator: the running sum’s name
+  ///
+  /// In en, this message translates to:
+  /// **'Expression'**
+  String get calcExpression;
+
+  /// Calculator: the list of finished sums
+  ///
+  /// In en, this message translates to:
+  /// **'History'**
+  String get calcHistory;
+
+  /// Calculator: the history is empty
+  ///
+  /// In en, this message translates to:
+  /// **'Nothing worked out yet.'**
+  String get calcNoHistory;
+
+  /// Calculator: clear everything
+  ///
+  /// In en, this message translates to:
+  /// **'Clear'**
+  String get calcClear;
+
+  /// Calculator: clear the number being typed
+  ///
+  /// In en, this message translates to:
+  /// **'Clear entry'**
+  String get calcClearEntry;
+
+  /// Calculator: delete the last digit
+  ///
+  /// In en, this message translates to:
+  /// **'Backspace'**
+  String get calcBackspace;
+
+  /// Calculator: work it out
+  ///
+  /// In en, this message translates to:
+  /// **'Equals'**
+  String get calcEquals;
+
+  /// Calculator: add
+  ///
+  /// In en, this message translates to:
+  /// **'Plus'**
+  String get calcPlus;
+
+  /// Calculator: subtract
+  ///
+  /// In en, this message translates to:
+  /// **'Minus'**
+  String get calcMinus;
+
+  /// Calculator: multiply
+  ///
+  /// In en, this message translates to:
+  /// **'Times'**
+  String get calcTimes;
+
+  /// Calculator: divide
+  ///
+  /// In en, this message translates to:
+  /// **'Divided by'**
+  String get calcDivide;
+
+  /// Calculator: divide by a hundred
+  ///
+  /// In en, this message translates to:
+  /// **'Per cent'**
+  String get calcPercent;
+
+  /// Calculator: the decimal separator key
+  ///
+  /// In en, this message translates to:
+  /// **'Decimal point'**
+  String get calcDecimal;
+
+  /// Calculator: make it negative or positive
+  ///
+  /// In en, this message translates to:
+  /// **'Change sign'**
+  String get calcSign;
+
+  /// Calculator: one of the ten digit keys
+  ///
+  /// In en, this message translates to:
+  /// **'Digit {n}'**
+  String calcDigit(String n);
+
+  /// Calculator: the reader asked to divide by zero
+  ///
+  /// In en, this message translates to:
+  /// **'Nothing can be divided by zero'**
+  String get calcErrDivZero;
+
+  /// Calculator: the entry reached its length limit
+  ///
+  /// In en, this message translates to:
+  /// **'That is as many digits as this can hold'**
+  String get calcErrTooLong;
+
+  /// Calculator: the result left the range the calculator keeps exactly
+  ///
+  /// In en, this message translates to:
+  /// **'That number is too large to work with'**
+  String get calcErrOverflow;
+
+  /// Calculator: a recurring decimal cut at the kept precision
+  ///
+  /// In en, this message translates to:
+  /// **'That division does not end'**
+  String get calcErrPrecision;
+
+  /// Calculator: one finished sum
+  ///
+  /// In en, this message translates to:
+  /// **'{expression} = {result}'**
+  String calcHistoryRow(String expression, String result);
+
+  /// Calculator: everything was cleared
+  ///
+  /// In en, this message translates to:
+  /// **'Cleared'**
+  String get calcCleared;
+
+  /// Calculator: how the arithmetic is done
+  ///
+  /// In en, this message translates to:
+  /// **'Worked out exactly, to {places} decimal places.'**
+  String calcPrecisionNote(String places);
+
+  /// Focus Timer: the working stretch
+  ///
+  /// In en, this message translates to:
+  /// **'Focus'**
+  String get focusFocus;
+
+  /// Focus Timer: the resting stretch
+  ///
+  /// In en, this message translates to:
+  /// **'Break'**
+  String get focusBreak;
+
+  /// Focus Timer: begin
+  ///
+  /// In en, this message translates to:
+  /// **'Start focus'**
+  String get focusStart;
+
+  /// Focus Timer: hold it where it is
+  ///
+  /// In en, this message translates to:
+  /// **'Pause'**
+  String get focusPause;
+
+  /// Focus Timer: carry on
+  ///
+  /// In en, this message translates to:
+  /// **'Resume'**
+  String get focusResume;
+
+  /// Focus Timer: back to the full time
+  ///
+  /// In en, this message translates to:
+  /// **'Reset'**
+  String get focusReset;
+
+  /// Focus Timer: go to the next stretch
+  ///
+  /// In en, this message translates to:
+  /// **'Skip'**
+  String get focusSkip;
+
+  /// Focus Timer: the working stretch ended
+  ///
+  /// In en, this message translates to:
+  /// **'Focus finished'**
+  String get focusDone;
+
+  /// Focus Timer: the resting stretch ended
+  ///
+  /// In en, this message translates to:
+  /// **'Break over'**
+  String get focusBreakOver;
+
+  /// Focus Timer: where the reader is in the round
+  ///
+  /// In en, this message translates to:
+  /// **'Session {n} of {of}'**
+  String focusSession(String n, String of);
+
+  /// Focus Timer: the clock is going
+  ///
+  /// In en, this message translates to:
+  /// **'Running'**
+  String get focusRunning;
+
+  /// Focus Timer: the clock is held
+  ///
+  /// In en, this message translates to:
+  /// **'Paused'**
+  String get focusPaused;
+
+  /// Focus Timer: the clock has not started
+  ///
+  /// In en, this message translates to:
+  /// **'Ready'**
+  String get focusReady;
+
+  /// Focus Timer: how long a stretch runs
+  ///
+  /// In en, this message translates to:
+  /// **'Focus length'**
+  String get focusLength;
+
+  /// Focus Timer: how long a break runs
+  ///
+  /// In en, this message translates to:
+  /// **'Break length'**
+  String get focusBreakLength;
+
+  /// Focus Timer: how long the reader has focused today
+  ///
+  /// In en, this message translates to:
+  /// **'Minutes today'**
+  String get focusToday;
+
+  /// Focus Timer: consecutive days with a session
+  ///
+  /// In en, this message translates to:
+  /// **'Day streak'**
+  String get focusStreakLabel;
+
+  /// Focus Timer: how many sessions were finished
+  ///
+  /// In en, this message translates to:
+  /// **'Sessions'**
+  String get focusSessionsLabel;
+
+  /// Focus Timer: the seven-day chart
+  ///
+  /// In en, this message translates to:
+  /// **'This week'**
+  String get focusThisWeek;
+
+  /// Focus Timer: a length in minutes
+  ///
+  /// In en, this message translates to:
+  /// **'{n, plural, =1{1 minute} other{{n} minutes}}'**
+  String focusMinutes(int n);
+
+  /// Focus Timer: one bar, for a screen reader
+  ///
+  /// In en, this message translates to:
+  /// **'{day}: {minutes}'**
+  String focusChartEntry(String day, String minutes);
+
+  /// Focus Timer: what the reader has done since opening the tool
+  ///
+  /// In en, this message translates to:
+  /// **'This session'**
+  String get focusThisSession;
+
+  /// Focus Timer: no session has finished in this run of the app
+  ///
+  /// In en, this message translates to:
+  /// **'Nothing yet — start a session and it will count here.'**
+  String get focusNothingYet;
+
+  /// Focus Timer: what "this session" means, said plainly
+  ///
+  /// In en, this message translates to:
+  /// **'Counted since you opened Lume. Nothing here survives closing it.'**
+  String get focusKeptSession;
+
+  /// Tasbih: the number the reader is on
+  ///
+  /// In en, this message translates to:
+  /// **'Counter'**
+  String get tasbihCounter;
+
+  /// Tasbih: what the big control does
+  ///
+  /// In en, this message translates to:
+  /// **'Tap to count'**
+  String get tasbihTap;
+
+  /// Tasbih: how far through a round the reader is
+  ///
+  /// In en, this message translates to:
+  /// **'{count} of {target}'**
+  String tasbihOf(String count, String target);
+
+  /// Tasbih: how many full rounds have been counted
+  ///
+  /// In en, this message translates to:
+  /// **'{n, plural, =0{No rounds} =1{1 round} other{{n} rounds}}'**
+  String tasbihSets(int n);
+
+  /// Tasbih: back to zero
+  ///
+  /// In en, this message translates to:
+  /// **'Reset'**
+  String get tasbihReset;
+
+  /// Tasbih: the reset confirmation
+  ///
+  /// In en, this message translates to:
+  /// **'Reset the counter?'**
+  String get tasbihResetAsk;
+
+  /// Tasbih: what resetting does
+  ///
+  /// In en, this message translates to:
+  /// **'The count and the rounds go back to zero. Nothing is kept.'**
+  String get tasbihResetText;
+
+  /// Tasbih: confirm the reset
+  ///
+  /// In en, this message translates to:
+  /// **'Reset it'**
+  String get tasbihResetGo;
+
+  /// Tasbih: do not reset
+  ///
+  /// In en, this message translates to:
+  /// **'Keep counting'**
+  String get tasbihKeepCount;
+
+  /// Tasbih: the target was reached
+  ///
+  /// In en, this message translates to:
+  /// **'Round complete'**
+  String get tasbihComplete;
+
+  /// Tasbih: which words are being counted
+  ///
+  /// In en, this message translates to:
+  /// **'Phrase'**
+  String get tasbihPhrase;
+
+  /// Tasbih: the phrase picker
+  ///
+  /// In en, this message translates to:
+  /// **'Choose a phrase'**
+  String get tasbihPickTitle;
+
+  /// Tasbih: switching phrases mid-count
+  ///
+  /// In en, this message translates to:
+  /// **'Change the phrase?'**
+  String get tasbihSwitchAsk;
+
+  /// Tasbih: what switching does
+  ///
+  /// In en, this message translates to:
+  /// **'The count goes back to zero. The rounds you have finished are kept.'**
+  String get tasbihSwitchText;
+
+  /// Tasbih: confirm the switch
+  ///
+  /// In en, this message translates to:
+  /// **'Change it'**
+  String get tasbihSwitchGo;
+
+  /// Tasbih: the count reached its ceiling
+  ///
+  /// In en, this message translates to:
+  /// **'That is as high as the counter goes'**
+  String get tasbihMax;
+
+  /// Tasbih: an honest statement of what is not stored
+  ///
+  /// In en, this message translates to:
+  /// **'The count is here while Lume is open. Nothing is written down.'**
+  String get tasbihNotKept;
+
+  /// Tasbih: the conventional count for this phrase
+  ///
+  /// In en, this message translates to:
+  /// **'Round of {n}'**
+  String tasbihTargetLabel(String n);
+
+  /// Tasbih: the English gloss’s label
+  ///
+  /// In en, this message translates to:
+  /// **'Meaning'**
+  String get tasbihMeaning;
+
+  /// Play: the grid of games
+  ///
+  /// In en, this message translates to:
+  /// **'Games'**
+  String get playGames;
+
+  /// Play: what sort of game it is
+  ///
+  /// In en, this message translates to:
+  /// **'Kind'**
+  String get playKind;
+
+  /// Play: a puzzle game
+  ///
+  /// In en, this message translates to:
+  /// **'Puzzle'**
+  String get playKindPuzzle;
+
+  /// Play: a word game
+  ///
+  /// In en, this message translates to:
+  /// **'Word'**
+  String get playKindWord;
+
+  /// Play: a memory game
+  ///
+  /// In en, this message translates to:
+  /// **'Memory'**
+  String get playKindMemory;
+
+  /// Play: an arithmetic game
+  ///
+  /// In en, this message translates to:
+  /// **'Arithmetic'**
+  String get playKindArithmetic;
+
+  /// Play: a game’s name
+  ///
+  /// In en, this message translates to:
+  /// **'Number Grid'**
+  String get playGameNumberGrid;
+
+  /// Play: a game’s name
+  ///
+  /// In en, this message translates to:
+  /// **'Word Chain'**
+  String get playGameWordChain;
+
+  /// Play: a game’s name
+  ///
+  /// In en, this message translates to:
+  /// **'Memory Match'**
+  String get playGameMemoryMatch;
+
+  /// Play: a game’s name
+  ///
+  /// In en, this message translates to:
+  /// **'Quick Maths'**
+  String get playGameQuickMaths;
+
+  /// Play: the reference draws the tile and nothing opens
+  ///
+  /// In en, this message translates to:
+  /// **'Not playable yet'**
+  String get playNotYet;
+
+  /// Play: why nothing opens, said plainly
+  ///
+  /// In en, this message translates to:
+  /// **'These are the games Lume plans to carry. None of them can be played yet, and nothing here is a score of yours.'**
+  String get playNotYetText;
+
+  /// Play: how many games the grid holds
+  ///
+  /// In en, this message translates to:
+  /// **'{n, plural, =1{1 game} other{{n} games}}'**
+  String playCount(int n);
 }
 
 class _AppLocalizationsDelegate

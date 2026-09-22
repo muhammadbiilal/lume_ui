@@ -12737,5 +12737,625 @@
         "type": "int"
       }
     }
+  },
+  "clockYourTime": "Your time",
+  "@clockYourTime": {
+    "description": "World Clock: the reader’s own clock"
+  },
+  "clockYourZone": "Your time zone",
+  "@clockYourZone": {
+    "description": "World Clock: the label under it"
+  },
+  "clockCities": "Clocks",
+  "@clockCities": {
+    "description": "World Clock: the list of places"
+  },
+  "clockAdd": "Add a place",
+  "@clockAdd": {
+    "description": "World Clock: add a zone to the list"
+  },
+  "clockAddTitle": "Add a place",
+  "@clockAddTitle": {
+    "description": "World Clock: the picker’s title"
+  },
+  "clockSearch": "Search cities and time zones",
+  "@clockSearch": {
+    "description": "World Clock: the search placeholder"
+  },
+  "clockNoMatch": "Nothing matches",
+  "@clockNoMatch": {
+    "description": "World Clock: no zone matched"
+  },
+  "clockNoMatchText": "Try a city, a country or a time zone name.",
+  "@clockNoMatchText": {
+    "description": "World Clock: what to do when nothing matched"
+  },
+  "clockShowAll": "Show all",
+  "@clockShowAll": {
+    "description": "World Clock: clear the search"
+  },
+  "clockEmptyTitle": "No places yet",
+  "@clockEmptyTitle": {
+    "description": "World Clock: the empty list"
+  },
+  "clockEmptyText": "Add a city to see its time beside yours. Your own time is always here.",
+  "@clockEmptyText": {
+    "description": "World Clock: the empty state body"
+  },
+  "clockCount": "{n, plural, =1{1 place} other{{n} places}}",
+  "@clockCount": {
+    "description": "World Clock: how many places the list holds",
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
+  "clockSameTime": "Same time",
+  "@clockSameTime": {
+    "description": "World Clock: the place keeps the reader’s own time"
+  },
+  "clockAhead": "{offset} ahead",
+  "@clockAhead": {
+    "description": "World Clock: the place is ahead of the reader",
+    "placeholders": {
+      "offset": {
+        "type": "String"
+      }
+    }
+  },
+  "clockBehind": "{offset} behind",
+  "@clockBehind": {
+    "description": "World Clock: the place is behind the reader",
+    "placeholders": {
+      "offset": {
+        "type": "String"
+      }
+    }
+  },
+  "clockYesterday": "Yesterday",
+  "@clockYesterday": {
+    "description": "World Clock: the place is on the day before the reader’s"
+  },
+  "clockToday": "Today",
+  "@clockToday": {
+    "description": "World Clock: the place is on the reader’s own day"
+  },
+  "clockTomorrow": "Tomorrow",
+  "@clockTomorrow": {
+    "description": "World Clock: the place is on the day after the reader’s"
+  },
+  "clockSummerTime": "Summer time",
+  "@clockSummerTime": {
+    "description": "World Clock: the place is currently on daylight saving time"
+  },
+  "clockRowSemantics": "{place}, {time}, {day}, {offset}",
+  "@clockRowSemantics": {
+    "description": "World Clock: what a screen reader hears for one row",
+    "placeholders": {
+      "place": {
+        "type": "String"
+      },
+      "time": {
+        "type": "String"
+      },
+      "day": {
+        "type": "String"
+      },
+      "offset": {
+        "type": "String"
+      }
+    }
+  },
+  "clockConvert": "Convert a time",
+  "@clockConvert": {
+    "description": "World Clock: the converter section"
+  },
+  "clockConvertFrom": "From",
+  "@clockConvertFrom": {
+    "description": "World Clock: the zone converted from"
+  },
+  "clockConvertTo": "To",
+  "@clockConvertTo": {
+    "description": "World Clock: the zone converted to"
+  },
+  "clockConvertAt": "At",
+  "@clockConvertAt": {
+    "description": "World Clock: the time being converted"
+  },
+  "clockConvertResult": "{time} on {day}",
+  "@clockConvertResult": {
+    "description": "World Clock: the converted time and its day",
+    "placeholders": {
+      "time": {
+        "type": "String"
+      },
+      "day": {
+        "type": "String"
+      }
+    }
+  },
+  "clockConvertSame": "Pick two different places",
+  "@clockConvertSame": {
+    "description": "World Clock: both sides of the converter are the same zone"
+  },
+  "clockRemove": "Remove",
+  "@clockRemove": {
+    "description": "World Clock: take a place off the list"
+  },
+  "clockMoveUp": "Move up",
+  "@clockMoveUp": {
+    "description": "World Clock: move a place earlier"
+  },
+  "clockMoveDown": "Move down",
+  "@clockMoveDown": {
+    "description": "World Clock: move a place later"
+  },
+  "clockAdded": "{place} added",
+  "@clockAdded": {
+    "description": "World Clock: a place joined the list",
+    "placeholders": {
+      "place": {
+        "type": "String"
+      }
+    }
+  },
+  "clockRemovedToast": "{place} removed",
+  "@clockRemovedToast": {
+    "description": "World Clock: a place left the list",
+    "placeholders": {
+      "place": {
+        "type": "String"
+      }
+    }
+  },
+  "clockAlready": "{place} is already on the list",
+  "@clockAlready": {
+    "description": "World Clock: the same zone twice is refused",
+    "placeholders": {
+      "place": {
+        "type": "String"
+      }
+    }
+  },
+  "clockZoneUnknownTitle": "That time zone is not known",
+  "@clockZoneUnknownTitle": {
+    "description": "World Clock: a stored identifier the database does not hold"
+  },
+  "clockZoneUnknownText": "Lume could not find “{id}” in the time-zone database it carries. Nothing has been guessed in its place.",
+  "@clockZoneUnknownText": {
+    "description": "World Clock: the unknown-zone body",
+    "placeholders": {
+      "id": {
+        "type": "String"
+      }
+    }
+  },
+  "clockDatabaseTitle": "The time-zone database is unavailable",
+  "@clockDatabaseTitle": {
+    "description": "World Clock: the database did not load"
+  },
+  "clockDatabaseText": "Without it no time anywhere can be worked out, and none is shown.",
+  "@clockDatabaseText": {
+    "description": "World Clock: the database-unavailable body"
+  },
+  "clockDeviceTitle": "This device has not said where it is",
+  "@clockDeviceTitle": {
+    "description": "World Clock: the device zone is unknown"
+  },
+  "clockDeviceText": "Choose your time zone in Settings, and your own clock will appear here.",
+  "@clockDeviceText": {
+    "description": "World Clock: the missing-device-zone body"
+  },
+  "clockChooseTitle": "Your country has more than one time zone",
+  "@clockChooseTitle": {
+    "description": "World Clock: the country needs a city or an explicit zone"
+  },
+  "clockChooseText": "Choose the one you are in, and your own clock will appear here.",
+  "@clockChooseText": {
+    "description": "World Clock: the selection-required body"
+  },
+  "clockAliasNote": "{stored} is now called {canonical}",
+  "@clockAliasNote": {
+    "description": "World Clock: a stored identifier that the database has renamed",
+    "placeholders": {
+      "stored": {
+        "type": "String"
+      },
+      "canonical": {
+        "type": "String"
+      }
+    }
+  },
+  "clockDatabaseVersion": "IANA time-zone database {version}",
+  "@clockDatabaseVersion": {
+    "description": "World Clock: which database the times come from",
+    "placeholders": {
+      "version": {
+        "type": "String"
+      }
+    }
+  },
+  "calcKeypad": "Calculator keypad",
+  "@calcKeypad": {
+    "description": "Calculator: the keypad’s name"
+  },
+  "calcDisplay": "Result",
+  "@calcDisplay": {
+    "description": "Calculator: the readout’s name"
+  },
+  "calcExpression": "Expression",
+  "@calcExpression": {
+    "description": "Calculator: the running sum’s name"
+  },
+  "calcHistory": "History",
+  "@calcHistory": {
+    "description": "Calculator: the list of finished sums"
+  },
+  "calcNoHistory": "Nothing worked out yet.",
+  "@calcNoHistory": {
+    "description": "Calculator: the history is empty"
+  },
+  "calcClear": "Clear",
+  "@calcClear": {
+    "description": "Calculator: clear everything"
+  },
+  "calcClearEntry": "Clear entry",
+  "@calcClearEntry": {
+    "description": "Calculator: clear the number being typed"
+  },
+  "calcBackspace": "Backspace",
+  "@calcBackspace": {
+    "description": "Calculator: delete the last digit"
+  },
+  "calcEquals": "Equals",
+  "@calcEquals": {
+    "description": "Calculator: work it out"
+  },
+  "calcPlus": "Plus",
+  "@calcPlus": {
+    "description": "Calculator: add"
+  },
+  "calcMinus": "Minus",
+  "@calcMinus": {
+    "description": "Calculator: subtract"
+  },
+  "calcTimes": "Times",
+  "@calcTimes": {
+    "description": "Calculator: multiply"
+  },
+  "calcDivide": "Divided by",
+  "@calcDivide": {
+    "description": "Calculator: divide"
+  },
+  "calcPercent": "Per cent",
+  "@calcPercent": {
+    "description": "Calculator: divide by a hundred"
+  },
+  "calcDecimal": "Decimal point",
+  "@calcDecimal": {
+    "description": "Calculator: the decimal separator key"
+  },
+  "calcSign": "Change sign",
+  "@calcSign": {
+    "description": "Calculator: make it negative or positive"
+  },
+  "calcDigit": "Digit {n}",
+  "@calcDigit": {
+    "description": "Calculator: one of the ten digit keys",
+    "placeholders": {
+      "n": {
+        "type": "String"
+      }
+    }
+  },
+  "calcErrDivZero": "Nothing can be divided by zero",
+  "@calcErrDivZero": {
+    "description": "Calculator: the reader asked to divide by zero"
+  },
+  "calcErrTooLong": "That is as many digits as this can hold",
+  "@calcErrTooLong": {
+    "description": "Calculator: the entry reached its length limit"
+  },
+  "calcErrOverflow": "That number is too large to work with",
+  "@calcErrOverflow": {
+    "description": "Calculator: the result left the range the calculator keeps exactly"
+  },
+  "calcErrPrecision": "That division does not end",
+  "@calcErrPrecision": {
+    "description": "Calculator: a recurring decimal cut at the kept precision"
+  },
+  "calcHistoryRow": "{expression} = {result}",
+  "@calcHistoryRow": {
+    "description": "Calculator: one finished sum",
+    "placeholders": {
+      "expression": {
+        "type": "String"
+      },
+      "result": {
+        "type": "String"
+      }
+    }
+  },
+  "calcCleared": "Cleared",
+  "@calcCleared": {
+    "description": "Calculator: everything was cleared"
+  },
+  "calcPrecisionNote": "Worked out exactly, to {places} decimal places.",
+  "@calcPrecisionNote": {
+    "description": "Calculator: how the arithmetic is done",
+    "placeholders": {
+      "places": {
+        "type": "String"
+      }
+    }
+  },
+  "focusFocus": "Focus",
+  "@focusFocus": {
+    "description": "Focus Timer: the working stretch"
+  },
+  "focusBreak": "Break",
+  "@focusBreak": {
+    "description": "Focus Timer: the resting stretch"
+  },
+  "focusStart": "Start focus",
+  "@focusStart": {
+    "description": "Focus Timer: begin"
+  },
+  "focusPause": "Pause",
+  "@focusPause": {
+    "description": "Focus Timer: hold it where it is"
+  },
+  "focusResume": "Resume",
+  "@focusResume": {
+    "description": "Focus Timer: carry on"
+  },
+  "focusReset": "Reset",
+  "@focusReset": {
+    "description": "Focus Timer: back to the full time"
+  },
+  "focusSkip": "Skip",
+  "@focusSkip": {
+    "description": "Focus Timer: go to the next stretch"
+  },
+  "focusDone": "Focus finished",
+  "@focusDone": {
+    "description": "Focus Timer: the working stretch ended"
+  },
+  "focusBreakOver": "Break over",
+  "@focusBreakOver": {
+    "description": "Focus Timer: the resting stretch ended"
+  },
+  "focusSession": "Session {n} of {of}",
+  "@focusSession": {
+    "description": "Focus Timer: where the reader is in the round",
+    "placeholders": {
+      "n": {
+        "type": "String"
+      },
+      "of": {
+        "type": "String"
+      }
+    }
+  },
+  "focusRunning": "Running",
+  "@focusRunning": {
+    "description": "Focus Timer: the clock is going"
+  },
+  "focusPaused": "Paused",
+  "@focusPaused": {
+    "description": "Focus Timer: the clock is held"
+  },
+  "focusReady": "Ready",
+  "@focusReady": {
+    "description": "Focus Timer: the clock has not started"
+  },
+  "focusLength": "Focus length",
+  "@focusLength": {
+    "description": "Focus Timer: how long a stretch runs"
+  },
+  "focusBreakLength": "Break length",
+  "@focusBreakLength": {
+    "description": "Focus Timer: how long a break runs"
+  },
+  "focusToday": "Minutes today",
+  "@focusToday": {
+    "description": "Focus Timer: how long the reader has focused today"
+  },
+  "focusStreakLabel": "Day streak",
+  "@focusStreakLabel": {
+    "description": "Focus Timer: consecutive days with a session"
+  },
+  "focusSessionsLabel": "Sessions",
+  "@focusSessionsLabel": {
+    "description": "Focus Timer: how many sessions were finished"
+  },
+  "focusThisWeek": "This week",
+  "@focusThisWeek": {
+    "description": "Focus Timer: the seven-day chart"
+  },
+  "focusMinutes": "{n, plural, =1{1 minute} other{{n} minutes}}",
+  "@focusMinutes": {
+    "description": "Focus Timer: a length in minutes",
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
+  "focusChartEntry": "{day}: {minutes}",
+  "@focusChartEntry": {
+    "description": "Focus Timer: one bar, for a screen reader",
+    "placeholders": {
+      "day": {
+        "type": "String"
+      },
+      "minutes": {
+        "type": "String"
+      }
+    }
+  },
+  "focusThisSession": "This session",
+  "@focusThisSession": {
+    "description": "Focus Timer: what the reader has done since opening the tool"
+  },
+  "focusNothingYet": "Nothing yet — start a session and it will count here.",
+  "@focusNothingYet": {
+    "description": "Focus Timer: no session has finished in this run of the app"
+  },
+  "focusKeptSession": "Counted since you opened Lume. Nothing here survives closing it.",
+  "@focusKeptSession": {
+    "description": "Focus Timer: what \"this session\" means, said plainly"
+  },
+  "tasbihCounter": "Counter",
+  "@tasbihCounter": {
+    "description": "Tasbih: the number the reader is on"
+  },
+  "tasbihTap": "Tap to count",
+  "@tasbihTap": {
+    "description": "Tasbih: what the big control does"
+  },
+  "tasbihOf": "{count} of {target}",
+  "@tasbihOf": {
+    "description": "Tasbih: how far through a round the reader is",
+    "placeholders": {
+      "count": {
+        "type": "String"
+      },
+      "target": {
+        "type": "String"
+      }
+    }
+  },
+  "tasbihSets": "{n, plural, =0{No rounds} =1{1 round} other{{n} rounds}}",
+  "@tasbihSets": {
+    "description": "Tasbih: how many full rounds have been counted",
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
+  "tasbihReset": "Reset",
+  "@tasbihReset": {
+    "description": "Tasbih: back to zero"
+  },
+  "tasbihResetAsk": "Reset the counter?",
+  "@tasbihResetAsk": {
+    "description": "Tasbih: the reset confirmation"
+  },
+  "tasbihResetText": "The count and the rounds go back to zero. Nothing is kept.",
+  "@tasbihResetText": {
+    "description": "Tasbih: what resetting does"
+  },
+  "tasbihResetGo": "Reset it",
+  "@tasbihResetGo": {
+    "description": "Tasbih: confirm the reset"
+  },
+  "tasbihKeepCount": "Keep counting",
+  "@tasbihKeepCount": {
+    "description": "Tasbih: do not reset"
+  },
+  "tasbihComplete": "Round complete",
+  "@tasbihComplete": {
+    "description": "Tasbih: the target was reached"
+  },
+  "tasbihPhrase": "Phrase",
+  "@tasbihPhrase": {
+    "description": "Tasbih: which words are being counted"
+  },
+  "tasbihPickTitle": "Choose a phrase",
+  "@tasbihPickTitle": {
+    "description": "Tasbih: the phrase picker"
+  },
+  "tasbihSwitchAsk": "Change the phrase?",
+  "@tasbihSwitchAsk": {
+    "description": "Tasbih: switching phrases mid-count"
+  },
+  "tasbihSwitchText": "The count goes back to zero. The rounds you have finished are kept.",
+  "@tasbihSwitchText": {
+    "description": "Tasbih: what switching does"
+  },
+  "tasbihSwitchGo": "Change it",
+  "@tasbihSwitchGo": {
+    "description": "Tasbih: confirm the switch"
+  },
+  "tasbihMax": "That is as high as the counter goes",
+  "@tasbihMax": {
+    "description": "Tasbih: the count reached its ceiling"
+  },
+  "tasbihNotKept": "The count is here while Lume is open. Nothing is written down.",
+  "@tasbihNotKept": {
+    "description": "Tasbih: an honest statement of what is not stored"
+  },
+  "tasbihTargetLabel": "Round of {n}",
+  "@tasbihTargetLabel": {
+    "description": "Tasbih: the conventional count for this phrase",
+    "placeholders": {
+      "n": {
+        "type": "String"
+      }
+    }
+  },
+  "tasbihMeaning": "Meaning",
+  "@tasbihMeaning": {
+    "description": "Tasbih: the English gloss’s label"
+  },
+  "playGames": "Games",
+  "@playGames": {
+    "description": "Play: the grid of games"
+  },
+  "playKind": "Kind",
+  "@playKind": {
+    "description": "Play: what sort of game it is"
+  },
+  "playKindPuzzle": "Puzzle",
+  "@playKindPuzzle": {
+    "description": "Play: a puzzle game"
+  },
+  "playKindWord": "Word",
+  "@playKindWord": {
+    "description": "Play: a word game"
+  },
+  "playKindMemory": "Memory",
+  "@playKindMemory": {
+    "description": "Play: a memory game"
+  },
+  "playKindArithmetic": "Arithmetic",
+  "@playKindArithmetic": {
+    "description": "Play: an arithmetic game"
+  },
+  "playGameNumberGrid": "Number Grid",
+  "@playGameNumberGrid": {
+    "description": "Play: a game’s name"
+  },
+  "playGameWordChain": "Word Chain",
+  "@playGameWordChain": {
+    "description": "Play: a game’s name"
+  },
+  "playGameMemoryMatch": "Memory Match",
+  "@playGameMemoryMatch": {
+    "description": "Play: a game’s name"
+  },
+  "playGameQuickMaths": "Quick Maths",
+  "@playGameQuickMaths": {
+    "description": "Play: a game’s name"
+  },
+  "playNotYet": "Not playable yet",
+  "@playNotYet": {
+    "description": "Play: the reference draws the tile and nothing opens"
+  },
+  "playNotYetText": "These are the games Lume plans to carry. None of them can be played yet, and nothing here is a score of yours.",
+  "@playNotYetText": {
+    "description": "Play: why nothing opens, said plainly"
+  },
+  "playCount": "{n, plural, =1{1 game} other{{n} games}}",
+  "@playCount": {
+    "description": "Play: how many games the grid holds",
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
   }
 }

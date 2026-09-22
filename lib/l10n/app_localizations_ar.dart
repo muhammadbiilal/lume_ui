@@ -9523,4 +9523,452 @@ class AppLocalizationsAr extends AppLocalizations {
     );
     return '$_temp0';
   }
+
+  @override
+  String get clockYourTime => 'Your time';
+
+  @override
+  String get clockYourZone => 'Your time zone';
+
+  @override
+  String get clockCities => 'Clocks';
+
+  @override
+  String get clockAdd => 'Add a place';
+
+  @override
+  String get clockAddTitle => 'Add a place';
+
+  @override
+  String get clockSearch => 'Search cities and time zones';
+
+  @override
+  String get clockNoMatch => 'Nothing matches';
+
+  @override
+  String get clockNoMatchText => 'Try a city, a country or a time zone name.';
+
+  @override
+  String get clockShowAll => 'Show all';
+
+  @override
+  String get clockEmptyTitle => 'No places yet';
+
+  @override
+  String get clockEmptyText =>
+      'Add a city to see its time beside yours. Your own time is always here.';
+
+  @override
+  String clockCount(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n places',
+      one: '1 place',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get clockSameTime => 'Same time';
+
+  @override
+  String clockAhead(String offset) {
+    return '$offset ahead';
+  }
+
+  @override
+  String clockBehind(String offset) {
+    return '$offset behind';
+  }
+
+  @override
+  String get clockYesterday => 'Yesterday';
+
+  @override
+  String get clockToday => 'Today';
+
+  @override
+  String get clockTomorrow => 'Tomorrow';
+
+  @override
+  String get clockSummerTime => 'Summer time';
+
+  @override
+  String clockRowSemantics(
+    String place,
+    String time,
+    String day,
+    String offset,
+  ) {
+    return '$place, $time, $day, $offset';
+  }
+
+  @override
+  String get clockConvert => 'Convert a time';
+
+  @override
+  String get clockConvertFrom => 'From';
+
+  @override
+  String get clockConvertTo => 'To';
+
+  @override
+  String get clockConvertAt => 'At';
+
+  @override
+  String clockConvertResult(String time, String day) {
+    return '$time on $day';
+  }
+
+  @override
+  String get clockConvertSame => 'Pick two different places';
+
+  @override
+  String get clockRemove => 'Remove';
+
+  @override
+  String get clockMoveUp => 'Move up';
+
+  @override
+  String get clockMoveDown => 'Move down';
+
+  @override
+  String clockAdded(String place) {
+    return '$place added';
+  }
+
+  @override
+  String clockRemovedToast(String place) {
+    return '$place removed';
+  }
+
+  @override
+  String clockAlready(String place) {
+    return '$place is already on the list';
+  }
+
+  @override
+  String get clockZoneUnknownTitle => 'That time zone is not known';
+
+  @override
+  String clockZoneUnknownText(String id) {
+    return 'Lume could not find “$id” in the time-zone database it carries. Nothing has been guessed in its place.';
+  }
+
+  @override
+  String get clockDatabaseTitle => 'The time-zone database is unavailable';
+
+  @override
+  String get clockDatabaseText =>
+      'Without it no time anywhere can be worked out, and none is shown.';
+
+  @override
+  String get clockDeviceTitle => 'This device has not said where it is';
+
+  @override
+  String get clockDeviceText =>
+      'Choose your time zone in Settings, and your own clock will appear here.';
+
+  @override
+  String get clockChooseTitle => 'Your country has more than one time zone';
+
+  @override
+  String get clockChooseText =>
+      'Choose the one you are in, and your own clock will appear here.';
+
+  @override
+  String clockAliasNote(String stored, String canonical) {
+    return '$stored is now called $canonical';
+  }
+
+  @override
+  String clockDatabaseVersion(String version) {
+    return 'IANA time-zone database $version';
+  }
+
+  @override
+  String get calcKeypad => 'Calculator keypad';
+
+  @override
+  String get calcDisplay => 'Result';
+
+  @override
+  String get calcExpression => 'Expression';
+
+  @override
+  String get calcHistory => 'History';
+
+  @override
+  String get calcNoHistory => 'Nothing worked out yet.';
+
+  @override
+  String get calcClear => 'Clear';
+
+  @override
+  String get calcClearEntry => 'Clear entry';
+
+  @override
+  String get calcBackspace => 'Backspace';
+
+  @override
+  String get calcEquals => 'Equals';
+
+  @override
+  String get calcPlus => 'Plus';
+
+  @override
+  String get calcMinus => 'Minus';
+
+  @override
+  String get calcTimes => 'Times';
+
+  @override
+  String get calcDivide => 'Divided by';
+
+  @override
+  String get calcPercent => 'Per cent';
+
+  @override
+  String get calcDecimal => 'Decimal point';
+
+  @override
+  String get calcSign => 'Change sign';
+
+  @override
+  String calcDigit(String n) {
+    return 'Digit $n';
+  }
+
+  @override
+  String get calcErrDivZero => 'Nothing can be divided by zero';
+
+  @override
+  String get calcErrTooLong => 'That is as many digits as this can hold';
+
+  @override
+  String get calcErrOverflow => 'That number is too large to work with';
+
+  @override
+  String get calcErrPrecision => 'That division does not end';
+
+  @override
+  String calcHistoryRow(String expression, String result) {
+    return '$expression = $result';
+  }
+
+  @override
+  String get calcCleared => 'Cleared';
+
+  @override
+  String calcPrecisionNote(String places) {
+    return 'Worked out exactly, to $places decimal places.';
+  }
+
+  @override
+  String get focusFocus => 'Focus';
+
+  @override
+  String get focusBreak => 'Break';
+
+  @override
+  String get focusStart => 'Start focus';
+
+  @override
+  String get focusPause => 'Pause';
+
+  @override
+  String get focusResume => 'Resume';
+
+  @override
+  String get focusReset => 'Reset';
+
+  @override
+  String get focusSkip => 'Skip';
+
+  @override
+  String get focusDone => 'Focus finished';
+
+  @override
+  String get focusBreakOver => 'Break over';
+
+  @override
+  String focusSession(String n, String of) {
+    return 'Session $n of $of';
+  }
+
+  @override
+  String get focusRunning => 'Running';
+
+  @override
+  String get focusPaused => 'Paused';
+
+  @override
+  String get focusReady => 'Ready';
+
+  @override
+  String get focusLength => 'Focus length';
+
+  @override
+  String get focusBreakLength => 'Break length';
+
+  @override
+  String get focusToday => 'Minutes today';
+
+  @override
+  String get focusStreakLabel => 'Day streak';
+
+  @override
+  String get focusSessionsLabel => 'Sessions';
+
+  @override
+  String get focusThisWeek => 'This week';
+
+  @override
+  String focusMinutes(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n minutes',
+      one: '1 minute',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String focusChartEntry(String day, String minutes) {
+    return '$day: $minutes';
+  }
+
+  @override
+  String get focusThisSession => 'This session';
+
+  @override
+  String get focusNothingYet =>
+      'Nothing yet — start a session and it will count here.';
+
+  @override
+  String get focusKeptSession =>
+      'Counted since you opened Lume. Nothing here survives closing it.';
+
+  @override
+  String get tasbihCounter => 'Counter';
+
+  @override
+  String get tasbihTap => 'Tap to count';
+
+  @override
+  String tasbihOf(String count, String target) {
+    return '$count of $target';
+  }
+
+  @override
+  String tasbihSets(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n rounds',
+      one: '1 round',
+      zero: 'No rounds',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get tasbihReset => 'Reset';
+
+  @override
+  String get tasbihResetAsk => 'Reset the counter?';
+
+  @override
+  String get tasbihResetText =>
+      'The count and the rounds go back to zero. Nothing is kept.';
+
+  @override
+  String get tasbihResetGo => 'Reset it';
+
+  @override
+  String get tasbihKeepCount => 'Keep counting';
+
+  @override
+  String get tasbihComplete => 'Round complete';
+
+  @override
+  String get tasbihPhrase => 'Phrase';
+
+  @override
+  String get tasbihPickTitle => 'Choose a phrase';
+
+  @override
+  String get tasbihSwitchAsk => 'Change the phrase?';
+
+  @override
+  String get tasbihSwitchText =>
+      'The count goes back to zero. The rounds you have finished are kept.';
+
+  @override
+  String get tasbihSwitchGo => 'Change it';
+
+  @override
+  String get tasbihMax => 'That is as high as the counter goes';
+
+  @override
+  String get tasbihNotKept =>
+      'The count is here while Lume is open. Nothing is written down.';
+
+  @override
+  String tasbihTargetLabel(String n) {
+    return 'Round of $n';
+  }
+
+  @override
+  String get tasbihMeaning => 'Meaning';
+
+  @override
+  String get playGames => 'Games';
+
+  @override
+  String get playKind => 'Kind';
+
+  @override
+  String get playKindPuzzle => 'Puzzle';
+
+  @override
+  String get playKindWord => 'Word';
+
+  @override
+  String get playKindMemory => 'Memory';
+
+  @override
+  String get playKindArithmetic => 'Arithmetic';
+
+  @override
+  String get playGameNumberGrid => 'Number Grid';
+
+  @override
+  String get playGameWordChain => 'Word Chain';
+
+  @override
+  String get playGameMemoryMatch => 'Memory Match';
+
+  @override
+  String get playGameQuickMaths => 'Quick Maths';
+
+  @override
+  String get playNotYet => 'Not playable yet';
+
+  @override
+  String get playNotYetText =>
+      'These are the games Lume plans to carry. None of them can be played yet, and nothing here is a score of yours.';
+
+  @override
+  String playCount(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n games',
+      one: '1 game',
+    );
+    return '$_temp0';
+  }
 }
