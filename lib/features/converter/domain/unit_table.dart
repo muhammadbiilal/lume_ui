@@ -293,15 +293,29 @@ LumeUnit lumeUnit(String id) =>
 ///
 /// The reference has no picker at all: `from` is always the category's first
 /// unit and `to` is its second — or its **fourth** for a reader on imperial
-/// units, which serves ounces for mass, cups for volume and *marlas* for
-/// area (`context.js:1130`). Both units are chosen here, so this is only
-/// where the screen starts, and each pair is named rather than indexed.
+/// units, which serves ounces for mass, cups for volume and, for area,
+/// *marlas* (`context.js:1130`). A marla is a Pakistani land unit; serving it
+/// to a reader in Ohio because it happens to sit at index 3 is the index
+/// heuristic showing through the screen. So the opening pair is **named**
+/// here, per category, and does not move with the reader's unit system —
+/// both units are chosen on the screen, which is where that choice belongs.
+///
+/// The five pairs the reference's own rule produces for a metric reader are
+/// kept as they are (`m → km`, `kg → g`, `L → mL`, `m² → ft²`, `km/h → mph`,
+/// measured on `tool_converter_default_pk_390x844_light_en`). Data is the one
+/// that moves, and only because its base did: the reference bases the
+/// category on the megabyte and opens `MB → GB`, and this table bases it on
+/// the byte so that the decimal and binary families hang off one
+/// unambiguous unit, so it opens `B → kB`. Recorded in C100.
 const Map<LumeUnitKind, (String, String)> kLumeUnitDefaults =
     <LumeUnitKind, (String, String)>{
-      LumeUnitKind.length: ('km', 'mi'),
-      LumeUnitKind.mass: ('kg', 'lb'),
-      LumeUnitKind.volume: ('L', 'gal_us'),
+      LumeUnitKind.length: ('m', 'km'),
+      LumeUnitKind.mass: ('kg', 'g'),
+      LumeUnitKind.volume: ('L', 'mL'),
       LumeUnitKind.area: ('m2', 'ft2'),
       LumeUnitKind.speed: ('kmh', 'mph'),
-      LumeUnitKind.data: ('GB', 'MB'),
+      LumeUnitKind.data: ('B', 'kB'),
     };
+
+/// The amount the screen opens with — `fieldsFor('converter', { amount: 1 })`.
+const String kLumeConverterOpeningAmount = '1';

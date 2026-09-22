@@ -6287,7 +6287,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get toolStatusBills => '2 due';
 
   @override
-  String get toolStatusBirthdays => 'Ayesha in 4d';
+  String get toolStatusBirthdays => 'Dates you add';
 
   @override
   String get toolStatusBmi => 'Track weight';
@@ -6512,7 +6512,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get toolStatusWastatus => 'Android';
 
   @override
-  String get toolStatusWater => '5 / 8';
+  String get toolStatusWater => 'Daily intake';
 
   @override
   String get toolStatusWeather => '34° Clear';
@@ -9823,4 +9823,302 @@ class AppLocalizationsEn extends AppLocalizations {
     );
     return '$_temp0';
   }
+
+  @override
+  String get ucLength => 'Length';
+
+  @override
+  String get ucMass => 'Weight';
+
+  @override
+  String get ucVolume => 'Volume';
+
+  @override
+  String get ucArea => 'Area';
+
+  @override
+  String get ucSpeed => 'Speed';
+
+  @override
+  String get ucData => 'Data';
+
+  @override
+  String get ucMetre => 'Metre';
+
+  @override
+  String get ucKilometre => 'Kilometre';
+
+  @override
+  String get ucCentimetre => 'Centimetre';
+
+  @override
+  String get ucMile => 'Mile';
+
+  @override
+  String get ucFoot => 'Foot';
+
+  @override
+  String get ucInch => 'Inch';
+
+  @override
+  String get ucKilogram => 'Kilogram';
+
+  @override
+  String get ucGram => 'Gram';
+
+  @override
+  String get ucPound => 'Pound';
+
+  @override
+  String get ucOunce => 'Ounce';
+
+  @override
+  String get ucTola => 'Tola';
+
+  @override
+  String get ucLitre => 'Litre';
+
+  @override
+  String get ucMillilitre => 'Millilitre';
+
+  @override
+  String get ucGallonUs => 'Gallon (US)';
+
+  @override
+  String get ucGallonImp => 'Gallon (imperial)';
+
+  @override
+  String get ucCupUs => 'Cup (US)';
+
+  @override
+  String get ucSqmetre => 'Square metre';
+
+  @override
+  String get ucSqfoot => 'Square foot';
+
+  @override
+  String get ucAcre => 'Acre';
+
+  @override
+  String get ucMarla => 'Marla';
+
+  @override
+  String get ucKmh => 'Kilometres per hour';
+
+  @override
+  String get ucMph => 'Miles per hour';
+
+  @override
+  String get ucMs => 'Metres per second';
+
+  @override
+  String get ucByte => 'Byte';
+
+  @override
+  String get ucKilobyte => 'Kilobyte';
+
+  @override
+  String get ucMegabyte => 'Megabyte';
+
+  @override
+  String get ucGigabyte => 'Gigabyte';
+
+  @override
+  String get ucTerabyte => 'Terabyte';
+
+  @override
+  String get ucKibibyte => 'Kibibyte';
+
+  @override
+  String get ucMebibyte => 'Mebibyte';
+
+  @override
+  String get ucGibibyte => 'Gibibyte';
+
+  @override
+  String get ucTebibyte => 'Tebibyte';
+
+  @override
+  String get convertSwap => 'Swap';
+
+  @override
+  String get convertAllUnits => 'All units';
+
+  @override
+  String get convertAmount => 'Amount';
+
+  @override
+  String get convertFrom => 'From';
+
+  @override
+  String get convertTo => 'To';
+
+  @override
+  String get convertChooseUnit => 'Choose a unit';
+
+  @override
+  String get convertCategory => 'What to convert';
+
+  @override
+  String convertEquals(String from, String to) {
+    return '$from is $to';
+  }
+
+  @override
+  String get convertDataNote =>
+      'kB, MB, GB and TB are powers of 1,000. KiB, MiB, GiB and TiB are powers of 1,024.';
+
+  @override
+  String get birthdaysNext => 'Next up';
+
+  @override
+  String get birthdaysTracked => 'Tracked';
+
+  @override
+  String get birthdaysThisMonth => 'This month';
+
+  @override
+  String get birthdaysTurning => 'Turning';
+
+  @override
+  String birthdaysTurns(int n) {
+    return 'turns $n';
+  }
+
+  @override
+  String birthdaysYears(int n) {
+    return '$n years';
+  }
+
+  @override
+  String get birthdaysUpcoming => 'Coming up';
+
+  @override
+  String get birthdaysBirthday => 'Birthday';
+
+  @override
+  String get birthdaysAnniversary => 'Anniversary';
+
+  @override
+  String get birthdaysAdd => 'Add a date';
+
+  @override
+  String get birthdaysNothingTitle => 'Nothing coming up';
+
+  @override
+  String get birthdaysNothingText =>
+      'Dates you add appear here, soonest first.';
+
+  @override
+  String get recBirthdaysNoun => 'date';
+
+  @override
+  String get recBirthdaysNounPlural => 'birthdays & anniversaries';
+
+  @override
+  String get recBirthdaysEmptyTitle => 'No dates saved';
+
+  @override
+  String get recBirthdaysEmptyText =>
+      'Add a birthday and it is counted down here.';
+
+  @override
+  String get recBirthdaysPh => 'Whose day is it?';
+
+  @override
+  String get recFieldOccasion => 'Occasion';
+
+  @override
+  String get recNextOne => 'Next one';
+
+  @override
+  String get recTurning => 'Turning';
+
+  @override
+  String get recSeedOurAnniversary => 'Our anniversary';
+
+  @override
+  String get waterToday => 'Today';
+
+  @override
+  String waterOfTarget(String target) {
+    return 'of a $target goal';
+  }
+
+  @override
+  String waterOfDefault(String target) {
+    return 'of the default $target goal';
+  }
+
+  @override
+  String get waterProgress => 'Progress';
+
+  @override
+  String get waterRemaining => 'Remaining';
+
+  @override
+  String get waterGlasses => 'Glasses';
+
+  @override
+  String get waterLogged => 'Logged';
+
+  @override
+  String get waterTimeline => 'Today’s intake';
+
+  @override
+  String get waterKindWater => 'Water';
+
+  @override
+  String get waterKindTea => 'Tea';
+
+  @override
+  String waterAdded(String amount) {
+    return '$amount logged';
+  }
+
+  @override
+  String get waterGoal => 'Daily goal';
+
+  @override
+  String get waterGoalDefault => 'Default goal';
+
+  @override
+  String get waterSetGoal => 'Change goal';
+
+  @override
+  String get waterGoalHint => 'A goal to fill, not a health recommendation.';
+
+  @override
+  String get waterGoalMl => 'Goal in ml';
+
+  @override
+  String get waterNothingTitle => 'Nothing logged today';
+
+  @override
+  String get waterNothingText =>
+      'Log a glass and today’s total starts filling.';
+
+  @override
+  String waterAddSmall(String amount) {
+    return 'Add $amount';
+  }
+
+  @override
+  String get recWaterNoun => 'drink';
+
+  @override
+  String get recWaterNounPlural => 'drinks';
+
+  @override
+  String get recWaterEmptyTitle => 'Nothing logged yet';
+
+  @override
+  String get recWaterEmptyText =>
+      'Log a glass and your daily total starts filling.';
+
+  @override
+  String get recFieldAmountMl => 'Amount in ml';
+
+  @override
+  String get recFieldDrink => 'Drink';
 }

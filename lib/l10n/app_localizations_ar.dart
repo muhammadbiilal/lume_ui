@@ -6362,7 +6362,7 @@ class AppLocalizationsAr extends AppLocalizations {
   String get toolStatusBills => '2 مستحقة';
 
   @override
-  String get toolStatusBirthdays => 'عائشة خلال 4 أيام';
+  String get toolStatusBirthdays => 'تواريخك';
 
   @override
   String get toolStatusBmi => 'تتبّع الوزن';
@@ -6587,7 +6587,7 @@ class AppLocalizationsAr extends AppLocalizations {
   String get toolStatusWastatus => 'أندرويد';
 
   @override
-  String get toolStatusWater => '5 / 8';
+  String get toolStatusWater => 'شرب اليوم';
 
   @override
   String get toolStatusWeather => '34° صافٍ';
@@ -9968,4 +9968,299 @@ class AppLocalizationsAr extends AppLocalizations {
     );
     return '$_temp0';
   }
+
+  @override
+  String get ucLength => 'الطول';
+
+  @override
+  String get ucMass => 'الوزن';
+
+  @override
+  String get ucVolume => 'الحجم';
+
+  @override
+  String get ucArea => 'المساحة';
+
+  @override
+  String get ucSpeed => 'السرعة';
+
+  @override
+  String get ucData => 'البيانات';
+
+  @override
+  String get ucMetre => 'متر';
+
+  @override
+  String get ucKilometre => 'كيلومتر';
+
+  @override
+  String get ucCentimetre => 'سنتيمتر';
+
+  @override
+  String get ucMile => 'ميل';
+
+  @override
+  String get ucFoot => 'قدم';
+
+  @override
+  String get ucInch => 'بوصة';
+
+  @override
+  String get ucKilogram => 'كيلوغرام';
+
+  @override
+  String get ucGram => 'غرام';
+
+  @override
+  String get ucPound => 'رطل';
+
+  @override
+  String get ucOunce => 'أونصة';
+
+  @override
+  String get ucTola => 'تولة';
+
+  @override
+  String get ucLitre => 'لتر';
+
+  @override
+  String get ucMillilitre => 'مليلتر';
+
+  @override
+  String get ucGallonUs => 'غالون (أمريكي)';
+
+  @override
+  String get ucGallonImp => 'غالون (إمبراطوري)';
+
+  @override
+  String get ucCupUs => 'كوب (أمريكي)';
+
+  @override
+  String get ucSqmetre => 'متر مربع';
+
+  @override
+  String get ucSqfoot => 'قدم مربع';
+
+  @override
+  String get ucAcre => 'فدان';
+
+  @override
+  String get ucMarla => 'مرلة';
+
+  @override
+  String get ucKmh => 'كيلومتر في الساعة';
+
+  @override
+  String get ucMph => 'ميل في الساعة';
+
+  @override
+  String get ucMs => 'متر في الثانية';
+
+  @override
+  String get ucByte => 'بايت';
+
+  @override
+  String get ucKilobyte => 'كيلوبايت';
+
+  @override
+  String get ucMegabyte => 'ميغابايت';
+
+  @override
+  String get ucGigabyte => 'غيغابايت';
+
+  @override
+  String get ucTerabyte => 'تيرابايت';
+
+  @override
+  String get ucKibibyte => 'كيبي بايت';
+
+  @override
+  String get ucMebibyte => 'ميبي بايت';
+
+  @override
+  String get ucGibibyte => 'غيبي بايت';
+
+  @override
+  String get ucTebibyte => 'تيبي بايت';
+
+  @override
+  String get convertSwap => 'تبديل';
+
+  @override
+  String get convertAllUnits => 'كل الوحدات';
+
+  @override
+  String get convertAmount => 'الكمية';
+
+  @override
+  String get convertFrom => 'من';
+
+  @override
+  String get convertTo => 'إلى';
+
+  @override
+  String get convertChooseUnit => 'اختر وحدة';
+
+  @override
+  String get convertCategory => 'ما المراد تحويله';
+
+  @override
+  String convertEquals(String from, String to) {
+    return '$from يساوي $to';
+  }
+
+  @override
+  String get convertDataNote =>
+      'kB وMB وGB وTB قوى الألف، أما KiB وMiB وGiB وTiB فقوى 1024.';
+
+  @override
+  String get birthdaysNext => 'التالي';
+
+  @override
+  String get birthdaysTracked => 'محفوظة';
+
+  @override
+  String get birthdaysThisMonth => 'هذا الشهر';
+
+  @override
+  String get birthdaysTurning => 'يُتم';
+
+  @override
+  String birthdaysTurns(int n) {
+    return 'يُتم $n';
+  }
+
+  @override
+  String birthdaysYears(int n) {
+    return '$n سنة';
+  }
+
+  @override
+  String get birthdaysUpcoming => 'قادم';
+
+  @override
+  String get birthdaysBirthday => 'عيد ميلاد';
+
+  @override
+  String get birthdaysAnniversary => 'ذكرى سنوية';
+
+  @override
+  String get birthdaysAdd => 'أضف تاريخًا';
+
+  @override
+  String get birthdaysNothingTitle => 'لا شيء قادم';
+
+  @override
+  String get birthdaysNothingText =>
+      'التواريخ التي تضيفها تظهر هنا، الأقرب أولًا.';
+
+  @override
+  String get recBirthdaysNoun => 'مناسبة';
+
+  @override
+  String get recBirthdaysNounPlural => 'أعياد الميلاد والذكرى';
+
+  @override
+  String get recBirthdaysEmptyTitle => 'لا توجد تواريخ محفوظة';
+
+  @override
+  String get recBirthdaysEmptyText => 'أضف عيد ميلاد وسيُعدّ هنا حتى موعده.';
+
+  @override
+  String get recBirthdaysPh => 'لمن هذا اليوم؟';
+
+  @override
+  String get recFieldOccasion => 'المناسبة';
+
+  @override
+  String get recNextOne => 'التالية';
+
+  @override
+  String get recTurning => 'يُتم';
+
+  @override
+  String get recSeedOurAnniversary => 'ذكرانا السنوية';
+
+  @override
+  String get waterToday => 'اليوم';
+
+  @override
+  String waterOfTarget(String target) {
+    return 'من هدف $target';
+  }
+
+  @override
+  String waterOfDefault(String target) {
+    return 'من الهدف الافتراضي $target';
+  }
+
+  @override
+  String get waterProgress => 'التقدم';
+
+  @override
+  String get waterRemaining => 'المتبقي';
+
+  @override
+  String get waterGlasses => 'أكواب';
+
+  @override
+  String get waterLogged => 'مُسجَّل';
+
+  @override
+  String get waterTimeline => 'شرب اليوم';
+
+  @override
+  String get waterKindWater => 'ماء';
+
+  @override
+  String get waterKindTea => 'شاي';
+
+  @override
+  String waterAdded(String amount) {
+    return 'تم تسجيل $amount';
+  }
+
+  @override
+  String get waterGoal => 'الهدف اليومي';
+
+  @override
+  String get waterGoalDefault => 'الهدف الافتراضي';
+
+  @override
+  String get waterSetGoal => 'غيّر الهدف';
+
+  @override
+  String get waterGoalHint => 'هدف تملؤه، وليس توصية صحية.';
+
+  @override
+  String get waterGoalMl => 'الهدف بالملّي لتر';
+
+  @override
+  String get waterNothingTitle => 'لم تُسجَّل مشروبات اليوم';
+
+  @override
+  String get waterNothingText => 'سجّل كوبًا ليبدأ إجمالي اليوم بالامتلاء.';
+
+  @override
+  String waterAddSmall(String amount) {
+    return 'أضف $amount';
+  }
+
+  @override
+  String get recWaterNoun => 'مشروب';
+
+  @override
+  String get recWaterNounPlural => 'مشروبات';
+
+  @override
+  String get recWaterEmptyTitle => 'لم يُسجَّل شيء بعد';
+
+  @override
+  String get recWaterEmptyText => 'سجّل كوبًا ليبدأ إجمالي اليوم بالامتلاء.';
+
+  @override
+  String get recFieldAmountMl => 'الكمية بالملّي لتر';
+
+  @override
+  String get recFieldDrink => 'المشروب';
 }

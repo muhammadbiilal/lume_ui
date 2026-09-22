@@ -7,14 +7,20 @@ library;
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../core/config/lume_build_profile.dart';
 import '../../features/records/data/memory_record_repository.dart';
 import '../../features/records/data/record_seeds.dart';
 import '../../features/records/domain/record_repository.dart';
 
 final Provider<LumeRecordRepository> recordRepositoryProvider =
     Provider<LumeRecordRepository>((Ref ref) {
+      // Only the build that reproduces the reference gets the two families
+      // whose seeds would be an account of the reader's own life
+      // ([kLumeParityOnlySeeds]).
+      final bool parity = ref.watch(buildProfileProvider).reproducesReference;
       final LumeMemoryRecordRepository store = LumeMemoryRecordRepository(
-        seeds: lumeRecordSeeds,
+        seeds: (String collection, DateTime now) =>
+            lumeRecordSeeds(collection, now, reproducesReference: parity),
       );
       ref.onDispose(store.dispose);
       return store;

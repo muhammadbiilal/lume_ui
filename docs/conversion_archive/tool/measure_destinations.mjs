@@ -1055,6 +1055,26 @@ const TOOL_TARGETS = {
   'meter.bar': '#toolBody .meter .pbar',
   'bars.col1': '#toolBody .bars__col:nth-child(1)',
   'bars.label': '#toolBody .bars__label',
+  // Wave 4 — Unit Converter's convert card (`shared.css:1015-1041`). The two
+  // sides are `flex: 1; min-width: 0` with a round swap between them, so
+  // where each side starts and how wide it is are the whole layout.
+  'convert': '#toolBody .convert',
+  'convert.side1': '#toolBody .convert__side:not(.convert__side--to)',
+  'convert.side2': '#toolBody .convert__side--to',
+  'convert.code1': '#toolBody .convert__side:not(.convert__side--to) .convert__code',
+  'convert.name1': '#toolBody .convert__side:not(.convert__side--to) .convert__name',
+  'convert.input': '#toolBody .convert__input',
+  'convert.swap': '#toolBody .convert__swap',
+  'convert.swapicon': '#toolBody .convert__swap svg',
+  'convert.code2': '#toolBody .convert__side--to .convert__code',
+  'convert.out': '#toolBody .convert__out',
+  'convert.name2': '#toolBody .convert__side--to .convert__name',
+  'crow2': '#toolBody .rows > .crow:nth-child(2)',
+  'crow.sub': '#toolBody .crow__sub',
+  // Wave 4 — the summary ring and the two add buttons Water draws, and the
+  // logo disc Birthdays puts on each row.
+  'summary.ring': '#toolBody .summary__aside .pring',
+  'rrow.logodisc': '#toolBody .rows > .rrow:nth-child(1) .rrow__logo',
 };
 
 /* The instant everything is captured at: Monday 7 September 2026, 16:41:32
@@ -2205,6 +2225,51 @@ async function main() {
             return { title: (el.querySelector('.rrow__title') || {}).textContent,
                      sub: (el.querySelector('.rrow__sub') || {}).textContent };
           });
+        /* Wave 4 — Unit Converter. Both codes, both names, the typed amount
+           and the drawn result, plus every row of "All units", so the
+           Flutter side can assert the arithmetic and not only the boxes. */
+        composition.convert = q('.convert') ? {
+          chips: texts('#toolBody .chips .chip'),
+          chipOn: tx('#toolBody .chips .chip.is-on'),
+          chipOnClass: q('#toolBody .chips .chip.is-on') ? 'is-on' : null,
+          from: { code: tx('.convert__side:not(.convert__side--to) .convert__code'),
+                  name: tx('.convert__side:not(.convert__side--to) .convert__name'),
+                  value: q('.convert__input') ? q('.convert__input').value : null,
+                  type: q('.convert__input') ? q('.convert__input').getAttribute('type') : null,
+                  inputmode: q('.convert__input') ? q('.convert__input').getAttribute('inputmode') : null },
+          swap: q('.convert__swap') ? q('.convert__swap').getAttribute('aria-label') : null,
+          to: { code: tx('.convert__side--to .convert__code'),
+                name: tx('.convert__side--to .convert__name'),
+                value: tx('.convert__out') },
+          units: Array.prototype.map.call(
+            document.querySelectorAll('#toolBody .rows > .crow'),
+            function (el) {
+              var lab = el.querySelector('.crow__label');
+              return { label: lab && lab.firstChild ? lab.firstChild.textContent : null,
+                       sub: (el.querySelector('.crow__label i') || el.querySelector('.crow__sub') || {}).textContent || null,
+                       value: (el.querySelector('.crow__value') || {}).textContent || null };
+            })
+        } : null;
+        /* Wave 4 — Water's timeline, which the reference draws from four
+           literals and Flutter draws from records. Dumped at the top level
+           rather than inside a tool branch, because it is the shared
+           UI.timeline helper and three converted tools now read it. */
+        composition.timeline = q('.tline') ? Array.prototype.map.call(
+          document.querySelectorAll('#toolBody .tline__item'),
+          function (el) {
+            var st = ['done', 'now'].filter(function (k) { return el.classList.contains('is-' + k); })[0] || '';
+            return { time: (el.querySelector('.tline__time') || {}).textContent || null,
+                     title: (el.querySelector('.tline__title') || {}).textContent || null,
+                     sub: (el.querySelector('.tline__sub') || {}).textContent || null,
+                     state: st };
+          }) : null;
+        /* Wave 4 — Birthdays' add action, at the top level for the same
+           reason: .fab was only ever read inside the calendar branch. */
+        composition.fab = document.querySelector('#screen-tool .fab')
+          ? { label: document.querySelector('#screen-tool .fab').getAttribute('aria-label'),
+              text: document.querySelector('#screen-tool .fab').textContent,
+              act: document.querySelector('#screen-tool .fab').getAttribute('data-act') }
+          : null;
       }
 
       var screenEl = active;

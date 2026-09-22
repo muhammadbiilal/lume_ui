@@ -6283,7 +6283,7 @@ class AppLocalizationsUr extends AppLocalizations {
   String get toolStatusBills => '2 واجب';
 
   @override
-  String get toolStatusBirthdays => 'عائشہ 4 دن میں';
+  String get toolStatusBirthdays => 'آپ کی تاریخیں';
 
   @override
   String get toolStatusBmi => 'وزن دیکھیں';
@@ -6508,7 +6508,7 @@ class AppLocalizationsUr extends AppLocalizations {
   String get toolStatusWastatus => 'اینڈرائیڈ';
 
   @override
-  String get toolStatusWater => '5 / 8';
+  String get toolStatusWater => 'روزانہ کا اندراج';
 
   @override
   String get toolStatusWeather => '34° صاف';
@@ -9816,4 +9816,302 @@ class AppLocalizationsUr extends AppLocalizations {
     );
     return '$_temp0';
   }
+
+  @override
+  String get ucLength => 'لمبائی';
+
+  @override
+  String get ucMass => 'وزن';
+
+  @override
+  String get ucVolume => 'حجم';
+
+  @override
+  String get ucArea => 'رقبہ';
+
+  @override
+  String get ucSpeed => 'رفتار';
+
+  @override
+  String get ucData => 'ڈیٹا';
+
+  @override
+  String get ucMetre => 'میٹر';
+
+  @override
+  String get ucKilometre => 'کلومیٹر';
+
+  @override
+  String get ucCentimetre => 'سینٹی میٹر';
+
+  @override
+  String get ucMile => 'میل';
+
+  @override
+  String get ucFoot => 'فٹ';
+
+  @override
+  String get ucInch => 'انچ';
+
+  @override
+  String get ucKilogram => 'کلوگرام';
+
+  @override
+  String get ucGram => 'گرام';
+
+  @override
+  String get ucPound => 'پاؤنڈ';
+
+  @override
+  String get ucOunce => 'اونس';
+
+  @override
+  String get ucTola => 'تولہ';
+
+  @override
+  String get ucLitre => 'لیٹر';
+
+  @override
+  String get ucMillilitre => 'ملی لیٹر';
+
+  @override
+  String get ucGallonUs => 'گیلن (امریکی)';
+
+  @override
+  String get ucGallonImp => 'گیلن (امپیریل)';
+
+  @override
+  String get ucCupUs => 'کپ (امریکی)';
+
+  @override
+  String get ucSqmetre => 'مربع میٹر';
+
+  @override
+  String get ucSqfoot => 'مربع فٹ';
+
+  @override
+  String get ucAcre => 'ایکڑ';
+
+  @override
+  String get ucMarla => 'مرلہ';
+
+  @override
+  String get ucKmh => 'کلومیٹر فی گھنٹہ';
+
+  @override
+  String get ucMph => 'میل فی گھنٹہ';
+
+  @override
+  String get ucMs => 'میٹر فی سیکنڈ';
+
+  @override
+  String get ucByte => 'بائٹ';
+
+  @override
+  String get ucKilobyte => 'کلوبائٹ';
+
+  @override
+  String get ucMegabyte => 'میگابائٹ';
+
+  @override
+  String get ucGigabyte => 'گیگابائٹ';
+
+  @override
+  String get ucTerabyte => 'ٹیرابائٹ';
+
+  @override
+  String get ucKibibyte => 'کِبی بائٹ';
+
+  @override
+  String get ucMebibyte => 'میبی بائٹ';
+
+  @override
+  String get ucGibibyte => 'گِبی بائٹ';
+
+  @override
+  String get ucTebibyte => 'ٹیبی بائٹ';
+
+  @override
+  String get convertSwap => 'الٹ دیں';
+
+  @override
+  String get convertAllUnits => 'تمام اکائیاں';
+
+  @override
+  String get convertAmount => 'مقدار';
+
+  @override
+  String get convertFrom => 'سے';
+
+  @override
+  String get convertTo => 'میں';
+
+  @override
+  String get convertChooseUnit => 'اکائی منتخب کریں';
+
+  @override
+  String get convertCategory => 'کیا تبدیل کرنا ہے';
+
+  @override
+  String convertEquals(String from, String to) {
+    return '$from برابر ہے $to';
+  }
+
+  @override
+  String get convertDataNote =>
+      'kB، MB، GB اور TB ایک ہزار کی طاقتیں ہیں۔ KiB، MiB، GiB اور TiB ۱۰۲۴ کی طاقتیں ہیں۔';
+
+  @override
+  String get birthdaysNext => 'اگلا موقع';
+
+  @override
+  String get birthdaysTracked => 'محفوظ';
+
+  @override
+  String get birthdaysThisMonth => 'اس مہینے';
+
+  @override
+  String get birthdaysTurning => 'عمر ہوگی';
+
+  @override
+  String birthdaysTurns(int n) {
+    return '$n سال کے ہوں گے';
+  }
+
+  @override
+  String birthdaysYears(int n) {
+    return '$n سال';
+  }
+
+  @override
+  String get birthdaysUpcoming => 'آنے والے';
+
+  @override
+  String get birthdaysBirthday => 'سالگرہ';
+
+  @override
+  String get birthdaysAnniversary => 'سالگرہِ شادی';
+
+  @override
+  String get birthdaysAdd => 'تاریخ شامل کریں';
+
+  @override
+  String get birthdaysNothingTitle => 'کوئی موقع قریب نہیں';
+
+  @override
+  String get birthdaysNothingText =>
+      'آپ کی شامل کردہ تاریخیں یہاں آئیں گی، قریب ترین پہلے۔';
+
+  @override
+  String get recBirthdaysNoun => 'تاریخ';
+
+  @override
+  String get recBirthdaysNounPlural => 'سالگرہ اور سالگرہِ شادی';
+
+  @override
+  String get recBirthdaysEmptyTitle => 'کوئی تاریخ محفوظ نہیں';
+
+  @override
+  String get recBirthdaysEmptyText =>
+      'سالگرہ شامل کریں، یہاں اس کی گنتی ہوتی رہے گی۔';
+
+  @override
+  String get recBirthdaysPh => 'کس کا دن ہے؟';
+
+  @override
+  String get recFieldOccasion => 'موقع';
+
+  @override
+  String get recNextOne => 'اگلی بار';
+
+  @override
+  String get recTurning => 'عمر ہوگی';
+
+  @override
+  String get recSeedOurAnniversary => 'ہماری سالگرہ';
+
+  @override
+  String get waterToday => 'آج';
+
+  @override
+  String waterOfTarget(String target) {
+    return '$target کے ہدف میں سے';
+  }
+
+  @override
+  String waterOfDefault(String target) {
+    return 'طے شدہ ہدف $target میں سے';
+  }
+
+  @override
+  String get waterProgress => 'پیش رفت';
+
+  @override
+  String get waterRemaining => 'باقی';
+
+  @override
+  String get waterGlasses => 'گلاس';
+
+  @override
+  String get waterLogged => 'اندراجات';
+
+  @override
+  String get waterTimeline => 'آج کا اندراج';
+
+  @override
+  String get waterKindWater => 'پانی';
+
+  @override
+  String get waterKindTea => 'چائے';
+
+  @override
+  String waterAdded(String amount) {
+    return '$amount درج ہو گیا';
+  }
+
+  @override
+  String get waterGoal => 'روزانہ کا ہدف';
+
+  @override
+  String get waterGoalDefault => 'طے شدہ ہدف';
+
+  @override
+  String get waterSetGoal => 'ہدف بدلیں';
+
+  @override
+  String get waterGoalHint => 'یہ صرف ایک ہدف ہے، طبی مشورہ نہیں۔';
+
+  @override
+  String get waterGoalMl => 'ہدف ملی لیٹر میں';
+
+  @override
+  String get waterNothingTitle => 'آج کچھ درج نہیں';
+
+  @override
+  String get waterNothingText =>
+      'ایک گلاس درج کریں، آج کا کل بھرنا شروع ہو جائے گا۔';
+
+  @override
+  String waterAddSmall(String amount) {
+    return '$amount شامل کریں';
+  }
+
+  @override
+  String get recWaterNoun => 'مشروب';
+
+  @override
+  String get recWaterNounPlural => 'مشروبات';
+
+  @override
+  String get recWaterEmptyTitle => 'ابھی کچھ درج نہیں';
+
+  @override
+  String get recWaterEmptyText =>
+      'ایک گلاس درج کریں، روزانہ کا کل بھرنا شروع ہو جائے گا۔';
+
+  @override
+  String get recFieldAmountMl => 'مقدار ملی لیٹر میں';
+
+  @override
+  String get recFieldDrink => 'مشروب';
 }

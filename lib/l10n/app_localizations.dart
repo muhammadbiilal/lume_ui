@@ -11044,10 +11044,10 @@ abstract class AppLocalizations {
   /// **'2 due'**
   String get toolStatusBills;
 
-  /// The status line on the birthdays tile. The prototype keeps it in the catalogue and renders it untranslated in every language (D22)
+  /// Reference key catalogue.js f.m for birthdays. The reference writes "Ayesha in 4d" - a fixture person and a countdown from a constant. The tool reads the reader own records, which start empty, so the tile says what the tool is (C100)
   ///
   /// In en, this message translates to:
-  /// **'Ayesha in 4d'**
+  /// **'Dates you add'**
   String get toolStatusBirthdays;
 
   /// The status line on the bmi tile. The prototype keeps it in the catalogue and renders it untranslated in every language (D22)
@@ -11494,10 +11494,10 @@ abstract class AppLocalizations {
   /// **'Android'**
   String get toolStatusWastatus;
 
-  /// The status line on the water tile. The prototype keeps it in the catalogue and renders it untranslated in every language (D22)
+  /// Reference key catalogue.js f.m for water. The reference writes "5 / 8" - a glass count from a constant. The tile says what the tool is (C100)
   ///
   /// In en, this message translates to:
-  /// **'5 / 8'**
+  /// **'Daily intake'**
   String get toolStatusWater;
 
   /// The status line on the weather tile. The prototype keeps it in the catalogue and renders it untranslated in every language (D22)
@@ -16830,6 +16830,564 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'{n, plural, =1{1 game} other{{n} games}}'**
   String playCount(int n);
+
+  /// Reference key uc.length
+  ///
+  /// In en, this message translates to:
+  /// **'Length'**
+  String get ucLength;
+
+  /// Reference key uc.mass - the reference word is Weight, not Mass
+  ///
+  /// In en, this message translates to:
+  /// **'Weight'**
+  String get ucMass;
+
+  /// Reference key uc.volume
+  ///
+  /// In en, this message translates to:
+  /// **'Volume'**
+  String get ucVolume;
+
+  /// Reference key uc.area
+  ///
+  /// In en, this message translates to:
+  /// **'Area'**
+  String get ucArea;
+
+  /// Reference key uc.speed
+  ///
+  /// In en, this message translates to:
+  /// **'Speed'**
+  String get ucSpeed;
+
+  /// Reference key uc.data
+  ///
+  /// In en, this message translates to:
+  /// **'Data'**
+  String get ucData;
+
+  /// Reference key uc.metre
+  ///
+  /// In en, this message translates to:
+  /// **'Metre'**
+  String get ucMetre;
+
+  /// Reference key uc.kilometre
+  ///
+  /// In en, this message translates to:
+  /// **'Kilometre'**
+  String get ucKilometre;
+
+  /// Reference key uc.centimetre
+  ///
+  /// In en, this message translates to:
+  /// **'Centimetre'**
+  String get ucCentimetre;
+
+  /// Reference key uc.mile
+  ///
+  /// In en, this message translates to:
+  /// **'Mile'**
+  String get ucMile;
+
+  /// Reference key uc.foot
+  ///
+  /// In en, this message translates to:
+  /// **'Foot'**
+  String get ucFoot;
+
+  /// Reference key uc.inch
+  ///
+  /// In en, this message translates to:
+  /// **'Inch'**
+  String get ucInch;
+
+  /// Reference key uc.kilogram
+  ///
+  /// In en, this message translates to:
+  /// **'Kilogram'**
+  String get ucKilogram;
+
+  /// Reference key uc.gram
+  ///
+  /// In en, this message translates to:
+  /// **'Gram'**
+  String get ucGram;
+
+  /// Reference key uc.pound
+  ///
+  /// In en, this message translates to:
+  /// **'Pound'**
+  String get ucPound;
+
+  /// Reference key uc.ounce
+  ///
+  /// In en, this message translates to:
+  /// **'Ounce'**
+  String get ucOunce;
+
+  /// Reference key uc.tola
+  ///
+  /// In en, this message translates to:
+  /// **'Tola'**
+  String get ucTola;
+
+  /// Reference key uc.litre
+  ///
+  /// In en, this message translates to:
+  /// **'Litre'**
+  String get ucLitre;
+
+  /// Reference key uc.millilitre
+  ///
+  /// In en, this message translates to:
+  /// **'Millilitre'**
+  String get ucMillilitre;
+
+  /// Reference key uc.gallon. The reference names this one US in English and still shows a bare gal beside it; C100 separates the two gallons
+  ///
+  /// In en, this message translates to:
+  /// **'Gallon (US)'**
+  String get ucGallonUs;
+
+  /// No reference key - the imperial gallon the reference has no unit for (C100)
+  ///
+  /// In en, this message translates to:
+  /// **'Gallon (imperial)'**
+  String get ucGallonImp;
+
+  /// Reference key uc.cup, named for the US legal cup of 240 ml that its 0.24 factor actually is (C100)
+  ///
+  /// In en, this message translates to:
+  /// **'Cup (US)'**
+  String get ucCupUs;
+
+  /// Reference key uc.sqmetre
+  ///
+  /// In en, this message translates to:
+  /// **'Square metre'**
+  String get ucSqmetre;
+
+  /// Reference key uc.sqfoot
+  ///
+  /// In en, this message translates to:
+  /// **'Square foot'**
+  String get ucSqfoot;
+
+  /// Reference key uc.acre
+  ///
+  /// In en, this message translates to:
+  /// **'Acre'**
+  String get ucAcre;
+
+  /// Reference key uc.marla
+  ///
+  /// In en, this message translates to:
+  /// **'Marla'**
+  String get ucMarla;
+
+  /// Reference key uc.kmh
+  ///
+  /// In en, this message translates to:
+  /// **'Kilometres per hour'**
+  String get ucKmh;
+
+  /// Reference key uc.mph
+  ///
+  /// In en, this message translates to:
+  /// **'Miles per hour'**
+  String get ucMph;
+
+  /// Reference key uc.ms
+  ///
+  /// In en, this message translates to:
+  /// **'Metres per second'**
+  String get ucMs;
+
+  /// No reference key - the base the two data families hang off (C100)
+  ///
+  /// In en, this message translates to:
+  /// **'Byte'**
+  String get ucByte;
+
+  /// No reference key - 1,000 bytes (C100)
+  ///
+  /// In en, this message translates to:
+  /// **'Kilobyte'**
+  String get ucKilobyte;
+
+  /// Reference key uc.megabyte
+  ///
+  /// In en, this message translates to:
+  /// **'Megabyte'**
+  String get ucMegabyte;
+
+  /// Reference key uc.gigabyte
+  ///
+  /// In en, this message translates to:
+  /// **'Gigabyte'**
+  String get ucGigabyte;
+
+  /// Reference key uc.terabyte
+  ///
+  /// In en, this message translates to:
+  /// **'Terabyte'**
+  String get ucTerabyte;
+
+  /// No reference key - the IEC binary unit, 1,024 bytes (C100)
+  ///
+  /// In en, this message translates to:
+  /// **'Kibibyte'**
+  String get ucKibibyte;
+
+  /// No reference key - the IEC binary unit, 1,024 KiB (C100)
+  ///
+  /// In en, this message translates to:
+  /// **'Mebibyte'**
+  String get ucMebibyte;
+
+  /// No reference key - the IEC binary unit, 1,024 MiB (C100)
+  ///
+  /// In en, this message translates to:
+  /// **'Gibibyte'**
+  String get ucGibibyte;
+
+  /// No reference key - the IEC binary unit, 1,024 GiB (C100)
+  ///
+  /// In en, this message translates to:
+  /// **'Tebibyte'**
+  String get ucTebibyte;
+
+  /// Reference key convert.swap
+  ///
+  /// In en, this message translates to:
+  /// **'Swap'**
+  String get convertSwap;
+
+  /// Reference key convert.allUnits
+  ///
+  /// In en, this message translates to:
+  /// **'All units'**
+  String get convertAllUnits;
+
+  /// No reference key - the amount field carries no label in the reference, and an unlabelled field is a field a screen reader cannot name
+  ///
+  /// In en, this message translates to:
+  /// **'Amount'**
+  String get convertAmount;
+
+  /// No reference key - which unit is being converted from
+  ///
+  /// In en, this message translates to:
+  /// **'From'**
+  String get convertFrom;
+
+  /// No reference key - which unit is being converted to
+  ///
+  /// In en, this message translates to:
+  /// **'To'**
+  String get convertTo;
+
+  /// No reference key - the unit picker the reference does not have (C100)
+  ///
+  /// In en, this message translates to:
+  /// **'Choose a unit'**
+  String get convertChooseUnit;
+
+  /// No reference key - the category strip has no accessible name in the reference
+  ///
+  /// In en, this message translates to:
+  /// **'What to convert'**
+  String get convertCategory;
+
+  /// No reference key - what a screen reader hears for the result, which is otherwise two numbers with no stated relation between them
+  ///
+  /// In en, this message translates to:
+  /// **'{from} is {to}'**
+  String convertEquals(String from, String to);
+
+  /// No reference key - the reference puts binary factors under decimal names; the names are separated here and the difference is stated where the reader chooses (C100)
+  ///
+  /// In en, this message translates to:
+  /// **'kB, MB, GB and TB are powers of 1,000. KiB, MiB, GiB and TiB are powers of 1,024.'**
+  String get convertDataNote;
+
+  /// Reference key birthdays.next
+  ///
+  /// In en, this message translates to:
+  /// **'Next up'**
+  String get birthdaysNext;
+
+  /// Reference key birthdays.tracked
+  ///
+  /// In en, this message translates to:
+  /// **'Tracked'**
+  String get birthdaysTracked;
+
+  /// Reference key birthdays.thisMonth
+  ///
+  /// In en, this message translates to:
+  /// **'This month'**
+  String get birthdaysThisMonth;
+
+  /// Reference key birthdays.turning
+  ///
+  /// In en, this message translates to:
+  /// **'Turning'**
+  String get birthdaysTurning;
+
+  /// Reference key birthdays.turns
+  ///
+  /// In en, this message translates to:
+  /// **'turns {n}'**
+  String birthdaysTurns(int n);
+
+  /// No reference key - an anniversary counts years; it does not turn an age
+  ///
+  /// In en, this message translates to:
+  /// **'{n} years'**
+  String birthdaysYears(int n);
+
+  /// Reference key birthdays.upcoming
+  ///
+  /// In en, this message translates to:
+  /// **'Coming up'**
+  String get birthdaysUpcoming;
+
+  /// Reference key birthdays.birthday
+  ///
+  /// In en, this message translates to:
+  /// **'Birthday'**
+  String get birthdaysBirthday;
+
+  /// Reference key birthdays.anniversary
+  ///
+  /// In en, this message translates to:
+  /// **'Anniversary'**
+  String get birthdaysAnniversary;
+
+  /// Reference key birthdays.add
+  ///
+  /// In en, this message translates to:
+  /// **'Add a date'**
+  String get birthdaysAdd;
+
+  /// No reference key - the reference has four fixture dates and so can never be empty (C100)
+  ///
+  /// In en, this message translates to:
+  /// **'Nothing coming up'**
+  String get birthdaysNothingTitle;
+
+  /// No reference key - see birthdaysNothingTitle
+  ///
+  /// In en, this message translates to:
+  /// **'Dates you add appear here, soonest first.'**
+  String get birthdaysNothingText;
+
+  /// Reference key rec.birthdays.noun
+  ///
+  /// In en, this message translates to:
+  /// **'date'**
+  String get recBirthdaysNoun;
+
+  /// Reference key rec.birthdays.nounPlural
+  ///
+  /// In en, this message translates to:
+  /// **'birthdays & anniversaries'**
+  String get recBirthdaysNounPlural;
+
+  /// Reference key rec.birthdays.emptyTitle
+  ///
+  /// In en, this message translates to:
+  /// **'No dates saved'**
+  String get recBirthdaysEmptyTitle;
+
+  /// Reference key rec.birthdays.emptyText. The reference promises a reminder - "Lume will remind you in good time" - and nothing in this build schedules or delivers one, so it says what it does do (C100)
+  ///
+  /// In en, this message translates to:
+  /// **'Add a birthday and it is counted down here.'**
+  String get recBirthdaysEmptyText;
+
+  /// Reference key rec.birthdays.ph
+  ///
+  /// In en, this message translates to:
+  /// **'Whose day is it?'**
+  String get recBirthdaysPh;
+
+  /// Reference key rec.f.occasion
+  ///
+  /// In en, this message translates to:
+  /// **'Occasion'**
+  String get recFieldOccasion;
+
+  /// Reference key rec.nextOne
+  ///
+  /// In en, this message translates to:
+  /// **'Next one'**
+  String get recNextOne;
+
+  /// Reference key rec.turning
+  ///
+  /// In en, this message translates to:
+  /// **'Turning'**
+  String get recTurning;
+
+  /// Reference key rec.seed.ourAnniversary
+  ///
+  /// In en, this message translates to:
+  /// **'Our anniversary'**
+  String get recSeedOurAnniversary;
+
+  /// Reference key water.today
+  ///
+  /// In en, this message translates to:
+  /// **'Today'**
+  String get waterToday;
+
+  /// Reference key water.ofTarget. "target" there, "goal" here, because this figure is a goal the reader sets and not a recommendation (C100)
+  ///
+  /// In en, this message translates to:
+  /// **'of a {target} goal'**
+  String waterOfTarget(String target);
+
+  /// No reference key - said while the goal is still the one the tool opened with, so a figure the reader never chose is never presented as theirs (C100)
+  ///
+  /// In en, this message translates to:
+  /// **'of the default {target} goal'**
+  String waterOfDefault(String target);
+
+  /// Reference key water.progress
+  ///
+  /// In en, this message translates to:
+  /// **'Progress'**
+  String get waterProgress;
+
+  /// Reference key water.remaining
+  ///
+  /// In en, this message translates to:
+  /// **'Remaining'**
+  String get waterRemaining;
+
+  /// Reference key water.glasses
+  ///
+  /// In en, this message translates to:
+  /// **'Glasses'**
+  String get waterGlasses;
+
+  /// No reference key - how many drinks were logged today, in the slot the reference fills with a Day streak of 6 that nothing counted (C100)
+  ///
+  /// In en, this message translates to:
+  /// **'Logged'**
+  String get waterLogged;
+
+  /// Reference key water.timeline
+  ///
+  /// In en, this message translates to:
+  /// **'Today’s intake'**
+  String get waterTimeline;
+
+  /// Reference key water.kindWater
+  ///
+  /// In en, this message translates to:
+  /// **'Water'**
+  String get waterKindWater;
+
+  /// Reference key water.kindTea
+  ///
+  /// In en, this message translates to:
+  /// **'Tea'**
+  String get waterKindTea;
+
+  /// Reference key water.added
+  ///
+  /// In en, this message translates to:
+  /// **'{amount} logged'**
+  String waterAdded(String amount);
+
+  /// No reference key - the reference fixes 2000 ml for every reader with no way to change it (C100)
+  ///
+  /// In en, this message translates to:
+  /// **'Daily goal'**
+  String get waterGoal;
+
+  /// No reference key - marks a goal the reader has not set, so it is never read as advice (C100)
+  ///
+  /// In en, this message translates to:
+  /// **'Default goal'**
+  String get waterGoalDefault;
+
+  /// No reference key - see waterGoal
+  ///
+  /// In en, this message translates to:
+  /// **'Change goal'**
+  String get waterSetGoal;
+
+  /// No reference key - the one sentence that keeps a number on a hydration screen from reading as medical guidance (C100)
+  ///
+  /// In en, this message translates to:
+  /// **'A goal to fill, not a health recommendation.'**
+  String get waterGoalHint;
+
+  /// No reference key - see waterGoal
+  ///
+  /// In en, this message translates to:
+  /// **'Goal in ml'**
+  String get waterGoalMl;
+
+  /// Reference key rec.water.emptyTitle, over the tool own summary rather than the list
+  ///
+  /// In en, this message translates to:
+  /// **'Nothing logged today'**
+  String get waterNothingTitle;
+
+  /// Reference key rec.water.emptyText
+  ///
+  /// In en, this message translates to:
+  /// **'Log a glass and today’s total starts filling.'**
+  String get waterNothingText;
+
+  /// No reference key - the two buttons are labelled with the amount alone in the reference, which a screen reader hears as a bare number
+  ///
+  /// In en, this message translates to:
+  /// **'Add {amount}'**
+  String waterAddSmall(String amount);
+
+  /// Reference key rec.water.noun
+  ///
+  /// In en, this message translates to:
+  /// **'drink'**
+  String get recWaterNoun;
+
+  /// Reference key rec.water.nounPlural. The reference says "today’s drinks" over a list that holds every day it has; this list is not filtered to today, so it does not claim to be (C100)
+  ///
+  /// In en, this message translates to:
+  /// **'drinks'**
+  String get recWaterNounPlural;
+
+  /// Reference key rec.water.emptyTitle
+  ///
+  /// In en, this message translates to:
+  /// **'Nothing logged yet'**
+  String get recWaterEmptyTitle;
+
+  /// Reference key rec.water.emptyText
+  ///
+  /// In en, this message translates to:
+  /// **'Log a glass and your daily total starts filling.'**
+  String get recWaterEmptyText;
+
+  /// Reference key rec.f.amountMl
+  ///
+  /// In en, this message translates to:
+  /// **'Amount in ml'**
+  String get recFieldAmountMl;
+
+  /// Reference key rec.f.drink
+  ///
+  /// In en, this message translates to:
+  /// **'Drink'**
+  String get recFieldDrink;
 }
 
 class _AppLocalizationsDelegate

@@ -98,6 +98,11 @@ class LumeDataCapability {
     // ships; the parity reproduction is the exception, and it is named in
     // [sampleInParityOnly] rather than left to change what this set means.
     'focus',
+    // Unit Converter: the amount typed, the two units chosen, and an exact
+    // rational between them. There is no table behind it that a reader
+    // could mistake for data — the factors are the values that define the
+    // units (wave 4).
+    'converter',
   };
 
   /// Tools that have sample data **only** where the build reproduces the
@@ -110,7 +115,18 @@ class LumeDataCapability {
   /// nothing else, so there is no sample data there to disclose, and
   /// saying otherwise was a claim about the reader's screen that was not
   /// true of it.
-  static const Set<String> sampleInParityOnly = <String>{'focus'};
+  ///
+  /// Birthdays and Water are here for the same reason, one step earlier:
+  /// their seeds are the sample data, and only the parity build has them
+  /// ([kLumeParityOnlySeeds]). A shipping build opens both empty, so there
+  /// is nothing on either screen to disclose — and every figure above the
+  /// list is arithmetic on the reader's own records or is not drawn at all
+  /// (wave 4).
+  static const Set<String> sampleInParityOnly = <String>{
+    'focus',
+    'birthdays',
+    'water',
+  };
 
   /// Tools whose every figure is worked out on the device for the reader's
   /// city — a calculation, not a fixture. Sun & Moon: the sun from the
@@ -130,6 +146,11 @@ class LumeDataCapability {
     'installments',
     'committee',
     'babybudget',
+    // Birthdays and Water: seeded only in the parity reproduction, so in
+    // the build a reader runs there is nothing on either screen that they
+    // did not write ([sampleInParityOnly], wave 4).
+    'birthdays',
+    'water',
   };
 
   /// Tools whose "live" is a clock ticking on the device.

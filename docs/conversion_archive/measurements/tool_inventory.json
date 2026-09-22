@@ -70,21 +70,28 @@
    "meds"
   ],
   "flutterBuilt": [
+   "calculator",
    "stopwatch",
    "timer",
    "age",
+   "focus",
    "datecalc",
    "calendar",
    "notes",
    "todos",
    "events",
    "hadith",
+   "tasbih",
    "compound",
    "goldrates",
    "tax",
    "loan",
    "tipsplit",
+   "ledger",
+   "installments",
+   "committee",
    "sunmoon",
+   "worldclock",
    "weather",
    "flights",
    "news",
@@ -94,6 +101,8 @@
    "recipes",
    "learning",
    "documents",
+   "play",
+   "babybudget",
    "expenses"
   ]
  },
@@ -443,7 +452,7 @@
    "approvedComposition": null,
    "recordFamily": false,
    "module": "assets/js/tools/everyday/calculator.tool.js",
-   "flutter": "placeholder"
+   "flutter": "built"
   },
   {
    "id": "converter",
@@ -638,7 +647,7 @@
    "approvedComposition": null,
    "recordFamily": false,
    "module": "assets/js/tools/everyday/focus.tool.js",
-   "flutter": "placeholder"
+   "flutter": "built"
   },
   {
    "id": "datecalc",
@@ -1377,7 +1386,7 @@
    "approvedComposition": null,
    "recordFamily": false,
    "module": "assets/js/tools/islamic/tasbih.tool.js",
-   "flutter": "placeholder"
+   "flutter": "built"
   },
   {
    "id": "zakat",
@@ -1935,7 +1944,7 @@
    "approvedComposition": null,
    "recordFamily": false,
    "module": "assets/js/tools/money/ledger.tool.js",
-   "flutter": "placeholder"
+   "flutter": "built"
   },
   {
    "id": "installments",
@@ -1970,7 +1979,7 @@
    "approvedComposition": null,
    "recordFamily": false,
    "module": "assets/js/tools/money/installments.tool.js",
-   "flutter": "placeholder"
+   "flutter": "built"
   },
   {
    "id": "committee",
@@ -2004,7 +2013,7 @@
    "approvedComposition": null,
    "recordFamily": false,
    "module": "assets/js/tools/money/committee.tool.js",
-   "flutter": "placeholder"
+   "flutter": "built"
   },
   {
    "id": "aqi",
@@ -2113,7 +2122,7 @@
    "approvedComposition": null,
    "recordFamily": false,
    "module": "assets/js/tools/daily/worldclock.tool.js",
-   "flutter": "placeholder"
+   "flutter": "built"
   },
   {
    "id": "holidays",
@@ -3076,7 +3085,7 @@
    "approvedComposition": null,
    "recordFamily": false,
    "module": "assets/js/tools/personal/play.tool.js",
-   "flutter": "placeholder"
+   "flutter": "built"
   },
   {
    "id": "babybudget",
@@ -3110,7 +3119,7 @@
    "approvedComposition": null,
    "recordFamily": false,
    "module": "assets/js/tools/personal/babybudget.tool.js",
-   "flutter": "placeholder"
+   "flutter": "built"
   },
   {
    "id": "habits",

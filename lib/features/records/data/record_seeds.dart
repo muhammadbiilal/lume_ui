@@ -15,12 +15,36 @@ String lumeIsoDay(DateTime now, int days) {
   return '${d.year}-${two(d.month)}-${two(d.day)}';
 }
 
+/// Collections whose seeds exist **only** where the build reproduces the
+/// reference.
+///
+/// The families of wave 2 open with demonstration records in every build:
+/// four notes, five shopping items, two events. They are the reference's,
+/// they are marked as samples, and a reader deletes them in a tap.
+///
+/// Wave 4's two are different in kind. A birthday is a person's name and the
+/// day they were born; a drink is something the reader did at a particular
+/// hour. Seeding those is not a demonstration of a list — it is an invented
+/// account of the reader's own life and of what they put in their body, and
+/// every figure above the list ("in 4 days", "turning 29", "1.25 L today")
+/// would be an arithmetic on fiction. So in a development or release build
+/// these two open empty and every figure is nothing until the reader writes
+/// one, and only the parity reproduction is seeded (C100).
+const Set<String> kLumeParityOnlySeeds = <String>{'birthdays', 'water'};
+
 /// Every family's seeds, by collection. A collection this build has not
 /// converted yet opens empty.
+///
+/// [reproducesReference] is the build's own
+/// `LumeBuildProfile.reproducesReference`; it decides only whether the
+/// collections in [kLumeParityOnlySeeds] are seeded at all.
 List<Map<String, Object?>>? lumeRecordSeeds(
   String collection,
-  DateTime now,
-) => switch (collection) {
+  DateTime now, {
+  bool reproducesReference = false,
+}) => switch (collection) {
+  _ when !reproducesReference && kLumeParityOnlySeeds.contains(collection) =>
+    null,
   'expenses' => <Map<String, Object?>>[
     <String, Object?>{
       'title': '@groceries',
@@ -187,6 +211,54 @@ List<Map<String, Object?>>? lumeRecordSeeds(
       'qty': '2',
       'price': 8,
       'group': 'household',
+    },
+  ],
+  // Birthdays: three dates, in the reference's order. Only the month and
+  // the day are counted down from; the year is the one it happened in, so
+  // "turning" is arithmetic and not a constant. Parity only.
+  'birthdays' => <Map<String, Object?>>[
+    <String, Object?>{
+      'name': 'Ayesha',
+      'kind': 'birthday',
+      'date': '1997-${lumeIsoDay(now, 4).substring(5)}',
+    },
+    <String, Object?>{
+      'name': '@recSeedOurAnniversary',
+      'kind': 'anniversary',
+      'date': '2020-${lumeIsoDay(now, 18).substring(5)}',
+    },
+    <String, Object?>{
+      'name': 'Musa',
+      'kind': 'birthday',
+      'date': '2021-${lumeIsoDay(now, 51).substring(5)}',
+    },
+  ],
+  // Water: the reference's four drinks, all of them today, which is what
+  // its timeline shows. Parity only.
+  'water' => <Map<String, Object?>>[
+    <String, Object?>{
+      'ml': 250,
+      'kind': 'water',
+      'at': '08:10',
+      'date': lumeIsoDay(now, 0),
+    },
+    <String, Object?>{
+      'ml': 500,
+      'kind': 'water',
+      'at': '10:30',
+      'date': lumeIsoDay(now, 0),
+    },
+    <String, Object?>{
+      'ml': 250,
+      'kind': 'tea',
+      'at': '13:05',
+      'date': lumeIsoDay(now, 0),
+    },
+    <String, Object?>{
+      'ml': 250,
+      'kind': 'water',
+      'at': '15:40',
+      'date': lumeIsoDay(now, 0),
     },
   ],
   _ => null,

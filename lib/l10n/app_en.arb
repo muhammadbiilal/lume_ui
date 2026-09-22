@@ -8527,9 +8527,9 @@
   "@toolStatusBills": {
     "description": "The status line on the bills tile. The prototype keeps it in the catalogue and renders it untranslated in every language (D22)"
   },
-  "toolStatusBirthdays": "Ayesha in 4d",
+  "toolStatusBirthdays": "Dates you add",
   "@toolStatusBirthdays": {
-    "description": "The status line on the birthdays tile. The prototype keeps it in the catalogue and renders it untranslated in every language (D22)"
+    "description": "Reference key catalogue.js f.m for birthdays. The reference writes \"Ayesha in 4d\" - a fixture person and a countdown from a constant. The tool reads the reader own records, which start empty, so the tile says what the tool is (C100)"
   },
   "toolStatusBmi": "Track weight",
   "@toolStatusBmi": {
@@ -8827,9 +8827,9 @@
   "@toolStatusWastatus": {
     "description": "The status line on the wastatus tile. The prototype keeps it in the catalogue and renders it untranslated in every language (D22)"
   },
-  "toolStatusWater": "5 / 8",
+  "toolStatusWater": "Daily intake",
   "@toolStatusWater": {
-    "description": "The status line on the water tile. The prototype keeps it in the catalogue and renders it untranslated in every language (D22)"
+    "description": "Reference key catalogue.js f.m for water. The reference writes \"5 / 8\" - a glass count from a constant. The tile says what the tool is (C100)"
   },
   "toolStatusWeather": "34° Clear",
   "@toolStatusWeather": {
@@ -13352,5 +13352,415 @@
         "type": "int"
       }
     }
+  },
+  "ucLength": "Length",
+  "@ucLength": {
+    "description": "Reference key uc.length"
+  },
+  "ucMass": "Weight",
+  "@ucMass": {
+    "description": "Reference key uc.mass - the reference word is Weight, not Mass"
+  },
+  "ucVolume": "Volume",
+  "@ucVolume": {
+    "description": "Reference key uc.volume"
+  },
+  "ucArea": "Area",
+  "@ucArea": {
+    "description": "Reference key uc.area"
+  },
+  "ucSpeed": "Speed",
+  "@ucSpeed": {
+    "description": "Reference key uc.speed"
+  },
+  "ucData": "Data",
+  "@ucData": {
+    "description": "Reference key uc.data"
+  },
+  "ucMetre": "Metre",
+  "@ucMetre": {
+    "description": "Reference key uc.metre"
+  },
+  "ucKilometre": "Kilometre",
+  "@ucKilometre": {
+    "description": "Reference key uc.kilometre"
+  },
+  "ucCentimetre": "Centimetre",
+  "@ucCentimetre": {
+    "description": "Reference key uc.centimetre"
+  },
+  "ucMile": "Mile",
+  "@ucMile": {
+    "description": "Reference key uc.mile"
+  },
+  "ucFoot": "Foot",
+  "@ucFoot": {
+    "description": "Reference key uc.foot"
+  },
+  "ucInch": "Inch",
+  "@ucInch": {
+    "description": "Reference key uc.inch"
+  },
+  "ucKilogram": "Kilogram",
+  "@ucKilogram": {
+    "description": "Reference key uc.kilogram"
+  },
+  "ucGram": "Gram",
+  "@ucGram": {
+    "description": "Reference key uc.gram"
+  },
+  "ucPound": "Pound",
+  "@ucPound": {
+    "description": "Reference key uc.pound"
+  },
+  "ucOunce": "Ounce",
+  "@ucOunce": {
+    "description": "Reference key uc.ounce"
+  },
+  "ucTola": "Tola",
+  "@ucTola": {
+    "description": "Reference key uc.tola"
+  },
+  "ucLitre": "Litre",
+  "@ucLitre": {
+    "description": "Reference key uc.litre"
+  },
+  "ucMillilitre": "Millilitre",
+  "@ucMillilitre": {
+    "description": "Reference key uc.millilitre"
+  },
+  "ucGallonUs": "Gallon (US)",
+  "@ucGallonUs": {
+    "description": "Reference key uc.gallon. The reference names this one US in English and still shows a bare gal beside it; C100 separates the two gallons"
+  },
+  "ucGallonImp": "Gallon (imperial)",
+  "@ucGallonImp": {
+    "description": "No reference key - the imperial gallon the reference has no unit for (C100)"
+  },
+  "ucCupUs": "Cup (US)",
+  "@ucCupUs": {
+    "description": "Reference key uc.cup, named for the US legal cup of 240 ml that its 0.24 factor actually is (C100)"
+  },
+  "ucSqmetre": "Square metre",
+  "@ucSqmetre": {
+    "description": "Reference key uc.sqmetre"
+  },
+  "ucSqfoot": "Square foot",
+  "@ucSqfoot": {
+    "description": "Reference key uc.sqfoot"
+  },
+  "ucAcre": "Acre",
+  "@ucAcre": {
+    "description": "Reference key uc.acre"
+  },
+  "ucMarla": "Marla",
+  "@ucMarla": {
+    "description": "Reference key uc.marla"
+  },
+  "ucKmh": "Kilometres per hour",
+  "@ucKmh": {
+    "description": "Reference key uc.kmh"
+  },
+  "ucMph": "Miles per hour",
+  "@ucMph": {
+    "description": "Reference key uc.mph"
+  },
+  "ucMs": "Metres per second",
+  "@ucMs": {
+    "description": "Reference key uc.ms"
+  },
+  "ucByte": "Byte",
+  "@ucByte": {
+    "description": "No reference key - the base the two data families hang off (C100)"
+  },
+  "ucKilobyte": "Kilobyte",
+  "@ucKilobyte": {
+    "description": "No reference key - 1,000 bytes (C100)"
+  },
+  "ucMegabyte": "Megabyte",
+  "@ucMegabyte": {
+    "description": "Reference key uc.megabyte"
+  },
+  "ucGigabyte": "Gigabyte",
+  "@ucGigabyte": {
+    "description": "Reference key uc.gigabyte"
+  },
+  "ucTerabyte": "Terabyte",
+  "@ucTerabyte": {
+    "description": "Reference key uc.terabyte"
+  },
+  "ucKibibyte": "Kibibyte",
+  "@ucKibibyte": {
+    "description": "No reference key - the IEC binary unit, 1,024 bytes (C100)"
+  },
+  "ucMebibyte": "Mebibyte",
+  "@ucMebibyte": {
+    "description": "No reference key - the IEC binary unit, 1,024 KiB (C100)"
+  },
+  "ucGibibyte": "Gibibyte",
+  "@ucGibibyte": {
+    "description": "No reference key - the IEC binary unit, 1,024 MiB (C100)"
+  },
+  "ucTebibyte": "Tebibyte",
+  "@ucTebibyte": {
+    "description": "No reference key - the IEC binary unit, 1,024 GiB (C100)"
+  },
+  "convertSwap": "Swap",
+  "@convertSwap": {
+    "description": "Reference key convert.swap"
+  },
+  "convertAllUnits": "All units",
+  "@convertAllUnits": {
+    "description": "Reference key convert.allUnits"
+  },
+  "convertAmount": "Amount",
+  "@convertAmount": {
+    "description": "No reference key - the amount field carries no label in the reference, and an unlabelled field is a field a screen reader cannot name"
+  },
+  "convertFrom": "From",
+  "@convertFrom": {
+    "description": "No reference key - which unit is being converted from"
+  },
+  "convertTo": "To",
+  "@convertTo": {
+    "description": "No reference key - which unit is being converted to"
+  },
+  "convertChooseUnit": "Choose a unit",
+  "@convertChooseUnit": {
+    "description": "No reference key - the unit picker the reference does not have (C100)"
+  },
+  "convertCategory": "What to convert",
+  "@convertCategory": {
+    "description": "No reference key - the category strip has no accessible name in the reference"
+  },
+  "convertEquals": "{from} is {to}",
+  "@convertEquals": {
+    "description": "No reference key - what a screen reader hears for the result, which is otherwise two numbers with no stated relation between them",
+    "placeholders": {
+      "from": {
+        "type": "String"
+      },
+      "to": {
+        "type": "String"
+      }
+    }
+  },
+  "convertDataNote": "kB, MB, GB and TB are powers of 1,000. KiB, MiB, GiB and TiB are powers of 1,024.",
+  "@convertDataNote": {
+    "description": "No reference key - the reference puts binary factors under decimal names; the names are separated here and the difference is stated where the reader chooses (C100)"
+  },
+  "birthdaysNext": "Next up",
+  "@birthdaysNext": {
+    "description": "Reference key birthdays.next"
+  },
+  "birthdaysTracked": "Tracked",
+  "@birthdaysTracked": {
+    "description": "Reference key birthdays.tracked"
+  },
+  "birthdaysThisMonth": "This month",
+  "@birthdaysThisMonth": {
+    "description": "Reference key birthdays.thisMonth"
+  },
+  "birthdaysTurning": "Turning",
+  "@birthdaysTurning": {
+    "description": "Reference key birthdays.turning"
+  },
+  "birthdaysTurns": "turns {n}",
+  "@birthdaysTurns": {
+    "description": "Reference key birthdays.turns",
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
+  "birthdaysYears": "{n} years",
+  "@birthdaysYears": {
+    "description": "No reference key - an anniversary counts years; it does not turn an age",
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
+  "birthdaysUpcoming": "Coming up",
+  "@birthdaysUpcoming": {
+    "description": "Reference key birthdays.upcoming"
+  },
+  "birthdaysBirthday": "Birthday",
+  "@birthdaysBirthday": {
+    "description": "Reference key birthdays.birthday"
+  },
+  "birthdaysAnniversary": "Anniversary",
+  "@birthdaysAnniversary": {
+    "description": "Reference key birthdays.anniversary"
+  },
+  "birthdaysAdd": "Add a date",
+  "@birthdaysAdd": {
+    "description": "Reference key birthdays.add"
+  },
+  "birthdaysNothingTitle": "Nothing coming up",
+  "@birthdaysNothingTitle": {
+    "description": "No reference key - the reference has four fixture dates and so can never be empty (C100)"
+  },
+  "birthdaysNothingText": "Dates you add appear here, soonest first.",
+  "@birthdaysNothingText": {
+    "description": "No reference key - see birthdaysNothingTitle"
+  },
+  "recBirthdaysNoun": "date",
+  "@recBirthdaysNoun": {
+    "description": "Reference key rec.birthdays.noun"
+  },
+  "recBirthdaysNounPlural": "birthdays & anniversaries",
+  "@recBirthdaysNounPlural": {
+    "description": "Reference key rec.birthdays.nounPlural"
+  },
+  "recBirthdaysEmptyTitle": "No dates saved",
+  "@recBirthdaysEmptyTitle": {
+    "description": "Reference key rec.birthdays.emptyTitle"
+  },
+  "recBirthdaysEmptyText": "Add a birthday and it is counted down here.",
+  "@recBirthdaysEmptyText": {
+    "description": "Reference key rec.birthdays.emptyText. The reference promises a reminder - \"Lume will remind you in good time\" - and nothing in this build schedules or delivers one, so it says what it does do (C100)"
+  },
+  "recBirthdaysPh": "Whose day is it?",
+  "@recBirthdaysPh": {
+    "description": "Reference key rec.birthdays.ph"
+  },
+  "recFieldOccasion": "Occasion",
+  "@recFieldOccasion": {
+    "description": "Reference key rec.f.occasion"
+  },
+  "recNextOne": "Next one",
+  "@recNextOne": {
+    "description": "Reference key rec.nextOne"
+  },
+  "recTurning": "Turning",
+  "@recTurning": {
+    "description": "Reference key rec.turning"
+  },
+  "recSeedOurAnniversary": "Our anniversary",
+  "@recSeedOurAnniversary": {
+    "description": "Reference key rec.seed.ourAnniversary"
+  },
+  "waterToday": "Today",
+  "@waterToday": {
+    "description": "Reference key water.today"
+  },
+  "waterOfTarget": "of a {target} goal",
+  "@waterOfTarget": {
+    "description": "Reference key water.ofTarget. \"target\" there, \"goal\" here, because this figure is a goal the reader sets and not a recommendation (C100)",
+    "placeholders": {
+      "target": {
+        "type": "String"
+      }
+    }
+  },
+  "waterOfDefault": "of the default {target} goal",
+  "@waterOfDefault": {
+    "description": "No reference key - said while the goal is still the one the tool opened with, so a figure the reader never chose is never presented as theirs (C100)",
+    "placeholders": {
+      "target": {
+        "type": "String"
+      }
+    }
+  },
+  "waterProgress": "Progress",
+  "@waterProgress": {
+    "description": "Reference key water.progress"
+  },
+  "waterRemaining": "Remaining",
+  "@waterRemaining": {
+    "description": "Reference key water.remaining"
+  },
+  "waterGlasses": "Glasses",
+  "@waterGlasses": {
+    "description": "Reference key water.glasses"
+  },
+  "waterLogged": "Logged",
+  "@waterLogged": {
+    "description": "No reference key - how many drinks were logged today, in the slot the reference fills with a Day streak of 6 that nothing counted (C100)"
+  },
+  "waterTimeline": "Today’s intake",
+  "@waterTimeline": {
+    "description": "Reference key water.timeline"
+  },
+  "waterKindWater": "Water",
+  "@waterKindWater": {
+    "description": "Reference key water.kindWater"
+  },
+  "waterKindTea": "Tea",
+  "@waterKindTea": {
+    "description": "Reference key water.kindTea"
+  },
+  "waterAdded": "{amount} logged",
+  "@waterAdded": {
+    "description": "Reference key water.added",
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "waterGoal": "Daily goal",
+  "@waterGoal": {
+    "description": "No reference key - the reference fixes 2000 ml for every reader with no way to change it (C100)"
+  },
+  "waterGoalDefault": "Default goal",
+  "@waterGoalDefault": {
+    "description": "No reference key - marks a goal the reader has not set, so it is never read as advice (C100)"
+  },
+  "waterSetGoal": "Change goal",
+  "@waterSetGoal": {
+    "description": "No reference key - see waterGoal"
+  },
+  "waterGoalHint": "A goal to fill, not a health recommendation.",
+  "@waterGoalHint": {
+    "description": "No reference key - the one sentence that keeps a number on a hydration screen from reading as medical guidance (C100)"
+  },
+  "waterGoalMl": "Goal in ml",
+  "@waterGoalMl": {
+    "description": "No reference key - see waterGoal"
+  },
+  "waterNothingTitle": "Nothing logged today",
+  "@waterNothingTitle": {
+    "description": "Reference key rec.water.emptyTitle, over the tool own summary rather than the list"
+  },
+  "waterNothingText": "Log a glass and today’s total starts filling.",
+  "@waterNothingText": {
+    "description": "Reference key rec.water.emptyText"
+  },
+  "waterAddSmall": "Add {amount}",
+  "@waterAddSmall": {
+    "description": "No reference key - the two buttons are labelled with the amount alone in the reference, which a screen reader hears as a bare number",
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "recWaterNoun": "drink",
+  "@recWaterNoun": {
+    "description": "Reference key rec.water.noun"
+  },
+  "recWaterNounPlural": "drinks",
+  "@recWaterNounPlural": {
+    "description": "Reference key rec.water.nounPlural. The reference says \"today’s drinks\" over a list that holds every day it has; this list is not filtered to today, so it does not claim to be (C100)"
+  },
+  "recWaterEmptyTitle": "Nothing logged yet",
+  "@recWaterEmptyTitle": {
+    "description": "Reference key rec.water.emptyTitle"
+  },
+  "recWaterEmptyText": "Log a glass and your daily total starts filling.",
+  "@recWaterEmptyText": {
+    "description": "Reference key rec.water.emptyText"
+  },
+  "recFieldAmountMl": "Amount in ml",
+  "@recFieldAmountMl": {
+    "description": "Reference key rec.f.amountMl"
+  },
+  "recFieldDrink": "Drink",
+  "@recFieldDrink": {
+    "description": "Reference key rec.f.drink"
   }
 }

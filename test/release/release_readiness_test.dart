@@ -304,13 +304,19 @@ void main() {
       // compiled-in database and the device's clock (D-W8). C99 adds
       // Focus Timer — in a build that ships. The default here is that
       // build; the parity reproduction is asserted separately, and
-      // `source_flavor_test.dart` holds the two apart.
+      // `source_flavor_test.dart` holds the two apart. Wave 4 adds three:
+      // Unit Converter converts what the reader typed, and Birthdays and
+      // Water are seeded **only** in the parity reproduction, so in a
+      // build a reader runs there is nothing on either screen they did
+      // not write (`kLumeParityOnlySeeds`).
       <String>[
         'age',
         'babybudget',
+        'birthdays',
         'calculator',
         'committee',
         'compound',
+        'converter',
         'focus',
         'installments',
         'ledger',
@@ -319,14 +325,17 @@ void main() {
         'sunmoon',
         'tasbih',
         'tipsplit',
+        'water',
         'worldclock',
       ],
     );
-    expect(
-      LumeDataCapability.fixture('focus', reproducesReference: true).isSample,
-      isTrue,
-      reason: 'the parity reproduction still discloses what it invents',
-    );
+    for (final String id in LumeDataCapability.sampleInParityOnly) {
+      expect(
+        LumeDataCapability.fixture(id, reproducesReference: true).isSample,
+        isTrue,
+        reason: '$id: the parity reproduction still discloses what it invents',
+      );
+    }
     // Sun & Moon is the one computed tool: a calculation for the reader's
     // city, never live and never stored (C86).
     final LumeDataCapability sky = LumeDataCapability.fixture('sunmoon');

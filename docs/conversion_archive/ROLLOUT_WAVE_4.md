@@ -52,7 +52,7 @@ shipped in three files. The policy settles both.
 | reference | `assets/js/tools/personal/birthdays.tool.js` (35 lines), `context.js:1581-1589` |
 | record schema | **already exists** — `assets/js/data/record-schemas.js:749-811`, with `nextOn`, `facts`, `empty` and three seeds |
 | closest built Flutter tool | **Events** — `lib/features/events/` — the same date-keyed record family over the shared `LumeRecordTool<T>` host |
-| capability | seeded like Shopping and Todos, so `isSample` stays true; no honesty change |
+| capability | `readerRecords` + `sampleInParityOnly` — **changed after the owner's wave-4 directive**: the seeds go to the parity reproduction only, so a shipping build opens the collection empty (C100) |
 
 The correction it carries: the reference's countdowns and ages are
 **constants** — `days: 4/18/51/88`, `turning: 29/6/5/61`, `thisMonth: 2`
@@ -67,7 +67,7 @@ and Todos already corrected.
 | reference | `assets/js/tools/personal/water.tool.js` (36 lines), `context.js:1620-1644` |
 | record schema | **already exists** — `record-schemas.js:600-645`: `ml`, `kind`, `at`, with four seeds matching the reference's timeline exactly |
 | closest built Flutter tool | **Shopping** for the record side, **Focus Timer** for the honest-subtraction side |
-| capability | seeded, so `isSample` true |
+| capability | `readerRecords` + `sampleInParityOnly`, for the same reason as Birthdays — an invented drinking history is not a demonstration of a list (C100) |
 
 Wave 3 held this tool under rule 9 — "a fixture would invent the
 reader's own data". That hold is retired the way Focus's was, and
@@ -102,9 +102,9 @@ independent of it.
 | converter | **no unit picker at all** — `from` is always `units[0]`, `to` is `units[1]` or `units[3]` | `context.js:1129-1130` | both units are chosen |
 | converter | the imperial heuristic picks `oz` for mass, `cup` for volume, `marla` for area | `context.js:1130` | no index heuristic; a named default per category |
 | converter | every imperial constant truncated to 6 s.f. (`1609.34`, `0.453592`, `1.60934`) | `context.js:1100-1113` | exact defined values |
-| converter | no temperature category — the engine is a pure ratio with no offset | `context.js:1134` | an affine unit kind, so °C/°F/K work |
+| converter | — *(withdrawn)* the reference has no temperature category, and one is **not** added: °C to °F is affine, not a ratio, and adding a category the reference does not have is a product decision rather than a conversion | `context.js:1134` | recorded as deferred in §7 rather than taken quietly |
 | converter | "Recent" is two literals, `10 km → mi = 6.21` and `1 kg → lb = 2.20` | `context.js:1140-1143` | dropped; nothing records a conversion |
-| converter | the selected chip emits `.chip.is-on`, a class **no stylesheet defines** | `converter.tool.js:19` vs `components.css:463` | the chip is drawn selected |
+| converter | the selected chip emits `.chip.is-on`; the stylesheet defines `.chip.is-active` | `converter.tool.js:19` vs `components.css:463` | **measured**: on `tool_converter_default_pk_390x844_light_en` the selected chip renders `rgb(255,255,255)` on `rgb(86,88,95)` — identical to every unselected chip — so the strip tells the reader nothing about which category is on. Flutter draws it selected |
 | converter | the catalogue badge says "32 units" over 25 | `catalogue.js:95` | corrected, and counted in the test |
 | birthdays | countdowns and ages are constants; `thisMonth: 2` counts nothing | `context.js:1581-1589` | computed from the stored date, by the schema's own rule |
 | birthdays | every control is `toast:` — the row, the FAB | `birthdays.tool.js` | real records, a real form |
@@ -285,8 +285,13 @@ source is approved.
 
 - The three `× 0.621` sites (§4) — documented, put to the reader as a
   separate migration decision, not changed here.
+- A **temperature category**. The reference has none, and °C ↔ °F is an
+  affine conversion rather than a ratio, so it is a product addition and not
+  a conversion. The §2 row that said it would be added was written before
+  the table was, and is withdrawn there.
 - A **personalised** hydration target — the default is the reference's
-  own figure and nothing else (§1.3).
+  own figure, editable, and nothing else (§1.3, and the owner's approved
+  conditions recorded in C100).
 - Water's week chart and streak; Unit Converter's "Recent" list —
   dropped, each measured per cell in its parity file.
 - Any durable storage, backend behaviour, or release claim the current
