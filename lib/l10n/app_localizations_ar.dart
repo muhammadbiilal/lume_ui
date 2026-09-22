@@ -9827,20 +9827,6 @@ class AppLocalizationsAr extends AppLocalizations {
   String get focusThisWeek => 'هذا الأسبوع';
 
   @override
-  String focusMinutes(int n) {
-    String _temp0 = intl.Intl.pluralLogic(
-      n,
-      locale: localeName,
-      other: '$n دقيقة',
-      many: '$n دقيقة',
-      few: '$n دقائق',
-      two: 'دقيقتان',
-      one: 'دقيقة واحدة',
-    );
-    return '$_temp0';
-  }
-
-  @override
   String focusChartEntry(String day, String minutes) {
     return '$day: $minutes';
   }

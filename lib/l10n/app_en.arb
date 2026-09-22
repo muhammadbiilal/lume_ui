@@ -13174,15 +13174,6 @@
   "@focusThisWeek": {
     "description": "Focus Timer: the seven-day chart"
   },
-  "focusMinutes": "{n, plural, =1{1 minute} other{{n} minutes}}",
-  "@focusMinutes": {
-    "description": "Focus Timer: a length in minutes",
-    "placeholders": {
-      "n": {
-        "type": "int"
-      }
-    }
-  },
   "focusChartEntry": "{day}: {minutes}",
   "@focusChartEntry": {
     "description": "Focus Timer: one bar, for a screen reader",

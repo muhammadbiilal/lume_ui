@@ -18,6 +18,7 @@ import '../../emergency/presentation/emergency_tool.dart';
 import '../../events/presentation/events_tool.dart';
 import '../../expenses/presentation/expenses_tool.dart';
 import '../../babybudget/presentation/babybudget_tool.dart';
+import '../../focus/presentation/focus_tool.dart';
 import '../../play/presentation/play_tool.dart';
 import '../../committee/presentation/committee_tool.dart';
 import '../../flights/presentation/flights_tool.dart';
@@ -82,5 +83,6 @@ const Map<String, LumeToolBuilder> kLumeToolRegistry =
       // Baby Budget, on its own host (`BABY_BUDGET_PROPOSAL.md` D-B13).
       'babybudget': LumeBabyBudgetTool.open,
       // Wave 3 (`ROLLOUT_WAVE_3.md`).
+      'focus': LumeFocusTool.open,
       'play': LumePlayTool.open,
     };

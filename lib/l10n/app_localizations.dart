@@ -16609,12 +16609,6 @@ abstract class AppLocalizations {
   /// **'This week'**
   String get focusThisWeek;
 
-  /// Focus Timer: a length in minutes
-  ///
-  /// In en, this message translates to:
-  /// **'{n, plural, =1{1 minute} other{{n} minutes}}'**
-  String focusMinutes(int n);
-
   /// Focus Timer: one bar, for a screen reader
   ///
   /// In en, this message translates to:

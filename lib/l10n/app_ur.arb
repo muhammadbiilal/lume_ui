@@ -2785,7 +2785,6 @@
   "focusStreakLabel": "دنوں کا تسلسل",
   "focusSessionsLabel": "سیشنز",
   "focusThisWeek": "اس ہفتے",
-  "focusMinutes": "{n, plural, =1{1 منٹ} other{{n} منٹ}}",
   "focusChartEntry": "{day}: {minutes}",
   "focusThisSession": "اس سیشن میں",
   "focusNothingYet": "ابھی کچھ نہیں — کوئی سیشن شروع کریں، یہاں شمار ہو جائے گا۔",

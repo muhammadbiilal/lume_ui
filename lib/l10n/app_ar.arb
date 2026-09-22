@@ -2785,7 +2785,6 @@
   "focusStreakLabel": "تتابع الأيام",
   "focusSessionsLabel": "الجلسات",
   "focusThisWeek": "هذا الأسبوع",
-  "focusMinutes": "{n, plural, =1{دقيقة واحدة} =2{دقيقتان} few{{n} دقائق} many{{n} دقيقة} other{{n} دقيقة}}",
   "focusChartEntry": "{day}: {minutes}",
   "focusThisSession": "هذه الجلسة",
   "focusNothingYet": "لا شيء بعد — ابدأ جلسة وستُحسب هنا.",
