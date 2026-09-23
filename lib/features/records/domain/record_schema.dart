@@ -44,6 +44,8 @@ class LumeRecordField {
     this.wide = false,
     this.rule,
     this.rows = 3,
+    this.yearsBack = 50,
+    this.yearsAhead = 50,
   });
 
   final String name;
@@ -60,6 +62,22 @@ class LumeRecordField {
 
   /// A textarea's `rows` — Notes' body opens at six.
   final int rows;
+
+  /// How far a date picker may reach either side of the day it opens on.
+  ///
+  /// Fifty years each way suits a due date, an event or an expense, and was
+  /// the host's fixed figure. It is wrong for a date the reader is
+  /// *remembering* rather than planning: Birthdays' field opens on today, so
+  /// a fifty-year floor could not reach a birth year before 1976 — the tool
+  /// could not record most of the people it exists to record. The floor
+  /// belongs to the field, so the family says how far back its own date
+  /// goes (C100).
+  final int yearsBack;
+
+  /// The same, forward. A birth date has no business being in 2076 either,
+  /// but a wrong future date is a visible mistake where a missing past one
+  /// is a wall, so this stays at fifty unless a family says otherwise.
+  final int yearsAhead;
 
   /// `defaultFor()` for kinds with no context: an unticked box, an empty
   /// string. Dates, times and selects take theirs from the tool.

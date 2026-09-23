@@ -558,11 +558,22 @@ class _LumeRecordToolState<T extends LumeFamilyRecord>
   Future<void> _chooseDay(String name) async {
     final DateTime now = _context().today;
     final DateTime initial = LumeFamilyText.day(_form?.value(name)) ?? now;
+    // How far the picker reaches is the field's, not the host's: a due date
+    // and a birth date are not the same kind of day (C100).
+    final LumeRecordField field = _schema.fields.firstWhere(
+      (LumeRecordField f) => f.name == name,
+    );
     final DateTime? picked = await showDatePicker(
       context: context,
       initialDate: initial,
-      firstDate: DateTime(initial.year - 50),
-      lastDate: DateTime(now.year + 50),
+      // Measured from both the day it opens on and today, so a record
+      // already holding an old date can still be moved further back.
+      firstDate: DateTime(
+        (initial.year < now.year ? initial.year : now.year) - field.yearsBack,
+      ),
+      lastDate: DateTime(
+        (initial.year > now.year ? initial.year : now.year) + field.yearsAhead,
+      ),
     );
     if (picked != null) {
       _form?.setValue(name, lumeIsoDay(picked, 0));

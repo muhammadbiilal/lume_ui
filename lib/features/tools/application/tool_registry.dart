@@ -10,6 +10,8 @@ library;
 import 'package:flutter/widgets.dart';
 
 import '../../age/presentation/age_tool.dart';
+import '../../birthdays/presentation/birthdays_tool.dart';
+import '../../converter/presentation/converter_tool.dart';
 import '../../calendar/presentation/calendar_tool.dart';
 import '../../compound/presentation/compound_tool.dart';
 import '../../datecalc/presentation/datecalc_tool.dart';
@@ -42,6 +44,7 @@ import '../../tax/presentation/tax_tool.dart';
 import '../../timer/presentation/timer_tool.dart';
 import '../../tipsplit/presentation/tipsplit_tool.dart';
 import '../../todos/presentation/todos_tool.dart';
+import '../../water/presentation/water_tool.dart';
 import '../../weather/presentation/weather_tool.dart';
 import 'tool_request.dart';
 
@@ -91,4 +94,8 @@ const Map<String, LumeToolBuilder> kLumeToolRegistry =
       'calculator': LumeCalculatorTool.open,
       'tasbih': LumeTasbihTool.open,
       'worldclock': LumeWorldClockTool.open,
+      // Wave 4 (`ROLLOUT_WAVE_4.md`).
+      'converter': LumeConverterTool.open,
+      'birthdays': LumeBirthdaysTool.open,
+      'water': LumeWaterTool.open,
     };
