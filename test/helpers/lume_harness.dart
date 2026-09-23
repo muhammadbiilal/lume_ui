@@ -126,9 +126,20 @@ Future<void> pumpLume(
         buildProfileProvider.overrideWithValue(LumeBuildProfile.parity),
         // Records on the fixture day, read at once: a test that is about
         // loading builds its own store with a delay.
+        //
+        // The seeds are asked the build's own question, exactly as
+        // `records_provider.dart` asks it, so that the two families seeded
+        // only in the reproduction (`kLumeParityOnlySeeds`) are seeded here
+        // under parity and empty under a shipping flavor. A harness that
+        // passed `lumeRecordSeeds` bare would leave every parity capture of
+        // Birthdays and Water blank and call it the reference.
         recordRepositoryProvider.overrideWith((Ref ref) {
+          final bool parity = ref
+              .watch(buildProfileProvider)
+              .reproducesReference;
           final LumeMemoryRecordRepository store = LumeMemoryRecordRepository(
-            seeds: lumeRecordSeeds,
+            seeds: (String collection, DateTime now) =>
+                lumeRecordSeeds(collection, now, reproducesReference: parity),
             now: () => kFixtureInstant,
             hydrateDelay: null,
           );
@@ -249,9 +260,20 @@ Future<GoRouter> pumpLumeRouter(
         buildProfileProvider.overrideWithValue(LumeBuildProfile.parity),
         // Records on the fixture day, read at once: a test that is about
         // loading builds its own store with a delay.
+        //
+        // The seeds are asked the build's own question, exactly as
+        // `records_provider.dart` asks it, so that the two families seeded
+        // only in the reproduction (`kLumeParityOnlySeeds`) are seeded here
+        // under parity and empty under a shipping flavor. A harness that
+        // passed `lumeRecordSeeds` bare would leave every parity capture of
+        // Birthdays and Water blank and call it the reference.
         recordRepositoryProvider.overrideWith((Ref ref) {
+          final bool parity = ref
+              .watch(buildProfileProvider)
+              .reproducesReference;
           final LumeMemoryRecordRepository store = LumeMemoryRecordRepository(
-            seeds: lumeRecordSeeds,
+            seeds: (String collection, DateTime now) =>
+                lumeRecordSeeds(collection, now, reproducesReference: parity),
             now: () => kFixtureInstant,
             hydrateDelay: null,
           );

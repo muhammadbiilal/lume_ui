@@ -302,11 +302,19 @@ LumeUnit lumeUnit(String id) =>
 ///
 /// The five pairs the reference's own rule produces for a metric reader are
 /// kept as they are (`m → km`, `kg → g`, `L → mL`, `m² → ft²`, `km/h → mph`,
-/// measured on `tool_converter_default_pk_390x844_light_en`). Data is the one
-/// that moves, and only because its base did: the reference bases the
-/// category on the megabyte and opens `MB → GB`, and this table bases it on
-/// the byte so that the decimal and binary families hang off one
-/// unambiguous unit, so it opens `B → kB`. Recorded in C100.
+/// measured on `tool_converter_default_pk_390x844_light_en`).
+///
+/// **Data is the one that moves**, for a reason that is about the screen
+/// rather than the table. The reference bases the category on the megabyte
+/// and opens `MB → GB`; this table bases it on the byte, so that the decimal
+/// and the binary family hang off one unambiguous unit. Opening on `B → kB`
+/// was tried and looks wrong: at the display's four decimals, one byte in
+/// megabytes, gigabytes, terabytes, mebibytes, gibibytes and tebibytes all
+/// round to **0**, so six of the nine rows under the card read zero and the
+/// category's whole point is invisible. `GB → MB` opens on the one line that
+/// states the correction — **1 GB is 1,000 MB**, where the reference says
+/// 1024 — with 1 GiB reading 953.6743 MiB two rows below it. Recorded in
+/// C100.
 const Map<LumeUnitKind, (String, String)> kLumeUnitDefaults =
     <LumeUnitKind, (String, String)>{
       LumeUnitKind.length: ('m', 'km'),
@@ -314,7 +322,7 @@ const Map<LumeUnitKind, (String, String)> kLumeUnitDefaults =
       LumeUnitKind.volume: ('L', 'mL'),
       LumeUnitKind.area: ('m2', 'ft2'),
       LumeUnitKind.speed: ('kmh', 'mph'),
-      LumeUnitKind.data: ('B', 'kB'),
+      LumeUnitKind.data: ('GB', 'MB'),
     };
 
 /// The amount the screen opens with — `fieldsFor('converter', { amount: 1 })`.
