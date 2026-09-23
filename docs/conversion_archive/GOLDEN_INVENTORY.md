@@ -139,6 +139,55 @@ every test that exercises the feed.
 any of the five.** The measured comparison is
 `docs/conversion_archive/parity/tool_<id>.md` — 877 named values.
 
+### Wave 4 — Unit Converter, Birthdays, Water
+
+| tool | golden cases | committed PNGs | composition cells | states |
+|---|---:|---:|---:|---:|
+| Unit Converter | 11 | 11 | 8 | 3 |
+| Birthdays | 12 | 12 | 8 | 4 |
+| Water | 13 | 13 | 8 | 5 |
+| **total** | **36** | **36** | | |
+
+The composition is captured in the same eight cells as every wave before
+it: 390×844 light, dark, Urdu, Arabic and at 200% type; 700×900;
+1100×900; 852×393. The states are reached by driving the tool's own
+controls — tapping a category chip, opening a unit picker, opening a
+record, opening the add form, opening the goal editor.
+
+**Three of the states are pictures of a correction**, and exist because
+reading about one is not the same as looking at it:
+
+* `tool_converter_default_pk_data` — the Data category. The card reads
+  **1 GB = 1,000 MB**, where the reference reads 1024, with 1 GiB at
+  953.6743 MiB two rows below and the note under the list saying which
+  family is which. `..._volume` and `..._units` are the other two: both
+  gallons named, and the unit picker the reference does not have.
+* `tool_birthdays_empty` and `tool_water_empty` — **taken at the
+  development profile**, where the seeds are not there
+  (`kLumeParityOnlySeeds`). The reference always holds four people and
+  1250 ml, so it has no empty list and no empty day; these two cells are
+  the only picture of what a reader actually opens, and nothing in them
+  can be compared to the reference because the reference cannot reach the
+  state.
+* `tool_water_default_pk_goal` — the goal editor, which the reference
+  does not have at all.
+
+The Data category's opening pair moved while these were being taken, and
+the picture is why. `B → kB` applied the reference's own rule to a table
+based on the byte, and at four decimals one byte in megabytes, gigabytes,
+terabytes, mebibytes, gibibytes and tebibytes all round to zero — six of
+the nine rows read 0 and the category's point was invisible.
+
+**The shared harness was seeding the wrong build** and was corrected in
+the same pass: it passed `lumeRecordSeeds` bare, so the two parity-only
+families would have been empty in every parity capture and the capture
+would have called that the reference. It now asks the build's own
+question, exactly as `records_provider.dart` does.
+
+**No percentage of differing pixels is offered as parity evidence for any
+of the three.** The measured comparison is
+`docs/conversion_archive/parity/tool_<id>.md`.
+
 ### Baby Budget (`test/goldens/babybudget_golden_test.dart`)
 
 | | count |
@@ -274,8 +323,8 @@ python scripts/check_goldens.py --no-run   # check the last run's records
 
 ```
 golden inventory
-  compared by the suite    462
-  committed on disk        462
+  compared by the suite   1052
+  committed on disk       1052
   orphans                    0
   compared but absent        0
   ok — every committed golden is compared, and every comparison has a file

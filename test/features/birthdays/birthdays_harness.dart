@@ -1,12 +1,12 @@
-/// Birthdays, pumped straight into the app's environment.
+/// Birthdays' shared test harness: the tool opened for a reader, over a
+/// record store the test holds.
 ///
-/// The other record tools reach their screen through the router, which reads
-/// `kLumeToolRegistry`; Birthdays is not in it yet — the integrator adds it —
-/// so the route would answer with the fixture screen instead. The tool is
-/// therefore built here from a hand-made [LumeToolRequest], inside the same
-/// `ProviderScope`, clock, theme, locale and breakpoint scope
-/// [pumpLume] gives every other widget test. Everything below the request is
-/// the real thing: the real host, the real record store, the real formats.
+/// `tool_registry.dart` names `birthdays`, so [pumpBirthdays] opens the route
+/// and the tool is built by `app_router.dart` `_tool` itself — the same
+/// eligibility, read from the same profile, refusing in the same place —
+/// inside the shell that draws around it. That shell is what makes the tool
+/// bar's back control and the rail-inset wide columns real, which the parity
+/// cells are measured against.
 library;
 
 import 'package:flutter/material.dart';
@@ -16,64 +16,60 @@ import 'package:lume/app/providers/records_provider.dart';
 import 'package:lume/core/fixtures/lume_clock.dart';
 import 'package:lume/core/routing/lume_routes.dart';
 import 'package:lume/features/birthdays/presentation/birthdays_tool.dart';
-import 'package:lume/features/catalogue/data/feature_catalogue.dart';
-import 'package:lume/features/catalogue/domain/eligibility.dart';
-import 'package:lume/features/catalogue/domain/lume_feature.dart';
+import 'package:lume/features/onboarding/domain/profile_repository.dart';
 import 'package:lume/features/records/data/memory_record_repository.dart';
 import 'package:lume/features/records/data/record_seeds.dart';
-import 'package:lume/features/tools/application/tool_request.dart';
 
 import '../../helpers/lume_harness.dart';
+import '../tax/tax_harness.dart';
 
-/// The catalogue's own entry, so the screen is drawn for the feature the
-/// route would hand it rather than an invented one.
-final LumeFeature kBirthdaysFeature = kLumeFeatures.firstWhere(
-  (LumeFeature f) => f.id == LumeBirthdaysTool.id,
+/// `/tools/tool/birthdays`.
+final String kBirthdays = LumeRoutes.tool(
+  LumeRoutes.tools,
+  LumeBirthdaysTool.id,
 );
 
 /// A store on the fixture day that reads at once.
 ///
-/// `birthdays` is in [kLumeParityOnlySeeds]: only a build that reproduces
-/// the reference is seeded, and every other build — a development or release
-/// one, and any reader who has added nothing — opens the collection empty.
-/// Both are real states, so both are pumped.
-LumeMemoryRecordRepository birthdaysStore({bool parity = true}) =>
-    LumeMemoryRecordRepository(
-      seeds: (String collection, DateTime now) =>
-          lumeRecordSeeds(collection, now, reproducesReference: parity),
-      now: () => kFixtureInstant,
-      hydrateDelay: null,
-    );
+/// [parity] is the parity build: Birthdays' seeds exist only there
+/// ([kLumeParityOnlySeeds]), and a development or release build opens the
+/// collection empty. Both are states this tool has to draw.
+LumeMemoryRecordRepository birthdaysStore({bool parity = true}) {
+  final LumeMemoryRecordRepository store = LumeMemoryRecordRepository(
+    seeds: (String collection, DateTime at) =>
+        lumeRecordSeeds(collection, at, reproducesReference: parity),
+    now: () => kFixtureInstant,
+    hydrateDelay: null,
+  );
+  addTearDown(store.dispose);
+  return store;
+}
 
+/// Pump Birthdays for a reader, through the tool route.
 Future<void> pumpBirthdays(
   WidgetTester tester, {
+  String state = 'default_pk',
+  LumeProfileRepository? profile,
   LumeMemoryRecordRepository? store,
   Size surface = const Size(390, 5000),
   Locale locale = const Locale('en'),
   ThemeMode theme = ThemeMode.light,
   double textScale = 1,
   DateTime? now,
-  LumeUserContext user = const LumeUserContext(),
   List<Override> overrides = const <Override>[],
 }) async {
-  final LumeMemoryRecordRepository records = store ?? birthdaysStore();
-  addTearDown(records.dispose);
-  await pumpLume(
+  await pumpLumeRouter(
     tester,
-    LumeBirthdaysTool.open(
-      LumeToolRequest(
-        feature: kBirthdaysFeature,
-        user: user,
-        branch: LumeRoutes.tools,
-      ),
-    ),
+    initialLocation: kBirthdays,
+    profile: profile ?? taxProfile(state),
     surface: surface,
     locale: locale,
     theme: theme,
     textScale: textScale,
-    now: now,
+    clock: now == null ? null : LumeClock.fixed(now),
+    // Appended after the harness's own, so a store the test holds wins.
     overrides: <Override>[
-      recordRepositoryProvider.overrideWithValue(records),
+      recordRepositoryProvider.overrideWithValue(store ?? birthdaysStore()),
       ...overrides,
     ],
   );

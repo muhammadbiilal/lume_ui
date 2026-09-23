@@ -1,28 +1,32 @@
-/// Unit Converter, in the full environment, over a session the test holds.
+/// Unit Converter, on the real router, over a session the test holds.
 ///
-/// The tool is pumped directly rather than through `/tools/tool/converter`:
-/// `tool_registry.dart` does not name it yet, and that file belongs to the
-/// rollout rather than to this screen. Everything else is the real thing —
-/// the catalogue's own feature record, the real [LumeToolScreen] frame with
-/// its source bar and related rail, and the same [LumeToolSession] the app
-/// keeps a tool's state in, handed in so a test can seed what a returning
-/// reader would have and read back what the screen wrote.
+/// The tool is reached through `/tools/tool/converter`, which
+/// `tool_registry.dart` names — so every test here runs against the screen the
+/// router builds, inside the shell that draws around it, and the country and
+/// city reach the tool the way they reach it in the app: off the reader's own
+/// saved profile, which the route turns into the `LumeUserContext` the screen
+/// is handed. The rest is the real thing too — the catalogue's own feature
+/// record, the real [LumeToolScreen] frame with its source bar and related
+/// rail, and the same [LumeToolSession] the app keeps a tool's state in,
+/// handed in so a test can seed what a returning reader would have and read
+/// back what the screen wrote.
 library;
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:go_router/go_router.dart';
 import 'package:lume/core/routing/lume_routes.dart';
 import 'package:lume/features/catalogue/data/feature_catalogue.dart';
-import 'package:lume/features/catalogue/domain/eligibility.dart';
 import 'package:lume/features/catalogue/domain/lume_feature.dart';
 import 'package:lume/features/converter/domain/unit_table.dart';
 import 'package:lume/features/converter/presentation/converter_tool.dart';
-import 'package:lume/features/tools/application/tool_request.dart';
+import 'package:lume/features/onboarding/domain/profile_repository.dart';
 import 'package:lume/features/tools/application/tool_session.dart';
 
 import '../../helpers/lume_harness.dart';
+import '../tax/tax_harness.dart';
 
 /// The catalogue's own entry — not a stand-in, so the frame draws the real
 /// name, the real source claim and the real related rail.
@@ -30,8 +34,14 @@ final LumeFeature kConverterFeature = kLumeFeatures.firstWhere(
   (LumeFeature f) => f.id == LumeConverterTool.id,
 );
 
+/// `/tools/tool/converter` — the converter opened from the Tools hub.
+final String kConverterLocation = LumeRoutes.tool(
+  LumeRoutes.tools,
+  LumeConverterTool.id,
+);
+
 /// Pump the tool for a reader in [country].
-Future<void> pumpConverter(
+Future<GoRouter> pumpConverter(
   WidgetTester tester, {
   LumeToolSession? session,
   Size surface = LumeViewport.tall,
@@ -42,14 +52,11 @@ Future<void> pumpConverter(
   String city = 'Islamabad',
   List<Override> overrides = const <Override>[],
 }) async {
-  await pumpLume(
+  final GoRouter router = await pumpLumeRouter(
     tester,
-    LumeConverterTool(
-      request: LumeToolRequest(
-        feature: kConverterFeature,
-        user: LumeUserContext(country: country, city: city),
-        branch: LumeRoutes.tools,
-      ),
+    initialLocation: kConverterLocation,
+    profile: LumeMemoryProfileRepository(
+      initial: taxReader(country: country, city: city),
     ),
     surface: surface,
     locale: locale,
@@ -61,6 +68,7 @@ Future<void> pumpConverter(
     ],
   );
   await tester.pumpAndSettle();
+  return router;
 }
 
 /// The figure in the answer, as a reader sees it.

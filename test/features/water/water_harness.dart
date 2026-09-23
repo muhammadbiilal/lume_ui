@@ -1,41 +1,30 @@
 /// Water's shared test harness: the tool opened for a reader, over a record
 /// store the test holds.
 ///
-/// Water is not in `kLumeToolRegistry` yet — the integrator adds it — so
-/// there is no route to pump. [pumpWater] builds the [LumeToolRequest] the
-/// route would build, from the same catalogue entry and the same profile, and
-/// hands it to [LumeWaterTool.open] inside the app's own providers.
+/// `tool_registry.dart` names `water`, so [pumpWater] opens the route and the
+/// tool is built by `app_router.dart` `_tool` itself — the same eligibility,
+/// read from the same profile, refusing in the same place — inside the shell
+/// that draws around it. That shell is what makes the tool bar's back control
+/// and the rail-inset wide columns real, which the parity cells are measured
+/// against.
 library;
-
-import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:lume/app/providers/personalisation.dart';
 import 'package:lume/app/providers/records_provider.dart';
-import 'package:lume/app/providers/shell_provider.dart';
 import 'package:lume/core/fixtures/lume_clock.dart';
 import 'package:lume/core/routing/lume_routes.dart';
-import 'package:lume/features/auth/data/fake_auth_repository.dart';
-import 'package:lume/features/auth/domain/auth_repository.dart';
-import 'package:lume/features/catalogue/data/feature_catalogue.dart';
-import 'package:lume/features/catalogue/domain/eligibility.dart';
-import 'package:lume/features/catalogue/domain/lume_feature.dart';
 import 'package:lume/features/onboarding/domain/profile_repository.dart';
 import 'package:lume/features/records/data/memory_record_repository.dart';
 import 'package:lume/features/records/data/record_seeds.dart';
-import 'package:lume/features/startup/application/startup_controller.dart';
-import 'package:lume/features/tools/application/tool_request.dart';
 import 'package:lume/features/water/presentation/water_tool.dart';
 
 import '../../helpers/lume_harness.dart';
 import '../tax/tax_harness.dart';
 
-/// The catalogue's own entry — the one the route would pass.
-final LumeFeature kWaterFeature = kLumeFeatures.firstWhere(
-  (LumeFeature f) => f.id == LumeWaterTool.id,
-);
+/// `/tools/tool/water`.
+final String kWater = LumeRoutes.tool(LumeRoutes.tools, LumeWaterTool.id);
 
 /// A store on the fixture day that reads at once.
 ///
@@ -53,7 +42,7 @@ LumeMemoryRecordRepository waterStore({bool seeded = true, DateTime? now}) {
   return store;
 }
 
-/// Pump Water for a reader.
+/// Pump Water for a reader, through the tool route.
 Future<void> pumpWater(
   WidgetTester tester, {
   String state = 'default_pk',
@@ -66,38 +55,17 @@ Future<void> pumpWater(
   DateTime? now,
   List<Override> overrides = const <Override>[],
 }) async {
-  final LumeProfileRepository profiles = profile ?? taxProfile(state);
-  final LumeAuthRepository auth = LumeFakeAuthRepository.withAccount();
-  final LumeStartupController gate = LumeStartupController(
-    authRepository: auth,
-    profileRepository: profiles,
-  );
-  addTearDown(gate.dispose);
-  // The launch, as the router's host runs it. Not awaited: the profile scope
-  // listens, and the pump below settles once it has published.
-  unawaited(gate.boot());
-
-  await pumpLume(
+  await pumpLumeRouter(
     tester,
-    LumeProfileScope(
-      builder: (BuildContext context, LumeUserContext user) =>
-          LumeWaterTool.open(
-            LumeToolRequest(
-              feature: kWaterFeature,
-              user: user,
-              branch: LumeRoutes.tools,
-            ),
-          ),
-    ),
+    initialLocation: kWater,
+    profile: profile ?? taxProfile(state),
     surface: surface,
     locale: locale,
     theme: theme,
     textScale: textScale,
-    now: now,
+    clock: now == null ? null : LumeClock.fixed(now),
+    // Appended after the harness's own, so a store the test holds wins.
     overrides: <Override>[
-      authRepositoryProvider.overrideWithValue(auth),
-      profileRepositoryProvider.overrideWithValue(profiles),
-      startupControllerProvider.overrideWithValue(gate),
       recordRepositoryProvider.overrideWithValue(store ?? waterStore()),
       ...overrides,
     ],

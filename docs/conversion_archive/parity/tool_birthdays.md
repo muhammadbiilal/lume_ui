@@ -1,0 +1,821 @@
+# birthdays — measured against the reference
+
+Written by the tool's bounds test. Every row is a value read from the running reference and the same value read from Flutter, relative to the tool bar's top-left.
+
+**813 values compared.**
+
+| cell | element | property | reference | Flutter | Δ |
+|---|---|---|---:|---:|---:|
+| tool_birthdays_default_pk_390x844_light_en | `toolbar` | x | 0.00 | 0.00 | 0.00 |
+| tool_birthdays_default_pk_390x844_light_en | `toolbar` | y | 0.00 | 0.00 | 0.00 |
+| tool_birthdays_default_pk_390x844_light_en | `toolbar` | width | 390.00 | 390.00 | 0.00 |
+| tool_birthdays_default_pk_390x844_light_en | `toolbar` | height | 67.00 | 67.00 | 0.00 |
+| tool_birthdays_default_pk_390x844_light_en | `toolbar.back` | x | 20.00 | 20.00 | 0.00 |
+| tool_birthdays_default_pk_390x844_light_en | `toolbar.back` | y | 13.00 | 13.00 | 0.00 |
+| tool_birthdays_default_pk_390x844_light_en | `toolbar.back` | width | 38.00 | 38.00 | 0.00 |
+| tool_birthdays_default_pk_390x844_light_en | `toolbar.back` | height | 38.00 | 38.00 | 0.00 |
+| tool_birthdays_default_pk_390x844_light_en | `toolbar.title` | x | 68.00 | 68.00 | 0.00 |
+| tool_birthdays_default_pk_390x844_light_en | `toolbar.title` | y | 12.50 | 12.50 | 0.00 |
+| tool_birthdays_default_pk_390x844_light_en | `toolbar.title` | height | 25.00 | 25.00 | 0.00 |
+| tool_birthdays_default_pk_390x844_light_en | `toolbar.sub` | x | 68.00 | 68.00 | 0.00 |
+| tool_birthdays_default_pk_390x844_light_en | `toolbar.sub` | y | 38.50 | 38.50 | 0.00 |
+| tool_birthdays_default_pk_390x844_light_en | `toolbar.sub` | height | 13.00 | 13.00 | 0.00 |
+| tool_birthdays_default_pk_390x844_light_en | `toolbar.actions` | x | 253.45 | 252.46 | -0.99 |
+| tool_birthdays_default_pk_390x844_light_en | `toolbar.actions` | y | 10.00 | 10.00 | 0.00 |
+| tool_birthdays_default_pk_390x844_light_en | `toolbar.actions` | width | 116.55 | 117.54 | 0.99 |
+| tool_birthdays_default_pk_390x844_light_en | `toolbar.actions` | height | 44.00 | 44.00 | 0.00 |
+| tool_birthdays_default_pk_390x844_light_en | `toolbar.textbtn` | x | 253.45 | 252.46 | -0.99 |
+| tool_birthdays_default_pk_390x844_light_en | `toolbar.textbtn` | y | 10.00 | 10.00 | 0.00 |
+| tool_birthdays_default_pk_390x844_light_en | `toolbar.textbtn` | width | 72.55 | 73.54 | 0.99 |
+| tool_birthdays_default_pk_390x844_light_en | `toolbar.textbtn` | height | 44.00 | 44.00 | 0.00 |
+| tool_birthdays_default_pk_390x844_light_en | `toolbar.action2` | x | 332.00 | 332.00 | 0.00 |
+| tool_birthdays_default_pk_390x844_light_en | `toolbar.action2` | y (reference +3, recorded) | 13.00 | 13.00 | 0.00 |
+| tool_birthdays_default_pk_390x844_light_en | `toolbar.action2` | width | 38.00 | 38.00 | 0.00 |
+| tool_birthdays_default_pk_390x844_light_en | `toolbar.action2` | height | 38.00 | 38.00 | 0.00 |
+| tool_birthdays_default_pk_390x844_light_en | `search` | x | 40.00 | 40.00 | 0.00 |
+| tool_birthdays_default_pk_390x844_light_en | `search` | y | 83.00 | 83.00 | 0.00 |
+| tool_birthdays_default_pk_390x844_light_en | `search` | width | 310.00 | 310.00 | 0.00 |
+| tool_birthdays_default_pk_390x844_light_en | `search` | height | 44.00 | 44.00 | 0.00 |
+| tool_birthdays_default_pk_390x844_light_en | `search.input` | x | 81.00 | 81.00 | 0.00 |
+| tool_birthdays_default_pk_390x844_light_en | `search.input` | y (reference -1, recorded) | 94.00 | 94.00 | 0.00 |
+| tool_birthdays_default_pk_390x844_light_en | `search.input` | width | 254.00 | 254.00 | 0.00 |
+| tool_birthdays_default_pk_390x844_light_en | `search.input` | height (reference +2, recorded) | 22.00 | 22.00 | 0.00 |
+| tool_birthdays_default_pk_390x844_light_en | `recs` | x | 20.00 | 20.00 | 0.00 |
+| tool_birthdays_default_pk_390x844_light_en | `recs` | y | 127.00 | 127.00 | 0.00 |
+| tool_birthdays_default_pk_390x844_light_en | `recs` | width | 350.00 | 350.00 | 0.00 |
+| tool_birthdays_default_pk_390x844_light_en | `recs` | height | 218.00 | 218.00 | 0.00 |
+| tool_birthdays_default_pk_390x844_light_en | `rrec1` | x | 20.00 | 20.00 | 0.00 |
+| tool_birthdays_default_pk_390x844_light_en | `rrec1` | y | 127.00 | 127.00 | 0.00 |
+| tool_birthdays_default_pk_390x844_light_en | `rrec1` | width | 350.00 | 350.00 | 0.00 |
+| tool_birthdays_default_pk_390x844_light_en | `rrec1` | height | 66.00 | 66.00 | 0.00 |
+| tool_birthdays_default_pk_390x844_light_en | `rrec2` | x | 20.00 | 20.00 | 0.00 |
+| tool_birthdays_default_pk_390x844_light_en | `rrec2` | y | 203.00 | 203.00 | 0.00 |
+| tool_birthdays_default_pk_390x844_light_en | `rrec2` | width | 350.00 | 350.00 | 0.00 |
+| tool_birthdays_default_pk_390x844_light_en | `rrec2` | height | 66.00 | 66.00 | 0.00 |
+| tool_birthdays_default_pk_390x844_light_en | `rrec.disc` | x | 35.00 | 35.00 | 0.00 |
+| tool_birthdays_default_pk_390x844_light_en | `rrec.disc` | y | 141.00 | 141.00 | 0.00 |
+| tool_birthdays_default_pk_390x844_light_en | `rrec.disc` | width | 38.00 | 38.00 | 0.00 |
+| tool_birthdays_default_pk_390x844_light_en | `rrec.disc` | height | 38.00 | 38.00 | 0.00 |
+| tool_birthdays_default_pk_390x844_light_en | `rrec.title` | x | 85.00 | 85.00 | 0.00 |
+| tool_birthdays_default_pk_390x844_light_en | `rrec.title` | y | 141.00 | 141.00 | 0.00 |
+| tool_birthdays_default_pk_390x844_light_en | `rrec.title` | width | 51.17 | 51.17 | -0.00 |
+| tool_birthdays_default_pk_390x844_light_en | `rrec.title` | height | 20.00 | 20.00 | 0.00 |
+| tool_birthdays_default_pk_390x844_light_en | `rrec.sub` | x | 85.00 | 85.00 | 0.00 |
+| tool_birthdays_default_pk_390x844_light_en | `rrec.sub` | y | 163.00 | 163.00 | 0.00 |
+| tool_birthdays_default_pk_390x844_light_en | `rrec.sub` | height | 16.00 | 16.00 | 0.00 |
+| tool_birthdays_default_pk_390x844_light_en | `rrec.value` | x | 273.75 | 273.76 | 0.01 |
+| tool_birthdays_default_pk_390x844_light_en | `rrec.value` | y | 150.00 | 150.00 | 0.00 |
+| tool_birthdays_default_pk_390x844_light_en | `rrec.value` | width | 58.25 | 58.24 | -0.01 |
+| tool_birthdays_default_pk_390x844_light_en | `rrec.value` | height | 20.00 | 20.00 | 0.00 |
+| tool_birthdays_default_pk_390x844_light_en | `rrec.chev` | x | 340.00 | 340.00 | 0.00 |
+| tool_birthdays_default_pk_390x844_light_en | `rrec.chev` | y | 152.50 | 152.50 | 0.00 |
+| tool_birthdays_default_pk_390x844_light_en | `rrec.chev` | width | 15.00 | 15.00 | 0.00 |
+| tool_birthdays_default_pk_390x844_light_en | `rrec.chev` | height | 15.00 | 15.00 | 0.00 |
+| tool_birthdays_default_pk_390x844_light_en | `sect1` | x | 0.00 | 0.00 | 0.00 |
+| tool_birthdays_default_pk_390x844_light_en | `sect1` | y (reference -16, recorded) | 67.00 | 67.00 | 0.00 |
+| tool_birthdays_default_pk_390x844_light_en | `sect1` | width | 390.00 | 390.00 | 0.00 |
+| tool_birthdays_default_pk_390x844_light_en | `sect1` | height (reference +16, recorded) | 278.00 | 278.00 | 0.00 |
+| tool_birthdays_default_pk_390x844_light_en | `sect2` | x | 0.00 | 0.00 | 0.00 |
+| tool_birthdays_default_pk_390x844_light_en | `sect2` | y (reference -24, recorded) | 345.00 | 345.00 | 0.00 |
+| tool_birthdays_default_pk_390x844_light_en | `sect2` | width | 390.00 | 390.00 | 0.00 |
+| tool_birthdays_default_pk_390x844_light_en | `sect2` | height (reference +24, recorded) | 209.08 | 209.00 | -0.08 |
+| tool_birthdays_default_pk_390x844_light_en | `sect3` | x | 0.00 | 0.00 | 0.00 |
+| tool_birthdays_default_pk_390x844_light_en | `sect3` | y (reference -24, recorded) | 554.08 | 554.00 | -0.08 |
+| tool_birthdays_default_pk_390x844_light_en | `sect3` | width | 390.00 | 390.00 | 0.00 |
+| tool_birthdays_default_pk_390x844_light_en | `sect3` | height (reference -49, recorded) | 275.00 | 275.00 | 0.00 |
+| tool_birthdays_default_pk_390x844_light_en | `sect3.title` | x | 20.00 | 20.00 | 0.00 |
+| tool_birthdays_default_pk_390x844_light_en | `sect3.title` | y | 578.08 | 578.00 | -0.08 |
+| tool_birthdays_default_pk_390x844_light_en | `sect3.title` | width | 75.42 | 75.42 | 0.00 |
+| tool_birthdays_default_pk_390x844_light_en | `sect3.title` | height | 19.00 | 19.00 | 0.00 |
+| tool_birthdays_default_pk_390x844_light_en | `summary` | x | 20.00 | 20.00 | 0.00 |
+| tool_birthdays_default_pk_390x844_light_en | `summary` | y | 369.00 | 369.00 | 0.00 |
+| tool_birthdays_default_pk_390x844_light_en | `summary` | width | 350.00 | 350.00 | 0.00 |
+| tool_birthdays_default_pk_390x844_light_en | `summary` | height | 185.08 | 185.00 | -0.08 |
+| tool_birthdays_default_pk_390x844_light_en | `summary.kicker` | x | 41.00 | 41.00 | 0.00 |
+| tool_birthdays_default_pk_390x844_light_en | `summary.kicker` | y | 390.00 | 390.00 | 0.00 |
+| tool_birthdays_default_pk_390x844_light_en | `summary.kicker` | height | 13.00 | 13.00 | 0.00 |
+| tool_birthdays_default_pk_390x844_light_en | `summary.value` | x | 41.00 | 41.00 | 0.00 |
+| tool_birthdays_default_pk_390x844_light_en | `summary.value` | y | 409.00 | 409.00 | 0.00 |
+| tool_birthdays_default_pk_390x844_light_en | `summary.value` | height | 35.69 | 36.00 | 0.31 |
+| tool_birthdays_default_pk_390x844_light_en | `summary.caption` | x | 41.00 | 41.00 | 0.00 |
+| tool_birthdays_default_pk_390x844_light_en | `summary.caption` | y | 451.69 | 452.00 | 0.31 |
+| tool_birthdays_default_pk_390x844_light_en | `summary.caption` | height | 17.39 | 17.00 | -0.39 |
+| tool_birthdays_default_pk_390x844_light_en | `summary.stats` | x | 41.00 | 41.00 | 0.00 |
+| tool_birthdays_default_pk_390x844_light_en | `summary.stats` | y | 485.08 | 485.00 | -0.08 |
+| tool_birthdays_default_pk_390x844_light_en | `summary.stats` | width | 308.00 | 308.00 | 0.00 |
+| tool_birthdays_default_pk_390x844_light_en | `summary.stats` | height | 48.00 | 48.00 | 0.00 |
+| tool_birthdays_default_pk_390x844_light_en | `summary.stat1` | x | 41.00 | 41.00 | 0.00 |
+| tool_birthdays_default_pk_390x844_light_en | `summary.stat1` | y | 500.08 | 500.00 | -0.08 |
+| tool_birthdays_default_pk_390x844_light_en | `summary.stat1` | width | 96.00 | 96.00 | 0.00 |
+| tool_birthdays_default_pk_390x844_light_en | `summary.stat1` | height | 33.00 | 33.00 | 0.00 |
+| tool_birthdays_default_pk_390x844_light_en | `summary.stat2` | x | 147.00 | 147.00 | 0.00 |
+| tool_birthdays_default_pk_390x844_light_en | `summary.stat2` | y | 500.08 | 500.00 | -0.08 |
+| tool_birthdays_default_pk_390x844_light_en | `summary.stat2` | width | 96.00 | 96.00 | 0.00 |
+| tool_birthdays_default_pk_390x844_light_en | `summary.stat2` | height | 33.00 | 33.00 | 0.00 |
+| tool_birthdays_default_pk_390x844_light_en | `summary.stat3` | x | 253.00 | 253.00 | 0.00 |
+| tool_birthdays_default_pk_390x844_light_en | `summary.stat3` | y | 500.08 | 500.00 | -0.08 |
+| tool_birthdays_default_pk_390x844_light_en | `summary.stat3` | width | 96.00 | 96.00 | 0.00 |
+| tool_birthdays_default_pk_390x844_light_en | `summary.stat3` | height | 33.00 | 33.00 | 0.00 |
+| tool_birthdays_default_pk_390x844_light_en | `rows` | x | 20.00 | 20.00 | 0.00 |
+| tool_birthdays_default_pk_390x844_light_en | `rows` | y | 609.08 | 609.00 | -0.08 |
+| tool_birthdays_default_pk_390x844_light_en | `rows` | width | 350.00 | 350.00 | 0.00 |
+| tool_birthdays_default_pk_390x844_light_en | `rows` | height (reference -73, recorded) | 220.00 | 220.00 | 0.00 |
+| tool_birthdays_default_pk_390x844_light_en | `rrow1` | x | 21.00 | 21.00 | 0.00 |
+| tool_birthdays_default_pk_390x844_light_en | `rrow1` | y | 610.08 | 610.00 | -0.08 |
+| tool_birthdays_default_pk_390x844_light_en | `rrow1` | width | 348.00 | 348.00 | 0.00 |
+| tool_birthdays_default_pk_390x844_light_en | `rrow1` | height | 73.00 | 72.00 | -1.00 |
+| tool_birthdays_default_pk_390x844_light_en | `rrow2` | x | 21.00 | 21.00 | 0.00 |
+| tool_birthdays_default_pk_390x844_light_en | `rrow2` | y | 683.08 | 683.00 | -0.08 |
+| tool_birthdays_default_pk_390x844_light_en | `rrow2` | width | 348.00 | 348.00 | 0.00 |
+| tool_birthdays_default_pk_390x844_light_en | `rrow2` | height | 73.00 | 72.00 | -1.00 |
+| tool_birthdays_default_pk_390x844_light_en | `rrow.logo` | x | 37.00 | 37.00 | 0.00 |
+| tool_birthdays_default_pk_390x844_light_en | `rrow.logo` | y | 627.08 | 627.00 | -0.08 |
+| tool_birthdays_default_pk_390x844_light_en | `rrow.logo` | width | 38.00 | 38.00 | 0.00 |
+| tool_birthdays_default_pk_390x844_light_en | `rrow.logo` | height | 38.00 | 38.00 | 0.00 |
+| tool_birthdays_default_pk_390x844_light_en | `rrow.title` | x | 87.00 | 87.00 | 0.00 |
+| tool_birthdays_default_pk_390x844_light_en | `rrow.title` | y | 622.08 | 622.00 | -0.08 |
+| tool_birthdays_default_pk_390x844_light_en | `rrow.title` | width | 47.94 | 47.92 | -0.02 |
+| tool_birthdays_default_pk_390x844_light_en | `rrow.title` | height | 18.00 | 18.00 | 0.00 |
+| tool_birthdays_default_pk_390x844_light_en | `rrow.sub` | x | 87.00 | 87.00 | 0.00 |
+| tool_birthdays_default_pk_390x844_light_en | `rrow.sub` | y | 641.08 | 641.00 | -0.08 |
+| tool_birthdays_default_pk_390x844_light_en | `rrow.sub` | height | 13.00 | 13.00 | 0.00 |
+| tool_birthdays_default_pk_390x844_light_en | `rrow.meta` | x | 87.00 | 87.00 | 0.00 |
+| tool_birthdays_default_pk_390x844_light_en | `rrow.meta` | y | 658.08 | 658.00 | -0.08 |
+| tool_birthdays_default_pk_390x844_light_en | `rrow.meta` | height | 12.00 | 12.00 | 0.00 |
+| tool_birthdays_default_pk_390x844_light_en | `rrow.value` | x | 271.63 | 271.64 | 0.01 |
+| tool_birthdays_default_pk_390x844_light_en | `rrow.value` | y | 637.08 | 637.00 | -0.08 |
+| tool_birthdays_default_pk_390x844_light_en | `rrow.value` | width | 54.38 | 54.36 | -0.02 |
+| tool_birthdays_default_pk_390x844_light_en | `rrow.value` | height | 18.00 | 18.00 | 0.00 |
+| tool_birthdays_default_pk_390x844_light_en | `rrow.chev` | x | 338.00 | 338.00 | 0.00 |
+| tool_birthdays_default_pk_390x844_light_en | `rrow.chev` | y | 638.58 | 638.50 | -0.08 |
+| tool_birthdays_default_pk_390x844_light_en | `rrow.chev` | width | 15.00 | 15.00 | 0.00 |
+| tool_birthdays_default_pk_390x844_light_en | `rrow.chev` | height | 15.00 | 15.00 | 0.00 |
+| tool_birthdays_default_pk_390x844_light_en | `srcbar` | x | 20.00 | 20.00 | 0.00 |
+| tool_birthdays_default_pk_390x844_light_en | `srcbar` | y (reference -73, recorded) | 853.08 | 853.00 | -0.08 |
+| tool_birthdays_default_pk_390x844_light_en | `srcbar` | width | 350.00 | 350.00 | 0.00 |
+| tool_birthdays_default_pk_390x844_light_en | `srcbar` | height | 39.00 | 39.00 | 0.00 |
+| tool_birthdays_default_pk_390x844_light_en | `fresh` | x | 35.00 | 35.00 | 0.00 |
+| tool_birthdays_default_pk_390x844_light_en | `fresh` | y (reference -73, recorded) | 866.08 | 866.00 | -0.08 |
+| tool_birthdays_default_pk_390x844_light_en | `fresh` | width | 124.52 | 124.51 | -0.01 |
+| tool_birthdays_default_pk_390x844_light_en | `fresh` | height | 13.00 | 13.00 | 0.00 |
+| tool_birthdays_default_pk_390x844_light_en | `related` | x | 20.00 | 20.00 | 0.00 |
+| tool_birthdays_default_pk_390x844_light_en | `related` | y (reference -73, recorded) | 947.08 | 947.00 | -0.08 |
+| tool_birthdays_default_pk_390x844_light_en | `related` | width | 350.00 | 350.00 | 0.00 |
+| tool_birthdays_default_pk_390x844_light_en | `related` | height | 81.50 | 81.00 | -0.50 |
+| tool_birthdays_default_pk_390x844_light_en | `related.sect` | x | 0.00 | 0.00 | 0.00 |
+| tool_birthdays_default_pk_390x844_light_en | `related.sect` | y (reference -97, recorded) | 892.08 | 892.00 | -0.08 |
+| tool_birthdays_default_pk_390x844_light_en | `related.sect` | width | 390.00 | 390.00 | 0.00 |
+| tool_birthdays_default_pk_390x844_light_en | `related.sect` | height (reference +24, recorded) | 136.50 | 136.00 | -0.50 |
+| tool_birthdays_default_pk_390x844_light_en | `related.title` | x | 20.00 | 20.00 | 0.00 |
+| tool_birthdays_default_pk_390x844_light_en | `related.title` | y (reference -73, recorded) | 916.08 | 916.00 | -0.08 |
+| tool_birthdays_default_pk_390x844_light_en | `related.title` | width | 90.75 | 90.74 | -0.01 |
+| tool_birthdays_default_pk_390x844_light_en | `related.title` | height | 19.00 | 19.00 | 0.00 |
+| tool_birthdays_default_pk_390x844_light_en | `related.item1` | x | 20.00 | 20.00 | 0.00 |
+| tool_birthdays_default_pk_390x844_light_en | `related.item1` | y (reference -73, recorded) | 947.08 | 947.00 | -0.08 |
+| tool_birthdays_default_pk_390x844_light_en | `related.item1` | width | 78.00 | 78.00 | 0.00 |
+| tool_birthdays_default_pk_390x844_light_en | `related.item1` | height | 79.50 | 79.00 | -0.50 |
+| tool_birthdays_default_pk_390x844_light_en | `related.item2` | x | 106.00 | 106.00 | 0.00 |
+| tool_birthdays_default_pk_390x844_light_en | `related.item2` | y (reference -73, recorded) | 947.08 | 947.00 | -0.08 |
+| tool_birthdays_default_pk_390x844_light_en | `related.item2` | width | 78.00 | 78.00 | 0.00 |
+| tool_birthdays_default_pk_390x844_light_en | `related.item2` | height | 79.50 | 79.00 | -0.50 |
+| tool_birthdays_default_pk_390x844_dark_en | `toolbar` | x | 0.00 | 0.00 | 0.00 |
+| tool_birthdays_default_pk_390x844_dark_en | `toolbar` | y | 0.00 | 0.00 | 0.00 |
+| tool_birthdays_default_pk_390x844_dark_en | `toolbar` | width | 390.00 | 390.00 | 0.00 |
+| tool_birthdays_default_pk_390x844_dark_en | `toolbar` | height | 67.00 | 67.00 | 0.00 |
+| tool_birthdays_default_pk_390x844_dark_en | `toolbar.back` | x | 20.00 | 20.00 | 0.00 |
+| tool_birthdays_default_pk_390x844_dark_en | `toolbar.back` | y | 13.00 | 13.00 | 0.00 |
+| tool_birthdays_default_pk_390x844_dark_en | `toolbar.back` | width | 38.00 | 38.00 | 0.00 |
+| tool_birthdays_default_pk_390x844_dark_en | `toolbar.back` | height | 38.00 | 38.00 | 0.00 |
+| tool_birthdays_default_pk_390x844_dark_en | `toolbar.title` | x | 68.00 | 68.00 | 0.00 |
+| tool_birthdays_default_pk_390x844_dark_en | `toolbar.title` | y | 12.50 | 12.50 | 0.00 |
+| tool_birthdays_default_pk_390x844_dark_en | `toolbar.title` | height | 25.00 | 25.00 | 0.00 |
+| tool_birthdays_default_pk_390x844_dark_en | `toolbar.sub` | x | 68.00 | 68.00 | 0.00 |
+| tool_birthdays_default_pk_390x844_dark_en | `toolbar.sub` | y | 38.50 | 38.50 | 0.00 |
+| tool_birthdays_default_pk_390x844_dark_en | `toolbar.sub` | height | 13.00 | 13.00 | 0.00 |
+| tool_birthdays_default_pk_390x844_dark_en | `toolbar.actions` | x | 253.45 | 252.46 | -0.99 |
+| tool_birthdays_default_pk_390x844_dark_en | `toolbar.actions` | y | 10.00 | 10.00 | 0.00 |
+| tool_birthdays_default_pk_390x844_dark_en | `toolbar.actions` | width | 116.55 | 117.54 | 0.99 |
+| tool_birthdays_default_pk_390x844_dark_en | `toolbar.actions` | height | 44.00 | 44.00 | 0.00 |
+| tool_birthdays_default_pk_390x844_dark_en | `toolbar.textbtn` | x | 253.45 | 252.46 | -0.99 |
+| tool_birthdays_default_pk_390x844_dark_en | `toolbar.textbtn` | y | 10.00 | 10.00 | 0.00 |
+| tool_birthdays_default_pk_390x844_dark_en | `toolbar.textbtn` | width | 72.55 | 73.54 | 0.99 |
+| tool_birthdays_default_pk_390x844_dark_en | `toolbar.textbtn` | height | 44.00 | 44.00 | 0.00 |
+| tool_birthdays_default_pk_390x844_dark_en | `toolbar.action2` | x | 332.00 | 332.00 | 0.00 |
+| tool_birthdays_default_pk_390x844_dark_en | `toolbar.action2` | y (reference +3, recorded) | 13.00 | 13.00 | 0.00 |
+| tool_birthdays_default_pk_390x844_dark_en | `toolbar.action2` | width | 38.00 | 38.00 | 0.00 |
+| tool_birthdays_default_pk_390x844_dark_en | `toolbar.action2` | height | 38.00 | 38.00 | 0.00 |
+| tool_birthdays_default_pk_390x844_dark_en | `search` | x | 40.00 | 40.00 | 0.00 |
+| tool_birthdays_default_pk_390x844_dark_en | `search` | y | 83.00 | 83.00 | 0.00 |
+| tool_birthdays_default_pk_390x844_dark_en | `search` | width | 310.00 | 310.00 | 0.00 |
+| tool_birthdays_default_pk_390x844_dark_en | `search` | height | 44.00 | 44.00 | 0.00 |
+| tool_birthdays_default_pk_390x844_dark_en | `search.input` | x | 81.00 | 81.00 | 0.00 |
+| tool_birthdays_default_pk_390x844_dark_en | `search.input` | y (reference -1, recorded) | 94.00 | 94.00 | 0.00 |
+| tool_birthdays_default_pk_390x844_dark_en | `search.input` | width | 254.00 | 254.00 | 0.00 |
+| tool_birthdays_default_pk_390x844_dark_en | `search.input` | height (reference +2, recorded) | 22.00 | 22.00 | 0.00 |
+| tool_birthdays_default_pk_390x844_dark_en | `recs` | x | 20.00 | 20.00 | 0.00 |
+| tool_birthdays_default_pk_390x844_dark_en | `recs` | y | 127.00 | 127.00 | 0.00 |
+| tool_birthdays_default_pk_390x844_dark_en | `recs` | width | 350.00 | 350.00 | 0.00 |
+| tool_birthdays_default_pk_390x844_dark_en | `recs` | height | 218.00 | 218.00 | 0.00 |
+| tool_birthdays_default_pk_390x844_dark_en | `rrec1` | x | 20.00 | 20.00 | 0.00 |
+| tool_birthdays_default_pk_390x844_dark_en | `rrec1` | y | 127.00 | 127.00 | 0.00 |
+| tool_birthdays_default_pk_390x844_dark_en | `rrec1` | width | 350.00 | 350.00 | 0.00 |
+| tool_birthdays_default_pk_390x844_dark_en | `rrec1` | height | 66.00 | 66.00 | 0.00 |
+| tool_birthdays_default_pk_390x844_dark_en | `rrec2` | x | 20.00 | 20.00 | 0.00 |
+| tool_birthdays_default_pk_390x844_dark_en | `rrec2` | y | 203.00 | 203.00 | 0.00 |
+| tool_birthdays_default_pk_390x844_dark_en | `rrec2` | width | 350.00 | 350.00 | 0.00 |
+| tool_birthdays_default_pk_390x844_dark_en | `rrec2` | height | 66.00 | 66.00 | 0.00 |
+| tool_birthdays_default_pk_390x844_dark_en | `rrec.disc` | x | 35.00 | 35.00 | 0.00 |
+| tool_birthdays_default_pk_390x844_dark_en | `rrec.disc` | y | 141.00 | 141.00 | 0.00 |
+| tool_birthdays_default_pk_390x844_dark_en | `rrec.disc` | width | 38.00 | 38.00 | 0.00 |
+| tool_birthdays_default_pk_390x844_dark_en | `rrec.disc` | height | 38.00 | 38.00 | 0.00 |
+| tool_birthdays_default_pk_390x844_dark_en | `rrec.title` | x | 85.00 | 85.00 | 0.00 |
+| tool_birthdays_default_pk_390x844_dark_en | `rrec.title` | y | 141.00 | 141.00 | 0.00 |
+| tool_birthdays_default_pk_390x844_dark_en | `rrec.title` | width | 51.17 | 51.17 | -0.00 |
+| tool_birthdays_default_pk_390x844_dark_en | `rrec.title` | height | 20.00 | 20.00 | 0.00 |
+| tool_birthdays_default_pk_390x844_dark_en | `rrec.sub` | x | 85.00 | 85.00 | 0.00 |
+| tool_birthdays_default_pk_390x844_dark_en | `rrec.sub` | y | 163.00 | 163.00 | 0.00 |
+| tool_birthdays_default_pk_390x844_dark_en | `rrec.sub` | height | 16.00 | 16.00 | 0.00 |
+| tool_birthdays_default_pk_390x844_dark_en | `rrec.value` | x | 273.75 | 273.76 | 0.01 |
+| tool_birthdays_default_pk_390x844_dark_en | `rrec.value` | y | 150.00 | 150.00 | 0.00 |
+| tool_birthdays_default_pk_390x844_dark_en | `rrec.value` | width | 58.25 | 58.24 | -0.01 |
+| tool_birthdays_default_pk_390x844_dark_en | `rrec.value` | height | 20.00 | 20.00 | 0.00 |
+| tool_birthdays_default_pk_390x844_dark_en | `rrec.chev` | x | 340.00 | 340.00 | 0.00 |
+| tool_birthdays_default_pk_390x844_dark_en | `rrec.chev` | y | 152.50 | 152.50 | 0.00 |
+| tool_birthdays_default_pk_390x844_dark_en | `rrec.chev` | width | 15.00 | 15.00 | 0.00 |
+| tool_birthdays_default_pk_390x844_dark_en | `rrec.chev` | height | 15.00 | 15.00 | 0.00 |
+| tool_birthdays_default_pk_390x844_dark_en | `sect1` | x | 0.00 | 0.00 | 0.00 |
+| tool_birthdays_default_pk_390x844_dark_en | `sect1` | y (reference -16, recorded) | 67.00 | 67.00 | 0.00 |
+| tool_birthdays_default_pk_390x844_dark_en | `sect1` | width | 390.00 | 390.00 | 0.00 |
+| tool_birthdays_default_pk_390x844_dark_en | `sect1` | height (reference +16, recorded) | 278.00 | 278.00 | 0.00 |
+| tool_birthdays_default_pk_390x844_dark_en | `sect2` | x | 0.00 | 0.00 | 0.00 |
+| tool_birthdays_default_pk_390x844_dark_en | `sect2` | y (reference -24, recorded) | 345.00 | 345.00 | 0.00 |
+| tool_birthdays_default_pk_390x844_dark_en | `sect2` | width | 390.00 | 390.00 | 0.00 |
+| tool_birthdays_default_pk_390x844_dark_en | `sect2` | height (reference +24, recorded) | 209.08 | 209.00 | -0.08 |
+| tool_birthdays_default_pk_390x844_dark_en | `sect3` | x | 0.00 | 0.00 | 0.00 |
+| tool_birthdays_default_pk_390x844_dark_en | `sect3` | y (reference -24, recorded) | 554.08 | 554.00 | -0.08 |
+| tool_birthdays_default_pk_390x844_dark_en | `sect3` | width | 390.00 | 390.00 | 0.00 |
+| tool_birthdays_default_pk_390x844_dark_en | `sect3` | height (reference -49, recorded) | 275.00 | 275.00 | 0.00 |
+| tool_birthdays_default_pk_390x844_dark_en | `sect3.title` | x | 20.00 | 20.00 | 0.00 |
+| tool_birthdays_default_pk_390x844_dark_en | `sect3.title` | y | 578.08 | 578.00 | -0.08 |
+| tool_birthdays_default_pk_390x844_dark_en | `sect3.title` | width | 75.42 | 75.42 | 0.00 |
+| tool_birthdays_default_pk_390x844_dark_en | `sect3.title` | height | 19.00 | 19.00 | 0.00 |
+| tool_birthdays_default_pk_390x844_dark_en | `summary` | x | 20.00 | 20.00 | 0.00 |
+| tool_birthdays_default_pk_390x844_dark_en | `summary` | y | 369.00 | 369.00 | 0.00 |
+| tool_birthdays_default_pk_390x844_dark_en | `summary` | width | 350.00 | 350.00 | 0.00 |
+| tool_birthdays_default_pk_390x844_dark_en | `summary` | height | 185.08 | 185.00 | -0.08 |
+| tool_birthdays_default_pk_390x844_dark_en | `summary.kicker` | x | 41.00 | 41.00 | 0.00 |
+| tool_birthdays_default_pk_390x844_dark_en | `summary.kicker` | y | 390.00 | 390.00 | 0.00 |
+| tool_birthdays_default_pk_390x844_dark_en | `summary.kicker` | height | 13.00 | 13.00 | 0.00 |
+| tool_birthdays_default_pk_390x844_dark_en | `summary.value` | x | 41.00 | 41.00 | 0.00 |
+| tool_birthdays_default_pk_390x844_dark_en | `summary.value` | y | 409.00 | 409.00 | 0.00 |
+| tool_birthdays_default_pk_390x844_dark_en | `summary.value` | height | 35.69 | 36.00 | 0.31 |
+| tool_birthdays_default_pk_390x844_dark_en | `summary.caption` | x | 41.00 | 41.00 | 0.00 |
+| tool_birthdays_default_pk_390x844_dark_en | `summary.caption` | y | 451.69 | 452.00 | 0.31 |
+| tool_birthdays_default_pk_390x844_dark_en | `summary.caption` | height | 17.39 | 17.00 | -0.39 |
+| tool_birthdays_default_pk_390x844_dark_en | `summary.stats` | x | 41.00 | 41.00 | 0.00 |
+| tool_birthdays_default_pk_390x844_dark_en | `summary.stats` | y | 485.08 | 485.00 | -0.08 |
+| tool_birthdays_default_pk_390x844_dark_en | `summary.stats` | width | 308.00 | 308.00 | 0.00 |
+| tool_birthdays_default_pk_390x844_dark_en | `summary.stats` | height | 48.00 | 48.00 | 0.00 |
+| tool_birthdays_default_pk_390x844_dark_en | `summary.stat1` | x | 41.00 | 41.00 | 0.00 |
+| tool_birthdays_default_pk_390x844_dark_en | `summary.stat1` | y | 500.08 | 500.00 | -0.08 |
+| tool_birthdays_default_pk_390x844_dark_en | `summary.stat1` | width | 96.00 | 96.00 | 0.00 |
+| tool_birthdays_default_pk_390x844_dark_en | `summary.stat1` | height | 33.00 | 33.00 | 0.00 |
+| tool_birthdays_default_pk_390x844_dark_en | `summary.stat2` | x | 147.00 | 147.00 | 0.00 |
+| tool_birthdays_default_pk_390x844_dark_en | `summary.stat2` | y | 500.08 | 500.00 | -0.08 |
+| tool_birthdays_default_pk_390x844_dark_en | `summary.stat2` | width | 96.00 | 96.00 | 0.00 |
+| tool_birthdays_default_pk_390x844_dark_en | `summary.stat2` | height | 33.00 | 33.00 | 0.00 |
+| tool_birthdays_default_pk_390x844_dark_en | `summary.stat3` | x | 253.00 | 253.00 | 0.00 |
+| tool_birthdays_default_pk_390x844_dark_en | `summary.stat3` | y | 500.08 | 500.00 | -0.08 |
+| tool_birthdays_default_pk_390x844_dark_en | `summary.stat3` | width | 96.00 | 96.00 | 0.00 |
+| tool_birthdays_default_pk_390x844_dark_en | `summary.stat3` | height | 33.00 | 33.00 | 0.00 |
+| tool_birthdays_default_pk_390x844_dark_en | `rows` | x | 20.00 | 20.00 | 0.00 |
+| tool_birthdays_default_pk_390x844_dark_en | `rows` | y | 609.08 | 609.00 | -0.08 |
+| tool_birthdays_default_pk_390x844_dark_en | `rows` | width | 350.00 | 350.00 | 0.00 |
+| tool_birthdays_default_pk_390x844_dark_en | `rows` | height (reference -73, recorded) | 220.00 | 220.00 | 0.00 |
+| tool_birthdays_default_pk_390x844_dark_en | `rrow1` | x | 21.00 | 21.00 | 0.00 |
+| tool_birthdays_default_pk_390x844_dark_en | `rrow1` | y | 610.08 | 610.00 | -0.08 |
+| tool_birthdays_default_pk_390x844_dark_en | `rrow1` | width | 348.00 | 348.00 | 0.00 |
+| tool_birthdays_default_pk_390x844_dark_en | `rrow1` | height | 73.00 | 72.00 | -1.00 |
+| tool_birthdays_default_pk_390x844_dark_en | `rrow2` | x | 21.00 | 21.00 | 0.00 |
+| tool_birthdays_default_pk_390x844_dark_en | `rrow2` | y | 683.08 | 683.00 | -0.08 |
+| tool_birthdays_default_pk_390x844_dark_en | `rrow2` | width | 348.00 | 348.00 | 0.00 |
+| tool_birthdays_default_pk_390x844_dark_en | `rrow2` | height | 73.00 | 72.00 | -1.00 |
+| tool_birthdays_default_pk_390x844_dark_en | `rrow.logo` | x | 37.00 | 37.00 | 0.00 |
+| tool_birthdays_default_pk_390x844_dark_en | `rrow.logo` | y | 627.08 | 627.00 | -0.08 |
+| tool_birthdays_default_pk_390x844_dark_en | `rrow.logo` | width | 38.00 | 38.00 | 0.00 |
+| tool_birthdays_default_pk_390x844_dark_en | `rrow.logo` | height | 38.00 | 38.00 | 0.00 |
+| tool_birthdays_default_pk_390x844_dark_en | `rrow.title` | x | 87.00 | 87.00 | 0.00 |
+| tool_birthdays_default_pk_390x844_dark_en | `rrow.title` | y | 622.08 | 622.00 | -0.08 |
+| tool_birthdays_default_pk_390x844_dark_en | `rrow.title` | width | 47.94 | 47.92 | -0.02 |
+| tool_birthdays_default_pk_390x844_dark_en | `rrow.title` | height | 18.00 | 18.00 | 0.00 |
+| tool_birthdays_default_pk_390x844_dark_en | `rrow.sub` | x | 87.00 | 87.00 | 0.00 |
+| tool_birthdays_default_pk_390x844_dark_en | `rrow.sub` | y | 641.08 | 641.00 | -0.08 |
+| tool_birthdays_default_pk_390x844_dark_en | `rrow.sub` | height | 13.00 | 13.00 | 0.00 |
+| tool_birthdays_default_pk_390x844_dark_en | `rrow.meta` | x | 87.00 | 87.00 | 0.00 |
+| tool_birthdays_default_pk_390x844_dark_en | `rrow.meta` | y | 658.08 | 658.00 | -0.08 |
+| tool_birthdays_default_pk_390x844_dark_en | `rrow.meta` | height | 12.00 | 12.00 | 0.00 |
+| tool_birthdays_default_pk_390x844_dark_en | `rrow.value` | x | 271.63 | 271.64 | 0.01 |
+| tool_birthdays_default_pk_390x844_dark_en | `rrow.value` | y | 637.08 | 637.00 | -0.08 |
+| tool_birthdays_default_pk_390x844_dark_en | `rrow.value` | width | 54.38 | 54.36 | -0.02 |
+| tool_birthdays_default_pk_390x844_dark_en | `rrow.value` | height | 18.00 | 18.00 | 0.00 |
+| tool_birthdays_default_pk_390x844_dark_en | `rrow.chev` | x | 338.00 | 338.00 | 0.00 |
+| tool_birthdays_default_pk_390x844_dark_en | `rrow.chev` | y | 638.58 | 638.50 | -0.08 |
+| tool_birthdays_default_pk_390x844_dark_en | `rrow.chev` | width | 15.00 | 15.00 | 0.00 |
+| tool_birthdays_default_pk_390x844_dark_en | `rrow.chev` | height | 15.00 | 15.00 | 0.00 |
+| tool_birthdays_default_pk_390x844_dark_en | `srcbar` | x | 20.00 | 20.00 | 0.00 |
+| tool_birthdays_default_pk_390x844_dark_en | `srcbar` | y (reference -73, recorded) | 853.08 | 853.00 | -0.08 |
+| tool_birthdays_default_pk_390x844_dark_en | `srcbar` | width | 350.00 | 350.00 | 0.00 |
+| tool_birthdays_default_pk_390x844_dark_en | `srcbar` | height | 39.00 | 39.00 | 0.00 |
+| tool_birthdays_default_pk_390x844_dark_en | `fresh` | x | 35.00 | 35.00 | 0.00 |
+| tool_birthdays_default_pk_390x844_dark_en | `fresh` | y (reference -73, recorded) | 866.08 | 866.00 | -0.08 |
+| tool_birthdays_default_pk_390x844_dark_en | `fresh` | width | 124.52 | 124.51 | -0.01 |
+| tool_birthdays_default_pk_390x844_dark_en | `fresh` | height | 13.00 | 13.00 | 0.00 |
+| tool_birthdays_default_pk_390x844_dark_en | `related` | x | 20.00 | 20.00 | 0.00 |
+| tool_birthdays_default_pk_390x844_dark_en | `related` | y (reference -73, recorded) | 947.08 | 947.00 | -0.08 |
+| tool_birthdays_default_pk_390x844_dark_en | `related` | width | 350.00 | 350.00 | 0.00 |
+| tool_birthdays_default_pk_390x844_dark_en | `related` | height | 81.50 | 81.00 | -0.50 |
+| tool_birthdays_default_pk_390x844_dark_en | `related.sect` | x | 0.00 | 0.00 | 0.00 |
+| tool_birthdays_default_pk_390x844_dark_en | `related.sect` | y (reference -97, recorded) | 892.08 | 892.00 | -0.08 |
+| tool_birthdays_default_pk_390x844_dark_en | `related.sect` | width | 390.00 | 390.00 | 0.00 |
+| tool_birthdays_default_pk_390x844_dark_en | `related.sect` | height (reference +24, recorded) | 136.50 | 136.00 | -0.50 |
+| tool_birthdays_default_pk_390x844_dark_en | `related.title` | x | 20.00 | 20.00 | 0.00 |
+| tool_birthdays_default_pk_390x844_dark_en | `related.title` | y (reference -73, recorded) | 916.08 | 916.00 | -0.08 |
+| tool_birthdays_default_pk_390x844_dark_en | `related.title` | width | 90.75 | 90.74 | -0.01 |
+| tool_birthdays_default_pk_390x844_dark_en | `related.title` | height | 19.00 | 19.00 | 0.00 |
+| tool_birthdays_default_pk_390x844_dark_en | `related.item1` | x | 20.00 | 20.00 | 0.00 |
+| tool_birthdays_default_pk_390x844_dark_en | `related.item1` | y (reference -73, recorded) | 947.08 | 947.00 | -0.08 |
+| tool_birthdays_default_pk_390x844_dark_en | `related.item1` | width | 78.00 | 78.00 | 0.00 |
+| tool_birthdays_default_pk_390x844_dark_en | `related.item1` | height | 79.50 | 79.00 | -0.50 |
+| tool_birthdays_default_pk_390x844_dark_en | `related.item2` | x | 106.00 | 106.00 | 0.00 |
+| tool_birthdays_default_pk_390x844_dark_en | `related.item2` | y (reference -73, recorded) | 947.08 | 947.00 | -0.08 |
+| tool_birthdays_default_pk_390x844_dark_en | `related.item2` | width | 78.00 | 78.00 | 0.00 |
+| tool_birthdays_default_pk_390x844_dark_en | `related.item2` | height | 79.50 | 79.00 | -0.50 |
+| tool_birthdays_default_pk_700x900_light_en | `toolbar` | x | 0.00 | 0.00 | 0.00 |
+| tool_birthdays_default_pk_700x900_light_en | `toolbar` | y | 0.00 | 0.00 | 0.00 |
+| tool_birthdays_default_pk_700x900_light_en | `toolbar` | width | 566.00 | 566.00 | 0.00 |
+| tool_birthdays_default_pk_700x900_light_en | `toolbar` | height | 67.00 | 67.00 | 0.00 |
+| tool_birthdays_default_pk_700x900_light_en | `toolbar.back` | x | 24.00 | 24.00 | 0.00 |
+| tool_birthdays_default_pk_700x900_light_en | `toolbar.back` | y | 13.00 | 13.00 | 0.00 |
+| tool_birthdays_default_pk_700x900_light_en | `toolbar.back` | width | 38.00 | 38.00 | 0.00 |
+| tool_birthdays_default_pk_700x900_light_en | `toolbar.back` | height | 38.00 | 38.00 | 0.00 |
+| tool_birthdays_default_pk_700x900_light_en | `toolbar.title` | x | 72.00 | 72.00 | 0.00 |
+| tool_birthdays_default_pk_700x900_light_en | `toolbar.title` | y | 12.50 | 12.50 | 0.00 |
+| tool_birthdays_default_pk_700x900_light_en | `toolbar.title` | height | 25.00 | 25.00 | 0.00 |
+| tool_birthdays_default_pk_700x900_light_en | `toolbar.sub` | x | 72.00 | 72.00 | 0.00 |
+| tool_birthdays_default_pk_700x900_light_en | `toolbar.sub` | y | 38.50 | 38.50 | 0.00 |
+| tool_birthdays_default_pk_700x900_light_en | `toolbar.sub` | height | 13.00 | 13.00 | 0.00 |
+| tool_birthdays_default_pk_700x900_light_en | `toolbar.actions` | x | 425.45 | 424.46 | -0.99 |
+| tool_birthdays_default_pk_700x900_light_en | `toolbar.actions` | y | 10.00 | 10.00 | 0.00 |
+| tool_birthdays_default_pk_700x900_light_en | `toolbar.actions` | width | 116.55 | 117.54 | 0.99 |
+| tool_birthdays_default_pk_700x900_light_en | `toolbar.actions` | height | 44.00 | 44.00 | 0.00 |
+| tool_birthdays_default_pk_700x900_light_en | `toolbar.textbtn` | x | 425.45 | 424.46 | -0.99 |
+| tool_birthdays_default_pk_700x900_light_en | `toolbar.textbtn` | y | 10.00 | 10.00 | 0.00 |
+| tool_birthdays_default_pk_700x900_light_en | `toolbar.textbtn` | width | 72.55 | 73.54 | 0.99 |
+| tool_birthdays_default_pk_700x900_light_en | `toolbar.textbtn` | height | 44.00 | 44.00 | 0.00 |
+| tool_birthdays_default_pk_700x900_light_en | `toolbar.action2` | x | 504.00 | 504.00 | 0.00 |
+| tool_birthdays_default_pk_700x900_light_en | `toolbar.action2` | y (reference +3, recorded) | 13.00 | 13.00 | 0.00 |
+| tool_birthdays_default_pk_700x900_light_en | `toolbar.action2` | width | 38.00 | 38.00 | 0.00 |
+| tool_birthdays_default_pk_700x900_light_en | `toolbar.action2` | height | 38.00 | 38.00 | 0.00 |
+| tool_birthdays_default_pk_700x900_light_en | `search` | x | 48.00 | 48.00 | 0.00 |
+| tool_birthdays_default_pk_700x900_light_en | `search` | y | 83.00 | 83.00 | 0.00 |
+| tool_birthdays_default_pk_700x900_light_en | `search` | width | 470.00 | 470.00 | 0.00 |
+| tool_birthdays_default_pk_700x900_light_en | `search` | height | 44.00 | 44.00 | 0.00 |
+| tool_birthdays_default_pk_700x900_light_en | `search.input` | x | 89.00 | 89.00 | 0.00 |
+| tool_birthdays_default_pk_700x900_light_en | `search.input` | y (reference -1, recorded) | 94.00 | 94.00 | 0.00 |
+| tool_birthdays_default_pk_700x900_light_en | `search.input` | width | 414.00 | 414.00 | 0.00 |
+| tool_birthdays_default_pk_700x900_light_en | `search.input` | height (reference +2, recorded) | 22.00 | 22.00 | 0.00 |
+| tool_birthdays_default_pk_700x900_light_en | `recs` | x | 24.00 | 24.00 | 0.00 |
+| tool_birthdays_default_pk_700x900_light_en | `recs` | y | 127.00 | 127.00 | 0.00 |
+| tool_birthdays_default_pk_700x900_light_en | `recs` | width | 518.00 | 518.00 | 0.00 |
+| tool_birthdays_default_pk_700x900_light_en | `recs` | height | 218.00 | 218.00 | 0.00 |
+| tool_birthdays_default_pk_700x900_light_en | `rrec1` | x | 24.00 | 24.00 | 0.00 |
+| tool_birthdays_default_pk_700x900_light_en | `rrec1` | y | 127.00 | 127.00 | 0.00 |
+| tool_birthdays_default_pk_700x900_light_en | `rrec1` | width | 518.00 | 518.00 | 0.00 |
+| tool_birthdays_default_pk_700x900_light_en | `rrec1` | height | 66.00 | 66.00 | 0.00 |
+| tool_birthdays_default_pk_700x900_light_en | `rrec2` | x | 24.00 | 24.00 | 0.00 |
+| tool_birthdays_default_pk_700x900_light_en | `rrec2` | y | 203.00 | 203.00 | 0.00 |
+| tool_birthdays_default_pk_700x900_light_en | `rrec2` | width | 518.00 | 518.00 | 0.00 |
+| tool_birthdays_default_pk_700x900_light_en | `rrec2` | height | 66.00 | 66.00 | 0.00 |
+| tool_birthdays_default_pk_700x900_light_en | `rrec.disc` | x | 39.00 | 39.00 | 0.00 |
+| tool_birthdays_default_pk_700x900_light_en | `rrec.disc` | y | 141.00 | 141.00 | 0.00 |
+| tool_birthdays_default_pk_700x900_light_en | `rrec.disc` | width | 38.00 | 38.00 | 0.00 |
+| tool_birthdays_default_pk_700x900_light_en | `rrec.disc` | height | 38.00 | 38.00 | 0.00 |
+| tool_birthdays_default_pk_700x900_light_en | `rrec.title` | x | 89.00 | 89.00 | 0.00 |
+| tool_birthdays_default_pk_700x900_light_en | `rrec.title` | y | 141.00 | 141.00 | 0.00 |
+| tool_birthdays_default_pk_700x900_light_en | `rrec.title` | width | 51.17 | 51.17 | -0.00 |
+| tool_birthdays_default_pk_700x900_light_en | `rrec.title` | height | 20.00 | 20.00 | 0.00 |
+| tool_birthdays_default_pk_700x900_light_en | `rrec.sub` | x | 89.00 | 89.00 | 0.00 |
+| tool_birthdays_default_pk_700x900_light_en | `rrec.sub` | y | 163.00 | 163.00 | 0.00 |
+| tool_birthdays_default_pk_700x900_light_en | `rrec.sub` | height | 16.00 | 16.00 | 0.00 |
+| tool_birthdays_default_pk_700x900_light_en | `rrec.value` | x | 445.75 | 445.76 | 0.01 |
+| tool_birthdays_default_pk_700x900_light_en | `rrec.value` | y | 150.00 | 150.00 | 0.00 |
+| tool_birthdays_default_pk_700x900_light_en | `rrec.value` | width | 58.25 | 58.24 | -0.01 |
+| tool_birthdays_default_pk_700x900_light_en | `rrec.value` | height | 20.00 | 20.00 | 0.00 |
+| tool_birthdays_default_pk_700x900_light_en | `rrec.chev` | x | 512.00 | 512.00 | 0.00 |
+| tool_birthdays_default_pk_700x900_light_en | `rrec.chev` | y | 152.50 | 152.50 | 0.00 |
+| tool_birthdays_default_pk_700x900_light_en | `rrec.chev` | width | 15.00 | 15.00 | 0.00 |
+| tool_birthdays_default_pk_700x900_light_en | `rrec.chev` | height | 15.00 | 15.00 | 0.00 |
+| tool_birthdays_default_pk_700x900_light_en | `sect1` | x | 0.00 | 0.00 | 0.00 |
+| tool_birthdays_default_pk_700x900_light_en | `sect1` | y (reference -16, recorded) | 67.00 | 67.00 | 0.00 |
+| tool_birthdays_default_pk_700x900_light_en | `sect1` | width | 566.00 | 566.00 | 0.00 |
+| tool_birthdays_default_pk_700x900_light_en | `sect1` | height (reference +16, recorded) | 278.00 | 278.00 | 0.00 |
+| tool_birthdays_default_pk_700x900_light_en | `sect2` | x | 0.00 | 0.00 | 0.00 |
+| tool_birthdays_default_pk_700x900_light_en | `sect2` | y (reference -24, recorded) | 345.00 | 345.00 | 0.00 |
+| tool_birthdays_default_pk_700x900_light_en | `sect2` | width | 566.00 | 566.00 | 0.00 |
+| tool_birthdays_default_pk_700x900_light_en | `sect2` | height (reference +24, recorded) | 209.08 | 209.00 | -0.08 |
+| tool_birthdays_default_pk_700x900_light_en | `sect3` | x | 0.00 | 0.00 | 0.00 |
+| tool_birthdays_default_pk_700x900_light_en | `sect3` | y (reference -24, recorded) | 554.08 | 554.00 | -0.08 |
+| tool_birthdays_default_pk_700x900_light_en | `sect3` | width | 566.00 | 566.00 | 0.00 |
+| tool_birthdays_default_pk_700x900_light_en | `sect3` | height (reference -49, recorded) | 275.00 | 275.00 | 0.00 |
+| tool_birthdays_default_pk_700x900_light_en | `sect3.title` | x | 24.00 | 24.00 | 0.00 |
+| tool_birthdays_default_pk_700x900_light_en | `sect3.title` | y | 578.08 | 578.00 | -0.08 |
+| tool_birthdays_default_pk_700x900_light_en | `sect3.title` | width | 75.42 | 75.42 | 0.00 |
+| tool_birthdays_default_pk_700x900_light_en | `sect3.title` | height | 19.00 | 19.00 | 0.00 |
+| tool_birthdays_default_pk_700x900_light_en | `summary` | x | 24.00 | 24.00 | 0.00 |
+| tool_birthdays_default_pk_700x900_light_en | `summary` | y | 369.00 | 369.00 | 0.00 |
+| tool_birthdays_default_pk_700x900_light_en | `summary` | width | 518.00 | 518.00 | 0.00 |
+| tool_birthdays_default_pk_700x900_light_en | `summary` | height | 185.08 | 185.00 | -0.08 |
+| tool_birthdays_default_pk_700x900_light_en | `summary.kicker` | x | 45.00 | 45.00 | 0.00 |
+| tool_birthdays_default_pk_700x900_light_en | `summary.kicker` | y | 390.00 | 390.00 | 0.00 |
+| tool_birthdays_default_pk_700x900_light_en | `summary.kicker` | height | 13.00 | 13.00 | 0.00 |
+| tool_birthdays_default_pk_700x900_light_en | `summary.value` | x | 45.00 | 45.00 | 0.00 |
+| tool_birthdays_default_pk_700x900_light_en | `summary.value` | y | 409.00 | 409.00 | 0.00 |
+| tool_birthdays_default_pk_700x900_light_en | `summary.value` | height | 35.69 | 36.00 | 0.31 |
+| tool_birthdays_default_pk_700x900_light_en | `summary.caption` | x | 45.00 | 45.00 | 0.00 |
+| tool_birthdays_default_pk_700x900_light_en | `summary.caption` | y | 451.69 | 452.00 | 0.31 |
+| tool_birthdays_default_pk_700x900_light_en | `summary.caption` | height | 17.39 | 17.00 | -0.39 |
+| tool_birthdays_default_pk_700x900_light_en | `summary.stats` | x | 45.00 | 45.00 | 0.00 |
+| tool_birthdays_default_pk_700x900_light_en | `summary.stats` | y | 485.08 | 485.00 | -0.08 |
+| tool_birthdays_default_pk_700x900_light_en | `summary.stats` | width | 476.00 | 476.00 | 0.00 |
+| tool_birthdays_default_pk_700x900_light_en | `summary.stats` | height | 48.00 | 48.00 | 0.00 |
+| tool_birthdays_default_pk_700x900_light_en | `summary.stat1` | x | 45.00 | 45.00 | 0.00 |
+| tool_birthdays_default_pk_700x900_light_en | `summary.stat1` | y | 500.08 | 500.00 | -0.08 |
+| tool_birthdays_default_pk_700x900_light_en | `summary.stat1` | width | 152.00 | 152.00 | 0.00 |
+| tool_birthdays_default_pk_700x900_light_en | `summary.stat1` | height | 33.00 | 33.00 | 0.00 |
+| tool_birthdays_default_pk_700x900_light_en | `summary.stat2` | x | 207.00 | 207.00 | 0.00 |
+| tool_birthdays_default_pk_700x900_light_en | `summary.stat2` | y | 500.08 | 500.00 | -0.08 |
+| tool_birthdays_default_pk_700x900_light_en | `summary.stat2` | width | 152.00 | 152.00 | 0.00 |
+| tool_birthdays_default_pk_700x900_light_en | `summary.stat2` | height | 33.00 | 33.00 | 0.00 |
+| tool_birthdays_default_pk_700x900_light_en | `summary.stat3` | x | 369.00 | 369.00 | 0.00 |
+| tool_birthdays_default_pk_700x900_light_en | `summary.stat3` | y | 500.08 | 500.00 | -0.08 |
+| tool_birthdays_default_pk_700x900_light_en | `summary.stat3` | width | 152.00 | 152.00 | 0.00 |
+| tool_birthdays_default_pk_700x900_light_en | `summary.stat3` | height | 33.00 | 33.00 | 0.00 |
+| tool_birthdays_default_pk_700x900_light_en | `rows` | x | 24.00 | 24.00 | 0.00 |
+| tool_birthdays_default_pk_700x900_light_en | `rows` | y | 609.08 | 609.00 | -0.08 |
+| tool_birthdays_default_pk_700x900_light_en | `rows` | width | 518.00 | 518.00 | 0.00 |
+| tool_birthdays_default_pk_700x900_light_en | `rows` | height (reference -73, recorded) | 220.00 | 220.00 | 0.00 |
+| tool_birthdays_default_pk_700x900_light_en | `rrow1` | x | 25.00 | 25.00 | 0.00 |
+| tool_birthdays_default_pk_700x900_light_en | `rrow1` | y | 610.08 | 610.00 | -0.08 |
+| tool_birthdays_default_pk_700x900_light_en | `rrow1` | width | 516.00 | 516.00 | 0.00 |
+| tool_birthdays_default_pk_700x900_light_en | `rrow1` | height | 73.00 | 72.00 | -1.00 |
+| tool_birthdays_default_pk_700x900_light_en | `rrow2` | x | 25.00 | 25.00 | 0.00 |
+| tool_birthdays_default_pk_700x900_light_en | `rrow2` | y | 683.08 | 683.00 | -0.08 |
+| tool_birthdays_default_pk_700x900_light_en | `rrow2` | width | 516.00 | 516.00 | 0.00 |
+| tool_birthdays_default_pk_700x900_light_en | `rrow2` | height | 73.00 | 72.00 | -1.00 |
+| tool_birthdays_default_pk_700x900_light_en | `rrow.logo` | x | 41.00 | 41.00 | 0.00 |
+| tool_birthdays_default_pk_700x900_light_en | `rrow.logo` | y | 627.08 | 627.00 | -0.08 |
+| tool_birthdays_default_pk_700x900_light_en | `rrow.logo` | width | 38.00 | 38.00 | 0.00 |
+| tool_birthdays_default_pk_700x900_light_en | `rrow.logo` | height | 38.00 | 38.00 | 0.00 |
+| tool_birthdays_default_pk_700x900_light_en | `rrow.title` | x | 91.00 | 91.00 | 0.00 |
+| tool_birthdays_default_pk_700x900_light_en | `rrow.title` | y | 622.08 | 622.00 | -0.08 |
+| tool_birthdays_default_pk_700x900_light_en | `rrow.title` | width | 47.94 | 47.92 | -0.02 |
+| tool_birthdays_default_pk_700x900_light_en | `rrow.title` | height | 18.00 | 18.00 | 0.00 |
+| tool_birthdays_default_pk_700x900_light_en | `rrow.sub` | x | 91.00 | 91.00 | 0.00 |
+| tool_birthdays_default_pk_700x900_light_en | `rrow.sub` | y | 641.08 | 641.00 | -0.08 |
+| tool_birthdays_default_pk_700x900_light_en | `rrow.sub` | height | 13.00 | 13.00 | 0.00 |
+| tool_birthdays_default_pk_700x900_light_en | `rrow.meta` | x | 91.00 | 91.00 | 0.00 |
+| tool_birthdays_default_pk_700x900_light_en | `rrow.meta` | y | 658.08 | 658.00 | -0.08 |
+| tool_birthdays_default_pk_700x900_light_en | `rrow.meta` | height | 12.00 | 12.00 | 0.00 |
+| tool_birthdays_default_pk_700x900_light_en | `rrow.value` | x | 443.63 | 443.64 | 0.01 |
+| tool_birthdays_default_pk_700x900_light_en | `rrow.value` | y | 637.08 | 637.00 | -0.08 |
+| tool_birthdays_default_pk_700x900_light_en | `rrow.value` | width | 54.38 | 54.36 | -0.02 |
+| tool_birthdays_default_pk_700x900_light_en | `rrow.value` | height | 18.00 | 18.00 | 0.00 |
+| tool_birthdays_default_pk_700x900_light_en | `rrow.chev` | x | 510.00 | 510.00 | 0.00 |
+| tool_birthdays_default_pk_700x900_light_en | `rrow.chev` | y | 638.58 | 638.50 | -0.08 |
+| tool_birthdays_default_pk_700x900_light_en | `rrow.chev` | width | 15.00 | 15.00 | 0.00 |
+| tool_birthdays_default_pk_700x900_light_en | `rrow.chev` | height | 15.00 | 15.00 | 0.00 |
+| tool_birthdays_default_pk_700x900_light_en | `srcbar` | x | 24.00 | 24.00 | 0.00 |
+| tool_birthdays_default_pk_700x900_light_en | `srcbar` | y (reference -73, recorded) | 853.08 | 853.00 | -0.08 |
+| tool_birthdays_default_pk_700x900_light_en | `srcbar` | width | 518.00 | 518.00 | 0.00 |
+| tool_birthdays_default_pk_700x900_light_en | `srcbar` | height | 39.00 | 39.00 | 0.00 |
+| tool_birthdays_default_pk_700x900_light_en | `fresh` | x | 39.00 | 39.00 | 0.00 |
+| tool_birthdays_default_pk_700x900_light_en | `fresh` | y (reference -73, recorded) | 866.08 | 866.00 | -0.08 |
+| tool_birthdays_default_pk_700x900_light_en | `fresh` | width | 124.52 | 124.51 | -0.01 |
+| tool_birthdays_default_pk_700x900_light_en | `fresh` | height | 13.00 | 13.00 | 0.00 |
+| tool_birthdays_default_pk_700x900_light_en | `related` | x | 24.00 | 24.00 | 0.00 |
+| tool_birthdays_default_pk_700x900_light_en | `related` | y (reference -73, recorded) | 947.08 | 947.00 | -0.08 |
+| tool_birthdays_default_pk_700x900_light_en | `related` | width | 518.00 | 518.00 | 0.00 |
+| tool_birthdays_default_pk_700x900_light_en | `related` | height | 81.50 | 81.00 | -0.50 |
+| tool_birthdays_default_pk_700x900_light_en | `related.sect` | x | 0.00 | 0.00 | 0.00 |
+| tool_birthdays_default_pk_700x900_light_en | `related.sect` | y (reference -97, recorded) | 892.08 | 892.00 | -0.08 |
+| tool_birthdays_default_pk_700x900_light_en | `related.sect` | width | 566.00 | 566.00 | 0.00 |
+| tool_birthdays_default_pk_700x900_light_en | `related.sect` | height (reference +24, recorded) | 136.50 | 136.00 | -0.50 |
+| tool_birthdays_default_pk_700x900_light_en | `related.title` | x | 24.00 | 24.00 | 0.00 |
+| tool_birthdays_default_pk_700x900_light_en | `related.title` | y (reference -73, recorded) | 916.08 | 916.00 | -0.08 |
+| tool_birthdays_default_pk_700x900_light_en | `related.title` | width | 90.75 | 90.74 | -0.01 |
+| tool_birthdays_default_pk_700x900_light_en | `related.title` | height | 19.00 | 19.00 | 0.00 |
+| tool_birthdays_default_pk_700x900_light_en | `related.item1` | x | 24.00 | 24.00 | 0.00 |
+| tool_birthdays_default_pk_700x900_light_en | `related.item1` | y (reference -73, recorded) | 947.08 | 947.00 | -0.08 |
+| tool_birthdays_default_pk_700x900_light_en | `related.item1` | width | 78.00 | 78.00 | 0.00 |
+| tool_birthdays_default_pk_700x900_light_en | `related.item1` | height | 79.50 | 79.00 | -0.50 |
+| tool_birthdays_default_pk_700x900_light_en | `related.item2` | x | 110.00 | 110.00 | 0.00 |
+| tool_birthdays_default_pk_700x900_light_en | `related.item2` | y (reference -73, recorded) | 947.08 | 947.00 | -0.08 |
+| tool_birthdays_default_pk_700x900_light_en | `related.item2` | width | 78.00 | 78.00 | 0.00 |
+| tool_birthdays_default_pk_700x900_light_en | `related.item2` | height | 79.50 | 79.00 | -0.50 |
+| tool_birthdays_default_pk_1100x900_light_en | `toolbar` | x | 0.00 | 0.00 | 0.00 |
+| tool_birthdays_default_pk_1100x900_light_en | `toolbar` | y | 0.00 | 0.00 | 0.00 |
+| tool_birthdays_default_pk_1100x900_light_en | `toolbar` | width | 806.00 | 806.00 | 0.00 |
+| tool_birthdays_default_pk_1100x900_light_en | `toolbar` | height | 67.00 | 67.00 | 0.00 |
+| tool_birthdays_default_pk_1100x900_light_en | `toolbar.back` | x | 32.00 | 32.00 | 0.00 |
+| tool_birthdays_default_pk_1100x900_light_en | `toolbar.back` | y | 13.00 | 13.00 | 0.00 |
+| tool_birthdays_default_pk_1100x900_light_en | `toolbar.back` | width | 38.00 | 38.00 | 0.00 |
+| tool_birthdays_default_pk_1100x900_light_en | `toolbar.back` | height | 38.00 | 38.00 | 0.00 |
+| tool_birthdays_default_pk_1100x900_light_en | `toolbar.title` | x | 80.00 | 80.00 | 0.00 |
+| tool_birthdays_default_pk_1100x900_light_en | `toolbar.title` | y | 12.50 | 12.50 | 0.00 |
+| tool_birthdays_default_pk_1100x900_light_en | `toolbar.title` | height | 25.00 | 25.00 | 0.00 |
+| tool_birthdays_default_pk_1100x900_light_en | `toolbar.sub` | x | 80.00 | 80.00 | 0.00 |
+| tool_birthdays_default_pk_1100x900_light_en | `toolbar.sub` | y | 38.50 | 38.50 | 0.00 |
+| tool_birthdays_default_pk_1100x900_light_en | `toolbar.sub` | height | 13.00 | 13.00 | 0.00 |
+| tool_birthdays_default_pk_1100x900_light_en | `toolbar.actions` | x | 657.45 | 656.46 | -0.99 |
+| tool_birthdays_default_pk_1100x900_light_en | `toolbar.actions` | y | 10.00 | 10.00 | 0.00 |
+| tool_birthdays_default_pk_1100x900_light_en | `toolbar.actions` | width | 116.55 | 117.54 | 0.99 |
+| tool_birthdays_default_pk_1100x900_light_en | `toolbar.actions` | height | 44.00 | 44.00 | 0.00 |
+| tool_birthdays_default_pk_1100x900_light_en | `toolbar.textbtn` | x | 657.45 | 656.46 | -0.99 |
+| tool_birthdays_default_pk_1100x900_light_en | `toolbar.textbtn` | y | 10.00 | 10.00 | 0.00 |
+| tool_birthdays_default_pk_1100x900_light_en | `toolbar.textbtn` | width | 72.55 | 73.54 | 0.99 |
+| tool_birthdays_default_pk_1100x900_light_en | `toolbar.textbtn` | height | 44.00 | 44.00 | 0.00 |
+| tool_birthdays_default_pk_1100x900_light_en | `toolbar.action2` | x | 736.00 | 736.00 | 0.00 |
+| tool_birthdays_default_pk_1100x900_light_en | `toolbar.action2` | y (reference +3, recorded) | 13.00 | 13.00 | 0.00 |
+| tool_birthdays_default_pk_1100x900_light_en | `toolbar.action2` | width | 38.00 | 38.00 | 0.00 |
+| tool_birthdays_default_pk_1100x900_light_en | `toolbar.action2` | height | 38.00 | 38.00 | 0.00 |
+| tool_birthdays_default_pk_1100x900_light_en | `search` | x | 64.00 | 64.00 | 0.00 |
+| tool_birthdays_default_pk_1100x900_light_en | `search` | y | 83.00 | 83.00 | 0.00 |
+| tool_birthdays_default_pk_1100x900_light_en | `search` | width | 316.00 | 316.00 | 0.00 |
+| tool_birthdays_default_pk_1100x900_light_en | `search` | height | 44.00 | 44.00 | 0.00 |
+| tool_birthdays_default_pk_1100x900_light_en | `search.input` | x | 105.00 | 105.00 | 0.00 |
+| tool_birthdays_default_pk_1100x900_light_en | `search.input` | y (reference -1, recorded) | 94.00 | 94.00 | 0.00 |
+| tool_birthdays_default_pk_1100x900_light_en | `search.input` | width | 260.00 | 260.00 | 0.00 |
+| tool_birthdays_default_pk_1100x900_light_en | `search.input` | height (reference +2, recorded) | 22.00 | 22.00 | 0.00 |
+| tool_birthdays_default_pk_1100x900_light_en | `recs` | x | 32.00 | 32.00 | 0.00 |
+| tool_birthdays_default_pk_1100x900_light_en | `recs` | y | 127.00 | 127.00 | 0.00 |
+| tool_birthdays_default_pk_1100x900_light_en | `recs` | width | 380.00 | 380.00 | 0.00 |
+| tool_birthdays_default_pk_1100x900_light_en | `recs` | height | 218.00 | 218.00 | 0.00 |
+| tool_birthdays_default_pk_1100x900_light_en | `rrec1` | x | 32.00 | 32.00 | 0.00 |
+| tool_birthdays_default_pk_1100x900_light_en | `rrec1` | y | 127.00 | 127.00 | 0.00 |
+| tool_birthdays_default_pk_1100x900_light_en | `rrec1` | width | 380.00 | 380.00 | 0.00 |
+| tool_birthdays_default_pk_1100x900_light_en | `rrec1` | height | 66.00 | 66.00 | 0.00 |
+| tool_birthdays_default_pk_1100x900_light_en | `rrec2` | x | 32.00 | 32.00 | 0.00 |
+| tool_birthdays_default_pk_1100x900_light_en | `rrec2` | y | 203.00 | 203.00 | 0.00 |
+| tool_birthdays_default_pk_1100x900_light_en | `rrec2` | width | 380.00 | 380.00 | 0.00 |
+| tool_birthdays_default_pk_1100x900_light_en | `rrec2` | height | 66.00 | 66.00 | 0.00 |
+| tool_birthdays_default_pk_1100x900_light_en | `rrec.disc` | x | 47.00 | 47.00 | 0.00 |
+| tool_birthdays_default_pk_1100x900_light_en | `rrec.disc` | y | 141.00 | 141.00 | 0.00 |
+| tool_birthdays_default_pk_1100x900_light_en | `rrec.disc` | width | 38.00 | 38.00 | 0.00 |
+| tool_birthdays_default_pk_1100x900_light_en | `rrec.disc` | height | 38.00 | 38.00 | 0.00 |
+| tool_birthdays_default_pk_1100x900_light_en | `rrec.title` | x | 97.00 | 97.00 | 0.00 |
+| tool_birthdays_default_pk_1100x900_light_en | `rrec.title` | y | 141.00 | 141.00 | 0.00 |
+| tool_birthdays_default_pk_1100x900_light_en | `rrec.title` | width | 51.17 | 51.17 | -0.00 |
+| tool_birthdays_default_pk_1100x900_light_en | `rrec.title` | height | 20.00 | 20.00 | 0.00 |
+| tool_birthdays_default_pk_1100x900_light_en | `rrec.sub` | x | 97.00 | 97.00 | 0.00 |
+| tool_birthdays_default_pk_1100x900_light_en | `rrec.sub` | y | 163.00 | 163.00 | 0.00 |
+| tool_birthdays_default_pk_1100x900_light_en | `rrec.sub` | height | 16.00 | 16.00 | 0.00 |
+| tool_birthdays_default_pk_1100x900_light_en | `rrec.value` | x | 315.75 | 315.76 | 0.01 |
+| tool_birthdays_default_pk_1100x900_light_en | `rrec.value` | y | 150.00 | 150.00 | 0.00 |
+| tool_birthdays_default_pk_1100x900_light_en | `rrec.value` | width | 58.25 | 58.24 | -0.01 |
+| tool_birthdays_default_pk_1100x900_light_en | `rrec.value` | height | 20.00 | 20.00 | 0.00 |
+| tool_birthdays_default_pk_1100x900_light_en | `rrec.chev` | x | 382.00 | 382.00 | 0.00 |
+| tool_birthdays_default_pk_1100x900_light_en | `rrec.chev` | y | 152.50 | 152.50 | 0.00 |
+| tool_birthdays_default_pk_1100x900_light_en | `rrec.chev` | width | 15.00 | 15.00 | 0.00 |
+| tool_birthdays_default_pk_1100x900_light_en | `rrec.chev` | height | 15.00 | 15.00 | 0.00 |
+| tool_birthdays_default_pk_1100x900_light_en | `sect1` | x | 0.00 | 0.00 | 0.00 |
+| tool_birthdays_default_pk_1100x900_light_en | `sect1` | y (reference -16, recorded) | 67.00 | 67.00 | 0.00 |
+| tool_birthdays_default_pk_1100x900_light_en | `sect1` | width | 806.00 | 806.00 | 0.00 |
+| tool_birthdays_default_pk_1100x900_light_en | `sect1` | height (reference +16, recorded) | 336.00 | 336.00 | 0.00 |
+| tool_birthdays_default_pk_1100x900_light_en | `sect2` | x | 0.00 | 0.00 | 0.00 |
+| tool_birthdays_default_pk_1100x900_light_en | `sect2` | y (reference -24, recorded) | 403.00 | 403.00 | 0.00 |
+| tool_birthdays_default_pk_1100x900_light_en | `sect2` | width | 806.00 | 806.00 | 0.00 |
+| tool_birthdays_default_pk_1100x900_light_en | `sect2` | height (reference +24, recorded) | 209.08 | 209.00 | -0.08 |
+| tool_birthdays_default_pk_1100x900_light_en | `sect3` | x | 0.00 | 0.00 | 0.00 |
+| tool_birthdays_default_pk_1100x900_light_en | `sect3` | y (reference -24, recorded) | 612.08 | 612.00 | -0.08 |
+| tool_birthdays_default_pk_1100x900_light_en | `sect3` | width | 806.00 | 806.00 | 0.00 |
+| tool_birthdays_default_pk_1100x900_light_en | `sect3` | height (reference -49, recorded) | 275.00 | 275.00 | 0.00 |
+| tool_birthdays_default_pk_1100x900_light_en | `sect3.title` | x | 32.00 | 32.00 | 0.00 |
+| tool_birthdays_default_pk_1100x900_light_en | `sect3.title` | y | 636.08 | 636.00 | -0.08 |
+| tool_birthdays_default_pk_1100x900_light_en | `sect3.title` | width | 75.42 | 75.42 | 0.00 |
+| tool_birthdays_default_pk_1100x900_light_en | `sect3.title` | height | 19.00 | 19.00 | 0.00 |
+| tool_birthdays_default_pk_1100x900_light_en | `summary` | x | 32.00 | 32.00 | 0.00 |
+| tool_birthdays_default_pk_1100x900_light_en | `summary` | y | 427.00 | 427.00 | 0.00 |
+| tool_birthdays_default_pk_1100x900_light_en | `summary` | width | 742.00 | 742.00 | 0.00 |
+| tool_birthdays_default_pk_1100x900_light_en | `summary` | height | 185.08 | 185.00 | -0.08 |
+| tool_birthdays_default_pk_1100x900_light_en | `summary.kicker` | x | 53.00 | 53.00 | 0.00 |
+| tool_birthdays_default_pk_1100x900_light_en | `summary.kicker` | y | 448.00 | 448.00 | 0.00 |
+| tool_birthdays_default_pk_1100x900_light_en | `summary.kicker` | height | 13.00 | 13.00 | 0.00 |
+| tool_birthdays_default_pk_1100x900_light_en | `summary.value` | x | 53.00 | 53.00 | 0.00 |
+| tool_birthdays_default_pk_1100x900_light_en | `summary.value` | y | 467.00 | 467.00 | 0.00 |
+| tool_birthdays_default_pk_1100x900_light_en | `summary.value` | height | 35.69 | 36.00 | 0.31 |
+| tool_birthdays_default_pk_1100x900_light_en | `summary.caption` | x | 53.00 | 53.00 | 0.00 |
+| tool_birthdays_default_pk_1100x900_light_en | `summary.caption` | y | 509.69 | 510.00 | 0.31 |
+| tool_birthdays_default_pk_1100x900_light_en | `summary.caption` | height | 17.39 | 17.00 | -0.39 |
+| tool_birthdays_default_pk_1100x900_light_en | `summary.stats` | x | 53.00 | 53.00 | 0.00 |
+| tool_birthdays_default_pk_1100x900_light_en | `summary.stats` | y | 543.08 | 543.00 | -0.08 |
+| tool_birthdays_default_pk_1100x900_light_en | `summary.stats` | width | 700.00 | 700.00 | 0.00 |
+| tool_birthdays_default_pk_1100x900_light_en | `summary.stats` | height | 48.00 | 48.00 | 0.00 |
+| tool_birthdays_default_pk_1100x900_light_en | `summary.stat1` | x | 53.00 | 53.00 | 0.00 |
+| tool_birthdays_default_pk_1100x900_light_en | `summary.stat1` | y | 558.08 | 558.00 | -0.08 |
+| tool_birthdays_default_pk_1100x900_light_en | `summary.stat1` | width | 226.66 | 226.67 | 0.01 |
+| tool_birthdays_default_pk_1100x900_light_en | `summary.stat1` | height | 33.00 | 33.00 | 0.00 |
+| tool_birthdays_default_pk_1100x900_light_en | `summary.stat2` | x | 289.66 | 289.67 | 0.01 |
+| tool_birthdays_default_pk_1100x900_light_en | `summary.stat2` | y | 558.08 | 558.00 | -0.08 |
+| tool_birthdays_default_pk_1100x900_light_en | `summary.stat2` | width | 226.67 | 226.67 | -0.00 |
+| tool_birthdays_default_pk_1100x900_light_en | `summary.stat2` | height | 33.00 | 33.00 | 0.00 |
+| tool_birthdays_default_pk_1100x900_light_en | `summary.stat3` | x | 526.33 | 526.33 | 0.00 |
+| tool_birthdays_default_pk_1100x900_light_en | `summary.stat3` | y | 558.08 | 558.00 | -0.08 |
+| tool_birthdays_default_pk_1100x900_light_en | `summary.stat3` | width | 226.67 | 226.67 | -0.00 |
+| tool_birthdays_default_pk_1100x900_light_en | `summary.stat3` | height | 33.00 | 33.00 | 0.00 |
+| tool_birthdays_default_pk_1100x900_light_en | `rows` | x | 32.00 | 32.00 | 0.00 |
+| tool_birthdays_default_pk_1100x900_light_en | `rows` | y | 667.08 | 667.00 | -0.08 |
+| tool_birthdays_default_pk_1100x900_light_en | `rows` | width | 742.00 | 742.00 | 0.00 |
+| tool_birthdays_default_pk_1100x900_light_en | `rows` | height (reference -73, recorded) | 220.00 | 220.00 | 0.00 |
+| tool_birthdays_default_pk_1100x900_light_en | `rrow1` | x | 33.00 | 33.00 | 0.00 |
+| tool_birthdays_default_pk_1100x900_light_en | `rrow1` | y | 668.08 | 668.00 | -0.08 |
+| tool_birthdays_default_pk_1100x900_light_en | `rrow1` | width | 740.00 | 740.00 | 0.00 |
+| tool_birthdays_default_pk_1100x900_light_en | `rrow1` | height | 73.00 | 72.00 | -1.00 |
+| tool_birthdays_default_pk_1100x900_light_en | `rrow2` | x | 33.00 | 33.00 | 0.00 |
+| tool_birthdays_default_pk_1100x900_light_en | `rrow2` | y | 741.08 | 741.00 | -0.08 |
+| tool_birthdays_default_pk_1100x900_light_en | `rrow2` | width | 740.00 | 740.00 | 0.00 |
+| tool_birthdays_default_pk_1100x900_light_en | `rrow2` | height | 73.00 | 72.00 | -1.00 |
+| tool_birthdays_default_pk_1100x900_light_en | `rrow.logo` | x | 49.00 | 49.00 | 0.00 |
+| tool_birthdays_default_pk_1100x900_light_en | `rrow.logo` | y | 685.08 | 685.00 | -0.08 |
+| tool_birthdays_default_pk_1100x900_light_en | `rrow.logo` | width | 38.00 | 38.00 | 0.00 |
+| tool_birthdays_default_pk_1100x900_light_en | `rrow.logo` | height | 38.00 | 38.00 | 0.00 |
+| tool_birthdays_default_pk_1100x900_light_en | `rrow.title` | x | 99.00 | 99.00 | 0.00 |
+| tool_birthdays_default_pk_1100x900_light_en | `rrow.title` | y | 680.08 | 680.00 | -0.08 |
+| tool_birthdays_default_pk_1100x900_light_en | `rrow.title` | width | 47.94 | 47.92 | -0.02 |
+| tool_birthdays_default_pk_1100x900_light_en | `rrow.title` | height | 18.00 | 18.00 | 0.00 |
+| tool_birthdays_default_pk_1100x900_light_en | `rrow.sub` | x | 99.00 | 99.00 | 0.00 |
+| tool_birthdays_default_pk_1100x900_light_en | `rrow.sub` | y | 699.08 | 699.00 | -0.08 |
+| tool_birthdays_default_pk_1100x900_light_en | `rrow.sub` | height | 13.00 | 13.00 | 0.00 |
+| tool_birthdays_default_pk_1100x900_light_en | `rrow.meta` | x | 99.00 | 99.00 | 0.00 |
+| tool_birthdays_default_pk_1100x900_light_en | `rrow.meta` | y | 716.08 | 716.00 | -0.08 |
+| tool_birthdays_default_pk_1100x900_light_en | `rrow.meta` | height | 12.00 | 12.00 | 0.00 |
+| tool_birthdays_default_pk_1100x900_light_en | `rrow.value` | x | 675.63 | 675.64 | 0.01 |
+| tool_birthdays_default_pk_1100x900_light_en | `rrow.value` | y | 695.08 | 695.00 | -0.08 |
+| tool_birthdays_default_pk_1100x900_light_en | `rrow.value` | width | 54.38 | 54.36 | -0.02 |
+| tool_birthdays_default_pk_1100x900_light_en | `rrow.value` | height | 18.00 | 18.00 | 0.00 |
+| tool_birthdays_default_pk_1100x900_light_en | `rrow.chev` | x | 742.00 | 742.00 | 0.00 |
+| tool_birthdays_default_pk_1100x900_light_en | `rrow.chev` | y | 696.58 | 696.50 | -0.08 |
+| tool_birthdays_default_pk_1100x900_light_en | `rrow.chev` | width | 15.00 | 15.00 | 0.00 |
+| tool_birthdays_default_pk_1100x900_light_en | `rrow.chev` | height | 15.00 | 15.00 | 0.00 |
+| tool_birthdays_default_pk_1100x900_light_en | `srcbar` | x | 32.00 | 32.00 | 0.00 |
+| tool_birthdays_default_pk_1100x900_light_en | `srcbar` | y (reference -73, recorded) | 911.08 | 911.00 | -0.08 |
+| tool_birthdays_default_pk_1100x900_light_en | `srcbar` | width | 742.00 | 742.00 | 0.00 |
+| tool_birthdays_default_pk_1100x900_light_en | `srcbar` | height | 39.00 | 39.00 | 0.00 |
+| tool_birthdays_default_pk_1100x900_light_en | `fresh` | x | 47.00 | 47.00 | 0.00 |
+| tool_birthdays_default_pk_1100x900_light_en | `fresh` | y (reference -73, recorded) | 924.08 | 924.00 | -0.08 |
+| tool_birthdays_default_pk_1100x900_light_en | `fresh` | width | 124.52 | 124.51 | -0.01 |
+| tool_birthdays_default_pk_1100x900_light_en | `fresh` | height | 13.00 | 13.00 | 0.00 |
+| tool_birthdays_default_pk_1100x900_light_en | `related` | x | 32.00 | 32.00 | 0.00 |
+| tool_birthdays_default_pk_1100x900_light_en | `related` | y (reference -73, recorded) | 1005.08 | 1005.00 | -0.08 |
+| tool_birthdays_default_pk_1100x900_light_en | `related` | width | 742.00 | 742.00 | 0.00 |
+| tool_birthdays_default_pk_1100x900_light_en | `related` | height | 81.50 | 81.00 | -0.50 |
+| tool_birthdays_default_pk_1100x900_light_en | `related.sect` | x | 0.00 | 0.00 | 0.00 |
+| tool_birthdays_default_pk_1100x900_light_en | `related.sect` | y (reference -97, recorded) | 950.08 | 950.00 | -0.08 |
+| tool_birthdays_default_pk_1100x900_light_en | `related.sect` | width | 806.00 | 806.00 | 0.00 |
+| tool_birthdays_default_pk_1100x900_light_en | `related.sect` | height (reference +24, recorded) | 136.50 | 136.00 | -0.50 |
+| tool_birthdays_default_pk_1100x900_light_en | `related.title` | x | 32.00 | 32.00 | 0.00 |
+| tool_birthdays_default_pk_1100x900_light_en | `related.title` | y (reference -73, recorded) | 974.08 | 974.00 | -0.08 |
+| tool_birthdays_default_pk_1100x900_light_en | `related.title` | width | 90.75 | 90.74 | -0.01 |
+| tool_birthdays_default_pk_1100x900_light_en | `related.title` | height | 19.00 | 19.00 | 0.00 |
+| tool_birthdays_default_pk_1100x900_light_en | `related.item1` | x | 32.00 | 32.00 | 0.00 |
+| tool_birthdays_default_pk_1100x900_light_en | `related.item1` | y (reference -73, recorded) | 1005.08 | 1005.00 | -0.08 |
+| tool_birthdays_default_pk_1100x900_light_en | `related.item1` | width | 78.00 | 78.00 | 0.00 |
+| tool_birthdays_default_pk_1100x900_light_en | `related.item1` | height | 79.50 | 79.00 | -0.50 |
+| tool_birthdays_default_pk_1100x900_light_en | `related.item2` | x | 118.00 | 118.00 | 0.00 |
+| tool_birthdays_default_pk_1100x900_light_en | `related.item2` | y (reference -73, recorded) | 1005.08 | 1005.00 | -0.08 |
+| tool_birthdays_default_pk_1100x900_light_en | `related.item2` | width | 78.00 | 78.00 | 0.00 |
+| tool_birthdays_default_pk_1100x900_light_en | `related.item2` | height | 79.50 | 79.00 | -0.50 |
+| tool_birthdays_default_pk_detail_390x844_light_en | `toolbar` | x | 0.00 | 0.00 | 0.00 |
+| tool_birthdays_default_pk_detail_390x844_light_en | `toolbar` | y | 0.00 | 0.00 | 0.00 |
+| tool_birthdays_default_pk_detail_390x844_light_en | `toolbar` | width | 390.00 | 390.00 | 0.00 |
+| tool_birthdays_default_pk_detail_390x844_light_en | `toolbar` | height | 62.00 | 62.00 | 0.00 |
+| tool_birthdays_default_pk_detail_390x844_light_en | `chero` | x | 20.00 | 20.00 | 0.00 |
+| tool_birthdays_default_pk_detail_390x844_light_en | `chero` | y | 86.00 | 86.00 | 0.00 |
+| tool_birthdays_default_pk_detail_390x844_light_en | `chero` | width | 350.00 | 350.00 | 0.00 |
+| tool_birthdays_default_pk_detail_390x844_light_en | `chero` | height | 132.00 | 132.00 | 0.00 |
+| tool_birthdays_default_pk_detail_390x844_light_en | `chero.kicker` | x | 42.00 | 42.00 | 0.00 |
+| tool_birthdays_default_pk_detail_390x844_light_en | `chero.kicker` | y | 108.00 | 108.00 | 0.00 |
+| tool_birthdays_default_pk_detail_390x844_light_en | `chero.kicker` | height | 16.00 | 16.00 | 0.00 |
+| tool_birthdays_default_pk_detail_390x844_light_en | `chero.value` | x | 42.00 | 42.00 | 0.00 |
+| tool_birthdays_default_pk_detail_390x844_light_en | `chero.value` | y | 138.00 | 138.00 | 0.00 |
+| tool_birthdays_default_pk_detail_390x844_light_en | `chero.value` | height | 32.00 | 32.00 | 0.00 |
+| tool_birthdays_default_pk_detail_390x844_light_en | `chero.caption` | x | 42.00 | 42.00 | 0.00 |
+| tool_birthdays_default_pk_detail_390x844_light_en | `chero.caption` | y | 180.00 | 180.00 | 0.00 |
+| tool_birthdays_default_pk_detail_390x844_light_en | `chero.caption` | height | 16.00 | 16.00 | 0.00 |
+| tool_birthdays_default_pk_detail_390x844_light_en | `cfacts` | x | 20.00 | 20.00 | 0.00 |
+| tool_birthdays_default_pk_detail_390x844_light_en | `cfacts` | y | 249.00 | 249.00 | 0.00 |
+| tool_birthdays_default_pk_detail_390x844_light_en | `cfacts` | width | 350.00 | 350.00 | 0.00 |
+| tool_birthdays_default_pk_detail_390x844_light_en | `cfacts` | height | 274.00 | 274.00 | 0.00 |
+| tool_birthdays_default_pk_detail_390x844_light_en | `cfact1` | x | 37.00 | 37.00 | 0.00 |
+| tool_birthdays_default_pk_detail_390x844_light_en | `cfact1` | y | 254.00 | 254.00 | 0.00 |
+| tool_birthdays_default_pk_detail_390x844_light_en | `cfact1` | width | 316.00 | 316.00 | 0.00 |
+| tool_birthdays_default_pk_detail_390x844_light_en | `cfact1` | height | 53.00 | 52.00 | -1.00 |
+| tool_birthdays_default_pk_detail_390x844_light_en | `cfact.label` | x | 37.00 | 37.00 | 0.00 |
+| tool_birthdays_default_pk_detail_390x844_light_en | `cfact.label` | y | 269.00 | 269.00 | 0.00 |
+| tool_birthdays_default_pk_detail_390x844_light_en | `cfact.label` | width | 64.48 | 64.48 | 0.00 |
+| tool_birthdays_default_pk_detail_390x844_light_en | `cfact.label` | height | 22.00 | 22.00 | 0.00 |
+| tool_birthdays_default_pk_detail_390x844_light_en | `cacts` | x | 20.00 | 20.00 | 0.00 |
+| tool_birthdays_default_pk_detail_390x844_light_en | `cacts` | y | 543.00 | 543.00 | 0.00 |
+| tool_birthdays_default_pk_detail_390x844_light_en | `cacts` | width | 350.00 | 350.00 | 0.00 |
+| tool_birthdays_default_pk_detail_390x844_light_en | `cacts` | height | 114.00 | 114.00 | 0.00 |
+| tool_birthdays_default_pk_detail_390x844_light_en | `cact.edit` | x | 20.00 | 20.00 | 0.00 |
+| tool_birthdays_default_pk_detail_390x844_light_en | `cact.edit` | y | 543.00 | 543.00 | 0.00 |
+| tool_birthdays_default_pk_detail_390x844_light_en | `cact.edit` | width | 350.00 | 350.00 | 0.00 |
+| tool_birthdays_default_pk_detail_390x844_light_en | `cact.edit` | height | 52.00 | 52.00 | 0.00 |
+| tool_birthdays_default_pk_detail_390x844_light_en | `cact.danger` | x | 20.00 | 20.00 | 0.00 |
+| tool_birthdays_default_pk_detail_390x844_light_en | `cact.danger` | y | 605.00 | 605.00 | 0.00 |
+| tool_birthdays_default_pk_detail_390x844_light_en | `cact.danger` | width | 350.00 | 350.00 | 0.00 |
+| tool_birthdays_default_pk_detail_390x844_light_en | `cact.danger` | height | 52.00 | 52.00 | 0.00 |
+| tool_birthdays_default_pk_detail_390x844_light_en | `crud.id` | x | 20.00 | 20.00 | 0.00 |
+| tool_birthdays_default_pk_detail_390x844_light_en | `crud.id` | y | 675.00 | 675.00 | 0.00 |
+| tool_birthdays_default_pk_detail_390x844_light_en | `crud.id` | width | 350.00 | 350.00 | 0.00 |
+| tool_birthdays_default_pk_detail_390x844_light_en | `crud.id` | height | 16.00 | 16.00 | 0.00 |
+| tool_birthdays_default_pk_detail_1100x900_light_en | `toolbar` | x | 0.00 | 0.00 | 0.00 |
+| tool_birthdays_default_pk_detail_1100x900_light_en | `toolbar` | y | 0.00 | 0.00 | 0.00 |
+| tool_birthdays_default_pk_detail_1100x900_light_en | `toolbar` | width | 806.00 | 806.00 | 0.00 |
+| tool_birthdays_default_pk_detail_1100x900_light_en | `toolbar` | height | 67.00 | 67.00 | 0.00 |
+| tool_birthdays_default_pk_detail_1100x900_light_en | `chero` | x | 432.00 | 432.00 | 0.00 |
+| tool_birthdays_default_pk_detail_1100x900_light_en | `chero` | y | 83.00 | 83.00 | 0.00 |
+| tool_birthdays_default_pk_detail_1100x900_light_en | `chero` | width | 342.00 | 342.00 | 0.00 |
+| tool_birthdays_default_pk_detail_1100x900_light_en | `chero` | height | 132.00 | 132.00 | 0.00 |
+| tool_birthdays_default_pk_detail_1100x900_light_en | `chero.kicker` | x | 454.00 | 454.00 | 0.00 |
+| tool_birthdays_default_pk_detail_1100x900_light_en | `chero.kicker` | y | 105.00 | 105.00 | 0.00 |
+| tool_birthdays_default_pk_detail_1100x900_light_en | `chero.kicker` | height | 16.00 | 16.00 | 0.00 |
+| tool_birthdays_default_pk_detail_1100x900_light_en | `chero.value` | x | 454.00 | 454.00 | 0.00 |
+| tool_birthdays_default_pk_detail_1100x900_light_en | `chero.value` | y | 135.00 | 135.00 | 0.00 |
+| tool_birthdays_default_pk_detail_1100x900_light_en | `chero.value` | height | 32.00 | 32.00 | 0.00 |
+| tool_birthdays_default_pk_detail_1100x900_light_en | `chero.caption` | x | 454.00 | 454.00 | 0.00 |
+| tool_birthdays_default_pk_detail_1100x900_light_en | `chero.caption` | y | 177.00 | 177.00 | 0.00 |
+| tool_birthdays_default_pk_detail_1100x900_light_en | `chero.caption` | height | 16.00 | 16.00 | 0.00 |
+| tool_birthdays_default_pk_detail_1100x900_light_en | `cfacts` | x | 432.00 | 432.00 | 0.00 |
+| tool_birthdays_default_pk_detail_1100x900_light_en | `cfacts` | y | 246.00 | 246.00 | 0.00 |
+| tool_birthdays_default_pk_detail_1100x900_light_en | `cfacts` | width | 342.00 | 342.00 | 0.00 |
+| tool_birthdays_default_pk_detail_1100x900_light_en | `cfacts` | height | 274.00 | 274.00 | 0.00 |
+| tool_birthdays_default_pk_detail_1100x900_light_en | `cfact1` | x | 449.00 | 449.00 | 0.00 |
+| tool_birthdays_default_pk_detail_1100x900_light_en | `cfact1` | y | 251.00 | 251.00 | 0.00 |
+| tool_birthdays_default_pk_detail_1100x900_light_en | `cfact1` | width | 308.00 | 308.00 | 0.00 |
+| tool_birthdays_default_pk_detail_1100x900_light_en | `cfact1` | height | 53.00 | 52.00 | -1.00 |
+| tool_birthdays_default_pk_detail_1100x900_light_en | `cfact.label` | x | 449.00 | 449.00 | 0.00 |
+| tool_birthdays_default_pk_detail_1100x900_light_en | `cfact.label` | y | 266.00 | 266.00 | 0.00 |
+| tool_birthdays_default_pk_detail_1100x900_light_en | `cfact.label` | width | 64.48 | 64.48 | 0.00 |
+| tool_birthdays_default_pk_detail_1100x900_light_en | `cfact.label` | height | 22.00 | 22.00 | 0.00 |
+| tool_birthdays_default_pk_detail_1100x900_light_en | `cacts` | x | 432.00 | 432.00 | 0.00 |
+| tool_birthdays_default_pk_detail_1100x900_light_en | `cacts` | y | 540.00 | 540.00 | 0.00 |
+| tool_birthdays_default_pk_detail_1100x900_light_en | `cacts` | width | 342.00 | 342.00 | 0.00 |
+| tool_birthdays_default_pk_detail_1100x900_light_en | `cacts` | height | 114.00 | 114.00 | 0.00 |
+| tool_birthdays_default_pk_detail_1100x900_light_en | `cact.edit` | x | 432.00 | 432.00 | 0.00 |
+| tool_birthdays_default_pk_detail_1100x900_light_en | `cact.edit` | y | 540.00 | 540.00 | 0.00 |
+| tool_birthdays_default_pk_detail_1100x900_light_en | `cact.edit` | width | 342.00 | 342.00 | 0.00 |
+| tool_birthdays_default_pk_detail_1100x900_light_en | `cact.edit` | height | 52.00 | 52.00 | 0.00 |
+| tool_birthdays_default_pk_detail_1100x900_light_en | `cact.danger` | x | 432.00 | 432.00 | 0.00 |
+| tool_birthdays_default_pk_detail_1100x900_light_en | `cact.danger` | y | 602.00 | 602.00 | 0.00 |
+| tool_birthdays_default_pk_detail_1100x900_light_en | `cact.danger` | width | 342.00 | 342.00 | 0.00 |
+| tool_birthdays_default_pk_detail_1100x900_light_en | `cact.danger` | height | 52.00 | 52.00 | 0.00 |
+| tool_birthdays_default_pk_detail_1100x900_light_en | `crud.id` | x | 432.00 | 432.00 | 0.00 |
+| tool_birthdays_default_pk_detail_1100x900_light_en | `crud.id` | y | 672.00 | 672.00 | 0.00 |
+| tool_birthdays_default_pk_detail_1100x900_light_en | `crud.id` | width | 342.00 | 342.00 | 0.00 |
+| tool_birthdays_default_pk_detail_1100x900_light_en | `crud.id` | height | 16.00 | 16.00 | 0.00 |
+| tool_birthdays_default_pk_new_390x844_light_en | `toolbar` | x | 0.00 | 0.00 | 0.00 |
+| tool_birthdays_default_pk_new_390x844_light_en | `toolbar` | y | 0.00 | 0.00 | 0.00 |
+| tool_birthdays_default_pk_new_390x844_light_en | `toolbar` | width | 390.00 | 390.00 | 0.00 |
+| tool_birthdays_default_pk_new_390x844_light_en | `toolbar` | height | 67.00 | 67.00 | 0.00 |
+| tool_birthdays_default_pk_new_390x844_light_en | `cform` | x | 20.00 | 20.00 | 0.00 |
+| tool_birthdays_default_pk_new_390x844_light_en | `cform` | y | 91.00 | 91.00 | 0.00 |
+| tool_birthdays_default_pk_new_390x844_light_en | `cform` | width | 350.00 | 350.00 | 0.00 |
+| tool_birthdays_default_pk_new_390x844_light_en | `cfield1` | x | 20.00 | 20.00 | 0.00 |
+| tool_birthdays_default_pk_new_390x844_light_en | `cfield1` | y | 91.00 | 91.00 | 0.00 |
+| tool_birthdays_default_pk_new_390x844_light_en | `cfield1` | width | 350.00 | 350.00 | 0.00 |
+| tool_birthdays_default_pk_new_390x844_light_en | `cfield1` | height | 71.00 | 71.00 | 0.00 |
+| tool_birthdays_default_pk_new_390x844_light_en | `cfield2` | x | 20.00 | 20.00 | 0.00 |
+| tool_birthdays_default_pk_new_390x844_light_en | `cfield2` | y | 180.00 | 180.00 | 0.00 |
+| tool_birthdays_default_pk_new_390x844_light_en | `cfield2` | width | 350.00 | 350.00 | 0.00 |
+| tool_birthdays_default_pk_new_390x844_light_en | `cfield2` | height | 71.00 | 71.41 | 0.41 |
+| tool_birthdays_default_pk_new_390x844_light_en | `cfield.label` | x | 20.00 | 20.00 | 0.00 |
+| tool_birthdays_default_pk_new_390x844_light_en | `cfield.label` | y | 91.00 | 91.00 | 0.00 |
+| tool_birthdays_default_pk_new_390x844_light_en | `cfield.label` | width | 350.00 | 350.00 | 0.00 |
+| tool_birthdays_default_pk_new_390x844_light_en | `cfield.label` | height | 16.00 | 16.00 | 0.00 |
+| tool_birthdays_default_pk_new_390x844_light_en | `cfield.box` | x | 20.00 | 20.00 | 0.00 |
+| tool_birthdays_default_pk_new_390x844_light_en | `cfield.box` | y | 114.00 | 114.00 | 0.00 |
+| tool_birthdays_default_pk_new_390x844_light_en | `cfield.box` | width | 350.00 | 350.00 | 0.00 |
+| tool_birthdays_default_pk_new_390x844_light_en | `cfield.box` | height | 48.00 | 48.00 | 0.00 |
+| tool_birthdays_default_pk_new_390x844_light_en | `csubmit` | x | 20.00 | 20.00 | 0.00 |
+| tool_birthdays_default_pk_new_390x844_light_en | `csubmit` | y | 502.06 | 501.41 | -0.65 |
+| tool_birthdays_default_pk_new_390x844_light_en | `csubmit` | width | 350.00 | 350.00 | 0.00 |
+| tool_birthdays_default_pk_new_390x844_light_en | `csubmit` | height (reference +2, recorded) | 74.00 | 74.00 | 0.00 |
+| tool_birthdays_default_pk_new_390x844_light_en | `csubmit.btn` | x | 20.00 | 20.00 | 0.00 |
+| tool_birthdays_default_pk_new_390x844_light_en | `csubmit.btn` | y | 502.06 | 501.41 | -0.65 |
+| tool_birthdays_default_pk_new_390x844_light_en | `csubmit.btn` | width | 350.00 | 350.00 | 0.00 |
+| tool_birthdays_default_pk_new_390x844_light_en | `csubmit.btn` | height | 46.00 | 46.00 | 0.00 |
+| tool_birthdays_default_pk_new_390x844_light_en | `csubmit.note` | x | 20.00 | 20.00 | 0.00 |
+| tool_birthdays_default_pk_new_390x844_light_en | `csubmit.note` | y (reference +1, recorded) | 559.41 | 559.41 | -0.00 |
+| tool_birthdays_default_pk_new_390x844_light_en | `csubmit.note` | width | 350.00 | 350.00 | 0.00 |
+| tool_birthdays_default_pk_new_390x844_light_en | `csubmit.note` | height | 16.00 | 16.00 | 0.00 |

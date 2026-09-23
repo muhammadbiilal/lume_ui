@@ -2479,6 +2479,209 @@ sample record ticked from its row would have shown its raw `@key`.
 `update(…, claim: false)` keeps it; a form's save still claims the record as
 the reader's (`memory_record_repository_test.dart`).
 
+### C100 — Wave 4: an exact converter, and two tools that stop guessing at the reader's life
+
+**Three tools built, and the corrections each one carried.** Unit Converter,
+Birthdays and Water. What they have in common is that all three of their
+references assert things about the reader — how far apart two units are, when
+somebody was born, how much water they drank — and all three get at least one
+of them wrong.
+
+#### Unit Converter
+
+The factor policy approved for this wave is on the screen, and every part of
+it is asserted at the table and again at the tool.
+
+**Decimal names take decimal factors.** `context.js:1116-1117` gives `GB` a
+factor of 1024 and `TB` 1048576, over a category based on the megabyte. Those
+are binary values under SI names: the reference's gigabyte overstates by
+**2.4 %** and its terabyte by **4.9 %**. Lume's kB is 1,000 bytes, MB 10⁶,
+GB 10⁹, TB 10¹², and the binary units are named — KiB, MiB, GiB, TiB — so no
+binary factor appears under a decimal name. A rule test requires it: any data
+unit whose factor is a power of 1,024 must carry the IEC `i`, so a unit added
+later cannot slip past.
+
+**A bare `gal` is never shown.** `context.js:1108` has one gallon at
+3.78541 L — a US gallon, served to every reader on earth. An Imperial gallon
+is 20.1 % larger, so a reader in the United Kingdom was told **16.7 % too
+little**. `gal (US)` and `gal (imperial)` are separate named units, and a
+test asserts no text anywhere on the screen is a bare `gal`. The cup is
+named `Cup (US)` for the same reason: 0.24 L is the US legal cup.
+
+**The constants are the defined values.** The reference truncates every
+imperial factor to six significant figures — `1609.34`, `0.453592`,
+`1.60934`, `0.0283495`. A mile is exactly 1609.344 m and a pound exactly
+0.45359237 kg, and the ounce is now a sixteenth of that pound as the same
+rational, not as an approximation of one.
+
+**Both units are chosen.** The reference has no picker at all: `from` is
+`units[0]` and `to` is `units[1]`, or `units[3]` for a reader on imperial
+units (`context.js:1129-1130`). Index three is `oz` for mass, `cup` for
+volume and, for area, **`marla`** — a Pakistani land unit, served to a reader
+in Ohio because of where it sits in a list. The heuristic is dropped and the
+opening pair is named per category. Five of the six are the pairs the
+reference's own rule produces for a metric reader, measured rather than
+assumed; Data opens `GB → MB` rather than `B → kB`, because at the display's
+four decimals one byte in six of the nine units rounds to zero, and because
+`1 GB = 1,000 MB` is the correction itself.
+
+**The selected chip is drawn selected.** `converter.tool.js:19` emits
+`.chip.is-on`; `components.css:463` defines `.chip.is-active`. Measured on
+`tool_converter_default_pk_390x844_light_en`, the selected chip renders
+`rgb(86, 88, 95)` on `rgb(255, 255, 255)` — byte-identical to an unselected
+one. The reference's category strip does not show which category is on. The
+parity test reads those three recorded colours back out of the capture and
+asserts the equality, so the finding is re-derived from the evidence on every
+run rather than restated.
+
+**"Recent" is dropped.** It is two literals — `10 km → mi = 6.21` and
+`1 kg → lb = 2.20` — that no conversion has ever changed, and the tool
+records nothing. Measured as a subtraction of exactly **140 points** in every
+English cell and carried through the parity report on each element below it;
+a test asserts neither figure nor the heading is in the tree.
+
+**The catalogue's badge is true for the first time.** It says "32 units" over
+a table of 25. The corrected table is 32.
+
+#### Birthdays
+
+**The reference contradicts itself on one screen.** Its record list holds
+three records and its toolbar says "3 records", while the tool's own "Coming
+up" section lists **four** rows from `context.js:1581-1589` — the fourth a
+person named in no record — and the summary card says "Tracked **4**".
+Lume reads the records in both places and counts three. The row's height is
+exactly 73 points, so the subtraction is carried as a named allowance through
+every value below it rather than absorbed.
+
+**Its countdowns and ages are constants** — `days: 4/18/51/88`,
+`turning: 29/6/5/61`, `thisMonth: 2` — set beside dates they are not derived
+from, while the same reference's record schema computes both properly. The
+schema's arithmetic is what is here, on an injected `today` rather than the
+wall clock. Two of the three happen to agree; "Tracked" does not.
+
+**An anniversary counts years; it does not turn an age.**
+`record-schemas.js:794` prints `Turning 6` of a marriage. Lume says
+"6 years".
+
+**The Date fact carries its year.** `record-schemas.js:797` shows the stored
+date through `dateShort`, which drops it: Ayesha's 1997 birthday reads
+"Thu, 11 Sept" — the weekday of a year the screen never names — beside a
+"Next one" of "Friday, 11 September" on the same day and month. The year
+that "Turning" is counted from appeared nowhere.
+
+**A 29 February is not pushed out of a leap year.**
+`record-schemas.js:772` adds a year to a date it has *already* rolled, so a
+29 February seen from mid-2027 answers 1 March 2028 — a year that has a 29th.
+Lume recomputes from the stored month and day. In a year with no 29th the day
+is observed on 1 March, the later of the two conventions, so a countdown
+never names a day that has gone.
+
+#### Water
+
+**Its own records would have produced the figure it hard-codes.** The
+reference's total is `stateFor('water').ml`, seeded at 1250 in
+`context.js:1622` and only ever added to in memory; its timeline is four
+literals at `context.js:1636-1641`. Its record schema seeds the same four
+drinks, and they sum to 1250. Lume reads the records.
+
+**Two sections do not survive.** `streak: 6` (`context.js:1633`) is a literal
+with nothing behind it, and the seven-bar week is
+`week: [1800, 2100, 1650, 2000, 1900, 2200, 1250]` (`context.js:1642`) over a
+store that holds no week. Nothing invents a replacement: the streak's slot in
+the summary takes a real count of drinks logged today, and the goal takes the
+week chart's section. Measured as a **61-point** difference carried through
+the report.
+
+**The schema has no date.** `record-schemas.js:602-606` gives a drink an
+amount, a kind and a time and no day at all, so "Today's intake" cannot be
+true across two days. A `date` field is added, required, and defaulted to the
+reader's own day.
+
+**One record, two clock formats.** `record-schemas.js:618` shows the bare
+stored `08:10` in the list while `context.js:1637` shows `8:10 am` on the
+timeline, on the same screen, for the same record. Lume uses the reader's
+clock format in both.
+
+**The detail never states the amount** — the one number the record exists to
+hold. `record-schemas.js:641-646` lists Drink and Time only. Lume adds Amount
+and Date.
+
+**The button and the message disagree.** `tool.screen.js:250-254` adds 250 or
+500 ml and toasts `add + ' ml'` unconditionally, so a reader on imperial units
+presses "+ 8 fl oz" and is told "250 ml logged". The message now says what the
+button said. Millilitres are always what is stored.
+
+**A translation key leaks into a control.**
+`record-schemas.js:610-611` stores `@water.kindWater` as the select's value,
+and the measured new-record form shows that key in the control. The stored
+value here is the plain code `water` / `tea`.
+
+**The fluid ounce is exact.** `context.js:1626` divides by 29.574; the US
+fluid ounce is 29.5735295625 ml.
+
+**The goal.** 2,000 ml is the reference's figure for every reader on earth,
+with no way to change it. It is kept as **a default goal and nothing more**,
+under the conditions approved for this wave: never called a recommendation, a
+requirement or a healthy amount; never derived from age, sex, pregnancy,
+weather, exercise or any condition; editable; stored with the tool's records
+so that every figure is measured against the target the reader is actually
+on; and marked "Default goal" until they set one. There is no advice, warning,
+classification or verdict anywhere in the tool, and a test enumerates fifteen
+health-claim substrings and asserts none appears. The goal editor is an
+approved functional correction — the reference has none.
+
+#### What the three share
+
+**Two collections a reader's build opens empty.** `kLumeParityOnlySeeds`
+holds `birthdays` and `water`, and the store gives their seeds to the parity
+reproduction alone. The wave-2 families keep theirs everywhere and are
+untouched: four notes and five shopping items demonstrate a list. A birthday
+is a person's name and the day they were born, and a drink is something the
+reader did at a particular hour — seeding those is not a demonstration but an
+invented account of somebody's life, with "in 4 days", "turning 29" and
+"1.25 L today" worked out on top of it and presented as theirs. Both tools
+therefore join `readerRecords` **and** `sampleInParityOnly`, and
+`parity_only_seeds_test.dart` asserts the two sets agree: a collection seeded
+only in parity must disclose only in parity, or the screen and the store are
+telling different stories.
+
+**Two tile statuses corrected rather than reproduced.** The catalogue writes
+"Ayesha in 4d" under Birthdays — a fixture person and a countdown from a
+constant — and "5 / 8" under Water. Both tools read records that start empty,
+so the tiles say what the tools are: "Dates you add" and "Daily intake".
+
+**A date picker's reach is the field's, not the host's.**
+`record_tool.dart` used a fixed fifty years each way, measured from the day
+the picker opens on. That suits a due date and is wrong for a date the reader
+is *remembering*: Birthdays' field opens on today, so the floor could not
+reach a birth year before 1976 and the tool could not record most of the
+people it exists to record. `LumeRecordField` now carries `yearsBack` and
+`yearsAhead`; Birthdays' date says 130 and 2.
+
+**The shared test harness was seeding the wrong build.** It passed
+`lumeRecordSeeds` bare, so the two parity-only families would have been empty
+in every parity capture and the capture would have called that the reference.
+It now asks the build's own question, exactly as `records_provider.dart` does.
+
+**Water's filter chips were written and taken out again.** A family's chips
+are its reference schema's `filters`. Shopping and To-dos have them; Events,
+Notes and Water do not, measured — `tool_water_default_pk_390x844_light_en`
+reports `"chips": []`. A chip row Water alone invented would also have pushed
+every figure below it off the cell it is compared against: a product addition
+paid for out of the parity comparison.
+
+**What did not change.** The `.csubmit` two-point gap the Water comparison
+reports is not new — it is already in the accepted wave-2 ledger
+(`parity/tool_events.md` records `csubmit` height 72.00 against 74.00). The
+toolbar's three-point icon-action placement belongs to the recorded D6
+adaptation. Neither is chased here.
+
+**Deliberately not taken.** A temperature category — the reference has none,
+and °C to °F is affine rather than a ratio, so adding one is a product
+decision and not a conversion. It is recorded as deferred in
+`ROLLOUT_WAVE_4.md` §7; the §2 row that said it would be added was written
+before the table was and is withdrawn there.
+
 ### C99 — Two source lines that were not true of the screen under them
 
 **Release-honesty corrections, wave 3 closure.** Both were one word chosen
@@ -3182,6 +3385,7 @@ deleted row invites the same question again.
 
 | Date | Change | Reason |
 |---|---|---|
+| 2026-09-23 | **C100 raised** — wave 4 built: Unit Converter on exact factors with decimal names separated from binary ones and both gallons named, Birthdays and Water computed from the reader’s own records with their seeds confined to the parity reproduction; the reference’s three-against-four count, its year-less birth date, its leap-day roll, its invented streak and week, its missing day field and its leaked translation key corrected | Approved wave, `ROLLOUT_WAVE_4.md`; goal conditions approved for Water |
 | 2026-09-22 | **C99 raised** — Focus Timer stops calling the reader's own session sample data, and World Clock says "Calculated live" rather than "Live"; both corrected at wave 3 closure, parity captures unchanged | Closure correction |
 | 2026-09-22 | **C98 raised** — wave 3 built: World Clock, Calculator, Focus Timer, Tasbih and Play, each corrected where its reference asserted something about the reader it could not know; three shared fixes to the test harness and the source-claim allowlist | Approved wave, `ROLLOUT_WAVE_3.md` |
 | 2026-09-21 | **C97 raised** — Baby Budget built as a record-backed tool; the reference's plan-less ratio, 101% donut, hard-coded English months, raw-USD bar titles, floor-height bars, wall-clock weekday dates, absent totals, stub export and unmarked sensitivity corrected | Approved model, `BABY_BUDGET_PROPOSAL.md` |
