@@ -32,9 +32,10 @@ of a route with a mislabelled row is a golden that will pass forever.
 | `390x844_light_ur` | 21 | right to left, Nasta'liq |
 | `390x844_light_ar` | 21 | right to left, Arabic |
 | `390x844_light_en_x2` | 21 | 200 % type |
+| `390x844_dark_en` | 21 | dark mode — added 2026-09-24, see §5 |
 
-Eighty-five committed goldens for the account section — 21 routes × 4
-cells, plus the guest refusal. `account_locale_test.dart` asserts that none of
+106 committed goldens for the account section — 21 routes × 5 cells, plus
+the guest refusal. `account_locale_test.dart` asserts that none of
 the twenty-one overflows in any of those conditions, plus at 359 points and
 as a guest; the goldens are what that assertion looks like.
 [`GOLDEN_INVENTORY.md`](GOLDEN_INVENTORY.md) is the whole suite's
@@ -191,7 +192,33 @@ Exact values went from **249 of 372** to **316 of 372**.
 
 ---
 
-## 5. What is not evidence
+## 5. Dark mode (2026-09-24)
+
+Not part of the original evidence above: dark mode had never been captured
+for Account on either side, confirmed missing during the Wave 5
+visual-parity re-audit ([WAVE_5_DISCOVERY.md](WAVE_5_DISCOVERY.md) §3).
+Closed by:
+
+- adding a `390x844_dark_en` golden for all twenty-one routes
+  (`test/goldens/destination_golden_test.dart`, alongside the existing
+  Urdu/Arabic/200% loop), so the eighty-five committed goldens in §1
+  become **106**;
+- capturing the matching web reference for all twenty-one routes at the
+  same cell (`measure_destinations.mjs --screen profile --route <r> --cell
+  account_<r> --theme dark`).
+
+Reviewed with `compare.mjs` against two representative routes —
+`appearance` (a route whose own subject is theme, so a dark-mode defect
+here would be the most visible possible case) and `time` (the C89 route,
+to confirm the finding above holds visually as well as in the measured
+bounds). Both are clean: matching card structure, radio-row styling and
+the teal selection treatment; `time`'s side-by-side visually confirms the
+canonicalised zone list (§3, C89) rather than showing anything new. No
+defect found in either; the remaining nineteen routes have goldens
+committed but were not individually eyeballed beyond the golden-diff
+check that `flutter test` itself performs.
+
+## 6. What is not evidence
 
 A golden that passes says the pixels are what they were. It does not say they
 are right, and nothing in this audit treats a green golden run as parity.

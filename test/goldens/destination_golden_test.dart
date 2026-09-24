@@ -697,6 +697,21 @@ void main() {
       }
     }
 
+    // Dark mode, for all twenty-one — added at the Wave 5 visual-parity
+    // re-audit (WAVE_5_DISCOVERY.md §3), which found every other destination
+    // already captured dark and Account was the one left out.
+    for (final Cell cell in kCells.where(
+      (Cell c) => c.$1 == '390x844_dark_en',
+    )) {
+      for (final LumeAccountRoute route in LumeAccountRoute.values) {
+        testWidgets('account_${route.segment} · ${cell.$1}', (
+          WidgetTester tester,
+        ) async {
+          await shootAccount(tester, route, cell);
+        });
+      }
+    }
+
     // The refusal a guest meets on a protected route, which is a screen in
     // its own right rather than an absence.
     testWidgets('account_sessions_guest · the reference cell', (

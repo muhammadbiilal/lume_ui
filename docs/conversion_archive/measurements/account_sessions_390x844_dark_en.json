@@ -1,0 +1,126 @@
+{
+  "cell": "account_sessions_390x844_dark_en",
+  "screen": "profile",
+  "state": "default_pk",
+  "account": "guest",
+  "route": "sessions",
+  "tool": null,
+  "toolstate": null,
+  "after": null,
+  "profile": {
+    "country": "PK",
+    "city": "Islamabad",
+    "islamic": false,
+    "interests": [
+      "weather",
+      "calendar",
+      "tasks",
+      "notes",
+      "maths",
+      "expenses",
+      "news"
+    ],
+    "favourites": [],
+    "recents": [],
+    "prefs": {
+      "news": true,
+      "cricket": true,
+      "finance": true,
+      "recos": true
+    },
+    "displayName": ""
+  },
+  "viewport": {
+    "width": 390,
+    "height": 844,
+    "innerWidth": 390
+  },
+  "scrollTop": 0,
+  "theme": "dark",
+  "lang": "en",
+  "dir": "ltr",
+  "tabs": [
+    "home",
+    "tools",
+    "trains",
+    "today",
+    "profile"
+  ],
+  "activeTab": null,
+  "scroll": {
+    "clientHeight": 816,
+    "scrollHeight": 816,
+    "paddingBottom": "0px"
+  },
+  "missing": [
+    "toolbar",
+    "toolbar.back",
+    "toolbar.title",
+    "toolbar.sub",
+    "sect",
+    "list",
+    "srow",
+    "srow.icon",
+    "srow.title",
+    "srow.value",
+    "optlist",
+    "optrow",
+    "optrow.on",
+    "notecard",
+    "field",
+    "field.box",
+    "btn",
+    "danger",
+    "storegroup",
+    "sessrow",
+    "conseq",
+    "state",
+    "stepper",
+    "stepper.row"
+  ],
+  "composition": {},
+  "bounds": {
+    "screen": {
+      "x": 0,
+      "y": 28,
+      "width": 390,
+      "height": 816,
+      "lines": null,
+      "font": "400 16px/normal normal",
+      "color": "rgb(243, 243, 244)",
+      "background": "rgba(0, 0, 0, 0)",
+      "radius": "0px",
+      "pad": "0px 0px 118px",
+      "gap": "normal",
+      "text": null
+    },
+    "body": {
+      "x": 0,
+      "y": 28,
+      "width": 390,
+      "height": 0,
+      "lines": null,
+      "font": "400 16px/normal normal",
+      "color": "rgb(243, 243, 244)",
+      "background": "rgba(0, 0, 0, 0)",
+      "radius": "0px",
+      "pad": "0px",
+      "gap": "normal",
+      "text": null
+    },
+    "shell.tabbar": {
+      "x": 12,
+      "y": 770,
+      "width": 366,
+      "height": 62,
+      "lines": null,
+      "font": "400 16px/normal normal",
+      "color": "rgb(243, 243, 244)",
+      "background": "color(srgb 0.0784314 0.0784314 0.0862745 / 0.84)",
+      "radius": "20px",
+      "pad": "0px 4px",
+      "gap": "normal",
+      "text": "HomeToolsTrainsTodayProfile"
+    }
+  }
+}

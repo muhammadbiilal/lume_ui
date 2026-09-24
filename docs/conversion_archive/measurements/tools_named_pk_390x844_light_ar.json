@@ -1,0 +1,875 @@
+{
+  "cell": "tools_named_pk_390x844_light_ar",
+  "screen": "tools",
+  "state": "named_pk",
+  "account": "guest",
+  "route": null,
+  "tool": null,
+  "toolstate": null,
+  "after": null,
+  "profile": {
+    "country": "PK",
+    "city": "Islamabad",
+    "islamic": false,
+    "interests": [
+      "weather",
+      "calendar",
+      "tasks",
+      "notes",
+      "maths",
+      "expenses",
+      "news"
+    ],
+    "favourites": [
+      "currency",
+      "qibla",
+      "notes"
+    ],
+    "recents": [
+      "calculator",
+      "weather",
+      "todos"
+    ],
+    "prefs": {
+      "news": true,
+      "cricket": true,
+      "finance": true,
+      "recos": true
+    },
+    "displayName": "Amina Tariq"
+  },
+  "viewport": {
+    "width": 390,
+    "height": 844,
+    "innerWidth": 390
+  },
+  "scrollTop": 0,
+  "theme": "light",
+  "lang": "ar",
+  "dir": "rtl",
+  "tabs": [
+    "home",
+    "tools",
+    "trains",
+    "today",
+    "profile"
+  ],
+  "activeTab": "tools",
+  "scroll": {
+    "clientHeight": 811,
+    "scrollHeight": 2060,
+    "paddingBottom": "118px"
+  },
+  "missing": [
+    "cattool.pin"
+  ],
+  "composition": {
+    "chips": [
+      "foryou",
+      "all",
+      "everyday",
+      "planning",
+      "money",
+      "daily",
+      "personal"
+    ],
+    "chipLabels": [
+      "For you",
+      "All",
+      "Everyday",
+      "Planning",
+      "Money",
+      "Daily Life",
+      "Personal"
+    ],
+    "activeChip": "foryou",
+    "categories": [
+      {
+        "id": "everyday",
+        "title": "Everyday",
+        "sub": "The ones you reach for daily",
+        "count": "6",
+        "tools": [
+          {
+            "id": "calculator",
+            "label": "Calculator",
+            "meta": "Standard",
+            "pin": false,
+            "flag": false,
+            "count": null
+          },
+          {
+            "id": "converter",
+            "label": "Unit Converter",
+            "meta": "32 units",
+            "pin": false,
+            "flag": false,
+            "count": null
+          },
+          {
+            "id": "currency",
+            "label": "Currency",
+            "meta": "Live rates",
+            "pin": false,
+            "flag": false,
+            "count": null
+          },
+          {
+            "id": "timer",
+            "label": "Timer",
+            "meta": "Presets",
+            "pin": false,
+            "flag": false,
+            "count": null
+          },
+          {
+            "id": "age",
+            "label": "Age Calculator",
+            "meta": "Exact days",
+            "pin": false,
+            "flag": false,
+            "count": null
+          },
+          {
+            "id": "datecalc",
+            "label": "Date Calculator",
+            "meta": "Add · diff",
+            "pin": false,
+            "flag": false,
+            "count": null
+          }
+        ]
+      },
+      {
+        "id": "planning",
+        "title": "Planning",
+        "sub": "Your time and your lists",
+        "count": "5",
+        "tools": [
+          {
+            "id": "calendar",
+            "label": "Calendar",
+            "meta": "3 events",
+            "pin": false,
+            "flag": false,
+            "count": null
+          },
+          {
+            "id": "reminders",
+            "label": "Reminders",
+            "meta": "4 today",
+            "pin": false,
+            "flag": false,
+            "count": null
+          },
+          {
+            "id": "notes",
+            "label": "Notes",
+            "meta": "12 saved",
+            "pin": false,
+            "flag": false,
+            "count": null
+          },
+          {
+            "id": "todos",
+            "label": "To-dos",
+            "meta": "2 of 5 done",
+            "pin": false,
+            "flag": false,
+            "count": null
+          },
+          {
+            "id": "events",
+            "label": "Events",
+            "meta": "Next 14:00",
+            "pin": false,
+            "flag": false,
+            "count": null
+          }
+        ]
+      },
+      {
+        "id": "money",
+        "title": "Money",
+        "sub": "Rates, bills and budgets",
+        "count": "5",
+        "tools": [
+          {
+            "id": "tax",
+            "label": "Tax Calculator",
+            "meta": "FBR 2025-26",
+            "pin": false,
+            "flag": false,
+            "count": null
+          },
+          {
+            "id": "loan",
+            "label": "Loan / EMI",
+            "meta": "Instalments",
+            "pin": false,
+            "flag": false,
+            "count": null
+          },
+          {
+            "id": "tipsplit",
+            "label": "Tip & Split",
+            "meta": "Split a bill",
+            "pin": false,
+            "flag": false,
+            "count": null
+          },
+          {
+            "id": "ledger",
+            "label": "Lending Ledger",
+            "meta": "Rs 8,480",
+            "pin": false,
+            "flag": false,
+            "count": null
+          },
+          {
+            "id": "installments",
+            "label": "Installments",
+            "meta": "3 running",
+            "pin": false,
+            "flag": false,
+            "count": null
+          }
+        ]
+      },
+      {
+        "id": "daily",
+        "title": "Daily Life",
+        "sub": "What’s happening around you",
+        "count": "8",
+        "tools": [
+          {
+            "id": "aqi",
+            "label": "Air Quality",
+            "meta": "AQI",
+            "pin": false,
+            "flag": false,
+            "count": null
+          },
+          {
+            "id": "sunmoon",
+            "label": "Sun & Moon",
+            "meta": "Sunrise · sunset",
+            "pin": false,
+            "flag": false,
+            "count": null
+          },
+          {
+            "id": "worldclock",
+            "label": "World Clock",
+            "meta": "8 cities",
+            "pin": false,
+            "flag": false,
+            "count": null
+          },
+          {
+            "id": "holidays",
+            "label": "Public Holidays",
+            "meta": "This year",
+            "pin": false,
+            "flag": false,
+            "count": null
+          },
+          {
+            "id": "weather",
+            "label": "Weather",
+            "meta": "34° Hazy sun",
+            "pin": false,
+            "flag": false,
+            "count": null
+          },
+          {
+            "id": "news",
+            "label": "News",
+            "meta": "12 new",
+            "pin": false,
+            "flag": false,
+            "count": null
+          },
+          {
+            "id": "emergency",
+            "label": "Emergency",
+            "meta": "15 · 1122",
+            "pin": false,
+            "flag": false,
+            "count": null
+          },
+          {
+            "id": "docscan",
+            "label": "Document Scanner",
+            "meta": "PDF ready",
+            "pin": false,
+            "flag": false,
+            "count": null
+          }
+        ]
+      },
+      {
+        "id": "personal",
+        "title": "Personal",
+        "sub": "Private to you, on this device",
+        "count": "6",
+        "tools": [
+          {
+            "id": "parcel",
+            "label": "Parcel Tracker",
+            "meta": "1 in transit",
+            "pin": false,
+            "flag": false,
+            "count": null
+          },
+          {
+            "id": "shopping",
+            "label": "Shopping List",
+            "meta": "6 items",
+            "pin": false,
+            "flag": false,
+            "count": null
+          },
+          {
+            "id": "birthdays",
+            "label": "Birthdays",
+            "meta": "Ayesha in 4d",
+            "pin": false,
+            "flag": false,
+            "count": null
+          },
+          {
+            "id": "babybudget",
+            "label": "Baby Budget",
+            "meta": "Plan costs",
+            "pin": false,
+            "flag": false,
+            "count": null
+          },
+          {
+            "id": "expenses",
+            "label": "Expenses",
+            "meta": "This month",
+            "pin": false,
+            "flag": true,
+            "count": null
+          },
+          {
+            "id": "subs",
+            "label": "Subscriptions",
+            "meta": "Rs 4,160",
+            "pin": false,
+            "flag": true,
+            "count": null
+          }
+        ]
+      }
+    ],
+    "recents": [
+      "calculator",
+      "weather",
+      "todos"
+    ],
+    "emptyShown": false,
+    "sections": [
+      {
+        "tag": "div",
+        "cls": "page-head",
+        "id": null,
+        "hidden": false,
+        "y": 32.8,
+        "height": 81.59
+      },
+      {
+        "tag": "div",
+        "cls": "section",
+        "id": null,
+        "hidden": false,
+        "y": 130.39,
+        "height": 44
+      },
+      {
+        "tag": "div",
+        "cls": "section",
+        "id": null,
+        "hidden": false,
+        "y": 188.39,
+        "height": 34
+      },
+      {
+        "tag": "div",
+        "cls": "section",
+        "id": "toolRecent",
+        "hidden": false,
+        "y": 246.39,
+        "height": 115.38
+      },
+      {
+        "tag": "div",
+        "cls": "",
+        "id": "toolCats",
+        "hidden": false,
+        "y": 385.77,
+        "height": 1588.97
+      },
+      {
+        "tag": "div",
+        "cls": "empty",
+        "id": "toolEmpty",
+        "hidden": false,
+        "y": 0,
+        "height": 0
+      }
+    ]
+  },
+  "bounds": {
+    "screen": {
+      "x": 0,
+      "y": 32.8,
+      "width": 390,
+      "height": 811.2,
+      "lines": 32,
+      "font": "400 16px/25.6px normal",
+      "color": "rgb(16, 17, 19)",
+      "background": "rgba(0, 0, 0, 0)",
+      "radius": "0px",
+      "pad": "0px 0px 118px",
+      "gap": "normal",
+      "text": "Tools\n          68 utilities, neatly sorted\n        \n        \n          \n        \n      \n    \n\n    \n      \n        \n        \n      \n    \n\n    \n       For youAll"
+    },
+    "pagehead": {
+      "x": 0,
+      "y": 32.8,
+      "width": 390,
+      "height": 81.59,
+      "lines": 3,
+      "font": "400 16px/25.6px normal",
+      "color": "rgb(16, 17, 19)",
+      "background": "rgba(0, 0, 0, 0)",
+      "radius": "0px",
+      "pad": "12px 20px 0px",
+      "gap": "normal",
+      "text": "Tools\n          68 utilities, neatly sorted"
+    },
+    "pagehead.bar": {
+      "x": 20,
+      "y": 44.8,
+      "width": 350,
+      "height": 69.59,
+      "lines": 3,
+      "font": "400 16px/25.6px normal",
+      "color": "rgb(16, 17, 19)",
+      "background": "rgba(0, 0, 0, 0)",
+      "radius": "0px",
+      "pad": "0px",
+      "gap": "12px",
+      "text": "Tools\n          68 utilities, neatly sorted"
+    },
+    "pagehead.title": {
+      "x": 219.03,
+      "y": 44.8,
+      "width": 150.97,
+      "height": 44.8,
+      "lines": 1,
+      "font": "800 28px/44.8px normal",
+      "color": "rgb(16, 17, 19)",
+      "background": "rgba(0, 0, 0, 0)",
+      "radius": "0px",
+      "pad": "0px",
+      "gap": "normal",
+      "text": "Tools"
+    },
+    "pagehead.sub": {
+      "x": 219.03,
+      "y": 93.59,
+      "width": 150.97,
+      "height": 20.8,
+      "lines": 1,
+      "font": "500 13px/20.8px normal",
+      "color": "rgb(139, 141, 149)",
+      "background": "rgba(0, 0, 0, 0)",
+      "radius": "0px",
+      "pad": "0px",
+      "gap": "normal",
+      "text": "68 utilities, neatly sorted"
+    },
+    "pagehead.action": {
+      "x": 20,
+      "y": 44.8,
+      "width": 38,
+      "height": 38,
+      "lines": 1,
+      "font": "400 16px/25.6px normal",
+      "color": "rgb(86, 88, 95)",
+      "background": "rgb(255, 255, 255)",
+      "radius": "12px",
+      "pad": "0px",
+      "gap": "normal",
+      "text": null
+    },
+    "search": {
+      "x": 20,
+      "y": 130.39,
+      "width": 350,
+      "height": 44,
+      "lines": 2,
+      "font": "400 16px/25.6px normal",
+      "color": "rgb(139, 141, 149)",
+      "background": "rgb(255, 255, 255)",
+      "radius": "12px",
+      "pad": "0px 14px",
+      "gap": "9px",
+      "text": null
+    },
+    "search.input": {
+      "x": 35,
+      "y": 140.19,
+      "width": 294,
+      "height": 24.39,
+      "lines": 1,
+      "font": "500 14px/22.4px -0.28px",
+      "color": "rgb(16, 17, 19)",
+      "background": "rgba(0, 0, 0, 0)",
+      "radius": "0px",
+      "pad": "1px 2px",
+      "gap": "normal",
+      "text": null
+    },
+    "chips": {
+      "x": 0,
+      "y": 188.39,
+      "width": 390,
+      "height": 34,
+      "lines": 1,
+      "font": "400 16px/25.6px normal",
+      "color": "rgb(16, 17, 19)",
+      "background": "rgba(0, 0, 0, 0)",
+      "radius": "0px",
+      "pad": "0px 20px 2px",
+      "gap": "7px",
+      "text": "For youAllEverydayPlanningMoneyDaily LifePersonal"
+    },
+    "chip": {
+      "x": 300.56,
+      "y": 188.39,
+      "width": 89.44,
+      "height": 32,
+      "lines": 2,
+      "font": "600 12px/19.2px -0.18px",
+      "color": "rgb(246, 246, 244)",
+      "background": "rgb(16, 17, 19)",
+      "radius": "999px",
+      "pad": "0px 13px",
+      "gap": "6px",
+      "text": "For you"
+    },
+    "chip.active": {
+      "x": 300.56,
+      "y": 188.39,
+      "width": 89.44,
+      "height": 32,
+      "lines": 2,
+      "font": "600 12px/19.2px -0.18px",
+      "color": "rgb(246, 246, 244)",
+      "background": "rgb(16, 17, 19)",
+      "radius": "999px",
+      "pad": "0px 13px",
+      "gap": "6px",
+      "text": "For you"
+    },
+    "recent.wrap": {
+      "x": 0,
+      "y": 246.39,
+      "width": 390,
+      "height": 115.38,
+      "lines": 5,
+      "font": "400 16px/25.6px normal",
+      "color": "rgb(16, 17, 19)",
+      "background": "rgba(0, 0, 0, 0)",
+      "radius": "0px",
+      "pad": "0px",
+      "gap": "normal",
+      "text": "Recently used\n          Straight back to where you were\n        \n      \n      CalculatorWeatherTo-dos"
+    },
+    "recent.title": {
+      "x": 186.41,
+      "y": 246.39,
+      "width": 183.59,
+      "height": 27.19,
+      "lines": 1,
+      "font": "700 17px/27.2px -0.476px",
+      "color": "rgb(16, 17, 19)",
+      "background": "rgba(0, 0, 0, 0)",
+      "radius": "0px",
+      "pad": "0px",
+      "gap": "normal",
+      "text": "Recently used"
+    },
+    "recent": {
+      "x": 254.58,
+      "y": 309.77,
+      "width": 115.42,
+      "height": 46,
+      "lines": 2,
+      "font": "400 16px/25.6px normal",
+      "color": "rgb(16, 17, 19)",
+      "background": "rgb(255, 255, 255)",
+      "radius": "999px",
+      "pad": "9px 13px 9px 9px",
+      "gap": "8px",
+      "text": "Calculator"
+    },
+    "recent.icon": {
+      "x": 330,
+      "y": 319.77,
+      "width": 26,
+      "height": 26,
+      "lines": 1,
+      "font": "400 16px/25.6px normal",
+      "color": "rgb(86, 88, 95)",
+      "background": "rgb(241, 241, 238)",
+      "radius": "12px",
+      "pad": "0px",
+      "gap": "normal",
+      "text": null
+    },
+    "recent.label": {
+      "x": 264.58,
+      "y": 323.17,
+      "width": 57.42,
+      "height": 19.19,
+      "lines": 1,
+      "font": "600 12px/19.2px -0.264px",
+      "color": "rgb(16, 17, 19)",
+      "background": "rgba(0, 0, 0, 0)",
+      "radius": "0px",
+      "pad": "0px",
+      "gap": "normal",
+      "text": "Calculator"
+    },
+    "cat": {
+      "x": 0,
+      "y": 385.77,
+      "width": 390,
+      "height": 279.59,
+      "lines": 11,
+      "font": "400 16px/25.6px normal",
+      "color": "rgb(16, 17, 19)",
+      "background": "rgba(0, 0, 0, 0)",
+      "radius": "0px",
+      "pad": "0px",
+      "gap": "normal",
+      "text": "EverydayThe ones you reach for daily6CalculatorStandardUnit Converter32 unitsCurrencyLive ratesStopwatchLapsTimerPresetsAge CalculatorExact daysFocus Timer25 mi"
+    },
+    "cat.head": {
+      "x": 0,
+      "y": 385.77,
+      "width": 390,
+      "height": 42.59,
+      "lines": 2,
+      "font": "400 16px/25.6px normal",
+      "color": "rgb(16, 17, 19)",
+      "background": "rgba(0, 0, 0, 0)",
+      "radius": "0px",
+      "pad": "0px 20px",
+      "gap": "9px",
+      "text": "EverydayThe ones you reach for daily6"
+    },
+    "cat.dot": {
+      "x": 344,
+      "y": 394.06,
+      "width": 26,
+      "height": 26,
+      "lines": 1,
+      "font": "400 16px/25.6px normal",
+      "color": "rgb(86, 88, 95)",
+      "background": "rgb(241, 241, 238)",
+      "radius": "12px",
+      "pad": "0px",
+      "gap": "normal",
+      "text": null
+    },
+    "cat.title": {
+      "x": 35.63,
+      "y": 385.77,
+      "width": 299.38,
+      "height": 24,
+      "lines": 1,
+      "font": "700 15px/24px -0.42px",
+      "color": "rgb(16, 17, 19)",
+      "background": "rgba(0, 0, 0, 0)",
+      "radius": "0px",
+      "pad": "0px",
+      "gap": "normal",
+      "text": "Everyday"
+    },
+    "cat.sub": {
+      "x": 35.63,
+      "y": 410.77,
+      "width": 299.38,
+      "height": 17.59,
+      "lines": 1,
+      "font": "500 11px/17.6px normal",
+      "color": "rgb(139, 141, 149)",
+      "background": "rgba(0, 0, 0, 0)",
+      "radius": "0px",
+      "pad": "0px",
+      "gap": "normal",
+      "text": "The ones you reach for daily"
+    },
+    "cat.count": {
+      "x": 20,
+      "y": 398.27,
+      "width": 6.63,
+      "height": 17.59,
+      "lines": 1,
+      "font": "600 11px/17.6px normal",
+      "color": "rgb(139, 141, 149)",
+      "background": "rgba(0, 0, 0, 0)",
+      "radius": "0px",
+      "pad": "0px",
+      "gap": "normal",
+      "text": "6"
+    },
+    "cat.grid": {
+      "x": 0,
+      "y": 440.36,
+      "width": 390,
+      "height": 225,
+      "lines": 9,
+      "font": "400 16px/25.6px normal",
+      "color": "rgb(16, 17, 19)",
+      "background": "rgba(0, 0, 0, 0)",
+      "radius": "0px",
+      "pad": "0px 20px",
+      "gap": "10px",
+      "text": "CalculatorStandardUnit Converter32 unitsCurrencyLive ratesStopwatchLapsTimerPresetsAge CalculatorExact daysFocus Timer25 minDate CalculatorAdd · diff"
+    },
+    "cattool": {
+      "x": 260,
+      "y": 440.36,
+      "width": 110,
+      "height": 100,
+      "lines": 4,
+      "font": "400 16px/25.6px normal",
+      "color": "rgb(16, 17, 19)",
+      "background": "rgb(255, 255, 255)",
+      "radius": "16px",
+      "pad": "13px 12px 14px",
+      "gap": "9px",
+      "text": "CalculatorStandard"
+    },
+    "cattool.icon": {
+      "x": 273,
+      "y": 454.36,
+      "width": 84,
+      "height": 20,
+      "lines": 1,
+      "font": "400 16px/25.6px normal",
+      "color": "rgb(16, 17, 19)",
+      "background": "rgba(0, 0, 0, 0)",
+      "radius": "0px",
+      "pad": "0px",
+      "gap": "normal",
+      "text": null
+    },
+    "cattool.label": {
+      "x": 273,
+      "y": 483.36,
+      "width": 84,
+      "height": 15,
+      "lines": 1,
+      "font": "600 12px/15px -0.264px",
+      "color": "rgb(16, 17, 19)",
+      "background": "rgba(0, 0, 0, 0)",
+      "radius": "0px",
+      "pad": "0px",
+      "gap": "normal",
+      "text": "Calculator"
+    },
+    "cattool.meta": {
+      "x": 273,
+      "y": 509.36,
+      "width": 84,
+      "height": 16,
+      "lines": 1,
+      "font": "500 10px/16px normal",
+      "color": "rgb(139, 141, 149)",
+      "background": "rgba(0, 0, 0, 0)",
+      "radius": "0px",
+      "pad": "0px",
+      "gap": "normal",
+      "text": "Standard"
+    },
+    "cattool.flag": {
+      "x": 0,
+      "y": 0,
+      "width": 0,
+      "height": 0,
+      "lines": 0,
+      "font": "400 16px/25.6px normal",
+      "color": "rgb(139, 141, 149)",
+      "background": "rgba(0, 0, 0, 0)",
+      "radius": "0px",
+      "pad": "0px",
+      "gap": "normal",
+      "text": null
+    },
+    "empty": {
+      "x": 0,
+      "y": 0,
+      "width": 0,
+      "height": 0,
+      "lines": 0,
+      "font": "400 16px/25.6px normal",
+      "color": "rgb(16, 17, 19)",
+      "background": "rgba(0, 0, 0, 0)",
+      "radius": "0px",
+      "pad": "44px 30px",
+      "gap": "10px",
+      "text": "Nothing here yet\n      Add a few more interests, or browse the full list under All."
+    },
+    "empty.title": {
+      "x": 0,
+      "y": 0,
+      "width": 0,
+      "height": 0,
+      "lines": 0,
+      "font": "700 15px/24px -0.375px",
+      "color": "rgb(16, 17, 19)",
+      "background": "rgba(0, 0, 0, 0)",
+      "radius": "0px",
+      "pad": "0px",
+      "gap": "normal",
+      "text": "Nothing here yet"
+    },
+    "empty.text": {
+      "x": 0,
+      "y": 0,
+      "width": 0,
+      "height": 0,
+      "lines": 0,
+      "font": "400 12px/18px normal",
+      "color": "rgb(139, 141, 149)",
+      "background": "rgba(0, 0, 0, 0)",
+      "radius": "0px",
+      "pad": "0px",
+      "gap": "normal",
+      "text": "Add a few more interests, or browse the full list under All."
+    },
+    "shell.tabbar": {
+      "x": 12,
+      "y": 770,
+      "width": 366,
+      "height": 62,
+      "lines": 2,
+      "font": "400 16px/25.6px normal",
+      "color": "rgb(16, 17, 19)",
+      "background": "color(srgb 1 1 1 / 0.84)",
+      "radius": "20px",
+      "pad": "0px 4px",
+      "gap": "normal",
+      "text": "HomeToolsTrainsTodayProfile"
+    }
+  }
+}

@@ -219,11 +219,11 @@ than resolved, the table says so; "—" means checked and clean.
 | Screen | Logic status | Structure diff (file:line) | Typography diff | Interaction diff | Dark mode | Urdu/Arabic (RTL) | Action |
 |---|---|---|---|---|---|---|---|
 | Home | Pass — all diffs ≤1px or cross-referenced | `livecard` -22.31 (`DESTINATION_PARITY.md:86`, →D25/C20); `qactions` -40.00 (`DESTINATION_PARITY.md:56`, clip note) | Recorded, unasserted heading widths by design; D20 line-box rounding | — (dot tap-target and date-format bugs already fixed) | — (reviewed: "authored, not inverted") | — (reviewed: hero-slide overflow bug found and fixed) | None |
-| Tools | Pass — no open `KNOWN_DIFFERENCES` refs needed | — (`DESTINATION_PARITY.md:156-238`, all `=`/sub-pixel) | Recorded, unasserted heading widths, same convention as Home | — (search + empty-state states pass; empty-state bug already fixed) | **GAP: captured but not confirmed reviewed** — `DESTINATION_VISUAL.md` §5 lists only "hub at primary cell, hub at 1100" | **GAP: same §5 limitation** — not confirmed eyeballed | Confirm the existing hub dark/Urdu/Arabic captures were actually reviewed, not just captured |
-| Profile | **Resolved (2026-09-24)** — `phead.acts` Δ-55 is a measurement-scope artifact, confirmed with evidence, not a Flutter defect | — (`DESTINATION_PARITY.md:373`; the test measures `find.byType(LumeButton).first` while the prototype's box wraps both stacked buttons: 46+9+46=101, confirmed against the raw measurement JSON and the signed-in/expired states, which render one button and match exactly) | No narrative coverage previously existed; now added as `DESTINATION_VISUAL.md` §6 | — (both guest buttons render correctly with the right gap/margin, per `lume_settings.dart`) | **GAP, confirmed real: Profile has never been captured in dark mode** — only the primary light/English cell exists in `DESTINATION_PARITY.md` | **GAP, confirmed real: same single-cell limitation** — no Urdu/Arabic capture exists for Profile at all | Dark mode and RTL capture for Profile still needed before Wave 5 reuses its layout; the Δ-55 finding itself needs no further action (test note corrected, doc section added) |
-| Onboarding (interests step) | Resolved — D12 (hard-coded English labels/copy/counter → 31 ids translated, enforced by `interests_catalogue_test.dart`) | — (`ONBOARDING_PARITY.md:201-211`, all within tolerance) | — | — (chip-based multi-select, min/max 5-10, live `{n} of {min}` counter confirmed) | **GAP: never measured or mentioned in any onboarding doc** | Only test-name coverage (`onboarding_screen_test.dart` claims "RTL"), no narrated verdict | **Fixed (2026-09-24):** `ONBOARDING_CONTRACT.md:254`'s stale "Open" label on Q9 corrected to closed, per `KNOWN_DIFFERENCES.md:3412` (F5C) |
-| Onboarding (remaining steps) | Pass — 327/327 measured values within tolerance | — (all steps: nav/skip/progress/art/title/text/continue/note bounds) | — (sub-pixel deltas footnoted as CSS artifacts) | — | **GAP: measured only at light/English** — no dark-mode pass documented anywhere | **GAP: D13 back-chevron RTL mirror fix is documented, but no full RTL bounds/narrative verdict exists** | Close the dark-mode and RTL documentation gap; no functional fix needed |
-| Account | **Resolved (2026-09-24)** — C89 is a real, intentional, already-documented consequence of commit `eb00909`'s timezone canonicalisation; `ACCOUNT_PARITY.md` is current and correct | C41 open-by-decision (`ACCOUNT_PARITY.md:62-65`, run-together option-row text); C43 open-by-decision (`ACCOUNT_PARITY.md:296-303`, list-moves-with-taller-form); C89 (`ACCOUNT_PARITY.md:182`, Δ-254 on the `time` route's notecard) confirmed via `git show eb00909` — the canonicalised zone list shortens the route's content above the notecard, and `KNOWN_DIFFERENCES.md` already predicted this exact 254pt figure | — (C50 resolved: toolbar subtitle line-height and margin fixed) | Not covered in either doc | **GAP, confirmed real: `ACCOUNT_VISUAL.md`'s golden matrix is light-only — dark mode was never captured for Account** | — (`ur`/`ar` goldens exist across 21 routes, `account_locale_test.dart` asserts no overflow, no defects noted) | **Done:** `ACCOUNT_VISUAL.md`'s stale D20 example (the pre-`eb00909` "2490→2496, six points" reading) corrected and cross-referenced to C89. Still needed: dark-mode golden coverage for Account |
+| Tools | Pass — no open `KNOWN_DIFFERENCES` refs needed | — (`DESTINATION_PARITY.md:156-238`, all `=`/sub-pixel) | Recorded, unasserted heading widths, same convention as Home | — (search + empty-state states pass; empty-state bug already fixed) | **Resolved (2026-09-24):** web reference captured at `tools_named_pk` dark/en and compared — same uniform-offset signature as every other reviewed cell, no new finding (`DESTINATION_VISUAL.md` §3) | **Resolved (2026-09-24):** same capture at Urdu and Arabic — matching structure and chip states | None |
+| Profile | **Resolved (2026-09-24)** — `phead.acts` Δ-55 is a measurement-scope artifact, confirmed with evidence, not a Flutter defect | — (`DESTINATION_PARITY.md:373`; the test measures `find.byType(LumeButton).first` while the prototype's box wraps both stacked buttons: 46+9+46=101, confirmed against the raw measurement JSON and the signed-in/expired states, which render one button and match exactly) | Added as `DESTINATION_VISUAL.md` §6 | — (both guest buttons render correctly with the right gap/margin, per `lume_settings.dart`) | **Resolved (2026-09-24):** web reference captured and compared against the Flutter goldens that already existed — clean, no new finding | **Resolved (2026-09-24), one new finding:** the web reference doesn't translate the guest screen's copy into Arabic (RTL layout mirrors, text stays English) while Flutter's Arabic translation is complete — the same accepted pattern as Home's D22, not a defect. RTL mirroring itself matches | None — both closed with evidence in `DESTINATION_VISUAL.md` §6 |
+| Onboarding (interests step) | Resolved — D12 (hard-coded English labels/copy/counter → 31 ids translated, enforced by `interests_catalogue_test.dart`) | — (`ONBOARDING_PARITY.md:201-211`, all within tolerance) | — | — (chip-based multi-select, min/max 5-10, live `{n} of {min}` counter confirmed) | **Corrected finding (2026-09-24):** dark-mode goldens already existed and pass (`onboarding_golden_test.dart`); a full web/Flutter/diff/report set already existed too (`shots/onboarding/onb_interests/*_dark_en_step5.*`) — the earlier "never measured" claim was reading only the narrative docs, not the actual test suite | Same correction: `onboarding_screen_test.dart`'s RTL claim is backed by real ur/ar diff/report artifacts already on disk, not just a test name | **Fixed (2026-09-24):** `ONBOARDING_CONTRACT.md:254`'s stale "Open" label on Q9 corrected to closed, per `KNOWN_DIFFERENCES.md:3412` (F5C) |
+| Onboarding (remaining steps) | Pass — 327/327 measured values within tolerance | — (all steps: nav/skip/progress/art/title/text/continue/note bounds) | — (sub-pixel deltas footnoted as CSS artifacts) | — | **Resolved (2026-09-24):** Flutter dark goldens already existed (`onboarding_flow_golden_test.dart`) for all seven remaining steps; the missing half — a web reference to compare against — captured for all seven (`capture_web.mjs --name onb_<step> --step <n> --theme dark`) and spot-checked (`onb_welcome`): near-pixel match | Flutter-side ur/ar goldens already exist for these steps; web references at those cells were not captured in this pass (only dark mode was in scope) | None for dark mode; Urdu/Arabic web references for these six steps remain uncaptured, lower priority than dark since Flutter's own RTL mirroring is separately covered by `onboarding_screen_test.dart` |
+| Account | **Resolved (2026-09-24)** — C89 is a real, intentional, already-documented consequence of commit `eb00909`'s timezone canonicalisation; `ACCOUNT_PARITY.md` is current and correct | C41 open-by-decision (`ACCOUNT_PARITY.md:62-65`, run-together option-row text); C43 open-by-decision (`ACCOUNT_PARITY.md:296-303`, list-moves-with-taller-form); C89 (`ACCOUNT_PARITY.md:182`, Δ-254 on the `time` route's notecard) confirmed via `git show eb00909` — the canonicalised zone list shortens the route's content above the notecard, and `KNOWN_DIFFERENCES.md` already predicted this exact 254pt figure | — (C50 resolved: toolbar subtitle line-height and margin fixed) | Not covered in either doc | **Resolved (2026-09-24):** dark mode had no Flutter golden at all (confirmed — the existing RTL/200% loop explicitly excluded it); added a `390x844_dark_en` golden for all 21 routes plus the matching web reference, reviewed `appearance` and `time` — both clean, `time`'s capture visually confirms the C89 canonicalisation | — (`ur`/`ar` goldens exist across 21 routes, `account_locale_test.dart` asserts no overflow, no defects noted) | **Done:** stale D20 example corrected and cross-referenced to C89 (`ACCOUNT_VISUAL.md` §3); dark-mode golden and web-reference coverage added for all 21 routes (`ACCOUNT_VISUAL.md` §5) |
 | Authentication | Pass — both deltas are already accepted, deliberate deviations | D19 (accepted): `AUTH_PARITY.md:293-326`, 6-12px header compression on the reset/password-creation screen; D20 (accepted, cosmetic): `AUTH_PARITY.md:207-209`, 0.08px legal-link padding | — (resolved: uppercase-transform and max-width-estimate bugs already fixed) | — (16 states / 115 goldens measured, no open defects; D21 seal-animation swap is cosmetic-only) | — (390×844 dark cell tested, "authored not inverted") | — (Urdu and Arabic cells tested, "RTL, real translations") | None — periodically re-confirm P1/D18/D19/D20/D21 still match |
 
 ### 3.2 What this audit actually found, and what was done about it
@@ -259,27 +259,43 @@ CSS) rather than left as documentation gaps:
    needed changing — `lib/core/widgets/lume/lume_settings.dart` already
    renders both buttons with the correct gap and margin.
 
-**Genuinely still open, confirmed real by the same investigation:** Profile
-has never been captured in dark mode or Urdu/Arabic at all — only the
-primary light/English cell exists for any of its three states. This is
-not resolved by the two verdicts above and should be closed before a Wave
-5 tool reuses Profile's layout.
+**2026-09-24 — the remaining dark-mode/RTL coverage gaps closed.** What
+looked like missing test coverage for Tools, Profile, Account and
+Onboarding turned out to be two different things, not one:
 
-Everything else that surfaced is a documentation-coverage gap rather than
-a visual defect: Tools' dark-mode/RTL captures exist but were never
-confirmed as reviewed; Account has no dark-mode capture at all; Onboarding
-has no dark-mode coverage anywhere and only test-name-level RTL coverage;
-and the stale "Open" label in `ONBOARDING_CONTRACT.md` (Q9) has been
-corrected. None of these block a persistence or data-model decision the
-way §2 does, but per the brief's own rule — reuse a shared component only
-after confirming it's currently Lume-visual — the remaining dark-mode/RTL
-capture gaps for Account, Tools and Profile should close before
-`lume_progress`/`LumeCrud` get reused near any of their layouts for a
-Goals or Subscriptions build.
+- **A real gap**, confirmed by checking the actual golden test suites
+  rather than trusting the narrative docs: Account genuinely had no
+  dark-mode Flutter golden at all (its RTL/200% loop explicitly excluded
+  the dark cell) — closed by adding one for all 21 routes plus the
+  matching web reference.
+- **A false gap**, corrected rather than closed: Onboarding's dark-mode
+  and RTL Flutter goldens already existed and pass
+  (`onboarding_golden_test.dart`, `onboarding_flow_golden_test.dart`) —
+  the earlier claim that dark mode was "never measured" came from reading
+  `ONBOARDING_PARITY.md`/`ONBOARDING_CONTRACT.md`, which don't mention it,
+  not from checking the test suite itself. The narrower real gap was that
+  the *web reference* had never been captured at dark mode for six of the
+  eight onboarding steps (the two F4A steps, country and interests,
+  already had full dark/ur/ar web+Flutter+diff+report sets on disk) —
+  closed by capturing the remaining six.
+- Tools' and Profile's dark/RTL web references were captured for the
+  first time and compared against the Flutter captures that already
+  existed, closing the "captured but never reviewed" gap for Tools and
+  the "never captured at all" gap for Profile. One new, non-blocking
+  finding came out of Profile's Arabic review — see `DESTINATION_VISUAL.md`
+  §6.
 
-Home and Authentication need no action — both are fully reviewed across
-structure, typography, interaction, dark mode and RTL, with every
-non-zero delta already accepted and named.
+None of this blocked a persistence or data-model decision the way §2
+does, but it directly serves the brief's own rule: a shared component is
+only safe to reuse once the surface it comes from is confirmed
+Lume-visual. Account, Tools, Profile and Onboarding are now reviewed
+across dark mode; Onboarding's six non-F4A steps still lack an Urdu/Arabic
+web reference specifically (lower priority — their Flutter-side RTL
+mirroring is already covered by `onboarding_screen_test.dart`).
+
+Home and Authentication needed no action — both were already fully
+reviewed across structure, typography, interaction, dark mode and RTL,
+with every non-zero delta already accepted and named.
 
 ## 4. Shared foundations already in place
 

@@ -133,6 +133,16 @@ per cent, Home at 852 × 393, the hub at the primary cell, the hub at 1100, and
 **all ten Today and Explore cells**. Four differences came out of that reading
 and out of nothing else — see §4.
 
+**2026-09-24 — the hub's dark and RTL cells, closed.** These were captured
+on the Flutter side from the start but never had a matching web reference to
+compare against, so nothing had actually been reviewed. Captured
+(`tools_named_pk`, dark/Urdu/Arabic) and compared with `compare.mjs`: the
+"beyond tolerance" shares (33–39%) are the same uniform-offset signature as
+every other cell in this document — the diff image shows paired, shifted
+duplicates of the same text rather than any new shape — and the side-by-side
+images show matching structure, chip states, grid content and dark-mode
+surface colours. No new finding.
+
 ---
 
 ## 4. What the comparison caught
@@ -283,6 +293,27 @@ height 46, a −55 delta with no prior explanation. Investigated directly:
 been updated to say so explicitly, so the next reader doesn't have to
 re-derive it.
 
-**Not yet done, and needed before Profile is reused by a Wave 5 tool:**
-dark mode and Urdu/Arabic capture and review, at minimum at the primary
-cell, matching the bar the other four destinations already clear.
+**2026-09-24 — dark mode and RTL captured and reviewed, closing the gap
+above.** `profile_default_pk` at dark/en, light/ur and light/ar, compared
+with `compare.mjs` against the existing Flutter captures (which already
+existed at all three cells — only the web reference was missing).
+
+- **Dark mode: clean.** The side-by-side shows matching card structure, the
+  same teal "Create account" / outlined "Sign in" treatment, and matching
+  "YOUR LUME" row list — no new finding.
+- **RTL (Arabic): one new, non-blocking finding.** The prototype applies
+  RTL layout direction at `--lang ar` (icons and chevrons mirror) but does
+  **not translate the guest screen's copy** — "Welcome to Lume", the
+  create-account bullet list, "Create account", "Sign in" and the settings
+  row labels all render in English on the web side. Flutter's Arabic
+  translation is complete for the same screen. This is the same pattern
+  already accepted for Home under D22 ("the tile status line is
+  translated; the reference renders it in English in all three
+  languages") — Lume translating content the reference does not is a
+  documented, approved adaptation, not a defect. Recorded here because it
+  had not been checked for Profile specifically before this pass. RTL
+  layout mirroring itself (icon and chevron direction) matches on both
+  sides.
+
+Both findings are closed; no code change needed. Dark mode and RTL for
+Profile are now reviewed to the same bar as the other four destinations.

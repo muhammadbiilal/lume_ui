@@ -2,6 +2,10 @@
   "cell": "home_default_pk_390x844_light_en",
   "screen": "home",
   "state": "default_pk",
+  "account": "guest",
+  "route": null,
+  "tool": null,
+  "toolstate": null,
   "after": null,
   "profile": {
     "country": "PK",
