@@ -203,25 +203,83 @@ entry should read — a specific defect, a file:line citation, a resolution
 — not a claim carried over from elsewhere without checking it against
 this repo's own history first.
 
-Proposed columns, keeping the brief's table but making "matched" mean
-something checkable:
+### 3.1 Filled table
+
+**Method note.** This table was produced by reading the already-regenerated
+(2026-09-23) `*_PARITY.md` measured-bounds reports and cross-checking each
+against its `*_VISUAL.md` narrative and `KNOWN_DIFFERENCES.md`, not by
+re-running `capture_web.mjs`/`compare.mjs` from scratch. A prior tooling
+check confirmed the pipeline is fully runnable in this environment (Node,
+Chrome and Flutter all present, no missing dependency) but that the
+measured-bounds data for all six screens was already current as of the
+same day as the latest commits — re-driving Chrome would have regenerated
+numbers that already exist. Where a defect is stale or unconfirmed rather
+than resolved, the table says so; "—" means checked and clean.
 
 | Screen | Logic status | Structure diff (file:line) | Typography diff | Interaction diff | Dark mode | Urdu/Arabic (RTL) | Action |
 |---|---|---|---|---|---|---|---|
-| Home | | | | | | | |
-| Tools | | | | | | | |
-| Onboarding (interests step) | resolved at F4A (D12) | — | — | — | needs re-check under this table's format | needs re-check | confirm still holding, don't re-litigate |
-| Onboarding (remaining steps) | | | | | | | |
-| Account | | | | | | | |
-| Profile | | | | | | | |
-| Authentication | | | | | | | |
+| Home | Pass — all diffs ≤1px or cross-referenced | `livecard` -22.31 (`DESTINATION_PARITY.md:86`, →D25/C20); `qactions` -40.00 (`DESTINATION_PARITY.md:56`, clip note) | Recorded, unasserted heading widths by design; D20 line-box rounding | — (dot tap-target and date-format bugs already fixed) | — (reviewed: "authored, not inverted") | — (reviewed: hero-slide overflow bug found and fixed) | None |
+| Tools | Pass — no open `KNOWN_DIFFERENCES` refs needed | — (`DESTINATION_PARITY.md:156-238`, all `=`/sub-pixel) | Recorded, unasserted heading widths, same convention as Home | — (search + empty-state states pass; empty-state bug already fixed) | **GAP: captured but not confirmed reviewed** — `DESTINATION_VISUAL.md` §5 lists only "hub at primary cell, hub at 1100" | **GAP: same §5 limitation** — not confirmed eyeballed | Confirm the existing hub dark/Urdu/Arabic captures were actually reviewed, not just captured |
+| Profile | **Resolved (2026-09-24)** — `phead.acts` Δ-55 is a measurement-scope artifact, confirmed with evidence, not a Flutter defect | — (`DESTINATION_PARITY.md:373`; the test measures `find.byType(LumeButton).first` while the prototype's box wraps both stacked buttons: 46+9+46=101, confirmed against the raw measurement JSON and the signed-in/expired states, which render one button and match exactly) | No narrative coverage previously existed; now added as `DESTINATION_VISUAL.md` §6 | — (both guest buttons render correctly with the right gap/margin, per `lume_settings.dart`) | **GAP, confirmed real: Profile has never been captured in dark mode** — only the primary light/English cell exists in `DESTINATION_PARITY.md` | **GAP, confirmed real: same single-cell limitation** — no Urdu/Arabic capture exists for Profile at all | Dark mode and RTL capture for Profile still needed before Wave 5 reuses its layout; the Δ-55 finding itself needs no further action (test note corrected, doc section added) |
+| Onboarding (interests step) | Resolved — D12 (hard-coded English labels/copy/counter → 31 ids translated, enforced by `interests_catalogue_test.dart`) | — (`ONBOARDING_PARITY.md:201-211`, all within tolerance) | — | — (chip-based multi-select, min/max 5-10, live `{n} of {min}` counter confirmed) | **GAP: never measured or mentioned in any onboarding doc** | Only test-name coverage (`onboarding_screen_test.dart` claims "RTL"), no narrated verdict | **Fixed (2026-09-24):** `ONBOARDING_CONTRACT.md:254`'s stale "Open" label on Q9 corrected to closed, per `KNOWN_DIFFERENCES.md:3412` (F5C) |
+| Onboarding (remaining steps) | Pass — 327/327 measured values within tolerance | — (all steps: nav/skip/progress/art/title/text/continue/note bounds) | — (sub-pixel deltas footnoted as CSS artifacts) | — | **GAP: measured only at light/English** — no dark-mode pass documented anywhere | **GAP: D13 back-chevron RTL mirror fix is documented, but no full RTL bounds/narrative verdict exists** | Close the dark-mode and RTL documentation gap; no functional fix needed |
+| Account | **Resolved (2026-09-24)** — C89 is a real, intentional, already-documented consequence of commit `eb00909`'s timezone canonicalisation; `ACCOUNT_PARITY.md` is current and correct | C41 open-by-decision (`ACCOUNT_PARITY.md:62-65`, run-together option-row text); C43 open-by-decision (`ACCOUNT_PARITY.md:296-303`, list-moves-with-taller-form); C89 (`ACCOUNT_PARITY.md:182`, Δ-254 on the `time` route's notecard) confirmed via `git show eb00909` — the canonicalised zone list shortens the route's content above the notecard, and `KNOWN_DIFFERENCES.md` already predicted this exact 254pt figure | — (C50 resolved: toolbar subtitle line-height and margin fixed) | Not covered in either doc | **GAP, confirmed real: `ACCOUNT_VISUAL.md`'s golden matrix is light-only — dark mode was never captured for Account** | — (`ur`/`ar` goldens exist across 21 routes, `account_locale_test.dart` asserts no overflow, no defects noted) | **Done:** `ACCOUNT_VISUAL.md`'s stale D20 example (the pre-`eb00909` "2490→2496, six points" reading) corrected and cross-referenced to C89. Still needed: dark-mode golden coverage for Account |
+| Authentication | Pass — both deltas are already accepted, deliberate deviations | D19 (accepted): `AUTH_PARITY.md:293-326`, 6-12px header compression on the reset/password-creation screen; D20 (accepted, cosmetic): `AUTH_PARITY.md:207-209`, 0.08px legal-link padding | — (resolved: uppercase-transform and max-width-estimate bugs already fixed) | — (16 states / 115 goldens measured, no open defects; D21 seal-animation swap is cosmetic-only) | — (390×844 dark cell tested, "authored not inverted") | — (Urdu and Arabic cells tested, "RTL, real translations") | None — periodically re-confirm P1/D18/D19/D20/D21 still match |
 
-Filling this in is itself a piece of work (re-running captures against
-`VISUAL_VERIFICATION.md`'s matrix per screen) and should happen **before**
-any Wave 5 candidate's screen is drafted, exactly as the brief says —
-reusing a shared component (`LumeRecordTool`, `LumeCrud`, `lume_progress`
-for a streak ring) is only safe once that component's *current* usages are
-confirmed Lume-visual, not assumed so because they're already in `lib/`.
+### 3.2 What this audit actually found, and what was done about it
+
+Two items looked like genuine open questions and were investigated
+directly against source (git history, measurement JSON, widget code, web
+CSS) rather than left as documentation gaps:
+
+1. **Account's C89** (`ACCOUNT_PARITY.md:182`) — a 254pt delta on the
+   `time` route's notecard. **Verdict: real and correct, not a
+   regression.** `git show eb00909` ("Follow my region is a preference,
+   and never picks one of several zones", 2026-09-19) is the exact commit
+   that changed this row from a +6pt D20 reading to the current -254pt
+   C89 reading, by canonicalising the timezone list
+   (`lib/core/time/lume_country_zones.dart`,
+   `lib/core/time/lume_iana_zones.dart`) and shortening the route's
+   content above the notecard. `KNOWN_DIFFERENCES.md`'s own C89 entry
+   already predicted this exact figure. `ACCOUNT_VISUAL.md` was simply
+   never regenerated after that commit landed six days later than the
+   doc's own date — fixed by correcting its stale example and adding a
+   dedicated C89 subsection.
+2. **Profile's `phead.acts` delta** (`DESTINATION_PARITY.md:373`, Δ-55 in
+   the guest state) — **Verdict: measurement-scope artifact, not a
+   defect.** The prototype's `.phead__acts` box wraps both stacked guest
+   buttons (46 + 9 gap + 46 = 101, confirmed against the raw measurement
+   JSON's concatenated button-label text); the Flutter test measures only
+   `find.byType(LumeButton).first` with `checkHeight: false`, a
+   deliberate but previously unexplained scope choice — confirmed by the
+   signed-in/expired states, which render one button and match exactly
+   (46=46). Fixed: the test's `note:` field now says so explicitly
+   (`test/features/destinations/destination_bounds_test.dart`), and
+   `DESTINATION_PARITY.md` was regenerated to carry it. No widget code
+   needed changing — `lib/core/widgets/lume/lume_settings.dart` already
+   renders both buttons with the correct gap and margin.
+
+**Genuinely still open, confirmed real by the same investigation:** Profile
+has never been captured in dark mode or Urdu/Arabic at all — only the
+primary light/English cell exists for any of its three states. This is
+not resolved by the two verdicts above and should be closed before a Wave
+5 tool reuses Profile's layout.
+
+Everything else that surfaced is a documentation-coverage gap rather than
+a visual defect: Tools' dark-mode/RTL captures exist but were never
+confirmed as reviewed; Account has no dark-mode capture at all; Onboarding
+has no dark-mode coverage anywhere and only test-name-level RTL coverage;
+and the stale "Open" label in `ONBOARDING_CONTRACT.md` (Q9) has been
+corrected. None of these block a persistence or data-model decision the
+way §2 does, but per the brief's own rule — reuse a shared component only
+after confirming it's currently Lume-visual — the remaining dark-mode/RTL
+capture gaps for Account, Tools and Profile should close before
+`lume_progress`/`LumeCrud` get reused near any of their layouts for a
+Goals or Subscriptions build.
+
+Home and Authentication need no action — both are fully reviewed across
+structure, typography, interaction, dark mode and RTL, with every
+non-zero delta already accepted and named.
 
 ## 4. Shared foundations already in place
 

@@ -100,13 +100,35 @@ logical pixels. Each heading is a fifth of a point shorter and the difference
 accumulates down a route, which is why the allowance is three points for a
 block below the first and one point for a block at the top.
 
-Largest: `time`'s note card at y 2490 → 2496, six points down a route that is
-two and a half thousand points tall. Smallest: a single point on `sync`'s
-list.
+Largest still under D20: a single point on `sync`'s list.
 
 **Not repairable, and not worth repairing.** Matching it would mean carrying
 fractional line heights through every heading in the product to move a card
-six points on one screen.
+by a point or two.
+
+**Correction (2026-09-24):** this section previously cited `time`'s note
+card at y 2490 → 2496 (six points) as D20's largest example. That reading
+predates commit `eb00909` ("Follow my region is a preference, and never
+picks one of several zones", 2026-09-19), which canonicalised the
+time-route's zone list and shortened the content above the note card. The
+cell now measures 2490 → 2236 (−254 points) and is correctly reclassified
+as **C89**, not D20 — see below. This document was not regenerated after
+`eb00909` landed; `ACCOUNT_PARITY.md` (regenerated 2026-09-23) reflects
+current reality and is the one to trust for this cell.
+
+### C89 — the Time route's note card moves with a shorter zone list
+
+**Open by decision, not a defect.** `KNOWN_DIFFERENCES.md` (C89) already
+predicts this exact figure: *"The Time route's list is shorter, and its
+note card sits higher (254 points on a 390-point phone in Pakistan); the
+account bounds test marks it open against this entry."* The canonicalised,
+deduplicated country/timezone list (`lib/core/time/lume_country_zones.dart`,
+`lib/core/time/lume_iana_zones.dart`) is shorter than the prototype's flat
+alias enumeration for a single-civil-time country like Pakistan, so
+everything below it — including the note card — sits higher. `x`, `width`
+and `height` for the note card are unaffected (exact matches); only its
+`y` moves, and only because the content above it is intentionally shorter,
+not because the card itself is mispositioned.
 
 ### C41 — the run-together option row (15 values)
 

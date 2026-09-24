@@ -367,10 +367,10 @@ fills its column. Both start at the same x and render on the same baselines.
 | `phead.name` | x | 39.00 | 39.00 | = | a centred line fills its column on both sides |
 | `phead.name` | width | 312.00 | 312.00 | = | a centred line fills its column on both sides |
 | `phead.name` | height | 24.00 | 24.00 | = | a centred line fills its column on both sides |
-| `phead.acts` | y | 430.50 | 432.00 | 1.50 | the first action, after the guest card’s D20 rounding |
-| `phead.acts` | x | 39.00 | 39.00 | = | the first action, after the guest card’s D20 rounding |
-| `phead.acts` | width | 312.00 | 312.00 | = | the first action, after the guest card’s D20 rounding |
-| `phead.acts` | height | 101.00 | 46.00 | -55.00 | the first action, after the guest card’s D20 rounding |
+| `phead.acts` | y | 430.50 | 432.00 | 1.50 | measures the first action only; the guest state stacks two buttons (46 + 9 gap + 46 = 101, matching the prototype's combined .phead__acts box), so height is intentionally not asserted here — see DESTINATION_VISUAL.md §6 |
+| `phead.acts` | x | 39.00 | 39.00 | = | measures the first action only; the guest state stacks two buttons (46 + 9 gap + 46 = 101, matching the prototype's combined .phead__acts box), so height is intentionally not asserted here — see DESTINATION_VISUAL.md §6 |
+| `phead.acts` | width | 312.00 | 312.00 | = | measures the first action only; the guest state stacks two buttons (46 + 9 gap + 46 = 101, matching the prototype's combined .phead__acts box), so height is intentionally not asserted here — see DESTINATION_VISUAL.md §6 |
+| `phead.acts` | height | 101.00 | 46.00 | -55.00 | measures the first action only; the guest state stacks two buttons (46 + 9 gap + 46 = 101, matching the prototype's combined .phead__acts box), so height is intentionally not asserted here — see DESTINATION_VISUAL.md §6 |
 | `phead.meta` | y | 264.00 | 264.00 | = | a centred wrap is as wide as its runs on both sides |
 | `phead.meta` | x | 172.42 | 172.43 | 0.01 | a centred wrap is as wide as its runs on both sides |
 | `phead.meta` | width | 45.16 | 45.15 | -0.01 | a centred wrap is as wide as its runs on both sides |
@@ -428,10 +428,10 @@ fills its column. Both start at the same x and render on the same baselines.
 | `phead.name` | x | 129.83 | 129.84 | 0.01 | a centred line fills its column on both sides |
 | `phead.name` | width | 130.33 | 130.32 | -0.01 | a centred line fills its column on both sides |
 | `phead.name` | height | 24.00 | 24.00 | = | a centred line fills its column on both sides |
-| `phead.acts` | y | 283.00 | 283.00 | = | the first action, after the guest card’s D20 rounding |
-| `phead.acts` | x | 39.00 | 39.00 | = | the first action, after the guest card’s D20 rounding |
-| `phead.acts` | width | 312.00 | 312.00 | = | the first action, after the guest card’s D20 rounding |
-| `phead.acts` | height | 46.00 | 46.00 | = | the first action, after the guest card’s D20 rounding |
+| `phead.acts` | y | 283.00 | 283.00 | = | measures the first action only; the guest state stacks two buttons (46 + 9 gap + 46 = 101, matching the prototype's combined .phead__acts box), so height is intentionally not asserted here — see DESTINATION_VISUAL.md §6 |
+| `phead.acts` | x | 39.00 | 39.00 | = | measures the first action only; the guest state stacks two buttons (46 + 9 gap + 46 = 101, matching the prototype's combined .phead__acts box), so height is intentionally not asserted here — see DESTINATION_VISUAL.md §6 |
+| `phead.acts` | width | 312.00 | 312.00 | = | measures the first action only; the guest state stacks two buttons (46 + 9 gap + 46 = 101, matching the prototype's combined .phead__acts box), so height is intentionally not asserted here — see DESTINATION_VISUAL.md §6 |
+| `phead.acts` | height | 46.00 | 46.00 | = | measures the first action only; the guest state stacks two buttons (46 + 9 gap + 46 = 101, matching the prototype's combined .phead__acts box), so height is intentionally not asserted here — see DESTINATION_VISUAL.md §6 |
 | `phead.meta` | y | 248.00 | 248.00 | = | a centred wrap is as wide as its runs on both sides |
 | `phead.meta` | x | 105.61 | 105.61 | = | a centred wrap is as wide as its runs on both sides |
 | `phead.meta` | width | 178.78 | 178.77 | -0.01 | a centred wrap is as wide as its runs on both sides |
@@ -485,10 +485,10 @@ fills its column. Both start at the same x and render on the same baselines.
 | `phead.name` | x | 89.17 | 89.18 | 0.01 | a centred line fills its column on both sides |
 | `phead.name` | width | 211.66 | 211.64 | -0.02 | a centred line fills its column on both sides |
 | `phead.name` | height | 24.00 | 24.00 | = | a centred line fills its column on both sides |
-| `phead.acts` | y | 278.00 | 278.00 | = | the first action, after the guest card’s D20 rounding |
-| `phead.acts` | x | 39.00 | 39.00 | = | the first action, after the guest card’s D20 rounding |
-| `phead.acts` | width | 312.00 | 312.00 | = | the first action, after the guest card’s D20 rounding |
-| `phead.acts` | height | 46.00 | 46.00 | = | the first action, after the guest card’s D20 rounding |
+| `phead.acts` | y | 278.00 | 278.00 | = | measures the first action only; the guest state stacks two buttons (46 + 9 gap + 46 = 101, matching the prototype's combined .phead__acts box), so height is intentionally not asserted here — see DESTINATION_VISUAL.md §6 |
+| `phead.acts` | x | 39.00 | 39.00 | = | measures the first action only; the guest state stacks two buttons (46 + 9 gap + 46 = 101, matching the prototype's combined .phead__acts box), so height is intentionally not asserted here — see DESTINATION_VISUAL.md §6 |
+| `phead.acts` | width | 312.00 | 312.00 | = | measures the first action only; the guest state stacks two buttons (46 + 9 gap + 46 = 101, matching the prototype's combined .phead__acts box), so height is intentionally not asserted here — see DESTINATION_VISUAL.md §6 |
+| `phead.acts` | height | 46.00 | 46.00 | = | measures the first action only; the guest state stacks two buttons (46 + 9 gap + 46 = 101, matching the prototype's combined .phead__acts box), so height is intentionally not asserted here — see DESTINATION_VISUAL.md §6 |
 | `phead.meta` | y | 248.00 | 248.00 | = | a centred wrap is as wide as its runs on both sides |
 | `phead.meta` | x | 124.31 | 124.68 | 0.37 | a centred wrap is as wide as its runs on both sides |
 | `phead.meta` | width | 141.36 | 140.64 | -0.72 | a centred wrap is as wide as its runs on both sides |

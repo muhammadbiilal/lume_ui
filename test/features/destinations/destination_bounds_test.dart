@@ -902,7 +902,11 @@ void main() {
         inKey(LumeProfileScreen.identityKey, find.byType(LumeButton)).first,
         checkHeight: false,
         tolerance: kDrift,
-        note: 'the first action, after the guest card’s D20 rounding',
+        note:
+            'measures the first action only; the guest state stacks two '
+            'buttons (46 + 9 gap + 46 = 101, matching the prototype\'s '
+            'combined .phead__acts box), so height is intentionally not '
+            'asserted here — see DESTINATION_VISUAL.md §6',
       );
       compare(
         tester,

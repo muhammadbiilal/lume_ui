@@ -4,6 +4,14 @@
 > The product-facing description of what Flutter does is
 > `docs/LUME_DESTINATIONS.md`.
 
+> **Scope note (2026-09-24).** This document's title and §1's value count
+> (191) predate Profile and Trains being added to
+> [DESTINATION_PARITY.md](DESTINATION_PARITY.md), which now covers all five
+> destinations at 483 measured values. Trains stays out of scope for this
+> note; Profile is covered in §6 below, added as part of a Wave 5
+> visual-parity re-audit ([WAVE_5_DISCOVERY.md](WAVE_5_DISCOVERY.md) §3)
+> rather than a full rewrite of this document.
+
 The protocol is the one in [VISUAL_VERIFICATION.md](VISUAL_VERIFICATION.md):
 the viewport is set through the DevTools Protocol, `window.innerWidth` is
 asserted afterwards, both sides run with reduced motion forced and the same
@@ -233,3 +241,48 @@ or a reproduction taken by decision.
 Nothing else differs by more than a logical pixel outside the drift D20
 describes. There is no state in which Flutter shows a control the reference
 does not, or omits one it does, except where the tables above say so.
+
+---
+
+## 6. Profile
+
+**Captured at one cell only: 390 × 844, light, English.** Unlike Home,
+Tools, Today and Explore, Profile has never been measured across dark
+mode, Urdu, Arabic, or any width other than the primary phone geometry —
+[DESTINATION_PARITY.md](DESTINATION_PARITY.md) covers exactly three
+states (`Profile · a guest`, `Profile · signed in`, `Profile · a session
+that has run out`), each at the single default cell. This is a genuine
+coverage gap, not a reviewed-and-clean result — treat dark mode and RTL
+for Profile as unaudited, the same way §2's cell table treats them as
+audited for the other four destinations.
+
+**One finding, resolved as a measurement-scope artifact, not a defect.**
+`DESTINATION_PARITY.md`'s guest-state `phead.acts` row (the profile
+header's action buttons) reads prototype height 101 against Flutter
+height 46, a −55 delta with no prior explanation. Investigated directly:
+
+- The prototype's `.phead__acts` (`assets/css/account.css`) is a flex
+  column wrapping *both* stacked buttons plus a 9px gap: 46 + 9 + 46 = 101,
+  confirmed against the raw measurement JSON, whose `text` field is the
+  concatenation of both buttons' labels.
+- `test/features/destinations/destination_bounds_test.dart`'s `phead.acts`
+  check measures `find.byType(LumeButton).first` — the *first* button
+  only — with `checkHeight: false`, so the mismatch was already known and
+  deliberately not asserted; it was simply never annotated as a scope
+  limitation.
+- The signed-in and session-expired states, which render exactly one
+  button, measure 46 against 46 — an exact match — confirming the
+  Flutter widget tree is correct and the discrepancy is specific to the
+  two-button guest case being measured by a single-button finder.
+- `LumeIdentityCard` (`lib/core/widgets/lume/lume_settings.dart`) renders
+  both guest buttons with a 9-point gap and 14-point top margin
+  (`LumeSettingsMetrics.actsGap`/`actsTop`), matching `.phead__acts`'s
+  `gap: 9px; margin-top: 14px` exactly.
+
+**No code change is needed.** The test's `note:` field for this row has
+been updated to say so explicitly, so the next reader doesn't have to
+re-derive it.
+
+**Not yet done, and needed before Profile is reused by a Wave 5 tool:**
+dark mode and Urdu/Arabic capture and review, at minimum at the primary
+cell, matching the bar the other four destinations already clear.

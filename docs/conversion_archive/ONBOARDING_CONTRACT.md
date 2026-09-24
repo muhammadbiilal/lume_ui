@@ -251,6 +251,6 @@ an Urdu page is a defect, not a design decision. Recorded as **D12**.
 |---|---|
 | D12 | Interest labels, the interests copy and the counter are translated; the reference leaves them English |
 | D13 | The onboarding back chevron mirrors in RTL; the reference mirrors it in auth but not here |
-| Q9 | A country row is 41 tall — three under §9's floor, with nowhere to overhang. **Open.** |
+| Q9 | A country row is 41 tall — three under §9's floor, with nowhere to overhang. **Closed** — approved screen-specific target exception; full-bleed and 350 wide, with adjacent neighbours and no spare room to separate the target into (`KNOWN_DIFFERENCES.md`, F5C). |
 
 All three are in [KNOWN_DIFFERENCES.md](KNOWN_DIFFERENCES.md).
