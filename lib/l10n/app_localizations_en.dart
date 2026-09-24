@@ -6356,7 +6356,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get toolStatusFuelcost => 'Trip cost';
 
   @override
-  String get toolStatusGoals => '2 active';
+  String get toolStatusGoals => 'Track your savings goals';
 
   @override
   String get toolStatusGoldrates => 'Gold & FX';
@@ -6476,7 +6476,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get toolStatusStreak => '12 days';
 
   @override
-  String get toolStatusSubs => '6 active';
+  String get toolStatusSubs => 'Track recurring subscriptions';
 
   @override
   String get toolStatusSunmoon => 'Sunrise · sunset';
@@ -7822,6 +7822,211 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get instImportNoNames =>
       'This backup has no names; plans come in as “Plan 1”, “Plan 2”.';
+
+  @override
+  String get goalsSummaryKicker => 'Saved so far';
+
+  @override
+  String goalsSummaryCaption(String target) {
+    return 'of $target across all goals';
+  }
+
+  @override
+  String get goalsStatActive => 'Active goals';
+
+  @override
+  String get goalsStatThisMonth => 'This month';
+
+  @override
+  String get goalsStatNext => 'Next to complete';
+
+  @override
+  String get goalsYourGoals => 'Your goals';
+
+  @override
+  String get goalsOtherGoals => 'Completed & abandoned';
+
+  @override
+  String goalsOfTarget(String saved, String target) {
+    return '$saved of $target';
+  }
+
+  @override
+  String goalsByDate(String date) {
+    return 'by $date';
+  }
+
+  @override
+  String goalsToGo(String amount) {
+    return '$amount to go';
+  }
+
+  @override
+  String goalsProjectedDate(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: 'in $n months',
+      one: 'in 1 month',
+      zero: 'Any time now',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get goalsReached => 'Target reached';
+
+  @override
+  String get goalsChartTitle => 'Contributions';
+
+  @override
+  String get goalsAddGoal => 'Add a goal';
+
+  @override
+  String get goalsAddContribution => 'Add a contribution';
+
+  @override
+  String get goalsEmptyTitle => 'No savings goals yet';
+
+  @override
+  String get goalsEmptyText =>
+      'A goal turns a vague intention into a monthly number.';
+
+  @override
+  String get goalsNewGoal => 'New goal';
+
+  @override
+  String get goalsEditGoal => 'Edit goal';
+
+  @override
+  String get goalsFieldName => 'Name';
+
+  @override
+  String get goalsFieldNote => 'Note';
+
+  @override
+  String get goalsFieldTarget => 'Target amount';
+
+  @override
+  String get goalsFieldTargetDate => 'Target date';
+
+  @override
+  String get goalsFieldIcon => 'Icon';
+
+  @override
+  String get goalsFieldCurrency => 'Currency';
+
+  @override
+  String get goalsErrName => 'Name this goal';
+
+  @override
+  String get goalsErrLong => 'That is too long';
+
+  @override
+  String get goalsErrTarget => 'Enter a target amount';
+
+  @override
+  String goalsErrWithdrawn(String code) {
+    return '$code is no longer issued. Choose a current currency.';
+  }
+
+  @override
+  String goalsErrCurrencyLocked(String code) {
+    return 'This goal already has contributions in $code. Delete them first to change its currency.';
+  }
+
+  @override
+  String get goalsErrAmount => 'Enter an amount';
+
+  @override
+  String get goalsErrConflict => 'This goal changed elsewhere';
+
+  @override
+  String get goalsErrClosed => 'This goal is completed or abandoned';
+
+  @override
+  String get goalsErrDamaged =>
+      'This goal\'s records don\'t add up and can\'t be shown safely';
+
+  @override
+  String get goalsErrTooLarge => 'That amount is too large';
+
+  @override
+  String get goalsErrFailed => 'That didn\'t save. Try again.';
+
+  @override
+  String get goalsNotFound => 'That goal isn\'t there any more';
+
+  @override
+  String get goalsStateActive => 'Active';
+
+  @override
+  String get goalsStateCompleted => 'Completed';
+
+  @override
+  String get goalsStateAbandoned => 'Abandoned';
+
+  @override
+  String get goalsMarkComplete => 'Mark completed';
+
+  @override
+  String get goalsMarkCompleteAsk => 'Mark this goal completed?';
+
+  @override
+  String get goalsMarkCompleteText =>
+      'It stays in your history, just no longer counted toward what\'s left to save.';
+
+  @override
+  String get goalsMarkCompleteToast => 'Goal completed';
+
+  @override
+  String get goalsAbandon => 'Abandon goal';
+
+  @override
+  String get goalsAbandonAsk => 'Abandon this goal?';
+
+  @override
+  String get goalsAbandonText =>
+      'It stays in your history. You can reactivate it any time.';
+
+  @override
+  String get goalsAbandonToast => 'Goal abandoned';
+
+  @override
+  String get goalsReactivate => 'Reactivate';
+
+  @override
+  String get goalsReactivatedToast => 'Goal reactivated';
+
+  @override
+  String get goalsDeleteAsk => 'Delete this goal?';
+
+  @override
+  String get goalsDeleteText =>
+      'This removes the goal and every contribution logged to it.';
+
+  @override
+  String get goalsDeletedToast => 'Goal deleted';
+
+  @override
+  String get goalsContributionAdded => 'Contribution added';
+
+  @override
+  String get goalsVoidContribution => 'Remove this contribution';
+
+  @override
+  String get goalsContributionVoidedToast => 'Contribution removed';
+
+  @override
+  String get goalsHistoryTitle => 'Contribution history';
+
+  @override
+  String get goalsHistoryEmpty => 'No contributions yet';
+
+  @override
+  String goalsShareText(String saved, String target, String pct) {
+    return '$saved of $target — $pct%';
+  }
 
   @override
   String get ledgerErrArchived =>

@@ -11182,10 +11182,10 @@ abstract class AppLocalizations {
   /// **'Trip cost'**
   String get toolStatusFuelcost;
 
-  /// The status line on the goals tile. The prototype keeps it in the catalogue and renders it untranslated in every language (D22)
+  /// The status line on the goals tile. States a purpose, not a count: the prototype's '2 active' disagrees with its own 3-goal seed data (GOALS_PROPOSAL.md D-G10)
   ///
   /// In en, this message translates to:
-  /// **'2 active'**
+  /// **'Track your savings goals'**
   String get toolStatusGoals;
 
   /// The status line on the goldrates tile. The prototype keeps it in the catalogue and renders it untranslated in every language (D22)
@@ -11422,10 +11422,10 @@ abstract class AppLocalizations {
   /// **'12 days'**
   String get toolStatusStreak;
 
-  /// The status line on the subs tile. The prototype keeps it in the catalogue and renders it untranslated in every language (D22)
+  /// The status line on the subs tile. States a purpose, not a count: the prototype's '6 active' disagrees with its own 5-subscription seed data (SUBSCRIPTIONS_PROPOSAL.md D-S9)
   ///
   /// In en, this message translates to:
-  /// **'6 active'**
+  /// **'Track recurring subscriptions'**
   String get toolStatusSubs;
 
   /// The status line on the sunmoon tile. The prototype keeps it in the catalogue and renders it untranslated in every language (D22)
@@ -13640,6 +13640,360 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'This backup has no names; plans come in as “Plan 1”, “Plan 2”.'**
   String get instImportNoNames;
+
+  /// Goals summary card kicker (goals.tool.js 'goals.saved')
+  ///
+  /// In en, this message translates to:
+  /// **'Saved so far'**
+  String get goalsSummaryKicker;
+
+  /// Goals summary card caption (goals.tool.js 'goals.ofTarget')
+  ///
+  /// In en, this message translates to:
+  /// **'of {target} across all goals'**
+  String goalsSummaryCaption(String target);
+
+  /// Goals summary stat label
+  ///
+  /// In en, this message translates to:
+  /// **'Active goals'**
+  String get goalsStatActive;
+
+  /// Goals summary stat label — real, derived from the reader's own contributions (D-G2), replacing the reference's untracked 'Monthly' plan figure
+  ///
+  /// In en, this message translates to:
+  /// **'This month'**
+  String get goalsStatThisMonth;
+
+  /// Goals summary stat label (goals.tool.js 'goals.nextDone')
+  ///
+  /// In en, this message translates to:
+  /// **'Next to complete'**
+  String get goalsStatNext;
+
+  /// Goals list section title (goals.tool.js 'goals.yours')
+  ///
+  /// In en, this message translates to:
+  /// **'Your goals'**
+  String get goalsYourGoals;
+
+  /// Section title for goals not currently active — the reference has no such state, so no section, but a goal needs to stay reachable once it leaves the active list
+  ///
+  /// In en, this message translates to:
+  /// **'Completed & abandoned'**
+  String get goalsOtherGoals;
+
+  /// A goal card's progress line
+  ///
+  /// In en, this message translates to:
+  /// **'{saved} of {target}'**
+  String goalsOfTarget(String saved, String target);
+
+  /// A goal card's target date, appended to goalsOfTarget (goals.tool.js 'goals.by')
+  ///
+  /// In en, this message translates to:
+  /// **'by {date}'**
+  String goalsByDate(String date);
+
+  /// A goal card's footer (goals.tool.js 'goals.remaining')
+  ///
+  /// In en, this message translates to:
+  /// **'{amount} to go'**
+  String goalsToGo(String amount);
+
+  /// A goal's projection, real and derived from its own pace (GOALS_PROPOSAL.md §2), never the reference's fabricated chart
+  ///
+  /// In en, this message translates to:
+  /// **'{n, plural, =0{Any time now} =1{in 1 month} other{in {n} months}}'**
+  String goalsProjectedDate(int n);
+
+  /// Shown in place of a projection once a goal's saved amount meets its target
+  ///
+  /// In en, this message translates to:
+  /// **'Target reached'**
+  String get goalsReached;
+
+  /// The real, derived monthly-contributions chart (goals.tool.js has a 'Contributions' chart, but its six values are a hardcoded literal array unrelated to any goal — this one is not)
+  ///
+  /// In en, this message translates to:
+  /// **'Contributions'**
+  String get goalsChartTitle;
+
+  /// Button — replaces the reference's 'Create your first goal' toast stub with a real form
+  ///
+  /// In en, this message translates to:
+  /// **'Add a goal'**
+  String get goalsAddGoal;
+
+  /// Button — replaces the reference's 'Add a contribution' toast stub with a real form (goals.tool.js 'goals.contribute')
+  ///
+  /// In en, this message translates to:
+  /// **'Add a contribution'**
+  String get goalsAddContribution;
+
+  /// Empty state title (goals.tool.js 'goals.empty.title') — dead code in the reference since its seed always has 3 goals; live here
+  ///
+  /// In en, this message translates to:
+  /// **'No savings goals yet'**
+  String get goalsEmptyTitle;
+
+  /// Empty state text (goals.tool.js 'goals.empty.text')
+  ///
+  /// In en, this message translates to:
+  /// **'A goal turns a vague intention into a monthly number.'**
+  String get goalsEmptyText;
+
+  /// Form title, creating
+  ///
+  /// In en, this message translates to:
+  /// **'New goal'**
+  String get goalsNewGoal;
+
+  /// Form title, editing
+  ///
+  /// In en, this message translates to:
+  /// **'Edit goal'**
+  String get goalsEditGoal;
+
+  /// Form field
+  ///
+  /// In en, this message translates to:
+  /// **'Name'**
+  String get goalsFieldName;
+
+  /// Form field, optional
+  ///
+  /// In en, this message translates to:
+  /// **'Note'**
+  String get goalsFieldNote;
+
+  /// Form field
+  ///
+  /// In en, this message translates to:
+  /// **'Target amount'**
+  String get goalsFieldTarget;
+
+  /// Form field, optional (D-G4)
+  ///
+  /// In en, this message translates to:
+  /// **'Target date'**
+  String get goalsFieldTargetDate;
+
+  /// Form field — a fixed small palette (D-G6)
+  ///
+  /// In en, this message translates to:
+  /// **'Icon'**
+  String get goalsFieldIcon;
+
+  /// Form field
+  ///
+  /// In en, this message translates to:
+  /// **'Currency'**
+  String get goalsFieldCurrency;
+
+  /// Validation
+  ///
+  /// In en, this message translates to:
+  /// **'Name this goal'**
+  String get goalsErrName;
+
+  /// Validation
+  ///
+  /// In en, this message translates to:
+  /// **'That is too long'**
+  String get goalsErrLong;
+
+  /// Validation
+  ///
+  /// In en, this message translates to:
+  /// **'Enter a target amount'**
+  String get goalsErrTarget;
+
+  /// Validation: a new goal in a withdrawn currency
+  ///
+  /// In en, this message translates to:
+  /// **'{code} is no longer issued. Choose a current currency.'**
+  String goalsErrWithdrawn(String code);
+
+  /// Validation: a currency change would orphan existing contributions
+  ///
+  /// In en, this message translates to:
+  /// **'This goal already has contributions in {code}. Delete them first to change its currency.'**
+  String goalsErrCurrencyLocked(String code);
+
+  /// Contribution form validation
+  ///
+  /// In en, this message translates to:
+  /// **'Enter an amount'**
+  String get goalsErrAmount;
+
+  /// Toast — a write lost a version race
+  ///
+  /// In en, this message translates to:
+  /// **'This goal changed elsewhere'**
+  String get goalsErrConflict;
+
+  /// Toast — a contribution to a non-active goal
+  ///
+  /// In en, this message translates to:
+  /// **'This goal is completed or abandoned'**
+  String get goalsErrClosed;
+
+  /// Toast
+  ///
+  /// In en, this message translates to:
+  /// **'This goal\'s records don\'t add up and can\'t be shown safely'**
+  String get goalsErrDamaged;
+
+  /// Toast — a sum would overflow
+  ///
+  /// In en, this message translates to:
+  /// **'That amount is too large'**
+  String get goalsErrTooLarge;
+
+  /// Toast — a generic storage failure
+  ///
+  /// In en, this message translates to:
+  /// **'That didn\'t save. Try again.'**
+  String get goalsErrFailed;
+
+  /// Toast — a deep link to a goal that no longer exists
+  ///
+  /// In en, this message translates to:
+  /// **'That goal isn\'t there any more'**
+  String get goalsNotFound;
+
+  /// Goal state
+  ///
+  /// In en, this message translates to:
+  /// **'Active'**
+  String get goalsStateActive;
+
+  /// Goal state
+  ///
+  /// In en, this message translates to:
+  /// **'Completed'**
+  String get goalsStateCompleted;
+
+  /// Goal state
+  ///
+  /// In en, this message translates to:
+  /// **'Abandoned'**
+  String get goalsStateAbandoned;
+
+  /// Detail action
+  ///
+  /// In en, this message translates to:
+  /// **'Mark completed'**
+  String get goalsMarkComplete;
+
+  /// Confirmation sheet title
+  ///
+  /// In en, this message translates to:
+  /// **'Mark this goal completed?'**
+  String get goalsMarkCompleteAsk;
+
+  /// Confirmation sheet text
+  ///
+  /// In en, this message translates to:
+  /// **'It stays in your history, just no longer counted toward what\'s left to save.'**
+  String get goalsMarkCompleteText;
+
+  /// Toast
+  ///
+  /// In en, this message translates to:
+  /// **'Goal completed'**
+  String get goalsMarkCompleteToast;
+
+  /// Detail action
+  ///
+  /// In en, this message translates to:
+  /// **'Abandon goal'**
+  String get goalsAbandon;
+
+  /// Confirmation sheet title
+  ///
+  /// In en, this message translates to:
+  /// **'Abandon this goal?'**
+  String get goalsAbandonAsk;
+
+  /// Confirmation sheet text
+  ///
+  /// In en, this message translates to:
+  /// **'It stays in your history. You can reactivate it any time.'**
+  String get goalsAbandonText;
+
+  /// Toast
+  ///
+  /// In en, this message translates to:
+  /// **'Goal abandoned'**
+  String get goalsAbandonToast;
+
+  /// Detail action — undoes completed/abandoned back to active
+  ///
+  /// In en, this message translates to:
+  /// **'Reactivate'**
+  String get goalsReactivate;
+
+  /// Toast
+  ///
+  /// In en, this message translates to:
+  /// **'Goal reactivated'**
+  String get goalsReactivatedToast;
+
+  /// Confirmation sheet title
+  ///
+  /// In en, this message translates to:
+  /// **'Delete this goal?'**
+  String get goalsDeleteAsk;
+
+  /// Confirmation sheet text
+  ///
+  /// In en, this message translates to:
+  /// **'This removes the goal and every contribution logged to it.'**
+  String get goalsDeleteText;
+
+  /// Toast, with Undo
+  ///
+  /// In en, this message translates to:
+  /// **'Goal deleted'**
+  String get goalsDeletedToast;
+
+  /// Toast, with Undo
+  ///
+  /// In en, this message translates to:
+  /// **'Contribution added'**
+  String get goalsContributionAdded;
+
+  /// Row action — voids, does not delete
+  ///
+  /// In en, this message translates to:
+  /// **'Remove this contribution'**
+  String get goalsVoidContribution;
+
+  /// Toast, with Undo
+  ///
+  /// In en, this message translates to:
+  /// **'Contribution removed'**
+  String get goalsContributionVoidedToast;
+
+  /// Goal detail section title
+  ///
+  /// In en, this message translates to:
+  /// **'Contribution history'**
+  String get goalsHistoryTitle;
+
+  /// Goal detail — empty history
+  ///
+  /// In en, this message translates to:
+  /// **'No contributions yet'**
+  String get goalsHistoryEmpty;
+
+  /// Share-card quote, mirroring the reference's own working share feature (goals.tool.js, tool.screen.js:993-998)
+  ///
+  /// In en, this message translates to:
+  /// **'{saved} of {target} — {pct}%'**
+  String goalsShareText(String saved, String target, String pct);
 
   /// Validation
   ///

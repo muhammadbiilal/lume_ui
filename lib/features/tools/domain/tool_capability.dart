@@ -151,6 +151,12 @@ class LumeDataCapability {
     // did not write ([sampleInParityOnly], wave 4).
     'birthdays',
     'water',
+    // Goals and Subscriptions (wave 5): the reference's own seed data is
+    // 100% hardcoded fixtures with no CRUD at all (GOALS_PROPOSAL.md §0,
+    // SUBSCRIPTIONS_PROPOSAL.md §0) — nothing here is reproduced; a
+    // reader's build opens both empty.
+    'goals',
+    'subs',
   };
 
   /// Tools whose "live" is a clock ticking on the device.

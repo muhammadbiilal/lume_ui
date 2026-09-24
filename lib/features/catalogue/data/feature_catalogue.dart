@@ -1897,6 +1897,10 @@ const List<LumeFeature> kLumeFeatures = <LumeFeature>[
     },
     aware: <String>{'country', 'currency', 'locale', 'timezone'},
   ),
+  // Goals: a real record family as of wave 5 (`GOALS_PROPOSAL.md`).
+  // homeEligible dropped (D-G1, matching Installments/Baby Budget: a
+  // sensitive financial record stays off Home) and notifications dropped
+  // (D-G9, not in v1).
   LumeFeature(
     id: 'goals',
     fallbackName: 'Savings Goals',
@@ -1906,7 +1910,6 @@ const List<LumeFeature> kLumeFeatures = <LumeFeature>[
     interests: <String>{'savings'},
     keywords: <String>{'money', 'save', 'target'},
     sensitive: true,
-    homeEligible: true,
     related: <String>{'expenses', 'natsavings', 'compound'},
     archetype: LumeToolArchetype.dashboard,
     density: LumeToolDensity.high,
@@ -1915,12 +1918,16 @@ const List<LumeFeature> kLumeFeatures = <LumeFeature>[
     supports: <LumeToolSupport>{
       LumeToolSupport.export,
       LumeToolSupport.history,
-      LumeToolSupport.notifications,
       LumeToolSupport.offline,
       LumeToolSupport.sharing,
     },
     aware: <String>{'currency', 'locale'},
   ),
+  // Subscriptions: a real record family as of wave 5
+  // (`SUBSCRIPTIONS_PROPOSAL.md`). homeEligible dropped (D-S1) and
+  // notifications dropped (D-S8, not in v1); filters stays — it is now a
+  // real Active/Cancelled/All filter (D-S6), not the reference's
+  // unimplemented claim.
   LumeFeature(
     id: 'subs',
     fallbackName: 'Subscriptions',
@@ -1930,7 +1937,6 @@ const List<LumeFeature> kLumeFeatures = <LumeFeature>[
     interests: <String>{'expenses'},
     keywords: <String>{'monthly', 'netflix', 'recurring', 'spotify'},
     sensitive: true,
-    homeEligible: true,
     related: <String>{'expenses', 'bills', 'installments'},
     archetype: LumeToolArchetype.manager,
     density: LumeToolDensity.high,
@@ -1940,7 +1946,6 @@ const List<LumeFeature> kLumeFeatures = <LumeFeature>[
       LumeToolSupport.export,
       LumeToolSupport.filters,
       LumeToolSupport.history,
-      LumeToolSupport.notifications,
       LumeToolSupport.search,
       LumeToolSupport.sorting,
     },

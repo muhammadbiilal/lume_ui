@@ -8619,9 +8619,9 @@
   "@toolStatusFuelcost": {
     "description": "The status line on the fuelcost tile. The prototype keeps it in the catalogue and renders it untranslated in every language (D22)"
   },
-  "toolStatusGoals": "2 active",
+  "toolStatusGoals": "Track your savings goals",
   "@toolStatusGoals": {
-    "description": "The status line on the goals tile. The prototype keeps it in the catalogue and renders it untranslated in every language (D22)"
+    "description": "The status line on the goals tile. States a purpose, not a count: the prototype's '2 active' disagrees with its own 3-goal seed data (GOALS_PROPOSAL.md D-G10)"
   },
   "toolStatusGoldrates": "Gold & FX",
   "@toolStatusGoldrates": {
@@ -8779,9 +8779,9 @@
   "@toolStatusStreak": {
     "description": "The status line on the streak tile. The prototype keeps it in the catalogue and renders it untranslated in every language (D22)"
   },
-  "toolStatusSubs": "6 active",
+  "toolStatusSubs": "Track recurring subscriptions",
   "@toolStatusSubs": {
-    "description": "The status line on the subs tile. The prototype keeps it in the catalogue and renders it untranslated in every language (D22)"
+    "description": "The status line on the subs tile. States a purpose, not a count: the prototype's '6 active' disagrees with its own 5-subscription seed data (SUBSCRIPTIONS_PROPOSAL.md D-S9)"
   },
   "toolStatusSunmoon": "Sunrise · sunset",
   "@toolStatusSunmoon": {
@@ -10658,6 +10658,291 @@
   "instImportNoNames": "This backup has no names; plans come in as “Plan 1”, “Plan 2”.",
   "@instImportNoNames": {
     "description": "Installments import: names left out of the file"
+  },
+  "goalsSummaryKicker": "Saved so far",
+  "@goalsSummaryKicker": {
+    "description": "Goals summary card kicker (goals.tool.js 'goals.saved')"
+  },
+  "goalsSummaryCaption": "of {target} across all goals",
+  "@goalsSummaryCaption": {
+    "description": "Goals summary card caption (goals.tool.js 'goals.ofTarget')",
+    "placeholders": {
+      "target": {
+        "type": "String"
+      }
+    }
+  },
+  "goalsStatActive": "Active goals",
+  "@goalsStatActive": {
+    "description": "Goals summary stat label"
+  },
+  "goalsStatThisMonth": "This month",
+  "@goalsStatThisMonth": {
+    "description": "Goals summary stat label — real, derived from the reader's own contributions (D-G2), replacing the reference's untracked 'Monthly' plan figure"
+  },
+  "goalsStatNext": "Next to complete",
+  "@goalsStatNext": {
+    "description": "Goals summary stat label (goals.tool.js 'goals.nextDone')"
+  },
+  "goalsYourGoals": "Your goals",
+  "@goalsYourGoals": {
+    "description": "Goals list section title (goals.tool.js 'goals.yours')"
+  },
+  "goalsOtherGoals": "Completed & abandoned",
+  "@goalsOtherGoals": {
+    "description": "Section title for goals not currently active — the reference has no such state, so no section, but a goal needs to stay reachable once it leaves the active list"
+  },
+  "goalsOfTarget": "{saved} of {target}",
+  "@goalsOfTarget": {
+    "description": "A goal card's progress line",
+    "placeholders": {
+      "saved": {
+        "type": "String"
+      },
+      "target": {
+        "type": "String"
+      }
+    }
+  },
+  "goalsByDate": "by {date}",
+  "@goalsByDate": {
+    "description": "A goal card's target date, appended to goalsOfTarget (goals.tool.js 'goals.by')",
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "goalsToGo": "{amount} to go",
+  "@goalsToGo": {
+    "description": "A goal card's footer (goals.tool.js 'goals.remaining')",
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "goalsProjectedDate": "{n, plural, =0{Any time now} =1{in 1 month} other{in {n} months}}",
+  "@goalsProjectedDate": {
+    "description": "A goal's projection, real and derived from its own pace (GOALS_PROPOSAL.md §2), never the reference's fabricated chart",
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
+  "goalsReached": "Target reached",
+  "@goalsReached": {
+    "description": "Shown in place of a projection once a goal's saved amount meets its target"
+  },
+  "goalsChartTitle": "Contributions",
+  "@goalsChartTitle": {
+    "description": "The real, derived monthly-contributions chart (goals.tool.js has a 'Contributions' chart, but its six values are a hardcoded literal array unrelated to any goal — this one is not)"
+  },
+  "goalsAddGoal": "Add a goal",
+  "@goalsAddGoal": {
+    "description": "Button — replaces the reference's 'Create your first goal' toast stub with a real form"
+  },
+  "goalsAddContribution": "Add a contribution",
+  "@goalsAddContribution": {
+    "description": "Button — replaces the reference's 'Add a contribution' toast stub with a real form (goals.tool.js 'goals.contribute')"
+  },
+  "goalsEmptyTitle": "No savings goals yet",
+  "@goalsEmptyTitle": {
+    "description": "Empty state title (goals.tool.js 'goals.empty.title') — dead code in the reference since its seed always has 3 goals; live here"
+  },
+  "goalsEmptyText": "A goal turns a vague intention into a monthly number.",
+  "@goalsEmptyText": {
+    "description": "Empty state text (goals.tool.js 'goals.empty.text')"
+  },
+  "goalsNewGoal": "New goal",
+  "@goalsNewGoal": {
+    "description": "Form title, creating"
+  },
+  "goalsEditGoal": "Edit goal",
+  "@goalsEditGoal": {
+    "description": "Form title, editing"
+  },
+  "goalsFieldName": "Name",
+  "@goalsFieldName": {
+    "description": "Form field"
+  },
+  "goalsFieldNote": "Note",
+  "@goalsFieldNote": {
+    "description": "Form field, optional"
+  },
+  "goalsFieldTarget": "Target amount",
+  "@goalsFieldTarget": {
+    "description": "Form field"
+  },
+  "goalsFieldTargetDate": "Target date",
+  "@goalsFieldTargetDate": {
+    "description": "Form field, optional (D-G4)"
+  },
+  "goalsFieldIcon": "Icon",
+  "@goalsFieldIcon": {
+    "description": "Form field — a fixed small palette (D-G6)"
+  },
+  "goalsFieldCurrency": "Currency",
+  "@goalsFieldCurrency": {
+    "description": "Form field"
+  },
+  "goalsErrName": "Name this goal",
+  "@goalsErrName": {
+    "description": "Validation"
+  },
+  "goalsErrLong": "That is too long",
+  "@goalsErrLong": {
+    "description": "Validation"
+  },
+  "goalsErrTarget": "Enter a target amount",
+  "@goalsErrTarget": {
+    "description": "Validation"
+  },
+  "goalsErrWithdrawn": "{code} is no longer issued. Choose a current currency.",
+  "@goalsErrWithdrawn": {
+    "description": "Validation: a new goal in a withdrawn currency",
+    "placeholders": {
+      "code": {
+        "type": "String"
+      }
+    }
+  },
+  "goalsErrCurrencyLocked": "This goal already has contributions in {code}. Delete them first to change its currency.",
+  "@goalsErrCurrencyLocked": {
+    "description": "Validation: a currency change would orphan existing contributions",
+    "placeholders": {
+      "code": {
+        "type": "String"
+      }
+    }
+  },
+  "goalsErrAmount": "Enter an amount",
+  "@goalsErrAmount": {
+    "description": "Contribution form validation"
+  },
+  "goalsErrConflict": "This goal changed elsewhere",
+  "@goalsErrConflict": {
+    "description": "Toast — a write lost a version race"
+  },
+  "goalsErrClosed": "This goal is completed or abandoned",
+  "@goalsErrClosed": {
+    "description": "Toast — a contribution to a non-active goal"
+  },
+  "goalsErrDamaged": "This goal's records don't add up and can't be shown safely",
+  "@goalsErrDamaged": {
+    "description": "Toast"
+  },
+  "goalsErrTooLarge": "That amount is too large",
+  "@goalsErrTooLarge": {
+    "description": "Toast — a sum would overflow"
+  },
+  "goalsErrFailed": "That didn't save. Try again.",
+  "@goalsErrFailed": {
+    "description": "Toast — a generic storage failure"
+  },
+  "goalsNotFound": "That goal isn't there any more",
+  "@goalsNotFound": {
+    "description": "Toast — a deep link to a goal that no longer exists"
+  },
+  "goalsStateActive": "Active",
+  "@goalsStateActive": {
+    "description": "Goal state"
+  },
+  "goalsStateCompleted": "Completed",
+  "@goalsStateCompleted": {
+    "description": "Goal state"
+  },
+  "goalsStateAbandoned": "Abandoned",
+  "@goalsStateAbandoned": {
+    "description": "Goal state"
+  },
+  "goalsMarkComplete": "Mark completed",
+  "@goalsMarkComplete": {
+    "description": "Detail action"
+  },
+  "goalsMarkCompleteAsk": "Mark this goal completed?",
+  "@goalsMarkCompleteAsk": {
+    "description": "Confirmation sheet title"
+  },
+  "goalsMarkCompleteText": "It stays in your history, just no longer counted toward what's left to save.",
+  "@goalsMarkCompleteText": {
+    "description": "Confirmation sheet text"
+  },
+  "goalsMarkCompleteToast": "Goal completed",
+  "@goalsMarkCompleteToast": {
+    "description": "Toast"
+  },
+  "goalsAbandon": "Abandon goal",
+  "@goalsAbandon": {
+    "description": "Detail action"
+  },
+  "goalsAbandonAsk": "Abandon this goal?",
+  "@goalsAbandonAsk": {
+    "description": "Confirmation sheet title"
+  },
+  "goalsAbandonText": "It stays in your history. You can reactivate it any time.",
+  "@goalsAbandonText": {
+    "description": "Confirmation sheet text"
+  },
+  "goalsAbandonToast": "Goal abandoned",
+  "@goalsAbandonToast": {
+    "description": "Toast"
+  },
+  "goalsReactivate": "Reactivate",
+  "@goalsReactivate": {
+    "description": "Detail action — undoes completed/abandoned back to active"
+  },
+  "goalsReactivatedToast": "Goal reactivated",
+  "@goalsReactivatedToast": {
+    "description": "Toast"
+  },
+  "goalsDeleteAsk": "Delete this goal?",
+  "@goalsDeleteAsk": {
+    "description": "Confirmation sheet title"
+  },
+  "goalsDeleteText": "This removes the goal and every contribution logged to it.",
+  "@goalsDeleteText": {
+    "description": "Confirmation sheet text"
+  },
+  "goalsDeletedToast": "Goal deleted",
+  "@goalsDeletedToast": {
+    "description": "Toast, with Undo"
+  },
+  "goalsContributionAdded": "Contribution added",
+  "@goalsContributionAdded": {
+    "description": "Toast, with Undo"
+  },
+  "goalsVoidContribution": "Remove this contribution",
+  "@goalsVoidContribution": {
+    "description": "Row action — voids, does not delete"
+  },
+  "goalsContributionVoidedToast": "Contribution removed",
+  "@goalsContributionVoidedToast": {
+    "description": "Toast, with Undo"
+  },
+  "goalsHistoryTitle": "Contribution history",
+  "@goalsHistoryTitle": {
+    "description": "Goal detail section title"
+  },
+  "goalsHistoryEmpty": "No contributions yet",
+  "@goalsHistoryEmpty": {
+    "description": "Goal detail — empty history"
+  },
+  "goalsShareText": "{saved} of {target} — {pct}%",
+  "@goalsShareText": {
+    "description": "Share-card quote, mirroring the reference's own working share feature (goals.tool.js, tool.screen.js:993-998)",
+    "placeholders": {
+      "saved": {
+        "type": "String"
+      },
+      "target": {
+        "type": "String"
+      },
+      "pct": {
+        "type": "String"
+      }
+    }
   },
   "ledgerErrArchived": "This person is archived. Unarchive them to add entries.",
   "@ledgerErrArchived": {

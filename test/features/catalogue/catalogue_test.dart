@@ -105,7 +105,10 @@ void main() {
       // joined the tools the reference marks.
       expect(by((LumeFeature f) => f.sensitive), 13);
       expect(by((LumeFeature f) => f.isCountryRestricted), 7);
-      expect(by((LumeFeature f) => f.homeEligible), 28);
+      // Goals and Subscriptions dropped homeEligible at wave 5 (D-G1,
+      // D-S1): sensitive financial records stay off Home, matching
+      // Installments/Ledger/Committee/Baby Budget's own precedent.
+      expect(by((LumeFeature f) => f.homeEligible), 26);
       expect(by((LumeFeature f) => f.quickEligible), 24);
     });
 

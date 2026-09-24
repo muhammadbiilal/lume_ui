@@ -6352,7 +6352,7 @@ class AppLocalizationsUr extends AppLocalizations {
   String get toolStatusFuelcost => 'سفر کا خرچ';
 
   @override
-  String get toolStatusGoals => '2 فعال';
+  String get toolStatusGoals => 'اپنے بچت کے اہداف کو ٹریک کریں';
 
   @override
   String get toolStatusGoldrates => 'سونا اور کرنسی';
@@ -6472,7 +6472,7 @@ class AppLocalizationsUr extends AppLocalizations {
   String get toolStatusStreak => '12 دن';
 
   @override
-  String get toolStatusSubs => '6 فعال';
+  String get toolStatusSubs => 'بار بار ہونے والی سبسکرپشنز ٹریک کریں';
 
   @override
   String get toolStatusSunmoon => 'طلوع · غروب';
@@ -7818,6 +7818,211 @@ class AppLocalizationsUr extends AppLocalizations {
   @override
   String get instImportNoNames =>
       'اس بیک اپ میں نام نہیں؛ منصوبے “Plan 1”، “Plan 2” کے طور پر آئیں گے۔';
+
+  @override
+  String get goalsSummaryKicker => 'اب تک بچت';
+
+  @override
+  String goalsSummaryCaption(String target) {
+    return '$target میں سے، تمام اہداف میں';
+  }
+
+  @override
+  String get goalsStatActive => 'فعال اہداف';
+
+  @override
+  String get goalsStatThisMonth => 'اس مہینے';
+
+  @override
+  String get goalsStatNext => 'اگلا مکمل ہونے والا';
+
+  @override
+  String get goalsYourGoals => 'آپ کے اہداف';
+
+  @override
+  String get goalsOtherGoals => 'مکمل اور ترک شدہ';
+
+  @override
+  String goalsOfTarget(String saved, String target) {
+    return '$target میں سے $saved';
+  }
+
+  @override
+  String goalsByDate(String date) {
+    return '$date تک';
+  }
+
+  @override
+  String goalsToGo(String amount) {
+    return '$amount باقی';
+  }
+
+  @override
+  String goalsProjectedDate(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n مہینوں میں',
+      one: '1 مہینے میں',
+      zero: 'ابھی کسی بھی وقت',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get goalsReached => 'ہدف مکمل';
+
+  @override
+  String get goalsChartTitle => 'شراکتیں';
+
+  @override
+  String get goalsAddGoal => 'ہدف شامل کریں';
+
+  @override
+  String get goalsAddContribution => 'شراکت شامل کریں';
+
+  @override
+  String get goalsEmptyTitle => 'ابھی تک کوئی بچت کا ہدف نہیں';
+
+  @override
+  String get goalsEmptyText =>
+      'ایک ہدف مبہم ارادے کو ماہانہ عدد میں بدل دیتا ہے۔';
+
+  @override
+  String get goalsNewGoal => 'نیا ہدف';
+
+  @override
+  String get goalsEditGoal => 'ہدف میں ترمیم کریں';
+
+  @override
+  String get goalsFieldName => 'نام';
+
+  @override
+  String get goalsFieldNote => 'نوٹ';
+
+  @override
+  String get goalsFieldTarget => 'ہدف کی رقم';
+
+  @override
+  String get goalsFieldTargetDate => 'ہدف کی تاریخ';
+
+  @override
+  String get goalsFieldIcon => 'آئیکن';
+
+  @override
+  String get goalsFieldCurrency => 'کرنسی';
+
+  @override
+  String get goalsErrName => 'اس ہدف کا نام لکھیں';
+
+  @override
+  String get goalsErrLong => 'یہ بہت طویل ہے';
+
+  @override
+  String get goalsErrTarget => 'ہدف کی رقم درج کریں';
+
+  @override
+  String goalsErrWithdrawn(String code) {
+    return '$code اب جاری نہیں کی جاتی۔ کوئی موجودہ کرنسی منتخب کریں۔';
+  }
+
+  @override
+  String goalsErrCurrencyLocked(String code) {
+    return 'اس ہدف میں پہلے ہی $code میں شراکتیں موجود ہیں۔ کرنسی بدلنے کے لیے پہلے انہیں حذف کریں۔';
+  }
+
+  @override
+  String get goalsErrAmount => 'رقم درج کریں';
+
+  @override
+  String get goalsErrConflict => 'یہ ہدف کہیں اور تبدیل ہو گیا';
+
+  @override
+  String get goalsErrClosed => 'یہ ہدف مکمل یا ترک شدہ ہے';
+
+  @override
+  String get goalsErrDamaged =>
+      'اس ہدف کے ریکارڈز درست نہیں اور محفوظ طریقے سے نہیں دکھائے جا سکتے';
+
+  @override
+  String get goalsErrTooLarge => 'وہ رقم بہت زیادہ ہے';
+
+  @override
+  String get goalsErrFailed => 'یہ محفوظ نہیں ہوا۔ دوبارہ کوشش کریں۔';
+
+  @override
+  String get goalsNotFound => 'وہ ہدف اب موجود نہیں ہے';
+
+  @override
+  String get goalsStateActive => 'فعال';
+
+  @override
+  String get goalsStateCompleted => 'مکمل';
+
+  @override
+  String get goalsStateAbandoned => 'ترک شدہ';
+
+  @override
+  String get goalsMarkComplete => 'مکمل کے طور پر نشان زد کریں';
+
+  @override
+  String get goalsMarkCompleteAsk => 'اس ہدف کو مکمل کے طور پر نشان زد کریں؟';
+
+  @override
+  String get goalsMarkCompleteText =>
+      'یہ آپ کی تاریخ میں رہتا ہے، بس اب باقی بچت میں شمار نہیں ہوتا۔';
+
+  @override
+  String get goalsMarkCompleteToast => 'ہدف مکمل ہو گیا';
+
+  @override
+  String get goalsAbandon => 'ہدف ترک کریں';
+
+  @override
+  String get goalsAbandonAsk => 'اس ہدف کو ترک کریں؟';
+
+  @override
+  String get goalsAbandonText =>
+      'یہ آپ کی تاریخ میں رہتا ہے۔ آپ اسے کسی بھی وقت دوبارہ فعال کر سکتے ہیں۔';
+
+  @override
+  String get goalsAbandonToast => 'ہدف ترک کر دیا گیا';
+
+  @override
+  String get goalsReactivate => 'دوبارہ فعال کریں';
+
+  @override
+  String get goalsReactivatedToast => 'ہدف دوبارہ فعال ہو گیا';
+
+  @override
+  String get goalsDeleteAsk => 'اس ہدف کو حذف کریں؟';
+
+  @override
+  String get goalsDeleteText =>
+      'یہ ہدف اور اس میں شامل ہر شراکت کو ہٹا دیتا ہے۔';
+
+  @override
+  String get goalsDeletedToast => 'ہدف حذف ہو گیا';
+
+  @override
+  String get goalsContributionAdded => 'شراکت شامل ہو گئی';
+
+  @override
+  String get goalsVoidContribution => 'یہ شراکت ہٹائیں';
+
+  @override
+  String get goalsContributionVoidedToast => 'شراکت ہٹا دی گئی';
+
+  @override
+  String get goalsHistoryTitle => 'شراکتوں کی تاریخ';
+
+  @override
+  String get goalsHistoryEmpty => 'ابھی تک کوئی شراکت نہیں';
+
+  @override
+  String goalsShareText(String saved, String target, String pct) {
+    return '$target میں سے $saved — $pct%';
+  }
 
   @override
   String get ledgerErrArchived =>
