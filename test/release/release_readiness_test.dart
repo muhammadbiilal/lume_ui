@@ -308,7 +308,10 @@ void main() {
       // Unit Converter converts what the reader typed, and Birthdays and
       // Water are seeded **only** in the parity reproduction, so in a
       // build a reader runs there is nothing on either screen they did
-      // not write (`kLumeParityOnlySeeds`).
+      // not write (`kLumeParityOnlySeeds`). Wave 5 adds two: Goals and
+      // Subscriptions show only what the reader wrote; the reference's
+      // own seed data has no CRUD at all, so a reader's build opens
+      // both empty (GOALS_PROPOSAL.md, SUBSCRIPTIONS_PROPOSAL.md).
       <String>[
         'age',
         'babybudget',
@@ -318,10 +321,12 @@ void main() {
         'compound',
         'converter',
         'focus',
+        'goals',
         'installments',
         'ledger',
         'loan',
         'stopwatch',
+        'subs',
         'sunmoon',
         'tasbih',
         'tipsplit',
