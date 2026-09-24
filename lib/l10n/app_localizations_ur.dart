@@ -8025,6 +8025,188 @@ class AppLocalizationsUr extends AppLocalizations {
   }
 
   @override
+  String get subsSummaryKicker => 'ہر مہینے';
+
+  @override
+  String subsSummaryCaption(String amount) {
+    return '$amount سالانہ';
+  }
+
+  @override
+  String get subsStatActive => 'فعال';
+
+  @override
+  String get subsStatNext => 'اگلی تجدید';
+
+  @override
+  String subsRenewsIn(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n دنوں میں',
+      one: '1 دن میں',
+      zero: 'آج',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get subsSearch => 'سبسکرپشنز تلاش کریں';
+
+  @override
+  String get subsAll => 'تمام سبسکرپشنز';
+
+  @override
+  String get subsPerMonth => 'فی مہینہ';
+
+  @override
+  String get subsPerYear => 'فی سال';
+
+  @override
+  String subsEveryDays(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: 'ہر $n دن',
+      one: 'ہر دن',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get subsByCategory => 'قسم کے لحاظ سے';
+
+  @override
+  String get subsUncategorised => 'دیگر';
+
+  @override
+  String get subsTimeline => 'آنے والی';
+
+  @override
+  String get subsAddSubscription => 'سبسکرپشن شامل کریں';
+
+  @override
+  String get subsEmptyTitle => 'ابھی تک کوئی سبسکرپشن نہیں';
+
+  @override
+  String get subsEmptyText => 'ایک ہی جگہ دیکھیں کیا اور کب تجدید ہوتی ہے۔';
+
+  @override
+  String get subsNewSubscription => 'نئی سبسکرپشن';
+
+  @override
+  String get subsEditSubscription => 'سبسکرپشن میں ترمیم کریں';
+
+  @override
+  String get subsFieldName => 'نام';
+
+  @override
+  String get subsFieldCategory => 'قسم';
+
+  @override
+  String get subsFieldAmount => 'رقم';
+
+  @override
+  String get subsFieldCycle => 'بلنگ سائیکل';
+
+  @override
+  String get subsFieldCustomDays => 'کتنے دنوں بعد';
+
+  @override
+  String get subsFieldStartedOn => 'شروع ہونے کی تاریخ';
+
+  @override
+  String get subsFieldCurrency => 'کرنسی';
+
+  @override
+  String get subsCycleMonthly => 'ماہانہ';
+
+  @override
+  String get subsCycleYearly => 'سالانہ';
+
+  @override
+  String get subsCycleCustom => 'مخصوص';
+
+  @override
+  String get subsErrName => 'اس سبسکرپشن کا نام لکھیں';
+
+  @override
+  String get subsErrLong => 'یہ بہت طویل ہے';
+
+  @override
+  String get subsErrAmount => 'رقم درج کریں';
+
+  @override
+  String get subsErrCustomDays => '1 سے 3,660 کے درمیان دنوں کی تعداد درج کریں';
+
+  @override
+  String subsErrWithdrawn(String code) {
+    return '$code اب جاری نہیں کی جاتی۔ کوئی موجودہ کرنسی منتخب کریں۔';
+  }
+
+  @override
+  String get subsErrConflict => 'یہ سبسکرپشن کہیں اور تبدیل ہو گئی';
+
+  @override
+  String get subsErrDamaged =>
+      'اس سبسکرپشن کے ریکارڈز درست نہیں اور محفوظ طریقے سے نہیں دکھائے جا سکتے';
+
+  @override
+  String get subsErrTooLarge => 'وہ رقم بہت زیادہ ہے';
+
+  @override
+  String get subsErrFailed => 'یہ محفوظ نہیں ہوا۔ دوبارہ کوشش کریں۔';
+
+  @override
+  String get subsNotFound => 'وہ سبسکرپشن اب موجود نہیں ہے';
+
+  @override
+  String get subsFilterActive => 'فعال';
+
+  @override
+  String get subsFilterCancelled => 'منسوخ شدہ';
+
+  @override
+  String get subsFilterAll => 'تمام';
+
+  @override
+  String get subsSortRenewal => 'تجدید';
+
+  @override
+  String get subsSortAmount => 'رقم';
+
+  @override
+  String get subsSortName => 'نام';
+
+  @override
+  String get subsCancelAsk => 'اس سبسکرپشن کو منسوخ کریں؟';
+
+  @override
+  String get subsCancelText =>
+      'یہ آپ کی تاریخ میں \'منسوخ شدہ\' کے تحت رہتی ہے۔ آپ اسے کسی بھی وقت دوبارہ فعال کر سکتے ہیں۔';
+
+  @override
+  String get subsCancelToast => 'سبسکرپشن منسوخ ہو گئی';
+
+  @override
+  String get subsCancel => 'سبسکرپشن منسوخ کریں';
+
+  @override
+  String get subsReactivate => 'دوبارہ فعال کریں';
+
+  @override
+  String get subsReactivatedToast => 'سبسکرپشن دوبارہ فعال ہو گئی';
+
+  @override
+  String get subsDeleteAsk => 'اس سبسکرپشن کو حذف کریں؟';
+
+  @override
+  String get subsDeleteText => 'یہ سبسکرپشن مکمل طور پر ہٹا دیتا ہے۔';
+
+  @override
+  String get subsDeletedToast => 'سبسکرپشن حذف ہو گئی';
+
+  @override
   String get ledgerErrArchived =>
       'یہ شخص محفوظ شدہ ہے۔ اندراج کے لیے واپس لائیں۔';
 

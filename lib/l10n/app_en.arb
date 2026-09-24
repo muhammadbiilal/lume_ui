@@ -10944,6 +10944,247 @@
       }
     }
   },
+  "subsSummaryKicker": "Every month",
+  "@subsSummaryKicker": {
+    "description": "Subscriptions summary card kicker (subs.tool.js 'subs.monthly')"
+  },
+  "subsSummaryCaption": "{amount} a year",
+  "@subsSummaryCaption": {
+    "description": "Subscriptions summary card caption (subs.tool.js 'subs.yearly')",
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "subsStatActive": "Active",
+  "@subsStatActive": {
+    "description": "Subscriptions summary stat label (subs.tool.js 'subs.active')"
+  },
+  "subsStatNext": "Next renewal",
+  "@subsStatNext": {
+    "description": "Subscriptions summary stat label (subs.tool.js 'subs.nextRenewal')"
+  },
+  "subsRenewsIn": "{n, plural, =0{today} =1{in 1 day} other{in {n} days}}",
+  "@subsRenewsIn": {
+    "description": "Subscriptions summary stat value (subs.tool.js 'subs.renewsIn'), from the real derived daysUntil, not the reference's hand-typed literal",
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
+  "subsSearch": "Search subscriptions",
+  "@subsSearch": {
+    "description": "Search field placeholder (subs.tool.js 'subs.search')"
+  },
+  "subsAll": "All subscriptions",
+  "@subsAll": {
+    "description": "List section title (subs.tool.js 'subs.all')"
+  },
+  "subsRenews": "renews {date}",
+  "@subsRenews": {
+    "description": "Row meta line (subs.tool.js 'subs.renews'), from the real derived nextRenewal",
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "subsPerMonth": "per month",
+  "@subsPerMonth": {
+    "description": "Row trailing sub-label for a monthly subscription. Corrected from the reference, which shows this label unconditionally even on its one Yearly item (subs.tool.js:49)"
+  },
+  "subsPerYear": "per year",
+  "@subsPerYear": {
+    "description": "Row trailing sub-label for a yearly subscription — the reference has no equivalent (D-S5)"
+  },
+  "subsEveryDays": "{n, plural, =1{every day} other{every {n} days}}",
+  "@subsEveryDays": {
+    "description": "Row trailing sub-label for a custom-cycle subscription — the reference has no equivalent (D-S4)",
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
+  "subsByCategory": "By category",
+  "@subsByCategory": {
+    "description": "Donut chart title (subs.tool.js 'subs.byCategory')"
+  },
+  "subsUncategorised": "Other",
+  "@subsUncategorised": {
+    "description": "The donut's group for a subscription with no category set"
+  },
+  "subsTimeline": "Coming up",
+  "@subsTimeline": {
+    "description": "Timeline title (subs.tool.js 'subs.timeline'), fed by real upcoming records"
+  },
+  "subsAddSubscription": "Add a subscription",
+  "@subsAddSubscription": {
+    "description": "Button — the reference has no creation affordance of any kind, not even a stub (SUBSCRIPTIONS_PROPOSAL.md §0)"
+  },
+  "subsEmptyTitle": "No subscriptions yet",
+  "@subsEmptyTitle": {
+    "description": "Empty state title — the reference has none; its own seed data would throw if empty (SUBSCRIPTIONS_PROPOSAL.md §1)"
+  },
+  "subsEmptyText": "Track what renews, and when, in one place.",
+  "@subsEmptyText": {
+    "description": "Empty state text"
+  },
+  "subsNewSubscription": "New subscription",
+  "@subsNewSubscription": {
+    "description": "Form title, creating"
+  },
+  "subsEditSubscription": "Edit subscription",
+  "@subsEditSubscription": {
+    "description": "Form title, editing"
+  },
+  "subsFieldName": "Name",
+  "@subsFieldName": {
+    "description": "Form field"
+  },
+  "subsFieldCategory": "Category",
+  "@subsFieldCategory": {
+    "description": "Form field, optional, free text (matches the reference's own unconstrained 'cat' field)"
+  },
+  "subsFieldAmount": "Amount",
+  "@subsFieldAmount": {
+    "description": "Form field"
+  },
+  "subsFieldCycle": "Billing cycle",
+  "@subsFieldCycle": {
+    "description": "Form field"
+  },
+  "subsFieldCustomDays": "Every how many days",
+  "@subsFieldCustomDays": {
+    "description": "Form field, shown only when the custom cycle is chosen (D-S4)"
+  },
+  "subsFieldStartedOn": "Started on",
+  "@subsFieldStartedOn": {
+    "description": "Form field — the one real anchor date that replaces the reference's two independent literals (D-S2)"
+  },
+  "subsFieldCurrency": "Currency",
+  "@subsFieldCurrency": {
+    "description": "Form field"
+  },
+  "subsCycleMonthly": "Monthly",
+  "@subsCycleMonthly": {
+    "description": "Cycle option"
+  },
+  "subsCycleYearly": "Yearly",
+  "@subsCycleYearly": {
+    "description": "Cycle option"
+  },
+  "subsCycleCustom": "Custom",
+  "@subsCycleCustom": {
+    "description": "Cycle option"
+  },
+  "subsErrName": "Name this subscription",
+  "@subsErrName": {
+    "description": "Validation"
+  },
+  "subsErrLong": "That is too long",
+  "@subsErrLong": {
+    "description": "Validation"
+  },
+  "subsErrAmount": "Enter an amount",
+  "@subsErrAmount": {
+    "description": "Validation"
+  },
+  "subsErrCustomDays": "Enter a day count between 1 and 3,660",
+  "@subsErrCustomDays": {
+    "description": "Validation"
+  },
+  "subsErrWithdrawn": "{code} is no longer issued. Choose a current currency.",
+  "@subsErrWithdrawn": {
+    "description": "Validation: a new subscription in a withdrawn currency",
+    "placeholders": {
+      "code": {
+        "type": "String"
+      }
+    }
+  },
+  "subsErrConflict": "This subscription changed elsewhere",
+  "@subsErrConflict": {
+    "description": "Toast"
+  },
+  "subsErrDamaged": "This subscription's records don't add up and can't be shown safely",
+  "@subsErrDamaged": {
+    "description": "Toast"
+  },
+  "subsErrTooLarge": "That amount is too large",
+  "@subsErrTooLarge": {
+    "description": "Toast"
+  },
+  "subsErrFailed": "That didn't save. Try again.",
+  "@subsErrFailed": {
+    "description": "Toast"
+  },
+  "subsNotFound": "That subscription isn't there any more",
+  "@subsNotFound": {
+    "description": "Toast — a deep link to a subscription that no longer exists"
+  },
+  "subsFilterActive": "Active",
+  "@subsFilterActive": {
+    "description": "Filter chip (D-S6 — satisfies the reference's unimplemented 'history' capability claim honestly)"
+  },
+  "subsFilterCancelled": "Cancelled",
+  "@subsFilterCancelled": {
+    "description": "Filter chip (D-S6)"
+  },
+  "subsFilterAll": "All",
+  "@subsFilterAll": {
+    "description": "Filter chip (D-S6)"
+  },
+  "subsSortRenewal": "Renewal",
+  "@subsSortRenewal": {
+    "description": "Sort option (subs.tool.js sort default)"
+  },
+  "subsSortAmount": "Amount",
+  "@subsSortAmount": {
+    "description": "Sort option (subs.tool.js)"
+  },
+  "subsSortName": "Name",
+  "@subsSortName": {
+    "description": "Sort option (subs.tool.js)"
+  },
+  "subsCancelAsk": "Cancel this subscription?",
+  "@subsCancelAsk": {
+    "description": "Confirmation sheet title"
+  },
+  "subsCancelText": "It stays in your history under Cancelled. You can reactivate it any time.",
+  "@subsCancelText": {
+    "description": "Confirmation sheet text"
+  },
+  "subsCancelToast": "Subscription cancelled",
+  "@subsCancelToast": {
+    "description": "Toast"
+  },
+  "subsCancel": "Cancel subscription",
+  "@subsCancel": {
+    "description": "Detail action"
+  },
+  "subsReactivate": "Reactivate",
+  "@subsReactivate": {
+    "description": "Detail action"
+  },
+  "subsReactivatedToast": "Subscription reactivated",
+  "@subsReactivatedToast": {
+    "description": "Toast"
+  },
+  "subsDeleteAsk": "Delete this subscription?",
+  "@subsDeleteAsk": {
+    "description": "Confirmation sheet title"
+  },
+  "subsDeleteText": "This removes the subscription completely.",
+  "@subsDeleteText": {
+    "description": "Confirmation sheet text"
+  },
+  "subsDeletedToast": "Subscription deleted",
+  "@subsDeletedToast": {
+    "description": "Toast, with Undo"
+  },
   "ledgerErrArchived": "This person is archived. Unarchive them to add entries.",
   "@ledgerErrArchived": {
     "description": "Validation"

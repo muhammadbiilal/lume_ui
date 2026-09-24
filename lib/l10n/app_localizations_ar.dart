@@ -5774,7 +5774,7 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String subsRenews(String date) {
-    return 'يتجدّد $date';
+    return 'يتجدد $date';
   }
 
   @override
@@ -8115,6 +8115,188 @@ class AppLocalizationsAr extends AppLocalizations {
   String goalsShareText(String saved, String target, String pct) {
     return '$saved من أصل $target — $pct%';
   }
+
+  @override
+  String get subsSummaryKicker => 'كل شهر';
+
+  @override
+  String subsSummaryCaption(String amount) {
+    return '$amount سنويًا';
+  }
+
+  @override
+  String get subsStatActive => 'نشطة';
+
+  @override
+  String get subsStatNext => 'التجديد التالي';
+
+  @override
+  String subsRenewsIn(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: 'خلال $n أيام',
+      one: 'خلال يوم واحد',
+      zero: 'اليوم',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get subsSearch => 'البحث في الاشتراكات';
+
+  @override
+  String get subsAll => 'كل الاشتراكات';
+
+  @override
+  String get subsPerMonth => 'شهريًا';
+
+  @override
+  String get subsPerYear => 'سنويًا';
+
+  @override
+  String subsEveryDays(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: 'كل $n أيام',
+      one: 'كل يوم',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get subsByCategory => 'حسب الفئة';
+
+  @override
+  String get subsUncategorised => 'أخرى';
+
+  @override
+  String get subsTimeline => 'القادم';
+
+  @override
+  String get subsAddSubscription => 'إضافة اشتراك';
+
+  @override
+  String get subsEmptyTitle => 'لا توجد اشتراكات بعد';
+
+  @override
+  String get subsEmptyText => 'تتبّع ما يتجدد، ومتى، في مكان واحد.';
+
+  @override
+  String get subsNewSubscription => 'اشتراك جديد';
+
+  @override
+  String get subsEditSubscription => 'تعديل الاشتراك';
+
+  @override
+  String get subsFieldName => 'الاسم';
+
+  @override
+  String get subsFieldCategory => 'الفئة';
+
+  @override
+  String get subsFieldAmount => 'المبلغ';
+
+  @override
+  String get subsFieldCycle => 'دورة الفوترة';
+
+  @override
+  String get subsFieldCustomDays => 'كل كم يومًا';
+
+  @override
+  String get subsFieldStartedOn => 'بدأ في';
+
+  @override
+  String get subsFieldCurrency => 'العملة';
+
+  @override
+  String get subsCycleMonthly => 'شهري';
+
+  @override
+  String get subsCycleYearly => 'سنوي';
+
+  @override
+  String get subsCycleCustom => 'مخصص';
+
+  @override
+  String get subsErrName => 'اكتب اسم هذا الاشتراك';
+
+  @override
+  String get subsErrLong => 'هذا طويل جدًا';
+
+  @override
+  String get subsErrAmount => 'أدخل مبلغًا';
+
+  @override
+  String get subsErrCustomDays => 'أدخل عدد أيام بين 1 و 3,660';
+
+  @override
+  String subsErrWithdrawn(String code) {
+    return '$code لم تعد متداولة. اختر عملة حالية.';
+  }
+
+  @override
+  String get subsErrConflict => 'تغيّر هذا الاشتراك في مكان آخر';
+
+  @override
+  String get subsErrDamaged =>
+      'سجلات هذا الاشتراك غير متّسقة ولا يمكن عرضها بأمان';
+
+  @override
+  String get subsErrTooLarge => 'هذا المبلغ كبير جدًا';
+
+  @override
+  String get subsErrFailed => 'لم يُحفظ ذلك. حاول مرة أخرى.';
+
+  @override
+  String get subsNotFound => 'هذا الاشتراك لم يعد موجودًا';
+
+  @override
+  String get subsFilterActive => 'نشطة';
+
+  @override
+  String get subsFilterCancelled => 'ملغاة';
+
+  @override
+  String get subsFilterAll => 'الكل';
+
+  @override
+  String get subsSortRenewal => 'التجديد';
+
+  @override
+  String get subsSortAmount => 'المبلغ';
+
+  @override
+  String get subsSortName => 'الاسم';
+
+  @override
+  String get subsCancelAsk => 'إلغاء هذا الاشتراك؟';
+
+  @override
+  String get subsCancelText =>
+      'يبقى في سجلّك ضمن الملغاة. يمكنك إعادة تفعيله في أي وقت.';
+
+  @override
+  String get subsCancelToast => 'أُلغي الاشتراك';
+
+  @override
+  String get subsCancel => 'إلغاء الاشتراك';
+
+  @override
+  String get subsReactivate => 'إعادة التفعيل';
+
+  @override
+  String get subsReactivatedToast => 'أُعيد تفعيل الاشتراك';
+
+  @override
+  String get subsDeleteAsk => 'حذف هذا الاشتراك؟';
+
+  @override
+  String get subsDeleteText => 'هذا يحذف الاشتراك بالكامل.';
+
+  @override
+  String get subsDeletedToast => 'تم حذف الاشتراك';
 
   @override
   String get ledgerErrArchived => 'هذا الشخص مؤرشف. ألغِ الأرشفة لإضافة قيود.';

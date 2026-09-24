@@ -10030,7 +10030,7 @@ abstract class AppLocalizations {
   /// **'Pause'**
   String get stopwatchPause;
 
-  /// Reference key subs.renews
+  /// Row meta line (subs.tool.js 'subs.renews'), from the real derived nextRenewal
   ///
   /// In en, this message translates to:
   /// **'renews {date}'**
@@ -13994,6 +13994,324 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'{saved} of {target} — {pct}%'**
   String goalsShareText(String saved, String target, String pct);
+
+  /// Subscriptions summary card kicker (subs.tool.js 'subs.monthly')
+  ///
+  /// In en, this message translates to:
+  /// **'Every month'**
+  String get subsSummaryKicker;
+
+  /// Subscriptions summary card caption (subs.tool.js 'subs.yearly')
+  ///
+  /// In en, this message translates to:
+  /// **'{amount} a year'**
+  String subsSummaryCaption(String amount);
+
+  /// Subscriptions summary stat label (subs.tool.js 'subs.active')
+  ///
+  /// In en, this message translates to:
+  /// **'Active'**
+  String get subsStatActive;
+
+  /// Subscriptions summary stat label (subs.tool.js 'subs.nextRenewal')
+  ///
+  /// In en, this message translates to:
+  /// **'Next renewal'**
+  String get subsStatNext;
+
+  /// Subscriptions summary stat value (subs.tool.js 'subs.renewsIn'), from the real derived daysUntil, not the reference's hand-typed literal
+  ///
+  /// In en, this message translates to:
+  /// **'{n, plural, =0{today} =1{in 1 day} other{in {n} days}}'**
+  String subsRenewsIn(int n);
+
+  /// Search field placeholder (subs.tool.js 'subs.search')
+  ///
+  /// In en, this message translates to:
+  /// **'Search subscriptions'**
+  String get subsSearch;
+
+  /// List section title (subs.tool.js 'subs.all')
+  ///
+  /// In en, this message translates to:
+  /// **'All subscriptions'**
+  String get subsAll;
+
+  /// Row trailing sub-label for a monthly subscription. Corrected from the reference, which shows this label unconditionally even on its one Yearly item (subs.tool.js:49)
+  ///
+  /// In en, this message translates to:
+  /// **'per month'**
+  String get subsPerMonth;
+
+  /// Row trailing sub-label for a yearly subscription — the reference has no equivalent (D-S5)
+  ///
+  /// In en, this message translates to:
+  /// **'per year'**
+  String get subsPerYear;
+
+  /// Row trailing sub-label for a custom-cycle subscription — the reference has no equivalent (D-S4)
+  ///
+  /// In en, this message translates to:
+  /// **'{n, plural, =1{every day} other{every {n} days}}'**
+  String subsEveryDays(int n);
+
+  /// Donut chart title (subs.tool.js 'subs.byCategory')
+  ///
+  /// In en, this message translates to:
+  /// **'By category'**
+  String get subsByCategory;
+
+  /// The donut's group for a subscription with no category set
+  ///
+  /// In en, this message translates to:
+  /// **'Other'**
+  String get subsUncategorised;
+
+  /// Timeline title (subs.tool.js 'subs.timeline'), fed by real upcoming records
+  ///
+  /// In en, this message translates to:
+  /// **'Coming up'**
+  String get subsTimeline;
+
+  /// Button — the reference has no creation affordance of any kind, not even a stub (SUBSCRIPTIONS_PROPOSAL.md §0)
+  ///
+  /// In en, this message translates to:
+  /// **'Add a subscription'**
+  String get subsAddSubscription;
+
+  /// Empty state title — the reference has none; its own seed data would throw if empty (SUBSCRIPTIONS_PROPOSAL.md §1)
+  ///
+  /// In en, this message translates to:
+  /// **'No subscriptions yet'**
+  String get subsEmptyTitle;
+
+  /// Empty state text
+  ///
+  /// In en, this message translates to:
+  /// **'Track what renews, and when, in one place.'**
+  String get subsEmptyText;
+
+  /// Form title, creating
+  ///
+  /// In en, this message translates to:
+  /// **'New subscription'**
+  String get subsNewSubscription;
+
+  /// Form title, editing
+  ///
+  /// In en, this message translates to:
+  /// **'Edit subscription'**
+  String get subsEditSubscription;
+
+  /// Form field
+  ///
+  /// In en, this message translates to:
+  /// **'Name'**
+  String get subsFieldName;
+
+  /// Form field, optional, free text (matches the reference's own unconstrained 'cat' field)
+  ///
+  /// In en, this message translates to:
+  /// **'Category'**
+  String get subsFieldCategory;
+
+  /// Form field
+  ///
+  /// In en, this message translates to:
+  /// **'Amount'**
+  String get subsFieldAmount;
+
+  /// Form field
+  ///
+  /// In en, this message translates to:
+  /// **'Billing cycle'**
+  String get subsFieldCycle;
+
+  /// Form field, shown only when the custom cycle is chosen (D-S4)
+  ///
+  /// In en, this message translates to:
+  /// **'Every how many days'**
+  String get subsFieldCustomDays;
+
+  /// Form field — the one real anchor date that replaces the reference's two independent literals (D-S2)
+  ///
+  /// In en, this message translates to:
+  /// **'Started on'**
+  String get subsFieldStartedOn;
+
+  /// Form field
+  ///
+  /// In en, this message translates to:
+  /// **'Currency'**
+  String get subsFieldCurrency;
+
+  /// Cycle option
+  ///
+  /// In en, this message translates to:
+  /// **'Monthly'**
+  String get subsCycleMonthly;
+
+  /// Cycle option
+  ///
+  /// In en, this message translates to:
+  /// **'Yearly'**
+  String get subsCycleYearly;
+
+  /// Cycle option
+  ///
+  /// In en, this message translates to:
+  /// **'Custom'**
+  String get subsCycleCustom;
+
+  /// Validation
+  ///
+  /// In en, this message translates to:
+  /// **'Name this subscription'**
+  String get subsErrName;
+
+  /// Validation
+  ///
+  /// In en, this message translates to:
+  /// **'That is too long'**
+  String get subsErrLong;
+
+  /// Validation
+  ///
+  /// In en, this message translates to:
+  /// **'Enter an amount'**
+  String get subsErrAmount;
+
+  /// Validation
+  ///
+  /// In en, this message translates to:
+  /// **'Enter a day count between 1 and 3,660'**
+  String get subsErrCustomDays;
+
+  /// Validation: a new subscription in a withdrawn currency
+  ///
+  /// In en, this message translates to:
+  /// **'{code} is no longer issued. Choose a current currency.'**
+  String subsErrWithdrawn(String code);
+
+  /// Toast
+  ///
+  /// In en, this message translates to:
+  /// **'This subscription changed elsewhere'**
+  String get subsErrConflict;
+
+  /// Toast
+  ///
+  /// In en, this message translates to:
+  /// **'This subscription\'s records don\'t add up and can\'t be shown safely'**
+  String get subsErrDamaged;
+
+  /// Toast
+  ///
+  /// In en, this message translates to:
+  /// **'That amount is too large'**
+  String get subsErrTooLarge;
+
+  /// Toast
+  ///
+  /// In en, this message translates to:
+  /// **'That didn\'t save. Try again.'**
+  String get subsErrFailed;
+
+  /// Toast — a deep link to a subscription that no longer exists
+  ///
+  /// In en, this message translates to:
+  /// **'That subscription isn\'t there any more'**
+  String get subsNotFound;
+
+  /// Filter chip (D-S6 — satisfies the reference's unimplemented 'history' capability claim honestly)
+  ///
+  /// In en, this message translates to:
+  /// **'Active'**
+  String get subsFilterActive;
+
+  /// Filter chip (D-S6)
+  ///
+  /// In en, this message translates to:
+  /// **'Cancelled'**
+  String get subsFilterCancelled;
+
+  /// Filter chip (D-S6)
+  ///
+  /// In en, this message translates to:
+  /// **'All'**
+  String get subsFilterAll;
+
+  /// Sort option (subs.tool.js sort default)
+  ///
+  /// In en, this message translates to:
+  /// **'Renewal'**
+  String get subsSortRenewal;
+
+  /// Sort option (subs.tool.js)
+  ///
+  /// In en, this message translates to:
+  /// **'Amount'**
+  String get subsSortAmount;
+
+  /// Sort option (subs.tool.js)
+  ///
+  /// In en, this message translates to:
+  /// **'Name'**
+  String get subsSortName;
+
+  /// Confirmation sheet title
+  ///
+  /// In en, this message translates to:
+  /// **'Cancel this subscription?'**
+  String get subsCancelAsk;
+
+  /// Confirmation sheet text
+  ///
+  /// In en, this message translates to:
+  /// **'It stays in your history under Cancelled. You can reactivate it any time.'**
+  String get subsCancelText;
+
+  /// Toast
+  ///
+  /// In en, this message translates to:
+  /// **'Subscription cancelled'**
+  String get subsCancelToast;
+
+  /// Detail action
+  ///
+  /// In en, this message translates to:
+  /// **'Cancel subscription'**
+  String get subsCancel;
+
+  /// Detail action
+  ///
+  /// In en, this message translates to:
+  /// **'Reactivate'**
+  String get subsReactivate;
+
+  /// Toast
+  ///
+  /// In en, this message translates to:
+  /// **'Subscription reactivated'**
+  String get subsReactivatedToast;
+
+  /// Confirmation sheet title
+  ///
+  /// In en, this message translates to:
+  /// **'Delete this subscription?'**
+  String get subsDeleteAsk;
+
+  /// Confirmation sheet text
+  ///
+  /// In en, this message translates to:
+  /// **'This removes the subscription completely.'**
+  String get subsDeleteText;
+
+  /// Toast, with Undo
+  ///
+  /// In en, this message translates to:
+  /// **'Subscription deleted'**
+  String get subsDeletedToast;
 
   /// Validation
   ///

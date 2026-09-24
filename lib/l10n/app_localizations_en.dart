@@ -8029,6 +8029,188 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
+  String get subsSummaryKicker => 'Every month';
+
+  @override
+  String subsSummaryCaption(String amount) {
+    return '$amount a year';
+  }
+
+  @override
+  String get subsStatActive => 'Active';
+
+  @override
+  String get subsStatNext => 'Next renewal';
+
+  @override
+  String subsRenewsIn(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: 'in $n days',
+      one: 'in 1 day',
+      zero: 'today',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get subsSearch => 'Search subscriptions';
+
+  @override
+  String get subsAll => 'All subscriptions';
+
+  @override
+  String get subsPerMonth => 'per month';
+
+  @override
+  String get subsPerYear => 'per year';
+
+  @override
+  String subsEveryDays(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: 'every $n days',
+      one: 'every day',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get subsByCategory => 'By category';
+
+  @override
+  String get subsUncategorised => 'Other';
+
+  @override
+  String get subsTimeline => 'Coming up';
+
+  @override
+  String get subsAddSubscription => 'Add a subscription';
+
+  @override
+  String get subsEmptyTitle => 'No subscriptions yet';
+
+  @override
+  String get subsEmptyText => 'Track what renews, and when, in one place.';
+
+  @override
+  String get subsNewSubscription => 'New subscription';
+
+  @override
+  String get subsEditSubscription => 'Edit subscription';
+
+  @override
+  String get subsFieldName => 'Name';
+
+  @override
+  String get subsFieldCategory => 'Category';
+
+  @override
+  String get subsFieldAmount => 'Amount';
+
+  @override
+  String get subsFieldCycle => 'Billing cycle';
+
+  @override
+  String get subsFieldCustomDays => 'Every how many days';
+
+  @override
+  String get subsFieldStartedOn => 'Started on';
+
+  @override
+  String get subsFieldCurrency => 'Currency';
+
+  @override
+  String get subsCycleMonthly => 'Monthly';
+
+  @override
+  String get subsCycleYearly => 'Yearly';
+
+  @override
+  String get subsCycleCustom => 'Custom';
+
+  @override
+  String get subsErrName => 'Name this subscription';
+
+  @override
+  String get subsErrLong => 'That is too long';
+
+  @override
+  String get subsErrAmount => 'Enter an amount';
+
+  @override
+  String get subsErrCustomDays => 'Enter a day count between 1 and 3,660';
+
+  @override
+  String subsErrWithdrawn(String code) {
+    return '$code is no longer issued. Choose a current currency.';
+  }
+
+  @override
+  String get subsErrConflict => 'This subscription changed elsewhere';
+
+  @override
+  String get subsErrDamaged =>
+      'This subscription\'s records don\'t add up and can\'t be shown safely';
+
+  @override
+  String get subsErrTooLarge => 'That amount is too large';
+
+  @override
+  String get subsErrFailed => 'That didn\'t save. Try again.';
+
+  @override
+  String get subsNotFound => 'That subscription isn\'t there any more';
+
+  @override
+  String get subsFilterActive => 'Active';
+
+  @override
+  String get subsFilterCancelled => 'Cancelled';
+
+  @override
+  String get subsFilterAll => 'All';
+
+  @override
+  String get subsSortRenewal => 'Renewal';
+
+  @override
+  String get subsSortAmount => 'Amount';
+
+  @override
+  String get subsSortName => 'Name';
+
+  @override
+  String get subsCancelAsk => 'Cancel this subscription?';
+
+  @override
+  String get subsCancelText =>
+      'It stays in your history under Cancelled. You can reactivate it any time.';
+
+  @override
+  String get subsCancelToast => 'Subscription cancelled';
+
+  @override
+  String get subsCancel => 'Cancel subscription';
+
+  @override
+  String get subsReactivate => 'Reactivate';
+
+  @override
+  String get subsReactivatedToast => 'Subscription reactivated';
+
+  @override
+  String get subsDeleteAsk => 'Delete this subscription?';
+
+  @override
+  String get subsDeleteText => 'This removes the subscription completely.';
+
+  @override
+  String get subsDeletedToast => 'Subscription deleted';
+
+  @override
   String get ledgerErrArchived =>
       'This person is archived. Unarchive them to add entries.';
 
