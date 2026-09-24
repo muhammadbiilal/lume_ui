@@ -23,6 +23,7 @@ import '../../babybudget/presentation/babybudget_tool.dart';
 import '../../calculator/presentation/calculator_tool.dart';
 import '../../focus/presentation/focus_tool.dart';
 import '../../goals/presentation/goals_tool.dart';
+import '../../mealplan/presentation/mealplan_tool.dart';
 import '../../subscriptions/presentation/subscriptions_tool.dart';
 import '../../tasbih/presentation/tasbih_tool.dart';
 import '../../worldclock/presentation/worldclock_tool.dart';
@@ -103,4 +104,6 @@ const Map<String, LumeToolBuilder> kLumeToolRegistry =
       // Wave 5 (`ROLLOUT_WAVE_5.md`).
       'goals': LumeGoalsTool.open,
       'subs': LumeSubscriptionsTool.open,
+      // Wave 6 (`ROLLOUT_WAVE_6.md`).
+      'mealplan': LumeMealPlanTool.open,
     };

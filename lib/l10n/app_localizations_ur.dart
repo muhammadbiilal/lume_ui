@@ -6391,7 +6391,7 @@ class AppLocalizationsUr extends AppLocalizations {
   String get toolStatusMarkets => 'KSE-100 ▲ 0.8%';
 
   @override
-  String get toolStatusMealplan => 'اس ہفتے';
+  String get toolStatusMealplan => 'اپنے ہفتے کے کھانوں کی منصوبہ بندی کریں';
 
   @override
   String get toolStatusMediasaver => 'پوسٹس محفوظ کریں';
@@ -8205,6 +8205,51 @@ class AppLocalizationsUr extends AppLocalizations {
 
   @override
   String get subsDeletedToast => 'سبسکرپشن حذف ہو گئی';
+
+  @override
+  String get mealSummaryKicker => 'اس ہفتے';
+
+  @override
+  String get mealPlannedCaption => 'کھانے منصوبہ بند';
+
+  @override
+  String get mealWeekTitle => 'آپ کا ہفتہ';
+
+  @override
+  String get mealBreakfast => 'ناشتہ';
+
+  @override
+  String get mealLunch => 'دوپہر کا کھانا';
+
+  @override
+  String get mealDinner => 'رات کا کھانا';
+
+  @override
+  String get mealEmptySlot => 'شامل کرنے کے لیے تھپتھپائیں';
+
+  @override
+  String get mealToShopping => 'خریداری کی فہرست بنائیں';
+
+  @override
+  String get mealBrowseRecipes => 'ترکیبیں دیکھیں';
+
+  @override
+  String get mealFieldText => 'آپ کیا کھانے کا سوچ رہے ہیں؟';
+
+  @override
+  String get mealClearSlot => 'یہ سلاٹ صاف کریں';
+
+  @override
+  String get mealSlotSavedToast => 'محفوظ ہو گیا';
+
+  @override
+  String get mealSlotClearedToast => 'صاف ہو گیا';
+
+  @override
+  String get mealErrFailed => 'یہ محفوظ نہیں ہوا۔ دوبارہ کوشش کریں۔';
+
+  @override
+  String get mealErrConflict => 'یہ سلاٹ کہیں اور تبدیل ہو گیا';
 
   @override
   String get ledgerErrArchived =>

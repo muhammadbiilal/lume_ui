@@ -6470,7 +6470,7 @@ class AppLocalizationsAr extends AppLocalizations {
   String get toolStatusMarkets => 'KSE-100 ▲ 0.8%';
 
   @override
-  String get toolStatusMealplan => 'هذا الأسبوع';
+  String get toolStatusMealplan => 'خطّط لوجبات أسبوعك';
 
   @override
   String get toolStatusMediasaver => 'حفظ المنشورات';
@@ -8297,6 +8297,51 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get subsDeletedToast => 'تم حذف الاشتراك';
+
+  @override
+  String get mealSummaryKicker => 'هذا الأسبوع';
+
+  @override
+  String get mealPlannedCaption => 'وجبات مخطط لها';
+
+  @override
+  String get mealWeekTitle => 'أسبوعك';
+
+  @override
+  String get mealBreakfast => 'الإفطار';
+
+  @override
+  String get mealLunch => 'الغداء';
+
+  @override
+  String get mealDinner => 'العشاء';
+
+  @override
+  String get mealEmptySlot => 'اضغط للإضافة';
+
+  @override
+  String get mealToShopping => 'إنشاء قائمة تسوق';
+
+  @override
+  String get mealBrowseRecipes => 'تصفّح الوصفات';
+
+  @override
+  String get mealFieldText => 'ما الذي تخطط لتناوله؟';
+
+  @override
+  String get mealClearSlot => 'إفراغ هذا الموعد';
+
+  @override
+  String get mealSlotSavedToast => 'تم الحفظ';
+
+  @override
+  String get mealSlotClearedToast => 'تم الإفراغ';
+
+  @override
+  String get mealErrFailed => 'لم يُحفظ ذلك. حاول مرة أخرى.';
+
+  @override
+  String get mealErrConflict => 'تغيّر هذا الموعد في مكان آخر';
 
   @override
   String get ledgerErrArchived => 'هذا الشخص مؤرشف. ألغِ الأرشفة لإضافة قيود.';

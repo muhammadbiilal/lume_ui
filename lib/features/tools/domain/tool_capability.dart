@@ -157,6 +157,10 @@ class LumeDataCapability {
     // reader's build opens both empty.
     'goals',
     'subs',
+    // Meal Plan (wave 6): the reference's headline figures are bare
+    // literals with no computation behind them (MEALPLAN_PROPOSAL.md
+    // §0) — nothing here is reproduced; a reader's build opens empty.
+    'mealplan',
   };
 
   /// Tools whose "live" is a clock ticking on the device.

@@ -6395,7 +6395,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get toolStatusMarkets => 'KSE-100 ▲ 0.8%';
 
   @override
-  String get toolStatusMealplan => 'This week';
+  String get toolStatusMealplan => 'Plan your week\'s meals';
 
   @override
   String get toolStatusMediasaver => 'Save posts';
@@ -8209,6 +8209,51 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get subsDeletedToast => 'Subscription deleted';
+
+  @override
+  String get mealSummaryKicker => 'This week';
+
+  @override
+  String get mealPlannedCaption => 'meals planned';
+
+  @override
+  String get mealWeekTitle => 'Your week';
+
+  @override
+  String get mealBreakfast => 'Breakfast';
+
+  @override
+  String get mealLunch => 'Lunch';
+
+  @override
+  String get mealDinner => 'Dinner';
+
+  @override
+  String get mealEmptySlot => 'Tap to add';
+
+  @override
+  String get mealToShopping => 'Build a shopping list';
+
+  @override
+  String get mealBrowseRecipes => 'Browse recipes';
+
+  @override
+  String get mealFieldText => 'What are you planning?';
+
+  @override
+  String get mealClearSlot => 'Clear this slot';
+
+  @override
+  String get mealSlotSavedToast => 'Saved';
+
+  @override
+  String get mealSlotClearedToast => 'Cleared';
+
+  @override
+  String get mealErrFailed => 'That didn\'t save. Try again.';
+
+  @override
+  String get mealErrConflict => 'This slot changed elsewhere';
 
   @override
   String get ledgerErrArchived =>

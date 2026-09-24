@@ -1590,6 +1590,10 @@ const List<LumeFeature> kLumeFeatures = <LumeFeature>[
     },
     aware: <String>{'language', 'locale', 'units'},
   ),
+  // Meal Plan: a real record family as of wave 6
+  // (`MEALPLAN_PROPOSAL.md`). Export and search dropped (D-M6) — neither
+  // has UI built for it yet, and the reference's own capability claim
+  // was aspirational relative to what mealplan.tool.js actually draws.
   LumeFeature(
     id: 'mealplan',
     fallbackName: 'Meal Planner',
@@ -1602,11 +1606,7 @@ const List<LumeFeature> kLumeFeatures = <LumeFeature>[
     density: LumeToolDensity.high,
     fallbackSource: 'On device',
     freshness: LumeFreshnessKind.local,
-    supports: <LumeToolSupport>{
-      LumeToolSupport.export,
-      LumeToolSupport.offline,
-      LumeToolSupport.search,
-    },
+    supports: <LumeToolSupport>{LumeToolSupport.offline},
     aware: <String>{'locale', 'units'},
   ),
   LumeFeature(

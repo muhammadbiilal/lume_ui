@@ -8671,9 +8671,9 @@
   "@toolStatusMarkets": {
     "description": "The status line on the markets tile. The prototype keeps it in the catalogue and renders it untranslated in every language (D22)"
   },
-  "toolStatusMealplan": "This week",
+  "toolStatusMealplan": "Plan your week's meals",
   "@toolStatusMealplan": {
-    "description": "The status line on the mealplan tile. The prototype keeps it in the catalogue and renders it untranslated in every language (D22)"
+    "description": "The status line on the mealplan tile. States a purpose, not the prototype's stale 'This week' (MEALPLAN_PROPOSAL.md D-M7)"
   },
   "toolStatusMediasaver": "Save posts",
   "@toolStatusMediasaver": {
@@ -11184,6 +11184,66 @@
   "subsDeletedToast": "Subscription deleted",
   "@subsDeletedToast": {
     "description": "Toast, with Undo"
+  },
+  "mealSummaryKicker": "This week",
+  "@mealSummaryKicker": {
+    "description": "Meal Plan summary card kicker (mealplan.tool.js 'meal.thisWeek')"
+  },
+  "mealPlannedCaption": "meals planned",
+  "@mealPlannedCaption": {
+    "description": "Meal Plan summary card caption (mealplan.tool.js 'meal.planned'); the value beside it is a real count, replacing the reference's 'planned: 18' literal (MEALPLAN_PROPOSAL.md D-M1)"
+  },
+  "mealWeekTitle": "Your week",
+  "@mealWeekTitle": {
+    "description": "Section title (mealplan.tool.js 'meal.week')"
+  },
+  "mealBreakfast": "Breakfast",
+  "@mealBreakfast": {
+    "description": "Slot label (mealplan.tool.js 'meal.breakfast')"
+  },
+  "mealLunch": "Lunch",
+  "@mealLunch": {
+    "description": "Slot label (mealplan.tool.js 'meal.lunch')"
+  },
+  "mealDinner": "Dinner",
+  "@mealDinner": {
+    "description": "Slot label (mealplan.tool.js 'meal.dinner')"
+  },
+  "mealEmptySlot": "Tap to add",
+  "@mealEmptySlot": {
+    "description": "Placeholder for a slot the reader hasn't filled in yet"
+  },
+  "mealToShopping": "Build a shopping list",
+  "@mealToShopping": {
+    "description": "Navigation button, unchanged from the reference (mealplan.tool.js 'meal.toShopping') — real navigation to the Shopping tool, kept as-is"
+  },
+  "mealBrowseRecipes": "Browse recipes",
+  "@mealBrowseRecipes": {
+    "description": "Navigation button, unchanged from the reference (mealplan.tool.js 'meal.browse') — real navigation to the Recipes tool, kept as-is"
+  },
+  "mealFieldText": "What are you planning?",
+  "@mealFieldText": {
+    "description": "The edit sheet's text field label — free text, no nutrition data (D-M2)"
+  },
+  "mealClearSlot": "Clear this slot",
+  "@mealClearSlot": {
+    "description": "Edit sheet action — deletes the entry for this slot"
+  },
+  "mealSlotSavedToast": "Saved",
+  "@mealSlotSavedToast": {
+    "description": "Toast after filling in or editing a slot"
+  },
+  "mealSlotClearedToast": "Cleared",
+  "@mealSlotClearedToast": {
+    "description": "Toast after clearing a slot, with Undo"
+  },
+  "mealErrFailed": "That didn't save. Try again.",
+  "@mealErrFailed": {
+    "description": "Toast — a generic storage failure"
+  },
+  "mealErrConflict": "This slot changed elsewhere",
+  "@mealErrConflict": {
+    "description": "Toast — a write lost a version race"
   },
   "ledgerErrArchived": "This person is archived. Unarchive them to add entries.",
   "@ledgerErrArchived": {

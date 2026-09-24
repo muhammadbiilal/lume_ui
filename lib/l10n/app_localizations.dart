@@ -11260,10 +11260,10 @@ abstract class AppLocalizations {
   /// **'KSE-100 ▲ 0.8%'**
   String get toolStatusMarkets;
 
-  /// The status line on the mealplan tile. The prototype keeps it in the catalogue and renders it untranslated in every language (D22)
+  /// The status line on the mealplan tile. States a purpose, not the prototype's stale 'This week' (MEALPLAN_PROPOSAL.md D-M7)
   ///
   /// In en, this message translates to:
-  /// **'This week'**
+  /// **'Plan your week\'s meals'**
   String get toolStatusMealplan;
 
   /// The status line on the mediasaver tile. The prototype keeps it in the catalogue and renders it untranslated in every language (D22)
@@ -14312,6 +14312,96 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Subscription deleted'**
   String get subsDeletedToast;
+
+  /// Meal Plan summary card kicker (mealplan.tool.js 'meal.thisWeek')
+  ///
+  /// In en, this message translates to:
+  /// **'This week'**
+  String get mealSummaryKicker;
+
+  /// Meal Plan summary card caption (mealplan.tool.js 'meal.planned'); the value beside it is a real count, replacing the reference's 'planned: 18' literal (MEALPLAN_PROPOSAL.md D-M1)
+  ///
+  /// In en, this message translates to:
+  /// **'meals planned'**
+  String get mealPlannedCaption;
+
+  /// Section title (mealplan.tool.js 'meal.week')
+  ///
+  /// In en, this message translates to:
+  /// **'Your week'**
+  String get mealWeekTitle;
+
+  /// Slot label (mealplan.tool.js 'meal.breakfast')
+  ///
+  /// In en, this message translates to:
+  /// **'Breakfast'**
+  String get mealBreakfast;
+
+  /// Slot label (mealplan.tool.js 'meal.lunch')
+  ///
+  /// In en, this message translates to:
+  /// **'Lunch'**
+  String get mealLunch;
+
+  /// Slot label (mealplan.tool.js 'meal.dinner')
+  ///
+  /// In en, this message translates to:
+  /// **'Dinner'**
+  String get mealDinner;
+
+  /// Placeholder for a slot the reader hasn't filled in yet
+  ///
+  /// In en, this message translates to:
+  /// **'Tap to add'**
+  String get mealEmptySlot;
+
+  /// Navigation button, unchanged from the reference (mealplan.tool.js 'meal.toShopping') — real navigation to the Shopping tool, kept as-is
+  ///
+  /// In en, this message translates to:
+  /// **'Build a shopping list'**
+  String get mealToShopping;
+
+  /// Navigation button, unchanged from the reference (mealplan.tool.js 'meal.browse') — real navigation to the Recipes tool, kept as-is
+  ///
+  /// In en, this message translates to:
+  /// **'Browse recipes'**
+  String get mealBrowseRecipes;
+
+  /// The edit sheet's text field label — free text, no nutrition data (D-M2)
+  ///
+  /// In en, this message translates to:
+  /// **'What are you planning?'**
+  String get mealFieldText;
+
+  /// Edit sheet action — deletes the entry for this slot
+  ///
+  /// In en, this message translates to:
+  /// **'Clear this slot'**
+  String get mealClearSlot;
+
+  /// Toast after filling in or editing a slot
+  ///
+  /// In en, this message translates to:
+  /// **'Saved'**
+  String get mealSlotSavedToast;
+
+  /// Toast after clearing a slot, with Undo
+  ///
+  /// In en, this message translates to:
+  /// **'Cleared'**
+  String get mealSlotClearedToast;
+
+  /// Toast — a generic storage failure
+  ///
+  /// In en, this message translates to:
+  /// **'That didn\'t save. Try again.'**
+  String get mealErrFailed;
+
+  /// Toast — a write lost a version race
+  ///
+  /// In en, this message translates to:
+  /// **'This slot changed elsewhere'**
+  String get mealErrConflict;
 
   /// Validation
   ///

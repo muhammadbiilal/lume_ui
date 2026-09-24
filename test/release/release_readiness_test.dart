@@ -311,7 +311,9 @@ void main() {
       // not write (`kLumeParityOnlySeeds`). Wave 5 adds two: Goals and
       // Subscriptions show only what the reader wrote; the reference's
       // own seed data has no CRUD at all, so a reader's build opens
-      // both empty (GOALS_PROPOSAL.md, SUBSCRIPTIONS_PROPOSAL.md).
+      // both empty (GOALS_PROPOSAL.md, SUBSCRIPTIONS_PROPOSAL.md). Wave
+      // 6 adds one: Meal Plan's five headline figures are bare literals
+      // with no computation behind them (MEALPLAN_PROPOSAL.md §0).
       <String>[
         'age',
         'babybudget',
@@ -325,6 +327,7 @@ void main() {
         'installments',
         'ledger',
         'loan',
+        'mealplan',
         'stopwatch',
         'subs',
         'sunmoon',
