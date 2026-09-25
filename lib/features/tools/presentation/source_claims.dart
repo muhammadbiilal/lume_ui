@@ -187,10 +187,12 @@ abstract final class LumeSourceClaims {
               )
             : sample,
       // "Current tax year" describes a schedule, not a moment; the date it was
-      // "updated" is shown only when it was observed.
+      // "updated" is shown only when it was observed. Tax's own wording is
+      // Tax-specific reference copy — a tool other than Tax with annual
+      // freshness (Public Holidays, wave 9) gets the generic label instead.
       LumeFreshnessKind.annual => LumeSourceClaim(
         quality: LumeFreshnessQuality.cached,
-        label: l.freshAnnual,
+        label: feature.id == 'tax' ? l.freshAnnual : l.freshAnnualGeneric,
         source: _source(l, feature, capability),
         updated: seen == null ? null : l.freshOn(f.dateShort(seen)),
       ),

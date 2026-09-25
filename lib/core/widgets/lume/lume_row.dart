@@ -227,6 +227,12 @@ class LumeRichRow extends StatelessWidget {
           ],
           if (value != null || valueSub != null || delta != null) ...<Widget>[
             const SizedBox(width: 12),
+            // Deliberately not `Flexible`: this sits beside the title's own
+            // `Expanded` above, and a second flex child here would split the
+            // row's remaining space between the two rather than leaving the
+            // title with all of it, moving this column (and the chevron
+            // after it) — a real regression a parity test caught (wave 9).
+            // `LumeDelta`'s own text already guards its narrower overflow.
             Column(
               crossAxisAlignment: CrossAxisAlignment.end,
               mainAxisSize: MainAxisSize.min,
@@ -508,6 +514,11 @@ class LumeCompactRow extends StatelessWidget {
           ),
           if (value != null) ...<Widget>[
             const SizedBox(width: 12),
+            // Deliberately not `Flexible`: this sits beside the label's own
+            // `Expanded` above, and a second flex child here would split the
+            // row's remaining space between the two rather than leaving the
+            // label with all of it — a real parity regression elsewhere in
+            // this file's own history (wave 9).
             LumeNumerals(
               value!,
               style: LumeType.numeric(

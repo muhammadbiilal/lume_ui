@@ -10,17 +10,36 @@ library;
 import 'package:flutter/widgets.dart';
 
 import '../../age/presentation/age_tool.dart';
+import '../../aqi/presentation/aqi_tool.dart';
+import '../../bills/presentation/bills_tool.dart';
 import '../../birthdays/presentation/birthdays_tool.dart';
 import '../../bmi/presentation/bmi_tool.dart';
 import '../../converter/presentation/converter_tool.dart';
 import '../../calendar/presentation/calendar_tool.dart';
 import '../../compound/presentation/compound_tool.dart';
+import '../../cricket/presentation/cricket_tool.dart';
+import '../../currency/presentation/currency_tool.dart';
 import '../../cycle/presentation/cycle_tool.dart';
 import '../../datecalc/presentation/datecalc_tool.dart';
 import '../../documents/presentation/documents_tool.dart';
+import '../../duas/presentation/duas_tool.dart';
 import '../../emergency/presentation/emergency_tool.dart';
 import '../../events/presentation/events_tool.dart';
 import '../../expenses/presentation/expenses_tool.dart';
+import '../../fuel/presentation/fuel_tool.dart';
+import '../../fuel/presentation/fuelcost_tool.dart';
+import '../../holidays/presentation/holidays_tool.dart';
+import '../../loadshed/presentation/loadshed_tool.dart';
+import '../../markets/presentation/markets_tool.dart';
+import '../../names99/presentation/names99_tool.dart';
+import '../../natsavings/presentation/natsavings_tool.dart';
+import '../../packages/presentation/packages_tool.dart';
+import '../../parcel/presentation/parcel_tool.dart';
+import '../../prizebonds/presentation/prizebonds_tool.dart';
+import '../../quran/presentation/ayah_tool.dart';
+import '../../quran/presentation/quran_tool.dart';
+import '../../quran/presentation/quransearch_tool.dart';
+import '../../trains/presentation/trains_tool.dart';
 import '../../babybudget/presentation/babybudget_tool.dart';
 import '../../calculator/presentation/calculator_tool.dart';
 import '../../focus/presentation/focus_tool.dart';
@@ -132,4 +151,26 @@ const Map<String, LumeToolBuilder> kLumeToolRegistry =
       'pregnancy': LumePregnancyTool.open,
       'qibla': LumeQiblaTool.open,
       'zakat': LumeZakatTool.open,
+      // Wave 9: sixteen tools built in parallel, "do the same as web" —
+      // porting the reference's own real (fixture) data faithfully, no
+      // live network calls anywhere (`ROLLOUT_WAVE_9.md`).
+      'quran': LumeQuranTool.open,
+      'quransearch': LumeQuranSearchTool.open,
+      'ayah': LumeAyahTool.open,
+      'duas': LumeDuasTool.open,
+      'names99': LumeNames99Tool.open,
+      'currency': LumeCurrencyTool.open,
+      'fuel': LumeFuelTool.open,
+      'fuelcost': LumeFuelcostTool.open,
+      'markets': LumeMarketsTool.open,
+      'natsavings': LumeNatSavingsTool.open,
+      'prizebonds': LumePrizebondsTool.open,
+      'bills': LumeBillsTool.open,
+      'packages': LumePackagesTool.open,
+      'cricket': LumeCricketTool.open,
+      'aqi': LumeAqiTool.open,
+      'loadshed': LumeLoadshedTool.open,
+      'trains': LumeTrainsTool.open,
+      'holidays': LumeHolidaysTool.open,
+      'parcel': LumeParcelTool.open,
     };

@@ -167,6 +167,9 @@ void main() {
         'toolStatusPackages',
         'toolStatusTax',
         'toolStatusWater',
+        // Cricket: Net Run Rate, a standings-table column header. NRR is NRR
+        // in every language a scorecard is printed in (wave 9).
+        'cricketNrr',
       };
 
       /// Anything left once the placeholders and the punctuation are gone.

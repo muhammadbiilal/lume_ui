@@ -40,6 +40,13 @@ class LumeTrainService {
     required this.status,
     required this.delayMinutes,
     required this.fare,
+    this.fromCode = '',
+    this.toCode = '',
+    this.platform = '',
+    this.speedKmh = 0,
+    this.next = '',
+    this.progress = 0,
+    this.classes = const <String>[],
   });
 
   /// `5UP`. A railway's own identifier, never translated and never reordered
@@ -65,6 +72,46 @@ class LumeTrainService {
   /// In the market's own currency, unconverted. The reference passes it
   /// through `L.moneyRaw`, which formats and never converts.
   final int fare;
+
+  // -- Trains-tool detail ---------------------------------------------------
+  //
+  // "Today's departures" (the destination) never reads the five fields below:
+  // the reference's departures row has no platform, no speed and no next
+  // stop. The Trains *tool* (`trains.tool.js`) draws the same roster with a
+  // richer detail card that does, so they live here rather than in a second,
+  // parallel roster the destination and the tool could disagree about. They
+  // default to nothing and are deliberately left out of [==] and [hashCode]:
+  // a service's identity is its number, route and timetable, not this extra
+  // detail.
+
+  /// `t.fromCode` / `t.toCode` — station codes for the journey card's two
+  /// ends; `''` where a market's fixture has none, which draws no code
+  /// rather than a placeholder.
+  final String fromCode;
+  final String toCode;
+
+  /// `t.platform`.
+  final String platform;
+
+  /// `t.speed` — kilometres an hour.
+  final int speedKmh;
+
+  /// `t.next` — the next stop's name, already worded by the fixture.
+  final String next;
+
+  /// `t.progress` — 0 at departure, 1 at arrival.
+  final double progress;
+
+  /// `t.classes` — fare tiers, in the order the reference lists them. A tier
+  /// after the first is priced at 72% of [fare] and seated 17 fewer than the
+  /// one before it (`fare * (i ? 0.72 : 1)`, `48 - i * 17`): the reference's
+  /// own fixed arithmetic, not data of its own.
+  final List<String> classes;
+
+  bool get isLate => delayMinutes > 0;
+
+  /// `t.no.replace(/[A-Z]+/, '')` — the row's logo tile, digits only.
+  String get code => number.replaceAll(RegExp('[A-Za-z]'), '');
 
   @override
   bool operator ==(Object other) =>
@@ -121,6 +168,42 @@ class LumeTrainStop {
 
   @override
   int get hashCode => Object.hash(station, minuteOfDay, isNow);
+}
+
+/// Where a stop on [LumeTrainTimelineStop]'s list sits against the train
+/// passing it.
+enum LumeTrainTimelineState { done, now, next }
+
+/// One stop on the Trains tool's own station timeline — `D.TRAIN_STOPS`.
+///
+/// A different list from [LumeTrainStop]: that one is the tracked card's own
+/// three names (start, "now", end); this is the full route the Trains tool
+/// draws underneath whichever service is selected. The reference shows this
+/// one fixed list under every service rather than that service's own stops,
+/// and this port keeps that rather than inventing per-service routes the
+/// fixture does not have.
+@immutable
+class LumeTrainTimelineStop {
+  const LumeTrainTimelineStop({
+    required this.name,
+    required this.scheduledMinute,
+    this.actualMinute,
+    required this.state,
+    required this.km,
+  });
+
+  final String name;
+
+  /// Minutes past local midnight.
+  final int scheduledMinute;
+
+  /// `null` where the reference writes `'—'`: nothing has happened here yet.
+  final int? actualMinute;
+
+  final LumeTrainTimelineState state;
+
+  /// Kilometres from the route's start.
+  final int km;
 }
 
 /// The service the reader is following.

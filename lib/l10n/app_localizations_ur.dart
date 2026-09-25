@@ -2661,6 +2661,9 @@ class AppLocalizationsUr extends AppLocalizations {
   String get freshAnnual => 'موجودہ ٹیکس سال';
 
   @override
+  String get freshAnnualGeneric => 'سالانہ اپ ڈیٹ ہوا';
+
+  @override
   String freshAt(String time) {
     return '$time پر اپ ڈیٹ ہوا';
   }
@@ -11348,4 +11351,947 @@ class AppLocalizationsUr extends AppLocalizations {
 
   @override
   String get zakatItem => 'مد';
+
+  @override
+  String get quranSearchPlaceholder => 'سورتیں تلاش کریں';
+
+  @override
+  String get quranSurahsTitle => 'سورتیں';
+
+  @override
+  String get quranNoMatch => 'کوئی سورت نہیں ملی';
+
+  @override
+  String get quranNoMatchText => 'کوئی دوسرا لفظ تلاش کریں۔';
+
+  @override
+  String quranAyahCount(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n آیات',
+      one: '1 آیت',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get quranMeccan => 'مکی';
+
+  @override
+  String get quranMedinan => 'مدنی';
+
+  @override
+  String quranVerseReference(String surah, int s, int a) {
+    return '$surah · $s:$a';
+  }
+
+  @override
+  String quranAyahNumber(int number) {
+    return 'آیت $number';
+  }
+
+  @override
+  String get quransearchPlaceholder => 'قرآن میں تلاش کریں';
+
+  @override
+  String quransearchResultsTitle(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n نتائج',
+      one: '1 نتیجہ',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get quransearchEmptyTitle => 'کچھ نہیں ملا';
+
+  @override
+  String get quransearchEmptyText => 'کوئی دوسرا لفظ یا مختصر تلاش آزمائیں۔';
+
+  @override
+  String get quransearchScopeNote =>
+      '3 آیات اور 12 سورتوں میں تلاش — یہ ایک ابتدائی مجموعہ ہے، مکمل قرآن نہیں۔';
+
+  @override
+  String get quransearchSuggestedTitle => 'تجویز کردہ';
+
+  @override
+  String get ayahMoreVerses => 'مزید آیات';
+
+  @override
+  String get ayahSaved => 'آپ کی قراءت میں محفوظ کر لیا گیا';
+
+  @override
+  String get ayahUnsaved => 'آپ کی قراءت سے ہٹا دیا گیا';
+
+  @override
+  String get ccyPkr => 'پاکستانی روپیہ';
+
+  @override
+  String get ccyInr => 'بھارتی روپیہ';
+
+  @override
+  String get ccyTry => 'ترک لیرا';
+
+  @override
+  String get currencyChooseCurrency => 'کرنسی منتخب کریں';
+
+  @override
+  String currencyRateLine(String from, String value, String to) {
+    return '1 $from = $value $to';
+  }
+
+  @override
+  String currencyChart(String pair) {
+    return '$pair، 30 دن';
+  }
+
+  @override
+  String get fuelHiOctane => 'ہائی آکٹین';
+
+  @override
+  String get fuelDiesel => 'ڈیزل';
+
+  @override
+  String get fuelLightDiesel => 'لائٹ ڈیزل';
+
+  @override
+  String get fuelUnleaded => 'ان لیڈڈ';
+
+  @override
+  String get fuelSuperUnleaded => 'سپر ان لیڈڈ';
+
+  @override
+  String get fuelRegular => 'ریگولر';
+
+  @override
+  String get fuelMidgrade => 'مڈ گریڈ';
+
+  @override
+  String get fuelPremium => 'پریمیم';
+
+  @override
+  String get fuelSpecial95 => 'اسپیشل 95';
+
+  @override
+  String get fuelSuper98 => 'سپر 98';
+
+  @override
+  String get fuelEPlus91 => 'ای پلس 91';
+
+  @override
+  String get fuelPetrol91 => 'پیٹرول 91';
+
+  @override
+  String get fuelPetrol95 => 'پیٹرول 95';
+
+  @override
+  String get fuelCng => 'سی این جی';
+
+  @override
+  String fuelEffective(String date) {
+    return '$date سے مؤثر';
+  }
+
+  @override
+  String get fuelSinceLast => 'پچھلی اپڈیٹ کے بعد سے';
+
+  @override
+  String get fuelAllGrades => 'تمام اقسام';
+
+  @override
+  String get fuelGrade => 'قسم';
+
+  @override
+  String get fuelPrevious => 'پچھلی';
+
+  @override
+  String get fuelCurrent => 'موجودہ';
+
+  @override
+  String get fuelTrend => 'قیمت کا رجحان';
+
+  @override
+  String get fuelTrendCap => 'ایندھن کی قیمت، پچھلے 24 مہینے';
+
+  @override
+  String get fuelSourceRetail => 'خوردہ قیمت';
+
+  @override
+  String get fuelSourceState => 'ریاستی اوسط';
+
+  @override
+  String get fuelSourceOmc => 'آئل مارکیٹنگ کمپنیاں';
+
+  @override
+  String get fuelSourceRegional => 'علاقائی اوسط';
+
+  @override
+  String get unitLitre => 'لیٹر';
+
+  @override
+  String get unitGallon => 'گیلن';
+
+  @override
+  String get commonThisWeek => 'اس ہفتے';
+
+  @override
+  String get unitMpg => 'میل فی گیلن';
+
+  @override
+  String get unitKmpl => 'کلومیٹر/لیٹر';
+
+  @override
+  String get fuelcostDistance => 'فاصلہ';
+
+  @override
+  String get fuelcostEconomy => 'ایندھن کی کارکردگی';
+
+  @override
+  String get fuelcostPrice => 'ایندھن کی قیمت';
+
+  @override
+  String get fuelcostPriceHint =>
+      'آج کی ایندھن کی قیمت سے — اپنی قیمت درج کرنے کے لیے تبدیل کریں';
+
+  @override
+  String get fuelcostPeople => 'افراد';
+
+  @override
+  String get fuelcostTotal => 'کل لاگت';
+
+  @override
+  String fuelcostForTrip(String d) {
+    return '$d کے سفر کے لیے';
+  }
+
+  @override
+  String get fuelcostUsed => 'استعمال شدہ ایندھن';
+
+  @override
+  String get fuelcostPerPerson => 'فی شخص';
+
+  @override
+  String fuelcostPerUnit(String unit) {
+    return 'فی $unit';
+  }
+
+  @override
+  String get fuelcostCompare => 'موازنہ';
+
+  @override
+  String get fuelcostScenario => 'منظرنامہ';
+
+  @override
+  String get fuelcostConsumption => 'کھپت';
+
+  @override
+  String get fuelcostCost => 'لاگت';
+
+  @override
+  String get fuelcostScSolo => 'اکیلا سفر';
+
+  @override
+  String fuelcostScShared(String n) {
+    return '$n کے ساتھ شیئر';
+  }
+
+  @override
+  String get fuelcostScReturn => 'دو طرفہ سفر';
+
+  @override
+  String get savingsScheme => 'نیشنل سیونگز';
+
+  @override
+  String get savingsBestRate => 'بہترین شرح';
+
+  @override
+  String get savingsTerm => 'مدت';
+
+  @override
+  String get savingsPayout => 'ادائیگی';
+
+  @override
+  String get savingsMinimum => 'کم از کم';
+
+  @override
+  String get savingsMin => 'کم از کم';
+
+  @override
+  String get savingsRate => 'شرح';
+
+  @override
+  String get savingsSearch => 'پروڈکٹس تلاش کریں';
+
+  @override
+  String get savingsProducts => 'پروڈکٹس';
+
+  @override
+  String get savingsPerYear => 'سالانہ';
+
+  @override
+  String get savingsEstimate => 'تخمینہ';
+
+  @override
+  String get savingsAmount => 'رقم';
+
+  @override
+  String get savingsProduct => 'پروڈکٹ';
+
+  @override
+  String get savingsMonthlyProfit => 'ماہانہ منافع';
+
+  @override
+  String get savingsYearlyProfit => 'سالانہ منافع';
+
+  @override
+  String get savingsUnavailableTitle => 'آپ کے ملک میں دستیاب نہیں';
+
+  @override
+  String get savingsUnavailableText =>
+      'نیشنل سیونگز سرٹیفکیٹس صرف پاکستان کے لیے مخصوص ہیں۔';
+
+  @override
+  String get packagesUnavailableTitle =>
+      'موبائل پیکجز آپ کے سیٹ اپ میں شامل نہیں ہیں';
+
+  @override
+  String get packagesSearch => 'پیکجز تلاش کریں';
+
+  @override
+  String get packagesPrice => 'قیمت';
+
+  @override
+  String get packagesData => 'ڈیٹا';
+
+  @override
+  String get packagesValidity => 'میعاد';
+
+  @override
+  String get packagesNoMatch => 'کوئی پیکج مماثل نہیں';
+
+  @override
+  String get packagesNoMatchText => 'کوئی دوسری تلاش یا فلٹر آزمائیں۔';
+
+  @override
+  String get packagesCompare => 'موازنہ';
+
+  @override
+  String get packagesPackage => 'پیکج';
+
+  @override
+  String get packagesMins => 'منٹس';
+
+  @override
+  String get packagesSms => 'ایس ایم ایس';
+
+  @override
+  String get packagesDetail => 'پیکج کی تفصیلات';
+
+  @override
+  String get holidaysNext => 'اگلی تعطیل';
+
+  @override
+  String get holidaysListed => 'یہاں درج ہیں';
+
+  @override
+  String get holidaysSearch => 'تعطیلات تلاش کریں';
+
+  @override
+  String get holidaysKind => 'قسم';
+
+  @override
+  String get holidaysNoMatch => 'کوئی تعطیل نہیں ملی';
+
+  @override
+  String get holidaysNoMatchText => 'کوئی دوسری تلاش یا قسم آزمائیں';
+
+  @override
+  String get holidaysListTitle => 'تعطیلات';
+
+  @override
+  String get holidaysNoteTitle => 'حوالہ جاتی تاریخیں، اس سال کا کیلنڈر نہیں';
+
+  @override
+  String get holidaysNoteText =>
+      'یہ مثالی تاریخیں ہیں، کسی لائیو کیلنڈر سے نہیں لی گئیں، اور عید جیسی متغیر تاریخیں ہر سال بدلتی ہیں۔ اس سال کی اصل تعطیلات کے لیے کسی سرکاری ذریعے سے تصدیق کریں۔';
+
+  @override
+  String get parcelTrackingLabel => 'ٹریکنگ نمبر';
+
+  @override
+  String get parcelPlaceholder => 'مثلاً TCS-8842910';
+
+  @override
+  String get parcelTrack => 'ٹریک کریں';
+
+  @override
+  String get parcelLookingUp => 'شپمنٹ تلاش کی جا رہی ہے';
+
+  @override
+  String get parcelActive => 'راستے میں';
+
+  @override
+  String get parcelCarrier => 'کیریئر';
+
+  @override
+  String get parcelLastSeen => 'آخری مقام';
+
+  @override
+  String get parcelExpected => 'متوقع';
+
+  @override
+  String get parcelJourney => 'سفر';
+
+  @override
+  String get parcelNotify => 'اپڈیٹس پر مطلع کریں';
+
+  @override
+  String get parcelNotifying => 'آپ کو ہر اپڈیٹ پر مطلع کیا جائے گا';
+
+  @override
+  String get parcelStBooked => 'بک ہو گیا';
+
+  @override
+  String get parcelStInTransit => 'راستے میں';
+
+  @override
+  String get parcelStArrived => 'پہنچ گیا';
+
+  @override
+  String get parcelStDelivered => 'ڈیلیور ہو گیا';
+
+  @override
+  String get parcelStArriving => 'پہنچنے والا ہے';
+
+  @override
+  String parcelShareText(String item, String status) {
+    return '$item · $status';
+  }
+
+  @override
+  String get trainsFind => 'ٹرینیں تلاش کریں';
+
+  @override
+  String get trainsSearching => 'سروسز تلاش کی جا رہی ہیں';
+
+  @override
+  String get trainsRunning => 'رواں';
+
+  @override
+  String get trainsDelayed => 'تاخیر';
+
+  @override
+  String get trainsNoMatch => 'کوئی سروس مماثل نہیں';
+
+  @override
+  String get trainsNoMatchText => 'ہر روانگی دیکھنے کے لیے اسٹیٹس فلٹر ہٹائیں۔';
+
+  @override
+  String get trainsPlatform => 'پلیٹ فارم';
+
+  @override
+  String get trainsFareCaption => 'سے';
+
+  @override
+  String trainsSelected(String name) {
+    return '$name';
+  }
+
+  @override
+  String get trainsSpeed => 'رفتار';
+
+  @override
+  String get trainsNextStop => 'اگلا اسٹاپ';
+
+  @override
+  String get trainsDelay => 'تاخیر';
+
+  @override
+  String get trainsMap => 'روٹ';
+
+  @override
+  String get trainsStops => 'اسٹیشنوں کی ٹائم لائن';
+
+  @override
+  String trainsActual(String time) {
+    return 'اصل وقت $time';
+  }
+
+  @override
+  String get trainsScheduled => 'شیڈول شدہ';
+
+  @override
+  String get trainsFares => 'کرایہ اور دستیابی';
+
+  @override
+  String get trainsClass => 'کلاس';
+
+  @override
+  String get trainsFare => 'کرایہ';
+
+  @override
+  String get trainsSeats => 'نشستیں';
+
+  @override
+  String get trainsRemind => 'مجھے یاد دلائیں';
+
+  @override
+  String trainsReminded(String name) {
+    return '$name ٹریک ہو رہی ہے';
+  }
+
+  @override
+  String trainsShareText(String name, String from, String to, String arrival) {
+    return '$name · $from → $to · $arrival';
+  }
+
+  @override
+  String get aqiIndex => 'ہوا کے معیار کا اشاریہ';
+
+  @override
+  String get aqiAdvice => 'اس کا مطلب';
+
+  @override
+  String get aqiPollutants => 'آلودگی کے اجزاء';
+
+  @override
+  String get aqiTrend => 'پچھلے 24 گھنٹے';
+
+  @override
+  String get aqiEstimated => 'تخمینی';
+
+  @override
+  String aqiHoursAgo(int n) {
+    return '$n گھنٹے پہلے';
+  }
+
+  @override
+  String aqiEstimatedNote(String city) {
+    return '$city کے لیے تخمینہ — کسی مانیٹرنگ اسٹیشن سے ناپا نہیں گیا۔';
+  }
+
+  @override
+  String get aqiEstimatedSource => 'تخمینی، ناپا نہیں گیا';
+
+  @override
+  String aqiShareText(String city, String value, String band) {
+    return '$city میں ہوا کا معیار: $value AQI · $band';
+  }
+
+  @override
+  String get duaCategoryMorning => 'صبح و شام';
+
+  @override
+  String get duaCategoryDaily => 'روزمرہ زندگی';
+
+  @override
+  String get duaCategoryTravel => 'سفر';
+
+  @override
+  String get duaCategoryDistress => 'پریشانی اور فکر';
+
+  @override
+  String get duaCategoryFood => 'کھانا پینا';
+
+  @override
+  String get duaCategorySleep => 'نیند';
+
+  @override
+  String get duaTitleAnxiety => 'پریشانی سے نجات';
+
+  @override
+  String get duaTitleBeforeEating => 'کھانے سے پہلے';
+
+  @override
+  String get duaTitleBeforeSleeping => 'سونے سے پہلے';
+
+  @override
+  String get duaTitleMorningRemembrance => 'صبح کا ذکر';
+
+  @override
+  String get duaTitleTravel => 'سفر کی دعا';
+
+  @override
+  String get duasAll => 'تمام دعائیں';
+
+  @override
+  String get duasCategories => 'اقسام';
+
+  @override
+  String duasInCategory(String name) {
+    return '$name';
+  }
+
+  @override
+  String get duasNoMatch => 'یہاں ابھی کوئی دعا نہیں';
+
+  @override
+  String get duasNoMatchText => 'کوئی دوسری قسم آزمائیں یا تلاش صاف کریں۔';
+
+  @override
+  String get duasSearch => 'دعائیں تلاش کریں';
+
+  @override
+  String get duasToday => 'آج کی دعا';
+
+  @override
+  String get readerListen => 'سنیں';
+
+  @override
+  String get readerPlaying => 'چل رہا ہے';
+
+  @override
+  String get names99AllTitle => 'تمام نام';
+
+  @override
+  String names99Caption(String n) {
+    return 'باقی $n کو مصدقہ ماخذ درکار ہے۔';
+  }
+
+  @override
+  String get names99Kicker => 'اللہ کے نام';
+
+  @override
+  String get names99NoMatch => 'کوئی نام میل نہیں کھاتا';
+
+  @override
+  String get names99NoMatchText => 'تلفظ یا معنی سے تلاش کریں۔';
+
+  @override
+  String names99Opened(String name, String meaning) {
+    return '$name — $meaning';
+  }
+
+  @override
+  String get names99Progress => 'معلوم نام';
+
+  @override
+  String names99Reading(String held, String total) {
+    return '$total میں سے $held';
+  }
+
+  @override
+  String get names99Search => 'نام تلاش کریں';
+
+  @override
+  String names99ShareSource(String name) {
+    return '$name — اسماء الحسنیٰ';
+  }
+
+  @override
+  String names99Total(String total) {
+    return '/ $total';
+  }
+
+  @override
+  String get marketsCap => 'مارکیٹ کیپ';
+
+  @override
+  String get marketsGlobal => 'عالمی';
+
+  @override
+  String get marketsTopCrypto => 'ٹاپ کرپٹو';
+
+  @override
+  String get marketsTopEtfs => 'ٹاپ ای ٹی ایفس';
+
+  @override
+  String get marketsVol => 'حجم';
+
+  @override
+  String billsOpening(String name) {
+    return '$name کھولا جا رہا ہے';
+  }
+
+  @override
+  String get billsTrend => 'چھ مہینے';
+
+  @override
+  String billsTrendCap(String money) {
+    return 'ہر ماہ کل بل: $money';
+  }
+
+  @override
+  String billsOverdueCount(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n تاخیر شدہ',
+      one: '1 تاخیر شدہ',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String billsPaidOn(String date) {
+    return '$date کو ادا کیا گیا';
+  }
+
+  @override
+  String get billsAllOnTrack => 'سب کچھ درست وقت پر ہے';
+
+  @override
+  String get billsUpcoming => 'آئندہ';
+
+  @override
+  String get billsPaidAmount => 'ادا شدہ';
+
+  @override
+  String get billsNeedAttentionText =>
+      'یہ بل تاخیر کا شکار ہیں اور ان پر جرمانہ عائد ہو سکتا ہے۔';
+
+  @override
+  String get billsAll => 'تمام بل';
+
+  @override
+  String get billsNoMatch => 'کوئی بل نہیں ملا';
+
+  @override
+  String get billsNoMatchText => 'کوئی دوسرا فلٹر آزمائیں۔';
+
+  @override
+  String get billsRef => 'حوالہ';
+
+  @override
+  String billsRowPaid(String name) {
+    return '$name پہلے ہی ادا ہو چکا ہے';
+  }
+
+  @override
+  String get cricketBalls => 'گیندیں';
+
+  @override
+  String get cricketBatter => 'بلے باز';
+
+  @override
+  String get cricketBatting => 'بیٹنگ';
+
+  @override
+  String get cricketBowler => 'بولر';
+
+  @override
+  String get cricketBowling => 'بولنگ';
+
+  @override
+  String cricketChoseToBat(String team) {
+    return '$team نے پہلے بیٹنگ کا انتخاب کیا';
+  }
+
+  @override
+  String get cricketEconomy => 'اکانومی';
+
+  @override
+  String get cricketFixtures => 'میچز';
+
+  @override
+  String get cricketFormat => 'فارمیٹ';
+
+  @override
+  String get cricketFours => 'چوکے';
+
+  @override
+  String get cricketLive => 'لائیو';
+
+  @override
+  String get cricketLost => 'ہارے';
+
+  @override
+  String get cricketMaidens => 'میڈن';
+
+  @override
+  String get cricketNotOut => 'ناٹ آؤٹ';
+
+  @override
+  String get cricketNrr => 'NRR';
+
+  @override
+  String get cricketOvers => 'اوورز';
+
+  @override
+  String get cricketOvers2 => 'اوورز';
+
+  @override
+  String get cricketPlayed => 'کھیلے';
+
+  @override
+  String get cricketPoints => 'پوائنٹس';
+
+  @override
+  String get cricketRunRate => 'رن ریٹ';
+
+  @override
+  String get cricketRuns => 'رنز';
+
+  @override
+  String get cricketSixes => 'چھکے';
+
+  @override
+  String get cricketStandings => 'ٹیبل';
+
+  @override
+  String get cricketStrikeRate => 'اسٹرائیک ریٹ';
+
+  @override
+  String get cricketTable => 'پوائنٹس ٹیبل';
+
+  @override
+  String get cricketTeam => 'ٹیم';
+
+  @override
+  String get cricketUpcoming => 'آئندہ';
+
+  @override
+  String get cricketVenue => 'مقام';
+
+  @override
+  String get cricketWickets => 'وکٹیں';
+
+  @override
+  String get cricketWon => 'جیتے';
+
+  @override
+  String get loadshedBillHint => 'اپنا آخری بل چیک کریں';
+
+  @override
+  String get loadshedCurrentlyOff => 'بجلی بند ہے';
+
+  @override
+  String get loadshedCurrentlyOn => 'اگلی بندش';
+
+  @override
+  String loadshedNextOutage(String from, String to) {
+    return '$from سے $to تک';
+  }
+
+  @override
+  String get loadshedNotify => 'بندش سے پہلے مجھے مطلع کریں';
+
+  @override
+  String get loadshedNotifyOn => 'بندش کی یاد دہانیاں آن ہیں';
+
+  @override
+  String get loadshedNotifyValue => 'آن';
+
+  @override
+  String get loadshedOutage => 'بندش';
+
+  @override
+  String loadshedPowerBack(String time) {
+    return '$time پر بحال ہو گی';
+  }
+
+  @override
+  String get loadshedProvider => 'تقسیم کار کمپنی';
+
+  @override
+  String get loadshedReliability => 'شیڈول کے مطابق';
+
+  @override
+  String get loadshedSchedule => 'آج کا شیڈول';
+
+  @override
+  String loadshedSlotDuration(String hours) {
+    return '$hours گھنٹے';
+  }
+
+  @override
+  String get loadshedSlots => 'سلاٹس';
+
+  @override
+  String get loadshedToday => 'آج بند';
+
+  @override
+  String get loadshedWeek => 'اس ہفتے';
+
+  @override
+  String get loadshedWeekCap => 'روزانہ بجلی کے بغیر گھنٹے';
+
+  @override
+  String get prizebondsBond => 'بانڈ';
+
+  @override
+  String get prizebondsCheck => 'چیک کریں';
+
+  @override
+  String get prizebondsCheckLead => 'بانڈ نمبر کو تازہ ترین ڈرا سے چیک کریں۔';
+
+  @override
+  String get prizebondsDenomination => 'مالیت';
+
+  @override
+  String get prizebondsDenominations => 'مالیتیں';
+
+  @override
+  String get prizebondsDraws => 'آئندہ ڈرا';
+
+  @override
+  String get prizebondsFirst => 'پہلا';
+
+  @override
+  String get prizebondsFirstPrize => 'پہلا انعام';
+
+  @override
+  String get prizebondsNextDraw => 'اگلا ڈرا';
+
+  @override
+  String prizebondsNextDrawSub(String denom, String draw) {
+    return '$denom بانڈ · $draw';
+  }
+
+  @override
+  String get prizebondsNoWin => 'تازہ ترین ڈرا میں اس نمبر پر کوئی انعام نہیں';
+
+  @override
+  String get prizebondsNoneSaved => 'آپ نے ابھی تک کوئی نمبر محفوظ نہیں کیا';
+
+  @override
+  String get prizebondsNoneSavedText =>
+      'یہاں ابھی کسی ڈرا سے ملانے کے لیے کچھ نہیں ہے۔';
+
+  @override
+  String get prizebondsNumber => 'بانڈ نمبر';
+
+  @override
+  String get prizebondsPrizePool => 'کل انعامات';
+
+  @override
+  String get prizebondsPrizeShape => 'مالیت کے لحاظ سے پہلا انعام';
+
+  @override
+  String get prizebondsPrizeShapeCap =>
+      'بڑا بانڈ بڑا انعام دیتا ہے، بہتر امکانات نہیں۔';
+
+  @override
+  String get prizebondsPrizeTiers => 'انعامی درجے';
+
+  @override
+  String get prizebondsScheme => 'نیشنل پرائز بانڈز';
+
+  @override
+  String get prizebondsSecond => 'دوسرا';
+
+  @override
+  String get prizebondsThird => 'تیسرا';
+
+  @override
+  String get prizebondsTotalWinners => 'جیتنے والے';
+
+  @override
+  String get prizebondsUnavailableText =>
+      'پرائز بانڈز صرف پاکستان کے لیے مخصوص ہیں۔';
+
+  @override
+  String get prizebondsUnavailableTitle => 'آپ کے ملک میں دستیاب نہیں';
+
+  @override
+  String prizebondsWinners(String n) {
+    return '$n جیتنے والے';
+  }
+
+  @override
+  String get prizebondsYourNumbers => 'آپ کے نمبر';
 }

@@ -202,6 +202,7 @@ class LumeDelta extends StatelessWidget {
     required this.direction,
     this.color,
     this.lineHeight,
+    this.maxWidth,
   });
 
   /// A line the change inherits from where it is set — a summary caption's
@@ -212,6 +213,11 @@ class LumeDelta extends StatelessWidget {
   final String text;
 
   final LumeDeltaDirection direction;
+
+  /// A cap for a caller whose own [text] can run long enough to overflow the
+  /// row it sits in (Markets' combined "change + percent", wave 9) — `null`
+  /// leaves every other caller's layout exactly as it was, unconstrained.
+  final double? maxWidth;
 
   /// `.summary[class*="summary--"] .delta { color: inherit }` — on a
   /// gradient the change takes the card's ink; `null` is the direction's.
@@ -252,9 +258,14 @@ class LumeDelta extends StatelessWidget {
           children: <Widget>[
             Text(glyphFor(direction), style: _glyphStyle(context, fg)),
             const SizedBox(width: gap),
-            Text(
-              _drawn,
-              style: _textStyle(context, fg).copyWith(height: lineHeight),
+            ConstrainedBox(
+              constraints: BoxConstraints(maxWidth: maxWidth ?? double.infinity),
+              child: Text(
+                _drawn,
+                style: _textStyle(context, fg).copyWith(height: lineHeight),
+                maxLines: 1,
+                overflow: maxWidth == null ? null : TextOverflow.ellipsis,
+              ),
             ),
           ],
         ),
@@ -428,13 +439,17 @@ class _LumeFreshnessState extends State<LumeFreshness>
           children: <Widget>[
             dot,
             const SizedBox(width: 6),
-            Text(
-              widget.label,
-              // 11 / 700 on the font's own 13, measured on `.fresh`.
-              style: LumeType.natural(
-                context,
-                context.lumeType.metaSmall,
-              ).copyWith(color: fg, fontWeight: FontWeight.w700),
+            Flexible(
+              child: Text(
+                widget.label,
+                // 11 / 700 on the font's own 13, measured on `.fresh`.
+                style: LumeType.natural(
+                  context,
+                  context.lumeType.metaSmall,
+                ).copyWith(color: fg, fontWeight: FontWeight.w700),
+                overflow: TextOverflow.ellipsis,
+                maxLines: 1,
+              ),
             ),
           ],
         ),
@@ -501,21 +516,32 @@ class LumeSourceLine extends StatelessWidget {
                 const SizedBox(width: LumeSpace.x2),
               ],
               if (i == 0 && sample != null)
-                Semantics(
-                  key: sampleKey,
-                  label: sampleSemantics ?? sample,
-                  child: ExcludeSemantics(
-                    child: Text(
-                      parts[i],
-                      style: style.copyWith(
-                        color: lume.text2,
-                        fontWeight: FontWeight.w600,
+                Flexible(
+                  child: Semantics(
+                    key: sampleKey,
+                    label: sampleSemantics ?? sample,
+                    child: ExcludeSemantics(
+                      child: Text(
+                        parts[i],
+                        style: style.copyWith(
+                          color: lume.text2,
+                          fontWeight: FontWeight.w600,
+                        ),
+                        overflow: TextOverflow.ellipsis,
+                        maxLines: 1,
                       ),
                     ),
                   ),
                 )
               else
-                Text(parts[i], style: style),
+                Flexible(
+                  child: Text(
+                    parts[i],
+                    style: style,
+                    overflow: TextOverflow.ellipsis,
+                    maxLines: 1,
+                  ),
+                ),
             ],
           ),
       ],

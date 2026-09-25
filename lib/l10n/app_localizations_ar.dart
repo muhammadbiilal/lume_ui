@@ -2707,6 +2707,9 @@ class AppLocalizationsAr extends AppLocalizations {
   String get freshAnnual => 'السنة الضريبية الحالية';
 
   @override
+  String get freshAnnualGeneric => 'يُحدَّث سنويًا';
+
+  @override
   String freshAt(String time) {
     return 'حُدّث الساعة $time';
   }
@@ -11495,4 +11498,945 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get zakatItem => 'البند';
+
+  @override
+  String get quranSearchPlaceholder => 'ابحث عن السور';
+
+  @override
+  String get quranSurahsTitle => 'السور';
+
+  @override
+  String get quranNoMatch => 'لم يتم العثور على أي سورة';
+
+  @override
+  String get quranNoMatchText => 'جرّب كلمة بحث مختلفة.';
+
+  @override
+  String quranAyahCount(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n آية',
+      one: 'آية واحدة',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get quranMeccan => 'مكية';
+
+  @override
+  String get quranMedinan => 'مدنية';
+
+  @override
+  String quranVerseReference(String surah, int s, int a) {
+    return '$surah · $s:$a';
+  }
+
+  @override
+  String quranAyahNumber(int number) {
+    return 'الآية $number';
+  }
+
+  @override
+  String get quransearchPlaceholder => 'ابحث في القرآن';
+
+  @override
+  String quransearchResultsTitle(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n نتيجة',
+      one: 'نتيجة واحدة',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get quransearchEmptyTitle => 'لم يُعثر على شيء';
+
+  @override
+  String get quransearchEmptyText => 'جرّب كلمة أخرى أو بحثًا أقصر.';
+
+  @override
+  String get quransearchScopeNote =>
+      'البحث يشمل 3 آيات و12 سورة فقط — مجموعة أولية، وليست القرآن كاملًا.';
+
+  @override
+  String get quransearchSuggestedTitle => 'مقترح';
+
+  @override
+  String get ayahMoreVerses => 'المزيد من الآيات';
+
+  @override
+  String get ayahSaved => 'تم الحفظ في قراءتك';
+
+  @override
+  String get ayahUnsaved => 'تمت الإزالة من قراءتك';
+
+  @override
+  String get ccyPkr => 'الروبية الباكستانية';
+
+  @override
+  String get ccyInr => 'الروبية الهندية';
+
+  @override
+  String get ccyTry => 'الليرة التركية';
+
+  @override
+  String get currencyChooseCurrency => 'اختر عملة';
+
+  @override
+  String currencyRateLine(String from, String value, String to) {
+    return '1 $from = $value $to';
+  }
+
+  @override
+  String currencyChart(String pair) {
+    return '$pair، 30 يومًا';
+  }
+
+  @override
+  String get fuelHiOctane => 'أوكتان عالٍ';
+
+  @override
+  String get fuelDiesel => 'ديزل';
+
+  @override
+  String get fuelLightDiesel => 'ديزل خفيف';
+
+  @override
+  String get fuelUnleaded => 'خالٍ من الرصاص';
+
+  @override
+  String get fuelSuperUnleaded => 'سوبر خالٍ من الرصاص';
+
+  @override
+  String get fuelRegular => 'عادي';
+
+  @override
+  String get fuelMidgrade => 'متوسط الجودة';
+
+  @override
+  String get fuelPremium => 'ممتاز';
+
+  @override
+  String get fuelSpecial95 => 'سبيشل 95';
+
+  @override
+  String get fuelSuper98 => 'سوبر 98';
+
+  @override
+  String get fuelEPlus91 => 'إي بلس 91';
+
+  @override
+  String get fuelPetrol91 => 'بنزين 91';
+
+  @override
+  String get fuelPetrol95 => 'بنزين 95';
+
+  @override
+  String get fuelCng => 'الغاز الطبيعي المضغوط';
+
+  @override
+  String fuelEffective(String date) {
+    return 'سارٍ اعتبارًا من $date';
+  }
+
+  @override
+  String get fuelSinceLast => 'منذ آخر تحديث';
+
+  @override
+  String get fuelAllGrades => 'جميع الأنواع';
+
+  @override
+  String get fuelGrade => 'النوع';
+
+  @override
+  String get fuelPrevious => 'السابق';
+
+  @override
+  String get fuelCurrent => 'الحالي';
+
+  @override
+  String get fuelTrend => 'اتجاه السعر';
+
+  @override
+  String get fuelTrendCap => 'سعر الوقود، آخر 24 شهرًا';
+
+  @override
+  String get fuelSourceRetail => 'سعر التجزئة';
+
+  @override
+  String get fuelSourceState => 'متوسط الولاية';
+
+  @override
+  String get fuelSourceOmc => 'شركات تسويق النفط';
+
+  @override
+  String get fuelSourceRegional => 'المتوسط الإقليمي';
+
+  @override
+  String get unitLitre => 'لتر';
+
+  @override
+  String get unitGallon => 'جالون';
+
+  @override
+  String get commonThisWeek => 'هذا الأسبوع';
+
+  @override
+  String get unitMpg => 'ميل/غالون';
+
+  @override
+  String get unitKmpl => 'كم/ل';
+
+  @override
+  String get fuelcostDistance => 'المسافة';
+
+  @override
+  String get fuelcostEconomy => 'كفاءة استهلاك الوقود';
+
+  @override
+  String get fuelcostPrice => 'سعر الوقود';
+
+  @override
+  String get fuelcostPriceHint =>
+      'من سعر الوقود اليوم — عدّله لاستخدام سعرك الخاص';
+
+  @override
+  String get fuelcostPeople => 'الأشخاص';
+
+  @override
+  String get fuelcostTotal => 'التكلفة الإجمالية';
+
+  @override
+  String fuelcostForTrip(String d) {
+    return 'لرحلة $d';
+  }
+
+  @override
+  String get fuelcostUsed => 'الوقود المستهلك';
+
+  @override
+  String get fuelcostPerPerson => 'للشخص الواحد';
+
+  @override
+  String fuelcostPerUnit(String unit) {
+    return 'لكل $unit';
+  }
+
+  @override
+  String get fuelcostCompare => 'مقارنة';
+
+  @override
+  String get fuelcostScenario => 'السيناريو';
+
+  @override
+  String get fuelcostConsumption => 'الاستهلاك';
+
+  @override
+  String get fuelcostCost => 'التكلفة';
+
+  @override
+  String get fuelcostScSolo => 'رحلة فردية';
+
+  @override
+  String fuelcostScShared(String n) {
+    return 'مشترك مع $n';
+  }
+
+  @override
+  String get fuelcostScReturn => 'رحلة ذهاب وإياب';
+
+  @override
+  String get savingsScheme => 'الادخار الوطني';
+
+  @override
+  String get savingsBestRate => 'أفضل معدل';
+
+  @override
+  String get savingsTerm => 'المدة';
+
+  @override
+  String get savingsPayout => 'الدفعة';
+
+  @override
+  String get savingsMinimum => 'الحد الأدنى';
+
+  @override
+  String get savingsMin => 'الأدنى';
+
+  @override
+  String get savingsRate => 'المعدل';
+
+  @override
+  String get savingsSearch => 'ابحث في المنتجات';
+
+  @override
+  String get savingsProducts => 'المنتجات';
+
+  @override
+  String get savingsPerYear => 'سنويًا';
+
+  @override
+  String get savingsEstimate => 'التقدير';
+
+  @override
+  String get savingsAmount => 'المبلغ';
+
+  @override
+  String get savingsProduct => 'المنتج';
+
+  @override
+  String get savingsMonthlyProfit => 'الربح الشهري';
+
+  @override
+  String get savingsYearlyProfit => 'الربح السنوي';
+
+  @override
+  String get savingsUnavailableTitle => 'غير متاح في بلدك';
+
+  @override
+  String get savingsUnavailableText =>
+      'شهادات الادخار الوطني خاصة بباكستان فقط.';
+
+  @override
+  String get packagesUnavailableTitle => 'باقات الجوال غير متاحة في إعدادك';
+
+  @override
+  String get packagesSearch => 'ابحث في الباقات';
+
+  @override
+  String get packagesPrice => 'السعر';
+
+  @override
+  String get packagesData => 'البيانات';
+
+  @override
+  String get packagesValidity => 'الصلاحية';
+
+  @override
+  String get packagesNoMatch => 'لا توجد باقات مطابقة';
+
+  @override
+  String get packagesNoMatchText => 'جرّب بحثًا أو تصفية مختلفة.';
+
+  @override
+  String get packagesCompare => 'مقارنة';
+
+  @override
+  String get packagesPackage => 'الباقة';
+
+  @override
+  String get packagesMins => 'الدقائق';
+
+  @override
+  String get packagesSms => 'الرسائل النصية';
+
+  @override
+  String get packagesDetail => 'تفاصيل الباقة';
+
+  @override
+  String get holidaysNext => 'العطلة القادمة';
+
+  @override
+  String get holidaysListed => 'مدرجة هنا';
+
+  @override
+  String get holidaysSearch => 'ابحث في العطلات';
+
+  @override
+  String get holidaysKind => 'النوع';
+
+  @override
+  String get holidaysNoMatch => 'لم يتم العثور على عطلات';
+
+  @override
+  String get holidaysNoMatchText => 'جرّب بحثًا أو نوعًا مختلفًا';
+
+  @override
+  String get holidaysListTitle => 'العطلات';
+
+  @override
+  String get holidaysNoteTitle => 'تواريخ مرجعية، وليست تقويم هذا العام';
+
+  @override
+  String get holidaysNoteText =>
+      'هذه تواريخ توضيحية غير مأخوذة من تقويم مباشر، والتواريخ المتغيرة مثل العيد تتبدّل كل عام. راجع مصدرًا رسميًا لمعرفة عطلات هذا العام الفعلية.';
+
+  @override
+  String get parcelTrackingLabel => 'رقم التتبع';
+
+  @override
+  String get parcelPlaceholder => 'مثلاً TCS-8842910';
+
+  @override
+  String get parcelTrack => 'تتبّع';
+
+  @override
+  String get parcelLookingUp => 'جارٍ البحث عن الشحنة';
+
+  @override
+  String get parcelActive => 'في الطريق';
+
+  @override
+  String get parcelCarrier => 'شركة الشحن';
+
+  @override
+  String get parcelLastSeen => 'آخر ظهور';
+
+  @override
+  String get parcelExpected => 'متوقع';
+
+  @override
+  String get parcelJourney => 'الرحلة';
+
+  @override
+  String get parcelNotify => 'إشعارات عند التحديثات';
+
+  @override
+  String get parcelNotifying => 'سيتم إشعارك عند كل تحديث';
+
+  @override
+  String get parcelStBooked => 'تم الحجز';
+
+  @override
+  String get parcelStInTransit => 'في الطريق';
+
+  @override
+  String get parcelStArrived => 'وصلت';
+
+  @override
+  String get parcelStDelivered => 'تم التسليم';
+
+  @override
+  String get parcelStArriving => 'في طريقها للوصول';
+
+  @override
+  String parcelShareText(String item, String status) {
+    return '$item · $status';
+  }
+
+  @override
+  String get trainsFind => 'ابحث عن القطارات';
+
+  @override
+  String get trainsSearching => 'جارٍ البحث عن الخدمات';
+
+  @override
+  String get trainsRunning => 'قيد التشغيل';
+
+  @override
+  String get trainsDelayed => 'متأخر';
+
+  @override
+  String get trainsNoMatch => 'لا توجد خدمات مطابقة';
+
+  @override
+  String get trainsNoMatchText => 'امسح تصفية الحالة لرؤية جميع المغادرات.';
+
+  @override
+  String get trainsPlatform => 'الرصيف';
+
+  @override
+  String get trainsFareCaption => 'ابتداءً من';
+
+  @override
+  String trainsSelected(String name) {
+    return '$name';
+  }
+
+  @override
+  String get trainsSpeed => 'السرعة';
+
+  @override
+  String get trainsNextStop => 'المحطة التالية';
+
+  @override
+  String get trainsDelay => 'التأخير';
+
+  @override
+  String get trainsMap => 'المسار';
+
+  @override
+  String get trainsStops => 'الجدول الزمني للمحطات';
+
+  @override
+  String trainsActual(String time) {
+    return 'الفعلي $time';
+  }
+
+  @override
+  String get trainsScheduled => 'المجدول';
+
+  @override
+  String get trainsFares => 'الأسعار والتوفر';
+
+  @override
+  String get trainsClass => 'الدرجة';
+
+  @override
+  String get trainsFare => 'السعر';
+
+  @override
+  String get trainsSeats => 'المقاعد';
+
+  @override
+  String get trainsRemind => 'ذكّرني';
+
+  @override
+  String trainsReminded(String name) {
+    return 'جارٍ تتبع $name';
+  }
+
+  @override
+  String trainsShareText(String name, String from, String to, String arrival) {
+    return '$name · $from → $to · $arrival';
+  }
+
+  @override
+  String get aqiIndex => 'مؤشر جودة الهواء';
+
+  @override
+  String get aqiAdvice => 'ماذا يعني هذا';
+
+  @override
+  String get aqiPollutants => 'الملوثات';
+
+  @override
+  String get aqiTrend => 'آخر 24 ساعة';
+
+  @override
+  String get aqiEstimated => 'مقدّر';
+
+  @override
+  String aqiHoursAgo(int n) {
+    return 'قبل $n س';
+  }
+
+  @override
+  String aqiEstimatedNote(String city) {
+    return 'تقدير لِـ$city — لم يُقَس بواسطة محطة مراقبة.';
+  }
+
+  @override
+  String get aqiEstimatedSource => 'مقدّر، غير مقاس';
+
+  @override
+  String aqiShareText(String city, String value, String band) {
+    return 'جودة الهواء في $city: $value AQI · $band';
+  }
+
+  @override
+  String get duaCategoryMorning => 'الصباح والمساء';
+
+  @override
+  String get duaCategoryDaily => 'الحياة اليومية';
+
+  @override
+  String get duaCategoryTravel => 'السفر';
+
+  @override
+  String get duaCategoryDistress => 'الكرب والقلق';
+
+  @override
+  String get duaCategoryFood => 'الطعام والشراب';
+
+  @override
+  String get duaCategorySleep => 'النوم';
+
+  @override
+  String get duaTitleAnxiety => 'الراحة من القلق';
+
+  @override
+  String get duaTitleBeforeEating => 'قبل الأكل';
+
+  @override
+  String get duaTitleBeforeSleeping => 'قبل النوم';
+
+  @override
+  String get duaTitleMorningRemembrance => 'ذكر الصباح';
+
+  @override
+  String get duaTitleTravel => 'دعاء السفر';
+
+  @override
+  String get duasAll => 'كل الأدعية';
+
+  @override
+  String get duasCategories => 'الفئات';
+
+  @override
+  String duasInCategory(String name) {
+    return '$name';
+  }
+
+  @override
+  String get duasNoMatch => 'لا توجد أدعية هنا بعد';
+
+  @override
+  String get duasNoMatchText => 'جرّب فئة أخرى أو امسح البحث.';
+
+  @override
+  String get duasSearch => 'ابحث في الأدعية';
+
+  @override
+  String get duasToday => 'دعاء اليوم';
+
+  @override
+  String get readerListen => 'استماع';
+
+  @override
+  String get readerPlaying => 'جارٍ التشغيل';
+
+  @override
+  String get names99AllTitle => 'جميع الأسماء';
+
+  @override
+  String names99Caption(String n) {
+    return 'الأسماء الـ$n المتبقية تحتاج إلى مصدر موثّق.';
+  }
+
+  @override
+  String get names99Kicker => 'أسماء الله';
+
+  @override
+  String get names99NoMatch => 'لا يوجد اسم مطابق';
+
+  @override
+  String get names99NoMatchText => 'جرّب النطق أو المعنى.';
+
+  @override
+  String names99Opened(String name, String meaning) {
+    return '$name — $meaning';
+  }
+
+  @override
+  String get names99Progress => 'الأسماء المعروفة';
+
+  @override
+  String names99Reading(String held, String total) {
+    return '$held من $total';
+  }
+
+  @override
+  String get names99Search => 'ابحث عن الأسماء';
+
+  @override
+  String names99ShareSource(String name) {
+    return '$name — أسماء الله الحسنى';
+  }
+
+  @override
+  String names99Total(String total) {
+    return '/ $total';
+  }
+
+  @override
+  String get marketsCap => 'القيمة السوقية';
+
+  @override
+  String get marketsGlobal => 'عالمي';
+
+  @override
+  String get marketsTopCrypto => 'أفضل العملات الرقمية';
+
+  @override
+  String get marketsTopEtfs => 'أفضل صناديق المؤشرات المتداولة';
+
+  @override
+  String get marketsVol => 'الحجم';
+
+  @override
+  String billsOpening(String name) {
+    return 'جارٍ فتح $name';
+  }
+
+  @override
+  String get billsTrend => 'ستة أشهر';
+
+  @override
+  String billsTrendCap(String money) {
+    return 'إجمالي الفواتير كل شهر: $money';
+  }
+
+  @override
+  String billsOverdueCount(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n فاتورة متأخرة',
+      one: 'فاتورة واحدة متأخرة',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String billsPaidOn(String date) {
+    return 'دُفعت في $date';
+  }
+
+  @override
+  String get billsAllOnTrack => 'كل شيء في موعده';
+
+  @override
+  String get billsUpcoming => 'قادمة';
+
+  @override
+  String get billsPaidAmount => 'مدفوع';
+
+  @override
+  String get billsNeedAttentionText =>
+      'هذه الفواتير متأخرة وقد تترتب عليها رسوم تأخير.';
+
+  @override
+  String get billsAll => 'جميع الفواتير';
+
+  @override
+  String get billsNoMatch => 'لا توجد فواتير مطابقة';
+
+  @override
+  String get billsNoMatchText => 'جرّب فلترًا مختلفًا.';
+
+  @override
+  String get billsRef => 'المرجع';
+
+  @override
+  String billsRowPaid(String name) {
+    return '$name مدفوعة بالفعل';
+  }
+
+  @override
+  String get cricketBalls => 'الكرات';
+
+  @override
+  String get cricketBatter => 'الضارب';
+
+  @override
+  String get cricketBatting => 'الضرب';
+
+  @override
+  String get cricketBowler => 'الرامي';
+
+  @override
+  String get cricketBowling => 'الرمي';
+
+  @override
+  String cricketChoseToBat(String team) {
+    return 'اختار $team الضرب أولاً';
+  }
+
+  @override
+  String get cricketEconomy => 'معدل الاقتصاد';
+
+  @override
+  String get cricketFixtures => 'المباريات';
+
+  @override
+  String get cricketFormat => 'الصيغة';
+
+  @override
+  String get cricketFours => 'رباعيات';
+
+  @override
+  String get cricketLive => 'مباشر';
+
+  @override
+  String get cricketLost => 'خسر';
+
+  @override
+  String get cricketMaidens => 'الميدن';
+
+  @override
+  String get cricketNotOut => 'لم يخرج';
+
+  @override
+  String get cricketNrr => 'NRR';
+
+  @override
+  String get cricketOvers => 'أوفر';
+
+  @override
+  String get cricketOvers2 => 'أوفر';
+
+  @override
+  String get cricketPlayed => 'لعب';
+
+  @override
+  String get cricketPoints => 'النقاط';
+
+  @override
+  String get cricketRunRate => 'معدل الجري';
+
+  @override
+  String get cricketRuns => 'الجري';
+
+  @override
+  String get cricketSixes => 'سداسيات';
+
+  @override
+  String get cricketStandings => 'الجدول';
+
+  @override
+  String get cricketStrikeRate => 'معدل الضرب';
+
+  @override
+  String get cricketTable => 'الترتيب';
+
+  @override
+  String get cricketTeam => 'الفريق';
+
+  @override
+  String get cricketUpcoming => 'القادمة';
+
+  @override
+  String get cricketVenue => 'الملعب';
+
+  @override
+  String get cricketWickets => 'الويكيت';
+
+  @override
+  String get cricketWon => 'فاز';
+
+  @override
+  String get loadshedBillHint => 'تحقق من آخر فاتورة لك';
+
+  @override
+  String get loadshedCurrentlyOff => 'الكهرباء مقطوعة';
+
+  @override
+  String get loadshedCurrentlyOn => 'الانقطاع القادم';
+
+  @override
+  String loadshedNextOutage(String from, String to) {
+    return 'من $from إلى $to';
+  }
+
+  @override
+  String get loadshedNotify => 'أعلمني قبل الانقطاع';
+
+  @override
+  String get loadshedNotifyOn => 'تذكيرات الانقطاع مُفعّلة';
+
+  @override
+  String get loadshedNotifyValue => 'مفعّل';
+
+  @override
+  String get loadshedOutage => 'انقطاع';
+
+  @override
+  String loadshedPowerBack(String time) {
+    return 'ستعود عند $time';
+  }
+
+  @override
+  String get loadshedProvider => 'شركة التوزيع';
+
+  @override
+  String get loadshedReliability => 'وفق الجدول';
+
+  @override
+  String get loadshedSchedule => 'جدول اليوم';
+
+  @override
+  String loadshedSlotDuration(String hours) {
+    return '$hours س';
+  }
+
+  @override
+  String get loadshedSlots => 'الفترات';
+
+  @override
+  String get loadshedToday => 'مقطوعة اليوم';
+
+  @override
+  String get loadshedWeek => 'هذا الأسبوع';
+
+  @override
+  String get loadshedWeekCap => 'ساعات انقطاع الكهرباء يوميًا';
+
+  @override
+  String get prizebondsBond => 'سند';
+
+  @override
+  String get prizebondsCheck => 'تحقق';
+
+  @override
+  String get prizebondsCheckLead => 'تحقق من رقم السند مقابل آخر سحب.';
+
+  @override
+  String get prizebondsDenomination => 'الفئة';
+
+  @override
+  String get prizebondsDenominations => 'الفئات';
+
+  @override
+  String get prizebondsDraws => 'السحوبات القادمة';
+
+  @override
+  String get prizebondsFirst => 'الأولى';
+
+  @override
+  String get prizebondsFirstPrize => 'الجائزة الأولى';
+
+  @override
+  String get prizebondsNextDraw => 'السحب القادم';
+
+  @override
+  String prizebondsNextDrawSub(String denom, String draw) {
+    return 'سند $denom · $draw';
+  }
+
+  @override
+  String get prizebondsNoWin => 'لا جائزة لهذا الرقم في آخر سحب';
+
+  @override
+  String get prizebondsNoneSaved => 'لم تحفظ رقمًا بعد';
+
+  @override
+  String get prizebondsNoneSavedText =>
+      'لا يوجد هنا ما يمكن مقارنته بسحب حتى الآن.';
+
+  @override
+  String get prizebondsNumber => 'رقم السند';
+
+  @override
+  String get prizebondsPrizePool => 'إجمالي الجوائز';
+
+  @override
+  String get prizebondsPrizeShape => 'الجائزة الأولى حسب الفئة';
+
+  @override
+  String get prizebondsPrizeShapeCap =>
+      'السند الأكبر يمنح جائزة أكبر، لا فرصًا أفضل.';
+
+  @override
+  String get prizebondsPrizeTiers => 'فئات الجوائز';
+
+  @override
+  String get prizebondsScheme => 'سندات اليانصيب الوطنية';
+
+  @override
+  String get prizebondsSecond => 'الثانية';
+
+  @override
+  String get prizebondsThird => 'الثالثة';
+
+  @override
+  String get prizebondsTotalWinners => 'الفائزون';
+
+  @override
+  String get prizebondsUnavailableText => 'سندات اليانصيب خاصة بباكستان فقط.';
+
+  @override
+  String get prizebondsUnavailableTitle => 'غير متاح في بلدك';
+
+  @override
+  String prizebondsWinners(String n) {
+    return '$n فائز';
+  }
+
+  @override
+  String get prizebondsYourNumbers => 'أرقامك';
 }

@@ -1316,7 +1316,11 @@ const List<LumeFeature> kLumeFeatures = <LumeFeature>[
     archetype: LumeToolArchetype.dashboard,
     density: LumeToolDensity.high,
     fallbackSource: 'Match feed',
-    freshness: LumeFreshnessKind.live,
+    // Wave 9: confirmed there is no live feed behind this tool — the
+    // reference's own scores are a static fixture, not a running match.
+    // `live` was the catalogue's stale claim; `cached` matches what the
+    // build actually shows (ROLLOUT_WAVE_9.md).
+    freshness: LumeFreshnessKind.cached,
     supports: <LumeToolSupport>{
       LumeToolSupport.filters,
       LumeToolSupport.history,

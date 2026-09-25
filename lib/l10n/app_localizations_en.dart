@@ -2663,6 +2663,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get freshAnnual => 'Current tax year';
 
   @override
+  String get freshAnnualGeneric => 'Updated annually';
+
+  @override
   String freshAt(String time) {
     return 'Updated at $time';
   }
@@ -11354,4 +11357,950 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get zakatItem => 'Item';
+
+  @override
+  String get quranSearchPlaceholder => 'Search surahs';
+
+  @override
+  String get quranSurahsTitle => 'Surahs';
+
+  @override
+  String get quranNoMatch => 'No surahs found';
+
+  @override
+  String get quranNoMatchText => 'Try a different search.';
+
+  @override
+  String quranAyahCount(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n ayahs',
+      one: '1 ayah',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get quranMeccan => 'Meccan';
+
+  @override
+  String get quranMedinan => 'Medinan';
+
+  @override
+  String quranVerseReference(String surah, int s, int a) {
+    return '$surah · $s:$a';
+  }
+
+  @override
+  String quranAyahNumber(int number) {
+    return 'Ayah $number';
+  }
+
+  @override
+  String get quransearchPlaceholder => 'Search the Qur’an';
+
+  @override
+  String quransearchResultsTitle(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n results',
+      one: '1 result',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get quransearchEmptyTitle => 'Nothing found';
+
+  @override
+  String get quransearchEmptyText =>
+      'Try a different word or a shorter search.';
+
+  @override
+  String get quransearchScopeNote =>
+      'Searching 3 ayahs and 12 surahs — a starting set, not the full Qur’an.';
+
+  @override
+  String get quransearchSuggestedTitle => 'Suggested';
+
+  @override
+  String get ayahMoreVerses => 'More verses';
+
+  @override
+  String get ayahSaved => 'Saved to your reading';
+
+  @override
+  String get ayahUnsaved => 'Removed from your reading';
+
+  @override
+  String get ccyPkr => 'Pakistani Rupee';
+
+  @override
+  String get ccyInr => 'Indian Rupee';
+
+  @override
+  String get ccyTry => 'Turkish Lira';
+
+  @override
+  String get currencyChooseCurrency => 'Choose a currency';
+
+  @override
+  String currencyRateLine(String from, String value, String to) {
+    return '1 $from = $value $to';
+  }
+
+  @override
+  String currencyChart(String pair) {
+    return '$pair, 30 days';
+  }
+
+  @override
+  String get fuelHiOctane => 'Hi-Octane';
+
+  @override
+  String get fuelDiesel => 'Diesel';
+
+  @override
+  String get fuelLightDiesel => 'Light Diesel';
+
+  @override
+  String get fuelUnleaded => 'Unleaded';
+
+  @override
+  String get fuelSuperUnleaded => 'Super Unleaded';
+
+  @override
+  String get fuelRegular => 'Regular';
+
+  @override
+  String get fuelMidgrade => 'Midgrade';
+
+  @override
+  String get fuelPremium => 'Premium';
+
+  @override
+  String get fuelSpecial95 => 'Special 95';
+
+  @override
+  String get fuelSuper98 => 'Super 98';
+
+  @override
+  String get fuelEPlus91 => 'E-Plus 91';
+
+  @override
+  String get fuelPetrol91 => 'Petrol 91';
+
+  @override
+  String get fuelPetrol95 => 'Petrol 95';
+
+  @override
+  String get fuelCng => 'CNG';
+
+  @override
+  String fuelEffective(String date) {
+    return 'Effective $date';
+  }
+
+  @override
+  String get fuelSinceLast => 'since last update';
+
+  @override
+  String get fuelAllGrades => 'All Grades';
+
+  @override
+  String get fuelGrade => 'Grade';
+
+  @override
+  String get fuelPrevious => 'Previous';
+
+  @override
+  String get fuelCurrent => 'Current';
+
+  @override
+  String get fuelTrend => 'Price trend';
+
+  @override
+  String get fuelTrendCap => 'Fuel price, last 24 months';
+
+  @override
+  String get fuelSourceRetail => 'Retail price';
+
+  @override
+  String get fuelSourceState => 'State average';
+
+  @override
+  String get fuelSourceOmc => 'Oil marketing companies';
+
+  @override
+  String get fuelSourceRegional => 'Regional average';
+
+  @override
+  String get unitLitre => 'litre';
+
+  @override
+  String get unitGallon => 'gallon';
+
+  @override
+  String get commonThisWeek => 'This week';
+
+  @override
+  String get unitMpg => 'mpg';
+
+  @override
+  String get unitKmpl => 'km/L';
+
+  @override
+  String get fuelcostDistance => 'Distance';
+
+  @override
+  String get fuelcostEconomy => 'Fuel economy';
+
+  @override
+  String get fuelcostPrice => 'Fuel price';
+
+  @override
+  String get fuelcostPriceHint =>
+      'From today’s fuel price — edit to use your own';
+
+  @override
+  String get fuelcostPeople => 'People';
+
+  @override
+  String get fuelcostTotal => 'Total cost';
+
+  @override
+  String fuelcostForTrip(String d) {
+    return 'For a $d trip';
+  }
+
+  @override
+  String get fuelcostUsed => 'Fuel used';
+
+  @override
+  String get fuelcostPerPerson => 'Per person';
+
+  @override
+  String fuelcostPerUnit(String unit) {
+    return 'Per $unit';
+  }
+
+  @override
+  String get fuelcostCompare => 'Compare';
+
+  @override
+  String get fuelcostScenario => 'Scenario';
+
+  @override
+  String get fuelcostConsumption => 'Consumption';
+
+  @override
+  String get fuelcostCost => 'Cost';
+
+  @override
+  String get fuelcostScSolo => 'Solo trip';
+
+  @override
+  String fuelcostScShared(String n) {
+    return 'Shared with $n';
+  }
+
+  @override
+  String get fuelcostScReturn => 'Round trip';
+
+  @override
+  String get savingsScheme => 'National Savings';
+
+  @override
+  String get savingsBestRate => 'Best rate';
+
+  @override
+  String get savingsTerm => 'Term';
+
+  @override
+  String get savingsPayout => 'Payout';
+
+  @override
+  String get savingsMinimum => 'Minimum';
+
+  @override
+  String get savingsMin => 'Min';
+
+  @override
+  String get savingsRate => 'Rate';
+
+  @override
+  String get savingsSearch => 'Search products';
+
+  @override
+  String get savingsProducts => 'Products';
+
+  @override
+  String get savingsPerYear => 'per year';
+
+  @override
+  String get savingsEstimate => 'Estimate';
+
+  @override
+  String get savingsAmount => 'Amount';
+
+  @override
+  String get savingsProduct => 'Product';
+
+  @override
+  String get savingsMonthlyProfit => 'Monthly profit';
+
+  @override
+  String get savingsYearlyProfit => 'Yearly profit';
+
+  @override
+  String get savingsUnavailableTitle => 'Not available in your country';
+
+  @override
+  String get savingsUnavailableText =>
+      'National Savings certificates are specific to Pakistan.';
+
+  @override
+  String get packagesUnavailableTitle =>
+      'Mobile packages are not in your setup';
+
+  @override
+  String get packagesSearch => 'Search packages';
+
+  @override
+  String get packagesPrice => 'Price';
+
+  @override
+  String get packagesData => 'Data';
+
+  @override
+  String get packagesValidity => 'Validity';
+
+  @override
+  String get packagesNoMatch => 'No packages match';
+
+  @override
+  String get packagesNoMatchText => 'Try a different search or filter.';
+
+  @override
+  String get packagesCompare => 'Compare';
+
+  @override
+  String get packagesPackage => 'Package';
+
+  @override
+  String get packagesMins => 'Minutes';
+
+  @override
+  String get packagesSms => 'SMS';
+
+  @override
+  String get packagesDetail => 'Package details';
+
+  @override
+  String get holidaysNext => 'Next holiday';
+
+  @override
+  String get holidaysListed => 'Listed here';
+
+  @override
+  String get holidaysSearch => 'Search holidays';
+
+  @override
+  String get holidaysKind => 'Type';
+
+  @override
+  String get holidaysNoMatch => 'No holidays found';
+
+  @override
+  String get holidaysNoMatchText => 'Try a different search or type';
+
+  @override
+  String get holidaysListTitle => 'Holidays';
+
+  @override
+  String get holidaysNoteTitle => 'Reference dates, not this year’s calendar';
+
+  @override
+  String get holidaysNoteText =>
+      'These are illustrative dates, not drawn from a live calendar, and movable dates like Eid shift every year. Check an official source for this year’s actual holidays.';
+
+  @override
+  String get parcelTrackingLabel => 'Tracking number';
+
+  @override
+  String get parcelPlaceholder => 'e.g. TCS-8842910';
+
+  @override
+  String get parcelTrack => 'Track';
+
+  @override
+  String get parcelLookingUp => 'Looking up the shipment';
+
+  @override
+  String get parcelActive => 'In transit';
+
+  @override
+  String get parcelCarrier => 'Carrier';
+
+  @override
+  String get parcelLastSeen => 'Last seen';
+
+  @override
+  String get parcelExpected => 'Expected';
+
+  @override
+  String get parcelJourney => 'Journey';
+
+  @override
+  String get parcelNotify => 'Notify on updates';
+
+  @override
+  String get parcelNotifying => 'You’ll be notified on every update';
+
+  @override
+  String get parcelStBooked => 'Booked';
+
+  @override
+  String get parcelStInTransit => 'In transit';
+
+  @override
+  String get parcelStArrived => 'Arrived';
+
+  @override
+  String get parcelStDelivered => 'Delivered';
+
+  @override
+  String get parcelStArriving => 'Arriving';
+
+  @override
+  String parcelShareText(String item, String status) {
+    return '$item · $status';
+  }
+
+  @override
+  String get trainsFind => 'Find trains';
+
+  @override
+  String get trainsSearching => 'Searching services';
+
+  @override
+  String get trainsRunning => 'Running';
+
+  @override
+  String get trainsDelayed => 'Delayed';
+
+  @override
+  String get trainsNoMatch => 'No services match';
+
+  @override
+  String get trainsNoMatchText =>
+      'Clear the status filter to see every departure.';
+
+  @override
+  String get trainsPlatform => 'Plat.';
+
+  @override
+  String get trainsFareCaption => 'from';
+
+  @override
+  String trainsSelected(String name) {
+    return '$name';
+  }
+
+  @override
+  String get trainsSpeed => 'Speed';
+
+  @override
+  String get trainsNextStop => 'Next stop';
+
+  @override
+  String get trainsDelay => 'Delay';
+
+  @override
+  String get trainsMap => 'Route';
+
+  @override
+  String get trainsStops => 'Station timeline';
+
+  @override
+  String trainsActual(String time) {
+    return 'actual $time';
+  }
+
+  @override
+  String get trainsScheduled => 'Scheduled';
+
+  @override
+  String get trainsFares => 'Fares & availability';
+
+  @override
+  String get trainsClass => 'Class';
+
+  @override
+  String get trainsFare => 'Fare';
+
+  @override
+  String get trainsSeats => 'Seats';
+
+  @override
+  String get trainsRemind => 'Remind me';
+
+  @override
+  String trainsReminded(String name) {
+    return 'Tracking $name';
+  }
+
+  @override
+  String trainsShareText(String name, String from, String to, String arrival) {
+    return '$name · $from → $to · $arrival';
+  }
+
+  @override
+  String get aqiIndex => 'Air quality index';
+
+  @override
+  String get aqiAdvice => 'What this means';
+
+  @override
+  String get aqiPollutants => 'Pollutants';
+
+  @override
+  String get aqiTrend => 'Last 24 hours';
+
+  @override
+  String get aqiEstimated => 'Estimated';
+
+  @override
+  String aqiHoursAgo(int n) {
+    return '${n}h';
+  }
+
+  @override
+  String aqiEstimatedNote(String city) {
+    return 'Estimated for $city — not measured by a monitoring station.';
+  }
+
+  @override
+  String get aqiEstimatedSource => 'Estimated, not measured';
+
+  @override
+  String aqiShareText(String city, String value, String band) {
+    return 'Air quality in $city: $value AQI · $band';
+  }
+
+  @override
+  String get duaCategoryMorning => 'Morning & evening';
+
+  @override
+  String get duaCategoryDaily => 'Daily life';
+
+  @override
+  String get duaCategoryTravel => 'Travel';
+
+  @override
+  String get duaCategoryDistress => 'Distress & worry';
+
+  @override
+  String get duaCategoryFood => 'Food & drink';
+
+  @override
+  String get duaCategorySleep => 'Sleep';
+
+  @override
+  String get duaTitleAnxiety => 'Relief from anxiety';
+
+  @override
+  String get duaTitleBeforeEating => 'Before eating';
+
+  @override
+  String get duaTitleBeforeSleeping => 'Before sleeping';
+
+  @override
+  String get duaTitleMorningRemembrance => 'Morning remembrance';
+
+  @override
+  String get duaTitleTravel => 'Dua for travel';
+
+  @override
+  String get duasAll => 'All duas';
+
+  @override
+  String get duasCategories => 'Categories';
+
+  @override
+  String duasInCategory(String name) {
+    return '$name';
+  }
+
+  @override
+  String get duasNoMatch => 'No duas here yet';
+
+  @override
+  String get duasNoMatchText => 'Try another category or clear the search.';
+
+  @override
+  String get duasSearch => 'Search duas';
+
+  @override
+  String get duasToday => 'Dua of the day';
+
+  @override
+  String get readerListen => 'Listen';
+
+  @override
+  String get readerPlaying => 'Playing';
+
+  @override
+  String get names99AllTitle => 'All names';
+
+  @override
+  String names99Caption(String n) {
+    return 'The remaining $n need a verified source.';
+  }
+
+  @override
+  String get names99Kicker => 'Names of Allah';
+
+  @override
+  String get names99NoMatch => 'No name matches';
+
+  @override
+  String get names99NoMatchText => 'Try the transliteration or the meaning.';
+
+  @override
+  String names99Opened(String name, String meaning) {
+    return '$name — $meaning';
+  }
+
+  @override
+  String get names99Progress => 'Names known';
+
+  @override
+  String names99Reading(String held, String total) {
+    return '$held of $total';
+  }
+
+  @override
+  String get names99Search => 'Search names';
+
+  @override
+  String names99ShareSource(String name) {
+    return '$name — Asma ul Husna';
+  }
+
+  @override
+  String names99Total(String total) {
+    return '/ $total';
+  }
+
+  @override
+  String get marketsCap => 'Cap';
+
+  @override
+  String get marketsGlobal => 'Global';
+
+  @override
+  String get marketsTopCrypto => 'Top crypto';
+
+  @override
+  String get marketsTopEtfs => 'Top ETFs';
+
+  @override
+  String get marketsVol => 'Vol';
+
+  @override
+  String billsOpening(String name) {
+    return 'Opening $name';
+  }
+
+  @override
+  String get billsTrend => 'Six months';
+
+  @override
+  String billsTrendCap(String money) {
+    return 'Total billed each month: $money';
+  }
+
+  @override
+  String billsOverdueCount(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n overdue',
+      one: '1 overdue',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String billsPaidOn(String date) {
+    return 'Paid $date';
+  }
+
+  @override
+  String get billsAllOnTrack => 'Everything is on track';
+
+  @override
+  String get billsUpcoming => 'Upcoming';
+
+  @override
+  String get billsPaidAmount => 'Paid';
+
+  @override
+  String get billsNeedAttentionText =>
+      'These bills are overdue and may carry a late fee.';
+
+  @override
+  String get billsAll => 'All bills';
+
+  @override
+  String get billsNoMatch => 'No bills match';
+
+  @override
+  String get billsNoMatchText => 'Try a different filter.';
+
+  @override
+  String get billsRef => 'Ref';
+
+  @override
+  String billsRowPaid(String name) {
+    return '$name is already paid';
+  }
+
+  @override
+  String get cricketBalls => 'B';
+
+  @override
+  String get cricketBatter => 'Batter';
+
+  @override
+  String get cricketBatting => 'Batting';
+
+  @override
+  String get cricketBowler => 'Bowler';
+
+  @override
+  String get cricketBowling => 'Bowling';
+
+  @override
+  String cricketChoseToBat(String team) {
+    return '$team chose to bat';
+  }
+
+  @override
+  String get cricketEconomy => 'Econ';
+
+  @override
+  String get cricketFixtures => 'Fixtures';
+
+  @override
+  String get cricketFormat => 'Format';
+
+  @override
+  String get cricketFours => '4s';
+
+  @override
+  String get cricketLive => 'Live';
+
+  @override
+  String get cricketLost => 'L';
+
+  @override
+  String get cricketMaidens => 'M';
+
+  @override
+  String get cricketNotOut => 'not out';
+
+  @override
+  String get cricketNrr => 'NRR';
+
+  @override
+  String get cricketOvers => 'overs';
+
+  @override
+  String get cricketOvers2 => 'O';
+
+  @override
+  String get cricketPlayed => 'P';
+
+  @override
+  String get cricketPoints => 'Pts';
+
+  @override
+  String get cricketRunRate => 'Run rate';
+
+  @override
+  String get cricketRuns => 'R';
+
+  @override
+  String get cricketSixes => '6s';
+
+  @override
+  String get cricketStandings => 'Table';
+
+  @override
+  String get cricketStrikeRate => 'SR';
+
+  @override
+  String get cricketTable => 'Standings';
+
+  @override
+  String get cricketTeam => 'Team';
+
+  @override
+  String get cricketUpcoming => 'Upcoming';
+
+  @override
+  String get cricketVenue => 'Venue';
+
+  @override
+  String get cricketWickets => 'W';
+
+  @override
+  String get cricketWon => 'W';
+
+  @override
+  String get loadshedBillHint => 'Check your last bill';
+
+  @override
+  String get loadshedCurrentlyOff => 'Power is off';
+
+  @override
+  String get loadshedCurrentlyOn => 'Next outage';
+
+  @override
+  String loadshedNextOutage(String from, String to) {
+    return '$from to $to';
+  }
+
+  @override
+  String get loadshedNotify => 'Notify me before an outage';
+
+  @override
+  String get loadshedNotifyOn => 'Outage reminders are on';
+
+  @override
+  String get loadshedNotifyValue => 'On';
+
+  @override
+  String get loadshedOutage => 'Outage';
+
+  @override
+  String loadshedPowerBack(String time) {
+    return 'Back on at $time';
+  }
+
+  @override
+  String get loadshedProvider => 'Distribution company';
+
+  @override
+  String get loadshedReliability => 'Kept to schedule';
+
+  @override
+  String get loadshedSchedule => 'Today’s schedule';
+
+  @override
+  String loadshedSlotDuration(String hours) {
+    return '${hours}h';
+  }
+
+  @override
+  String get loadshedSlots => 'Slots';
+
+  @override
+  String get loadshedToday => 'Off today';
+
+  @override
+  String get loadshedWeek => 'This week';
+
+  @override
+  String get loadshedWeekCap => 'Hours without power each day';
+
+  @override
+  String get prizebondsBond => 'bond';
+
+  @override
+  String get prizebondsCheck => 'Check';
+
+  @override
+  String get prizebondsCheckLead =>
+      'Check a bond number against the latest draw.';
+
+  @override
+  String get prizebondsDenomination => 'Denomination';
+
+  @override
+  String get prizebondsDenominations => 'Denominations';
+
+  @override
+  String get prizebondsDraws => 'Upcoming draws';
+
+  @override
+  String get prizebondsFirst => 'First';
+
+  @override
+  String get prizebondsFirstPrize => 'First prize';
+
+  @override
+  String get prizebondsNextDraw => 'Next draw';
+
+  @override
+  String prizebondsNextDrawSub(String denom, String draw) {
+    return '$denom bond · $draw';
+  }
+
+  @override
+  String get prizebondsNoWin => 'No prize on this number in the latest draw';
+
+  @override
+  String get prizebondsNoneSaved => 'You haven’t saved a number yet';
+
+  @override
+  String get prizebondsNoneSavedText =>
+      'There’s nothing here to check against a draw yet.';
+
+  @override
+  String get prizebondsNumber => 'Bond number';
+
+  @override
+  String get prizebondsPrizePool => 'Total prizes';
+
+  @override
+  String get prizebondsPrizeShape => 'First prize by denomination';
+
+  @override
+  String get prizebondsPrizeShapeCap =>
+      'A larger bond buys a larger top prize, not better odds.';
+
+  @override
+  String get prizebondsPrizeTiers => 'Prize tiers';
+
+  @override
+  String get prizebondsScheme => 'National prize bonds';
+
+  @override
+  String get prizebondsSecond => 'Second';
+
+  @override
+  String get prizebondsThird => 'Third';
+
+  @override
+  String get prizebondsTotalWinners => 'Winners';
+
+  @override
+  String get prizebondsUnavailableText =>
+      'Prize bonds are specific to Pakistan.';
+
+  @override
+  String get prizebondsUnavailableTitle => 'Not available in your country';
+
+  @override
+  String prizebondsWinners(String n) {
+    return '$n winners';
+  }
+
+  @override
+  String get prizebondsYourNumbers => 'Your numbers';
 }

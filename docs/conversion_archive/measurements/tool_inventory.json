@@ -71,39 +71,75 @@
   ],
   "flutterBuilt": [
    "calculator",
+   "converter",
+   "currency",
    "stopwatch",
    "timer",
    "age",
    "focus",
    "datecalc",
    "calendar",
+   "reminders",
    "notes",
    "todos",
    "events",
+   "qibla",
+   "ayah",
+   "quran",
+   "quransearch",
    "hadith",
+   "duas",
+   "names99",
    "tasbih",
+   "zakat",
    "compound",
    "goldrates",
+   "markets",
+   "fuel",
+   "fuelcost",
    "tax",
+   "natsavings",
+   "prizebonds",
+   "bills",
+   "packages",
    "loan",
    "tipsplit",
    "ledger",
    "installments",
    "committee",
+   "aqi",
    "sunmoon",
    "worldclock",
+   "holidays",
    "weather",
+   "loadshed",
+   "trains",
    "flights",
    "news",
+   "cricket",
    "emergency",
    "qr",
+   "parcel",
    "shopping",
+   "birthdays",
+   "streak",
    "recipes",
+   "mealplan",
    "learning",
    "documents",
+   "vaccines",
+   "health",
    "play",
    "babybudget",
-   "expenses"
+   "habits",
+   "water",
+   "bmi",
+   "cycle",
+   "pregnancy",
+   "expenses",
+   "goals",
+   "subs",
+   "meds"
   ]
  },
  "archetypes": {
@@ -486,7 +522,7 @@
    "approvedComposition": null,
    "recordFamily": false,
    "module": "assets/js/tools/everyday/converter.tool.js",
-   "flutter": "placeholder"
+   "flutter": "built"
   },
   {
    "id": "currency",
@@ -522,7 +558,7 @@
    "approvedComposition": null,
    "recordFamily": false,
    "module": "assets/js/tools/everyday/currency.tool.js",
-   "flutter": "placeholder"
+   "flutter": "built"
   },
   {
    "id": "stopwatch",
@@ -752,7 +788,7 @@
    "approvedComposition": null,
    "recordFamily": true,
    "module": "assets/js/tools/planning/reminders.tool.js",
-   "flutter": "placeholder"
+   "flutter": "built"
   },
   {
    "id": "notes",
@@ -932,7 +968,7 @@
    "approvedComposition": null,
    "recordFamily": false,
    "module": "assets/js/tools/islamic/qibla.tool.js",
-   "flutter": "placeholder"
+   "flutter": "built"
   },
   {
    "id": "mosques",
@@ -1145,7 +1181,7 @@
    "approvedComposition": null,
    "recordFamily": false,
    "module": "assets/js/tools/islamic/ayah.tool.js",
-   "flutter": "placeholder"
+   "flutter": "built"
   },
   {
    "id": "quran",
@@ -1181,7 +1217,7 @@
    "approvedComposition": null,
    "recordFamily": false,
    "module": "assets/js/tools/islamic/quran.tool.js",
-   "flutter": "placeholder"
+   "flutter": "built"
   },
   {
    "id": "quransearch",
@@ -1216,7 +1252,7 @@
    "approvedComposition": null,
    "recordFamily": false,
    "module": "assets/js/tools/islamic/quransearch.tool.js",
-   "flutter": "placeholder"
+   "flutter": "built"
   },
   {
    "id": "hadith",
@@ -1286,7 +1322,7 @@
    "approvedComposition": null,
    "recordFamily": false,
    "module": "assets/js/tools/islamic/duas.tool.js",
-   "flutter": "placeholder"
+   "flutter": "built"
   },
   {
    "id": "names99",
@@ -1321,7 +1357,7 @@
    "approvedComposition": null,
    "recordFamily": false,
    "module": "assets/js/tools/islamic/names99.tool.js",
-   "flutter": "placeholder"
+   "flutter": "built"
   },
   {
    "id": "hijri",
@@ -1422,7 +1458,7 @@
    "approvedComposition": null,
    "recordFamily": false,
    "module": "assets/js/tools/islamic/zakat.tool.js",
-   "flutter": "placeholder"
+   "flutter": "built"
   },
   {
    "id": "faraid",
@@ -1573,7 +1609,7 @@
    ],
    "recordFamily": false,
    "module": "assets/js/tools/money/markets.tool.js",
-   "flutter": "placeholder"
+   "flutter": "built"
   },
   {
    "id": "fuel",
@@ -1610,7 +1646,7 @@
    "approvedComposition": null,
    "recordFamily": false,
    "module": "assets/js/tools/money/fuel.tool.js",
-   "flutter": "placeholder"
+   "flutter": "built"
   },
   {
    "id": "fuelcost",
@@ -1645,7 +1681,7 @@
    "approvedComposition": null,
    "recordFamily": false,
    "module": "assets/js/tools/money/fuelcost.tool.js",
-   "flutter": "placeholder"
+   "flutter": "built"
   },
   {
    "id": "tax",
@@ -1725,7 +1761,7 @@
    "approvedComposition": null,
    "recordFamily": false,
    "module": "assets/js/tools/money/natsavings.tool.js",
-   "flutter": "placeholder"
+   "flutter": "built"
   },
   {
    "id": "prizebonds",
@@ -1762,7 +1798,7 @@
    "approvedComposition": null,
    "recordFamily": false,
    "module": "assets/js/tools/money/prizebonds.tool.js",
-   "flutter": "placeholder"
+   "flutter": "built"
   },
   {
    "id": "bills",
@@ -1801,7 +1837,7 @@
    "approvedComposition": null,
    "recordFamily": false,
    "module": "assets/js/tools/money/bills.tool.js",
-   "flutter": "placeholder"
+   "flutter": "built"
   },
   {
    "id": "packages",
@@ -1838,7 +1874,7 @@
    "approvedComposition": null,
    "recordFamily": false,
    "module": "assets/js/tools/money/packages.tool.js",
-   "flutter": "placeholder"
+   "flutter": "built"
   },
   {
    "id": "loan",
@@ -2050,7 +2086,7 @@
    "approvedComposition": null,
    "recordFamily": false,
    "module": "assets/js/tools/daily/aqi.tool.js",
-   "flutter": "placeholder"
+   "flutter": "built"
   },
   {
    "id": "sunmoon",
@@ -2159,7 +2195,7 @@
    "approvedComposition": null,
    "recordFamily": false,
    "module": "assets/js/tools/daily/holidays.tool.js",
-   "flutter": "placeholder"
+   "flutter": "built"
   },
   {
    "id": "weather",
@@ -2240,7 +2276,7 @@
    "approvedComposition": null,
    "recordFamily": false,
    "module": "assets/js/tools/daily/loadshed.tool.js",
-   "flutter": "placeholder"
+   "flutter": "built"
   },
   {
    "id": "trains",
@@ -2284,7 +2320,7 @@
    "approvedComposition": null,
    "recordFamily": false,
    "module": "assets/js/tools/daily/trains.tool.js",
-   "flutter": "placeholder"
+   "flutter": "built"
   },
   {
    "id": "flights",
@@ -2399,7 +2435,7 @@
    "approvedComposition": null,
    "recordFamily": false,
    "module": "assets/js/tools/daily/cricket.tool.js",
-   "flutter": "placeholder"
+   "flutter": "built"
   },
   {
    "id": "emergency",
@@ -2706,7 +2742,7 @@
    "approvedComposition": null,
    "recordFamily": false,
    "module": "assets/js/tools/personal/parcel.tool.js",
-   "flutter": "placeholder"
+   "flutter": "built"
   },
   {
    "id": "shopping",
@@ -2775,7 +2811,7 @@
    "approvedComposition": null,
    "recordFamily": true,
    "module": "assets/js/tools/personal/birthdays.tool.js",
-   "flutter": "placeholder"
+   "flutter": "built"
   },
   {
    "id": "streak",
@@ -2806,7 +2842,7 @@
    "approvedComposition": null,
    "recordFamily": false,
    "module": "assets/js/tools/personal/streak.tool.js",
-   "flutter": "placeholder"
+   "flutter": "built"
   },
   {
    "id": "recipes",
@@ -2877,7 +2913,7 @@
    "approvedComposition": null,
    "recordFamily": false,
    "module": "assets/js/tools/personal/mealplan.tool.js",
-   "flutter": "placeholder"
+   "flutter": "built"
   },
   {
    "id": "alarms",
@@ -3015,7 +3051,7 @@
    "approvedComposition": null,
    "recordFamily": false,
    "module": "assets/js/tools/personal/vaccines.tool.js",
-   "flutter": "placeholder"
+   "flutter": "built"
   },
   {
    "id": "health",
@@ -3054,7 +3090,7 @@
    "approvedComposition": null,
    "recordFamily": true,
    "module": "assets/js/tools/personal/health.tool.js",
-   "flutter": "placeholder"
+   "flutter": "built"
   },
   {
    "id": "play",
@@ -3155,7 +3191,7 @@
    "approvedComposition": null,
    "recordFamily": true,
    "module": "assets/js/tools/personal/habits.tool.js",
-   "flutter": "placeholder"
+   "flutter": "built"
   },
   {
    "id": "water",
@@ -3189,7 +3225,7 @@
    "approvedComposition": null,
    "recordFamily": true,
    "module": "assets/js/tools/personal/water.tool.js",
-   "flutter": "placeholder"
+   "flutter": "built"
   },
   {
    "id": "bmi",
@@ -3222,7 +3258,7 @@
    "approvedComposition": null,
    "recordFamily": false,
    "module": "assets/js/tools/personal/bmi.tool.js",
-   "flutter": "placeholder"
+   "flutter": "built"
   },
   {
    "id": "cycle",
@@ -3256,7 +3292,7 @@
    "approvedComposition": null,
    "recordFamily": false,
    "module": "assets/js/tools/personal/cycle.tool.js",
-   "flutter": "placeholder"
+   "flutter": "built"
   },
   {
    "id": "pregnancy",
@@ -3291,7 +3327,7 @@
    "approvedComposition": null,
    "recordFamily": false,
    "module": "assets/js/tools/personal/pregnancy.tool.js",
-   "flutter": "placeholder"
+   "flutter": "built"
   },
   {
    "id": "expenses",
@@ -3368,7 +3404,7 @@
    "approvedComposition": null,
    "recordFamily": false,
    "module": "assets/js/tools/personal/goals.tool.js",
-   "flutter": "placeholder"
+   "flutter": "built"
   },
   {
    "id": "subs",
@@ -3406,7 +3442,7 @@
    "approvedComposition": null,
    "recordFamily": false,
    "module": "assets/js/tools/personal/subs.tool.js",
-   "flutter": "placeholder"
+   "flutter": "built"
   },
   {
    "id": "meds",
@@ -3441,7 +3477,7 @@
    "approvedComposition": null,
    "recordFamily": true,
    "module": "assets/js/tools/personal/meds.tool.js",
-   "flutter": "placeholder"
+   "flutter": "built"
   }
  ],
  "modules": [

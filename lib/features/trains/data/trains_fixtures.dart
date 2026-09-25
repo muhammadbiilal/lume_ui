@@ -31,6 +31,13 @@ const List<LumeTrainService> _roster = <LumeTrainService>[
     status: LumeTrainStatus.onTime,
     delayMinutes: 0,
     fare: 8900,
+    fromCode: 'KYC',
+    toCode: 'ISL',
+    platform: '4',
+    speedKmh: 96,
+    next: 'Rohri Junction',
+    progress: 0.48,
+    classes: <String>['AC Sleeper', 'AC Business'],
   ),
   LumeTrainService(
     number: '7UP',
@@ -43,6 +50,13 @@ const List<LumeTrainService> _roster = <LumeTrainService>[
     status: LumeTrainStatus.late_,
     delayMinutes: 35,
     fare: 6300,
+    fromCode: 'KYC',
+    toCode: 'RWP',
+    platform: '2',
+    speedKmh: 78,
+    next: 'Khanewal Junction',
+    progress: 0.71,
+    classes: <String>['AC Standard', 'Economy'],
   ),
   LumeTrainService(
     number: '41UP',
@@ -55,6 +69,13 @@ const List<LumeTrainService> _roster = <LumeTrainService>[
     status: LumeTrainStatus.onTime,
     delayMinutes: 0,
     fare: 7100,
+    fromCode: 'KYC',
+    toCode: 'LHR',
+    platform: '1',
+    speedKmh: 104,
+    next: 'Multan Cantt',
+    progress: 0.62,
+    classes: <String>['AC Business', 'Economy'],
   ),
   LumeTrainService(
     number: '27DN',
@@ -67,6 +88,13 @@ const List<LumeTrainService> _roster = <LumeTrainService>[
     status: LumeTrainStatus.departed,
     delayMinutes: 0,
     fare: 5400,
+    fromCode: 'LHR',
+    toCode: 'KYC',
+    platform: '6',
+    speedKmh: 88,
+    next: 'Sahiwal',
+    progress: 0.14,
+    classes: <String>['AC Standard', 'Economy'],
   ),
   LumeTrainService(
     number: '101UP',
@@ -79,6 +107,71 @@ const List<LumeTrainService> _roster = <LumeTrainService>[
     status: LumeTrainStatus.late_,
     delayMinutes: 70,
     fare: 4850,
+    fromCode: 'KYC',
+    toCode: 'RWP',
+    platform: '3',
+    speedKmh: 62,
+    next: 'Bahawalpur',
+    progress: 0.36,
+    classes: <String>['Economy'],
+  ),
+];
+
+/// `D.TRAIN_STOPS` — the Trains tool's own fixed station timeline, shown
+/// under whichever service in [_roster] is selected (see
+/// `LumeTrainTimelineStop`'s own doc comment for why it is one list rather
+/// than one per service).
+const List<LumeTrainTimelineStop> _timelineStops = <LumeTrainTimelineStop>[
+  LumeTrainTimelineStop(
+    name: 'Karachi Cantt',
+    scheduledMinute: 22 * 60,
+    actualMinute: 22 * 60,
+    state: LumeTrainTimelineState.done,
+    km: 0,
+  ),
+  LumeTrainTimelineStop(
+    name: 'Hyderabad Junction',
+    scheduledMinute: 5,
+    actualMinute: 11,
+    state: LumeTrainTimelineState.done,
+    km: 165,
+  ),
+  LumeTrainTimelineStop(
+    name: 'Rohri Junction',
+    scheduledMinute: 4 * 60 + 20,
+    actualMinute: 4 * 60 + 20,
+    state: LumeTrainTimelineState.now,
+    km: 480,
+  ),
+  LumeTrainTimelineStop(
+    name: 'Rahim Yar Khan',
+    scheduledMinute: 7 * 60 + 5,
+    state: LumeTrainTimelineState.next,
+    km: 660,
+  ),
+  LumeTrainTimelineStop(
+    name: 'Multan Cantt',
+    scheduledMinute: 10 * 60 + 15,
+    state: LumeTrainTimelineState.next,
+    km: 890,
+  ),
+  LumeTrainTimelineStop(
+    name: 'Lahore Junction',
+    scheduledMinute: 14 * 60 + 40,
+    state: LumeTrainTimelineState.next,
+    km: 1210,
+  ),
+  LumeTrainTimelineStop(
+    name: 'Rawalpindi',
+    scheduledMinute: 16 * 60 + 55,
+    state: LumeTrainTimelineState.next,
+    km: 1480,
+  ),
+  LumeTrainTimelineStop(
+    name: 'Islamabad',
+    scheduledMinute: 17 * 60 + 30,
+    state: LumeTrainTimelineState.next,
+    km: 1505,
   ),
 ];
 
@@ -192,6 +285,11 @@ abstract final class LumeTrainsComposer {
 
   static List<LumePopularRoute> routes() => _routes;
 
+  /// `D.TRAIN_STOPS` — the Trains tool's one fixed station timeline, shown
+  /// under whichever service is selected. See [LumeTrainTimelineStop]'s own
+  /// doc comment for why it is one list rather than one per service.
+  static List<LumeTrainTimelineStop> timelineStops() => _timelineStops;
+
   static LumeTrackedTrain tracked({required DateTime now}) => LumeTrackedTrain(
     number: '5UP',
     name: 'Green Line Express',
@@ -204,6 +302,36 @@ abstract final class LumeTrainsComposer {
   );
 
   static String operatorFor(String country) => _operators[country] ?? '';
+
+  // -- Trains-tool pure helpers ----------------------------------------------
+  //
+  // Kept here rather than on the tool's own widget class so a test can assert
+  // them — and the roster and the timeline they work over — without pulling
+  // in `AppLocalizations` at all. `LumeTrainsTool.speed`/`.distance`/
+  // `.duration` stay on the widget: they format through the reader's locale,
+  // which is exactly what these three never do.
+
+  /// What [status] leaves of [all] — `status === 'all' || (status ===
+  /// 'ontime' ? !t.delay : !!t.delay)`. Filtered on [LumeTrainService.isLate],
+  /// not the three-way status label: the reference's "late" chip catches
+  /// nothing among the departed services either, because they have no delay.
+  static List<LumeTrainService> filterByStatus(
+    List<LumeTrainService> all, {
+    required String status,
+  }) {
+    return <LumeTrainService>[
+      for (final LumeTrainService s in all)
+        if (status == 'all' || (status == 'ontime' ? !s.isLate : s.isLate)) s,
+    ];
+  }
+
+  /// A fare tier's price — `fare * (i ? 0.72 : 1)`. Every tier after the
+  /// first is the reference's own fixed 72%, not data of its own.
+  static double fareForTier(LumeTrainService s, int tier) =>
+      s.fare * (tier == 0 ? 1 : 0.72);
+
+  /// A fare tier's seats — `48 - i * 17`.
+  static int seatsForTier(int tier) => 48 - tier * 17;
 }
 
 /// A fixture that answers like a feed and says it is not one.

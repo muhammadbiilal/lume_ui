@@ -4798,11 +4798,17 @@ abstract class AppLocalizations {
   /// **'Updated {n} sec ago'**
   String freshAgoSec(int n);
 
-  /// Reference key fresh.annual
+  /// Reference key fresh.annual — Tax's own reference wording, still used for Tax specifically (source_claims.dart special-cases it). A tool other than Tax with annual freshness uses freshAnnualGeneric instead (wave 9).
   ///
   /// In en, this message translates to:
   /// **'Current tax year'**
   String get freshAnnual;
+
+  /// The annual-freshness label for a tool other than Tax — Public Holidays, and any future annual tool (wave 9). Matches the freshDaily/freshWeekly 'Updated ...' pattern rather than Tax's own tax-specific reference wording.
+  ///
+  /// In en, this message translates to:
+  /// **'Updated annually'**
+  String get freshAnnualGeneric;
 
   /// Reference key fresh.at — a daily source, in the reader's clock
   ///
@@ -19536,6 +19542,1698 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Item'**
   String get zakatItem;
+
+  /// Search field placeholder, Al-Qur’an browse (quran_tool.dart)
+  ///
+  /// In en, this message translates to:
+  /// **'Search surahs'**
+  String get quranSearchPlaceholder;
+
+  /// Section title, surah list
+  ///
+  /// In en, this message translates to:
+  /// **'Surahs'**
+  String get quranSurahsTitle;
+
+  /// Empty-state title
+  ///
+  /// In en, this message translates to:
+  /// **'No surahs found'**
+  String get quranNoMatch;
+
+  /// Empty-state body
+  ///
+  /// In en, this message translates to:
+  /// **'Try a different search.'**
+  String get quranNoMatchText;
+
+  /// n: int — a surah's ayah count, shown in the surah list's meta line
+  ///
+  /// In en, this message translates to:
+  /// **'{n, plural, =1{1 ayah} other{{n} ayahs}}'**
+  String quranAyahCount(int n);
+
+  /// Where a surah was revealed
+  ///
+  /// In en, this message translates to:
+  /// **'Meccan'**
+  String get quranMeccan;
+
+  /// Where a surah was revealed
+  ///
+  /// In en, this message translates to:
+  /// **'Medinan'**
+  String get quranMedinan;
+
+  /// surah: String, s: int, a: int — an ayah reference line (surah name, surah number, ayah number)
+  ///
+  /// In en, this message translates to:
+  /// **'{surah} · {s}:{a}'**
+  String quranVerseReference(String surah, int s, int a);
+
+  /// number: int
+  ///
+  /// In en, this message translates to:
+  /// **'Ayah {number}'**
+  String quranAyahNumber(int number);
+
+  /// Search field placeholder, Search the Qur’an
+  ///
+  /// In en, this message translates to:
+  /// **'Search the Qur’an'**
+  String get quransearchPlaceholder;
+
+  /// n: int — number of ayah hits
+  ///
+  /// In en, this message translates to:
+  /// **'{n, plural, =1{1 result} other{{n} results}}'**
+  String quransearchResultsTitle(int n);
+
+  /// Empty-state title
+  ///
+  /// In en, this message translates to:
+  /// **'Nothing found'**
+  String get quransearchEmptyTitle;
+
+  /// Empty-state body
+  ///
+  /// In en, this message translates to:
+  /// **'Try a different word or a shorter search.'**
+  String get quransearchEmptyText;
+
+  /// Honesty disclosure under the search field, stating the pool's real size
+  ///
+  /// In en, this message translates to:
+  /// **'Searching 3 ayahs and 12 surahs — a starting set, not the full Qur’an.'**
+  String get quransearchScopeNote;
+
+  /// Suggested-search chips title
+  ///
+  /// In en, this message translates to:
+  /// **'Suggested'**
+  String get quransearchSuggestedTitle;
+
+  /// Section title, other ayat in the pool
+  ///
+  /// In en, this message translates to:
+  /// **'More verses'**
+  String get ayahMoreVerses;
+
+  /// Toast shown after Save
+  ///
+  /// In en, this message translates to:
+  /// **'Saved to your reading'**
+  String get ayahSaved;
+
+  /// Toast shown after Save is toggled off
+  ///
+  /// In en, this message translates to:
+  /// **'Removed from your reading'**
+  String get ayahUnsaved;
+
+  /// Currency name
+  ///
+  /// In en, this message translates to:
+  /// **'Pakistani Rupee'**
+  String get ccyPkr;
+
+  /// Currency name
+  ///
+  /// In en, this message translates to:
+  /// **'Indian Rupee'**
+  String get ccyInr;
+
+  /// Currency name
+  ///
+  /// In en, this message translates to:
+  /// **'Turkish Lira'**
+  String get ccyTry;
+
+  /// Currency picker sheet title
+  ///
+  /// In en, this message translates to:
+  /// **'Choose a currency'**
+  String get currencyChooseCurrency;
+
+  /// from: String, value: String, to: String — the headline conversion line
+  ///
+  /// In en, this message translates to:
+  /// **'1 {from} = {value} {to}'**
+  String currencyRateLine(String from, String value, String to);
+
+  /// pair: String — the rate chart's caption, matching ratesHistory's own '{name}, 30 days' pattern
+  ///
+  /// In en, this message translates to:
+  /// **'{pair}, 30 days'**
+  String currencyChart(String pair);
+
+  /// Fuel grade name
+  ///
+  /// In en, this message translates to:
+  /// **'Hi-Octane'**
+  String get fuelHiOctane;
+
+  /// Fuel grade name
+  ///
+  /// In en, this message translates to:
+  /// **'Diesel'**
+  String get fuelDiesel;
+
+  /// Fuel grade name
+  ///
+  /// In en, this message translates to:
+  /// **'Light Diesel'**
+  String get fuelLightDiesel;
+
+  /// Fuel grade name
+  ///
+  /// In en, this message translates to:
+  /// **'Unleaded'**
+  String get fuelUnleaded;
+
+  /// Fuel grade name
+  ///
+  /// In en, this message translates to:
+  /// **'Super Unleaded'**
+  String get fuelSuperUnleaded;
+
+  /// Fuel grade name
+  ///
+  /// In en, this message translates to:
+  /// **'Regular'**
+  String get fuelRegular;
+
+  /// Fuel grade name
+  ///
+  /// In en, this message translates to:
+  /// **'Midgrade'**
+  String get fuelMidgrade;
+
+  /// Fuel grade name
+  ///
+  /// In en, this message translates to:
+  /// **'Premium'**
+  String get fuelPremium;
+
+  /// Fuel grade name
+  ///
+  /// In en, this message translates to:
+  /// **'Special 95'**
+  String get fuelSpecial95;
+
+  /// Fuel grade name
+  ///
+  /// In en, this message translates to:
+  /// **'Super 98'**
+  String get fuelSuper98;
+
+  /// Fuel grade name
+  ///
+  /// In en, this message translates to:
+  /// **'E-Plus 91'**
+  String get fuelEPlus91;
+
+  /// Fuel grade name
+  ///
+  /// In en, this message translates to:
+  /// **'Petrol 91'**
+  String get fuelPetrol91;
+
+  /// Fuel grade name
+  ///
+  /// In en, this message translates to:
+  /// **'Petrol 95'**
+  String get fuelPetrol95;
+
+  /// Fuel grade name
+  ///
+  /// In en, this message translates to:
+  /// **'CNG'**
+  String get fuelCng;
+
+  /// date: String — the price list's effective date
+  ///
+  /// In en, this message translates to:
+  /// **'Effective {date}'**
+  String fuelEffective(String date);
+
+  /// Trailing caption on the delta since the previous revision
+  ///
+  /// In en, this message translates to:
+  /// **'since last update'**
+  String get fuelSinceLast;
+
+  /// Filter chip — every fuel grade
+  ///
+  /// In en, this message translates to:
+  /// **'All Grades'**
+  String get fuelAllGrades;
+
+  /// Column/field label — the fuel grade
+  ///
+  /// In en, this message translates to:
+  /// **'Grade'**
+  String get fuelGrade;
+
+  /// Column label, the prior price
+  ///
+  /// In en, this message translates to:
+  /// **'Previous'**
+  String get fuelPrevious;
+
+  /// Column label, the current price
+  ///
+  /// In en, this message translates to:
+  /// **'Current'**
+  String get fuelCurrent;
+
+  /// Chart section title
+  ///
+  /// In en, this message translates to:
+  /// **'Price trend'**
+  String get fuelTrend;
+
+  /// Chart caption
+  ///
+  /// In en, this message translates to:
+  /// **'Fuel price, last 24 months'**
+  String get fuelTrendCap;
+
+  /// Data-source label
+  ///
+  /// In en, this message translates to:
+  /// **'Retail price'**
+  String get fuelSourceRetail;
+
+  /// Data-source label
+  ///
+  /// In en, this message translates to:
+  /// **'State average'**
+  String get fuelSourceState;
+
+  /// Data-source label
+  ///
+  /// In en, this message translates to:
+  /// **'Oil marketing companies'**
+  String get fuelSourceOmc;
+
+  /// Data-source label
+  ///
+  /// In en, this message translates to:
+  /// **'Regional average'**
+  String get fuelSourceRegional;
+
+  /// Unit name
+  ///
+  /// In en, this message translates to:
+  /// **'litre'**
+  String get unitLitre;
+
+  /// Unit name
+  ///
+  /// In en, this message translates to:
+  /// **'gallon'**
+  String get unitGallon;
+
+  /// Generic label used by Fuel Prices' effective-date chip (fuel_text.dart); no shared commonThisWeek-equivalent existed — several tools duplicate their own 'This week' string under feature-specific keys instead
+  ///
+  /// In en, this message translates to:
+  /// **'This week'**
+  String get commonThisWeek;
+
+  /// Unit abbreviation, miles per gallon
+  ///
+  /// In en, this message translates to:
+  /// **'mpg'**
+  String get unitMpg;
+
+  /// Unit abbreviation, kilometres per litre
+  ///
+  /// In en, this message translates to:
+  /// **'km/L'**
+  String get unitKmpl;
+
+  /// Field label
+  ///
+  /// In en, this message translates to:
+  /// **'Distance'**
+  String get fuelcostDistance;
+
+  /// Field label
+  ///
+  /// In en, this message translates to:
+  /// **'Fuel economy'**
+  String get fuelcostEconomy;
+
+  /// Field label
+  ///
+  /// In en, this message translates to:
+  /// **'Fuel price'**
+  String get fuelcostPrice;
+
+  /// Hint under the fuel-price field
+  ///
+  /// In en, this message translates to:
+  /// **'From today’s fuel price — edit to use your own'**
+  String get fuelcostPriceHint;
+
+  /// Field label
+  ///
+  /// In en, this message translates to:
+  /// **'People'**
+  String get fuelcostPeople;
+
+  /// Result label
+  ///
+  /// In en, this message translates to:
+  /// **'Total cost'**
+  String get fuelcostTotal;
+
+  /// d: String — the trip's distance, formatted
+  ///
+  /// In en, this message translates to:
+  /// **'For a {d} trip'**
+  String fuelcostForTrip(String d);
+
+  /// Result label
+  ///
+  /// In en, this message translates to:
+  /// **'Fuel used'**
+  String get fuelcostUsed;
+
+  /// Result label
+  ///
+  /// In en, this message translates to:
+  /// **'Per person'**
+  String get fuelcostPerPerson;
+
+  /// unit: String — the distance unit in use
+  ///
+  /// In en, this message translates to:
+  /// **'Per {unit}'**
+  String fuelcostPerUnit(String unit);
+
+  /// Section title
+  ///
+  /// In en, this message translates to:
+  /// **'Compare'**
+  String get fuelcostCompare;
+
+  /// Table column header
+  ///
+  /// In en, this message translates to:
+  /// **'Scenario'**
+  String get fuelcostScenario;
+
+  /// Table column header
+  ///
+  /// In en, this message translates to:
+  /// **'Consumption'**
+  String get fuelcostConsumption;
+
+  /// Table column header
+  ///
+  /// In en, this message translates to:
+  /// **'Cost'**
+  String get fuelcostCost;
+
+  /// Comparison scenario name
+  ///
+  /// In en, this message translates to:
+  /// **'Solo trip'**
+  String get fuelcostScSolo;
+
+  /// n: String — the number of people sharing the trip
+  ///
+  /// In en, this message translates to:
+  /// **'Shared with {n}'**
+  String fuelcostScShared(String n);
+
+  /// Comparison scenario name
+  ///
+  /// In en, this message translates to:
+  /// **'Round trip'**
+  String get fuelcostScReturn;
+
+  /// Scheme name
+  ///
+  /// In en, this message translates to:
+  /// **'National Savings'**
+  String get savingsScheme;
+
+  /// Summary label
+  ///
+  /// In en, this message translates to:
+  /// **'Best rate'**
+  String get savingsBestRate;
+
+  /// Field/column label
+  ///
+  /// In en, this message translates to:
+  /// **'Term'**
+  String get savingsTerm;
+
+  /// Field/column label
+  ///
+  /// In en, this message translates to:
+  /// **'Payout'**
+  String get savingsPayout;
+
+  /// Field label
+  ///
+  /// In en, this message translates to:
+  /// **'Minimum'**
+  String get savingsMinimum;
+
+  /// Compact form of Minimum, tight spaces
+  ///
+  /// In en, this message translates to:
+  /// **'Min'**
+  String get savingsMin;
+
+  /// Field/column label
+  ///
+  /// In en, this message translates to:
+  /// **'Rate'**
+  String get savingsRate;
+
+  /// Search field placeholder
+  ///
+  /// In en, this message translates to:
+  /// **'Search products'**
+  String get savingsSearch;
+
+  /// Section title
+  ///
+  /// In en, this message translates to:
+  /// **'Products'**
+  String get savingsProducts;
+
+  /// Trailing unit on a rate
+  ///
+  /// In en, this message translates to:
+  /// **'per year'**
+  String get savingsPerYear;
+
+  /// Section title, the return calculator
+  ///
+  /// In en, this message translates to:
+  /// **'Estimate'**
+  String get savingsEstimate;
+
+  /// Field label
+  ///
+  /// In en, this message translates to:
+  /// **'Amount'**
+  String get savingsAmount;
+
+  /// Field label
+  ///
+  /// In en, this message translates to:
+  /// **'Product'**
+  String get savingsProduct;
+
+  /// Result label
+  ///
+  /// In en, this message translates to:
+  /// **'Monthly profit'**
+  String get savingsMonthlyProfit;
+
+  /// Result label
+  ///
+  /// In en, this message translates to:
+  /// **'Yearly profit'**
+  String get savingsYearlyProfit;
+
+  /// Empty state, non-Pakistan reader
+  ///
+  /// In en, this message translates to:
+  /// **'Not available in your country'**
+  String get savingsUnavailableTitle;
+
+  /// Empty state body, non-Pakistan reader
+  ///
+  /// In en, this message translates to:
+  /// **'National Savings certificates are specific to Pakistan.'**
+  String get savingsUnavailableText;
+
+  /// Empty state, country without operator tariffs
+  ///
+  /// In en, this message translates to:
+  /// **'Mobile packages are not in your setup'**
+  String get packagesUnavailableTitle;
+
+  /// Search field placeholder
+  ///
+  /// In en, this message translates to:
+  /// **'Search packages'**
+  String get packagesSearch;
+
+  /// Field/column label
+  ///
+  /// In en, this message translates to:
+  /// **'Price'**
+  String get packagesPrice;
+
+  /// Field/column label
+  ///
+  /// In en, this message translates to:
+  /// **'Data'**
+  String get packagesData;
+
+  /// Field/column label
+  ///
+  /// In en, this message translates to:
+  /// **'Validity'**
+  String get packagesValidity;
+
+  /// Empty-state title
+  ///
+  /// In en, this message translates to:
+  /// **'No packages match'**
+  String get packagesNoMatch;
+
+  /// Empty-state body
+  ///
+  /// In en, this message translates to:
+  /// **'Try a different search or filter.'**
+  String get packagesNoMatchText;
+
+  /// Action label
+  ///
+  /// In en, this message translates to:
+  /// **'Compare'**
+  String get packagesCompare;
+
+  /// Field/column label
+  ///
+  /// In en, this message translates to:
+  /// **'Package'**
+  String get packagesPackage;
+
+  /// Field/column label
+  ///
+  /// In en, this message translates to:
+  /// **'Minutes'**
+  String get packagesMins;
+
+  /// Field/column label
+  ///
+  /// In en, this message translates to:
+  /// **'SMS'**
+  String get packagesSms;
+
+  /// Detail sheet title
+  ///
+  /// In en, this message translates to:
+  /// **'Package details'**
+  String get packagesDetail;
+
+  /// Summary kicker
+  ///
+  /// In en, this message translates to:
+  /// **'Next holiday'**
+  String get holidaysNext;
+
+  /// Small status label
+  ///
+  /// In en, this message translates to:
+  /// **'Listed here'**
+  String get holidaysListed;
+
+  /// Search field placeholder
+  ///
+  /// In en, this message translates to:
+  /// **'Search holidays'**
+  String get holidaysSearch;
+
+  /// Filter label
+  ///
+  /// In en, this message translates to:
+  /// **'Type'**
+  String get holidaysKind;
+
+  /// Empty-state title
+  ///
+  /// In en, this message translates to:
+  /// **'No holidays found'**
+  String get holidaysNoMatch;
+
+  /// Empty-state body
+  ///
+  /// In en, this message translates to:
+  /// **'Try a different search or type'**
+  String get holidaysNoMatchText;
+
+  /// Section title, the full list
+  ///
+  /// In en, this message translates to:
+  /// **'Holidays'**
+  String get holidaysListTitle;
+
+  /// Honesty note title — curly apostrophe, asserted literally by holidays_tool_test.dart
+  ///
+  /// In en, this message translates to:
+  /// **'Reference dates, not this year’s calendar'**
+  String get holidaysNoteTitle;
+
+  /// Honesty note body — curly apostrophe
+  ///
+  /// In en, this message translates to:
+  /// **'These are illustrative dates, not drawn from a live calendar, and movable dates like Eid shift every year. Check an official source for this year’s actual holidays.'**
+  String get holidaysNoteText;
+
+  /// Field label
+  ///
+  /// In en, this message translates to:
+  /// **'Tracking number'**
+  String get parcelTrackingLabel;
+
+  /// Field placeholder, an example tracking number
+  ///
+  /// In en, this message translates to:
+  /// **'e.g. TCS-8842910'**
+  String get parcelPlaceholder;
+
+  /// Action button
+  ///
+  /// In en, this message translates to:
+  /// **'Track'**
+  String get parcelTrack;
+
+  /// Fixed toast, never varies
+  ///
+  /// In en, this message translates to:
+  /// **'Looking up the shipment'**
+  String get parcelLookingUp;
+
+  /// Section title
+  ///
+  /// In en, this message translates to:
+  /// **'In transit'**
+  String get parcelActive;
+
+  /// Field label
+  ///
+  /// In en, this message translates to:
+  /// **'Carrier'**
+  String get parcelCarrier;
+
+  /// Field label
+  ///
+  /// In en, this message translates to:
+  /// **'Last seen'**
+  String get parcelLastSeen;
+
+  /// Field label
+  ///
+  /// In en, this message translates to:
+  /// **'Expected'**
+  String get parcelExpected;
+
+  /// Section title, the tracking timeline
+  ///
+  /// In en, this message translates to:
+  /// **'Journey'**
+  String get parcelJourney;
+
+  /// Row label
+  ///
+  /// In en, this message translates to:
+  /// **'Notify on updates'**
+  String get parcelNotify;
+
+  /// Confirmation toast
+  ///
+  /// In en, this message translates to:
+  /// **'You’ll be notified on every update'**
+  String get parcelNotifying;
+
+  /// Timeline status
+  ///
+  /// In en, this message translates to:
+  /// **'Booked'**
+  String get parcelStBooked;
+
+  /// Timeline status — distinct key from parcelActive despite the same English
+  ///
+  /// In en, this message translates to:
+  /// **'In transit'**
+  String get parcelStInTransit;
+
+  /// Timeline status
+  ///
+  /// In en, this message translates to:
+  /// **'Arrived'**
+  String get parcelStArrived;
+
+  /// Timeline status
+  ///
+  /// In en, this message translates to:
+  /// **'Delivered'**
+  String get parcelStDelivered;
+
+  /// Timeline status
+  ///
+  /// In en, this message translates to:
+  /// **'Arriving'**
+  String get parcelStArriving;
+
+  /// item: String, status: String — the shared summary line
+  ///
+  /// In en, this message translates to:
+  /// **'{item} · {status}'**
+  String parcelShareText(String item, String status);
+
+  /// Search action/title
+  ///
+  /// In en, this message translates to:
+  /// **'Find trains'**
+  String get trainsFind;
+
+  /// Loading state
+  ///
+  /// In en, this message translates to:
+  /// **'Searching services'**
+  String get trainsSearching;
+
+  /// Status filter chip
+  ///
+  /// In en, this message translates to:
+  /// **'Running'**
+  String get trainsRunning;
+
+  /// Status filter chip
+  ///
+  /// In en, this message translates to:
+  /// **'Delayed'**
+  String get trainsDelayed;
+
+  /// Empty-state title
+  ///
+  /// In en, this message translates to:
+  /// **'No services match'**
+  String get trainsNoMatch;
+
+  /// Empty-state body
+  ///
+  /// In en, this message translates to:
+  /// **'Clear the status filter to see every departure.'**
+  String get trainsNoMatchText;
+
+  /// Compact column header, platform number
+  ///
+  /// In en, this message translates to:
+  /// **'Plat.'**
+  String get trainsPlatform;
+
+  /// Small caption before a starting fare
+  ///
+  /// In en, this message translates to:
+  /// **'from'**
+  String get trainsFareCaption;
+
+  /// name: String — the chosen train's name
+  ///
+  /// In en, this message translates to:
+  /// **'{name}'**
+  String trainsSelected(String name);
+
+  /// Metric label
+  ///
+  /// In en, this message translates to:
+  /// **'Speed'**
+  String get trainsSpeed;
+
+  /// Metric label
+  ///
+  /// In en, this message translates to:
+  /// **'Next stop'**
+  String get trainsNextStop;
+
+  /// Metric label
+  ///
+  /// In en, this message translates to:
+  /// **'Delay'**
+  String get trainsDelay;
+
+  /// Section title
+  ///
+  /// In en, this message translates to:
+  /// **'Route'**
+  String get trainsMap;
+
+  /// Section title
+  ///
+  /// In en, this message translates to:
+  /// **'Station timeline'**
+  String get trainsStops;
+
+  /// time: String — the real, as-run time beside a scheduled one
+  ///
+  /// In en, this message translates to:
+  /// **'actual {time}'**
+  String trainsActual(String time);
+
+  /// Label, the timetabled time
+  ///
+  /// In en, this message translates to:
+  /// **'Scheduled'**
+  String get trainsScheduled;
+
+  /// Section title
+  ///
+  /// In en, this message translates to:
+  /// **'Fares & availability'**
+  String get trainsFares;
+
+  /// Column header
+  ///
+  /// In en, this message translates to:
+  /// **'Class'**
+  String get trainsClass;
+
+  /// Column header
+  ///
+  /// In en, this message translates to:
+  /// **'Fare'**
+  String get trainsFare;
+
+  /// Column header
+  ///
+  /// In en, this message translates to:
+  /// **'Seats'**
+  String get trainsSeats;
+
+  /// Action button
+  ///
+  /// In en, this message translates to:
+  /// **'Remind me'**
+  String get trainsRemind;
+
+  /// name: String — confirmation toast after Remind me
+  ///
+  /// In en, this message translates to:
+  /// **'Tracking {name}'**
+  String trainsReminded(String name);
+
+  /// name: String, from: String, to: String, arrival: String — the shared summary line
+  ///
+  /// In en, this message translates to:
+  /// **'{name} · {from} → {to} · {arrival}'**
+  String trainsShareText(String name, String from, String to, String arrival);
+
+  /// Progress ring's accessible label
+  ///
+  /// In en, this message translates to:
+  /// **'Air quality index'**
+  String get aqiIndex;
+
+  /// Section title
+  ///
+  /// In en, this message translates to:
+  /// **'What this means'**
+  String get aqiAdvice;
+
+  /// Section title
+  ///
+  /// In en, this message translates to:
+  /// **'Pollutants'**
+  String get aqiPollutants;
+
+  /// Chart label
+  ///
+  /// In en, this message translates to:
+  /// **'Last 24 hours'**
+  String get aqiTrend;
+
+  /// Badge on an estimated (not measured) reading
+  ///
+  /// In en, this message translates to:
+  /// **'Estimated'**
+  String get aqiEstimated;
+
+  /// n: int — a trend chart's axis label
+  ///
+  /// In en, this message translates to:
+  /// **'{n}h'**
+  String aqiHoursAgo(int n);
+
+  /// city: String — honesty note under an estimated reading
+  ///
+  /// In en, this message translates to:
+  /// **'Estimated for {city} — not measured by a monitoring station.'**
+  String aqiEstimatedNote(String city);
+
+  /// Source-bar caption
+  ///
+  /// In en, this message translates to:
+  /// **'Estimated, not measured'**
+  String get aqiEstimatedSource;
+
+  /// city: String, value: String, band: String — the shared summary line
+  ///
+  /// In en, this message translates to:
+  /// **'Air quality in {city}: {value} AQI · {band}'**
+  String aqiShareText(String city, String value, String band);
+
+  /// Reference key DUA_CATEGORIES[].label ('morning') — exact text asserted by duas_tool_test.dart's category-count assertions
+  ///
+  /// In en, this message translates to:
+  /// **'Morning & evening'**
+  String get duaCategoryMorning;
+
+  /// Reference key DUA_CATEGORIES[].label ('daily') — exact text asserted literally by duas_tool_test.dart (tap target and count-map key)
+  ///
+  /// In en, this message translates to:
+  /// **'Daily life'**
+  String get duaCategoryDaily;
+
+  /// Reference key DUA_CATEGORIES[].label ('travel') — exact text asserted literally by duas_tool_test.dart (tap target)
+  ///
+  /// In en, this message translates to:
+  /// **'Travel'**
+  String get duaCategoryTravel;
+
+  /// Reference key DUA_CATEGORIES[].label ('distress') — exact text asserted by duas_tool_test.dart's category-count assertions
+  ///
+  /// In en, this message translates to:
+  /// **'Distress & worry'**
+  String get duaCategoryDistress;
+
+  /// Reference key DUA_CATEGORIES[].label ('food') — exact text asserted by duas_tool_test.dart's category-count assertions
+  ///
+  /// In en, this message translates to:
+  /// **'Food & drink'**
+  String get duaCategoryFood;
+
+  /// Reference key DUA_CATEGORIES[].label ('sleep') — exact text asserted by duas_tool_test.dart's category-count assertions
+  ///
+  /// In en, this message translates to:
+  /// **'Sleep'**
+  String get duaCategorySleep;
+
+  /// Reference DUAS[].title, the 'distress' dua (Sahih al-Bukhari 6369)
+  ///
+  /// In en, this message translates to:
+  /// **'Relief from anxiety'**
+  String get duaTitleAnxiety;
+
+  /// Reference DUAS[].title, the 'food' dua (Sunan Abi Dawud 3767) — exact text asserted literally by duas_tool_test.dart (tap target)
+  ///
+  /// In en, this message translates to:
+  /// **'Before eating'**
+  String get duaTitleBeforeEating;
+
+  /// Reference DUAS[].title, the 'sleep' dua (Sahih al-Bukhari 6324)
+  ///
+  /// In en, this message translates to:
+  /// **'Before sleeping'**
+  String get duaTitleBeforeSleeping;
+
+  /// Reference DUAS[].title, the 'morning' dua (Sahih Muslim 2723)
+  ///
+  /// In en, this message translates to:
+  /// **'Morning remembrance'**
+  String get duaTitleMorningRemembrance;
+
+  /// Reference DUAS[].title, the 'travel' dua (Az-Zukhruf 13)
+  ///
+  /// In en, this message translates to:
+  /// **'Dua for travel'**
+  String get duaTitleTravel;
+
+  /// Reference key duas.all — the browse-list title with no category filter
+  ///
+  /// In en, this message translates to:
+  /// **'All duas'**
+  String get duasAll;
+
+  /// Filter-bar section title
+  ///
+  /// In en, this message translates to:
+  /// **'Categories'**
+  String get duasCategories;
+
+  /// name: String — reference key duas.inCategory, the browse-list title once a category is chosen (the reference passes the category's own label as {name})
+  ///
+  /// In en, this message translates to:
+  /// **'{name}'**
+  String duasInCategory(String name);
+
+  /// Reference key duas.noMatch — empty-state title
+  ///
+  /// In en, this message translates to:
+  /// **'No duas here yet'**
+  String get duasNoMatch;
+
+  /// Reference key duas.noMatchText — empty-state body
+  ///
+  /// In en, this message translates to:
+  /// **'Try another category or clear the search.'**
+  String get duasNoMatchText;
+
+  /// Reference key duas.search — search field placeholder
+  ///
+  /// In en, this message translates to:
+  /// **'Search duas'**
+  String get duasSearch;
+
+  /// Reference key duas.today — the featured reader card's reference line
+  ///
+  /// In en, this message translates to:
+  /// **'Dua of the day'**
+  String get duasToday;
+
+  /// Generic, reusable reader-card control (not dua-prefixed) — reference key reader.listen; kept deliberately generic since other reader cards may reuse it
+  ///
+  /// In en, this message translates to:
+  /// **'Listen'**
+  String get readerListen;
+
+  /// Generic, reusable reader-card toast (not dua-prefixed) — reference key reader.playing, kept as the plain 'Playing' rather than the reference's dua-specific 'Playing recitation' so the string stays reusable by any future audio reader card
+  ///
+  /// In en, this message translates to:
+  /// **'Playing'**
+  String get readerPlaying;
+
+  /// Section title above the name grid
+  ///
+  /// In en, this message translates to:
+  /// **'All names'**
+  String get names99AllTitle;
+
+  /// n: String (formatted count) — honesty disclosure on the summary card: twelve of ninety-nine names are held, and this says so rather than looking like a full but truncated list
+  ///
+  /// In en, this message translates to:
+  /// **'The remaining {n} need a verified source.'**
+  String names99Caption(String n);
+
+  /// Summary card's kicker, above the held-count figure
+  ///
+  /// In en, this message translates to:
+  /// **'Names of Allah'**
+  String get names99Kicker;
+
+  /// Empty-state title
+  ///
+  /// In en, this message translates to:
+  /// **'No name matches'**
+  String get names99NoMatch;
+
+  /// Empty-state body
+  ///
+  /// In en, this message translates to:
+  /// **'Try the transliteration or the meaning.'**
+  String get names99NoMatchText;
+
+  /// name: String, meaning: String — the toast a tap on a name card says, composed exactly as names99.tool.js does (n.tl + ' — ' + n.meaning); em dash asserted literally by names99_tool_test.dart ('Al-Quddus — The Most Holy')
+  ///
+  /// In en, this message translates to:
+  /// **'{name} — {meaning}'**
+  String names99Opened(String name, String meaning);
+
+  /// The progress ring's own accessible label, alongside its centre percentage
+  ///
+  /// In en, this message translates to:
+  /// **'Names known'**
+  String get names99Progress;
+
+  /// held: String, total: String — the ring's accessible value and the summary's reading ('12 of 99')
+  ///
+  /// In en, this message translates to:
+  /// **'{held} of {total}'**
+  String names99Reading(String held, String total);
+
+  /// Search field placeholder
+  ///
+  /// In en, this message translates to:
+  /// **'Search names'**
+  String get names99Search;
+
+  /// name: String — the reference line a shared name card carries
+  ///
+  /// In en, this message translates to:
+  /// **'{name} — Asma ul Husna'**
+  String names99ShareSource(String name);
+
+  /// total: String — the small suffix beside the lead figure ('/ 99')
+  ///
+  /// In en, this message translates to:
+  /// **'/ {total}'**
+  String names99Total(String total);
+
+  /// Reference key markets.cap — an asset row's meta line ('Vol {vol}', 'Cap {cap}')
+  ///
+  /// In en, this message translates to:
+  /// **'Cap'**
+  String get marketsCap;
+
+  /// Reference key markets.tab.global — the world indices section/context-bar label
+  ///
+  /// In en, this message translates to:
+  /// **'Global'**
+  String get marketsGlobal;
+
+  /// Section title, the crypto board — beyond the reference's own three-section world board (see markets_tool.dart's library note), so not a reference-supplied string
+  ///
+  /// In en, this message translates to:
+  /// **'Top crypto'**
+  String get marketsTopCrypto;
+
+  /// Section title, the ETF board — see marketsTopCrypto's note
+  ///
+  /// In en, this message translates to:
+  /// **'Top ETFs'**
+  String get marketsTopEtfs;
+
+  /// Reference key markets.vol — an asset row's meta line ('Vol {vol}', 'Cap {cap}')
+  ///
+  /// In en, this message translates to:
+  /// **'Vol'**
+  String get marketsVol;
+
+  /// name: String — reference key bills.opening, the toast on tapping a bill row
+  ///
+  /// In en, this message translates to:
+  /// **'Opening {name}'**
+  String billsOpening(String name);
+
+  /// Reference key bills.trend — the trend chart's own label/section title
+  ///
+  /// In en, this message translates to:
+  /// **'Six months'**
+  String get billsTrend;
+
+  /// money: String — reference key bills.trendCap — the trend chart's caption
+  ///
+  /// In en, this message translates to:
+  /// **'Total billed each month: {money}'**
+  String billsTrendCap(String money);
+
+  /// n: int — the summary card's caption when bills are overdue (bills_tool.dart). Not in wave9_arb_keys.md's alphabetical 262-key list (that list's own header count is actually off by 9 — 271 keys, not 262 — see final report), but the list's own instructions explicitly call out this key's ICU-plural shape and bills_tool.dart / bills_tool_test.dart both reference it, so it is added here too
+  ///
+  /// In en, this message translates to:
+  /// **'{n, plural, =1{1 overdue} other{{n} overdue}}'**
+  String billsOverdueCount(int n);
+
+  /// date: String — a paid bill's row meta, when it was paid
+  ///
+  /// In en, this message translates to:
+  /// **'Paid {date}'**
+  String billsPaidOn(String date);
+
+  /// Summary card's caption when nothing is overdue
+  ///
+  /// In en, this message translates to:
+  /// **'Everything is on track'**
+  String get billsAllOnTrack;
+
+  /// Summary card's stat label for bills not yet due
+  ///
+  /// In en, this message translates to:
+  /// **'Upcoming'**
+  String get billsUpcoming;
+
+  /// Summary card's stat label for the amount already paid
+  ///
+  /// In en, this message translates to:
+  /// **'Paid'**
+  String get billsPaidAmount;
+
+  /// Body text under the overdue-attention notice
+  ///
+  /// In en, this message translates to:
+  /// **'These bills are overdue and may carry a late fee.'**
+  String get billsNeedAttentionText;
+
+  /// Section title above the full bills list
+  ///
+  /// In en, this message translates to:
+  /// **'All bills'**
+  String get billsAll;
+
+  /// Empty-state title when a filter matches nothing
+  ///
+  /// In en, this message translates to:
+  /// **'No bills match'**
+  String get billsNoMatch;
+
+  /// Empty-state body text
+  ///
+  /// In en, this message translates to:
+  /// **'Try a different filter.'**
+  String get billsNoMatchText;
+
+  /// Row meta prefix before a bill's reference number
+  ///
+  /// In en, this message translates to:
+  /// **'Ref'**
+  String get billsRef;
+
+  /// name: String — the toast on tapping an already-paid bill row
+  ///
+  /// In en, this message translates to:
+  /// **'{name} is already paid'**
+  String billsRowPaid(String name);
+
+  /// Reference key cricket.balls — batting table column header
+  ///
+  /// In en, this message translates to:
+  /// **'B'**
+  String get cricketBalls;
+
+  /// Reference key cricket.batter — batting table column header
+  ///
+  /// In en, this message translates to:
+  /// **'Batter'**
+  String get cricketBatter;
+
+  /// Reference key cricket.batting — section title
+  ///
+  /// In en, this message translates to:
+  /// **'Batting'**
+  String get cricketBatting;
+
+  /// Reference key cricket.bowler — bowling table column header
+  ///
+  /// In en, this message translates to:
+  /// **'Bowler'**
+  String get cricketBowler;
+
+  /// Reference key cricket.bowling — section title
+  ///
+  /// In en, this message translates to:
+  /// **'Bowling'**
+  String get cricketBowling;
+
+  /// team: String — reference key cricket.choseToBat, the score card's status line
+  ///
+  /// In en, this message translates to:
+  /// **'{team} chose to bat'**
+  String cricketChoseToBat(String team);
+
+  /// Reference key cricket.economy — bowling table column header
+  ///
+  /// In en, this message translates to:
+  /// **'Econ'**
+  String get cricketEconomy;
+
+  /// Reference key cricket.fixtures — tab label, asserted literally by cricket_test.dart
+  ///
+  /// In en, this message translates to:
+  /// **'Fixtures'**
+  String get cricketFixtures;
+
+  /// Reference key cricket.format — score card metric label
+  ///
+  /// In en, this message translates to:
+  /// **'Format'**
+  String get cricketFormat;
+
+  /// Reference key cricket.fours — batting table column header
+  ///
+  /// In en, this message translates to:
+  /// **'4s'**
+  String get cricketFours;
+
+  /// Reference key cricket.live — tab label
+  ///
+  /// In en, this message translates to:
+  /// **'Live'**
+  String get cricketLive;
+
+  /// Reference key cricket.lost — standings table column header
+  ///
+  /// In en, this message translates to:
+  /// **'L'**
+  String get cricketLost;
+
+  /// Reference key cricket.maidens — bowling table column header
+  ///
+  /// In en, this message translates to:
+  /// **'M'**
+  String get cricketMaidens;
+
+  /// Reference key cricket.notOut — suffix beside a batter's name who has not been dismissed
+  ///
+  /// In en, this message translates to:
+  /// **'not out'**
+  String get cricketNotOut;
+
+  /// Reference key cricket.nrr — standings table column header, kept as the universal stat abbreviation
+  ///
+  /// In en, this message translates to:
+  /// **'NRR'**
+  String get cricketNrr;
+
+  /// Reference key cricket.overs — suffix after an overs count on the score card (e.g. '18.2 overs')
+  ///
+  /// In en, this message translates to:
+  /// **'overs'**
+  String get cricketOvers;
+
+  /// Reference key cricket.overs2 — bowling table's own overs-bowled column header (distinct from cricketOvers' score-card suffix, same underlying word)
+  ///
+  /// In en, this message translates to:
+  /// **'O'**
+  String get cricketOvers2;
+
+  /// Reference key cricket.played — standings table column header
+  ///
+  /// In en, this message translates to:
+  /// **'P'**
+  String get cricketPlayed;
+
+  /// Reference key cricket.points — standings table column header
+  ///
+  /// In en, this message translates to:
+  /// **'Pts'**
+  String get cricketPoints;
+
+  /// Reference key cricket.runRate — score card metric label
+  ///
+  /// In en, this message translates to:
+  /// **'Run rate'**
+  String get cricketRunRate;
+
+  /// Reference key cricket.runs — batting/bowling table column header
+  ///
+  /// In en, this message translates to:
+  /// **'R'**
+  String get cricketRuns;
+
+  /// Reference key cricket.sixes — batting table column header
+  ///
+  /// In en, this message translates to:
+  /// **'6s'**
+  String get cricketSixes;
+
+  /// Reference key cricket.standings — the tab label that opens the table; asserted literally by cricket_test.dart (see cricketTable's own note for the reference's own inverted naming)
+  ///
+  /// In en, this message translates to:
+  /// **'Table'**
+  String get cricketStandings;
+
+  /// Reference key cricket.strikeRate — batting table column header
+  ///
+  /// In en, this message translates to:
+  /// **'SR'**
+  String get cricketStrikeRate;
+
+  /// Reference key cricket.table — the section title the Table tab opens, asserted literally by cricket_test.dart. The reference's own naming is inverted: the tab is labelled cricket.standings ('Table') and the section it opens is titled cricket.table ('Standings')
+  ///
+  /// In en, this message translates to:
+  /// **'Standings'**
+  String get cricketTable;
+
+  /// Reference key cricket.team — standings table column header
+  ///
+  /// In en, this message translates to:
+  /// **'Team'**
+  String get cricketTeam;
+
+  /// Reference key cricket.upcoming — fixtures section title
+  ///
+  /// In en, this message translates to:
+  /// **'Upcoming'**
+  String get cricketUpcoming;
+
+  /// Reference key cricket.venue — score card metric label
+  ///
+  /// In en, this message translates to:
+  /// **'Venue'**
+  String get cricketVenue;
+
+  /// Reference key cricket.wickets — bowling table column header
+  ///
+  /// In en, this message translates to:
+  /// **'W'**
+  String get cricketWickets;
+
+  /// Reference key cricket.won — standings table column header
+  ///
+  /// In en, this message translates to:
+  /// **'W'**
+  String get cricketWon;
+
+  /// Reference key loadshed.billHint — the nudge-to-Bills row's value
+  ///
+  /// In en, this message translates to:
+  /// **'Check your last bill'**
+  String get loadshedBillHint;
+
+  /// Reference key loadshed.currentlyOff — summary card kicker, mid-outage
+  ///
+  /// In en, this message translates to:
+  /// **'Power is off'**
+  String get loadshedCurrentlyOff;
+
+  /// Reference key loadshed.currentlyOn — summary card kicker, power currently on
+  ///
+  /// In en, this message translates to:
+  /// **'Next outage'**
+  String get loadshedCurrentlyOn;
+
+  /// from: String, to: String — reference key loadshed.nextOutage
+  ///
+  /// In en, this message translates to:
+  /// **'{from} to {to}'**
+  String loadshedNextOutage(String from, String to);
+
+  /// Reference key loadshed.notify — the reminders row's label
+  ///
+  /// In en, this message translates to:
+  /// **'Notify me before an outage'**
+  String get loadshedNotify;
+
+  /// Reference key loadshed.notifyOn — confirmation toast
+  ///
+  /// In en, this message translates to:
+  /// **'Outage reminders are on'**
+  String get loadshedNotifyOn;
+
+  /// The reminders row's static trailing value — matches the reference's own reused common.on ('On')
+  ///
+  /// In en, this message translates to:
+  /// **'On'**
+  String get loadshedNotifyValue;
+
+  /// Reference key loadshed.outage — each schedule row's own title
+  ///
+  /// In en, this message translates to:
+  /// **'Outage'**
+  String get loadshedOutage;
+
+  /// time: String — reference key loadshed.powerBack, summary caption mid-outage
+  ///
+  /// In en, this message translates to:
+  /// **'Back on at {time}'**
+  String loadshedPowerBack(String time);
+
+  /// Reference key loadshed.provider — context-bar label
+  ///
+  /// In en, this message translates to:
+  /// **'Distribution company'**
+  String get loadshedProvider;
+
+  /// Reference key loadshed.reliability — summary card stat label
+  ///
+  /// In en, this message translates to:
+  /// **'Kept to schedule'**
+  String get loadshedReliability;
+
+  /// Reference key loadshed.schedule — section title
+  ///
+  /// In en, this message translates to:
+  /// **'Today’s schedule'**
+  String get loadshedSchedule;
+
+  /// hours: String — a slot's own length, scoped to Loadshedding rather than a second shared duration key (loadshed_text.dart's own note)
+  ///
+  /// In en, this message translates to:
+  /// **'{hours}h'**
+  String loadshedSlotDuration(String hours);
+
+  /// Reference key loadshed.slots — summary card stat label
+  ///
+  /// In en, this message translates to:
+  /// **'Slots'**
+  String get loadshedSlots;
+
+  /// Reference key loadshed.today — summary card stat label
+  ///
+  /// In en, this message translates to:
+  /// **'Off today'**
+  String get loadshedToday;
+
+  /// Reference key loadshed.week — the week chart's own label/section title
+  ///
+  /// In en, this message translates to:
+  /// **'This week'**
+  String get loadshedWeek;
+
+  /// Reference key loadshed.weekCap — week chart caption
+  ///
+  /// In en, this message translates to:
+  /// **'Hours without power each day'**
+  String get loadshedWeekCap;
+
+  /// Reference key bonds.bond — e.g. '750 bond'
+  ///
+  /// In en, this message translates to:
+  /// **'bond'**
+  String get prizebondsBond;
+
+  /// Reference key bonds.check — action button
+  ///
+  /// In en, this message translates to:
+  /// **'Check'**
+  String get prizebondsCheck;
+
+  /// Reference key bonds.checkLead — lead text above the check form
+  ///
+  /// In en, this message translates to:
+  /// **'Check a bond number against the latest draw.'**
+  String get prizebondsCheckLead;
+
+  /// Reference key bonds.denomination — the denomination picker's accessible label
+  ///
+  /// In en, this message translates to:
+  /// **'Denomination'**
+  String get prizebondsDenomination;
+
+  /// Reference key bonds.denominations — summary card stat label
+  ///
+  /// In en, this message translates to:
+  /// **'Denominations'**
+  String get prizebondsDenominations;
+
+  /// Reference key bonds.draws — section title
+  ///
+  /// In en, this message translates to:
+  /// **'Upcoming draws'**
+  String get prizebondsDraws;
+
+  /// Reference key bonds.first — prize-tiers table column header
+  ///
+  /// In en, this message translates to:
+  /// **'First'**
+  String get prizebondsFirst;
+
+  /// Reference key bonds.firstPrize — a draw row's value caption
+  ///
+  /// In en, this message translates to:
+  /// **'First prize'**
+  String get prizebondsFirstPrize;
+
+  /// Reference key bonds.nextDraw — summary card kicker
+  ///
+  /// In en, this message translates to:
+  /// **'Next draw'**
+  String get prizebondsNextDraw;
+
+  /// denom: String, draw: String — reference key bonds.nextDrawSub, summary card caption
+  ///
+  /// In en, this message translates to:
+  /// **'{denom} bond · {draw}'**
+  String prizebondsNextDrawSub(String denom, String draw);
+
+  /// Reference key bonds.noWin — toast on Check, always (the reference never wires up a real match)
+  ///
+  /// In en, this message translates to:
+  /// **'No prize on this number in the latest draw'**
+  String get prizebondsNoWin;
+
+  /// Empty-state title, 'Your numbers'. Deliberately reworded from the reference's own bonds.noneSaved ('No saved numbers') to read as an honest empty state — see prizebondsNoneSavedText's note
+  ///
+  /// In en, this message translates to:
+  /// **'You haven’t saved a number yet'**
+  String get prizebondsNoneSaved;
+
+  /// Deliberately reworded from the reference's own bonds.noneSavedText ('Check a number above and save it to be told when it wins.'), which implies a working save action; the reference never writes to its own saved-numbers state (see prizebonds_tool.dart's library note), so this describes the permanently-empty state honestly instead of promising a save flow that does not exist
+  ///
+  /// In en, this message translates to:
+  /// **'There’s nothing here to check against a draw yet.'**
+  String get prizebondsNoneSavedText;
+
+  /// Reference key bonds.number — field label
+  ///
+  /// In en, this message translates to:
+  /// **'Bond number'**
+  String get prizebondsNumber;
+
+  /// Reference key bonds.prizePool — summary card stat label
+  ///
+  /// In en, this message translates to:
+  /// **'Total prizes'**
+  String get prizebondsPrizePool;
+
+  /// Reference key bonds.prizeShape — chart section title
+  ///
+  /// In en, this message translates to:
+  /// **'First prize by denomination'**
+  String get prizebondsPrizeShape;
+
+  /// Reference key bonds.prizeShapeCap — chart caption
+  ///
+  /// In en, this message translates to:
+  /// **'A larger bond buys a larger top prize, not better odds.'**
+  String get prizebondsPrizeShapeCap;
+
+  /// Reference key bonds.prizeTiers — table section title
+  ///
+  /// In en, this message translates to:
+  /// **'Prize tiers'**
+  String get prizebondsPrizeTiers;
+
+  /// Reference key bonds.scheme — context-bar label
+  ///
+  /// In en, this message translates to:
+  /// **'National prize bonds'**
+  String get prizebondsScheme;
+
+  /// Reference key bonds.second — prize-tiers table column header
+  ///
+  /// In en, this message translates to:
+  /// **'Second'**
+  String get prizebondsSecond;
+
+  /// Reference key bonds.third — prize-tiers table column header
+  ///
+  /// In en, this message translates to:
+  /// **'Third'**
+  String get prizebondsThird;
+
+  /// Reference key bonds.totalWinners — summary card stat label
+  ///
+  /// In en, this message translates to:
+  /// **'Winners'**
+  String get prizebondsTotalWinners;
+
+  /// Empty state body, non-Pakistan reader — reworded to match savingsUnavailableText's own 'specific to Pakistan' phrasing (the sibling Money & Rates tool) rather than the reference's own more generic bonds.unavailable.text ('a country-specific savings product')
+  ///
+  /// In en, this message translates to:
+  /// **'Prize bonds are specific to Pakistan.'**
+  String get prizebondsUnavailableText;
+
+  /// Reference key bonds.unavailable.title — empty state title, non-Pakistan reader
+  ///
+  /// In en, this message translates to:
+  /// **'Not available in your country'**
+  String get prizebondsUnavailableTitle;
+
+  /// n: String — reference key bonds.winners, a draw row's meta line
+  ///
+  /// In en, this message translates to:
+  /// **'{n} winners'**
+  String prizebondsWinners(String n);
+
+  /// Reference key bonds.yourNumbers — section title
+  ///
+  /// In en, this message translates to:
+  /// **'Your numbers'**
+  String get prizebondsYourNumbers;
 }
 
 class _AppLocalizationsDelegate
