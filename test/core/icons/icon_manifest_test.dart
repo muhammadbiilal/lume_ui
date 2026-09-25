@@ -1,9 +1,9 @@
 /// The icon set: complete, geometrically faithful, and correctly directional.
 ///
-/// The icons exist only inside the reference's sprite until they are extracted,
-/// so these tests compare the extracted assets back against `index.html` while
-/// it is still here. After Phase F9 the manifest and the geometry checks stand
-/// on their own.
+/// The icons were extracted from the web reference's own sprite (`index.html`)
+/// and compared back against it byte for byte before Phase F9 removed that
+/// file — every one of the 112 matched. The manifest and the geometry checks
+/// below stand on their own now, with nothing left to compare against.
 library;
 
 import 'dart:convert';
@@ -18,7 +18,6 @@ import 'package:lume/core/theme/lume/lume_space.dart';
 import '../../helpers/lume_harness.dart';
 
 const String _dir = 'assets/icons';
-const String _sprite = 'index.html';
 
 void main() {
   final Map<String, dynamic> manifest =
@@ -66,42 +65,6 @@ void main() {
   });
 
   group('geometry survived extraction', () {
-    // Temporary: reads the sprite, which is deleted at Phase F9. By then the
-    // assets have been compared visually and stand alone.
-    final bool spriteHere = File(_sprite).existsSync();
-
-    test('every icon keeps the sprite\'s path data byte for byte', () {
-      if (!spriteHere) {
-        markTestSkipped('the reference sprite has been removed');
-        return;
-      }
-      final String html = File(_sprite).readAsStringSync();
-      final RegExp symbol = RegExp(
-        r'<symbol id="i-([a-z0-9-]+)" viewBox="([^"]+)">([\s\S]*?)</symbol>',
-      );
-
-      int checked = 0;
-      for (final RegExpMatch m in symbol.allMatches(html)) {
-        final String name = m.group(1)!;
-        final String viewBox = m.group(2)!;
-        final String body = m.group(3)!;
-        final String svg = File('$_dir/$name.svg').readAsStringSync();
-
-        expect(
-          svg,
-          contains('viewBox="$viewBox"'),
-          reason: '$name lost its viewBox',
-        );
-        expect(
-          svg,
-          contains(body),
-          reason: '$name path geometry differs from the sprite',
-        );
-        checked++;
-      }
-      expect(checked, 112);
-    });
-
     test(
       'every asset carries the stroke presentation the sprite inherited',
       () {

@@ -24,8 +24,8 @@ void main() {
   if (!Measurements.available()) {
     test('component measurements are present', () {
       fail(
-        'No measurements found. Run '
-        'docs/conversion_archive/tool/measure_components.mjs first.',
+        'No measurements found. They are frozen and cannot be regenerated; '
+        'restore docs/conversion_archive/measurements/ from git history.',
       );
     });
     return;

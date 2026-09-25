@@ -25,8 +25,8 @@ void main() {
   if (!Measurements.available()) {
     test('navigation measurements are present', () {
       fail(
-        'No measurements found. Run '
-        'docs/conversion_archive/tool/measure_components.mjs first.',
+        'No measurements found. They are frozen and cannot be regenerated; '
+        'restore docs/conversion_archive/measurements/ from git history.',
       );
     });
     return;
@@ -41,7 +41,7 @@ void main() {
   // area, and `--nav-w` is set on `.app` by the width class. Measured outside
   // the shell it simply fills its host, so the honest source for these two is
   // the stylesheet that declares them.
-  final ReferenceTokens css = ReferenceTokens.load();
+  const ReferenceTokens css = ReferenceTokens.frozen;
   final double railWidth = ReferenceTokens.px(css.light['--nav-rail']!);
   final double sidebarWidth = ReferenceTokens.px(css.light['--nav-side']!);
 

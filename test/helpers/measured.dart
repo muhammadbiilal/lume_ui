@@ -1,14 +1,16 @@
-/// Reads the component measurements taken from the rendered prototype.
+/// Reads the component measurements taken from the original rendered design.
 ///
-/// `docs/conversion_archive/tool/measure_components.mjs` drives the real
-/// components in a real browser and records `getComputedStyle` for each. These
-/// tests compare the Flutter widgets against *that*, not against a number
-/// somebody typed into both places.
+/// Before Phase F9 a capture tool drove the browser prototype's real
+/// components and recorded `getComputedStyle` for each; these tests compare
+/// the Flutter widgets against *that*, not against a number somebody typed
+/// into both places.
 ///
-/// **Temporary.** The measurements outlive the prototype — they are JSON — but
-/// the tool that produces them does not. At Phase F9 these files are either
-/// frozen as the record of what the design was, or replaced by the goldens
-/// that will by then have been proven against them.
+/// **Frozen.** The prototype and the capture tool were removed at Phase F9;
+/// the JSON they produced is kept in `docs/conversion_archive/measurements/`
+/// as the permanent record of what the design was. It cannot be regenerated —
+/// a deliberate design change updates the Flutter source of truth and, where a
+/// test here then disagrees, the measurement it compares against, by hand and
+/// in review.
 library;
 
 import 'dart:convert';
@@ -137,8 +139,8 @@ class Measurements {
     final File f = File('$_dir/$cell.json');
     if (!f.existsSync()) {
       throw StateError(
-        '$_dir/$cell.json is missing. Run '
-        'docs/conversion_archive/tool/measure_components.mjs to produce it.',
+        '$_dir/$cell.json is missing. These measurements are frozen and '
+        'cannot be regenerated; restore the file from git history.',
       );
     }
     final Map<String, dynamic> json =
@@ -152,8 +154,8 @@ class Measurements {
     final dynamic c = _components[name];
     if (c == null) {
       throw StateError(
-        'no specimen "$name" in $cell. Add it to '
-        'docs/conversion_archive/tool/fixture/specimens.js and re-measure.',
+        'no specimen "$name" in $cell. The measurements are frozen; a '
+        'component with no measured specimen needs a golden instead.',
       );
     }
     return Measured(name, c as Map<String, dynamic>);

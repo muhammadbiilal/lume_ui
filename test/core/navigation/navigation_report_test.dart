@@ -48,8 +48,8 @@ void main() {
   if (!Measurements.available()) {
     test('navigation measurements are present', () {
       fail(
-        'No measurements found. Run '
-        'docs/conversion_archive/tool/measure_components.mjs first.',
+        'No measurements found. They are frozen and cannot be regenerated; '
+        'restore docs/conversion_archive/measurements/ from git history.',
       );
     });
     return;
@@ -160,7 +160,7 @@ void main() {
     ),
   ];
 
-  final ReferenceTokens css = ReferenceTokens.load();
+  const ReferenceTokens css = ReferenceTokens.frozen;
   final List<String> rows = <String>[];
 
   /// One compared value. Recorded for the report, and asserted here.
@@ -346,9 +346,10 @@ void main() {
       )
       ..writeln()
       ..writeln(
-        'Re-generate by re-running `tool/measure_components.mjs` for the cells '
-        'listed\nbelow, then '
-        '`flutter test test/core/navigation/navigation_report_test.dart`.',
+        'The **web** column is frozen: it was measured before Phase F9 removed '
+        'the\nprototype and cannot be re-measured. Re-running '
+        '`flutter test test/core/navigation/navigation_report_test.dart`\n'
+        'refreshes the **Flutter** column.',
       )
       ..writeln()
       ..writeln('| Cell | Property | Web | Flutter | Note |')

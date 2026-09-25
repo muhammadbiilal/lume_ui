@@ -1,8 +1,7 @@
-/// Every design token, asserted against the reference stylesheet it came from.
-///
-/// These tests parse `assets/css/tokens.css` rather than repeating its values,
-/// so they fail when the Dart and the design disagree — not when someone typed
-/// the same hex twice.
+/// Every design token, asserted against the reference stylesheet's own values
+/// (`test/helpers/reference_tokens.dart`), frozen at Phase F9 once the web
+/// reference itself was removed. See that file's own doc comment for why a
+/// frozen value is not a weaker protection than a live parse.
 library;
 
 import 'dart:math' as math;
@@ -18,20 +17,7 @@ import 'package:lume/core/theme/lume/lume_type.dart';
 import '../../helpers/reference_tokens.dart';
 
 void main() {
-  if (!ReferenceTokens.available) {
-    // The reference is deleted at Phase F9. When that happens these tests are
-    // rewritten to assert the values directly; until then, a missing
-    // stylesheet is a broken checkout, not a passing suite.
-    test('the reference stylesheet is present', () {
-      fail(
-        '${ReferenceTokens.path} is missing. Token parity cannot be '
-        'checked against the source.',
-      );
-    });
-    return;
-  }
-
-  final ReferenceTokens css = ReferenceTokens.load();
+  const ReferenceTokens css = ReferenceTokens.frozen;
 
   group('colour — light', () {
     const Map<String, Color Function(LumeColors)> mapping =
