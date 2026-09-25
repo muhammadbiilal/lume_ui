@@ -39,6 +39,7 @@ class LumeDataCapability {
     bool reproducesReference = false,
   }) => LumeDataCapability(
     source: sampleSource,
+    isDurable: durable.contains(toolId),
     isLive: onDeviceClocks.contains(toolId),
     computedHere: computed.contains(toolId),
     isSample:
@@ -103,6 +104,11 @@ class LumeDataCapability {
     // could mistake for data — the factors are the values that define the
     // units (wave 4).
     'converter',
+    // BMI Calculator (wave 8): the height/weight the reader typed, and a
+    // real BMI/band calculation over it. The reference's five-point
+    // "history" is invented offsets from the current reading, not a real
+    // past record, and is not reproduced.
+    'bmi',
   };
 
   /// Tools that have sample data **only** where the build reproduces the
@@ -136,6 +142,11 @@ class LumeDataCapability {
     // World Clock: every time is worked out from the compiled-in
     // IANA database and the device's own clock (D-W8, wave 3).
     'worldclock',
+    // Qibla Compass (wave 8): a real great-circle bearing and distance to
+    // the Kaaba from the reader's city coordinates — no live compass
+    // sensor, no fixture. `fallbackSource: 'Great-circle bearing'` in the
+    // catalogue already says as much.
+    'qibla',
   };
 
   /// Tools that show only what the reader wrote — nothing seeded, nothing
@@ -161,7 +172,29 @@ class LumeDataCapability {
     // literals with no computation behind them (MEALPLAN_PROPOSAL.md
     // §0) — nothing here is reproduced; a reader's build opens empty.
     'mealplan',
+    // Reminders (wave 7): the one family whose store actually outlives the
+    // app closing — a second, scoped LumeRecordRepository implementation,
+    // not a project-wide change (ROLLOUT_WAVE_7.md, REMINDERS_PROPOSAL.md
+    // §2). Also in [durable], which every other entry here is not.
+    'reminders',
+    // Wave 8 — ten tools built in parallel without a per-tool discovery
+    // gate. Each of these six is the reader's own entered records, with
+    // every derived figure (a streak, a due count, a predicted date, a
+    // week number) computed for real over them rather than reproduced from
+    // the reference's own bare literals or invented fixtures:
+    'streak',
+    'habits',
+    'meds',
+    'vaccines',
+    'health',
+    'cycle',
+    'pregnancy',
   };
+
+  /// The one family (so far) whose store survives the app closing —
+  /// [LumeSqliteRecordRepository], scoped to Reminders alone. Every other
+  /// entry in [readerRecords] keeps [isDurable] at its default, `false`.
+  static const Set<String> durable = <String>{'reminders'};
 
   /// Tools whose "live" is a clock ticking on the device.
   static const Set<String> onDeviceClocks = <String>{

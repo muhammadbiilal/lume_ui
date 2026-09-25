@@ -15,7 +15,7 @@
 /// faith-gated tool, the trains slide is `PK` and opens a `PK` feature. So this
 /// asks [LumeEligibility] about the target instead, which is §63's "use
 /// centralized capability metadata" and cannot drift out of step with the
-/// catalogue. `home_composer_test.dart` asserts the two agree on every slide.
+/// catalogue. `home_composition_test.dart` asserts the two agree on every slide.
 ///
 /// **Sorting is stable.** `Array.prototype.sort` has been stable since ES2019,
 /// and the hero ranking and the upcoming ordering both rely on it — two slides

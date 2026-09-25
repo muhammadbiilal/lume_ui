@@ -67,6 +67,12 @@ void main() {
       ]..sort(),
       <String>[
         'android.permission.CAMERA',
+        // Wave 7 (`ROLLOUT_WAVE_7.md`) — Reminders' real scheduled
+        // notifications, asked for when the reader first sets a reminder,
+        // never at launch.
+        'android.permission.POST_NOTIFICATIONS',
+        'android.permission.RECEIVE_BOOT_COMPLETED',
+        'android.permission.SCHEDULE_EXACT_ALARM',
         'android.permission.WRITE_EXTERNAL_STORAGE',
       ],
     );
@@ -103,6 +109,9 @@ void main() {
           <String>[
             'android.permission.CAMERA',
             'android.permission.INTERNET',
+            'android.permission.POST_NOTIFICATIONS',
+            'android.permission.RECEIVE_BOOT_COMPLETED',
+            'android.permission.SCHEDULE_EXACT_ALARM',
             'android.permission.WRITE_EXTERNAL_STORAGE',
             ownReceivers,
           ],
@@ -113,6 +122,9 @@ void main() {
               'processReleaseManifest/AndroidManifest.xml',
           <String>[
             'android.permission.CAMERA',
+            'android.permission.POST_NOTIFICATIONS',
+            'android.permission.RECEIVE_BOOT_COMPLETED',
+            'android.permission.SCHEDULE_EXACT_ALARM',
             'android.permission.WRITE_EXTERNAL_STORAGE',
             ownReceivers,
           ],

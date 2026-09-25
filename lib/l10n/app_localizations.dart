@@ -18150,6 +18150,1392 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Drink'**
   String get recFieldDrink;
+
+  /// Reference key rec.f.repeat
+  ///
+  /// In en, this message translates to:
+  /// **'Repeat'**
+  String get recFieldRepeat;
+
+  /// Wave 7 (ROLLOUT_WAVE_7.md) — Reminders' label field, the schema's own copy (rec.f.remindMe)
+  ///
+  /// In en, this message translates to:
+  /// **'Remind me to'**
+  String get remFieldLabel;
+
+  /// reminders.once
+  ///
+  /// In en, this message translates to:
+  /// **'Once'**
+  String get remRepeatOnce;
+
+  /// reminders.daily
+  ///
+  /// In en, this message translates to:
+  /// **'Every day'**
+  String get remRepeatDaily;
+
+  /// reminders.weekly
+  ///
+  /// In en, this message translates to:
+  /// **'Every week'**
+  String get remRepeatWeekly;
+
+  /// Validation: the label field was left empty
+  ///
+  /// In en, this message translates to:
+  /// **'Say what to be reminded about'**
+  String get remErrLabel;
+
+  /// A save or delete found a newer version than the one on screen
+  ///
+  /// In en, this message translates to:
+  /// **'This reminder changed elsewhere'**
+  String get remErrConflict;
+
+  /// A write failed for a reason other than a conflict
+  ///
+  /// In en, this message translates to:
+  /// **'That didn\'t save. Try again.'**
+  String get remErrFailed;
+
+  /// Toast: the record saved, but the reader's timezone could not be resolved, so nothing was scheduled with the platform (REMINDERS_PROPOSAL.md §2 — never guessed)
+  ///
+  /// In en, this message translates to:
+  /// **'Saved — set your location in Account so this can fire on time'**
+  String get remSavedNoZone;
+
+  /// Toast: the record saved, but the platform refused or failed to schedule the notification
+  ///
+  /// In en, this message translates to:
+  /// **'Saved, but the reminder couldn\'t be scheduled'**
+  String get remSavedNoSchedule;
+
+  /// Button, and the add sheet's title
+  ///
+  /// In en, this message translates to:
+  /// **'Add reminder'**
+  String get remAddReminder;
+
+  /// The edit sheet's title
+  ///
+  /// In en, this message translates to:
+  /// **'Edit reminder'**
+  String get remEditReminder;
+
+  /// Toast after deleting a reminder, with Undo
+  ///
+  /// In en, this message translates to:
+  /// **'Reminder deleted'**
+  String get remDeletedToast;
+
+  /// Banner shown when the platform's notification permission is not granted (REMINDERS_PROPOSAL.md §4)
+  ///
+  /// In en, this message translates to:
+  /// **'Turn on notifications'**
+  String get remPermissionTitle;
+
+  /// Banner body, explaining why the permission matters
+  ///
+  /// In en, this message translates to:
+  /// **'Lume needs permission to remind you at the right time, even when the app is closed.'**
+  String get remPermissionText;
+
+  /// Button: the permission can only be changed from the platform's own Settings screen
+  ///
+  /// In en, this message translates to:
+  /// **'Open Settings'**
+  String get remOpenSettings;
+
+  /// Button: the platform will still show its own request dialog
+  ///
+  /// In en, this message translates to:
+  /// **'Enable notifications'**
+  String get remEnableNotifications;
+
+  /// Android 12+ banner: exact-alarm scheduling is not available
+  ///
+  /// In en, this message translates to:
+  /// **'Allow exact timing'**
+  String get remExactAlarmTitle;
+
+  /// Android 12+ banner body
+  ///
+  /// In en, this message translates to:
+  /// **'Without this, Android may deliver a reminder a few minutes late.'**
+  String get remExactAlarmText;
+
+  /// Summary card kicker
+  ///
+  /// In en, this message translates to:
+  /// **'Reminders'**
+  String get remSummaryKicker;
+
+  /// Summary card caption, read after the count of enabled reminders
+  ///
+  /// In en, this message translates to:
+  /// **'turned on'**
+  String get remSummaryCaption;
+
+  /// rec.reminders.emptyTitle
+  ///
+  /// In en, this message translates to:
+  /// **'No reminders yet'**
+  String get remEmptyTitle;
+
+  /// rec.reminders.emptyText
+  ///
+  /// In en, this message translates to:
+  /// **'Set one and Lume will nudge you at the right time.'**
+  String get remEmptyText;
+
+  /// The height field's label on the BMI calculator.
+  ///
+  /// In en, this message translates to:
+  /// **'Height'**
+  String get bmiFieldHeight;
+
+  /// The weight field's label on the BMI calculator.
+  ///
+  /// In en, this message translates to:
+  /// **'Weight'**
+  String get bmiFieldWeight;
+
+  /// The summary card's kicker, and the progress gauge's accessible name.
+  ///
+  /// In en, this message translates to:
+  /// **'Your BMI'**
+  String get bmiYourBmi;
+
+  /// The band label for a BMI under 18.5.
+  ///
+  /// In en, this message translates to:
+  /// **'Underweight'**
+  String get bmiBandUnderweight;
+
+  /// The band label for a BMI from 18.5 up to 25.
+  ///
+  /// In en, this message translates to:
+  /// **'Healthy weight'**
+  String get bmiBandHealthy;
+
+  /// The band label for a BMI from 25 up to 30.
+  ///
+  /// In en, this message translates to:
+  /// **'Overweight'**
+  String get bmiBandOverweight;
+
+  /// The band label for a BMI of 30 and over.
+  ///
+  /// In en, this message translates to:
+  /// **'Obese'**
+  String get bmiBandObese;
+
+  /// The section title over the four bands.
+  ///
+  /// In en, this message translates to:
+  /// **'BMI scale'**
+  String get bmiScale;
+
+  /// The section title over the healthy range and ideal weight rows.
+  ///
+  /// In en, this message translates to:
+  /// **'Healthy weight for you'**
+  String get bmiHealthyTitle;
+
+  /// The row label for the healthy-weight range at the reader's height.
+  ///
+  /// In en, this message translates to:
+  /// **'Healthy range'**
+  String get bmiHealthyRange;
+
+  /// The row label for the midpoint of the healthy range.
+  ///
+  /// In en, this message translates to:
+  /// **'Ideal weight'**
+  String get bmiIdealWeight;
+
+  /// A closed band's boundaries on the scale, both already formatted.
+  ///
+  /// In en, this message translates to:
+  /// **'{low} to {high}'**
+  String bmiRange(String low, String high);
+
+  /// An open-ended band's ceiling on the scale (underweight).
+  ///
+  /// In en, this message translates to:
+  /// **'Under {value}'**
+  String bmiUnder(String value);
+
+  /// An open-ended band's floor on the scale (obese).
+  ///
+  /// In en, this message translates to:
+  /// **'Over {value}'**
+  String bmiOver(String value);
+
+  /// The marker on the scale row matching the reader's own reading.
+  ///
+  /// In en, this message translates to:
+  /// **'Current'**
+  String get bmiCurrent;
+
+  /// Toast when today's check-in changed elsewhere before this write landed.
+  ///
+  /// In en, this message translates to:
+  /// **'This changed somewhere else. Open it again.'**
+  String get streakErrConflict;
+
+  /// Toast when a check-in write failed to save.
+  ///
+  /// In en, this message translates to:
+  /// **'That didn\'t save. Try again.'**
+  String get streakErrFailed;
+
+  /// Toast after marking today done on the streak.
+  ///
+  /// In en, this message translates to:
+  /// **'Checked in for today'**
+  String get streakCheckedInToast;
+
+  /// Toast after clearing today's check-in on the streak.
+  ///
+  /// In en, this message translates to:
+  /// **'Check-in removed'**
+  String get streakUncheckedToast;
+
+  /// Streak summary card kicker.
+  ///
+  /// In en, this message translates to:
+  /// **'Current streak'**
+  String get streakSummaryKicker;
+
+  /// Streak summary caption — the reader's longest streak ever recorded.
+  ///
+  /// In en, this message translates to:
+  /// **'Best: {n} days'**
+  String streakBestCaption(int n);
+
+  /// Streak summary stat label — this month's check-ins as a share of days elapsed.
+  ///
+  /// In en, this message translates to:
+  /// **'Consistency'**
+  String get streakRateLabel;
+
+  /// Streak summary stat label — the next streak-length milestone still ahead.
+  ///
+  /// In en, this message translates to:
+  /// **'Next milestone'**
+  String get streakNextLabel;
+
+  /// Checkbox state announced for today's row on the streak toggle.
+  ///
+  /// In en, this message translates to:
+  /// **'Checked in today'**
+  String get streakCheckInLabel;
+
+  /// Section title over the streak's 35-day check-in grid.
+  ///
+  /// In en, this message translates to:
+  /// **'Calendar'**
+  String get streakCalendarTitle;
+
+  /// Section title over the streak's milestone list.
+  ///
+  /// In en, this message translates to:
+  /// **'Milestones'**
+  String get streakMilestonesTitle;
+
+  /// Label for one streak-length milestone.
+  ///
+  /// In en, this message translates to:
+  /// **'{n}-day streak'**
+  String streakMilestoneDays(int n);
+
+  /// Screen-reader summary for the streak's 35-day check-in grid.
+  ///
+  /// In en, this message translates to:
+  /// **'{checked} of the last {total} days checked in'**
+  String streakCalendarA11y(int checked, int total);
+
+  /// Label for the cadence field in the habit form.
+  ///
+  /// In en, this message translates to:
+  /// **'Frequency'**
+  String get habitsFieldFrequency;
+
+  /// Habit cadence: every day.
+  ///
+  /// In en, this message translates to:
+  /// **'Daily'**
+  String get habitsFreqDaily;
+
+  /// Habit cadence: Monday to Friday only.
+  ///
+  /// In en, this message translates to:
+  /// **'Weekdays'**
+  String get habitsFreqWeekdays;
+
+  /// Habit cadence: once a week.
+  ///
+  /// In en, this message translates to:
+  /// **'Weekly'**
+  String get habitsFreqWeekly;
+
+  /// Empty state title for the Habits list.
+  ///
+  /// In en, this message translates to:
+  /// **'No habits yet'**
+  String get habitsEmptyTitle;
+
+  /// Empty state text for the Habits list.
+  ///
+  /// In en, this message translates to:
+  /// **'Add a habit to start tracking your streak.'**
+  String get habitsEmptyText;
+
+  /// Button that opens the new-habit form.
+  ///
+  /// In en, this message translates to:
+  /// **'Add habit'**
+  String get habitsAddHabit;
+
+  /// Form title when adding a habit.
+  ///
+  /// In en, this message translates to:
+  /// **'New habit'**
+  String get habitsNewHabit;
+
+  /// Form title when editing a habit.
+  ///
+  /// In en, this message translates to:
+  /// **'Edit habit'**
+  String get habitsEditHabit;
+
+  /// Kicker on the Habits summary card.
+  ///
+  /// In en, this message translates to:
+  /// **'Today'**
+  String get habitsSummaryKicker;
+
+  /// Summary stat label: how many habits are tracked.
+  ///
+  /// In en, this message translates to:
+  /// **'Habits'**
+  String get habitsStatTotal;
+
+  /// Summary stat label: habits with a current streak.
+  ///
+  /// In en, this message translates to:
+  /// **'Active streaks'**
+  String get habitsStatActiveStreaks;
+
+  /// What a habit row's checkbox marks, read together with the habit's own name.
+  ///
+  /// In en, this message translates to:
+  /// **'Done today'**
+  String get habitsCheckLabel;
+
+  /// A habit's current streak in days, shown on its row.
+  ///
+  /// In en, this message translates to:
+  /// **'{n, plural, =0{No streak yet} =1{1 day streak} other{{n} day streak}}'**
+  String habitsStreakDays(int n);
+
+  /// A habit's current streak in weeks, shown on its row.
+  ///
+  /// In en, this message translates to:
+  /// **'{n, plural, =0{No streak yet} =1{1 week streak} other{{n} week streak}}'**
+  String habitsStreakWeeks(int n);
+
+  /// The bare unit word for a daily-cadence streak figure.
+  ///
+  /// In en, this message translates to:
+  /// **'{n, plural, =1{day} other{days}}'**
+  String habitsUnitDays(int n);
+
+  /// The bare unit word for a weekly-cadence streak figure.
+  ///
+  /// In en, this message translates to:
+  /// **'{n, plural, =1{week} other{weeks}}'**
+  String habitsUnitWeeks(int n);
+
+  /// Caption under the habit detail's headline figure.
+  ///
+  /// In en, this message translates to:
+  /// **'Current streak'**
+  String get habitsCurrentStreakCaption;
+
+  /// Habit detail stat label: the longest streak on record.
+  ///
+  /// In en, this message translates to:
+  /// **'Best'**
+  String get habitsStatBest;
+
+  /// Habit detail stat label: share of required days/weeks kept.
+  ///
+  /// In en, this message translates to:
+  /// **'Completion'**
+  String get habitsStatCompletion;
+
+  /// Detail action that logs today's check-in.
+  ///
+  /// In en, this message translates to:
+  /// **'Mark done today'**
+  String get habitsMarkDone;
+
+  /// Detail action that removes today's check-in.
+  ///
+  /// In en, this message translates to:
+  /// **'Undo today\'s check-in'**
+  String get habitsUnmarkDone;
+
+  /// Delete-confirmation title for a habit.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete this habit?'**
+  String get habitsDeleteAsk;
+
+  /// Delete-confirmation body.
+  ///
+  /// In en, this message translates to:
+  /// **'{name} and its check-in history will be removed. You can undo this straight away.'**
+  String habitsDeleteText(String name);
+
+  /// Toast after deleting a habit.
+  ///
+  /// In en, this message translates to:
+  /// **'Habit deleted'**
+  String get habitsDeletedToast;
+
+  /// Error toast: conflict/notFound on a write.
+  ///
+  /// In en, this message translates to:
+  /// **'Someone already changed this habit'**
+  String get habitsErrConflict;
+
+  /// Error toast: generic write failure.
+  ///
+  /// In en, this message translates to:
+  /// **'Couldn\'t save this habit'**
+  String get habitsErrFailed;
+
+  /// Validation error: empty name.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter a name'**
+  String get habitsErrName;
+
+  /// Validation error: name or notes over the limit.
+  ///
+  /// In en, this message translates to:
+  /// **'That\'s too long'**
+  String get habitsErrLong;
+
+  /// Badge on a habit whose check-in records are inconsistent; its figures are hidden.
+  ///
+  /// In en, this message translates to:
+  /// **'Needs attention'**
+  String get habitsDamagedBadge;
+
+  /// Medication schedule option. Reference key rec.sched.daily.
+  ///
+  /// In en, this message translates to:
+  /// **'Once a day'**
+  String get medsScheduleDaily;
+
+  /// Medication schedule option. Reference key rec.sched.twice.
+  ///
+  /// In en, this message translates to:
+  /// **'Twice a day'**
+  String get medsScheduleTwice;
+
+  /// Medication schedule option. Reference key rec.sched.weekly.
+  ///
+  /// In en, this message translates to:
+  /// **'Once a week'**
+  String get medsScheduleWeekly;
+
+  /// Medication schedule option. Reference key rec.sched.needed.
+  ///
+  /// In en, this message translates to:
+  /// **'As needed'**
+  String get medsScheduleNeeded;
+
+  /// Form field label for the medication's schedule. Reference key rec.f.schedule.
+  ///
+  /// In en, this message translates to:
+  /// **'Schedule'**
+  String get medsFieldSchedule;
+
+  /// Form field label for the medicine's name.
+  ///
+  /// In en, this message translates to:
+  /// **'Name'**
+  String get medsFieldName;
+
+  /// Placeholder text for the name field. Reference key rec.meds.ph.
+  ///
+  /// In en, this message translates to:
+  /// **'Name of the medicine'**
+  String get medsFieldNamePh;
+
+  /// Form field label for the dose. Reference key rec.f.dose.
+  ///
+  /// In en, this message translates to:
+  /// **'Dose'**
+  String get medsFieldDose;
+
+  /// Placeholder text for the dose field. Reference key rec.meds.dosePh.
+  ///
+  /// In en, this message translates to:
+  /// **'500 mg'**
+  String get medsFieldDosePh;
+
+  /// Form field label for the optional first-dose time of day; stored as plain data, not a scheduled alert. Reference key rec.f.firstDose.
+  ///
+  /// In en, this message translates to:
+  /// **'First dose'**
+  String get medsFieldFirstDose;
+
+  /// Form field label for the optional count of doses remaining. Reference key rec.f.dosesLeft.
+  ///
+  /// In en, this message translates to:
+  /// **'Doses left'**
+  String get medsFieldDosesLeft;
+
+  /// Form field label for the optional free-text note. Reference key rec.f.notes.
+  ///
+  /// In en, this message translates to:
+  /// **'Notes'**
+  String get medsFieldNotes;
+
+  /// Title shown when the reader has not added any medication yet. Reference key rec.meds.emptyTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'No medication tracked'**
+  String get medsEmptyTitle;
+
+  /// Supporting text under the empty-state title; adapted from the reference to drop the "next dose" claim this build cannot compute.
+  ///
+  /// In en, this message translates to:
+  /// **'Add one to keep track of the dose, the schedule, and how much is left.'**
+  String get medsEmptyText;
+
+  /// Label on the button that opens the add-medication form.
+  ///
+  /// In en, this message translates to:
+  /// **'Add medication'**
+  String get medsAddMedication;
+
+  /// Screen title while adding a new medication.
+  ///
+  /// In en, this message translates to:
+  /// **'New medication'**
+  String get medsNewMedication;
+
+  /// Screen title while editing an existing medication.
+  ///
+  /// In en, this message translates to:
+  /// **'Edit medication'**
+  String get medsEditMedication;
+
+  /// Small label above the medication count on the list's summary card.
+  ///
+  /// In en, this message translates to:
+  /// **'Medication'**
+  String get medsSummaryKicker;
+
+  /// Summary-card caption, shown only when at least one medication is running low; ICU plural on the count.
+  ///
+  /// In en, this message translates to:
+  /// **'{n, plural, =0{} =1{1 running low} other{{n} running low}}'**
+  String medsSummaryCaption(int n);
+
+  /// Badge shown on a medication whose doses-left count is at or below 3. Reference key rec.meds.low.
+  ///
+  /// In en, this message translates to:
+  /// **'Running low'**
+  String get medsLowBadge;
+
+  /// Small unit word shown beside the doses-left count on the medication's detail summary.
+  ///
+  /// In en, this message translates to:
+  /// **'left'**
+  String get medsDosesLeftUnit;
+
+  /// Detail-screen caption stating the stored first-dose time of day (not an alert).
+  ///
+  /// In en, this message translates to:
+  /// **'First dose at {time}'**
+  String medsFirstDoseAt(String time);
+
+  /// Title of the safety notice on a medication's detail screen; replaces the reference's "Kept on this device" title, which would misstate this build's session-only storage.
+  ///
+  /// In en, this message translates to:
+  /// **'Not medical advice'**
+  String get medsSafetyTitle;
+
+  /// Body of the safety notice. Reference key rec.meds.safety.
+  ///
+  /// In en, this message translates to:
+  /// **'Lume reminds you; it does not advise. Follow what your doctor or pharmacist told you.'**
+  String get medsSafetyText;
+
+  /// Validation message when the name field is left empty.
+  ///
+  /// In en, this message translates to:
+  /// **'Name this medication'**
+  String get medsErrName;
+
+  /// Validation message when the dose field is left empty.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter the dose'**
+  String get medsErrDose;
+
+  /// Validation message when a text field exceeds its length limit.
+  ///
+  /// In en, this message translates to:
+  /// **'That is too long'**
+  String get medsErrLong;
+
+  /// Validation message when the doses-left field isn't a valid non-negative integer.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter a whole number, 0 or more'**
+  String get medsErrDosesLeft;
+
+  /// Toast shown when a write is refused because the record changed since it was read.
+  ///
+  /// In en, this message translates to:
+  /// **'This medication changed elsewhere'**
+  String get medsErrConflict;
+
+  /// Toast shown when a record fails its strict codec.
+  ///
+  /// In en, this message translates to:
+  /// **'This medication\'s record doesn\'t add up and can\'t be shown safely'**
+  String get medsErrDamaged;
+
+  /// Generic toast for an unspecified write failure.
+  ///
+  /// In en, this message translates to:
+  /// **'That didn\'t save. Try again.'**
+  String get medsErrFailed;
+
+  /// Title of the delete-confirmation sheet.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete this medication?'**
+  String get medsDeleteAsk;
+
+  /// Body of the delete-confirmation sheet; names the medication and states Undo is available.
+  ///
+  /// In en, this message translates to:
+  /// **'{name} will be removed. You can undo this straight away.'**
+  String medsDeleteText(String name);
+
+  /// Toast shown after a successful delete (paired with Undo).
+  ///
+  /// In en, this message translates to:
+  /// **'Medication deleted'**
+  String get medsDeletedToast;
+
+  /// The noun used inside the generic recDelete/recDeleteAsk/recDeletedFinal sentence templates for this family's irreversible delete
+  ///
+  /// In en, this message translates to:
+  /// **'vaccination record'**
+  String get vaccinesNoun;
+
+  /// Empty-state title on the Vaccinations list
+  ///
+  /// In en, this message translates to:
+  /// **'No vaccinations yet'**
+  String get vaccinesEmptyTitle;
+
+  /// Empty-state supporting text
+  ///
+  /// In en, this message translates to:
+  /// **'Keep a record of vaccinations for yourself or your family.'**
+  String get vaccinesEmptyText;
+
+  /// Button label, empty state and list
+  ///
+  /// In en, this message translates to:
+  /// **'Add vaccination'**
+  String get vaccinesAddVaccination;
+
+  /// Form screen title when adding
+  ///
+  /// In en, this message translates to:
+  /// **'New vaccination'**
+  String get vaccinesNewVaccination;
+
+  /// Form screen title when editing
+  ///
+  /// In en, this message translates to:
+  /// **'Edit vaccination'**
+  String get vaccinesEditVaccination;
+
+  /// Summary card caption; n is the real due count, never a fixture literal
+  ///
+  /// In en, this message translates to:
+  /// **'{n, plural, =0{All up to date} =1{1 still due} other{{n} still due}}'**
+  String vaccinesDueCaption(int n);
+
+  /// Form field label for the vaccine's name
+  ///
+  /// In en, this message translates to:
+  /// **'Vaccine'**
+  String get vaccinesFieldName;
+
+  /// Form field / detail label for who received it (free text, never a picker)
+  ///
+  /// In en, this message translates to:
+  /// **'For'**
+  String get vaccinesFieldFor;
+
+  /// Form field label, e.g. "2nd dose"
+  ///
+  /// In en, this message translates to:
+  /// **'Dose'**
+  String get vaccinesFieldDose;
+
+  /// Form field / detail label for the clinic, doctor or pharmacy
+  ///
+  /// In en, this message translates to:
+  /// **'Given by'**
+  String get vaccinesFieldGivenBy;
+
+  /// Validation message when an optional text field exceeds its length limit
+  ///
+  /// In en, this message translates to:
+  /// **'That is too long'**
+  String get vaccinesErrLong;
+
+  /// Toast when a write hits a version conflict or the record is gone
+  ///
+  /// In en, this message translates to:
+  /// **'This record changed elsewhere'**
+  String get vaccinesErrConflict;
+
+  /// Generic write-failure toast
+  ///
+  /// In en, this message translates to:
+  /// **'That didn\'t save. Try again.'**
+  String get vaccinesErrFailed;
+
+  /// Title shown when the reader has not added any health record
+  ///
+  /// In en, this message translates to:
+  /// **'No health records yet'**
+  String get healthEmptyTitle;
+
+  /// Supporting text under the empty-state title
+  ///
+  /// In en, this message translates to:
+  /// **'Add a visit, a result or anything else worth keeping track of.'**
+  String get healthEmptyText;
+
+  /// Button label to add a new health record
+  ///
+  /// In en, this message translates to:
+  /// **'Add a record'**
+  String get healthAddRecord;
+
+  /// Header title while adding a record
+  ///
+  /// In en, this message translates to:
+  /// **'New record'**
+  String get healthNewRecord;
+
+  /// Header title while editing a record
+  ///
+  /// In en, this message translates to:
+  /// **'Edit record'**
+  String get healthEditRecord;
+
+  /// Placeholder text in the records search field
+  ///
+  /// In en, this message translates to:
+  /// **'Search records'**
+  String get healthSearch;
+
+  /// Section title above the full record list
+  ///
+  /// In en, this message translates to:
+  /// **'All records'**
+  String get healthAll;
+
+  /// Small label above the summary card's total count
+  ///
+  /// In en, this message translates to:
+  /// **'Health records'**
+  String get healthSummaryKicker;
+
+  /// Summary card caption naming how many records are dated today or later
+  ///
+  /// In en, this message translates to:
+  /// **'{n, plural, =1{1 upcoming} other{{n} upcoming}}'**
+  String healthSummaryUpcoming(int n);
+
+  /// Summary card caption when no record is dated today or later
+  ///
+  /// In en, this message translates to:
+  /// **'Nothing upcoming'**
+  String get healthSummaryNoneUpcoming;
+
+  /// Summary card stat label: total record count
+  ///
+  /// In en, this message translates to:
+  /// **'Total'**
+  String get healthStatTotal;
+
+  /// Summary card stat label: count of upcoming records
+  ///
+  /// In en, this message translates to:
+  /// **'Upcoming'**
+  String get healthStatUpcoming;
+
+  /// Summary card stat label: number of distinct record kinds used
+  ///
+  /// In en, this message translates to:
+  /// **'Types'**
+  String get healthStatTypes;
+
+  /// Form field / fact label for the record's kind (appointment, report, etc.)
+  ///
+  /// In en, this message translates to:
+  /// **'Type'**
+  String get healthFieldType;
+
+  /// Form field / fact label for who the record is from (doctor, clinic, lab)
+  ///
+  /// In en, this message translates to:
+  /// **'Source'**
+  String get healthFieldSource;
+
+  /// Placeholder text in the record title field
+  ///
+  /// In en, this message translates to:
+  /// **'Annual check-up, blood test…'**
+  String get healthTitlePlaceholder;
+
+  /// Placeholder text in the source field
+  ///
+  /// In en, this message translates to:
+  /// **'Doctor, clinic or lab'**
+  String get healthSourcePlaceholder;
+
+  /// Record kind option/label
+  ///
+  /// In en, this message translates to:
+  /// **'Appointment'**
+  String get healthKindAppointment;
+
+  /// Record kind option/label
+  ///
+  /// In en, this message translates to:
+  /// **'Report'**
+  String get healthKindReport;
+
+  /// Record kind option/label
+  ///
+  /// In en, this message translates to:
+  /// **'Prescription'**
+  String get healthKindPrescription;
+
+  /// Record kind option/label
+  ///
+  /// In en, this message translates to:
+  /// **'Vaccination'**
+  String get healthKindVaccination;
+
+  /// Record kind option/label
+  ///
+  /// In en, this message translates to:
+  /// **'Measurement'**
+  String get healthKindMeasurement;
+
+  /// Validation message when a field exceeds its length limit
+  ///
+  /// In en, this message translates to:
+  /// **'That is too long'**
+  String get healthErrTooLong;
+
+  /// Error toast when a stored record fails strict decoding
+  ///
+  /// In en, this message translates to:
+  /// **'This record\'s details don\'t add up and can\'t be shown safely'**
+  String get healthErrDamaged;
+
+  /// Delete confirmation sheet title
+  ///
+  /// In en, this message translates to:
+  /// **'Delete this record?'**
+  String get healthDeleteAsk;
+
+  /// Delete confirmation sheet body — states plainly it's irreversible
+  ///
+  /// In en, this message translates to:
+  /// **'This removes the record permanently. It cannot be undone.'**
+  String get healthDeleteText;
+
+  /// Toast shown after a successful, final delete
+  ///
+  /// In en, this message translates to:
+  /// **'Record deleted'**
+  String get healthDeletedToast;
+
+  /// Cycle Tracker summary card kicker: the reader's current day within their logged cycle
+  ///
+  /// In en, this message translates to:
+  /// **'Cycle day'**
+  String get cycleDayKicker;
+
+  /// Cycle phase name, from the reader's own logged average length
+  ///
+  /// In en, this message translates to:
+  /// **'Menstrual'**
+  String get cyclePhaseMenstrual;
+
+  /// Cycle phase name
+  ///
+  /// In en, this message translates to:
+  /// **'Follicular'**
+  String get cyclePhaseFollicular;
+
+  /// Cycle phase name
+  ///
+  /// In en, this message translates to:
+  /// **'Ovulation'**
+  String get cyclePhaseOvulation;
+
+  /// Cycle phase name
+  ///
+  /// In en, this message translates to:
+  /// **'Luteal'**
+  String get cyclePhaseLuteal;
+
+  /// Summary card caption shown before there is enough history for an average
+  ///
+  /// In en, this message translates to:
+  /// **'Log a couple more periods to see predictions'**
+  String get cycleTrackingCaption;
+
+  /// Empty state title: nothing logged at all
+  ///
+  /// In en, this message translates to:
+  /// **'No periods logged yet'**
+  String get cycleEmptyTitle;
+
+  /// Empty state body: what logging unlocks, honestly framed as an estimate from the reader's own data
+  ///
+  /// In en, this message translates to:
+  /// **'Log when your period starts and Lume will work out your average cycle length and estimate your next one from your own history.'**
+  String get cycleEmptyText;
+
+  /// Empty state's primary call to action
+  ///
+  /// In en, this message translates to:
+  /// **'Log your first period'**
+  String get cycleLogFirst;
+
+  /// Sheet title / primary button for logging a new period
+  ///
+  /// In en, this message translates to:
+  /// **'Log period'**
+  String get cycleLogPeriod;
+
+  /// Sheet title when correcting an already-logged period
+  ///
+  /// In en, this message translates to:
+  /// **'Edit period'**
+  String get cycleEditPeriod;
+
+  /// Field label: when the period started
+  ///
+  /// In en, this message translates to:
+  /// **'Start date'**
+  String get cycleStartDateLabel;
+
+  /// Field label: when the period ended
+  ///
+  /// In en, this message translates to:
+  /// **'End date'**
+  String get cycleEndDateLabel;
+
+  /// Checkbox: the period is still ongoing, so there's no end date
+  ///
+  /// In en, this message translates to:
+  /// **'Hasn\'t ended yet'**
+  String get cycleStillOngoing;
+
+  /// Shown as the current period's value when it has no end date logged
+  ///
+  /// In en, this message translates to:
+  /// **'Ongoing'**
+  String get cycleOngoingBadge;
+
+  /// Label for the current/most recent logged period's row
+  ///
+  /// In en, this message translates to:
+  /// **'Started {date}'**
+  String cycleStartedOn(String date);
+
+  /// A past period's start and end date, formatted, for its history row
+  ///
+  /// In en, this message translates to:
+  /// **'{start} – {end}'**
+  String cycleDateRange(String start, String end);
+
+  /// Section title for the predicted next start date
+  ///
+  /// In en, this message translates to:
+  /// **'Estimated next period'**
+  String get cycleNextEstimateKicker;
+
+  /// Caption under the estimate, keeping it honest about certainty
+  ///
+  /// In en, this message translates to:
+  /// **'An estimate from your own average — not a diagnosis or a guarantee'**
+  String get cycleNextEstimateCaption;
+
+  /// Section title for past completed cycles
+  ///
+  /// In en, this message translates to:
+  /// **'History'**
+  String get cycleHistoryTitle;
+
+  /// Summary card stat label for the average logged cycle length
+  ///
+  /// In en, this message translates to:
+  /// **'Average cycle'**
+  String get cycleAverageLabel;
+
+  /// Summary card stat label for how many periods the reader has logged
+  ///
+  /// In en, this message translates to:
+  /// **'Periods logged'**
+  String get cycleLoggedCountLabel;
+
+  /// Verb label for removing a logged period (button and delete-confirmation action)
+  ///
+  /// In en, this message translates to:
+  /// **'Delete entry'**
+  String get cycleDeleteEntry;
+
+  /// Delete confirmation title
+  ///
+  /// In en, this message translates to:
+  /// **'Delete this entry?'**
+  String get cycleDeleteTitle;
+
+  /// Delete confirmation consequence — recoverable, matching the Undo that follows
+  ///
+  /// In en, this message translates to:
+  /// **'This removes this logged period from your history. This can be undone right after.'**
+  String get cycleDeleteText;
+
+  /// Toast after a successful delete, paired with Undo
+  ///
+  /// In en, this message translates to:
+  /// **'Entry deleted'**
+  String get cycleDeletedToast;
+
+  /// Toast after logging or correcting a period
+  ///
+  /// In en, this message translates to:
+  /// **'Saved'**
+  String get cycleSavedToast;
+
+  /// Generic write-failure toast
+  ///
+  /// In en, this message translates to:
+  /// **'That didn\'t save. Try again.'**
+  String get cycleErrFailed;
+
+  /// Toast for a conflicting/missing record on write
+  ///
+  /// In en, this message translates to:
+  /// **'This entry changed elsewhere'**
+  String get cycleErrConflict;
+
+  /// Pregnancy: the one field label, for the date picker
+  ///
+  /// In en, this message translates to:
+  /// **'First day of your last period'**
+  String get pregnancyLmpLabel;
+
+  /// Pregnancy: hint under the date field, keeping the estimate honest
+  ///
+  /// In en, this message translates to:
+  /// **'Used to estimate your due date. Not medical advice.'**
+  String get pregnancyLmpHint;
+
+  /// Pregnancy: the date field's value before anything is entered
+  ///
+  /// In en, this message translates to:
+  /// **'Not set'**
+  String get pregnancyNotSet;
+
+  /// Pregnancy: empty-state title, before a date is entered
+  ///
+  /// In en, this message translates to:
+  /// **'See your estimated due date'**
+  String get pregnancyEmptyTitle;
+
+  /// Pregnancy: empty-state body text
+  ///
+  /// In en, this message translates to:
+  /// **'Add the first day of your last period and Lume will estimate your week, trimester and due date.'**
+  String get pregnancyEmptyText;
+
+  /// Pregnancy: the unit beside the week number ("/ 40"); weeks is pre-formatted
+  ///
+  /// In en, this message translates to:
+  /// **'/ {weeks}'**
+  String pregnancyOfWeeks(String weeks);
+
+  /// Pregnancy: the trimester label in the summary caption; n is pre-formatted
+  ///
+  /// In en, this message translates to:
+  /// **'Trimester {n}'**
+  String pregnancyTrimester(String n);
+
+  /// Pregnancy: summary stat label
+  ///
+  /// In en, this message translates to:
+  /// **'Days pregnant'**
+  String get pregnancyDaysPregnant;
+
+  /// Pregnancy: summary stat label, before the due date
+  ///
+  /// In en, this message translates to:
+  /// **'Days to go'**
+  String get pregnancyDaysToGo;
+
+  /// Pregnancy: summary stat label, once the due date has passed
+  ///
+  /// In en, this message translates to:
+  /// **'Days overdue'**
+  String get pregnancyDaysOverdue;
+
+  /// Pregnancy: summary stat label for the calendar date itself
+  ///
+  /// In en, this message translates to:
+  /// **'Due date'**
+  String get pregnancyDueDateLabel;
+
+  /// Pregnancy: accessible label on the summary card's progress ring
+  ///
+  /// In en, this message translates to:
+  /// **'Progress'**
+  String get pregnancyProgressLabel;
+
+  /// Pregnancy: section title over the four gestational-age markers
+  ///
+  /// In en, this message translates to:
+  /// **'Milestones'**
+  String get pregnancyMilestonesTitle;
+
+  /// Pregnancy: milestone label, week 12
+  ///
+  /// In en, this message translates to:
+  /// **'First trimester complete'**
+  String get pregnancyMilestone12;
+
+  /// Pregnancy: milestone label, week 20 (usual timing, not a booked appointment)
+  ///
+  /// In en, this message translates to:
+  /// **'Anatomy scan window'**
+  String get pregnancyMilestone20;
+
+  /// Pregnancy: milestone label, week 28
+  ///
+  /// In en, this message translates to:
+  /// **'Third trimester begins'**
+  String get pregnancyMilestone28;
+
+  /// Pregnancy: milestone label, week 37
+  ///
+  /// In en, this message translates to:
+  /// **'Full term'**
+  String get pregnancyMilestone37;
+
+  /// Pregnancy: toast after clearing the stored date
+  ///
+  /// In en, this message translates to:
+  /// **'Date cleared'**
+  String get pregnancyClearedToast;
+
+  /// Pregnancy: generic save-failure toast
+  ///
+  /// In en, this message translates to:
+  /// **'That didn\'t save. Try again.'**
+  String get pregnancyErrFailed;
+
+  /// Pregnancy: conflict/not-found save-failure toast
+  ///
+  /// In en, this message translates to:
+  /// **'This changed elsewhere. Try again.'**
+  String get pregnancyErrConflict;
+
+  /// Reference key qibla.direction — the qibla metric's own label, over the bearing figure
+  ///
+  /// In en, this message translates to:
+  /// **'Qibla'**
+  String get qiblaDirection;
+
+  /// Reference key qibla.distance — the label over the great-circle distance to the Kaaba
+  ///
+  /// In en, this message translates to:
+  /// **'To the Kaaba'**
+  String get qiblaToKaaba;
+
+  /// Reference key qibla.reference — the section title over the Kaaba's and the reader's own coordinates
+  ///
+  /// In en, this message translates to:
+  /// **'Reference'**
+  String get qiblaReference;
+
+  /// Reference key qibla.kaaba — the row naming the Kaaba's own coordinates
+  ///
+  /// In en, this message translates to:
+  /// **'Kaaba'**
+  String get qiblaKaaba;
+
+  /// Reference key qibla.yourpos — the row naming the reader's own coordinates, worked out from their city
+  ///
+  /// In en, this message translates to:
+  /// **'Your position'**
+  String get qiblaYourPosition;
+
+  /// Reference key qibla.magnetic — the row naming what the bearing is measured against
+  ///
+  /// In en, this message translates to:
+  /// **'Bearing basis'**
+  String get qiblaBasis;
+
+  /// Reference key qibla.trueNorth — this build has no device compass to correct for magnetic declination, so the bearing is given against true north
+  ///
+  /// In en, this message translates to:
+  /// **'True north'**
+  String get qiblaTrueNorth;
+
+  /// The note under the qibla dial, explaining the needle is worked out from coordinates rather than read from the phone's own sensor
+  ///
+  /// In en, this message translates to:
+  /// **'A calculated direction, not a live compass'**
+  String get qiblaNoteTitle;
+
+  /// The note's explanatory text
+  ///
+  /// In en, this message translates to:
+  /// **'This shows the great-circle direction to the Kaaba, worked out from your city\'s coordinates. It doesn\'t read your phone\'s sensors, so hold a compass or a map beside it to line yourself up.'**
+  String get qiblaNoteText;
+
+  /// Shown when Lume has no coordinates for the reader's chosen city, mirroring sun.noCity's own pattern
+  ///
+  /// In en, this message translates to:
+  /// **'No position for {city}'**
+  String qiblaNoCityTitle(String city);
+
+  /// The explanatory text under qiblaNoCityTitle
+  ///
+  /// In en, this message translates to:
+  /// **'The qibla direction is worked out from a city\'s coordinates, and Lume has none for this one. Choose another city in Profile to see it.'**
+  String get qiblaNoCityText;
+
+  /// Reference key zakat.assets — the asset-entry section's title
+  ///
+  /// In en, this message translates to:
+  /// **'Your assets'**
+  String get zakatAssets;
+
+  /// Reference key zakat.cash — one of the six asset fields
+  ///
+  /// In en, this message translates to:
+  /// **'Cash & bank'**
+  String get zakatCash;
+
+  /// Reference key zakat.gold — gold held, entered in grams
+  ///
+  /// In en, this message translates to:
+  /// **'Gold'**
+  String get zakatGold;
+
+  /// Reference key zakat.silver — silver held, entered in grams
+  ///
+  /// In en, this message translates to:
+  /// **'Silver'**
+  String get zakatSilver;
+
+  /// Reference key zakat.investments
+  ///
+  /// In en, this message translates to:
+  /// **'Investments'**
+  String get zakatInvestments;
+
+  /// Reference key zakat.business
+  ///
+  /// In en, this message translates to:
+  /// **'Business assets'**
+  String get zakatBusiness;
+
+  /// Reference key zakat.liabilities — subtracted from assets before the nisab test
+  ///
+  /// In en, this message translates to:
+  /// **'Liabilities'**
+  String get zakatLiabilities;
+
+  /// Reference key zakat.payable — the headline figure (2.5% of net assets, once above nisab)
+  ///
+  /// In en, this message translates to:
+  /// **'Zakat payable'**
+  String get zakatPayable;
+
+  /// Reference key zakat.aboveNisab — the summary caption when eligible
+  ///
+  /// In en, this message translates to:
+  /// **'Your net assets are above nisab'**
+  String get zakatAboveNisab;
+
+  /// Reference key zakat.belowNisab — the summary caption when not eligible
+  ///
+  /// In en, this message translates to:
+  /// **'Below nisab — no zakat is due'**
+  String get zakatBelowNisab;
+
+  /// Reference key zakat.netAssets — assets less liabilities, may be negative
+  ///
+  /// In en, this message translates to:
+  /// **'Net assets'**
+  String get zakatNetAssets;
+
+  /// Reference key zakat.nisab — the lower of the gold/silver thresholds actually applied
+  ///
+  /// In en, this message translates to:
+  /// **'Nisab'**
+  String get zakatNisab;
+
+  /// Reference key zakat.rate — the fixed 2.5% zakat rate
+  ///
+  /// In en, this message translates to:
+  /// **'Rate'**
+  String get zakatRateLabel;
+
+  /// Reference key zakat.breakdown — the eight-row detail table's title
+  ///
+  /// In en, this message translates to:
+  /// **'Breakdown'**
+  String get zakatBreakdown;
+
+  /// Reference key zakat.item — the breakdown table's first column header
+  ///
+  /// In en, this message translates to:
+  /// **'Item'**
+  String get zakatItem;
 }
 
 class _AppLocalizationsDelegate

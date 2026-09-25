@@ -3,8 +3,8 @@
 /// **Development only.** It is reachable from the token gallery and from
 /// nowhere else: no route points at it, no navigation destination lists it, and
 /// `kGalleryIsDevelopmentOnly` is asserted by
-/// `test/features/gallery/gallery_test.dart` so it cannot quietly become a
-/// production destination.
+/// `test/features/gallery/component_gallery_test.dart` so it cannot quietly
+/// become a production destination.
 ///
 /// It shows the *same widgets the screens use*. There are no replicas here: if
 /// a component looks wrong in the gallery it is wrong everywhere, which is the

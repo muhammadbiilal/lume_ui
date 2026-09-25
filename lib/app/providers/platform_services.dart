@@ -16,6 +16,7 @@ import '../../core/platform/lume_image_saver_platform.dart';
 import '../../core/platform/lume_link_opener.dart';
 import '../../core/platform/lume_media_store_saver.dart';
 import '../../core/platform/lume_link_opener_platform.dart';
+import '../../core/platform/lume_notification_gate.dart';
 import '../../core/platform/lume_scanner.dart';
 import '../../core/platform/lume_scanner_platform.dart';
 import '../../core/platform/lume_share.dart';
@@ -81,3 +82,16 @@ final Provider<LumeLinkOpener> linkOpenerProvider = Provider<LumeLinkOpener>(
 final Provider<LumeExporter> exporterProvider = Provider<LumeExporter>(
   (Ref ref) => const LumePlatformExporter(),
 );
+
+/// Wave 7 (`REMINDERS_PROPOSAL.md` §4) — one gate, one channel per platform,
+/// not one channel branching inside itself, matching the camera gate's own
+/// Android-only-rather-than-pretending-cross-platform choice.
+final Provider<LumeNotificationGate> notificationGateProvider =
+    Provider<LumeNotificationGate>((Ref ref) {
+      if (kIsWeb) return const LumeUnavailableNotificationGate();
+      return switch (defaultTargetPlatform) {
+        TargetPlatform.android => const LumeAndroidNotificationGate(),
+        TargetPlatform.iOS => const LumeIosNotificationGate(),
+        _ => const LumeUnavailableNotificationGate(),
+      };
+    });

@@ -252,8 +252,8 @@ List<RouteBase> _nestedRoutes(LumeDestinationId branch) {
 
   return <RouteBase>[
     // The development gallery hangs off Profile and nowhere else. It is not a
-    // product surface: `gallery_scope_test.dart` keeps it out of every other
-    // import graph, and this is the one route that reaches it.
+    // product surface: `component_gallery_test.dart` keeps it out of every
+    // other import graph, and this is the one route that reaches it.
     if (branch == LumeDestinationId.profile) ...<RouteBase>[
       GoRoute(
         path: _gallerySegment,

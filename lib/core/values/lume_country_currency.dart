@@ -98,7 +98,7 @@ abstract final class LumeCountryCurrency {
   }
 
   /// The web reference's table as captured (`geo.js`), 194 countries.
-  /// `country_currency_test.dart` holds it to `assets/data/countries.json`.
+  /// `lume_country_currency_test.dart` holds it to `assets/data/countries.json`.
   static const Map<String, String> reference = <String, String>{
     'AD': 'EUR',
     'AE': 'AED',

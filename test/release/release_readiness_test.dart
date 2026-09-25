@@ -206,10 +206,21 @@ void main() {
     }
     expect(faults, isEmpty, reason: faults.join('\n'));
     // The in-memory store: a session claim, never "Stored on this device".
+    // Reminders is the one exception (`ROLLOUT_WAVE_7.md`) — a real durable
+    // store, so its own claim is checked separately, below, against what a
+    // durable adapter actually says rather than what a session one would.
     for (final String id in LumeDataCapability.readerRecords) {
+      if (LumeDataCapability.durable.contains(id)) continue;
       expect(
         claim(l, f, byId(id), LumeBuildProfile.development).label,
         l.freshSession,
+      );
+    }
+    for (final String id in LumeDataCapability.durable) {
+      expect(
+        claim(l, f, byId(id), LumeBuildProfile.development).label,
+        l.freshLocal,
+        reason: id,
       );
     }
   });
@@ -313,26 +324,47 @@ void main() {
       // own seed data has no CRUD at all, so a reader's build opens
       // both empty (GOALS_PROPOSAL.md, SUBSCRIPTIONS_PROPOSAL.md). Wave
       // 6 adds one: Meal Plan's five headline figures are bare literals
-      // with no computation behind them (MEALPLAN_PROPOSAL.md §0).
+      // with no computation behind them (MEALPLAN_PROPOSAL.md §0). Wave 7
+      // adds Reminders — the one durable family (ROLLOUT_WAVE_7.md),
+      // still reader-entered, nothing seeded. Wave 8 adds nine more, each
+      // resolved the same way: BMI Calculator and Qibla Compass compute a
+      // real result from what the reader typed or their city's
+      // coordinates; Habits, Streak, Medication, Vaccinations, Health
+      // Records, Cycle Tracker and Pregnancy show only the reader's own
+      // records, with every derived figure (a streak, a due count, a
+      // predicted date) computed for real rather than reproduced from the
+      // reference's own bare literals. Zakat Calculator is deliberately
+      // NOT here: its nisab reuses Gold Rates' own fixture metal price,
+      // which is real sample data honestly disclosed, not reader input.
       <String>[
         'age',
         'babybudget',
         'birthdays',
+        'bmi',
         'calculator',
         'committee',
         'compound',
         'converter',
+        'cycle',
         'focus',
         'goals',
+        'habits',
+        'health',
         'installments',
         'ledger',
         'loan',
         'mealplan',
+        'meds',
+        'pregnancy',
+        'qibla',
+        'reminders',
         'stopwatch',
+        'streak',
         'subs',
         'sunmoon',
         'tasbih',
         'tipsplit',
+        'vaccines',
         'water',
         'worldclock',
       ],
@@ -552,10 +584,13 @@ void main() {
           final List<String> said = textsUnder(tester, bar);
           if (!profile.reproducesReference) {
             expect(said.contains('Sample data'), sample, reason: '$said');
+            // Every family but Reminders is session-only (`ROLLOUT_WAVE_7.md`
+            // is the one exception, a real durable store) — everywhere else,
+            // "Stored on this device" would be a false claim.
             expect(
-              said,
-              isNot(contains('Stored on this device')),
-              reason: 'nothing here is durable',
+              said.contains('Stored on this device'),
+              LumeDataCapability.durable.contains(id),
+              reason: '$id: $said',
             );
             expect(
               find.descendant(

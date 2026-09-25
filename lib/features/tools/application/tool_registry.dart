@@ -11,9 +11,11 @@ import 'package:flutter/widgets.dart';
 
 import '../../age/presentation/age_tool.dart';
 import '../../birthdays/presentation/birthdays_tool.dart';
+import '../../bmi/presentation/bmi_tool.dart';
 import '../../converter/presentation/converter_tool.dart';
 import '../../calendar/presentation/calendar_tool.dart';
 import '../../compound/presentation/compound_tool.dart';
+import '../../cycle/presentation/cycle_tool.dart';
 import '../../datecalc/presentation/datecalc_tool.dart';
 import '../../documents/presentation/documents_tool.dart';
 import '../../emergency/presentation/emergency_tool.dart';
@@ -23,9 +25,17 @@ import '../../babybudget/presentation/babybudget_tool.dart';
 import '../../calculator/presentation/calculator_tool.dart';
 import '../../focus/presentation/focus_tool.dart';
 import '../../goals/presentation/goals_tool.dart';
+import '../../habits/presentation/habits_tool.dart';
+import '../../health/presentation/health_tool.dart';
+import '../../meds/presentation/meds_tool.dart';
 import '../../mealplan/presentation/mealplan_tool.dart';
+import '../../pregnancy/presentation/pregnancy_tool.dart';
+import '../../qibla/presentation/qibla_tool.dart';
+import '../../reminders/presentation/reminder_tool.dart';
+import '../../streak/presentation/streak_tool.dart';
 import '../../subscriptions/presentation/subscriptions_tool.dart';
 import '../../tasbih/presentation/tasbih_tool.dart';
+import '../../vaccines/presentation/vaccines_tool.dart';
 import '../../worldclock/presentation/worldclock_tool.dart';
 import '../../play/presentation/play_tool.dart';
 import '../../committee/presentation/committee_tool.dart';
@@ -49,6 +59,7 @@ import '../../tipsplit/presentation/tipsplit_tool.dart';
 import '../../todos/presentation/todos_tool.dart';
 import '../../water/presentation/water_tool.dart';
 import '../../weather/presentation/weather_tool.dart';
+import '../../zakat/presentation/zakat_tool.dart';
 import 'tool_request.dart';
 
 /// Builds one converted tool for an opening the gate has allowed.
@@ -106,4 +117,19 @@ const Map<String, LumeToolBuilder> kLumeToolRegistry =
       'subs': LumeSubscriptionsTool.open,
       // Wave 6 (`ROLLOUT_WAVE_6.md`).
       'mealplan': LumeMealPlanTool.open,
+      // Wave 7 (`ROLLOUT_WAVE_7.md`).
+      'reminders': LumeReminderTool.open,
+      // Wave 8: ten tools built in parallel, without a per-tool discovery
+      // gate (the owner's own explicit choice after Wave 7's discovery
+      // found nothing left that clears alone).
+      'bmi': LumeBmiTool.open,
+      'habits': LumeHabitsTool.open,
+      'streak': LumeStreakTool.open,
+      'meds': LumeMedsTool.open,
+      'vaccines': LumeVaccinesTool.open,
+      'health': LumeHealthTool.open,
+      'cycle': LumeCycleTool.open,
+      'pregnancy': LumePregnancyTool.open,
+      'qibla': LumeQiblaTool.open,
+      'zakat': LumeZakatTool.open,
     };

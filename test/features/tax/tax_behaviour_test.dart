@@ -145,8 +145,9 @@ void main() {
       (WidgetTester tester) async {
         await pumpTax(
           tester,
-          // BMI is held back from wave 1 (`ROLLOUT_WAVE_1.md`).
-          location: LumeRoutes.tool(LumeRoutes.tools, 'bmi'),
+          // Alarms has no schema at all yet (`WAVE_6_DISCOVERY.md` §2) —
+          // still unconverted after the wave-8 batch.
+          location: LumeRoutes.tool(LumeRoutes.tools, 'alarms'),
         );
         expect(find.byType(FixtureToolScreen), findsOneWidget);
         expect(find.byType(LumeTaxTool), findsNothing);

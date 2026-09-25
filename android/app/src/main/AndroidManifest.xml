@@ -36,6 +36,19 @@
     <uses-permission
         android:name="android.permission.ACCESS_NETWORK_STATE"
         tools:node="remove" />
+    <!-- Reminders: lets a reminder actually show as a notification. Asked
+         when the reader first sets a reminder, never at launch. -->
+    <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
+    <!-- Reminders: so a reminder fires at the exact time the reader set, not
+         some inexact window Android might delay by minutes. Android's own
+         Settings screen is the only way to grant this — this app cannot show
+         its own dialog for it. -->
+    <uses-permission android:name="android.permission.SCHEDULE_EXACT_ALARM" />
+    <!-- Required by flutter_local_notifications' own bundled boot receiver,
+         which re-arms any exact alarms after a device restart. This project
+         does NOT declare its own boot receiver: doing so would risk
+         duplicating or racing the plugin's already-registered one. -->
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
     <application
         android:label="lume"
         android:name="${applicationName}"

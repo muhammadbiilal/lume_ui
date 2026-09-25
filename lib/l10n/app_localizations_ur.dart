@@ -10546,4 +10546,806 @@ class AppLocalizationsUr extends AppLocalizations {
 
   @override
   String get recFieldDrink => 'مشروب';
+
+  @override
+  String get recFieldRepeat => 'دہرائیں';
+
+  @override
+  String get remFieldLabel => 'یاد دلائیں';
+
+  @override
+  String get remRepeatOnce => 'ایک بار';
+
+  @override
+  String get remRepeatDaily => 'روزانہ';
+
+  @override
+  String get remRepeatWeekly => 'ہر ہفتے';
+
+  @override
+  String get remErrLabel => 'یاد دہانی کے لیے کچھ لکھیں';
+
+  @override
+  String get remErrConflict => 'یہ یاد دہانی کہیں اور تبدیل ہو گئی';
+
+  @override
+  String get remErrFailed => 'یہ محفوظ نہیں ہوا۔ دوبارہ کوشش کریں۔';
+
+  @override
+  String get remSavedNoZone =>
+      'محفوظ ہو گیا — درست وقت پر یاد دہانی کے لیے اکاؤنٹ میں اپنا مقام مقرر کریں';
+
+  @override
+  String get remSavedNoSchedule =>
+      'محفوظ ہو گیا، لیکن یاد دہانی مقرر نہیں ہو سکی';
+
+  @override
+  String get remAddReminder => 'یاد دہانی شامل کریں';
+
+  @override
+  String get remEditReminder => 'یاد دہانی میں ترمیم کریں';
+
+  @override
+  String get remDeletedToast => 'یاد دہانی حذف ہو گئی';
+
+  @override
+  String get remPermissionTitle => 'اطلاعات آن کریں';
+
+  @override
+  String get remPermissionText =>
+      'درست وقت پر یاد دلانے کے لیے، ایپ بند ہونے پر بھی، Lume کو اجازت درکار ہے۔';
+
+  @override
+  String get remOpenSettings => 'ترتیبات کھولیں';
+
+  @override
+  String get remEnableNotifications => 'اطلاعات فعال کریں';
+
+  @override
+  String get remExactAlarmTitle => 'درست وقت کی اجازت دیں';
+
+  @override
+  String get remExactAlarmText =>
+      'اس کے بغیر، Android یاد دہانی چند منٹ تاخیر سے بھیج سکتا ہے۔';
+
+  @override
+  String get remSummaryKicker => 'یاد دہانیاں';
+
+  @override
+  String get remSummaryCaption => 'فعال ہیں';
+
+  @override
+  String get remEmptyTitle => 'ابھی کوئی یاد دہانی نہیں';
+
+  @override
+  String get remEmptyText => 'ایک مقرر کریں، Lume صحیح وقت پر یاد دلائے گا۔';
+
+  @override
+  String get bmiFieldHeight => 'قد';
+
+  @override
+  String get bmiFieldWeight => 'وزن';
+
+  @override
+  String get bmiYourBmi => 'آپ کا بی ایم آئی';
+
+  @override
+  String get bmiBandUnderweight => 'کم وزن';
+
+  @override
+  String get bmiBandHealthy => 'صحت مند وزن';
+
+  @override
+  String get bmiBandOverweight => 'زائد وزن';
+
+  @override
+  String get bmiBandObese => 'موٹاپا';
+
+  @override
+  String get bmiScale => 'بی ایم آئی پیمانہ';
+
+  @override
+  String get bmiHealthyTitle => 'آپ کے لیے صحت مند وزن';
+
+  @override
+  String get bmiHealthyRange => 'صحت مند حد';
+
+  @override
+  String get bmiIdealWeight => 'مثالی وزن';
+
+  @override
+  String bmiRange(String low, String high) {
+    return '$low سے $high تک';
+  }
+
+  @override
+  String bmiUnder(String value) {
+    return '$value سے کم';
+  }
+
+  @override
+  String bmiOver(String value) {
+    return '$value سے زیادہ';
+  }
+
+  @override
+  String get bmiCurrent => 'موجودہ';
+
+  @override
+  String get streakErrConflict => 'یہ کہیں اور تبدیل ہوگیا۔ اسے دوبارہ کھولیں۔';
+
+  @override
+  String get streakErrFailed => 'یہ محفوظ نہیں ہوا۔ دوبارہ کوشش کریں۔';
+
+  @override
+  String get streakCheckedInToast => 'آج کے لیے حاضری لگا دی گئی';
+
+  @override
+  String get streakUncheckedToast => 'حاضری ہٹا دی گئی';
+
+  @override
+  String get streakSummaryKicker => 'موجودہ سلسلہ';
+
+  @override
+  String streakBestCaption(int n) {
+    return 'بہترین: $n دن';
+  }
+
+  @override
+  String get streakRateLabel => 'تسلسل';
+
+  @override
+  String get streakNextLabel => 'اگلا سنگ میل';
+
+  @override
+  String get streakCheckInLabel => 'آج حاضری لگا دی گئی';
+
+  @override
+  String get streakCalendarTitle => 'کیلنڈر';
+
+  @override
+  String get streakMilestonesTitle => 'سنگ میل';
+
+  @override
+  String streakMilestoneDays(int n) {
+    return '$n دن کا سلسلہ';
+  }
+
+  @override
+  String streakCalendarA11y(int checked, int total) {
+    return 'پچھلے $total دنوں میں سے $checked میں حاضری لگائی گئی';
+  }
+
+  @override
+  String get habitsFieldFrequency => 'تعدد';
+
+  @override
+  String get habitsFreqDaily => 'روزانہ';
+
+  @override
+  String get habitsFreqWeekdays => 'ہفتے کے دن';
+
+  @override
+  String get habitsFreqWeekly => 'ہفتہ وار';
+
+  @override
+  String get habitsEmptyTitle => 'ابھی تک کوئی عادت نہیں';
+
+  @override
+  String get habitsEmptyText =>
+      'اپنا سلسلہ شروع کرنے کے لیے ایک عادت شامل کریں۔';
+
+  @override
+  String get habitsAddHabit => 'عادت شامل کریں';
+
+  @override
+  String get habitsNewHabit => 'نئی عادت';
+
+  @override
+  String get habitsEditHabit => 'عادت میں ترمیم کریں';
+
+  @override
+  String get habitsSummaryKicker => 'آج';
+
+  @override
+  String get habitsStatTotal => 'عادات';
+
+  @override
+  String get habitsStatActiveStreaks => 'جاری سلسلے';
+
+  @override
+  String get habitsCheckLabel => 'آج مکمل';
+
+  @override
+  String habitsStreakDays(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n دن کا سلسلہ',
+      one: '1 دن کا سلسلہ',
+      zero: 'ابھی تک کوئی سلسلہ نہیں',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String habitsStreakWeeks(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n ہفتوں کا سلسلہ',
+      one: '1 ہفتے کا سلسلہ',
+      zero: 'ابھی تک کوئی سلسلہ نہیں',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String habitsUnitDays(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: 'دن',
+      one: 'دن',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String habitsUnitWeeks(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: 'ہفتے',
+      one: 'ہفتہ',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get habitsCurrentStreakCaption => 'موجودہ سلسلہ';
+
+  @override
+  String get habitsStatBest => 'بہترین';
+
+  @override
+  String get habitsStatCompletion => 'تکمیل';
+
+  @override
+  String get habitsMarkDone => 'آج مکمل کریں';
+
+  @override
+  String get habitsUnmarkDone => 'آج کی انٹری واپس لیں';
+
+  @override
+  String get habitsDeleteAsk => 'کیا یہ عادت حذف کریں؟';
+
+  @override
+  String habitsDeleteText(String name) {
+    return '$name اور اس کی چیک ان تاریخ حذف کر دی جائے گی۔ آپ فوراً اسے واپس لا سکتے ہیں۔';
+  }
+
+  @override
+  String get habitsDeletedToast => 'عادت حذف کر دی گئی';
+
+  @override
+  String get habitsErrConflict => 'کسی نے پہلے ہی یہ عادت تبدیل کر دی ہے';
+
+  @override
+  String get habitsErrFailed => 'یہ عادت محفوظ نہیں ہو سکی';
+
+  @override
+  String get habitsErrName => 'ایک نام درج کریں';
+
+  @override
+  String get habitsErrLong => 'یہ بہت طویل ہے';
+
+  @override
+  String get habitsDamagedBadge => 'توجہ درکار ہے';
+
+  @override
+  String get medsScheduleDaily => 'روزانہ ایک بار';
+
+  @override
+  String get medsScheduleTwice => 'روزانہ دو بار';
+
+  @override
+  String get medsScheduleWeekly => 'ہفتے میں ایک بار';
+
+  @override
+  String get medsScheduleNeeded => 'ضرورت کے مطابق';
+
+  @override
+  String get medsFieldSchedule => 'شیڈول';
+
+  @override
+  String get medsFieldName => 'نام';
+
+  @override
+  String get medsFieldNamePh => 'دوا کا نام';
+
+  @override
+  String get medsFieldDose => 'خوراک';
+
+  @override
+  String get medsFieldDosePh => '500 ملی گرام';
+
+  @override
+  String get medsFieldFirstDose => 'پہلی خوراک';
+
+  @override
+  String get medsFieldDosesLeft => 'باقی خوراکیں';
+
+  @override
+  String get medsFieldNotes => 'نوٹس';
+
+  @override
+  String get medsEmptyTitle => 'کوئی دوا درج نہیں';
+
+  @override
+  String get medsEmptyText =>
+      'خوراک، شیڈول اور باقی مقدار کا خیال رکھنے کے لیے ایک شامل کریں۔';
+
+  @override
+  String get medsAddMedication => 'دوا شامل کریں';
+
+  @override
+  String get medsNewMedication => 'نئی دوا';
+
+  @override
+  String get medsEditMedication => 'دوا میں ترمیم کریں';
+
+  @override
+  String get medsSummaryKicker => 'دوائیں';
+
+  @override
+  String medsSummaryCaption(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n دوائیں کم ہو رہی ہیں',
+      one: '1 دوا کم ہو رہی ہے',
+      zero: '',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get medsLowBadge => 'کم رہ گئی';
+
+  @override
+  String get medsDosesLeftUnit => 'باقی';
+
+  @override
+  String medsFirstDoseAt(String time) {
+    return 'پہلی خوراک $time پر';
+  }
+
+  @override
+  String get medsSafetyTitle => 'طبی مشورہ نہیں';
+
+  @override
+  String get medsSafetyText =>
+      'Lume صرف یاد دلاتا ہے، مشورہ نہیں دیتا۔ اپنے ڈاکٹر کی ہدایت پر عمل کریں۔';
+
+  @override
+  String get medsErrName => 'اس دوا کا نام لکھیں';
+
+  @override
+  String get medsErrDose => 'خوراک درج کریں';
+
+  @override
+  String get medsErrLong => 'یہ بہت لمبا ہے';
+
+  @override
+  String get medsErrDosesLeft => '0 یا اس سے زیادہ کا پورا عدد درج کریں';
+
+  @override
+  String get medsErrConflict => 'یہ دوا کہیں اور تبدیل ہو گئی';
+
+  @override
+  String get medsErrDamaged =>
+      'اس دوا کا ریکارڈ درست نہیں اور اسے محفوظ طریقے سے نہیں دکھایا جا سکتا';
+
+  @override
+  String get medsErrFailed => 'یہ محفوظ نہیں ہوا۔ دوبارہ کوشش کریں۔';
+
+  @override
+  String get medsDeleteAsk => 'کیا اس دوا کو حذف کریں؟';
+
+  @override
+  String medsDeleteText(String name) {
+    return '$name ہٹا دی جائے گی۔ آپ فوراً اسے واپس لا سکتے ہیں۔';
+  }
+
+  @override
+  String get medsDeletedToast => 'دوا حذف کر دی گئی';
+
+  @override
+  String get vaccinesNoun => 'ویکسینیشن ریکارڈ';
+
+  @override
+  String get vaccinesEmptyTitle => 'ابھی تک کوئی ویکسینیشن نہیں';
+
+  @override
+  String get vaccinesEmptyText =>
+      'اپنے یا اپنے خاندان کے ویکسینیشن کا ریکارڈ رکھیں۔';
+
+  @override
+  String get vaccinesAddVaccination => 'ویکسینیشن شامل کریں';
+
+  @override
+  String get vaccinesNewVaccination => 'نئی ویکسینیشن';
+
+  @override
+  String get vaccinesEditVaccination => 'ویکسینیشن میں ترمیم کریں';
+
+  @override
+  String vaccinesDueCaption(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n ابھی باقی ہیں',
+      one: '1 ابھی باقی ہے',
+      zero: 'سب اپ ٹو ڈیٹ ہیں',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get vaccinesFieldName => 'ویکسین';
+
+  @override
+  String get vaccinesFieldFor => 'کس کے لیے';
+
+  @override
+  String get vaccinesFieldDose => 'خوراک';
+
+  @override
+  String get vaccinesFieldGivenBy => 'دی گئی بذریعہ';
+
+  @override
+  String get vaccinesErrLong => 'یہ بہت طویل ہے';
+
+  @override
+  String get vaccinesErrConflict => 'یہ ریکارڈ کہیں اور تبدیل ہو چکا ہے';
+
+  @override
+  String get vaccinesErrFailed => 'یہ محفوظ نہیں ہوا۔ دوبارہ کوشش کریں۔';
+
+  @override
+  String get healthEmptyTitle => 'ابھی تک کوئی صحت کا ریکارڈ نہیں';
+
+  @override
+  String get healthEmptyText =>
+      'کوئی وزٹ، رپورٹ یا کوئی اور بات شامل کریں جسے آپ محفوظ رکھنا چاہتے ہیں۔';
+
+  @override
+  String get healthAddRecord => 'ریکارڈ شامل کریں';
+
+  @override
+  String get healthNewRecord => 'نیا ریکارڈ';
+
+  @override
+  String get healthEditRecord => 'ریکارڈ میں ترمیم کریں';
+
+  @override
+  String get healthSearch => 'ریکارڈز تلاش کریں';
+
+  @override
+  String get healthAll => 'تمام ریکارڈز';
+
+  @override
+  String get healthSummaryKicker => 'صحت کے ریکارڈز';
+
+  @override
+  String healthSummaryUpcoming(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n آنے والے',
+      one: '1 آنے والا',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get healthSummaryNoneUpcoming => 'فی الحال کچھ آنے والا نہیں';
+
+  @override
+  String get healthStatTotal => 'کل';
+
+  @override
+  String get healthStatUpcoming => 'آنے والے';
+
+  @override
+  String get healthStatTypes => 'اقسام';
+
+  @override
+  String get healthFieldType => 'قسم';
+
+  @override
+  String get healthFieldSource => 'ذریعہ';
+
+  @override
+  String get healthTitlePlaceholder => 'سالانہ چیک اپ، بلڈ ٹیسٹ…';
+
+  @override
+  String get healthSourcePlaceholder => 'ڈاکٹر، کلینک یا لیب';
+
+  @override
+  String get healthKindAppointment => 'اپائنٹمنٹ';
+
+  @override
+  String get healthKindReport => 'رپورٹ';
+
+  @override
+  String get healthKindPrescription => 'نسخہ';
+
+  @override
+  String get healthKindVaccination => 'ویکسینیشن';
+
+  @override
+  String get healthKindMeasurement => 'پیمائش';
+
+  @override
+  String get healthErrTooLong => 'یہ بہت طویل ہے';
+
+  @override
+  String get healthErrDamaged =>
+      'اس ریکارڈ کی تفصیلات درست نہیں اور محفوظ طریقے سے نہیں دکھائی جا سکتیں';
+
+  @override
+  String get healthDeleteAsk => 'کیا اس ریکارڈ کو حذف کرنا ہے؟';
+
+  @override
+  String get healthDeleteText =>
+      'یہ ریکارڈ کو مستقل طور پر حذف کر دے گا۔ اسے واپس نہیں لایا جا سکتا۔';
+
+  @override
+  String get healthDeletedToast => 'ریکارڈ حذف کر دیا گیا';
+
+  @override
+  String get cycleDayKicker => 'سائیکل کا دن';
+
+  @override
+  String get cyclePhaseMenstrual => 'ایام حیض';
+
+  @override
+  String get cyclePhaseFollicular => 'فولیکولر مرحلہ';
+
+  @override
+  String get cyclePhaseOvulation => 'بیضہ دانی کا وقت';
+
+  @override
+  String get cyclePhaseLuteal => 'لیوٹیل مرحلہ';
+
+  @override
+  String get cycleTrackingCaption =>
+      'مزید ایام درج کریں تاکہ اندازہ ظاہر ہو سکے';
+
+  @override
+  String get cycleEmptyTitle => 'ابھی تک کوئی دورانیہ درج نہیں کیا گیا';
+
+  @override
+  String get cycleEmptyText =>
+      'جب آپ کا دورانیہ شروع ہو تو اسے درج کریں — Lume آپ کی اپنی تاریخ کی بنیاد پر اوسط طوالت نکالے گا اور اگلے دورانیے کا تخمینہ دے گا۔';
+
+  @override
+  String get cycleLogFirst => 'اپنا پہلا دورانیہ درج کریں';
+
+  @override
+  String get cycleLogPeriod => 'دورانیہ درج کریں';
+
+  @override
+  String get cycleEditPeriod => 'دورانیہ میں ترمیم کریں';
+
+  @override
+  String get cycleStartDateLabel => 'آغاز کی تاریخ';
+
+  @override
+  String get cycleEndDateLabel => 'اختتام کی تاریخ';
+
+  @override
+  String get cycleStillOngoing => 'ابھی ختم نہیں ہوا';
+
+  @override
+  String get cycleOngoingBadge => 'جاری ہے';
+
+  @override
+  String cycleStartedOn(String date) {
+    return '$date کو شروع ہوا';
+  }
+
+  @override
+  String cycleDateRange(String start, String end) {
+    return '$start – $end';
+  }
+
+  @override
+  String get cycleNextEstimateKicker => 'اگلے دورانیے کا تخمینہ';
+
+  @override
+  String get cycleNextEstimateCaption =>
+      'یہ آپ کی اپنی اوسط پر مبنی ایک تخمینہ ہے — کوئی تشخیص یا ضمانت نہیں';
+
+  @override
+  String get cycleHistoryTitle => 'سابقہ ریکارڈ';
+
+  @override
+  String get cycleAverageLabel => 'اوسط سائیکل';
+
+  @override
+  String get cycleLoggedCountLabel => 'درج شدہ دورانیے';
+
+  @override
+  String get cycleDeleteEntry => 'اندراج حذف کریں';
+
+  @override
+  String get cycleDeleteTitle => 'کیا یہ اندراج حذف کر دیا جائے؟';
+
+  @override
+  String get cycleDeleteText =>
+      'یہ آپ کی تاریخ سے یہ درج شدہ دورانیہ ہٹا دے گا۔ اسے فوراً بعد واپس لایا جا سکتا ہے۔';
+
+  @override
+  String get cycleDeletedToast => 'اندراج حذف کر دیا گیا';
+
+  @override
+  String get cycleSavedToast => 'محفوظ کر لیا گیا';
+
+  @override
+  String get cycleErrFailed => 'یہ محفوظ نہیں ہو سکا۔ دوبارہ کوشش کریں۔';
+
+  @override
+  String get cycleErrConflict => 'یہ اندراج کہیں اور تبدیل ہو چکا ہے';
+
+  @override
+  String get pregnancyLmpLabel => 'آپ کی آخری ماہواری کا پہلا دن';
+
+  @override
+  String get pregnancyLmpHint =>
+      'یہ صرف متوقع تاریخِ پیدائش کا اندازہ لگانے کے لیے ہے۔ طبی مشورہ نہیں۔';
+
+  @override
+  String get pregnancyNotSet => 'طے نہیں';
+
+  @override
+  String get pregnancyEmptyTitle => 'اپنی متوقع تاریخِ پیدائش دیکھیں';
+
+  @override
+  String get pregnancyEmptyText =>
+      'اپنی آخری ماہواری کا پہلا دن درج کریں، Lume آپ کا ہفتہ، سہ ماہی اور متوقع تاریخِ پیدائش بتا دے گا۔';
+
+  @override
+  String pregnancyOfWeeks(String weeks) {
+    return '‎/ $weeks';
+  }
+
+  @override
+  String pregnancyTrimester(String n) {
+    return 'سہ ماہی $n';
+  }
+
+  @override
+  String get pregnancyDaysPregnant => 'حمل کے دن';
+
+  @override
+  String get pregnancyDaysToGo => 'باقی دن';
+
+  @override
+  String get pregnancyDaysOverdue => 'تاخیر کے دن';
+
+  @override
+  String get pregnancyDueDateLabel => 'متوقع تاریخ';
+
+  @override
+  String get pregnancyProgressLabel => 'پیش رفت';
+
+  @override
+  String get pregnancyMilestonesTitle => 'اہم مراحل';
+
+  @override
+  String get pregnancyMilestone12 => 'پہلی سہ ماہی مکمل';
+
+  @override
+  String get pregnancyMilestone20 => 'اناٹومی اسکین کا وقت';
+
+  @override
+  String get pregnancyMilestone28 => 'تیسری سہ ماہی شروع';
+
+  @override
+  String get pregnancyMilestone37 => 'مکمل مدتِ حمل';
+
+  @override
+  String get pregnancyClearedToast => 'تاریخ صاف کر دی گئی';
+
+  @override
+  String get pregnancyErrFailed => 'یہ محفوظ نہیں ہوا۔ دوبارہ کوشش کریں۔';
+
+  @override
+  String get pregnancyErrConflict =>
+      'یہ کہیں اور تبدیل ہو گیا۔ دوبارہ کوشش کریں۔';
+
+  @override
+  String get qiblaDirection => 'قبلہ';
+
+  @override
+  String get qiblaToKaaba => 'کعبہ تک';
+
+  @override
+  String get qiblaReference => 'حوالہ';
+
+  @override
+  String get qiblaKaaba => 'کعبہ';
+
+  @override
+  String get qiblaYourPosition => 'آپ کا مقام';
+
+  @override
+  String get qiblaBasis => 'زاویے کی بنیاد';
+
+  @override
+  String get qiblaTrueNorth => 'حقیقی شمال';
+
+  @override
+  String get qiblaNoteTitle => 'لائیو کمپاس نہیں، ایک حساب شدہ سمت';
+
+  @override
+  String get qiblaNoteText =>
+      'یہ آپ کے شہر کے احداثیات سے نکالی گئی کعبہ تک کی راست سمت (great-circle) دکھاتا ہے۔ یہ آپ کے فون کے سینسر نہیں پڑھتا، اس لیے خود کو درست سمت میں لانے کے لیے ساتھ ایک قطب نما یا نقشہ رکھیں۔';
+
+  @override
+  String qiblaNoCityTitle(String city) {
+    return '$city کے لیے کوئی محلِ وقوع نہیں';
+  }
+
+  @override
+  String get qiblaNoCityText =>
+      'قبلہ کی سمت شہر کے احداثیات سے نکالی جاتی ہے، اور لیوم کے پاس اس شہر کے لیے کوئی نہیں ہے۔ اسے دیکھنے کے لیے پروفائل میں کوئی اور شہر منتخب کریں۔';
+
+  @override
+  String get zakatAssets => 'آپ کے اثاثے';
+
+  @override
+  String get zakatCash => 'نقد اور بینک';
+
+  @override
+  String get zakatGold => 'سونا';
+
+  @override
+  String get zakatSilver => 'چاندی';
+
+  @override
+  String get zakatInvestments => 'سرمایہ کاری';
+
+  @override
+  String get zakatBusiness => 'کاروباری اثاثے';
+
+  @override
+  String get zakatLiabilities => 'واجبات';
+
+  @override
+  String get zakatPayable => 'واجب الادا زکوٰۃ';
+
+  @override
+  String get zakatAboveNisab => 'آپ کے مجموعی اثاثے نصاب سے زیادہ ہیں';
+
+  @override
+  String get zakatBelowNisab => 'نصاب سے کم — کوئی زکوٰۃ واجب نہیں';
+
+  @override
+  String get zakatNetAssets => 'مجموعی اثاثے';
+
+  @override
+  String get zakatNisab => 'نصاب';
+
+  @override
+  String get zakatRateLabel => 'شرح';
+
+  @override
+  String get zakatBreakdown => 'تفصیل';
+
+  @override
+  String get zakatItem => 'مد';
 }

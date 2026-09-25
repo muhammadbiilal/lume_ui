@@ -15,6 +15,9 @@ import UIKit
     if let registrar = engineBridge.pluginRegistry.registrar(forPlugin: "LumeAppSettings") {
       LumeAppSettings.register(messenger: registrar.messenger())
     }
+    if let registrar = engineBridge.pluginRegistry.registrar(forPlugin: "LumeNotificationPermission") {
+      LumeNotificationPermission.register(messenger: registrar.messenger())
+    }
   }
 }
 

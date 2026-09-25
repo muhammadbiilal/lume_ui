@@ -66,6 +66,21 @@ Future<void> pumpTool(
     overrides: overrides,
   );
   await tester.pumpAndSettle();
+  // Reminders' durable store (`ROLLOUT_WAVE_7.md`) hydrates over a real
+  // SQLite read — genuine async I/O `pumpAndSettle`'s fake-async clock does
+  // not fast-forward, unlike every other tool's synchronous or Timer-based
+  // store. Generic, not Reminders-specific: waits only while the frame's own
+  // loading skeleton is still showing, for whichever tool that turns out to
+  // be true of.
+  if (find.byType(LumeSkeleton).evaluate().isNotEmpty) {
+    await tester.runAsync(() async {
+      for (int i = 0; i < 200 && find.byType(LumeSkeleton).evaluate().isNotEmpty; i++) {
+        await Future<void>.delayed(const Duration(milliseconds: 5));
+        await tester.pump();
+      }
+    });
+    await tester.pumpAndSettle();
+  }
 }
 
 Finder inKey(Key key, Finder matching) =>

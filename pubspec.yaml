@@ -64,6 +64,16 @@ dependencies:
   # leave a plugin out of one platform, so gal's Android half is still
   # compiled in and registered; nothing reaches it. Pinned.
   gal: 2.3.3
+  # Wave 7 (`ROLLOUT_WAVE_7.md`, `REMINDERS_PROPOSAL.md` §2) — Reminders'
+  # own durable store, scoped to that one collection alone: no other family
+  # touches this. Android/iOS only, matching this project's real platform
+  # scope. Used only by lib/features/records/data/sqlite_record_repository.dart.
+  sqflite: ^2.4.1
+  # Wave 7 — real scheduled local notifications for Reminders, the standard
+  # actively-maintained package for exactly this. Used only by
+  # lib/features/reminders/data/reminder_scheduler.dart, behind
+  # LumeReminderScheduler; nothing else calls it.
+  flutter_local_notifications: ^22.3.1
 
 dev_dependencies:
   flutter_test:
@@ -74,6 +84,12 @@ dev_dependencies:
   # product. Dayroz already depends on crypto ^3.0.7, so this adds nothing to
   # the production surface at integration.
   crypto: ^3.0.7
+  # Test-only. sqflite's own documented FFI backend
+  # (`databaseFactory = databaseFactoryFfi`), so the durable Reminders
+  # repository is exercised for real against SQLite in `flutter test` — no
+  # platform channel, no device — the same principle every other test in
+  # this repo already follows: real logic, not a mock standing in for it.
+  sqflite_common_ffi: ^2.3.4+4
 
 flutter:
   uses-material-design: true
