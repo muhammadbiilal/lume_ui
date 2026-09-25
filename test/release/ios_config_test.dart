@@ -104,19 +104,24 @@ void main() {
   const String root = 'ios/Runner';
   const Set<String> usage = <String>{
     'NSCameraUsageDescription',
+    'NSLocationWhenInUseUsageDescription',
     'NSPhotoLibraryAddUsageDescription',
   };
   final String plist = File('$root/Info.plist').readAsStringSync();
   final Map<String, String> info = plistStrings(plist);
 
-  test('Info.plist asks for the camera and add-only Photos, nothing more', () {
+  test('Info.plist asks for the camera, add-only Photos and when-in-use '
+      'location, nothing more', () {
     expect(
       info.keys.where((String k) => k.endsWith('UsageDescription')).toSet(),
       usage,
     );
     expect(plist, isNot(contains('NSPhotoLibraryUsageDescription')));
     expect(plist, isNot(contains('NSMicrophoneUsageDescription')));
-    expect(plist, isNot(contains('NSLocation')));
+    // "Use my current location" — while the app is in use, never always or
+    // in the background.
+    expect(plist, isNot(contains('NSLocationAlways')));
+    expect(plist, isNot(contains('UIBackgroundModes')));
     expect(
       RegExp(
         r'<key>CFBundleLocalizations</key>\s*<array>\s*'
@@ -183,6 +188,9 @@ void main() {
           expect(add.toLowerCase(), isNot(contains(broad)));
         }
         expect(s['NSCameraUsageDescription'], contains('only while you scan'));
+        final String where = s['NSLocationWhenInUseUsageDescription']!;
+        expect(where, contains('approximate'));
+        expect(where, contains('not tracked'));
       } else {
         // Translated, not English left in place.
         for (final String k in usage) {

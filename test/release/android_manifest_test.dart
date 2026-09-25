@@ -66,6 +66,8 @@ void main() {
           if (e.value != 'remove') e.key,
       ]..sort(),
       <String>[
+        // "Use my current location" — approximate only, asked on tap.
+        'android.permission.ACCESS_COARSE_LOCATION',
         'android.permission.CAMERA',
         // Wave 7 (`ROLLOUT_WAVE_7.md`) — Reminders' real scheduled
         // notifications, asked for when the reader first sets a reminder,
@@ -92,6 +94,21 @@ void main() {
       if (broad == 'android.permission.READ_EXTERNAL_STORAGE') continue;
       expect(p.keys, isNot(contains(broad)), reason: broad);
     }
+    // Location is one approximate fix: never precise, never in the
+    // background, and geolocator's own tracking service is removed.
+    expect(p.keys, isNot(contains('android.permission.ACCESS_FINE_LOCATION')));
+    expect(
+      p.keys,
+      isNot(contains('android.permission.ACCESS_BACKGROUND_LOCATION')),
+    );
+    expect(
+      RegExp(
+        r'<service\s+android:name="com\.baseflow\.geolocator\.'
+        r'GeolocatorLocationService"\s+tools:node="remove"',
+      ).hasMatch(xml),
+      isTrue,
+      reason: 'the plugin background service must be removed',
+    );
   });
 
   // What the merger may add that is not a request to the reader: Flutter's

@@ -1,5 +1,8 @@
 /* F6B closure: the camera, asked for only after Scan is pressed (C80). */
 "NSCameraUsageDescription" = "يستخدم Lume الكاميرا فقط أثناء مسحك لرمز QR. لا يُسجَّل أي شيء ولا يُرفَع.";
 
+/* "Use my current location": one approximate position, asked for only when it is tapped. */
+"NSLocationWhenInUseUsageDescription" = "يستخدم Lume موقعك التقريبي مرة واحدة عندما تطلب منه تحديد مدينتك. لا يُتتبَّع ولا يُرفَع.";
+
 /* F6B closure: add-only Photos access, asked for only when Save image is pressed (C81). Lume cannot read the library. */
 "NSPhotoLibraryAddUsageDescription" = "يضيف Lume الصورة التي تختار حفظها إلى صورك. ولا يمكنه رؤية صورك الأخرى.";

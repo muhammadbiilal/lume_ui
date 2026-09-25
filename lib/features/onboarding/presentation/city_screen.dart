@@ -49,6 +49,7 @@ class LumeCityPickerView extends StatelessWidget {
     required this.useLocationLabel,
     this.header,
     this.onUseLocation,
+    this.useLocationNote,
     this.searchController,
     this.scrollController,
     this.pinHead = true,
@@ -71,6 +72,10 @@ class LumeCityPickerView extends StatelessWidget {
   /// `null` leaves the row visible and inert, which is what a device that has
   /// refused the permission should show — the offer is still there.
   final VoidCallback? onUseLocation;
+
+  /// Why the last "Use my current location" found nothing, under the row;
+  /// announced as it appears. `null` draws nothing.
+  final String? useLocationNote;
 
   /// The step's lead, handed over when it scrolls with the list. See [pinHead].
   final Widget? header;
@@ -109,6 +114,7 @@ class LumeCityPickerView extends StatelessWidget {
           ),
         ),
         _UseLocation(label: useLocationLabel, onPressed: onUseLocation),
+        if (useLocationNote case final String note) _LocationNote(text: note),
         const SizedBox(height: LumeLocPickerMetrics.scrollTop),
       ],
     );
@@ -250,6 +256,34 @@ class _UseLocation extends StatelessWidget {
               ),
             ],
           ),
+        ),
+      ),
+    );
+  }
+}
+
+class _LocationNote extends StatelessWidget {
+  const _LocationNote({required this.text});
+
+  final String text;
+
+  @override
+  Widget build(BuildContext context) {
+    final LumeColors lume = context.lume;
+    return Padding(
+      padding: const EdgeInsetsDirectional.only(
+        top: LumeSpace.x2,
+        start: LumeLocPickerMetrics.searchInset,
+        end: LumeLocPickerMetrics.searchInset,
+      ),
+      child: Semantics(
+        liveRegion: true,
+        child: Text(
+          text,
+          style: LumeType.fit(
+            context,
+            context.lumeType.metaSmall,
+          ).copyWith(color: lume.text2),
         ),
       ),
     );

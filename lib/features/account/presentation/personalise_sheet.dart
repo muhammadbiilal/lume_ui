@@ -24,9 +24,11 @@ library;
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../../app/providers/platform_services.dart';
 import '../../../app/providers/shell_provider.dart';
 import '../../../core/widgets/lume/lume_overlay.dart';
 import '../../../l10n/app_localizations.dart';
+import '../../onboarding/application/use_location.dart';
 import '../../onboarding/data/country_fixture.dart';
 import '../../onboarding/data/interests_fixture.dart';
 import '../../onboarding/domain/city_picker_model.dart';
@@ -190,6 +192,10 @@ class _LocationSheetState extends ConsumerState<_LocationSheet> {
   late String _country = _gate.state.profile.country;
   String _query = '';
 
+  /// "Use my current location" — reading, and why it last found nothing.
+  bool _locating = false;
+  String? _locationNote;
+
   @override
   void dispose() {
     _search.dispose();
@@ -214,6 +220,34 @@ class _LocationSheetState extends ConsumerState<_LocationSheet> {
       p.copyWith(country: _country, city: city, region: region ?? ''),
     );
     if (mounted) Navigator.of(context).maybePop();
+  }
+
+  /// One position, turned into the nearest city the picker lists. Here, as
+  /// with a tapped city, the place found is saved and the sheet closes; the
+  /// Region screen then shows it, and choosing by hand stays one tap away.
+  Future<void> _useLocation(LumeCountryFixture table) async {
+    if (_locating) return;
+    final AppLocalizations l = AppLocalizations.of(context);
+    setState(() {
+      _locating = true;
+      _locationNote = null;
+    });
+    final LumeUseLocationResult found = await LumeUseLocation.resolve(
+      locator: ref.read(locatorProvider),
+      countries: table,
+    );
+    if (!mounted) return;
+    final String? country = found.country;
+    final String? city = found.city;
+    if (country != null && city != null) {
+      _country = country;
+      _chooseCity(city, found.region);
+      return;
+    }
+    setState(() {
+      _locating = false;
+      _locationNote = found.message(l);
+    });
   }
 
   @override
@@ -277,7 +311,9 @@ class _LocationSheetState extends ConsumerState<_LocationSheet> {
         onQueryChanged: (String q) => setState(() => _query = q),
         searchPlaceholder: l.persSearchCities,
         noResultsText: l.searchNothing,
-        useLocationLabel: l.persUseLocation,
+        useLocationLabel: _locating ? l.persLocating : l.persUseLocation,
+        onUseLocation: _locating ? null : () => _useLocation(table),
+        useLocationNote: _locationNote,
         searchController: _search,
       ),
     );

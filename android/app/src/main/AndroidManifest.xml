@@ -49,10 +49,20 @@
          does NOT declare its own boot receiver: doing so would risk
          duplicating or racing the plugin's already-registered one. -->
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+    <!-- "Use my current location": approximate location only, which is all a
+         city needs. Asked when the reader taps it, never at launch; one fix,
+         never tracked, never in the background. -->
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <application
         android:label="lume"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
+        <!-- geolocator ships a foreground service for background position
+             streams. Lume takes one fix while the reader waits and never
+             tracks, so the service is removed rather than declared unused. -->
+        <service
+            android:name="com.baseflow.geolocator.GeolocatorLocationService"
+            tools:node="remove" />
         <activity
             android:name=".MainActivity"
             android:exported="true"

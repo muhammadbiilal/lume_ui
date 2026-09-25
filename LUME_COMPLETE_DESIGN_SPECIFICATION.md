@@ -412,7 +412,7 @@ Components must not contain product-specific availability logic. They receive al
 - Most data is bundled demonstration data, marked "Sample data" on the tool that shows it.
 - Preferences, the simulated account and most records are held in memory for the session; Reminders alone are stored durably on the device.
 - Nothing about the simulated account is written to disk or protected; it is explicitly not production security.
-- Device location is not read yet: "Use my current location" is shown but not wired, and a place is chosen by hand.
+- Device location is read only when the reader taps "Use my current location": one approximate fix, never at launch, never tracked or stored — only the city it resolves to is kept, and only once the reader confirms it.
 - The notification permission is requested only after an explanation and consent.
 - Sharing, export, the dialer and outbound links go through the platform's own share sheet and URL handlers.
 

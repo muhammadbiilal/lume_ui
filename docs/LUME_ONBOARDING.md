@@ -224,11 +224,15 @@ that change what a user sees:
 | D15 | Method pills sit 10 apart rather than 7 | Two 44-point targets cannot sit 7 apart without overlapping |
 | D16 | The secondary link's box is 44 rather than 36 | The same floor; the text does not move |
 | D17 | The method the user picks is the method that is stored | The source's pills are decorative — they neither read nor write the preference |
+| — | "Use my current location" places the reader at the nearest city Lume knows, by great-circle distance, at that city's own coordinates, and offers it as the selection for Continue | The source paired each country's one coordinate with the country's *first listed* city, so a reader in New York was set to Los Angeles and one in Delhi to Mumbai, and it compared raw degrees, which stretches distances away from the equator |
 
 ---
 
 ## 9. Evidence
 
+* `test/features/onboarding/use_location_test.dart` and
+  `use_location_screen_test.dart` — "Use my current location": the nearest
+  city for a position, every refusal, onboarding and the location sheet.
 * `test/features/onboarding/onboarding_flow_test.dart` — the nine-step machine,
   every skip, every back, and a layout check for each step at five surfaces in
   three languages, in dark, at 200 per cent and with the keyboard up.

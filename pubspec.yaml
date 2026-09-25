@@ -74,6 +74,13 @@ dependencies:
   # lib/features/reminders/data/reminder_scheduler.dart, behind
   # LumeReminderScheduler; nothing else calls it.
   flutter_local_notifications: ^22.3.1
+  # "Use my current location" (claude.md §9) — one approximate fix, asked for
+  # only when the reader taps it, never at launch and never in the background.
+  # Android declares ACCESS_COARSE_LOCATION alone (a city needs no more), and
+  # the plugin's background location service is removed from the merged
+  # manifest. Used only by lib/core/platform/lume_locator_platform.dart,
+  # behind LumeLocator. Pinned.
+  geolocator: 14.0.2
 
 dev_dependencies:
   flutter_test:

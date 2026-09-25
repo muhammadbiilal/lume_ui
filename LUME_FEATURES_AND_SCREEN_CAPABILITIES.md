@@ -49,7 +49,8 @@ release build they start empty.
   feature that schedules real notifications on the device.
 - Visual share cards through the platform share sheet; named export files;
   handing a number to the dialer (never placing a call); handing a link or a
-  maps search to another app; the camera and photo picker for QR Scanner,
+  maps search to another app; one approximate position for "Use my current
+  location"; the camera and photo picker for QR Scanner,
   Document Scanner and Passport Photos; saving an image to Photos.
 - Screen-reader semantics, focus order, reduced motion, 200 % text scale.
 - Loading, empty, no-results, offline, error, private and unavailable states.
@@ -150,8 +151,9 @@ platform entries never appear.
 The product introduced; country (from all 194), region and city; interests
 (29 offered, at least five); the Islamic experience as an opt-in switch, never
 preselected; an optional name that is never invented; neutral defaults when
-skipped. **"Use my current location" is shown but not yet wired** — choosing a
-place is by hand for now.
+skipped. **"Use my current location"** reads one approximate position when
+tapped (never at launch, never tracked) and offers the nearest city Lume
+knows as the selection; choosing by hand always remains possible.
 
 ## 5. Everyday — 8
 
@@ -313,7 +315,6 @@ notifications, related tools and deep links.
   documents, health and financial records.
 - Cloud sync and multi-device conflict resolution.
 - A push-notification service, and delivered notifications beyond Reminders.
-- Device location for "Use my current location".
 - Analytics, monitoring, audit logs, abuse controls and rate limiting.
 
 ## 13. Capability acceptance rule

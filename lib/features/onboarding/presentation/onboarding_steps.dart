@@ -363,6 +363,8 @@ class CityStep extends StatefulWidget {
     this.onBack,
     this.onSkip,
     this.onUseLocation,
+    this.locating = false,
+    this.locationNote,
     this.controller,
   });
 
@@ -380,9 +382,16 @@ class CityStep extends StatefulWidget {
   final VoidCallback? onBack;
   final VoidCallback? onSkip;
 
-  /// `null` leaves the offer visible and inert. A real permission request is
-  /// the platform's, at the moment it is needed.
+  /// Asks for one position; the permission request is the platform's, at
+  /// the moment it is needed. `null` leaves the offer visible and inert.
   final VoidCallback? onUseLocation;
+
+  /// While one position is being read: the row says so and cannot be pressed
+  /// again.
+  final bool locating;
+
+  /// Why the last attempt found nothing, if it did not.
+  final String? locationNote;
 
   final LumeCityPickerController? controller;
 
@@ -472,8 +481,9 @@ class _CityStepState extends State<CityStep> {
         searchController: _search,
         searchPlaceholder: l.persSearchCities,
         noResultsText: l.searchNothing,
-        useLocationLabel: l.persUseLocation,
-        onUseLocation: widget.onUseLocation,
+        useLocationLabel: widget.locating ? l.persLocating : l.persUseLocation,
+        onUseLocation: widget.locating ? null : widget.onUseLocation,
+        useLocationNote: widget.locationNote,
         onSelect: _controller.choose,
         onQueryChanged: (String q) => _controller.query = q,
       ),

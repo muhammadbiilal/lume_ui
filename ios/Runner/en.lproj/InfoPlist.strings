@@ -1,5 +1,8 @@
 /* F6B closure: the camera, asked for only after Scan is pressed (C80). */
 "NSCameraUsageDescription" = "Lume uses the camera only while you scan a QR code. Nothing is recorded or uploaded.";
 
+/* "Use my current location": one approximate position, asked for only when it is tapped. */
+"NSLocationWhenInUseUsageDescription" = "Lume uses your approximate location once, when you ask it to find your city. It is not tracked or uploaded.";
+
 /* F6B closure: add-only Photos access, asked for only when Save image is pressed (C81). Lume cannot read the library. */
 "NSPhotoLibraryAddUsageDescription" = "Lume adds the image you choose to save to your photos. It cannot see your other photos.";

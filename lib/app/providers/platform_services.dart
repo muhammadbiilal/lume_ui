@@ -14,6 +14,8 @@ import '../../core/platform/lume_dialer_platform.dart';
 import '../../core/platform/lume_export.dart';
 import '../../core/platform/lume_image_saver_platform.dart';
 import '../../core/platform/lume_link_opener.dart';
+import '../../core/platform/lume_locator.dart';
+import '../../core/platform/lume_locator_platform.dart';
 import '../../core/platform/lume_media_store_saver.dart';
 import '../../core/platform/lume_link_opener_platform.dart';
 import '../../core/platform/lume_notification_gate.dart';
@@ -70,6 +72,12 @@ final Provider<LumeScanner> scannerProvider = Provider<LumeScanner>(
         ? const LumeChannelAppSettings()
         : null,
   ),
+);
+
+/// claude.md §9 — one approximate position, when the reader taps "Use my
+/// current location". Never at launch, never tracked.
+final Provider<LumeLocator> locatorProvider = Provider<LumeLocator>(
+  (Ref ref) => const LumePlatformLocator(),
 );
 
 /// C80 — opens a checked web, email or message address in another app, on a

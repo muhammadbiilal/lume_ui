@@ -36,6 +36,7 @@ import 'package:lume/features/records/data/memory_record_repository.dart';
 import 'package:lume/features/records/data/record_seeds.dart';
 import 'package:lume/app/providers/shell_provider.dart';
 import 'package:lume/core/platform/lume_link_opener.dart';
+import 'package:lume/core/platform/lume_locator.dart';
 import 'package:lume/core/platform/lume_scanner.dart';
 import 'package:lume/core/platform/lume_dialer.dart';
 import 'package:lume/core/platform/lume_export.dart';
@@ -120,6 +121,7 @@ Future<void> pumpLume(
         exporterProvider.overrideWithValue(LumeRecordingExporter()),
         scannerProvider.overrideWithValue(LumeRecordingScanner()),
         linkOpenerProvider.overrideWithValue(LumeRecordingLinkOpener()),
+        locatorProvider.overrideWithValue(LumeRecordingLocator()),
         // Tests are the parity captures: the reference's own source-line
         // copy, stated explicitly rather than inherited from a missing
         // define. A test about another flavor overrides this.
@@ -254,6 +256,7 @@ Future<GoRouter> pumpLumeRouter(
         exporterProvider.overrideWithValue(LumeRecordingExporter()),
         scannerProvider.overrideWithValue(LumeRecordingScanner()),
         linkOpenerProvider.overrideWithValue(LumeRecordingLinkOpener()),
+        locatorProvider.overrideWithValue(LumeRecordingLocator()),
         // Tests are the parity captures: the reference's own source-line
         // copy, stated explicitly rather than inherited from a missing
         // define. A test about another flavor overrides this.

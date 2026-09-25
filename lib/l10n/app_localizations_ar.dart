@@ -4504,6 +4504,24 @@ class AppLocalizationsAr extends AppLocalizations {
   String get persUseLocationSub => 'اختياري — يمكنك دائمًا ضبطه يدويًا';
 
   @override
+  String get persLocating => 'جارٍ تحديد موقعك…';
+
+  @override
+  String get persLocationUnavailable => 'الموقع غير متاح — اختر مدينتك يدويًا.';
+
+  @override
+  String get persLocationDenied =>
+      'لم يُسمح بالوصول إلى الموقع — اختر مدينتك يدويًا.';
+
+  @override
+  String get persLocationBlocked =>
+      'الموقع متوقف لـ Lume في إعدادات هاتفك — اختر مدينتك يدويًا.';
+
+  @override
+  String get persLocationOff =>
+      'خدمة الموقع متوقفة على هذا الجهاز — اختر مدينتك يدويًا.';
+
+  @override
   String get persWhereYouAre => 'أين أنت';
 
   @override

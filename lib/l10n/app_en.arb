@@ -6038,6 +6038,26 @@
   "@persUseLocationSub": {
     "description": "Reference: `pers.useLocationSub`."
   },
+  "persLocating": "Finding your location…",
+  "@persLocating": {
+    "description": "Shown on the \"Use my current location\" row while one position is read."
+  },
+  "persLocationUnavailable": "Location unavailable — choose your city by hand.",
+  "@persLocationUnavailable": {
+    "description": "No position could be read, or it timed out."
+  },
+  "persLocationDenied": "Location wasn't allowed — choose your city by hand.",
+  "@persLocationDenied": {
+    "description": "The reader declined the location permission this time."
+  },
+  "persLocationBlocked": "Location is off for Lume in your phone's Settings — choose your city by hand.",
+  "@persLocationBlocked": {
+    "description": "The location permission was refused for good; only system Settings can change it."
+  },
+  "persLocationOff": "Location is switched off on this device — choose your city by hand.",
+  "@persLocationOff": {
+    "description": "The device's location service is off."
+  },
   "persWhereYouAre": "Where you are",
   "@persWhereYouAre": {
     "description": "Reference: `pers.whereYouAre`."

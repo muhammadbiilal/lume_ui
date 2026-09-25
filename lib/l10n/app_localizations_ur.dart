@@ -4449,6 +4449,25 @@ class AppLocalizationsUr extends AppLocalizations {
       'اختیاری — آپ اسے ہمیشہ خود بھی طے کر سکتے ہیں';
 
   @override
+  String get persLocating => 'آپ کا مقام تلاش کیا جا رہا ہے…';
+
+  @override
+  String get persLocationUnavailable =>
+      'مقام دستیاب نہیں — اپنا شہر خود منتخب کریں۔';
+
+  @override
+  String get persLocationDenied =>
+      'مقام کی اجازت نہیں دی گئی — اپنا شہر خود منتخب کریں۔';
+
+  @override
+  String get persLocationBlocked =>
+      'فون کی سیٹنگز میں Lume کے لیے مقام بند ہے — اپنا شہر خود منتخب کریں۔';
+
+  @override
+  String get persLocationOff =>
+      'اس ڈیوائس پر مقام بند ہے — اپنا شہر خود منتخب کریں۔';
+
+  @override
   String get persWhereYouAre => 'آپ کہاں ہیں';
 
   @override

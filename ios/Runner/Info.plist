@@ -34,6 +34,8 @@
 	<true/>
 	<key>NSCameraUsageDescription</key>
 	<string>Lume uses the camera only while you scan a QR code. Nothing is recorded or uploaded.</string>
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string>Lume uses your approximate location once, when you ask it to find your city. It is not tracked or uploaded.</string>
 	<key>NSPhotoLibraryAddUsageDescription</key>
 	<string>Lume adds the image you choose to save to your photos. It cannot see your other photos.</string>
 	<key>UIApplicationSceneManifest</key>

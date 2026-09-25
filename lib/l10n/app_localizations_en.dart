@@ -4452,6 +4452,25 @@ class AppLocalizationsEn extends AppLocalizations {
   String get persUseLocationSub => 'Optional — you can always set this by hand';
 
   @override
+  String get persLocating => 'Finding your location…';
+
+  @override
+  String get persLocationUnavailable =>
+      'Location unavailable — choose your city by hand.';
+
+  @override
+  String get persLocationDenied =>
+      'Location wasn\'t allowed — choose your city by hand.';
+
+  @override
+  String get persLocationBlocked =>
+      'Location is off for Lume in your phone\'s Settings — choose your city by hand.';
+
+  @override
+  String get persLocationOff =>
+      'Location is switched off on this device — choose your city by hand.';
+
+  @override
   String get persWhereYouAre => 'Where you are';
 
   @override

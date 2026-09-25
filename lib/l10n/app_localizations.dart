@@ -7864,6 +7864,36 @@ abstract class AppLocalizations {
   /// **'Optional — you can always set this by hand'**
   String get persUseLocationSub;
 
+  /// Shown on the "Use my current location" row while one position is read.
+  ///
+  /// In en, this message translates to:
+  /// **'Finding your location…'**
+  String get persLocating;
+
+  /// No position could be read, or it timed out.
+  ///
+  /// In en, this message translates to:
+  /// **'Location unavailable — choose your city by hand.'**
+  String get persLocationUnavailable;
+
+  /// The reader declined the location permission this time.
+  ///
+  /// In en, this message translates to:
+  /// **'Location wasn\'t allowed — choose your city by hand.'**
+  String get persLocationDenied;
+
+  /// The location permission was refused for good; only system Settings can change it.
+  ///
+  /// In en, this message translates to:
+  /// **'Location is off for Lume in your phone\'s Settings — choose your city by hand.'**
+  String get persLocationBlocked;
+
+  /// The device's location service is off.
+  ///
+  /// In en, this message translates to:
+  /// **'Location is switched off on this device — choose your city by hand.'**
+  String get persLocationOff;
+
   /// Reference: `pers.whereYouAre`.
   ///
   /// In en, this message translates to:

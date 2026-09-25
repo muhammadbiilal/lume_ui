@@ -26,9 +26,13 @@
 library;
 
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../../app/providers/platform_services.dart';
 import '../../../core/navigation/lume_back_intercept.dart';
+import '../../../core/platform/lume_locator.dart';
 import '../../../l10n/app_localizations.dart';
+import '../application/use_location.dart';
 import '../data/country_fixture.dart';
 import '../data/interests_fixture.dart';
 import '../domain/city_picker_model.dart';
@@ -61,7 +65,7 @@ class LumeOnboardingFlow extends StatefulWidget {
     this.onDone,
     this.initialStep = LumeOnboardingStep.welcome,
     this.nextPrayerName,
-    this.onUseLocation,
+    this.locator,
   });
 
   final LumeCountryFixture countries;
@@ -82,9 +86,10 @@ class LumeOnboardingFlow extends StatefulWidget {
   /// falls back to the neutral sentence rather than leaving a hole in one.
   final String? nextPrayerName;
 
-  /// The city step's "use my current location". `null` leaves it inert — a
-  /// real permission belongs to the platform, at the moment it is needed.
-  final VoidCallback? onUseLocation;
+  /// Reads one position for the city step's "Use my current location".
+  /// `null` leaves the offer inert. The permission request is the
+  /// platform's, at the moment the reader taps.
+  final LumeLocator? locator;
 
   @override
   State<LumeOnboardingFlow> createState() => LumeOnboardingFlowState();
@@ -93,6 +98,14 @@ class LumeOnboardingFlow extends StatefulWidget {
 class LumeOnboardingFlowState extends State<LumeOnboardingFlow> {
   late int _step = widget.initialStep;
   late LumeOnboardingDraft _draft;
+
+  /// "Use my current location" — reading, and why it last found nothing.
+  bool _locating = false;
+  String? _locationNote;
+
+  /// Bumped when a position moves the draft, so the city step is rebuilt
+  /// around the place found rather than keeping its own earlier selection.
+  int _located = 0;
 
   /// The name the step opened with, so Continue can tell a change from a
   /// no-op without asking the store again.
@@ -227,6 +240,39 @@ class LumeOnboardingFlowState extends State<LumeOnboardingFlow> {
     _go(LumeOnboardingStep.setUp);
   }
 
+  Future<void> _useLocation() async {
+    final LumeLocator? locator = widget.locator;
+    if (locator == null || _locating) return;
+    final AppLocalizations l = AppLocalizations.of(context);
+    setState(() {
+      _locating = true;
+      _locationNote = null;
+    });
+    final LumeUseLocationResult found = await LumeUseLocation.resolve(
+      locator: locator,
+      countries: widget.countries,
+    );
+    if (!mounted) return;
+    setState(() {
+      _locating = false;
+      final String? country = found.country;
+      final String? city = found.city;
+      if (country != null && city != null) {
+        // Offered, not committed: the city step now shows the place found
+        // as its selection, and the reader still presses Continue.
+        _draft = _draft.copyWith(
+          country: country,
+          city: city,
+          region: found.region,
+          clearRegion: found.region == null,
+        );
+        _located++;
+      } else {
+        _locationNote = found.message(l);
+      }
+    });
+  }
+
   void _commitName(String name) {
     setState(() => _draft = _draft.copyWith(displayName: name));
     widget.store.write(widget.store.read().copyWith(displayName: name));
@@ -276,6 +322,7 @@ class LumeOnboardingFlowState extends State<LumeOnboardingFlow> {
           onSkip: _skip,
         ),
         LumeOnboardingStep.city => CityStep(
+          key: ValueKey<String>('city-${_draft.country}-$_located'),
           countries: widget.countries,
           country: _draft.country,
           initialCity: _draft.city,
@@ -283,7 +330,9 @@ class LumeOnboardingFlowState extends State<LumeOnboardingFlow> {
           onContinue: _chooseCity,
           onBack: _back,
           onSkip: _skip,
-          onUseLocation: widget.onUseLocation,
+          onUseLocation: widget.locator == null ? null : _useLocation,
+          locating: _locating,
+          locationNote: _locationNote,
         ),
         LumeOnboardingStep.interests => InterestsStep(
           catalogue: widget.catalogue,
@@ -342,7 +391,6 @@ class LumeOnboardingFlowLoader extends StatefulWidget {
     this.onDone,
     this.initialStep = LumeOnboardingStep.welcome,
     this.nextPrayerName,
-    this.onUseLocation,
   });
 
   final LumeOnboardingStore store;
@@ -350,7 +398,6 @@ class LumeOnboardingFlowLoader extends StatefulWidget {
   onDone;
   final int initialStep;
   final String? nextPrayerName;
-  final VoidCallback? onUseLocation;
 
   @override
   State<LumeOnboardingFlowLoader> createState() =>
@@ -383,14 +430,17 @@ class _LumeOnboardingFlowLoaderState extends State<LumeOnboardingFlowLoader> {
             }
             final LumeOnboardingTables? data = snapshot.data;
             if (data == null) return const SizedBox.expand();
-            return LumeOnboardingFlow(
-              countries: data.countries,
-              catalogue: data.catalogue,
-              store: widget.store,
-              initialStep: widget.initialStep,
-              nextPrayerName: widget.nextPrayerName,
-              onUseLocation: widget.onUseLocation,
-              onDone: widget.onDone,
+            return Consumer(
+              builder: (BuildContext context, WidgetRef ref, Widget? _) =>
+                  LumeOnboardingFlow(
+                    countries: data.countries,
+                    catalogue: data.catalogue,
+                    store: widget.store,
+                    initialStep: widget.initialStep,
+                    nextPrayerName: widget.nextPrayerName,
+                    locator: ref.read(locatorProvider),
+                    onDone: widget.onDone,
+                  ),
             );
           },
     );
