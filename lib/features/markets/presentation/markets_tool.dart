@@ -106,6 +106,9 @@ class LumeMarketsTool extends ConsumerWidget {
         trend: LumeMarketsTool.trendOf(a.percent),
       ),
       value: f.money(a.price, code: 'USD', decimals: 2),
+      // A five-figure price at 200 % pushed this row 1.5 px past its card
+      // with the title already squeezed to nothing; capped as the delta is.
+      valueMaxWidth: 120,
       valueSub: 'USD',
       delta: LumeDelta(
         text:
