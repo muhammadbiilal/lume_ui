@@ -385,8 +385,8 @@ Components must not contain product-specific availability logic. They receive al
 
 - English uses LTR.
 - Urdu and Arabic use RTL.
-- Direction is applied at document and layout levels.
-- Physical `left` and `right` assumptions should be replaced with logical CSS properties.
+- Direction is applied at app and layout levels (`Directionality`).
+- Physical `left` and `right` assumptions should be replaced with directional equivalents (`EdgeInsetsDirectional`, `AlignmentDirectional`, `start`/`end`).
 - Directional navigation icons mirror; semantic icons such as Close do not.
 - Every visible string must resolve through localization or an intentional content source.
 - A fallback string must exist so translation keys never reach the interface.

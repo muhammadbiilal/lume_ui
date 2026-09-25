@@ -13,8 +13,9 @@ cannot report a value), and the **Flutter** column is the rendered widget
 measured in the same run. A mismatch fails the test, so this file cannot
 disagree with the code.
 
-Re-generate by re-running `tool/measure_components.mjs` for the cells listed
-below, then `flutter test test/core/navigation/navigation_report_test.dart`.
+The **web** column is frozen: it was measured before Phase F9 removed the
+prototype and cannot be re-measured. Re-running `flutter test test/core/navigation/navigation_report_test.dart`
+refreshes the **Flutter** column.
 
 | Cell | Property | Web | Flutter | Note |
 |---|---|---|---|---|

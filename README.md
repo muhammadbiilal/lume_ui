@@ -6,168 +6,133 @@ Islamic experience — personalised by country, city, language, locale,
 units, currency, time zone and interests, and by nothing the user did not
 choose.
 
-It is a high-fidelity browser prototype. The interactions are real and the
-data is realistic demonstration data; there is no backend yet.
+Lume is a native Flutter application for Android and iOS phones and
+tablets. There is no backend yet: data is realistic fixture data, and every
+screen says so where it matters (see *Build profiles* below).
 
-## Running it
+## Prerequisites
 
-```bash
-npm install     # jsdom, for the tests and the build; nothing is needed at runtime
-npm run serve   # http://localhost:8080
-npm test        # the full suite
-```
+- Flutter 3.44 (stable) with Dart `^3.11.5`, matching the Dayroz production
+  app so the presentation layer moves across without an SDK negotiation.
+- An Android SDK and/or Xcode for the platform you run on.
 
-The app is ES modules, so a browser refuses to load it from `file://` and
-opening `index.html` directly gives a blank page. Serve it instead.
-
-If you want a page you can just double-click:
+## Getting started
 
 ```bash
-npm run build   # then open build/index.html
+flutter pub get
+flutter gen-l10n          # regenerate lib/l10n/app_localizations*.dart from the ARBs
+flutter run               # a development build
 ```
 
-That bundles the module graph into one classic script and writes a page
-that loads it, referencing the real stylesheets in place so there is no
-second copy to fall out of date. The build opens its own output in jsdom
-and checks the shell, the screens, the tab bar and a rendered Home before
-reporting success — it will tell you if it produced something broken.
-Rebuild after changing any JavaScript; CSS edits show up on reload.
+## Checks
+
+```bash
+dart format --set-exit-if-changed lib test
+flutter analyze lib test
+flutter test                          # the full suite, goldens included
+python scripts/check_goldens.py       # every committed golden is still compared
+```
+
+Golden images live in `test/goldens/images/`. After an intended visual
+change, regenerate the affected ones with
+`flutter test --update-goldens <test file>` and review the diff before
+committing it.
+
+## Build profiles
+
+Chosen with `--dart-define=LUME_BUILD=…`
+(`lib/core/config/lume_build_profile.dart`):
+
+| profile | define | what a tool's source line says | may ship |
+|---|---|---|---|
+| parity | `parity` | the original design reference's own copy, for golden comparison | never — a release binary compiled as parity refuses to start |
+| development | none | what the data adapters' capabilities actually support | no |
+| release | `release` | what the data adapters' capabilities actually support | yes |
+
+```bash
+flutter build apk --release --dart-define=LUME_BUILD=release
+flutter build ios --release --dart-define=LUME_BUILD=release
+```
+
+`test/release/release_readiness_test.dart` fails on any claim — storage,
+liveness, an update time — that no adapter's capability supports.
+
+## Project structure
+
+```text
+lib/
+  main.dart              entry point
+  app/                   the app widget and app-wide Riverpod providers
+                         (locale, theme, personalisation, time zone,
+                         records, notifications, platform services)
+  core/                  everything feature-agnostic:
+    routing/             GoRouter configuration and route names
+    navigation/          the shell, bottom bar / rail / sidebar, the tool
+                         frame, master-detail
+    theme/ widgets/      the design system: tokens, type, and the shared
+                         Lume widget library
+    layout/              width classes (compact / medium / expanded)
+    localization/        locale-aware formatting and numerals
+    values/ time/        money, currency, dates, IANA time zones, the Hijri
+                         calendar, solar calculations
+    platform/            adapters for the dialer, share sheet, camera,
+                         image saving and links — each behind an interface
+    fixtures/ config/    fixture data and the build profile
+  features/<id>/         one folder per feature, layered as
+                         domain/ data/ application/ presentation/
+  l10n/                  ARB sources (en, ur, ar) and generated localizations
+test/                    mirrors lib/; goldens/, helpers/, release/
+assets/                  fonts, icons, images and bundled data
+scripts/                 maintenance tools (golden inventory, time-zone
+                         data generation)
+docs/                    maintenance documentation
+```
 
 ## How it is put together
 
-```text
-index.html            the shell: metadata, icon sprite, status bar,
-                      one screen outlet, one overlay outlet, the tab
-                      bar, the live regions and one module entry
+**The catalogue is the single source of truth.** Every feature is declared
+once in `lib/features/catalogue/data/feature_catalogue.dart` — its
+category, faith gating, countries, locale awareness, sensitivity, sharing
+and what it requires. `lib/features/tools/application/tool_registry.dart`
+maps each of the 85 catalogue ids to its screen.
 
-assets/js/
-  main.js             the entry point — the only script index.html loads
-  shell.js            the composition root: builds the store, the router,
-                      the services, mounts the screens, owns the action
-                      vocabulary
-  core/               router, lifecycle, profile store, eligibility,
-                      the record store, the width class, storage, the
-                      shell context and four DOM helpers
-  data/…              catalogue, tool specs, record schemas,
-                      demonstration data, geography
-  services/           account forms, notifications, prayer times, search,
-                      share cards, appearance
-  ui/                 sheets, pickers, the component builders and the
-                      record vocabulary
-  screens/            one module per destination, each owning its markup,
-                      its rendering and its own cleanup
-  tools/              one module per tool, under its category, plus a
-                      registry that checks itself against the catalogue
-                      and the CRUD engine every record tool runs on
+**Visibility is decided in one place.** Whether a feature exists for this
+user is answered by `lib/features/catalogue/domain/eligibility.dart` and
+nowhere else, so Home, Tools, Today, Explore, search, navigation,
+notifications, recents, related tools and deep links cannot disagree. Faith
+and country are separate rules: religion is never inferred from country,
+and a route refuses a hidden feature exactly as it refuses one that does not
+exist.
 
-assets/css/
-  tokens, base, components        global
-  crud.css                        record lists, details, forms and states
-  responsive.css                  the three width classes
-  screens/…                       one sheet per screen
-  tools/shared.css, markets.css   the tool component library, and the one
-                                  tool with enough of its own language to
-                                  earn a sheet
-  rtl.css                         direction, last so it can correct
-```
+**Width is decided in one place.** Compact (below 600) uses a bottom bar,
+medium (600–839) a labelled navigation rail, expanded (840 and up) a
+persistent sidebar with master-detail.
 
-Four rules hold the structure together. `tests/architecture.js` enforces
-the first two; `tests/design.js` and `tests/crud.js` enforce the others.
+**A record flow is written once.** The record families share one record
+layer (`lib/features/records/`): typed models over a versioned envelope,
+optimistic-lock conflicts, Undo where deletion is recoverable and none where
+it is not (documents, health records).
 
-**Visibility is asked in one place.** Whether a feature exists for this
-user is decided by `core/eligibility.js` and nowhere else, so Home, Tools,
-Today, Explore, search, the tab bar, notifications, recents, related tools
-and deep links cannot disagree. Faith and country are separate rules: one
-is the Islamic experience being switched on, the other is which markets a
-feature has launched in.
+**Localisation is first-class.** English, Urdu and Arabic, with real RTL;
+no user-facing string is hard-coded. Numbers, dates, currency and units
+follow the reader's locale and preferences, independently of their country.
 
-**A screen owns its own root and nothing else.** Each screen builds one
-element into the outlet and is handed that element back on every later
-call, so it cannot reach a sibling. Listeners are bound with an abort
-signal and timers stop when the screen leaves.
+## Documentation
 
-**The width is decided in one place.** `core/breakpoint.js` measures the
-shell — not the window, which is a different number once the shell is
-inside the stage's padding and capped at 1366 — and stamps `data-bp` on
-`<html>`. `responsive.css` switches on that attribute and nothing else
-counts pixels a second time. The three classes are the Design System's:
-compact below 600 with a bottom bar, medium 600–839 with a labelled
-navigation rail, expanded 840–1366 with a persistent sidebar and
-master-detail. The navigation is one destination set drawn twice, so the
-router selects a destination rather than keeping three bars in step.
-
-**A record flow is written once.** Twelve tools keep records — tasks,
-reminders, notes, expenses, medication, documents, health records, habits,
-water, shopping, events and birthdays — and none of them writes a list, a
-form or a delete confirmation. `data/record-schemas.js` says what each
-record *is*; `tools/crud-engine.js` builds every view from that, owns the
-validation lifecycle and the dirty guard, and `core/records.js` holds the
-records. The states the CRUD guide asks for are real rather than mocked: a
-collection hydrates on a genuinely deferred read, `navigator.onLine` drives
-offline, device storage genuinely refuses writes where it is blocked, a
-corrupt store is a genuine load error, and every record carries a version
-so a form opened against one cannot silently overwrite another.
-
-Deleting says which kind of deletion it is. Most families offer Undo and
-mean it; documents and health records — the two whose consideration in the
-guide is secure deletion and consent — say the action cannot be undone and
-then do not arm an Undo they could not honour.
-
-## Tests
-
-```bash
-npm test
-```
-
-Ten suites, all of which boot the real `index.html`:
-
-| Suite | What it holds |
-| --- | --- |
-| `architecture.js` | the module graph, the registry, the lifecycle, screen isolation, repeat navigation, the first run, the cascade |
-| `verify.js` | every tool builds in five personalisation states, with no leaks and no untranslated keys |
-| `interact.js` | navigation, gating and regional configuration |
-| `controls.js` | filters, sorting, search, accessibility roles, localisation |
-| `regress.js` | one assertion per defect found by an adversarial read |
-| `notify.js` | the notification engine, centre, privacy rules and permission flow |
-| `account.js` | onboarding, identity, settings and the account lifecycle |
-| `auth.js` | the authentication flows and their layout contract |
-| `design.js` | the Design System's handoff contract: the palette, the type scale, spacing, motion, the three width classes and a golden pass at each |
-| `crud.js` | the CRUD guide's own checklist, driven: every state, the validation lifecycle, conflict, undo, the dirty guard and master-detail |
-
-jsdom has no module loader, so `scripts/bundler.js` resolves the import
-graph itself and hands jsdom one ordinary script — the same bundler
-`npm run build` uses. It refuses a cycle rather than
-emitting a bundle that half-works, and `architecture.js` walks the same
-graph over a real HTTP server so a specifier that resolves only in the test
-cannot pass.
-
-## Being converted to Flutter
-
-**Everything above describes a temporary conversion input.** Lume is being
-re-authored as a native Flutter mobile and tablet application, and this
-repository becomes that Flutter project. The HTML, CSS, JavaScript, Node
-scripts and the ten JavaScript suites are kept only while they are needed to
-determine and verify what the Flutter interface must be. They are removed in a
-dedicated cleanup commit once Flutter parity is proven and protected by
-Flutter's own tests, after which this README is rewritten to describe the
-Flutter project.
-
-While the conversion runs, this prototype is the design and stays authoritative:
-where it and a document disagree, the rendered interface wins. No new product
-behaviour is built here.
-
-Flutter work that is finished carries its own maintenance document, outside the
-archive and written for the application rather than for the conversion:
-[`docs/LUME_ONBOARDING.md`](docs/LUME_ONBOARDING.md) is the first of them.
-
-The working record lives in `docs/conversion_archive/`, every file of which is
-marked temporary and none of which is product documentation. Start with
-`F0_FINAL_ARCHITECTURE.md` for the target structure, the retention plan and the
-removal manifest, and `TEMPORARY_WEB_REFERENCE_NOTES.md` for what each web file
-is still needed for and until when.
+- `docs/LUME_FLUTTER_ARCHITECTURE.md` — the architecture in depth.
+- `docs/LUME_ONBOARDING.md`, `docs/LUME_AUTH.md`, `docs/LUME_ACCOUNT.md`,
+  `docs/LUME_DESTINATIONS.md`, `docs/LUME_LOCALIZATION.md` — maintenance
+  documents for those areas.
+- `claude.md` — the product requirements.
+- `docs/conversion_archive/` — **historical, non-authoritative.** The
+  record of converting Lume from its original browser prototype, kept for
+  the reasoning behind decisions (the `ROLLOUT_WAVE_*.md` files in
+  particular). Nothing in the build or the docs above depends on it, except
+  the frozen reference measurements some parity tests read from
+  `docs/conversion_archive/measurements/`.
 
 ## Not yet production
 
 No backend, no real authentication, no live data providers, no cloud sync,
-no push service. The account engine simulates identity in browser storage
-and is explicitly not production security.
+no push service. The account engine simulates identity locally and is
+explicitly not production security.

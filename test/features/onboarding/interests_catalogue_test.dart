@@ -2,9 +2,9 @@
 ///
 /// Two figures had been reported for the same thing — 31 interests, and 57
 /// chips — and a conversion cannot proceed on "about thirty". These tests fix
-/// the answer to the generated asset, which is derived from
-/// `assets/js/data/catalogue.js` and nothing else, and they fail if the two
-/// ever disagree again.
+/// the answer to the asset, which was generated from the browser prototype's
+/// own catalogue and checked against it until Phase F9 removed the prototype;
+/// the ids are frozen below as that check last passed.
 ///
 /// The resolution, written out in
 /// `docs/conversion_archive/INTERESTS_CATALOGUE.md`:
@@ -31,6 +31,8 @@ import 'package:lume/l10n/app_localizations.dart';
 
 void main() {
   const String assetPath = 'assets/data/interests.json';
+  // Where the asset was generated from — provenance the asset records about
+  // itself, asserted below. The file itself was removed at Phase F9.
   const String referencePath = 'assets/js/data/catalogue.js';
 
   final String raw = File(assetPath).readAsStringSync();
@@ -98,30 +100,45 @@ void main() {
   });
 
   group('the asset is derived, not typed', () {
-    test('every id in the asset is in the reference catalogue', () {
-      final String reference = File(referencePath).readAsStringSync();
-      for (final String id in fixture.allIds) {
-        expect(
-          reference.contains("{ id: '$id',"),
-          isTrue,
-          reason: '$id is in the asset but not in $referencePath',
-        );
-      }
-    });
-
-    test('the reference’s own group ids are all present', () {
-      final String reference = File(referencePath).readAsStringSync();
-      final String block = reference.substring(
-        reference.indexOf('var INTEREST_GROUPS'),
-        reference.indexOf('var FAITH_INTERESTS'),
-      );
-      final Iterable<RegExpMatch> groups = RegExp(
-        r"\{ id: '([a-z]+)', label: '[^']+'(?:, faith: true)?, items: \[",
-      ).allMatches(block);
-      expect(
-        groups.map((RegExpMatch m) => m.group(1)).toList(),
-        fixture.groups.map((LumeInterestGroupEntry g) => g.id).toList(),
-      );
+    test('the 31 ids are exactly the reference catalogue’s, in its order', () {
+      // Until Phase F9 this read `assets/js/data/catalogue.js` and checked
+      // every asset id against it, and the group ids against its
+      // `INTEREST_GROUPS` block. The prototype is gone; the list is frozen
+      // here as that check last passed, so the asset still cannot drift
+      // silently. (Group order is pinned separately, above.)
+      expect(fixture.allIds, <String>[
+        'weather',
+        'calendar',
+        'tasks',
+        'notes',
+        'convert',
+        'maths',
+        'alarms',
+        'expenses',
+        'rates',
+        'bills',
+        'savings',
+        'markets',
+        'habits',
+        'water',
+        'fitness',
+        'meds',
+        'sleep',
+        'trains',
+        'flights',
+        'nearby',
+        'fuel',
+        'news',
+        'cricket',
+        'reading',
+        'quotes',
+        'prayer',
+        'quran',
+        'hadith',
+        'duas',
+        'zakat',
+        'ramadan',
+      ]);
     });
 
     test('the faith set matches FAITH_INTERESTS', () {

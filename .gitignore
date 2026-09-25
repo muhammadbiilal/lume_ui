@@ -53,17 +53,10 @@ app.*.map.json
 # in a `failures/` directory beside the goldens, not at the top of `test/`.
 **/failures/
 
-# Bulk raw captures. Regenerated on demand by the conversion tooling, and
-# large — a run writes a PNG per screen per viewport per theme per language.
+# Bulk raw captures from the conversion, large — a PNG per screen per
+# viewport per theme per language. Never committed.
 #
 # What IS committed, deliberately: the golden baselines the tests need, the
-# component measurements the parity tests read, and the comparison reports.
-# Those are the durable evidence; the raw pixels are reproducible from them.
+# frozen component measurements the parity tests read, and the comparison
+# reports. Those are the durable evidence.
 /docs/conversion_archive/shots/
-
-# ---------------------------------------------------------------------------
-# Temporary: the web prototype Lume is being converted from. These entries go
-# with the files themselves at Phase F9.
-# ---------------------------------------------------------------------------
-node_modules/
-tests/_peek.js

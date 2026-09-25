@@ -1,10 +1,19 @@
 # Lume → Flutter conversion
 
-> **Temporary conversion evidence. Not part of the final Flutter maintenance
-> specification.** This document describes the browser prototype that Lume is
-> being converted *from*, and is removed or relabelled as historical at Phase F9.
-> The authoritative documents for the Flutter application are `claude.md`, `README.md`
-> and the rewritten `LUME_*` specifications.
+> **Historical and non-authoritative.** The conversion this folder records
+> is finished: at Phase F9 the browser prototype was removed from the
+> repository, and this archive was kept, relabelled, rather than deleted —
+> the `ROLLOUT_WAVE_*.md` files and the decision records hold reasoning the
+> code comments still cite. Every mention below of the prototype, its files
+> (`index.html`, `assets/js/`, `assets/css/`, `tests/`, the capture tooling
+> in `tool/`) or of running it describes how things were, not how they are;
+> those files survive only in git history. Nothing in the build, and none of
+> `README.md`, `claude.md` or `docs/LUME_*.md`, depends on this folder —
+> except the frozen measurements in `measurements/`, which some parity tests
+> still read. The authoritative documents for the Flutter application are
+> `claude.md`, `README.md` and `docs/LUME_*.md`
+> (`docs/LUME_FLUTTER_ARCHITECTURE.md` replaced
+> `LUME_SCREEN_BASED_REFACTORING_PLAN.md`).
 
 This folder is the working record of converting the Lume browser prototype into
 the native Flutter application that **becomes this repository**. It is evidence
@@ -88,8 +97,8 @@ Dayroz widget is not copied.
 | F5B | Today, Explore, Trains and Profile | **complete — awaiting approval** |
 | F6 | Tool screens, in archetype batches | **complete — awaiting approval** |
 | F7 | CRUD across every record family | **complete — awaiting approval** |
-| F8 | Flutter-native documentation rewrite | not started |
-| F9 | Remove the web implementation | not started |
+| F8 | Flutter-native documentation rewrite | **in progress** — `README.md` rewritten; `docs/LUME_FLUTTER_ARCHITECTURE.md` replaces the refactoring plan; the web-file references in `claude.md` and `LUME_COMPLETE_DESIGN_SPECIFICATION.md` corrected. Not yet done: the complete rewrite of `claude.md` as maintenance instructions, the two `LUME_*` specifications at the root in Flutter terms, and the two `.docx` guides |
+| F9 | Remove the web implementation | **complete — awaiting approval** — the manifest's files removed; `scripts/check_goldens.py`, `scripts/generate_zone_aliases.dart` and `scripts/cldr_country_zones.mjs` kept, being Flutter maintenance tools added after the manifest was written |
 | F10 | Final Flutter acceptance | not started |
 
 Each phase stops for approval. Nothing continues automatically.

@@ -637,7 +637,7 @@ Result:
 
 Continue using the existing:
 
-**catalogue.js**
+**`lib/features/catalogue/data/feature_catalogue.dart`**
 
 as the **single source of truth**.
 
