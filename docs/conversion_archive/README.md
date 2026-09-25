@@ -28,7 +28,7 @@ web screen, not against a description of it.
 | [WEB_TO_FLUTTER_MAPPING.md](WEB_TO_FLUTTER_MAPPING.md) | Every web concept — token, class, layout, route, state — and its Flutter equivalent |
 | [DAYROZ_ARCHITECTURE_MAPPING.md](DAYROZ_ARCHITECTURE_MAPPING.md) | How the reference is organised so it can move into Dayroz, and what will need an adapter |
 | [COMPONENT_MATRIX.md](COMPONENT_MATRIX.md) | Every shared component, its states, and its conversion status |
-| [SCREEN_MATRIX.md](SCREEN_MATRIX.md) | Every screen and all 85 tools, with archetype and gating — its own conversion-status column predates the wave rollout and is stale; see "F6 and F7 in practice" under Phases below |
+| [SCREEN_MATRIX.md](SCREEN_MATRIX.md) | Every screen and all 85 tools, with archetype, gating and conversion status — the status column names the wave that built each one; see "F6 and F7 in practice" under Phases below |
 | [VISUAL_VERIFICATION.md](VISUAL_VERIFICATION.md) | The capture pipeline, the viewport matrix and how a screen is proved |
 | [tool/README.md](tool/README.md) | The conversion tooling: the component fixture, the measurer, the capture and the comparison |
 | [NAVIGATION_CONTRACT.md](NAVIGATION_CONTRACT.md) | The shell, the route map, branch indices, back-navigation, the tool host and master-detail |
@@ -100,8 +100,14 @@ each with its own agents, its own honesty findings and its own integration
 pass, recorded in `ROLLOUT_WAVE_1.md` through `ROLLOUT_WAVE_10.md`. Wave 10
 closed the catalogue — `tool_registry.dart` now names all 85 of the
 reference's modules, and all twelve record families (§6 of
-[SCREEN_MATRIX.md](SCREEN_MATRIX.md)) are built. **`SCREEN_MATRIX.md` and
-`TOOL_INVENTORY.md` are not kept current against this** — both predate the
-wave system and still show most screens and tools as `not started`; treat
-the `ROLLOUT_WAVE_*.md` files as the source of truth for what is actually
+[SCREEN_MATRIX.md](SCREEN_MATRIX.md)) are built. `SCREEN_MATRIX.md`'s own
+status column has been brought current against this (every screen and tool
+now says `built`, with the wave that built it, cross-checked against
+`tool_registry.dart` and each `ROLLOUT_WAVE_*.md` before being marked so).
+**`TOOL_INVENTORY.md` has not** — it is a design document from before the
+wave system existed (its own dependency graph and build order stop at the
+fourteen F6A reference tools), and its "Corrections to the F6A commit
+record" section already establishes this archive's convention of recording
+history rather than rewriting it, so it is left as it is. Treat the
+`ROLLOUT_WAVE_*.md` files as the source of truth for what is actually
 built, and this table's F6/F7 rows as the summary of them.
