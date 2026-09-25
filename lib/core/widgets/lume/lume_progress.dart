@@ -218,36 +218,50 @@ class LumeProgressRing extends StatelessWidget {
               ExcludeSemantics(child: centre!)
             else if (centreValue != null)
               ExcludeSemantics(
-                child: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  children: <Widget>[
-                    LumeNumerals(
-                      centreValue!,
-                      style: LumeType.numeric(
-                        LumeType.tracked(
-                          LumeType.natural(
-                            context,
-                            context.lumeType.body,
-                          ).copyWith(fontWeight: FontWeight.w800),
-                          -0.04,
-                        ),
-                      ).copyWith(color: ink),
-                    ),
-                    if (centreSub != null)
-                      Padding(
-                        padding: const EdgeInsets.only(top: 1),
-                        child: Opacity(
-                          opacity: 0.8,
-                          child: Text(
-                            centreSub!,
-                            style: LumeType.natural(
+                // The ring is a fixed circle with no room to reflow — at
+                // large text scale even one centred numeral (let alone a
+                // value plus its sub-label) can outgrow it. Shrinking to
+                // fit keeps the reading centred and whole instead of
+                // spilling past the ring; at 100% scale nothing changes,
+                // since natural size already fits (`lume_month_grid.dart`'s
+                // own day cell took the same fix for the same reason).
+                child: FittedBox(
+                  fit: BoxFit.scaleDown,
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: <Widget>[
+                      LumeNumerals(
+                        centreValue!,
+                        style: LumeType.numeric(
+                          LumeType.tracked(
+                            LumeType.natural(
                               context,
-                              context.lumeType.metaSmall,
-                            ).copyWith(color: ink, fontWeight: FontWeight.w600),
+                              context.lumeType.body,
+                            ).copyWith(fontWeight: FontWeight.w800),
+                            -0.04,
+                          ),
+                        ).copyWith(color: ink),
+                      ),
+                      if (centreSub != null)
+                        Padding(
+                          padding: const EdgeInsets.only(top: 1),
+                          child: Opacity(
+                            opacity: 0.8,
+                            child: Text(
+                              centreSub!,
+                              style:
+                                  LumeType.natural(
+                                    context,
+                                    context.lumeType.metaSmall,
+                                  ).copyWith(
+                                    color: ink,
+                                    fontWeight: FontWeight.w600,
+                                  ),
+                            ),
                           ),
                         ),
-                      ),
-                  ],
+                    ],
+                  ),
                 ),
               ),
           ],

@@ -452,14 +452,22 @@ const List<LumeFeature> kLumeFeatures = <LumeFeature>[
     interests: <String>{'ramadan', 'prayer'},
     faith: true,
     related: <String>{'mosques', 'ramadan', 'prayer'},
-    archetype: LumeToolArchetype.tracking,
+    // Wave 10: the reference's own `taraweeh.tool.js` turned out to be a
+    // nearby-mosque finder, not a personal tracker — every mosque name,
+    // reciter and start time in it is fabricated (the same
+    // `nearbyMosques()` fixture `mosques.tool.js` also draws from, with
+    // nothing real to port). Kept the one honest thing worth keeping — the
+    // reader's own Taraweeh nights — and built a real reader-record
+    // tracker instead (rakaat prayed + optional Juz reached), the same
+    // shape as Habits/Streak, not a places directory
+    // (`ROLLOUT_WAVE_10.md`).
+    archetype: LumeToolArchetype.tracker,
     density: LumeToolDensity.medium,
-    fallbackSource: 'Places directory',
-    freshness: LumeFreshnessKind.cached,
+    fallbackSource: 'On device',
+    freshness: LumeFreshnessKind.local,
     supports: <LumeToolSupport>{
-      LumeToolSupport.filters,
       LumeToolSupport.notifications,
-      LumeToolSupport.search,
+      LumeToolSupport.offline,
     },
     aware: <String>{'city', 'units'},
   ),
@@ -619,7 +627,12 @@ const List<LumeFeature> kLumeFeatures = <LumeFeature>[
     related: <String>{'calendar', 'ramadan', 'holidays'},
     archetype: LumeToolArchetype.planner,
     density: LumeToolDensity.medium,
-    fallbackSource: 'Umm al-Qura calculation',
+    // Wave 10: "Umm al-Qura calculation" was false — this build implements
+    // the tabular ("Kuwaiti") arithmetic calendar, not Saudi Arabia's
+    // officially-adopted lookup-table calendar. The tool discloses this
+    // on screen too (a subtitle + honesty note); this is the source-bar
+    // half of the same correction (`ROLLOUT_WAVE_10.md`).
+    fallbackSource: 'Tabular Islamic calendar',
     freshness: LumeFreshnessKind.computed,
     supports: <LumeToolSupport>{
       LumeToolSupport.export,
@@ -1378,11 +1391,16 @@ const List<LumeFeature> kLumeFeatures = <LumeFeature>[
     related: <String>{'documents', 'notes', 'passport'},
     archetype: LumeToolArchetype.instrument,
     density: LumeToolDensity.medium,
-    fallbackSource: 'Camera',
-    freshness: LumeFreshnessKind.live,
+    // Wave 10: `live` (with this tool never in `onDeviceClocks`) resolves
+    // to the generic "Sample data" claim, false for a screen with no
+    // sample data at all — every page is the reader's own capture this
+    // session. `On device`/`local` matches BMI/Age/Tip & Split's own
+    // inputOnly convention. `history` removed: pages are session-only,
+    // nothing persists across a reopen (`ROLLOUT_WAVE_10.md`).
+    fallbackSource: 'On device',
+    freshness: LumeFreshnessKind.local,
     supports: <LumeToolSupport>{
       LumeToolSupport.export,
-      LumeToolSupport.history,
       LumeToolSupport.offline,
     },
   ),
@@ -1478,12 +1496,18 @@ const List<LumeFeature> kLumeFeatures = <LumeFeature>[
     related: <String>{'packages', 'bills'},
     archetype: LumeToolArchetype.instrument,
     density: LumeToolDensity.medium,
-    fallbackSource: 'Nearest test server',
-    freshness: LumeFreshnessKind.live,
-    supports: <LumeToolSupport>{
-      LumeToolSupport.history,
-      LumeToolSupport.offline,
-    },
+    // Wave 10: confirmed the reference's own "speed test" never touches a
+    // network either — its numbers are `Math.random()` output, never real
+    // even once. This build shows no figures, sample or real, at all
+    // (`ROLLOUT_WAVE_10.md`); `live`/'Nearest test server' were the stale
+    // claim inherited from the fake reference. `On device`/`local` is the
+    // closest honest fit this build's freshness kinds have — a residual
+    // imperfection ("Kept until you close Lume" still overclaims slightly
+    // for a screen with no data at all) flagged for a future kind that
+    // can say "not available" outright.
+    fallbackSource: 'On device',
+    freshness: LumeFreshnessKind.local,
+    supports: <LumeToolSupport>{LumeToolSupport.offline},
     aware: <String>{'country', 'locale'},
   ),
   LumeFeature(

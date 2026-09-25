@@ -346,22 +346,41 @@ void main() {
         'compound',
         'converter',
         'cycle',
+        // Wave 10: Document Scanner, Faraid, Mobile Speed Test's own
+        // honest-hand-off, Media Saver and Passport Photos are `inputOnly`
+        // (nothing sampled — real capture bytes, real reader-typed heir
+        // figures, or, for Speed Test, no figures at all); Prayer Times,
+        // Islamic Calendar and Ramadan are `computed` (real solar/Hijri
+        // math, no fixture); Prayer Tracker, Fasting Tracker and Taraweeh
+        // are `readerRecords` (a real per-day/per-night log, every derived
+        // figure computed from it, same as Habits/Streak).
+        'docscan',
+        'faraid',
+        'fasting',
         'focus',
         'goals',
         'habits',
         'health',
+        'hijri',
         'installments',
         'ledger',
         'loan',
         'mealplan',
+        'mediasaver',
         'meds',
+        'passport',
+        'prayer',
+        'praytrack',
         'pregnancy',
         'qibla',
+        'ramadan',
         'reminders',
+        'speedtest',
         'stopwatch',
         'streak',
         'subs',
         'sunmoon',
+        'taraweeh',
         'tasbih',
         'tipsplit',
         'vaccines',
@@ -548,6 +567,15 @@ void main() {
     }
   });
 
+  // Tools with `bare: true` unconditionally — no figure, feed or record of
+  // any kind on screen, so no source bar could claim anything honest
+  // (`wastatus_capability_test.dart`'s own "why the tool screen has to be
+  // bare"). `documents`/`expenses`/`record_tool` also pass `bare: true`, but
+  // only for a sub-state `pumpTool`'s default route never lands on; their
+  // own list screen still draws a bar and is covered below like any other
+  // tool.
+  const Set<String> kUnconditionallyBareTools = <String>{'wastatus'};
+
   // What a reader actually sees: every converted tool, opened through its
   // route, with only its own source bar looked at.
   group('in the tool itself', () {
@@ -580,6 +608,10 @@ void main() {
             reproducesReference: profile.reproducesReference,
           ).isSample;
           final Finder bar = find.byType(LumeSourceBar);
+          if (kUnconditionallyBareTools.contains(id)) {
+            expect(bar, findsNothing, reason: '$id draws a source bar');
+            return;
+          }
           expect(bar, findsOneWidget, reason: '$id draws no source bar');
           final List<String> said = textsUnder(tester, bar);
           if (!profile.reproducesReference) {

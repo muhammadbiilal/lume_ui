@@ -365,7 +365,20 @@ class _ContextItem extends StatelessWidget {
           LumeIcon(item.icon!, size: 13, color: ink),
           const SizedBox(width: 5),
         ],
-        Text(item.label, style: style),
+        // `Wrap` constrains a run to its own available width (`RenderWrap`
+        // gives every child `maxWidth: constraints.maxWidth`), so a single
+        // item longer than that — a combined "City, Country" label at 200%
+        // text scale — can still overflow this Row on its own. No sibling
+        // here is `Expanded`, so `Flexible` is safe (unlike `LumeRichRow`'s
+        // own end column, wave 9's own near-miss).
+        Flexible(
+          child: Text(
+            item.label,
+            style: style,
+            maxLines: 1,
+            overflow: TextOverflow.ellipsis,
+          ),
+        ),
         if (pressable) ...<Widget>[
           const SizedBox(width: 5),
           // `.ctxbar__caret` — 11 at .6.

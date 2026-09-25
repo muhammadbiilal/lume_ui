@@ -141,13 +141,18 @@ void main() {
     });
 
     testWidgets(
-      'a tool that is not converted yet still takes the fixture path',
+      'an id the registry has never heard of still takes the fixture path',
       (WidgetTester tester) async {
         await pumpTax(
           tester,
-          // Alarms has no schema at all yet (`WAVE_6_DISCOVERY.md` §2) —
-          // still unconverted after the wave-8 batch.
-          location: LumeRoutes.tool(LumeRoutes.tools, 'alarms'),
+          // As of wave 10 every one of the catalogue's 85 ids is a
+          // registered, converted tool (`tool_registry.dart`'s own header
+          // comment) — there is no longer a real, still-unconverted id to
+          // point this at. What the route actually promises (`app_router.
+          // dart`'s own comment on `_tool`) is that a missing registry
+          // entry and an unknown catalogue id take the identical fixture
+          // path, so a made-up id exercises the same fallback.
+          location: LumeRoutes.tool(LumeRoutes.tools, 'not-a-real-tool'),
         );
         expect(find.byType(FixtureToolScreen), findsOneWidget);
         expect(find.byType(LumeTaxTool), findsNothing);

@@ -109,6 +109,20 @@ class LumeDataCapability {
     // "history" is invented offsets from the current reading, not a real
     // past record, and is not reproduced.
     'bmi',
+    // Faraid (wave 10): the estate value and heir counts the reader
+    // typed, and a real Islamic-inheritance-shares calculation over them
+    // — no fixture, unlike Zakat's own nisab lookup.
+    'faraid',
+    // Document Scanner, Media Saver, Passport Photos (wave 10): every
+    // figure is the bytes the reader's own camera/gallery/link action
+    // produced this session — nothing sampled. Speed Test (wave 10): the
+    // reference's own numbers were never real even once (`Math.random()`
+    // output dressed as a measurement); this build shows none of them —
+    // no figures, sample or real, at all.
+    'docscan',
+    'mediasaver',
+    'passport',
+    'speedtest',
   };
 
   /// Tools that have sample data **only** where the build reproduces the
@@ -147,6 +161,14 @@ class LumeDataCapability {
     // sensor, no fixture. `fallbackSource: 'Great-circle bearing'` in the
     // catalogue already says as much.
     'qibla',
+    // Prayer Times, Islamic Calendar, Ramadan (wave 10): real solar
+    // (`LumeSolar.prayerTimes`, the same calculation Weather/Calendar
+    // already use) and real Hijri-calendar arithmetic
+    // (`lib/core/time/lume_hijri.dart`) worked out from the reader's
+    // city/date — no fixture, no reader record.
+    'prayer',
+    'hijri',
+    'ramadan',
   };
 
   /// Tools that show only what the reader wrote — nothing seeded, nothing
@@ -189,6 +211,16 @@ class LumeDataCapability {
     'health',
     'cycle',
     'pregnancy',
+    // Wave 10 — three more, resolved the same way: Prayer Tracker,
+    // Fasting Tracker and Taraweeh each replace a reference whose own
+    // headline figures were bare literals (or, for Prayer Tracker,
+    // subtly wrong — it counted prayers whose clock time had passed, not
+    // prayers actually prayed) with a real per-day reader check-in and
+    // every derived figure (a streak, a rate, a qada count) computed for
+    // real over it.
+    'praytrack',
+    'fasting',
+    'taraweeh',
   };
 
   /// The one family (so far) whose store survives the app closing —

@@ -12294,4 +12294,943 @@ class AppLocalizationsUr extends AppLocalizations {
 
   @override
   String get prizebondsYourNumbers => 'آپ کے نمبر';
+
+  @override
+  String get alarmsNext => 'اگلا الارم';
+
+  @override
+  String get alarmsNone => 'کوئی الارم سیٹ نہیں';
+
+  @override
+  String get alarmsAll => 'الارم';
+
+  @override
+  String get alarmsAdd => 'الارم شامل کریں';
+
+  @override
+  String get alarmsAdding => 'نیا الارم';
+
+  @override
+  String get alarmsDaily => 'ہر روز';
+
+  @override
+  String get alarmsWeekdays => 'ہفتے کے دن';
+
+  @override
+  String get alarmsWeekend => 'چھٹی کے دن';
+
+  @override
+  String get alarmsA1 => 'کام';
+
+  @override
+  String get alarmsA2 => 'دیر تک سونا';
+
+  @override
+  String get alarmsA3 => 'آرام کا وقت';
+
+  @override
+  String alarmsInHours(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: 'تقریباً $n گھنٹوں میں',
+      one: 'تقریباً 1 گھنٹے میں',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get docscanCapture => 'کیپچر کریں';
+
+  @override
+  String get docscanHint => 'صفحہ سیدھا رکھیں اور کیپچر کریں';
+
+  @override
+  String get docscanCaptureDenied =>
+      'Lume کیمرا استعمال نہیں کر سکتا۔ دوبارہ پوچھے جانے کے لیے کیپچر کریں دبائیں۔';
+
+  @override
+  String get docscanCaptureUndetermined =>
+      'Lume کیمرا استعمال نہیں کر سکتا۔ دوبارہ پوچھے جانے کے لیے کیپچر کریں دبائیں، یا اگر Android نہ پوچھے تو سیٹنگز میں اسے آن کریں۔';
+
+  @override
+  String get docscanPagesTitle => 'صفحات';
+
+  @override
+  String docscanPageN(int n) {
+    return 'صفحہ $n';
+  }
+
+  @override
+  String get docscanSourceCamera => 'کیمرا';
+
+  @override
+  String get docscanSourceGallery => 'گیلری';
+
+  @override
+  String get docscanCleared => 'صفحات صاف کر دیے گئے';
+
+  @override
+  String get docscanShareFailed => 'شیئر نہیں ہو سکا۔ دوبارہ کوشش کریں۔';
+
+  @override
+  String get docscanStepsTitle => 'یہ کیسے کام کرتا ہے';
+
+  @override
+  String get docscanStepCapture => 'ہر صفحہ کیپچر کریں';
+
+  @override
+  String get docscanStepReview => 'صفحات کا جائزہ لیں اور ہٹائیں';
+
+  @override
+  String get docscanStepShare => 'تیار ہونے پر شیئر کریں';
+
+  @override
+  String get faraidNoteTitle => 'رہنما اصول، فتویٰ نہیں';
+
+  @override
+  String get faraidNoteText =>
+      'یہ کیلکولیٹر صرف بیوی یا بیویوں، بیٹوں اور بیٹیوں کا احاطہ کرتا ہے — اسلامی وراثت کے قانون میں تسلیم شدہ ہر رشتہ دار کا نہیں۔ یہ ایک ابتدائی نکتہ ہے، فتویٰ نہیں۔';
+
+  @override
+  String get faraidEstate => 'ترکہ';
+
+  @override
+  String get faraidGross => 'کل ترکہ';
+
+  @override
+  String get faraidDebts => 'قرض اور تجہیز و تکفین کے اخراجات';
+
+  @override
+  String get faraidBequest => 'وصیت';
+
+  @override
+  String get faraidBequestHint => 'خالص ترکے کے ایک تہائی تک محدود۔';
+
+  @override
+  String get faraidHeirs => 'وارثین';
+
+  @override
+  String get faraidWife => 'بیوی';
+
+  @override
+  String get faraidSons => 'بیٹے';
+
+  @override
+  String get faraidDaughters => 'بیٹیاں';
+
+  @override
+  String get faraidRuleWife =>
+      'بیوی کا مقررہ حصہ اولاد کی موجودگی میں 1/8 اور اولاد نہ ہونے کی صورت میں 1/4 ہے۔';
+
+  @override
+  String get faraidRuleSons =>
+      'بیٹا باقی ماندہ ترکے میں بیٹی کے مقابلے میں دگنا حصہ لیتا ہے۔';
+
+  @override
+  String get faraidRuleDaughters =>
+      'اکیلی یا بہنوں کے ساتھ بیٹی مقررہ حصہ لیتی ہے؛ بھائی کے ساتھ ہونے پر وہ باقی ماندہ ترکہ 1:2 کے تناسب سے تقسیم کرتی ہے۔';
+
+  @override
+  String get faraidNet => 'خالص ترکہ';
+
+  @override
+  String get faraidCaptionCapped =>
+      'وصیت کو خالص ترکے کے ایک تہائی تک محدود کر دیا گیا';
+
+  @override
+  String get faraidCaptionReady => 'ذیل میں دیے گئے وارثین میں تقسیم شدہ';
+
+  @override
+  String get faraidDistribution => 'تقسیم';
+
+  @override
+  String get faraidExplain => 'یہ حصے کیوں';
+
+  @override
+  String get faraidResiduary => 'عصبہ';
+
+  @override
+  String get faraidReasonWife => 'مقررہ حصہ';
+
+  @override
+  String get faraidReasonSons => 'بقیہ ترکہ، بیٹی کے مقابلے میں دگنا حصہ';
+
+  @override
+  String get faraidReasonDaughters =>
+      'مقررہ حصہ، یا بھائی کی موجودگی میں بقیہ ترکہ';
+
+  @override
+  String get faraidUnallocated => 'غیر مختص';
+
+  @override
+  String get faraidReasonUnallocated =>
+      'یہ کیلکولیٹر ہر رشتہ دار کا حساب نہیں رکھتا — عام طور پر یہ حصہ والد، والدہ، شوہر، بہن بھائیوں یا پوتے پوتیوں کو ملتا ہے۔';
+
+  @override
+  String get fastingLogFast => 'روزہ لاگ کریں';
+
+  @override
+  String get fastingEditFast => 'روزہ میں ترمیم کریں';
+
+  @override
+  String get fastingDateLabel => 'تاریخ';
+
+  @override
+  String get fastingKindLabel => 'قسم';
+
+  @override
+  String get fastingKindSunnah => 'سنت';
+
+  @override
+  String get fastingKindQada => 'قضا';
+
+  @override
+  String get fastingKeptToggleLabel => 'میں نے یہ روزہ رکھا';
+
+  @override
+  String get fastingDeleteEntry => 'روزہ حذف کریں';
+
+  @override
+  String get fastingDeleteTitle => 'یہ روزہ حذف کریں؟';
+
+  @override
+  String get fastingDeleteText => 'یہ یہاں سے واپس نہیں ہو سکتا۔';
+
+  @override
+  String get fastingErrConflict => 'یہ اندراج کہیں اور تبدیل ہو چکا ہے';
+
+  @override
+  String get fastingErrFailed => 'یہ محفوظ نہیں ہو سکا۔ دوبارہ کوشش کریں۔';
+
+  @override
+  String get fastingSavedToast => 'روزہ محفوظ ہو گیا';
+
+  @override
+  String get fastingDeletedToast => 'روزہ حذف ہو گیا';
+
+  @override
+  String get fastingEmptyTitle => 'ابھی تک کوئی روزہ درج نہیں';
+
+  @override
+  String get fastingEmptyText =>
+      'اپنا سلسلہ شروع کرنے کے لیے ایک روزہ لاگ کریں۔';
+
+  @override
+  String get fastingLogFirst => 'اپنا پہلا روزہ لاگ کریں';
+
+  @override
+  String fastingStreakCaption(int n) {
+    return '$n لگاتار';
+  }
+
+  @override
+  String get fastingProgressLabel => 'مکمل';
+
+  @override
+  String get fastingVoluntaryLabel => 'نفلی';
+
+  @override
+  String get fastingObligatoryLabel => 'فرضی';
+
+  @override
+  String get fastingMissedLabel => 'فوت شدہ';
+
+  @override
+  String get fastingCalendarTitle => 'پچھلے 30 دن';
+
+  @override
+  String get fastingRecentTitle => 'حالیہ دن';
+
+  @override
+  String get fastingKeptBadge => 'مکمل';
+
+  @override
+  String get fastingNotKeptBadge => 'نامکمل';
+
+  @override
+  String fastingCalendarA11y(int kept, int total) {
+    return 'پچھلے $total دنوں میں سے $kept میں روزہ رکھا گیا';
+  }
+
+  @override
+  String get hijriCalculatedSubtitle => 'حساب شدہ · جدولی اسلامی کیلنڈر';
+
+  @override
+  String hijriYearAh(String year) {
+    return '$year ہجری';
+  }
+
+  @override
+  String get hijriNoteTitle => 'ایک حساب شدہ کیلنڈر، سرکاری رویتِ ہلال نہیں';
+
+  @override
+  String get hijriNoteText =>
+      'یہ کیلنڈر ایک مقررہ 30 سالہ حسابی چکر سے نکالا گیا ہے، نہ کہ سرکاری طور پر اپنایا گیا ام القریٰ کیلنڈر یا آپ کی مقامی رویتِ ہلال کمیٹی سے۔ یہاں دی گئی تاریخیں اصل اعلان شدہ تاریخ سے ایک دن آگے یا پیچھے ہو سکتی ہیں۔';
+
+  @override
+  String get hijriEventsTitle => 'آنے والی تاریخیں';
+
+  @override
+  String get hijriEventAshura => 'عاشورہ';
+
+  @override
+  String get hijriEventRamadanBegins => 'رمضان کا آغاز';
+
+  @override
+  String get hijriEventDayOfArafah => 'یومِ عرفہ';
+
+  @override
+  String get hijriConvertTitle => 'تاریخ تبدیل کریں';
+
+  @override
+  String get hijriGregorian => 'عیسوی تاریخ';
+
+  @override
+  String get hijriHijriDate => 'ہجری تاریخ';
+
+  @override
+  String get hijriMonthsTitle => 'ہجری مہینے';
+
+  @override
+  String get mediasaverLinkLabel => 'لنک';
+
+  @override
+  String get mediasaverLinkPlaceholder => 'https://…';
+
+  @override
+  String get mediasaverNoNetworkTitle => 'نیٹ ورک تک رسائی نہیں';
+
+  @override
+  String get mediasaverNoNetworkText =>
+      'Lume انٹرنیٹ سے کبھی رابطہ نہیں کرتا، اس لیے یہ لنک سے میڈیا حاصل یا ڈاؤن لوڈ نہیں کر سکتا۔';
+
+  @override
+  String get mediasaverNoNetworkToast =>
+      'Lume یہ حاصل نہیں کر سکتا — یہ انٹرنیٹ سے رابطہ نہیں کرتا۔';
+
+  @override
+  String get mediasaverSave => 'محفوظ کریں';
+
+  @override
+  String get mediasaverLibrary => 'محفوظ شدہ میڈیا';
+
+  @override
+  String get mediasaverEmptyTitle => 'ابھی تک کچھ محفوظ نہیں ہوا';
+
+  @override
+  String get mediasaverEmptyText =>
+      'آپ جو میڈیا محفوظ کریں گے وہ اسی ڈیوائس پر رہے گا — Lume لنک سے کچھ ڈاؤن لوڈ نہیں کر سکتا۔';
+
+  @override
+  String get mosquesUnavailableTitle => 'ابھی کوئی لائیو مسجد سرچ دستیاب نہیں';
+
+  @override
+  String get mosquesUnavailableText =>
+      'Lume کے پاس ابھی مقامات کی لائیو ڈائریکٹری موجود نہیں، اس لیے یہاں قریبی فہرست دکھانے کا مطلب مسجدوں کے نام اور فاصلے گھڑنا ہوگا۔ اپنے قریب حقیقی تلاش کے لیے Maps کھولیں۔';
+
+  @override
+  String get mosquesOpenMaps => 'Maps میں کھولیں';
+
+  @override
+  String get mosquesMapsUnavailable => 'یہ ڈیوائس Maps نہیں کھول سکتی۔';
+
+  @override
+  String get mosquesMapsFailed => 'Maps نہیں کھل سکا۔ دوبارہ کوشش کریں۔';
+
+  @override
+  String get passportCountry => 'ملک';
+
+  @override
+  String get passportSize => 'تصویر کا سائز';
+
+  @override
+  String get passportBackground => 'پس منظر';
+
+  @override
+  String get passportWhite => 'سادہ سفید';
+
+  @override
+  String get passportHeadHeight => 'سر کی اونچائی';
+
+  @override
+  String get passportCapture => 'تصویر لیں';
+
+  @override
+  String get passportCapturing => 'کیمرا کھل رہا ہے';
+
+  @override
+  String get passportImport => 'امپورٹ';
+
+  @override
+  String get passportImporting => 'تصویر منتخب کی جا رہی ہے';
+
+  @override
+  String get passportRequirements => 'تقاضے';
+
+  @override
+  String get passportReqBackground => 'سادہ، یکساں روشنی والا پس منظر';
+
+  @override
+  String get passportReqExpression => 'غیر جانبدار تاثرات، منہ بند';
+
+  @override
+  String get passportReqGlasses => 'آنکھوں پر چمک یا موٹے فریم نہ ہوں';
+
+  @override
+  String get passportReqRecent => 'پچھلے چھ ماہ کے اندر لی گئی';
+
+  @override
+  String get passportSizes => 'عام سائز';
+
+  @override
+  String get passportDocument => 'دستاویز';
+
+  @override
+  String get passportDpi => 'DPI';
+
+  @override
+  String get passportPassport => 'پاسپورٹ';
+
+  @override
+  String get passportVisaUS => 'امریکی ویزا';
+
+  @override
+  String get passportIdCard => 'قومی شناختی کارڈ';
+
+  @override
+  String get passportSavePhoto => 'تصویر محفوظ کریں';
+
+  @override
+  String get passportSaving => 'محفوظ ہو رہا ہے…';
+
+  @override
+  String get passportSaved => 'آپ کی تصاویر میں محفوظ ہو گئی';
+
+  @override
+  String get passportRetake => 'دوبارہ لیں';
+
+  @override
+  String get passportChooseDifferent => 'مختلف تصویر منتخب کریں';
+
+  @override
+  String get passportPreviewAlt => 'آپ کی کراپ شدہ پاسپورٹ تصویر';
+
+  @override
+  String get passportGuideHint =>
+      'اپنا چہرہ فریم کے بیچ میں رکھیں، سیدھا آگے دیکھیں';
+
+  @override
+  String get passportProcessFailed =>
+      'Lume وہ تصویر استعمال نہیں کر سکا۔ کوئی دوسری آزمائیں۔';
+
+  @override
+  String get passportCameraDenied =>
+      'Lume کیمرا استعمال نہیں کر سکتا۔ دوبارہ پوچھے جانے کے لیے تصویر لیں دبائیں۔';
+
+  @override
+  String get passportCameraBlocked =>
+      'Lume کے لیے کیمرے کی رسائی بند ہے۔ تصویر لینے کے لیے سیٹنگز میں اسے آن کریں۔';
+
+  @override
+  String get passportCameraUndetermined =>
+      'Lume کیمرا استعمال نہیں کر سکتا۔ دوبارہ پوچھے جانے کے لیے تصویر لیں دبائیں، یا اگر Android نہ پوچھے تو سیٹنگز میں اسے آن کریں۔';
+
+  @override
+  String get passportCameraRestricted =>
+      'اس ڈیوائس پر کیمرا کسی پابندی یا اس کے منتظم کی جانب سے بند ہے۔';
+
+  @override
+  String get passportCameraUnavailable => 'اس ڈیوائس پر تصویر لینا دستیاب نہیں';
+
+  @override
+  String get passportCameraFailed => 'کیمرا نہیں کھل سکا۔ دوبارہ کوشش کریں۔';
+
+  @override
+  String get passportGalleryDenied =>
+      'Lume آپ کی تصاویر نہیں کھول سکتا۔ آپ سیٹنگز میں اجازت دے سکتے ہیں۔';
+
+  @override
+  String get passportGalleryUnavailable =>
+      'اس ڈیوائس پر تصویر منتخب کرنا دستیاب نہیں';
+
+  @override
+  String get passportGalleryFailed =>
+      'آپ کی تصاویر نہیں کھل سکیں۔ دوبارہ کوشش کریں۔';
+
+  @override
+  String get passportTooLarge => 'یہ تصویر استعمال کے لیے بہت بڑی ہے';
+
+  @override
+  String get passportOpenSettings => 'سیٹنگز';
+
+  @override
+  String get passportSettingsFailed =>
+      'سیٹنگز نہیں کھلیں۔ آپ کو Lume اپنے فون کی سیٹنگز میں ایپس کے تحت ملے گا۔';
+
+  @override
+  String get passportSaveDenied =>
+      'Lume آپ کی تصاویر میں محفوظ نہیں کر سکتا۔ آپ سیٹنگز میں اجازت دے سکتے ہیں۔';
+
+  @override
+  String get passportSaveNoSpace => 'تصویر محفوظ کرنے کے لیے جگہ کافی نہیں';
+
+  @override
+  String get passportSaveUnavailable =>
+      'اس ڈیوائس پر تصاویر میں محفوظ کرنا دستیاب نہیں';
+
+  @override
+  String get passportSaveFailed => 'تصویر محفوظ نہیں ہو سکی۔ دوبارہ کوشش کریں۔';
+
+  @override
+  String get prayerNext => 'اگلی نماز';
+
+  @override
+  String prayerCountdown(String time) {
+    return '$time باقی';
+  }
+
+  @override
+  String get prayerProgress => 'پیش رفت';
+
+  @override
+  String get prayerToday => 'آج';
+
+  @override
+  String get prayerUpNext => 'اگلی باری';
+
+  @override
+  String get prayerPassed => 'گزر گئی';
+
+  @override
+  String get prayerSunTitle => 'طلوع و غروب آفتاب';
+
+  @override
+  String get prayerUpcoming => 'آنے والے دن';
+
+  @override
+  String get prayerMethod => 'حساب کا طریقہ';
+
+  @override
+  String get prayerMethodMwl => 'مسلم ورلڈ لیگ';
+
+  @override
+  String get prayerAsrMethodLabel => 'عصر کا حساب';
+
+  @override
+  String get prayerAsrStandard => 'معیاری (شافعی، مالکی، حنبلی)';
+
+  @override
+  String get prayerLocation => 'مقام';
+
+  @override
+  String get prayerTimezone => 'ٹائم زون';
+
+  @override
+  String get prayerSettings => 'طریقہ اور مقام';
+
+  @override
+  String prayerNoCityTitle(String city) {
+    return '$city کے لیے کوئی محلِ وقوع نہیں';
+  }
+
+  @override
+  String get prayerNoCityText =>
+      'نماز کے اوقات شہر کے احداثیات سے نکالے جاتے ہیں، اور Lume کے پاس اس شہر کے لیے کوئی نہیں ہیں۔ انہیں دیکھنے کے لیے پروفائل میں دوسرا شہر منتخب کریں۔';
+
+  @override
+  String prayerNoZoneTitle(String zone) {
+    return 'ٹائم زون $zone دستیاب نہیں';
+  }
+
+  @override
+  String get prayerNoZoneText =>
+      'آپ کے ٹائم زون کے بغیر نماز کے اوقات نہیں دکھائے جا سکتے، اس لیے کوئی وقت نہیں دکھایا گیا۔';
+
+  @override
+  String get prayerZoneChooseText =>
+      'نماز کے اوقات آپ کی گھڑی پر نکالے جاتے ہیں، اس لیے ان کے لیے آپ کا ٹائم زون ضروری ہے۔ پروفائل › وقت میں ایک منتخب کریں۔';
+
+  @override
+  String get prayerNoteTitle => 'ایک حساب شدہ شیڈول، مسجد کا اعلان نہیں';
+
+  @override
+  String get prayerNoteText =>
+      'یہ اوقات آپ کے شہر کے احداثیات سے مسلم ورلڈ لیگ کے طریقے کے مطابق نکالے گئے ہیں۔ ان پر انحصار کرنے سے پہلے اپنی مقامی مسجد یا ادارے سے ان کی تصدیق کر لیں۔';
+
+  @override
+  String prayerShareSource(String city, String date) {
+    return '$city · $date';
+  }
+
+  @override
+  String get praytrackErrConflict =>
+      'یہ کہیں اور تبدیل ہو گیا۔ اسے دوبارہ کھولیں۔';
+
+  @override
+  String get praytrackErrFailed => 'یہ محفوظ نہیں ہوا۔ دوبارہ کوشش کریں۔';
+
+  @override
+  String get praytrackMarkTitle => 'آج کی نمازیں نشان زد کریں';
+
+  @override
+  String get praytrackPending => 'باقی';
+
+  @override
+  String praytrackStreakCaption(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n دن کا تسلسل',
+      one: '1 دن کا تسلسل',
+      zero: 'ابھی تک کوئی تسلسل نہیں',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get praytrackStreakLabel => 'روزانہ تسلسل';
+
+  @override
+  String get praytrackQadaStatLabel => 'قضا باقی';
+
+  @override
+  String get praytrackCheckLabel => 'ادا کی';
+
+  @override
+  String get praytrackHeatTitle => 'پچھلے 35 دن';
+
+  @override
+  String get praytrackByPrayerTitle => 'نماز کے لحاظ سے';
+
+  @override
+  String get praytrackByPrayerCaption =>
+      'پچھلے 35 دنوں میں ہر نماز کتنی بار ادا کی گئی۔';
+
+  @override
+  String get praytrackQadaTitle => 'قضا';
+
+  @override
+  String praytrackQadaValue(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n نمازیں قضا',
+      one: '1 نماز قضا',
+      zero: 'کچھ بھی باقی نہیں',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get praytrackQadaFootnote =>
+      'یہ صرف اس نماز کو شمار کرتا ہے جو گزرے دن میں نشان زد نہیں کی گئی — کبھی بھی ایک فرضی ابتدائی تعداد نہیں۔';
+
+  @override
+  String get ramadanCountdown => 'رمضان';
+
+  @override
+  String ramadanStarts(String date) {
+    return '$date کے لگ بھگ شروع ہوگا';
+  }
+
+  @override
+  String get ramadanYear => 'ہجری سال';
+
+  @override
+  String get ramadanSunsetToday => 'آج غروبِ آفتاب';
+
+  @override
+  String get ramadanPrepare => 'تیاری';
+
+  @override
+  String get ramadanPrepQada => 'چھوٹے ہوئے روزوں کی قضا کریں';
+
+  @override
+  String get ramadanPrepQadaSub => 'رمضان شروع ہونے سے پہلے';
+
+  @override
+  String get ramadanPrepQuran => 'پڑھنے کی رفتار طے کریں';
+
+  @override
+  String get ramadanPrepQuranSub => 'روزانہ ایک جز 30 دنوں میں مکمل کر دیتا ہے';
+
+  @override
+  String get ramadanPrepZakat => 'اپنی زکوٰۃ کی منصوبہ بندی کریں';
+
+  @override
+  String get ramadanPrepZakatSub => 'بہت سے لوگ رمضان میں زکوٰۃ دیتے ہیں';
+
+  @override
+  String ramadanDay(String n) {
+    return 'رمضان، دن $n';
+  }
+
+  @override
+  String ramadanIftarIn(String time) {
+    return 'افطار میں $time';
+  }
+
+  @override
+  String get ramadanSuhoor => 'سحری ختم';
+
+  @override
+  String get ramadanSuhoorEnds => 'سحری ختم';
+
+  @override
+  String get ramadanSuhoorSub => 'فجر پر کھانا بند کر دیں';
+
+  @override
+  String get ramadanIftar => 'افطار';
+
+  @override
+  String get ramadanIftarSub => 'مغرب پر روزہ افطار کریں';
+
+  @override
+  String get ramadanRemaining => 'باقی دن';
+
+  @override
+  String get ramadanDayTimeline => 'آج';
+
+  @override
+  String get ramadanNoteTitle => 'ایک حساب شدہ تخمینہ';
+
+  @override
+  String get ramadanNoteText =>
+      'یہ ہجری کیلنڈر اور آج کے فجر و مغرب کے اوقات پر مبنی ہے — رویتِ ہلال پر نہیں۔ اصل تاریخ ایک دن آگے یا پیچھے ہو سکتی ہے۔';
+
+  @override
+  String ramadanNoCityTitle(String city) {
+    return '$city کے لیے کوئی محلِ وقوع نہیں';
+  }
+
+  @override
+  String get ramadanNoCityText =>
+      'رمضان کے اوقات شہر کے احداثیات سے نکالے جاتے ہیں، اور Lume کے پاس اس شہر کے لیے کوئی نہیں ہیں۔ انہیں دیکھنے کے لیے پروفائل میں دوسرا شہر منتخب کریں۔';
+
+  @override
+  String ramadanNoZoneTitle(String zone) {
+    return 'ٹائم زون $zone دستیاب نہیں';
+  }
+
+  @override
+  String get ramadanNoZoneText =>
+      'آپ کے ٹائم زون کے بغیر رمضان کے اوقات نہیں دکھائے جا سکتے، اس لیے کوئی وقت نہیں دکھایا گیا۔';
+
+  @override
+  String get ramadanZoneChooseText =>
+      'رمضان کے اوقات آپ کی گھڑی پر نکالے جاتے ہیں، اس لیے ان کے لیے آپ کا ٹائم زون ضروری ہے۔ پروفائل › وقت میں ایک منتخب کریں۔';
+
+  @override
+  String ramadanShareSource(String city, String date) {
+    return '$city · $date';
+  }
+
+  @override
+  String get speedtestUnavailableTitle => 'Lume میں کوئی لائیو اسپیڈ ٹیسٹ نہیں';
+
+  @override
+  String get speedtestUnavailableText =>
+      'Lume نیٹ ورک پر کچھ نہیں بھیجتا، اس لیے یہ آپ کی ڈاؤن لوڈ یا اپ لوڈ اسپیڈ ناپ نہیں سکتا۔ اس کے بجائے ایک حقیقی ٹیسٹ کھولیں۔';
+
+  @override
+  String get speedtestOpenBrowser => 'اسپیڈ ٹیسٹ کھولیں';
+
+  @override
+  String get speedtestOpenFootnote =>
+      'fast.com کھلتا ہے — ایک مفت، بغیر اشتہار کے ٹیسٹ۔ Lume اسے نہ چلاتا ہے نہ نتیجہ دیکھتا ہے۔';
+
+  @override
+  String get speedtestOpenUnavailable =>
+      'اس ڈیوائس پر کوئی بھی ایپ یہ لنک نہیں کھول سکتی';
+
+  @override
+  String get speedtestOpenFailed => 'یہ لنک نہیں کھل سکا';
+
+  @override
+  String get taraweehErrConflict =>
+      'یہ کہیں اور تبدیل ہو گیا۔ اسے دوبارہ کھولیں۔';
+
+  @override
+  String get taraweehErrFailed => 'یہ محفوظ نہیں ہوا۔ دوبارہ کوشش کریں۔';
+
+  @override
+  String get taraweehPrayedToast => 'آج رات کے لیے لاگ ہو گیا';
+
+  @override
+  String get taraweehClearedToast => 'آج رات کا اندراج ہٹا دیا گیا';
+
+  @override
+  String get taraweehSummaryKicker => 'تراویح کا تسلسل';
+
+  @override
+  String get taraweehNightsUnit => 'راتیں';
+
+  @override
+  String taraweehBestCaption(int n) {
+    return 'بہترین: $n راتیں';
+  }
+
+  @override
+  String get taraweehStatTotal => 'لاگ شدہ راتیں';
+
+  @override
+  String get taraweehStatJuz => 'مکمل شدہ جز';
+
+  @override
+  String get taraweehStatNextJuz => 'اگلا جز';
+
+  @override
+  String get taraweehTonight => 'آج رات';
+
+  @override
+  String get taraweehPrayedLabel => 'آج رات پڑھی';
+
+  @override
+  String get taraweehRakaatTitle => 'ادا کی گئی رکعات';
+
+  @override
+  String taraweehRakaatOption(int n) {
+    return '$n رکعات';
+  }
+
+  @override
+  String get taraweehJuzTitle => 'پہنچا گیا جز';
+
+  @override
+  String get taraweehJuzValueNone => 'درج نہیں';
+
+  @override
+  String get taraweehJuzDecrementLabel => 'کم';
+
+  @override
+  String get taraweehJuzIncrementLabel => 'زیادہ';
+
+  @override
+  String get taraweehProgressTitle => 'قرآن کی پیش رفت';
+
+  @override
+  String get taraweehProgressLabel => 'مکمل شدہ جز';
+
+  @override
+  String taraweehProgressValue(int done, int total) {
+    return '$total میں سے $done';
+  }
+
+  @override
+  String get taraweehKhatmComplete => 'اس رمضان میں پورا قرآن مکمل ہو گیا ہے';
+
+  @override
+  String get taraweehCalendarTitle => 'کیلنڈر';
+
+  @override
+  String taraweehCalendarA11y(int prayed, int total) {
+    return 'پچھلے $total راتوں میں سے $prayed میں تراویح پڑھی گئی';
+  }
+
+  @override
+  String get vehicleFleet => 'آپ کی گاڑیاں';
+
+  @override
+  String vehicleOpenFines(int n) {
+    return '$n کھلا چالان';
+  }
+
+  @override
+  String get vehicleNoFines => 'کوئی بقایا چالان نہیں';
+
+  @override
+  String get vehicleOutstanding => 'بقایا';
+
+  @override
+  String get vehicleNextToken => 'اگلا ٹوکن ٹیکس';
+
+  @override
+  String get vehicleOdometer => 'اوڈومیٹر';
+
+  @override
+  String get vehicleSearch => 'اپنی گاڑیاں تلاش کریں';
+
+  @override
+  String get vehicleYours => 'آپ کے نام رجسٹرڈ';
+
+  @override
+  String get vehicleToken => 'ٹوکن';
+
+  @override
+  String get vehicleInsurance => 'انشورنس';
+
+  @override
+  String vehicleFines(int n) {
+    return '$n چالان';
+  }
+
+  @override
+  String get vehicleClear => 'کلیئر';
+
+  @override
+  String get vehicleCheck => 'کوئی بھی رجسٹریشن چیک کریں';
+
+  @override
+  String get vehicleRegistration => 'رجسٹریشن نمبر';
+
+  @override
+  String get vehicleLookup => 'تلاش کریں';
+
+  @override
+  String get vehicleLookingUp => 'رجسٹر چیک ہو رہا ہے';
+
+  @override
+  String get vehicleReminders => 'آنے والے معاملات';
+
+  @override
+  String get vehicleTokenTax => 'ٹوکن ٹیکس واجب الادا';
+
+  @override
+  String get vehicleInsuranceRenewal => 'انشورنس کی تجدید';
+
+  @override
+  String get wastatusWhyTitle => 'Lume واٹس ایپ کی فائلیں نہیں پڑھ سکتا';
+
+  @override
+  String get wastatusWhyText =>
+      'کسی اور ایپ کا اسٹوریج کھولنے کے لیے وسیع فائل رسائی کی اجازت درکار ہوتی ہے۔ Lume جان بوجھ کر یہ اجازت نہیں مانگتا، اس لیے یہ اسٹیٹس تلاش یا فہرست نہیں بنا سکتا۔';
+
+  @override
+  String get wastatusSaveTitle => 'اسٹیٹس خود محفوظ کریں';
+
+  @override
+  String get wastatusSaveSubtitle =>
+      'دو مراحل، واٹس ایپ کے اندر ہی — کسی اضافی اجازت کی ضرورت نہیں';
+
+  @override
+  String get wastatusStep1Title => 'اسٹیٹس کھولیں';
+
+  @override
+  String get wastatusStep1Text =>
+      'تصویر یا ویڈیو کو معمول کے مطابق دیکھیں، اس کے غائب ہونے سے پہلے۔';
+
+  @override
+  String get wastatusStep2Title => 'محفوظ کرنے کے آئیکن پر ٹیپ کریں';
+
+  @override
+  String get wastatusStep2Text =>
+      'واٹس ایپ کا اپنا ڈاؤن لوڈ آئیکن اسے براہِ راست آپ کے فون کی گیلری میں محفوظ کر دیتا ہے۔';
+
+  @override
+  String get wastatusStep3Title => 'بعد میں اسے تلاش کریں';
+
+  @override
+  String get wastatusStep3Text =>
+      'آپ نے جو محفوظ کیا ہے اسے دیکھنے کے لیے اپنی گیلری، یا Lume کا میڈیا سیور کھولیں۔';
+
+  @override
+  String get wastatusFolderTitle => 'محفوظ کرنے کا آئیکن چھوٹ گیا؟';
+
+  @override
+  String get wastatusFolderNoteTitle => 'صرف Android';
+
+  @override
+  String get wastatusFolderNoteText =>
+      'آپ کے فون کی اپنی فائلز ایپ بعض اوقات واٹس ایپ کے میڈیا فولڈر تک رسائی حاصل کر سکتی ہے جب تک اسٹیٹس وہاں کیش میں موجود ہو — ایک پوشیدہ \".Statuses\" فولڈر تلاش کریں اور اگر نظر نہ آئے تو \"پوشیدہ فائلیں دکھائیں\" آن کریں۔ اس کا صحیح مقام آپ کے فون اور واٹس ایپ ورژن پر منحصر ہے، اور یہ آئی فون پر کام نہیں کرتا۔';
 }

@@ -190,37 +190,45 @@ class _Cell extends StatelessWidget {
             selected: day.today,
             excludeSemantics: true,
             child: Center(
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                children: <Widget>[
-                  LumeNumerals(
-                    day.label,
-                    style: LumeType.numeric(
-                      LumeType.natural(
-                        context,
-                        context.lumeType.label,
-                        size: 12,
-                      ),
-                    ).copyWith(fontWeight: FontWeight.w600, color: ink),
-                  ),
-                  if (day.sub != null)
+              // A day cell has no room to reflow — at 200% text scale two
+              // stacked numerals (a Gregorian day over its Hijri one) no
+              // longer fit a fixed square cell. Shrinking to fit keeps both
+              // lines on screen instead of overflowing the grid; at 100%
+              // scale nothing here changes, since natural size already fits.
+              child: FittedBox(
+                fit: BoxFit.scaleDown,
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: <Widget>[
                     LumeNumerals(
-                      day.sub!,
-                      style:
-                          LumeType.numeric(
-                            LumeType.natural(
-                              context,
-                              context.lumeType.label,
-                              size: 11,
-                            ),
-                          ).copyWith(
-                            fontWeight: FontWeight.w600,
-                            color: day.today
-                                ? lume.onAccent.withValues(alpha: 0.76)
-                                : lume.text3,
-                          ),
+                      day.label,
+                      style: LumeType.numeric(
+                        LumeType.natural(
+                          context,
+                          context.lumeType.label,
+                          size: 12,
+                        ),
+                      ).copyWith(fontWeight: FontWeight.w600, color: ink),
                     ),
-                ],
+                    if (day.sub != null)
+                      LumeNumerals(
+                        day.sub!,
+                        style:
+                            LumeType.numeric(
+                              LumeType.natural(
+                                context,
+                                context.lumeType.label,
+                                size: 11,
+                              ),
+                            ).copyWith(
+                              fontWeight: FontWeight.w600,
+                              color: day.today
+                                  ? lume.onAccent.withValues(alpha: 0.76)
+                                  : lume.text3,
+                            ),
+                      ),
+                  ],
+                ),
               ),
             ),
           ),

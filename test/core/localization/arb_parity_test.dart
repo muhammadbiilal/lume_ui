@@ -170,6 +170,11 @@ void main() {
         // Cricket: Net Run Rate, a standings-table column header. NRR is NRR
         // in every language a scorecard is printed in (wave 9).
         'cricketNrr',
+        // Media Saver: a URL placeholder example, not a sentence.
+        'mediasaverLinkPlaceholder',
+        // Passport Photos: "dots per inch" is DPI in every language a
+        // print spec is printed in (wave 10).
+        'passportDpi',
       };
 
       /// Anything left once the placeholders and the punctuation are gone.

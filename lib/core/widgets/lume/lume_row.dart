@@ -94,6 +94,7 @@ class LumeRichRow extends StatelessWidget {
     this.meta,
     this.value,
     this.valueSub,
+    this.valueMaxWidth,
     this.icon,
     this.iconTone,
     this.iconInk,
@@ -130,6 +131,12 @@ class LumeRichRow extends StatelessWidget {
   /// in the same row must not swap places in an RTL page.
   final String? value;
   final String? valueSub;
+
+  /// Caps [value]'s own width, ellipsizing rather than pushing the row wider
+  /// — for a value long enough to threaten the fixed end column at large
+  /// text scale (`LumeDelta.maxWidth`'s own precedent). `null` (the default)
+  /// leaves every existing caller's layout exactly as it was.
+  final double? valueMaxWidth;
 
   final String? icon;
 
@@ -241,17 +248,26 @@ class LumeRichRow extends StatelessWidget {
                   if (value != null)
                     // `.rrow__value` — 14 / 700 / −.03em on the font's own
                     // 18.
-                    LumeNumerals(
-                      value!,
-                      style: LumeType.numeric(
-                        LumeType.tracked(
-                          LumeType.natural(
-                            context,
-                            context.lumeType.body,
-                          ).copyWith(fontWeight: FontWeight.w700),
-                          -0.03,
-                        ),
-                      ).copyWith(color: valueColor ?? lume.text),
+                    ConstrainedBox(
+                      constraints: BoxConstraints(
+                        maxWidth: valueMaxWidth ?? double.infinity,
+                      ),
+                      child: LumeNumerals(
+                        value!,
+                        style: LumeType.numeric(
+                          LumeType.tracked(
+                            LumeType.natural(
+                              context,
+                              context.lumeType.body,
+                            ).copyWith(fontWeight: FontWeight.w700),
+                            -0.03,
+                          ),
+                        ).copyWith(color: valueColor ?? lume.text),
+                        maxLines: valueMaxWidth == null ? null : 1,
+                        overflow: valueMaxWidth == null
+                            ? null
+                            : TextOverflow.ellipsis,
+                      ),
                     ),
                   // `.rrow__valuesub` — 10 / 600 on the font's own 12.
                   if (valueSub != null)

@@ -10,6 +10,7 @@ library;
 import 'package:flutter/widgets.dart';
 
 import '../../age/presentation/age_tool.dart';
+import '../../alarms/presentation/alarms_tool.dart';
 import '../../aqi/presentation/aqi_tool.dart';
 import '../../bills/presentation/bills_tool.dart';
 import '../../birthdays/presentation/birthdays_tool.dart';
@@ -21,25 +22,39 @@ import '../../cricket/presentation/cricket_tool.dart';
 import '../../currency/presentation/currency_tool.dart';
 import '../../cycle/presentation/cycle_tool.dart';
 import '../../datecalc/presentation/datecalc_tool.dart';
+import '../../docscan/presentation/docscan_tool.dart';
 import '../../documents/presentation/documents_tool.dart';
 import '../../duas/presentation/duas_tool.dart';
 import '../../emergency/presentation/emergency_tool.dart';
 import '../../events/presentation/events_tool.dart';
 import '../../expenses/presentation/expenses_tool.dart';
+import '../../faraid/presentation/faraid_tool.dart';
+import '../../fasting/presentation/fasting_tool.dart';
 import '../../fuel/presentation/fuel_tool.dart';
 import '../../fuel/presentation/fuelcost_tool.dart';
+import '../../hijri/presentation/hijri_tool.dart';
 import '../../holidays/presentation/holidays_tool.dart';
 import '../../loadshed/presentation/loadshed_tool.dart';
 import '../../markets/presentation/markets_tool.dart';
+import '../../mediasaver/presentation/mediasaver_tool.dart';
+import '../../mosques/presentation/mosques_tool.dart';
 import '../../names99/presentation/names99_tool.dart';
 import '../../natsavings/presentation/natsavings_tool.dart';
 import '../../packages/presentation/packages_tool.dart';
 import '../../parcel/presentation/parcel_tool.dart';
+import '../../passport/presentation/passport_tool.dart';
+import '../../prayer/presentation/prayer_tool.dart';
+import '../../praytrack/presentation/praytrack_tool.dart';
 import '../../prizebonds/presentation/prizebonds_tool.dart';
 import '../../quran/presentation/ayah_tool.dart';
 import '../../quran/presentation/quran_tool.dart';
 import '../../quran/presentation/quransearch_tool.dart';
+import '../../ramadan/presentation/ramadan_tool.dart';
+import '../../speedtest/presentation/speedtest_tool.dart';
+import '../../taraweeh/presentation/taraweeh_tool.dart';
 import '../../trains/presentation/trains_tool.dart';
+import '../../vehicle/presentation/vehicle_tool.dart';
+import '../../wastatus/presentation/wastatus_tool.dart';
 import '../../babybudget/presentation/babybudget_tool.dart';
 import '../../calculator/presentation/calculator_tool.dart';
 import '../../focus/presentation/focus_tool.dart';
@@ -173,4 +188,23 @@ const Map<String, LumeToolBuilder> kLumeToolRegistry =
       'trains': LumeTrainsTool.open,
       'holidays': LumeHolidaysTool.open,
       'parcel': LumeParcelTool.open,
+      // Wave 10: fifteen tools built in parallel — Islamic worship
+      // features (real astronomical/calendar math, or real reader-record
+      // trackers where the reference itself had no schema) plus a batch
+      // of device-capability tools (`ROLLOUT_WAVE_10.md`).
+      'prayer': LumePrayerTool.open,
+      'praytrack': LumePrayTrackTool.open,
+      'fasting': LumeFastingTool.open,
+      'ramadan': LumeRamadanTool.open,
+      'taraweeh': LumeTaraweehTool.open,
+      'faraid': LumeFaraidTool.open,
+      'hijri': LumeHijriTool.open,
+      'mosques': LumeMosquesTool.open,
+      'docscan': LumeDocScanTool.open,
+      'mediasaver': LumeMediaSaverTool.open,
+      'speedtest': LumeSpeedtestTool.open,
+      'vehicle': LumeVehicleTool.open,
+      'wastatus': LumeWastatusTool.open,
+      'passport': LumePassportTool.open,
+      'alarms': LumeAlarmsTool.open,
     };

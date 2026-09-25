@@ -12439,4 +12439,940 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get prizebondsYourNumbers => 'أرقامك';
+
+  @override
+  String get alarmsNext => 'المنبه القادم';
+
+  @override
+  String get alarmsNone => 'لم يتم ضبط أي منبه';
+
+  @override
+  String get alarmsAll => 'المنبهات';
+
+  @override
+  String get alarmsAdd => 'أضف منبهًا';
+
+  @override
+  String get alarmsAdding => 'منبه جديد';
+
+  @override
+  String get alarmsDaily => 'كل يوم';
+
+  @override
+  String get alarmsWeekdays => 'أيام الأسبوع';
+
+  @override
+  String get alarmsWeekend => 'عطلة نهاية الأسبوع';
+
+  @override
+  String get alarmsA1 => 'العمل';
+
+  @override
+  String get alarmsA2 => 'نوم متأخر';
+
+  @override
+  String get alarmsA3 => 'وقت الاسترخاء';
+
+  @override
+  String alarmsInHours(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: 'خلال $n ساعة تقريبًا',
+      few: 'خلال $n ساعات تقريبًا',
+      two: 'خلال ساعتين تقريبًا',
+      one: 'خلال ساعة تقريبًا',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get docscanCapture => 'التقط';
+
+  @override
+  String get docscanHint => 'ضع الصفحة مسطحة والتقط';
+
+  @override
+  String get docscanCaptureDenied =>
+      'لا يستطيع Lume استخدام الكاميرا. اضغط «التقط» ليُطلب منك الإذن مرة أخرى.';
+
+  @override
+  String get docscanCaptureUndetermined =>
+      'لا يستطيع Lume استخدام الكاميرا. اضغط «التقط» ليُطلب منك الإذن مرة أخرى، أو فعّله من الإعدادات إن لم يطلبه Android.';
+
+  @override
+  String get docscanPagesTitle => 'الصفحات';
+
+  @override
+  String docscanPageN(int n) {
+    return 'صفحة $n';
+  }
+
+  @override
+  String get docscanSourceCamera => 'الكاميرا';
+
+  @override
+  String get docscanSourceGallery => 'المعرض';
+
+  @override
+  String get docscanCleared => 'تم مسح الصفحات';
+
+  @override
+  String get docscanShareFailed => 'تعذّرت المشاركة. حاول مرة أخرى.';
+
+  @override
+  String get docscanStepsTitle => 'كيف يعمل';
+
+  @override
+  String get docscanStepCapture => 'التقط كل صفحة';
+
+  @override
+  String get docscanStepReview => 'راجع الصفحات وأزلها';
+
+  @override
+  String get docscanStepShare => 'شارك عندما تكون جاهزًا';
+
+  @override
+  String get faraidNoteTitle => 'دليل إرشادي، وليس فتوى';
+
+  @override
+  String get faraidNoteText =>
+      'تشمل هذه الحاسبة الزوجة أو الزوجات والأبناء والبنات فقط — وليس كل قريب يعترف به قانون الميراث الإسلامي. إنها نقطة بداية، وليست فتوى.';
+
+  @override
+  String get faraidEstate => 'التركة';
+
+  @override
+  String get faraidGross => 'إجمالي التركة';
+
+  @override
+  String get faraidDebts => 'الديون ومصاريف الجنازة';
+
+  @override
+  String get faraidBequest => 'الوصية';
+
+  @override
+  String get faraidBequestHint => 'محدودة بثلث صافي التركة.';
+
+  @override
+  String get faraidHeirs => 'الورثة';
+
+  @override
+  String get faraidWife => 'الزوجة';
+
+  @override
+  String get faraidSons => 'الأبناء';
+
+  @override
+  String get faraidDaughters => 'البنات';
+
+  @override
+  String get faraidRuleWife =>
+      'نصيب الزوجة المفروض هو الثمن مع وجود الأولاد، والربع بدونهم.';
+
+  @override
+  String get faraidRuleSons => 'يأخذ الابن من الباقي ضعف نصيب البنت.';
+
+  @override
+  String get faraidRuleDaughters =>
+      'تأخذ البنت المنفردة أو مع أخواتها نصيبًا مفروضًا؛ ومع وجود أخ تشارك في الباقي بنسبة 1:2.';
+
+  @override
+  String get faraidNet => 'صافي التركة';
+
+  @override
+  String get faraidCaptionCapped => 'تم تحديد الوصية بثلث صافي التركة';
+
+  @override
+  String get faraidCaptionReady => 'موزّعة على الورثة أدناه';
+
+  @override
+  String get faraidDistribution => 'التوزيع';
+
+  @override
+  String get faraidExplain => 'لماذا هذه الأنصبة';
+
+  @override
+  String get faraidResiduary => 'العصبة';
+
+  @override
+  String get faraidReasonWife => 'نصيب مفروض';
+
+  @override
+  String get faraidReasonSons => 'الباقي، بنسبة الضعف مقابل نصيب البنت';
+
+  @override
+  String get faraidReasonDaughters => 'نصيب مفروض، أو من الباقي مع وجود أخ';
+
+  @override
+  String get faraidUnallocated => 'غير موزّع';
+
+  @override
+  String get faraidReasonUnallocated =>
+      'لا تحسب هذه الحاسبة كل قريب — عادةً ما يذهب هذا النصيب إلى الأب أو الأم أو الزوج أو الإخوة أو الأحفاد.';
+
+  @override
+  String get fastingLogFast => 'تسجيل صيام';
+
+  @override
+  String get fastingEditFast => 'تعديل الصيام';
+
+  @override
+  String get fastingDateLabel => 'التاريخ';
+
+  @override
+  String get fastingKindLabel => 'النوع';
+
+  @override
+  String get fastingKindSunnah => 'سنة';
+
+  @override
+  String get fastingKindQada => 'قضاء';
+
+  @override
+  String get fastingKeptToggleLabel => 'صمتُ هذا اليوم';
+
+  @override
+  String get fastingDeleteEntry => 'حذف الصيام';
+
+  @override
+  String get fastingDeleteTitle => 'هل تريد حذف هذا الصيام؟';
+
+  @override
+  String get fastingDeleteText => 'لا يمكن التراجع عن هذا من هنا.';
+
+  @override
+  String get fastingErrConflict => 'تم تغيير هذا الإدخال في مكان آخر';
+
+  @override
+  String get fastingErrFailed => 'لم يتم الحفظ. حاولي مرة أخرى.';
+
+  @override
+  String get fastingSavedToast => 'تم حفظ الصيام';
+
+  @override
+  String get fastingDeletedToast => 'تم حذف الصيام';
+
+  @override
+  String get fastingEmptyTitle => 'لا يوجد صيام مسجّل بعد';
+
+  @override
+  String get fastingEmptyText => 'سجّل صيامًا لتبدأ بتتبّع تتابعك.';
+
+  @override
+  String get fastingLogFirst => 'سجّل أول صيام لك';
+
+  @override
+  String fastingStreakCaption(int n) {
+    return '$n على التوالي';
+  }
+
+  @override
+  String get fastingProgressLabel => 'مكتمل';
+
+  @override
+  String get fastingVoluntaryLabel => 'تطوّعي';
+
+  @override
+  String get fastingObligatoryLabel => 'فرضي';
+
+  @override
+  String get fastingMissedLabel => 'فائت';
+
+  @override
+  String get fastingCalendarTitle => 'آخر 30 يومًا';
+
+  @override
+  String get fastingRecentTitle => 'الأيام الأخيرة';
+
+  @override
+  String get fastingKeptBadge => 'مكتمل';
+
+  @override
+  String get fastingNotKeptBadge => 'غير مكتمل';
+
+  @override
+  String fastingCalendarA11y(int kept, int total) {
+    return 'تم الصيام في $kept من أصل $total يومًا الماضية';
+  }
+
+  @override
+  String get hijriCalculatedSubtitle => 'محسوب · التقويم الهجري الجدولي';
+
+  @override
+  String hijriYearAh(String year) {
+    return '$year هـ';
+  }
+
+  @override
+  String get hijriNoteTitle => 'تقويم محسوب، وليس رؤية هلال رسمية';
+
+  @override
+  String get hijriNoteText =>
+      'يُحسب هذا التقويم من دورة حسابية ثابتة مدتها 30 عامًا، وليس من تقويم أم القرى المعتمد رسميًا أو من لجنة رؤية الهلال المحلية لديك. قد تختلف التواريخ هنا يومًا واحدًا عمّا يُعلن فعليًا.';
+
+  @override
+  String get hijriEventsTitle => 'التواريخ القادمة';
+
+  @override
+  String get hijriEventAshura => 'عاشوراء';
+
+  @override
+  String get hijriEventRamadanBegins => 'بداية رمضان';
+
+  @override
+  String get hijriEventDayOfArafah => 'يوم عرفة';
+
+  @override
+  String get hijriConvertTitle => 'تحويل تاريخ';
+
+  @override
+  String get hijriGregorian => 'التاريخ الميلادي';
+
+  @override
+  String get hijriHijriDate => 'التاريخ الهجري';
+
+  @override
+  String get hijriMonthsTitle => 'الأشهر الهجرية';
+
+  @override
+  String get mediasaverLinkLabel => 'الرابط';
+
+  @override
+  String get mediasaverLinkPlaceholder => 'https://…';
+
+  @override
+  String get mediasaverNoNetworkTitle => 'لا يوجد اتصال بالإنترنت';
+
+  @override
+  String get mediasaverNoNetworkText =>
+      'لا يتصل لوم بالإنترنت أبدًا، لذا لا يمكنه جلب الوسائط أو تنزيلها من رابط.';
+
+  @override
+  String get mediasaverNoNetworkToast =>
+      'لا يمكن للوم جلب هذا — فهو لا يتصل بالإنترنت.';
+
+  @override
+  String get mediasaverSave => 'حفظ';
+
+  @override
+  String get mediasaverLibrary => 'الوسائط المحفوظة';
+
+  @override
+  String get mediasaverEmptyTitle => 'لم يُحفظ أي شيء بعد';
+
+  @override
+  String get mediasaverEmptyText =>
+      'الوسائط التي تحفظها تبقى على هذا الجهاز — لا يمكن للوم تنزيل أي شيء من رابط.';
+
+  @override
+  String get mosquesUnavailableTitle => 'لا يوجد بحث مباشر عن المساجد بعد';
+
+  @override
+  String get mosquesUnavailableText =>
+      'لا يملك Lume دليل أماكن مباشرًا بعد، لذا فإن عرض قائمة قريبة هنا يعني اختلاق أسماء مساجد ومسافات. افتح خرائط Maps لإجراء بحث حقيقي بالقرب منك.';
+
+  @override
+  String get mosquesOpenMaps => 'افتح في خرائط';
+
+  @override
+  String get mosquesMapsUnavailable => 'لا يمكن لهذا الجهاز فتح خرائط.';
+
+  @override
+  String get mosquesMapsFailed => 'تعذّر فتح خرائط. حاول مرة أخرى.';
+
+  @override
+  String get passportCountry => 'الدولة';
+
+  @override
+  String get passportSize => 'حجم الصورة';
+
+  @override
+  String get passportBackground => 'الخلفية';
+
+  @override
+  String get passportWhite => 'أبيض بسيط';
+
+  @override
+  String get passportHeadHeight => 'ارتفاع الرأس';
+
+  @override
+  String get passportCapture => 'التقط صورة';
+
+  @override
+  String get passportCapturing => 'جارٍ فتح الكاميرا';
+
+  @override
+  String get passportImport => 'استيراد';
+
+  @override
+  String get passportImporting => 'جارٍ اختيار صورة';
+
+  @override
+  String get passportRequirements => 'المتطلبات';
+
+  @override
+  String get passportReqBackground => 'خلفية بسيطة ومضاءة بالتساوي';
+
+  @override
+  String get passportReqExpression => 'تعبير محايد، والفم مغلق';
+
+  @override
+  String get passportReqGlasses => 'بلا وهج أو إطارات سميكة فوق العينين';
+
+  @override
+  String get passportReqRecent => 'مُلتقطة خلال الأشهر الستة الماضية';
+
+  @override
+  String get passportSizes => 'الأحجام الشائعة';
+
+  @override
+  String get passportDocument => 'المستند';
+
+  @override
+  String get passportDpi => 'DPI';
+
+  @override
+  String get passportPassport => 'جواز السفر';
+
+  @override
+  String get passportVisaUS => 'تأشيرة أمريكية';
+
+  @override
+  String get passportIdCard => 'الهوية الوطنية';
+
+  @override
+  String get passportSavePhoto => 'حفظ الصورة';
+
+  @override
+  String get passportSaving => 'جارٍ الحفظ…';
+
+  @override
+  String get passportSaved => 'تم الحفظ في صورك';
+
+  @override
+  String get passportRetake => 'أعد الالتقاط';
+
+  @override
+  String get passportChooseDifferent => 'اختر صورة أخرى';
+
+  @override
+  String get passportPreviewAlt => 'صورة جواز سفرك المقصوصة';
+
+  @override
+  String get passportGuideHint =>
+      'ضع وجهك في منتصف الإطار، وانظر إلى الأمام مباشرة';
+
+  @override
+  String get passportProcessFailed =>
+      'تعذّر على Lume استخدام هذه الصورة. جرّب صورة أخرى.';
+
+  @override
+  String get passportCameraDenied =>
+      'لا يستطيع Lume استخدام الكاميرا. اضغط «التقط صورة» ليُطلب منك الإذن مرة أخرى.';
+
+  @override
+  String get passportCameraBlocked =>
+      'الوصول إلى الكاميرا متوقف لـ Lume. فعّله من الإعدادات لالتقاط صورة.';
+
+  @override
+  String get passportCameraUndetermined =>
+      'لا يستطيع Lume استخدام الكاميرا. اضغط «التقط صورة» ليُطلب منك الإذن مرة أخرى، أو فعّله من الإعدادات إن لم يطلبه Android.';
+
+  @override
+  String get passportCameraRestricted =>
+      'الكاميرا متوقفة على هذا الجهاز بسبب قيد أو من قِبل مسؤوله.';
+
+  @override
+  String get passportCameraUnavailable =>
+      'التقاط الصور غير متاح على هذا الجهاز';
+
+  @override
+  String get passportCameraFailed => 'تعذّر فتح الكاميرا. حاول مرة أخرى.';
+
+  @override
+  String get passportGalleryDenied =>
+      'لا يستطيع Lume فتح صورك. يمكنك السماح بذلك من الإعدادات.';
+
+  @override
+  String get passportGalleryUnavailable =>
+      'اختيار صورة غير متاح على هذا الجهاز';
+
+  @override
+  String get passportGalleryFailed => 'تعذّر فتح صورك. حاول مرة أخرى.';
+
+  @override
+  String get passportTooLarge => 'هذه الصورة أكبر من أن تُستخدم';
+
+  @override
+  String get passportOpenSettings => 'الإعدادات';
+
+  @override
+  String get passportSettingsFailed =>
+      'لم تُفتح الإعدادات. ستجد Lume ضمن التطبيقات في إعدادات هاتفك.';
+
+  @override
+  String get passportSaveDenied =>
+      'لا يستطيع Lume الحفظ في صورك. يمكنك السماح بذلك من الإعدادات.';
+
+  @override
+  String get passportSaveNoSpace => 'لا توجد مساحة كافية لحفظ الصورة';
+
+  @override
+  String get passportSaveUnavailable =>
+      'الحفظ في الصور غير متاح على هذا الجهاز';
+
+  @override
+  String get passportSaveFailed => 'تعذّر حفظ الصورة. حاول مرة أخرى.';
+
+  @override
+  String get prayerNext => 'الصلاة القادمة';
+
+  @override
+  String prayerCountdown(String time) {
+    return 'يتبقى $time';
+  }
+
+  @override
+  String get prayerProgress => 'التقدم';
+
+  @override
+  String get prayerToday => 'اليوم';
+
+  @override
+  String get prayerUpNext => 'التالية';
+
+  @override
+  String get prayerPassed => 'انقضت';
+
+  @override
+  String get prayerSunTitle => 'الشروق والغروب';
+
+  @override
+  String get prayerUpcoming => 'الأيام القادمة';
+
+  @override
+  String get prayerMethod => 'طريقة الحساب';
+
+  @override
+  String get prayerMethodMwl => 'رابطة العالم الإسلامي';
+
+  @override
+  String get prayerAsrMethodLabel => 'حساب العصر';
+
+  @override
+  String get prayerAsrStandard => 'القياسي (الشافعي، المالكي، الحنبلي)';
+
+  @override
+  String get prayerLocation => 'الموقع';
+
+  @override
+  String get prayerTimezone => 'المنطقة الزمنية';
+
+  @override
+  String get prayerSettings => 'الطريقة والموقع';
+
+  @override
+  String prayerNoCityTitle(String city) {
+    return 'لا إحداثيات لـ$city';
+  }
+
+  @override
+  String get prayerNoCityText =>
+      'تُحسب مواقيت الصلاة من إحداثيات المدينة، ولا يملك Lume إحداثيات لهذه المدينة. اختر مدينة أخرى في الملف الشخصي لرؤيتها.';
+
+  @override
+  String prayerNoZoneTitle(String zone) {
+    return 'لا توقيت لـ$zone';
+  }
+
+  @override
+  String get prayerNoZoneText =>
+      'تُحسب مواقيت الصلاة وفق ساعتك، لذا فهي تحتاج منطقتك الزمنية. اختر واحدة من الملف الشخصي › الوقت.';
+
+  @override
+  String get prayerZoneChooseText =>
+      'تحتاج مواقيت الصلاة إلى منطقتك الزمنية لحسابها. اختر واحدة من الملف الشخصي › الوقت.';
+
+  @override
+  String get prayerNoteTitle => 'جدول محسوب، وليس إعلانًا من المسجد';
+
+  @override
+  String get prayerNoteText =>
+      'تُحسب هذه المواقيت من إحداثيات مدينتك باستخدام طريقة رابطة العالم الإسلامي. تحقق منها لدى مسجدك أو الجهة المحلية المختصة قبل الاعتماد عليها.';
+
+  @override
+  String prayerShareSource(String city, String date) {
+    return '$city · $date';
+  }
+
+  @override
+  String get praytrackErrConflict => 'تغيّر هذا في مكان آخر. افتحه مرة أخرى.';
+
+  @override
+  String get praytrackErrFailed => 'لم يتم الحفظ. حاول مرة أخرى.';
+
+  @override
+  String get praytrackMarkTitle => 'سجّل صلوات اليوم';
+
+  @override
+  String get praytrackPending => 'معلّق';
+
+  @override
+  String praytrackStreakCaption(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: 'تسلسل $n أيام',
+      one: 'تسلسل يوم واحد',
+      zero: 'لا يوجد تسلسل بعد',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get praytrackStreakLabel => 'تسلسل الأيام';
+
+  @override
+  String get praytrackQadaStatLabel => 'للقضاء';
+
+  @override
+  String get praytrackCheckLabel => 'صُلّيت';
+
+  @override
+  String get praytrackHeatTitle => 'آخر 35 يومًا';
+
+  @override
+  String get praytrackByPrayerTitle => 'حسب الصلاة';
+
+  @override
+  String get praytrackByPrayerCaption =>
+      'عدد المرات التي سُجّلت فيها كل صلاة كمُصلّاة خلال آخر 35 يومًا.';
+
+  @override
+  String get praytrackQadaTitle => 'قضاء';
+
+  @override
+  String praytrackQadaValue(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n صلوات للقضاء',
+      one: 'صلاة واحدة للقضاء',
+      zero: 'لا يوجد شيء متبقٍ',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get praytrackQadaFootnote =>
+      'يُحتسب فقط عندما تبقى صلاة يوم ماضٍ غير مسجّلة — وليس رصيدًا افتراضيًا في البداية.';
+
+  @override
+  String get ramadanCountdown => 'رمضان';
+
+  @override
+  String ramadanStarts(String date) {
+    return 'يبدأ في حوالي $date';
+  }
+
+  @override
+  String get ramadanYear => 'السنة الهجرية';
+
+  @override
+  String get ramadanSunsetToday => 'غروب اليوم';
+
+  @override
+  String get ramadanPrepare => 'الاستعداد';
+
+  @override
+  String get ramadanPrepQada => 'اقضِ الصيام الفائت';
+
+  @override
+  String get ramadanPrepQadaSub => 'قبل بدء رمضان';
+
+  @override
+  String get ramadanPrepQuran => 'حدّد وتيرة للقراءة';
+
+  @override
+  String get ramadanPrepQuranSub => 'جزء واحد يوميًا يُتم القرآن خلال 30 يومًا';
+
+  @override
+  String get ramadanPrepZakat => 'خطط لزكاتك';
+
+  @override
+  String get ramadanPrepZakatSub => 'يُخرج كثيرون زكاتهم خلال رمضان';
+
+  @override
+  String ramadanDay(String n) {
+    return 'رمضان، اليوم $n';
+  }
+
+  @override
+  String ramadanIftarIn(String time) {
+    return 'الإفطار خلال $time';
+  }
+
+  @override
+  String get ramadanSuhoor => 'نهاية السحور';
+
+  @override
+  String get ramadanSuhoorEnds => 'نهاية السحور';
+
+  @override
+  String get ramadanSuhoorSub => 'توقف عن الأكل عند الفجر';
+
+  @override
+  String get ramadanIftar => 'الإفطار';
+
+  @override
+  String get ramadanIftarSub => 'أفطر عند المغرب';
+
+  @override
+  String get ramadanRemaining => 'الأيام المتبقية';
+
+  @override
+  String get ramadanDayTimeline => 'اليوم';
+
+  @override
+  String get ramadanNoteTitle => 'تقدير محسوب';
+
+  @override
+  String get ramadanNoteText =>
+      'يعتمد هذا على التقويم الهجري وأوقات الفجر والمغرب اليوم — وليس على رؤية الهلال. قد يختلف التاريخ الفعلي بيوم واحد.';
+
+  @override
+  String ramadanNoCityTitle(String city) {
+    return 'لا إحداثيات لـ$city';
+  }
+
+  @override
+  String get ramadanNoCityText =>
+      'تُحسب أوقات رمضان من إحداثيات المدينة، ولا يملك Lume إحداثيات لهذه المدينة. اختر مدينة أخرى في الملف الشخصي لرؤيتها.';
+
+  @override
+  String ramadanNoZoneTitle(String zone) {
+    return 'لا توقيت لـ$zone';
+  }
+
+  @override
+  String get ramadanNoZoneText =>
+      'تُحسب أوقات رمضان وفق ساعتك، لذا فهي تحتاج منطقتك الزمنية. اختر واحدة من الملف الشخصي › الوقت.';
+
+  @override
+  String get ramadanZoneChooseText =>
+      'تحتاج أوقات رمضان إلى منطقتك الزمنية لحسابها. اختر واحدة من الملف الشخصي › الوقت.';
+
+  @override
+  String ramadanShareSource(String city, String date) {
+    return '$city · $date';
+  }
+
+  @override
+  String get speedtestUnavailableTitle => 'لا يوجد اختبار سرعة مباشر في Lume';
+
+  @override
+  String get speedtestUnavailableText =>
+      'Lume لا يرسل أي شيء عبر الشبكة، لذا لا يمكنه قياس سرعة التنزيل أو الرفع لديك. افتح اختبارًا حقيقيًا بدلاً من ذلك.';
+
+  @override
+  String get speedtestOpenBrowser => 'افتح اختبار سرعة';
+
+  @override
+  String get speedtestOpenFootnote =>
+      'يفتح fast.com — اختبار مجاني وخالٍ من الإعلانات. Lume لا يشغّله ولا يرى نتيجته.';
+
+  @override
+  String get speedtestOpenUnavailable =>
+      'لا يوجد تطبيق على هذا الجهاز يمكنه فتح هذا الرابط';
+
+  @override
+  String get speedtestOpenFailed => 'تعذّر فتح هذا الرابط';
+
+  @override
+  String get taraweehErrConflict => 'تغيّر هذا في مكان آخر. افتحه مرة أخرى.';
+
+  @override
+  String get taraweehErrFailed => 'لم يتم الحفظ. حاول مرة أخرى.';
+
+  @override
+  String get taraweehPrayedToast => 'تم التسجيل لليلة';
+
+  @override
+  String get taraweehClearedToast => 'تمت إزالة إدخال الليلة';
+
+  @override
+  String get taraweehSummaryKicker => 'تتابع التراويح';
+
+  @override
+  String get taraweehNightsUnit => 'ليالٍ';
+
+  @override
+  String taraweehBestCaption(int n) {
+    return 'الأفضل: $n ليالٍ';
+  }
+
+  @override
+  String get taraweehStatTotal => 'الليالي المسجّلة';
+
+  @override
+  String get taraweehStatJuz => 'الأجزاء المكتملة';
+
+  @override
+  String get taraweehStatNextJuz => 'الجزء التالي';
+
+  @override
+  String get taraweehTonight => 'الليلة';
+
+  @override
+  String get taraweehPrayedLabel => 'صُلّيت الليلة';
+
+  @override
+  String get taraweehRakaatTitle => 'الركعات المصلاة';
+
+  @override
+  String taraweehRakaatOption(int n) {
+    return '$n ركعة';
+  }
+
+  @override
+  String get taraweehJuzTitle => 'الجزء الذي تم الوصول إليه';
+
+  @override
+  String get taraweehJuzValueNone => 'غير مسجّل';
+
+  @override
+  String get taraweehJuzDecrementLabel => 'أقل';
+
+  @override
+  String get taraweehJuzIncrementLabel => 'أكثر';
+
+  @override
+  String get taraweehProgressTitle => 'تقدم القرآن';
+
+  @override
+  String get taraweehProgressLabel => 'الأجزاء المكتملة';
+
+  @override
+  String taraweehProgressValue(int done, int total) {
+    return '$done من $total';
+  }
+
+  @override
+  String get taraweehKhatmComplete =>
+      'تم ختم القرآن الكريم كاملاً في هذا رمضان';
+
+  @override
+  String get taraweehCalendarTitle => 'التقويم';
+
+  @override
+  String taraweehCalendarA11y(int prayed, int total) {
+    return 'تم صلاة التراويح في $prayed من أصل $total ليلة الماضية';
+  }
+
+  @override
+  String get vehicleFleet => 'مركباتك';
+
+  @override
+  String vehicleOpenFines(int n) {
+    return '$n مخالفة مفتوحة';
+  }
+
+  @override
+  String get vehicleNoFines => 'لا توجد مخالفات مستحقة';
+
+  @override
+  String get vehicleOutstanding => 'المستحق';
+
+  @override
+  String get vehicleNextToken => 'رسم الترخيص القادم';
+
+  @override
+  String get vehicleOdometer => 'عداد المسافة';
+
+  @override
+  String get vehicleSearch => 'ابحث عن مركباتك';
+
+  @override
+  String get vehicleYours => 'مسجلة باسمك';
+
+  @override
+  String get vehicleToken => 'رسم الترخيص';
+
+  @override
+  String get vehicleInsurance => 'التأمين';
+
+  @override
+  String vehicleFines(int n) {
+    return '$n مخالفة';
+  }
+
+  @override
+  String get vehicleClear => 'لا مخالفات';
+
+  @override
+  String get vehicleCheck => 'تحقق من أي تسجيل';
+
+  @override
+  String get vehicleRegistration => 'رقم التسجيل';
+
+  @override
+  String get vehicleLookup => 'بحث';
+
+  @override
+  String get vehicleLookingUp => 'جارٍ التحقق من السجل';
+
+  @override
+  String get vehicleReminders => 'ما هو قادم';
+
+  @override
+  String get vehicleTokenTax => 'رسم الترخيص المستحق';
+
+  @override
+  String get vehicleInsuranceRenewal => 'تجديد التأمين';
+
+  @override
+  String get wastatusWhyTitle => 'لا يستطيع Lume قراءة ملفات واتساب';
+
+  @override
+  String get wastatusWhyText =>
+      'يتطلب فتح تخزين تطبيق آخر إذن وصول واسع للملفات. لا يطلبه Lume عمدًا، لذا لا يمكنه البحث عن الحالات أو سردها لك.';
+
+  @override
+  String get wastatusSaveTitle => 'احفظ الحالة بنفسك';
+
+  @override
+  String get wastatusSaveSubtitle =>
+      'خطوتان، داخل واتساب مباشرة — بلا حاجة إلى إذن إضافي';
+
+  @override
+  String get wastatusStep1Title => 'افتح الحالة';
+
+  @override
+  String get wastatusStep1Text =>
+      'شاهد الصورة أو الفيديو كما تفعل عادةً، قبل أن يختفي.';
+
+  @override
+  String get wastatusStep2Title => 'اضغط على أيقونة الحفظ';
+
+  @override
+  String get wastatusStep2Text =>
+      'أيقونة التنزيل الخاصة بواتساب تحفظه مباشرة في معرض هاتفك.';
+
+  @override
+  String get wastatusStep3Title => 'اعثر عليه لاحقًا';
+
+  @override
+  String get wastatusStep3Text =>
+      'افتح معرضك، أو أداة حفظ الوسائط في Lume، لترى ما حفظته.';
+
+  @override
+  String get wastatusFolderTitle => 'فاتتك أيقونة الحفظ؟';
+
+  @override
+  String get wastatusFolderNoteTitle => 'Android فقط';
+
+  @override
+  String get wastatusFolderNoteText =>
+      'يمكن لتطبيق الملفات الخاص بهاتفك أحيانًا تصفح مجلد وسائط واتساب طالما الحالة لا تزال مخزّنة مؤقتًا هناك — ابحث عن مجلد مخفي باسم \".Statuses\" وفعّل \"إظهار الملفات المخفية\" إن لم تجده. يختلف مكانه بالضبط حسب هاتفك وإصدار واتساب، ولا يعمل هذا على آيفون.';
 }

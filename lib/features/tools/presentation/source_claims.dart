@@ -91,6 +91,9 @@ abstract final class LumeSourceClaims {
     'Classical faraid rules',
     'National Savings schedule',
     'Operator tariffs',
+    // Wave 10.
+    'Tabular Islamic calendar',
+    'ICAO + national specs',
   };
 
   static const String encryptedSource = 'Encrypted on device';

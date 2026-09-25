@@ -21234,6 +21234,1656 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Your numbers'**
   String get prizebondsYourNumbers;
+
+  /// Label for the next upcoming alarm.
+  ///
+  /// In en, this message translates to:
+  /// **'Next alarm'**
+  String get alarmsNext;
+
+  /// Empty state: no alarms have been created.
+  ///
+  /// In en, this message translates to:
+  /// **'No alarms set'**
+  String get alarmsNone;
+
+  /// Screen/section title for the alarms list.
+  ///
+  /// In en, this message translates to:
+  /// **'Alarms'**
+  String get alarmsAll;
+
+  /// Button that opens the new-alarm form.
+  ///
+  /// In en, this message translates to:
+  /// **'Add an alarm'**
+  String get alarmsAdd;
+
+  /// Form title when adding an alarm.
+  ///
+  /// In en, this message translates to:
+  /// **'New alarm'**
+  String get alarmsAdding;
+
+  /// Alarm repeat option: every day of the week.
+  ///
+  /// In en, this message translates to:
+  /// **'Every day'**
+  String get alarmsDaily;
+
+  /// Alarm repeat option: Monday to Friday only.
+  ///
+  /// In en, this message translates to:
+  /// **'Weekdays'**
+  String get alarmsWeekdays;
+
+  /// Alarm repeat option: Saturday and Sunday only.
+  ///
+  /// In en, this message translates to:
+  /// **'Weekends'**
+  String get alarmsWeekend;
+
+  /// Suggested alarm label/preset.
+  ///
+  /// In en, this message translates to:
+  /// **'Work'**
+  String get alarmsA1;
+
+  /// Suggested alarm label/preset for a later, relaxed wake-up.
+  ///
+  /// In en, this message translates to:
+  /// **'Lie-in'**
+  String get alarmsA2;
+
+  /// Suggested alarm label/preset for an evening wind-down reminder.
+  ///
+  /// In en, this message translates to:
+  /// **'Wind down'**
+  String get alarmsA3;
+
+  /// Relative time until the next alarm fires.
+  ///
+  /// In en, this message translates to:
+  /// **'{n, plural, =1{in about 1 hour} other{in about {n} hours}}'**
+  String alarmsInHours(int n);
+
+  /// Button that captures the current page photo.
+  ///
+  /// In en, this message translates to:
+  /// **'Capture'**
+  String get docscanCapture;
+
+  /// On-screen hint shown on the capture page.
+  ///
+  /// In en, this message translates to:
+  /// **'Lay the page flat and capture'**
+  String get docscanHint;
+
+  /// Said when the camera permission is refused and the platform will ask again the next time Capture is pressed.
+  ///
+  /// In en, this message translates to:
+  /// **'Lume can\'t use the camera. Press Capture to be asked again.'**
+  String get docscanCaptureDenied;
+
+  /// Said when the camera was refused and Android does not say whether it will ask again.
+  ///
+  /// In en, this message translates to:
+  /// **'Lume can\'t use the camera. Press Capture to be asked again, or turn it on in Settings if Android doesn\'t ask.'**
+  String get docscanCaptureUndetermined;
+
+  /// Section title over the captured pages list.
+  ///
+  /// In en, this message translates to:
+  /// **'Pages'**
+  String get docscanPagesTitle;
+
+  /// Label for one captured page, by its position.
+  ///
+  /// In en, this message translates to:
+  /// **'Page {n}'**
+  String docscanPageN(int n);
+
+  /// Page-source option: capture with the camera.
+  ///
+  /// In en, this message translates to:
+  /// **'Camera'**
+  String get docscanSourceCamera;
+
+  /// Page-source option: import from the gallery.
+  ///
+  /// In en, this message translates to:
+  /// **'Gallery'**
+  String get docscanSourceGallery;
+
+  /// Toast after clearing all captured pages.
+  ///
+  /// In en, this message translates to:
+  /// **'Pages cleared'**
+  String get docscanCleared;
+
+  /// Toast when sharing the scanned pages fails.
+  ///
+  /// In en, this message translates to:
+  /// **'Couldn\'t share. Try again.'**
+  String get docscanShareFailed;
+
+  /// Section title over the how-it-works steps.
+  ///
+  /// In en, this message translates to:
+  /// **'How it works'**
+  String get docscanStepsTitle;
+
+  /// First how-it-works step.
+  ///
+  /// In en, this message translates to:
+  /// **'Capture each page'**
+  String get docscanStepCapture;
+
+  /// Second how-it-works step.
+  ///
+  /// In en, this message translates to:
+  /// **'Review and remove pages'**
+  String get docscanStepReview;
+
+  /// Third how-it-works step.
+  ///
+  /// In en, this message translates to:
+  /// **'Share when you\'re ready'**
+  String get docscanStepShare;
+
+  /// Title of the honesty note above the Faraid calculator.
+  ///
+  /// In en, this message translates to:
+  /// **'A guide, not a ruling'**
+  String get faraidNoteTitle;
+
+  /// Body of the honesty note above the Faraid calculator.
+  ///
+  /// In en, this message translates to:
+  /// **'This calculator only covers a wife or wives, sons and daughters — not every relative Islamic inheritance law recognizes. It\'s a starting point, not a fatwa.'**
+  String get faraidNoteText;
+
+  /// Section title for the estate-entry fields.
+  ///
+  /// In en, this message translates to:
+  /// **'The estate'**
+  String get faraidEstate;
+
+  /// Field label: the estate's value before debts and bequest.
+  ///
+  /// In en, this message translates to:
+  /// **'Gross estate'**
+  String get faraidGross;
+
+  /// Field label: amounts deducted before distribution.
+  ///
+  /// In en, this message translates to:
+  /// **'Debts & funeral costs'**
+  String get faraidDebts;
+
+  /// Field label: the optional bequest amount.
+  ///
+  /// In en, this message translates to:
+  /// **'Bequest (wasiyyah)'**
+  String get faraidBequest;
+
+  /// Hint under the bequest field.
+  ///
+  /// In en, this message translates to:
+  /// **'Capped at one third of the net estate.'**
+  String get faraidBequestHint;
+
+  /// Section title for the heirs list.
+  ///
+  /// In en, this message translates to:
+  /// **'Heirs'**
+  String get faraidHeirs;
+
+  /// Heir type: wife/wives.
+  ///
+  /// In en, this message translates to:
+  /// **'Wife'**
+  String get faraidWife;
+
+  /// Heir type: sons.
+  ///
+  /// In en, this message translates to:
+  /// **'Sons'**
+  String get faraidSons;
+
+  /// Heir type: daughters.
+  ///
+  /// In en, this message translates to:
+  /// **'Daughters'**
+  String get faraidDaughters;
+
+  /// Explainer line for the wife's fixed share.
+  ///
+  /// In en, this message translates to:
+  /// **'A wife\'s fixed share is 1/8 with children, 1/4 without.'**
+  String get faraidRuleWife;
+
+  /// Explainer line for how sons share the residue.
+  ///
+  /// In en, this message translates to:
+  /// **'A son shares the residue as 2 parts to a daughter\'s 1.'**
+  String get faraidRuleSons;
+
+  /// Explainer line for how daughters' shares work.
+  ///
+  /// In en, this message translates to:
+  /// **'A daughter alone or with sisters takes a fixed share; with a brother she shares the residue 1:2.'**
+  String get faraidRuleDaughters;
+
+  /// Label: estate value after debts and bequest.
+  ///
+  /// In en, this message translates to:
+  /// **'Net estate'**
+  String get faraidNet;
+
+  /// Caption shown when the entered bequest exceeded the one-third cap.
+  ///
+  /// In en, this message translates to:
+  /// **'The bequest was capped at one third of the net estate'**
+  String get faraidCaptionCapped;
+
+  /// Caption shown once the net estate is ready to distribute.
+  ///
+  /// In en, this message translates to:
+  /// **'Distributed among the heirs below'**
+  String get faraidCaptionReady;
+
+  /// Section title over the calculated shares.
+  ///
+  /// In en, this message translates to:
+  /// **'Distribution'**
+  String get faraidDistribution;
+
+  /// Section title for the per-heir explanation list.
+  ///
+  /// In en, this message translates to:
+  /// **'Why these shares'**
+  String get faraidExplain;
+
+  /// Share-type tag: a residuary (non-fixed) heir.
+  ///
+  /// In en, this message translates to:
+  /// **'Residuary'**
+  String get faraidResiduary;
+
+  /// Reason tag for the wife's share.
+  ///
+  /// In en, this message translates to:
+  /// **'Fixed share'**
+  String get faraidReasonWife;
+
+  /// Reason tag for the sons' share.
+  ///
+  /// In en, this message translates to:
+  /// **'Residue, 2 parts to a daughter\'s 1'**
+  String get faraidReasonSons;
+
+  /// Reason tag for the daughters' share.
+  ///
+  /// In en, this message translates to:
+  /// **'Fixed share, or residue with a brother'**
+  String get faraidReasonDaughters;
+
+  /// Label for the portion this calculator doesn't assign to a modelled heir.
+  ///
+  /// In en, this message translates to:
+  /// **'Unallocated'**
+  String get faraidUnallocated;
+
+  /// Explainer for the unallocated portion.
+  ///
+  /// In en, this message translates to:
+  /// **'This calculator doesn\'t model every relative — a father, mother, husband, siblings or grandchildren would normally receive this share.'**
+  String get faraidReasonUnallocated;
+
+  /// Button that opens the new-fast form.
+  ///
+  /// In en, this message translates to:
+  /// **'Log a fast'**
+  String get fastingLogFast;
+
+  /// Form title when editing a logged fast.
+  ///
+  /// In en, this message translates to:
+  /// **'Edit fast'**
+  String get fastingEditFast;
+
+  /// Field label for the fast's date.
+  ///
+  /// In en, this message translates to:
+  /// **'Date'**
+  String get fastingDateLabel;
+
+  /// Field label for the fast's type.
+  ///
+  /// In en, this message translates to:
+  /// **'Type'**
+  String get fastingKindLabel;
+
+  /// Fast type: a voluntary Sunnah fast.
+  ///
+  /// In en, this message translates to:
+  /// **'Sunnah'**
+  String get fastingKindSunnah;
+
+  /// Fast type: making up a missed obligatory fast.
+  ///
+  /// In en, this message translates to:
+  /// **'Qada'**
+  String get fastingKindQada;
+
+  /// Toggle label confirming the fast was kept.
+  ///
+  /// In en, this message translates to:
+  /// **'I kept this fast'**
+  String get fastingKeptToggleLabel;
+
+  /// Button that deletes a logged fast.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete fast'**
+  String get fastingDeleteEntry;
+
+  /// Confirmation dialog title for deleting a fast.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete this fast?'**
+  String get fastingDeleteTitle;
+
+  /// Confirmation dialog body for deleting a fast.
+  ///
+  /// In en, this message translates to:
+  /// **'This can\'t be undone from here.'**
+  String get fastingDeleteText;
+
+  /// Toast for a conflicting/missing record on write (mirrors cycleErrConflict).
+  ///
+  /// In en, this message translates to:
+  /// **'This entry changed elsewhere'**
+  String get fastingErrConflict;
+
+  /// Generic write-failure toast (mirrors cycleErrFailed).
+  ///
+  /// In en, this message translates to:
+  /// **'That didn\'t save. Try again.'**
+  String get fastingErrFailed;
+
+  /// Toast after saving a fast.
+  ///
+  /// In en, this message translates to:
+  /// **'Fast saved'**
+  String get fastingSavedToast;
+
+  /// Toast after deleting a fast.
+  ///
+  /// In en, this message translates to:
+  /// **'Fast deleted'**
+  String get fastingDeletedToast;
+
+  /// Empty state title for the fasting log.
+  ///
+  /// In en, this message translates to:
+  /// **'No fasts logged yet'**
+  String get fastingEmptyTitle;
+
+  /// Empty state text for the fasting log.
+  ///
+  /// In en, this message translates to:
+  /// **'Log a fast to start tracking your streak.'**
+  String get fastingEmptyText;
+
+  /// Empty state CTA button.
+  ///
+  /// In en, this message translates to:
+  /// **'Log your first fast'**
+  String get fastingLogFirst;
+
+  /// Caption for the current fasting streak count.
+  ///
+  /// In en, this message translates to:
+  /// **'{n} in a row'**
+  String fastingStreakCaption(int n);
+
+  /// Stat label: fasts kept.
+  ///
+  /// In en, this message translates to:
+  /// **'Kept'**
+  String get fastingProgressLabel;
+
+  /// Stat label: voluntary (non-obligatory) fasts.
+  ///
+  /// In en, this message translates to:
+  /// **'Voluntary'**
+  String get fastingVoluntaryLabel;
+
+  /// Stat label: obligatory fasts.
+  ///
+  /// In en, this message translates to:
+  /// **'Obligatory'**
+  String get fastingObligatoryLabel;
+
+  /// Stat label: fasts missed.
+  ///
+  /// In en, this message translates to:
+  /// **'Missed'**
+  String get fastingMissedLabel;
+
+  /// Section title over the fasting calendar grid.
+  ///
+  /// In en, this message translates to:
+  /// **'Last 30 days'**
+  String get fastingCalendarTitle;
+
+  /// Section title over the recent-days list.
+  ///
+  /// In en, this message translates to:
+  /// **'Recent days'**
+  String get fastingRecentTitle;
+
+  /// Calendar-day badge: this day's fast was kept.
+  ///
+  /// In en, this message translates to:
+  /// **'Kept'**
+  String get fastingKeptBadge;
+
+  /// Calendar-day badge: this day's fast was not kept.
+  ///
+  /// In en, this message translates to:
+  /// **'Not kept'**
+  String get fastingNotKeptBadge;
+
+  /// Screen-reader summary for the fasting calendar grid.
+  ///
+  /// In en, this message translates to:
+  /// **'{kept} of {total} days fasted'**
+  String fastingCalendarA11y(int kept, int total);
+
+  /// Subtitle noting the calendar is calculated, not observed.
+  ///
+  /// In en, this message translates to:
+  /// **'Calculated · tabular Islamic calendar'**
+  String get hijriCalculatedSubtitle;
+
+  /// Hijri year with its era marker. year: String — pre-formatted via LumeFormatting.integer for locale-aware digits.
+  ///
+  /// In en, this message translates to:
+  /// **'{year} AH'**
+  String hijriYearAh(String year);
+
+  /// Title of the honesty note above the Hijri calendar.
+  ///
+  /// In en, this message translates to:
+  /// **'A calculated calendar, not an official sighting'**
+  String get hijriNoteTitle;
+
+  /// Body of the honesty note above the Hijri calendar.
+  ///
+  /// In en, this message translates to:
+  /// **'This calendar is worked out from a fixed 30-year arithmetic cycle, not the officially adopted Umm al-Qura calendar or your local moon-sighting authority. Dates here can fall a day either side of what is actually announced.'**
+  String get hijriNoteText;
+
+  /// Section title over the upcoming Islamic dates list.
+  ///
+  /// In en, this message translates to:
+  /// **'Upcoming dates'**
+  String get hijriEventsTitle;
+
+  /// Islamic calendar event: the 10th of Muharram.
+  ///
+  /// In en, this message translates to:
+  /// **'Ashura'**
+  String get hijriEventAshura;
+
+  /// Islamic calendar event: the first of Ramadan.
+  ///
+  /// In en, this message translates to:
+  /// **'Ramadan begins'**
+  String get hijriEventRamadanBegins;
+
+  /// Islamic calendar event: the 9th of Dhul-Hijjah.
+  ///
+  /// In en, this message translates to:
+  /// **'Day of Arafah'**
+  String get hijriEventDayOfArafah;
+
+  /// Section title over the date converter.
+  ///
+  /// In en, this message translates to:
+  /// **'Convert a date'**
+  String get hijriConvertTitle;
+
+  /// Field label for the Gregorian side of the converter.
+  ///
+  /// In en, this message translates to:
+  /// **'Gregorian date'**
+  String get hijriGregorian;
+
+  /// Field label for the Hijri side of the converter.
+  ///
+  /// In en, this message translates to:
+  /// **'Hijri date'**
+  String get hijriHijriDate;
+
+  /// Section title over the list of Hijri month names.
+  ///
+  /// In en, this message translates to:
+  /// **'The Hijri months'**
+  String get hijriMonthsTitle;
+
+  /// Field label for the pasted link.
+  ///
+  /// In en, this message translates to:
+  /// **'Link'**
+  String get mediasaverLinkLabel;
+
+  /// Placeholder text for the link field.
+  ///
+  /// In en, this message translates to:
+  /// **'https://…'**
+  String get mediasaverLinkPlaceholder;
+
+  /// Empty/blocked state title: Lume has no network access.
+  ///
+  /// In en, this message translates to:
+  /// **'No network access'**
+  String get mediasaverNoNetworkTitle;
+
+  /// Body explaining Lume can't fetch media from a link.
+  ///
+  /// In en, this message translates to:
+  /// **'Lume never connects to the internet, so it can\'t fetch or download media from a link.'**
+  String get mediasaverNoNetworkText;
+
+  /// Toast when a link is submitted despite no network capability.
+  ///
+  /// In en, this message translates to:
+  /// **'Lume can\'t fetch that — it doesn\'t connect to the internet.'**
+  String get mediasaverNoNetworkToast;
+
+  /// Button that saves the media to the device.
+  ///
+  /// In en, this message translates to:
+  /// **'Save'**
+  String get mediasaverSave;
+
+  /// Section title over the saved-media library.
+  ///
+  /// In en, this message translates to:
+  /// **'Saved media'**
+  String get mediasaverLibrary;
+
+  /// Empty state title for the saved-media library.
+  ///
+  /// In en, this message translates to:
+  /// **'Nothing saved yet'**
+  String get mediasaverEmptyTitle;
+
+  /// Empty state text for the saved-media library.
+  ///
+  /// In en, this message translates to:
+  /// **'Media you save stays on this device — Lume can\'t download anything from a link.'**
+  String get mediasaverEmptyText;
+
+  /// Empty state title: no live places directory.
+  ///
+  /// In en, this message translates to:
+  /// **'No live mosque search yet'**
+  String get mosquesUnavailableTitle;
+
+  /// Empty state body explaining why there's no in-app mosque list.
+  ///
+  /// In en, this message translates to:
+  /// **'Lume doesn\'t have a live places directory yet, so a nearby list here would mean inventing mosque names and distances. Open Maps for a real search near you.'**
+  String get mosquesUnavailableText;
+
+  /// Button that opens the device's Maps app.
+  ///
+  /// In en, this message translates to:
+  /// **'Open in Maps'**
+  String get mosquesOpenMaps;
+
+  /// Said when no Maps app is available on the device.
+  ///
+  /// In en, this message translates to:
+  /// **'This device can\'t open Maps.'**
+  String get mosquesMapsUnavailable;
+
+  /// Toast when opening Maps fails.
+  ///
+  /// In en, this message translates to:
+  /// **'Couldn\'t open Maps. Try again.'**
+  String get mosquesMapsFailed;
+
+  /// Field label: destination country for the photo spec.
+  ///
+  /// In en, this message translates to:
+  /// **'Country'**
+  String get passportCountry;
+
+  /// Field label: the target photo size.
+  ///
+  /// In en, this message translates to:
+  /// **'Photo size'**
+  String get passportSize;
+
+  /// Field label: background treatment.
+  ///
+  /// In en, this message translates to:
+  /// **'Background'**
+  String get passportBackground;
+
+  /// Background option: plain white.
+  ///
+  /// In en, this message translates to:
+  /// **'Plain white'**
+  String get passportWhite;
+
+  /// Field label: required head height in the frame.
+  ///
+  /// In en, this message translates to:
+  /// **'Head height'**
+  String get passportHeadHeight;
+
+  /// Button that opens the camera.
+  ///
+  /// In en, this message translates to:
+  /// **'Take a photo'**
+  String get passportCapture;
+
+  /// Status text while the camera opens.
+  ///
+  /// In en, this message translates to:
+  /// **'Opening the camera'**
+  String get passportCapturing;
+
+  /// Button that imports a photo from the gallery.
+  ///
+  /// In en, this message translates to:
+  /// **'Import'**
+  String get passportImport;
+
+  /// Status text while the gallery picker is open.
+  ///
+  /// In en, this message translates to:
+  /// **'Choosing a photo'**
+  String get passportImporting;
+
+  /// Section title over the photo requirements list.
+  ///
+  /// In en, this message translates to:
+  /// **'Requirements'**
+  String get passportRequirements;
+
+  /// Requirement: background.
+  ///
+  /// In en, this message translates to:
+  /// **'Plain, evenly lit background'**
+  String get passportReqBackground;
+
+  /// Requirement: facial expression.
+  ///
+  /// In en, this message translates to:
+  /// **'Neutral expression, mouth closed'**
+  String get passportReqExpression;
+
+  /// Requirement: glasses/glare.
+  ///
+  /// In en, this message translates to:
+  /// **'No glare or heavy frames over the eyes'**
+  String get passportReqGlasses;
+
+  /// Requirement: photo recency.
+  ///
+  /// In en, this message translates to:
+  /// **'Taken within the last six months'**
+  String get passportReqRecent;
+
+  /// Section title over the common photo-size presets.
+  ///
+  /// In en, this message translates to:
+  /// **'Common sizes'**
+  String get passportSizes;
+
+  /// Field label: target document type.
+  ///
+  /// In en, this message translates to:
+  /// **'Document'**
+  String get passportDocument;
+
+  /// Field label: print resolution in dots per inch.
+  ///
+  /// In en, this message translates to:
+  /// **'DPI'**
+  String get passportDpi;
+
+  /// Document type: passport photo.
+  ///
+  /// In en, this message translates to:
+  /// **'Passport'**
+  String get passportPassport;
+
+  /// Document type: US visa photo.
+  ///
+  /// In en, this message translates to:
+  /// **'US visa'**
+  String get passportVisaUS;
+
+  /// Document type: national ID photo.
+  ///
+  /// In en, this message translates to:
+  /// **'National ID'**
+  String get passportIdCard;
+
+  /// Button that saves the cropped photo.
+  ///
+  /// In en, this message translates to:
+  /// **'Save photo'**
+  String get passportSavePhoto;
+
+  /// Status text while the photo saves.
+  ///
+  /// In en, this message translates to:
+  /// **'Saving…'**
+  String get passportSaving;
+
+  /// Toast after saving the photo.
+  ///
+  /// In en, this message translates to:
+  /// **'Saved to your photos'**
+  String get passportSaved;
+
+  /// Button that discards and retakes the photo.
+  ///
+  /// In en, this message translates to:
+  /// **'Retake'**
+  String get passportRetake;
+
+  /// Button that returns to the gallery picker.
+  ///
+  /// In en, this message translates to:
+  /// **'Choose a different photo'**
+  String get passportChooseDifferent;
+
+  /// Accessibility label for the cropped preview image.
+  ///
+  /// In en, this message translates to:
+  /// **'Your cropped passport photo'**
+  String get passportPreviewAlt;
+
+  /// On-screen framing guide hint.
+  ///
+  /// In en, this message translates to:
+  /// **'Centre your face in the frame, looking straight ahead'**
+  String get passportGuideHint;
+
+  /// Said when the chosen photo can't be processed.
+  ///
+  /// In en, this message translates to:
+  /// **'Lume couldn\'t use that photo. Try a different one.'**
+  String get passportProcessFailed;
+
+  /// Said when the camera permission is refused and the platform will ask again.
+  ///
+  /// In en, this message translates to:
+  /// **'Lume can\'t use the camera. Press Take a photo to be asked again.'**
+  String get passportCameraDenied;
+
+  /// Said when the camera permission is off for good.
+  ///
+  /// In en, this message translates to:
+  /// **'Camera access for Lume is off. Turn it on in Settings to take a photo.'**
+  String get passportCameraBlocked;
+
+  /// Said when the camera was refused and Android does not say whether it will ask again.
+  ///
+  /// In en, this message translates to:
+  /// **'Lume can\'t use the camera. Press Take a photo to be asked again, or turn it on in Settings if Android doesn\'t ask.'**
+  String get passportCameraUndetermined;
+
+  /// Said when a device policy has turned the camera off.
+  ///
+  /// In en, this message translates to:
+  /// **'The camera is turned off on this device by a restriction or its administrator.'**
+  String get passportCameraRestricted;
+
+  /// Said when this build/device has no camera capture.
+  ///
+  /// In en, this message translates to:
+  /// **'Taking a photo isn\'t available on this device'**
+  String get passportCameraUnavailable;
+
+  /// Toast when opening the camera fails.
+  ///
+  /// In en, this message translates to:
+  /// **'Couldn\'t open the camera. Try again.'**
+  String get passportCameraFailed;
+
+  /// Said when the photo-library permission is refused.
+  ///
+  /// In en, this message translates to:
+  /// **'Lume can\'t open your photos. You can allow it in Settings.'**
+  String get passportGalleryDenied;
+
+  /// Said when this build/device has no gallery picker.
+  ///
+  /// In en, this message translates to:
+  /// **'Choosing a photo isn\'t available on this device'**
+  String get passportGalleryUnavailable;
+
+  /// Toast when opening the gallery fails.
+  ///
+  /// In en, this message translates to:
+  /// **'Couldn\'t open your photos. Try again.'**
+  String get passportGalleryFailed;
+
+  /// Said when the chosen photo exceeds a usable size.
+  ///
+  /// In en, this message translates to:
+  /// **'That photo is too large to use'**
+  String get passportTooLarge;
+
+  /// Action that opens the device's Settings page for Lume.
+  ///
+  /// In en, this message translates to:
+  /// **'Settings'**
+  String get passportOpenSettings;
+
+  /// Said when the system would not open Lume's page in Settings.
+  ///
+  /// In en, this message translates to:
+  /// **'Settings didn\'t open. You\'ll find Lume under Apps in your phone\'s Settings.'**
+  String get passportSettingsFailed;
+
+  /// Said when the photo-library write permission is refused.
+  ///
+  /// In en, this message translates to:
+  /// **'Lume can\'t save to your photos. You can allow it in Settings.'**
+  String get passportSaveDenied;
+
+  /// Said when the photo library reports no space.
+  ///
+  /// In en, this message translates to:
+  /// **'There\'s no space to save the photo'**
+  String get passportSaveNoSpace;
+
+  /// Said when this build/device can't save to the photo library.
+  ///
+  /// In en, this message translates to:
+  /// **'Saving to photos isn\'t available on this device'**
+  String get passportSaveUnavailable;
+
+  /// Toast when saving the photo fails.
+  ///
+  /// In en, this message translates to:
+  /// **'Couldn\'t save the photo. Try again.'**
+  String get passportSaveFailed;
+
+  /// Label for the next upcoming prayer.
+  ///
+  /// In en, this message translates to:
+  /// **'Next prayer'**
+  String get prayerNext;
+
+  /// Countdown to the next prayer.
+  ///
+  /// In en, this message translates to:
+  /// **'{time} to go'**
+  String prayerCountdown(String time);
+
+  /// Label for the day's prayer progress indicator.
+  ///
+  /// In en, this message translates to:
+  /// **'Progress'**
+  String get prayerProgress;
+
+  /// Section title for today's prayer times.
+  ///
+  /// In en, this message translates to:
+  /// **'Today'**
+  String get prayerToday;
+
+  /// Label for the next prayer in the day's list.
+  ///
+  /// In en, this message translates to:
+  /// **'Up next'**
+  String get prayerUpNext;
+
+  /// Status tag: this prayer's time has already passed today.
+  ///
+  /// In en, this message translates to:
+  /// **'Passed'**
+  String get prayerPassed;
+
+  /// Section title for sunrise/sunset times.
+  ///
+  /// In en, this message translates to:
+  /// **'Sunrise & sunset'**
+  String get prayerSunTitle;
+
+  /// Section title for the multi-day prayer schedule.
+  ///
+  /// In en, this message translates to:
+  /// **'Upcoming days'**
+  String get prayerUpcoming;
+
+  /// Field label: the prayer-time calculation method.
+  ///
+  /// In en, this message translates to:
+  /// **'Calculation method'**
+  String get prayerMethod;
+
+  /// Calculation method option.
+  ///
+  /// In en, this message translates to:
+  /// **'Muslim World League'**
+  String get prayerMethodMwl;
+
+  /// Field label: the Asr-specific calculation setting.
+  ///
+  /// In en, this message translates to:
+  /// **'Asr calculation'**
+  String get prayerAsrMethodLabel;
+
+  /// Asr calculation option.
+  ///
+  /// In en, this message translates to:
+  /// **'Standard (Shafi\'i, Maliki, Hanbali)'**
+  String get prayerAsrStandard;
+
+  /// Field label: the city used to calculate prayer times.
+  ///
+  /// In en, this message translates to:
+  /// **'Location'**
+  String get prayerLocation;
+
+  /// Field label: the time zone used to display prayer times.
+  ///
+  /// In en, this message translates to:
+  /// **'Time zone'**
+  String get prayerTimezone;
+
+  /// Section title for prayer settings.
+  ///
+  /// In en, this message translates to:
+  /// **'Method & location'**
+  String get prayerSettings;
+
+  /// Empty state title when the selected city has no coordinates.
+  ///
+  /// In en, this message translates to:
+  /// **'No position for {city}'**
+  String prayerNoCityTitle(String city);
+
+  /// Empty state body when the selected city has no coordinates.
+  ///
+  /// In en, this message translates to:
+  /// **'Prayer times are worked out from a city\'s coordinates, and Lume has none for this one. Choose another city in Profile to see them.'**
+  String get prayerNoCityText;
+
+  /// Empty state title when the time zone can't be resolved.
+  ///
+  /// In en, this message translates to:
+  /// **'No clock for {zone}'**
+  String prayerNoZoneTitle(String zone);
+
+  /// Empty state body when the time zone can't be resolved.
+  ///
+  /// In en, this message translates to:
+  /// **'Prayer times are worked out on your clock, so they need your time zone. Choose one in Profile › Time.'**
+  String get prayerNoZoneText;
+
+  /// Prompt to choose a time zone, shown inline before times are available.
+  ///
+  /// In en, this message translates to:
+  /// **'Prayer times need your time zone to be worked out. Choose one in Profile › Time.'**
+  String get prayerZoneChooseText;
+
+  /// Title of the honesty note above prayer times.
+  ///
+  /// In en, this message translates to:
+  /// **'A calculated schedule, not a mosque announcement'**
+  String get prayerNoteTitle;
+
+  /// Body of the honesty note above prayer times.
+  ///
+  /// In en, this message translates to:
+  /// **'These times are worked out from your city\'s coordinates using the Muslim World League method. Cross-check them against your local mosque or authority before relying on them.'**
+  String get prayerNoteText;
+
+  /// Source line on the prayer-times share card.
+  ///
+  /// In en, this message translates to:
+  /// **'{city} · {date}'**
+  String prayerShareSource(String city, String date);
+
+  /// Toast for a conflicting record on write.
+  ///
+  /// In en, this message translates to:
+  /// **'This changed somewhere else. Open it again.'**
+  String get praytrackErrConflict;
+
+  /// Generic write-failure toast.
+  ///
+  /// In en, this message translates to:
+  /// **'That didn\'t save. Try again.'**
+  String get praytrackErrFailed;
+
+  /// Section title over today's prayer checklist.
+  ///
+  /// In en, this message translates to:
+  /// **'Mark today\'s prayers'**
+  String get praytrackMarkTitle;
+
+  /// Status tag: a prayer not yet marked.
+  ///
+  /// In en, this message translates to:
+  /// **'Pending'**
+  String get praytrackPending;
+
+  /// Caption for the current all-five-prayers streak.
+  ///
+  /// In en, this message translates to:
+  /// **'{n, plural, =0{No streak yet} =1{1 day streak} other{{n} day streak}}'**
+  String praytrackStreakCaption(int n);
+
+  /// Stat label for the streak count.
+  ///
+  /// In en, this message translates to:
+  /// **'Day streak'**
+  String get praytrackStreakLabel;
+
+  /// Stat label: prayers still to make up.
+  ///
+  /// In en, this message translates to:
+  /// **'To make up'**
+  String get praytrackQadaStatLabel;
+
+  /// Checkbox label: this prayer was prayed.
+  ///
+  /// In en, this message translates to:
+  /// **'Prayed'**
+  String get praytrackCheckLabel;
+
+  /// Section title over the 35-day heatmap.
+  ///
+  /// In en, this message translates to:
+  /// **'Last 35 days'**
+  String get praytrackHeatTitle;
+
+  /// Section title over the per-prayer breakdown.
+  ///
+  /// In en, this message translates to:
+  /// **'By prayer'**
+  String get praytrackByPrayerTitle;
+
+  /// Caption under the per-prayer breakdown.
+  ///
+  /// In en, this message translates to:
+  /// **'How often each prayer was marked prayed in the last 35 days.'**
+  String get praytrackByPrayerCaption;
+
+  /// Section title for the qada (make-up) summary.
+  ///
+  /// In en, this message translates to:
+  /// **'Qada'**
+  String get praytrackQadaTitle;
+
+  /// Value line for the qada summary.
+  ///
+  /// In en, this message translates to:
+  /// **'{n, plural, =0{Nothing outstanding} =1{1 prayer to make up} other{{n} prayers to make up}}'**
+  String praytrackQadaValue(int n);
+
+  /// Footnote clarifying how the qada count is derived.
+  ///
+  /// In en, this message translates to:
+  /// **'Counts a past day\'s prayer only once it went unmarked — never a starting balance.'**
+  String get praytrackQadaFootnote;
+
+  /// Kicker label on the Ramadan countdown card.
+  ///
+  /// In en, this message translates to:
+  /// **'Ramadan'**
+  String get ramadanCountdown;
+
+  /// Estimated start date before Ramadan begins.
+  ///
+  /// In en, this message translates to:
+  /// **'Begins around {date}'**
+  String ramadanStarts(String date);
+
+  /// Label for the Hijri year.
+  ///
+  /// In en, this message translates to:
+  /// **'Hijri year'**
+  String get ramadanYear;
+
+  /// Label for today's sunset time.
+  ///
+  /// In en, this message translates to:
+  /// **'Sunset today'**
+  String get ramadanSunsetToday;
+
+  /// Section title over the pre-Ramadan preparation cards.
+  ///
+  /// In en, this message translates to:
+  /// **'Prepare'**
+  String get ramadanPrepare;
+
+  /// Preparation card: making up missed fasts.
+  ///
+  /// In en, this message translates to:
+  /// **'Make up missed fasts'**
+  String get ramadanPrepQada;
+
+  /// Subtitle for the qada preparation card.
+  ///
+  /// In en, this message translates to:
+  /// **'Before Ramadan begins'**
+  String get ramadanPrepQadaSub;
+
+  /// Preparation card: planning a Qur'an reading pace.
+  ///
+  /// In en, this message translates to:
+  /// **'Set a reading pace'**
+  String get ramadanPrepQuran;
+
+  /// Subtitle for the Qur'an-pace preparation card.
+  ///
+  /// In en, this message translates to:
+  /// **'One juz a day finishes in 30'**
+  String get ramadanPrepQuranSub;
+
+  /// Preparation card: planning zakat.
+  ///
+  /// In en, this message translates to:
+  /// **'Plan your zakat'**
+  String get ramadanPrepZakat;
+
+  /// Subtitle for the zakat preparation card.
+  ///
+  /// In en, this message translates to:
+  /// **'Many give during Ramadan'**
+  String get ramadanPrepZakatSub;
+
+  /// Label for the current day of Ramadan. n: String — pre-formatted via LumeFormatting.integer for locale-aware digits.
+  ///
+  /// In en, this message translates to:
+  /// **'Ramadan, day {n}'**
+  String ramadanDay(String n);
+
+  /// Countdown to iftar.
+  ///
+  /// In en, this message translates to:
+  /// **'Iftar in {time}'**
+  String ramadanIftarIn(String time);
+
+  /// Stat label: when suhoor ends.
+  ///
+  /// In en, this message translates to:
+  /// **'Suhoor ends'**
+  String get ramadanSuhoor;
+
+  /// Timeline title: when suhoor ends (distinct key from ramadanSuhoor).
+  ///
+  /// In en, this message translates to:
+  /// **'Suhoor ends'**
+  String get ramadanSuhoorEnds;
+
+  /// Subtitle under the suhoor timeline entry.
+  ///
+  /// In en, this message translates to:
+  /// **'Stop eating at Fajr'**
+  String get ramadanSuhoorSub;
+
+  /// Label for iftar.
+  ///
+  /// In en, this message translates to:
+  /// **'Iftar'**
+  String get ramadanIftar;
+
+  /// Subtitle under the iftar timeline entry.
+  ///
+  /// In en, this message translates to:
+  /// **'Break the fast at Maghrib'**
+  String get ramadanIftarSub;
+
+  /// Stat label: days remaining in Ramadan.
+  ///
+  /// In en, this message translates to:
+  /// **'Days left'**
+  String get ramadanRemaining;
+
+  /// Label for today's entry on the Ramadan timeline.
+  ///
+  /// In en, this message translates to:
+  /// **'Today'**
+  String get ramadanDayTimeline;
+
+  /// Title of the honesty note above Ramadan dates.
+  ///
+  /// In en, this message translates to:
+  /// **'A calculated estimate'**
+  String get ramadanNoteTitle;
+
+  /// Body of the honesty note above Ramadan dates.
+  ///
+  /// In en, this message translates to:
+  /// **'Based on the Hijri calendar and today\'s Fajr and Maghrib — not a moon sighting. The actual date may differ by a day.'**
+  String get ramadanNoteText;
+
+  /// Empty state title when the selected city has no coordinates.
+  ///
+  /// In en, this message translates to:
+  /// **'No position for {city}'**
+  String ramadanNoCityTitle(String city);
+
+  /// Empty state body when the selected city has no coordinates.
+  ///
+  /// In en, this message translates to:
+  /// **'Ramadan times are worked out from a city\'s coordinates, and Lume has none for this one. Choose another city in Profile to see them.'**
+  String get ramadanNoCityText;
+
+  /// Empty state title when the time zone can't be resolved.
+  ///
+  /// In en, this message translates to:
+  /// **'No clock for {zone}'**
+  String ramadanNoZoneTitle(String zone);
+
+  /// Empty state body when the time zone can't be resolved.
+  ///
+  /// In en, this message translates to:
+  /// **'Ramadan times are worked out on your clock, so they need your time zone. Choose one in Profile › Time.'**
+  String get ramadanNoZoneText;
+
+  /// Prompt to choose a time zone, shown inline before times are available.
+  ///
+  /// In en, this message translates to:
+  /// **'Ramadan times need your time zone to be worked out. Choose one in Profile › Time.'**
+  String get ramadanZoneChooseText;
+
+  /// Source line on the Ramadan share card.
+  ///
+  /// In en, this message translates to:
+  /// **'{city} · {date}'**
+  String ramadanShareSource(String city, String date);
+
+  /// Empty state title: no in-app speed test.
+  ///
+  /// In en, this message translates to:
+  /// **'No live speed test in Lume'**
+  String get speedtestUnavailableTitle;
+
+  /// Empty state body explaining why there's no in-app speed test.
+  ///
+  /// In en, this message translates to:
+  /// **'Lume never sends anything over the network, so it can\'t measure your download or upload speed. Open a real test instead.'**
+  String get speedtestUnavailableText;
+
+  /// Button that opens a real, external speed test — C49: never names "browser", a claim a Flutter build can't make even though the link happens to open one.
+  ///
+  /// In en, this message translates to:
+  /// **'Open a speed test'**
+  String get speedtestOpenBrowser;
+
+  /// Footnote clarifying Lume's role (none) in the external speed test.
+  ///
+  /// In en, this message translates to:
+  /// **'Opens fast.com — a free, ad-free test. Lume doesn\'t run it or see your result.'**
+  String get speedtestOpenFootnote;
+
+  /// Said when no app can open the speed-test link.
+  ///
+  /// In en, this message translates to:
+  /// **'Nothing on this device can open that link'**
+  String get speedtestOpenUnavailable;
+
+  /// Toast when opening the speed-test link fails.
+  ///
+  /// In en, this message translates to:
+  /// **'Couldn\'t open that link'**
+  String get speedtestOpenFailed;
+
+  /// Toast for a conflicting record on write (mirrors praytrackErrConflict).
+  ///
+  /// In en, this message translates to:
+  /// **'This changed somewhere else. Open it again.'**
+  String get taraweehErrConflict;
+
+  /// Generic write-failure toast (mirrors praytrackErrFailed).
+  ///
+  /// In en, this message translates to:
+  /// **'That didn\'t save. Try again.'**
+  String get taraweehErrFailed;
+
+  /// Toast after marking tonight's Taraweeh as prayed.
+  ///
+  /// In en, this message translates to:
+  /// **'Logged for tonight'**
+  String get taraweehPrayedToast;
+
+  /// Toast after clearing tonight's entry.
+  ///
+  /// In en, this message translates to:
+  /// **'Tonight\'s entry removed'**
+  String get taraweehClearedToast;
+
+  /// Kicker label on the Taraweeh summary card.
+  ///
+  /// In en, this message translates to:
+  /// **'Taraweeh streak'**
+  String get taraweehSummaryKicker;
+
+  /// Unit word for a count of nights.
+  ///
+  /// In en, this message translates to:
+  /// **'nights'**
+  String get taraweehNightsUnit;
+
+  /// Caption showing the best-ever streak.
+  ///
+  /// In en, this message translates to:
+  /// **'Best: {n} nights'**
+  String taraweehBestCaption(int n);
+
+  /// Stat label: total nights logged.
+  ///
+  /// In en, this message translates to:
+  /// **'Nights logged'**
+  String get taraweehStatTotal;
+
+  /// Stat label: Juz of the Qur'an completed.
+  ///
+  /// In en, this message translates to:
+  /// **'Juz completed'**
+  String get taraweehStatJuz;
+
+  /// Stat label: the next Juz to read.
+  ///
+  /// In en, this message translates to:
+  /// **'Next Juz'**
+  String get taraweehStatNextJuz;
+
+  /// Label for tonight's entry.
+  ///
+  /// In en, this message translates to:
+  /// **'Tonight'**
+  String get taraweehTonight;
+
+  /// Toggle/status label: Taraweeh prayed tonight.
+  ///
+  /// In en, this message translates to:
+  /// **'Prayed tonight'**
+  String get taraweehPrayedLabel;
+
+  /// Field label: number of rakaat prayed.
+  ///
+  /// In en, this message translates to:
+  /// **'Rakaat prayed'**
+  String get taraweehRakaatTitle;
+
+  /// Option label for a rakaat-count choice.
+  ///
+  /// In en, this message translates to:
+  /// **'{n} rakaat'**
+  String taraweehRakaatOption(int n);
+
+  /// Field label: the Juz reached tonight.
+  ///
+  /// In en, this message translates to:
+  /// **'Juz reached'**
+  String get taraweehJuzTitle;
+
+  /// Value shown when no Juz has been noted yet.
+  ///
+  /// In en, this message translates to:
+  /// **'Not noted'**
+  String get taraweehJuzValueNone;
+
+  /// The Juz stepper's decrease action (mirrors tipFewer).
+  ///
+  /// In en, this message translates to:
+  /// **'Fewer'**
+  String get taraweehJuzDecrementLabel;
+
+  /// The Juz stepper's increase action (mirrors tipMore).
+  ///
+  /// In en, this message translates to:
+  /// **'More'**
+  String get taraweehJuzIncrementLabel;
+
+  /// Section title over the Qur'an-completion progress.
+  ///
+  /// In en, this message translates to:
+  /// **'Qur\'an progress'**
+  String get taraweehProgressTitle;
+
+  /// Progress label: Juz completed so far.
+  ///
+  /// In en, this message translates to:
+  /// **'Juz completed'**
+  String get taraweehProgressLabel;
+
+  /// Progress value: Juz done out of total.
+  ///
+  /// In en, this message translates to:
+  /// **'{done} of {total}'**
+  String taraweehProgressValue(int done, int total);
+
+  /// Message shown once the Khatm (full Qur'an) is complete.
+  ///
+  /// In en, this message translates to:
+  /// **'The whole Qur\'an has been completed this Ramadan'**
+  String get taraweehKhatmComplete;
+
+  /// Section title over the Taraweeh calendar grid.
+  ///
+  /// In en, this message translates to:
+  /// **'Calendar'**
+  String get taraweehCalendarTitle;
+
+  /// Screen-reader summary for the Taraweeh calendar grid.
+  ///
+  /// In en, this message translates to:
+  /// **'{prayed} of the last {total} nights prayed'**
+  String taraweehCalendarA11y(int prayed, int total);
+
+  /// Section title over the user's saved vehicles.
+  ///
+  /// In en, this message translates to:
+  /// **'Your vehicles'**
+  String get vehicleFleet;
+
+  /// Count of open fines on a vehicle.
+  ///
+  /// In en, this message translates to:
+  /// **'{n} open fine'**
+  String vehicleOpenFines(int n);
+
+  /// Said when a vehicle has no outstanding fines.
+  ///
+  /// In en, this message translates to:
+  /// **'No outstanding fines'**
+  String get vehicleNoFines;
+
+  /// Stat label: outstanding amount due.
+  ///
+  /// In en, this message translates to:
+  /// **'Outstanding'**
+  String get vehicleOutstanding;
+
+  /// Stat label: next token-tax due date.
+  ///
+  /// In en, this message translates to:
+  /// **'Next token due'**
+  String get vehicleNextToken;
+
+  /// Field label: the vehicle's odometer reading.
+  ///
+  /// In en, this message translates to:
+  /// **'Odometer'**
+  String get vehicleOdometer;
+
+  /// Search field placeholder for the saved vehicles list.
+  ///
+  /// In en, this message translates to:
+  /// **'Search your vehicles'**
+  String get vehicleSearch;
+
+  /// Tag: a vehicle registered to the user.
+  ///
+  /// In en, this message translates to:
+  /// **'Registered to you'**
+  String get vehicleYours;
+
+  /// Label: vehicle token (registration) tax.
+  ///
+  /// In en, this message translates to:
+  /// **'Token'**
+  String get vehicleToken;
+
+  /// Label: vehicle insurance.
+  ///
+  /// In en, this message translates to:
+  /// **'Insurance'**
+  String get vehicleInsurance;
+
+  /// Count of fines on a vehicle.
+  ///
+  /// In en, this message translates to:
+  /// **'{n} fine'**
+  String vehicleFines(int n);
+
+  /// Status tag: no fines on record.
+  ///
+  /// In en, this message translates to:
+  /// **'Clear'**
+  String get vehicleClear;
+
+  /// Section title/prompt for the registration lookup.
+  ///
+  /// In en, this message translates to:
+  /// **'Check any registration'**
+  String get vehicleCheck;
+
+  /// Field label: vehicle registration number.
+  ///
+  /// In en, this message translates to:
+  /// **'Registration number'**
+  String get vehicleRegistration;
+
+  /// Button that looks up a registration number.
+  ///
+  /// In en, this message translates to:
+  /// **'Look up'**
+  String get vehicleLookup;
+
+  /// Status text while a lookup is in progress.
+  ///
+  /// In en, this message translates to:
+  /// **'Checking the register'**
+  String get vehicleLookingUp;
+
+  /// Section title over upcoming vehicle reminders.
+  ///
+  /// In en, this message translates to:
+  /// **'What\'s coming up'**
+  String get vehicleReminders;
+
+  /// Reminder type: token tax due.
+  ///
+  /// In en, this message translates to:
+  /// **'Token tax due'**
+  String get vehicleTokenTax;
+
+  /// Reminder type: insurance renewal due.
+  ///
+  /// In en, this message translates to:
+  /// **'Insurance renewal'**
+  String get vehicleInsuranceRenewal;
+
+  /// Title explaining why Lume can't list statuses automatically.
+  ///
+  /// In en, this message translates to:
+  /// **'Lume can\'t read WhatsApp\'s files'**
+  String get wastatusWhyTitle;
+
+  /// Body explaining the privacy trade-off behind not scanning WhatsApp's storage.
+  ///
+  /// In en, this message translates to:
+  /// **'Opening another app\'s storage needs a broad file-access permission. Lume deliberately doesn\'t ask for it, so it can\'t scan for statuses or list them for you.'**
+  String get wastatusWhyText;
+
+  /// Section title over the manual save instructions.
+  ///
+  /// In en, this message translates to:
+  /// **'Save a status yourself'**
+  String get wastatusSaveTitle;
+
+  /// Subtitle under the manual save instructions.
+  ///
+  /// In en, this message translates to:
+  /// **'Two steps, right inside WhatsApp — no extra permission needed'**
+  String get wastatusSaveSubtitle;
+
+  /// Step 1 title.
+  ///
+  /// In en, this message translates to:
+  /// **'Open the status'**
+  String get wastatusStep1Title;
+
+  /// Step 1 body.
+  ///
+  /// In en, this message translates to:
+  /// **'View the photo or video the way you normally would, before it disappears.'**
+  String get wastatusStep1Text;
+
+  /// Step 2 title.
+  ///
+  /// In en, this message translates to:
+  /// **'Tap the save icon'**
+  String get wastatusStep2Title;
+
+  /// Step 2 body.
+  ///
+  /// In en, this message translates to:
+  /// **'WhatsApp\'s own download icon saves it straight to your phone\'s gallery.'**
+  String get wastatusStep2Text;
+
+  /// Step 3 title.
+  ///
+  /// In en, this message translates to:
+  /// **'Find it afterwards'**
+  String get wastatusStep3Title;
+
+  /// Step 3 body.
+  ///
+  /// In en, this message translates to:
+  /// **'Open your gallery, or Lume\'s Media Saver, to see what you\'ve saved.'**
+  String get wastatusStep3Text;
+
+  /// Section title over the fallback folder-browsing tip.
+  ///
+  /// In en, this message translates to:
+  /// **'Missed the save icon?'**
+  String get wastatusFolderTitle;
+
+  /// Note title flagging the fallback tip as Android-only.
+  ///
+  /// In en, this message translates to:
+  /// **'Android only'**
+  String get wastatusFolderNoteTitle;
+
+  /// Body of the Android-only fallback tip for browsing WhatsApp's media folder directly.
+  ///
+  /// In en, this message translates to:
+  /// **'Your phone\'s own Files app can sometimes browse to WhatsApp\'s media folder while a status is still cached there — look for a hidden \".Statuses\" folder and turn on \"show hidden files\" if you don\'t see it. Exactly where it is depends on your phone and WhatsApp version, and this doesn\'t work on iPhone.'**
+  String get wastatusFolderNoteText;
 }
 
 class _AppLocalizationsDelegate

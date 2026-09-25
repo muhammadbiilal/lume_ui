@@ -12303,4 +12303,944 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get prizebondsYourNumbers => 'Your numbers';
+
+  @override
+  String get alarmsNext => 'Next alarm';
+
+  @override
+  String get alarmsNone => 'No alarms set';
+
+  @override
+  String get alarmsAll => 'Alarms';
+
+  @override
+  String get alarmsAdd => 'Add an alarm';
+
+  @override
+  String get alarmsAdding => 'New alarm';
+
+  @override
+  String get alarmsDaily => 'Every day';
+
+  @override
+  String get alarmsWeekdays => 'Weekdays';
+
+  @override
+  String get alarmsWeekend => 'Weekends';
+
+  @override
+  String get alarmsA1 => 'Work';
+
+  @override
+  String get alarmsA2 => 'Lie-in';
+
+  @override
+  String get alarmsA3 => 'Wind down';
+
+  @override
+  String alarmsInHours(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: 'in about $n hours',
+      one: 'in about 1 hour',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get docscanCapture => 'Capture';
+
+  @override
+  String get docscanHint => 'Lay the page flat and capture';
+
+  @override
+  String get docscanCaptureDenied =>
+      'Lume can\'t use the camera. Press Capture to be asked again.';
+
+  @override
+  String get docscanCaptureUndetermined =>
+      'Lume can\'t use the camera. Press Capture to be asked again, or turn it on in Settings if Android doesn\'t ask.';
+
+  @override
+  String get docscanPagesTitle => 'Pages';
+
+  @override
+  String docscanPageN(int n) {
+    return 'Page $n';
+  }
+
+  @override
+  String get docscanSourceCamera => 'Camera';
+
+  @override
+  String get docscanSourceGallery => 'Gallery';
+
+  @override
+  String get docscanCleared => 'Pages cleared';
+
+  @override
+  String get docscanShareFailed => 'Couldn\'t share. Try again.';
+
+  @override
+  String get docscanStepsTitle => 'How it works';
+
+  @override
+  String get docscanStepCapture => 'Capture each page';
+
+  @override
+  String get docscanStepReview => 'Review and remove pages';
+
+  @override
+  String get docscanStepShare => 'Share when you\'re ready';
+
+  @override
+  String get faraidNoteTitle => 'A guide, not a ruling';
+
+  @override
+  String get faraidNoteText =>
+      'This calculator only covers a wife or wives, sons and daughters — not every relative Islamic inheritance law recognizes. It\'s a starting point, not a fatwa.';
+
+  @override
+  String get faraidEstate => 'The estate';
+
+  @override
+  String get faraidGross => 'Gross estate';
+
+  @override
+  String get faraidDebts => 'Debts & funeral costs';
+
+  @override
+  String get faraidBequest => 'Bequest (wasiyyah)';
+
+  @override
+  String get faraidBequestHint => 'Capped at one third of the net estate.';
+
+  @override
+  String get faraidHeirs => 'Heirs';
+
+  @override
+  String get faraidWife => 'Wife';
+
+  @override
+  String get faraidSons => 'Sons';
+
+  @override
+  String get faraidDaughters => 'Daughters';
+
+  @override
+  String get faraidRuleWife =>
+      'A wife\'s fixed share is 1/8 with children, 1/4 without.';
+
+  @override
+  String get faraidRuleSons =>
+      'A son shares the residue as 2 parts to a daughter\'s 1.';
+
+  @override
+  String get faraidRuleDaughters =>
+      'A daughter alone or with sisters takes a fixed share; with a brother she shares the residue 1:2.';
+
+  @override
+  String get faraidNet => 'Net estate';
+
+  @override
+  String get faraidCaptionCapped =>
+      'The bequest was capped at one third of the net estate';
+
+  @override
+  String get faraidCaptionReady => 'Distributed among the heirs below';
+
+  @override
+  String get faraidDistribution => 'Distribution';
+
+  @override
+  String get faraidExplain => 'Why these shares';
+
+  @override
+  String get faraidResiduary => 'Residuary';
+
+  @override
+  String get faraidReasonWife => 'Fixed share';
+
+  @override
+  String get faraidReasonSons => 'Residue, 2 parts to a daughter\'s 1';
+
+  @override
+  String get faraidReasonDaughters => 'Fixed share, or residue with a brother';
+
+  @override
+  String get faraidUnallocated => 'Unallocated';
+
+  @override
+  String get faraidReasonUnallocated =>
+      'This calculator doesn\'t model every relative — a father, mother, husband, siblings or grandchildren would normally receive this share.';
+
+  @override
+  String get fastingLogFast => 'Log a fast';
+
+  @override
+  String get fastingEditFast => 'Edit fast';
+
+  @override
+  String get fastingDateLabel => 'Date';
+
+  @override
+  String get fastingKindLabel => 'Type';
+
+  @override
+  String get fastingKindSunnah => 'Sunnah';
+
+  @override
+  String get fastingKindQada => 'Qada';
+
+  @override
+  String get fastingKeptToggleLabel => 'I kept this fast';
+
+  @override
+  String get fastingDeleteEntry => 'Delete fast';
+
+  @override
+  String get fastingDeleteTitle => 'Delete this fast?';
+
+  @override
+  String get fastingDeleteText => 'This can\'t be undone from here.';
+
+  @override
+  String get fastingErrConflict => 'This entry changed elsewhere';
+
+  @override
+  String get fastingErrFailed => 'That didn\'t save. Try again.';
+
+  @override
+  String get fastingSavedToast => 'Fast saved';
+
+  @override
+  String get fastingDeletedToast => 'Fast deleted';
+
+  @override
+  String get fastingEmptyTitle => 'No fasts logged yet';
+
+  @override
+  String get fastingEmptyText => 'Log a fast to start tracking your streak.';
+
+  @override
+  String get fastingLogFirst => 'Log your first fast';
+
+  @override
+  String fastingStreakCaption(int n) {
+    return '$n in a row';
+  }
+
+  @override
+  String get fastingProgressLabel => 'Kept';
+
+  @override
+  String get fastingVoluntaryLabel => 'Voluntary';
+
+  @override
+  String get fastingObligatoryLabel => 'Obligatory';
+
+  @override
+  String get fastingMissedLabel => 'Missed';
+
+  @override
+  String get fastingCalendarTitle => 'Last 30 days';
+
+  @override
+  String get fastingRecentTitle => 'Recent days';
+
+  @override
+  String get fastingKeptBadge => 'Kept';
+
+  @override
+  String get fastingNotKeptBadge => 'Not kept';
+
+  @override
+  String fastingCalendarA11y(int kept, int total) {
+    return '$kept of $total days fasted';
+  }
+
+  @override
+  String get hijriCalculatedSubtitle => 'Calculated · tabular Islamic calendar';
+
+  @override
+  String hijriYearAh(String year) {
+    return '$year AH';
+  }
+
+  @override
+  String get hijriNoteTitle =>
+      'A calculated calendar, not an official sighting';
+
+  @override
+  String get hijriNoteText =>
+      'This calendar is worked out from a fixed 30-year arithmetic cycle, not the officially adopted Umm al-Qura calendar or your local moon-sighting authority. Dates here can fall a day either side of what is actually announced.';
+
+  @override
+  String get hijriEventsTitle => 'Upcoming dates';
+
+  @override
+  String get hijriEventAshura => 'Ashura';
+
+  @override
+  String get hijriEventRamadanBegins => 'Ramadan begins';
+
+  @override
+  String get hijriEventDayOfArafah => 'Day of Arafah';
+
+  @override
+  String get hijriConvertTitle => 'Convert a date';
+
+  @override
+  String get hijriGregorian => 'Gregorian date';
+
+  @override
+  String get hijriHijriDate => 'Hijri date';
+
+  @override
+  String get hijriMonthsTitle => 'The Hijri months';
+
+  @override
+  String get mediasaverLinkLabel => 'Link';
+
+  @override
+  String get mediasaverLinkPlaceholder => 'https://…';
+
+  @override
+  String get mediasaverNoNetworkTitle => 'No network access';
+
+  @override
+  String get mediasaverNoNetworkText =>
+      'Lume never connects to the internet, so it can\'t fetch or download media from a link.';
+
+  @override
+  String get mediasaverNoNetworkToast =>
+      'Lume can\'t fetch that — it doesn\'t connect to the internet.';
+
+  @override
+  String get mediasaverSave => 'Save';
+
+  @override
+  String get mediasaverLibrary => 'Saved media';
+
+  @override
+  String get mediasaverEmptyTitle => 'Nothing saved yet';
+
+  @override
+  String get mediasaverEmptyText =>
+      'Media you save stays on this device — Lume can\'t download anything from a link.';
+
+  @override
+  String get mosquesUnavailableTitle => 'No live mosque search yet';
+
+  @override
+  String get mosquesUnavailableText =>
+      'Lume doesn\'t have a live places directory yet, so a nearby list here would mean inventing mosque names and distances. Open Maps for a real search near you.';
+
+  @override
+  String get mosquesOpenMaps => 'Open in Maps';
+
+  @override
+  String get mosquesMapsUnavailable => 'This device can\'t open Maps.';
+
+  @override
+  String get mosquesMapsFailed => 'Couldn\'t open Maps. Try again.';
+
+  @override
+  String get passportCountry => 'Country';
+
+  @override
+  String get passportSize => 'Photo size';
+
+  @override
+  String get passportBackground => 'Background';
+
+  @override
+  String get passportWhite => 'Plain white';
+
+  @override
+  String get passportHeadHeight => 'Head height';
+
+  @override
+  String get passportCapture => 'Take a photo';
+
+  @override
+  String get passportCapturing => 'Opening the camera';
+
+  @override
+  String get passportImport => 'Import';
+
+  @override
+  String get passportImporting => 'Choosing a photo';
+
+  @override
+  String get passportRequirements => 'Requirements';
+
+  @override
+  String get passportReqBackground => 'Plain, evenly lit background';
+
+  @override
+  String get passportReqExpression => 'Neutral expression, mouth closed';
+
+  @override
+  String get passportReqGlasses => 'No glare or heavy frames over the eyes';
+
+  @override
+  String get passportReqRecent => 'Taken within the last six months';
+
+  @override
+  String get passportSizes => 'Common sizes';
+
+  @override
+  String get passportDocument => 'Document';
+
+  @override
+  String get passportDpi => 'DPI';
+
+  @override
+  String get passportPassport => 'Passport';
+
+  @override
+  String get passportVisaUS => 'US visa';
+
+  @override
+  String get passportIdCard => 'National ID';
+
+  @override
+  String get passportSavePhoto => 'Save photo';
+
+  @override
+  String get passportSaving => 'Saving…';
+
+  @override
+  String get passportSaved => 'Saved to your photos';
+
+  @override
+  String get passportRetake => 'Retake';
+
+  @override
+  String get passportChooseDifferent => 'Choose a different photo';
+
+  @override
+  String get passportPreviewAlt => 'Your cropped passport photo';
+
+  @override
+  String get passportGuideHint =>
+      'Centre your face in the frame, looking straight ahead';
+
+  @override
+  String get passportProcessFailed =>
+      'Lume couldn\'t use that photo. Try a different one.';
+
+  @override
+  String get passportCameraDenied =>
+      'Lume can\'t use the camera. Press Take a photo to be asked again.';
+
+  @override
+  String get passportCameraBlocked =>
+      'Camera access for Lume is off. Turn it on in Settings to take a photo.';
+
+  @override
+  String get passportCameraUndetermined =>
+      'Lume can\'t use the camera. Press Take a photo to be asked again, or turn it on in Settings if Android doesn\'t ask.';
+
+  @override
+  String get passportCameraRestricted =>
+      'The camera is turned off on this device by a restriction or its administrator.';
+
+  @override
+  String get passportCameraUnavailable =>
+      'Taking a photo isn\'t available on this device';
+
+  @override
+  String get passportCameraFailed => 'Couldn\'t open the camera. Try again.';
+
+  @override
+  String get passportGalleryDenied =>
+      'Lume can\'t open your photos. You can allow it in Settings.';
+
+  @override
+  String get passportGalleryUnavailable =>
+      'Choosing a photo isn\'t available on this device';
+
+  @override
+  String get passportGalleryFailed => 'Couldn\'t open your photos. Try again.';
+
+  @override
+  String get passportTooLarge => 'That photo is too large to use';
+
+  @override
+  String get passportOpenSettings => 'Settings';
+
+  @override
+  String get passportSettingsFailed =>
+      'Settings didn\'t open. You\'ll find Lume under Apps in your phone\'s Settings.';
+
+  @override
+  String get passportSaveDenied =>
+      'Lume can\'t save to your photos. You can allow it in Settings.';
+
+  @override
+  String get passportSaveNoSpace => 'There\'s no space to save the photo';
+
+  @override
+  String get passportSaveUnavailable =>
+      'Saving to photos isn\'t available on this device';
+
+  @override
+  String get passportSaveFailed => 'Couldn\'t save the photo. Try again.';
+
+  @override
+  String get prayerNext => 'Next prayer';
+
+  @override
+  String prayerCountdown(String time) {
+    return '$time to go';
+  }
+
+  @override
+  String get prayerProgress => 'Progress';
+
+  @override
+  String get prayerToday => 'Today';
+
+  @override
+  String get prayerUpNext => 'Up next';
+
+  @override
+  String get prayerPassed => 'Passed';
+
+  @override
+  String get prayerSunTitle => 'Sunrise & sunset';
+
+  @override
+  String get prayerUpcoming => 'Upcoming days';
+
+  @override
+  String get prayerMethod => 'Calculation method';
+
+  @override
+  String get prayerMethodMwl => 'Muslim World League';
+
+  @override
+  String get prayerAsrMethodLabel => 'Asr calculation';
+
+  @override
+  String get prayerAsrStandard => 'Standard (Shafi\'i, Maliki, Hanbali)';
+
+  @override
+  String get prayerLocation => 'Location';
+
+  @override
+  String get prayerTimezone => 'Time zone';
+
+  @override
+  String get prayerSettings => 'Method & location';
+
+  @override
+  String prayerNoCityTitle(String city) {
+    return 'No position for $city';
+  }
+
+  @override
+  String get prayerNoCityText =>
+      'Prayer times are worked out from a city\'s coordinates, and Lume has none for this one. Choose another city in Profile to see them.';
+
+  @override
+  String prayerNoZoneTitle(String zone) {
+    return 'No clock for $zone';
+  }
+
+  @override
+  String get prayerNoZoneText =>
+      'Prayer times are worked out on your clock, so they need your time zone. Choose one in Profile › Time.';
+
+  @override
+  String get prayerZoneChooseText =>
+      'Prayer times need your time zone to be worked out. Choose one in Profile › Time.';
+
+  @override
+  String get prayerNoteTitle =>
+      'A calculated schedule, not a mosque announcement';
+
+  @override
+  String get prayerNoteText =>
+      'These times are worked out from your city\'s coordinates using the Muslim World League method. Cross-check them against your local mosque or authority before relying on them.';
+
+  @override
+  String prayerShareSource(String city, String date) {
+    return '$city · $date';
+  }
+
+  @override
+  String get praytrackErrConflict =>
+      'This changed somewhere else. Open it again.';
+
+  @override
+  String get praytrackErrFailed => 'That didn\'t save. Try again.';
+
+  @override
+  String get praytrackMarkTitle => 'Mark today\'s prayers';
+
+  @override
+  String get praytrackPending => 'Pending';
+
+  @override
+  String praytrackStreakCaption(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n day streak',
+      one: '1 day streak',
+      zero: 'No streak yet',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get praytrackStreakLabel => 'Day streak';
+
+  @override
+  String get praytrackQadaStatLabel => 'To make up';
+
+  @override
+  String get praytrackCheckLabel => 'Prayed';
+
+  @override
+  String get praytrackHeatTitle => 'Last 35 days';
+
+  @override
+  String get praytrackByPrayerTitle => 'By prayer';
+
+  @override
+  String get praytrackByPrayerCaption =>
+      'How often each prayer was marked prayed in the last 35 days.';
+
+  @override
+  String get praytrackQadaTitle => 'Qada';
+
+  @override
+  String praytrackQadaValue(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n prayers to make up',
+      one: '1 prayer to make up',
+      zero: 'Nothing outstanding',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get praytrackQadaFootnote =>
+      'Counts a past day\'s prayer only once it went unmarked — never a starting balance.';
+
+  @override
+  String get ramadanCountdown => 'Ramadan';
+
+  @override
+  String ramadanStarts(String date) {
+    return 'Begins around $date';
+  }
+
+  @override
+  String get ramadanYear => 'Hijri year';
+
+  @override
+  String get ramadanSunsetToday => 'Sunset today';
+
+  @override
+  String get ramadanPrepare => 'Prepare';
+
+  @override
+  String get ramadanPrepQada => 'Make up missed fasts';
+
+  @override
+  String get ramadanPrepQadaSub => 'Before Ramadan begins';
+
+  @override
+  String get ramadanPrepQuran => 'Set a reading pace';
+
+  @override
+  String get ramadanPrepQuranSub => 'One juz a day finishes in 30';
+
+  @override
+  String get ramadanPrepZakat => 'Plan your zakat';
+
+  @override
+  String get ramadanPrepZakatSub => 'Many give during Ramadan';
+
+  @override
+  String ramadanDay(String n) {
+    return 'Ramadan, day $n';
+  }
+
+  @override
+  String ramadanIftarIn(String time) {
+    return 'Iftar in $time';
+  }
+
+  @override
+  String get ramadanSuhoor => 'Suhoor ends';
+
+  @override
+  String get ramadanSuhoorEnds => 'Suhoor ends';
+
+  @override
+  String get ramadanSuhoorSub => 'Stop eating at Fajr';
+
+  @override
+  String get ramadanIftar => 'Iftar';
+
+  @override
+  String get ramadanIftarSub => 'Break the fast at Maghrib';
+
+  @override
+  String get ramadanRemaining => 'Days left';
+
+  @override
+  String get ramadanDayTimeline => 'Today';
+
+  @override
+  String get ramadanNoteTitle => 'A calculated estimate';
+
+  @override
+  String get ramadanNoteText =>
+      'Based on the Hijri calendar and today\'s Fajr and Maghrib — not a moon sighting. The actual date may differ by a day.';
+
+  @override
+  String ramadanNoCityTitle(String city) {
+    return 'No position for $city';
+  }
+
+  @override
+  String get ramadanNoCityText =>
+      'Ramadan times are worked out from a city\'s coordinates, and Lume has none for this one. Choose another city in Profile to see them.';
+
+  @override
+  String ramadanNoZoneTitle(String zone) {
+    return 'No clock for $zone';
+  }
+
+  @override
+  String get ramadanNoZoneText =>
+      'Ramadan times are worked out on your clock, so they need your time zone. Choose one in Profile › Time.';
+
+  @override
+  String get ramadanZoneChooseText =>
+      'Ramadan times need your time zone to be worked out. Choose one in Profile › Time.';
+
+  @override
+  String ramadanShareSource(String city, String date) {
+    return '$city · $date';
+  }
+
+  @override
+  String get speedtestUnavailableTitle => 'No live speed test in Lume';
+
+  @override
+  String get speedtestUnavailableText =>
+      'Lume never sends anything over the network, so it can\'t measure your download or upload speed. Open a real test instead.';
+
+  @override
+  String get speedtestOpenBrowser => 'Open a speed test';
+
+  @override
+  String get speedtestOpenFootnote =>
+      'Opens fast.com — a free, ad-free test. Lume doesn\'t run it or see your result.';
+
+  @override
+  String get speedtestOpenUnavailable =>
+      'Nothing on this device can open that link';
+
+  @override
+  String get speedtestOpenFailed => 'Couldn\'t open that link';
+
+  @override
+  String get taraweehErrConflict =>
+      'This changed somewhere else. Open it again.';
+
+  @override
+  String get taraweehErrFailed => 'That didn\'t save. Try again.';
+
+  @override
+  String get taraweehPrayedToast => 'Logged for tonight';
+
+  @override
+  String get taraweehClearedToast => 'Tonight\'s entry removed';
+
+  @override
+  String get taraweehSummaryKicker => 'Taraweeh streak';
+
+  @override
+  String get taraweehNightsUnit => 'nights';
+
+  @override
+  String taraweehBestCaption(int n) {
+    return 'Best: $n nights';
+  }
+
+  @override
+  String get taraweehStatTotal => 'Nights logged';
+
+  @override
+  String get taraweehStatJuz => 'Juz completed';
+
+  @override
+  String get taraweehStatNextJuz => 'Next Juz';
+
+  @override
+  String get taraweehTonight => 'Tonight';
+
+  @override
+  String get taraweehPrayedLabel => 'Prayed tonight';
+
+  @override
+  String get taraweehRakaatTitle => 'Rakaat prayed';
+
+  @override
+  String taraweehRakaatOption(int n) {
+    return '$n rakaat';
+  }
+
+  @override
+  String get taraweehJuzTitle => 'Juz reached';
+
+  @override
+  String get taraweehJuzValueNone => 'Not noted';
+
+  @override
+  String get taraweehJuzDecrementLabel => 'Fewer';
+
+  @override
+  String get taraweehJuzIncrementLabel => 'More';
+
+  @override
+  String get taraweehProgressTitle => 'Qur\'an progress';
+
+  @override
+  String get taraweehProgressLabel => 'Juz completed';
+
+  @override
+  String taraweehProgressValue(int done, int total) {
+    return '$done of $total';
+  }
+
+  @override
+  String get taraweehKhatmComplete =>
+      'The whole Qur\'an has been completed this Ramadan';
+
+  @override
+  String get taraweehCalendarTitle => 'Calendar';
+
+  @override
+  String taraweehCalendarA11y(int prayed, int total) {
+    return '$prayed of the last $total nights prayed';
+  }
+
+  @override
+  String get vehicleFleet => 'Your vehicles';
+
+  @override
+  String vehicleOpenFines(int n) {
+    return '$n open fine';
+  }
+
+  @override
+  String get vehicleNoFines => 'No outstanding fines';
+
+  @override
+  String get vehicleOutstanding => 'Outstanding';
+
+  @override
+  String get vehicleNextToken => 'Next token due';
+
+  @override
+  String get vehicleOdometer => 'Odometer';
+
+  @override
+  String get vehicleSearch => 'Search your vehicles';
+
+  @override
+  String get vehicleYours => 'Registered to you';
+
+  @override
+  String get vehicleToken => 'Token';
+
+  @override
+  String get vehicleInsurance => 'Insurance';
+
+  @override
+  String vehicleFines(int n) {
+    return '$n fine';
+  }
+
+  @override
+  String get vehicleClear => 'Clear';
+
+  @override
+  String get vehicleCheck => 'Check any registration';
+
+  @override
+  String get vehicleRegistration => 'Registration number';
+
+  @override
+  String get vehicleLookup => 'Look up';
+
+  @override
+  String get vehicleLookingUp => 'Checking the register';
+
+  @override
+  String get vehicleReminders => 'What\'s coming up';
+
+  @override
+  String get vehicleTokenTax => 'Token tax due';
+
+  @override
+  String get vehicleInsuranceRenewal => 'Insurance renewal';
+
+  @override
+  String get wastatusWhyTitle => 'Lume can\'t read WhatsApp\'s files';
+
+  @override
+  String get wastatusWhyText =>
+      'Opening another app\'s storage needs a broad file-access permission. Lume deliberately doesn\'t ask for it, so it can\'t scan for statuses or list them for you.';
+
+  @override
+  String get wastatusSaveTitle => 'Save a status yourself';
+
+  @override
+  String get wastatusSaveSubtitle =>
+      'Two steps, right inside WhatsApp — no extra permission needed';
+
+  @override
+  String get wastatusStep1Title => 'Open the status';
+
+  @override
+  String get wastatusStep1Text =>
+      'View the photo or video the way you normally would, before it disappears.';
+
+  @override
+  String get wastatusStep2Title => 'Tap the save icon';
+
+  @override
+  String get wastatusStep2Text =>
+      'WhatsApp\'s own download icon saves it straight to your phone\'s gallery.';
+
+  @override
+  String get wastatusStep3Title => 'Find it afterwards';
+
+  @override
+  String get wastatusStep3Text =>
+      'Open your gallery, or Lume\'s Media Saver, to see what you\'ve saved.';
+
+  @override
+  String get wastatusFolderTitle => 'Missed the save icon?';
+
+  @override
+  String get wastatusFolderNoteTitle => 'Android only';
+
+  @override
+  String get wastatusFolderNoteText =>
+      'Your phone\'s own Files app can sometimes browse to WhatsApp\'s media folder while a status is still cached there — look for a hidden \".Statuses\" folder and turn on \"show hidden files\" if you don\'t see it. Exactly where it is depends on your phone and WhatsApp version, and this doesn\'t work on iPhone.';
 }
