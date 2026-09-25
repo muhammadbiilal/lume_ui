@@ -20,7 +20,10 @@ final LumeDate kToday = d(9, 7);
 
 class PrayTrackHarness {
   PrayTrackHarness({int seed = 1, Duration? readDelay}) {
-    store = LumeMemoryRecordRepository(hydrateDelay: readDelay, now: () => clock);
+    store = LumeMemoryRecordRepository(
+      hydrateDelay: readDelay,
+      now: () => clock,
+    );
     repo = PrayTrackRepository(store, random: Random(seed), now: () => clock);
     if (readDelay == null) repo.open();
   }
@@ -29,7 +32,8 @@ class PrayTrackHarness {
   late final PrayTrackRepository repo;
   DateTime clock = DateTime.utc(2026, 9, 7, 10);
 
-  void tick([Duration by = const Duration(minutes: 1)]) => clock = clock.add(by);
+  void tick([Duration by = const Duration(minutes: 1)]) =>
+      clock = clock.add(by);
 
   PrayTrackStats stats([LumeDate? today]) => repo.view().stats(today ?? kToday);
 
@@ -41,7 +45,11 @@ class PrayTrackHarness {
   PrayerCheckin toggle(PrayerKey k, LumeDate date) {
     final PrayTrackResult<PrayTrackWrite> r = tryToggle(k, date);
     expect(r.failure, isNull, reason: 'toggle $k $date');
-    expect(r.value!.checkin, isNotNull, reason: 'toggle $k $date should have created one');
+    expect(
+      r.value!.checkin,
+      isNotNull,
+      reason: 'toggle $k $date should have created one',
+    );
     return r.value!.checkin!;
   }
 

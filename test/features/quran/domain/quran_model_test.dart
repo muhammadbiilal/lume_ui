@@ -28,20 +28,28 @@ const LumeSurah kSurah = LumeSurah(
 
 void main() {
   group('LumeAyah.resolve', () {
-    test('an Arabic reader is given the Arabic, and it is never a fallback', () {
-      final LumeResolvedPassage p = kAyah.resolve(LumeContentLanguage.arabic);
-      expect(p.text, kAyah.arabic);
-      expect(p.language, LumeContentLanguage.arabic);
-      expect(p.language.isRightToLeft, isTrue);
-      expect(p.isFallback, isFalse);
-    });
+    test(
+      'an Arabic reader is given the Arabic, and it is never a fallback',
+      () {
+        final LumeResolvedPassage p = kAyah.resolve(LumeContentLanguage.arabic);
+        expect(p.text, kAyah.arabic);
+        expect(p.language, LumeContentLanguage.arabic);
+        expect(p.language.isRightToLeft, isTrue);
+        expect(p.isFallback, isFalse);
+      },
+    );
 
-    test('an English reader is given the English, and it is not a fallback', () {
-      final LumeResolvedPassage p = kAyah.resolve(LumeContentLanguage.english);
-      expect(p.text, kAyah.translation);
-      expect(p.language, LumeContentLanguage.english);
-      expect(p.isFallback, isFalse);
-    });
+    test(
+      'an English reader is given the English, and it is not a fallback',
+      () {
+        final LumeResolvedPassage p = kAyah.resolve(
+          LumeContentLanguage.english,
+        );
+        expect(p.text, kAyah.translation);
+        expect(p.language, LumeContentLanguage.english);
+        expect(p.isFallback, isFalse);
+      },
+    );
 
     test('an Urdu reader is given the English, and told it is English', () {
       final LumeResolvedPassage p = kAyah.resolve(LumeContentLanguage.urdu);
@@ -52,7 +60,9 @@ void main() {
     });
 
     test('any other language is the same fallback, marked the same way', () {
-      final LumeResolvedPassage p = kAyah.resolve(const LumeContentLanguage('fr'));
+      final LumeResolvedPassage p = kAyah.resolve(
+        const LumeContentLanguage('fr'),
+      );
       expect(p.text, kAyah.translation);
       expect(p.isFallback, isTrue);
     });
@@ -60,27 +70,26 @@ void main() {
 
   group('LumeSurah.resolveName', () {
     test('an Arabic reader is given the Arabic name, never a fallback', () {
-      final LumeResolvedPassage p = kSurah.resolveName(LumeContentLanguage.arabic);
+      final LumeResolvedPassage p = kSurah.resolveName(
+        LumeContentLanguage.arabic,
+      );
       expect(p.text, kSurah.arabicName);
       expect(p.language, LumeContentLanguage.arabic);
       expect(p.isFallback, isFalse);
     });
 
-    test(
-      'every other reader is given the transliterated name — a proper noun, '
-      'never marked as a translation with nothing verified behind it',
-      () {
-        for (final LumeContentLanguage lang in <LumeContentLanguage>[
-          LumeContentLanguage.english,
-          LumeContentLanguage.urdu,
-          const LumeContentLanguage('fr'),
-        ]) {
-          final LumeResolvedPassage p = kSurah.resolveName(lang);
-          expect(p.text, kSurah.name);
-          expect(p.isFallback, isFalse);
-        }
-      },
-    );
+    test('every other reader is given the transliterated name — a proper noun, '
+        'never marked as a translation with nothing verified behind it', () {
+      for (final LumeContentLanguage lang in <LumeContentLanguage>[
+        LumeContentLanguage.english,
+        LumeContentLanguage.urdu,
+        const LumeContentLanguage('fr'),
+      ]) {
+        final LumeResolvedPassage p = kSurah.resolveName(lang);
+        expect(p.text, kSurah.name);
+        expect(p.isFallback, isFalse);
+      }
+    });
   });
 
   test("an ayah's own id is surah:ayah, independent of language", () {

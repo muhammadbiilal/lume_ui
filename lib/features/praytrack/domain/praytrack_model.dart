@@ -114,7 +114,12 @@ class PrayerCheckin {
 /// A record that could not be read as what its collection holds.
 @immutable
 class PrayTrackDefect {
-  const PrayTrackDefect(this.collection, this.recordId, this.field, this.reason);
+  const PrayTrackDefect(
+    this.collection,
+    this.recordId,
+    this.field,
+    this.reason,
+  );
 
   final String collection;
   final String recordId;
@@ -146,8 +151,9 @@ class PrayTrackCodec {
   final String collection;
   final LumeRecord record;
 
-  Never fail(String field, String reason) =>
-      throw PrayTrackDefectException(PrayTrackDefect(collection, record.id, field, reason));
+  Never fail(String field, String reason) => throw PrayTrackDefectException(
+    PrayTrackDefect(collection, record.id, field, reason),
+  );
 
   LumeRecordId get id => LumeRecordId.tryParse(record.id) ?? fail('id', 'uuid');
 

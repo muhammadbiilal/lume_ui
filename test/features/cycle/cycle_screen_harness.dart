@@ -24,11 +24,16 @@ import 'package:lume/features/tools/application/tool_request.dart';
 
 import '../../helpers/lume_harness.dart';
 
-final LumeFeature kCycleFeature = kLumeFeatures.firstWhere((LumeFeature f) => f.id == 'cycle');
+final LumeFeature kCycleFeature = kLumeFeatures.firstWhere(
+  (LumeFeature f) => f.id == 'cycle',
+);
 
 class CycleWorld {
   CycleWorld({this.seed = 1, Duration? readDelay}) {
-    store = LumeMemoryRecordRepository(hydrateDelay: readDelay, now: () => clock);
+    store = LumeMemoryRecordRepository(
+      hydrateDelay: readDelay,
+      now: () => clock,
+    );
     repo = CycleRepository(store, random: Random(seed), now: () => clock);
     if (readDelay == null) repo.open();
   }
@@ -68,7 +73,11 @@ Future<void> pumpCycle(
   await pumpLume(
     tester,
     CycleTool(
-      request: LumeToolRequest(feature: kCycleFeature, user: user, branch: 'tools'),
+      request: LumeToolRequest(
+        feature: kCycleFeature,
+        user: user,
+        branch: 'tools',
+      ),
     ),
     surface: surface,
     locale: locale,

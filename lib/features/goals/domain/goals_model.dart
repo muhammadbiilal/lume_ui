@@ -144,16 +144,8 @@ class Goal {
       other.version == version;
 
   @override
-  int get hashCode => Object.hash(
-    id,
-    name,
-    note,
-    target,
-    targetDate,
-    icon,
-    state,
-    version,
-  );
+  int get hashCode =>
+      Object.hash(id, name, note, target, targetDate, icon, state, version);
 }
 
 /// One contribution toward a goal, on one date, append-only.

@@ -80,8 +80,11 @@ class SubscriptionsSnapshot {
   bool get loading => status == LumeCollectionStatus.loading;
   bool get failed => status == LumeCollectionStatus.error;
 
-  SubscriptionsBook book(LumeDate? today) =>
-      SubscriptionsBook.from(subscriptions: subscriptions, defects: defects, today: today);
+  SubscriptionsBook book(LumeDate? today) => SubscriptionsBook.from(
+    subscriptions: subscriptions,
+    defects: defects,
+    today: today,
+  );
 }
 
 class _Data {
@@ -111,9 +114,12 @@ class _Data {
 }
 
 class SubscriptionsRepository {
-  SubscriptionsRepository(this._store, {Random? random, DateTime Function()? now})
-    : _random = random ?? Random.secure(),
-      _now = now ?? DateTime.now;
+  SubscriptionsRepository(
+    this._store, {
+    Random? random,
+    DateTime Function()? now,
+  }) : _random = random ?? Random.secure(),
+       _now = now ?? DateTime.now;
 
   final LumeRecordRepository _store;
   final Random _random;
@@ -142,7 +148,9 @@ class SubscriptionsRepository {
   }
 
   SubscriptionsSnapshot view() {
-    final LumeCollectionView v = _store.view(SubscriptionsCollections.subscriptions);
+    final LumeCollectionView v = _store.view(
+      SubscriptionsCollections.subscriptions,
+    );
     if (v.status == LumeCollectionStatus.error) {
       return const SubscriptionsSnapshot(status: LumeCollectionStatus.error);
     }
@@ -158,7 +166,11 @@ class SubscriptionsRepository {
         defects.add(e.defect);
       }
     }
-    return SubscriptionsSnapshot(status: v.status, subscriptions: out, defects: defects);
+    return SubscriptionsSnapshot(
+      status: v.status,
+      subscriptions: out,
+      defects: defects,
+    );
   }
 
   SubscriptionsResult<SubscriptionsWrite> add(
@@ -214,7 +226,10 @@ class SubscriptionsRepository {
       expectVersion: version,
     );
     final Subscription stored = Subscription.decode(r);
-    d.subscriptions[d.subscriptions.indexWhere((Subscription x) => x.id == id)] = stored;
+    d.subscriptions[d.subscriptions.indexWhere(
+          (Subscription x) => x.id == id,
+        )] =
+        stored;
     return stored;
   });
 
@@ -230,7 +245,9 @@ class SubscriptionsRepository {
       id.value,
       was
           .copyWith(
-            state: cancelled ? SubscriptionState.cancelled : SubscriptionState.active,
+            state: cancelled
+                ? SubscriptionState.cancelled
+                : SubscriptionState.active,
             cancelledAt: cancelled ? _now() : null,
             clearCancelledAt: !cancelled,
           )
@@ -238,7 +255,10 @@ class SubscriptionsRepository {
       expectVersion: version,
     );
     final Subscription stored = Subscription.decode(r);
-    d.subscriptions[d.subscriptions.indexWhere((Subscription x) => x.id == id)] = stored;
+    d.subscriptions[d.subscriptions.indexWhere(
+          (Subscription x) => x.id == id,
+        )] =
+        stored;
     return stored;
   });
 
@@ -247,7 +267,11 @@ class SubscriptionsRepository {
     required int version,
   }) => _write<Subscription>((_Data d) {
     final Subscription was = d.sound(id);
-    d.tx.delete(SubscriptionsCollections.subscriptions, id.value, expectVersion: version);
+    d.tx.delete(
+      SubscriptionsCollections.subscriptions,
+      id.value,
+      expectVersion: version,
+    );
     d.subscriptions.removeWhere((Subscription x) => x.id == id);
     d.defects.removeWhere((SubscriptionsDefect x) => x.recordId == id.value);
     return was;
@@ -274,7 +298,9 @@ class SubscriptionsRepository {
     category: _optional(draft.category),
     amount: draft.amount,
     cycle: draft.cycle,
-    customDays: draft.cycle == SubscriptionCycle.custom ? draft.customDays : null,
+    customDays: draft.cycle == SubscriptionCycle.custom
+        ? draft.customDays
+        : null,
     startedOn: draft.startedOn,
     tone: draft.tone,
     state: state,
@@ -315,20 +341,31 @@ class SubscriptionsRepository {
     String? idempotencyKey,
     String? fingerprint,
   }) {
-    final LumeTxResult<T> r = _store.run<T>((LumeRecordTx tx) {
-      try {
-        final _Data d = _Data(tx);
-        return body(d);
-      } on SubscriptionsFailure catch (f) {
-        tx.reject(f);
-      } on LumeMoneyException catch (e) {
-        tx.reject(SubscriptionsFailure(SubscriptionsFailureKind.overflow, cause: e));
-      }
-    }, idempotencyKey: idempotencyKey, fingerprint: fingerprint);
-    if (!r.ok) return SubscriptionsResult<SubscriptionsWrite>.failed(_map(r.failure!));
+    final LumeTxResult<T> r = _store.run<T>(
+      (LumeRecordTx tx) {
+        try {
+          final _Data d = _Data(tx);
+          return body(d);
+        } on SubscriptionsFailure catch (f) {
+          tx.reject(f);
+        } on LumeMoneyException catch (e) {
+          tx.reject(
+            SubscriptionsFailure(SubscriptionsFailureKind.overflow, cause: e),
+          );
+        }
+      },
+      idempotencyKey: idempotencyKey,
+      fingerprint: fingerprint,
+    );
+    if (!r.ok) {
+      return SubscriptionsResult<SubscriptionsWrite>.failed(_map(r.failure!));
+    }
     final T v = r.value as T;
     return SubscriptionsResult<SubscriptionsWrite>.ok(
-      SubscriptionsWrite(r.receipt!, subscription: v is Subscription ? v : null),
+      SubscriptionsWrite(
+        r.receipt!,
+        subscription: v is Subscription ? v : null,
+      ),
     );
   }
 

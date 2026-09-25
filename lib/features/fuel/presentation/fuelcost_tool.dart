@@ -148,8 +148,7 @@ class _LumeFuelcostToolState extends ConsumerState<LumeFuelcostTool> {
 
     String money(LumeMoney m) =>
         f.money(m.minor / currency.scale, code: currency.code, decimals: 2);
-    String distLabel(double v) =>
-        '${f.number(v, decimals: 0)} $distUnit';
+    String distLabel(double v) => '${f.number(v, decimals: 0)} $distUnit';
     String scenarioLabel(LumeFuelCostScenarioKind k) => switch (k) {
       LumeFuelCostScenarioKind.solo => l.fuelcostScSolo,
       LumeFuelCostScenarioKind.shared => l.fuelcostScShared(
@@ -237,11 +236,15 @@ class _LumeFuelcostToolState extends ConsumerState<LumeFuelcostTool> {
               caption: l.fuelcostForTrip(distLabel(distanceRaw)),
               stats: <LumeStat>[
                 LumeStat(
-                  value: '${f.number(result.fuelUsed, decimals: 1)} '
+                  value:
+                      '${f.number(result.fuelUsed, decimals: 1)} '
                       '${LumeFuelStrings.unit(l, market.unit)}',
                   label: l.fuelcostUsed,
                 ),
-                LumeStat(value: money(result.perPerson), label: l.fuelcostPerPerson),
+                LumeStat(
+                  value: money(result.perPerson),
+                  label: l.fuelcostPerPerson,
+                ),
                 LumeStat(
                   value: money(result.perUnit),
                   label: l.fuelcostPerUnit(distUnit),

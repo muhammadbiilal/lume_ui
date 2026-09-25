@@ -49,22 +49,17 @@ class LumePlatformDocumentSharer implements LumeDocumentSharer {
   Future<LumeDocShareOutcome> share(List<LumeDocumentPage> pages) async {
     if (pages.isEmpty) return LumeDocShareOutcome.failed;
     try {
-      final ShareResultStatus status =
-          (await SharePlus.instance.share(
-            ShareParams(
-              files: <XFile>[
-                for (final LumeDocumentPage p in pages)
-                  XFile.fromData(
-                    p.bytes,
-                    mimeType: p.mimeType,
-                    name: p.fileName,
-                  ),
-              ],
-              fileNameOverrides: <String>[
-                for (final LumeDocumentPage p in pages) p.fileName,
-              ],
-            ),
-          )).status;
+      final ShareResultStatus status = (await SharePlus.instance.share(
+        ShareParams(
+          files: <XFile>[
+            for (final LumeDocumentPage p in pages)
+              XFile.fromData(p.bytes, mimeType: p.mimeType, name: p.fileName),
+          ],
+          fileNameOverrides: <String>[
+            for (final LumeDocumentPage p in pages) p.fileName,
+          ],
+        ),
+      )).status;
       return switch (status) {
         ShareResultStatus.success => LumeDocShareOutcome.shared,
         ShareResultStatus.dismissed => LumeDocShareOutcome.dismissed,

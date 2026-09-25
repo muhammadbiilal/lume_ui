@@ -164,9 +164,7 @@ void main() {
           expect(find.byKey(LumeNames99Tool.gridKey), findsOneWidget);
           expect(
             Directionality.of(
-              tester.element(
-                find.text(LumeNames99Fixtures.all.first.arabic),
-              ),
+              tester.element(find.text(LumeNames99Fixtures.all.first.arabic)),
             ),
             TextDirection.rtl,
           );

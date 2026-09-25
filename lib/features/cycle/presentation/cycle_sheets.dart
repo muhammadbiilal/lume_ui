@@ -23,7 +23,9 @@ abstract final class CycleSheetKeys {
   static const Key save = ValueKey<String>('cycle.sheet.save');
   static const Key delete = ValueKey<String>('cycle.sheet.delete');
   static const Key cancel = ValueKey<String>('cycle.sheet.cancel');
-  static const Key confirmDelete = ValueKey<String>('cycle.sheet.confirmDelete');
+  static const Key confirmDelete = ValueKey<String>(
+    'cycle.sheet.confirmDelete',
+  );
 }
 
 /// What the sheet decided: save these dates, delete the entry, or (`null`
@@ -125,7 +127,8 @@ class _CycleEntrySheetState extends State<CycleEntrySheet> {
   }
 
   Future<void> _pickEnd() async {
-    final LumeDate base = _end ?? (widget.today.isBefore(_start) ? _start : widget.today);
+    final LumeDate base =
+        _end ?? (widget.today.isBefore(_start) ? _start : widget.today);
     final DateTime? picked = await showDatePicker(
       context: context,
       initialDate: base.toCalendarDateTime(),
@@ -163,7 +166,9 @@ class _CycleEntrySheetState extends State<CycleEntrySheet> {
               // Unchecking defaults the end to today (or the start, if the
               // start is somehow later than today) — the overwhelmingly
               // common case — and the picker beside it can still change it.
-              _end = v ? null : (widget.today.isBefore(_start) ? _start : widget.today);
+              _end = v
+                  ? null
+                  : (widget.today.isBefore(_start) ? _start : widget.today);
             }),
           ),
           if (!_ongoing) ...<Widget>[
@@ -182,9 +187,9 @@ class _CycleEntrySheetState extends State<CycleEntrySheet> {
             key: CycleSheetKeys.save,
             label: l.actionSave,
             block: true,
-            onPressed: () => Navigator.of(context).pop(
-              CycleEntryResult.saved(_start, _ongoing ? null : _end),
-            ),
+            onPressed: () => Navigator.of(
+              context,
+            ).pop(CycleEntryResult.saved(_start, _ongoing ? null : _end)),
           ),
           if (widget.canDelete) ...<Widget>[
             const SizedBox(height: 8),

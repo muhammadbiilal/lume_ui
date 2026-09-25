@@ -17,10 +17,12 @@ void main() {
       );
       // The reference's own figures — `tool-data.js`'s `MOBILE_PACKAGES.PK`,
       // ported without rounding or conversion.
-      expect(
-        pk.map((LumeMobilePackage p) => p.price).toList(),
-        <int>[1150, 1200, 1050, 1000],
-      );
+      expect(pk.map((LumeMobilePackage p) => p.price).toList(), <int>[
+        1150,
+        1200,
+        1050,
+        1000,
+      ]);
       expect(
         pk.firstWhere((LumeMobilePackage p) => p.operatorName == 'Jazz').name,
         'Super Duper Card',
@@ -53,8 +55,8 @@ void main() {
     test('sorts every Pakistani bundle by price, data and validity without '
         'throwing', () {
       final List<LumeMobilePackage> pk = LumeMobilePackages.forCountry('PK')!;
-      final List<double> byData = pk.map((LumeMobilePackage p) => p.dataGb).toList()
-        ..sort();
+      final List<double> byData =
+          pk.map((LumeMobilePackage p) => p.dataGb).toList()..sort();
       expect(byData, <double>[10, 12, 15, 20]);
       final List<int> byValid = pk
           .map((LumeMobilePackage p) => p.validDays)

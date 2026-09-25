@@ -55,7 +55,12 @@ void main() {
     ) async {
       await pumpCricket(tester);
       expect(
-        inKey(score, find.byWidgetPredicate((Widget w) => w is LumeNumerals && w.text == '214/4')),
+        inKey(
+          score,
+          find.byWidgetPredicate(
+            (Widget w) => w is LumeNumerals && w.text == '214/4',
+          ),
+        ),
         findsOneWidget,
       );
       expect(inKey(score, find.text('PAK')), findsOneWidget);

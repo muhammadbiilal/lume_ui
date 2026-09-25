@@ -9,7 +9,11 @@ import '../data/aqi_fixtures.dart';
 /// A band's label, its advice and the tone it is shown in — `AQI_BANDS`'
 /// `key` resolved through the reader's own language, exactly the mapping
 /// already ported for Weather's embedded AQI card.
-typedef LumeAirQualityBandText = ({String label, String advice, LumeBadgeTone tone});
+typedef LumeAirQualityBandText = ({
+  String label,
+  String advice,
+  LumeBadgeTone tone,
+});
 
 abstract final class LumeAqiText {
   static LumeAirQualityBandText bandText(

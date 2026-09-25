@@ -370,14 +370,15 @@ abstract final class LumeFuel {
     ],
   );
 
-  static const Map<String, LumeFuelMarket> _byCountry = <String, LumeFuelMarket>{
-    'PK': pakistan,
-    'GB': unitedKingdom,
-    'US': unitedStates,
-    'AE': uae,
-    'SA': saudiArabia,
-    'IN': india,
-  };
+  static const Map<String, LumeFuelMarket> _byCountry =
+      <String, LumeFuelMarket>{
+        'PK': pakistan,
+        'GB': unitedKingdom,
+        'US': unitedStates,
+        'AE': uae,
+        'SA': saudiArabia,
+        'IN': india,
+      };
 
   /// `fuelFor(code)` — [country]'s own market, or [fallback].
   static LumeFuelMarket forCountry(String country) =>

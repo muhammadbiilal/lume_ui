@@ -30,7 +30,9 @@ void main() {
   setUpAll(loadLumeFonts);
 
   group('first use', () {
-    testWidgets('nothing is invented — a clear next step instead', (WidgetTester t) async {
+    testWidgets('nothing is invented — a clear next step instead', (
+      WidgetTester t,
+    ) async {
       final CycleWorld w = CycleWorld();
       await pumpCycle(t, w);
       expect(find.byKey(LumeCycleTool.emptyKey), findsOneWidget);
@@ -73,26 +75,27 @@ void main() {
   });
 
   group('closing an ongoing period', () {
-    testWidgets('unchecking "still ongoing" defaults the end to today and saves it', (
-      WidgetTester t,
-    ) async {
-      final CycleWorld w = CycleWorld();
-      w.log(kToday);
-      await pumpCycle(t, w);
-      expect(find.byKey(LumeCycleTool.currentRowKey), findsOneWidget);
+    testWidgets(
+      'unchecking "still ongoing" defaults the end to today and saves it',
+      (WidgetTester t) async {
+        final CycleWorld w = CycleWorld();
+        w.log(kToday);
+        await pumpCycle(t, w);
+        expect(find.byKey(LumeCycleTool.currentRowKey), findsOneWidget);
 
-      await tapShown(t, find.byKey(LumeCycleTool.currentRowKey));
-      expect(find.byKey(CycleSheetKeys.ongoingToggle), findsOneWidget);
-      expect(find.byKey(CycleSheetKeys.endPicker), findsNothing);
-      await tapShown(t, find.byKey(CycleSheetKeys.ongoingToggle));
-      expect(find.byKey(CycleSheetKeys.endPicker), findsOneWidget);
-      await tapShown(t, find.byKey(CycleSheetKeys.save));
+        await tapShown(t, find.byKey(LumeCycleTool.currentRowKey));
+        expect(find.byKey(CycleSheetKeys.ongoingToggle), findsOneWidget);
+        expect(find.byKey(CycleSheetKeys.endPicker), findsNothing);
+        await tapShown(t, find.byKey(CycleSheetKeys.ongoingToggle));
+        expect(find.byKey(CycleSheetKeys.endPicker), findsOneWidget);
+        await tapShown(t, find.byKey(CycleSheetKeys.save));
 
-      final CyclePeriod saved = w.repo.view().periods.single;
-      expect(saved.endDate, kToday);
-      expect(saved.ongoing, isFalse);
-      w.dispose();
-    });
+        final CyclePeriod saved = w.repo.view().periods.single;
+        expect(saved.endDate, kToday);
+        expect(saved.ongoing, isFalse);
+        w.dispose();
+      },
+    );
 
     testWidgets('deleting a period removes it and Undo brings it back', (
       WidgetTester t,
@@ -134,7 +137,10 @@ void main() {
       expect(find.byKey(LumeCycleTool.nextKey), findsOneWidget);
       expect(find.byKey(LumeCycleTool.historyKey), findsOneWidget);
       expect(
-        find.descendant(of: find.byKey(LumeCycleTool.nextKey), matching: find.text('today')),
+        find.descendant(
+          of: find.byKey(LumeCycleTool.nextKey),
+          matching: find.text('today'),
+        ),
         findsOneWidget,
       ); // subsRenewsIn(0)
       expect(find.text('28 days'), findsWidgets); // ageDaysCount(28)

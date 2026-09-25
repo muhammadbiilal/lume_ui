@@ -46,7 +46,8 @@ class SubscriptionsFailure implements Exception {
 @immutable
 class SubscriptionsResult<T> {
   const SubscriptionsResult.ok(T this.value) : failure = null;
-  const SubscriptionsResult.failed(SubscriptionsFailure this.failure) : value = null;
+  const SubscriptionsResult.failed(SubscriptionsFailure this.failure)
+    : value = null;
 
   final T? value;
   final SubscriptionsFailure? failure;

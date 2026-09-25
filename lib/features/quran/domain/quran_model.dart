@@ -67,16 +67,16 @@ class LumeSurah {
   /// translation attempt with nothing verified behind it.
   LumeResolvedPassage resolveName(LumeContentLanguage language) =>
       language == LumeContentLanguage.arabic
-          ? LumeResolvedPassage(
-              text: arabicName,
-              language: LumeContentLanguage.arabic,
-              isFallback: false,
-            )
-          : LumeResolvedPassage(
-              text: name,
-              language: LumeContentLanguage.english,
-              isFallback: false,
-            );
+      ? LumeResolvedPassage(
+          text: arabicName,
+          language: LumeContentLanguage.arabic,
+          isFallback: false,
+        )
+      : LumeResolvedPassage(
+          text: name,
+          language: LumeContentLanguage.english,
+          isFallback: false,
+        );
 }
 
 /// One ayah — `AYAT`. Three of the mushaf's 6,236: exactly the reference's

@@ -45,7 +45,11 @@ class MealPlanWeek {
       for (int i = 0; i < 7; i++)
         () {
           final LumeDate d = today.addDays(i);
-          return MealPlanDay(d, i == 0, byDate[d] ?? const <MealSlot, MealPlanEntry>{});
+          return MealPlanDay(
+            d,
+            i == 0,
+            byDate[d] ?? const <MealSlot, MealPlanEntry>{},
+          );
         }(),
     ];
     return MealPlanWeek._(days);

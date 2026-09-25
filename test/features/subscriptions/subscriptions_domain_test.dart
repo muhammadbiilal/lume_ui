@@ -13,7 +13,11 @@ void main() {
     test('a subscription round-trips through its fields', () {
       final SubscriptionsHarness h = SubscriptionsHarness();
       addTearDown(h.dispose);
-      final Subscription s = h.add(name: 'Spotify', category: 'Music', amount: rs(5));
+      final Subscription s = h.add(
+        name: 'Spotify',
+        category: 'Music',
+        amount: rs(5),
+      );
       expect(s.name, 'Spotify');
       expect(s.category, 'Music');
       expect(s.amount, rs(5));
@@ -50,9 +54,11 @@ void main() {
     test('a record of the wrong schema is a defect, not a crash', () {
       final SubscriptionsHarness h = SubscriptionsHarness();
       addTearDown(h.dispose);
-      h.raw(SubscriptionsCollections.subscriptions, 'not-a-uuid', <String, Object?>{
-        'schema': 'lume.other/1',
-      });
+      h.raw(
+        SubscriptionsCollections.subscriptions,
+        'not-a-uuid',
+        <String, Object?>{'schema': 'lume.other/1'},
+      );
       expect(h.book().defects, hasLength(1));
       expect(h.book().defects.first.reason, 'schema');
     });
@@ -79,13 +85,22 @@ void main() {
       expect(v.daysUntil, 0);
     });
 
-    test('monthly: month-end clamps without drifting (31 Jan -> 28 Feb -> 31 Mar)', () {
-      final SubscriptionsHarness h = SubscriptionsHarness();
-      addTearDown(h.dispose);
-      final Subscription s = h.add(startedOn: LumeDate(2026, 1, 31));
-      expect(h.view(s.id, LumeDate(2026, 2, 1)).nextRenewal, LumeDate(2026, 2, 28));
-      expect(h.view(s.id, LumeDate(2026, 3, 1)).nextRenewal, LumeDate(2026, 3, 31));
-    });
+    test(
+      'monthly: month-end clamps without drifting (31 Jan -> 28 Feb -> 31 Mar)',
+      () {
+        final SubscriptionsHarness h = SubscriptionsHarness();
+        addTearDown(h.dispose);
+        final Subscription s = h.add(startedOn: LumeDate(2026, 1, 31));
+        expect(
+          h.view(s.id, LumeDate(2026, 2, 1)).nextRenewal,
+          LumeDate(2026, 2, 28),
+        );
+        expect(
+          h.view(s.id, LumeDate(2026, 3, 1)).nextRenewal,
+          LumeDate(2026, 3, 31),
+        );
+      },
+    );
 
     test('yearly: the next anniversary on or after today', () {
       final SubscriptionsHarness h = SubscriptionsHarness();
@@ -133,7 +148,10 @@ void main() {
     test('yearly divides by 12 — never shown as the row\'s bare amount', () {
       final SubscriptionsHarness h = SubscriptionsHarness();
       addTearDown(h.dispose);
-      final Subscription s = h.add(amount: rs(120), cycle: SubscriptionCycle.yearly);
+      final Subscription s = h.add(
+        amount: rs(120),
+        cycle: SubscriptionCycle.yearly,
+      );
       expect(h.view(s.id).monthlyEquivalent, rs(10));
     });
 
@@ -151,25 +169,28 @@ void main() {
   });
 
   group('aggregate summary', () {
-    test('monthly is the sum of active subscriptions\' equivalents; yearly is real math on it', () {
-      final SubscriptionsHarness h = SubscriptionsHarness();
-      addTearDown(h.dispose);
-      h.add(name: 'Netflix', amount: rs(9));
-      h.add(name: 'Spotify', amount: rs(5));
-      final Subscription yearly = h.add(
-        name: 'Domain',
-        amount: rs(14),
-        cycle: SubscriptionCycle.yearly,
-      );
-      h.repo.setCancelled(yearly.id, true, version: yearly.version);
+    test(
+      'monthly is the sum of active subscriptions\' equivalents; yearly is real math on it',
+      () {
+        final SubscriptionsHarness h = SubscriptionsHarness();
+        addTearDown(h.dispose);
+        h.add(name: 'Netflix', amount: rs(9));
+        h.add(name: 'Spotify', amount: rs(5));
+        final Subscription yearly = h.add(
+          name: 'Domain',
+          amount: rs(14),
+          cycle: SubscriptionCycle.yearly,
+        );
+        h.repo.setCancelled(yearly.id, true, version: yearly.version);
 
-      final SubscriptionsCurrencySummary s = h.book().summary(pkr);
-      // Cancelled is excluded, matching the reference's "active" concept
-      // this build adds (the reference has none at all).
-      expect(s.monthly, rs(14));
-      expect(s.yearly, rs(168));
-      expect(s.activeCount, 2);
-    });
+        final SubscriptionsCurrencySummary s = h.book().summary(pkr);
+        // Cancelled is excluded, matching the reference's "active" concept
+        // this build adds (the reference has none at all).
+        expect(s.monthly, rs(14));
+        expect(s.yearly, rs(168));
+        expect(s.activeCount, 2);
+      },
+    );
 
     test('next is the active subscription renewing soonest', () {
       final SubscriptionsHarness h = SubscriptionsHarness();

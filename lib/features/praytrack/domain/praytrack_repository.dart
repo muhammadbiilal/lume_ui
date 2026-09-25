@@ -185,9 +185,10 @@ class PrayTrackRepository {
   }
 
   static PrayTrackFailure _map(LumeTxFailure f) => switch (f.kind) {
-    LumeTxFailureKind.rejected => f.detail is PrayTrackFailure
-        ? f.detail! as PrayTrackFailure
-        : PrayTrackFailure(PrayTrackFailureKind.storage, cause: f.kind),
+    LumeTxFailureKind.rejected =>
+      f.detail is PrayTrackFailure
+          ? f.detail! as PrayTrackFailure
+          : PrayTrackFailure(PrayTrackFailureKind.storage, cause: f.kind),
     LumeTxFailureKind.conflict ||
     LumeTxFailureKind.duplicateId => PrayTrackFailure(
       PrayTrackFailureKind.conflict,

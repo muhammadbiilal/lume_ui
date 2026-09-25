@@ -37,7 +37,10 @@ import '../../helpers/lume_harness.dart';
 
 class TaraweehWorld {
   TaraweehWorld({this.seed = 1, Duration? readDelay}) {
-    store = LumeMemoryRecordRepository(hydrateDelay: readDelay, now: () => clock);
+    store = LumeMemoryRecordRepository(
+      hydrateDelay: readDelay,
+      now: () => clock,
+    );
     repo = TaraweehRepository(store, random: Random(seed), now: () => clock);
     if (readDelay == null) repo.open();
   }
@@ -51,7 +54,10 @@ class TaraweehWorld {
 
   TaraweehNight logTonight(LumeDate date, {int rakaat = 20}) {
     _tick();
-    final TaraweehResult<TaraweehWrite> r = repo.logTonight(date, rakaat: rakaat);
+    final TaraweehResult<TaraweehWrite> r = repo.logTonight(
+      date,
+      rakaat: rakaat,
+    );
     if (r.failure != null) throw StateError('${r.failure}');
     return r.value!.night!;
   }

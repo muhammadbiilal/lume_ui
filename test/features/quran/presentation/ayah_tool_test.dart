@@ -83,10 +83,7 @@ void main() {
         findsOneWidget,
       );
       expect(
-        find.descendant(
-          of: card,
-          matching: find.byType(LumeQuranArabicText),
-        ),
+        find.descendant(of: card, matching: find.byType(LumeQuranArabicText)),
         findsOneWidget,
       );
       expect(
@@ -127,10 +124,7 @@ void main() {
       WidgetTester tester,
     ) async {
       await pumpAyah(tester);
-      expect(
-        find.textContaining('Classical commentators'),
-        findsNothing,
-      );
+      expect(find.textContaining('Classical commentators'), findsNothing);
     });
   });
 

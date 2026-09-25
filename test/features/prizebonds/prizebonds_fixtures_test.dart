@@ -72,19 +72,16 @@ void main() {
       expect(shuffled.next.draw, 'Draw 47');
     });
 
-    test(
-      'the prize pool is first once, second three times over, third across '
-      'its winners — the reference\'s own formula, not each tier\'s real '
-      'winner count',
-      () {
-        final LumePrizeBondScheme pk = LumePrizeBondScheme.forCountry('PK')!;
-        // 100:  700,000 +  200,000×3 +  1,000×2,394 =  3,694,000
-        // 200:  750,000 +  250,000×3 +  1,250×2,394 =  4,492,500
-        // 750: 1,500,000 +  500,000×3 +  9,300×1,696 = 18,772,800
-        // 1500: 3,000,000 + 1,000,000×3 + 18,500×1,696 = 37,376,000
-        expect(pk.prizePool, 64335300);
-      },
-    );
+    test('the prize pool is first once, second three times over, third across '
+        'its winners — the reference\'s own formula, not each tier\'s real '
+        'winner count', () {
+      final LumePrizeBondScheme pk = LumePrizeBondScheme.forCountry('PK')!;
+      // 100:  700,000 +  200,000×3 +  1,000×2,394 =  3,694,000
+      // 200:  750,000 +  250,000×3 +  1,250×2,394 =  4,492,500
+      // 750: 1,500,000 +  500,000×3 +  9,300×1,696 = 18,772,800
+      // 1500: 3,000,000 + 1,000,000×3 + 18,500×1,696 = 37,376,000
+      expect(pk.prizePool, 64335300);
+    });
 
     test('total winners sums every denomination\'s own winner count', () {
       final LumePrizeBondScheme pk = LumePrizeBondScheme.forCountry('PK')!;

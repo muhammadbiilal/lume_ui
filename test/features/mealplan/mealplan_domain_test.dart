@@ -18,13 +18,20 @@ void main() {
       expect(e.version, 1);
     });
 
-    test('blank text is refused — clearing is a delete, not an empty write', () {
-      final MealPlanHarness h = MealPlanHarness();
-      addTearDown(h.dispose);
-      final MealPlanResult<MealPlanWrite> r = h.repo.setSlot(kToday, MealSlot.lunch, '   ');
-      expect(r.ok, isFalse);
-      expect(r.failure!.field, 'text');
-    });
+    test(
+      'blank text is refused — clearing is a delete, not an empty write',
+      () {
+        final MealPlanHarness h = MealPlanHarness();
+        addTearDown(h.dispose);
+        final MealPlanResult<MealPlanWrite> r = h.repo.setSlot(
+          kToday,
+          MealSlot.lunch,
+          '   ',
+        );
+        expect(r.ok, isFalse);
+        expect(r.failure!.field, 'text');
+      },
+    );
 
     test('a record of the wrong schema is a defect, not a crash', () {
       final MealPlanHarness h = MealPlanHarness();
@@ -32,23 +39,29 @@ void main() {
       h.raw(MealPlanCollections.entries, 'not-a-uuid', <String, Object?>{
         'schema': 'lume.other/1',
       });
-      expect(h.week().days.every((MealPlanDay d) => d.filledCount == 0), isTrue);
+      expect(
+        h.week().days.every((MealPlanDay d) => d.filledCount == 0),
+        isTrue,
+      );
     });
   });
 
   group('upsert — one entry per (date, slot)', () {
-    test('setting an already-filled slot replaces it in place, never duplicates', () {
-      final MealPlanHarness h = MealPlanHarness();
-      addTearDown(h.dispose);
-      final MealPlanEntry first = h.set(kToday, MealSlot.dinner, 'Daal');
-      final MealPlanEntry second = h.set(kToday, MealSlot.dinner, 'Karahi');
+    test(
+      'setting an already-filled slot replaces it in place, never duplicates',
+      () {
+        final MealPlanHarness h = MealPlanHarness();
+        addTearDown(h.dispose);
+        final MealPlanEntry first = h.set(kToday, MealSlot.dinner, 'Daal');
+        final MealPlanEntry second = h.set(kToday, MealSlot.dinner, 'Karahi');
 
-      expect(second.id, first.id); // same record, updated
-      expect(second.version, first.version + 1);
-      final MealPlanWeek week = h.week();
-      expect(week.days.first.slot(MealSlot.dinner)!.text, 'Karahi');
-      expect(week.filled, 1); // not 2
-    });
+        expect(second.id, first.id); // same record, updated
+        expect(second.version, first.version + 1);
+        final MealPlanWeek week = h.week();
+        expect(week.days.first.slot(MealSlot.dinner)!.text, 'Karahi');
+        expect(week.filled, 1); // not 2
+      },
+    );
 
     test('different slots on the same day are independent', () {
       final MealPlanHarness h = MealPlanHarness();
@@ -99,7 +112,10 @@ void main() {
       final MealPlanHarness h = MealPlanHarness();
       addTearDown(h.dispose);
       h.set(kToday, MealSlot.breakfast, 'Oats');
-      final MealPlanResult<MealPlanWrite> r = h.repo.clearSlot(kToday, MealSlot.breakfast);
+      final MealPlanResult<MealPlanWrite> r = h.repo.clearSlot(
+        kToday,
+        MealSlot.breakfast,
+      );
       expect(r.ok, isTrue);
       expect(h.week().filled, 0);
     });
@@ -107,7 +123,10 @@ void main() {
     test('clearing an already-empty slot is a no-op, not a failure', () {
       final MealPlanHarness h = MealPlanHarness();
       addTearDown(h.dispose);
-      final MealPlanResult<MealPlanWrite> r = h.repo.clearSlot(kToday, MealSlot.breakfast);
+      final MealPlanResult<MealPlanWrite> r = h.repo.clearSlot(
+        kToday,
+        MealSlot.breakfast,
+      );
       expect(r.ok, isTrue);
     });
 
@@ -115,7 +134,10 @@ void main() {
       final MealPlanHarness h = MealPlanHarness();
       addTearDown(h.dispose);
       h.set(kToday, MealSlot.breakfast, 'Oats');
-      final MealPlanResult<MealPlanWrite> cleared = h.repo.clearSlot(kToday, MealSlot.breakfast);
+      final MealPlanResult<MealPlanWrite> cleared = h.repo.clearSlot(
+        kToday,
+        MealSlot.breakfast,
+      );
       final MealPlanResult<void> u = h.repo.undo(cleared.value!);
       expect(u.ok, isTrue);
       expect(h.week().days.first.slot(MealSlot.breakfast)!.text, 'Oats');
@@ -124,7 +146,10 @@ void main() {
     test('undo of a no-op clear does nothing and does not fail', () {
       final MealPlanHarness h = MealPlanHarness();
       addTearDown(h.dispose);
-      final MealPlanResult<MealPlanWrite> r = h.repo.clearSlot(kToday, MealSlot.breakfast);
+      final MealPlanResult<MealPlanWrite> r = h.repo.clearSlot(
+        kToday,
+        MealSlot.breakfast,
+      );
       final MealPlanResult<void> u = h.repo.undo(r.value!);
       expect(u.ok, isTrue);
     });

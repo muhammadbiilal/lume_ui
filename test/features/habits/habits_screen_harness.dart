@@ -26,7 +26,10 @@ import '../tax/tax_harness.dart';
 
 class HabitsWorld {
   HabitsWorld({this.seed = 1, Duration? readDelay}) {
-    store = LumeMemoryRecordRepository(hydrateDelay: readDelay, now: () => clock);
+    store = LumeMemoryRecordRepository(
+      hydrateDelay: readDelay,
+      now: () => clock,
+    );
     repo = HabitsRepository(store, random: Random(seed), now: () => clock);
     if (readDelay == null) repo.open();
   }
@@ -74,7 +77,8 @@ class HabitsWorld {
     habitsRepositoryProvider.overrideWithValue(repo),
   ];
 
-  HabitsBook book([LumeDate? today]) => repo.view().book(today ?? LumeDate(2026, 9, 7));
+  HabitsBook book([LumeDate? today]) =>
+      repo.view().book(today ?? LumeDate(2026, 9, 7));
 
   void dispose() => store.dispose();
 }

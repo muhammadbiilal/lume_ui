@@ -62,7 +62,8 @@ class LumeMobilePackage {
 
   /// `parseInt(p.valid, 10)` — the number the reference's own sort reads out
   /// of [valid] ("30 days" sorts on 30).
-  int get validDays => int.tryParse(RegExp(r'\d+').stringMatch(valid) ?? '') ?? 0;
+  int get validDays =>
+      int.tryParse(RegExp(r'\d+').stringMatch(valid) ?? '') ?? 0;
 }
 
 /// `D.MOBILE_PACKAGES` — keyed by country, one Pakistani list at present.

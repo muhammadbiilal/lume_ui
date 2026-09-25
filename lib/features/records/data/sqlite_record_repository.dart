@@ -100,14 +100,16 @@ class LumeSqliteRecordRepository extends ChangeNotifier
   Future<void> _writeChain = Future<void>.value();
 
   void _persist(Future<void> Function(Database db) op) {
-    _writeChain = _writeChain.then((_) async {
-      final Database db = await _database;
-      await op(db);
-    }).catchError((Object _, StackTrace _) {
-      // A write-behind failure has nowhere to surface to once the
-      // synchronous call has already returned success. The cache stays the
-      // live truth; the next successful write for this row corrects disk.
-    });
+    _writeChain = _writeChain
+        .then((_) async {
+          final Database db = await _database;
+          await op(db);
+        })
+        .catchError((Object _, StackTrace _) {
+          // A write-behind failure has nowhere to surface to once the
+          // synchronous call has already returned success. The cache stays the
+          // live truth; the next successful write for this row corrects disk.
+        });
   }
 
   void _upsertRow(String collection, LumeRecord r) => _persist(
@@ -130,7 +132,8 @@ class LumeSqliteRecordRepository extends ChangeNotifier
   );
 
   void _touch(String collection) {
-    _collectionRevision[collection] = (_collectionRevision[collection] ?? 0) + 1;
+    _collectionRevision[collection] =
+        (_collectionRevision[collection] ?? 0) + 1;
     _revision++;
   }
 
@@ -164,21 +167,27 @@ class LumeSqliteRecordRepository extends ChangeNotifier
         where: 'collection = ?',
         whereArgs: <Object?>[collection],
       );
-      final List<LumeRecord> items = <LumeRecord>[
-        for (final Map<String, Object?> row in rows)
-          LumeRecord(
-            id: row['id']! as String,
-            fields: Map<String, Object?>.unmodifiable(
-              Map<String, Object?>.from(
-                jsonDecode(row['fields']! as String) as Map<Object?, Object?>,
+      final List<LumeRecord> items =
+          <LumeRecord>[
+            for (final Map<String, Object?> row in rows)
+              LumeRecord(
+                id: row['id']! as String,
+                fields: Map<String, Object?>.unmodifiable(
+                  Map<String, Object?>.from(
+                    jsonDecode(row['fields']! as String)
+                        as Map<Object?, Object?>,
+                  ),
+                ),
+                version: row['version']! as int,
+                createdAt: DateTime.parse(row['created_at']! as String),
+                updatedAt: DateTime.parse(row['updated_at']! as String),
               ),
-            ),
-            version: row['version']! as int,
-            createdAt: DateTime.parse(row['created_at']! as String),
-            updatedAt: DateTime.parse(row['updated_at']! as String),
-          ),
-      ]..sort((LumeRecord a, LumeRecord b) => b.createdAt.compareTo(a.createdAt));
-      (_used[collection] ??= <String>{}).addAll(items.map((LumeRecord r) => r.id));
+          ]..sort(
+            (LumeRecord a, LumeRecord b) => b.createdAt.compareTo(a.createdAt),
+          );
+      (_used[collection] ??= <String>{}).addAll(
+        items.map((LumeRecord r) => r.id),
+      );
       _cache[collection] = items;
     } on Object {
       _failed.add(collection);
@@ -204,8 +213,13 @@ class LumeSqliteRecordRepository extends ChangeNotifier
       return const LumeCollectionView(LumeCollectionStatus.error);
     }
     final List<LumeRecord>? items = _cache[collection];
-    if (items == null) return const LumeCollectionView(LumeCollectionStatus.loading);
-    return LumeCollectionView(LumeCollectionStatus.ready, List<LumeRecord>.unmodifiable(items));
+    if (items == null) {
+      return const LumeCollectionView(LumeCollectionStatus.loading);
+    }
+    return LumeCollectionView(
+      LumeCollectionStatus.ready,
+      List<LumeRecord>.unmodifiable(items),
+    );
   }
 
   @override
@@ -217,11 +231,15 @@ class LumeSqliteRecordRepository extends ChangeNotifier
   }
 
   int _indexOf(String collection, String id) =>
-      (_cache[collection] ?? const <LumeRecord>[]).indexWhere((LumeRecord r) => r.id == id);
+      (_cache[collection] ?? const <LumeRecord>[]).indexWhere(
+        (LumeRecord r) => r.id == id,
+      );
 
   @override
   LumeWriteResult create(String collection, Map<String, Object?> fields) {
-    if (refuseWrites) return const LumeWriteResult.failed(LumeWriteFailure.storage);
+    if (refuseWrites) {
+      return const LumeWriteResult.failed(LumeWriteFailure.storage);
+    }
     final LumeRecord record = _stamp(fields);
     (_used[collection] ??= <String>{}).add(record.id);
     (_cache[collection] ??= <LumeRecord>[]).insert(0, record);
@@ -246,7 +264,9 @@ class LumeSqliteRecordRepository extends ChangeNotifier
     if (expectVersion != null && before.version != expectVersion) {
       return LumeWriteResult.failed(LumeWriteFailure.conflict, current: before);
     }
-    if (refuseWrites) return const LumeWriteResult.failed(LumeWriteFailure.storage);
+    if (refuseWrites) {
+      return const LumeWriteResult.failed(LumeWriteFailure.storage);
+    }
     final LumeRecord after = before.copyWith(
       fields: Map<String, Object?>.unmodifiable(<String, Object?>{
         ...before.fields,
@@ -267,7 +287,9 @@ class LumeSqliteRecordRepository extends ChangeNotifier
   LumeWriteResult remove(String collection, String id) {
     final int at = _indexOf(collection, id);
     if (at == -1) return const LumeWriteResult.failed(LumeWriteFailure.missing);
-    if (refuseWrites) return const LumeWriteResult.failed(LumeWriteFailure.storage);
+    if (refuseWrites) {
+      return const LumeWriteResult.failed(LumeWriteFailure.storage);
+    }
     final LumeRecord record = _cache[collection]!.removeAt(at);
     _touch(collection);
     _undo = _UndoEntry.delete(collection, record, at);
@@ -299,7 +321,10 @@ class LumeSqliteRecordRepository extends ChangeNotifier
         notifyListeners();
         return LumeUndone(LumeUndoKind.update, entry.collection, entry.record);
       case LumeUndoKind.delete:
-        items.insert(entry.index!.clamp(0, items.length).toInt(), entry.record!);
+        items.insert(
+          entry.index!.clamp(0, items.length).toInt(),
+          entry.record!,
+        );
         _upsertRow(entry.collection, entry.record!);
         notifyListeners();
         return LumeUndone(LumeUndoKind.delete, entry.collection, entry.record);
@@ -333,7 +358,9 @@ class LumeSqliteRecordRepository extends ChangeNotifier
     String? idempotencyKey,
     String? fingerprint,
   }) {
-    final _Idempotent? prior = idempotencyKey == null ? null : _idempotent[idempotencyKey];
+    final _Idempotent? prior = idempotencyKey == null
+        ? null
+        : _idempotent[idempotencyKey];
     if (prior != null) return prior.replay<T>(fingerprint);
     final _SqliteTx tx = begin() as _SqliteTx;
     final T value;
@@ -343,7 +370,12 @@ class LumeSqliteRecordRepository extends ChangeNotifier
       tx._closed = true;
       return LumeTxResult<T>.failed(f);
     }
-    return commit<T>(tx, value, idempotencyKey: idempotencyKey, fingerprint: fingerprint);
+    return commit<T>(
+      tx,
+      value,
+      idempotencyKey: idempotencyKey,
+      fingerprint: fingerprint,
+    );
   }
 
   @override
@@ -356,12 +388,16 @@ class LumeSqliteRecordRepository extends ChangeNotifier
     final _SqliteTx t = tx as _SqliteTx;
     if (t._closed) throw StateError('transaction already finished');
     t._closed = true;
-    final _Idempotent? prior = idempotencyKey == null ? null : _idempotent[idempotencyKey];
+    final _Idempotent? prior = idempotencyKey == null
+        ? null
+        : _idempotent[idempotencyKey];
     if (prior != null) return prior.replay<T>(fingerprint);
 
     for (final MapEntry<String, int> scan in t._scans.entries) {
       if ((_collectionRevision[scan.key] ?? 0) != scan.value) {
-        return LumeTxResult<T>.failed(LumeTxFailure(LumeTxFailureKind.conflict, collection: scan.key));
+        return LumeTxResult<T>.failed(
+          LumeTxFailure(LumeTxFailureKind.conflict, collection: scan.key),
+        );
       }
     }
     for (final MapEntry<(String, String), int?> read in t._reads.entries) {
@@ -378,13 +414,17 @@ class LumeSqliteRecordRepository extends ChangeNotifier
       }
     }
     if (refuseWrites) {
-      return LumeTxResult<T>.failed(const LumeTxFailure(LumeTxFailureKind.storage));
+      return LumeTxResult<T>.failed(
+        const LumeTxFailure(LumeTxFailureKind.storage),
+      );
     }
 
     final Map<String, List<LumeRecord>> next = <String, List<LumeRecord>>{};
     final List<LumeTxChange> changes = <LumeTxChange>[];
     for (final (String c, String id) in t._order) {
-      final List<LumeRecord> list = next[c] ??= List<LumeRecord>.of(_cache[c] ?? <LumeRecord>[]);
+      final List<LumeRecord> list = next[c] ??= List<LumeRecord>.of(
+        _cache[c] ?? <LumeRecord>[],
+      );
       final int at = list.indexWhere((LumeRecord r) => r.id == id);
       final LumeRecord? before = at == -1 ? null : list[at];
       final LumeRecord? after = t._writes[(c, id)];
@@ -394,7 +434,10 @@ class LumeSqliteRecordRepository extends ChangeNotifier
         list.removeAt(at);
       } else if (before == null) {
         final int? was = t._restoredAt[(c, id)];
-        list.insert(was == null || was < 0 ? (was == null ? 0 : list.length) : was, after);
+        list.insert(
+          was == null || was < 0 ? (was == null ? 0 : list.length) : was,
+          after,
+        );
       } else {
         list[at] = after;
       }
@@ -412,7 +455,10 @@ class LumeSqliteRecordRepository extends ChangeNotifier
         _deleteRow(c.collection, c.id);
       }
     }
-    final LumeTxReceipt receipt = LumeTxReceipt(_revision, List<LumeTxChange>.unmodifiable(changes));
+    final LumeTxReceipt receipt = LumeTxReceipt(
+      _revision,
+      List<LumeTxChange>.unmodifiable(changes),
+    );
     if (idempotencyKey != null) {
       _idempotent[idempotencyKey] = _Idempotent(fingerprint, value, receipt);
     }
@@ -424,28 +470,34 @@ class LumeSqliteRecordRepository extends ChangeNotifier
   }
 
   @override
-  LumeTxResult<void> revert(LumeTxReceipt receipt) => run<void>((LumeRecordTx tx) {
-    final _SqliteTx t = tx as _SqliteTx;
-    for (final LumeTxChange c in receipt.changes.reversed) {
-      final LumeRecord? live = t.get(c.collection, c.id);
-      final LumeTxFailure conflict = LumeTxFailure(
-        LumeTxFailureKind.conflict,
-        collection: c.collection,
-        id: c.id,
-        current: live,
-      );
-      if (c.after == null) {
-        if (live != null) throw conflict;
-        t._restore(c.collection, c.before!);
-      } else if (live == null || live.version != c.after!.version) {
-        throw conflict;
-      } else if (c.before == null) {
-        t.delete(c.collection, c.id, expectVersion: live.version);
-      } else {
-        t.update(c.collection, c.id, c.before!.fields, expectVersion: live.version);
-      }
-    }
-  });
+  LumeTxResult<void> revert(LumeTxReceipt receipt) =>
+      run<void>((LumeRecordTx tx) {
+        final _SqliteTx t = tx as _SqliteTx;
+        for (final LumeTxChange c in receipt.changes.reversed) {
+          final LumeRecord? live = t.get(c.collection, c.id);
+          final LumeTxFailure conflict = LumeTxFailure(
+            LumeTxFailureKind.conflict,
+            collection: c.collection,
+            id: c.id,
+            current: live,
+          );
+          if (c.after == null) {
+            if (live != null) throw conflict;
+            t._restore(c.collection, c.before!);
+          } else if (live == null || live.version != c.after!.version) {
+            throw conflict;
+          } else if (c.before == null) {
+            t.delete(c.collection, c.id, expectVersion: live.version);
+          } else {
+            t.update(
+              c.collection,
+              c.id,
+              c.before!.fields,
+              expectVersion: live.version,
+            );
+          }
+        }
+      });
 
   /// Waits for every persistence write issued so far to reach disk — tests
   /// only, so an assertion against the database itself is not a race
@@ -470,8 +522,13 @@ class _Idempotent {
   final LumeTxReceipt receipt;
 
   LumeTxResult<T> replay<T>(String? asked) => asked == fingerprint
-      ? LumeTxResult<T>.ok(value as T, LumeTxReceipt(receipt.revision, receipt.changes, replayed: true))
-      : LumeTxResult<T>.failed(const LumeTxFailure(LumeTxFailureKind.idempotencyMismatch));
+      ? LumeTxResult<T>.ok(
+          value as T,
+          LumeTxReceipt(receipt.revision, receipt.changes, replayed: true),
+        )
+      : LumeTxResult<T>.failed(
+          const LumeTxFailure(LumeTxFailureKind.idempotencyMismatch),
+        );
 }
 
 class _SqliteTx implements LumeRecordTx {
@@ -483,7 +540,8 @@ class _SqliteTx implements LumeRecordTx {
 
   final Map<String, int> _scans = <String, int>{};
   final Map<(String, String), int?> _reads = <(String, String), int?>{};
-  final Map<(String, String), LumeRecord?> _writes = <(String, String), LumeRecord?>{};
+  final Map<(String, String), LumeRecord?> _writes =
+      <(String, String), LumeRecord?>{};
   final List<(String, String)> _order = <(String, String)>[];
   final Map<(String, String), int> _restoredAt = <(String, String), int>{};
 
@@ -520,7 +578,8 @@ class _SqliteTx implements LumeRecordTx {
     final Set<String> inBase = <String>{for (final LumeRecord r in base) r.id};
     return <LumeRecord>[
       for (final (String c, String id) in _order.reversed)
-        if (c == collection && !inBase.contains(id) && _writes[(c, id)] != null) _writes[(c, id)]!,
+        if (c == collection && !inBase.contains(id) && _writes[(c, id)] != null)
+          _writes[(c, id)]!,
       for (final LumeRecord r in base)
         if (!_writes.containsKey((collection, r.id)))
           r
@@ -531,8 +590,13 @@ class _SqliteTx implements LumeRecordTx {
 
   @override
   LumeRecord create(String collection, String id, Map<String, Object?> fields) {
-    if (get(collection, id) != null || (_store._used[collection]?.contains(id) ?? false)) {
-      throw LumeTxFailure(LumeTxFailureKind.duplicateId, collection: collection, id: id);
+    if (get(collection, id) != null ||
+        (_store._used[collection]?.contains(id) ?? false)) {
+      throw LumeTxFailure(
+        LumeTxFailureKind.duplicateId,
+        collection: collection,
+        id: id,
+      );
     }
     final DateTime now = _store._now();
     final LumeRecord record = LumeRecord(
@@ -550,9 +614,15 @@ class _SqliteTx implements LumeRecordTx {
   LumeRecord insert(String collection, LumeRecord record) {
     if (get(collection, record.id) != null ||
         (_store._used[collection]?.contains(record.id) ?? false)) {
-      throw LumeTxFailure(LumeTxFailureKind.duplicateId, collection: collection, id: record.id);
+      throw LumeTxFailure(
+        LumeTxFailureKind.duplicateId,
+        collection: collection,
+        id: record.id,
+      );
     }
-    final LumeRecord copy = record.copyWith(fields: Map<String, Object?>.unmodifiable(record.fields));
+    final LumeRecord copy = record.copyWith(
+      fields: Map<String, Object?>.unmodifiable(record.fields),
+    );
     _stage(collection, record.id, copy);
     return copy;
   }
@@ -560,10 +630,19 @@ class _SqliteTx implements LumeRecordTx {
   LumeRecord _current(String collection, String id, int expectVersion) {
     final LumeRecord? current = get(collection, id);
     if (current == null) {
-      throw LumeTxFailure(LumeTxFailureKind.missing, collection: collection, id: id);
+      throw LumeTxFailure(
+        LumeTxFailureKind.missing,
+        collection: collection,
+        id: id,
+      );
     }
     if (current.version != expectVersion) {
-      throw LumeTxFailure(LumeTxFailureKind.conflict, collection: collection, id: id, current: current);
+      throw LumeTxFailure(
+        LumeTxFailureKind.conflict,
+        collection: collection,
+        id: id,
+        current: current,
+      );
     }
     return current;
   }
@@ -593,13 +672,15 @@ class _SqliteTx implements LumeRecordTx {
 
   void _restore(String collection, LumeRecord record) {
     final List<LumeRecord> base = _base(collection);
-    _restoredAt[(collection, record.id)] =
-        base.indexWhere((LumeRecord r) => r.createdAt.isBefore(record.createdAt));
+    _restoredAt[(collection, record.id)] = base.indexWhere(
+      (LumeRecord r) => r.createdAt.isBefore(record.createdAt),
+    );
     _stage(collection, record.id, record);
   }
 
   @override
-  Never reject(Object detail) => throw LumeTxFailure(LumeTxFailureKind.rejected, detail: detail);
+  Never reject(Object detail) =>
+      throw LumeTxFailure(LumeTxFailureKind.rejected, detail: detail);
 }
 
 @immutable
@@ -609,12 +690,18 @@ class _UndoEntry {
       record = null,
       index = null;
 
-  const _UndoEntry.update(this.collection, String this.id, LumeRecord this.record)
-    : kind = LumeUndoKind.update,
+  const _UndoEntry.update(
+    this.collection,
+    String this.id,
+    LumeRecord this.record,
+  ) : kind = LumeUndoKind.update,
       index = null;
 
-  const _UndoEntry.delete(this.collection, LumeRecord this.record, int this.index)
-    : kind = LumeUndoKind.delete,
+  const _UndoEntry.delete(
+    this.collection,
+    LumeRecord this.record,
+    int this.index,
+  ) : kind = LumeUndoKind.delete,
       id = null;
 
   final LumeUndoKind kind;

@@ -70,7 +70,8 @@ class ReminderTool extends ConsumerStatefulWidget {
   ConsumerState<ReminderTool> createState() => _ReminderToolState();
 }
 
-class _ReminderToolState extends ConsumerState<ReminderTool> with WidgetsBindingObserver {
+class _ReminderToolState extends ConsumerState<ReminderTool>
+    with WidgetsBindingObserver {
   final GlobalKey<LumeToolScreenState> _host = GlobalKey<LumeToolScreenState>();
   late final ReminderRepository _repo = ref.read(reminderRepositoryProvider);
   late final LumeNotificationGate _gate = ref.read(notificationGateProvider);
@@ -134,7 +135,8 @@ class _ReminderToolState extends ConsumerState<ReminderTool> with WidgetsBinding
 
   void _failed(AppLocalizations l, ReminderFailure f) {
     _say(switch (f.kind) {
-      ReminderFailureKind.conflict || ReminderFailureKind.notFound => l.remErrConflict,
+      ReminderFailureKind.conflict ||
+      ReminderFailureKind.notFound => l.remErrConflict,
       _ => l.remErrFailed,
     }, tone: LumeToastTone.error);
   }
@@ -154,7 +156,11 @@ class _ReminderToolState extends ConsumerState<ReminderTool> with WidgetsBinding
   }
 
   Future<void> _add(AppLocalizations l) async {
-    final ReminderDraftResult? d = await reminderEditSheet(context, title: l.remAddReminder, existing: null);
+    final ReminderDraftResult? d = await reminderEditSheet(
+      context,
+      title: l.remAddReminder,
+      existing: null,
+    );
     if (d == null || !mounted) return;
     final ReminderResult<ReminderWrite> r = await _repo.add(
       label: d.label,
@@ -170,7 +176,11 @@ class _ReminderToolState extends ConsumerState<ReminderTool> with WidgetsBinding
   }
 
   Future<void> _edit(AppLocalizations l, ReminderEntry e) async {
-    final ReminderDraftResult? d = await reminderEditSheet(context, title: l.remEditReminder, existing: e);
+    final ReminderDraftResult? d = await reminderEditSheet(
+      context,
+      title: l.remEditReminder,
+      existing: e,
+    );
     if (d == null || !mounted) return;
     if (reminderSheetIsDelete(d)) return _delete(l, e);
     final ReminderResult<ReminderWrite> r = await _repo.edit(
@@ -187,7 +197,11 @@ class _ReminderToolState extends ConsumerState<ReminderTool> with WidgetsBinding
     _reportSchedule(l, r.value!.scheduleOutcome);
   }
 
-  Future<void> _toggle(AppLocalizations l, ReminderEntry e, bool enabled) async {
+  Future<void> _toggle(
+    AppLocalizations l,
+    ReminderEntry e,
+    bool enabled,
+  ) async {
     final ReminderResult<ReminderWrite> r = await _repo.setEnabled(
       e.id,
       enabled,
@@ -209,7 +223,11 @@ class _ReminderToolState extends ConsumerState<ReminderTool> with WidgetsBinding
     );
   }
 
-  Future<void> _undo(AppLocalizations l, ReminderWrite w, String? zoneId) async {
+  Future<void> _undo(
+    AppLocalizations l,
+    ReminderWrite w,
+    String? zoneId,
+  ) async {
     final ReminderResult<void> r = await _repo.undo(w, zoneId: zoneId);
     if (mounted && r.failure != null) _failed(l, r.failure!);
   }
@@ -227,7 +245,10 @@ class _ReminderToolState extends ConsumerState<ReminderTool> with WidgetsBinding
   @override
   Widget build(BuildContext context) {
     final AppLocalizations l = AppLocalizations.of(context);
-    final LumeFormatting f = LumeFormatting.of(context, countryCode: widget.request.user.country);
+    final LumeFormatting f = LumeFormatting.of(
+      context,
+      countryCode: widget.request.user.country,
+    );
     final ReminderSnapshot snapshot = _repo.view();
 
     LumeToolStatus status = LumeToolStatus.ready;
@@ -255,7 +276,12 @@ class _ReminderToolState extends ConsumerState<ReminderTool> with WidgetsBinding
     );
   }
 
-  List<Widget> _body(BuildContext context, AppLocalizations l, LumeFormatting f, ReminderBook book) {
+  List<Widget> _body(
+    BuildContext context,
+    AppLocalizations l,
+    LumeFormatting f,
+    ReminderBook book,
+  ) {
     final LumeNotificationState? access = _access;
     return <Widget>[
       if (access != null && access.access != LumeNotificationAccess.granted)
@@ -266,9 +292,13 @@ class _ReminderToolState extends ConsumerState<ReminderTool> with WidgetsBinding
             title: l.remPermissionTitle,
             text: l.remPermissionText,
             action: LumeButton.accent(
-              label: access.access.settingsHelp ? l.remOpenSettings : l.remEnableNotifications,
+              label: access.access.settingsHelp
+                  ? l.remOpenSettings
+                  : l.remEnableNotifications,
               onPressed: () => unawaited(
-                access.access.settingsHelp ? _openSettings() : _requestPermission(),
+                access.access.settingsHelp
+                    ? _openSettings()
+                    : _requestPermission(),
               ),
             ),
           ),
@@ -325,7 +355,12 @@ class _ReminderToolState extends ConsumerState<ReminderTool> with WidgetsBinding
     ];
   }
 
-  Widget _row(BuildContext context, AppLocalizations l, LumeFormatting f, ReminderEntry e) => LumeRichRow(
+  Widget _row(
+    BuildContext context,
+    AppLocalizations l,
+    LumeFormatting f,
+    ReminderEntry e,
+  ) => LumeRichRow(
     key: LumeReminderTool.row(e.id.value),
     icon: ReminderText.icon(e.repeat),
     title: e.label,

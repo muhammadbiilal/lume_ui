@@ -164,7 +164,10 @@ class FastingRepository {
   }) => _write<FastEntry>((_Data d) {
     final FastEntry? existing = d.at(id);
     if (existing == null) {
-      throw FastingFailure(FastingFailureKind.notFound, ids: <LumeRecordId>[id]);
+      throw FastingFailure(
+        FastingFailureKind.notFound,
+        ids: <LumeRecordId>[id],
+      );
     }
     _validate(d, date: date, excluding: id);
     final LumeRecord r = d.tx.update(
@@ -187,9 +190,16 @@ class FastingRepository {
   }) => _write<FastEntry>((_Data d) {
     final FastEntry? existing = d.at(id);
     if (existing == null) {
-      throw FastingFailure(FastingFailureKind.notFound, ids: <LumeRecordId>[id]);
+      throw FastingFailure(
+        FastingFailureKind.notFound,
+        ids: <LumeRecordId>[id],
+      );
     }
-    d.tx.delete(FastingCollections.entries, id.value, expectVersion: expectVersion);
+    d.tx.delete(
+      FastingCollections.entries,
+      id.value,
+      expectVersion: expectVersion,
+    );
     d.entries.removeWhere((FastEntry e) => e.id == id);
     return existing;
   });

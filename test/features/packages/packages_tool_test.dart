@@ -105,15 +105,12 @@ void main() {
       expect(find.byKey(LumePackagesTool.tableKey), findsOneWidget);
       // Sorted by price, ascending, by default — the reference's own
       // `c.sortBy(shown, {...}, 'price', 'asc')` — not the fixture's order.
-      expect(
-        _tableFirstColumn(tester),
-        <String>[
-          'Telenor · Super Card',
-          'Ufone · Super Card Plus',
-          'Jazz · Super Duper Card',
-          'Zong · Super Card Max',
-        ],
-      );
+      expect(_tableFirstColumn(tester), <String>[
+        'Telenor · Super Card',
+        'Ufone · Super Card Plus',
+        'Jazz · Super Duper Card',
+        'Zong · Super Card Max',
+      ]);
 
       // One filter chip for "All" plus one per named carrier.
       final LumeFilterBar bar = tester.widget(
@@ -139,8 +136,9 @@ void main() {
       expect(_tableFirstColumn(tester).first, contains('Telenor'));
     });
 
-    testWidgets('a query narrows both the compare table and the detail list',
-        (WidgetTester tester) async {
+    testWidgets('a query narrows both the compare table and the detail list', (
+      WidgetTester tester,
+    ) async {
       await pumpPackages(tester);
       await tester.enterText(
         find.descendant(
@@ -233,7 +231,9 @@ void main() {
       // Carrier and bundle names are proper nouns — never translated.
       expect(find.textContaining('Jazz'), findsWidgets);
       expect(
-        Directionality.of(tester.element(find.byKey(LumePackagesTool.tableKey))),
+        Directionality.of(
+          tester.element(find.byKey(LumePackagesTool.tableKey)),
+        ),
         TextDirection.rtl,
       );
     });

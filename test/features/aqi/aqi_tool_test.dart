@@ -94,7 +94,8 @@ void main() {
       expect(rows, hasLength(4));
       expect(
         <List<String?>>[
-          for (final LumeRichRow r in rows) <String?>[r.title, r.value, r.valueSub],
+          for (final LumeRichRow r in rows)
+            <String?>[r.title, r.value, r.valueSub],
         ],
         <List<String?>>[
           <String?>['PM2.5', '115', 'µg/m³'],
@@ -229,7 +230,8 @@ void main() {
       ];
       final List<String> unexpected = overflows
           .where(
-            (String text) => !knownPreExisting.any((String f) => text.contains(f)),
+            (String text) =>
+                !knownPreExisting.any((String f) => text.contains(f)),
           )
           .toList();
       expect(unexpected, isEmpty, reason: unexpected.join('\n\n'));

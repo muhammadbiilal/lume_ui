@@ -131,8 +131,12 @@ class LumePlatformDocumentCamera implements LumeDocumentCamera {
   /// before this is ever reached for the camera source.
   @visibleForTesting
   static LumeCaptureOutcome trouble(String code, {required bool isCamera}) {
-    final String denied = isCamera ? 'camera_access_denied' : 'photo_access_denied';
-    return code == denied ? LumeCaptureOutcome.denied : LumeCaptureOutcome.failed;
+    final String denied = isCamera
+        ? 'camera_access_denied'
+        : 'photo_access_denied';
+    return code == denied
+        ? LumeCaptureOutcome.denied
+        : LumeCaptureOutcome.failed;
   }
 
   /// A best guess from the file's own name, for a gallery file `image_picker`

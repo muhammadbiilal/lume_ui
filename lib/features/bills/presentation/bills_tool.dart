@@ -40,7 +40,8 @@ class LumeBillsTool extends ConsumerStatefulWidget {
 
   final LumeToolRequest request;
 
-  static Widget open(LumeToolRequest request) => LumeBillsTool(request: request);
+  static Widget open(LumeToolRequest request) =>
+      LumeBillsTool(request: request);
 
   static const String id = 'bills';
 
@@ -51,7 +52,8 @@ class LumeBillsTool extends ConsumerStatefulWidget {
   static const Key emptyKey = ValueKey<String>('bills.empty');
   static const Key trendKey = ValueKey<String>('bills.trend');
   static const Key historyKey = ValueKey<String>('bills.history');
-  static Key filterChip(LumeBillsFilter f) => ValueKey<String>('bills.filter.${f.name}');
+  static Key filterChip(LumeBillsFilter f) =>
+      ValueKey<String>('bills.filter.${f.name}');
   static Key row(String ref) => ValueKey<String>('bills.row.$ref');
 
   @override
@@ -70,18 +72,28 @@ class _LumeBillsToolState extends ConsumerState<LumeBillsTool> {
   void _setFilter(LumeBillsFilter f) =>
       setState(() => _session.write(LumeBillsTool.id, 'state', f.name));
 
-  String _dueLabel(AppLocalizations l, LumeFormatting f, DateTime now, LumeBill b) =>
-      switch (b.state) {
-        LumeBillState.overdue => l.billsOverdueBy(-b.days),
-        LumeBillState.paid => l.billsPaidOn(
-          f.dateMedium(now.add(Duration(days: b.days))),
-        ),
-        LumeBillState.due || LumeBillState.upcoming => l.billsDueIn(b.days),
-      };
+  String _dueLabel(
+    AppLocalizations l,
+    LumeFormatting f,
+    DateTime now,
+    LumeBill b,
+  ) => switch (b.state) {
+    LumeBillState.overdue => l.billsOverdueBy(-b.days),
+    LumeBillState.paid => l.billsPaidOn(
+      f.dateMedium(now.add(Duration(days: b.days))),
+    ),
+    LumeBillState.due || LumeBillState.upcoming => l.billsDueIn(b.days),
+  };
 
   LumeBadge _badge(AppLocalizations l, LumeBillState state) => switch (state) {
-    LumeBillState.overdue => LumeBadge(label: l.commonOverdue, tone: LumeBadgeTone.late_),
-    LumeBillState.paid => LumeBadge(label: l.commonPaid, tone: LumeBadgeTone.ok),
+    LumeBillState.overdue => LumeBadge(
+      label: l.commonOverdue,
+      tone: LumeBadgeTone.late_,
+    ),
+    LumeBillState.paid => LumeBadge(
+      label: l.commonPaid,
+      tone: LumeBadgeTone.ok,
+    ),
     LumeBillState.due || LumeBillState.upcoming => LumeBadge(
       label: l.commonDue,
       tone: LumeBadgeTone.warn,
@@ -92,12 +104,19 @@ class _LumeBillsToolState extends ConsumerState<LumeBillsTool> {
   Widget build(BuildContext context) {
     final LumeToolRequest r = widget.request;
     final AppLocalizations l = AppLocalizations.of(context);
-    final LumeFormatting f = LumeFormatting.of(context, countryCode: r.user.country);
+    final LumeFormatting f = LumeFormatting.of(
+      context,
+      countryCode: r.user.country,
+    );
     final DateTime now = LumeClockScope.of(context).now();
     final LumeColors lume = context.lume;
 
     final String ccy =
-        ref.watch(startupControllerProvider).state.countries?.currencyOf(r.user.country) ??
+        ref
+            .watch(startupControllerProvider)
+            .state
+            .countries
+            ?.currencyOf(r.user.country) ??
         f.currency;
     final LumeBillsBoard board = LumeBillsBoard(currency: ccy);
     String money(double usd) => f.money(board.money(usd), code: ccy);
@@ -106,7 +125,8 @@ class _LumeBillsToolState extends ConsumerState<LumeBillsTool> {
     final List<LumeBill> shown = board.shown(filter);
 
     final List<String> trendLabels = <String>[
-      for (int i = 5; i >= 0; i--) f.monthShort(DateTime(now.year, now.month - i)),
+      for (int i = 5; i >= 0; i--)
+        f.monthShort(DateTime(now.year, now.month - i)),
     ];
 
     return LumeToolScreen(
@@ -132,8 +152,14 @@ class _LumeBillsToolState extends ConsumerState<LumeBillsTool> {
                 label: l.commonPaid,
               ),
               stats: <LumeStat>[
-                LumeStat(value: money(board.overdueUsd), label: l.commonOverdue),
-                LumeStat(value: money(board.upcomingUsd), label: l.billsUpcoming),
+                LumeStat(
+                  value: money(board.overdueUsd),
+                  label: l.commonOverdue,
+                ),
+                LumeStat(
+                  value: money(board.upcomingUsd),
+                  label: l.billsUpcoming,
+                ),
                 LumeStat(value: money(board.paidUsd), label: l.billsPaidAmount),
               ],
             ),
@@ -200,10 +226,15 @@ class _LumeBillsToolState extends ConsumerState<LumeBillsTool> {
                           iconTone: b.state == LumeBillState.overdue
                               ? lume.amber.withValues(alpha: 0.18)
                               : null,
-                          iconInk: b.state == LumeBillState.overdue ? lume.amber : null,
+                          iconInk: b.state == LumeBillState.overdue
+                              ? lume.amber
+                              : null,
                           title: b.name,
                           subtitle: b.provider,
-                          meta: <String>['${l.billsRef} ${b.ref}', _dueLabel(l, f, now, b)],
+                          meta: <String>[
+                            '${l.billsRef} ${b.ref}',
+                            _dueLabel(l, f, now, b),
+                          ],
                           badge: _badge(l, b.state),
                           value: money(b.amountUsd),
                           onTap: () => _host.currentState?.say(
@@ -227,9 +258,10 @@ class _LumeBillsToolState extends ConsumerState<LumeBillsTool> {
                 label: l.billsTrend,
                 caption: Text(
                   l.billsTrendCap(money(board.trendAverageUsd)),
-                  style: LumeType.natural(context, context.lumeType.metaSmall).copyWith(
-                    color: lume.text3,
-                  ),
+                  style: LumeType.natural(
+                    context,
+                    context.lumeType.metaSmall,
+                  ).copyWith(color: lume.text3),
                 ),
               ),
             ),

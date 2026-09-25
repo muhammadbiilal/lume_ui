@@ -14,7 +14,10 @@ import 'package:lume/features/records/domain/record_transaction.dart';
 
 class MedsHarness {
   MedsHarness({int seed = 1, Duration? readDelay}) {
-    store = LumeMemoryRecordRepository(hydrateDelay: readDelay, now: () => clock);
+    store = LumeMemoryRecordRepository(
+      hydrateDelay: readDelay,
+      now: () => clock,
+    );
     repo = MedsRepository(store, random: Random(seed), now: () => clock);
     if (readDelay == null) repo.open();
   }
@@ -23,7 +26,8 @@ class MedsHarness {
   late final MedsRepository repo;
   DateTime clock = DateTime.utc(2026, 9, 7, 10);
 
-  void tick([Duration by = const Duration(minutes: 1)]) => clock = clock.add(by);
+  void tick([Duration by = const Duration(minutes: 1)]) =>
+      clock = clock.add(by);
 
   MedsBook book() => repo.view().book();
 

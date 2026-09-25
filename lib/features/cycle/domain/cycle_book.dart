@@ -134,7 +134,9 @@ class CycleInsights {
     if (periods.isEmpty) return CycleInsights.empty(today);
 
     final List<CyclePeriod> sorted = List<CyclePeriod>.of(periods)
-      ..sort((CyclePeriod a, CyclePeriod b) => a.startDate.compareTo(b.startDate));
+      ..sort(
+        (CyclePeriod a, CyclePeriod b) => a.startDate.compareTo(b.startDate),
+      );
     final CyclePeriod current = sorted.last;
 
     final int sinceStart = current.startDate.daysUntil(today);
@@ -158,7 +160,9 @@ class CycleInsights {
         ),
       );
     }
-    history.sort((CycleHistoryEntry a, CycleHistoryEntry b) => b.start.compareTo(a.start));
+    history.sort(
+      (CycleHistoryEntry a, CycleHistoryEntry b) => b.start.compareTo(a.start),
+    );
 
     final double? averageLength = intervals.isEmpty
         ? null

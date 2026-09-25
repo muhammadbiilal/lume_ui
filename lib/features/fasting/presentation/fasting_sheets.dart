@@ -25,7 +25,9 @@ abstract final class FastingSheetKeys {
   static const Key save = ValueKey<String>('fasting.sheet.save');
   static const Key delete = ValueKey<String>('fasting.sheet.delete');
   static const Key cancel = ValueKey<String>('fasting.sheet.cancel');
-  static const Key confirmDelete = ValueKey<String>('fasting.sheet.confirmDelete');
+  static const Key confirmDelete = ValueKey<String>(
+    'fasting.sheet.confirmDelete',
+  );
 }
 
 /// What the sheet decided: save this entry, delete it, or (`null` from
@@ -153,13 +155,18 @@ class _FastEntrySheetState extends State<FastEntrySheet> {
             key: FastingSheetKeys.kindControl,
             value: _kind.name,
             items: <LumeChoice>[
-              LumeChoice(value: FastingKind.voluntary.name, label: l.fastingKindSunnah),
-              LumeChoice(value: FastingKind.makeup.name, label: l.fastingKindQada),
+              LumeChoice(
+                value: FastingKind.voluntary.name,
+                label: l.fastingKindSunnah,
+              ),
+              LumeChoice(
+                value: FastingKind.makeup.name,
+                label: l.fastingKindQada,
+              ),
             ],
             semanticLabel: l.fastingKindLabel,
-            onChanged: (String v) => setState(
-              () => _kind = FastingKind.values.byName(v),
-            ),
+            onChanged: (String v) =>
+                setState(() => _kind = FastingKind.values.byName(v)),
           ),
           const SizedBox(height: 14),
           LumeCheckbox(
@@ -173,9 +180,9 @@ class _FastEntrySheetState extends State<FastEntrySheet> {
             key: FastingSheetKeys.save,
             label: l.actionSave,
             block: true,
-            onPressed: () => Navigator.of(context).pop(
-              FastEntryResult.saved(_date, _kind, _kept),
-            ),
+            onPressed: () => Navigator.of(
+              context,
+            ).pop(FastEntryResult.saved(_date, _kind, _kept)),
           ),
           if (widget.canDelete) ...<Widget>[
             const SizedBox(height: 8),

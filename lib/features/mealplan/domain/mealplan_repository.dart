@@ -43,7 +43,8 @@ class MealPlanSnapshot {
   bool get loading => status == LumeCollectionStatus.loading;
   bool get failed => status == LumeCollectionStatus.error;
 
-  MealPlanWeek week(LumeDate today) => MealPlanWeek.from(entries: entries, today: today);
+  MealPlanWeek week(LumeDate today) =>
+      MealPlanWeek.from(entries: entries, today: today);
 }
 
 class _Data {
@@ -143,7 +144,10 @@ class MealPlanRepository {
         expectVersion: existing.version,
       );
       final MealPlanEntry stored = MealPlanEntry.decode(r);
-      d.entries[d.entries.indexWhere((MealPlanEntry x) => x.id == existing.id)] = stored;
+      d.entries[d.entries.indexWhere(
+            (MealPlanEntry x) => x.id == existing.id,
+          )] =
+          stored;
       return stored;
     }
     final MealPlanEntry e = MealPlanEntry(
@@ -177,9 +181,16 @@ class MealPlanRepository {
     return _write<MealPlanEntry>((_Data d) {
       final MealPlanEntry? e = d.at(date, slot);
       if (e == null) {
-        throw MealPlanFailure(MealPlanFailureKind.notFound, ids: <LumeRecordId>[existing!.id]);
+        throw MealPlanFailure(
+          MealPlanFailureKind.notFound,
+          ids: <LumeRecordId>[existing!.id],
+        );
       }
-      d.tx.delete(MealPlanCollections.entries, e.id.value, expectVersion: e.version);
+      d.tx.delete(
+        MealPlanCollections.entries,
+        e.id.value,
+        expectVersion: e.version,
+      );
       d.entries.removeWhere((MealPlanEntry x) => x.id == e.id);
       return e;
     });

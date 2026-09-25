@@ -176,9 +176,7 @@ abstract final class LumeNames99Fixtures {
     if (q.isEmpty) return all;
     return <LumeName>[
       for (final LumeName n in all)
-        if ('${n.transliteration} ${n.meaning.text}'.toLowerCase().contains(
-          q,
-        ))
+        if ('${n.transliteration} ${n.meaning.text}'.toLowerCase().contains(q))
           n,
     ];
   }

@@ -22,10 +22,13 @@ void main() {
 
   group('the roster — `TRAINS`, ported', () {
     test('five named services, in the reference’s order', () {
-      expect(
-        roster.map((LumeTrainService t) => t.number).toList(),
-        <String>['5UP', '7UP', '41UP', '27DN', '101UP'],
-      );
+      expect(roster.map((LumeTrainService t) => t.number).toList(), <String>[
+        '5UP',
+        '7UP',
+        '41UP',
+        '27DN',
+        '101UP',
+      ]);
     });
 
     test('Green Line Express — 5UP', () {
@@ -92,19 +95,16 @@ void main() {
         LumeTrainsComposer.timelineStops();
 
     test('eight stops, Karachi Cantt to Islamabad, in order', () {
-      expect(
-        stops.map((LumeTrainTimelineStop s) => s.name).toList(),
-        <String>[
-          'Karachi Cantt',
-          'Hyderabad Junction',
-          'Rohri Junction',
-          'Rahim Yar Khan',
-          'Multan Cantt',
-          'Lahore Junction',
-          'Rawalpindi',
-          'Islamabad',
-        ],
-      );
+      expect(stops.map((LumeTrainTimelineStop s) => s.name).toList(), <String>[
+        'Karachi Cantt',
+        'Hyderabad Junction',
+        'Rohri Junction',
+        'Rahim Yar Khan',
+        'Multan Cantt',
+        'Lahore Junction',
+        'Rawalpindi',
+        'Islamabad',
+      ]);
     });
 
     test('a done stop, an actual time later than scheduled', () {

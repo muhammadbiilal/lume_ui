@@ -56,13 +56,14 @@ class LumeAqiTool extends ConsumerWidget {
 
   /// `dirOf`-style tone-to-colour, so the ring reads the same severity as
   /// the badge beside it without a second, disagreeing colour system.
-  static Color _toneColor(LumeColors lume, LumeBadgeTone tone) => switch (tone) {
-    LumeBadgeTone.ok => lume.up,
-    LumeBadgeTone.info => lume.sky,
-    LumeBadgeTone.warn => lume.amberInk,
-    LumeBadgeTone.late_ => lume.roseInk,
-    _ => lume.accent,
-  };
+  static Color _toneColor(LumeColors lume, LumeBadgeTone tone) =>
+      switch (tone) {
+        LumeBadgeTone.ok => lume.up,
+        LumeBadgeTone.info => lume.sky,
+        LumeBadgeTone.warn => lume.amberInk,
+        LumeBadgeTone.late_ => lume.roseInk,
+        _ => lume.accent,
+      };
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {

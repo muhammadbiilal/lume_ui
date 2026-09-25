@@ -29,7 +29,10 @@ import '../tax/tax_harness.dart';
 /// A store and Goals on the fixture instant, ids from a seeded source.
 class GoalsWorld {
   GoalsWorld({this.seed = 1, Duration? readDelay}) {
-    store = LumeMemoryRecordRepository(hydrateDelay: readDelay, now: () => clock);
+    store = LumeMemoryRecordRepository(
+      hydrateDelay: readDelay,
+      now: () => clock,
+    );
     repo = GoalsRepository(store, random: Random(seed), now: () => clock);
     if (readDelay == null) repo.open();
   }
@@ -59,7 +62,11 @@ class GoalsWorld {
 
   void contribute(String name, LumeMoney amount, LumeDate on) {
     _tick();
-    final GoalsResult<GoalsWrite> r = repo.addContribution(goals[name]!, amount, on);
+    final GoalsResult<GoalsWrite> r = repo.addContribution(
+      goals[name]!,
+      amount,
+      on,
+    );
     if (r.failure != null) throw StateError('${r.failure}');
   }
 
@@ -78,7 +85,8 @@ class GoalsWorld {
     goalsRepositoryProvider.overrideWithValue(repo),
   ];
 
-  GoalsBook book([LumeDate? today]) => repo.view().book(today ?? LumeDate(2026, 9, 7));
+  GoalsBook book([LumeDate? today]) =>
+      repo.view().book(today ?? LumeDate(2026, 9, 7));
 
   void dispose() => store.dispose();
 }

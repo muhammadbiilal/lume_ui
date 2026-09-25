@@ -82,7 +82,8 @@ class _LumeWastatusToolState extends ConsumerState<LumeWastatusTool> {
     // suppress here.
     final List<LumeRelatedTool> related = <LumeRelatedTool>[
       for (final String relatedId in r.feature.related)
-        if (eligibility.visibleById(relatedId, r.user) case final LumeFeature rf)
+        if (eligibility.visibleById(relatedId, r.user)
+            case final LumeFeature rf)
           LumeRelatedTool(
             id: rf.id,
             name: LumeFeatureStrings.name(l, rf.id),
@@ -191,14 +192,17 @@ class _WastatusStep extends StatelessWidget {
             width: _badge,
             height: _badge,
             alignment: Alignment.center,
-            decoration: BoxDecoration(color: lume.tintAccent, shape: BoxShape.circle),
+            decoration: BoxDecoration(
+              color: lume.tintAccent,
+              shape: BoxShape.circle,
+            ),
             child: ExcludeSemantics(
               child: Text(
                 '$number',
-                style: LumeType.fit(context, context.lumeType.metaSmall).copyWith(
-                  color: lume.accent,
-                  fontWeight: FontWeight.w700,
-                ),
+                style: LumeType.fit(
+                  context,
+                  context.lumeType.metaSmall,
+                ).copyWith(color: lume.accent, fontWeight: FontWeight.w700),
               ),
             ),
           ),
@@ -218,10 +222,10 @@ class _WastatusStep extends StatelessWidget {
                 const SizedBox(height: 2),
                 Text(
                   text,
-                  style: LumeType.fit(context, context.lumeType.body).copyWith(
-                    color: lume.text2,
-                    height: 1.4,
-                  ),
+                  style: LumeType.fit(
+                    context,
+                    context.lumeType.body,
+                  ).copyWith(color: lume.text2, height: 1.4),
                 ),
               ],
             ),

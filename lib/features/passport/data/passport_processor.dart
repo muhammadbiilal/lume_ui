@@ -65,7 +65,12 @@ abstract final class LumePassportProcessor {
       canvas.drawImageRect(
         source,
         ui.Rect.fromLTWH(left, top, cropWidth, cropHeight),
-        ui.Rect.fromLTWH(0, 0, spec.widthPx.toDouble(), spec.heightPx.toDouble()),
+        ui.Rect.fromLTWH(
+          0,
+          0,
+          spec.widthPx.toDouble(),
+          spec.heightPx.toDouble(),
+        ),
         ui.Paint()..filterQuality = ui.FilterQuality.high,
       );
       final ui.Picture picture = recorder.endRecording();

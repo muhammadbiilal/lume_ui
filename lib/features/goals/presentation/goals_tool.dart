@@ -83,7 +83,8 @@ abstract final class LumeGoalsTool {
   static const Key targetField = ValueKey<String>('goals.field.target');
   static const Key targetDateField = ValueKey<String>('goals.field.targetDate');
   static Key row(String goal) => ValueKey<String>('goals.row.$goal');
-  static Key contribution(String id) => ValueKey<String>('goals.contribution.$id');
+  static Key contribution(String id) =>
+      ValueKey<String>('goals.contribution.$id');
 
   static Widget open(LumeToolRequest request) => GoalsTool(request: request);
 }
@@ -216,7 +217,10 @@ class _GoalsToolState extends ConsumerState<GoalsTool> {
   }
 
   LumeCurrency? _currency() {
-    final LumeProfileRecord p = ref.read(startupControllerProvider).state.profile;
+    final LumeProfileRecord p = ref
+        .read(startupControllerProvider)
+        .state
+        .profile;
     final String code = p.currency != LumePreference.auto
         ? p.currency
         : (ref
@@ -240,7 +244,9 @@ class _GoalsToolState extends ConsumerState<GoalsTool> {
     if (!moved) return;
     WidgetsBinding.instance.addPostFrameCallback((_) {
       final BuildContext? c = _body.currentContext;
-      final ScrollPosition? p = c == null ? null : Scrollable.maybeOf(c)?.position;
+      final ScrollPosition? p = c == null
+          ? null
+          : Scrollable.maybeOf(c)?.position;
       if (p != null && p.pixels != 0) p.jumpTo(0);
     });
   }
@@ -299,7 +305,8 @@ class _GoalsToolState extends ConsumerState<GoalsTool> {
 
   void _failed(AppLocalizations l, GoalsFailure f) {
     _say(switch (f.kind) {
-      GoalsFailureKind.conflict || GoalsFailureKind.notFound => l.goalsErrConflict,
+      GoalsFailureKind.conflict ||
+      GoalsFailureKind.notFound => l.goalsErrConflict,
       GoalsFailureKind.damaged => l.goalsErrDamaged,
       GoalsFailureKind.closed => l.goalsErrClosed,
       GoalsFailureKind.overflow => l.goalsErrTooLarge,
@@ -364,12 +371,15 @@ class _GoalsToolState extends ConsumerState<GoalsTool> {
     final GoalsFailure? failure = r.failure;
     if (failure != null) {
       if (failure.field == 'currency' && failure.reason == 'withdrawn') {
-        setState(() => d.errors['currency'] = l.goalsErrWithdrawn(d.currency!.code));
+        setState(
+          () => d.errors['currency'] = l.goalsErrWithdrawn(d.currency!.code),
+        );
         return;
       }
       if (failure.field == 'currency' && failure.reason == 'hasContributions') {
         setState(
-          () => d.errors['currency'] = l.goalsErrCurrencyLocked(d.currency!.code),
+          () =>
+              d.errors['currency'] = l.goalsErrCurrencyLocked(d.currency!.code),
         );
         return;
       }
@@ -383,7 +393,11 @@ class _GoalsToolState extends ConsumerState<GoalsTool> {
     _say(l.commonSaved);
   }
 
-  Future<void> _contribute(AppLocalizations l, GoalView v, LumeDate? today) async {
+  Future<void> _contribute(
+    AppLocalizations l,
+    GoalView v,
+    LumeDate? today,
+  ) async {
     final (LumeMoney, LumeDate)? entered = await GoalsContributeSheet.show(
       context,
       currency: v.currency,
@@ -401,10 +415,22 @@ class _GoalsToolState extends ConsumerState<GoalsTool> {
     _undoable(l, l.goalsContributionAdded, r.value!);
   }
 
-  Future<void> _setState(AppLocalizations l, GoalView v, GoalState state) async {
+  Future<void> _setState(
+    AppLocalizations l,
+    GoalView v,
+    GoalState state,
+  ) async {
     final (String title, String text, String toast)? copy = switch (state) {
-      GoalState.completed => (l.goalsMarkCompleteAsk, l.goalsMarkCompleteText, l.goalsMarkCompleteToast),
-      GoalState.abandoned => (l.goalsAbandonAsk, l.goalsAbandonText, l.goalsAbandonToast),
+      GoalState.completed => (
+        l.goalsMarkCompleteAsk,
+        l.goalsMarkCompleteText,
+        l.goalsMarkCompleteToast,
+      ),
+      GoalState.abandoned => (
+        l.goalsAbandonAsk,
+        l.goalsAbandonText,
+        l.goalsAbandonToast,
+      ),
       GoalState.active => null,
     };
     if (copy != null) {
@@ -432,7 +458,10 @@ class _GoalsToolState extends ConsumerState<GoalsTool> {
       text: l.goalsDeleteText,
     );
     if (!ok || !mounted) return;
-    final GoalsResult<GoalsWrite> r = _repo.deleteGoal(v.goal.id, version: v.goal.version);
+    final GoalsResult<GoalsWrite> r = _repo.deleteGoal(
+      v.goal.id,
+      version: v.goal.version,
+    );
     if (r.failure != null) return _failed(l, r.failure!);
     _go(_View.list);
     _undoable(l, l.goalsDeletedToast, r.value!);
@@ -511,7 +540,9 @@ class _GoalsToolState extends ConsumerState<GoalsTool> {
         shareCard: book == null || book.isEmpty
             ? null
             : () {
-                final GoalsCurrencySummary s = book!.summary(book.currencies.first);
+                final GoalsCurrencySummary s = book!.summary(
+                  book.currencies.first,
+                );
                 return LumeShareCard.forFeature(
                   sensitive: widget.request.feature.sensitive,
                   kind: LumeShareKind.reminder,
@@ -603,14 +634,19 @@ class _GoalsToolState extends ConsumerState<GoalsTool> {
           key: LumeGoalsTool.summaryKey,
           kicker: l.goalsSummaryKicker,
           value: f.amount(summary.saved, withCode: withCode),
-          caption: l.goalsSummaryCaption(f.amount(summary.target, withCode: withCode)),
+          caption: l.goalsSummaryCaption(
+            f.amount(summary.target, withCode: withCode),
+          ),
           aside: LumeProgressRing(
             value: summary.ratio,
             centreValue: f.integer((summary.ratio * 100).round().clamp(0, 999)),
             valueText: f.percent(summary.ratio * 100),
           ),
           stats: <LumeStat>[
-            LumeStat(value: f.integer(summary.activeGoals), label: l.goalsStatActive),
+            LumeStat(
+              value: f.integer(summary.activeGoals),
+              label: l.goalsStatActive,
+            ),
             LumeStat(
               value: summary.thisMonth == null
                   ? '—'
@@ -664,8 +700,13 @@ class _GoalsToolState extends ConsumerState<GoalsTool> {
           child: LumeCard(
             child: LumeBarChart(
               key: LumeGoalsTool.chartKey,
-              values: <double>[for (final GoalsMonth m in months) m.total.minor.toDouble()],
-              labels: <String>[for (final GoalsMonth m in months) f.monthShort(m.month.toCalendarDateTime())],
+              values: <double>[
+                for (final GoalsMonth m in months) m.total.minor.toDouble(),
+              ],
+              labels: <String>[
+                for (final GoalsMonth m in months)
+                  f.monthShort(m.month.toCalendarDateTime()),
+              ],
               label: l.goalsChartTitle,
               highlight: months.length - 1,
             ),
@@ -682,7 +723,12 @@ class _GoalsToolState extends ConsumerState<GoalsTool> {
     ];
   }
 
-  Widget _goalCard(BuildContext context, AppLocalizations l, LumeFormatting f, GoalView v) {
+  Widget _goalCard(
+    BuildContext context,
+    AppLocalizations l,
+    LumeFormatting f,
+    GoalView v,
+  ) {
     final String meta = v.goal.targetDate == null
         ? l.goalsOfTarget(f.amount(v.saved), f.amount(v.target))
         : '${l.goalsOfTarget(f.amount(v.saved), f.amount(v.target))} · '
@@ -792,13 +838,15 @@ class _GoalsToolState extends ConsumerState<GoalsTool> {
                   key: LumeGoalsTool.completeKey,
                   label: l.goalsMarkComplete,
                   icon: LumeIcons.checkCircle,
-                  onPressed: () => unawaited(_setState(l, v, GoalState.completed)),
+                  onPressed: () =>
+                      unawaited(_setState(l, v, GoalState.completed)),
                 ),
                 LumeDetailAction(
                   key: LumeGoalsTool.abandonKey,
                   label: l.goalsAbandon,
                   destructive: true,
-                  onPressed: () => unawaited(_setState(l, v, GoalState.abandoned)),
+                  onPressed: () =>
+                      unawaited(_setState(l, v, GoalState.abandoned)),
                 ),
               ] else
                 LumeDetailAction(
@@ -846,12 +894,13 @@ class _GoalsToolState extends ConsumerState<GoalsTool> {
               optionalLabel: l.actionNotSet,
               value: d.targetDate == null
                   ? l.actionNotSet
-                  : LumeFormatting.of(context).dateMediumYear(
-                      d.targetDate!.toCalendarDateTime(),
-                    ),
+                  : LumeFormatting.of(
+                      context,
+                    ).dateMediumYear(d.targetDate!.toCalendarDateTime()),
               onTap: () async {
                 final DateTime base =
-                    d.targetDate?.toCalendarDateTime() ?? LumeClockScope.of(context).now();
+                    d.targetDate?.toCalendarDateTime() ??
+                    LumeClockScope.of(context).now();
                 final DateTime? picked = await showDatePicker(
                   context: context,
                   initialDate: base,

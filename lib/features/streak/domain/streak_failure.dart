@@ -9,7 +9,11 @@ enum StreakFailureKind { conflict, notFound, storage }
 
 @immutable
 class StreakFailure implements Exception {
-  const StreakFailure(this.kind, {this.ids = const <LumeRecordId>[], this.cause});
+  const StreakFailure(
+    this.kind, {
+    this.ids = const <LumeRecordId>[],
+    this.cause,
+  });
 
   final StreakFailureKind kind;
   final List<LumeRecordId> ids;

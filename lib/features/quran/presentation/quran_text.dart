@@ -156,10 +156,11 @@ class LumeAyahCard extends StatelessWidget {
               translation,
               key: translationKey,
               style: LumeType.tracked(
-                LumeType.fit(
-                  context,
-                  context.lumeType.body,
-                ).copyWith(fontSize: 15, height: 1.6, fontWeight: FontWeight.w500),
+                LumeType.fit(context, context.lumeType.body).copyWith(
+                  fontSize: 15,
+                  height: 1.6,
+                  fontWeight: FontWeight.w500,
+                ),
                 -0.012,
               ).copyWith(color: lume.text),
             ),

@@ -90,18 +90,21 @@ void main() {
       expect(xrp.price, 2.31);
     });
 
-    test('the sparkline is 20 points, deterministic, and matches seriesFor', () {
-      for (final LumeQuotedAsset a in LumeMarkets.crypto) {
-        expect(a.sparkline, hasLength(20));
-        expect(a.sparkline, a.sparkline);
-      }
-      final LumeQuotedAsset btc = LumeMarkets.crypto[0];
-      final int seed = (btc.price * 1000 + 0.5).floor() + 1533;
-      expect(
-        btc.sparkline,
-        lumeWalk(seed, 44, btc.price, 0.004).take(20).toList(),
-      );
-    });
+    test(
+      'the sparkline is 20 points, deterministic, and matches seriesFor',
+      () {
+        for (final LumeQuotedAsset a in LumeMarkets.crypto) {
+          expect(a.sparkline, hasLength(20));
+          expect(a.sparkline, a.sparkline);
+        }
+        final LumeQuotedAsset btc = LumeMarkets.crypto[0];
+        final int seed = (btc.price * 1000 + 0.5).floor() + 1533;
+        expect(
+          btc.sparkline,
+          lumeWalk(seed, 44, btc.price, 0.004).take(20).toList(),
+        );
+      },
+    );
   });
 
   group('ETFS, ported unchanged', () {

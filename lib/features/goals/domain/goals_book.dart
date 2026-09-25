@@ -154,7 +154,9 @@ class GoalsBook {
         <LumeRecordId, List<GoalContribution>>{};
     for (final GoalContribution c in contributions) {
       if (!byId.containsKey(c.goalId)) {
-        damage.add(GoalsDamage(c.goalId.value, 'orphanContribution', c.id.value));
+        damage.add(
+          GoalsDamage(c.goalId.value, 'orphanContribution', c.id.value),
+        );
         continue;
       }
       if (c.amount.currency != byId[c.goalId]!.currency) {
@@ -228,9 +230,9 @@ class GoalsBook {
   }
 
   /// The currencies in use, by code.
-  List<LumeCurrency> get currencies => <LumeCurrency>{
-    for (final GoalView g in goals) g.currency,
-  }.toList()..sort();
+  List<LumeCurrency> get currencies =>
+      <LumeCurrency>{for (final GoalView g in goals) g.currency}.toList()
+        ..sort();
 
   /// One summary per currency; damaged goals are left out of every figure.
   List<GoalsCurrencySummary> get summaries => <GoalsCurrencySummary>[
@@ -255,7 +257,9 @@ class GoalsBook {
       if (next == null || g.pct > next.pct) next = g;
       if (thisMonth != null) {
         for (final GoalContribution ct in g.contributions) {
-          if (lumeSameCalendarMonth(ct.on, today!)) thisMonth = thisMonth! + ct.amount;
+          if (lumeSameCalendarMonth(ct.on, today!)) {
+            thisMonth = thisMonth! + ct.amount;
+          }
         }
       }
     }
@@ -294,7 +298,8 @@ class GoalsBook {
   }
 
   /// Every active contribution, newest first — for a goal's own history.
-  List<GoalContribution> history(LumeRecordId goalId) => goal(goalId)?.contributions ?? const <GoalContribution>[];
+  List<GoalContribution> history(LumeRecordId goalId) =>
+      goal(goalId)?.contributions ?? const <GoalContribution>[];
 
   static LumeDate _monthStart(LumeDate day, int offset) {
     final int months = day.year * 12 + (day.month - 1) + offset;
@@ -308,7 +313,8 @@ class GoalsBook {
     final LumeDate? due = goal.targetDate;
     if (due == null) return null;
     final LumeDate created = LumeDate.ofWallClock(goal.createdAt);
-    int elapsed = (today.year - created.year) * 12 + (today.month - created.month);
+    int elapsed =
+        (today.year - created.year) * 12 + (today.month - created.month);
     if (today.day < created.day) elapsed -= 1;
     if (elapsed < 1 || saved.isZero) return null;
     final LumeMoney remaining = goal.target - saved;

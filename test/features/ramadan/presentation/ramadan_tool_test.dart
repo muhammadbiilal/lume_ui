@@ -34,8 +34,9 @@ final LumeFeature _ramadanFeature = kLumeFeatures.firstWhere(
 /// resolution, since this pumps [LumeRamadanTool] directly ([pumpLume]) —
 /// `tool_registry.dart` is out of scope for this wave, exactly as Qibla's own
 /// harness explains (`qibla_tool_test.dart`).
-LumeZoneResolution _karachi() =>
-    LumeZoneResolution.fixed(LumeTimeZoneService.shared.zoneFor('Asia/Karachi')!);
+LumeZoneResolution _karachi() => LumeZoneResolution.fixed(
+  LumeTimeZoneService.shared.zoneFor('Asia/Karachi')!,
+);
 
 Future<void> pumpRamadan(
   WidgetTester tester, {
@@ -73,7 +74,10 @@ void main() {
     test('is faith-gated, computed, and points at the tools this dashboard '
         'actually opens', () {
       expect(_ramadanFeature.faith, isTrue);
-      expect(_ramadanFeature.related, containsAll(<String>['fasting', 'quran']));
+      expect(
+        _ramadanFeature.related,
+        containsAll(<String>['fasting', 'quran']),
+      );
     });
   });
 
@@ -133,17 +137,22 @@ void main() {
       expect(r!.ramadanHijriYear, h.year + 1);
     });
 
-    test('a city with no coordinates is said, not guessed from the country', () {
-      final (LumeRamadanReading? r, LumeRamadanMissing? missing) =
-          LumeRamadanReading.at(
-            now: before,
-            country: 'PK',
-            city: 'Nowhereistan',
-            zone: _karachi(),
-          );
-      expect(r, isNull);
-      expect(missing, LumeRamadanMissing.city);
-    });
+    test(
+      'a city with no coordinates is said, not guessed from the country',
+      () {
+        final (
+          LumeRamadanReading? r,
+          LumeRamadanMissing? missing,
+        ) = LumeRamadanReading.at(
+          now: before,
+          country: 'PK',
+          city: 'Nowhereistan',
+          zone: _karachi(),
+        );
+        expect(r, isNull);
+        expect(missing, LumeRamadanMissing.city);
+      },
+    );
 
     test('a zone this build cannot read is said, not guessed', () {
       final LumeZoneResolution unresolved = LumeTimeZoneService.shared.reader(
@@ -152,13 +161,15 @@ void main() {
         city: 'Islamabad',
       );
       expect(unresolved.zone, isNull);
-      final (LumeRamadanReading? r, LumeRamadanMissing? missing) =
-          LumeRamadanReading.at(
-            now: before,
-            country: 'PK',
-            city: 'Islamabad',
-            zone: unresolved,
-          );
+      final (
+        LumeRamadanReading? r,
+        LumeRamadanMissing? missing,
+      ) = LumeRamadanReading.at(
+        now: before,
+        country: 'PK',
+        city: 'Islamabad',
+        zone: unresolved,
+      );
       expect(r, isNull);
       expect(missing, LumeRamadanMissing.zone);
     });
@@ -263,103 +274,108 @@ void main() {
     });
   });
 
-  group('the tool, before Ramadan (2026-09-07, the app\'s own fixture day)', () {
-    testWidgets('a countdown in real days, and links to Fasting, Qur\'an and '
-        'Zakat — never Hadith, Dua or Tasbih', (WidgetTester tester) async {
-      await pumpRamadan(tester);
+  group(
+    'the tool, before Ramadan (2026-09-07, the app\'s own fixture day)',
+    () {
+      testWidgets('a countdown in real days, and links to Fasting, Qur\'an and '
+          'Zakat — never Hadith, Dua or Tasbih', (WidgetTester tester) async {
+        await pumpRamadan(tester);
 
-      expect(find.byKey(LumeRamadanTool.missingKey), findsNothing);
-      final LumeSummaryCard summary = tester.widget(
-        find.byKey(LumeRamadanTool.summaryKey),
-      );
-      expect(summary.value, '155');
-      expect(summary.stats, hasLength(2));
+        expect(find.byKey(LumeRamadanTool.missingKey), findsNothing);
+        final LumeSummaryCard summary = tester.widget(
+          find.byKey(LumeRamadanTool.summaryKey),
+        );
+        expect(summary.value, '155');
+        expect(summary.stats, hasLength(2));
 
-      expect(find.byKey(LumeRamadanTool.prepareKey), findsOneWidget);
-      final LumeRows prepare = tester.widget(
-        find.byKey(LumeRamadanTool.prepareKey),
-      );
-      expect(prepare.children, hasLength(3));
+        expect(find.byKey(LumeRamadanTool.prepareKey), findsOneWidget);
+        final LumeRows prepare = tester.widget(
+          find.byKey(LumeRamadanTool.prepareKey),
+        );
+        expect(prepare.children, hasLength(3));
 
-      expect(find.byKey(LumeRamadanTool.timelineKey), findsNothing);
-      expect(find.byKey(LumeRamadanTool.noteKey), findsOneWidget);
-    });
+        expect(find.byKey(LumeRamadanTool.timelineKey), findsNothing);
+        expect(find.byKey(LumeRamadanTool.noteKey), findsOneWidget);
+      });
 
-    testWidgets('a non-Muslim reader never sees it — the frame itself '
-        'blocks a faith-gated tool\'s body (§64)', (WidgetTester tester) async {
-      await pumpRamadan(tester, user: const LumeUserContext(islamic: false));
-      expect(find.byKey(LumeRamadanTool.summaryKey), findsNothing);
-      expect(find.byKey(LumeRamadanTool.prepareKey), findsNothing);
-      expect(find.byKey(LumeRamadanTool.missingKey), findsNothing);
-    });
+      testWidgets('a non-Muslim reader never sees it — the frame itself '
+          'blocks a faith-gated tool\'s body (§64)', (
+        WidgetTester tester,
+      ) async {
+        await pumpRamadan(tester, user: const LumeUserContext(islamic: false));
+        expect(find.byKey(LumeRamadanTool.summaryKey), findsNothing);
+        expect(find.byKey(LumeRamadanTool.prepareKey), findsNothing);
+        expect(find.byKey(LumeRamadanTool.missingKey), findsNothing);
+      });
 
-    testWidgets('a city with no coordinates says so plainly', (
-      WidgetTester tester,
-    ) async {
-      await pumpRamadan(
-        tester,
-        user: const LumeUserContext(
-          country: 'PK',
-          city: 'Chitral',
-          islamic: true,
-        ),
-      );
-      expect(find.byKey(LumeRamadanTool.missingKey), findsOneWidget);
-      expect(find.byKey(LumeRamadanTool.summaryKey), findsNothing);
-    });
-
-    testWidgets('at 200% text scale, nothing overflows', (
-      WidgetTester tester,
-    ) async {
-      await pumpLume(
-        tester,
-        LumeRamadanTool(
-          request: LumeToolRequest(
-            feature: _ramadanFeature,
-            user: const LumeUserContext(islamic: true),
-            branch: 'tools',
+      testWidgets('a city with no coordinates says so plainly', (
+        WidgetTester tester,
+      ) async {
+        await pumpRamadan(
+          tester,
+          user: const LumeUserContext(
+            country: 'PK',
+            city: 'Chitral',
+            islamic: true,
           ),
-        ),
-        textScale: 2,
-        surface: const Size(390, 4200),
-      );
-      await tester.pumpAndSettle();
-      expect(tester.takeException(), isNull);
-    });
+        );
+        expect(find.byKey(LumeRamadanTool.missingKey), findsOneWidget);
+        expect(find.byKey(LumeRamadanTool.summaryKey), findsNothing);
+      });
 
-    testWidgets('in Arabic it reads right to left', (
-      WidgetTester tester,
-    ) async {
-      await pumpRamadan(tester, locale: const Locale('ar'));
-      expect(find.byKey(LumeRamadanTool.summaryKey), findsOneWidget);
-      expect(
-        Directionality.of(
-          tester.element(find.byKey(LumeRamadanTool.summaryKey)),
-        ),
-        TextDirection.rtl,
-      );
-    });
-
-    testWidgets('in Urdu at 200% text scale, still no overflow', (
-      WidgetTester tester,
-    ) async {
-      await pumpLume(
-        tester,
-        LumeRamadanTool(
-          request: LumeToolRequest(
-            feature: _ramadanFeature,
-            user: const LumeUserContext(islamic: true),
-            branch: 'tools',
+      testWidgets('at 200% text scale, nothing overflows', (
+        WidgetTester tester,
+      ) async {
+        await pumpLume(
+          tester,
+          LumeRamadanTool(
+            request: LumeToolRequest(
+              feature: _ramadanFeature,
+              user: const LumeUserContext(islamic: true),
+              branch: 'tools',
+            ),
           ),
-        ),
-        locale: const Locale('ur'),
-        textScale: 2,
-        surface: const Size(390, 4400),
-      );
-      await tester.pumpAndSettle();
-      expect(tester.takeException(), isNull);
-    });
-  });
+          textScale: 2,
+          surface: const Size(390, 4200),
+        );
+        await tester.pumpAndSettle();
+        expect(tester.takeException(), isNull);
+      });
+
+      testWidgets('in Arabic it reads right to left', (
+        WidgetTester tester,
+      ) async {
+        await pumpRamadan(tester, locale: const Locale('ar'));
+        expect(find.byKey(LumeRamadanTool.summaryKey), findsOneWidget);
+        expect(
+          Directionality.of(
+            tester.element(find.byKey(LumeRamadanTool.summaryKey)),
+          ),
+          TextDirection.rtl,
+        );
+      });
+
+      testWidgets('in Urdu at 200% text scale, still no overflow', (
+        WidgetTester tester,
+      ) async {
+        await pumpLume(
+          tester,
+          LumeRamadanTool(
+            request: LumeToolRequest(
+              feature: _ramadanFeature,
+              user: const LumeUserContext(islamic: true),
+              branch: 'tools',
+            ),
+          ),
+          locale: const Locale('ur'),
+          textScale: 2,
+          surface: const Size(390, 4400),
+        );
+        await tester.pumpAndSettle();
+        expect(tester.takeException(), isNull);
+      });
+    },
+  );
 
   group('the tool, inside Ramadan (day 11, 1448)', () {
     testWidgets('the day\'s timeline: Suhoor, five prayers, Iftar — no '

@@ -122,7 +122,8 @@ class _LumeZakatToolState extends ConsumerState<LumeZakatTool> {
             .countries
             ?.currencyOf(r.user.country) ??
         f.currency;
-    final LumeCurrency currency = LumeCurrency.tryOf(ccy) ?? LumeCurrency.of('USD');
+    final LumeCurrency currency =
+        LumeCurrency.tryOf(ccy) ?? LumeCurrency.of('USD');
     final double usdRate = lumeRatePerUsd(currency.code);
     final LumeMetals metals = LumeMetals.forCurrency(currency.code);
 
@@ -195,7 +196,8 @@ class _LumeZakatToolState extends ConsumerState<LumeZakatTool> {
         sensitive: r.feature.sensitive,
         kind: LumeShareKind.reminder,
         text: '${l.zakatPayable}: ${money(z.due)}',
-        source: '${l.zakatRateLabel}: ${f.percent(LumeZakatRules.rate * 100, decimals: 1)}',
+        source:
+            '${l.zakatRateLabel}: ${f.percent(LumeZakatRules.rate * 100, decimals: 1)}',
       ),
       // `exportRows('zakat')` — the eight breakdown rows, figures rounded.
       exportFile: () => LumeExportFile.csv(

@@ -12,7 +12,11 @@ void main() {
     test('a goal round-trips through its fields', () {
       final GoalsHarness h = GoalsHarness();
       addTearDown(h.dispose);
-      final Goal g = h.add(name: 'Umrah trip', note: 'By Ramadan', target: rs(240000));
+      final Goal g = h.add(
+        name: 'Umrah trip',
+        note: 'By Ramadan',
+        target: rs(240000),
+      );
       expect(g.name, 'Umrah trip');
       expect(g.note, 'By Ramadan');
       expect(g.target, rs(240000));
@@ -83,7 +87,11 @@ void main() {
       addTearDown(h.dispose);
       final Goal g = h.add(target: rs(1000));
       h.repo.setState(g.id, GoalState.abandoned, version: g.version);
-      final GoalsResult<GoalsWrite> r = h.repo.addContribution(g.id, rs(100), kToday);
+      final GoalsResult<GoalsWrite> r = h.repo.addContribution(
+        g.id,
+        rs(100),
+        kToday,
+      );
       expect(r.ok, isFalse);
       expect(r.failure!.kind, GoalsFailureKind.closed);
     });
@@ -131,16 +139,19 @@ void main() {
       expect(s.nextComplete?.goal.id, a.id);
     });
 
-    test('this month sums only contributions in the reader\'s calendar month', () {
-      final GoalsHarness h = GoalsHarness();
-      addTearDown(h.dispose);
-      final Goal g = h.add(target: rs(10000));
-      h.contribute(g.id, rs(300), kToday);
-      h.contribute(g.id, rs(700), d(8, 1)); // last month
+    test(
+      'this month sums only contributions in the reader\'s calendar month',
+      () {
+        final GoalsHarness h = GoalsHarness();
+        addTearDown(h.dispose);
+        final Goal g = h.add(target: rs(10000));
+        h.contribute(g.id, rs(300), kToday);
+        h.contribute(g.id, rs(700), d(8, 1)); // last month
 
-      final GoalsCurrencySummary s = h.book(kToday).summary(pkr);
-      expect(s.thisMonth, rs(300));
-    });
+        final GoalsCurrencySummary s = h.book(kToday).summary(pkr);
+        expect(s.thisMonth, rs(300));
+      },
+    );
 
     test('projected months is null before a month of history exists', () {
       final GoalsHarness h = GoalsHarness();
@@ -163,18 +174,21 @@ void main() {
       expect(v.projectedMonths, 5);
     });
 
-    test('monthlyHistory is real and zero-filled, never the reference\'s literal array', () {
-      final GoalsHarness h = GoalsHarness();
-      addTearDown(h.dispose);
-      final Goal g = h.add(target: rs(10000));
-      h.contribute(g.id, rs(300), kToday);
+    test(
+      'monthlyHistory is real and zero-filled, never the reference\'s literal array',
+      () {
+        final GoalsHarness h = GoalsHarness();
+        addTearDown(h.dispose);
+        final Goal g = h.add(target: rs(10000));
+        h.contribute(g.id, rs(300), kToday);
 
-      final List<GoalsMonth>? months = h.book(kToday).months(pkr, count: 6);
-      expect(months, isNotNull);
-      expect(months!.length, 6);
-      expect(months.last.total, rs(300));
-      expect(months.first.total, LumeMoney.zero(pkr));
-    });
+        final List<GoalsMonth>? months = h.book(kToday).months(pkr, count: 6);
+        expect(months, isNotNull);
+        expect(months!.length, 6);
+        expect(months.last.total, rs(300));
+        expect(months.first.total, LumeMoney.zero(pkr));
+      },
+    );
   });
 
   group('delete and undo', () {
@@ -183,7 +197,10 @@ void main() {
       addTearDown(h.dispose);
       final Goal g = h.add(target: rs(1000));
       h.contribute(g.id, rs(100));
-      final GoalsResult<GoalsWrite> r = h.repo.deleteGoal(g.id, version: g.version);
+      final GoalsResult<GoalsWrite> r = h.repo.deleteGoal(
+        g.id,
+        version: g.version,
+      );
       expect(r.ok, isTrue);
       expect(h.book().goals, isEmpty);
     });
@@ -193,7 +210,10 @@ void main() {
       addTearDown(h.dispose);
       final Goal g = h.add(target: rs(1000));
       h.contribute(g.id, rs(100));
-      final GoalsResult<GoalsWrite> del = h.repo.deleteGoal(g.id, version: g.version);
+      final GoalsResult<GoalsWrite> del = h.repo.deleteGoal(
+        g.id,
+        version: g.version,
+      );
       final GoalsResult<void> u = h.repo.undo(del.value!);
       expect(u.ok, isTrue);
       expect(h.view(g.id).saved, rs(100));

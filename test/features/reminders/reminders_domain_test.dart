@@ -18,7 +18,11 @@ void main() {
     test('an entry round-trips through its fields', () async {
       final ReminderHarness h = ReminderHarness();
       addTearDown(h.dispose);
-      final ReminderEntry e = await h.add(label: 'Drink water', atHour: 14, atMinute: 30);
+      final ReminderEntry e = await h.add(
+        label: 'Drink water',
+        atHour: 14,
+        atMinute: 30,
+      );
       expect(e.label, 'Drink water');
       expect(e.atHour, 14);
       expect(e.atMinute, 30);
@@ -45,10 +49,15 @@ void main() {
       addTearDown(h.dispose);
       await h.add();
       h.store.run<void>((tx) {
-        tx.create('reminder.entry', 'bad-id', <String, Object?>{'schema': 'lume.other/1'});
+        tx.create('reminder.entry', 'bad-id', <String, Object?>{
+          'schema': 'lume.other/1',
+        });
       });
       final ReminderBook book = h.book();
-      expect(book.entries.length, 1); // the good one only; the bad one is a defect
+      expect(
+        book.entries.length,
+        1,
+      ); // the good one only; the bad one is a defect
     });
   });
 
@@ -67,21 +76,24 @@ void main() {
       expect(r.value!.entry!.version, 2);
     });
 
-    test('disabling cancels the scheduled notification without deleting the record', () async {
-      final ReminderHarness h = ReminderHarness();
-      addTearDown(h.dispose);
-      final ReminderEntry e = await h.add();
-      expect(h.scheduler.scheduled, contains(e.id.value));
-      final ReminderResult<ReminderWrite> r = await h.repo.setEnabled(
-        e.id,
-        false,
-        zoneId: ReminderHarness.zone,
-      );
-      expect(r.ok, isTrue);
-      expect(r.value!.entry!.enabled, isFalse);
-      expect(h.scheduler.scheduled, isNot(contains(e.id.value)));
-      expect(h.book().entries, hasLength(1)); // still there, just off
-    });
+    test(
+      'disabling cancels the scheduled notification without deleting the record',
+      () async {
+        final ReminderHarness h = ReminderHarness();
+        addTearDown(h.dispose);
+        final ReminderEntry e = await h.add();
+        expect(h.scheduler.scheduled, contains(e.id.value));
+        final ReminderResult<ReminderWrite> r = await h.repo.setEnabled(
+          e.id,
+          false,
+          zoneId: ReminderHarness.zone,
+        );
+        expect(r.ok, isTrue);
+        expect(r.value!.entry!.enabled, isFalse);
+        expect(h.scheduler.scheduled, isNot(contains(e.id.value)));
+        expect(h.book().entries, hasLength(1)); // still there, just off
+      },
+    );
   });
 
   group('delete and undo', () {
@@ -135,68 +147,77 @@ void main() {
       expect(h.store.durable, isTrue);
     });
 
-    test('a record written by one instance is read back by a fresh one, same file', () async {
-      final Directory dir = await Directory.systemTemp.createTemp('lume_reminders_test');
-      final String path = '${dir.path}/reminders.db';
-      addTearDown(() async {
-        try {
-          await dir.delete(recursive: true);
-        } on FileSystemException {
-          // Windows can hold the handle briefly after close(); harmless.
-        }
-      });
+    test(
+      'a record written by one instance is read back by a fresh one, same file',
+      () async {
+        final Directory dir = await Directory.systemTemp.createTemp(
+          'lume_reminders_test',
+        );
+        final String path = '${dir.path}/reminders.db';
+        addTearDown(() async {
+          try {
+            await dir.delete(recursive: true);
+          } on FileSystemException {
+            // Windows can hold the handle briefly after close(); harmless.
+          }
+        });
 
-      Future<Database> open(String p) => databaseFactoryFfi.openDatabase(
-        path,
-        options: OpenDatabaseOptions(
-          version: 1,
-          onCreate: (Database db, int v) => db.execute(
-            'CREATE TABLE records ('
-            'collection TEXT NOT NULL, id TEXT NOT NULL, fields TEXT NOT NULL, '
-            'version INTEGER NOT NULL, created_at TEXT NOT NULL, updated_at TEXT NOT NULL, '
-            'PRIMARY KEY (collection, id))',
+        Future<Database> open(String p) => databaseFactoryFfi.openDatabase(
+          path,
+          options: OpenDatabaseOptions(
+            version: 1,
+            onCreate: (Database db, int v) => db.execute(
+              'CREATE TABLE records ('
+              'collection TEXT NOT NULL, id TEXT NOT NULL, fields TEXT NOT NULL, '
+              'version INTEGER NOT NULL, created_at TEXT NOT NULL, updated_at TEXT NOT NULL, '
+              'PRIMARY KEY (collection, id))',
+            ),
           ),
-        ),
-      );
+        );
 
-      final LumeSqliteRecordRepository first = LumeSqliteRecordRepository(
-        path: path,
-        now: () => kFixtureNow,
-        open: open,
-      );
-      final ReminderRepository firstRepo = ReminderRepository(
-        first,
-        LumeFakeReminderScheduler(),
-        now: () => kFixtureNow,
-      );
-      firstRepo.open();
-      final ReminderResult<ReminderWrite> r = await firstRepo.add(
-        label: 'Survives a restart',
-        atHour: 7,
-        atMinute: 15,
-        zoneId: ReminderHarness.zone,
-      );
-      expect(r.ok, isTrue);
-      await first.flush();
-      await first.dispose();
+        final LumeSqliteRecordRepository first = LumeSqliteRecordRepository(
+          path: path,
+          now: () => kFixtureNow,
+          open: open,
+        );
+        final ReminderRepository firstRepo = ReminderRepository(
+          first,
+          LumeFakeReminderScheduler(),
+          now: () => kFixtureNow,
+        );
+        firstRepo.open();
+        final ReminderResult<ReminderWrite> r = await firstRepo.add(
+          label: 'Survives a restart',
+          atHour: 7,
+          atMinute: 15,
+          zoneId: ReminderHarness.zone,
+        );
+        expect(r.ok, isTrue);
+        await first.flush();
+        await first.dispose();
 
-      final LumeSqliteRecordRepository second = LumeSqliteRecordRepository(
-        path: path,
-        now: () => kFixtureNow,
-        open: open,
-      );
-      final ReminderRepository secondRepo = ReminderRepository(
-        second,
-        LumeFakeReminderScheduler(),
-        now: () => kFixtureNow,
-      );
-      secondRepo.open();
-      for (int i = 0; i < 200 && secondRepo.view().loading; i++) {
-        await Future<void>.delayed(const Duration(milliseconds: 5));
-      }
-      expect(secondRepo.view().loading, isFalse, reason: 'hydration never finished');
-      expect(secondRepo.view().entries.single.label, 'Survives a restart');
-      await second.dispose();
-    });
+        final LumeSqliteRecordRepository second = LumeSqliteRecordRepository(
+          path: path,
+          now: () => kFixtureNow,
+          open: open,
+        );
+        final ReminderRepository secondRepo = ReminderRepository(
+          second,
+          LumeFakeReminderScheduler(),
+          now: () => kFixtureNow,
+        );
+        secondRepo.open();
+        for (int i = 0; i < 200 && secondRepo.view().loading; i++) {
+          await Future<void>.delayed(const Duration(milliseconds: 5));
+        }
+        expect(
+          secondRepo.view().loading,
+          isFalse,
+          reason: 'hydration never finished',
+        );
+        expect(secondRepo.view().entries.single.label, 'Survives a restart');
+        await second.dispose();
+      },
+    );
   });
 }

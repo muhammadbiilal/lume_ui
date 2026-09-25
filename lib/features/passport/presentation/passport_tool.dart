@@ -148,7 +148,9 @@ class _LumePassportToolState extends ConsumerState<LumePassportTool> {
   Future<void> _run({required bool camera}) async {
     if (_busy) return;
     final AppLocalizations l = AppLocalizations.of(context);
-    final LumePassportPhotoSource source = ref.read(passportPhotoSourceProvider);
+    final LumePassportPhotoSource source = ref.read(
+      passportPhotoSourceProvider,
+    );
     final LumePassportSpec spec = LumePassportSpec.forCountry(
       widget.request.user.country,
     );
@@ -275,7 +277,11 @@ class _LumePassportToolState extends ConsumerState<LumePassportTool> {
               key: LumePassportTool.contextKey,
               items: <LumeContextItem>[
                 LumeContextItem(
-                  label: LumeToolScreen.countryName(context, ref, r.user.country),
+                  label: LumeToolScreen.countryName(
+                    context,
+                    ref,
+                    r.user.country,
+                  ),
                   icon: LumeIcons.globe,
                   onTap: () => showLumePersonalise(context),
                 ),
@@ -288,7 +294,10 @@ class _LumePassportToolState extends ConsumerState<LumePassportTool> {
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: <Widget>[
                   if (photo == null)
-                    _GuideFrame(key: LumePassportTool.guideKey, hint: l.passportGuideHint)
+                    _GuideFrame(
+                      key: LumePassportTool.guideKey,
+                      hint: l.passportGuideHint,
+                    )
                   else
                     _PreviewFrame(
                       key: LumePassportTool.previewKey,
@@ -301,7 +310,11 @@ class _LumePassportToolState extends ConsumerState<LumePassportTool> {
                     items: <(String, String)>[
                       (
                         l.passportCountry,
-                        LumeToolScreen.countryName(context, ref, r.user.country),
+                        LumeToolScreen.countryName(
+                          context,
+                          ref,
+                          r.user.country,
+                        ),
                       ),
                       (l.passportSize, spec.sizeLabel),
                       (l.passportBackground, l.passportWhite),
@@ -406,9 +419,21 @@ class _LumePassportToolState extends ConsumerState<LumePassportTool> {
                 LumeColumn(label: l.passportDpi, numeric: true),
               ],
               rows: <List<String>>[
-                <String>[l.passportPassport, LumePassportSpec.intl.sizeLabel, '600'],
-                <String>[l.passportVisaUS, LumePassportSpec.us.sizeLabel, '600'],
-                <String>[l.passportIdCard, LumePassportSpec.intl.sizeLabel, '600'],
+                <String>[
+                  l.passportPassport,
+                  LumePassportSpec.intl.sizeLabel,
+                  '600',
+                ],
+                <String>[
+                  l.passportVisaUS,
+                  LumePassportSpec.us.sizeLabel,
+                  '600',
+                ],
+                <String>[
+                  l.passportIdCard,
+                  LumePassportSpec.intl.sizeLabel,
+                  '600',
+                ],
               ],
             ),
           ),

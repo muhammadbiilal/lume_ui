@@ -41,7 +41,9 @@ void main() {
     test('a name over the limit is refused', () {
       final VaccinesHarness h = VaccinesHarness();
       addTearDown(h.dispose);
-      final VaccinesResult<VaccinesWrite> r = h.tryAdd(name: 'x' * (kVaccinesNameMax + 1));
+      final VaccinesResult<VaccinesWrite> r = h.tryAdd(
+        name: 'x' * (kVaccinesNameMax + 1),
+      );
       expect(r.ok, isFalse);
       expect(r.failure!.field, 'name');
       expect(r.failure!.reason, 'long');
@@ -50,7 +52,12 @@ void main() {
     test('optional fields left blank decode as null, never empty strings', () {
       final VaccinesHarness h = VaccinesHarness();
       addTearDown(h.dispose);
-      final VaccineRecord r = h.add(name: 'Tetanus', forWhom: null, dose: null, provider: null);
+      final VaccineRecord r = h.add(
+        name: 'Tetanus',
+        forWhom: null,
+        dose: null,
+        provider: null,
+      );
       expect(r.forWhom, isNull);
       expect(r.dose, isNull);
       expect(r.provider, isNull);
@@ -129,12 +136,23 @@ void main() {
     test('upcoming is the still-due records, soonest first', () {
       final VaccinesHarness h = VaccinesHarness();
       addTearDown(h.dispose);
-      final VaccineRecord later = h.add(name: 'Later', status: VaccineStatus.due, date: d(12, 1));
-      final VaccineRecord soon = h.add(name: 'Soon', status: VaccineStatus.due, date: d(9, 10));
+      final VaccineRecord later = h.add(
+        name: 'Later',
+        status: VaccineStatus.due,
+        date: d(12, 1),
+      );
+      final VaccineRecord soon = h.add(
+        name: 'Soon',
+        status: VaccineStatus.due,
+        date: d(9, 10),
+      );
       h.add(name: 'Given', status: VaccineStatus.given, date: d(1, 1));
       final List<VaccineView>? up = h.book().upcoming();
       expect(up, isNotNull);
-      expect(up!.map((VaccineView v) => v.record.id), <dynamic>[soon.id, later.id]);
+      expect(up!.map((VaccineView v) => v.record.id), <dynamic>[
+        soon.id,
+        later.id,
+      ]);
     });
   });
 
@@ -142,7 +160,11 @@ void main() {
     test('edits every field, including switching due to given', () {
       final VaccinesHarness h = VaccinesHarness();
       addTearDown(h.dispose);
-      final VaccineRecord r = h.add(name: 'MMR', status: VaccineStatus.due, date: d(1, 1));
+      final VaccineRecord r = h.add(
+        name: 'MMR',
+        status: VaccineStatus.due,
+        date: d(1, 1),
+      );
       final VaccinesResult<VaccinesWrite> edited = h.repo.edit(
         r.id,
         VaccineDraft(name: 'MMR', date: d(2, 2), status: VaccineStatus.given),
@@ -158,7 +180,11 @@ void main() {
       final VaccinesHarness h = VaccinesHarness();
       addTearDown(h.dispose);
       final VaccineRecord r = h.add();
-      h.repo.edit(r.id, VaccineDraft(name: 'MMR', date: d(2, 2)), version: r.version);
+      h.repo.edit(
+        r.id,
+        VaccineDraft(name: 'MMR', date: d(2, 2)),
+        version: r.version,
+      );
       final VaccinesResult<VaccinesWrite> stale = h.repo.edit(
         r.id,
         VaccineDraft(name: 'MMR again', date: d(3, 3)),
@@ -169,36 +195,58 @@ void main() {
     });
   });
 
-  group('delete, undo — the repository stays uniform even though the UI never offers Undo', () {
-    test('deleting removes the record', () {
-      final VaccinesHarness h = VaccinesHarness();
-      addTearDown(h.dispose);
-      final VaccineRecord r = h.add();
-      final VaccinesResult<VaccinesWrite> del = h.repo.delete(r.id, version: r.version);
-      expect(del.ok, isTrue);
-      expect(h.repo.view().records, isEmpty);
-    });
+  group(
+    'delete, undo — the repository stays uniform even though the UI never offers Undo',
+    () {
+      test('deleting removes the record', () {
+        final VaccinesHarness h = VaccinesHarness();
+        addTearDown(h.dispose);
+        final VaccineRecord r = h.add();
+        final VaccinesResult<VaccinesWrite> del = h.repo.delete(
+          r.id,
+          version: r.version,
+        );
+        expect(del.ok, isTrue);
+        expect(h.repo.view().records, isEmpty);
+      });
 
-    test('deleting with a stale version is a conflict, not a silent success', () {
-      final VaccinesHarness h = VaccinesHarness();
-      addTearDown(h.dispose);
-      final VaccineRecord r = h.add();
-      h.repo.edit(r.id, VaccineDraft(name: 'MMR', date: d(2, 2)), version: r.version);
-      final VaccinesResult<VaccinesWrite> del = h.repo.delete(r.id, version: r.version);
-      expect(del.ok, isFalse);
-      expect(del.failure!.kind, VaccinesFailureKind.conflict);
-    });
+      test(
+        'deleting with a stale version is a conflict, not a silent success',
+        () {
+          final VaccinesHarness h = VaccinesHarness();
+          addTearDown(h.dispose);
+          final VaccineRecord r = h.add();
+          h.repo.edit(
+            r.id,
+            VaccineDraft(name: 'MMR', date: d(2, 2)),
+            version: r.version,
+          );
+          final VaccinesResult<VaccinesWrite> del = h.repo.delete(
+            r.id,
+            version: r.version,
+          );
+          expect(del.ok, isFalse);
+          expect(del.failure!.kind, VaccinesFailureKind.conflict);
+        },
+      );
 
-    test('the domain layer can still reverse a delete, even though no screen calls it', () {
-      final VaccinesHarness h = VaccinesHarness();
-      addTearDown(h.dispose);
-      final VaccineRecord r = h.add();
-      final VaccinesResult<VaccinesWrite> del = h.repo.delete(r.id, version: r.version);
-      final VaccinesResult<void> u = h.repo.undo(del.value!);
-      expect(u.ok, isTrue);
-      expect(h.repo.view().records, hasLength(1));
-    });
-  });
+      test(
+        'the domain layer can still reverse a delete, even though no screen calls it',
+        () {
+          final VaccinesHarness h = VaccinesHarness();
+          addTearDown(h.dispose);
+          final VaccineRecord r = h.add();
+          final VaccinesResult<VaccinesWrite> del = h.repo.delete(
+            r.id,
+            version: r.version,
+          );
+          final VaccinesResult<void> u = h.repo.undo(del.value!);
+          expect(u.ok, isTrue);
+          expect(h.repo.view().records, hasLength(1));
+        },
+      );
+    },
+  );
 
   group('Option B — non-durability', () {
     test('the repository reports itself as not durable', () {

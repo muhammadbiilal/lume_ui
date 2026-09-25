@@ -22,7 +22,9 @@ void main() {
   setUpAll(loadLumeFonts);
 
   group('first use', () {
-    testWidgets('starts empty, nothing rotated in from a fixture', (WidgetTester t) async {
+    testWidgets('starts empty, nothing rotated in from a fixture', (
+      WidgetTester t,
+    ) async {
       final MedsWorld w = MedsWorld();
       await pumpMeds(t, w);
       expect(find.byKey(LumeMedsTool.emptyKey), findsOneWidget);
@@ -33,7 +35,9 @@ void main() {
   });
 
   group('adding a medication', () {
-    testWidgets('fills the form, saves, and shows up in the list', (WidgetTester t) async {
+    testWidgets('fills the form, saves, and shows up in the list', (
+      WidgetTester t,
+    ) async {
       final MedsWorld w = MedsWorld();
       await pumpMeds(t, w);
       await tapShown(t, find.byKey(LumeMedsTool.addKey));
@@ -44,7 +48,10 @@ void main() {
       await t.pumpAndSettle();
 
       await tapShown(t, find.byKey(LumeMedsTool.scheduleField));
-      await tapShown(t, find.byKey(MedsSheetKeys.scheduleOption(MedsSchedule.twice)));
+      await tapShown(
+        t,
+        find.byKey(MedsSheetKeys.scheduleOption(MedsSchedule.twice)),
+      );
 
       await tapShown(t, find.byKey(LumeMedsTool.saveKey));
 
@@ -59,7 +66,9 @@ void main() {
       w.dispose();
     });
 
-    testWidgets('an empty name is refused, nothing is written', (WidgetTester t) async {
+    testWidgets('an empty name is refused, nothing is written', (
+      WidgetTester t,
+    ) async {
       final MedsWorld w = MedsWorld();
       await pumpMeds(t, w);
       await tapShown(t, find.byKey(LumeMedsTool.addKey));
@@ -72,12 +81,17 @@ void main() {
   });
 
   group('editing a medication', () {
-    testWidgets('changes are written back, not duplicated', (WidgetTester t) async {
+    testWidgets('changes are written back, not duplicated', (
+      WidgetTester t,
+    ) async {
       final MedsWorld w = MedsWorld();
       w.add('Vitamin D', dose: '50,000 IU', dosesLeft: 8);
       await pumpMeds(t, w);
 
-      await tapShown(t, find.byKey(LumeMedsTool.row(w.repo.view().medications.single.id.value)));
+      await tapShown(
+        t,
+        find.byKey(LumeMedsTool.row(w.repo.view().medications.single.id.value)),
+      );
       expect(find.byKey(LumeMedsTool.medicationKey), findsOneWidget);
       // The Edit action opens the same form pre-filled.
       await tapShown(t, find.text('Edit'));

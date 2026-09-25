@@ -84,11 +84,15 @@ void main() {
     ) async {
       await pumpMediaSaver(tester);
 
-      expect(inKey(LumeMediaSaverTool.fieldKey, find.byType(EditableText)),
-          findsOneWidget);
+      expect(
+        inKey(LumeMediaSaverTool.fieldKey, find.byType(EditableText)),
+        findsOneWidget,
+      );
       expect(find.byKey(LumeMediaSaverTool.noticeKey), findsOneWidget);
       expect(
-        tester.widget<LumeNotice>(find.byKey(LumeMediaSaverTool.noticeKey)).kind,
+        tester
+            .widget<LumeNotice>(find.byKey(LumeMediaSaverTool.noticeKey))
+            .kind,
         LumeNoticeKind.info,
       );
 
@@ -149,7 +153,10 @@ void main() {
       );
       await tester.tap(save);
       await tester.pump();
-      final String first = tester.widget<LumeToast>(find.byType(LumeToast)).data.message;
+      final String first = tester
+          .widget<LumeToast>(find.byType(LumeToast))
+          .data
+          .message;
       await tester.pump(const Duration(seconds: 3));
 
       await tester.enterText(
@@ -158,7 +165,10 @@ void main() {
       );
       await tester.tap(save);
       await tester.pump();
-      final String second = tester.widget<LumeToast>(find.byType(LumeToast)).data.message;
+      final String second = tester
+          .widget<LumeToast>(find.byType(LumeToast))
+          .data
+          .message;
 
       expect(first, second);
       await tester.pump(const Duration(seconds: 3));
@@ -167,14 +177,19 @@ void main() {
     testWidgets('there is no share action — there is nothing honest for '
         'this tool to share', (WidgetTester tester) async {
       await pumpMediaSaver(tester);
-      expect(find.byWidgetPredicate((Widget w) => w is LumeShareCardArt), findsNothing);
+      expect(
+        find.byWidgetPredicate((Widget w) => w is LumeShareCardArt),
+        findsNothing,
+      );
     });
 
     testWidgets('in Urdu the field and notice run right to left, without '
         'overflow', (WidgetTester tester) async {
       await pumpMediaSaver(tester, locale: const Locale('ur'));
       expect(
-        Directionality.of(tester.element(find.byKey(LumeMediaSaverTool.noticeKey))),
+        Directionality.of(
+          tester.element(find.byKey(LumeMediaSaverTool.noticeKey)),
+        ),
         TextDirection.rtl,
       );
       expectNoOverflow(tester);

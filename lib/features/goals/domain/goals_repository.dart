@@ -183,10 +183,14 @@ class GoalsRepository {
     final List<LumeCollectionView> views = <LumeCollectionView>[
       for (final String c in GoalsCollections.all) _store.view(c),
     ];
-    if (views.any((LumeCollectionView v) => v.status == LumeCollectionStatus.error)) {
+    if (views.any(
+      (LumeCollectionView v) => v.status == LumeCollectionStatus.error,
+    )) {
       return const GoalsSnapshot(status: LumeCollectionStatus.error);
     }
-    if (views.any((LumeCollectionView v) => v.status == LumeCollectionStatus.loading)) {
+    if (views.any(
+      (LumeCollectionView v) => v.status == LumeCollectionStatus.loading,
+    )) {
       return const GoalsSnapshot(status: LumeCollectionStatus.loading);
     }
     final List<GoalsDefect> defects = <GoalsDefect>[];
@@ -253,7 +257,12 @@ class GoalsRepository {
       // dropped or converted.
       throw const GoalsFailure.validation('currency', 'hasContributions');
     }
-    final Goal now = _goal(v.goal.id, draft, v.goal.createdAt, state: v.goal.state);
+    final Goal now = _goal(
+      v.goal.id,
+      draft,
+      v.goal.createdAt,
+      state: v.goal.state,
+    );
     final LumeRecord r = d.tx.update(
       GoalsCollections.goals,
       id.value,
@@ -286,23 +295,25 @@ class GoalsRepository {
   /// Delete a goal made by mistake: the goal and every contribution that
   /// names it, in one transaction. [undo] brings back the same ids and
   /// versions.
-  GoalsResult<GoalsWrite> deleteGoal(
-    LumeRecordId id, {
-    required int version,
-  }) => _write<Goal>((_Data d) {
-    final GoalView v = d.view(id);
-    for (final LumeRecord r in d.tx.all(GoalsCollections.contributions)) {
-      if (r['goal'] == id.value) {
-        d.tx.delete(GoalsCollections.contributions, r.id, expectVersion: r.version);
-      }
-    }
-    d.tx.delete(GoalsCollections.goals, id.value, expectVersion: version);
-    d.goals.removeWhere((Goal x) => x.id == id);
-    d.contributions.removeWhere((GoalContribution x) => x.goalId == id);
-    d.defects.removeWhere((GoalsDefect x) => x.goalId == id.value);
-    d.damagedBefore.remove(id.value);
-    return v.goal;
-  });
+  GoalsResult<GoalsWrite> deleteGoal(LumeRecordId id, {required int version}) =>
+      _write<Goal>((_Data d) {
+        final GoalView v = d.view(id);
+        for (final LumeRecord r in d.tx.all(GoalsCollections.contributions)) {
+          if (r['goal'] == id.value) {
+            d.tx.delete(
+              GoalsCollections.contributions,
+              r.id,
+              expectVersion: r.version,
+            );
+          }
+        }
+        d.tx.delete(GoalsCollections.goals, id.value, expectVersion: version);
+        d.goals.removeWhere((Goal x) => x.id == id);
+        d.contributions.removeWhere((GoalContribution x) => x.goalId == id);
+        d.defects.removeWhere((GoalsDefect x) => x.goalId == id.value);
+        d.damagedBefore.remove(id.value);
+        return v.goal;
+      });
 
   // ---- contributions ---------------------------------------------------------
 
@@ -315,7 +326,10 @@ class GoalsRepository {
     (_Data d) {
       final GoalView v = d.sound(goalId);
       if (v.goal.state != GoalState.active) {
-        throw GoalsFailure(GoalsFailureKind.closed, ids: <LumeRecordId>[goalId]);
+        throw GoalsFailure(
+          GoalsFailureKind.closed,
+          ids: <LumeRecordId>[goalId],
+        );
       }
       if (amount.isZero) {
         throw const GoalsFailure.validation('amount', 'zero');
@@ -365,14 +379,19 @@ class GoalsRepository {
       GoalsCollections.contributions,
       c.id.value,
       c
-          .withState(voided ? GoalContributionState.voided : GoalContributionState.active)
+          .withState(
+            voided
+                ? GoalContributionState.voided
+                : GoalContributionState.active,
+          )
           .toFields(),
       expectVersion: version,
     );
     final GoalContribution stored = GoalContribution.decode(r);
     d.contributions[d.contributions.indexWhere(
-      (GoalContribution x) => x.id == c.id,
-    )] = stored;
+          (GoalContribution x) => x.id == c.id,
+        )] =
+        stored;
     return stored;
   });
 
@@ -425,18 +444,22 @@ class GoalsRepository {
     String? idempotencyKey,
     String? fingerprint,
   }) {
-    final LumeTxResult<T> r = _store.run<T>((LumeRecordTx tx) {
-      try {
-        final _Data d = _Data(tx);
-        final T v = body(d);
-        _verify(d);
-        return v;
-      } on GoalsFailure catch (f) {
-        tx.reject(f);
-      } on LumeMoneyException catch (e) {
-        tx.reject(GoalsFailure(GoalsFailureKind.overflow, cause: e));
-      }
-    }, idempotencyKey: idempotencyKey, fingerprint: fingerprint);
+    final LumeTxResult<T> r = _store.run<T>(
+      (LumeRecordTx tx) {
+        try {
+          final _Data d = _Data(tx);
+          final T v = body(d);
+          _verify(d);
+          return v;
+        } on GoalsFailure catch (f) {
+          tx.reject(f);
+        } on LumeMoneyException catch (e) {
+          tx.reject(GoalsFailure(GoalsFailureKind.overflow, cause: e));
+        }
+      },
+      idempotencyKey: idempotencyKey,
+      fingerprint: fingerprint,
+    );
     if (!r.ok) return GoalsResult<GoalsWrite>.failed(_map(r.failure!));
     final T v = r.value as T;
     return GoalsResult<GoalsWrite>.ok(
@@ -459,7 +482,9 @@ class GoalsRepository {
     if (fresh.isNotEmpty) {
       throw GoalsFailure(
         GoalsFailureKind.damaged,
-        ids: <LumeRecordId>[for (final GoalsDamage x in fresh) ?LumeRecordId.tryParse(x.goal)],
+        ids: <LumeRecordId>[
+          for (final GoalsDamage x in fresh) ?LumeRecordId.tryParse(x.goal),
+        ],
         cause: <String>[for (final GoalsDamage x in fresh) x.reason],
       );
     }
@@ -478,8 +503,7 @@ class GoalsRepository {
 
   static GoalsFailure _map(LumeTxFailure f) => switch (f.kind) {
     LumeTxFailureKind.rejected => f.detail! as GoalsFailure,
-    LumeTxFailureKind.conflict ||
-    LumeTxFailureKind.duplicateId => GoalsFailure(
+    LumeTxFailureKind.conflict || LumeTxFailureKind.duplicateId => GoalsFailure(
       GoalsFailureKind.conflict,
       ids: <LumeRecordId>[?LumeRecordId.tryParse(f.id ?? '')],
     ),

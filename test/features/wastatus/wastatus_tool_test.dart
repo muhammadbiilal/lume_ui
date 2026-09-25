@@ -108,10 +108,10 @@ void main() {
       final LumeRelatedTools rail = tester.widget<LumeRelatedTools>(
         find.byKey(LumeWastatusTool.relatedKey),
       );
-      expect(
-        rail.tools.map((LumeRelatedTool t) => t.id),
-        <String>['mediasaver', 'docscan'],
-      );
+      expect(rail.tools.map((LumeRelatedTool t) => t.id), <String>[
+        'mediasaver',
+        'docscan',
+      ]);
       expect(
         find.text(LumeFeatureStrings.name(l, 'mediasaver')),
         findsOneWidget,
@@ -170,11 +170,7 @@ void main() {
       '200% text scale in Arabic (RTL and long text together) still renders '
       'cleanly',
       (WidgetTester tester) async {
-        await pumpWastatus(
-          tester,
-          locale: const Locale('ar'),
-          textScale: 2.0,
-        );
+        await pumpWastatus(tester, locale: const Locale('ar'), textScale: 2.0);
         expect(tester.takeException(), isNull);
       },
     );

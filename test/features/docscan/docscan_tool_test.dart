@@ -40,15 +40,73 @@ final LumeFeature _docscanFeature = kLumeFeatures.firstWhere(
 // be an image codecs can actually open, the same reasoning `passport_tool_
 // test.dart` settled on for its own capture fixtures.
 final Uint8List _jpeg = Uint8List.fromList(<int>[
-  0x89, 0x50, 0x4E, 0x47, 0x0D, 0x0A, 0x1A, 0x0A,
-  0x00, 0x00, 0x00, 0x0D, 0x49, 0x48, 0x44, 0x52,
-  0x00, 0x00, 0x00, 0x01, 0x00, 0x00, 0x00, 0x01,
-  0x08, 0x06, 0x00, 0x00, 0x00, 0x1F, 0x15, 0xC4,
-  0x89, 0x00, 0x00, 0x00, 0x0D, 0x49, 0x44, 0x41,
-  0x54, 0x78, 0x9C, 0x62, 0x00, 0x01, 0x00, 0x00,
-  0x05, 0x00, 0x01, 0x0D, 0x0A, 0x2D, 0xB4, 0x00,
-  0x00, 0x00, 0x00, 0x49, 0x45, 0x4E, 0x44, 0xAE,
-  0x42, 0x60, 0x82,
+  0x89,
+  0x50,
+  0x4E,
+  0x47,
+  0x0D,
+  0x0A,
+  0x1A,
+  0x0A,
+  0x00,
+  0x00,
+  0x00,
+  0x0D,
+  0x49,
+  0x48,
+  0x44,
+  0x52,
+  0x00,
+  0x00,
+  0x00,
+  0x01,
+  0x00,
+  0x00,
+  0x00,
+  0x01,
+  0x08,
+  0x06,
+  0x00,
+  0x00,
+  0x00,
+  0x1F,
+  0x15,
+  0xC4,
+  0x89,
+  0x00,
+  0x00,
+  0x00,
+  0x0D,
+  0x49,
+  0x44,
+  0x41,
+  0x54,
+  0x78,
+  0x9C,
+  0x62,
+  0x00,
+  0x01,
+  0x00,
+  0x00,
+  0x05,
+  0x00,
+  0x01,
+  0x0D,
+  0x0A,
+  0x2D,
+  0xB4,
+  0x00,
+  0x00,
+  0x00,
+  0x00,
+  0x49,
+  0x45,
+  0x4E,
+  0x44,
+  0xAE,
+  0x42,
+  0x60,
+  0x82,
 ]);
 
 Future<void> pumpDocscan(
@@ -106,9 +164,7 @@ void main() {
       final LumeRecordingDocumentCamera camera = LumeRecordingDocumentCamera();
       await pumpDocscan(
         tester,
-        overrides: <Override>[
-          documentCameraProvider.overrideWithValue(camera),
-        ],
+        overrides: <Override>[documentCameraProvider.overrideWithValue(camera)],
       );
       expect(camera.requested, isEmpty);
       expect(find.byKey(LumeDocScanTool.emptyKey), findsOneWidget);
@@ -155,9 +211,7 @@ void main() {
       );
       await pumpDocscan(
         tester,
-        overrides: <Override>[
-          documentCameraProvider.overrideWithValue(camera),
-        ],
+        overrides: <Override>[documentCameraProvider.overrideWithValue(camera)],
       );
       await tester.tap(find.byKey(LumeDocScanTool.captureKey));
       await tester.pump();
@@ -191,9 +245,7 @@ void main() {
       );
       await pumpDocscan(
         tester,
-        overrides: <Override>[
-          documentCameraProvider.overrideWithValue(camera),
-        ],
+        overrides: <Override>[documentCameraProvider.overrideWithValue(camera)],
       );
       await tester.tap(find.byKey(LumeDocScanTool.galleryKey));
       await tester.pump();
@@ -221,9 +273,7 @@ void main() {
       );
       await pumpDocscan(
         tester,
-        overrides: <Override>[
-          documentCameraProvider.overrideWithValue(camera),
-        ],
+        overrides: <Override>[documentCameraProvider.overrideWithValue(camera)],
       );
       await tester.tap(find.byKey(LumeDocScanTool.captureKey));
       await tester.pump();
@@ -345,9 +395,7 @@ void main() {
       );
       await pumpDocscan(
         tester,
-        overrides: <Override>[
-          documentCameraProvider.overrideWithValue(camera),
-        ],
+        overrides: <Override>[documentCameraProvider.overrideWithValue(camera)],
       );
       await tester.tap(find.byKey(LumeDocScanTool.captureKey));
       await tester.pump();
@@ -381,10 +429,7 @@ void main() {
       // The remaining page keeps its own title — nothing was renumbered from
       // whichever page was removed, because there is nothing to renumber:
       // each row's number is worked out fresh from its position each build.
-      expect(
-        tester.widget<LumeRichRow>(rows).title,
-        l.docscanPageN(1),
-      );
+      expect(tester.widget<LumeRichRow>(rows).title, l.docscanPageN(1));
     });
 
     testWidgets('Clear all empties the pages and says so', (
@@ -399,9 +444,7 @@ void main() {
       );
       await pumpDocscan(
         tester,
-        overrides: <Override>[
-          documentCameraProvider.overrideWithValue(camera),
-        ],
+        overrides: <Override>[documentCameraProvider.overrideWithValue(camera)],
       );
       await tester.tap(find.byKey(LumeDocScanTool.captureKey));
       await tester.pump();
@@ -411,7 +454,10 @@ void main() {
       final AppLocalizations l = AppLocalizations.of(
         tester.element(find.byType(LumeDocScanTool)),
       );
-      expect(await pressAndHear(tester, LumeDocScanTool.clearKey), l.docscanCleared);
+      expect(
+        await pressAndHear(tester, LumeDocScanTool.clearKey),
+        l.docscanCleared,
+      );
       expect(find.byKey(LumeDocScanTool.emptyKey), findsOneWidget);
       expect(find.byKey(LumeDocScanTool.pagesKey), findsNothing);
     });
@@ -442,7 +488,10 @@ void main() {
         tester.element(find.byType(LumeDocScanTool)),
       );
       sharer.outcome = LumeDocShareOutcome.shared;
-      expect(await pressAndHear(tester, LumeDocScanTool.shareKey), l.shareShared);
+      expect(
+        await pressAndHear(tester, LumeDocScanTool.shareKey),
+        l.shareShared,
+      );
       expect(sharer.shared, hasLength(1));
       expect(sharer.shared.single, hasLength(1));
 
@@ -476,9 +525,7 @@ void main() {
         tester,
         locale: const Locale('ur'),
         textScale: 2,
-        overrides: <Override>[
-          documentCameraProvider.overrideWithValue(camera),
-        ],
+        overrides: <Override>[documentCameraProvider.overrideWithValue(camera)],
       );
       await tester.tap(find.byKey(LumeDocScanTool.captureKey));
       await tester.pump();

@@ -56,8 +56,7 @@ abstract final class LumeTaraweehTool {
   static const Key progressKey = ValueKey<String>('taraweeh.progress');
   static const Key calendarKey = ValueKey<String>('taraweeh.calendar');
 
-  static Widget open(LumeToolRequest request) =>
-      TaraweehTool(request: request);
+  static Widget open(LumeToolRequest request) => TaraweehTool(request: request);
 }
 
 class TaraweehTool extends ConsumerStatefulWidget {
@@ -156,7 +155,10 @@ class _TaraweehToolState extends ConsumerState<TaraweehTool> {
   @override
   Widget build(BuildContext context) {
     final AppLocalizations l = AppLocalizations.of(context);
-    final LumeFormatting f = LumeFormatting.of(context, countryCode: widget.request.user.country);
+    final LumeFormatting f = LumeFormatting.of(
+      context,
+      countryCode: widget.request.user.country,
+    );
     final LumeDate? today = _today(context);
     final TaraweehSnapshot snapshot = _repo.view();
 
@@ -202,7 +204,10 @@ class _TaraweehToolState extends ConsumerState<TaraweehTool> {
         valueSmall: l.taraweehNightsUnit,
         caption: l.taraweehBestCaption(stats.best),
         stats: <LumeStat>[
-          LumeStat(value: f.integer(stats.totalNights), label: l.taraweehStatTotal),
+          LumeStat(
+            value: f.integer(stats.totalNights),
+            label: l.taraweehStatTotal,
+          ),
           LumeStat(value: f.integer(stats.juzDone), label: l.taraweehStatJuz),
           LumeStat(
             value: stats.nextJuz == null ? '—' : f.integer(stats.nextJuz!),
@@ -258,7 +263,11 @@ class _TaraweehToolState extends ConsumerState<TaraweehTool> {
     ),
     LumeToolSection(
       title: l.taraweehCalendarTitle,
-      child: _TaraweehHeatGrid(key: LumeTaraweehTool.calendarKey, days: stats.heat, l: l),
+      child: _TaraweehHeatGrid(
+        key: LumeTaraweehTool.calendarKey,
+        days: stats.heat,
+        l: l,
+      ),
     ),
   ];
 }

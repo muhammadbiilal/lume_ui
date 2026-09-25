@@ -127,7 +127,9 @@ class _LumeQuranSearchToolState extends ConsumerState<LumeQuranSearchTool> {
             ),
           ),
           LumeToolSection(
-            title: results.isEmpty ? null : l.quransearchResultsTitle(results.length),
+            title: results.isEmpty
+                ? null
+                : l.quransearchResultsTitle(results.length),
             child: results.isEmpty
                 ? LumeToolState(
                     key: LumeQuranSearchTool.emptyKey,

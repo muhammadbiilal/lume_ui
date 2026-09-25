@@ -131,8 +131,16 @@ LumeAirQualityReading lumeAirQualityFor(String country, String city) {
   return LumeAirQualityReading(
     value: v,
     parts: <LumeAirQualityPart>[
-      LumeAirQualityPart(name: 'PM2.5', value: _jsRound(v * 0.62), unit: 'µg/m³'),
-      LumeAirQualityPart(name: 'PM10', value: _jsRound(v * 0.94), unit: 'µg/m³'),
+      LumeAirQualityPart(
+        name: 'PM2.5',
+        value: _jsRound(v * 0.62),
+        unit: 'µg/m³',
+      ),
+      LumeAirQualityPart(
+        name: 'PM10',
+        value: _jsRound(v * 0.94),
+        unit: 'µg/m³',
+      ),
       LumeAirQualityPart(name: 'O₃', value: _jsRound(v * 0.34), unit: 'ppb'),
       LumeAirQualityPart(name: 'NO₂', value: _jsRound(v * 0.22), unit: 'ppb'),
     ],

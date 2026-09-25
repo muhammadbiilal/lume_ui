@@ -141,15 +141,13 @@ class _LumeFaraidToolState extends ConsumerState<LumeFaraidTool> {
     final TextEditingController gross = _field(
       'gross',
       () => LumeFaraidTool.jsNumber(
-        LumeFaraidRules.openingGross(usdRate, currency).minor /
-            currency.scale,
+        LumeFaraidRules.openingGross(usdRate, currency).minor / currency.scale,
       ),
     );
     final TextEditingController debts = _field(
       'debts',
       () => LumeFaraidTool.jsNumber(
-        LumeFaraidRules.openingDebts(usdRate, currency).minor /
-            currency.scale,
+        LumeFaraidRules.openingDebts(usdRate, currency).minor / currency.scale,
       ),
     );
     final TextEditingController bequest = _field(
@@ -158,9 +156,7 @@ class _LumeFaraidToolState extends ConsumerState<LumeFaraidTool> {
     );
     final TextEditingController wives = _field(
       'wife',
-      () => LumeFaraidTool.jsNumber(
-        LumeFaraidRules.defaultWives.toDouble(),
-      ),
+      () => LumeFaraidTool.jsNumber(LumeFaraidRules.defaultWives.toDouble()),
     );
     final TextEditingController sons = _field(
       'son',
@@ -168,9 +164,8 @@ class _LumeFaraidToolState extends ConsumerState<LumeFaraidTool> {
     );
     final TextEditingController daughters = _field(
       'daughter',
-      () => LumeFaraidTool.jsNumber(
-        LumeFaraidRules.defaultDaughters.toDouble(),
-      ),
+      () =>
+          LumeFaraidTool.jsNumber(LumeFaraidRules.defaultDaughters.toDouble()),
     );
 
     final LumeFaraidResult result = LumeFaraidRules.compute(
@@ -352,8 +347,14 @@ class _LumeFaraidToolState extends ConsumerState<LumeFaraidTool> {
               value: money(result.net),
               caption: capped ? l.faraidCaptionCapped : l.faraidCaptionReady,
               stats: <LumeStat>[
-                LumeStat(value: money(result.inputs.gross), label: l.faraidGross),
-                LumeStat(value: money(result.inputs.debts), label: l.faraidDebts),
+                LumeStat(
+                  value: money(result.inputs.gross),
+                  label: l.faraidGross,
+                ),
+                LumeStat(
+                  value: money(result.inputs.debts),
+                  label: l.faraidDebts,
+                ),
                 LumeStat(value: money(result.bequest), label: l.faraidBequest),
               ],
             ),

@@ -73,8 +73,7 @@ class LumeNatSavingsTool extends ConsumerStatefulWidget {
   static const String defaultAmount = '1000000';
 
   @override
-  ConsumerState<LumeNatSavingsTool> createState() =>
-      _LumeNatSavingsToolState();
+  ConsumerState<LumeNatSavingsTool> createState() => _LumeNatSavingsToolState();
 }
 
 class _LumeNatSavingsToolState extends ConsumerState<LumeNatSavingsTool> {

@@ -59,10 +59,7 @@ class LumeQiblaReading {
 
   /// `null` where [LumeSolar.coordsFor] has no coordinates for [city] — said,
   /// not guessed from the country (§ "no fabricated data").
-  static LumeQiblaReading? at({
-    required String country,
-    required String city,
-  }) {
+  static LumeQiblaReading? at({required String country, required String city}) {
     final (double, double)? coords = LumeSolar.coordsFor(country, city);
     if (coords == null) return null;
     final (double lat, double lon) = coords;

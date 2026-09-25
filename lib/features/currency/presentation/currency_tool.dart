@@ -216,7 +216,9 @@ class _LumeCurrencyToolState extends ConsumerState<LumeCurrencyTool> {
 
     final LumeCurrencyBoard board = LumeCurrencyBoard.forPair(from, to);
     final double? result = LumeCurrencyBoard.convert(board.rate, _amount.text);
-    final String resultText = result == null ? '—' : f.number(result, decimals: 2);
+    final String resultText = result == null
+        ? '—'
+        : f.number(result, decimals: 2);
     final String rateText = f.number(board.rate, decimals: 4);
 
     final List<LumeCurrencyPair> pairs = LumeCurrencyTool.filter(
@@ -278,10 +280,7 @@ class _LumeCurrencyToolState extends ConsumerState<LumeCurrencyTool> {
                         ),
                       ),
                       const SizedBox(width: 10),
-                      _Swap(
-                        label: l.convertSwap,
-                        onTap: () => _swap(from, to),
-                      ),
+                      _Swap(label: l.convertSwap, onTap: () => _swap(from, to)),
                       const SizedBox(width: 10),
                       Expanded(
                         child: _ConvertSide(
@@ -595,9 +594,7 @@ class _Amount extends StatelessWidget {
             style: _figureStyle(context).copyWith(color: lume.text),
             cursorColor: lume.accent,
             inputFormatters: <TextInputFormatter>[
-              FilteringTextInputFormatter.allow(
-                RegExp('[0-9٠-٩۰-۹.,٫]'),
-              ),
+              FilteringTextInputFormatter.allow(RegExp('[0-9٠-٩۰-۹.,٫]')),
             ],
             decoration: const InputDecoration(
               isDense: true,

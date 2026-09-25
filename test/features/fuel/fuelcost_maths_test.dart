@@ -26,7 +26,14 @@ void main() {
   group('the default price is Fuel Prices\' own — the cross-tool link', () {
     test('every named market\'s default price is that market\'s own leading '
         'grade, read at call time rather than duplicated', () {
-      for (final String country in <String>['PK', 'GB', 'US', 'AE', 'SA', 'IN']) {
+      for (final String country in <String>[
+        'PK',
+        'GB',
+        'US',
+        'AE',
+        'SA',
+        'IN',
+      ]) {
         expect(
           LumeFuelCostRules.defaultPrice(country),
           LumeFuel.forCountry(country).main.price,

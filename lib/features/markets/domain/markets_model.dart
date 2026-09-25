@@ -98,8 +98,10 @@ class LumeQuotedAsset {
   /// plus `'1D'.charCodeAt(0) * 31 + '1D'.length * 7` (`49 * 31 + 2 * 7 =
   /// 1533`) and `0.004` is `seriesFor`'s non-FX base volatility at the `1D`
   /// range's own multiplier of `1`.
-  List<double> get sparkline =>
-      lumeWalk((price * 1000 + 0.5).floor() + 1533, 44, price, 0.004)
-          .take(20)
-          .toList(growable: false);
+  List<double> get sparkline => lumeWalk(
+    (price * 1000 + 0.5).floor() + 1533,
+    44,
+    price,
+    0.004,
+  ).take(20).toList(growable: false);
 }

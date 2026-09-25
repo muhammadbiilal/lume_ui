@@ -188,16 +188,13 @@ class _LumePackagesToolState extends ConsumerState<LumePackagesTool> {
       for (final LumeMobilePackage p in list) p.operatorName,
     }.toList();
 
-    final List<LumeMobilePackage> shown = LumePackagesTool.filter(
-      list,
-      operator: op,
-      query: _query.text,
-    )..sort(
-        (LumeMobilePackage a, LumeMobilePackage b) =>
-            sortDir == LumeSortDirection.ascending
-            ? LumePackagesTool.compare(a, b, sortBy)
-            : LumePackagesTool.compare(b, a, sortBy),
-      );
+    final List<LumeMobilePackage> shown =
+        LumePackagesTool.filter(list, operator: op, query: _query.text)..sort(
+          (LumeMobilePackage a, LumeMobilePackage b) =>
+              sortDir == LumeSortDirection.ascending
+              ? LumePackagesTool.compare(a, b, sortBy)
+              : LumePackagesTool.compare(b, a, sortBy),
+        );
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -303,17 +300,18 @@ class _LumePackagesToolState extends ConsumerState<LumePackagesTool> {
                         Expanded(
                           child: Text(
                             LumePackagesText.title(p),
-                            style: LumeType.tracked(
-                              LumeType.natural(
-                                context,
-                                context.lumeType.meta,
-                                size: 13,
-                              ),
-                              -0.022,
-                            ).copyWith(
-                              color: lume.text,
-                              fontWeight: FontWeight.w600,
-                            ),
+                            style:
+                                LumeType.tracked(
+                                  LumeType.natural(
+                                    context,
+                                    context.lumeType.meta,
+                                    size: 13,
+                                  ),
+                                  -0.022,
+                                ).copyWith(
+                                  color: lume.text,
+                                  fontWeight: FontWeight.w600,
+                                ),
                             maxLines: 1,
                             overflow: TextOverflow.ellipsis,
                           ),
@@ -321,15 +319,19 @@ class _LumePackagesToolState extends ConsumerState<LumePackagesTool> {
                         const SizedBox(width: 12),
                         LumeNumerals(
                           money(p.price),
-                          style: LumeType.numeric(
-                            LumeType.tracked(
-                              LumeType.natural(context, context.lumeType.label),
-                              -0.02,
-                            ),
-                          ).copyWith(
-                            color: lume.text2,
-                            fontWeight: FontWeight.w700,
-                          ),
+                          style:
+                              LumeType.numeric(
+                                LumeType.tracked(
+                                  LumeType.natural(
+                                    context,
+                                    context.lumeType.label,
+                                  ),
+                                  -0.02,
+                                ),
+                              ).copyWith(
+                                color: lume.text2,
+                                fontWeight: FontWeight.w700,
+                              ),
                         ),
                       ],
                     ),

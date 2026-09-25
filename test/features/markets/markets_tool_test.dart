@@ -178,9 +178,7 @@ void main() {
       await pumpMarkets(tester, locale: const Locale('ur'));
       expect(find.text('Bitcoin'), findsOneWidget);
       expect(
-        Directionality.of(
-          tester.element(find.byType(LumeRichRow).first),
-        ),
+        Directionality.of(tester.element(find.byType(LumeRichRow).first)),
         TextDirection.rtl,
       );
       expectNoOverflow(tester);

@@ -130,12 +130,15 @@ void main() {
   });
 
   group('below nisab', () {
-    test('nothing owned at all is not eligible, and due is zero, not refused', () {
-      final LumeZakatResult z = zakatFor('USD');
-      expect(z.net.minor, 0);
-      expect(z.eligible, isFalse);
-      expect(z.due, LumeMoney.zero(LumeCurrency.of('USD')));
-    });
+    test(
+      'nothing owned at all is not eligible, and due is zero, not refused',
+      () {
+        final LumeZakatResult z = zakatFor('USD');
+        expect(z.net.minor, 0);
+        expect(z.eligible, isFalse);
+        expect(z.due, LumeMoney.zero(LumeCurrency.of('USD')));
+      },
+    );
 
     test('cash alone, under the silver nisab, stays under', () {
       // $600 is under $642.978; $650 clears it.
@@ -149,11 +152,7 @@ void main() {
     });
 
     test('liabilities can take net below zero, never clamped', () {
-      final LumeZakatResult z = zakatFor(
-        'USD',
-        cash: 1000,
-        liabilities: 5000,
-      );
+      final LumeZakatResult z = zakatFor('USD', cash: 1000, liabilities: 5000);
       expect(z.net.minor, -400000); // −$4,000.00, signed, not floored at 0
       expect(z.eligible, isFalse);
       expect(z.due.minor, 0);
@@ -161,39 +160,43 @@ void main() {
   });
 
   group('the eight breakdown rows, in the reference\'s own order', () {
-    test('cash, gold, silver, investments, business, liabilities, net, due', () {
-      final LumeZakatResult z = zakatFor(
-        'USD',
-        cash: 1000,
-        gold: 10,
-        silver: 50,
-        investments: 500,
-        business: 200,
-        liabilities: 300,
-      );
-      expect(z.lines.map((LumeZakatLine l) => l.kind).toList(), <
-        LumeZakatLineKind
-      >[
-        LumeZakatLineKind.cash,
-        LumeZakatLineKind.gold,
-        LumeZakatLineKind.silver,
-        LumeZakatLineKind.investments,
-        LumeZakatLineKind.business,
-        LumeZakatLineKind.liabilities,
-        LumeZakatLineKind.netAssets,
-        LumeZakatLineKind.payable,
-      ]);
-      // The liabilities row is signed negative — `-Number(f.liab)`.
-      final LumeZakatLine liab = z.lines[5];
-      expect(liab.amount.isNegative, isTrue);
-      expect(liab.amount.minor, -30000);
-      // Gold and silver carry the grams they were valued at; nothing else
-      // does.
-      expect(z.lines[1].grams, 10);
-      expect(z.lines[2].grams, 50);
-      expect(z.lines[0].grams, isNull);
-      expect(z.lines[3].grams, isNull);
-    });
+    test(
+      'cash, gold, silver, investments, business, liabilities, net, due',
+      () {
+        final LumeZakatResult z = zakatFor(
+          'USD',
+          cash: 1000,
+          gold: 10,
+          silver: 50,
+          investments: 500,
+          business: 200,
+          liabilities: 300,
+        );
+        expect(
+          z.lines.map((LumeZakatLine l) => l.kind).toList(),
+          <LumeZakatLineKind>[
+            LumeZakatLineKind.cash,
+            LumeZakatLineKind.gold,
+            LumeZakatLineKind.silver,
+            LumeZakatLineKind.investments,
+            LumeZakatLineKind.business,
+            LumeZakatLineKind.liabilities,
+            LumeZakatLineKind.netAssets,
+            LumeZakatLineKind.payable,
+          ],
+        );
+        // The liabilities row is signed negative — `-Number(f.liab)`.
+        final LumeZakatLine liab = z.lines[5];
+        expect(liab.amount.isNegative, isTrue);
+        expect(liab.amount.minor, -30000);
+        // Gold and silver carry the grams they were valued at; nothing else
+        // does.
+        expect(z.lines[1].grams, 10);
+        expect(z.lines[2].grams, 50);
+        expect(z.lines[0].grams, isNull);
+        expect(z.lines[3].grams, isNull);
+      },
+    );
   });
 
   group('rate and scaling', () {

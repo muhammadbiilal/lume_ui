@@ -42,8 +42,10 @@ class ReminderDraftResult {
   final String? notes;
 }
 
-TextStyle _label(BuildContext context) =>
-    LumeType.natural(context, context.lumeType.label).copyWith(color: context.lume.text2);
+TextStyle _label(BuildContext context) => LumeType.natural(
+  context,
+  context.lumeType.label,
+).copyWith(color: context.lume.text2);
 
 /// `null` for cancelled, [_deleted] for "delete this reminder", otherwise the
 /// filled-in draft.
@@ -60,8 +62,12 @@ Future<ReminderDraftResult?> reminderEditSheet(
   required ReminderEntry? existing,
 }) {
   final AppLocalizations l = AppLocalizations.of(context);
-  final TextEditingController label = TextEditingController(text: existing?.label ?? '');
-  final TextEditingController notes = TextEditingController(text: existing?.notes ?? '');
+  final TextEditingController label = TextEditingController(
+    text: existing?.label ?? '',
+  );
+  final TextEditingController notes = TextEditingController(
+    text: existing?.notes ?? '',
+  );
   int hour = existing?.atHour ?? 9;
   int minute = existing?.atMinute ?? 0;
   ReminderRepeat repeat = existing?.repeat ?? ReminderRepeat.once;
@@ -116,7 +122,9 @@ Future<ReminderDraftResult?> reminderEditSheet(
                     LumeChoice(value: r.name, label: ReminderText.repeat(l, r)),
                 ],
                 onChanged: (String v) => setSheetState(
-                  () => repeat = ReminderRepeat.values.firstWhere((ReminderRepeat r) => r.name == v),
+                  () => repeat = ReminderRepeat.values.firstWhere(
+                    (ReminderRepeat r) => r.name == v,
+                  ),
                 ),
               ),
               const SizedBox(height: 14),

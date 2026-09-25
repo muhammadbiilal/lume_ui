@@ -83,7 +83,14 @@ class LumeCurrencyBoard {
   /// `[0.18, -0.24, 0.06, 0, 0.42, -0.11]` — the reference's own fixed
   /// changes, indexed by a row's position in the board once `from` is
   /// removed from [majors].
-  static const List<double> changes = <double>[0.18, -0.24, 0.06, 0, 0.42, -0.11];
+  static const List<double> changes = <double>[
+    0.18,
+    -0.24,
+    0.06,
+    0,
+    0.42,
+    -0.11,
+  ];
 
   /// `home === 'USD' ? 'EUR' : 'USD'` — the `to` the board opens on when the
   /// reader has never chosen one.

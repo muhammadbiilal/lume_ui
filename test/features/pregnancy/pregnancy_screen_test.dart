@@ -43,35 +43,36 @@ void main() {
   });
 
   group('setting a date', () {
-    testWidgets('picking a date closes the empty state and fills the dashboard', (
-      WidgetTester t,
-    ) async {
-      final PregnancyWorld w = PregnancyWorld();
-      await pumpPregnancy(t, w);
-      await tapShown(t, find.byKey(LumePregnancyTool.lmpKey));
-      expect(find.byType(DatePickerDialog), findsOneWidget);
-      // The picker opens on the fixture day, September 2026; 5 September is
-      // two days before it and within the picker's allowed range.
-      await tapShown(
-        t,
-        find.descendant(
-          of: find.byType(DatePickerDialog),
-          matching: find.text('5'),
-        ),
-      );
-      await tapShown(t, find.text('OK'));
+    testWidgets(
+      'picking a date closes the empty state and fills the dashboard',
+      (WidgetTester t) async {
+        final PregnancyWorld w = PregnancyWorld();
+        await pumpPregnancy(t, w);
+        await tapShown(t, find.byKey(LumePregnancyTool.lmpKey));
+        expect(find.byType(DatePickerDialog), findsOneWidget);
+        // The picker opens on the fixture day, September 2026; 5 September is
+        // two days before it and within the picker's allowed range.
+        await tapShown(
+          t,
+          find.descendant(
+            of: find.byType(DatePickerDialog),
+            matching: find.text('5'),
+          ),
+        );
+        await tapShown(t, find.text('OK'));
 
-      expect(find.byKey(LumePregnancyTool.emptyKey), findsNothing);
-      expect(find.byKey(LumePregnancyTool.summaryKey), findsOneWidget);
-      final LumeSummaryCard s = summary(t);
-      expect(s.value, '0'); // 2 days pregnant is still week 0
-      expect(
-        s.stats.map((LumeStat st) => '${st.label}=${st.value}'),
-        contains('Days pregnant=2'),
-      );
-      expect(w.repo.view().profile!.lmp, LumeDate(2026, 9, 5));
-      w.dispose();
-    });
+        expect(find.byKey(LumePregnancyTool.emptyKey), findsNothing);
+        expect(find.byKey(LumePregnancyTool.summaryKey), findsOneWidget);
+        final LumeSummaryCard s = summary(t);
+        expect(s.value, '0'); // 2 days pregnant is still week 0
+        expect(
+          s.stats.map((LumeStat st) => '${st.label}=${st.value}'),
+          contains('Days pregnant=2'),
+        );
+        expect(w.repo.view().profile!.lmp, LumeDate(2026, 9, 5));
+        w.dispose();
+      },
+    );
 
     testWidgets('cancelling the picker saves nothing', (WidgetTester t) async {
       final PregnancyWorld w = PregnancyWorld();

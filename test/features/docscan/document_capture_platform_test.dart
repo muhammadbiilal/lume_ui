@@ -115,22 +115,25 @@ void main() {
       expect(d.asked, isEmpty);
     });
 
-    test('the gate granting opens the camera and hands back the photo', () async {
-      final picker.XFile file = picker.XFile.fromData(
-        Uint8List.fromList(<int>[1, 2, 3]),
-        mimeType: 'image/jpeg',
-        name: 'photo.jpg',
-      );
-      final _Device d = _Device(file: file);
-      final LumeFakeCameraGate gate = LumeFakeCameraGate(
-        answer: LumeCameraAccess.granted,
-      );
-      final LumeCaptureResult r = await d.camera(gate: gate).capture();
-      expect(r.outcome, LumeCaptureOutcome.captured);
-      expect(r.bytes, <int>[1, 2, 3]);
-      expect(r.mimeType, 'image/jpeg');
-      expect(d.asked, <picker.ImageSource>[picker.ImageSource.camera]);
-    });
+    test(
+      'the gate granting opens the camera and hands back the photo',
+      () async {
+        final picker.XFile file = picker.XFile.fromData(
+          Uint8List.fromList(<int>[1, 2, 3]),
+          mimeType: 'image/jpeg',
+          name: 'photo.jpg',
+        );
+        final _Device d = _Device(file: file);
+        final LumeFakeCameraGate gate = LumeFakeCameraGate(
+          answer: LumeCameraAccess.granted,
+        );
+        final LumeCaptureResult r = await d.camera(gate: gate).capture();
+        expect(r.outcome, LumeCaptureOutcome.captured);
+        expect(r.bytes, <int>[1, 2, 3]);
+        expect(r.mimeType, 'image/jpeg');
+        expect(d.asked, <picker.ImageSource>[picker.ImageSource.camera]);
+      },
+    );
 
     test('no gate (iOS) opens the camera directly', () async {
       final picker.XFile file = picker.XFile.fromData(
@@ -146,11 +149,17 @@ void main() {
 
     test('choosing nothing is cancelled, not a failure', () async {
       final _Device d = _Device();
-      expect((await d.camera().capture()).outcome, LumeCaptureOutcome.cancelled);
+      expect(
+        (await d.camera().capture()).outcome,
+        LumeCaptureOutcome.cancelled,
+      );
     });
 
     test('an empty file is a failure', () async {
-      final picker.XFile file = picker.XFile.fromData(Uint8List(0), name: 'x.jpg');
+      final picker.XFile file = picker.XFile.fromData(
+        Uint8List(0),
+        name: 'x.jpg',
+      );
       final _Device d = _Device(file: file);
       expect((await d.camera().capture()).outcome, LumeCaptureOutcome.failed);
     });

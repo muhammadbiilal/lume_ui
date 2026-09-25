@@ -179,7 +179,10 @@ abstract final class LumeVehicleCosts {
 
   /// `D.VEHICLES.reduce((a, v) => a + v.fineAmount, 0)`, converted and
   /// tidied — the summary card's "Outstanding" stat.
-  static LumeMoney fineTotal(List<LumeVehicle> vehicles, LumeCurrency currency) {
+  static LumeMoney fineTotal(
+    List<LumeVehicle> vehicles,
+    LumeCurrency currency,
+  ) {
     final double usd = vehicles.fold<double>(
       0,
       (double a, LumeVehicle v) => a + v.fineAmount,
@@ -197,8 +200,7 @@ List<LumeVehicle> lumeVehicleFilter(List<LumeVehicle> vehicles, String query) {
   if (q.isEmpty) return vehicles;
   return vehicles
       .where(
-        (LumeVehicle v) =>
-            '${v.plate} ${v.make}'.toLowerCase().contains(q),
+        (LumeVehicle v) => '${v.plate} ${v.make}'.toLowerCase().contains(q),
       )
       .toList();
 }

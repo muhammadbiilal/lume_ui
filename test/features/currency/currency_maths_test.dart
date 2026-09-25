@@ -31,7 +31,10 @@ void main() {
         'USD',
         'ZZZ',
       );
-      expect(toUnknown.rate, lumeRatePerUsd('ZZZ') / kReferenceRatesPerUsd['USD']!);
+      expect(
+        toUnknown.rate,
+        lumeRatePerUsd('ZZZ') / kReferenceRatesPerUsd['USD']!,
+      );
       expect(lumeRatePerUsd('ZZZ'), 1);
     });
 
@@ -55,20 +58,25 @@ void main() {
     test('is the eight majors, minus the active from, in the reference\'s '
         'own order and change figures', () {
       final LumeCurrencyBoard b = LumeCurrencyBoard.forPair('PKR', 'USD');
-      expect(
-        b.popular.map((LumeCurrencyPair p) => p.code).toList(),
-        <String>['USD', 'EUR', 'GBP', 'SAR', 'AED', 'INR'],
-      );
-      expect(
-        b.popular.map((LumeCurrencyPair p) => p.pct).toList(),
-        <double>[0.18, -0.24, 0.06, 0, 0.42, -0.11],
-      );
+      expect(b.popular.map((LumeCurrencyPair p) => p.code).toList(), <String>[
+        'USD',
+        'EUR',
+        'GBP',
+        'SAR',
+        'AED',
+        'INR',
+      ]);
+      expect(b.popular.map((LumeCurrencyPair p) => p.pct).toList(), <double>[
+        0.18,
+        -0.24,
+        0.06,
+        0,
+        0.42,
+        -0.11,
+      ]);
       // Every row prices from `from` (PKR), not from USD.
       for (final LumeCurrencyPair p in b.popular) {
-        expect(
-          p.rate,
-          lumeRatePerUsd(p.code) / kReferenceRatesPerUsd['PKR']!,
-        );
+        expect(p.rate, lumeRatePerUsd(p.code) / kReferenceRatesPerUsd['PKR']!);
       }
     });
 

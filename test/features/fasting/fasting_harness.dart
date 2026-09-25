@@ -20,7 +20,10 @@ final LumeDate kToday = d(9, 7);
 
 class FastingHarness {
   FastingHarness({int seed = 1, Duration? readDelay}) {
-    store = LumeMemoryRecordRepository(hydrateDelay: readDelay, now: () => clock);
+    store = LumeMemoryRecordRepository(
+      hydrateDelay: readDelay,
+      now: () => clock,
+    );
     repo = FastingRepository(store, random: Random(seed), now: () => clock);
     if (readDelay == null) repo.open();
   }
@@ -29,9 +32,11 @@ class FastingHarness {
   late final FastingRepository repo;
   DateTime clock = DateTime.utc(2026, 9, 7, 10);
 
-  void tick([Duration by = const Duration(minutes: 1)]) => clock = clock.add(by);
+  void tick([Duration by = const Duration(minutes: 1)]) =>
+      clock = clock.add(by);
 
-  FastingInsights insights([LumeDate? today]) => repo.view().insights(today ?? kToday);
+  FastingInsights insights([LumeDate? today]) =>
+      repo.view().insights(today ?? kToday);
 
   FastEntry log(
     LumeDate date, {
@@ -39,7 +44,11 @@ class FastingHarness {
     bool kept = true,
   }) {
     tick();
-    final FastingResult<FastingWrite> r = repo.logFast(date, kind: kind, kept: kept);
+    final FastingResult<FastingWrite> r = repo.logFast(
+      date,
+      kind: kind,
+      kept: kept,
+    );
     expect(r.failure, isNull, reason: 'log $date: ${r.failure}');
     return r.value!.entry!;
   }

@@ -72,7 +72,9 @@ abstract final class LumeMedsTool {
   static const Key doseField = ValueKey<String>('meds.field.dose');
   static const Key scheduleField = ValueKey<String>('meds.field.schedule');
   static const Key firstDoseField = ValueKey<String>('meds.field.firstDose');
-  static const Key clearFirstDose = ValueKey<String>('meds.field.firstDose.clear');
+  static const Key clearFirstDose = ValueKey<String>(
+    'meds.field.firstDose.clear',
+  );
   static const Key dosesLeftField = ValueKey<String>('meds.field.dosesLeft');
   static const Key notesField = ValueKey<String>('meds.field.notes');
   static Key row(String id) => ValueKey<String>('meds.row.$id');
@@ -184,7 +186,9 @@ class _MedsToolState extends ConsumerState<MedsTool> {
     });
     WidgetsBinding.instance.addPostFrameCallback((_) {
       final BuildContext? c = _body.currentContext;
-      final ScrollPosition? p = c == null ? null : Scrollable.maybeOf(c)?.position;
+      final ScrollPosition? p = c == null
+          ? null
+          : Scrollable.maybeOf(c)?.position;
       if (p != null && p.pixels != 0) p.jumpTo(0);
     });
   }
@@ -334,7 +338,10 @@ class _MedsToolState extends ConsumerState<MedsTool> {
   @override
   Widget build(BuildContext context) {
     final AppLocalizations l = AppLocalizations.of(context);
-    final LumeFormatting f = LumeFormatting.of(context, countryCode: widget.request.user.country);
+    final LumeFormatting f = LumeFormatting.of(
+      context,
+      countryCode: widget.request.user.country,
+    );
     final MedsSnapshot snapshot = _repo.view();
 
     MedsBook? book;
@@ -347,7 +354,9 @@ class _MedsToolState extends ConsumerState<MedsTool> {
       book = snapshot.book();
     }
 
-    if (book != null && _medication != null && book.medication(_medication!) == null) {
+    if (book != null &&
+        _medication != null &&
+        book.medication(_medication!) == null) {
       _view = _View.list;
       _medication = null;
     }
@@ -398,7 +407,12 @@ class _MedsToolState extends ConsumerState<MedsTool> {
 
   // ------------------------------------------------------------------ list
 
-  List<Widget> _list(BuildContext context, AppLocalizations l, LumeFormatting f, MedsBook book) {
+  List<Widget> _list(
+    BuildContext context,
+    AppLocalizations l,
+    LumeFormatting f,
+    MedsBook book,
+  ) {
     if (book.isEmpty) {
       return <Widget>[
         LumeToolSection(
@@ -433,7 +447,9 @@ class _MedsToolState extends ConsumerState<MedsTool> {
       LumeToolSection(
         child: LumeRows(
           key: LumeMedsTool.listKey,
-          children: <Widget>[for (final MedsEntry m in book.medications) _row(context, l, f, m)],
+          children: <Widget>[
+            for (final MedsEntry m in book.medications) _row(context, l, f, m),
+          ],
         ),
       ),
       LumeToolSection(
@@ -447,14 +463,21 @@ class _MedsToolState extends ConsumerState<MedsTool> {
     ];
   }
 
-  Widget _row(BuildContext context, AppLocalizations l, LumeFormatting f, MedsEntry m) => LumeRichRow(
+  Widget _row(
+    BuildContext context,
+    AppLocalizations l,
+    LumeFormatting f,
+    MedsEntry m,
+  ) => LumeRichRow(
     key: LumeMedsTool.row(m.id.value),
     icon: LumeIcons.pill,
     title: m.name,
     subtitle: m.dose,
     meta: <String>[MedsText.schedule(l, m.schedule)],
     value: m.firstDoseAt == null ? '—' : _time(f, m.firstDoseAt!),
-    badge: m.runningLow ? LumeBadge(label: l.medsLowBadge, tone: LumeBadgeTone.warn) : null,
+    badge: m.runningLow
+        ? LumeBadge(label: l.medsLowBadge, tone: LumeBadgeTone.warn)
+        : null,
     chevron: true,
     onTap: () => _go(_View.medication, medication: m.id),
   );
@@ -467,7 +490,9 @@ class _MedsToolState extends ConsumerState<MedsTool> {
     LumeFormatting f,
     MedsBook book,
   ) {
-    final MedsEntry? m = _medication == null ? null : book.medication(_medication!);
+    final MedsEntry? m = _medication == null
+        ? null
+        : book.medication(_medication!);
     if (m == null) {
       WidgetsBinding.instance.addPostFrameCallback((_) => _go(_View.list));
       return (null, const <Widget>[], false);
@@ -497,7 +522,10 @@ class _MedsToolState extends ConsumerState<MedsTool> {
             decoration: BoxDecoration(
               color: context.lume.card,
               borderRadius: LumeRadius.brMd,
-              border: Border.all(color: context.lume.border, width: LumeSpace.border),
+              border: Border.all(
+                color: context.lume.border,
+                width: LumeSpace.border,
+              ),
               boxShadow: context.lumeShadows.xs,
             ),
             child: LumeFactCard(
@@ -577,7 +605,9 @@ class _MedsToolState extends ConsumerState<MedsTool> {
                   context,
                   current: d.schedule,
                 );
-                if (chosen != null && mounted) setState(() => d.schedule = chosen);
+                if (chosen != null && mounted) {
+                  setState(() => d.schedule = chosen);
+                }
               },
             ),
             _timeField(context, l, d),
@@ -604,8 +634,13 @@ class _MedsToolState extends ConsumerState<MedsTool> {
   }
 
   Widget _timeField(BuildContext context, AppLocalizations l, _MedsDraft d) {
-    final LumeFormatting f = LumeFormatting.of(context, countryCode: widget.request.user.country);
-    final String shown = d.firstDoseAt == null ? l.actionNotSet : _time(f, d.firstDoseAt!);
+    final LumeFormatting f = LumeFormatting.of(
+      context,
+      countryCode: widget.request.user.country,
+    );
+    final String shown = d.firstDoseAt == null
+        ? l.actionNotSet
+        : _time(f, d.firstDoseAt!);
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       mainAxisSize: MainAxisSize.min,
@@ -626,7 +661,10 @@ class _MedsToolState extends ConsumerState<MedsTool> {
             );
             if (picked != null && mounted) {
               setState(
-                () => d.firstDoseAt = LumeFamilyText.isoClock(picked.hour, picked.minute),
+                () => d.firstDoseAt = LumeFamilyText.isoClock(
+                  picked.hour,
+                  picked.minute,
+                ),
               );
             }
           },

@@ -119,8 +119,7 @@ abstract final class LumeFuelCostRules {
       imperial ? 250 : 400;
 
   /// `econ: imperial ? 32 : 12`.
-  static double defaultEconomy({required bool imperial}) =>
-      imperial ? 32 : 12;
+  static double defaultEconomy({required bool imperial}) => imperial ? 32 : 12;
 
   /// `people: 2`.
   static const double defaultPeople = 2;

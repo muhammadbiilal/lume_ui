@@ -61,8 +61,7 @@ class LumeLoadshedTool extends ConsumerStatefulWidget {
 }
 
 class _LumeLoadshedToolState extends ConsumerState<LumeLoadshedTool> {
-  final GlobalKey<LumeToolScreenState> _host =
-      GlobalKey<LumeToolScreenState>();
+  final GlobalKey<LumeToolScreenState> _host = GlobalKey<LumeToolScreenState>();
 
   @override
   Widget build(BuildContext context) {
@@ -111,9 +110,7 @@ class _LumeLoadshedToolState extends ConsumerState<LumeLoadshedTool> {
               gradient: ls.isNow
                   ? context.lumeGradients.warn
                   : context.lumeGradients.accent,
-              kicker: ls.isNow
-                  ? l.loadshedCurrentlyOff
-                  : l.loadshedCurrentlyOn,
+              kicker: ls.isNow ? l.loadshedCurrentlyOff : l.loadshedCurrentlyOn,
               value: LumeLoadshedText.hm(l, minutes),
               caption: ls.isNow
                   ? l.loadshedPowerBack(ls.slot.slot.to)

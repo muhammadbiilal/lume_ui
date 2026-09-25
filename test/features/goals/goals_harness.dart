@@ -33,7 +33,10 @@ final LumeDate kToday = d(9, 7);
 
 class GoalsHarness {
   GoalsHarness({int seed = 1, Duration? readDelay}) {
-    store = LumeMemoryRecordRepository(hydrateDelay: readDelay, now: () => clock);
+    store = LumeMemoryRecordRepository(
+      hydrateDelay: readDelay,
+      now: () => clock,
+    );
     repo = GoalsRepository(store, random: Random(seed), now: () => clock);
     if (readDelay == null) repo.open();
   }
@@ -42,7 +45,8 @@ class GoalsHarness {
   late final GoalsRepository repo;
   DateTime clock = DateTime.utc(2026, 9, 7, 10);
 
-  void tick([Duration by = const Duration(minutes: 1)]) => clock = clock.add(by);
+  void tick([Duration by = const Duration(minutes: 1)]) =>
+      clock = clock.add(by);
 
   GoalsBook book([LumeDate? today]) => repo.view().book(today ?? kToday);
 
@@ -87,9 +91,17 @@ class GoalsHarness {
 
   GoalView view(LumeRecordId id, [LumeDate? today]) => book(today).goal(id)!;
 
-  GoalContribution contribute(LumeRecordId goal, LumeMoney amount, [LumeDate? on]) {
+  GoalContribution contribute(
+    LumeRecordId goal,
+    LumeMoney amount, [
+    LumeDate? on,
+  ]) {
     tick();
-    final GoalsResult<GoalsWrite> r = repo.addContribution(goal, amount, on ?? kToday);
+    final GoalsResult<GoalsWrite> r = repo.addContribution(
+      goal,
+      amount,
+      on ?? kToday,
+    );
     expect(r.failure, isNull, reason: 'contribute $amount');
     return r.value!.contribution!;
   }

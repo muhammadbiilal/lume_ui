@@ -44,10 +44,15 @@ void main() {
   });
 
   group('filling a slot', () {
-    testWidgets('opens the sheet, saves, updates the count', (WidgetTester t) async {
+    testWidgets('opens the sheet, saves, updates the count', (
+      WidgetTester t,
+    ) async {
       final MealPlanWorld w = MealPlanWorld();
       await pumpMealPlan(t, w);
-      await tapShown(t, find.byKey(LumeMealPlanTool.slotKey(kToday, MealSlot.breakfast)));
+      await tapShown(
+        t,
+        find.byKey(LumeMealPlanTool.slotKey(kToday, MealSlot.breakfast)),
+      );
       expect(find.byKey(MealPlanSheetKeys.text), findsOneWidget);
 
       await t.enterText(find.byKey(MealPlanSheetKeys.text), 'Oats and fruit');
@@ -66,7 +71,10 @@ void main() {
       final MealPlanWorld w = MealPlanWorld();
       w.set(kToday, MealSlot.lunch, 'Salad');
       await pumpMealPlan(t, w);
-      await tapShown(t, find.byKey(LumeMealPlanTool.slotKey(kToday, MealSlot.lunch)));
+      await tapShown(
+        t,
+        find.byKey(LumeMealPlanTool.slotKey(kToday, MealSlot.lunch)),
+      );
       await t.enterText(find.byKey(MealPlanSheetKeys.text), 'Soup');
       await t.pumpAndSettle();
       await tapShown(t, find.byKey(MealPlanSheetKeys.save));
@@ -82,7 +90,10 @@ void main() {
       final MealPlanWorld w = MealPlanWorld();
       w.set(kToday, MealSlot.dinner, 'Daal');
       await pumpMealPlan(t, w);
-      await tapShown(t, find.byKey(LumeMealPlanTool.slotKey(kToday, MealSlot.dinner)));
+      await tapShown(
+        t,
+        find.byKey(LumeMealPlanTool.slotKey(kToday, MealSlot.dinner)),
+      );
       expect(find.byKey(MealPlanSheetKeys.clear), findsOneWidget);
       await tapShown(t, find.byKey(MealPlanSheetKeys.clear));
 
@@ -106,7 +117,9 @@ void main() {
   });
 
   group('language', () {
-    testWidgets('Urdu: the summary caption is translated', (WidgetTester t) async {
+    testWidgets('Urdu: the summary caption is translated', (
+      WidgetTester t,
+    ) async {
       final MealPlanWorld w = MealPlanWorld();
       await pumpMealPlan(t, w, locale: const Locale('ur'));
       expect(find.text('کھانے منصوبہ بند'), findsOneWidget);

@@ -157,8 +157,7 @@ class LumeRecordingDocumentCamera implements LumeDocumentCamera {
   }
 
   @override
-  bool offersSettings(LumeCaptureOutcome outcome) =>
-      settings.contains(outcome);
+  bool offersSettings(LumeCaptureOutcome outcome) => settings.contains(outcome);
 
   @override
   Future<bool> openSettings() async {

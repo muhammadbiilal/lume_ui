@@ -83,7 +83,14 @@ List<String> textsIn(WidgetTester tester, Finder of) => tester
 /// by code point ([String.fromCharCode]) rather than as a literal escape in
 /// the source, so the file holds plain ASCII and never the invisible mark
 /// itself.
-const List<int> _bidiMarks = <int>[0x2066, 0x2067, 0x2068, 0x2069, 0x200e, 0x200f];
+const List<int> _bidiMarks = <int>[
+  0x2066,
+  0x2067,
+  0x2068,
+  0x2069,
+  0x200e,
+  0x200f,
+];
 const int _nbsp = 0x00a0;
 const int _narrowNbsp = 0x202f;
 

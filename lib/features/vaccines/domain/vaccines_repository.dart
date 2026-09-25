@@ -97,7 +97,10 @@ class _Data {
     for (final VaccineRecord v in records) {
       if (v.id == id) return v;
     }
-    throw VaccinesFailure(VaccinesFailureKind.notFound, ids: <LumeRecordId>[id]);
+    throw VaccinesFailure(
+      VaccinesFailureKind.notFound,
+      ids: <LumeRecordId>[id],
+    );
   }
 }
 
@@ -151,19 +154,21 @@ class VaccinesRepository {
     return VaccinesSnapshot(status: v.status, records: out, defects: defects);
   }
 
-  VaccinesResult<VaccinesWrite> add(VaccineDraft draft, {String? idempotencyKey}) =>
-      _write<VaccineRecord>((_Data d) {
-        _validate(draft);
-        final VaccineRecord r = _record(_newId(), draft, _now());
-        final LumeRecord stored = d.tx.create(
-          VaccinesCollections.records,
-          r.id.value,
-          r.toFields(),
-        );
-        final VaccineRecord decoded = VaccineRecord.decode(stored);
-        d.records.add(decoded);
-        return decoded;
-      }, idempotencyKey: idempotencyKey);
+  VaccinesResult<VaccinesWrite> add(
+    VaccineDraft draft, {
+    String? idempotencyKey,
+  }) => _write<VaccineRecord>((_Data d) {
+    _validate(draft);
+    final VaccineRecord r = _record(_newId(), draft, _now());
+    final LumeRecord stored = d.tx.create(
+      VaccinesCollections.records,
+      r.id.value,
+      r.toFields(),
+    );
+    final VaccineRecord decoded = VaccineRecord.decode(stored);
+    d.records.add(decoded);
+    return decoded;
+  }, idempotencyKey: idempotencyKey);
 
   VaccinesResult<VaccinesWrite> edit(
     LumeRecordId id,
@@ -186,24 +191,32 @@ class VaccinesRepository {
 
   /// Irreversible in the UI (see the library doc); still a uniform,
   /// conflict-checked write here.
-  VaccinesResult<VaccinesWrite> delete(LumeRecordId id, {required int version}) =>
-      _write<VaccineRecord>((_Data d) {
-        final VaccineRecord was = d.sound(id);
-        d.tx.delete(VaccinesCollections.records, id.value, expectVersion: version);
-        d.records.removeWhere((VaccineRecord x) => x.id == id);
-        d.defects.removeWhere((VaccinesDefect x) => x.recordId == id.value);
-        return was;
-      });
+  VaccinesResult<VaccinesWrite> delete(
+    LumeRecordId id, {
+    required int version,
+  }) => _write<VaccineRecord>((_Data d) {
+    final VaccineRecord was = d.sound(id);
+    d.tx.delete(VaccinesCollections.records, id.value, expectVersion: version);
+    d.records.removeWhere((VaccineRecord x) => x.id == id);
+    d.defects.removeWhere((VaccinesDefect x) => x.recordId == id.value);
+    return was;
+  });
 
   VaccinesResult<void> undo(VaccinesWrite write) {
     if (write.receipt.revision == 0) return const VaccinesResult<void>.ok(null);
     final LumeTxResult<void> r = _store.revert(write.receipt);
-    return r.ok ? const VaccinesResult<void>.ok(null) : VaccinesResult<void>.failed(_map(r.failure!));
+    return r.ok
+        ? const VaccinesResult<void>.ok(null)
+        : VaccinesResult<void>.failed(_map(r.failure!));
   }
 
   // ---- internals ----------------------------------------------------------
 
-  VaccineRecord _record(LumeRecordId id, VaccineDraft draft, DateTime createdAt) => VaccineRecord(
+  VaccineRecord _record(
+    LumeRecordId id,
+    VaccineDraft draft,
+    DateTime createdAt,
+  ) => VaccineRecord(
     id: id,
     name: draft.name.trim(),
     forWhom: _optional(draft.forWhom),
@@ -237,21 +250,26 @@ class VaccinesRepository {
     }
   }
 
-  static String? _optional(String? s) => s == null || s.trim().isEmpty ? null : s.trim();
+  static String? _optional(String? s) =>
+      s == null || s.trim().isEmpty ? null : s.trim();
 
   VaccinesResult<VaccinesWrite> _write<T>(
     T Function(_Data d) body, {
     String? idempotencyKey,
     String? fingerprint,
   }) {
-    final LumeTxResult<T> r = _store.run<T>((LumeRecordTx tx) {
-      try {
-        final _Data d = _Data(tx);
-        return body(d);
-      } on VaccinesFailure catch (f) {
-        tx.reject(f);
-      }
-    }, idempotencyKey: idempotencyKey, fingerprint: fingerprint);
+    final LumeTxResult<T> r = _store.run<T>(
+      (LumeRecordTx tx) {
+        try {
+          final _Data d = _Data(tx);
+          return body(d);
+        } on VaccinesFailure catch (f) {
+          tx.reject(f);
+        }
+      },
+      idempotencyKey: idempotencyKey,
+      fingerprint: fingerprint,
+    );
     if (!r.ok) return VaccinesResult<VaccinesWrite>.failed(_map(r.failure!));
     final T v = r.value as T;
     return VaccinesResult<VaccinesWrite>.ok(

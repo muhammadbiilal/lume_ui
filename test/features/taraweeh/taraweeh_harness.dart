@@ -20,7 +20,10 @@ final LumeDate kToday = d(9, 7);
 
 class TaraweehHarness {
   TaraweehHarness({int seed = 1, Duration? readDelay}) {
-    store = LumeMemoryRecordRepository(hydrateDelay: readDelay, now: () => clock);
+    store = LumeMemoryRecordRepository(
+      hydrateDelay: readDelay,
+      now: () => clock,
+    );
     repo = TaraweehRepository(store, random: Random(seed), now: () => clock);
     if (readDelay == null) repo.open();
   }
@@ -29,13 +32,17 @@ class TaraweehHarness {
   late final TaraweehRepository repo;
   DateTime clock = DateTime.utc(2026, 9, 7, 22);
 
-  void tick([Duration by = const Duration(minutes: 1)]) => clock = clock.add(by);
+  void tick([Duration by = const Duration(minutes: 1)]) =>
+      clock = clock.add(by);
 
   TaraweehStats stats([LumeDate? today]) => repo.view().stats(today ?? kToday);
 
   TaraweehNight logTonight(LumeDate date, {int rakaat = 20}) {
     tick();
-    final TaraweehResult<TaraweehWrite> r = repo.logTonight(date, rakaat: rakaat);
+    final TaraweehResult<TaraweehWrite> r = repo.logTonight(
+      date,
+      rakaat: rakaat,
+    );
     expect(r.failure, isNull, reason: 'logTonight $date');
     return r.value!.night!;
   }

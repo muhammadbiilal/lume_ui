@@ -142,7 +142,8 @@ class _FastingToolState extends ConsumerState<FastingTool> {
 
   void _failed(AppLocalizations l, FastingFailure f) {
     _say(switch (f.kind) {
-      FastingFailureKind.conflict || FastingFailureKind.notFound => l.fastingErrConflict,
+      FastingFailureKind.conflict ||
+      FastingFailureKind.notFound => l.fastingErrConflict,
       _ => l.fastingErrFailed,
     }, tone: LumeToastTone.error);
   }
@@ -217,7 +218,10 @@ class _FastingToolState extends ConsumerState<FastingTool> {
   @override
   Widget build(BuildContext context) {
     final AppLocalizations l = AppLocalizations.of(context);
-    final LumeFormatting f = LumeFormatting.of(context, countryCode: widget.request.user.country);
+    final LumeFormatting f = LumeFormatting.of(
+      context,
+      countryCode: widget.request.user.country,
+    );
     final LumeDate? today = _today(context);
     final FastingSnapshot snapshot = _repo.view();
 
@@ -301,9 +305,18 @@ class _FastingToolState extends ConsumerState<FastingTool> {
             label: l.fastingProgressLabel,
           ),
           stats: <LumeStat>[
-            LumeStat(value: f.integer(insights.voluntaryKept), label: l.fastingVoluntaryLabel),
-            LumeStat(value: f.integer(insights.makeupKept), label: l.fastingObligatoryLabel),
-            LumeStat(value: f.integer(insights.missedCount), label: l.fastingMissedLabel),
+            LumeStat(
+              value: f.integer(insights.voluntaryKept),
+              label: l.fastingVoluntaryLabel,
+            ),
+            LumeStat(
+              value: f.integer(insights.makeupKept),
+              label: l.fastingObligatoryLabel,
+            ),
+            LumeStat(
+              value: f.integer(insights.missedCount),
+              label: l.fastingMissedLabel,
+            ),
           ],
         ),
       ),
@@ -331,13 +344,20 @@ class _FastingToolState extends ConsumerState<FastingTool> {
       ),
       LumeToolSection(
         title: l.fastingCalendarTitle,
-        child: _FastingHeatGrid(key: LumeFastingTool.calendarKey, days: insights.heat, l: l),
+        child: _FastingHeatGrid(
+          key: LumeFastingTool.calendarKey,
+          days: insights.heat,
+          l: l,
+        ),
       ),
       LumeToolSection(
         title: l.fastingRecentTitle,
         child: filtered.isEmpty
             ? Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 16,
+                  vertical: 8,
+                ),
                 child: Text(
                   l.fastingEmptyText,
                   style: Theme.of(context).textTheme.bodySmall,
@@ -357,7 +377,9 @@ class _FastingToolState extends ConsumerState<FastingTool> {
                           ? l.fastingKindSunnah
                           : l.fastingKindQada,
                       badge: LumeBadge(
-                        label: e.kept ? l.fastingKeptBadge : l.fastingNotKeptBadge,
+                        label: e.kept
+                            ? l.fastingKeptBadge
+                            : l.fastingNotKeptBadge,
                         tone: e.kept ? LumeBadgeTone.ok : LumeBadgeTone.neutral,
                       ),
                       onTap: () => unawaited(_editEntry(l, today, e, entries)),
@@ -393,7 +415,9 @@ class _FastingHeatGrid extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final LumeColors lume = context.lume;
-    final int kept = days.where((FastingHeatDay d) => d.state == FastingDayState.kept).length;
+    final int kept = days
+        .where((FastingHeatDay d) => d.state == FastingDayState.kept)
+        .length;
     return Semantics(
       label: l.fastingCalendarA11y(kept, days.length),
       child: ExcludeSemantics(

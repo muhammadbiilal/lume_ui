@@ -205,10 +205,9 @@ class TaraweehRepository {
   /// Clear [date]'s entry entirely, with Undo. A no-op when it was already
   /// clear.
   TaraweehResult<TaraweehWrite> clear(LumeDate date) {
-    final TaraweehNight? existing = view().nights.cast<TaraweehNight?>().firstWhere(
-      (TaraweehNight? n) => n!.date == date,
-      orElse: () => null,
-    );
+    final TaraweehNight? existing = view().nights
+        .cast<TaraweehNight?>()
+        .firstWhere((TaraweehNight? n) => n!.date == date, orElse: () => null);
     if (existing == null) {
       return const TaraweehResult<TaraweehWrite>.ok(
         TaraweehWrite(LumeTxReceipt(0, <LumeTxChange>[])),
@@ -217,9 +216,16 @@ class TaraweehRepository {
     return _write<TaraweehNight>((_Data d) {
       final TaraweehNight? n = d.at(date);
       if (n == null) {
-        throw TaraweehFailure(TaraweehFailureKind.notFound, ids: <LumeRecordId>[existing.id]);
+        throw TaraweehFailure(
+          TaraweehFailureKind.notFound,
+          ids: <LumeRecordId>[existing.id],
+        );
       }
-      d.tx.delete(TaraweehCollections.nights, n.id.value, expectVersion: n.version);
+      d.tx.delete(
+        TaraweehCollections.nights,
+        n.id.value,
+        expectVersion: n.version,
+      );
       d.nights.removeWhere((TaraweehNight x) => x.id == n.id);
       return n;
     });
@@ -256,9 +262,10 @@ class TaraweehRepository {
   }
 
   static TaraweehFailure _map(LumeTxFailure f) => switch (f.kind) {
-    LumeTxFailureKind.rejected => f.detail is TaraweehFailure
-        ? f.detail! as TaraweehFailure
-        : TaraweehFailure(TaraweehFailureKind.storage, cause: f.kind),
+    LumeTxFailureKind.rejected =>
+      f.detail is TaraweehFailure
+          ? f.detail! as TaraweehFailure
+          : TaraweehFailure(TaraweehFailureKind.storage, cause: f.kind),
     LumeTxFailureKind.conflict ||
     LumeTxFailureKind.duplicateId => TaraweehFailure(
       TaraweehFailureKind.conflict,

@@ -188,10 +188,14 @@ class LumeAndroidNotificationGate implements LumeNotificationGate {
       }
       final LumeNotificationFacts facts = LumeNotificationFacts.fromMap(m);
       LumeNotificationAccess access = LumeNotificationAccess.classify(facts);
-      if (method == 'request' && access == LumeNotificationAccess.firstRequest) {
+      if (method == 'request' &&
+          access == LumeNotificationAccess.firstRequest) {
         access = LumeNotificationAccess.failed;
       }
-      return LumeNotificationState(access, canScheduleExact: facts.canScheduleExactAlarms);
+      return LumeNotificationState(
+        access,
+        canScheduleExact: facts.canScheduleExactAlarms,
+      );
     } on PlatformException {
       return const LumeNotificationState(LumeNotificationAccess.failed);
     } on MissingPluginException {
@@ -232,7 +236,9 @@ class LumeIosNotificationGate implements LumeNotificationGate {
       if (m == null) {
         return const LumeNotificationState(LumeNotificationAccess.failed);
       }
-      final LumeIosNotificationFacts facts = LumeIosNotificationFacts.fromMap(m);
+      final LumeIosNotificationFacts facts = LumeIosNotificationFacts.fromMap(
+        m,
+      );
       return LumeNotificationState(LumeNotificationAccess.classifyIos(facts));
     } on PlatformException {
       return const LumeNotificationState(LumeNotificationAccess.failed);

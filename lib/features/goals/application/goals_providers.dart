@@ -8,6 +8,7 @@ import '../domain/goals_repository.dart';
 
 /// Goals' repository. Ids come from a secure random source and creation
 /// instants from the device clock; a test overrides both.
-final Provider<GoalsRepository> goalsRepositoryProvider = Provider<GoalsRepository>(
-  (Ref ref) => GoalsRepository(ref.watch(recordRepositoryProvider)),
-);
+final Provider<GoalsRepository> goalsRepositoryProvider =
+    Provider<GoalsRepository>(
+      (Ref ref) => GoalsRepository(ref.watch(recordRepositoryProvider)),
+    );

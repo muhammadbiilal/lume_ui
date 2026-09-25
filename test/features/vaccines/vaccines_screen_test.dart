@@ -27,7 +27,9 @@ void main() {
   setUpAll(loadLumeFonts);
 
   group('first use', () {
-    testWidgets('empty: what it is for, one way in, nothing seeded', (WidgetTester t) async {
+    testWidgets('empty: what it is for, one way in, nothing seeded', (
+      WidgetTester t,
+    ) async {
       final VaccinesWorld w = VaccinesWorld();
       await pumpVaccines(t, w);
       expect(find.byKey(LumeVaccinesTool.emptyKey), findsOneWidget);
@@ -38,7 +40,9 @@ void main() {
   });
 
   group('adding a vaccination', () {
-    testWidgets('a new vaccination appears, dated today by default', (WidgetTester t) async {
+    testWidgets('a new vaccination appears, dated today by default', (
+      WidgetTester t,
+    ) async {
       final VaccinesWorld w = VaccinesWorld();
       await pumpVaccines(t, w);
       await tapShown(t, find.byKey(LumeVaccinesTool.addKey));
@@ -74,10 +78,18 @@ void main() {
   });
 
   group('editing a vaccination', () {
-    testWidgets('changes are saved in place, not duplicated', (WidgetTester t) async {
+    testWidgets('changes are saved in place, not duplicated', (
+      WidgetTester t,
+    ) async {
       final VaccinesWorld w = VaccinesWorld();
       final VaccineRecord seeded = w.repo
-          .add(VaccineDraft(name: 'MMR', date: LumeDate(2026, 1, 1), status: VaccineStatus.due))
+          .add(
+            VaccineDraft(
+              name: 'MMR',
+              date: LumeDate(2026, 1, 1),
+              status: VaccineStatus.due,
+            ),
+          )
           .value!
           .record!;
       await pumpVaccines(t, w);
@@ -99,10 +111,18 @@ void main() {
   });
 
   group('deleting a vaccination — irreversible, no Undo', () {
-    testWidgets('removes it for good, and offers no Undo', (WidgetTester t) async {
+    testWidgets('removes it for good, and offers no Undo', (
+      WidgetTester t,
+    ) async {
       final VaccinesWorld w = VaccinesWorld();
       final VaccineRecord seeded = w.repo
-          .add(VaccineDraft(name: 'MMR', date: kToday, status: VaccineStatus.given))
+          .add(
+            VaccineDraft(
+              name: 'MMR',
+              date: kToday,
+              status: VaccineStatus.given,
+            ),
+          )
           .value!
           .record!;
       await pumpVaccines(t, w);

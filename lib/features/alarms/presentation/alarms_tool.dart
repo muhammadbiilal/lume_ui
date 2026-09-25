@@ -79,8 +79,7 @@ class _LumeAlarmsToolState extends ConsumerState<LumeAlarmsTool> {
 
   bool _isOn(LumeAlarm a) => _flipped[a.id] ?? a.on;
 
-  void _toggle(LumeAlarm a) =>
-      setState(() => _flipped[a.id] = !_isOn(a));
+  void _toggle(LumeAlarm a) => setState(() => _flipped[a.id] = !_isOn(a));
 
   @override
   Widget build(BuildContext context) {

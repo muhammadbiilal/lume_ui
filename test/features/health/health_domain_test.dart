@@ -36,7 +36,9 @@ void main() {
     test('a title over the length limit is refused', () {
       final HealthHarness h = HealthHarness();
       addTearDown(h.dispose);
-      final HealthResult<HealthWrite> r = h.tryAdd(title: 'x' * (kHealthTitleMax + 1));
+      final HealthResult<HealthWrite> r = h.tryAdd(
+        title: 'x' * (kHealthTitleMax + 1),
+      );
       expect(r.ok, isFalse);
       expect(r.failure!.field, 'title');
     });
@@ -44,7 +46,9 @@ void main() {
     test('an optional field over its limit is refused', () {
       final HealthHarness h = HealthHarness();
       addTearDown(h.dispose);
-      final HealthResult<HealthWrite> r = h.tryAdd(notes: 'x' * (kHealthNotesMax + 1));
+      final HealthResult<HealthWrite> r = h.tryAdd(
+        notes: 'x' * (kHealthNotesMax + 1),
+      );
       expect(r.ok, isFalse);
       expect(r.failure!.field, 'notes');
     });
@@ -71,12 +75,16 @@ void main() {
     test('an unrecognised kind is a defect', () {
       final HealthHarness h = HealthHarness();
       addTearDown(h.dispose);
-      h.raw(HealthCollections.records, '11111111-1111-4111-8111-111111111111', <String, Object?>{
-        'schema': kHealthSchema,
-        'title': 'Something',
-        'kind': 'diagnosis', // not a real option
-        'date': '2026-01-01',
-      });
+      h.raw(
+        HealthCollections.records,
+        '11111111-1111-4111-8111-111111111111',
+        <String, Object?>{
+          'schema': kHealthSchema,
+          'title': 'Something',
+          'kind': 'diagnosis', // not a real option
+          'date': '2026-01-01',
+        },
+      );
       expect(h.book().defects, hasLength(1));
       expect(h.book().defects.first.field, 'kind');
     });
@@ -131,14 +139,17 @@ void main() {
       expect(book.kindsUsed, 2);
     });
 
-    test('upcomingCount is null without a today, and a real count with one', () {
-      final HealthHarness h = HealthHarness();
-      addTearDown(h.dispose);
-      h.add(date: d(9, 14));
-      h.add(date: d(1, 1));
-      expect(h.repo.view().book(null).upcomingCount, isNull);
-      expect(h.book().upcomingCount, 1);
-    });
+    test(
+      'upcomingCount is null without a today, and a real count with one',
+      () {
+        final HealthHarness h = HealthHarness();
+        addTearDown(h.dispose);
+        h.add(date: d(9, 14));
+        h.add(date: d(1, 1));
+        expect(h.repo.view().book(null).upcomingCount, isNull);
+        expect(h.book().upcomingCount, 1);
+      },
+    );
   });
 
   group('edit, delete, undo', () {
@@ -169,7 +180,11 @@ void main() {
       final HealthHarness h = HealthHarness();
       addTearDown(h.dispose);
       final HealthRecord r = h.add();
-      h.repo.edit(r.id, HealthDraft(title: 'First edit', kind: r.kind, date: r.date), version: r.version);
+      h.repo.edit(
+        r.id,
+        HealthDraft(title: 'First edit', kind: r.kind, date: r.date),
+        version: r.version,
+      );
       final HealthResult<HealthWrite> stale = h.repo.edit(
         r.id,
         HealthDraft(title: 'Second edit', kind: r.kind, date: r.date),
@@ -183,7 +198,10 @@ void main() {
       final HealthHarness h = HealthHarness();
       addTearDown(h.dispose);
       final HealthRecord r = h.add();
-      final HealthResult<HealthWrite> del = h.repo.delete(r.id, version: r.version);
+      final HealthResult<HealthWrite> del = h.repo.delete(
+        r.id,
+        version: r.version,
+      );
       expect(del.ok, isTrue);
       expect(h.repo.view().records, isEmpty);
     });
@@ -193,7 +211,10 @@ void main() {
       addTearDown(h.dispose);
       final HealthRecord r = h.add();
       h.repo.delete(r.id, version: r.version);
-      final HealthResult<HealthWrite> again = h.repo.delete(r.id, version: r.version);
+      final HealthResult<HealthWrite> again = h.repo.delete(
+        r.id,
+        version: r.version,
+      );
       expect(again.ok, isFalse);
       expect(again.failure!.kind, HealthFailureKind.notFound);
     });
@@ -204,7 +225,10 @@ void main() {
       final HealthHarness h = HealthHarness();
       addTearDown(h.dispose);
       final HealthRecord r = h.add();
-      final HealthResult<HealthWrite> del = h.repo.delete(r.id, version: r.version);
+      final HealthResult<HealthWrite> del = h.repo.delete(
+        r.id,
+        version: r.version,
+      );
       expect(h.repo.view().records, isEmpty);
       final HealthResult<void> u = h.repo.undo(del.value!);
       expect(u.ok, isTrue);

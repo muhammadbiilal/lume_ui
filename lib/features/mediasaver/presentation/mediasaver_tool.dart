@@ -78,8 +78,7 @@ class LumeMediaSaverTool extends ConsumerStatefulWidget {
   static const Key libraryKey = ValueKey<String>('mediasaver.library');
 
   @override
-  ConsumerState<LumeMediaSaverTool> createState() =>
-      _LumeMediaSaverToolState();
+  ConsumerState<LumeMediaSaverTool> createState() => _LumeMediaSaverToolState();
 }
 
 class _LumeMediaSaverToolState extends ConsumerState<LumeMediaSaverTool> {

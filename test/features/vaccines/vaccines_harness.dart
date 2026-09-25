@@ -19,7 +19,10 @@ final LumeDate kToday = d(9, 7);
 
 class VaccinesHarness {
   VaccinesHarness({int seed = 1, Duration? readDelay}) {
-    store = LumeMemoryRecordRepository(hydrateDelay: readDelay, now: () => clock);
+    store = LumeMemoryRecordRepository(
+      hydrateDelay: readDelay,
+      now: () => clock,
+    );
     repo = VaccinesRepository(store, random: Random(seed), now: () => clock);
     if (readDelay == null) repo.open();
   }
@@ -28,7 +31,8 @@ class VaccinesHarness {
   late final VaccinesRepository repo;
   DateTime clock = DateTime.utc(2026, 9, 7, 10);
 
-  void tick([Duration by = const Duration(minutes: 1)]) => clock = clock.add(by);
+  void tick([Duration by = const Duration(minutes: 1)]) =>
+      clock = clock.add(by);
 
   VaccinesBook book([LumeDate? today]) => repo.view().book(today ?? kToday);
 
@@ -80,7 +84,9 @@ class VaccinesHarness {
   VaccineView view(LumeRecordId id, [LumeDate? today]) => book(today).view(id)!;
 
   void raw(String collection, String id, Map<String, Object?> fields) {
-    final LumeTxResult<void> r = store.run<void>((LumeRecordTx tx) => tx.create(collection, id, fields));
+    final LumeTxResult<void> r = store.run<void>(
+      (LumeRecordTx tx) => tx.create(collection, id, fields),
+    );
     expect(r.ok, isTrue);
   }
 

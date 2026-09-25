@@ -91,7 +91,8 @@ class ReminderRepository {
   void open() => _store.open(ReminderCollections.entries);
 
   void retry() {
-    if (_store.view(ReminderCollections.entries).status == LumeCollectionStatus.error) {
+    if (_store.view(ReminderCollections.entries).status ==
+        LumeCollectionStatus.error) {
       _store.retry(ReminderCollections.entries);
     }
   }
@@ -144,7 +145,9 @@ class ReminderRepository {
       notes: notes?.trim().isEmpty ?? true ? null : notes!.trim(),
       createdAt: _now(),
     );
-    final LumeTxResult<ReminderEntry> r = _store.run<ReminderEntry>((LumeRecordTx tx) {
+    final LumeTxResult<ReminderEntry> r = _store.run<ReminderEntry>((
+      LumeRecordTx tx,
+    ) {
       final _Data d = _Data(tx);
       final LumeRecord stored = d.tx.create(
         ReminderCollections.entries,
@@ -154,7 +157,10 @@ class ReminderRepository {
       return ReminderEntry.decode(stored);
     });
     if (!r.ok) return ReminderResult<ReminderWrite>.failed(_map(r.failure!));
-    final ReminderScheduleOutcome outcome = await _scheduler.schedule(r.value!, zoneId: zoneId);
+    final ReminderScheduleOutcome outcome = await _scheduler.schedule(
+      r.value!,
+      zoneId: zoneId,
+    );
     return ReminderResult<ReminderWrite>.ok(
       ReminderWrite(r.receipt!, entry: r.value, scheduleOutcome: outcome),
     );
@@ -201,7 +207,9 @@ class ReminderRepository {
       notes: identical(notes, _sentinel) ? _sentinel : notes,
       enabled: enabled,
     );
-    final LumeTxResult<ReminderEntry> r = _store.run<ReminderEntry>((LumeRecordTx tx) {
+    final LumeTxResult<ReminderEntry> r = _store.run<ReminderEntry>((
+      LumeRecordTx tx,
+    ) {
       final LumeRecord stored = tx.update(
         ReminderCollections.entries,
         id.value,
@@ -211,7 +219,10 @@ class ReminderRepository {
       return ReminderEntry.decode(stored);
     });
     if (!r.ok) return ReminderResult<ReminderWrite>.failed(_map(r.failure!));
-    final ReminderScheduleOutcome outcome = await _scheduler.schedule(r.value!, zoneId: zoneId);
+    final ReminderScheduleOutcome outcome = await _scheduler.schedule(
+      r.value!,
+      zoneId: zoneId,
+    );
     return ReminderResult<ReminderWrite>.ok(
       ReminderWrite(r.receipt!, entry: r.value, scheduleOutcome: outcome),
     );
@@ -234,16 +245,27 @@ class ReminderRepository {
         ReminderFailure(ReminderFailureKind.notFound, ids: <LumeRecordId>[id]),
       );
     }
-    final LumeTxResult<ReminderEntry> r = _store.run<ReminderEntry>((LumeRecordTx tx) {
-      tx.delete(ReminderCollections.entries, id.value, expectVersion: existing!.version);
+    final LumeTxResult<ReminderEntry> r = _store.run<ReminderEntry>((
+      LumeRecordTx tx,
+    ) {
+      tx.delete(
+        ReminderCollections.entries,
+        id.value,
+        expectVersion: existing!.version,
+      );
       return existing;
     });
     if (!r.ok) return ReminderResult<ReminderWrite>.failed(_map(r.failure!));
     await _scheduler.cancel(id);
-    return ReminderResult<ReminderWrite>.ok(ReminderWrite(r.receipt!, entry: r.value));
+    return ReminderResult<ReminderWrite>.ok(
+      ReminderWrite(r.receipt!, entry: r.value),
+    );
   }
 
-  Future<ReminderResult<void>> undo(ReminderWrite write, {required String? zoneId}) async {
+  Future<ReminderResult<void>> undo(
+    ReminderWrite write, {
+    required String? zoneId,
+  }) async {
     if (write.receipt.revision == 0) return const ReminderResult<void>.ok(null);
     final LumeTxResult<void> r = _store.revert(write.receipt);
     if (!r.ok) return ReminderResult<void>.failed(_map(r.failure!));
@@ -252,7 +274,10 @@ class ReminderRepository {
     if (entry != null) {
       final ReminderEntry? restored = view().entries
           .cast<ReminderEntry?>()
-          .firstWhere((ReminderEntry? e) => e?.id == entry.id, orElse: () => null);
+          .firstWhere(
+            (ReminderEntry? e) => e?.id == entry.id,
+            orElse: () => null,
+          );
       if (restored != null) {
         await _scheduler.schedule(restored, zoneId: zoneId);
       } else {

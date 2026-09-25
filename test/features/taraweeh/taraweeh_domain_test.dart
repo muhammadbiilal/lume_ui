@@ -31,11 +31,15 @@ void main() {
     test('a rakaat outside 8/20 is a defect', () {
       final TaraweehHarness h = TaraweehHarness();
       addTearDown(h.dispose);
-      h.raw(TaraweehCollections.nights, '11111111-1111-4111-8111-111111111111', <String, Object?>{
-        'schema': kTaraweehSchema,
-        'date': kToday.toIso(),
-        'rakaat': 12,
-      });
+      h.raw(
+        TaraweehCollections.nights,
+        '11111111-1111-4111-8111-111111111111',
+        <String, Object?>{
+          'schema': kTaraweehSchema,
+          'date': kToday.toIso(),
+          'rakaat': 12,
+        },
+      );
       expect(h.repo.view().defects, hasLength(1));
       expect(h.repo.view().nights, isEmpty);
     });
@@ -43,12 +47,16 @@ void main() {
     test('a juz outside 1-30 is a defect', () {
       final TaraweehHarness h = TaraweehHarness();
       addTearDown(h.dispose);
-      h.raw(TaraweehCollections.nights, '11111111-1111-4111-8111-111111111111', <String, Object?>{
-        'schema': kTaraweehSchema,
-        'date': kToday.toIso(),
-        'rakaat': 20,
-        'juz': 31,
-      });
+      h.raw(
+        TaraweehCollections.nights,
+        '11111111-1111-4111-8111-111111111111',
+        <String, Object?>{
+          'schema': kTaraweehSchema,
+          'date': kToday.toIso(),
+          'rakaat': 20,
+          'juz': 31,
+        },
+      );
       expect(h.repo.view().defects, hasLength(1));
     });
   });
@@ -58,7 +66,10 @@ void main() {
       final TaraweehHarness h = TaraweehHarness();
       addTearDown(h.dispose);
       h.logTonight(kToday);
-      final TaraweehResult<TaraweehWrite> second = h.repo.logTonight(kToday, rakaat: 8);
+      final TaraweehResult<TaraweehWrite> second = h.repo.logTonight(
+        kToday,
+        rakaat: 8,
+      );
       expect(second.ok, isTrue);
       expect(second.value!.receipt.revision, 0);
       expect(h.repo.view().nights, hasLength(1));
@@ -69,41 +80,47 @@ void main() {
     test('an invalid rakaat is refused', () {
       final TaraweehHarness h = TaraweehHarness();
       addTearDown(h.dispose);
-      final TaraweehResult<TaraweehWrite> r = h.repo.logTonight(kToday, rakaat: 12);
+      final TaraweehResult<TaraweehWrite> r = h.repo.logTonight(
+        kToday,
+        rakaat: 12,
+      );
       expect(r.ok, isFalse);
       expect(r.failure!.kind, TaraweehFailureKind.validation);
       expect(h.repo.view().nights, isEmpty);
     });
   });
 
-  group('current streak — a real calculation, over the reader\'s own nights', () {
-    test('is 0 with nothing logged', () {
-      final TaraweehHarness h = TaraweehHarness();
-      addTearDown(h.dispose);
-      expect(h.stats().current, 0);
-      expect(h.stats().prayedTonight, isFalse);
-    });
+  group(
+    'current streak — a real calculation, over the reader\'s own nights',
+    () {
+      test('is 0 with nothing logged', () {
+        final TaraweehHarness h = TaraweehHarness();
+        addTearDown(h.dispose);
+        expect(h.stats().current, 0);
+        expect(h.stats().prayedTonight, isFalse);
+      });
 
-    test('counts the consecutive nights ending tonight', () {
-      final TaraweehHarness h = TaraweehHarness();
-      addTearDown(h.dispose);
-      h.logTonight(kToday.addDays(-2));
-      h.logTonight(kToday.addDays(-1));
-      h.logTonight(kToday);
-      expect(h.stats().current, 3);
-      expect(h.stats().prayedTonight, isTrue);
-    });
+      test('counts the consecutive nights ending tonight', () {
+        final TaraweehHarness h = TaraweehHarness();
+        addTearDown(h.dispose);
+        h.logTonight(kToday.addDays(-2));
+        h.logTonight(kToday.addDays(-1));
+        h.logTonight(kToday);
+        expect(h.stats().current, 3);
+        expect(h.stats().prayedTonight, isTrue);
+      });
 
-    test('a gap resets the streak — only the run since the gap counts', () {
-      final TaraweehHarness h = TaraweehHarness();
-      addTearDown(h.dispose);
-      h.logTonight(kToday.addDays(-3));
-      h.logTonight(kToday.addDays(-2));
-      // kToday.addDays(-1) is missing — the gap.
-      h.logTonight(kToday);
-      expect(h.stats().current, 1);
-    });
-  });
+      test('a gap resets the streak — only the run since the gap counts', () {
+        final TaraweehHarness h = TaraweehHarness();
+        addTearDown(h.dispose);
+        h.logTonight(kToday.addDays(-3));
+        h.logTonight(kToday.addDays(-2));
+        // kToday.addDays(-1) is missing — the gap.
+        h.logTonight(kToday);
+        expect(h.stats().current, 1);
+      });
+    },
+  );
 
   group('best streak — the longest run ever, even when not current', () {
     test('outlives a broken run', () {
@@ -190,18 +207,21 @@ void main() {
       expect(h.stats().juzDone, 1);
     });
 
-    test('juzDone counts distinct Juz across nights, progress is out of 30', () {
-      final TaraweehHarness h = TaraweehHarness();
-      addTearDown(h.dispose);
-      for (int i = 0; i < 5; i++) {
-        h.logTonight(kToday.addDays(-i));
-        h.repo.setJuz(kToday.addDays(-i), i + 1);
-      }
-      final TaraweehStats s = h.stats();
-      expect(s.juzDone, 5);
-      expect(s.progress, closeTo(5 / 30, 1e-9));
-      expect(s.nextJuz, 6);
-    });
+    test(
+      'juzDone counts distinct Juz across nights, progress is out of 30',
+      () {
+        final TaraweehHarness h = TaraweehHarness();
+        addTearDown(h.dispose);
+        for (int i = 0; i < 5; i++) {
+          h.logTonight(kToday.addDays(-i));
+          h.repo.setJuz(kToday.addDays(-i), i + 1);
+        }
+        final TaraweehStats s = h.stats();
+        expect(s.juzDone, 5);
+        expect(s.progress, closeTo(5 / 30, 1e-9));
+        expect(s.nextJuz, 6);
+      },
+    );
 
     test('khatmComplete once all 30 Juz are logged', () {
       final TaraweehHarness h = TaraweehHarness();
@@ -237,7 +257,10 @@ void main() {
 
   group('heat — the reader\'s own last 35 nights, never a random fixture', () {
     test('is 35 nights, oldest first, ending tonight', () {
-      final TaraweehStats s = TaraweehStats.compute(nights: <TaraweehNight>[], today: kToday);
+      final TaraweehStats s = TaraweehStats.compute(
+        nights: <TaraweehNight>[],
+        today: kToday,
+      );
       expect(s.heat, hasLength(35));
       expect(s.heat.first.date, kToday.addDays(-34));
       expect(s.heat.last.date, kToday);

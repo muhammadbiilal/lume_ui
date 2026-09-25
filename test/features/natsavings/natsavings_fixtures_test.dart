@@ -24,9 +24,10 @@ void main() {
       final LumeNatSavingsScheme pk = LumeNatSavingsScheme.forCountry('PK')!;
       expect(pk.instruments, hasLength(5));
 
-      final Map<String, LumeSavingsInstrument> byName = <String, LumeSavingsInstrument>{
-        for (final LumeSavingsInstrument p in pk.instruments) p.name: p,
-      };
+      final Map<String, LumeSavingsInstrument> byName =
+          <String, LumeSavingsInstrument>{
+            for (final LumeSavingsInstrument p in pk.instruments) p.name: p,
+          };
       expect(byName.keys.toSet(), <String>{
         'Behbood Savings Certificate',
         'Defence Savings Certificate',
@@ -35,35 +36,40 @@ void main() {
         'Pensioners’ Benefit Account',
       });
 
-      final LumeSavingsInstrument behbood = byName['Behbood Savings Certificate']!;
+      final LumeSavingsInstrument behbood =
+          byName['Behbood Savings Certificate']!;
       expect(behbood.rate, 15.36);
       expect(behbood.term, '10 years');
       expect(behbood.payout, 'Monthly');
       expect(behbood.min, 5000);
       expect(behbood.eligible, 'Widows, seniors, disabled');
 
-      final LumeSavingsInstrument defence = byName['Defence Savings Certificate']!;
+      final LumeSavingsInstrument defence =
+          byName['Defence Savings Certificate']!;
       expect(defence.rate, 13.02);
       expect(defence.term, '10 years');
       expect(defence.payout, 'On maturity');
       expect(defence.min, 500);
       expect(defence.eligible, 'All');
 
-      final LumeSavingsInstrument regular = byName['Regular Income Certificate']!;
+      final LumeSavingsInstrument regular =
+          byName['Regular Income Certificate']!;
       expect(regular.rate, 13.44);
       expect(regular.term, '5 years');
       expect(regular.payout, 'Monthly');
       expect(regular.min, 50000);
       expect(regular.eligible, 'All');
 
-      final LumeSavingsInstrument special = byName['Special Savings Certificate']!;
+      final LumeSavingsInstrument special =
+          byName['Special Savings Certificate']!;
       expect(special.rate, 12.60);
       expect(special.term, '3 years');
       expect(special.payout, 'Half-yearly');
       expect(special.min, 500);
       expect(special.eligible, 'All');
 
-      final LumeSavingsInstrument pensioners = byName['Pensioners’ Benefit Account']!;
+      final LumeSavingsInstrument pensioners =
+          byName['Pensioners’ Benefit Account']!;
       expect(pensioners.rate, 15.36);
       expect(pensioners.term, '10 years');
       expect(pensioners.payout, 'Monthly');
@@ -73,53 +79,70 @@ void main() {
 
     test('term years are parsed from the free-text term, for the sort bar', () {
       final LumeNatSavingsScheme pk = LumeNatSavingsScheme.forCountry('PK')!;
-      final Map<String, LumeSavingsInstrument> byName = <String, LumeSavingsInstrument>{
-        for (final LumeSavingsInstrument p in pk.instruments) p.name: p,
-      };
+      final Map<String, LumeSavingsInstrument> byName =
+          <String, LumeSavingsInstrument>{
+            for (final LumeSavingsInstrument p in pk.instruments) p.name: p,
+          };
       expect(byName['Behbood Savings Certificate']!.termYears, 10);
       expect(byName['Regular Income Certificate']!.termYears, 5);
       expect(byName['Special Savings Certificate']!.termYears, 3);
     });
 
-    test('the best rate is the highest — and, on a tie, the first of them in '
-        'the reference\'s own order (Behbood before Pensioners, both 15.36)', () {
-      final LumeNatSavingsScheme pk = LumeNatSavingsScheme.forCountry('PK')!;
-      expect(pk.best.name, 'Behbood Savings Certificate');
-      expect(pk.best.rate, 15.36);
+    test(
+      'the best rate is the highest — and, on a tie, the first of them in '
+      'the reference\'s own order (Behbood before Pensioners, both 15.36)',
+      () {
+        final LumeNatSavingsScheme pk = LumeNatSavingsScheme.forCountry('PK')!;
+        expect(pk.best.name, 'Behbood Savings Certificate');
+        expect(pk.best.rate, 15.36);
 
-      // A scrambled order still resolves to the highest rate — but the tie
-      // now breaks toward whichever of the two 15.36% instruments comes
-      // first in *that* order, exactly as `list.slice().sort((a,b) => b.rate
-      // - a.rate)[0]` would with a stable sort.
-      final LumeNatSavingsScheme reversed = LumeNatSavingsScheme(
-        List<LumeSavingsInstrument>.from(pk.instruments.reversed),
-      );
-      expect(reversed.best.name, 'Pensioners’ Benefit Account');
-    });
+        // A scrambled order still resolves to the highest rate — but the tie
+        // now breaks toward whichever of the two 15.36% instruments comes
+        // first in *that* order, exactly as `list.slice().sort((a,b) => b.rate
+        // - a.rate)[0]` would with a stable sort.
+        final LumeNatSavingsScheme reversed = LumeNatSavingsScheme(
+          List<LumeSavingsInstrument>.from(pk.instruments.reversed),
+        );
+        expect(reversed.best.name, 'Pensioners’ Benefit Account');
+      },
+    );
   });
 
   group('lumeNatSavingsFilter', () {
-    final List<LumeSavingsInstrument> pk =
-        LumeNatSavingsScheme.forCountry('PK')!.instruments;
+    final List<LumeSavingsInstrument> pk = LumeNatSavingsScheme.forCountry(
+      'PK',
+    )!.instruments;
 
     test('matches the name, case-insensitively', () {
       expect(
-        lumeNatSavingsFilter(pk, 'behbood').map((LumeSavingsInstrument p) => p.name),
+        lumeNatSavingsFilter(
+          pk,
+          'behbood',
+        ).map((LumeSavingsInstrument p) => p.name),
         <String>['Behbood Savings Certificate'],
       );
       expect(
-        lumeNatSavingsFilter(pk, 'BEHBOOD').map((LumeSavingsInstrument p) => p.name),
+        lumeNatSavingsFilter(
+          pk,
+          'BEHBOOD',
+        ).map((LumeSavingsInstrument p) => p.name),
         <String>['Behbood Savings Certificate'],
       );
     });
 
     test('matches eligibility as well as the name', () {
       expect(
-        lumeNatSavingsFilter(pk, 'pensioners').map((LumeSavingsInstrument p) => p.name),
+        lumeNatSavingsFilter(
+          pk,
+          'pensioners',
+        ).map((LumeSavingsInstrument p) => p.name),
         <String>['Pensioners’ Benefit Account'],
       );
       expect(
-        lumeNatSavingsFilter(pk, 'widows').map((LumeSavingsInstrument p) => p.name),
+        lumeNatSavingsFilter(
+          pk,
+          'widows',
+        ).map((LumeSavingsInstrument p) => p.name),
         <String>['Behbood Savings Certificate'],
       );
     });
@@ -135,8 +158,9 @@ void main() {
   });
 
   group('lumeNatSavingsSort', () {
-    final List<LumeSavingsInstrument> pk =
-        LumeNatSavingsScheme.forCountry('PK')!.instruments;
+    final List<LumeSavingsInstrument> pk = LumeNatSavingsScheme.forCountry(
+      'PK',
+    )!.instruments;
 
     List<String> names(List<LumeSavingsInstrument> list) =>
         list.map((LumeSavingsInstrument p) => p.name).toList();

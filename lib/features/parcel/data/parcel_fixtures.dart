@@ -30,7 +30,14 @@ enum LumeParcelTone { amber, rose }
 /// The words a stage carries, in both the list's badge and the timeline's
 /// titles. `parcel.js` writes these as plain strings; naming them here is
 /// what lets one label serve both places without repeating itself.
-enum LumeParcelStage { booked, inTransit, arrived, outForDelivery, delivered, arriving }
+enum LumeParcelStage {
+  booked,
+  inTransit,
+  arrived,
+  outForDelivery,
+  delivered,
+  arriving,
+}
 
 @immutable
 class LumeParcelEvent {

@@ -148,25 +148,26 @@ void main() {
   });
 
   group('cancel and reactivate', () {
-    testWidgets('cancelling asks first, keeps the record, excludes it from the total', (
-      WidgetTester t,
-    ) async {
-      final SubscriptionsWorld w = SubscriptionsWorld().reference();
-      await pumpSubscriptions(t, w);
-      await tapShown(
-        t,
-        find.byKey(LumeSubscriptionsTool.row(w.subs['Netflix']!.value)),
-      );
-      await tapShown(t, find.byKey(LumeSubscriptionsTool.cancelKey));
-      expect(find.text('Cancel this subscription?'), findsOneWidget);
-      await tapShown(t, find.text('Confirm'));
+    testWidgets(
+      'cancelling asks first, keeps the record, excludes it from the total',
+      (WidgetTester t) async {
+        final SubscriptionsWorld w = SubscriptionsWorld().reference();
+        await pumpSubscriptions(t, w);
+        await tapShown(
+          t,
+          find.byKey(LumeSubscriptionsTool.row(w.subs['Netflix']!.value)),
+        );
+        await tapShown(t, find.byKey(LumeSubscriptionsTool.cancelKey));
+        expect(find.text('Cancel this subscription?'), findsOneWidget);
+        await tapShown(t, find.text('Confirm'));
 
-      final SubscriptionView v = w.book().subscriptions.single;
-      expect(v.subscription.state, SubscriptionState.cancelled);
-      expect(w.book().summary(pkr).activeCount, 0);
-      expect(find.byKey(LumeSubscriptionsTool.reactivateKey), findsOneWidget);
-      w.dispose();
-    });
+        final SubscriptionView v = w.book().subscriptions.single;
+        expect(v.subscription.state, SubscriptionState.cancelled);
+        expect(w.book().summary(pkr).activeCount, 0);
+        expect(find.byKey(LumeSubscriptionsTool.reactivateKey), findsOneWidget);
+        w.dispose();
+      },
+    );
   });
 
   group('delete', () {

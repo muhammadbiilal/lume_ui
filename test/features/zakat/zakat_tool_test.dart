@@ -99,7 +99,12 @@ void main() {
     testWidgets('a non-Pakistan reader sees their own currency, not PKR', (
       WidgetTester tester,
     ) async {
-      await pumpZakatTool(tester, country: 'US', region: 'New York', city: 'New York');
+      await pumpZakatTool(
+        tester,
+        country: 'US',
+        region: 'New York',
+        city: 'New York',
+      );
       expect(find.textContaining(r'$'), findsWidgets);
       expect(find.textContaining('Rs '), findsNothing);
     });

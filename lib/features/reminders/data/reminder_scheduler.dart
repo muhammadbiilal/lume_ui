@@ -23,7 +23,13 @@ import 'package:timezone/timezone.dart' as tz;
 import '../../../core/values/lume_record_id.dart';
 import '../domain/reminder_model.dart';
 
-enum ReminderScheduleOutcome { scheduled, cancelled, zoneUnresolved, denied, failed }
+enum ReminderScheduleOutcome {
+  scheduled,
+  cancelled,
+  zoneUnresolved,
+  denied,
+  failed,
+}
 
 /// A stable 31-bit id for the plugin's own int-keyed notification store —
 /// derived from the record id's bytes, not `Object.hashCode` (Dart never
@@ -47,7 +53,10 @@ abstract interface class LumeReminderScheduler {
   /// Schedules (or replaces) [entry]'s notification. `zoneId` is the
   /// reader's resolved IANA identifier; `null` schedules nothing and
   /// reports [ReminderScheduleOutcome.zoneUnresolved].
-  Future<ReminderScheduleOutcome> schedule(ReminderEntry entry, {String? zoneId});
+  Future<ReminderScheduleOutcome> schedule(
+    ReminderEntry entry, {
+    String? zoneId,
+  });
 
   Future<void> cancel(LumeRecordId id);
 
@@ -72,15 +81,30 @@ class LumeLocalReminderScheduler implements LumeReminderScheduler {
     _initialized = true;
   }
 
-  tz.TZDateTime? _next(tz.Location zone, int hour, int minute, ReminderRepeat repeat) {
+  tz.TZDateTime? _next(
+    tz.Location zone,
+    int hour,
+    int minute,
+    ReminderRepeat repeat,
+  ) {
     final tz.TZDateTime now = tz.TZDateTime.now(zone);
-    tz.TZDateTime at = tz.TZDateTime(zone, now.year, now.month, now.day, hour, minute);
+    tz.TZDateTime at = tz.TZDateTime(
+      zone,
+      now.year,
+      now.month,
+      now.day,
+      hour,
+      minute,
+    );
     if (!at.isAfter(now)) at = at.add(const Duration(days: 1));
     return at;
   }
 
   @override
-  Future<ReminderScheduleOutcome> schedule(ReminderEntry entry, {String? zoneId}) async {
+  Future<ReminderScheduleOutcome> schedule(
+    ReminderEntry entry, {
+    String? zoneId,
+  }) async {
     final int id = lumeReminderNotificationId(entry.id);
     if (!entry.enabled) {
       await _plugin.cancel(id: id);
@@ -94,7 +118,12 @@ class LumeLocalReminderScheduler implements LumeReminderScheduler {
     } on tz.LocationNotFoundException {
       return ReminderScheduleOutcome.zoneUnresolved;
     }
-    final tz.TZDateTime? at = _next(zone, entry.atHour, entry.atMinute, entry.repeat);
+    final tz.TZDateTime? at = _next(
+      zone,
+      entry.atHour,
+      entry.atMinute,
+      entry.repeat,
+    );
     if (at == null) return ReminderScheduleOutcome.failed;
     try {
       await _plugin.zonedSchedule(
@@ -106,7 +135,8 @@ class LumeLocalReminderScheduler implements LumeReminderScheduler {
           android: AndroidNotificationDetails(
             kReminderChannelId,
             'Reminders',
-            channelDescription: 'A reminder set in Lume, at the time chosen for it.',
+            channelDescription:
+                'A reminder set in Lume, at the time chosen for it.',
             importance: Importance.high,
             priority: Priority.high,
           ),
@@ -126,7 +156,8 @@ class LumeLocalReminderScheduler implements LumeReminderScheduler {
   }
 
   @override
-  Future<void> cancel(LumeRecordId id) => _plugin.cancel(id: lumeReminderNotificationId(id));
+  Future<void> cancel(LumeRecordId id) =>
+      _plugin.cancel(id: lumeReminderNotificationId(id));
 
   @override
   Future<void> cancelAll() => _plugin.cancelAll();
@@ -134,14 +165,24 @@ class LumeLocalReminderScheduler implements LumeReminderScheduler {
 
 /// Records every call instead of touching a platform, for tests.
 class LumeFakeReminderScheduler implements LumeReminderScheduler {
-  final Map<String, ({int atHour, int atMinute, ReminderRepeat repeat, String? zoneId})>
-  scheduled = <String, ({int atHour, int atMinute, ReminderRepeat repeat, String? zoneId})>{};
+  final Map<
+    String,
+    ({int atHour, int atMinute, ReminderRepeat repeat, String? zoneId})
+  >
+  scheduled =
+      <
+        String,
+        ({int atHour, int atMinute, ReminderRepeat repeat, String? zoneId})
+      >{};
   final List<String> cancelled = <String>[];
   bool cancelledAll = false;
   ReminderScheduleOutcome answer = ReminderScheduleOutcome.scheduled;
 
   @override
-  Future<ReminderScheduleOutcome> schedule(ReminderEntry entry, {String? zoneId}) async {
+  Future<ReminderScheduleOutcome> schedule(
+    ReminderEntry entry, {
+    String? zoneId,
+  }) async {
     if (!entry.enabled) {
       scheduled.remove(entry.id.value);
       cancelled.add(entry.id.value);

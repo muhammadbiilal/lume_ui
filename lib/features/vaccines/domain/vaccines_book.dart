@@ -17,7 +17,11 @@ import 'vaccines_model.dart';
 /// One vaccination with everything worked out from its record.
 @immutable
 class VaccineView {
-  const VaccineView._({required this.record, required this.daysUntil, required this.overdue});
+  const VaccineView._({
+    required this.record,
+    required this.daysUntil,
+    required this.overdue,
+  });
 
   final VaccineRecord record;
 
@@ -35,7 +39,11 @@ class VaccineView {
 
 @immutable
 class VaccinesBook {
-  const VaccinesBook._({required this.records, required this.defects, required this.today});
+  const VaccinesBook._({
+    required this.records,
+    required this.defects,
+    required this.today,
+  });
 
   factory VaccinesBook.from({
     required List<VaccineRecord> records,
@@ -47,7 +55,10 @@ class VaccinesBook {
         VaccineView._(
           record: r,
           daysUntil: today?.daysUntil(r.date),
-          overdue: today != null && r.status == VaccineStatus.due && r.date.isBefore(today),
+          overdue:
+              today != null &&
+              r.status == VaccineStatus.due &&
+              r.date.isBefore(today),
         ),
     ];
     return VaccinesBook._(records: views, defects: defects, today: today);
@@ -78,10 +89,14 @@ class VaccinesBook {
   /// day, never sorted on a value that is not there.
   List<VaccineView>? upcoming({int count = 4}) {
     if (today == null) return null;
-    final List<VaccineView> due = <VaccineView>[
-      for (final VaccineView v in records)
-        if (!v.given) v,
-    ]..sort((VaccineView a, VaccineView b) => a.daysUntil!.compareTo(b.daysUntil!));
+    final List<VaccineView> due =
+        <VaccineView>[
+          for (final VaccineView v in records)
+            if (!v.given) v,
+        ]..sort(
+          (VaccineView a, VaccineView b) =>
+              a.daysUntil!.compareTo(b.daysUntil!),
+        );
     return due.take(count).toList();
   }
 }

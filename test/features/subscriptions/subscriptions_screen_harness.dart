@@ -28,8 +28,15 @@ import '../tax/tax_harness.dart';
 
 class SubscriptionsWorld {
   SubscriptionsWorld({this.seed = 1, Duration? readDelay}) {
-    store = LumeMemoryRecordRepository(hydrateDelay: readDelay, now: () => clock);
-    repo = SubscriptionsRepository(store, random: Random(seed), now: () => clock);
+    store = LumeMemoryRecordRepository(
+      hydrateDelay: readDelay,
+      now: () => clock,
+    );
+    repo = SubscriptionsRepository(
+      store,
+      random: Random(seed),
+      now: () => clock,
+    );
     if (readDelay == null) repo.open();
   }
 
@@ -79,7 +86,8 @@ class SubscriptionsWorld {
     subscriptionsRepositoryProvider.overrideWithValue(repo),
   ];
 
-  SubscriptionsBook book([LumeDate? today]) => repo.view().book(today ?? LumeDate(2026, 9, 7));
+  SubscriptionsBook book([LumeDate? today]) =>
+      repo.view().book(today ?? LumeDate(2026, 9, 7));
 
   void dispose() => store.dispose();
 }

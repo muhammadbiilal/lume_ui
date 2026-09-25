@@ -15,7 +15,9 @@ abstract final class HabitsText {
   /// "5 day streak" / "3 week streak" — the unit follows the habit's own
   /// cadence, never a bare number the reader has to interpret themselves.
   static String streakSentence(AppLocalizations l, HabitFrequency f, int n) =>
-      f == HabitFrequency.weekly ? l.habitsStreakWeeks(n) : l.habitsStreakDays(n);
+      f == HabitFrequency.weekly
+      ? l.habitsStreakWeeks(n)
+      : l.habitsStreakDays(n);
 
   /// "days" / "weeks" (or "day" / "week") — the bare unit word, for a figure
   /// that already carries its own number apart from the word.

@@ -150,7 +150,9 @@ class _HealthToolState extends ConsumerState<HealthTool> {
   final GlobalKey<LumeToolScreenState> _host = GlobalKey<LumeToolScreenState>();
   late final HealthRepository _repo = ref.read(healthRepositoryProvider);
   late final LumeToolSession _session = ref.read(toolSessionProvider);
-  late final TextEditingController _query = TextEditingController(text: _read('q') ?? '');
+  late final TextEditingController _query = TextEditingController(
+    text: _read('q') ?? '',
+  );
   final FocusNode _searchFocus = FocusNode();
   final GlobalKey _body = GlobalKey();
 
@@ -244,7 +246,9 @@ class _HealthToolState extends ConsumerState<HealthTool> {
     if (!moved) return;
     WidgetsBinding.instance.addPostFrameCallback((_) {
       final BuildContext? c = _body.currentContext;
-      final ScrollPosition? p = c == null ? null : Scrollable.maybeOf(c)?.position;
+      final ScrollPosition? p = c == null
+          ? null
+          : Scrollable.maybeOf(c)?.position;
       if (p != null && p.pixels != 0) p.jumpTo(0);
     });
   }
@@ -366,7 +370,10 @@ class _HealthToolState extends ConsumerState<HealthTool> {
       text: l.healthDeleteText,
     );
     if (!ok || !mounted) return;
-    final HealthResult<HealthWrite> result = _repo.delete(r.id, version: r.version);
+    final HealthResult<HealthWrite> result = _repo.delete(
+      r.id,
+      version: r.version,
+    );
     if (result.failure != null) return _failed(l, result.failure!);
     _go(_View.list);
     _say(l.healthDeletedToast);
@@ -377,7 +384,10 @@ class _HealthToolState extends ConsumerState<HealthTool> {
   @override
   Widget build(BuildContext context) {
     final AppLocalizations l = AppLocalizations.of(context);
-    final LumeFormatting f = LumeFormatting.of(context, countryCode: widget.request.user.country);
+    final LumeFormatting f = LumeFormatting.of(
+      context,
+      countryCode: widget.request.user.country,
+    );
     final LumeDate? today = _today(context);
     final HealthSnapshot snapshot = _repo.view();
 
@@ -509,14 +519,22 @@ class _HealthToolState extends ConsumerState<HealthTool> {
           value: f.integer(book.totalCount),
           caption: upcoming == null
               ? null
-              : (upcoming > 0 ? l.healthSummaryUpcoming(upcoming) : l.healthSummaryNoneUpcoming),
+              : (upcoming > 0
+                    ? l.healthSummaryUpcoming(upcoming)
+                    : l.healthSummaryNoneUpcoming),
           stats: <LumeStat>[
-            LumeStat(value: f.integer(book.totalCount), label: l.healthStatTotal),
+            LumeStat(
+              value: f.integer(book.totalCount),
+              label: l.healthStatTotal,
+            ),
             LumeStat(
               value: upcoming == null ? '—' : f.integer(upcoming),
               label: l.healthStatUpcoming,
             ),
-            LumeStat(value: f.integer(book.kindsUsed), label: l.healthStatTypes),
+            LumeStat(
+              value: f.integer(book.kindsUsed),
+              label: l.healthStatTypes,
+            ),
           ],
         ),
       ),
@@ -557,7 +575,9 @@ class _HealthToolState extends ConsumerState<HealthTool> {
           key: LumeHealthTool.sortKey,
           label: l.commonSort,
           value: _sort.name,
-          direction: _descending ? LumeSortDirection.descending : LumeSortDirection.ascending,
+          direction: _descending
+              ? LumeSortDirection.descending
+              : LumeSortDirection.ascending,
           items: <LumeChoice>[
             LumeChoice(value: HealthSort.date.name, label: l.commonDate),
             LumeChoice(value: HealthSort.title.name, label: l.recFieldTitle),
@@ -598,17 +618,27 @@ class _HealthToolState extends ConsumerState<HealthTool> {
     ];
   }
 
-  Widget _row(BuildContext context, AppLocalizations l, LumeFormatting f, HealthRecordView v) {
+  Widget _row(
+    BuildContext context,
+    AppLocalizations l,
+    LumeFormatting f,
+    HealthRecordView v,
+  ) {
     final HealthRecord r = v.record;
     return LumeRichRow(
       key: LumeHealthTool.row(r.id.value),
       icon: HealthText.icon(r.kind),
       title: r.title,
       subtitle: r.source,
-      meta: <String>[HealthText.kind(l, r.kind), f.dateMediumYear(r.date.toCalendarDateTime())],
+      meta: <String>[
+        HealthText.kind(l, r.kind),
+        f.dateMediumYear(r.date.toCalendarDateTime()),
+      ],
       badge: v.isUpcoming
           ? LumeBadge(
-              label: v.daysUntil == 0 ? l.commonToday : l.commonInDays(v.daysUntil!),
+              label: v.daysUntil == 0
+                  ? l.commonToday
+                  : l.commonInDays(v.daysUntil!),
               tone: LumeBadgeTone.info,
             )
           : null,
@@ -651,16 +681,29 @@ class _HealthToolState extends ConsumerState<HealthTool> {
           decoration: BoxDecoration(
             color: context.lume.card,
             borderRadius: LumeRadius.brMd,
-            border: Border.all(color: context.lume.border, width: LumeSpace.border),
+            border: Border.all(
+              color: context.lume.border,
+              width: LumeSpace.border,
+            ),
             boxShadow: context.lumeShadows.xs,
           ),
           child: LumeFactCard(
             facts: <LumeFact>[
-              LumeFact(label: l.healthFieldType, value: HealthText.kind(l, r.kind)),
-              LumeFact(label: l.commonDate, value: f.dateMediumYear(r.date.toCalendarDateTime())),
+              LumeFact(
+                label: l.healthFieldType,
+                value: HealthText.kind(l, r.kind),
+              ),
+              LumeFact(
+                label: l.commonDate,
+                value: f.dateMediumYear(r.date.toCalendarDateTime()),
+              ),
               LumeFact(label: l.healthFieldSource, value: r.source ?? '—'),
               LumeFact(label: l.commonValue, value: r.value ?? '—'),
-              LumeFact(label: l.recFieldNotes, value: r.notes ?? l.recNone, block: true),
+              LumeFact(
+                label: l.recFieldNotes,
+                value: r.notes ?? l.recNone,
+                block: true,
+              ),
             ],
           ),
         ),
@@ -706,7 +749,8 @@ class _HealthToolState extends ConsumerState<HealthTool> {
 
   Future<void> _chooseDate(BuildContext context) async {
     final _HealthDraft d = _draft!;
-    final DateTime base = d.date?.toCalendarDateTime() ?? LumeClockScope.of(context).now();
+    final DateTime base =
+        d.date?.toCalendarDateTime() ?? LumeClockScope.of(context).now();
     final DateTime? picked = await showDatePicker(
       context: context,
       initialDate: base,
@@ -718,7 +762,11 @@ class _HealthToolState extends ConsumerState<HealthTool> {
     }
   }
 
-  List<Widget> _form(BuildContext context, AppLocalizations l, LumeFormatting f) {
+  List<Widget> _form(
+    BuildContext context,
+    AppLocalizations l,
+    LumeFormatting f,
+  ) {
     final _HealthDraft d = _draft!;
     return <Widget>[
       LumeToolSection(

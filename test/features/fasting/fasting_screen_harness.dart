@@ -24,11 +24,16 @@ import 'package:lume/features/tools/application/tool_request.dart';
 
 import '../../helpers/lume_harness.dart';
 
-final LumeFeature kFastingFeature = kLumeFeatures.firstWhere((LumeFeature f) => f.id == 'fasting');
+final LumeFeature kFastingFeature = kLumeFeatures.firstWhere(
+  (LumeFeature f) => f.id == 'fasting',
+);
 
 class FastingWorld {
   FastingWorld({this.seed = 1, Duration? readDelay}) {
-    store = LumeMemoryRecordRepository(hydrateDelay: readDelay, now: () => clock);
+    store = LumeMemoryRecordRepository(
+      hydrateDelay: readDelay,
+      now: () => clock,
+    );
     repo = FastingRepository(store, random: Random(seed), now: () => clock);
     if (readDelay == null) repo.open();
   }
@@ -46,7 +51,11 @@ class FastingWorld {
     bool kept = true,
   }) {
     _tick();
-    final FastingResult<FastingWrite> r = repo.logFast(date, kind: kind, kept: kept);
+    final FastingResult<FastingWrite> r = repo.logFast(
+      date,
+      kind: kind,
+      kept: kept,
+    );
     if (r.failure != null) throw StateError('${r.failure}');
     return r.value!.entry!;
   }
@@ -76,7 +85,11 @@ Future<void> pumpFasting(
   await pumpLume(
     tester,
     FastingTool(
-      request: LumeToolRequest(feature: kFastingFeature, user: user, branch: 'tools'),
+      request: LumeToolRequest(
+        feature: kFastingFeature,
+        user: user,
+        branch: 'tools',
+      ),
     ),
     surface: surface,
     locale: locale,

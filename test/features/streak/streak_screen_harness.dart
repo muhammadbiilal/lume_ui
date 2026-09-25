@@ -38,7 +38,10 @@ import '../../helpers/lume_harness.dart';
 
 class StreakWorld {
   StreakWorld({this.seed = 1, Duration? readDelay}) {
-    store = LumeMemoryRecordRepository(hydrateDelay: readDelay, now: () => clock);
+    store = LumeMemoryRecordRepository(
+      hydrateDelay: readDelay,
+      now: () => clock,
+    );
     repo = StreakRepository(store, random: Random(seed), now: () => clock);
     if (readDelay == null) repo.open();
   }

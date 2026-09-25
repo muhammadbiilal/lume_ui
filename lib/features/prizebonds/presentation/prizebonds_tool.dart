@@ -72,8 +72,7 @@ class LumePrizebondsTool extends ConsumerStatefulWidget {
   static const String defaultDenom = '750';
 
   @override
-  ConsumerState<LumePrizebondsTool> createState() =>
-      _LumePrizebondsToolState();
+  ConsumerState<LumePrizebondsTool> createState() => _LumePrizebondsToolState();
 }
 
 class _LumePrizebondsToolState extends ConsumerState<LumePrizebondsTool> {
@@ -102,7 +101,8 @@ class _LumePrizebondsToolState extends ConsumerState<LumePrizebondsTool> {
   }
 
   String _denomOf(LumePrizeBondScheme scheme) {
-    final String saved = _session.read(LumePrizebondsTool.id, 'denom') ??
+    final String saved =
+        _session.read(LumePrizebondsTool.id, 'denom') ??
         LumePrizebondsTool.defaultDenom;
     return scheme.bonds.any((LumePrizeBond b) => '${b.denom}' == saved)
         ? saved
@@ -324,7 +324,8 @@ class _LumePrizebondsToolState extends ConsumerState<LumePrizebondsTool> {
                 key: LumePrizebondsTool.shapeKey,
                 values: <double>[for (final LumePrizeBond b in bonds) b.first],
                 labels: <String>[
-                  for (final LumePrizeBond b in bonds) money(b.denom.toDouble()),
+                  for (final LumePrizeBond b in bonds)
+                    money(b.denom.toDouble()),
                 ],
                 label: l.prizebondsPrizeShape,
                 caption: Text(

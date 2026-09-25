@@ -13,7 +13,11 @@ void main() {
     test('a habit round-trips through its fields', () {
       final HabitsHarness h = HabitsHarness();
       addTearDown(h.dispose);
-      final Habit habit = h.add(name: 'Read', frequency: HabitFrequency.weekly, notes: 'Before bed');
+      final Habit habit = h.add(
+        name: 'Read',
+        frequency: HabitFrequency.weekly,
+        notes: 'Before bed',
+      );
       expect(habit.name, 'Read');
       expect(habit.frequency, HabitFrequency.weekly);
       expect(habit.notes, 'Before bed');
@@ -31,7 +35,9 @@ void main() {
     test('a name over the limit is refused', () {
       final HabitsHarness h = HabitsHarness();
       addTearDown(h.dispose);
-      final HabitsResult<HabitsWrite> r = h.tryAdd(name: 'x' * (kHabitsNameMax + 1));
+      final HabitsResult<HabitsWrite> r = h.tryAdd(
+        name: 'x' * (kHabitsNameMax + 1),
+      );
       expect(r.ok, isFalse);
       expect(r.failure!.field, 'name');
     });
@@ -39,46 +45,62 @@ void main() {
     test('a habit record of the wrong schema is a defect, not a crash', () {
       final HabitsHarness h = HabitsHarness();
       addTearDown(h.dispose);
-      h.raw(HabitsCollections.habits, 'aaaaaaaa-aaaa-4aaa-8aaa-aaaaaaaaaaaa', <String, Object?>{
-        'schema': 'lume.other/1',
-      });
+      h.raw(
+        HabitsCollections.habits,
+        'aaaaaaaa-aaaa-4aaa-8aaa-aaaaaaaaaaaa',
+        <String, Object?>{'schema': 'lume.other/1'},
+      );
       expect(h.repo.view().defects, hasLength(1));
       expect(h.repo.view().defects.first.reason, 'schema');
       expect(h.book().habits, isEmpty);
     });
 
-    test('a check-in with a malformed date is a defect naming its own habit', () {
-      final HabitsHarness h = HabitsHarness();
-      addTearDown(h.dispose);
-      final Habit habit = h.add();
-      h.raw(HabitsCollections.checkins, 'bbbbbbbb-bbbb-4bbb-8bbb-bbbbbbbbbbbb', <String, Object?>{
-        'schema': kHabitsSchema,
-        'habit': habit.id.value,
-        'date': 'not-a-date',
-      });
-      final HabitsSnapshot snap = h.repo.view();
-      expect(snap.defects, hasLength(1));
-      expect(snap.defects.first.habitId, habit.id.value);
-      final HabitsBook book = h.book();
-      final HabitView v = book.habit(habit.id)!;
-      expect(v.damaged, isTrue);
-      expect(v.currentStreak, isNull);
-      expect(v.bestStreak, 0);
-    });
+    test(
+      'a check-in with a malformed date is a defect naming its own habit',
+      () {
+        final HabitsHarness h = HabitsHarness();
+        addTearDown(h.dispose);
+        final Habit habit = h.add();
+        h.raw(
+          HabitsCollections.checkins,
+          'bbbbbbbb-bbbb-4bbb-8bbb-bbbbbbbbbbbb',
+          <String, Object?>{
+            'schema': kHabitsSchema,
+            'habit': habit.id.value,
+            'date': 'not-a-date',
+          },
+        );
+        final HabitsSnapshot snap = h.repo.view();
+        expect(snap.defects, hasLength(1));
+        expect(snap.defects.first.habitId, habit.id.value);
+        final HabitsBook book = h.book();
+        final HabitView v = book.habit(habit.id)!;
+        expect(v.damaged, isTrue);
+        expect(v.currentStreak, isNull);
+        expect(v.bestStreak, 0);
+      },
+    );
 
-    test('an orphan check-in names a habit that is not there, and does not crash', () {
-      final HabitsHarness h = HabitsHarness();
-      addTearDown(h.dispose);
-      h.raw(HabitsCollections.checkins, 'cccccccc-cccc-4ccc-8ccc-cccccccccccc', <String, Object?>{
-        'schema': kHabitsSchema,
-        'habit': 'dddddddd-dddd-4ddd-8ddd-dddddddddddd',
-        'date': kToday.toIso(),
-      });
-      final HabitsBook book = h.book();
-      expect(book.habits, isEmpty);
-      expect(book.damage, hasLength(1));
-      expect(book.damage.first.reason, 'orphanCheckin');
-    });
+    test(
+      'an orphan check-in names a habit that is not there, and does not crash',
+      () {
+        final HabitsHarness h = HabitsHarness();
+        addTearDown(h.dispose);
+        h.raw(
+          HabitsCollections.checkins,
+          'cccccccc-cccc-4ccc-8ccc-cccccccccccc',
+          <String, Object?>{
+            'schema': kHabitsSchema,
+            'habit': 'dddddddd-dddd-4ddd-8ddd-dddddddddddd',
+            'date': kToday.toIso(),
+          },
+        );
+        final HabitsBook book = h.book();
+        expect(book.habits, isEmpty);
+        expect(book.damage, hasLength(1));
+        expect(book.damage.first.reason, 'orphanCheckin');
+      },
+    );
   });
 
   group('streaks — daily', () {
@@ -93,23 +115,28 @@ void main() {
       expect(v.currentStreak, 3);
     });
 
-    test('stays alive, counting from yesterday, when today is not yet checked', () {
-      final HabitsHarness h = HabitsHarness();
-      addTearDown(h.dispose);
-      h.clock = DateTime.utc(2026, 9, 1);
-      final Habit habit = h.add();
-      h.checkIn(habit.id, <LumeDate>[d(9, 5), d(9, 6)]);
-      final HabitView v = h.view(habit.id); // today is 7 Sep, unchecked
-      expect(v.doneToday, isFalse);
-      expect(v.currentStreak, 2);
-    });
+    test(
+      'stays alive, counting from yesterday, when today is not yet checked',
+      () {
+        final HabitsHarness h = HabitsHarness();
+        addTearDown(h.dispose);
+        h.clock = DateTime.utc(2026, 9, 1);
+        final Habit habit = h.add();
+        h.checkIn(habit.id, <LumeDate>[d(9, 5), d(9, 6)]);
+        final HabitView v = h.view(habit.id); // today is 7 Sep, unchecked
+        expect(v.doneToday, isFalse);
+        expect(v.currentStreak, 2);
+      },
+    );
 
     test('breaks on a missed day', () {
       final HabitsHarness h = HabitsHarness();
       addTearDown(h.dispose);
       h.clock = DateTime.utc(2026, 9, 1);
       final Habit habit = h.add();
-      h.checkIn(habit.id, <LumeDate>[d(9, 5)]); // 6th missed, 7th (today) missed
+      h.checkIn(habit.id, <LumeDate>[
+        d(9, 5),
+      ]); // 6th missed, 7th (today) missed
       final HabitView v = h.view(habit.id);
       expect(v.currentStreak, 0);
     });
@@ -158,18 +185,21 @@ void main() {
   });
 
   group('streaks — weekly', () {
-    test('any day in the week counts for that week, and weeks must be consecutive', () {
-      final HabitsHarness h = HabitsHarness();
-      addTearDown(h.dispose);
-      h.clock = DateTime.utc(2026, 8, 1);
-      final Habit habit = h.add(frequency: HabitFrequency.weekly);
-      // Three consecutive Mondays (17, 24, 31 Aug) — this week (7 Sep,
-      // today) is not yet done, but is not over yet either, so it does not
-      // break the streak.
-      h.checkIn(habit.id, <LumeDate>[d(8, 17), d(8, 24), d(8, 31)]);
-      final HabitView v = h.view(habit.id);
-      expect(v.currentStreak, 3);
-    });
+    test(
+      'any day in the week counts for that week, and weeks must be consecutive',
+      () {
+        final HabitsHarness h = HabitsHarness();
+        addTearDown(h.dispose);
+        h.clock = DateTime.utc(2026, 8, 1);
+        final Habit habit = h.add(frequency: HabitFrequency.weekly);
+        // Three consecutive Mondays (17, 24, 31 Aug) — this week (7 Sep,
+        // today) is not yet done, but is not over yet either, so it does not
+        // break the streak.
+        h.checkIn(habit.id, <LumeDate>[d(8, 17), d(8, 24), d(8, 31)]);
+        final HabitView v = h.view(habit.id);
+        expect(v.currentStreak, 3);
+      },
+    );
 
     test('a week with no check-in breaks the streak', () {
       final HabitsHarness h = HabitsHarness();
@@ -182,15 +212,18 @@ void main() {
       expect(v.currentStreak, 1);
     });
 
-    test('stays alive counting from last week when this week is not done yet', () {
-      final HabitsHarness h = HabitsHarness();
-      addTearDown(h.dispose);
-      h.clock = DateTime.utc(2026, 8, 1);
-      final Habit habit = h.add(frequency: HabitFrequency.weekly);
-      h.checkIn(habit.id, <LumeDate>[d(8, 31), d(9, 3)]); // last week only
-      final HabitView v = h.view(habit.id);
-      expect(v.currentStreak, 1);
-    });
+    test(
+      'stays alive counting from last week when this week is not done yet',
+      () {
+        final HabitsHarness h = HabitsHarness();
+        addTearDown(h.dispose);
+        h.clock = DateTime.utc(2026, 8, 1);
+        final Habit habit = h.add(frequency: HabitFrequency.weekly);
+        h.checkIn(habit.id, <LumeDate>[d(8, 31), d(9, 3)]); // last week only
+        final HabitView v = h.view(habit.id);
+        expect(v.currentStreak, 1);
+      },
+    );
   });
 
   group('completion rate', () {
@@ -200,7 +233,13 @@ void main() {
       h.clock = DateTime.utc(2026, 9, 1); // habit made 1 Sep
       final Habit habit = h.add();
       // 7 days from 1 Sep to 7 Sep inclusive; 5 checked.
-      h.checkIn(habit.id, <LumeDate>[d(9, 1), d(9, 2), d(9, 3), d(9, 5), d(9, 6)]);
+      h.checkIn(habit.id, <LumeDate>[
+        d(9, 1),
+        d(9, 2),
+        d(9, 3),
+        d(9, 5),
+        d(9, 6),
+      ]);
       final HabitView v = h.view(habit.id);
       expect(v.completionRate, closeTo(5 / 7, 1e-9));
     });
@@ -231,18 +270,21 @@ void main() {
   });
 
   group('aggregate book stats — real, never a fixture literal', () {
-    test('doneTodayCount and activeStreakCount count only undamaged habits', () {
-      final HabitsHarness h = HabitsHarness();
-      addTearDown(h.dispose);
-      h.clock = DateTime.utc(2026, 9, 1);
-      final Habit a = h.add(name: 'A');
-      final Habit b = h.add(name: 'B');
-      h.checkIn(a.id, <LumeDate>[d(9, 6), d(9, 7)]); // streak, done today
-      h.checkIn(b.id, <LumeDate>[d(9, 5)]); // no streak, not done today
-      final HabitsBook book = h.book();
-      expect(book.doneTodayCount, 1);
-      expect(book.activeStreakCount, 1);
-    });
+    test(
+      'doneTodayCount and activeStreakCount count only undamaged habits',
+      () {
+        final HabitsHarness h = HabitsHarness();
+        addTearDown(h.dispose);
+        h.clock = DateTime.utc(2026, 9, 1);
+        final Habit a = h.add(name: 'A');
+        final Habit b = h.add(name: 'B');
+        h.checkIn(a.id, <LumeDate>[d(9, 6), d(9, 7)]); // streak, done today
+        h.checkIn(b.id, <LumeDate>[d(9, 5)]); // no streak, not done today
+        final HabitsBook book = h.book();
+        expect(book.doneTodayCount, 1);
+        expect(book.activeStreakCount, 1);
+      },
+    );
 
     test('an empty book counts zero, not a fabricated figure', () {
       final HabitsHarness h = HabitsHarness();
@@ -259,7 +301,10 @@ void main() {
       final HabitsHarness h = HabitsHarness();
       addTearDown(h.dispose);
       final Habit habit = h.add();
-      final HabitsResult<HabitsWrite> r = h.repo.toggleCheckin(habit.id, kToday);
+      final HabitsResult<HabitsWrite> r = h.repo.toggleCheckin(
+        habit.id,
+        kToday,
+      );
       expect(r.ok, isTrue);
       expect(r.value!.checkin, isNotNull);
       expect(h.view(habit.id).doneToday, isTrue);
@@ -270,7 +315,10 @@ void main() {
       addTearDown(h.dispose);
       final Habit habit = h.add();
       h.repo.toggleCheckin(habit.id, kToday);
-      final HabitsResult<HabitsWrite> r = h.repo.toggleCheckin(habit.id, kToday);
+      final HabitsResult<HabitsWrite> r = h.repo.toggleCheckin(
+        habit.id,
+        kToday,
+      );
       expect(r.ok, isTrue);
       expect(r.value!.checkin, isNull);
       expect(h.view(habit.id).doneToday, isFalse);
@@ -291,7 +339,10 @@ void main() {
       final HabitsHarness h = HabitsHarness();
       addTearDown(h.dispose);
       final Habit habit = h.add();
-      final HabitsResult<HabitsWrite> r = h.repo.toggleCheckin(habit.id, kToday);
+      final HabitsResult<HabitsWrite> r = h.repo.toggleCheckin(
+        habit.id,
+        kToday,
+      );
       expect(h.view(habit.id).doneToday, isTrue);
       final HabitsResult<void> u = h.repo.undo(r.value!);
       expect(u.ok, isTrue);
@@ -305,7 +356,10 @@ void main() {
       addTearDown(h.dispose);
       final Habit habit = h.add();
       h.checkIn(habit.id, <LumeDate>[kToday]);
-      final HabitsResult<HabitsWrite> r = h.repo.deleteHabit(habit.id, version: habit.version);
+      final HabitsResult<HabitsWrite> r = h.repo.deleteHabit(
+        habit.id,
+        version: habit.version,
+      );
       expect(r.ok, isTrue);
       expect(h.repo.view().habits, isEmpty);
       expect(h.repo.view().checkins, isEmpty);
@@ -316,7 +370,10 @@ void main() {
       addTearDown(h.dispose);
       final Habit habit = h.add();
       h.checkIn(habit.id, <LumeDate>[kToday]);
-      final HabitsResult<HabitsWrite> del = h.repo.deleteHabit(habit.id, version: habit.version);
+      final HabitsResult<HabitsWrite> del = h.repo.deleteHabit(
+        habit.id,
+        version: habit.version,
+      );
       final HabitsResult<void> u = h.repo.undo(del.value!);
       expect(u.ok, isTrue);
       expect(h.repo.view().habits, hasLength(1));

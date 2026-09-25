@@ -37,7 +37,10 @@ final LumeFeature kPregnancyFeature = kLumeFeatures.firstWhere(
 
 class PregnancyWorld {
   PregnancyWorld({this.seed = 1, Duration? readDelay}) {
-    store = LumeMemoryRecordRepository(hydrateDelay: readDelay, now: () => clock);
+    store = LumeMemoryRecordRepository(
+      hydrateDelay: readDelay,
+      now: () => clock,
+    );
     repo = PregnancyRepository(store, random: Random(seed), now: () => clock);
     if (readDelay == null) repo.open();
   }

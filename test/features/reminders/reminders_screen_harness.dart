@@ -30,7 +30,10 @@ import 'reminders_harness.dart';
 
 class ReminderWorld {
   ReminderWorld({Duration? readDelay}) {
-    store = LumeMemoryRecordRepository(hydrateDelay: readDelay, now: () => kFixtureNow);
+    store = LumeMemoryRecordRepository(
+      hydrateDelay: readDelay,
+      now: () => kFixtureNow,
+    );
     scheduler = LumeFakeReminderScheduler();
     repo = ReminderRepository(store, scheduler, now: () => kFixtureNow);
     gate = LumeFakeNotificationGate(

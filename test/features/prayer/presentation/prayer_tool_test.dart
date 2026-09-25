@@ -58,7 +58,8 @@ LumePrayerDay _oracle(String country, String city) {
   expect(
     missing,
     isNull,
-    reason: 'the oracle itself has no reading for $country/$city — fix the '
+    reason:
+        'the oracle itself has no reading for $country/$city — fix the '
         'test, not the widget',
   );
   return day!;
@@ -87,7 +88,11 @@ Future<void> pumpPrayer(
   await pumpLume(
     tester,
     LumePrayerTool(
-      request: LumeToolRequest(feature: _prayerFeature, user: user, branch: 'tools'),
+      request: LumeToolRequest(
+        feature: _prayerFeature,
+        user: user,
+        branch: 'tools',
+      ),
     ),
     locale: locale,
     surface: surface,

@@ -91,10 +91,12 @@ abstract final class LumeSubscriptionsTool {
   static const Key cycleField = ValueKey<String>('subs.field.cycle');
   static const Key customDaysField = ValueKey<String>('subs.field.customDays');
   static const Key startedOnField = ValueKey<String>('subs.field.startedOn');
-  static Key filterChip(SubscriptionsFilter f) => ValueKey<String>('subs.filter.${f.name}');
+  static Key filterChip(SubscriptionsFilter f) =>
+      ValueKey<String>('subs.filter.${f.name}');
   static Key row(String id) => ValueKey<String>('subs.row.$id');
 
-  static Widget open(LumeToolRequest request) => SubscriptionsTool(request: request);
+  static Widget open(LumeToolRequest request) =>
+      SubscriptionsTool(request: request);
 }
 
 class SubscriptionsTool extends ConsumerStatefulWidget {
@@ -160,9 +162,13 @@ class _SubscriptionDraft {
 
 class _SubscriptionsToolState extends ConsumerState<SubscriptionsTool> {
   final GlobalKey<LumeToolScreenState> _host = GlobalKey<LumeToolScreenState>();
-  late final SubscriptionsRepository _repo = ref.read(subscriptionsRepositoryProvider);
+  late final SubscriptionsRepository _repo = ref.read(
+    subscriptionsRepositoryProvider,
+  );
   late final LumeToolSession _session = ref.read(toolSessionProvider);
-  late final TextEditingController _query = TextEditingController(text: _read('q') ?? '');
+  late final TextEditingController _query = TextEditingController(
+    text: _read('q') ?? '',
+  );
   final FocusNode _searchFocus = FocusNode();
   final GlobalKey _body = GlobalKey();
 
@@ -241,7 +247,10 @@ class _SubscriptionsToolState extends ConsumerState<SubscriptionsTool> {
   }
 
   LumeCurrency? _currency() {
-    final LumeProfileRecord p = ref.read(startupControllerProvider).state.profile;
+    final LumeProfileRecord p = ref
+        .read(startupControllerProvider)
+        .state
+        .profile;
     final String code = p.currency != LumePreference.auto
         ? p.currency
         : (ref
@@ -256,7 +265,8 @@ class _SubscriptionsToolState extends ConsumerState<SubscriptionsTool> {
   // ------------------------------------------------------------ navigation
 
   void _go(_View v, {LumeRecordId? subscription}) {
-    final bool moved = v != _view || (subscription != null && subscription != _subscription);
+    final bool moved =
+        v != _view || (subscription != null && subscription != _subscription);
     setState(() {
       _view = v;
       if (subscription != null) _subscription = subscription;
@@ -265,7 +275,9 @@ class _SubscriptionsToolState extends ConsumerState<SubscriptionsTool> {
     if (!moved) return;
     WidgetsBinding.instance.addPostFrameCallback((_) {
       final BuildContext? c = _body.currentContext;
-      final ScrollPosition? p = c == null ? null : Scrollable.maybeOf(c)?.position;
+      final ScrollPosition? p = c == null
+          ? null
+          : Scrollable.maybeOf(c)?.position;
       if (p != null && p.pixels != 0) p.jumpTo(0);
     });
   }
@@ -334,14 +346,15 @@ class _SubscriptionsToolState extends ConsumerState<SubscriptionsTool> {
     }, tone: LumeToastTone.error);
   }
 
-  void _undoable(AppLocalizations l, String message, SubscriptionsWrite w) => _say(
-    message,
-    actionLabel: l.recUndo,
-    onAction: () {
-      final SubscriptionsResult<void> r = _repo.undo(w);
-      if (r.failure != null) _failed(l, r.failure!);
-    },
-  );
+  void _undoable(AppLocalizations l, String message, SubscriptionsWrite w) =>
+      _say(
+        message,
+        actionLabel: l.recUndo,
+        onAction: () {
+          final SubscriptionsResult<void> r = _repo.undo(w);
+          if (r.failure != null) _failed(l, r.failure!);
+        },
+      );
 
   Future<void> _save(AppLocalizations l) async {
     final _SubscriptionDraft d = _draft!;
@@ -403,7 +416,9 @@ class _SubscriptionsToolState extends ConsumerState<SubscriptionsTool> {
     final SubscriptionsFailure? failure = r.failure;
     if (failure != null) {
       if (failure.field == 'currency' && failure.reason == 'withdrawn') {
-        setState(() => d.errors['currency'] = l.subsErrWithdrawn(d.currency!.code));
+        setState(
+          () => d.errors['currency'] = l.subsErrWithdrawn(d.currency!.code),
+        );
         return;
       }
       _failed(l, failure);
@@ -416,7 +431,11 @@ class _SubscriptionsToolState extends ConsumerState<SubscriptionsTool> {
     _say(l.commonSaved);
   }
 
-  Future<void> _setCancelled(AppLocalizations l, Subscription s, bool cancelled) async {
+  Future<void> _setCancelled(
+    AppLocalizations l,
+    Subscription s,
+    bool cancelled,
+  ) async {
     if (cancelled) {
       final bool? ok = await subsDecide(
         context,
@@ -442,7 +461,10 @@ class _SubscriptionsToolState extends ConsumerState<SubscriptionsTool> {
       text: l.subsDeleteText,
     );
     if (!ok || !mounted) return;
-    final SubscriptionsResult<SubscriptionsWrite> r = _repo.delete(s.id, version: s.version);
+    final SubscriptionsResult<SubscriptionsWrite> r = _repo.delete(
+      s.id,
+      version: s.version,
+    );
     if (r.failure != null) return _failed(l, r.failure!);
     _go(_View.list);
     _undoable(l, l.subsDeletedToast, r.value!);
@@ -453,7 +475,10 @@ class _SubscriptionsToolState extends ConsumerState<SubscriptionsTool> {
   @override
   Widget build(BuildContext context) {
     final AppLocalizations l = AppLocalizations.of(context);
-    final LumeFormatting f = LumeFormatting.of(context, countryCode: widget.request.user.country);
+    final LumeFormatting f = LumeFormatting.of(
+      context,
+      countryCode: widget.request.user.country,
+    );
     final LumeDate? today = _today(context);
     final SubscriptionsSnapshot snapshot = _repo.view();
 
@@ -560,7 +585,8 @@ class _SubscriptionsToolState extends ConsumerState<SubscriptionsTool> {
 
   bool _matchesSearch(SubscriptionView v, String q) {
     if (q.isEmpty) return true;
-    final String hay = '${v.subscription.name} ${v.subscription.category ?? ''}'.toLowerCase();
+    final String hay = '${v.subscription.name} ${v.subscription.category ?? ''}'
+        .toLowerCase();
     return hay.contains(q.toLowerCase());
   }
 
@@ -601,15 +627,23 @@ class _SubscriptionsToolState extends ConsumerState<SubscriptionsTool> {
         if (_matchesFilter(v, _filter) && _matchesSearch(v, _query.text)) v,
     ];
     int cmp(SubscriptionView a, SubscriptionView b) => switch (_sort) {
-      SubscriptionsSort.renewal =>
-        (a.daysUntil ?? 1 << 30).compareTo(b.daysUntil ?? 1 << 30),
-      SubscriptionsSort.amount => a.subscription.amount.compareTo(b.subscription.amount),
-      SubscriptionsSort.name => a.subscription.name.compareTo(b.subscription.name),
+      SubscriptionsSort.renewal => (a.daysUntil ?? 1 << 30).compareTo(
+        b.daysUntil ?? 1 << 30,
+      ),
+      SubscriptionsSort.amount => a.subscription.amount.compareTo(
+        b.subscription.amount,
+      ),
+      SubscriptionsSort.name => a.subscription.name.compareTo(
+        b.subscription.name,
+      ),
     };
     shown.sort(cmp);
     if (_descending) shown = shown.reversed.toList();
 
-    final Map<String, LumeMoney> byCategory = book.byCategory(primary, l.subsUncategorised);
+    final Map<String, LumeMoney> byCategory = book.byCategory(
+      primary,
+      l.subsUncategorised,
+    );
     final List<SubscriptionView>? upcoming = book.upcoming();
 
     return <Widget>[
@@ -618,9 +652,14 @@ class _SubscriptionsToolState extends ConsumerState<SubscriptionsTool> {
           key: LumeSubscriptionsTool.summaryKey,
           kicker: l.subsSummaryKicker,
           value: f.amount(summary.monthly, withCode: withCode),
-          caption: l.subsSummaryCaption(f.amount(summary.yearly, withCode: withCode)),
+          caption: l.subsSummaryCaption(
+            f.amount(summary.yearly, withCode: withCode),
+          ),
           stats: <LumeStat>[
-            LumeStat(value: f.integer(summary.activeCount), label: l.subsStatActive),
+            LumeStat(
+              value: f.integer(summary.activeCount),
+              label: l.subsStatActive,
+            ),
             LumeStat(
               value: summary.next?.subscription.name ?? '—',
               label: l.subsStatNext,
@@ -666,11 +705,22 @@ class _SubscriptionsToolState extends ConsumerState<SubscriptionsTool> {
         child: LumeSortBar(
           key: LumeSubscriptionsTool.sortKey,
           value: _sort.name,
-          direction: _descending ? LumeSortDirection.descending : LumeSortDirection.ascending,
+          direction: _descending
+              ? LumeSortDirection.descending
+              : LumeSortDirection.ascending,
           items: <LumeChoice>[
-            LumeChoice(value: SubscriptionsSort.renewal.name, label: l.subsSortRenewal),
-            LumeChoice(value: SubscriptionsSort.amount.name, label: l.subsSortAmount),
-            LumeChoice(value: SubscriptionsSort.name.name, label: l.subsSortName),
+            LumeChoice(
+              value: SubscriptionsSort.renewal.name,
+              label: l.subsSortRenewal,
+            ),
+            LumeChoice(
+              value: SubscriptionsSort.amount.name,
+              label: l.subsSortAmount,
+            ),
+            LumeChoice(
+              value: SubscriptionsSort.name.name,
+              label: l.subsSortName,
+            ),
           ],
           onChanged: (String v, LumeSortDirection dir) => setState(() {
             _write('sort', v);
@@ -727,7 +777,9 @@ class _SubscriptionsToolState extends ConsumerState<SubscriptionsTool> {
                 LumeTimelineEntry(
                   title: v.subscription.name,
                   time: f.dateMediumYear(v.nextRenewal!.toCalendarDateTime()),
-                  state: v.dueSoon ? LumeTimelineState.now : LumeTimelineState.upcoming,
+                  state: v.dueSoon
+                      ? LumeTimelineState.now
+                      : LumeTimelineState.upcoming,
                 ),
             ],
           ),
@@ -743,7 +795,12 @@ class _SubscriptionsToolState extends ConsumerState<SubscriptionsTool> {
     ];
   }
 
-  Widget _row(BuildContext context, AppLocalizations l, LumeFormatting f, SubscriptionView v) {
+  Widget _row(
+    BuildContext context,
+    AppLocalizations l,
+    LumeFormatting f,
+    SubscriptionView v,
+  ) {
     final Subscription s = v.subscription;
     return LumeRichRow(
       key: LumeSubscriptionsTool.row(s.id.value),
@@ -757,7 +814,10 @@ class _SubscriptionsToolState extends ConsumerState<SubscriptionsTool> {
           l.subsRenews(f.dateMediumYear(v.nextRenewal!.toCalendarDateTime())),
       ],
       badge: v.dueSoon && v.daysUntil != null
-          ? LumeBadge(label: l.subsRenewsIn(v.daysUntil!), tone: LumeBadgeTone.warn)
+          ? LumeBadge(
+              label: l.subsRenewsIn(v.daysUntil!),
+              tone: LumeBadgeTone.warn,
+            )
           : null,
       value: f.amount(s.amount),
       valueSub: SubscriptionsText.perCycle(l, s),
@@ -774,7 +834,9 @@ class _SubscriptionsToolState extends ConsumerState<SubscriptionsTool> {
     LumeFormatting f,
     SubscriptionsBook book,
   ) {
-    final SubscriptionView? v = _subscription == null ? null : book.subscription(_subscription!);
+    final SubscriptionView? v = _subscription == null
+        ? null
+        : book.subscription(_subscription!);
     if (v == null) {
       WidgetsBinding.instance.addPostFrameCallback((_) => _go(_View.list));
       return (null, const <Widget>[], false);
@@ -867,12 +929,23 @@ class _SubscriptionsToolState extends ConsumerState<SubscriptionsTool> {
               key: LumeSubscriptionsTool.cycleField,
               value: d.cycle.name,
               items: <LumeChoice>[
-                LumeChoice(value: SubscriptionCycle.monthly.name, label: l.subsCycleMonthly),
-                LumeChoice(value: SubscriptionCycle.yearly.name, label: l.subsCycleYearly),
-                LumeChoice(value: SubscriptionCycle.custom.name, label: l.subsCycleCustom),
+                LumeChoice(
+                  value: SubscriptionCycle.monthly.name,
+                  label: l.subsCycleMonthly,
+                ),
+                LumeChoice(
+                  value: SubscriptionCycle.yearly.name,
+                  label: l.subsCycleYearly,
+                ),
+                LumeChoice(
+                  value: SubscriptionCycle.custom.name,
+                  label: l.subsCycleCustom,
+                ),
               ],
               onChanged: (String v) => setState(
-                () => d.cycle = SubscriptionCycle.values.firstWhere((SubscriptionCycle c) => c.name == v),
+                () => d.cycle = SubscriptionCycle.values.firstWhere(
+                  (SubscriptionCycle c) => c.name == v,
+                ),
               ),
             ),
             if (d.cycle == SubscriptionCycle.custom)
@@ -889,10 +962,13 @@ class _SubscriptionsToolState extends ConsumerState<SubscriptionsTool> {
               label: l.subsFieldStartedOn,
               value: d.startedOn == null
                   ? l.actionNotSet
-                  : LumeFormatting.of(context).dateMediumYear(d.startedOn!.toCalendarDateTime()),
+                  : LumeFormatting.of(
+                      context,
+                    ).dateMediumYear(d.startedOn!.toCalendarDateTime()),
               onTap: () async {
                 final DateTime base =
-                    d.startedOn?.toCalendarDateTime() ?? LumeClockScope.of(context).now();
+                    d.startedOn?.toCalendarDateTime() ??
+                    LumeClockScope.of(context).now();
                 final DateTime? picked = await showDatePicker(
                   context: context,
                   initialDate: base,

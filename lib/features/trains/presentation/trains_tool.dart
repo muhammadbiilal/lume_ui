@@ -277,7 +277,10 @@ class _LumeTrainsToolState extends ConsumerState<LumeTrainsTool> {
               key: LumeTrainsTool.metricsKey,
               columns: 3,
               children: <Widget>[
-                LumeMetric(value: f.integer(all.length), label: l.trainsRunning),
+                LumeMetric(
+                  value: f.integer(all.length),
+                  label: l.trainsRunning,
+                ),
                 LumeMetric(
                   value: f.integer(onTime),
                   label: l.trainsStatusOnTime,
@@ -436,8 +439,7 @@ class _LumeTrainsToolState extends ConsumerState<LumeTrainsTool> {
                     state: switch (s.state) {
                       LumeTrainTimelineState.done => LumeTimelineState.done,
                       LumeTrainTimelineState.now => LumeTimelineState.now,
-                      LumeTrainTimelineState.next =>
-                        LumeTimelineState.upcoming,
+                      LumeTrainTimelineState.next => LumeTimelineState.upcoming,
                     },
                   ),
               ],

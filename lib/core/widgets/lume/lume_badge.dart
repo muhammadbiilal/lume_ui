@@ -259,7 +259,9 @@ class LumeDelta extends StatelessWidget {
             Text(glyphFor(direction), style: _glyphStyle(context, fg)),
             const SizedBox(width: gap),
             ConstrainedBox(
-              constraints: BoxConstraints(maxWidth: maxWidth ?? double.infinity),
+              constraints: BoxConstraints(
+                maxWidth: maxWidth ?? double.infinity,
+              ),
               child: Text(
                 _drawn,
                 style: _textStyle(context, fg).copyWith(height: lineHeight),

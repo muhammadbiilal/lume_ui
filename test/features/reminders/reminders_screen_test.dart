@@ -22,7 +22,9 @@ void main() {
   setUpAll(loadLumeFonts);
 
   group('first use', () {
-    testWidgets('starts empty, nothing seeded into a fresh install', (WidgetTester t) async {
+    testWidgets('starts empty, nothing seeded into a fresh install', (
+      WidgetTester t,
+    ) async {
       final ReminderWorld w = ReminderWorld();
       await pumpReminders(t, w);
       expect(find.byKey(LumeReminderTool.emptyKey), findsOneWidget);
@@ -32,7 +34,9 @@ void main() {
   });
 
   group('adding', () {
-    testWidgets('opens the sheet, saves, appears in the list', (WidgetTester t) async {
+    testWidgets('opens the sheet, saves, appears in the list', (
+      WidgetTester t,
+    ) async {
       final ReminderWorld w = ReminderWorld();
       await pumpReminders(t, w);
       await tapShown(t, find.byKey(LumeReminderTool.addKey));
@@ -44,13 +48,18 @@ void main() {
 
       expect(find.text('Take a walk'), findsOneWidget);
       expect(w.repo.view().entries.single.label, 'Take a walk');
-      expect(w.scheduler.scheduled, contains(w.repo.view().entries.single.id.value));
+      expect(
+        w.scheduler.scheduled,
+        contains(w.repo.view().entries.single.id.value),
+      );
       w.dispose();
     });
   });
 
   group('editing', () {
-    testWidgets('changes the label in place, not a duplicate row', (WidgetTester t) async {
+    testWidgets('changes the label in place, not a duplicate row', (
+      WidgetTester t,
+    ) async {
       final ReminderWorld w = ReminderWorld();
       await pumpReminders(t, w);
       await tapShown(t, find.byKey(LumeReminderTool.addKey));
@@ -69,7 +78,9 @@ void main() {
   });
 
   group('toggling', () {
-    testWidgets('turning it off cancels the schedule but keeps the record', (WidgetTester t) async {
+    testWidgets('turning it off cancels the schedule but keeps the record', (
+      WidgetTester t,
+    ) async {
       final ReminderWorld w = ReminderWorld();
       await pumpReminders(t, w);
       await tapShown(t, find.byKey(LumeReminderTool.addKey));
@@ -89,7 +100,10 @@ void main() {
       final ReminderWorld w = ReminderWorld();
       await pumpReminders(t, w);
       await tapShown(t, find.byKey(LumeReminderTool.addKey));
-      await t.enterText(find.byKey(ReminderSheetKeys.label), 'Water the plants');
+      await t.enterText(
+        find.byKey(ReminderSheetKeys.label),
+        'Water the plants',
+      );
       await tapShown(t, find.byKey(ReminderSheetKeys.save));
       final String id = w.repo.view().entries.single.id.value;
 
@@ -106,20 +120,31 @@ void main() {
   });
 
   group('permission banner', () {
-    testWidgets('shown when notifications are not granted, hidden once they are', (
-      WidgetTester t,
-    ) async {
-      final ReminderWorld w = ReminderWorld();
-      w.gate.now = const LumeNotificationState(LumeNotificationAccess.firstRequest);
-      await pumpReminders(t, w);
-      expect(find.byKey(LumeReminderTool.permissionBannerKey), findsOneWidget);
+    testWidgets(
+      'shown when notifications are not granted, hidden once they are',
+      (WidgetTester t) async {
+        final ReminderWorld w = ReminderWorld();
+        w.gate.now = const LumeNotificationState(
+          LumeNotificationAccess.firstRequest,
+        );
+        await pumpReminders(t, w);
+        expect(
+          find.byKey(LumeReminderTool.permissionBannerKey),
+          findsOneWidget,
+        );
 
-      w.gate.answer = const LumeNotificationState(LumeNotificationAccess.granted);
-      // The "Enable notifications" button is inside the banner's LumeToolState action.
-      await t.tap(find.byKey(LumeReminderTool.permissionBannerKey), warnIfMissed: false);
-      await t.pumpAndSettle();
-      w.dispose();
-    });
+        w.gate.answer = const LumeNotificationState(
+          LumeNotificationAccess.granted,
+        );
+        // The "Enable notifications" button is inside the banner's LumeToolState action.
+        await t.tap(
+          find.byKey(LumeReminderTool.permissionBannerKey),
+          warnIfMissed: false,
+        );
+        await t.pumpAndSettle();
+        w.dispose();
+      },
+    );
   });
 
   group('language', () {

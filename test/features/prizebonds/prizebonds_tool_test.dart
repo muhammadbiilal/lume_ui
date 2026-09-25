@@ -93,10 +93,12 @@ void main() {
           )
           .toList();
       expect(rows, hasLength(4));
-      expect(
-        rows.map((LumeRichRow r) => r.logo).toSet(),
-        <String>{'100', '200', '750', '1500'},
-      );
+      expect(rows.map((LumeRichRow r) => r.logo).toSet(), <String>{
+        '100',
+        '200',
+        '750',
+        '1500',
+      });
       expect(rows.map((LumeRichRow r) => r.subtitle).toSet(), <String>{
         'Draw 47',
         'Draw 98',

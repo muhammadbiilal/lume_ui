@@ -366,11 +366,8 @@ class _CapturePanel extends StatelessWidget {
                     hint,
                     maxLines: 1,
                     softWrap: false,
-                    style:
-                        LumeType.natural(
-                          context,
-                          context.lumeType.metaSmall,
-                        ).copyWith(
+                    style: LumeType.natural(context, context.lumeType.metaSmall)
+                        .copyWith(
                           fontWeight: FontWeight.w600,
                           color: Colors.white.withValues(alpha: 0.82),
                         ),

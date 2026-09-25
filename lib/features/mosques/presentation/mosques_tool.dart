@@ -67,8 +67,7 @@ class _LumeMosquesToolState extends ConsumerState<LumeMosquesTool> {
       // `mapsUri` only ever builds an `https` address with a host, so the
       // allowlist never actually refuses it — kept here only so the switch
       // stays exhaustive if that ever stops being true.
-      LumeOpenOutcome.refused ||
-      LumeOpenOutcome.failed => l.mosquesMapsFailed,
+      LumeOpenOutcome.refused || LumeOpenOutcome.failed => l.mosquesMapsFailed,
     };
     if (said != null) _host.currentState?.say(said, tone: LumeToastTone.info);
   }

@@ -131,11 +131,7 @@ class LumeMarketsTool extends ConsumerWidget {
             child: LumeContextBar(
               items: <LumeContextItem>[
                 LumeContextItem(
-                  label: LumeToolScreen.countryName(
-                    context,
-                    ref,
-                    user.country,
-                  ),
+                  label: LumeToolScreen.countryName(context, ref, user.country),
                   icon: LumeIcons.globe,
                   onTap: () => showLumePersonalise(context),
                 ),

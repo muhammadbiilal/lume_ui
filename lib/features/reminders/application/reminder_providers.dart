@@ -17,22 +17,22 @@ import '../domain/reminder_repository.dart';
 /// test can override it with any conforming store (a widget test uses the
 /// deterministic in-memory one; only the repository-level tests need the
 /// real SQLite behind it, `REMINDERS_PROPOSAL.md` §2 §6).
-final Provider<LumeRecordRepository> reminderStoreProvider = Provider<LumeRecordRepository>((
-  Ref ref,
-) {
-  final LumeSqliteRecordRepository store = LumeSqliteRecordRepository(
-    path: 'lume_reminders.db',
-  );
-  ref.onDispose(store.dispose);
-  return store;
-});
+final Provider<LumeRecordRepository> reminderStoreProvider =
+    Provider<LumeRecordRepository>((Ref ref) {
+      final LumeSqliteRecordRepository store = LumeSqliteRecordRepository(
+        path: 'lume_reminders.db',
+      );
+      ref.onDispose(store.dispose);
+      return store;
+    });
 
 final Provider<LumeReminderScheduler> reminderSchedulerProvider =
     Provider<LumeReminderScheduler>((Ref ref) => LumeLocalReminderScheduler());
 
-final Provider<ReminderRepository> reminderRepositoryProvider = Provider<ReminderRepository>(
-  (Ref ref) => ReminderRepository(
-    ref.watch(reminderStoreProvider),
-    ref.watch(reminderSchedulerProvider),
-  ),
-);
+final Provider<ReminderRepository> reminderRepositoryProvider =
+    Provider<ReminderRepository>(
+      (Ref ref) => ReminderRepository(
+        ref.watch(reminderStoreProvider),
+        ref.watch(reminderSchedulerProvider),
+      ),
+    );

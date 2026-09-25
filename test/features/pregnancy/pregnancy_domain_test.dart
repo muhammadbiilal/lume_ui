@@ -88,22 +88,29 @@ void main() {
       expect(p.progress, 1.0);
     });
 
-    test('milestones carry real dates for this LMP and flip to done in order', () {
-      final LumePregnancy early = LumePregnancy.of(lmp, lmp.addDays(90));
-      expect(early.milestones.map((LumePregnancyMilestone m) => m.week), <int>[
-        12,
-        20,
-        28,
-        37,
-      ]);
-      expect(early.milestones[0].date, lmp.addDays(12 * 7));
-      // Day 90 is week 12 (90 ~/ 7 == 12), so the first milestone is done.
-      expect(early.milestones[0].done, isTrue);
-      final LumePregnancy late = LumePregnancy.of(lmp, lmp.addDays(280));
-      expect(late.milestones.every((LumePregnancyMilestone m) => m.done), isTrue);
-      final LumePregnancy fresh = LumePregnancy.of(lmp, lmp);
-      expect(fresh.milestones.every((LumePregnancyMilestone m) => m.done), isFalse);
-    });
+    test(
+      'milestones carry real dates for this LMP and flip to done in order',
+      () {
+        final LumePregnancy early = LumePregnancy.of(lmp, lmp.addDays(90));
+        expect(
+          early.milestones.map((LumePregnancyMilestone m) => m.week),
+          <int>[12, 20, 28, 37],
+        );
+        expect(early.milestones[0].date, lmp.addDays(12 * 7));
+        // Day 90 is week 12 (90 ~/ 7 == 12), so the first milestone is done.
+        expect(early.milestones[0].done, isTrue);
+        final LumePregnancy late = LumePregnancy.of(lmp, lmp.addDays(280));
+        expect(
+          late.milestones.every((LumePregnancyMilestone m) => m.done),
+          isTrue,
+        );
+        final LumePregnancy fresh = LumePregnancy.of(lmp, lmp);
+        expect(
+          fresh.milestones.every((LumePregnancyMilestone m) => m.done),
+          isFalse,
+        );
+      },
+    );
   });
 
   group('LumePregnancyValidity.check', () {
@@ -177,8 +184,14 @@ void main() {
     test('setting again replaces the same record, never a second one', () {
       final PregnancyHarness h = PregnancyHarness();
       addTearDown(h.dispose);
-      final PregnancyProfile first = h.set(LumeDate(2026, 6, 1)).value!.profile!;
-      final PregnancyProfile second = h.set(LumeDate(2026, 6, 8)).value!.profile!;
+      final PregnancyProfile first = h
+          .set(LumeDate(2026, 6, 1))
+          .value!
+          .profile!;
+      final PregnancyProfile second = h
+          .set(LumeDate(2026, 6, 8))
+          .value!
+          .profile!;
 
       expect(second.id, first.id);
       expect(second.version, first.version + 1);

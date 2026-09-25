@@ -23,8 +23,9 @@ import 'currency_harness.dart';
 
 void main() {
   group('what it opens on', () {
-    testWidgets('the reader\'s own currency to the reference\'s own default',
-        (WidgetTester tester) async {
+    testWidgets('the reader\'s own currency to the reference\'s own default', (
+      WidgetTester tester,
+    ) async {
       await pumpCurrency(tester);
 
       expect(currencyCode(tester, LumeCurrencyTool.fromKey), 'PKR');
@@ -315,10 +316,7 @@ void main() {
       WidgetTester tester,
     ) async {
       await pumpCurrency(tester, locale: const Locale('ur'));
-      await tester.enterText(
-        find.byKey(LumeCurrencyTool.searchKey),
-        'pound',
-      );
+      await tester.enterText(find.byKey(LumeCurrencyTool.searchKey), 'pound');
       await tester.pumpAndSettle();
       expect(
         tester
@@ -337,9 +335,7 @@ void main() {
       await pumpCurrency(tester, locale: const Locale('ar'));
       expectNoOverflow(tester);
       expect(
-        Directionality.of(
-          tester.element(find.byKey(LumeCurrencyTool.cardKey)),
-        ),
+        Directionality.of(tester.element(find.byKey(LumeCurrencyTool.cardKey))),
         TextDirection.rtl,
       );
       // The figures keep their own left-to-right order inside the RTL page.

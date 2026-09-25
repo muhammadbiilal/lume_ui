@@ -40,10 +40,7 @@ void main() {
     });
 
     test('matches the name, the meaning or the number, case-insensitively', () {
-      expect(
-        LumeQuranFixtures.surahsMatching('cave').single.name,
-        'Al-Kahf',
-      );
+      expect(LumeQuranFixtures.surahsMatching('cave').single.name, 'Al-Kahf');
       expect(
         LumeQuranFixtures.surahsMatching('AR-RAHMAN').single.name,
         'Ar-Rahman',
@@ -82,12 +79,19 @@ void main() {
     test('an empty query is the three ayat, in the reference\'s order', () {
       final List<LumeQuranSearchHit> hits = LumeQuranFixtures.search('');
       expect(hits, hasLength(3));
-      expect(hits.every((LumeQuranSearchHit h) => h.kind == LumeQuranSearchKind.ayah), isTrue);
+      expect(
+        hits.every(
+          (LumeQuranSearchHit h) => h.kind == LumeQuranSearchKind.ayah,
+        ),
+        isTrue,
+      );
       expect(hits.first.surahNumber, 13);
     });
 
     test('matches an ayah by its translation or its surah name', () {
-      final List<LumeQuranSearchHit> hits = LumeQuranFixtures.search('hardship');
+      final List<LumeQuranSearchHit> hits = LumeQuranFixtures.search(
+        'hardship',
+      );
       expect(hits, hasLength(1));
       expect(hits.single.kind, LumeQuranSearchKind.ayah);
       expect(hits.single.surahNumber, 94);

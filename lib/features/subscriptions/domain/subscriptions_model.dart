@@ -167,7 +167,9 @@ class Subscription {
       tone: c.choice('tone', SubscriptionTone.values),
       state: c.choice('state', SubscriptionState.values),
       createdAt: r.createdAt,
-      cancelledAt: cancelled == null ? null : DateTime.tryParse(cancelled as String),
+      cancelledAt: cancelled == null
+          ? null
+          : DateTime.tryParse(cancelled as String),
       version: r.version,
     );
   }
@@ -204,7 +206,12 @@ class Subscription {
 /// A record that could not be read as what its collection holds.
 @immutable
 class SubscriptionsDefect {
-  const SubscriptionsDefect(this.collection, this.recordId, this.field, this.reason);
+  const SubscriptionsDefect(
+    this.collection,
+    this.recordId,
+    this.field,
+    this.reason,
+  );
 
   final String collection;
   final String recordId;
@@ -233,10 +240,9 @@ class SubscriptionsCodec {
   final String collection;
   final LumeRecord record;
 
-  Never fail(String field, String reason) =>
-      throw SubscriptionsDefectException(
-        SubscriptionsDefect(collection, record.id, field, reason),
-      );
+  Never fail(String field, String reason) => throw SubscriptionsDefectException(
+    SubscriptionsDefect(collection, record.id, field, reason),
+  );
 
   LumeRecordId get id => LumeRecordId.tryParse(record.id) ?? fail('id', 'uuid');
 

@@ -106,7 +106,9 @@ class _LumeAyahToolState extends ConsumerState<LumeAyahTool> {
               arabic: ayah.arabic,
               translation: ayah.translation,
               transliteration: ayah.transliteration,
-              fallbackNote: resolved.isFallback ? l.readerFallbackEnglish : null,
+              fallbackNote: resolved.isFallback
+                  ? l.readerFallbackEnglish
+                  : null,
               actions: <Widget>[
                 LumeButton.accent(
                   key: LumeAyahTool.shareKey,

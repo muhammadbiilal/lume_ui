@@ -145,10 +145,9 @@ class StreakRepository {
 
   /// Clear [date]'s check-in, with Undo. A no-op when it was already clear.
   StreakResult<StreakWrite> uncheck(LumeDate date) {
-    final StreakCheckIn? existing = view().checkIns.cast<StreakCheckIn?>().firstWhere(
-      (StreakCheckIn? c) => c!.date == date,
-      orElse: () => null,
-    );
+    final StreakCheckIn? existing = view().checkIns
+        .cast<StreakCheckIn?>()
+        .firstWhere((StreakCheckIn? c) => c!.date == date, orElse: () => null);
     if (existing == null) {
       return const StreakResult<StreakWrite>.ok(
         StreakWrite(LumeTxReceipt(0, <LumeTxChange>[])),
@@ -157,9 +156,16 @@ class StreakRepository {
     return _write<StreakCheckIn>((_Data d) {
       final StreakCheckIn? c = d.at(date);
       if (c == null) {
-        throw StreakFailure(StreakFailureKind.notFound, ids: <LumeRecordId>[existing.id]);
+        throw StreakFailure(
+          StreakFailureKind.notFound,
+          ids: <LumeRecordId>[existing.id],
+        );
       }
-      d.tx.delete(StreakCollections.checkIns, c.id.value, expectVersion: c.version);
+      d.tx.delete(
+        StreakCollections.checkIns,
+        c.id.value,
+        expectVersion: c.version,
+      );
       d.checkIns.removeWhere((StreakCheckIn x) => x.id == c.id);
       return c;
     });
@@ -190,9 +196,10 @@ class StreakRepository {
   }
 
   static StreakFailure _map(LumeTxFailure f) => switch (f.kind) {
-    LumeTxFailureKind.rejected => f.detail is StreakFailure
-        ? f.detail! as StreakFailure
-        : StreakFailure(StreakFailureKind.storage, cause: f.kind),
+    LumeTxFailureKind.rejected =>
+      f.detail is StreakFailure
+          ? f.detail! as StreakFailure
+          : StreakFailure(StreakFailureKind.storage, cause: f.kind),
     LumeTxFailureKind.conflict ||
     LumeTxFailureKind.duplicateId => StreakFailure(
       StreakFailureKind.conflict,

@@ -74,7 +74,11 @@ Future<void> pumpTool(
   // be true of.
   if (find.byType(LumeSkeleton).evaluate().isNotEmpty) {
     await tester.runAsync(() async {
-      for (int i = 0; i < 200 && find.byType(LumeSkeleton).evaluate().isNotEmpty; i++) {
+      for (
+        int i = 0;
+        i < 200 && find.byType(LumeSkeleton).evaluate().isNotEmpty;
+        i++
+      ) {
         await Future<void>.delayed(const Duration(milliseconds: 5));
         await tester.pump();
       }

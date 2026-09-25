@@ -168,7 +168,13 @@ class CycleRepository {
     final LumeRecord r = d.tx.update(
       CycleCollections.periods,
       id.value,
-      existing.copyWith(startDate: start, endDate: endDate, clearEnd: endDate == null).toFields(),
+      existing
+          .copyWith(
+            startDate: start,
+            endDate: endDate,
+            clearEnd: endDate == null,
+          )
+          .toFields(),
       expectVersion: expectVersion,
     );
     final CyclePeriod stored = CyclePeriod.decode(r);
@@ -187,7 +193,11 @@ class CycleRepository {
     if (existing == null) {
       throw CycleFailure(CycleFailureKind.notFound, ids: <LumeRecordId>[id]);
     }
-    d.tx.delete(CycleCollections.periods, id.value, expectVersion: expectVersion);
+    d.tx.delete(
+      CycleCollections.periods,
+      id.value,
+      expectVersion: expectVersion,
+    );
     d.periods.removeWhere((CyclePeriod p) => p.id == id);
     return existing;
   });
@@ -232,8 +242,7 @@ class CycleRepository {
 
   static CycleFailure _map(LumeTxFailure f) => switch (f.kind) {
     LumeTxFailureKind.rejected => f.detail! as CycleFailure,
-    LumeTxFailureKind.conflict ||
-    LumeTxFailureKind.duplicateId => CycleFailure(
+    LumeTxFailureKind.conflict || LumeTxFailureKind.duplicateId => CycleFailure(
       CycleFailureKind.conflict,
       ids: <LumeRecordId>[?LumeRecordId.tryParse(f.id ?? '')],
     ),

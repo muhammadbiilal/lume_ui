@@ -17,8 +17,10 @@ abstract final class MealPlanSheetKeys {
   static const Key cancel = ValueKey<String>('mealplan.sheet.cancel');
 }
 
-TextStyle _body(BuildContext context) =>
-    LumeType.natural(context, context.lumeType.body).copyWith(color: context.lume.text2);
+TextStyle _body(BuildContext context) => LumeType.natural(
+  context,
+  context.lumeType.body,
+).copyWith(color: context.lume.text2);
 
 /// `null` for cancelled, `''` for "clear this slot", anything else for the
 /// text to save.

@@ -19,7 +19,10 @@ final LumeDate kToday = d(9, 7);
 
 class PregnancyHarness {
   PregnancyHarness({int seed = 1, Duration? readDelay}) {
-    store = LumeMemoryRecordRepository(hydrateDelay: readDelay, now: () => clock);
+    store = LumeMemoryRecordRepository(
+      hydrateDelay: readDelay,
+      now: () => clock,
+    );
     repo = PregnancyRepository(store, random: Random(seed), now: () => clock);
     if (readDelay == null) repo.open();
   }
@@ -28,7 +31,8 @@ class PregnancyHarness {
   late final PregnancyRepository repo;
   DateTime clock = DateTime.utc(2026, 9, 7, 10);
 
-  void tick([Duration by = const Duration(minutes: 1)]) => clock = clock.add(by);
+  void tick([Duration by = const Duration(minutes: 1)]) =>
+      clock = clock.add(by);
 
   /// Sets [lmp] against [today] (defaulting to [kToday]) and unwraps the
   /// written profile, failing the test with the repository's own reason if

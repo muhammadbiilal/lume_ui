@@ -64,16 +64,13 @@ void main() {
     ) async {
       await pumpTrains(tester);
       final List<LumeRichRow> rows = boardRows(tester);
-      expect(
-        rows.map((LumeRichRow r) => r.title).toList(),
-        <String>[
-          'Green Line Express',
-          'Tezgam Express',
-          'Karakoram Express',
-          'Shalimar Express',
-          'Pakistan Express',
-        ],
-      );
+      expect(rows.map((LumeRichRow r) => r.title).toList(), <String>[
+        'Green Line Express',
+        'Tezgam Express',
+        'Karakoram Express',
+        'Shalimar Express',
+        'Pakistan Express',
+      ]);
       expect(rows.first.selected, isTrue);
       expect(rows.first.logo, '5');
       expect(rows.first.subtitle, 'Karachi Cantt → Islamabad');
@@ -86,10 +83,7 @@ void main() {
       WidgetTester tester,
     ) async {
       await pumpTrains(tester);
-      expect(
-        editableTextIn(tester, LumeTrainsTool.searchKey),
-        'Karachi Cantt',
-      );
+      expect(editableTextIn(tester, LumeTrainsTool.searchKey), 'Karachi Cantt');
       final LumeToolField to = tester
           .widgetList<LumeToolField>(find.byType(LumeToolField))
           .last;
@@ -184,12 +178,14 @@ void main() {
       expect(map.pins[1].active, isTrue);
       expect(map.pins[1].label, 'Tezgam Express');
 
-      final List<LumeMetric> metrics = tester.widgetList<LumeMetric>(
-        find.descendant(
-          of: find.byKey(LumeTrainsTool.detailMetricsKey),
-          matching: find.byType(LumeMetric),
-        ),
-      ).toList();
+      final List<LumeMetric> metrics = tester
+          .widgetList<LumeMetric>(
+            find.descendant(
+              of: find.byKey(LumeTrainsTool.detailMetricsKey),
+              matching: find.byType(LumeMetric),
+            ),
+          )
+          .toList();
       expect(metrics[1].value, 'Khanewal Junction');
       expect(metrics[2].value, '35 min late');
     });
@@ -248,10 +244,11 @@ void main() {
       final LumeTable table = tester.widget<LumeTable>(
         find.byKey(LumeTrainsTool.faresKey),
       );
-      expect(
-        table.columns.map((LumeColumn c) => c.label).toList(),
-        <String>['Class', 'Fare', 'Seats'],
-      );
+      expect(table.columns.map((LumeColumn c) => c.label).toList(), <String>[
+        'Class',
+        'Fare',
+        'Seats',
+      ]);
       expect(table.rows, hasLength(2));
       expect(table.rows[0][0], 'AC Business');
       expect(table.rows[0][2], '48');

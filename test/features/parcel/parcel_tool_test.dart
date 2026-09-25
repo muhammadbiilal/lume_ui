@@ -137,15 +137,16 @@ void main() {
         'Out for delivery',
         'Delivered',
       ]);
-      expect(tl.entries.map((LumeTimelineEntry e) => e.state), <
-        LumeTimelineState
-      >[
-        LumeTimelineState.done,
-        LumeTimelineState.done,
-        LumeTimelineState.done,
-        LumeTimelineState.now,
-        LumeTimelineState.upcoming,
-      ]);
+      expect(
+        tl.entries.map((LumeTimelineEntry e) => e.state),
+        <LumeTimelineState>[
+          LumeTimelineState.done,
+          LumeTimelineState.done,
+          LumeTimelineState.done,
+          LumeTimelineState.now,
+          LumeTimelineState.upcoming,
+        ],
+      );
     });
   });
 
@@ -241,7 +242,9 @@ void main() {
       await pumpParcel(tester, locale: const Locale('ur'));
       expect(
         Directionality.of(
-          tester.element(inKey(LumeParcelTool.listKey, find.byType(LumeRichRow)).first),
+          tester.element(
+            inKey(LumeParcelTool.listKey, find.byType(LumeRichRow)).first,
+          ),
         ),
         TextDirection.rtl,
       );

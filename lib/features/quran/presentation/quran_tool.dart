@@ -38,7 +38,8 @@ class LumeQuranTool extends ConsumerStatefulWidget {
 
   final LumeToolRequest request;
 
-  static Widget open(LumeToolRequest request) => LumeQuranTool(request: request);
+  static Widget open(LumeToolRequest request) =>
+      LumeQuranTool(request: request);
 
   static const String id = 'quran';
 

@@ -90,11 +90,7 @@ Future<void> typeAmount(WidgetTester tester, String amount) async {
 }
 
 /// Open one side's currency sheet and choose [code].
-Future<void> pickCurrency(
-  WidgetTester tester,
-  Key sideKey,
-  String code,
-) async {
+Future<void> pickCurrency(WidgetTester tester, Key sideKey, String code) async {
   await tester.tap(find.byKey(sideKey));
   await tester.pumpAndSettle();
   final Finder option = find.byKey(LumeCurrencyTool.optionKey(code));

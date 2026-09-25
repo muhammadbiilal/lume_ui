@@ -84,8 +84,7 @@ class MedsEntry {
   final int version;
 
   /// `record-schemas.js` `meds.row()`: `Number(r.left) > 0 && <= 3`.
-  bool get runningLow =>
-      dosesLeft != null && dosesLeft! > 0 && dosesLeft! <= 3;
+  bool get runningLow => dosesLeft != null && dosesLeft! > 0 && dosesLeft! <= 3;
 
   Map<String, Object?> toFields() => <String, Object?>{
     'schema': kMedsSchema,
@@ -192,8 +191,9 @@ class MedsCodec {
   final String collection;
   final LumeRecord record;
 
-  Never fail(String field, String reason) =>
-      throw MedsDefectException(MedsDefect(collection, record.id, field, reason));
+  Never fail(String field, String reason) => throw MedsDefectException(
+    MedsDefect(collection, record.id, field, reason),
+  );
 
   LumeRecordId get id => LumeRecordId.tryParse(record.id) ?? fail('id', 'uuid');
 

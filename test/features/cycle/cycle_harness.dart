@@ -20,7 +20,10 @@ final LumeDate kToday = d(9, 7);
 
 class CycleHarness {
   CycleHarness({int seed = 1, Duration? readDelay}) {
-    store = LumeMemoryRecordRepository(hydrateDelay: readDelay, now: () => clock);
+    store = LumeMemoryRecordRepository(
+      hydrateDelay: readDelay,
+      now: () => clock,
+    );
     repo = CycleRepository(store, random: Random(seed), now: () => clock);
     if (readDelay == null) repo.open();
   }
@@ -29,9 +32,11 @@ class CycleHarness {
   late final CycleRepository repo;
   DateTime clock = DateTime.utc(2026, 9, 7, 10);
 
-  void tick([Duration by = const Duration(minutes: 1)]) => clock = clock.add(by);
+  void tick([Duration by = const Duration(minutes: 1)]) =>
+      clock = clock.add(by);
 
-  CycleInsights insights([LumeDate? today]) => repo.view().insights(today ?? kToday);
+  CycleInsights insights([LumeDate? today]) =>
+      repo.view().insights(today ?? kToday);
 
   CyclePeriod log(LumeDate start, {LumeDate? end}) {
     tick();

@@ -67,7 +67,11 @@ void main() {
           reason: '${e.key} at the minimum city offset',
         );
       }
-      expect(lumeAirQualityFor('ZZ', '').value, 44, reason: 'ZZ has no baseline of its own');
+      expect(
+        lumeAirQualityFor('ZZ', '').value,
+        44,
+        reason: 'ZZ has no baseline of its own',
+      );
     });
   });
 
@@ -94,19 +98,16 @@ void main() {
       // spread of markets, not just the one the widget test pumps.
       final Map<(String, String), (int, List<int>)> cases =
           <(String, String), (int, List<int>)>{
-        ('PK', 'Islamabad'): (185, <int>[115, 174, 63, 41]),
-        ('GB', 'London'): (41, <int>[25, 39, 14, 9]),
-        ('US', 'New York'): (46, <int>[29, 43, 16, 10]),
-        ('IN', 'Delhi'): (157, <int>[97, 148, 53, 35]),
-        ('FR', 'Paris'): (30, <int>[19, 28, 10, 7]),
-        ('SE', 'Stockholm'): (18, <int>[11, 17, 6, 4]),
-      };
+            ('PK', 'Islamabad'): (185, <int>[115, 174, 63, 41]),
+            ('GB', 'London'): (41, <int>[25, 39, 14, 9]),
+            ('US', 'New York'): (46, <int>[29, 43, 16, 10]),
+            ('IN', 'Delhi'): (157, <int>[97, 148, 53, 35]),
+            ('FR', 'Paris'): (30, <int>[19, 28, 10, 7]),
+            ('SE', 'Stockholm'): (18, <int>[11, 17, 6, 4]),
+          };
       for (final MapEntry<(String, String), (int, List<int>)> e
           in cases.entries) {
-        final LumeAirQualityReading r = lumeAirQualityFor(
-          e.key.$1,
-          e.key.$2,
-        );
+        final LumeAirQualityReading r = lumeAirQualityFor(e.key.$1, e.key.$2);
         expect(r.value, e.value.$1, reason: '${e.key.$1} ${e.key.$2} value');
         expect(
           r.parts.map((LumeAirQualityPart p) => p.value).toList(),

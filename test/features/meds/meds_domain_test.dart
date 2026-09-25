@@ -67,15 +67,22 @@ void main() {
       expect(r.failure!.field, 'firstDoseAt');
     });
 
-    test('no dosesLeft, no firstDoseAt and no notes are all fine — every extra field is optional', () {
-      final MedsHarness h = MedsHarness();
-      addTearDown(h.dispose);
-      final MedsEntry m = h.add(dosesLeft: null, firstDoseAt: null, notes: null);
-      expect(m.dosesLeft, isNull);
-      expect(m.firstDoseAt, isNull);
-      expect(m.notes, isNull);
-      expect(m.runningLow, isFalse);
-    });
+    test(
+      'no dosesLeft, no firstDoseAt and no notes are all fine — every extra field is optional',
+      () {
+        final MedsHarness h = MedsHarness();
+        addTearDown(h.dispose);
+        final MedsEntry m = h.add(
+          dosesLeft: null,
+          firstDoseAt: null,
+          notes: null,
+        );
+        expect(m.dosesLeft, isNull);
+        expect(m.firstDoseAt, isNull);
+        expect(m.notes, isNull);
+        expect(m.runningLow, isFalse);
+      },
+    );
 
     test('a record of the wrong schema is a defect, not a crash', () {
       final MedsHarness h = MedsHarness();
@@ -121,7 +128,11 @@ void main() {
       h.add(name: 'vitamin d');
       h.add(name: 'Amoxicillin');
       h.add(name: 'Cetirizine');
-      final List<String> names = h.book().medications.map((MedsEntry m) => m.name).toList();
+      final List<String> names = h
+          .book()
+          .medications
+          .map((MedsEntry m) => m.name)
+          .toList();
       expect(names, <String>['Amoxicillin', 'Cetirizine', 'vitamin d']);
     });
   });
@@ -154,37 +165,49 @@ void main() {
   });
 
   group('conflict', () {
-    test('editing with a stale version is refused as a conflict, not overwritten', () {
-      final MedsHarness h = MedsHarness();
-      addTearDown(h.dispose);
-      final MedsEntry m = h.add();
-      // Someone else's edit lands first, raising the version.
-      h.repo.edit(
-        m.id,
-        MedsDraft(name: m.name, dose: 'changed', schedule: m.schedule),
-        version: m.version,
-      );
-      // This caller still holds the version from before that edit.
-      final MedsResult<MedsWrite> stale = h.repo.edit(
-        m.id,
-        MedsDraft(name: m.name, dose: 'stale write', schedule: m.schedule),
-        version: m.version,
-      );
-      expect(stale.ok, isFalse);
-      expect(stale.failure!.kind, MedsFailureKind.conflict);
-      // The winning edit is untouched.
-      expect(h.book().medication(m.id)!.dose, 'changed');
-    });
+    test(
+      'editing with a stale version is refused as a conflict, not overwritten',
+      () {
+        final MedsHarness h = MedsHarness();
+        addTearDown(h.dispose);
+        final MedsEntry m = h.add();
+        // Someone else's edit lands first, raising the version.
+        h.repo.edit(
+          m.id,
+          MedsDraft(name: m.name, dose: 'changed', schedule: m.schedule),
+          version: m.version,
+        );
+        // This caller still holds the version from before that edit.
+        final MedsResult<MedsWrite> stale = h.repo.edit(
+          m.id,
+          MedsDraft(name: m.name, dose: 'stale write', schedule: m.schedule),
+          version: m.version,
+        );
+        expect(stale.ok, isFalse);
+        expect(stale.failure!.kind, MedsFailureKind.conflict);
+        // The winning edit is untouched.
+        expect(h.book().medication(m.id)!.dose, 'changed');
+      },
+    );
 
-    test('deleting an already-deleted medication is a conflict, not a crash', () {
-      final MedsHarness h = MedsHarness();
-      addTearDown(h.dispose);
-      final MedsEntry m = h.add();
-      final MedsResult<MedsWrite> first = h.repo.delete(m.id, version: m.version);
-      expect(first.ok, isTrue);
-      final MedsResult<MedsWrite> second = h.repo.delete(m.id, version: m.version);
-      expect(second.ok, isFalse);
-    });
+    test(
+      'deleting an already-deleted medication is a conflict, not a crash',
+      () {
+        final MedsHarness h = MedsHarness();
+        addTearDown(h.dispose);
+        final MedsEntry m = h.add();
+        final MedsResult<MedsWrite> first = h.repo.delete(
+          m.id,
+          version: m.version,
+        );
+        expect(first.ok, isTrue);
+        final MedsResult<MedsWrite> second = h.repo.delete(
+          m.id,
+          version: m.version,
+        );
+        expect(second.ok, isFalse);
+      },
+    );
   });
 
   group('delete, undo', () {

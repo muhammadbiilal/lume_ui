@@ -97,7 +97,10 @@ class LumePlatformPassportPhotoSource implements LumePassportPhotoSource {
   /// reaching it at all past the gate, or on iOS where there is no gate,
   /// means the one ask is spent), and `photo_access_denied` is the picker's
   /// own gallery refusal.
-  static LumePassportPhotoOutcome _trouble(String code, {required bool camera}) {
+  static LumePassportPhotoOutcome _trouble(
+    String code, {
+    required bool camera,
+  }) {
     if (camera) {
       return switch (code) {
         'camera_access_denied' => LumePassportPhotoOutcome.blocked,

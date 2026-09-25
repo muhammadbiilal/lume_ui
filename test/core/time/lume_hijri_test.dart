@@ -58,13 +58,12 @@ void main() {
   group('walkForward', () {
     test('daysAway is 0 when today already matches', () {
       final DateTime today = DateTime(2026, 9, 7);
-      final (DateTime g, LumeHijriDate h, int away) =
-          LumeHijriDate.walkForward(
-            start: today,
-            matches: (LumeHijriDate h) => h.month == 3 && h.day == 23,
-            horizonDays: 400,
-            reason: 'unreachable',
-          );
+      final (DateTime g, LumeHijriDate h, int away) = LumeHijriDate.walkForward(
+        start: today,
+        matches: (LumeHijriDate h) => h.month == 3 && h.day == 23,
+        horizonDays: 400,
+        reason: 'unreachable',
+      );
       expect(away, 0);
       expect(g, today);
       expect(h, const LumeHijriDate(1448, 3, 23));
@@ -73,13 +72,12 @@ void main() {
     test('finds the next Ramadan (month 9) from just before it starts', () {
       // 2026-09-07 is 23 Rabi‘ al-Awwal 1448 — Ramadan is six lunar months
       // away, comfortably inside a 400-day horizon.
-      final (DateTime g, LumeHijriDate h, int away) =
-          LumeHijriDate.walkForward(
-            start: DateTime(2026, 9, 7),
-            matches: (LumeHijriDate h) => h.month == 9,
-            horizonDays: 400,
-            reason: 'unreachable',
-          );
+      final (DateTime g, LumeHijriDate h, int away) = LumeHijriDate.walkForward(
+        start: DateTime(2026, 9, 7),
+        matches: (LumeHijriDate h) => h.month == 9,
+        horizonDays: 400,
+        reason: 'unreachable',
+      );
       expect(h.month, 9);
       expect(h.day, 1, reason: 'the first hit is the month\'s own start');
       expect(LumeHijriDate.of(g), h, reason: 'g and h agree on the same day');

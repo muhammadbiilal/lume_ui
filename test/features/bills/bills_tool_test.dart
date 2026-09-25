@@ -62,7 +62,8 @@ Future<void> pumpBills(
   await tester.pumpAndSettle();
 }
 
-BuildContext ctx(WidgetTester t) => t.element(find.byKey(LumeBillsTool.summaryKey));
+BuildContext ctx(WidgetTester t) =>
+    t.element(find.byKey(LumeBillsTool.summaryKey));
 
 // `find.byKey` on a subtree's own key won't find descendants of that type
 // directly through `widgetList`; use `find.descendant` instead.
@@ -88,10 +89,15 @@ void main() {
     ) async {
       await pumpBills(tester);
       final AppLocalizations l = AppLocalizations.of(ctx(tester));
-      final LumeFormatting f = LumeFormatting.of(ctx(tester), countryCode: 'PK');
+      final LumeFormatting f = LumeFormatting.of(
+        ctx(tester),
+        countryCode: 'PK',
+      );
       const LumeBillsBoard board = LumeBillsBoard(currency: 'PKR');
 
-      final LumeSummaryCard card = tester.widget(find.byKey(LumeBillsTool.summaryKey));
+      final LumeSummaryCard card = tester.widget(
+        find.byKey(LumeBillsTool.summaryKey),
+      );
       expect(card.kicker, l.billsDueThisMonth);
       expect(card.value, f.money(board.money(board.totalDueUsd), code: 'PKR'));
       expect(card.caption, l.billsOverdueCount(1));
@@ -122,14 +128,22 @@ void main() {
       expect(rows(tester), hasLength(5));
     });
 
-    testWidgets('Overdue narrows to the one overdue bill', (WidgetTester tester) async {
+    testWidgets('Overdue narrows to the one overdue bill', (
+      WidgetTester tester,
+    ) async {
       await pumpBills(tester);
-      await tester.tap(find.byKey(LumeBillsTool.filterChip(LumeBillsFilter.overdue)));
+      await tester.tap(
+        find.byKey(LumeBillsTool.filterChip(LumeBillsFilter.overdue)),
+      );
       await tester.pumpAndSettle();
-      expect(rows(tester).map((LumeRichRow r) => r.title), <String>['Internet']);
+      expect(rows(tester).map((LumeRichRow r) => r.title), <String>[
+        'Internet',
+      ]);
     });
 
-    testWidgets('Paid narrows to the one paid bill', (WidgetTester tester) async {
+    testWidgets('Paid narrows to the one paid bill', (
+      WidgetTester tester,
+    ) async {
       await pumpBills(tester);
       // The filter bar is its own horizontal scroller (`LumeFilterBar`); at
       // 390 points wide, "Paid" (the fourth chip) starts outside the initial
@@ -137,7 +151,9 @@ void main() {
       await tester.ensureVisible(
         find.byKey(LumeBillsTool.filterChip(LumeBillsFilter.paid)),
       );
-      await tester.tap(find.byKey(LumeBillsTool.filterChip(LumeBillsFilter.paid)));
+      await tester.tap(
+        find.byKey(LumeBillsTool.filterChip(LumeBillsFilter.paid)),
+      );
       await tester.pumpAndSettle();
       expect(rows(tester).map((LumeRichRow r) => r.title), <String>['Mobile']);
     });
@@ -151,7 +167,9 @@ void main() {
           find.byKey(LumeBillsTool.filterChip(LumeBillsFilter.due)),
         );
         expect(before.count, 1);
-        await tester.tap(find.byKey(LumeBillsTool.filterChip(LumeBillsFilter.due)));
+        await tester.tap(
+          find.byKey(LumeBillsTool.filterChip(LumeBillsFilter.due)),
+        );
         await tester.pumpAndSettle();
         expect(rows(tester).map((LumeRichRow r) => r.title), <String>[
           'Electricity',

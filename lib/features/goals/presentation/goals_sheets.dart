@@ -22,13 +22,17 @@ import '../../ledger/presentation/ledger_text.dart';
 abstract final class GoalsSheetKeys {
   static const Key confirm = ValueKey<String>('goals.sheet.confirm');
   static const Key cancel = ValueKey<String>('goals.sheet.cancel');
-  static const Key contributeAmount = ValueKey<String>('goals.contribute.amount');
+  static const Key contributeAmount = ValueKey<String>(
+    'goals.contribute.amount',
+  );
   static const Key contributeDate = ValueKey<String>('goals.contribute.date');
   static const Key contributeGo = ValueKey<String>('goals.contribute.go');
 }
 
-TextStyle _body(BuildContext context) =>
-    LumeType.natural(context, context.lumeType.body).copyWith(color: context.lume.text2);
+TextStyle _body(BuildContext context) => LumeType.natural(
+  context,
+  context.lumeType.body,
+).copyWith(color: context.lume.text2);
 
 /// A decision with a confirm and a way out. `true` for confirm, `null` for
 /// the way out.

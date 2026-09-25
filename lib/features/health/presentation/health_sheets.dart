@@ -16,8 +16,10 @@ abstract final class HealthSheetKeys {
   static const Key cancel = ValueKey<String>('health.sheet.cancel');
 }
 
-TextStyle _body(BuildContext context) =>
-    LumeType.natural(context, context.lumeType.body).copyWith(color: context.lume.text2);
+TextStyle _body(BuildContext context) => LumeType.natural(
+  context,
+  context.lumeType.body,
+).copyWith(color: context.lume.text2);
 
 /// A plain yes/no decision — used only for leaving a changed form.
 Future<bool?> healthDecide(

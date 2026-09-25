@@ -38,32 +38,37 @@ void main() {
     });
   });
 
-  group('the reference\'s own default heirs — a wife, two sons, a daughter', () {
-    testWidgets('the sons\' total is exactly twice the daughter\'s — the '
-        '2:1 asaba split, over whatever currency the reader\'s country '
-        'uses', (WidgetTester tester) async {
-      await pumpFaraid(tester);
-      final LumeTable table = breakdown(tester);
-      // Rows are "Label (fraction)" → "amount"; find sons/daughter by their
-      // English label surviving inside the row text.
-      String amountOf(String needle) => table.rows
-          .firstWhere((List<String> row) => row.first.contains(needle))
-          .last;
-      final String sons = amountOf('Sons');
-      final String daughters = amountOf('Daughters');
-      expect(sons, isNot(daughters));
-      // Wife + sons + daughters — exactly three rows, no fourth
-      // "unallocated" row: this combination is fully accounted for.
-      expect(table.rows, hasLength(3));
-      expect(find.byKey(LumeFaraidTool.unallocatedNoteKey), findsNothing);
-    });
+  group(
+    'the reference\'s own default heirs — a wife, two sons, a daughter',
+    () {
+      testWidgets('the sons\' total is exactly twice the daughter\'s — the '
+          '2:1 asaba split, over whatever currency the reader\'s country '
+          'uses', (WidgetTester tester) async {
+        await pumpFaraid(tester);
+        final LumeTable table = breakdown(tester);
+        // Rows are "Label (fraction)" → "amount"; find sons/daughter by their
+        // English label surviving inside the row text.
+        String amountOf(String needle) => table.rows
+            .firstWhere((List<String> row) => row.first.contains(needle))
+            .last;
+        final String sons = amountOf('Sons');
+        final String daughters = amountOf('Daughters');
+        expect(sons, isNot(daughters));
+        // Wife + sons + daughters — exactly three rows, no fourth
+        // "unallocated" row: this combination is fully accounted for.
+        expect(table.rows, hasLength(3));
+        expect(find.byKey(LumeFaraidTool.unallocatedNoteKey), findsNothing);
+      });
 
-    testWidgets('renders with no exception at all', (WidgetTester tester) async {
-      await pumpFaraid(tester);
-      expect(find.byType(LumeFaraidTool), findsOneWidget);
-      expect(tester.takeException(), isNull);
-    });
-  });
+      testWidgets('renders with no exception at all', (
+        WidgetTester tester,
+      ) async {
+        await pumpFaraid(tester);
+        expect(find.byType(LumeFaraidTool), findsOneWidget);
+        expect(tester.takeException(), isNull);
+      });
+    },
+  );
 
   group('editing the heirs updates the distribution live', () {
     testWidgets('changing the sons field changes the summary and the '

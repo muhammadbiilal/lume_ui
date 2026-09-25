@@ -159,12 +159,10 @@ List<LumeSavingsInstrument> lumeNatSavingsSort(
     'min' => p.min,
     _ => p.rate,
   };
-  final List<(int, LumeSavingsInstrument)> indexed = <(
-    int,
-    LumeSavingsInstrument,
-  )>[
-    for (int i = 0; i < list.length; i++) (i, list[i]),
-  ];
+  final List<(int, LumeSavingsInstrument)> indexed =
+      <(int, LumeSavingsInstrument)>[
+        for (int i = 0; i < list.length; i++) (i, list[i]),
+      ];
   indexed.sort((
     (int, LumeSavingsInstrument) a,
     (int, LumeSavingsInstrument) b,

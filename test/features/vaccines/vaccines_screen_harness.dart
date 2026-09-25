@@ -37,7 +37,10 @@ final LumeFeature kVaccinesFeature = kLumeFeatures.firstWhere(
 
 class VaccinesWorld {
   VaccinesWorld({this.seed = 1, Duration? readDelay}) {
-    store = LumeMemoryRecordRepository(hydrateDelay: readDelay, now: () => clock);
+    store = LumeMemoryRecordRepository(
+      hydrateDelay: readDelay,
+      now: () => clock,
+    );
     repo = VaccinesRepository(store, random: Random(seed), now: () => clock);
     if (readDelay == null) repo.open();
   }

@@ -38,7 +38,13 @@ const int kHealthValueMax = 60;
 const int kHealthNotesMax = 1000;
 
 /// `rec.health.kinds` — the reference's fixed option list, in its order.
-enum HealthRecordKind { appointment, report, prescription, vaccination, measurement }
+enum HealthRecordKind {
+  appointment,
+  report,
+  prescription,
+  vaccination,
+  measurement,
+}
 
 @immutable
 class HealthRecord {
@@ -168,8 +174,9 @@ class HealthCodec {
   final String collection;
   final LumeRecord record;
 
-  Never fail(String field, String reason) =>
-      throw HealthDefectException(HealthDefect(collection, record.id, field, reason));
+  Never fail(String field, String reason) => throw HealthDefectException(
+    HealthDefect(collection, record.id, field, reason),
+  );
 
   LumeRecordId get id => LumeRecordId.tryParse(record.id) ?? fail('id', 'uuid');
 

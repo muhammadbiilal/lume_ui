@@ -161,13 +161,19 @@ class PregnancyRepository {
           ids: <LumeRecordId>[existing.id],
         );
       }
-      d.tx.delete(PregnancyCollections.profile, p.id.value, expectVersion: p.version);
+      d.tx.delete(
+        PregnancyCollections.profile,
+        p.id.value,
+        expectVersion: p.version,
+      );
       return p;
     });
   }
 
   PregnancyResult<void> undo(PregnancyWrite write) {
-    if (write.receipt.revision == 0) return const PregnancyResult<void>.ok(null);
+    if (write.receipt.revision == 0) {
+      return const PregnancyResult<void>.ok(null);
+    }
     final LumeTxResult<void> r = _store.revert(write.receipt);
     return r.ok
         ? const PregnancyResult<void>.ok(null)

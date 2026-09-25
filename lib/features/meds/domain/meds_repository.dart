@@ -182,14 +182,19 @@ class MedsRepository {
       expectVersion: version,
     );
     final MedsEntry stored = MedsEntry.decode(r);
-    d.medications[d.medications.indexWhere((MedsEntry x) => x.id == id)] = stored;
+    d.medications[d.medications.indexWhere((MedsEntry x) => x.id == id)] =
+        stored;
     return stored;
   });
 
   MedsResult<MedsWrite> delete(LumeRecordId id, {required int version}) =>
       _write<MedsEntry>((_Data d) {
         final MedsEntry was = d.sound(id);
-        d.tx.delete(MedsCollections.medications, id.value, expectVersion: version);
+        d.tx.delete(
+          MedsCollections.medications,
+          id.value,
+          expectVersion: version,
+        );
         d.medications.removeWhere((MedsEntry x) => x.id == id);
         d.defects.removeWhere((MedsDefect x) => x.recordId == id.value);
         return was;
@@ -204,16 +209,17 @@ class MedsRepository {
 
   // ---- internals ------------------------------------------------------
 
-  MedsEntry _entry(LumeRecordId id, MedsDraft draft, DateTime createdAt) => MedsEntry(
-    id: id,
-    name: draft.name.trim(),
-    dose: draft.dose.trim(),
-    schedule: draft.schedule,
-    firstDoseAt: draft.firstDoseAt,
-    dosesLeft: draft.dosesLeft,
-    notes: _optional(draft.notes),
-    createdAt: createdAt,
-  );
+  MedsEntry _entry(LumeRecordId id, MedsDraft draft, DateTime createdAt) =>
+      MedsEntry(
+        id: id,
+        name: draft.name.trim(),
+        dose: draft.dose.trim(),
+        schedule: draft.schedule,
+        firstDoseAt: draft.firstDoseAt,
+        dosesLeft: draft.dosesLeft,
+        notes: _optional(draft.notes),
+        createdAt: createdAt,
+      );
 
   static void _validate(MedsDraft draft) {
     final String name = draft.name.trim();
@@ -251,14 +257,18 @@ class MedsRepository {
     String? idempotencyKey,
     String? fingerprint,
   }) {
-    final LumeTxResult<T> r = _store.run<T>((LumeRecordTx tx) {
-      try {
-        final _Data d = _Data(tx);
-        return body(d);
-      } on MedsFailure catch (f) {
-        tx.reject(f);
-      }
-    }, idempotencyKey: idempotencyKey, fingerprint: fingerprint);
+    final LumeTxResult<T> r = _store.run<T>(
+      (LumeRecordTx tx) {
+        try {
+          final _Data d = _Data(tx);
+          return body(d);
+        } on MedsFailure catch (f) {
+          tx.reject(f);
+        }
+      },
+      idempotencyKey: idempotencyKey,
+      fingerprint: fingerprint,
+    );
     if (!r.ok) return MedsResult<MedsWrite>.failed(_map(r.failure!));
     final T v = r.value as T;
     return MedsResult<MedsWrite>.ok(
@@ -268,8 +278,7 @@ class MedsRepository {
 
   static MedsFailure _map(LumeTxFailure f) => switch (f.kind) {
     LumeTxFailureKind.rejected => f.detail! as MedsFailure,
-    LumeTxFailureKind.conflict ||
-    LumeTxFailureKind.duplicateId => MedsFailure(
+    LumeTxFailureKind.conflict || LumeTxFailureKind.duplicateId => MedsFailure(
       MedsFailureKind.conflict,
       ids: <LumeRecordId>[?LumeRecordId.tryParse(f.id ?? '')],
     ),

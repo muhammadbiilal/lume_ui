@@ -58,15 +58,18 @@ void main() {
       expect(h.stats().checkedInToday, isTrue);
     });
 
-    test('still counts yesterday\'s run today, before a missed day resets it', () {
-      final StreakHarness h = StreakHarness();
-      addTearDown(h.dispose);
-      h.checkIn(kToday.addDays(-2));
-      h.checkIn(kToday.addDays(-1));
-      // Nothing logged yet today.
-      expect(h.stats().current, 2);
-      expect(h.stats().checkedInToday, isFalse);
-    });
+    test(
+      'still counts yesterday\'s run today, before a missed day resets it',
+      () {
+        final StreakHarness h = StreakHarness();
+        addTearDown(h.dispose);
+        h.checkIn(kToday.addDays(-2));
+        h.checkIn(kToday.addDays(-1));
+        // Nothing logged yet today.
+        expect(h.stats().current, 2);
+        expect(h.stats().checkedInToday, isFalse);
+      },
+    );
 
     test('a gap resets the streak — only the run since the gap counts', () {
       final StreakHarness h = StreakHarness();
@@ -149,7 +152,10 @@ void main() {
 
   group('heat — the reader\'s own last 35 days, never a random fixture', () {
     test('is 35 days, oldest first, ending today', () {
-      final StreakStats s = StreakStats.compute(checkIns: <LumeDate>{}, today: kToday);
+      final StreakStats s = StreakStats.compute(
+        checkIns: <LumeDate>{},
+        today: kToday,
+      );
       expect(s.heat, hasLength(35));
       expect(s.heat.first.date, kToday.addDays(-34));
       expect(s.heat.last.date, kToday);

@@ -81,7 +81,12 @@ class PregnancyProfile {
 
 @immutable
 class PregnancyDefect {
-  const PregnancyDefect(this.collection, this.recordId, this.field, this.reason);
+  const PregnancyDefect(
+    this.collection,
+    this.recordId,
+    this.field,
+    this.reason,
+  );
 
   final String collection;
   final String recordId;

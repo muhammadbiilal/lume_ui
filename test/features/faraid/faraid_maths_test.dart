@@ -82,7 +82,10 @@ void main() {
       );
       expect(r.net.minor, money(24000, r.net.currency).minor);
       expect(shareOf(r, LumeFaraidShareKind.wife)!.amount.minor, 300000);
-      expect(shareOf(r, LumeFaraidShareKind.wife)!.fraction, LumeFaraidFraction.eighth);
+      expect(
+        shareOf(r, LumeFaraidShareKind.wife)!.fraction,
+        LumeFaraidFraction.eighth,
+      );
       expect(shareOf(r, LumeFaraidShareKind.sons)!.amount.minor, 1400000);
       expect(shareOf(r, LumeFaraidShareKind.daughters)!.amount.minor, 700000);
       // The son takes exactly twice the daughter's share.
@@ -103,8 +106,14 @@ void main() {
         wives: 1,
         sons: 2,
       );
-      expect(shareOf(r, LumeFaraidShareKind.wife)!.amount.minor, 200000); // 1/8 of 16,000
-      expect(shareOf(r, LumeFaraidShareKind.sons)!.amount.minor, 1400000); // 7/8 of 16,000
+      expect(
+        shareOf(r, LumeFaraidShareKind.wife)!.amount.minor,
+        200000,
+      ); // 1/8 of 16,000
+      expect(
+        shareOf(r, LumeFaraidShareKind.sons)!.amount.minor,
+        1400000,
+      ); // 7/8 of 16,000
       expect(shareOf(r, LumeFaraidShareKind.daughters), isNull);
       expect(shareOf(r, LumeFaraidShareKind.unallocated), isNull);
     });
@@ -112,7 +121,12 @@ void main() {
 
   group('textbook combination 3 — wife and a lone son', () {
     test('the son, sole descendant, takes the entire residue', () {
-      final LumeFaraidResult r = faraidFor('USD', gross: 8000, wives: 1, sons: 1);
+      final LumeFaraidResult r = faraidFor(
+        'USD',
+        gross: 8000,
+        wives: 1,
+        sons: 1,
+      );
       expect(shareOf(r, LumeFaraidShareKind.wife)!.amount.minor, 100000); // 1/8
       expect(shareOf(r, LumeFaraidShareKind.sons)!.amount.minor, 700000); // 7/8
     });
@@ -145,12 +159,18 @@ void main() {
       final LumeFaraidResult r = faraidFor('USD', gross: 12000, wives: 1);
       final LumeFaraidShare wife = shareOf(r, LumeFaraidShareKind.wife)!;
       expect(wife.fraction, LumeFaraidFraction.quarter);
-      expect(wife.amount.minor, 300000); // exactly 1/4 of 12,000 — never inflated
+      expect(
+        wife.amount.minor,
+        300000,
+      ); // exactly 1/4 of 12,000 — never inflated
       final LumeFaraidShare unallocated = shareOf(
         r,
         LumeFaraidShareKind.unallocated,
       )!;
-      expect(unallocated.amount.minor, 900000); // the undisclosed 3/4, made honest
+      expect(
+        unallocated.amount.minor,
+        900000,
+      ); // the undisclosed 3/4, made honest
       // The two rows account for the whole net estate between them.
       expect(wife.amount.minor + unallocated.amount.minor, r.net.minor);
     });
@@ -175,11 +195,7 @@ void main() {
     test('the bequest is capped at one third of the estate after debts', () {
       // afterDebts = 90,000. Cap = 30,000. Requested 40,000 is refused down
       // to the cap; net = 90,000 − 30,000 = 60,000.
-      final LumeFaraidResult r = faraidFor(
-        'USD',
-        gross: 90000,
-        bequest: 40000,
-      );
+      final LumeFaraidResult r = faraidFor('USD', gross: 90000, bequest: 40000);
       expect(r.afterDebts.minor, money(90000, r.afterDebts.currency).minor);
       expect(r.bequest.minor, money(30000, r.bequest.currency).minor);
       expect(r.net.minor, money(60000, r.net.currency).minor);
@@ -246,8 +262,10 @@ void main() {
             // disclosed remainder), the total never exceeds net — the
             // structural reason `awl` cannot arise from this heir set.
             final int heirsOnly = r.shares
-                .where((LumeFaraidShare s) =>
-                    s.kind != LumeFaraidShareKind.unallocated)
+                .where(
+                  (LumeFaraidShare s) =>
+                      s.kind != LumeFaraidShareKind.unallocated,
+                )
                 .fold(0, (int sum, LumeFaraidShare s) => sum + s.amount.minor);
             expect(
               heirsOnly,

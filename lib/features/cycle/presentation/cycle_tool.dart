@@ -134,7 +134,8 @@ class _CycleToolState extends ConsumerState<CycleTool> {
 
   void _failed(AppLocalizations l, CycleFailure f) {
     _say(switch (f.kind) {
-      CycleFailureKind.conflict || CycleFailureKind.notFound => l.cycleErrConflict,
+      CycleFailureKind.conflict ||
+      CycleFailureKind.notFound => l.cycleErrConflict,
       _ => l.cycleErrFailed,
     }, tone: LumeToastTone.error);
   }
@@ -149,10 +150,14 @@ class _CycleToolState extends ConsumerState<CycleTool> {
       isNew: true,
       initialStart: today,
       today: today,
-      startTaken: (LumeDate d) => periods.any((CyclePeriod p) => p.startDate == d),
+      startTaken: (LumeDate d) =>
+          periods.any((CyclePeriod p) => p.startDate == d),
     );
     if (result == null || !mounted) return;
-    final CycleResult<CycleWrite> r = _repo.logPeriod(result.start!, end: result.end);
+    final CycleResult<CycleWrite> r = _repo.logPeriod(
+      result.start!,
+      end: result.end,
+    );
     if (r.failure != null) return _failed(l, r.failure!);
     _say(l.cycleSavedToast);
   }
@@ -203,7 +208,10 @@ class _CycleToolState extends ConsumerState<CycleTool> {
   @override
   Widget build(BuildContext context) {
     final AppLocalizations l = AppLocalizations.of(context);
-    final LumeFormatting f = LumeFormatting.of(context, countryCode: widget.request.user.country);
+    final LumeFormatting f = LumeFormatting.of(
+      context,
+      countryCode: widget.request.user.country,
+    );
     final LumeDate? today = _today(context);
     final CycleSnapshot snapshot = _repo.view();
 
@@ -267,26 +275,43 @@ class _CycleToolState extends ConsumerState<CycleTool> {
       for (final CycleHistoryEntry h in insights.history) h.start: h.length,
     };
     final List<CyclePeriod> past =
-        periods.where((CyclePeriod p) => p.id != current?.id && lengthByStart.containsKey(p.startDate)).toList()
-          ..sort((CyclePeriod a, CyclePeriod b) => b.startDate.compareTo(a.startDate));
+        periods
+            .where(
+              (CyclePeriod p) =>
+                  p.id != current?.id && lengthByStart.containsKey(p.startDate),
+            )
+            .toList()
+          ..sort(
+            (CyclePeriod a, CyclePeriod b) =>
+                b.startDate.compareTo(a.startDate),
+          );
 
     return <Widget>[
       LumeToolSection(
         child: LumeSummaryCard(
           key: LumeCycleTool.summaryKey,
           kicker: l.cycleDayKicker,
-          value: insights.currentDay == null ? '—' : f.integer(insights.currentDay!),
-          valueSmall: insights.currentDay != null && insights.averageLengthRounded != null
+          value: insights.currentDay == null
+              ? '—'
+              : f.integer(insights.currentDay!),
+          valueSmall:
+              insights.currentDay != null &&
+                  insights.averageLengthRounded != null
               ? '/ ${f.integer(insights.averageLengthRounded!)}'
               : null,
           caption: insights.phase == null
               ? l.cycleTrackingCaption
               : _phaseLabel(l, insights.phase!),
           aside: LumeProgressRing(
-            value: insights.currentDay != null && insights.averageLengthRounded != null && insights.averageLengthRounded! > 0
+            value:
+                insights.currentDay != null &&
+                    insights.averageLengthRounded != null &&
+                    insights.averageLengthRounded! > 0
                 ? insights.currentDay! / insights.averageLengthRounded!
                 : 0,
-            centreValue: insights.currentDay == null ? '—' : f.integer(insights.currentDay!),
+            centreValue: insights.currentDay == null
+                ? '—'
+                : f.integer(insights.currentDay!),
             label: l.cycleDayKicker,
           ),
           stats: <LumeStat>[
@@ -295,7 +320,10 @@ class _CycleToolState extends ConsumerState<CycleTool> {
                 value: l.ageDaysCount(insights.averageLengthRounded!),
                 label: l.cycleAverageLabel,
               ),
-            LumeStat(value: f.integer(insights.loggedCount), label: l.cycleLoggedCountLabel),
+            LumeStat(
+              value: f.integer(insights.loggedCount),
+              label: l.cycleLoggedCountLabel,
+            ),
           ],
         ),
       ),
@@ -304,7 +332,9 @@ class _CycleToolState extends ConsumerState<CycleTool> {
           child: LumeCompactRow(
             key: LumeCycleTool.currentRowKey,
             icon: LumeIcons.droplet,
-            label: l.cycleStartedOn(f.dateMediumYear(current.startDate.toCalendarDateTime())),
+            label: l.cycleStartedOn(
+              f.dateMediumYear(current.startDate.toCalendarDateTime()),
+            ),
             value: current.ongoing
                 ? l.cycleOngoingBadge
                 : f.dateMediumYear(current.endDate!.toCalendarDateTime()),
@@ -320,7 +350,9 @@ class _CycleToolState extends ConsumerState<CycleTool> {
             children: <Widget>[
               LumeCompactRow(
                 icon: LumeIcons.calendar,
-                label: f.dateMediumYear(insights.predictedNextStart!.toCalendarDateTime()),
+                label: f.dateMediumYear(
+                  insights.predictedNextStart!.toCalendarDateTime(),
+                ),
                 value: insights.isOverdue
                     ? l.billsOverdueBy(insights.overdueByDays!)
                     : l.subsRenewsIn(insights.daysUntilNext!),

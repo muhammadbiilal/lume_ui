@@ -118,13 +118,20 @@ class _StreakToolState extends ConsumerState<StreakTool> {
 
   void _failed(AppLocalizations l, StreakFailure f) {
     _say(switch (f.kind) {
-      StreakFailureKind.conflict || StreakFailureKind.notFound => l.streakErrConflict,
+      StreakFailureKind.conflict ||
+      StreakFailureKind.notFound => l.streakErrConflict,
       StreakFailureKind.storage => l.streakErrFailed,
     }, tone: LumeToastTone.error);
   }
 
-  Future<void> _setChecked(AppLocalizations l, LumeDate date, bool value) async {
-    final StreakResult<StreakWrite> r = value ? _repo.checkIn(date) : _repo.uncheck(date);
+  Future<void> _setChecked(
+    AppLocalizations l,
+    LumeDate date,
+    bool value,
+  ) async {
+    final StreakResult<StreakWrite> r = value
+        ? _repo.checkIn(date)
+        : _repo.uncheck(date);
     if (r.failure != null) return _failed(l, r.failure!);
     if (r.value!.receipt.revision == 0) return;
     _say(
@@ -140,7 +147,10 @@ class _StreakToolState extends ConsumerState<StreakTool> {
   @override
   Widget build(BuildContext context) {
     final AppLocalizations l = AppLocalizations.of(context);
-    final LumeFormatting f = LumeFormatting.of(context, countryCode: widget.request.user.country);
+    final LumeFormatting f = LumeFormatting.of(
+      context,
+      countryCode: widget.request.user.country,
+    );
     final LumeDate? today = _today(context);
     final StreakSnapshot snapshot = _repo.view();
 
@@ -187,9 +197,14 @@ class _StreakToolState extends ConsumerState<StreakTool> {
         caption: l.streakBestCaption(stats.best),
         stats: <LumeStat>[
           LumeStat(value: f.integer(stats.thisMonth), label: l.commonThisMonth),
-          LumeStat(value: f.percent(stats.rate * 100, decimals: 0), label: l.streakRateLabel),
           LumeStat(
-            value: stats.nextMilestone == null ? '—' : f.integer(stats.nextMilestone!),
+            value: f.percent(stats.rate * 100, decimals: 0),
+            label: l.streakRateLabel,
+          ),
+          LumeStat(
+            value: stats.nextMilestone == null
+                ? '—'
+                : f.integer(stats.nextMilestone!),
             label: l.streakNextLabel,
           ),
         ],
@@ -207,7 +222,11 @@ class _StreakToolState extends ConsumerState<StreakTool> {
     ),
     LumeToolSection(
       title: l.streakCalendarTitle,
-      child: _StreakHeatGrid(key: LumeStreakTool.calendarKey, days: stats.heat, l: l),
+      child: _StreakHeatGrid(
+        key: LumeStreakTool.calendarKey,
+        days: stats.heat,
+        l: l,
+      ),
     ),
     LumeToolSection(
       title: l.streakMilestonesTitle,

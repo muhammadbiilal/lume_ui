@@ -81,7 +81,10 @@ void main() {
       await tapShown(t, find.text('Edit'));
       expect(find.byKey(LumeHealthTool.formKey), findsOneWidget);
 
-      await t.enterText(find.byKey(LumeHealthTool.titleField), 'Follow-up visit');
+      await t.enterText(
+        find.byKey(LumeHealthTool.titleField),
+        'Follow-up visit',
+      );
       await t.pumpAndSettle();
       await tapShown(t, find.byKey(LumeHealthTool.saveKey));
 
@@ -118,13 +121,18 @@ void main() {
   });
 
   group('filter', () {
-    testWidgets('a kind chip narrows the list to that kind', (WidgetTester t) async {
+    testWidgets('a kind chip narrows the list to that kind', (
+      WidgetTester t,
+    ) async {
       final HealthWorld w = HealthWorld();
       w.add('Annual physical');
       w.add('Lipid panel', kind: HealthRecordKind.report);
       await pumpHealth(t, w);
 
-      await tapShown(t, find.byKey(LumeHealthTool.filterChip(HealthRecordKind.report)));
+      await tapShown(
+        t,
+        find.byKey(LumeHealthTool.filterChip(HealthRecordKind.report)),
+      );
       expect(
         find.descendant(
           of: find.byKey(LumeHealthTool.listKey),
@@ -144,7 +152,9 @@ void main() {
   });
 
   group('delete', () {
-    testWidgets('removes it for good, and offers no Undo', (WidgetTester t) async {
+    testWidgets('removes it for good, and offers no Undo', (
+      WidgetTester t,
+    ) async {
       final HealthWorld w = HealthWorld().reference();
       await pumpHealth(t, w);
       await tapShown(

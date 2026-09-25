@@ -19,7 +19,11 @@ enum PrayTrackFailureKind {
 
 @immutable
 class PrayTrackFailure implements Exception {
-  const PrayTrackFailure(this.kind, {this.ids = const <LumeRecordId>[], this.cause});
+  const PrayTrackFailure(
+    this.kind, {
+    this.ids = const <LumeRecordId>[],
+    this.cause,
+  });
 
   final PrayTrackFailureKind kind;
   final List<LumeRecordId> ids;

@@ -43,7 +43,10 @@ void main() {
   });
 
   test('two specs with the same id are equal', () {
-    expect(LumePassportSpec.forCountry('PK'), LumePassportSpec.forCountry('DE'));
+    expect(
+      LumePassportSpec.forCountry('PK'),
+      LumePassportSpec.forCountry('DE'),
+    );
     expect(
       LumePassportSpec.forCountry('PK').hashCode,
       LumePassportSpec.forCountry('DE').hashCode,

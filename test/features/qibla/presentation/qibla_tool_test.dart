@@ -112,7 +112,11 @@ void main() {
         'not hard-coded', (WidgetTester tester) async {
       await pumpQibla(
         tester,
-        user: const LumeUserContext(country: 'GB', city: 'London', islamic: true),
+        user: const LumeUserContext(
+          country: 'GB',
+          city: 'London',
+          islamic: true,
+        ),
       );
       final LumeQiblaDial dial = tester.widget(
         find.byKey(LumeQiblaTool.dialKey),
@@ -143,7 +147,11 @@ void main() {
         'reference card', (WidgetTester tester) async {
       await pumpQibla(
         tester,
-        user: const LumeUserContext(country: 'PK', city: 'Chitral', islamic: true),
+        user: const LumeUserContext(
+          country: 'PK',
+          city: 'Chitral',
+          islamic: true,
+        ),
       );
       expect(find.byKey(LumeQiblaTool.missingKey), findsOneWidget);
       expect(find.byKey(LumeQiblaTool.dialKey), findsNothing);
@@ -164,9 +172,7 @@ void main() {
       await pumpQibla(tester, locale: const Locale('ar'));
       expect(find.byKey(LumeQiblaTool.dialKey), findsOneWidget);
       expect(
-        Directionality.of(
-          tester.element(find.byKey(LumeQiblaTool.summaryKey)),
-        ),
+        Directionality.of(tester.element(find.byKey(LumeQiblaTool.summaryKey))),
         TextDirection.rtl,
       );
       // The dial's own cardinal letters stay Latin in every language (D22),

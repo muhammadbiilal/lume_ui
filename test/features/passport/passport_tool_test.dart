@@ -472,10 +472,7 @@ void main() {
     for (final LumeSaveOutcome outcome in LumeSaveOutcome.values) {
       testWidgets('${outcome.name} is said', (WidgetTester tester) async {
         await pumpWithPhoto(tester, outcome: outcome);
-        expect(
-          await pressAndHear(tester, LumePassportTool.saveKey),
-          isNotNull,
-        );
+        expect(await pressAndHear(tester, LumePassportTool.saveKey), isNotNull);
       });
     }
   });
@@ -519,9 +516,7 @@ void main() {
       expectNoOverflow(tester);
     });
 
-    testWidgets('at 200% text scale, no overflow', (
-      WidgetTester tester,
-    ) async {
+    testWidgets('at 200% text scale, no overflow', (WidgetTester tester) async {
       await pumpPassport(tester, textScale: 2);
       expectNoOverflow(tester);
     });

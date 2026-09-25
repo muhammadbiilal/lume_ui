@@ -21,8 +21,10 @@ abstract final class MedsSheetKeys {
       ValueKey<String>('meds.sheet.schedule.${s.name}');
 }
 
-TextStyle _body(BuildContext context) =>
-    LumeType.natural(context, context.lumeType.body).copyWith(color: context.lume.text2);
+TextStyle _body(BuildContext context) => LumeType.natural(
+  context,
+  context.lumeType.body,
+).copyWith(color: context.lume.text2);
 
 Future<bool?> medsDecide(
   BuildContext context, {

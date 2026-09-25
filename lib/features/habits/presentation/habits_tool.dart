@@ -105,7 +105,8 @@ class _HabitDraft {
   final Map<String, String> errors = <String, String>{};
   late final String _initial;
 
-  String get _state => <Object?>[name.text, notes.text, frequency.name].join('\u0000');
+  String get _state =>
+      <Object?>[name.text, notes.text, frequency.name].join('\u0000');
 
   bool get dirty => _state != _initial;
 
@@ -185,7 +186,9 @@ class _HabitsToolState extends ConsumerState<HabitsTool> {
     });
     WidgetsBinding.instance.addPostFrameCallback((_) {
       final BuildContext? c = _body.currentContext;
-      final ScrollPosition? p = c == null ? null : Scrollable.maybeOf(c)?.position;
+      final ScrollPosition? p = c == null
+          ? null
+          : Scrollable.maybeOf(c)?.position;
       if (p != null && p.pixels != 0) p.jumpTo(0);
     });
   }
@@ -241,7 +244,8 @@ class _HabitsToolState extends ConsumerState<HabitsTool> {
 
   void _failed(AppLocalizations l, HabitsFailure f) {
     _say(switch (f.kind) {
-      HabitsFailureKind.conflict || HabitsFailureKind.notFound => l.habitsErrConflict,
+      HabitsFailureKind.conflict ||
+      HabitsFailureKind.notFound => l.habitsErrConflict,
       _ => l.habitsErrFailed,
     }, tone: LumeToastTone.error);
   }
@@ -261,7 +265,9 @@ class _HabitsToolState extends ConsumerState<HabitsTool> {
     final String name = d.name.text.trim();
     if (name.isEmpty) errors['name'] = l.habitsErrName;
     if (name.length > kHabitsNameMax) errors['name'] = l.habitsErrLong;
-    if (d.notes.text.trim().length > kHabitsNoteMax) errors['notes'] = l.habitsErrLong;
+    if (d.notes.text.trim().length > kHabitsNoteMax) {
+      errors['notes'] = l.habitsErrLong;
+    }
     setState(() {
       d.errors
         ..clear()
@@ -298,7 +304,10 @@ class _HabitsToolState extends ConsumerState<HabitsTool> {
       text: l.habitsDeleteText(h.name),
     );
     if (!ok || !mounted) return;
-    final HabitsResult<HabitsWrite> r = _repo.deleteHabit(h.id, version: h.version);
+    final HabitsResult<HabitsWrite> r = _repo.deleteHabit(
+      h.id,
+      version: h.version,
+    );
     if (r.failure != null) return _failed(l, r.failure!);
     _go(_View.list);
     _undoable(l, l.habitsDeletedToast, r.value!);
@@ -309,7 +318,10 @@ class _HabitsToolState extends ConsumerState<HabitsTool> {
   @override
   Widget build(BuildContext context) {
     final AppLocalizations l = AppLocalizations.of(context);
-    final LumeFormatting f = LumeFormatting.of(context, countryCode: widget.request.user.country);
+    final LumeFormatting f = LumeFormatting.of(
+      context,
+      countryCode: widget.request.user.country,
+    );
     final LumeDate? today = _today(context);
     final HabitsSnapshot snapshot = _repo.view();
 
@@ -322,7 +334,10 @@ class _HabitsToolState extends ConsumerState<HabitsTool> {
     } else {
       book = snapshot.book(today);
     }
-    if (book != null && _habit != null && book.habit(_habit!) == null && _view != _View.form) {
+    if (book != null &&
+        _habit != null &&
+        book.habit(_habit!) == null &&
+        _view != _View.form) {
       WidgetsBinding.instance.addPostFrameCallback((_) {
         if (mounted) _go(_View.list);
       });
@@ -377,7 +392,11 @@ class _HabitsToolState extends ConsumerState<HabitsTool> {
 
   /// Name and current streak, real for every habit — never the reference's
   /// unconditional `h.streak` fixture (`context.js:1972-1974`).
-  LumeExportFile? _export(AppLocalizations l, HabitsBook book, LumeDate? today) {
+  LumeExportFile? _export(
+    AppLocalizations l,
+    HabitsBook book,
+    LumeDate? today,
+  ) {
     if (book.isEmpty) return null;
     final List<List<Object?>> rows = <List<Object?>>[
       <Object?>[l.commonName, l.habitsFieldFrequency],
@@ -437,7 +456,10 @@ class _HabitsToolState extends ConsumerState<HabitsTool> {
           value: doneToday == null ? '—' : f.integer(doneToday),
           valueSmall: '/ ${f.integer(book.habits.length)}',
           stats: <LumeStat>[
-            LumeStat(value: f.integer(book.habits.length), label: l.habitsStatTotal),
+            LumeStat(
+              value: f.integer(book.habits.length),
+              label: l.habitsStatTotal,
+            ),
             LumeStat(
               value: active == null ? '—' : f.integer(active),
               label: l.habitsStatActiveStreaks,
@@ -448,7 +470,9 @@ class _HabitsToolState extends ConsumerState<HabitsTool> {
       LumeToolSection(
         child: LumeRecordList(
           key: LumeHabitsTool.listKey,
-          children: <Widget>[for (final HabitView v in book.habits) _row(l, f, v, today)],
+          children: <Widget>[
+            for (final HabitView v in book.habits) _row(l, f, v, today),
+          ],
         ),
       ),
       LumeToolSection(
@@ -462,7 +486,12 @@ class _HabitsToolState extends ConsumerState<HabitsTool> {
     ];
   }
 
-  Widget _row(AppLocalizations l, LumeFormatting f, HabitView v, LumeDate? today) {
+  Widget _row(
+    AppLocalizations l,
+    LumeFormatting f,
+    HabitView v,
+    LumeDate? today,
+  ) {
     final Habit h = v.habit;
     return LumeRecordRow(
       key: LumeHabitsTool.row(h.id.value),
@@ -472,7 +501,9 @@ class _HabitsToolState extends ConsumerState<HabitsTool> {
           ? <String>[l.habitsDamagedBadge]
           : v.currentStreak == null
           ? null
-          : <String>[HabitsText.streakSentence(l, h.frequency, v.currentStreak!)],
+          : <String>[
+              HabitsText.streakSentence(l, h.frequency, v.currentStreak!),
+            ],
       done: v.doneToday ?? false,
       onToggle: v.damaged || today == null
           ? null
@@ -510,13 +541,18 @@ class _HabitsToolState extends ConsumerState<HabitsTool> {
             key: LumeHabitsTool.habitKey,
             kicker: HabitsText.frequency(l, h.frequency),
             value: v.damaged || streak == null ? '—' : f.integer(streak),
-            valueSmall: v.damaged || streak == null ? null : HabitsText.unit(l, h.frequency, streak),
-            caption: v.damaged ? l.habitsDamagedBadge : l.habitsCurrentStreakCaption,
+            valueSmall: v.damaged || streak == null
+                ? null
+                : HabitsText.unit(l, h.frequency, streak),
+            caption: v.damaged
+                ? l.habitsDamagedBadge
+                : l.habitsCurrentStreakCaption,
             stats: v.damaged
                 ? const <LumeStat>[]
                 : <LumeStat>[
                     LumeStat(
-                      value: '${f.integer(v.bestStreak)} ${HabitsText.unit(l, h.frequency, v.bestStreak)}',
+                      value:
+                          '${f.integer(v.bestStreak)} ${HabitsText.unit(l, h.frequency, v.bestStreak)}',
                       label: l.habitsStatBest,
                     ),
                     LumeStat(
@@ -531,7 +567,9 @@ class _HabitsToolState extends ConsumerState<HabitsTool> {
         if (h.notes != null)
           LumeToolSection(
             child: LumeFactCard(
-              facts: <LumeFact>[LumeFact(label: l.recFieldNotes, value: h.notes!, block: true)],
+              facts: <LumeFact>[
+                LumeFact(label: l.recFieldNotes, value: h.notes!, block: true),
+              ],
             ),
           ),
         LumeToolSection(
@@ -584,13 +622,23 @@ class _HabitsToolState extends ConsumerState<HabitsTool> {
                   value: d.frequency.name,
                   semanticLabel: l.habitsFieldFrequency,
                   items: <LumeChoice>[
-                    LumeChoice(value: HabitFrequency.daily.name, label: l.habitsFreqDaily),
-                    LumeChoice(value: HabitFrequency.weekdays.name, label: l.habitsFreqWeekdays),
-                    LumeChoice(value: HabitFrequency.weekly.name, label: l.habitsFreqWeekly),
+                    LumeChoice(
+                      value: HabitFrequency.daily.name,
+                      label: l.habitsFreqDaily,
+                    ),
+                    LumeChoice(
+                      value: HabitFrequency.weekdays.name,
+                      label: l.habitsFreqWeekdays,
+                    ),
+                    LumeChoice(
+                      value: HabitFrequency.weekly.name,
+                      label: l.habitsFreqWeekly,
+                    ),
                   ],
                   onChanged: (String v) => setState(
-                    () => d.frequency =
-                        HabitFrequency.values.firstWhere((HabitFrequency x) => x.name == v),
+                    () => d.frequency = HabitFrequency.values.firstWhere(
+                      (HabitFrequency x) => x.name == v,
+                    ),
                   ),
                 ),
               ],

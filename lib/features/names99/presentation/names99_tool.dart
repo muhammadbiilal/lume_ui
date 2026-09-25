@@ -143,9 +143,7 @@ class _LumeNames99ToolState extends ConsumerState<LumeNames99Tool> {
         LumeNames99Fixtures.all.isNotEmpty &&
         LumeNames99Fixtures.all.first.resolve(lang).isFallback;
 
-    final List<LumeName> shown = LumeNames99Fixtures.shown(
-      query: _query.text,
-    );
+    final List<LumeName> shown = LumeNames99Fixtures.shown(query: _query.text);
 
     return LumeToolScreen(
       key: _host,
@@ -193,7 +191,8 @@ class _LumeNames99ToolState extends ConsumerState<LumeNames99Tool> {
                 key: LumeNames99Tool.searchKey,
                 controller: _query,
                 placeholder: l.names99Search,
-                onChanged: (String q) => setState(() => _session.write(_id, 'q', q)),
+                onChanged: (String q) =>
+                    setState(() => _session.write(_id, 'q', q)),
               ),
             ),
           ),
@@ -336,15 +335,16 @@ class _NameCard extends StatelessWidget {
               // `.ncard__meaning`.
               Text(
                 name.meaning.text,
-                style: LumeType.natural(
-                  context,
-                  context.lumeType.metaSmall,
-                  size: 10,
-                ).copyWith(
-                  color: lume.text3,
-                  fontWeight: FontWeight.w500,
-                  height: 1.35,
-                ),
+                style:
+                    LumeType.natural(
+                      context,
+                      context.lumeType.metaSmall,
+                      size: 10,
+                    ).copyWith(
+                      color: lume.text3,
+                      fontWeight: FontWeight.w500,
+                      height: 1.35,
+                    ),
               ),
             ],
           ),

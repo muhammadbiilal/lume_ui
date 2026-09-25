@@ -94,8 +94,7 @@ class LumeVehicleTool extends ConsumerStatefulWidget {
 }
 
 class _LumeVehicleToolState extends ConsumerState<LumeVehicleTool> {
-  final GlobalKey<LumeToolScreenState> _host =
-      GlobalKey<LumeToolScreenState>();
+  final GlobalKey<LumeToolScreenState> _host = GlobalKey<LumeToolScreenState>();
   late final LumeToolSession _session = ref.read(toolSessionProvider);
   late final TextEditingController _query = TextEditingController(
     text: _session.read(LumeVehicleTool.id, 'q') ?? '',
@@ -139,7 +138,8 @@ class _LumeVehicleToolState extends ConsumerState<LumeVehicleTool> {
             .countries
             ?.currencyOf(r.user.country) ??
         f.currency;
-    final LumeCurrency currency = LumeCurrency.tryOf(ccyCode) ?? LumeCurrency.of('PKR');
+    final LumeCurrency currency =
+        LumeCurrency.tryOf(ccyCode) ?? LumeCurrency.of('PKR');
     String money(LumeMoney m) =>
         f.money(m.minor / m.currency.scale, code: m.currency.code);
 
@@ -250,11 +250,7 @@ class _LumeVehicleToolState extends ConsumerState<LumeVehicleTool> {
                                   label: l.vehicleClear,
                                   tone: LumeBadgeTone.ok,
                                 ),
-                          value: LumeVehicleTool.distance(
-                            l,
-                            f,
-                            v.odometerKm,
-                          ),
+                          value: LumeVehicleTool.distance(l, f, v.odometerKm),
                           chevron: true,
                           // `act: 'toast:' + v.plate` — the reference toasts
                           // the plate itself; there is no vehicle-detail

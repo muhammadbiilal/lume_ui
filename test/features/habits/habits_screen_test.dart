@@ -59,7 +59,9 @@ void main() {
   });
 
   group('adding a habit', () {
-    testWidgets('a new habit appears, with no streak yet', (WidgetTester t) async {
+    testWidgets('a new habit appears, with no streak yet', (
+      WidgetTester t,
+    ) async {
       final HabitsWorld w = HabitsWorld();
       await pumpHabits(t, w);
       await tapShown(t, find.byKey(LumeHabitsTool.addKey));
@@ -92,7 +94,9 @@ void main() {
   });
 
   group('toggling today — instant, no confirmation', () {
-    testWidgets('checking the row logs today and shows a streak', (WidgetTester t) async {
+    testWidgets('checking the row logs today and shows a streak', (
+      WidgetTester t,
+    ) async {
       final HabitsWorld w = HabitsWorld();
       w.add('Read');
       await pumpHabits(t, w);
@@ -126,7 +130,10 @@ void main() {
     ) async {
       final HabitsWorld w = HabitsWorld().reference();
       await pumpHabits(t, w);
-      await tapShown(t, find.byKey(LumeHabitsTool.row(w.habits['Read']!.value)));
+      await tapShown(
+        t,
+        find.byKey(LumeHabitsTool.row(w.habits['Read']!.value)),
+      );
       await tapShown(t, find.text('Edit'));
       await t.enterText(find.byKey(LumeHabitsTool.nameField), 'Read daily');
       await t.pumpAndSettle();
@@ -145,7 +152,10 @@ void main() {
     ) async {
       final HabitsWorld w = HabitsWorld().reference();
       await pumpHabits(t, w);
-      await tapShown(t, find.byKey(LumeHabitsTool.row(w.habits['Read']!.value)));
+      await tapShown(
+        t,
+        find.byKey(LumeHabitsTool.row(w.habits['Read']!.value)),
+      );
       await tapShown(t, find.text('Delete'));
       expect(find.byType(LumeDeleteConfirmation), findsOneWidget);
       await tapShown(t, find.text('Delete').last);

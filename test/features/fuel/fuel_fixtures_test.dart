@@ -33,7 +33,11 @@ void main() {
       expect(m.unit, LumeFuelUnit.litre);
       expect(m.sourceKind, LumeFuelSource.retail);
       expect(m.effectiveKind, LumeFuelEffective.today);
-      expect(m.items.map((LumeFuelItem i) => i.code), <String>['E10', 'E5', 'B7']);
+      expect(m.items.map((LumeFuelItem i) => i.code), <String>[
+        'E10',
+        'E5',
+        'B7',
+      ]);
       expect(m.main.price, 1.34);
     });
 
@@ -82,7 +86,14 @@ void main() {
 
   group('the global fallback', () {
     test('an unlisted country reads the honest neutral fallback', () {
-      for (final String country in <String>['FR', 'DE', 'JP', 'NG', 'BR', 'ZZ']) {
+      for (final String country in <String>[
+        'FR',
+        'DE',
+        'JP',
+        'NG',
+        'BR',
+        'ZZ',
+      ]) {
         final LumeFuelMarket m = LumeFuel.forCountry(country);
         expect(m, same(LumeFuel.fallback), reason: country);
       }

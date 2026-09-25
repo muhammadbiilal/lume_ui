@@ -27,7 +27,9 @@ void main() {
   setUpAll(loadLumeFonts);
 
   group('first use', () {
-    testWidgets('nothing logged, the summary shows a real zero', (WidgetTester t) async {
+    testWidgets('nothing logged, the summary shows a real zero', (
+      WidgetTester t,
+    ) async {
       final TaraweehWorld w = TaraweehWorld();
       await pumpTaraweeh(t, w);
       final LumeSummaryCard s = summary(t);
@@ -42,7 +44,9 @@ void main() {
   });
 
   group('logging tonight', () {
-    testWidgets('toggling the row logs tonight and the summary updates', (WidgetTester t) async {
+    testWidgets('toggling the row logs tonight and the summary updates', (
+      WidgetTester t,
+    ) async {
       final TaraweehWorld w = TaraweehWorld();
       await pumpTaraweeh(t, w);
       expect(summary(t).value, '0');
@@ -58,22 +62,25 @@ void main() {
       w.dispose();
     });
 
-    testWidgets('a streak already running keeps counting once tonight is added', (
+    testWidgets(
+      'a streak already running keeps counting once tonight is added',
+      (WidgetTester t) async {
+        final TaraweehWorld w = TaraweehWorld();
+        w.logTonight(kToday.addDays(-2));
+        w.logTonight(kToday.addDays(-1));
+        await pumpTaraweeh(t, w);
+        expect(summary(t).value, '2');
+
+        await tapShown(t, find.bySemanticsLabel('Prayed tonight, Tonight'));
+
+        expect(summary(t).value, '3');
+        w.dispose();
+      },
+    );
+
+    testWidgets('toggling it off again clears tonight, with Undo', (
       WidgetTester t,
     ) async {
-      final TaraweehWorld w = TaraweehWorld();
-      w.logTonight(kToday.addDays(-2));
-      w.logTonight(kToday.addDays(-1));
-      await pumpTaraweeh(t, w);
-      expect(summary(t).value, '2');
-
-      await tapShown(t, find.bySemanticsLabel('Prayed tonight, Tonight'));
-
-      expect(summary(t).value, '3');
-      w.dispose();
-    });
-
-    testWidgets('toggling it off again clears tonight, with Undo', (WidgetTester t) async {
       final TaraweehWorld w = TaraweehWorld();
       w.logTonight(kToday, rakaat: 8);
       await pumpTaraweeh(t, w);
@@ -93,7 +100,9 @@ void main() {
   });
 
   group('rakaat', () {
-    testWidgets('choosing 8 rakaat updates tonight\'s entry', (WidgetTester t) async {
+    testWidgets('choosing 8 rakaat updates tonight\'s entry', (
+      WidgetTester t,
+    ) async {
       final TaraweehWorld w = TaraweehWorld();
       w.logTonight(kToday, rakaat: 20);
       await pumpTaraweeh(t, w);
@@ -106,7 +115,9 @@ void main() {
   });
 
   group('juz — Khatm progress', () {
-    testWidgets('incrementing the Juz stepper notes a Juz for tonight', (WidgetTester t) async {
+    testWidgets('incrementing the Juz stepper notes a Juz for tonight', (
+      WidgetTester t,
+    ) async {
       final TaraweehWorld w = TaraweehWorld();
       w.logTonight(kToday);
       await pumpTaraweeh(t, w);
@@ -117,7 +128,9 @@ void main() {
       w.dispose();
     });
 
-    testWidgets('decrementing from Juz 1 clears it back to not noted', (WidgetTester t) async {
+    testWidgets('decrementing from Juz 1 clears it back to not noted', (
+      WidgetTester t,
+    ) async {
       final TaraweehWorld w = TaraweehWorld();
       w.logTonight(kToday);
       w.repo.setJuz(kToday, 1);
@@ -129,7 +142,9 @@ void main() {
       w.dispose();
     });
 
-    testWidgets('progress reflects distinct Juz logged across nights', (WidgetTester t) async {
+    testWidgets('progress reflects distinct Juz logged across nights', (
+      WidgetTester t,
+    ) async {
       final TaraweehWorld w = TaraweehWorld();
       for (int i = 0; i < 5; i++) {
         w.logTonight(kToday.addDays(-i));
@@ -153,7 +168,9 @@ void main() {
       w.dispose();
     });
 
-    testWidgets('Arabic: renders right-to-left with no overflow', (WidgetTester t) async {
+    testWidgets('Arabic: renders right-to-left with no overflow', (
+      WidgetTester t,
+    ) async {
       final TaraweehWorld w = TaraweehWorld();
       w.logTonight(kToday);
       await pumpTaraweeh(t, w, locale: const Locale('ar'));
@@ -163,7 +180,9 @@ void main() {
   });
 
   group('accessibility', () {
-    testWidgets('200% text scale does not overflow, with a night logged', (WidgetTester t) async {
+    testWidgets('200% text scale does not overflow, with a night logged', (
+      WidgetTester t,
+    ) async {
       final TaraweehWorld w = TaraweehWorld();
       w.logTonight(kToday);
       w.repo.setJuz(kToday, 5);
@@ -174,7 +193,9 @@ void main() {
       w.dispose();
     });
 
-    testWidgets('200% text scale does not overflow on first use either', (WidgetTester t) async {
+    testWidgets('200% text scale does not overflow on first use either', (
+      WidgetTester t,
+    ) async {
       final TaraweehWorld w = TaraweehWorld();
       await pumpTaraweeh(t, w, textScale: 2);
       expectNoOverflow(t);

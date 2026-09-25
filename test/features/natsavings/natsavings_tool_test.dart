@@ -142,9 +142,7 @@ void main() {
       await pumpNatSavings(tester, user: const LumeUserContext(country: 'PK'));
       // 'Minimum' also names a stat label on every row — tap the sort bar's
       // own chip, by scoping to its key.
-      await tester.tap(
-        inKey(LumeNatSavingsTool.sortKey, find.text('Minimum')),
-      );
+      await tester.tap(inKey(LumeNatSavingsTool.sortKey, find.text('Minimum')));
       await tester.pumpAndSettle();
 
       final List<LumeRichRow> rows = tester
@@ -179,7 +177,10 @@ void main() {
       // The same name also titles the row in the products list above — tap
       // the segmented picker's own option, by scoping to its key.
       await tester.tap(
-        inKey(LumeNatSavingsTool.productKey, find.text('Special Savings Certificate')),
+        inKey(
+          LumeNatSavingsTool.productKey,
+          find.text('Special Savings Certificate'),
+        ),
       );
       await tester.pumpAndSettle();
 

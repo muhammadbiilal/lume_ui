@@ -81,7 +81,8 @@ abstract final class LumeVaccinesTool {
   static const Key dateField = ValueKey<String>('vaccines.field.date');
   static const Key providerField = ValueKey<String>('vaccines.field.provider');
   static const Key notesField = ValueKey<String>('vaccines.field.notes');
-  static Key filterChip(VaccinesFilter f) => ValueKey<String>('vaccines.filter.${f.name}');
+  static Key filterChip(VaccinesFilter f) =>
+      ValueKey<String>('vaccines.filter.${f.name}');
   static Key row(String id) => ValueKey<String>('vaccines.row.$id');
 
   static Widget open(LumeToolRequest request) => VaccinesTool(request: request);
@@ -226,7 +227,9 @@ class _VaccinesToolState extends ConsumerState<VaccinesTool> {
     if (!moved) return;
     WidgetsBinding.instance.addPostFrameCallback((_) {
       final BuildContext? c = _body.currentContext;
-      final ScrollPosition? p = c == null ? null : Scrollable.maybeOf(c)?.position;
+      final ScrollPosition? p = c == null
+          ? null
+          : Scrollable.maybeOf(c)?.position;
       if (p != null && p.pixels != 0) p.jumpTo(0);
     });
   }
@@ -239,7 +242,9 @@ class _VaccinesToolState extends ConsumerState<VaccinesTool> {
         _go(_View.list);
       case _View.form:
         final _VaccineDraft? d = _draft;
-        if (d != null && d.dirty && !await vaccinesConfirmDiscard(context)) return;
+        if (d != null && d.dirty && !await vaccinesConfirmDiscard(context)) {
+          return;
+        }
         if (!mounted) return;
         _draft = null;
         d?.dispose();
@@ -273,7 +278,8 @@ class _VaccinesToolState extends ConsumerState<VaccinesTool> {
 
   void _failed(AppLocalizations l, VaccinesFailure f) {
     _say(switch (f.kind) {
-      VaccinesFailureKind.conflict || VaccinesFailureKind.notFound => l.vaccinesErrConflict,
+      VaccinesFailureKind.conflict ||
+      VaccinesFailureKind.notFound => l.vaccinesErrConflict,
       _ => l.vaccinesErrFailed,
     }, tone: LumeToastTone.error);
   }
@@ -338,7 +344,10 @@ class _VaccinesToolState extends ConsumerState<VaccinesTool> {
       text: l.recDeleteTextFinal(r.name),
     );
     if (!ok || !mounted) return;
-    final VaccinesResult<VaccinesWrite> result = _repo.delete(r.id, version: r.version);
+    final VaccinesResult<VaccinesWrite> result = _repo.delete(
+      r.id,
+      version: r.version,
+    );
     if (result.failure != null) return _failed(l, result.failure!);
     _go(_View.list);
     // Irreversible, by design (D-V2): no Undo is offered here.
@@ -350,7 +359,10 @@ class _VaccinesToolState extends ConsumerState<VaccinesTool> {
   @override
   Widget build(BuildContext context) {
     final AppLocalizations l = AppLocalizations.of(context);
-    final LumeFormatting f = LumeFormatting.of(context, countryCode: widget.request.user.country);
+    final LumeFormatting f = LumeFormatting.of(
+      context,
+      countryCode: widget.request.user.country,
+    );
     final LumeDate? today = _today(context);
     final VaccinesSnapshot snapshot = _repo.view();
 
@@ -369,7 +381,9 @@ class _VaccinesToolState extends ConsumerState<VaccinesTool> {
       _View.list => (null, _list(context, l, f, book, today), false),
       _View.record => _recordScreen(context, l, f, book),
       _View.form => (
-        _draft?.id == null ? l.vaccinesNewVaccination : l.vaccinesEditVaccination,
+        _draft?.id == null
+            ? l.vaccinesNewVaccination
+            : l.vaccinesEditVaccination,
         _form(context, l, f),
         true,
       ),
@@ -444,10 +458,14 @@ class _VaccinesToolState extends ConsumerState<VaccinesTool> {
       ];
     }
 
-    final List<VaccineView> shown = <VaccineView>[
-      for (final VaccineView v in book.records)
-        if (_matchesFilter(v, _filter)) v,
-    ]..sort((VaccineView a, VaccineView b) => b.record.date.compareTo(a.record.date));
+    final List<VaccineView> shown =
+        <VaccineView>[
+          for (final VaccineView v in book.records)
+            if (_matchesFilter(v, _filter)) v,
+        ]..sort(
+          (VaccineView a, VaccineView b) =>
+              b.record.date.compareTo(a.record.date),
+        );
 
     return <Widget>[
       LumeToolSection(
@@ -512,10 +530,18 @@ class _VaccinesToolState extends ConsumerState<VaccinesTool> {
     ];
   }
 
-  Widget _row(BuildContext context, AppLocalizations l, LumeFormatting f, VaccineView v) {
+  Widget _row(
+    BuildContext context,
+    AppLocalizations l,
+    LumeFormatting f,
+    VaccineView v,
+  ) {
     final LumeColors lume = context.lume;
     final VaccineRecord r = v.record;
-    final (Color tone, Color ink, LumeBadge badge) = switch ((v.given, v.overdue)) {
+    final (Color tone, Color ink, LumeBadge badge) = switch ((
+      v.given,
+      v.overdue,
+    )) {
       (true, _) => (
         lume.tintAccent,
         lume.accent,
@@ -539,7 +565,10 @@ class _VaccinesToolState extends ConsumerState<VaccinesTool> {
       iconInk: ink,
       title: r.name,
       subtitle: r.forWhom,
-      meta: <String>[if (r.dose != null) r.dose!, if (r.provider != null) r.provider!],
+      meta: <String>[
+        if (r.dose != null) r.dose!,
+        if (r.provider != null) r.provider!,
+      ],
       badge: badge,
       value: f.dateMediumYear(r.date.toCalendarDateTime()),
       valueSub: !v.given && v.daysUntil != null && v.daysUntil! >= 0
@@ -578,9 +607,16 @@ class _VaccinesToolState extends ConsumerState<VaccinesTool> {
         LumeToolSection(
           child: LumeFactCard(
             facts: <LumeFact>[
-              LumeFact(label: l.vaccinesFieldFor, value: r.forWhom ?? l.actionNotSet),
-              LumeFact(label: l.vaccinesFieldGivenBy, value: r.provider ?? l.actionNotSet),
-              if (r.notes != null) LumeFact(label: l.recFieldNotes, value: r.notes!, block: true),
+              LumeFact(
+                label: l.vaccinesFieldFor,
+                value: r.forWhom ?? l.actionNotSet,
+              ),
+              LumeFact(
+                label: l.vaccinesFieldGivenBy,
+                value: r.provider ?? l.actionNotSet,
+              ),
+              if (r.notes != null)
+                LumeFact(label: l.recFieldNotes, value: r.notes!, block: true),
             ],
           ),
         ),
@@ -599,7 +635,11 @@ class _VaccinesToolState extends ConsumerState<VaccinesTool> {
 
   // ------------------------------------------------------------------ form
 
-  List<Widget> _form(BuildContext context, AppLocalizations l, LumeFormatting f) {
+  List<Widget> _form(
+    BuildContext context,
+    AppLocalizations l,
+    LumeFormatting f,
+  ) {
     final _VaccineDraft d = _draft!;
     return <Widget>[
       LumeToolSection(
@@ -632,11 +672,16 @@ class _VaccinesToolState extends ConsumerState<VaccinesTool> {
               key: LumeVaccinesTool.statusField,
               value: d.status.name,
               items: <LumeChoice>[
-                LumeChoice(value: VaccineStatus.given.name, label: l.commonDone),
+                LumeChoice(
+                  value: VaccineStatus.given.name,
+                  label: l.commonDone,
+                ),
                 LumeChoice(value: VaccineStatus.due.name, label: l.commonDue),
               ],
               onChanged: (String v) => setState(
-                () => d.status = VaccineStatus.values.firstWhere((VaccineStatus s) => s.name == v),
+                () => d.status = VaccineStatus.values.firstWhere(
+                  (VaccineStatus s) => s.name == v,
+                ),
               ),
             ),
             LumeFormPicker(
@@ -646,7 +691,9 @@ class _VaccinesToolState extends ConsumerState<VaccinesTool> {
                   ? l.actionNotSet
                   : f.dateMediumYear(d.date!.toCalendarDateTime()),
               onTap: () async {
-                final DateTime base = d.date?.toCalendarDateTime() ?? LumeClockScope.of(context).now();
+                final DateTime base =
+                    d.date?.toCalendarDateTime() ??
+                    LumeClockScope.of(context).now();
                 final DateTime? picked = await showDatePicker(
                   context: context,
                   initialDate: base,

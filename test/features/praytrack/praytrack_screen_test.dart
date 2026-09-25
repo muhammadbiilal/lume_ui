@@ -39,26 +39,29 @@ void main() {
   });
 
   group('first use', () {
-    testWidgets('nothing checked in: a real zero, and all five prayers listed', (
-      WidgetTester t,
-    ) async {
-      final PrayTrackWorld w = PrayTrackWorld();
-      await pumpPrayTrack(t, w);
-      final LumeSummaryCard s = summary(t);
-      expect(s.value, '0');
-      expect(s.valueSmall, '/ 5');
-      expect(find.text('Fajr'), findsWidgets);
-      expect(find.text('Dhuhr'), findsWidgets);
-      expect(find.text('Asr'), findsWidgets);
-      expect(find.text('Maghrib'), findsWidgets);
-      expect(find.text('Isha'), findsWidgets);
-      expect(w.repo.view().checkins, isEmpty);
-      w.dispose();
-    });
+    testWidgets(
+      'nothing checked in: a real zero, and all five prayers listed',
+      (WidgetTester t) async {
+        final PrayTrackWorld w = PrayTrackWorld();
+        await pumpPrayTrack(t, w);
+        final LumeSummaryCard s = summary(t);
+        expect(s.value, '0');
+        expect(s.valueSmall, '/ 5');
+        expect(find.text('Fajr'), findsWidgets);
+        expect(find.text('Dhuhr'), findsWidgets);
+        expect(find.text('Asr'), findsWidgets);
+        expect(find.text('Maghrib'), findsWidgets);
+        expect(find.text('Isha'), findsWidgets);
+        expect(w.repo.view().checkins, isEmpty);
+        w.dispose();
+      },
+    );
   });
 
   group('marking a prayer — instant, no confirmation', () {
-    testWidgets('toggling a row logs it and the summary updates', (WidgetTester t) async {
+    testWidgets('toggling a row logs it and the summary updates', (
+      WidgetTester t,
+    ) async {
       final PrayTrackWorld w = PrayTrackWorld();
       await pumpPrayTrack(t, w);
       expect(summary(t).value, '0');
@@ -84,37 +87,39 @@ void main() {
       w.dispose();
     });
 
-    testWidgets('marking all five today completes the day and starts a streak', (
-      WidgetTester t,
-    ) async {
-      final PrayTrackWorld w = PrayTrackWorld();
-      await pumpPrayTrack(t, w);
-      for (final PrayerKey k in PrayerKey.values) {
-        await tapShown(
-          t,
-          find.bySemanticsLabel('Prayed, ${_name(k)}'),
-        );
-      }
-      expect(summary(t).value, '5');
-      expect(w.repo.view().checkins, hasLength(5));
-      w.dispose();
-    });
+    testWidgets(
+      'marking all five today completes the day and starts a streak',
+      (WidgetTester t) async {
+        final PrayTrackWorld w = PrayTrackWorld();
+        await pumpPrayTrack(t, w);
+        for (final PrayerKey k in PrayerKey.values) {
+          await tapShown(t, find.bySemanticsLabel('Prayed, ${_name(k)}'));
+        }
+        expect(summary(t).value, '5');
+        expect(w.repo.view().checkins, hasLength(5));
+        w.dispose();
+      },
+    );
   });
 
-  group('the reference composition — real figures, computed from check-ins on record', () {
-    testWidgets('a real streak over several complete days, never the reference\'s bare 12', (
-      WidgetTester t,
-    ) async {
-      final PrayTrackWorld w = PrayTrackWorld();
-      w.completeDay(kToday.addDays(-2));
-      w.completeDay(kToday.addDays(-1));
-      w.completeDay(kToday);
-      await pumpPrayTrack(t, w);
-      expect(summary(t).value, '5');
-      expect(summary(t).stats.first.value, '3'); // the streak stat
-      w.dispose();
-    });
-  });
+  group(
+    'the reference composition — real figures, computed from check-ins on record',
+    () {
+      testWidgets(
+        'a real streak over several complete days, never the reference\'s bare 12',
+        (WidgetTester t) async {
+          final PrayTrackWorld w = PrayTrackWorld();
+          w.completeDay(kToday.addDays(-2));
+          w.completeDay(kToday.addDays(-1));
+          w.completeDay(kToday);
+          await pumpPrayTrack(t, w);
+          expect(summary(t).value, '5');
+          expect(summary(t).stats.first.value, '3'); // the streak stat
+          w.dispose();
+        },
+      );
+    },
+  );
 
   group('a non-Muslim reader', () {
     testWidgets('never sees the tracker at all — the frame itself blocks a '
@@ -130,20 +135,25 @@ void main() {
   });
 
   group('a city Lume has no prayer-time coordinates for', () {
-    testWidgets('still marks prayers — only the real computed time is left off', (
-      WidgetTester t,
-    ) async {
-      final PrayTrackWorld w = PrayTrackWorld();
-      await pumpPrayTrack(
-        t,
-        w,
-        user: const LumeUserContext(country: 'PK', city: 'Chitral', islamic: true),
-      );
-      expect(find.byKey(LumePrayTrackTool.markKey), findsOneWidget);
-      await tapShown(t, find.bySemanticsLabel('Prayed, Fajr'));
-      expect(w.repo.view().checkins, hasLength(1));
-      w.dispose();
-    });
+    testWidgets(
+      'still marks prayers — only the real computed time is left off',
+      (WidgetTester t) async {
+        final PrayTrackWorld w = PrayTrackWorld();
+        await pumpPrayTrack(
+          t,
+          w,
+          user: const LumeUserContext(
+            country: 'PK',
+            city: 'Chitral',
+            islamic: true,
+          ),
+        );
+        expect(find.byKey(LumePrayTrackTool.markKey), findsOneWidget);
+        await tapShown(t, find.bySemanticsLabel('Prayed, Fajr'));
+        expect(w.repo.view().checkins, hasLength(1));
+        w.dispose();
+      },
+    );
   });
 
   group('language', () {
@@ -174,7 +184,9 @@ void main() {
       const Locale('ur'),
       const Locale('ar'),
     ]) {
-      testWidgets('(${locale.languageCode}) nothing overflows', (WidgetTester t) async {
+      testWidgets('(${locale.languageCode}) nothing overflows', (
+        WidgetTester t,
+      ) async {
         final PrayTrackWorld w = PrayTrackWorld();
         w.completeDay(kToday.addDays(-1));
         await pumpPrayTrack(

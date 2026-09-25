@@ -27,7 +27,10 @@ void main() {
       expect(uri.toString(), contains('mosques+near+New+York'));
       // Round-trips back to the exact text handed in — nothing lost or
       // mangled by the encoding.
-      expect(uri.queryParameters['query'], 'mosques near New York, United States');
+      expect(
+        uri.queryParameters['query'],
+        'mosques near New York, United States',
+      );
     });
 
     test('passes the same outbound allowlist every other checked address '

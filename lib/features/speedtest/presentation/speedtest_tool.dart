@@ -64,13 +64,11 @@ class LumeSpeedtestTool extends ConsumerStatefulWidget {
   static final Uri realTest = Uri.parse('https://fast.com');
 
   @override
-  ConsumerState<LumeSpeedtestTool> createState() =>
-      _LumeSpeedtestToolState();
+  ConsumerState<LumeSpeedtestTool> createState() => _LumeSpeedtestToolState();
 }
 
 class _LumeSpeedtestToolState extends ConsumerState<LumeSpeedtestTool> {
-  final GlobalKey<LumeToolScreenState> _host =
-      GlobalKey<LumeToolScreenState>();
+  final GlobalKey<LumeToolScreenState> _host = GlobalKey<LumeToolScreenState>();
   bool _busy = false;
 
   Future<void> _openRealTest() async {

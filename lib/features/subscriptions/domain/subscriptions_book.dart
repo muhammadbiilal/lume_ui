@@ -101,7 +101,11 @@ class SubscriptionsBook {
           );
         }(),
     ];
-    return SubscriptionsBook._(subscriptions: views, defects: defects, today: today);
+    return SubscriptionsBook._(
+      subscriptions: views,
+      defects: defects,
+      today: today,
+    );
   }
 
   final List<SubscriptionView> subscriptions;
@@ -121,9 +125,10 @@ class SubscriptionsBook {
     for (final SubscriptionView v in subscriptions) v.currency,
   }.toList()..sort();
 
-  List<SubscriptionsCurrencySummary> get summaries => <SubscriptionsCurrencySummary>[
-    for (final LumeCurrency c in currencies) summary(c),
-  ];
+  List<SubscriptionsCurrencySummary> get summaries =>
+      <SubscriptionsCurrencySummary>[
+        for (final LumeCurrency c in currencies) summary(c),
+      ];
 
   SubscriptionsCurrencySummary summary(LumeCurrency c) {
     final List<SubscriptionView> mine = <SubscriptionView>[
@@ -165,24 +170,37 @@ class SubscriptionsBook {
   /// timeline (`subs.tool.js:57-59`), over real records.
   List<SubscriptionView>? upcoming({int count = 4}) {
     if (today == null) return null;
-    final List<SubscriptionView> active = <SubscriptionView>[
-      for (final SubscriptionView v in subscriptions)
-        if (v.active) v,
-    ]..sort((SubscriptionView a, SubscriptionView b) => a.daysUntil!.compareTo(b.daysUntil!));
+    final List<SubscriptionView> active =
+        <SubscriptionView>[
+          for (final SubscriptionView v in subscriptions)
+            if (v.active) v,
+        ]..sort(
+          (SubscriptionView a, SubscriptionView b) =>
+              a.daysUntil!.compareTo(b.daysUntil!),
+        );
     return active.take(count).toList();
   }
 
-  static LumeDate _nextRenewal(Subscription s, LumeDate today) => switch (s.cycle) {
-    SubscriptionCycle.monthly => _nextByMonthStep(s.startedOn, today, 1),
-    SubscriptionCycle.yearly => _nextByMonthStep(s.startedOn, today, 12),
-    SubscriptionCycle.custom => _nextByDays(s.startedOn, today, s.customDays!),
-  };
+  static LumeDate _nextRenewal(Subscription s, LumeDate today) =>
+      switch (s.cycle) {
+        SubscriptionCycle.monthly => _nextByMonthStep(s.startedOn, today, 1),
+        SubscriptionCycle.yearly => _nextByMonthStep(s.startedOn, today, 12),
+        SubscriptionCycle.custom => _nextByDays(
+          s.startedOn,
+          today,
+          s.customDays!,
+        ),
+      };
 
   /// The smallest occurrence of a [stepMonths]-month cycle anchored on
   /// [anchor] that falls on or after [today]. Checked by ascending
   /// candidate rather than solved algebraically, since a calendar month's
   /// length varies and the anchor's day may clamp (`lumeMonthlyDue`).
-  static LumeDate _nextByMonthStep(LumeDate anchor, LumeDate today, int stepMonths) {
+  static LumeDate _nextByMonthStep(
+    LumeDate anchor,
+    LumeDate today,
+    int stepMonths,
+  ) {
     if (!anchor.isBefore(today)) return anchor;
     final int monthsBetween =
         (today.year - anchor.year) * 12 + (today.month - anchor.month);

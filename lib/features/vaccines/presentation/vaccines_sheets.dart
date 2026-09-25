@@ -15,8 +15,10 @@ abstract final class VaccinesSheetKeys {
   static const Key cancel = ValueKey<String>('vaccines.sheet.cancel');
 }
 
-TextStyle _body(BuildContext context) =>
-    LumeType.natural(context, context.lumeType.body).copyWith(color: context.lume.text2);
+TextStyle _body(BuildContext context) => LumeType.natural(
+  context,
+  context.lumeType.body,
+).copyWith(color: context.lume.text2);
 
 /// Leaving a form with unsaved changes — recoverable (nothing has been
 /// written yet), unlike deleting a saved record.

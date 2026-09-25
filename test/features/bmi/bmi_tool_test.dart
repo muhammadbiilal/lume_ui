@@ -28,10 +28,19 @@ void main() {
       expect(bmiTyped(tester, LumeBmiTool.weightKey), '75');
       // The suffixes are the plain international symbols, not a translated
       // word — `cm` and `kg`.
-      expect(textsIn(tester, find.byKey(LumeBmiTool.heightKey)), contains('cm'));
-      expect(textsIn(tester, find.byKey(LumeBmiTool.weightKey)), contains('kg'));
+      expect(
+        textsIn(tester, find.byKey(LumeBmiTool.heightKey)),
+        contains('cm'),
+      );
+      expect(
+        textsIn(tester, find.byKey(LumeBmiTool.weightKey)),
+        contains('kg'),
+      );
       // 75 / 1.75² rounds to 24.5, and the reading is healthy.
-      expect(textsIn(tester, find.byKey(LumeBmiTool.summaryKey)), contains('24.5'));
+      expect(
+        textsIn(tester, find.byKey(LumeBmiTool.summaryKey)),
+        contains('24.5'),
+      );
       expect(
         textsIn(tester, find.byKey(LumeBmiTool.summaryKey)),
         contains('Healthy weight'),
@@ -45,10 +54,19 @@ void main() {
 
       expect(bmiTyped(tester, LumeBmiTool.heightKey), '69');
       expect(bmiTyped(tester, LumeBmiTool.weightKey), '165');
-      expect(textsIn(tester, find.byKey(LumeBmiTool.heightKey)), contains('in'));
-      expect(textsIn(tester, find.byKey(LumeBmiTool.weightKey)), contains('lb'));
+      expect(
+        textsIn(tester, find.byKey(LumeBmiTool.heightKey)),
+        contains('in'),
+      );
+      expect(
+        textsIn(tester, find.byKey(LumeBmiTool.weightKey)),
+        contains('lb'),
+      );
       // 165 lb and 69 in round to 24.4, still healthy.
-      expect(textsIn(tester, find.byKey(LumeBmiTool.summaryKey)), contains('24.4'));
+      expect(
+        textsIn(tester, find.byKey(LumeBmiTool.summaryKey)),
+        contains('24.4'),
+      );
     });
 
     testWidgets('the scale names all four bands, and marks the reader\'s own', (
@@ -59,12 +77,15 @@ void main() {
         tester,
         find.byKey(LumeBmiTool.scaleKey),
       );
-      expect(scale, containsAll(<String>[
-        'Underweight',
-        'Healthy weight',
-        'Overweight',
-        'Obese',
-      ]));
+      expect(
+        scale,
+        containsAll(<String>[
+          'Underweight',
+          'Healthy weight',
+          'Overweight',
+          'Obese',
+        ]),
+      );
       // The default reading is healthy, and only that row is marked current.
       expect(
         textsIn(
@@ -74,10 +95,7 @@ void main() {
         contains('Current'),
       );
       expect(
-        textsIn(
-          tester,
-          find.byKey(LumeBmiTool.scaleRowKey(LumeBmiBand.obese)),
-        ),
+        textsIn(tester, find.byKey(LumeBmiTool.scaleRowKey(LumeBmiBand.obese))),
         isNot(contains('Current')),
       );
     });
@@ -86,10 +104,7 @@ void main() {
       WidgetTester tester,
     ) async {
       await pumpBmi(tester);
-      final List<String> screen = textsIn(
-        tester,
-        find.byType(LumeBmiTool),
-      );
+      final List<String> screen = textsIn(tester, find.byType(LumeBmiTool));
       expect(screen, isNot(contains('History')));
       // The reference's own offsets from a BMI of 24.5.
       for (final String fabricated in <String>[
@@ -112,16 +127,16 @@ void main() {
       await tester.pumpAndSettle();
 
       // 100 / 1.75² = 32.65..., which rounds to 32.7 and is obese.
-      expect(textsIn(tester, find.byKey(LumeBmiTool.summaryKey)), contains('32.7'));
+      expect(
+        textsIn(tester, find.byKey(LumeBmiTool.summaryKey)),
+        contains('32.7'),
+      );
       expect(
         textsIn(tester, find.byKey(LumeBmiTool.summaryKey)),
         contains('Obese'),
       );
       expect(
-        textsIn(
-          tester,
-          find.byKey(LumeBmiTool.scaleRowKey(LumeBmiBand.obese)),
-        ),
+        textsIn(tester, find.byKey(LumeBmiTool.scaleRowKey(LumeBmiBand.obese))),
         contains('Current'),
       );
     });
@@ -133,7 +148,10 @@ void main() {
       await tester.enterText(bmiInput(LumeBmiTool.heightKey), '');
       await tester.pumpAndSettle();
 
-      expect(textsIn(tester, find.byKey(LumeBmiTool.summaryKey)), contains('0.0'));
+      expect(
+        textsIn(tester, find.byKey(LumeBmiTool.summaryKey)),
+        contains('0.0'),
+      );
       expect(tester.takeException(), isNull);
     });
 
@@ -165,9 +183,7 @@ void main() {
       await pumpBmi(tester, locale: const Locale('ar'), country: 'SA');
       expect(tester.takeException(), isNull);
       expect(
-        Directionality.of(
-          tester.element(find.byKey(LumeBmiTool.summaryKey)),
-        ),
+        Directionality.of(tester.element(find.byKey(LumeBmiTool.summaryKey))),
         TextDirection.rtl,
       );
     });

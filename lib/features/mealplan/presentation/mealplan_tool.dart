@@ -58,7 +58,8 @@ abstract final class LumeMealPlanTool {
   static const Key shoppingKey = ValueKey<String>('mealplan.shopping');
   static const Key recipesKey = ValueKey<String>('mealplan.recipes');
 
-  static Key dayKey(LumeDate d) => ValueKey<String>('mealplan.day.${d.toIso()}');
+  static Key dayKey(LumeDate d) =>
+      ValueKey<String>('mealplan.day.${d.toIso()}');
   static Key slotKey(LumeDate d, MealSlot s) =>
       ValueKey<String>('mealplan.slot.${d.toIso()}.${s.name}');
 
@@ -125,16 +126,24 @@ class _MealPlanToolState extends ConsumerState<MealPlanTool> {
 
   void _failed(AppLocalizations l, MealPlanFailure f) {
     _say(switch (f.kind) {
-      MealPlanFailureKind.conflict || MealPlanFailureKind.notFound => l.mealErrConflict,
+      MealPlanFailureKind.conflict ||
+      MealPlanFailureKind.notFound => l.mealErrConflict,
       _ => l.mealErrFailed,
     }, tone: LumeToastTone.error);
   }
 
-  Future<void> _editSlot(AppLocalizations l, LumeDate date, MealSlot slot, String current) async {
+  Future<void> _editSlot(
+    AppLocalizations l,
+    LumeDate date,
+    MealSlot slot,
+    String current,
+  ) async {
     final String? result = await mealPlanEditSlot(
       context,
       title: MealPlanText.slot(l, slot),
-      subtitle: LumeFormatting.of(context).dateMediumYear(date.toCalendarDateTime()),
+      subtitle: LumeFormatting.of(
+        context,
+      ).dateMediumYear(date.toCalendarDateTime()),
       initial: current,
     );
     if (result == null || !mounted) return;
@@ -161,7 +170,10 @@ class _MealPlanToolState extends ConsumerState<MealPlanTool> {
   @override
   Widget build(BuildContext context) {
     final AppLocalizations l = AppLocalizations.of(context);
-    final LumeFormatting f = LumeFormatting.of(context, countryCode: widget.request.user.country);
+    final LumeFormatting f = LumeFormatting.of(
+      context,
+      countryCode: widget.request.user.country,
+    );
     final LumeDate? today = _today(context);
     final MealPlanSnapshot snapshot = _repo.view();
 

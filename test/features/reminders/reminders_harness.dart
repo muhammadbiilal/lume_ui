@@ -42,7 +42,12 @@ class ReminderHarness {
         ),
       ),
       scheduler = LumeFakeReminderScheduler() {
-    repo = ReminderRepository(store, scheduler, random: null, now: () => kFixtureNow);
+    repo = ReminderRepository(
+      store,
+      scheduler,
+      random: null,
+      now: () => kFixtureNow,
+    );
     repo.open();
   }
 

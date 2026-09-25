@@ -10,13 +10,10 @@ import 'package:lume/features/bills/data/bills_fixtures.dart';
 void main() {
   group('the fixture list — ported verbatim from D.BILLS', () {
     test('is the reference\'s five bills, in its own order', () {
-      expect(LumeBillsFixtures.list.map((LumeBill b) => b.name).toList(), <String>[
-        'Electricity',
-        'Gas',
-        'Internet',
-        'Water',
-        'Mobile',
-      ]);
+      expect(
+        LumeBillsFixtures.list.map((LumeBill b) => b.name).toList(),
+        <String>['Electricity', 'Gas', 'Internet', 'Water', 'Mobile'],
+      );
     });
 
     test('carries the reference\'s provider, amount, days, state and ref', () {
@@ -46,27 +43,30 @@ void main() {
       }
     });
 
-    test('maps each category to its own icon, and an unknown one to receipt', () {
-      const Map<String, String> want = <String, String>{
-        'Electricity': LumeIcons.bolt,
-        'Gas': LumeIcons.flame,
-        'Internet': LumeIcons.wifi,
-        'Water': LumeIcons.droplet,
-        'Mobile': LumeIcons.signal,
-      };
-      for (final LumeBill b in LumeBillsFixtures.list) {
-        expect(b.icon, want[b.name]);
-      }
-      const LumeBill other = LumeBill(
-        name: 'Council tax',
-        provider: 'Anytown',
-        amountUsd: 10,
-        days: 1,
-        state: LumeBillState.due,
-        ref: '••••0000',
-      );
-      expect(other.icon, LumeIcons.receipt);
-    });
+    test(
+      'maps each category to its own icon, and an unknown one to receipt',
+      () {
+        const Map<String, String> want = <String, String>{
+          'Electricity': LumeIcons.bolt,
+          'Gas': LumeIcons.flame,
+          'Internet': LumeIcons.wifi,
+          'Water': LumeIcons.droplet,
+          'Mobile': LumeIcons.signal,
+        };
+        for (final LumeBill b in LumeBillsFixtures.list) {
+          expect(b.icon, want[b.name]);
+        }
+        const LumeBill other = LumeBill(
+          name: 'Council tax',
+          provider: 'Anytown',
+          amountUsd: 10,
+          days: 1,
+          state: LumeBillState.due,
+          ref: '••••0000',
+        );
+        expect(other.icon, LumeIcons.receipt);
+      },
+    );
 
     test('the trend is six months, the last exactly this month\'s total', () {
       expect(LumeBillsFixtures.trend, <double>[128, 142, 118, 156, 134, 144]);
@@ -82,9 +82,16 @@ void main() {
     const LumeBillsBoard board = LumeBillsBoard(currency: 'USD');
 
     test('sorts each bill into exactly one state bucket', () {
-      expect(board.overdueBills.map((LumeBill b) => b.name), <String>['Internet']);
-      expect(board.dueBills.map((LumeBill b) => b.name), <String>['Electricity']);
-      expect(board.upcomingBills.map((LumeBill b) => b.name), <String>['Gas', 'Water']);
+      expect(board.overdueBills.map((LumeBill b) => b.name), <String>[
+        'Internet',
+      ]);
+      expect(board.dueBills.map((LumeBill b) => b.name), <String>[
+        'Electricity',
+      ]);
+      expect(board.upcomingBills.map((LumeBill b) => b.name), <String>[
+        'Gas',
+        'Water',
+      ]);
       expect(board.paidBills.map((LumeBill b) => b.name), <String>['Mobile']);
     });
 
@@ -108,12 +115,15 @@ void main() {
       expect(board.paidRatio, 1 / 5);
     });
 
-    test('money(usd) is the reference\'s dollar-to-local conversion, tidied', () {
-      expect(board.money(74), lumeFromUsd(74, 'USD'));
-      const LumeBillsBoard pk = LumeBillsBoard(currency: 'PKR');
-      expect(pk.money(74), lumeFromUsd(74, 'PKR'));
-      expect(pk.money(74), isNot(board.money(74)));
-    });
+    test(
+      'money(usd) is the reference\'s dollar-to-local conversion, tidied',
+      () {
+        expect(board.money(74), lumeFromUsd(74, 'USD'));
+        const LumeBillsBoard pk = LumeBillsBoard(currency: 'PKR');
+        expect(pk.money(74), lumeFromUsd(74, 'PKR'));
+        expect(pk.money(74), isNot(board.money(74)));
+      },
+    );
 
     group('shown(filter) — the reference\'s quirk, kept', () {
       test('all shows every bill', () {
@@ -134,21 +144,28 @@ void main() {
         );
       });
 
-      test('due also shows upcoming — three bills, though dueCount says one', () {
-        expect(
-          board.shown(LumeBillsFilter.due).map((LumeBill b) => b.name),
-          <String>['Electricity', 'Gas', 'Water'],
-        );
-        expect(board.dueCount, isNot(board.shown(LumeBillsFilter.due).length));
-      });
+      test(
+        'due also shows upcoming — three bills, though dueCount says one',
+        () {
+          expect(
+            board.shown(LumeBillsFilter.due).map((LumeBill b) => b.name),
+            <String>['Electricity', 'Gas', 'Water'],
+          );
+          expect(
+            board.dueCount,
+            isNot(board.shown(LumeBillsFilter.due).length),
+          );
+        },
+      );
     });
 
     test('history is every paid bill, then up to two more still open, in '
         'list order', () {
-      expect(
-        board.history.map((LumeBill b) => b.name),
-        <String>['Mobile', 'Electricity', 'Gas'],
-      );
+      expect(board.history.map((LumeBill b) => b.name), <String>[
+        'Mobile',
+        'Electricity',
+        'Gas',
+      ]);
     });
 
     test('trendAverageUsd is the trend\'s own mean', () {

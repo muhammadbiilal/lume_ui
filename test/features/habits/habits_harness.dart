@@ -21,7 +21,10 @@ final LumeDate kToday = d(9, 7);
 
 class HabitsHarness {
   HabitsHarness({int seed = 1, Duration? readDelay}) {
-    store = LumeMemoryRecordRepository(hydrateDelay: readDelay, now: () => clock);
+    store = LumeMemoryRecordRepository(
+      hydrateDelay: readDelay,
+      now: () => clock,
+    );
     repo = HabitsRepository(store, random: Random(seed), now: () => clock);
     if (readDelay == null) repo.open();
   }
@@ -30,7 +33,8 @@ class HabitsHarness {
   late final HabitsRepository repo;
   DateTime clock = DateTime.utc(2026, 9, 7, 10);
 
-  void tick([Duration by = const Duration(minutes: 1)]) => clock = clock.add(by);
+  void tick([Duration by = const Duration(minutes: 1)]) =>
+      clock = clock.add(by);
 
   HabitsBook book([LumeDate? today]) => repo.view().book(today ?? kToday);
 
@@ -52,7 +56,11 @@ class HabitsHarness {
     HabitFrequency frequency = HabitFrequency.daily,
     String? notes,
   }) {
-    final HabitsResult<HabitsWrite> r = tryAdd(name: name, frequency: frequency, notes: notes);
+    final HabitsResult<HabitsWrite> r = tryAdd(
+      name: name,
+      frequency: frequency,
+      notes: notes,
+    );
     expect(r.failure, isNull, reason: 'add $name');
     return r.value!.habit!;
   }

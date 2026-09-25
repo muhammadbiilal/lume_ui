@@ -64,11 +64,8 @@ class LumeParcelTool extends ConsumerStatefulWidget {
   /// `D.PARCELS.filter(x => x.ref === sel)[0] || D.PARCELS[0]` — the chosen
   /// parcel, falling back to the first when nothing (or a since-removed ref)
   /// is on record.
-  static LumeParcel selected(List<LumeParcel> parcels, String? ref) =>
-      parcels.firstWhere(
-        (LumeParcel p) => p.ref == ref,
-        orElse: () => parcels.first,
-      );
+  static LumeParcel selected(List<LumeParcel> parcels, String? ref) => parcels
+      .firstWhere((LumeParcel p) => p.ref == ref, orElse: () => parcels.first);
 
   @override
   ConsumerState<LumeParcelTool> createState() => _LumeParcelToolState();

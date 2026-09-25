@@ -25,7 +25,9 @@ void main() {
   setUpAll(loadLumeFonts);
 
   group('first use', () {
-    testWidgets('nothing checked in, the summary shows a real zero', (WidgetTester t) async {
+    testWidgets('nothing checked in, the summary shows a real zero', (
+      WidgetTester t,
+    ) async {
       final StreakWorld w = StreakWorld();
       await pumpStreak(t, w);
       final LumeSummaryCard s = summary(t);
@@ -37,7 +39,9 @@ void main() {
   });
 
   group('checking in today', () {
-    testWidgets('toggling the row logs today and the summary updates', (WidgetTester t) async {
+    testWidgets('toggling the row logs today and the summary updates', (
+      WidgetTester t,
+    ) async {
       final StreakWorld w = StreakWorld();
       await pumpStreak(t, w);
       expect(summary(t).value, '0');
@@ -65,7 +69,9 @@ void main() {
       w.dispose();
     });
 
-    testWidgets('toggling it off again removes today, with Undo', (WidgetTester t) async {
+    testWidgets('toggling it off again removes today, with Undo', (
+      WidgetTester t,
+    ) async {
       final StreakWorld w = StreakWorld();
       w.checkIn(kToday);
       await pumpStreak(t, w);
@@ -83,7 +89,9 @@ void main() {
   });
 
   group('milestones', () {
-    testWidgets('a 7-day streak marks the first milestone done', (WidgetTester t) async {
+    testWidgets('a 7-day streak marks the first milestone done', (
+      WidgetTester t,
+    ) async {
       final StreakWorld w = StreakWorld();
       for (int i = 0; i < 7; i++) {
         w.checkIn(kToday.addDays(-i));

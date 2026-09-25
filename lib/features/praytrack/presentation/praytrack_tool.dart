@@ -76,7 +76,8 @@ abstract final class LumePrayTrackTool {
 
   static Key row(PrayerKey k) => ValueKey<String>('praytrack.row.${k.name}');
 
-  static Widget open(LumeToolRequest request) => PrayTrackTool(request: request);
+  static Widget open(LumeToolRequest request) =>
+      PrayTrackTool(request: request);
 
   /// The reader's five daily prayer times for [now], in [zone] — or `null`
   /// where the city has no coordinates or the zone is not known, which
@@ -130,10 +131,8 @@ class _PrayTrackToolState extends ConsumerState<PrayTrackTool> {
     super.dispose();
   }
 
-  void _say(
-    String message, {
-    LumeToastTone tone = LumeToastTone.success,
-  }) => _host.currentState?.say(message, tone: tone);
+  void _say(String message, {LumeToastTone tone = LumeToastTone.success}) =>
+      _host.currentState?.say(message, tone: tone);
 
   void _failed(AppLocalizations l, PrayTrackFailure f) {
     _say(switch (f.kind) {
@@ -151,7 +150,10 @@ class _PrayTrackToolState extends ConsumerState<PrayTrackTool> {
   @override
   Widget build(BuildContext context) {
     final AppLocalizations l = AppLocalizations.of(context);
-    final LumeFormatting f = LumeFormatting.of(context, countryCode: widget.request.user.country);
+    final LumeFormatting f = LumeFormatting.of(
+      context,
+      countryCode: widget.request.user.country,
+    );
     final DateTime now = LumeClockScope.of(context).now();
 
     // `L.timezone()` — the reader's zone as Account › Time resolves it, the
@@ -166,8 +168,12 @@ class _PrayTrackToolState extends ConsumerState<PrayTrackTool> {
           country: widget.request.user.country,
           city: widget.request.user.city,
         );
-    final LumeZoneClock clock = ref.watch(timeZoneServiceProvider).clock(now, resolution);
-    final LumeDate? today = clock.ok ? LumeDate.ofWallClock(clock.local!) : null;
+    final LumeZoneClock clock = ref
+        .watch(timeZoneServiceProvider)
+        .clock(now, resolution);
+    final LumeDate? today = clock.ok
+        ? LumeDate.ofWallClock(clock.local!)
+        : null;
 
     final PrayTrackSnapshot snapshot = _repo.view();
 
@@ -208,11 +214,18 @@ class _PrayTrackToolState extends ConsumerState<PrayTrackTool> {
 
   /// Prayer and its current streak, real for every row — never the
   /// reference's unconditional literals.
-  LumeExportFile _export(AppLocalizations l, PrayTrackStats stats, LumeDate today) {
+  LumeExportFile _export(
+    AppLocalizations l,
+    PrayTrackStats stats,
+    LumeDate today,
+  ) {
     final List<List<Object?>> rows = <List<Object?>>[
       <Object?>[l.praytrackMarkTitle, l.commonToday],
       for (final PrayerKey k in PrayerKey.values)
-        <Object?>[PrayTrackText.name(l, k), stats.isDoneToday(k) ? l.commonDone : l.praytrackPending],
+        <Object?>[
+          PrayTrackText.name(l, k),
+          stats.isDoneToday(k) ? l.commonDone : l.praytrackPending,
+        ],
     ];
     return LumeExportFile.csv(
       tool: LumePrayTrackTool.id,
@@ -221,11 +234,18 @@ class _PrayTrackToolState extends ConsumerState<PrayTrackTool> {
     );
   }
 
-  String? _timeFor(LumeFormatting f, List<LumeSolarTime>? times, LumeDate today, PrayerKey k) {
+  String? _timeFor(
+    LumeFormatting f,
+    List<LumeSolarTime>? times,
+    LumeDate today,
+    PrayerKey k,
+  ) {
     if (times == null) return null;
     for (final LumeSolarTime t in times) {
       if (t.key == k.name) {
-        return f.time(DateTime(today.year, today.month, today.day, t.hour, t.minute));
+        return f.time(
+          DateTime(today.year, today.month, today.day, t.hour, t.minute),
+        );
       }
     }
     return null;
@@ -249,12 +269,18 @@ class _PrayTrackToolState extends ConsumerState<PrayTrackTool> {
           valueSmall: '/ ${f.integer(total)}',
           caption: l.praytrackStreakCaption(stats.currentStreak),
           stats: <LumeStat>[
-            LumeStat(value: f.integer(stats.currentStreak), label: l.praytrackStreakLabel),
+            LumeStat(
+              value: f.integer(stats.currentStreak),
+              label: l.praytrackStreakLabel,
+            ),
             LumeStat(
               value: f.percent(stats.monthRate * 100, decimals: 0),
               label: l.commonThisMonth,
             ),
-            LumeStat(value: f.integer(stats.qada), label: l.praytrackQadaStatLabel),
+            LumeStat(
+              value: f.integer(stats.qada),
+              label: l.praytrackQadaStatLabel,
+            ),
           ],
         ),
       ),
@@ -302,12 +328,20 @@ class _PrayTrackToolState extends ConsumerState<PrayTrackTool> {
           child: LumeBarChart(
             key: LumePrayTrackTool.byPrayerKey,
             label: l.praytrackByPrayerTitle,
-            values: <double>[for (final PrayerKey k in PrayerKey.values) (stats.byPrayer[k] ?? 0).toDouble()],
-            labels: <String>[for (final PrayerKey k in PrayerKey.values) PrayTrackText.name(l, k)],
+            values: <double>[
+              for (final PrayerKey k in PrayerKey.values)
+                (stats.byPrayer[k] ?? 0).toDouble(),
+            ],
+            labels: <String>[
+              for (final PrayerKey k in PrayerKey.values)
+                PrayTrackText.name(l, k),
+            ],
             max: stats.heat.length.toDouble(),
             caption: Text(
               l.praytrackByPrayerCaption,
-              style: context.lumeType.metaSmall.copyWith(color: context.lume.text3),
+              style: context.lumeType.metaSmall.copyWith(
+                color: context.lume.text3,
+              ),
             ),
           ),
         ),

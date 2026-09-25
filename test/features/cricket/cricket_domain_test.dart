@@ -62,7 +62,9 @@ void main() {
     test('lists three, in the reference order', () {
       expect(LumeCricket.fixtures, hasLength(3));
       expect(
-        LumeCricket.fixtures.map((LumeCricketFixture f) => '${f.team1} v ${f.team2}'),
+        LumeCricket.fixtures.map(
+          (LumeCricketFixture f) => '${f.team1} v ${f.team2}',
+        ),
         <String>['PAK v ENG', 'IND v AUS', 'SA v NZ'],
       );
     });

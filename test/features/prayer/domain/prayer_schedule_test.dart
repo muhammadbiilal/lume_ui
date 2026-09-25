@@ -59,15 +59,15 @@ void main() {
       'Islamabad, 7 September 2026, MWL — matches the fixture the reference '
       'measured and an independent re-implementation of the same algorithm',
       () {
-        final (LumePrayerDay? day, LumePrayerMissing? missing) =
-            LumePrayerDay.at(
-              now: DateTime.utc(2026, 9, 7, 10),
-              country: 'PK',
-              city: 'Islamabad',
-              zone: const LumeZoneResolution.fixed(
-                _FixedZone(Duration(hours: 5)),
-              ),
-            );
+        final (
+          LumePrayerDay? day,
+          LumePrayerMissing? missing,
+        ) = LumePrayerDay.at(
+          now: DateTime.utc(2026, 9, 7, 10),
+          country: 'PK',
+          city: 'Islamabad',
+          zone: const LumeZoneResolution.fixed(_FixedZone(Duration(hours: 5))),
+        );
         expect(missing, isNull);
         expect(day, isNotNull);
         final Map<String, DateTime> byKey = <String, DateTime>{
@@ -83,69 +83,60 @@ void main() {
       },
     );
 
-    test(
-      'London, 7 September 2026, BST (+1), MWL — same fixture, a different '
-      'hemisphere and a different offset',
-      () {
-        final (LumePrayerDay? day, LumePrayerMissing? missing) =
-            LumePrayerDay.at(
-              now: DateTime.utc(2026, 9, 7, 10),
-              country: 'GB',
-              city: 'London',
-              zone: const LumeZoneResolution.fixed(
-                _FixedZone(Duration(hours: 1)),
-              ),
-            );
-        expect(missing, isNull);
-        final Map<String, DateTime> byKey = <String, DateTime>{
-          for (final LumePrayerSlot s in day!.slots) s.key: s.at,
-        };
-        expect(byKey['fajr'], DateTime(2026, 9, 7, 4, 21));
-        expect(byKey['dhuhr'], DateTime(2026, 9, 7, 13, 0));
-        expect(byKey['asr'], DateTime(2026, 9, 7, 16, 36));
-        expect(byKey['maghrib'], DateTime(2026, 9, 7, 19, 35));
-        expect(byKey['isha'], DateTime(2026, 9, 7, 21, 28));
-      },
-    );
-
-    test(
-      'New York, 7 September 2026, EDT (-4), MWL — Maghrib matches '
-      "today_fixtures.dart's own lumeSunsetMinute('US') (19:20) exactly",
-      () {
-        final (LumePrayerDay? day, LumePrayerMissing? missing) =
-            LumePrayerDay.at(
-              now: DateTime.utc(2026, 9, 7, 10),
-              country: 'US',
-              city: 'New York',
-              zone: const LumeZoneResolution.fixed(
-                _FixedZone(Duration(hours: -4)),
-              ),
-            );
-        expect(missing, isNull);
-        final Map<String, DateTime> byKey = <String, DateTime>{
-          for (final LumePrayerSlot s in day!.slots) s.key: s.at,
-        };
-        expect(byKey['fajr'], DateTime(2026, 9, 7, 4, 54));
-        expect(byKey['dhuhr'], DateTime(2026, 9, 7, 12, 55));
-        expect(byKey['asr'], DateTime(2026, 9, 7, 16, 31));
-        expect(byKey['maghrib'], DateTime(2026, 9, 7, 19, 20));
-        expect(byKey['isha'], DateTime(2026, 9, 7, 20, 49));
-      },
-    );
-
-    test('a city Lume has no coordinates for says so, rather than guessing', () {
-      final (LumePrayerDay? day, LumePrayerMissing? missing) =
-          LumePrayerDay.at(
-            now: DateTime.utc(2026, 9, 7, 10),
-            country: 'PK',
-            city: 'Chitral',
-            zone: const LumeZoneResolution.fixed(
-              _FixedZone(Duration(hours: 5)),
-            ),
-          );
-      expect(day, isNull);
-      expect(missing, LumePrayerMissing.city);
+    test('London, 7 September 2026, BST (+1), MWL — same fixture, a different '
+        'hemisphere and a different offset', () {
+      final (LumePrayerDay? day, LumePrayerMissing? missing) = LumePrayerDay.at(
+        now: DateTime.utc(2026, 9, 7, 10),
+        country: 'GB',
+        city: 'London',
+        zone: const LumeZoneResolution.fixed(_FixedZone(Duration(hours: 1))),
+      );
+      expect(missing, isNull);
+      final Map<String, DateTime> byKey = <String, DateTime>{
+        for (final LumePrayerSlot s in day!.slots) s.key: s.at,
+      };
+      expect(byKey['fajr'], DateTime(2026, 9, 7, 4, 21));
+      expect(byKey['dhuhr'], DateTime(2026, 9, 7, 13, 0));
+      expect(byKey['asr'], DateTime(2026, 9, 7, 16, 36));
+      expect(byKey['maghrib'], DateTime(2026, 9, 7, 19, 35));
+      expect(byKey['isha'], DateTime(2026, 9, 7, 21, 28));
     });
+
+    test('New York, 7 September 2026, EDT (-4), MWL — Maghrib matches '
+        "today_fixtures.dart's own lumeSunsetMinute('US') (19:20) exactly", () {
+      final (LumePrayerDay? day, LumePrayerMissing? missing) = LumePrayerDay.at(
+        now: DateTime.utc(2026, 9, 7, 10),
+        country: 'US',
+        city: 'New York',
+        zone: const LumeZoneResolution.fixed(_FixedZone(Duration(hours: -4))),
+      );
+      expect(missing, isNull);
+      final Map<String, DateTime> byKey = <String, DateTime>{
+        for (final LumePrayerSlot s in day!.slots) s.key: s.at,
+      };
+      expect(byKey['fajr'], DateTime(2026, 9, 7, 4, 54));
+      expect(byKey['dhuhr'], DateTime(2026, 9, 7, 12, 55));
+      expect(byKey['asr'], DateTime(2026, 9, 7, 16, 31));
+      expect(byKey['maghrib'], DateTime(2026, 9, 7, 19, 20));
+      expect(byKey['isha'], DateTime(2026, 9, 7, 20, 49));
+    });
+
+    test(
+      'a city Lume has no coordinates for says so, rather than guessing',
+      () {
+        final (
+          LumePrayerDay? day,
+          LumePrayerMissing? missing,
+        ) = LumePrayerDay.at(
+          now: DateTime.utc(2026, 9, 7, 10),
+          country: 'PK',
+          city: 'Chitral',
+          zone: const LumeZoneResolution.fixed(_FixedZone(Duration(hours: 5))),
+        );
+        expect(day, isNull);
+        expect(missing, LumePrayerMissing.city);
+      },
+    );
 
     test('a zone this build cannot resolve says so, rather than guessing', () {
       // `LumeTimeZoneService.detached()` has no database at all: every
@@ -156,13 +147,12 @@ void main() {
           .resolveId('Asia/Karachi');
       expect(unresolved.zone, isNull);
 
-      final (LumePrayerDay? day, LumePrayerMissing? missing) =
-          LumePrayerDay.at(
-            now: DateTime.utc(2026, 9, 7, 10),
-            country: 'PK',
-            city: 'Islamabad',
-            zone: unresolved,
-          );
+      final (LumePrayerDay? day, LumePrayerMissing? missing) = LumePrayerDay.at(
+        now: DateTime.utc(2026, 9, 7, 10),
+        country: 'PK',
+        city: 'Islamabad',
+        zone: unresolved,
+      );
       expect(day, isNull);
       expect(missing, LumePrayerMissing.zone);
     });
@@ -221,9 +211,7 @@ void main() {
 
     test('progress is always within [0, 1]', () {
       for (int h = 0; h < 24; h++) {
-        final (_, _, double progress) = day.state(
-          DateTime(2026, 9, 7, h, 30),
-        );
+        final (_, _, double progress) = day.state(DateTime(2026, 9, 7, h, 30));
         expect(progress, inInclusiveRange(0.0, 1.0));
       }
     });

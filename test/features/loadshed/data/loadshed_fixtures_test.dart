@@ -6,29 +6,32 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:lume/features/loadshed/data/loadshed_fixtures.dart';
 
 void main() {
-  group('the fixed schedule — the reference\'s own figures, ported exactly', () {
-    test('five outage windows, the last one crossing midnight', () {
-      expect(kLoadshedSlots, hasLength(5));
-      expect(
-        kLoadshedSlots.map((LumeLoadshedSlot s) => (s.from, s.to)).toList(),
-        <(String, String)>[
-          ('06:00', '07:00'),
-          ('10:00', '11:00'),
-          ('14:00', '16:00'),
-          ('19:00', '20:00'),
-          ('23:00', '00:00'),
-        ],
-      );
-    });
+  group(
+    'the fixed schedule — the reference\'s own figures, ported exactly',
+    () {
+      test('five outage windows, the last one crossing midnight', () {
+        expect(kLoadshedSlots, hasLength(5));
+        expect(
+          kLoadshedSlots.map((LumeLoadshedSlot s) => (s.from, s.to)).toList(),
+          <(String, String)>[
+            ('06:00', '07:00'),
+            ('10:00', '11:00'),
+            ('14:00', '16:00'),
+            ('19:00', '20:00'),
+            ('23:00', '00:00'),
+          ],
+        );
+      });
 
-    test('reliability is the reference\'s hardcoded 78%', () {
-      expect(kLoadshedReliability, 78);
-    });
+      test('reliability is the reference\'s hardcoded 78%', () {
+        expect(kLoadshedReliability, 78);
+      });
 
-    test('the week is Monday first, matching (now.getDay() + 6) % 7', () {
-      expect(kLoadshedWeek, <int>[6, 5, 7, 6, 4, 5, 6]);
-    });
-  });
+      test('the week is Monday first, matching (now.getDay() + 6) % 7', () {
+        expect(kLoadshedWeek, <int>[6, 5, 7, 6, 4, 5, 6]);
+      });
+    },
+  );
 
   group('resolved against the clock', () {
     test('right after midnight, every slot is still ahead', () {

@@ -63,23 +63,29 @@ void main() {
     expect(await _decodedSize(out!), (827, 1063));
   });
 
-  test('a square source still lands on a non-square spec\'s own canvas', () async {
-    final Uint8List source = await _pngOf(1000, 1000);
-    final Uint8List? out = await LumePassportProcessor.cropToSpec(
-      source,
-      LumePassportSpec.intl,
-    );
-    expect(out, isNotNull);
-    expect(await _decodedSize(out!), (827, 1063));
-  });
+  test(
+    'a square source still lands on a non-square spec\'s own canvas',
+    () async {
+      final Uint8List source = await _pngOf(1000, 1000);
+      final Uint8List? out = await LumePassportProcessor.cropToSpec(
+        source,
+        LumePassportSpec.intl,
+      );
+      expect(out, isNotNull);
+      expect(await _decodedSize(out!), (827, 1063));
+    },
+  );
 
-  test('bytes that are not a decodable image answer null, not a throw', () async {
-    final Uint8List garbage = Uint8List.fromList(<int>[1, 2, 3, 4, 5]);
-    expect(
-      await LumePassportProcessor.cropToSpec(garbage, LumePassportSpec.us),
-      isNull,
-    );
-  });
+  test(
+    'bytes that are not a decodable image answer null, not a throw',
+    () async {
+      final Uint8List garbage = Uint8List.fromList(<int>[1, 2, 3, 4, 5]);
+      expect(
+        await LumePassportProcessor.cropToSpec(garbage, LumePassportSpec.us),
+        isNull,
+      );
+    },
+  );
 
   test('empty bytes answer null', () async {
     expect(

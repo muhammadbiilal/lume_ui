@@ -124,7 +124,9 @@ void main() {
   });
 
   group('a contribution', () {
-    testWidgets('adds to saved, and Undo takes it back', (WidgetTester t) async {
+    testWidgets('adds to saved, and Undo takes it back', (
+      WidgetTester t,
+    ) async {
       final GoalsWorld w = GoalsWorld().reference();
       await pumpGoals(t, w);
       await tapShown(
@@ -172,7 +174,10 @@ void main() {
     ) async {
       final GoalsWorld w = GoalsWorld().reference();
       await pumpGoals(t, w);
-      await tapShown(t, find.byKey(LumeGoalsTool.row(w.goals['Emergency fund']!.value)));
+      await tapShown(
+        t,
+        find.byKey(LumeGoalsTool.row(w.goals['Emergency fund']!.value)),
+      );
       await tapShown(t, find.byKey(LumeGoalsTool.completeKey));
       // The confirmation sheet.
       expect(find.byKey(GoalsSheetKeys.confirm), findsOneWidget);
@@ -192,7 +197,10 @@ void main() {
     ) async {
       final GoalsWorld w = GoalsWorld().reference();
       await pumpGoals(t, w);
-      await tapShown(t, find.byKey(LumeGoalsTool.row(w.goals['Emergency fund']!.value)));
+      await tapShown(
+        t,
+        find.byKey(LumeGoalsTool.row(w.goals['Emergency fund']!.value)),
+      );
       await tapShown(t, find.text('Delete'));
       expect(find.byType(LumeDeleteConfirmation), findsOneWidget);
       await tapShown(t, find.text('Delete').last);

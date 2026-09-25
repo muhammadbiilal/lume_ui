@@ -28,11 +28,7 @@ import 'habits_model.dart';
 /// What the reader filled in for a habit.
 @immutable
 class HabitDraft {
-  const HabitDraft({
-    required this.name,
-    required this.frequency,
-    this.notes,
-  });
+  const HabitDraft({required this.name, required this.frequency, this.notes});
 
   final String name;
   final HabitFrequency frequency;
@@ -161,10 +157,14 @@ class HabitsRepository {
     final List<LumeCollectionView> views = <LumeCollectionView>[
       for (final String c in HabitsCollections.all) _store.view(c),
     ];
-    if (views.any((LumeCollectionView v) => v.status == LumeCollectionStatus.error)) {
+    if (views.any(
+      (LumeCollectionView v) => v.status == LumeCollectionStatus.error,
+    )) {
       return const HabitsSnapshot(status: LumeCollectionStatus.error);
     }
-    if (views.any((LumeCollectionView v) => v.status == LumeCollectionStatus.loading)) {
+    if (views.any(
+      (LumeCollectionView v) => v.status == LumeCollectionStatus.loading,
+    )) {
       return const HabitsSnapshot(status: LumeCollectionStatus.loading);
     }
     final List<HabitsDefect> defects = <HabitsDefect>[];
@@ -189,26 +189,28 @@ class HabitsRepository {
 
   // ---- habits ---------------------------------------------------------------
 
-  HabitsResult<HabitsWrite> addHabit(HabitDraft draft, {String? idempotencyKey}) =>
-      _write<Habit?>(
-        (_Data d) {
-          _validate(draft);
-          final Habit h = Habit(
-            id: _newId(),
-            name: draft.name.trim(),
-            frequency: draft.frequency,
-            notes: _optional(draft.notes),
-            createdAt: _now(),
-          );
-          final Habit stored = Habit.decode(
-            d.tx.create(HabitsCollections.habits, h.id.value, h.toFields()),
-          );
-          d.habits.add(stored);
-          return stored;
-        },
-        idempotencyKey: idempotencyKey,
-        fingerprint: idempotencyKey == null ? null : draft.fingerprint,
+  HabitsResult<HabitsWrite> addHabit(
+    HabitDraft draft, {
+    String? idempotencyKey,
+  }) => _write<Habit?>(
+    (_Data d) {
+      _validate(draft);
+      final Habit h = Habit(
+        id: _newId(),
+        name: draft.name.trim(),
+        frequency: draft.frequency,
+        notes: _optional(draft.notes),
+        createdAt: _now(),
       );
+      final Habit stored = Habit.decode(
+        d.tx.create(HabitsCollections.habits, h.id.value, h.toFields()),
+      );
+      d.habits.add(stored);
+      return stored;
+    },
+    idempotencyKey: idempotencyKey,
+    fingerprint: idempotencyKey == null ? null : draft.fingerprint,
+  );
 
   /// Edit a habit — every field, at any time. Its check-in history is
   /// untouched.
@@ -263,31 +265,33 @@ class HabitsRepository {
   /// there was none, or removes the one that was there. Fast and
   /// optimistic — no confirmation sheet, matching the reference's own
   /// composition note on this family.
-  HabitsResult<HabitsWrite> toggleCheckin(LumeRecordId habitId, LumeDate date) =>
-      _write<HabitCheckin?>((_Data d) {
-        d.sound(habitId);
-        final HabitCheckin? existing = d.checkinAt(habitId, date);
-        if (existing != null) {
-          d.tx.delete(
-            HabitsCollections.checkins,
-            existing.id.value,
-            expectVersion: existing.version,
-          );
-          d.checkins.removeWhere((HabitCheckin x) => x.id == existing.id);
-          return null;
-        }
-        final HabitCheckin c = HabitCheckin(
-          id: _newId(),
-          habitId: habitId,
-          date: date,
-          createdAt: _now(),
-        );
-        final HabitCheckin stored = HabitCheckin.decode(
-          d.tx.create(HabitsCollections.checkins, c.id.value, c.toFields()),
-        );
-        d.checkins.add(stored);
-        return stored;
-      });
+  HabitsResult<HabitsWrite> toggleCheckin(
+    LumeRecordId habitId,
+    LumeDate date,
+  ) => _write<HabitCheckin?>((_Data d) {
+    d.sound(habitId);
+    final HabitCheckin? existing = d.checkinAt(habitId, date);
+    if (existing != null) {
+      d.tx.delete(
+        HabitsCollections.checkins,
+        existing.id.value,
+        expectVersion: existing.version,
+      );
+      d.checkins.removeWhere((HabitCheckin x) => x.id == existing.id);
+      return null;
+    }
+    final HabitCheckin c = HabitCheckin(
+      id: _newId(),
+      habitId: habitId,
+      date: date,
+      createdAt: _now(),
+    );
+    final HabitCheckin stored = HabitCheckin.decode(
+      d.tx.create(HabitsCollections.checkins, c.id.value, c.toFields()),
+    );
+    d.checkins.add(stored);
+    return stored;
+  });
 
   /// Reverse a committed write — a delete's or a toggle's — restoring the
   /// same ids and versions.
@@ -319,14 +323,18 @@ class HabitsRepository {
     String? idempotencyKey,
     String? fingerprint,
   }) {
-    final LumeTxResult<T> r = _store.run<T>((LumeRecordTx tx) {
-      try {
-        final _Data d = _Data(tx);
-        return body(d);
-      } on HabitsFailure catch (f) {
-        tx.reject(f);
-      }
-    }, idempotencyKey: idempotencyKey, fingerprint: fingerprint);
+    final LumeTxResult<T> r = _store.run<T>(
+      (LumeRecordTx tx) {
+        try {
+          final _Data d = _Data(tx);
+          return body(d);
+        } on HabitsFailure catch (f) {
+          tx.reject(f);
+        }
+      },
+      idempotencyKey: idempotencyKey,
+      fingerprint: fingerprint,
+    );
     if (!r.ok) return HabitsResult<HabitsWrite>.failed(_map(r.failure!));
     final T v = r.value as T;
     return HabitsResult<HabitsWrite>.ok(

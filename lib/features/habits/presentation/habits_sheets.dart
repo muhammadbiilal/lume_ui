@@ -16,8 +16,10 @@ abstract final class HabitsSheetKeys {
   static const Key cancel = ValueKey<String>('habits.sheet.cancel');
 }
 
-TextStyle _body(BuildContext context) =>
-    LumeType.natural(context, context.lumeType.body).copyWith(color: context.lume.text2);
+TextStyle _body(BuildContext context) => LumeType.natural(
+  context,
+  context.lumeType.body,
+).copyWith(color: context.lume.text2);
 
 Future<bool?> habitsDecide(
   BuildContext context, {

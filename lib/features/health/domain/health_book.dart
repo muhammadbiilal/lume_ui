@@ -34,7 +34,11 @@ class HealthRecordView {
 
 @immutable
 class HealthBook {
-  const HealthBook._({required this.records, required this.defects, required this.today});
+  const HealthBook._({
+    required this.records,
+    required this.defects,
+    required this.today,
+  });
 
   factory HealthBook.from({
     required List<HealthRecord> records,

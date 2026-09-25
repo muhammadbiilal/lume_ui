@@ -107,10 +107,9 @@ class LumePrizeBondScheme {
   /// `list.slice().sort(function (a, b) { return a.denom - b.denom; })[0]` —
   /// the lowest denomination. Sorted fresh, as the reference does, though the
   /// fixture list is already written in ascending order.
-  LumePrizeBond get next =>
-      (List<LumePrizeBond>.of(bonds)
-            ..sort((LumePrizeBond a, LumePrizeBond b) => a.denom - b.denom))
-          .first;
+  LumePrizeBond get next => (List<LumePrizeBond>.of(
+    bonds,
+  )..sort((LumePrizeBond a, LumePrizeBond b) => a.denom - b.denom)).first;
 
   /// `list.reduce(function (a, b) { return a + b.first + b.second * 3 +
   /// b.third * b.winners; }, 0)` — first prize counted once, second counted
@@ -118,7 +117,8 @@ class LumePrizeBondScheme {
   /// per-denomination winner count) and third across all of its winners.
   double get prizePool => bonds.fold(
     0,
-    (double a, LumePrizeBond b) => a + b.first + b.second * 3 + b.third * b.winners,
+    (double a, LumePrizeBond b) =>
+        a + b.first + b.second * 3 + b.third * b.winners,
   );
 
   /// `list.reduce(function (a, b) { return a + b.winners; }, 0)`.

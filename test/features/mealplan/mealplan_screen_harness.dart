@@ -25,7 +25,10 @@ import '../tax/tax_harness.dart';
 
 class MealPlanWorld {
   MealPlanWorld({this.seed = 1, Duration? readDelay}) {
-    store = LumeMemoryRecordRepository(hydrateDelay: readDelay, now: () => clock);
+    store = LumeMemoryRecordRepository(
+      hydrateDelay: readDelay,
+      now: () => clock,
+    );
     repo = MealPlanRepository(store, random: Random(seed), now: () => clock);
     if (readDelay == null) repo.open();
   }

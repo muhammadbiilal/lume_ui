@@ -113,20 +113,23 @@ class _LumeCricketToolState extends ConsumerState<LumeCricketTool> {
                   Row(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: <Widget>[
-                      Expanded(child: _TeamSide(code: m.team1, name: m.team1Full)),
+                      Expanded(
+                        child: _TeamSide(code: m.team1, name: m.team1Full),
+                      ),
                       Expanded(
                         child: Column(
                           mainAxisSize: MainAxisSize.min,
                           children: <Widget>[
                             LumeNumerals(
                               m.score1,
-                              style: LumeType.fit(
-                                context,
-                                context.lumeType.display,
-                              ).copyWith(
-                                color: context.lume.text,
-                                fontWeight: FontWeight.w800,
-                              ),
+                              style:
+                                  LumeType.fit(
+                                    context,
+                                    context.lumeType.display,
+                                  ).copyWith(
+                                    color: context.lume.text,
+                                    fontWeight: FontWeight.w800,
+                                  ),
                               maxLines: 1,
                               overflow: TextOverflow.ellipsis,
                             ),
@@ -266,7 +269,10 @@ class _LumeCricketToolState extends ConsumerState<LumeCricketTool> {
                   LumeColumn(label: l.cricketStrikeRate, numeric: true),
                 ],
                 cell: (int row, int column) => column == 0
-                    ? _BatterName(batter: m.batters[row], notOut: l.cricketNotOut)
+                    ? _BatterName(
+                        batter: m.batters[row],
+                        notOut: l.cricketNotOut,
+                      )
                     : null,
                 rows: <List<String>>[
                   for (final LumeCricketBatter b in m.batters)
@@ -370,10 +376,10 @@ class _TeamSide extends StatelessWidget {
             second!,
             maxLines: 1,
             overflow: TextOverflow.ellipsis,
-            style: LumeType.fit(context, context.lumeType.metaSmall).copyWith(
-              color: lume.text2,
-              fontStyle: FontStyle.italic,
-            ),
+            style: LumeType.fit(
+              context,
+              context.lumeType.metaSmall,
+            ).copyWith(color: lume.text2, fontStyle: FontStyle.italic),
           ),
         ],
       ],

@@ -201,7 +201,11 @@ class HealthRepository {
   HealthResult<HealthWrite> delete(LumeRecordId id, {required int version}) =>
       _write<HealthRecord>((_Data d) {
         final HealthRecord was = d.sound(id);
-        d.tx.delete(HealthCollections.records, id.value, expectVersion: version);
+        d.tx.delete(
+          HealthCollections.records,
+          id.value,
+          expectVersion: version,
+        );
         d.records.removeWhere((HealthRecord x) => x.id == id);
         d.defects.removeWhere((HealthDefect x) => x.recordId == id.value);
         return was;
@@ -219,17 +223,20 @@ class HealthRepository {
 
   // ---- internals ----------------------------------------------------------
 
-  HealthRecord _record(LumeRecordId id, HealthDraft draft, DateTime createdAt) =>
-      HealthRecord(
-        id: id,
-        title: draft.title.trim(),
-        kind: draft.kind,
-        date: draft.date,
-        source: _optional(draft.source),
-        value: _optional(draft.value),
-        notes: _optional(draft.notes),
-        createdAt: createdAt,
-      );
+  HealthRecord _record(
+    LumeRecordId id,
+    HealthDraft draft,
+    DateTime createdAt,
+  ) => HealthRecord(
+    id: id,
+    title: draft.title.trim(),
+    kind: draft.kind,
+    date: draft.date,
+    source: _optional(draft.source),
+    value: _optional(draft.value),
+    notes: _optional(draft.notes),
+    createdAt: createdAt,
+  );
 
   static void _validate(HealthDraft draft) {
     final String title = draft.title.trim();
@@ -258,14 +265,18 @@ class HealthRepository {
     String? idempotencyKey,
     String? fingerprint,
   }) {
-    final LumeTxResult<T> r = _store.run<T>((LumeRecordTx tx) {
-      try {
-        final _Data d = _Data(tx);
-        return body(d);
-      } on HealthFailure catch (f) {
-        tx.reject(f);
-      }
-    }, idempotencyKey: idempotencyKey, fingerprint: fingerprint);
+    final LumeTxResult<T> r = _store.run<T>(
+      (LumeRecordTx tx) {
+        try {
+          final _Data d = _Data(tx);
+          return body(d);
+        } on HealthFailure catch (f) {
+          tx.reject(f);
+        }
+      },
+      idempotencyKey: idempotencyKey,
+      fingerprint: fingerprint,
+    );
     if (!r.ok) return HealthResult<HealthWrite>.failed(_map(r.failure!));
     final T v = r.value as T;
     return HealthResult<HealthWrite>.ok(

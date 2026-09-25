@@ -20,5 +20,9 @@ abstract final class LumeMarketsStrings {
     AppLocalizations l, {
     required String venue,
     required LumeQuotedAsset asset,
-  }) => <String>[venue, '${l.marketsVol} ${asset.volume}', '${l.marketsCap} ${asset.cap}'];
+  }) => <String>[
+    venue,
+    '${l.marketsVol} ${asset.volume}',
+    '${l.marketsCap} ${asset.cap}',
+  ];
 }

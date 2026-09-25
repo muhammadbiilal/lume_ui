@@ -44,8 +44,7 @@ class LumeBmiTool extends ConsumerStatefulWidget {
 
   final LumeToolRequest request;
 
-  static Widget open(LumeToolRequest request) =>
-      LumeBmiTool(request: request);
+  static Widget open(LumeToolRequest request) => LumeBmiTool(request: request);
 
   /// The catalogue id, and the key the session is kept under.
   static const String id = 'bmi';
