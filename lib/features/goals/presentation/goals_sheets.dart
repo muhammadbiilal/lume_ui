@@ -6,6 +6,7 @@ library;
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart' as intl;
 
+import '../../../core/fixtures/lume_clock.dart';
 import '../../../core/theme/lume/lume_theme.dart';
 import '../../../core/theme/lume/lume_type.dart';
 import '../../../core/values/lume_currency.dart';
@@ -158,7 +159,8 @@ class _GoalsContributeSheetState extends State<GoalsContributeSheet> {
   }
 
   Future<void> _pick() async {
-    final DateTime base = _on?.toCalendarDateTime() ?? DateTime.now();
+    final DateTime base =
+        _on?.toCalendarDateTime() ?? LumeClockScope.of(context).now();
     final DateTime? picked = await showDatePicker(
       context: context,
       initialDate: base,

@@ -368,6 +368,9 @@ void main() {
         'mealplan',
         'mediasaver',
         'meds',
+        // Nearby Mosques: no directory, no figures — the only data it
+        // ever showed was a false "Sample data · Places directory".
+        'mosques',
         'passport',
         'prayer',
         'praytrack',

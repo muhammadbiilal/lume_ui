@@ -367,14 +367,14 @@ const List<LumeFeature> kLumeFeatures = <LumeFeature>[
     related: <String>{'prayer', 'qibla', 'taraweeh'},
     archetype: LumeToolArchetype.tracking,
     density: LumeToolDensity.high,
-    fallbackSource: 'Places directory',
-    freshness: LumeFreshnessKind.cached,
-    supports: <LumeToolSupport>{
-      LumeToolSupport.filters,
-      LumeToolSupport.search,
-      LumeToolSupport.sorting,
-    },
-    aware: <String>{'city', 'country', 'units'},
+    // No places directory exists: the screen names the reader's own place
+    // and hands a real search to their maps app (ROLLOUT_WAVE_10.md). With
+    // `Places directory` / `cached` the source bar claimed "Sample data ·
+    // Places directory" over a screen that shows no data at all; and it has
+    // no list for search, filters or sorting to act on.
+    fallbackSource: 'On device',
+    freshness: LumeFreshnessKind.local,
+    aware: <String>{'city', 'country'},
   ),
   LumeFeature(
     id: 'praytrack',

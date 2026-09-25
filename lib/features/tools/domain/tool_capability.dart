@@ -123,6 +123,10 @@ class LumeDataCapability {
     'mediasaver',
     'passport',
     'speedtest',
+    // Nearby Mosques (wave 10): no places directory exists, so it shows no
+    // mosque, distance or facility — only the reader's own place and a
+    // hand-off to their maps app. Nothing sampled, like Speed Test.
+    'mosques',
   };
 
   /// Tools that have sample data **only** where the build reproduces the

@@ -31,6 +31,7 @@ import 'package:lume/features/mosques/presentation/mosques_tool.dart';
 import 'package:lume/features/onboarding/domain/profile_repository.dart';
 import 'package:lume/features/startup/application/startup_controller.dart';
 import 'package:lume/features/tools/application/tool_request.dart';
+import 'package:lume/features/tools/domain/tool_capability.dart';
 
 import '../../../helpers/lume_harness.dart';
 
@@ -83,7 +84,10 @@ void main() {
         're-decide', () {
       expect(_feature.faith, isTrue);
       expect(_feature.requiresCity, isTrue);
-      expect(_feature.fallbackSource, 'Places directory');
+      // There is no places directory, so the source bar must never name one
+      // — nor call an empty screen "sample data".
+      expect(_feature.fallbackSource, 'On device');
+      expect(LumeDataCapability.fixture(_feature.id).isSample, isFalse);
     });
   });
 
