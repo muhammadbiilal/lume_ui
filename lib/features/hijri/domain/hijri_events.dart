@@ -121,25 +121,27 @@ abstract final class LumeHijriEvents {
     required int month,
     required int day,
   }) {
-    for (int i = 0; i <= horizonDays; i++) {
-      // Calendar-day arithmetic on the fields themselves (not `add(Duration)`
-      // on a local `DateTime`, which a daylight-saving transition can carry
-      // past or short of midnight): `DateTime` normalises an out-of-range day
-      // into the next month on its own, exactly as `LumeMonthGrid`'s own
-      // day loop relies on it doing.
-      final DateTime d = DateTime(today.year, today.month, today.day + i);
-      final LumeHijriDate h = LumeHijriDate.of(d);
-      if (h.month == month && h.day == day) {
-        return LumeHijriEvent(id: id, hijri: h, gregorian: d, daysAway: i);
-      }
-    }
-    // Unreachable given [horizonDays]; a thrown error rather than a silent
-    // fallback date, so a change to the horizon that broke this would fail
-    // loudly instead of drawing a wrong "next" date.
-    throw StateError(
-      'No occurrence of Hijri $month/$day within $horizonDays days of '
-      '${today.toIso8601String()} — the tabular calendar\'s year is at most '
-      '355 days, so this should be unreachable.',
+    // Walked over `LumeHijriDate.walkForward` — the same day-by-day scan
+    // Ramadan's own countdown now walks too (`ramadan_tool.dart`'s
+    // `_daysUntil`), extracted once both agents independently arrived at it.
+    final (
+      DateTime gregorian,
+      LumeHijriDate hijri,
+      int daysAway,
+    ) = LumeHijriDate.walkForward(
+      start: today,
+      matches: (LumeHijriDate h) => h.month == month && h.day == day,
+      horizonDays: horizonDays,
+      reason:
+          'No occurrence of Hijri $month/$day within $horizonDays days '
+          'of ${today.toIso8601String()} — the tabular calendar\'s year '
+          'is at most 355 days, so this should be unreachable.',
+    );
+    return LumeHijriEvent(
+      id: id,
+      hijri: hijri,
+      gregorian: gregorian,
+      daysAway: daysAway,
     );
   }
 }

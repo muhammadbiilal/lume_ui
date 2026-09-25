@@ -65,4 +65,32 @@ class LumeHijriDate {
 
   @override
   String toString() => 'LumeHijriDate($year-$month-$day)';
+
+  /// Walks forward from [start] (only its year/month/day matter — a civil
+  /// date, not an instant) counting real calendar days until [matches] is
+  /// true of that day's Hijri date.
+  ///
+  /// Field arithmetic on the date itself (`DateTime(year, month, day + i)`,
+  /// which `DateTime` normalises across a month boundary on its own) — never
+  /// `add(Duration)` on a local clock value, which a daylight-saving
+  /// transition could carry past or short of midnight.
+  ///
+  /// Throws a [StateError] naming [reason] if nothing matches within
+  /// [horizonDays] — a Hijri year is at most 355 days, so any predicate that
+  /// is eventually true of some Hijri (month, day) is reachable well inside a
+  /// generous horizon, and a genuine miss is a defect worth failing loudly
+  /// over, not a silently wrong "next" date.
+  static (DateTime gregorian, LumeHijriDate hijri, int daysAway) walkForward({
+    required DateTime start,
+    required bool Function(LumeHijriDate hijri) matches,
+    required int horizonDays,
+    required String reason,
+  }) {
+    for (int i = 0; i <= horizonDays; i++) {
+      final DateTime d = DateTime(start.year, start.month, start.day + i);
+      final LumeHijriDate h = LumeHijriDate.of(d);
+      if (matches(h)) return (d, h, i);
+    }
+    throw StateError(reason);
+  }
 }

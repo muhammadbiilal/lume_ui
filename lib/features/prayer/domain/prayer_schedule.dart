@@ -32,6 +32,7 @@ import 'package:flutter/foundation.dart';
 
 import '../../../core/time/lume_iana_zones.dart';
 import '../../../core/time/lume_solar.dart';
+import '../../../core/time/lume_solar_day.dart';
 import '../../../core/time/lume_zone.dart';
 
 /// Which real-world input stops a schedule from being worked out.
@@ -141,22 +142,12 @@ class LumePrayerDay {
     if (coords == null) return (null, LumePrayerMissing.city);
     final LumeZone? z = zone.zone;
     if (z == null) return (null, LumePrayerMissing.zone);
-    final DateTime local = z.wallClockAt(now);
-    final double offsetHours = z.offsetAt(now).inMinutes / 60;
-    return (_on(local, coords, offsetHours), null);
+    return (_on(LumeSolarDay.at(now: now, coords: coords, zone: z)), null);
   }
 
-  static LumePrayerDay _on(
-    DateTime local,
-    (double, double) coords,
-    double offsetHours,
-  ) {
-    final List<LumeSolarTime> raw = LumeSolar.prayerTimes(
-      date: local,
-      lat: coords.$1,
-      lon: coords.$2,
-      offsetHours: offsetHours,
-    );
+  static LumePrayerDay _on(LumeSolarDay solarDay) {
+    final DateTime local = solarDay.local;
+    final List<LumeSolarTime> raw = solarDay.raw;
     DateTime at(LumeSolarTime t) =>
         DateTime(local.year, local.month, local.day, t.hour, t.minute);
     LumeSolarTime byKey(String k) =>
@@ -189,7 +180,9 @@ class LumePrayerDay {
         offsetHours: offsetHours,
       );
       DateTime at(String key) {
-        final LumeSolarTime t = raw.firstWhere((LumeSolarTime t) => t.key == key);
+        final LumeSolarTime t = raw.firstWhere(
+          (LumeSolarTime t) => t.key == key,
+        );
         return DateTime(day.year, day.month, day.day, t.hour, t.minute);
       }
 

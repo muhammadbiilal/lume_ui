@@ -67,6 +67,7 @@ import '../../../core/platform/lume_share.dart';
 import '../../../core/time/lume_hijri.dart';
 import '../../../core/time/lume_iana_zones.dart';
 import '../../../core/time/lume_solar.dart';
+import '../../../core/time/lume_solar_day.dart';
 import '../../../core/time/lume_zone.dart';
 import '../../../core/widgets/lume/lume_header.dart';
 import '../../../core/widgets/lume/lume_progress.dart';
@@ -150,14 +151,19 @@ class LumeRamadanReading {
     final LumeZone? z = zone.zone;
     if (z == null) return (null, LumeRamadanMissing.zone);
 
-    final DateTime local = z.wallClockAt(now);
+    // The same local-instant-plus-raw-solar-times resolution Prayer Times'
+    // own `LumePrayerDay.at` uses — extracted to `LumeSolarDay` once both
+    // tools had independently derived it identically.
+    final LumeSolarDay solarDay = LumeSolarDay.at(
+      now: now,
+      coords: at,
+      zone: z,
+    );
+    final DateTime local = solarDay.local;
     final LumeHijriDate hijri = LumeHijriDate.of(local);
-    final List<LumeSolarTime> day = LumeSolar.prayerTimes(
-      date: local,
-      lat: at.$1,
-      lon: at.$2,
-      offsetHours: z.offsetAt(now).inMinutes / 60,
-    ).where((LumeSolarTime t) => !t.minor).toList();
+    final List<LumeSolarTime> day = solarDay.raw
+        .where((LumeSolarTime t) => !t.minor)
+        .toList();
     final LumeSolarTime fajr = day.firstWhere(
       (LumeSolarTime t) => t.key == 'fajr',
     );
@@ -207,18 +213,23 @@ class LumeRamadanReading {
   }
 
   /// Calendar days from [localToday] until the Hijri month first reads 9 —
-  /// walked a real day at a time over [LumeHijriDate], so an alternating
-  /// 29-/30-day month is never approximated away.
+  /// walked over [LumeHijriDate.walkForward], the same day-by-day scan
+  /// `hijri_events.dart`'s own `LumeHijriEvents.upcoming` walks to find its
+  /// six transitions, so an alternating 29-/30-day month is never
+  /// approximated away.
   static int _daysUntil(DateTime localToday) {
-    DateTime d = DateTime(localToday.year, localToday.month, localToday.day);
-    int count = 0;
     // A Hijri year is never more than 355 days; two of them is headroom, not
     // a magic number tuned to one date.
-    while (LumeHijriDate.of(d).month != ramadanMonth && count <= 710) {
-      d = d.add(const Duration(days: 1));
-      count++;
-    }
-    return count;
+    final (_, _, int daysAway) = LumeHijriDate.walkForward(
+      start: localToday,
+      matches: (LumeHijriDate h) => h.month == ramadanMonth,
+      horizonDays: 710,
+      reason:
+          'No Hijri month 9 found within 710 days of '
+          '${localToday.toIso8601String()} — a Hijri year is at most 355 '
+          'days, so this should be unreachable.',
+    );
+    return daysAway;
   }
 
   /// Calendar days left in Ramadan from [localToday], today included —
@@ -330,13 +341,15 @@ class _LumeRamadanToolState extends ConsumerState<LumeRamadanTool> {
           country: r.user.country,
           city: r.user.city,
         );
-    final (LumeRamadanReading? reading, LumeRamadanMissing? missing) =
-        LumeRamadanReading.at(
-          now: now,
-          country: r.user.country,
-          city: r.user.city,
-          zone: zone,
-        );
+    final (
+      LumeRamadanReading? reading,
+      LumeRamadanMissing? missing,
+    ) = LumeRamadanReading.at(
+      now: now,
+      country: r.user.country,
+      city: r.user.city,
+      zone: zone,
+    );
     final String zoneLabel =
         zone.label(Localizations.localeOf(context).languageCode)?.display ??
         zone.requested ??
@@ -478,18 +491,13 @@ class _LumeRamadanToolState extends ConsumerState<LumeRamadanTool> {
     final double nowMinutes =
         local.hour * 60 + local.minute + local.second / 60;
 
-    final List<(LumeSolarTime, String, String?, String)> rows =
-        <(LumeSolarTime, String, String?, String)>[
-          (reading.fajr, l.ramadanSuhoorEnds, l.ramadanSuhoorSub, LumeIcons.moon),
-          for (final LumeSolarTime p in reading.day)
-            (p, LumeRamadanTool.prayerName(l, p.key), null, LumeIcons.prayer),
-          (
-            reading.maghrib,
-            l.ramadanIftar,
-            l.ramadanIftarSub,
-            LumeIcons.utensils,
-          ),
-        ];
+    final List<(LumeSolarTime, String, String?, String)>
+    rows = <(LumeSolarTime, String, String?, String)>[
+      (reading.fajr, l.ramadanSuhoorEnds, l.ramadanSuhoorSub, LumeIcons.moon),
+      for (final LumeSolarTime p in reading.day)
+        (p, LumeRamadanTool.prayerName(l, p.key), null, LumeIcons.prayer),
+      (reading.maghrib, l.ramadanIftar, l.ramadanIftarSub, LumeIcons.utensils),
+    ];
     final List<LumeTimelineState> states = LumeRamadanTool.states(<double>[
       for (final (LumeSolarTime, String, String?, String) row in rows)
         row.$1.minutes.toDouble(),
