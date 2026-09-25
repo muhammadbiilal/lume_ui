@@ -97,7 +97,7 @@ Dayroz widget is not copied.
 | F5B | Today, Explore, Trains and Profile | **complete — awaiting approval** |
 | F6 | Tool screens, in archetype batches | **complete — awaiting approval** |
 | F7 | CRUD across every record family | **complete — awaiting approval** |
-| F8 | Flutter-native documentation rewrite | **in progress** — `README.md` rewritten; `docs/LUME_FLUTTER_ARCHITECTURE.md` replaces the refactoring plan; the web-file references in `claude.md` and `LUME_COMPLETE_DESIGN_SPECIFICATION.md` corrected. Not yet done: the complete rewrite of `claude.md` as maintenance instructions, the two `LUME_*` specifications at the root in Flutter terms, and the two `.docx` guides |
+| F8 | Flutter-native documentation rewrite | **complete — awaiting approval** — `README.md` rewritten; `docs/LUME_FLUTTER_ARCHITECTURE.md` replaces the refactoring plan; `LUME_FEATURES_AND_SCREEN_CAPABILITIES.md` rewritten from the Flutter catalogue and each tool's verified data class; `LUME_COMPLETE_DESIGN_SPECIFICATION.md` restated for phones and tablets; `claude.md` keeps the product requirements unchanged and gains §70, the codebase rules. The two `.docx` guides were checked and contain nothing web-specific (no CSS, DOM, HTML, JavaScript or browser terms), so they stand as platform-neutral design guides |
 | F9 | Remove the web implementation | **complete — awaiting approval** — the manifest's files removed; `scripts/check_goldens.py`, `scripts/generate_zone_aliases.dart` and `scripts/cldr_country_zones.mjs` kept, being Flutter maintenance tools added after the manifest was written |
 | F10 | Final Flutter acceptance | not started |
 

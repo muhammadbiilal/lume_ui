@@ -2354,3 +2354,63 @@ The final product should feel like a **real, production-ready 2026 global consum
 **Sleek + Premium + Minimal + Global + Localized + Personal + Useful + Modern + Friendly + Highly Polished.**
 
 Every screen should feel intentional, consistent and production-ready.
+
+---
+
+# 70. ENGINEERING — THE FLUTTER CODEBASE
+
+Lume is implemented as a native Flutter application for Android and iOS phones
+and tablets. The sections above are the product requirements; this section is
+how they are held in the code. The architecture in depth is in
+`docs/LUME_FLUTTER_ARCHITECTURE.md`; commands and structure are in `README.md`.
+
+## Where things live
+
+* **Feature registry (§19):** `lib/features/catalogue/data/feature_catalogue.dart`
+  — ordinary source, edited directly.
+* **Visibility (§63, §64):** `lib/features/catalogue/domain/eligibility.dart`
+  is the only place that decides whether a feature exists for a user. Never
+  write a country or religion check in a screen.
+* **Tool screens:** `lib/features/tools/application/tool_registry.dart` maps
+  every catalogue id to its screen; every tool is built inside `LumeToolFrame`,
+  which refuses a body the reader may not see.
+* **Features:** `lib/features/<id>/` layered as `domain/`, `data/`,
+  `application/`, `presentation/`. Shared presentation comes from the hub
+  features (`tools/` for the tool frame, `records/` for the record engine,
+  `catalogue/`, `account/`, `share/`), not from another tool's internals.
+
+## Rules
+
+* **No hard-coded user-facing strings (§11).** Every string is an ARB key in
+  `lib/l10n/app_en.arb`, `app_ur.arb` and `app_ar.arb`; run `flutter gen-l10n`.
+  A placeholder's ARB `type` matches what the call site passes (a formatted
+  number is a `String` from `LumeFormatting`).
+* **No invented data.** A tool shows real computation, the reader's own
+  records, or sample data that its source line calls sample data. Its data
+  class is declared in `lib/features/tools/domain/tool_capability.dart`; the
+  source line is derived from it, and `release_readiness_test.dart` fails on
+  any claim nothing supports.
+* **Layout direction is logical (§17).** Asymmetric padding and alignment use
+  `EdgeInsetsDirectional` and `AlignmentDirectional`; physical left and right
+  appear only where they genuinely mean a physical side — a decorative
+  gradient, symmetric padding, or a share card that has already chosen its
+  direction. Numerals inside RTL text go through `LumeNumerals`.
+* **Clocks are injected.** Read time from `LumeClockScope`, never
+  `DateTime.now()` in a widget.
+* **Platform capabilities sit behind interfaces** in `lib/core/platform/`, with
+  a recording fake for tests.
+* **Dependencies are deliberate.** Every package in `pubspec.yaml` says why it
+  is there and what uses it; nothing is added for convenience.
+* **Changing country, language or the Islamic preference never deletes user
+  data (§37)** — it changes only what is visible.
+
+## Before every commit
+
+```bash
+dart format --set-exit-if-changed lib test
+flutter analyze lib test
+flutter test
+```
+
+Every new screen is tested in English, Urdu and Arabic, and at 200 % text
+scale, for overflow.

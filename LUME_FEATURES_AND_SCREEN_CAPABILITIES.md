@@ -2,366 +2,325 @@
 
 ## 1. Purpose of this document
 
-This is a functional inventory of the current Lume prototype. It explains what each screen and feature does, what the user can do with it, what context it uses, and whether its information is local, calculated, static, cached, delayed or intended to be live.
+A functional inventory of the Lume Flutter application: what each screen and
+tool does, what context it uses, and — most importantly — what its data really
+is. Nothing here claims an external service is connected: Lume has no backend
+yet, and every screen says so where it matters.
 
-The word **capable** here means the capability is represented in the current interface and its prototype behaviour. It does not mean a real external service is connected. Financial feeds, weather, transport, news, places, carrier information and similar datasets are realistic demonstrations unless a production integration is added.
+How a tool's detailed behaviour came to be — including every reference feature
+deliberately *not* reproduced because it would have meant inventing data — is
+recorded in `docs/conversion_archive/ROLLOUT_WAVE_*.md` for that tool's wave.
 
-## 2. Capability vocabulary
+## 2. Data classes
 
-| Capability | Meaning in Lume |
-| --- | --- |
-| Search | Find records or content inside the current screen |
-| Filters | Narrow content by category, status or type |
-| Sorting | Change record order and, where supported, sort direction |
-| History | Show previous calculations, activity or stored entries |
-| Notifications | Generate or configure relevant reminders/alerts |
-| Offline | Core screen remains usable without a network |
-| Sharing | Produce shareable text or a visual share card |
-| Export | Produce a named downloadable file or export action |
-| Favourites | Save important items for faster return |
-| Sensitive | Hide private detail from promotion and notification previews |
-| Location required | Needs a city, position or device permission to be meaningful |
+Every tool's source line is derived from its data class
+(`lib/features/tools/domain/tool_capability.dart`), never written by hand, and
+`test/release/release_readiness_test.dart` fails on any claim nothing supports.
+
+| Class | Meaning | What the screen says |
+| --- | --- | --- |
+| **Computed** | Worked out on the device from the reader's city, time zone and clock — no fixture | the calculation it came from |
+| **Your input** | Shows only what the reader typed, captured or picked this session | kept on the device |
+| **Your records** | Shows only the reader's own entries; every derived figure (a streak, a rate, a due date) computed from them | kept until Lume is closed — **Reminders** alone is durable, stored on the device |
+| **Sample** | Realistic demonstration data bundled with the app | **Sample data**, on the tool itself |
+
+A few record tools (Birthdays, Water, Focus Timer's history) draw sample rows
+only in the *parity* build used for design comparison; in a development or
+release build they start empty.
 
 ## 3. Global application capabilities
 
-Lume currently provides these cross-product capabilities:
-
-- Responsive mobile and desktop layouts.
-- Light, dark and system appearance modes.
-- English, Urdu and Arabic, including LTR/RTL switching.
-- Locale-aware date, time, number, currency, distance and temperature formatting.
-- Country, region and city personalization.
-- Interest-based Home and Tools recommendations.
-- Optional Islamic content with strict faith-content gating.
-- Country-specific availability and global tools with localized content.
-- Global search, tool search, recent tools and related tools.
-- Guest use and a simulated device-local account lifecycle.
-- Notification centre, categories, priorities, read/dismiss state, quiet hours and previews.
-- Browser notification permission education and request flow.
-- Browser geolocation, native sharing and telephone links where supported.
-- Accessible roles, keyboard navigation, focus management and reduced motion.
+- Phone and tablet layouts: a bottom bar when compact (below 600), a labelled
+  navigation rail when medium (600–839), a sidebar with master-detail when
+  expanded (840 and up); a short screen is compact at any width.
+- Light, dark and system appearance; dark is authored, not inverted.
+- English, Urdu and Arabic, with right-to-left layout for Urdu and Arabic and
+  directional icons that mirror while pictures of things do not.
+- Locale-aware dates, times, numbers, currency, distance and temperature;
+  metric or imperial by preference, independent of country.
+- Country, region and city personalisation; interest-based Home and Tools.
+- The Islamic experience is opt-in, never inferred from country or language.
+- Country-specific tools appear only where they have launched; global tools
+  stay global.
+- Global search, tool search, recent tools, related tools and favourite tools.
+- Guest use and a simulated, device-local account lifecycle.
+- A notification centre — categories, priorities, read and dismiss, quiet
+  hours, preview privacy — over sample notifications. **Reminders** is the one
+  feature that schedules real notifications on the device.
+- Visual share cards through the platform share sheet; named export files;
+  handing a number to the dialer (never placing a call); handing a link or a
+  maps search to another app; the camera and photo picker for QR Scanner,
+  Document Scanner and Passport Photos; saving an image to Photos.
+- Screen-reader semantics, focus order, reduced motion, 200 % text scale.
 - Loading, empty, no-results, offline, error, private and unavailable states.
 
 ## 4. Main screens
 
 ### 4.1 Home
 
-**Purpose:** Give the user a personalized summary of what matters now.
+**Purpose:** a personalised summary of what matters now.
 
-**What it does:**
+- A time-based greeting, the date and the selected city; Profile from the
+  avatar and Notifications from the bell.
+- Weather, and prayer context when the Islamic experience is on.
+- A highlight carousel of at most four slides chosen for relevance.
+- Quick tools built from eligibility, interests and staple tools, balanced so
+  no single category dominates.
+- At-a-glance and discovery cards that never expose sensitive or ineligible
+  features.
 
-- Shows a time-based greeting, current date and selected city.
-- Opens Profile from the avatar and Notifications from the bell.
-- Shows immediate weather and, when enabled, prayer context.
-- Displays a highlight carousel for timely content and important tools.
-- Builds quick actions and quick tools from catalogue eligibility, interests and staple tools.
-- Displays live-now and upcoming information only when relevant content exists.
-- Shows at-a-glance progress, rates or regional information.
-- Offers discovery cards without exposing sensitive or ineligible features.
-
-**Context used:** name, country, city, language, interests, Islamic-content preference, current time, recent tools and regional data.
+**Context used:** name, country, city, language, interests, the Islamic
+preference, the current time, recent tools and regional data.
 
 ### 4.2 Tools
 
-**Purpose:** Provide one searchable catalogue for every eligible utility.
+One searchable catalogue of every eligible tool: the available count, search
+by name and common keywords (petrol, namaz, calculator), the six categories,
+recently used tools, and a real no-results state. Availability recalculates
+when country or the Islamic preference changes.
 
-**What it does:**
+### 4.3 Trains (Pakistan)
 
-- Displays the number of currently available tools.
-- Searches feature names and common keywords such as petrol, namaz or calculator.
-- Filters tools by Everyday, Planning, Islamic, Money, Daily Life and Personal categories.
-- Shows recently used tools.
-- Opens each tool through the shared Tool Host.
-- Displays a proper no-results state.
-- Recalculates availability when country or faith settings change.
-
-### 4.3 Trains destination
-
-**Purpose:** Give Pakistan users fast access to train information from primary navigation where configured.
-
-**What it does:**
-
-- Shows routes, departure/arrival times, duration, status and fare information.
-- Provides route/search controls and train-list interaction.
-- Uses Pakistan-specific visibility and selected-city context.
-
-**Current limitation:** train information is demonstration data, not connected to Pakistan Railways.
+A primary destination in Pakistan: routes, departures and arrivals, duration,
+status and fares, with search and a train detail. Sample data — not connected
+to Pakistan Railways.
 
 ### 4.4 Today
 
-**Purpose:** Present the user's day as an ordered plan.
-
-**What it does:**
-
-- Shows daily completion percentage and completed-task count.
-- Displays compact daily statistics.
-- Orders agenda events chronologically.
-- Shows tasks with accessible checked/unchecked state.
-- Uses the user's clock format, time zone and language.
+The reader's day as an ordered plan: completion, compact statistics, the
+agenda in time order, and tasks with accessible checked state, in the reader's
+clock format, time zone and language.
 
 ### 4.5 Explore
 
-**Purpose:** Surface useful local and topical information beyond the personal plan.
-
-**What it does:**
-
-- Shows localized weather, temperature, rain, wind and sunset.
-- Shows nearby/contextual content when available.
-- Displays eligible sports/live cards.
-- Lists localized or global news.
-- Offers curated discovery tools.
+Localised weather, contextual and topical content, eligible sports cards,
+news and curated discovery tools. Reachable from contextual links in Pakistan,
+where Trains takes its place in the navigation.
 
 ### 4.6 Profile
 
-**Purpose:** Provide the entry point for identity, preferences, privacy and support.
-
-**What it does:**
-
-- Renders honest guest, authenticated and expired-session states.
-- Shows real profile data only when it exists.
-- Offers sign-up/sign-in to guests.
-- Provides personalization, notifications, region, language, appearance, units, currency and time settings.
-- Provides account, security, sessions, data/sync and logout destinations to account holders.
-- Provides help, about and tour destinations.
-- Keeps account deletion visually separate from ordinary settings.
+Honest guest, signed-in and expired-session states; real profile data only
+when it exists; sign-up and sign-in for guests; personalisation, notifications,
+region, language, appearance, units, currency and time; account, security,
+sessions, data and sign-out for account holders; help and about; account
+deletion kept apart from ordinary settings.
 
 ### 4.7 Account
 
-**Purpose:** Host nested profile and settings screens.
-
-**What it does:**
-
-- Edits profile name, email and phone.
-- Handles email-change verification behaviour.
-- Changes the local prototype password after verifying the current password.
-- Lists the current browser/device session and simulated other sessions.
-- Supports sign-out of other sessions.
-- Configures language, appearance, region, units, time zone, clock and currency.
-- Hosts notification preferences and data/sync information.
-- Confirms logout and account deletion.
-- Warns before discarding unsaved form changes.
+Twenty-one routes: preferences (language, region, currency, units, time,
+appearance, notifications), identity (profile, name, email, phone), security
+(password, sessions — this device and simulated others), data (library,
+privacy, sync), support (help, about) and deletion. Unsaved form changes are
+guarded before leaving.
 
 ### 4.8 Authentication
 
-**Purpose:** Handle identity flows outside the utility-tool system.
+Sign-up, sign-in, password recovery and reset, email verification and
+session-expired flows, with inline validation, protection against double
+submission, password visibility, indistinguishable unknown-account and
+wrong-password errors, guest preferences preserved on sign-up, and a return to
+the destination originally asked for.
 
-**What it does:**
-
-- Supports sign-up, sign-in, password recovery, password reset, verification and session-expired flows.
-- Validates email and password rules inline.
-- Prevents double submission while processing.
-- Provides password visibility controls.
-- Keeps unknown-account and wrong-password errors indistinguishable.
-- Preserves guest preferences when creating an account.
-- Returns a signed-in user to an originally requested protected destination.
-
-**Current limitation:** accounts, digests, tokens and sessions are simulated in browser storage. This is not production authentication.
+**Limitation:** accounts, tokens and sessions are simulated on the device. This
+is not production authentication.
 
 ### 4.9 Notifications
 
-**Purpose:** Collect important Lume alerts in one privacy-aware centre.
+An unread count on the bell; All, Unread, Important and category filters;
+priority ordering; read on open and dismiss; the related tool opened and the
+centre returned to afterwards; global, category and per-tool preferences;
+quiet hours and preview privacy; an explanation before the system permission
+is asked for; and no faith, country or sensitive-data leaks.
 
-**What it does:**
+### 4.10 Tool host
 
-- Shows unread count on the global bell.
-- Filters by All, Unread, Important and eligible categories.
-- Prioritizes important items.
-- Marks items read when opened and supports dismissal.
-- Opens the related tool and returns to the centre afterward.
-- Configures global, category and per-tool notification preferences.
-- Configures quiet hours and notification-preview privacy.
-- Educates the user before requesting browser permission.
-- Prevents faith, country or sensitive-data leaks.
+The frame around all 85 tools: the header with Back and the tool's actions,
+the eligibility check before any body is built, the tool's archetype and
+density, its source line, privacy note and related tools, and an error state
+rather than a blank screen.
 
-### 4.10 Tool Host
+### 4.11 Global search
 
-**Purpose:** Provide consistent navigation and layout around all 85 tool screens.
+Suggestions and recent searches over eligible features, by name and keyword;
+matching tools and destinations open directly; hidden faith, country and
+platform entries never appear.
 
-**What it does:**
+### 4.12 Onboarding
 
-- Builds a tool-specific header, subtitle, Back control and supported actions.
-- Enforces catalogue eligibility before opening a tool.
-- Applies the tool's approved archetype, density and composition.
-- Adds source/freshness, privacy notes and eligible related tools.
-- Displays an error state rather than a blank screen if construction fails.
-- Manages tool detail navigation and cleanup when leaving.
+The product introduced; country (from all 194), region and city; interests
+(29 offered, at least five); the Islamic experience as an opt-in switch, never
+preselected; an optional name that is never invented; neutral defaults when
+skipped. **"Use my current location" is shown but not yet wired** — choosing a
+place is by hand for now.
 
-### 4.11 Global Search
+## 5. Everyday — 8
 
-**Purpose:** Find tools and relevant destinations from anywhere in the shell.
+| Tool | What it does in this app | Data |
+| --- | --- | --- |
+| Calculator | Exact decimal arithmetic with operator precedence, history and locale digits; refuses divide-by-zero rather than answering 0 | Your input |
+| Unit Converter | Converts across measurement units using internationally defined factors | Your input |
+| Currency | Converts between any two currencies with a from/to picker | Sample |
+| Stopwatch | Elapsed time and laps, from a clock that keeps counting through sleep | Your input |
+| Timer | Counts down from a duration or preset | Sample (its history section) |
+| Age Calculator | Exact age from a date of birth, and the next birthday | Your input |
+| Focus Timer | Focus and break phases, timed from a start instant so it never drifts | Your input |
+| Date Calculator | Differences between dates, and a date plus or minus days, with weekday and holiday counts | Sample (the holiday count) |
 
-**What it does:**
+## 6. Planning — 5
 
-- Shows suggestions and recent searches.
-- Searches eligible features using names and keywords.
-- Opens matching tools or destinations.
-- Excludes hidden faith, country and platform-specific entries.
+| Tool | What it does in this app | Data |
+| --- | --- | --- |
+| Calendar | Month grid (with Hijri days for Muslim readers), the day's agenda with the next prayer, holidays, export | Sample |
+| Reminders | Create, repeat and complete reminders, with real scheduled notifications | Your records — **stored on the device** |
+| Notes | A record family: search, sort, detail, add, edit, delete with Undo | Sample |
+| To-dos | Tasks with done state, filters and progress | Sample |
+| Events | Scheduled events | Sample |
 
-### 4.12 Personalization and onboarding
+## 7. Islamic — 17
 
-**Purpose:** Establish a useful profile without forcing account creation.
+Visible only when the Islamic experience is on.
 
-**What it does:**
+| Tool | What it does in this app | Data |
+| --- | --- | --- |
+| Prayer Times | Next prayer and countdown, the five prayers, sunrise and sunset; the calculation method (Muslim World League, standard Asr) stated plainly | Computed |
+| Qibla Compass | Bearing and distance to the Kaaba from the reader's city (no live compass sensor) | Computed |
+| Nearby Mosques | Names the reader's place and opens a real mosque search in their maps app — no invented list | Your input |
+| Prayer Tracker | Check off each prayer; streak, monthly rate and missed (qada) prayers computed from the check-ins | Your records |
+| Ramadan | Before Ramadan, a countdown in real days; during it, the day, Suhoor and Iftar from the real Fajr and Maghrib, and a countdown to Iftar | Computed |
+| Fasting Tracker | Log fasts (sunnah or qada); streak, completion and a 30-day view computed from them | Your records |
+| Taraweeh | Log each night's rakaat and the juz reached; streaks and Qur'an progress computed | Your records |
+| Ayah of the Day | A daily ayah, shared as a visual card | Sample (a bundled selection) |
+| Al-Qur’an | Reads 12 of the 114 surahs — said on screen, not presented as complete | Sample |
+| Search the Qur’an | Searches the bundled surahs | Sample |
+| Hadith | The day's hadith, search and collections; narrations kept as written | Sample |
+| Daily Duas | A categorised dua library, shared as cards | Sample |
+| 99 Names | 12 of the 99 names, with their meanings — the rest await a verified source | Sample |
+| Islamic Calendar | Today's Hijri date, the month grid, the next six calendar transitions and a converter; the tabular calendar named as such | Computed |
+| Tasbih | A dhikr counter over five phrases, with rounds; nothing written down | Your input |
+| Zakat Calculator | Zakat due from assets and liabilities against the nisab | Sample (the metal price behind the nisab) |
+| Faraid | Shares for a wife, sons and daughters by the Qur'an's fixed shares; any remainder it does not cover is shown, not silently dropped | Your input |
 
-- Introduces the product and asks for optional name, interests and contextual preferences.
-- Allows the name to be skipped without inventing an identity.
-- Configures country, region and city.
-- Keeps Islamic features opt-in rather than preselected.
-- Uses neutral defaults when personalization is skipped.
+## 8. Money — 15
 
-## 5. Everyday tools — 8
+| Tool | What it does in this app | Data |
+| --- | --- | --- |
+| Compound Interest | Projects growth from principal, contributions, rate and years, as a chart and table | Your input |
+| Currency & Gold | Gold, metals and currency rows with movement, a 30-day chart and a gold converter | Sample |
+| Markets | Indices, crypto and ETFs | Sample |
+| Fuel Prices | Pump prices by fuel type | Sample |
+| Fuel Cost | Trip cost from distance, efficiency and Fuel Prices' own price | Sample (the price) |
+| Tax Calculator | Income tax by the slabs of a supported country (PK, GB, US, IN, AE, SA) | Sample (the slabs) |
+| National Savings | Pakistan's savings instruments and their returns | Sample |
+| Prize Bonds | Denominations and draw results; saving your own numbers is not offered | Sample |
+| Bills | Bills with due status | Sample |
+| Mobile Packages | Pakistan's operator bundles | Sample |
+| Loan / EMI | Instalment, total interest and the schedule | Your input |
+| Tip & Split | Per-person share of a bill with tip | Your input |
+| Lending Ledger | Who owes whom: people, entries, allocations, void and restore | Your records |
+| Installments | Purchase plans, their schedules and payments | Your records |
+| Committee | A rotating savings committee: members, shares, cycles, payouts | Your records |
 
-| Feature | What it does | User capabilities | Context/data |
-| --- | --- | --- | --- |
-| Calculator | Performs standard arithmetic calculations. | Enter expressions, calculate results and review history; works offline. | On-device, local |
-| Unit Converter | Converts values across supported measurement units. | Select units, convert, review history and favourite common conversions; offline. | Units and locale; on-device |
-| Currency | Explores and converts foreign-exchange rates. | Search currencies, convert amounts, view history, save favourites and share. | Country/currency/locale; delayed demo interbank feed |
-| Stopwatch | Measures elapsed time and records laps. | Start, pause, reset and review lap/history information; offline. | On-device live timer |
-| Timer | Counts down from a selected duration or preset. | Start, pause, reset, choose presets, keep history and configure completion notification. | On-device live timer |
-| Age Calculator | Calculates exact age and date-based breakdown. | Enter birth date, calculate exact duration, keep history and share result. | Locale-aware on-device calculation |
-| Focus Timer | Runs a focused work/Pomodoro-style session. | Start/pause/reset focus sessions, use presets, review history and enable completion alerts. | On-device live timer |
-| Date Calculator | Adds/subtracts dates and calculates date differences. | Enter dates/durations, calculate, review history and work offline. | Locale/time-zone-aware calculation |
+## 9. Daily Life — 18
 
-## 6. Planning tools — 5
+| Tool | What it does in this app | Data |
+| --- | --- | --- |
+| Weather | Conditions, the next 12 hours, five days, air quality, sun and moon | Sample |
+| Air Quality | An estimated index and pollutants, labelled estimated | Sample |
+| Sun & Moon | Sunrise, sunset, twilight, daylight and the moon's phase | Computed |
+| World Clock | The reader's zone first, then any of 341 zones or 577 cities, with a converter | Computed |
+| Public Holidays | Six countries' holidays plus a global fallback, as illustrative dates | Sample |
+| Loadshedding | Pakistan outage windows | Sample |
+| Trains | Routes, departures, a train's journey, stops and fares | Sample |
+| Flights | A board, a selected flight's journey, aircraft and timeline | Sample |
+| News | A lead story, categories and reading rows | Sample |
+| Cricket | A match summary and scorecard | Sample |
+| Emergency | National emergency numbers; a press opens the dialer, never calls | Sample (the directory) |
+| QR Scanner | Scans with the camera or from a photo, decoded on the device | Sample (its history list); scans are your input |
+| Document Scanner | Captures pages with the camera or from photos, and shares each page as an image | Your input |
+| Passport Photos | Crops a captured or picked photo to the country's size (2×2 in for the US, 35×45 mm elsewhere) and saves it | Your input |
+| Vehicle & Fines | Pakistan vehicle records with a fleet search | Sample |
+| Media Saver | Says plainly that Lume has no network access to fetch media | Your input |
+| WhatsApp Status | Explains how to save a status with WhatsApp's own save button — Lume cannot read the folder | — (no data) |
+| Speed Test | Says it cannot measure speed here, and opens a real test in another app | Your input |
 
-| Feature | What it does | User capabilities | Context/data |
-| --- | --- | --- | --- |
-| Calendar | Organizes events across calendar and agenda views. | Navigate dates, search events, create/view entries, export and configure alerts; offline prototype. | Country, locale and time zone; on-device |
-| Reminders | Manages reminders and their schedules. | Search, view status/repeat details and configure notifications; offline. | Locale/time zone; on-device |
-| Notes | Stores and organizes personal notes. | Search, sort, favourite and export notes; offline. | On-device |
-| To-dos | Manages tasks and completion state. | Add/view/check tasks, search, filter, sort and configure reminders; offline. | Locale/time zone; on-device |
-| Events | Manages scheduled activities. | Search/filter events, view timing and configure alerts. | City, locale and time zone; on-device prototype |
+## 10. Personal — 22
 
-## 7. Islamic tools — 17
-
-All tools in this section are visible only when Islamic content is enabled.
-
-| Feature | What it does | User capabilities | Context/data |
-| --- | --- | --- | --- |
-| Prayer Times | Shows daily prayers, current/next prayer and timing progress. | View schedule and countdown, share/export timings and configure prayer alerts; offline calculation. | City, country, time zone and locale; astronomical calculation |
-| Qibla Compass | Shows the bearing toward the Kaaba. | View direction/instrument guidance and use location context offline. | City/position; computed great-circle bearing |
-| Nearby Mosques | Displays nearby mosque results and map-style pins. | Search, filter and sort mosques; select a pin/result. | City/location/units; cached demo places directory |
-| Prayer Tracker | Records completed prayers and streak/progress. | Mark prayers, inspect history/heatmap, export and configure reminders; offline. | Time zone; on-device |
-| Ramadan | Summarizes Ramadan dates, fasting-day and prayer context. | View key timing/status, share and configure alerts; offline calculations. | City/country/time zone; Hijri and solar calculations |
-| Fasting Tracker | Records fasts and progress. | Mark fasts, view history/stats and export; offline. | Time zone; on-device |
-| Taraweeh | Helps find and compare Taraweeh locations/times. | Search/filter places and configure alerts. | City/units; cached demo directory |
-| Ayah of the Day | Presents a daily Qur'anic verse. | Read, favourite and share; available offline. | Language; static Qur'an text with daily selection |
-| Al-Qur’an | Provides Qur'an reading and navigation. | Browse by Surah/Juz/bookmarks, search, track reading history/progress, favourite and share; offline. | Language; static Qur'an text |
-| Search the Qur’an | Searches Qur'anic text by word or reference. | Search, filter, review history, favourite results and work offline. | Language; static Qur'an text |
-| Hadith | Provides a searchable Hadith reader. | Search/filter collections, favourite and share narrations; offline. | Language; static Hadith collection |
-| Daily Duas | Provides a categorized dua library. | Search/filter categories, open duas, favourite and share; offline. | Language; static dua collection |
-| 99 Names | Presents Asma ul Husna as a visual library. | Search, open details, favourite, review history and share; offline. | Language; static content |
-| Islamic Calendar | Displays Hijri dates and Islamic events. | Navigate dates, export and configure event alerts; offline. | Country/locale/time zone; Umm al-Qura-style calculation |
-| Tasbih | Provides a focused dhikr counter. | Increment/reset counter and review sessions/history; offline. | On-device |
-| Zakat Calculator | Estimates zakat using assets, liabilities and nisab. | Enter values, calculate eligibility/amount, inspect breakdown, save history, share and export; offline logic with rate input. | Country/currency/locale; delayed demo metal rates |
-| Faraid | Calculates Islamic inheritance distribution. | Enter estate/heirs, change heir counts, inspect shares, keep history, share and export. | Currency/locale; static classical-rule prototype |
-
-## 8. Money tools — 15
-
-| Feature | What it does | User capabilities | Context/data |
-| --- | --- | --- | --- |
-| Currency & Gold | Shows localized FX, gold and bullion information. | Search rates, inspect movements/history, favourite and share. | Country/currency/units/locale; delayed demo market data |
-| Markets | Provides a detailed regional/global market explorer. | Switch asset classes, search, filter, sort, view charts/details/timeframes, favourite, share, export and configure alerts. | Country/currency/locale; delayed demo exchange feed |
-| Fuel Prices | Shows localized pump-price information. | Compare fuel types, review history, share and configure price alerts. | Country/region/currency/units; daily demo regulator data |
-| Fuel Cost | Estimates trip fuel consumption and cost. | Enter distance, efficiency and price; compare scenarios, save history and share; offline. | Country/currency/units; current demo pump price |
-| Tax Calculator | Estimates income tax using selected country's slabs. | Enter income, calculate breakdown, keep history, share and export; offline calculation. | Supported country/currency/locale; annual statutory demo slabs |
-| National Savings | Explores Pakistan National Savings products and returns. | Search/sort schemes, compare returns and review history. | Pakistan/currency/locale; weekly demo schedule |
-| Prize Bonds | Shows bond denominations, draws and prize structures. | Search results/denominations, view history and configure draw alerts. | Pakistan/currency/locale; official-shaped demo draw data |
-| Bills | Summarizes bills, due dates and payment status. | Search/filter/sort bills, inspect history, export and configure due alerts. | Country/currency/locale/time zone; device + demo provider data |
-| Mobile Packages | Compares mobile operator packages. | Search, filter and sort by operator/type/value. | Pakistan/currency/locale; weekly demo tariffs |
-| Loan / EMI | Calculates loan instalments and amortization. | Enter principal/rate/tenure, calculate EMI, inspect yearly schedule, save history, share and export; offline. | Currency/locale; on-device |
-| Tip & Split | Splits a bill and calculates gratuity. | Enter bill, tip and people; calculate per-person amount, save history and share; offline. | Currency/locale; on-device |
-| Lending Ledger | Tracks who owes or is owed money. | Search/filter/sort people and entries, review history, export and configure reminders. | Currency/locale; on-device |
-| Installments | Tracks active purchase instalments. | Filter/sort plans, view schedules/history and configure due alerts. | Currency/locale; on-device |
-| Committee | Tracks a rotating savings committee/ROSCA. | View pool, member order and history; export and configure reminders. | Currency/locale; on-device |
-| Compound Interest | Projects investment growth over time. | Enter principal/contribution/rate/years, view chart/table, save history and share; offline. | Currency/locale; on-device |
-
-## 9. Daily Life tools — 18
-
-| Feature | What it does | User capabilities | Context/data |
-| --- | --- | --- | --- |
-| Weather | Shows current conditions and forecast-style information. | View temperature/feels-like/rain/wind, favourite location, share and configure weather alerts; cached offline display. | City/country/units/locale/time zone; delayed demo forecast |
-| Air Quality | Shows AQI, pollutant status and health guidance. | View current level/history, share and configure warnings. | City/country/locale; delayed demo stations |
-| Sun & Moon | Shows sunrise, sunset, daylight and lunar information. | View astronomical events/timeline and share; offline calculation. | City/country/time zone/locale; computed |
-| Loadshedding | Shows electricity outage windows. | View daily schedule/history and configure outage notifications; cached offline display. | Pakistan city/region/time zone; daily demo distributor data |
-| Trains | Tracks train routes, status, stations and fares. | Search/filter/sort, open train detail/timeline, review history, share and configure alerts. | Pakistan/city/currency/locale/time zone; intended live operator feed |
-| Flights | Tracks arrivals/departures and flight progress. | Search/filter/sort, open status/timeline, review history, share and configure alerts. | Country/city/locale/time zone/units; intended live ADS-B feed |
-| News | Provides localized and global news reading. | Search/filter, open stories, favourite, share and review reading history; offline cache capability. | Country/city/language/locale; intended live publisher feeds |
-| Cricket | Shows match summary, scorecard and standings/details. | Filter competitions/views, inspect batting/bowling/table data, share, review history and configure alerts. | Country/language/locale; intended live match feed |
-| Emergency | Provides local emergency services and direct call actions. | View services and activate real `tel:` links; works offline. | Country/region/city/language; static directory |
-| QR Scanner | Provides a camera-oriented QR scan interface. | Request camera permission, simulate/perform scan flow and review scan history; offline capability. | Camera permission; live device input |
-| Document Scanner | Provides document capture and export flow. | Request camera, capture/preview document, review history and export. | Camera permission; on-device |
-| Passport Photos | Helps compose passport/ID photos to country specifications. | Capture/select, frame to requirements, review prior items and export. | Country/locale + camera permission; static specifications |
-| Vehicle & Fines | Manages vehicle details, token/insurance dates and fine checks. | Search/filter vehicles, view history and configure reminders. | Pakistan/region/currency/locale; daily-shaped demo excise data |
-| Media Saver | Organizes media-saving actions from a supplied link. | Enter a link, view saved/history items and use offline device records. | On-device prototype |
-| WhatsApp Status | Presents an Android status-media library. | Request storage/media permission, browse items and review history offline. | Android/device permission; local prototype |
-| Speed Test | Presents an internet-speed testing instrument. | Start a test and view ping/download/upload-style result/history. | Country/locale; intended nearest test server |
-| World Clock | Compares time across cities and zones. | Search zones, select/favourite cities and compare current times offline. | Time zone/locale/language; IANA zones |
-| Public Holidays | Shows country and regional holidays. | Search/filter holidays, navigate schedule and export; offline. | Country/region/locale/language; annual calendar data |
-
-## 10. Personal tools — 22
-
-| Feature | What it does | User capabilities | Context/data |
-| --- | --- | --- | --- |
-| Parcel Tracker | Shows shipment status and delivery timeline. | Search tracking items, inspect milestones/history, share and configure alerts. | Country/locale/time zone; delayed demo carrier data |
-| Shopping List | Organizes grocery and shopping items. | Add/check items, search/filter and share list; offline. | Currency/locale; on-device |
-| Birthdays | Tracks birthdays and upcoming dates. | Search people/dates and configure reminders; offline. | Locale/time zone; on-device |
-| Daily Streak | Summarizes consistency across tracked activity. | View streak/history and configure reminders; offline. | On-device |
-| Recipes | Provides a searchable visual recipe library. | Search/filter, open recipes, favourite and share; offline. | Units/locale/language; static recipe data |
-| Meal Planner | Organizes meals across a week. | Navigate schedule, search, plan/export meals and work offline. | Units/locale; on-device |
-| Alarms | Manages scheduled alarms. | View/toggle alarms and configure notification behaviour; offline. | Time zone/locale; on-device |
-| Learning & Growth | Tracks courses or learning progress. | Search, favourite, record progress/history and work offline. | On-device |
-| Documents | Organizes private document records. | Search/filter/sort, inspect records, export and configure expiry reminders; offline. | Country/locale; sensitive on-device demo store |
-| Vaccinations | Tracks vaccination records and due dates. | Filter records, export and configure due reminders; offline. | Country/locale; sensitive on-device demo store |
-| Health Records | Organizes private reports and health entries. | Search/filter/sort records, export and configure reminders; offline. | Country/currency/locale; sensitive on-device demo store |
-| Play | Provides a small offline game/puzzle library. | Browse/open activities, favourite and review history. | On-device |
-| Baby Budget | Summarizes baby-related spending. | View category breakdown/history and export; offline. | Currency/locale; on-device |
-| Habits | Tracks daily habits and streaks. | Mark today, inspect history/heatmap/insights, export and configure reminders; offline. | Time zone/locale; on-device |
-| Water | Tracks daily hydration. | Add intake, view goal/progress/history and configure reminders; offline. | Units/locale; on-device |
-| BMI Calculator | Calculates body mass index from height and weight. | Enter measurements, view classification and retain history; offline. | Units/locale; on-device |
-| Cycle Tracker | Tracks menstrual-cycle dates and predictions. | Record dates, inspect calendar/history and configure reminders; offline. | Locale/time zone; sensitive on-device demo store |
-| Pregnancy | Shows pregnancy week, milestones and appointment-style items. | View progress/history and configure reminders; offline. | Locale/time zone/units; sensitive on-device demo store |
-| Expenses | Summarizes transactions and spending categories. | Search/filter/sort, view charts/history, share and export; offline. | Country/currency/locale/time zone; sensitive on-device |
-| Savings Goals | Tracks savings targets and progress. | View goals/history, share/export and configure contribution reminders; offline. | Currency/locale; sensitive on-device |
-| Subscriptions | Tracks recurring subscriptions and renewal dates. | Search/filter/sort, inspect history, export and configure renewal alerts. | Currency/locale/time zone; sensitive on-device |
-| Medication | Tracks medicines, doses and schedules. | View dose timeline/history, export and configure reminders; offline. | Time zone/locale; sensitive on-device demo store |
+| Tool | What it does in this app | Data |
+| --- | --- | --- |
+| Parcel Tracker | Two shipments and their milestones | Sample |
+| Shopping List | Items with bought state and progress | Sample |
+| Birthdays | Upcoming birthdays and anniversaries | Your records |
+| Daily Streak | A streak, best streak and rate from real check-ins | Your records |
+| Recipes | A searchable recipe library | Sample |
+| Meal Planner | Meals the reader plans, by day and slot | Your records |
+| Alarms | Three example alarms; the switches are not connected to any alarm | Sample |
+| Learning & Growth | Learning progress as a bar chart and heatmap | Sample |
+| Documents | Private document records; deletion is permanent | Sample |
+| Vaccinations | Vaccination records and what is due | Your records |
+| Health Records | Health entries with a detailed form; deletion is permanent | Your records |
+| Play | Lists four games and says none can be played yet | Sample |
+| Baby Budget | A budget, categories and spends | Your records |
+| Habits | Daily habits with real streaks and rates | Your records |
+| Water | Daily intake against a goal | Your records |
+| BMI Calculator | BMI from height and weight | Your input |
+| Cycle Tracker | Cycle dates and a prediction from the reader's own average interval | Your records |
+| Pregnancy | Week, trimester and due date from one stored date | Your records |
+| Expenses | Transactions, budgets, categories and insights | Sample |
+| Savings Goals | Goals and their progress | Your records |
+| Subscriptions | Subscriptions and renewals | Your records |
+| Medication | Medicines and doses | Your records |
 
 ## 11. Availability summary
 
-- **Islamic-only:** Prayer Times, Qibla, Nearby Mosques, Prayer Tracker, Ramadan, Fasting Tracker, Taraweeh, Ayah, Qur'an, Qur'an Search, Hadith, Duas, 99 Names, Hijri Calendar, Tasbih, Zakat and Faraid.
-- **Pakistan-only in the current catalogue:** National Savings, Prize Bonds, Mobile Packages, Loadshedding, Trains and Vehicle & Fines. Tax supports multiple configured countries.
-- **Android-oriented:** WhatsApp Status.
-- **Permission-oriented:** Qibla/nearby location, QR Scanner, Document Scanner, Passport Photos and WhatsApp Status.
-- **Sensitive:** Documents, Vaccinations, Health Records, Cycle Tracker, Pregnancy, Expenses, Savings Goals, Subscriptions and Medication.
+- **Islamic experience only:** Prayer Times, Qibla Compass, Nearby Mosques,
+  Prayer Tracker, Ramadan, Fasting Tracker, Taraweeh, Ayah of the Day,
+  Al-Qur’an, Search the Qur’an, Hadith, Daily Duas, 99 Names, Islamic Calendar,
+  Tasbih, Zakat Calculator and Faraid.
+- **Pakistan only:** National Savings, Prize Bonds, Mobile Packages,
+  Loadshedding, Trains and Vehicle & Fines. Tax supports PK, GB, US, IN, AE
+  and SA.
+- **Android only:** WhatsApp Status.
+- **Camera or photo access, asked for only when used:** QR Scanner, Document
+  Scanner and Passport Photos.
+- **Sensitive** (kept off Home, Today and share cards; private in
+  notifications): Lending Ledger, Installments, Committee, Documents,
+  Vaccinations, Health Records, Baby Budget, Cycle Tracker, Pregnancy,
+  Expenses, Savings Goals, Subscriptions and Medication.
 
-Availability is enforced not only in the Tools catalogue but also in Home recommendations, global search, recent tools, notifications, related tools and deep links.
+Availability is enforced not only in Tools but in Home, search, recent tools,
+notifications, related tools and deep links.
 
-## 12. Current production-readiness boundaries
+## 12. Production-readiness boundaries
 
-### Working as a prototype
+### Working today
 
-- Complete interface compositions for all 85 tools.
-- Personalization and eligibility rules.
-- Calculations and formatted demonstration data.
-- Local preferences, history and account simulation.
-- Navigation, Back stacks, sheets and dialogs.
-- Localization, RTL, dark mode and accessibility semantics.
-- Notification-centre logic and browser-permission flow.
-- Automated verification and regression coverage.
+- All 85 tool screens, the six destinations, onboarding, authentication and
+  the account routes.
+- Personalisation and eligibility rules.
+- Calculations, including prayer times, the Hijri calendar, Qibla and zakat.
+- The record layer, with Reminders on a durable store.
+- Navigation, back stacks, sheets and dialogs on phone and tablet.
+- Localisation, RTL, dark mode and accessibility semantics.
+- Honest source lines, enforced by test.
+- Around 6,600 automated tests, including golden images.
 
 ### Still required for production
 
-- Backend APIs and database.
-- Secure real authentication and authorization.
-- Real email/phone verification and password recovery.
-- Live weather, finance, transport, sports, news, places and carrier providers.
-- Secure document/health storage and compliance controls.
-- Real cloud sync and multi-device conflict resolution.
-- Production push-notification service.
-- Payment/bill-payment integrations if money movement is intended.
+- A backend and database; secure real authentication and authorisation.
+- Real email and phone verification and password recovery.
+- Live weather, finance, transport, sports, news, places and carrier data.
+- Durable storage for every record family, with secure storage for
+  documents, health and financial records.
+- Cloud sync and multi-device conflict resolution.
+- A push-notification service, and delivered notifications beyond Reminders.
+- Device location for "Use my current location".
 - Analytics, monitoring, audit logs, abuse controls and rate limiting.
-- Provider-specific caching, offline and freshness policies.
 
 ## 13. Capability acceptance rule
 
-A feature should not claim a capability merely because a button can be drawn. Search must actually narrow results; filters and sorting must change content; calculators must recompute; history must persist at its promised scope; sharing/export must produce meaningful output; notifications must respect eligibility and privacy; and live/provider labels must not be used until real integrations exist.
+A feature should not claim a capability merely because a button can be drawn.
+Search must narrow results; filters and sorting must change content;
+calculators must recompute; history must persist at its promised scope; sharing
+and export must produce meaningful output; notifications must respect
+eligibility and privacy; and no live or provider label is shown until a real
+integration exists.

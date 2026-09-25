@@ -123,7 +123,11 @@ follow the reader's locale and preferences, independently of their country.
 - `docs/LUME_ONBOARDING.md`, `docs/LUME_AUTH.md`, `docs/LUME_ACCOUNT.md`,
   `docs/LUME_DESTINATIONS.md`, `docs/LUME_LOCALIZATION.md` — maintenance
   documents for those areas.
-- `claude.md` — the product requirements.
+- `claude.md` — the product requirements, and in §70 the rules the codebase
+  holds them to.
+- `LUME_COMPLETE_DESIGN_SPECIFICATION.md`,
+  `LUME_FEATURES_AND_SCREEN_CAPABILITIES.md` — the design specification, and
+  what every screen and tool does and what its data really is.
 - `docs/conversion_archive/` — **historical, non-authoritative.** The
   record of converting Lume from its original browser prototype, kept for
   the reasoning behind decisions (the `ROLLOUT_WAVE_*.md` files in

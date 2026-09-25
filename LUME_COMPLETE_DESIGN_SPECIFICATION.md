@@ -2,9 +2,9 @@
 
 ## 1. Document purpose
 
-This document is the implementation-facing design reference for the current Lume prototype. It explains what the product is, who it serves, how the interface behaves, how personalization affects content, and which visual and interaction rules must remain consistent when the code is changed.
+This document is the implementation-facing design reference for the Lume Flutter application. It explains what the product is, who it serves, how the interface behaves, how personalization affects content, and which visual and interaction rules must remain consistent when the code is changed.
 
-It is based on the current `tes.zip` implementation and its existing design specifications. When this document and the running implementation disagree, the mismatch should be reviewed deliberately rather than silently changing either side.
+When this document and the application disagree, the mismatch should be reviewed deliberately rather than silently changing either side.
 
 ## 2. Product definition
 
@@ -14,7 +14,7 @@ The product promise is:
 
 > One calm, personalized place for the small tasks and information people need throughout the day.
 
-The current version is a high-fidelity browser prototype. It contains working interactions and realistic demonstration data, but it does not yet connect to production APIs, a remote database, secure server-side authentication, payment services, or cloud synchronization.
+Lume is a native Flutter application for Android and iOS phones and tablets. It contains working interactions and realistic demonstration data, but it does not yet connect to production APIs, a remote database, secure server-side authentication, payment services, or cloud synchronization.
 
 ## 3. Product principles
 
@@ -23,7 +23,7 @@ The current version is a high-fidelity browser prototype. It contains working in
 3. **Faith and country are separate dimensions.** Islamic content depends on the faith-content preference. Country-specific content depends on availability in the selected country.
 4. **No invented data.** Missing information should have a designed empty, unavailable, loading, error, or private state.
 5. **Progressive depth.** Home gives a glance; category and tool screens provide detail; focused tools provide action.
-6. **Mobile first, desktop composed.** Mobile uses the full screen. Desktop constrains content without turning every screen into an oversized mobile card.
+6. **Phone first, tablet composed.** A phone uses the full screen. A tablet constrains content and uses a navigation rail, a sidebar and master-detail rather than an oversized phone layout.
 7. **Accessible by default.** Keyboard access, focus visibility, semantic roles, readable contrast, touch targets, reduced motion, and RTL support are requirements.
 8. **Honest privacy.** Sensitive data and notification previews must be identified clearly. The interface must not imply production-grade security that is not implemented.
 
@@ -38,7 +38,7 @@ Primary contexts:
 - Morning and evening daily overview.
 - Country-aware information while living or travelling abroad.
 - English, Urdu, or Arabic use, including RTL layouts.
-- Guest use on one device, with an optional local prototype account.
+- Guest use on one device, with an optional, simulated device-local account.
 
 ## 5. Information architecture
 
@@ -161,7 +161,7 @@ Rules:
 
 Required composition:
 
-1. Page heading and visible tool count.
+1. Screen heading and visible tool count.
 2. Search field.
 3. Category chips.
 4. Recently used tools, when history exists.
@@ -239,7 +239,7 @@ Rules:
 
 Authentication is a flow, not a utility tool.
 
-Supported prototype flows:
+Supported flows:
 
 - Sign up.
 - Sign in.
@@ -251,7 +251,7 @@ Supported prototype flows:
 
 Design rules:
 
-- Mobile uses the entire canvas; desktop constrains forms to approximately 460 px.
+- A phone uses the entire screen; a wide screen constrains the form to a centred card of about 460 logical pixels.
 - Sign-in and sign-up are sibling flows.
 - Validation starts after interaction, not on initial render.
 - Error space is reserved to avoid layout jumping.
@@ -261,7 +261,7 @@ Design rules:
 - Loading prevents double submission.
 - Success screens do not expose a route back into a completed flow.
 
-The current local account engine is for prototype behaviour only. Production authentication requires a backend, secure password hashing, server-issued sessions, email delivery, rate limits, CSRF/XSS protection, audit events and secure recovery tokens.
+The current account engine is simulated on the device and is not production security. Production authentication requires a backend, secure password hashing, server-issued sessions, email delivery, rate limits, request-forgery and injection protection, audit events and secure recovery tokens.
 
 ### 8.8 Notifications
 
@@ -282,7 +282,7 @@ Rules:
 - Dismissal removes it.
 - Sensitive details respect preview settings.
 - Faith and country eligibility apply to notification generation and display.
-- Browser permission must never be requested at boot.
+- The system notification permission must never be requested at launch.
 - The user sees an education step before the system prompt.
 - A denial is explained and not repeatedly prompted.
 
@@ -321,7 +321,7 @@ Lume uses a calm, rounded, modern visual language with soft surfaces, restrained
 
 ### 9.2 Design tokens
 
-All colours, typography, spacing, radii, shadows, control sizes and animation durations should come from semantic tokens.
+All colours, typography, spacing, radii, shadows, control sizes and animation durations should come from semantic tokens (`lib/core/theme/lume/`). Sizes in this document are Flutter logical pixels.
 
 Required token principles:
 
@@ -343,7 +343,7 @@ Required token principles:
 - Plus Jakarta Sans is the main Latin UI family.
 - Noto Naskh Arabic supports Urdu and Arabic script.
 - Headings use strong but controlled weight.
-- Inputs use at least 16 px text to prevent mobile browser zoom.
+- Input text is never smaller than body text.
 - Numeric content uses consistent numeral styling.
 - Long translations must wrap without clipping or forcing physical left/right layout assumptions.
 
@@ -374,7 +374,7 @@ Components must not contain product-specific availability logic. They receive al
 - Sheets rise from the bottom where appropriate.
 - Horizontal content uses deliberate scroll containers with accessible labels.
 
-### Tablet and desktop
+### Tablet
 
 - Content receives a readable maximum width.
 - Authentication forms remain constrained.
@@ -407,14 +407,14 @@ Components must not contain product-specific availability logic. They receive al
 
 ## 13. Data, privacy and security model
 
-### Current prototype
+### Current application
 
-- Most data is embedded demonstration data.
-- Device preferences and prototype account records use browser storage.
-- Passwords are converted to a lightweight local digest; this is explicitly not production security.
-- Browser geolocation is requested only through user action.
-- Browser notification permission is requested only after education and consent.
-- Native sharing and telephone links use browser/platform support.
+- Most data is bundled demonstration data, marked "Sample data" on the tool that shows it.
+- Preferences, the simulated account and most records are held in memory for the session; Reminders alone are stored durably on the device.
+- Nothing about the simulated account is written to disk or protected; it is explicitly not production security.
+- Device location is not read yet: "Use my current location" is shown but not wired, and a place is chosen by hand.
+- The notification permission is requested only after an explanation and consent.
+- Sharing, export, the dialer and outbound links go through the platform's own share sheet and URL handlers.
 
 ### Production requirements
 
@@ -460,7 +460,7 @@ A screen is complete only when:
 - Loading, empty, offline, denied and error states are handled where applicable.
 - Eligibility and personalization are correct.
 - English, Urdu and Arabic render without leaks or clipping.
-- Mobile, desktop, light, dark, LTR, RTL and reduced-motion modes work.
+- Phone, tablet, light, dark, LTR, RTL and reduced-motion modes work.
 - Keyboard and assistive-technology semantics are correct.
 - No fake security, fake live status or invented user data is shown.
 - Relevant automated tests pass.
@@ -470,7 +470,7 @@ A screen is complete only when:
 Use the following prompt when asking another coding or design system to reproduce or extend Lume:
 
 ```text
-Act as a senior product designer and frontend architect. Design and implement Lume, a calm, responsive, multilingual daily-life super-app. Preserve these product rules:
+Act as a senior product designer and Flutter architect. Design and implement Lume, a calm, responsive, multilingual daily-life super-app. Preserve these product rules:
 
 1. Primary destinations are Home, Tools, Today, Explore and Profile. Account, Authentication, Notifications and Tool screens are nested destinations.
 2. Personalize using country, city, language, interests, Islamic-content preference, units, currency, time zone and theme.
@@ -478,7 +478,7 @@ Act as a senior product designer and frontend architect. Design and implement Lu
 4. Support English LTR, Urdu RTL and Arabic RTL with locale-aware currency, numbers, dates, time, temperature and distance.
 5. Use a calm rounded interface with semantic tokens, teal-led accents, 24–32 px cards, 14–16 px controls, 44 px minimum touch targets, visible focus and full dark-mode tokens.
 6. Build honest loading, empty, no-results, offline, denied, error, stale and private states. Never render a blank screen or invent user data.
-7. Keep mobile screens full-width and constrain desktop forms/content appropriately. Respect safe areas, reduced motion and keyboard navigation.
+7. Keep phone screens full-width and constrain tablet forms/content appropriately. Respect safe areas, reduced motion and keyboard navigation.
 8. Treat authentication and notifications as platform flows, not utility tools. Do not claim production security unless a real backend exists.
 9. Each tool declares its metadata, capabilities, eligibility, data awareness, density and composition archetype. Search appears above filtered content; source and freshness appear on data tools.
 10. Preserve the existing Lume screen composition and behaviour tests. Add tests for every new state and interaction.

@@ -13,10 +13,18 @@ lib/features/   one folder per feature
 lib/l10n/       localisation
 ```
 
-Dependencies point inward: a feature may use `core/` and `app/`; `core/`
-never imports a feature. Features talk to each other only through the
-catalogue, the tool registry and shared providers — never by importing
-another feature's presentation layer.
+Dependencies point inward: a feature may use `core/` and `app/`, and `core/`
+imports no feature — with one necessary exception,
+`core/routing/app_router.dart`, which has to know every destination and tool
+to route to it.
+
+Presentation shared by many features lives in a few hub features, and the
+rest build on them: `tools/` (the tool frame, `tool_screen.dart`, used by every
+tool), `records/` (the record engine), `catalogue/` (feature names),
+`account/` (the personalisation sheet) and `share/` (the share sheet). Outside
+those, a feature does not reach into another feature's internals; related
+features share a small text or model file where they genuinely share a
+vocabulary (the financial record families share `ledger_text.dart`).
 
 ### Inside a feature
 
