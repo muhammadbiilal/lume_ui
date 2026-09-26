@@ -24,6 +24,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
+import '../../../app/providers/notification_feed.dart';
 import '../../../app/providers/personalisation.dart';
 import '../../../app/providers/shell_provider.dart';
 import '../../../app/providers/locale_provider.dart';
@@ -56,6 +57,7 @@ import '../domain/account_repository.dart';
 import '../domain/notification_prefs.dart';
 import 'account_parts.dart';
 import 'account_routes.dart';
+import '../../notifications/presentation/notification_sheets.dart';
 import 'account_confirm.dart';
 import 'personalise_sheet.dart';
 
@@ -546,12 +548,21 @@ class _LumeAccountHostState extends ConsumerState<LumeAccountHost> {
       final LumeNotificationPrefs now = ref
           .read(notificationPrefsProvider)
           .prefs;
+      if (name == 'push') {
+        // Asked of the platform, through the push sheet (`#sheet-notifpush`).
+        unawaited(
+          switchLumePush(
+            context: context,
+            ref: ref,
+            on: on,
+            write: (bool v) => unawaited(_writeNotify(now.copyWith(push: v))),
+            say: _say,
+          ),
+        );
+        return;
+      }
       unawaited(
         _writeNotify(switch (name) {
-          // Push reports what the OS has granted. This build never asks, so
-          // switching it on cannot make it true — and the row says "Not
-          // asked yet" rather than pretending.
-          'push' => now.copyWith(push: on),
           'inApp' => now.copyWith(inApp: on),
           'sound' => now.copyWith(sound: on),
           'haptics' => now.copyWith(haptics: on),
@@ -573,7 +584,12 @@ class _LumeAccountHostState extends ConsumerState<LumeAccountHost> {
         ref.read(notificationPrefsProvider).prefs.typeToggled(sourceId, on: on),
       ),
     ),
-    restoreNotifications: () => _say(l.notifPrefRestore),
+    // `notifrestore` — every dismissed row back, as the preferences sheet's
+    // own Restore does.
+    restoreNotifications: () => unawaited(() async {
+      await ref.read(notificationFeedProvider).restoreAll();
+      if (mounted) _say(l.nRestored);
+    }()),
     toggleCategory: (String id, bool on) => unawaited(
       _writeNotify(
         ref.read(notificationPrefsProvider).prefs.toggled(id, on: on),

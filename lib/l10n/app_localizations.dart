@@ -11362,6 +11362,24 @@ abstract class AppLocalizations {
   /// **'Sign in to continue'**
   String get authNeedAccount;
 
+  /// account.js auth.legalTitle — the sign-up legal link's sheet (the web's own ur/ar).
+  ///
+  /// In en, this message translates to:
+  /// **'How Lume handles your data'**
+  String get authLegalTitle;
+
+  /// account.js auth.legalBody
+  ///
+  /// In en, this message translates to:
+  /// **'Your account, your settings and everything you create in Lume are stored on this device. Lume does not sell your information and does not share it with anyone.'**
+  String get authLegalBody;
+
+  /// account.js auth.legalWhere
+  ///
+  /// In en, this message translates to:
+  /// **'The full detail lives under Privacy in your profile, and you can delete your account and everything in it at any time.'**
+  String get authLegalWhere;
+
   /// tool-specs.js src "On device" — shared by every tool whose figures live on the device. The reference prints it in English everywhere; translated here (§11).
   ///
   /// In en, this message translates to:

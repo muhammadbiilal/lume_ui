@@ -6457,6 +6457,17 @@ class AppLocalizationsEn extends AppLocalizations {
   String get authNeedAccount => 'Sign in to continue';
 
   @override
+  String get authLegalTitle => 'How Lume handles your data';
+
+  @override
+  String get authLegalBody =>
+      'Your account, your settings and everything you create in Lume are stored on this device. Lume does not sell your information and does not share it with anyone.';
+
+  @override
+  String get authLegalWhere =>
+      'The full detail lives under Privacy in your profile, and you can delete your account and everything in it at any time.';
+
+  @override
   String get toolSourceOnDevice => 'On device';
 
   @override

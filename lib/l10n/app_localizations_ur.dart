@@ -6453,6 +6453,17 @@ class AppLocalizationsUr extends AppLocalizations {
   String get authNeedAccount => 'جاری رکھنے کے لیے سائن اِن کریں';
 
   @override
+  String get authLegalTitle => 'Lume آپ کا ڈیٹا کیسے سنبھالتا ہے';
+
+  @override
+  String get authLegalBody =>
+      'آپ کا اکاؤنٹ، آپ کی ترتیبات اور Lume میں بنائی گئی ہر چیز اسی ڈیوائس پر محفوظ ہے۔ Lume آپ کی معلومات نہ بیچتا ہے نہ کسی کے ساتھ بانٹتا ہے۔';
+
+  @override
+  String get authLegalWhere =>
+      'مکمل تفصیل آپ کی پروفائل میں پرائیویسی کے تحت موجود ہے، اور آپ جب چاہیں اپنا اکاؤنٹ اور اس کا سب کچھ حذف کر سکتے ہیں۔';
+
+  @override
   String get toolSourceOnDevice => 'آلے پر';
 
   @override

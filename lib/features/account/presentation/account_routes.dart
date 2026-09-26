@@ -709,9 +709,8 @@ LumeAccountView _notifications(LumeAccountRouteContext c) {
           rows: <Widget>[
             LumeSettingsRow(
               title: l.notifPrefPush,
-              // What the OS has granted, not what the app would like. This
-              // build never asks, so it never claims to have been allowed.
-              subtitle: l.acctPushAsk,
+              // On only once the platform has allowed it (`switchLumePush`).
+              subtitle: c.notify.push ? l.acctPushGranted : l.acctPushAsk,
               toggle: c.notify.push,
               onTap: () => c.actions.toggleGeneral('push', !c.notify.push),
             ),

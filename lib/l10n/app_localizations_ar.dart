@@ -6531,6 +6531,17 @@ class AppLocalizationsAr extends AppLocalizations {
   String get authNeedAccount => 'سجّل الدخول للمتابعة';
 
   @override
+  String get authLegalTitle => 'كيف يتعامل Lume مع بياناتك';
+
+  @override
+  String get authLegalBody =>
+      'حسابك وإعداداتك وكل ما تنشئه في Lume محفوظ على هذا الجهاز. لا يبيع Lume معلوماتك ولا يشاركها مع أحد.';
+
+  @override
+  String get authLegalWhere =>
+      'التفاصيل الكاملة تجدها ضمن الخصوصية في ملفك الشخصي، ويمكنك حذف حسابك وكل ما فيه في أي وقت.';
+
+  @override
   String get toolSourceOnDevice => 'على الجهاز';
 
   @override

@@ -8749,6 +8749,18 @@
   "@authNeedAccount": {
     "description": "account.js auth.needAccount — the signed-out refusal's title."
   },
+  "authLegalTitle": "How Lume handles your data",
+  "@authLegalTitle": {
+    "description": "account.js auth.legalTitle — the sign-up legal link's sheet (the web's own ur/ar)."
+  },
+  "authLegalBody": "Your account, your settings and everything you create in Lume are stored on this device. Lume does not sell your information and does not share it with anyone.",
+  "@authLegalBody": {
+    "description": "account.js auth.legalBody"
+  },
+  "authLegalWhere": "The full detail lives under Privacy in your profile, and you can delete your account and everything in it at any time.",
+  "@authLegalWhere": {
+    "description": "account.js auth.legalWhere"
+  },
   "toolSourceOnDevice": "On device",
   "@toolSourceOnDevice": {
     "description": "tool-specs.js src \"On device\" — shared by every tool whose figures live on the device. The reference prints it in English everywhere; translated here (§11)."

@@ -19,10 +19,12 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../app/providers/notification_feed.dart';
 import '../../../app/providers/personalisation.dart';
+import '../../../app/providers/platform_services.dart';
 import '../../../app/providers/shell_provider.dart';
 import '../../../core/icons/lume_icon.dart';
 import '../../../core/icons/lume_icons.dart';
 import '../../../core/localization/lume_format.dart';
+import '../../../core/platform/lume_notification_gate.dart';
 import '../../../core/theme/lume/lume_colors.dart';
 import '../../../core/theme/lume/lume_space.dart';
 import '../../../core/theme/lume/lume_theme.dart';
@@ -55,6 +57,59 @@ Future<bool?> showLumeNotificationPushSheet(BuildContext context) =>
         ),
       ),
     );
+
+/// Push, switched on — `notifications.js`'s push toggle.
+///
+/// Turning it on is a question for the platform, not a stored wish: already
+/// granted, it is simply on; not yet decided (or refused where the platform
+/// will still ask), the push sheet explains what it is for and, on Enable,
+/// the platform's own dialog asks; refused for good, or with no
+/// notifications on this platform, it stays off and says why. Turning it off
+/// needs no one's permission. [write] stores the answer; [say] reports it.
+Future<void> switchLumePush({
+  required BuildContext context,
+  required WidgetRef ref,
+  required bool on,
+  required void Function(bool on) write,
+  required void Function(String message) say,
+}) async {
+  final AppLocalizations l = AppLocalizations.of(context);
+  if (!on) {
+    write(false);
+    return;
+  }
+  final LumeNotificationGate gate = ref.read(notificationGateProvider);
+  LumeNotificationState state = await gate.check();
+  if (!context.mounted) return;
+  switch (state.access) {
+    case LumeNotificationAccess.granted:
+      write(true);
+      return;
+    case LumeNotificationAccess.blocked || LumeNotificationAccess.undetermined:
+      // Only Settings can change it (`settingsHelp`) — asking would show
+      // nothing, or might.
+      say(l.acctPushDeniedHelp);
+      return;
+    case LumeNotificationAccess.unavailable:
+      say(l.acctPushUnsupported);
+      return;
+    case LumeNotificationAccess.firstRequest ||
+        LumeNotificationAccess.denied ||
+        LumeNotificationAccess.interrupted ||
+        LumeNotificationAccess.failed:
+      break;
+  }
+  final bool? allow = await showLumeNotificationPushSheet(context);
+  if (allow != true || !context.mounted) return;
+  state = await gate.request();
+  if (!context.mounted) return;
+  if (state.access == LumeNotificationAccess.granted) {
+    write(true);
+    say(l.acctPushThanks);
+  } else {
+    say(l.acctPushDeniedHelp);
+  }
+}
 
 /// `.pushask` — the body of `#sheet-notifpush`.
 class LumeNotificationPushAsk extends ConsumerWidget {
@@ -363,11 +418,19 @@ class LumeNotificationPrefsSheet extends ConsumerWidget {
             rows: <Widget>[
               LumeSettingsRow(
                 title: l.notifPrefPush,
-                // What the OS has granted, not what the app would like. This
-                // build never asks, so it never claims to have been allowed.
-                subtitle: l.acctPushAsk,
+                // On only once the platform has allowed it (`switchLumePush`).
+                subtitle: prefs.push ? l.acctPushGranted : l.acctPushAsk,
                 toggle: prefs.push,
-                onTap: () => store.write(prefs.copyWith(push: !prefs.push)),
+                onTap: () => unawaited(
+                  switchLumePush(
+                    context: context,
+                    ref: ref,
+                    on: !prefs.push,
+                    write: (bool on) => store.write(prefs.copyWith(push: on)),
+                    say: (String m) =>
+                        showLumeToast(context, LumeToastData(message: m)),
+                  ),
+                ),
               ),
               LumeSettingsRow(
                 title: l.notifPrefInApp,

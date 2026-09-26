@@ -37,6 +37,7 @@ import 'package:go_router/go_router.dart';
 import '../../app/providers/personalisation.dart';
 import '../config/lume_build_profile.dart';
 import '../../app/providers/shell_provider.dart';
+import '../../features/auth/presentation/auth_legal_sheet.dart';
 import '../../features/auth/application/auth_flow_controller.dart';
 import '../../features/auth/data/fake_auth_repository.dart';
 import '../../features/auth/domain/auth_model.dart';
@@ -529,6 +530,9 @@ Widget _auth(BuildContext context, GoRouterState state) {
         // carry on as a guest.
         modal: gate.state.held != null,
         pendingDestination: gate.state.held,
+        // Sign-up's "How Lume handles your data" — a sheet, so the form and
+        // the password typed into it stay where they are.
+        onOpenLegal: () => showLumeAuthLegal(context),
         onRouteChanged: (LumeAuthRoute next) {
           if (!context.mounted) return;
           context.replace(LumeRoutes.authRoute(next.segment));
