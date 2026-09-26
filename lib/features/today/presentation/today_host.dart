@@ -6,10 +6,14 @@
 /// inputs and can be pumped with a fixture and no router.
 library;
 
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
+import '../../share/presentation/share_sheet.dart';
+import '../../../core/platform/lume_share.dart';
 import '../../../app/providers/personalisation.dart';
 import '../../../core/fixtures/lume_clock.dart';
 import '../../../core/routing/lume_routes.dart';
@@ -40,6 +44,10 @@ class _LumeTodayHostState extends ConsumerState<LumeTodayHost> {
   /// Shown over the page. There is no global presenter, so a screen that
   /// toasts holds its own — the same shape onboarding uses.
   LumeToastData? _toast;
+
+  /// The reflection card's Bookmark, for as long as Today is open — the
+  /// reference's `classList.toggle('is-on')`, which nothing stores either.
+  bool _bookmarked = false;
 
   void _say(String message) {
     setState(() => _toast = LumeToastData(message: message));
@@ -102,6 +110,14 @@ class _LumeTodayHostState extends ConsumerState<LumeTodayHost> {
           openWeek: () => _say(l.todayWeekToast),
           addTask: () => _say(l.todayAddToast),
           openPrivate: () => _say(l.todayPrivateToast),
+          bookmarked: _bookmarked,
+          toggleBookmark: () {
+            setState(() => _bookmarked = !_bookmarked);
+            _say(_bookmarked ? l.todayBookmarked : l.todayUnbookmarked);
+          },
+          share: (LumeShareCard card) =>
+              unawaited(showLumeShareSheet(context: context, card: card)),
+          say: _say,
         ),
       );
 

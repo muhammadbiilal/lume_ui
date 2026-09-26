@@ -6444,6 +6444,15 @@ class AppLocalizationsUr extends AppLocalizations {
   String get wastatusGranting => 'رسائی کی درخواست کی جا رہی ہے';
 
   @override
+  String get todayBookmarked => 'آپ کے محفوظات میں شامل کر دیا گیا';
+
+  @override
+  String get todayUnbookmarked => 'محفوظات سے ہٹا دیا گیا';
+
+  @override
+  String get authNeedAccount => 'جاری رکھنے کے لیے سائن اِن کریں';
+
+  @override
   String get toolSourceOnDevice => 'آلے پر';
 
   @override

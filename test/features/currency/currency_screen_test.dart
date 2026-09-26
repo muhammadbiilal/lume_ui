@@ -23,6 +23,18 @@ import 'currency_harness.dart';
 
 void main() {
   group('what it opens on', () {
+    testWidgets('the rate line reads "1 PKR = … USD", the unit said once', (
+      WidgetTester tester,
+    ) async {
+      await pumpCurrency(tester);
+      final String line = tester
+          .widget<Text>(find.byKey(LumeCurrencyTool.rateKey))
+          .data!;
+      expect(line, startsWith('1 PKR = '));
+      expect(line, endsWith(' USD'));
+      expect(line, isNot(contains('1 1')));
+    });
+
     testWidgets('the reader\'s own currency to the reference\'s own default', (
       WidgetTester tester,
     ) async {

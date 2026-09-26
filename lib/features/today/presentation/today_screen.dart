@@ -24,6 +24,7 @@ library;
 
 import 'package:flutter/material.dart';
 
+import '../../../core/platform/lume_share.dart';
 import '../../../core/fixtures/lume_clock.dart';
 import '../../../core/icons/lume_icons.dart';
 import '../../../core/layout/lume_measure.dart';
@@ -51,6 +52,10 @@ class LumeTodayActions {
     required this.openWeek,
     required this.addTask,
     required this.openPrivate,
+    required this.toggleBookmark,
+    required this.share,
+    required this.say,
+    this.bookmarked = false,
   });
 
   final void Function(LumeHomeTarget target) openTarget;
@@ -58,6 +63,19 @@ class LumeTodayActions {
   final VoidCallback openWeek;
   final VoidCallback addTask;
   final VoidCallback openPrivate;
+
+  /// The reflection card's Bookmark — `data-bookmark`: it turns on or off
+  /// and says which. [bookmarked] is whether it is on.
+  final VoidCallback toggleBookmark;
+  final bool bookmarked;
+
+  /// The reflection card's Share — `data-share="ayah"` / `"quote"`: the
+  /// share sheet, over the card it is given.
+  final void Function(LumeShareCard card) share;
+
+  /// A line said as a toast — an agenda entry with nowhere to go says its
+  /// own title, as the reference's `toast:<title>` does.
+  final void Function(String message) say;
 }
 
 /// The screen.
@@ -319,12 +337,39 @@ class LumeTodayScreen extends StatelessWidget {
               LumeCardAction(
                 icon: LumeIcons.bookmark,
                 semanticLabel: l.actionBookmark,
-                onPressed: () {},
+                selected: actions.bookmarked,
+                onPressed: actions.toggleBookmark,
               ),
               LumeCardAction(
                 icon: LumeIcons.share,
                 semanticLabel: l.actionShare,
-                onPressed: () {},
+                onPressed: () {
+                  final LumeShareCard? card = switch (r) {
+                    LumeAyahReflection(
+                      :final String translation,
+                      :final String? arabic,
+                      :final String surah,
+                    ) =>
+                      LumeShareCard.forFeature(
+                        sensitive: false,
+                        kind: LumeShareKind.quran,
+                        text: translation,
+                        source: l.todayAyahCitation(surah, verse!),
+                        arabic: arabic,
+                      ),
+                    LumeThoughtReflection(
+                      :final String text,
+                      :final String attribution,
+                    ) =>
+                      LumeShareCard.forFeature(
+                        sensitive: false,
+                        kind: LumeShareKind.quote,
+                        text: text,
+                        source: attribution,
+                      ),
+                  };
+                  if (card != null) actions.share(card);
+                },
               ),
             ],
           ),
@@ -383,7 +428,9 @@ class LumeTodayScreen extends StatelessWidget {
         LumeAgendaState.upcoming => LumeAgendaTone.upcoming,
       },
       isLast: index == (data?.agenda.length ?? 0) - 1,
-      onTap: e.target == null ? null : () => actions.openTarget(e.target!),
+      onTap: e.target == null
+          ? () => actions.say(title)
+          : () => actions.openTarget(e.target!),
     );
   }
 

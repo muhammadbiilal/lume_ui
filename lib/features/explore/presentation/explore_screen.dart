@@ -44,11 +44,16 @@ class LumeExploreActions {
     required this.openTarget,
     required this.openSearch,
     required this.refreshWeather,
+    required this.say,
   });
 
   final void Function(LumeHomeTarget target) openTarget;
   final VoidCallback openSearch;
   final VoidCallback refreshWeather;
+
+  /// A line said as a toast — a Nearby row says its own, as the reference's
+  /// `data-toast` does. **Dayroz:** the row opens that place.
+  final void Function(String message) say;
 }
 
 /// The screen.
@@ -595,7 +600,10 @@ class LumeExploreScreen extends StatelessWidget {
                   subtitle: _placeSub(l, f, d.nearby[i].id),
                   value: _distance(l, f, d.nearby[i].distanceMetres),
                   isLast: i == d.nearby.length - 1,
-                  onTap: () {},
+                  onTap: () => actions.say(
+                    '${_placeTitle(l, d.nearby[i].id)} · '
+                    '${_placeSub(l, f, d.nearby[i].id)}',
+                  ),
                 ),
             ],
           ),

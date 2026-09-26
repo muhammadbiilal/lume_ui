@@ -6448,6 +6448,15 @@ class AppLocalizationsEn extends AppLocalizations {
   String get wastatusGranting => 'Requesting access';
 
   @override
+  String get todayBookmarked => 'Saved to your bookmarks';
+
+  @override
+  String get todayUnbookmarked => 'Removed from bookmarks';
+
+  @override
+  String get authNeedAccount => 'Sign in to continue';
+
+  @override
   String get toolSourceOnDevice => 'On device';
 
   @override

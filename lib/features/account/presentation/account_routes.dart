@@ -298,8 +298,9 @@ LumeAccountView signedOutView(LumeAccountRouteContext c, String title) =>
         LumeAccountSection(
           child: LumeToolState(
             icon: LumeIcons.lock,
-            title: c.l.authErrSignedOut,
-            text: c.l.authNeedAccountText,
+            // `signedOutRoute`: "Sign in to continue", then why.
+            title: c.l.authNeedAccount,
+            text: c.l.authErrSignedOut,
             action: LumeButton.accent(
               label: c.l.authSignIn,
               icon: LumeIcons.login,

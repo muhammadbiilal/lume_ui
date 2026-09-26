@@ -234,8 +234,10 @@ class _LumeCurrencyToolState extends ConsumerState<LumeCurrencyTool> {
       context,
       LumeToastData(
         tone: LumeToastTone.info,
+        // The template already says "1 {from}"; passing "1 $from" drew
+        // "1 1 PKR = …".
         message: l.currencyRateLine(
-          '1 $from',
+          from,
           f.number(p.rate, decimals: 3),
           p.code,
         ),
@@ -251,7 +253,7 @@ class _LumeCurrencyToolState extends ConsumerState<LumeCurrencyTool> {
       shareCard: () => LumeShareCard.forFeature(
         sensitive: r.feature.sensitive,
         kind: LumeShareKind.quote,
-        text: l.currencyRateLine('1 $from', rateText, to),
+        text: l.currencyRateLine(from, rateText, to),
         source: '${LumeToolStrings.source(l, r.feature)} · ${f.dateLong(now)}',
       ),
       body: Column(
@@ -303,7 +305,7 @@ class _LumeCurrencyToolState extends ConsumerState<LumeCurrencyTool> {
                   ),
                   const SizedBox(height: 10),
                   Text(
-                    l.currencyRateLine('1 $from', rateText, to),
+                    l.currencyRateLine(from, rateText, to),
                     key: LumeCurrencyTool.rateKey,
                     style: LumeType.natural(
                       context,

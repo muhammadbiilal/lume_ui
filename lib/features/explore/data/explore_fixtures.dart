@@ -175,8 +175,15 @@ abstract final class LumeExploreComposer {
   }
 
   /// The reader's news edition.
-  static List<LumeNewsArticle> news(LumeUserContext user) =>
-      user.country == 'PK' ? _newsPk : _newsGlobal;
+  ///
+  /// `data-int="news"` in the reference: shown when the reader has the news
+  /// interest, or has chosen no interests at all — as [score] is for
+  /// cricket.
+  static List<LumeNewsArticle> news(LumeUserContext user) {
+    final bool wanted = user.interests.isEmpty || user.hasInterest('news');
+    if (!wanted) return const <LumeNewsArticle>[];
+    return user.country == 'PK' ? _newsPk : _newsGlobal;
+  }
 
   /// The collections this reader can see.
   static List<LumeCollectionCard> collections(LumeUserContext user) =>

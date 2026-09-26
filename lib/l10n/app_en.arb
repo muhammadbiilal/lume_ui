@@ -8737,6 +8737,18 @@
   "@wastatusGranting": {
     "description": "tools.js wastatus.granting — the Grant toast (Dayroz: opens Android's folder picker)."
   },
+  "todayBookmarked": "Saved to your bookmarks",
+  "@todayBookmarked": {
+    "description": "shell.js data-bookmark — the reflection card's Bookmark, turned on."
+  },
+  "todayUnbookmarked": "Removed from bookmarks",
+  "@todayUnbookmarked": {
+    "description": "shell.js data-bookmark — the reflection card's Bookmark, turned off."
+  },
+  "authNeedAccount": "Sign in to continue",
+  "@authNeedAccount": {
+    "description": "account.js auth.needAccount — the signed-out refusal's title."
+  },
   "toolSourceOnDevice": "On device",
   "@toolSourceOnDevice": {
     "description": "tool-specs.js src \"On device\" — shared by every tool whose figures live on the device. The reference prints it in English everywhere; translated here (§11)."

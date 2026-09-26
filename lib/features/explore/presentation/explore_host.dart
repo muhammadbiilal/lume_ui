@@ -88,6 +88,8 @@ class _LumeExploreHostState extends ConsumerState<LumeExploreHost> {
               () => _toast = LumeToastData(message: l.exploreWeatherToast),
             );
           },
+          say: (String message) =>
+              setState(() => _toast = LumeToastData(message: message)),
         ),
       );
 

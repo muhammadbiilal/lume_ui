@@ -6522,6 +6522,15 @@ class AppLocalizationsAr extends AppLocalizations {
   String get wastatusGranting => 'جارٍ طلب الإذن';
 
   @override
+  String get todayBookmarked => 'حُفظ في محفوظاتك';
+
+  @override
+  String get todayUnbookmarked => 'أُزيل من المحفوظات';
+
+  @override
+  String get authNeedAccount => 'سجّل الدخول للمتابعة';
+
+  @override
   String get toolSourceOnDevice => 'على الجهاز';
 
   @override

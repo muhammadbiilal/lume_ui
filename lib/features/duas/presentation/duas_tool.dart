@@ -182,6 +182,9 @@ class _LumeDuasToolState extends ConsumerState<LumeDuasTool> {
     final List<LumeDua> shown = LumeDuaFixtures.shown(
       category: category,
       query: _query.text,
+      // The reference searches `title + tr`; the title is the one the
+      // reader reads, in their language.
+      titleOf: (LumeDua d) => LumeDuasStrings.title(l, d.id),
     );
 
     return LumeToolScreen(

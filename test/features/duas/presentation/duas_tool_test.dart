@@ -199,6 +199,19 @@ void main() {
       expect(find.byKey(LumeDuasTool.emptyKey), findsOneWidget);
     });
 
+    testWidgets('a search finds a dua by its title, as the reference’s '
+        '`title + tr` does', (WidgetTester tester) async {
+      await pumpDuas(tester);
+      // "travel" is only in the title — the translation reads "Glory to Him
+      // who has subjected this to us".
+      await tester.enterText(find.byKey(LumeDuasTool.searchKey), 'travel');
+      await tester.pumpAndSettle();
+      expect(
+        inKey(LumeDuasTool.browseKey, find.text('Dua for travel')),
+        findsOneWidget,
+      );
+    });
+
     testWidgets(
       'opening a dua shows its own real Arabic, translation and citation, '
       'and offers to share it',

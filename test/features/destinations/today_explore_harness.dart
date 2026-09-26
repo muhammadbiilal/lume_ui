@@ -7,6 +7,7 @@ library;
 
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:lume/core/platform/lume_share.dart';
 import 'package:lume/core/navigation/lume_destination.dart';
 import 'package:lume/features/catalogue/domain/eligibility.dart';
 import 'package:lume/features/explore/data/explore_fixtures.dart';
@@ -31,6 +32,9 @@ class LumeRecordedDay {
   int searches = 0;
   int refreshes = 0;
   int backs = 0;
+  int bookmarks = 0;
+  final List<LumeShareCard> shared = <LumeShareCard>[];
+  final List<String> said = <String>[];
 
   LumeTodayActions get today => LumeTodayActions(
     openTarget: opened.add,
@@ -38,12 +42,16 @@ class LumeRecordedDay {
     openWeek: () => weeks++,
     addTask: () => adds++,
     openPrivate: () => privates++,
+    toggleBookmark: () => bookmarks++,
+    share: shared.add,
+    say: said.add,
   );
 
   LumeExploreActions get explore => LumeExploreActions(
     openTarget: opened.add,
     openSearch: () => searches++,
     refreshWeather: () => refreshes++,
+    say: said.add,
   );
 }
 

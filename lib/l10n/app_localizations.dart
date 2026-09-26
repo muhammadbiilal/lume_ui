@@ -11344,6 +11344,24 @@ abstract class AppLocalizations {
   /// **'Requesting access'**
   String get wastatusGranting;
 
+  /// shell.js data-bookmark — the reflection card's Bookmark, turned on.
+  ///
+  /// In en, this message translates to:
+  /// **'Saved to your bookmarks'**
+  String get todayBookmarked;
+
+  /// shell.js data-bookmark — the reflection card's Bookmark, turned off.
+  ///
+  /// In en, this message translates to:
+  /// **'Removed from bookmarks'**
+  String get todayUnbookmarked;
+
+  /// account.js auth.needAccount — the signed-out refusal's title.
+  ///
+  /// In en, this message translates to:
+  /// **'Sign in to continue'**
+  String get authNeedAccount;
+
   /// tool-specs.js src "On device" — shared by every tool whose figures live on the device. The reference prints it in English everywhere; translated here (§11).
   ///
   /// In en, this message translates to:

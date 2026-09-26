@@ -82,13 +82,22 @@ abstract final class LumeDuaFixtures {
   /// `title + tr`; this also matches the citation and the Arabic, the way
   /// Hadith's own `shown()` matches every fixture-held field rather than a
   /// subset of them.
-  static List<LumeDua> shown({LumeDuaCategory? category, String query = ''}) {
+  ///
+  /// [titleOf] is the title as the reader sees it — it is translated, so the
+  /// screen supplies it; without it only the fixture-held fields are
+  /// searched.
+  static List<LumeDua> shown({
+    LumeDuaCategory? category,
+    String query = '',
+    String Function(LumeDua d)? titleOf,
+  }) {
     final String q = query.trim().toLowerCase();
     return <LumeDua>[
       for (final LumeDua d in all)
         if ((category == null || d.category == category) &&
             (q.isEmpty ||
-                '${d.arabic} ${d.translation} ${d.citation}'
+                '${titleOf?.call(d) ?? ''} ${d.arabic} ${d.translation} '
+                        '${d.citation}'
                     .toLowerCase()
                     .contains(q)))
           d,

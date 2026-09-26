@@ -271,8 +271,10 @@ void main() {
         surface: kTall,
       );
       expect(find.byType(LumeToolState), findsOneWidget);
+      // `signedOutRoute`: the title asks, the text says why.
+      expect(find.text('Sign in to continue'), findsOneWidget);
       expect(
-        find.text('This part of Lume belongs to your account.'),
+        find.text('You’re signed out. Sign in to continue.'),
         findsOneWidget,
       );
       expect(find.text('Sign in'), findsOneWidget);
