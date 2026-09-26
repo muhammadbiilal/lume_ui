@@ -109,9 +109,18 @@ final Provider<LumeTrainsRepository> trainsRepositoryProvider =
 /// Overriding this one provider is the whole of the swap when Dayroz's real
 /// account service arrives.
 final Provider<LumeFakeAccountRepository> accountStoreProvider =
-    Provider<LumeFakeAccountRepository>(
-      (Ref ref) => LumeFakeAccountRepository.guest(),
-    );
+    Provider<LumeFakeAccountRepository>((Ref ref) {
+      // Follows the launch gate: signing in or out through the auth screens
+      // is what the account screens then show (`follow`). A test that
+      // overrides this provider keeps the store it hands in, unfollowed.
+      final LumeFakeAccountRepository store = LumeFakeAccountRepository.guest();
+      final LumeStartupController gate = ref.watch(startupControllerProvider);
+      void sync() => store.follow(gate.state.auth);
+      sync();
+      gate.addListener(sync);
+      ref.onDispose(() => gate.removeListener(sync));
+      return store;
+    });
 
 final Provider<LumeAccountRepository> accountRepositoryProvider =
     Provider<LumeAccountRepository>(

@@ -1,29 +1,36 @@
-/// The two personalisation editors the account section opens.
+/// The personalisation editors.
 ///
-/// `sheet:personalise` in the reference is one tall sheet holding location,
-/// language, units, currency, time, interests and the content switches. Six of
-/// those seven now have a route of their own in the account section, and a
-/// second copy of the language picker would be a second answer to the same
-/// question — so the sheet is split into the two editors its two entry points
-/// are actually about:
+/// [showLumePersonalise] is `sheet:personalise` — the reference's one tall
+/// sheet: where you are, language and formatting, content, and your
+/// interests, with Save preferences. Every entry point the reference has
+/// opens it: Profile's Interests row, Tools' header, search, and each tool's
+/// place chip.
 ///
-/// | entry point | opens |
-/// |---|---|
-/// | Profile's Interests row | [showLumePersonalise] — the interests picker |
-/// | the Region route's Change button | [showLumeLocationPicker] — country, then city |
-///
-/// Recorded as D41. Neither is a route: the reference opens a sheet from both
-/// places, and a sheet has no address.
+/// [showLumeLocationPicker] is the country-then-city picker, opened by the
+/// sheet's Country and City rows and by Account → Region.
 ///
 /// Both write through [LumeStartupController.profileChanged], which is the one
-/// place the profile is stored — so changing a country here re-renders Home
-/// and the tab set in the same frame, and **nothing is deleted while it
-/// happens**.
+/// place the profile is stored — so changing a country re-renders Home and
+/// the tab set in the same frame, and **nothing is deleted while it
+/// happens** (§37).
 library;
 
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../../app/providers/locale_provider.dart';
+import '../../../app/providers/personalisation.dart';
+import '../../../core/icons/lume_icons.dart';
+import '../../../core/localization/lume_locales.dart';
+import '../../../core/theme/lume/lume_theme.dart';
+import '../../../core/theme/lume/lume_type.dart';
+import '../../../core/widgets/lume/lume_button.dart';
+import '../../../core/widgets/lume/lume_settings.dart';
+import '../../../core/widgets/lume/lume_surface.dart';
+import '../../catalogue/data/feature_catalogue.dart';
+import '../../catalogue/domain/eligibility.dart';
+import '../../catalogue/domain/lume_feature.dart';
+import 'account_parts.dart';
 import '../../../app/providers/platform_services.dart';
 import '../../../app/providers/shell_provider.dart';
 import '../../../core/widgets/lume/lume_overlay.dart';
@@ -65,15 +72,40 @@ class _PersonaliseSheet extends ConsumerStatefulWidget {
   ConsumerState<_PersonaliseSheet> createState() => _PersonaliseSheetState();
 }
 
+/// `#sheet-personalise` — the reference's one tall sheet, in its order:
+/// where you are, language and formatting, content, your interests, and
+/// Save preferences.
+///
+/// What is held and what is written, as the reference's `pickers.js` has it:
+///
+/// * **Drafted until Save** — the interests, the Islamic experience, units,
+///   currency and the time format. Save is disabled until the minimum of
+///   interests is picked, writes them all at once, closes the sheet and says
+///   "Your app has been updated". Closing without Save keeps nothing.
+/// * **Written at once** — the content switches (`data-pref`, handled by the
+///   shell the moment one is pressed) and the language, which the reference
+///   also applies immediately because it is the one setting nobody can judge
+///   without seeing it.
+/// * **Where you are** — the Country and City rows open the location picker,
+///   which saves the place it is given (the reference edits it inline, in the
+///   same draft; here it is its own sheet, the one Account → Region opens).
 class _PersonaliseSheetState extends ConsumerState<_PersonaliseSheet> {
   late final LumeStartupController _gate = ref.read(startupControllerProvider);
-  // Growable: the load below adds the catalogue's faith interests to it. A
-  // `const` set here made that throw, the future fail, and the sheet spin
-  // forever without ever drawing an interest.
+  late final LumeProfileRecord _start = _gate.state.profile;
   late final LumeInterestsController _picks = LumeInterestsController(
+    // Growable: the load below adds the catalogue's faith interests to it. A
+    // `const` set here made that throw, the future fail, and the sheet spin
+    // forever without ever drawing an interest.
     faithInterests: <String>{},
   );
   Future<LumeInterestsFixture>? _catalogue;
+
+  late LumeUnitsPreference _units = _start.units;
+  late String _currency = _start.currency;
+  late String _clock = _start.clock;
+
+  /// The refusal at the cap, shown where the reference shows a toast.
+  LumeToastData? _toast;
 
   @override
   void initState() {
@@ -81,10 +113,9 @@ class _PersonaliseSheetState extends ConsumerState<_PersonaliseSheet> {
     _catalogue = LumeInterestsFixture.load().then((
       LumeInterestsFixture fixture,
     ) {
-      final LumeProfileRecord p = _gate.state.profile;
       _picks
         ..faithInterests.addAll(fixture.faithInterests)
-        ..restore(p.interests.toSet(), faithOpen: p.islamic ?? false);
+        ..restore(_start.interests.toSet(), faithOpen: _start.islamic ?? false);
       return fixture;
     });
   }
@@ -95,84 +126,370 @@ class _PersonaliseSheetState extends ConsumerState<_PersonaliseSheet> {
     super.dispose();
   }
 
-  /// Written on every change rather than on a Save button.
-  ///
-  /// The reference's sheet has no Save: a switch is the commit. Holding the
-  /// edit until a button would mean a reader who closed the sheet lost a
-  /// choice they had already watched take effect.
-  void _commit() {
+  /// `cycle(list, current)` — small option sets do not deserve a sheet.
+  static T _next<T>(List<T> list, T current) {
+    final int at = list.indexOf(current);
+    return list[(at + 1) % list.length];
+  }
+
+  void _toggle(String id, AppLocalizations l) {
+    if (_picks.toggle(id)) {
+      if (_toast != null) setState(() => _toast = null);
+      return;
+    }
+    setState(
+      () => _toast = LumeToastData(
+        message: l.onbAtCap(LumeInterests.maximum.toString()),
+      ),
+    );
+  }
+
+  void _setContent(LumeContentPrefs prefs) {
+    final LumeProfileRecord p = _gate.state.profile;
+    _gate.profileChanged(p.copyWith(prefs: prefs));
+  }
+
+  void _save(AppLocalizations l) {
     final LumeProfileRecord p = _gate.state.profile;
     _gate.profileChanged(
       p.copyWith(
         interests: _picks.selected.toList(growable: false),
         islamic: _picks.faithOpen,
+        units: _units,
+        currency: _currency,
+        clock: _clock,
       ),
+    );
+    // Raised from the sheet's own context, so it lands in the root overlay
+    // the sheet sits in, and stays up once the sheet has closed.
+    showLumeToast(context, LumeToastData(message: l.persSaved));
+    Navigator.of(context).maybePop();
+  }
+
+  String _unitsLabel(AppLocalizations l) => switch (_units) {
+    LumeUnitsPreference.auto => l.persUnitsAuto,
+    LumeUnitsPreference.metric => l.persUnitsMetric,
+    LumeUnitsPreference.imperial => l.persUnitsImperial,
+  };
+
+  String _clockLabel(AppLocalizations l) => switch (_clock) {
+    '12' => l.persTime12,
+    '24' => l.persTime24,
+    _ => l.persUnitsAuto,
+  };
+
+  /// The interests some feature visible in the reader's country offers —
+  /// `pickers.js` drops the rest. Asked with the Islamic experience on so
+  /// the faith interests stay; the faith card is what governs those.
+  Set<String> _visibleInterests(LumeProfileRecord p) {
+    final LumeEligibility eligibility = ref.read(eligibilityProvider);
+    final LumeUserContext asked = LumeUserContext(
+      country: p.country,
+      city: p.city,
+      islamic: true,
+    );
+    return <String>{
+      for (final LumeFeature f in kLumeFeatures)
+        if (eligibility.isVisible(f, asked)) ...f.interests,
+    };
+  }
+
+  Widget _header(AppLocalizations l, LumeProfileRecord p, String language) {
+    final LumeCountryFixture? countries = _gate.state.countries;
+    final String countryCurrency = countries?.currencyOf(p.country) ?? '';
+    // `['auto', 'USD', 'EUR', 'GBP', <the country's>]`, each once.
+    final List<String> currencies = <String>{
+      LumePreference.auto,
+      for (final String c in <String>['USD', 'EUR', 'GBP', countryCurrency])
+        if (c.isNotEmpty) c,
+    }.toList();
+    final LumeContentPrefs prefs = p.prefs;
+
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: <Widget>[
+        LumeSettingsGroupLabel(l.persWhereYouAre),
+        const SizedBox(height: 9),
+        // §124.17 — say what changing this changes, where it changes.
+        LumeNoteCard(
+          tone: LumeNoteTone.warn,
+          icon: LumeIcons.alert,
+          title: l.acctRegionTitle,
+          text: l.acctRegionWarn,
+        ),
+        const SizedBox(height: 12),
+        LumeAccountList(
+          rows: <Widget>[
+            LumeSettingsRow(
+              key: LumePersonaliseKeys.country,
+              icon: LumeIcons.globe,
+              title: l.persCountry,
+              subtitle: l.persCountrySub,
+              value: countries?.nameOf(p.country, language) ?? p.country,
+              onTap: () => showLumeLocationPicker(context),
+            ),
+            if (p.region.isNotEmpty)
+              LumeSettingsRow(
+                icon: LumeIcons.pin,
+                title: l.persRegion,
+                value: p.region,
+                chevron: false,
+              ),
+            LumeSettingsRow(
+              key: LumePersonaliseKeys.city,
+              icon: LumeIcons.pin,
+              title: l.persCity,
+              subtitle: l.persCitySub,
+              value: p.city,
+              onTap: () => showLumeLocationPicker(context),
+              isLast: true,
+            ),
+          ],
+        ),
+        const SizedBox(height: 22),
+        LumeSettingsGroupLabel(l.persFormatting),
+        const SizedBox(height: 9),
+        LumeAccountList(
+          rows: <Widget>[
+            LumeSettingsRow(
+              key: LumePersonaliseKeys.language,
+              icon: LumeIcons.globe,
+              title: l.persAppLanguage,
+              value: LumeLocales.forCode(language).native,
+              onTap: () {
+                final List<String> codes = <String>[
+                  for (final LumeLanguage x in LumeLocales.all) x.code,
+                ];
+                ref.read(localeProvider.notifier).state = Locale(
+                  _next(codes, language),
+                );
+              },
+            ),
+            LumeSettingsRow(
+              key: LumePersonaliseKeys.units,
+              icon: LumeIcons.ruler,
+              title: l.persUnits,
+              value: _unitsLabel(l),
+              onTap: () => setState(
+                () => _units = _next(LumeUnitsPreference.values, _units),
+              ),
+            ),
+            LumeSettingsRow(
+              key: LumePersonaliseKeys.currency,
+              icon: LumeIcons.currency,
+              title: l.persCurrency,
+              value: _currency == LumePreference.auto
+                  ? l.persCurrencyAuto(countryCurrency)
+                  : _currency,
+              onTap: () =>
+                  setState(() => _currency = _next(currencies, _currency)),
+            ),
+            LumeSettingsRow(
+              key: LumePersonaliseKeys.clock,
+              icon: LumeIcons.clock,
+              title: l.persTimeFormat,
+              value: _clockLabel(l),
+              onTap: () => setState(
+                () => _clock = _next(<String>[
+                  LumePreference.auto,
+                  '12',
+                  '24',
+                ], _clock),
+              ),
+              isLast: true,
+            ),
+          ],
+        ),
+        const SizedBox(height: 22),
+        LumeSettingsGroupLabel(l.persContent),
+        const SizedBox(height: 9),
+        LumeAccountList(
+          rows: <Widget>[
+            LumeSettingsRow(
+              key: LumePersonaliseKeys.islamic,
+              icon: LumeIcons.moonStar,
+              accent: _picks.faithOpen,
+              title: l.persIslamic,
+              subtitle: l.persIslamicSub,
+              toggle: _picks.faithOpen,
+              onTap: () => _picks.setFaithOpen(!_picks.faithOpen),
+            ),
+            LumeSettingsRow(
+              key: LumePersonaliseKeys.news,
+              icon: LumeIcons.news,
+              title: l.persNews,
+              subtitle: l.persNewsSub,
+              toggle: prefs.news,
+              onTap: () => _setContent(prefs.copyWith(news: !prefs.news)),
+            ),
+            LumeSettingsRow(
+              key: LumePersonaliseKeys.sport,
+              icon: LumeIcons.cricket,
+              title: l.persSport,
+              subtitle: l.persSportSub,
+              toggle: prefs.cricket,
+              onTap: () => _setContent(prefs.copyWith(cricket: !prefs.cricket)),
+            ),
+            LumeSettingsRow(
+              key: LumePersonaliseKeys.finance,
+              icon: LumeIcons.trending,
+              title: l.persFinance,
+              subtitle: l.persFinanceSub,
+              toggle: prefs.finance,
+              onTap: () => _setContent(prefs.copyWith(finance: !prefs.finance)),
+            ),
+            LumeSettingsRow(
+              key: LumePersonaliseKeys.recos,
+              icon: LumeIcons.sparkles,
+              title: l.persRecos,
+              subtitle: l.persRecosSub,
+              toggle: prefs.recommendations,
+              onTap: () => _setContent(
+                prefs.copyWith(recommendations: !prefs.recommendations),
+              ),
+              isLast: true,
+            ),
+          ],
+        ),
+        const SizedBox(height: 22),
+        LumeSettingsGroupLabel(l.persInterests),
+        const SizedBox(height: 4),
+        Text(
+          l.persInterestsHint(LumeInterests.minimum),
+          style: LumeType.natural(
+            context,
+            context.lumeType.meta,
+          ).copyWith(color: context.lume.text2),
+        ),
+      ],
     );
   }
 
   @override
   Widget build(BuildContext context) {
     final AppLocalizations l = AppLocalizations.of(context);
-    return LumeSheet(
-      title: l.persTitle,
-      closeLabel: l.actionClose,
-      onClose: () => Navigator.of(context).maybePop(),
-      child: FutureBuilder<LumeInterestsFixture>(
-        future: _catalogue,
-        builder:
-            (
-              BuildContext context,
-              AsyncSnapshot<LumeInterestsFixture> snapshot,
-            ) {
-              final LumeInterestsFixture? fixture = snapshot.data;
-              if (fixture == null) {
-                return const SizedBox(
-                  height: 220,
-                  child: Center(child: CircularProgressIndicator()),
-                );
-              }
-              return ListenableBuilder(
-                listenable: _picks,
-                builder: (BuildContext context, Widget? _) {
-                  final LumeInterestsModel model = _picks.model(
-                    fixture.build(
-                      label: (String id) => interestLabel(l, id),
-                      groupLabel: (String id) => interestGroupLabel(l, id),
-                    ),
-                  );
-                  return LumeInterestsView(
-                    model: model,
-                    countLabel: model.meetsMinimum
-                        ? l.onbSelected(
-                            model.count.toString(),
-                            LumeInterests.maximum.toString(),
-                          )
-                        : l.onbMinimum(
-                            model.count.toString(),
-                            LumeInterests.minimum.toString(),
+    final String language = Localizations.localeOf(context).languageCode;
+    // Watched, so a place chosen in the location picker, or a content switch,
+    // is drawn here as soon as it is saved.
+    final LumeProfileRecord p = ref
+        .watch(startupControllerProvider)
+        .state
+        .profile;
+    return Stack(
+      children: <Widget>[
+        LumeSheet(
+          title: l.persTitle,
+          subtitle: l.persSub,
+          tall: true,
+          closeLabel: l.actionClose,
+          onClose: () => Navigator.of(context).maybePop(),
+          child: FutureBuilder<LumeInterestsFixture>(
+            future: _catalogue,
+            builder:
+                (
+                  BuildContext context,
+                  AsyncSnapshot<LumeInterestsFixture> snapshot,
+                ) {
+                  final LumeInterestsFixture? fixture = snapshot.data;
+                  if (fixture == null) {
+                    return const SizedBox(
+                      height: 220,
+                      child: Center(child: CircularProgressIndicator()),
+                    );
+                  }
+                  return ListenableBuilder(
+                    listenable: _picks,
+                    builder: (BuildContext context, Widget? _) {
+                      final LumeInterestsModel model = _picks.model(
+                        fixture.build(
+                          label: (String id) => interestLabel(l, id),
+                          groupLabel: (String id) => interestGroupLabel(l, id),
+                          visibleFeatureInterests: _visibleInterests(p),
+                        ),
+                      );
+                      return LumeInterestsView(
+                        model: model,
+                        header: _header(l, p, language),
+                        countLabel: model.meetsMinimum
+                            ? l.onbSelected(
+                                model.count.toString(),
+                                LumeInterests.maximum.toString(),
+                              )
+                            : l.onbMinimum(
+                                model.count.toString(),
+                                LumeInterests.minimum.toString(),
+                              ),
+                        clearLabel: l.actionClear,
+                        faithTitle: l.persIslamic,
+                        faithSubtitle: l.persIslamicSub,
+                        onToggle: (String id) => _toggle(id, l),
+                        onClear: _picks.clear,
+                        onFaithChanged: _picks.setFaithOpen,
+                        footer: Padding(
+                          padding: const EdgeInsets.only(top: 16),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.stretch,
+                            children: <Widget>[
+                              Text(
+                                l.persDataSafe,
+                                style: LumeType.natural(
+                                  context,
+                                  context.lumeType.meta,
+                                ).copyWith(color: context.lume.text2),
+                              ),
+                              const SizedBox(height: 16),
+                              LumeButtonRow(
+                                children: <Widget>[
+                                  LumeButton.accent(
+                                    key: LumePersonaliseKeys.save,
+                                    label: l.persSavePrefs,
+                                    block: true,
+                                    onPressed: model.meetsMinimum
+                                        ? () => _save(l)
+                                        : null,
+                                  ),
+                                ],
+                              ),
+                            ],
                           ),
-                    clearLabel: l.actionClear,
-                    faithTitle: l.persIslamic,
-                    faithSubtitle: l.persIslamicSub,
-                    onToggle: (String id) {
-                      _picks.toggle(id);
-                      _commit();
-                    },
-                    onClear: () {
-                      _picks.clear();
-                      _commit();
-                    },
-                    onFaithChanged: (bool on) {
-                      _picks.setFaithOpen(on);
-                      _commit();
+                        ),
+                      );
                     },
                   );
                 },
-              );
-            },
-      ),
+          ),
+        ),
+        if (_toast != null)
+          Positioned(
+            left: 0,
+            right: 0,
+            bottom: 24 + MediaQuery.paddingOf(context).bottom,
+            child: Align(
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 24),
+                child: LumeToast(data: _toast!),
+              ),
+            ),
+          ),
+      ],
     );
   }
+}
+
+/// The Personalisation sheet's rows and Save, for a test to find.
+abstract final class LumePersonaliseKeys {
+  static const Key country = ValueKey<String>('pers.country');
+  static const Key city = ValueKey<String>('pers.city');
+  static const Key language = ValueKey<String>('pers.language');
+  static const Key units = ValueKey<String>('pers.units');
+  static const Key currency = ValueKey<String>('pers.currency');
+  static const Key clock = ValueKey<String>('pers.clock');
+  static const Key islamic = ValueKey<String>('pers.islamic');
+  static const Key news = ValueKey<String>('pers.news');
+  static const Key sport = ValueKey<String>('pers.sport');
+  static const Key finance = ValueKey<String>('pers.finance');
+  static const Key recos = ValueKey<String>('pers.recos');
+  static const Key save = ValueKey<String>('pers.save');
 }
 
 // ----------------------------------------------------------------- location

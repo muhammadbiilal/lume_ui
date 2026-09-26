@@ -103,6 +103,7 @@ class LumeInterestsView extends StatelessWidget {
     required this.faithTitle,
     required this.faithSubtitle,
     this.header,
+    this.footer,
     this.scrollController,
   });
 
@@ -132,6 +133,10 @@ class LumeInterestsView extends StatelessWidget {
   /// lead instead left 46 points for a region needing 52 on a landscape phone,
   /// and the column overflowed.
   final Widget? header;
+
+  /// After the picker, scrolling with it — the Personalisation sheet's
+  /// data-safe note and Save. Onboarding has none.
+  final Widget? footer;
 
   final ScrollController? scrollController;
 
@@ -179,6 +184,7 @@ class LumeInterestsView extends StatelessWidget {
             onChanged: onFaithChanged,
           ),
         ],
+        ?footer,
       ],
     );
   }
@@ -379,22 +385,29 @@ class LumeInterestChip extends StatelessWidget {
                   color: selected ? lume.accent : lume.text3,
                 ),
                 const SizedBox(width: LumePickerMetrics.chipIconGap),
-                Text(
-                  interest.label,
-                  style:
-                      LumeType.tracked(
-                        LumeType.fit(context, context.lumeType.label),
-                        -0.02,
-                      ).copyWith(
-                        fontSize: 13,
-                        fontWeight: FontWeight.w600,
-                        // `[data-theme="dark"] .pick.is-on` swaps the ink, because
-                        // `accentInk` is a dark green that disappears on a dark
-                        // ground.
-                        color: selected
-                            ? (dark ? lume.accent700 : lume.accentInk)
-                            : lume.text2,
-                      ),
+                // Loose, so a chip no wider than its row ellipsizes its label
+                // at large text instead of running past its own edge; a chip
+                // that fits is drawn exactly as before.
+                Flexible(
+                  child: Text(
+                    interest.label,
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                    style:
+                        LumeType.tracked(
+                          LumeType.fit(context, context.lumeType.label),
+                          -0.02,
+                        ).copyWith(
+                          fontSize: 13,
+                          fontWeight: FontWeight.w600,
+                          // `[data-theme="dark"] .pick.is-on` swaps the ink, because
+                          // `accentInk` is a dark green that disappears on a dark
+                          // ground.
+                          color: selected
+                              ? (dark ? lume.accent700 : lume.accentInk)
+                              : lume.text2,
+                        ),
+                  ),
                 ),
               ],
             ),

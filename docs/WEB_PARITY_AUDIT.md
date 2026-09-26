@@ -25,6 +25,9 @@ Seven tools match the web fully (compound, loan, tax, tipsplit, datecalc, learni
 - **Personalise sheet spun forever** — fixed (`53f701e`): its controller started from a `const` set the load then added to.
 - **Tools header "Personalise"** — now opens the sheet, as `tools.screen.js` does (`53f701e`).
 - **Nearby Mosques, Speed Test, Media Saver, WhatsApp Status** — rebuilt to the web composition with the web's sample data and a Dayroz note at each control (this change).
+- **Sign out** — asks "Log out?", signs the gate out and says "Signed out"; the account store now follows the gate, so Profile shows the account after sign-in and a guest after sign-out. Revoking this device's own session signs out too.
+- **Replay the welcome tour** — opens the tour (Profile and Help), over the reader's saved choices.
+- **Personalise sheet** — the web's whole sheet: subtitle; Where you are (region warning, Country, Region, City, each opening the location picker); Language & formatting (language applied at once; units, currency and time drafted); Content (Islamic, News, Sport, Financial information, Recommendations — the content switches written at once, as the web's are); Your interests with its hint, filtered to the country; the data-safe note; and **Save preferences**, disabled under five, which saves the draft, closes and says "Your app has been updated". The cap refusal is said. Every tool's place chip now reaches a location editor through it.
 - **Markets price overflow at 200 %**, **untranslated source lines**, **headline figures cut off at 200 %** — fixed earlier (`bc223df`, `ded2925`).
 
 ---

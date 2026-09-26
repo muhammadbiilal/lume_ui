@@ -37,6 +37,7 @@ import '../domain/account_model.dart';
 import '../domain/account_repository.dart';
 import '../domain/notification_prefs.dart';
 import '../domain/profile_view.dart';
+import 'account_confirm.dart';
 import 'personalise_sheet.dart';
 import 'profile_screen.dart';
 
@@ -56,6 +57,21 @@ class _LumeProfileHostState extends ConsumerState<LumeProfileHost> {
   /// Shown over the page. There is no global presenter, so a screen that
   /// toasts holds its own.
   LumeToastData? _toast;
+
+  Future<void> _signOut(AppLocalizations l) async {
+    final bool ok =
+        await askLumeConfirm(
+          context,
+          title: l.acctLogoutTitle,
+          text: l.acctLogoutText,
+          confirm: l.acctSignOut,
+        ) ??
+        false;
+    if (!ok || !mounted) return;
+    await ref.read(startupControllerProvider).signOut();
+    if (!mounted) return;
+    _say(l.acctLoggedOut);
+  }
 
   void _say(String message) {
     if (!mounted) return;
@@ -151,8 +167,13 @@ class _LumeProfileHostState extends ConsumerState<LumeProfileHost> {
               context.go(LumeRoutes.authRoute(LumeAuthRoute.signIn.segment)),
           signUp: () =>
               context.go(LumeRoutes.authRoute(LumeAuthRoute.signUp.segment)),
-          signOut: () => _say(l.acctLoggedOut),
-          startTour: () => _say(l.acctHelpTour),
+          // `acctdo:logout` — asked first, then the gate signs out and the
+          // account store follows it; the reader stays on Profile, now a
+          // guest, and is told.
+          signOut: () => unawaited(_signOut(l)),
+          // `startTour: onbStart` — the welcome tour again, over the
+          // reader's saved choices; finishing it keeps them (§37).
+          startTour: () => context.go(LumeRoutes.onboarding),
         ),
       );
 

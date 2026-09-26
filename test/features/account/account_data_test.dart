@@ -16,6 +16,8 @@ library;
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:go_router/go_router.dart';
+import 'package:lume/core/routing/lume_routes.dart';
+import 'package:lume/features/onboarding/presentation/onboarding_flow.dart';
 import 'package:lume/core/lume_build.dart';
 import 'package:lume/core/widgets/lume/lume_overlay.dart';
 import 'package:lume/core/widgets/lume/lume_row.dart';
@@ -30,6 +32,7 @@ import 'package:lume/features/startup/application/startup_controller.dart';
 
 import '../../helpers/load_fonts.dart';
 import '../../helpers/lume_harness.dart';
+import '../tax/tax_harness.dart';
 import 'account_harness.dart';
 
 /// Tall enough that every section of these routes is laid out at once — a row
@@ -646,16 +649,24 @@ void main() {
       expect(tester.takeException(), isNull);
     });
 
-    testWidgets('so does replaying the tour', (WidgetTester tester) async {
-      await pumpAccountHost(
+    testWidgets('replaying the tour opens the welcome tour', (
+      WidgetTester tester,
+    ) async {
+      // Through the router: the row navigates, as the reference's
+      // `startTour: onbStart` does, rather than saying its own name.
+      await pumpLumeRouter(
         tester,
-        route: LumeAccountRoute.help,
-        gate: await bootedGate(),
+        initialLocation: LumeRoutes.accountRoute(
+          LumeRoutes.profile,
+          LumeAccountRoute.help.segment,
+        ),
+        profile: taxProfile('default_pk'),
         surface: kTall,
       );
+      await tester.pumpAndSettle();
       await tester.tap(rowTitled('Replay the welcome tour'));
-      await tester.pump();
-      expect(find.byType(LumeToast), findsOneWidget);
+      await tester.pumpAndSettle();
+      expect(find.byType(LumeOnboardingFlow), findsOneWidget);
       expect(tester.takeException(), isNull);
     });
   });

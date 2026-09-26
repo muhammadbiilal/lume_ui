@@ -12,6 +12,7 @@ library;
 
 import 'dart:async';
 
+import '../../auth/domain/auth_model.dart';
 import '../../auth/domain/password_policy.dart';
 import '../domain/account_model.dart';
 import '../domain/account_repository.dart';
@@ -117,6 +118,54 @@ class LumeFakeAccountRepository
 
   @override
   LumeAccountIdentity? get identity => _identity;
+
+  /// Keeps this store's "who is signed in" in step with the launch gate's.
+  ///
+  /// The gate owns the session — the auth screens sign in and out through
+  /// it — and the account screens read this store. Without this the two
+  /// disagreed: signing in left Profile showing a guest, and signing out
+  /// left it showing the account. A signed-in account the store already
+  /// holds keeps its identity (so an edited name survives); a new one is
+  /// built from what the session knows, dated by the session's own issue
+  /// time rather than a clock read. Signing out leaves a guest with no
+  /// identity and no sessions; an expired session keeps the identity, as
+  /// `LumeFakeAccountRepository.expired` does.
+  ///
+  /// **Dayroz obligation:** the real account service answers "who is this"
+  /// from the same session the auth service issued, so there is one answer
+  /// rather than two kept in step.
+  void follow(LumeAuthStatus auth) {
+    final LumeAccount? a = auth.signedInAccount;
+    if (a != null) {
+      if (state == LumeAccountState.authed && _identity?.email == a.email) {
+        return;
+      }
+      final String name = a.displayName.trim();
+      final List<String> words = name.isEmpty
+          ? const <String>[]
+          : name.split(RegExp(r'\s+'));
+      _identity = LumeAccountIdentity(
+        email: a.email,
+        createdAt: auth.session?.issued ?? DateTime(2024),
+        displayName: name,
+        firstName: words.isEmpty ? '' : words.first,
+        lastName: words.length > 1 ? words.sublist(1).join(' ') : '',
+        pendingEmail: a.pendingEmail,
+      );
+      if (_sessions.isEmpty) {
+        _sessions = List<LumeDeviceSession>.of(_seedSessions.take(1));
+      }
+      state = LumeAccountState.authed;
+      return;
+    }
+    if (auth.isExpired) {
+      state = LumeAccountState.expired;
+      return;
+    }
+    state = LumeAccountState.guest;
+    _identity = null;
+    _sessions = <LumeDeviceSession>[];
+  }
 
   /// `PROTECTED` in `account.js`, exactly.
   static const Set<LumeAccountRoute> _protected = <LumeAccountRoute>{

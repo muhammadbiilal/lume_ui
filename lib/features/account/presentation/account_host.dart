@@ -56,6 +56,7 @@ import '../domain/account_repository.dart';
 import '../domain/notification_prefs.dart';
 import 'account_parts.dart';
 import 'account_routes.dart';
+import 'account_confirm.dart';
 import 'personalise_sheet.dart';
 
 /// One account route, on a branch.
@@ -218,31 +219,13 @@ class _LumeAccountHostState extends ConsumerState<LumeAccountHost> {
     required String text,
     required String confirm,
     LumeDeleteKind kind = LumeDeleteKind.recoverable,
-  }) {
-    final AppLocalizations l = AppLocalizations.of(context);
-    return showLumeSheet<bool>(
-      context: context,
-      barrierLabel: title,
-      // The buttons pop the *sheet's* route, which is why they take their
-      // context from inside it. Closing over this method's `context` would
-      // find the navigator the host is on — and a sheet raised on the root
-      // navigator is not on that one, so Cancel would dismiss the screen
-      // underneath instead of the question.
-      child: Builder(
-        builder: (BuildContext sheetContext) => LumeSheet(
-          child: LumeDeleteConfirmation(
-            title: title,
-            consequence: text,
-            confirmLabel: confirm,
-            cancelLabel: l.actionCancel,
-            kind: kind,
-            onConfirm: () => Navigator.of(sheetContext).pop(true),
-            onCancel: () => Navigator.of(sheetContext).pop(false),
-          ),
-        ),
-      ),
-    );
-  }
+  }) => askLumeConfirm(
+    context,
+    title: title,
+    text: text,
+    confirm: confirm,
+    kind: kind,
+  );
 
   // -- the writes ----------------------------------------------------------
 
@@ -421,7 +404,10 @@ class _LumeAccountHostState extends ConsumerState<LumeAccountHost> {
     if (!mounted) return;
     if (r.signedOutSelf) {
       // Ending this device's session *is* signing out, and the whole shell
-      // has to be told rather than one settings screen.
+      // has to be told rather than one settings screen: the gate signs out,
+      // and the account store follows it.
+      await _gate.signOut();
+      if (!mounted) return;
       _say(l.acctLoggedOut);
       context.go(widget.branch);
       return;
@@ -615,7 +601,8 @@ class _LumeAccountHostState extends ConsumerState<LumeAccountHost> {
     submit: () => unawaited(_submit()),
     signIn: () =>
         context.go(LumeRoutes.authRoute(LumeAuthRoute.signIn.segment)),
-    startTour: () => _say(l.acctHelpTour),
+    // `startTour: onbStart`, as Profile's own row.
+    startTour: () => context.go(LumeRoutes.onboarding),
     sendFeedback: () => _say(l.acctHelpContact),
     pickPhoto: () => _say(l.acctPhotoNote),
     clearPhoto: () => unawaited(_clearPhoto()),
