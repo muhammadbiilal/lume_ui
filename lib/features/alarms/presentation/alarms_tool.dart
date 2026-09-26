@@ -1,5 +1,5 @@
-/// Alarms — the reference's own decorative switch, ported honestly rather
-/// than turned into a real scheduler it never was.
+/// Alarms — three sample alarms, and two controls that say what they
+/// cannot do rather than pretending to do it.
 ///
 /// `tools/personal/alarms.tool.js` draws three fixture alarms (see
 /// `alarms_fixtures.dart`) with a switch on each row and a "+" FAB. Neither
@@ -14,19 +14,19 @@
 ///   flip does not survive, because nothing durable was ever changed. It is
 ///   real in the sense that the pixel moves; it is not real in the sense
 ///   that it arms or disarms anything.
-/// * The FAB is `act: 'toast:' + c.t('alarms.adding')` — the same
-///   toast-only shape Calendar's own `+` and Parcel's Track button already
-///   port honestly in this codebase. There is no reader-added alarm in the
+/// * The FAB is `act: 'toast:' + c.t('alarms.adding')` — it says "New
+///   alarm" and adds nothing. There is no reader-added alarm in the
 ///   reference to build one for here.
 ///
-/// This port keeps both exactly that honest: the switch below flips in
-/// [State] for as long as the tool stays mounted (so a press visibly
-/// responds, the same as the reference's own CSS class does), the FAB says a
-/// fixed line, and neither one changes the "Next alarm" summary — which, in
-/// the reference, is worked out once from the untouched fixture and never
-/// revisited either. `LumeDataCapability.fixture('alarms')` needs no entry
-/// in `inputOnly`, `computed` or `readerRecords`: default fixture-display,
-/// the same shape wave 9 gave Parcel and its fifteen siblings.
+/// Lume has no alarm clock behind either, so neither pretends. A switch that
+/// moves says an alarm was armed or disarmed, and none was — so pressing one
+/// leaves it where it is and says these are sample alarms. The FAB says Lume
+/// can't set alarms yet and points to the phone's own Clock app, where the
+/// reference said "New alarm" and added nothing. The "Next alarm" summary is
+/// worked out once from the fixture, as the reference's is.
+/// `LumeDataCapability.fixture('alarms')` needs no entry in `inputOnly`,
+/// `computed` or `readerRecords`: default fixture-display, the same shape
+/// wave 9 gave Parcel and its fifteen siblings.
 library;
 
 import 'package:flutter/material.dart';
@@ -38,6 +38,7 @@ import '../../../core/theme/lume/lume_colors.dart';
 import '../../../core/theme/lume/lume_theme.dart';
 import '../../../core/widgets/lume/lume_button.dart';
 import '../../../core/widgets/lume/lume_field.dart';
+import '../../../core/widgets/lume/lume_overlay.dart';
 import '../../../core/widgets/lume/lume_row.dart';
 import '../../../core/widgets/lume/lume_summary.dart';
 import '../../../core/widgets/lume/lume_tool.dart';
@@ -71,15 +72,11 @@ class LumeAlarmsTool extends ConsumerStatefulWidget {
 class _LumeAlarmsToolState extends ConsumerState<LumeAlarmsTool> {
   final GlobalKey<LumeToolScreenState> _host = GlobalKey<LumeToolScreenState>();
 
-  /// Which fixture alarms have been flipped from their starting `on`, for as
-  /// long as this screen stays mounted. Never written anywhere durable —
-  /// see the library note on why that is the honest port of the reference's
-  /// own DOM-only class toggle, not a shortfall of this one.
-  final Map<String, bool> _flipped = <String, bool>{};
+  bool _isOn(LumeAlarm a) => a.on;
 
-  bool _isOn(LumeAlarm a) => _flipped[a.id] ?? a.on;
-
-  void _toggle(LumeAlarm a) => setState(() => _flipped[a.id] = !_isOn(a));
+  /// A switch arms nothing (library note), so it stays put and says so.
+  void _toggle(AppLocalizations l) =>
+      _host.currentState?.say(l.alarmsSampleSwitch, tone: LumeToastTone.info);
 
   @override
   Widget build(BuildContext context) {
@@ -92,9 +89,8 @@ class _LumeAlarmsToolState extends ConsumerState<LumeAlarmsTool> {
     );
     const List<LumeAlarm> alarms = LumeAlarmBoard.alarms;
 
-    // Worked out once, from the fixture's own starting values — the switch
-    // below never feeds back into this, matching the reference's own frozen
-    // summary card (see the library note).
+    // Worked out once, from the fixture's own starting values, as the
+    // reference's summary card is.
     final LumeAlarm? next = LumeAlarmBoard.next(alarms);
 
     return LumeToolScreen(
@@ -107,9 +103,9 @@ class _LumeAlarmsToolState extends ConsumerState<LumeAlarmsTool> {
         key: LumeAlarmsTool.addKey,
         label: l.alarmsAdd,
         icon: LumeIcons.plus,
-        // The reference's own fixed toast — no reader-added alarm exists to
-        // build one for (library note).
-        onPressed: () => _host.currentState?.say(l.alarmsAdding),
+        // Nothing here can set an alarm (library note).
+        onPressed: () =>
+            _host.currentState?.say(l.alarmsCantAdd, tone: LumeToastTone.info),
       ),
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -144,7 +140,7 @@ class _LumeAlarmsToolState extends ConsumerState<LumeAlarmsTool> {
                     trailing: LumeSwitch(
                       value: _isOn(a),
                       semanticLabel: LumeAlarmText.label(l, a.label),
-                      onChanged: (_) => _toggle(a),
+                      onChanged: (_) => _toggle(l),
                     ),
                   ),
               ],

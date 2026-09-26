@@ -240,7 +240,9 @@ class _LumeBillsToolState extends ConsumerState<LumeBillsTool> {
                           onTap: () => _host.currentState?.say(
                             b.state == LumeBillState.paid
                                 ? l.billsRowPaid(b.name)
-                                : l.billsOpening(b.provider),
+                                // The reference said "Opening …" and
+                                // opened nothing.
+                                : l.billsCantOpen(b.provider),
                             tone: LumeToastTone.info,
                           ),
                         ),

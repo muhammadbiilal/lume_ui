@@ -470,6 +470,13 @@ Widget _tool(BuildContext context, GoRouterState state, String root) {
                 onBack: () => context.go(root),
                 onOpenRelated: (String id) =>
                     context.replace(LumeRoutes.tool(root, id)),
+                onOpenRelatedWith: (String id, Map<String, String> query) =>
+                    context.replace(
+                      Uri(
+                        path: LumeRoutes.tool(root, id),
+                        queryParameters: query,
+                      ).toString(),
+                    ),
                 query: state.uri.queryParameters,
               ),
             );

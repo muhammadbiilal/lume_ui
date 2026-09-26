@@ -19,6 +19,7 @@ class LumeToolRequest {
     required this.branch,
     this.onBack,
     this.onOpenRelated,
+    this.onOpenRelatedWith,
     this.query = const <String, String>{},
   });
 
@@ -32,6 +33,12 @@ class LumeToolRequest {
 
   /// A related tool replaces this one rather than stacking on it.
   final ValueChanged<String>? onOpenRelated;
+
+  /// [onOpenRelated], with a query for the tool it opens — Calendar's Add
+  /// opens Events on its create form (`LumeRecordTool.newQuery`). The route
+  /// still gates the tool it opens; a query never opens a hidden one.
+  final void Function(String toolId, Map<String, String> query)?
+  onOpenRelatedWith;
 
   /// The location's query — a tool's own deep link (Ledger's `person`).
   /// Untrusted: a tool validates what it reads here.

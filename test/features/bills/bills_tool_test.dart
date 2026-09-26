@@ -198,19 +198,20 @@ void main() {
       expect(byTitle['Mobile']!.tone, LumeBadgeTone.ok);
     });
 
-    testWidgets('tapping an unpaid bill only toasts — nothing is written', (
-      WidgetTester tester,
-    ) async {
-      await pumpBills(tester);
-      final AppLocalizations l = AppLocalizations.of(ctx(tester));
-      // 'Electricity' also names the row below in the History section
-      // (`board.history`) — tap the specific main-list row, by key.
-      await tester.tap(find.byKey(LumeBillsTool.row('••••4821')));
-      await tester.pump();
-      expect(find.text(l.billsOpening('K-Electric')), findsOneWidget);
-      // Nothing was written — the same five bills, the same states.
-      expect(rows(tester), hasLength(5));
-    });
+    testWidgets(
+      'tapping an unpaid bill says it cannot open — nothing is written',
+      (WidgetTester tester) async {
+        await pumpBills(tester);
+        final AppLocalizations l = AppLocalizations.of(ctx(tester));
+        // 'Electricity' also names the row below in the History section
+        // (`board.history`) — tap the specific main-list row, by key.
+        await tester.tap(find.byKey(LumeBillsTool.row('••••4821')));
+        await tester.pump();
+        expect(find.text(l.billsCantOpen('K-Electric')), findsOneWidget);
+        // Nothing was written — the same five bills, the same states.
+        expect(rows(tester), hasLength(5));
+      },
+    );
 
     testWidgets('tapping the paid bill only toasts — it is not un-paid', (
       WidgetTester tester,

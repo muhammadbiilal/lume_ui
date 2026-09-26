@@ -1344,9 +1344,6 @@ class AppLocalizationsAr extends AppLocalizations {
   String get calendarAdd => 'أضف موعدًا';
 
   @override
-  String get calendarAdding => 'موعد جديد';
-
-  @override
   String get calendarAgenda => 'جدول اليوم';
 
   @override
@@ -3993,9 +3990,6 @@ class AppLocalizationsAr extends AppLocalizations {
   }
 
   @override
-  String get newsSavedOpen => 'جارٍ فتح الأخبار المحفوظة';
-
-  @override
   String get newsSavings => 'دليل مبسّط لأول هدف ادخاري لك';
 
   @override
@@ -5794,11 +5788,6 @@ class AppLocalizationsAr extends AppLocalizations {
   String get stopwatchPause => 'إيقاف مؤقت';
 
   @override
-  String subsRenews(String date) {
-    return 'يتجدد $date';
-  }
-
-  @override
   String get sunDawn => 'الفجر';
 
   @override
@@ -6357,6 +6346,49 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get toolRelated => 'أدوات ذات صلة';
+
+  @override
+  String get alarmsCantAdd =>
+      'لا يستطيع Lume ضبط المنبّهات بعد — استخدم تطبيق الساعة في هاتفك.';
+
+  @override
+  String get alarmsSampleSwitch =>
+      'هذه منبّهات تجريبية — لا يستطيع Lume تشغيل منبّه حقيقي أو إيقافه بعد.';
+
+  @override
+  String get parcelCantTrack =>
+      'لا يتصل Lume بشركات الشحن بعد، لذا لا يستطيع تتبّع هذه الشحنة.';
+
+  @override
+  String get parcelCantNotify =>
+      'لا يستطيع Lume متابعة الشحنات بعد، لذا ليس لديه تحديثات يرسلها.';
+
+  @override
+  String get vehicleCantCheck =>
+      'لا يتصل Lume بسجل المركبات بعد، لذا لا يستطيع التحقق من هذا التسجيل.';
+
+  @override
+  String get trainsCantSearch =>
+      'لا يستطيع Lume البحث في الرحلات المباشرة بعد — المغادرات أدناه بيانات تجريبية.';
+
+  @override
+  String billsCantOpen(String provider) {
+    return 'لا يستطيع Lume فتح فواتير $provider بعد.';
+  }
+
+  @override
+  String get newsCantSave =>
+      'لا يستطيع Lume حفظ الأخبار بعد — هذا العدد بيانات تجريبية.';
+
+  @override
+  String quranSurahNotHeld(String name) {
+    return 'نص $name غير موجود في Lume بعد.';
+  }
+
+  @override
+  String recipesNoMethod(String name) {
+    return 'طريقة تحضير $name غير موجودة في Lume بعد.';
+  }
 
   @override
   String get toolSourceOnDevice => 'على الجهاز';
@@ -8273,6 +8305,11 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get subsAll => 'كل الاشتراكات';
+
+  @override
+  String subsRenews(String date) {
+    return 'يتجدد $date';
+  }
 
   @override
   String get subsPerMonth => 'شهريًا';
@@ -11998,9 +12035,6 @@ class AppLocalizationsAr extends AppLocalizations {
   String get parcelTrack => 'تتبّع';
 
   @override
-  String get parcelLookingUp => 'جارٍ البحث عن الشحنة';
-
-  @override
   String get parcelActive => 'في الطريق';
 
   @override
@@ -12017,9 +12051,6 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get parcelNotify => 'إشعارات عند التحديثات';
-
-  @override
-  String get parcelNotifying => 'سيتم إشعارك عند كل تحديث';
 
   @override
   String get parcelStBooked => 'تم الحجز';
@@ -12043,9 +12074,6 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get trainsFind => 'ابحث عن القطارات';
-
-  @override
-  String get trainsSearching => 'جارٍ البحث عن الخدمات';
 
   @override
   String get trainsRunning => 'قيد التشغيل';
@@ -12270,11 +12298,6 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get marketsVol => 'الحجم';
-
-  @override
-  String billsOpening(String name) {
-    return 'جارٍ فتح $name';
-  }
 
   @override
   String get billsTrend => 'ستة أشهر';
@@ -12574,9 +12597,6 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get alarmsAdd => 'أضف منبهًا';
-
-  @override
-  String get alarmsAdding => 'منبه جديد';
 
   @override
   String get alarmsDaily => 'كل يوم';
@@ -13441,9 +13461,6 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get vehicleLookup => 'بحث';
-
-  @override
-  String get vehicleLookingUp => 'جارٍ التحقق من السجل';
 
   @override
   String get vehicleReminders => 'ما هو قادم';

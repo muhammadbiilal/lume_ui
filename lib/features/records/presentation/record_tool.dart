@@ -162,6 +162,10 @@ class LumeRecordTool<T extends LumeFamilyRecord>
   /// The host's share card, where the family has one.
   final LumeShareCard? Function(LumeRecordScope<T> scope)? shareCard;
 
+  /// `?new=1`: open on the create form, as Add would — Calendar's own Add
+  /// lands here on Events.
+  static const String newQuery = 'new';
+
   @override
   ConsumerState<LumeRecordTool<T>> createState() => _LumeRecordToolState<T>();
 }
@@ -210,6 +214,11 @@ class _LumeRecordToolState<T extends LumeFamilyRecord>
     // A draft does not outlive the screen that held it; the view it was in
     // does not come back without it.
     if (_view == 'new' || _view == 'edit') _write('view', '');
+    if (widget.request.query[LumeRecordTool.newQuery] == '1') {
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        if (mounted) _startCreate();
+      });
+    }
   }
 
   @override

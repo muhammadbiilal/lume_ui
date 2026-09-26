@@ -173,7 +173,7 @@ void main() {
       // No input at all.
       await tester.tap(find.byKey(LumeVehicleTool.checkButtonKey));
       await tester.pump();
-      expect(find.text(l.vehicleLookingUp), findsOneWidget);
+      expect(find.text(l.vehicleCantCheck), findsOneWidget);
       await tester.pump(const Duration(seconds: 3));
 
       // Arbitrary, made-up input answers with the exact same line — proof
@@ -185,7 +185,7 @@ void main() {
       await tester.pump();
       await tester.tap(find.byKey(LumeVehicleTool.checkButtonKey));
       await tester.pump();
-      expect(find.text(l.vehicleLookingUp), findsOneWidget);
+      expect(find.text(l.vehicleCantCheck), findsOneWidget);
 
       // And the fleet above is exactly what it was — the field changed
       // nothing about it.

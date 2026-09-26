@@ -22,8 +22,10 @@
 /// The status filter and the tracked service live in the tool session.
 ///
 /// Kept as the reference has it (C73): the from/to fields never do anything
-/// but mirror the tracked service's endpoints, and "Find trains" always shows
-/// the same toast regardless of what they read — so this port draws them
+/// but mirror the tracked service's endpoints, and "Find trains" always says
+/// the same thing regardless of what they read — here, that Lume can't
+/// search live services and the departures are sample data, where the
+/// reference claimed to be "Searching services" — so this port draws them
 /// read-only rather than as search fields with nothing behind them. The
 /// station timeline is the reference's one fixed list, shown under whichever
 /// service is selected. For a reader whose country has no rail network in
@@ -40,6 +42,7 @@ import '../../../core/icons/lume_icons.dart';
 import '../../../core/localization/lume_format.dart';
 import '../../../core/platform/lume_share.dart';
 import '../../../core/theme/lume/lume_theme.dart';
+import '../../../core/widgets/lume/lume_overlay.dart';
 import '../../../core/widgets/lume/lume_badge.dart';
 import '../../../core/widgets/lume/lume_button.dart';
 import '../../../core/widgets/lume/lume_chip.dart';
@@ -263,8 +266,12 @@ class _LumeTrainsToolState extends ConsumerState<LumeTrainsTool> {
                         label: l.trainsFind,
                         icon: LumeIcons.search,
                         block: true,
-                        onPressed: () =>
-                            _host.currentState?.say(l.trainsSearching),
+                        // The reference said "Searching services" and
+                        // searched nothing; the departures are sample data.
+                        onPressed: () => _host.currentState?.say(
+                          l.trainsCantSearch,
+                          tone: LumeToastTone.info,
+                        ),
                       ),
                     ],
                   ),

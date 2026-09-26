@@ -102,7 +102,10 @@ void main() {
       expect(
         find.descendant(
           of: find.byType(LumeToast),
-          matching: find.text('Searching services'),
+          matching: find.text(
+            "Lume can't search live services yet — the departures below "
+            'are sample data.',
+          ),
         ),
         findsOneWidget,
       );

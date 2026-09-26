@@ -15,6 +15,7 @@ import '../../../core/layout/lume_breakpoint.dart';
 import '../../../core/layout/lume_measure.dart';
 import '../../../core/localization/lume_format.dart';
 import '../../../core/platform/lume_share.dart';
+import '../../../core/widgets/lume/lume_overlay.dart';
 import '../../../core/widgets/lume/lume_art.dart';
 import '../../../core/widgets/lume/lume_badge.dart';
 import '../../../core/widgets/lume/lume_destination.dart';
@@ -116,9 +117,13 @@ class _LumeRecipesToolState extends ConsumerState<LumeRecipesTool> {
   void _search(String q) =>
       setState(() => _session.write(LumeRecipesTool.id, 'q', q));
 
-  /// `toast:<name>` — the reference opens nothing yet; it names the recipe.
-  void _open(AppLocalizations l, LumeRecipe r) =>
-      _host.currentState?.say(LumeRecipesStrings.name(l, r.id));
+  /// `toast:<name>` — the reference opens nothing and names the recipe as if
+  /// it were about to. Lume holds its times and servings, not its method, and
+  /// says so.
+  void _open(AppLocalizations l, LumeRecipe r) => _host.currentState?.say(
+    l.recipesNoMethod(LumeRecipesStrings.name(l, r.id)),
+    tone: LumeToastTone.info,
+  );
 
   /// The library as the screen shows it (C68): how many recipes, and which
   /// are the reader's favourites. The reference shares an unrelated quote.

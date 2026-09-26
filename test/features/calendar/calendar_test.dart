@@ -18,12 +18,12 @@ import 'package:lume/core/widgets/lume/lume_button.dart';
 import 'package:lume/core/widgets/lume/lume_chip.dart';
 import 'package:lume/core/widgets/lume/lume_header.dart';
 import 'package:lume/core/widgets/lume/lume_month_grid.dart';
-import 'package:lume/core/widgets/lume/lume_overlay.dart';
 import 'package:lume/core/widgets/lume/lume_progress.dart';
 import 'package:lume/core/widgets/lume/lume_row.dart';
 import 'package:lume/core/widgets/lume/lume_table.dart';
 import 'package:lume/core/widgets/lume/lume_tool.dart';
 import 'package:lume/core/time/lume_solar.dart';
+import 'package:lume/features/records/presentation/record_tool.dart';
 import 'package:lume/features/calendar/presentation/calendar_tool.dart';
 
 import '../../helpers/capture.dart';
@@ -386,23 +386,20 @@ void main() {
       );
     });
 
-    testWidgets('Add is named, and says what it does', (
-      WidgetTester tester,
-    ) async {
+    testWidgets('Add is named, and opens a new event in Events — the '
+        'reference only said "New event"', (WidgetTester tester) async {
       await pumpCalendar(tester, surface: const Size(390, 900));
       final SemanticsHandle h = tester.ensureSemantics();
       expect(find.bySemanticsLabel('Add an event'), findsOneWidget);
       h.dispose();
       await tester.tap(find.byKey(LumeCalendarTool.addKey));
-      await tester.pump();
-      expect(
-        find.descendant(
-          of: find.byType(LumeToast),
-          matching: find.text('New event'),
-        ),
-        findsOneWidget,
-      );
-      await tester.pump(const Duration(seconds: 3));
+      await tester.pumpAndSettle();
+
+      const LumeRecordKeys events = LumeRecordKeys('events');
+      expect(find.byType(LumeCalendarTool), findsNothing);
+      expect(find.byKey(events.form), findsOneWidget);
+      expect(find.byKey(events.submit), findsOneWidget);
+      expect(find.text('New event'), findsNothing);
     });
 
     testWidgets('today is announced as the chosen day', (

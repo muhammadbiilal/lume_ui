@@ -5,10 +5,11 @@
 /// agenda, and the next public holidays, with an add action floating over it.
 ///
 /// What the reference plans is small, and it is kept as it is (C71): the
-/// grid is always this month, the view is stored and nothing reads it, the
-/// agenda is three fixed items and Add only says "New event". What is
-/// corrected: the agenda is in time order, and each day's Hijri date is its
-/// own.
+/// grid is always this month, the view is stored and nothing reads it, and
+/// the agenda is three fixed items. What is corrected: the agenda is in time
+/// order, each day's Hijri date is its own, and Add — which in the reference
+/// only says "New event" — opens Events' create form, where the reader's
+/// events are kept.
 library;
 
 import 'package:flutter/material.dart';
@@ -34,6 +35,7 @@ import '../../../core/widgets/lume/lume_row.dart';
 import '../../../core/widgets/lume/lume_tool.dart';
 import '../../../l10n/app_localizations.dart';
 import '../../startup/domain/startup_state.dart';
+import '../../records/presentation/record_tool.dart';
 import '../../tools/application/tool_request.dart';
 import '../../tools/application/tool_session.dart';
 import '../../tools/presentation/tool_screen.dart';
@@ -179,7 +181,15 @@ class _LumeCalendarToolState extends ConsumerState<LumeCalendarTool> {
         key: LumeCalendarTool.addKey,
         label: l.calendarAdd,
         icon: LumeIcons.plus,
-        onPressed: () => _host.currentState?.say(l.calendarAdding),
+        // The reference toasts "New event" and adds nothing. An event is the
+        // reader's own record, and Events keeps them, so Add opens its
+        // create form. (By id, not by import: a tool reaches another only
+        // through the route, which gates it.)
+        onPressed: r.onOpenRelatedWith == null
+            ? null
+            : () => r.onOpenRelatedWith!('events', const <String, String>{
+                LumeRecordTool.newQuery: '1',
+              }),
       ),
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,

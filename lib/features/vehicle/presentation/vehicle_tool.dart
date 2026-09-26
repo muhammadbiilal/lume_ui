@@ -4,12 +4,13 @@
 /// registration-check field that answers nothing it is given, and a
 /// reminders timeline for token tax and insurance.
 ///
-/// **Kept exactly as the reference has it, on purpose:** "Check any
+/// **Kept as the reference has it, but truthful:** "Check any
 /// registration"'s field is read by nothing — `UI.field({ name: 'veh_reg' })`
 /// has no matching read anywhere in `vehicle.tool.js` — and "Look up" answers
-/// any input, or none, with the same fixed toast (`vehicle.lookingUp`). This
-/// is the same pattern already ported honestly for Parcel Tracker's "Track"
-/// and Trains' "Find trains": there is no vehicle-registry lookup behind it,
+/// any input, or none, the same way. The reference's answer was "Checking
+/// the register", which checks nothing; this one says Lume can't reach the
+/// register yet — the same answer Parcel Tracker's "Track" and Trains'
+/// "Find trains" give. There is no vehicle-registry lookup behind it,
 /// so this port does not invent one that only *looks* real by quietly
 /// matching the fixture plates against whatever was typed.
 ///
@@ -37,6 +38,7 @@ import '../../../core/theme/lume/lume_colors.dart';
 import '../../../core/theme/lume/lume_theme.dart';
 import '../../../core/values/lume_currency.dart';
 import '../../../core/values/lume_money.dart';
+import '../../../core/widgets/lume/lume_overlay.dart';
 import '../../../core/widgets/lume/lume_badge.dart';
 import '../../../core/widgets/lume/lume_button.dart';
 import '../../../core/widgets/lume/lume_field.dart';
@@ -282,11 +284,13 @@ class _LumeVehicleToolState extends ConsumerState<LumeVehicleTool> {
                         label: l.vehicleLookup,
                         icon: LumeIcons.search,
                         block: true,
-                        // The reference's own fixed toast: it answers
-                        // whatever was typed, or nothing, the same way —
-                        // there is no register behind it.
-                        onPressed: () =>
-                            _host.currentState?.say(l.vehicleLookingUp),
+                        // The reference said "Checking the register" and
+                        // checked nothing; there is no register behind this,
+                        // so it says that instead.
+                        onPressed: () => _host.currentState?.say(
+                          l.vehicleCantCheck,
+                          tone: LumeToastTone.info,
+                        ),
                       ),
                     ],
                   ),

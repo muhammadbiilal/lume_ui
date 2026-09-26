@@ -189,7 +189,9 @@ void main() {
       expect(
         find.descendant(
           of: find.byType(LumeToast),
-          matching: find.text('Looking up the shipment'),
+          matching: find.text(
+            "Lume can't reach couriers yet, so it can't look up this shipment.",
+          ),
         ),
         findsOneWidget,
       );
@@ -216,7 +218,9 @@ void main() {
       expect(
         find.descendant(
           of: find.byType(LumeToast),
-          matching: find.text('You’ll be notified on every update'),
+          matching: find.text(
+            "Lume can't follow shipments yet, so it has no updates to send.",
+          ),
         ),
         findsOneWidget,
       );
