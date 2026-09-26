@@ -67,8 +67,11 @@ class _PersonaliseSheet extends ConsumerStatefulWidget {
 
 class _PersonaliseSheetState extends ConsumerState<_PersonaliseSheet> {
   late final LumeStartupController _gate = ref.read(startupControllerProvider);
+  // Growable: the load below adds the catalogue's faith interests to it. A
+  // `const` set here made that throw, the future fail, and the sheet spin
+  // forever without ever drawing an interest.
   late final LumeInterestsController _picks = LumeInterestsController(
-    faithInterests: const <String>{},
+    faithInterests: <String>{},
   );
   Future<LumeInterestsFixture>? _catalogue;
 

@@ -6,6 +6,8 @@
 /// load, and nothing to get out of step.
 library;
 
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
@@ -13,6 +15,7 @@ import 'package:go_router/go_router.dart';
 import '../../../app/providers/personalisation.dart';
 import '../../../core/fixtures/lume_clock.dart';
 import '../../../core/routing/lume_routes.dart';
+import '../../account/presentation/personalise_sheet.dart';
 import '../../catalogue/domain/eligibility.dart';
 import 'tools_screen.dart';
 
@@ -43,7 +46,9 @@ class LumeToolsHost extends ConsumerWidget {
           ref.read(recentToolsProvider).note(id);
           context.go(LumeRoutes.tool(branch, id));
         },
-        openPersonalise: () => context.go(LumeRoutes.account(branch)),
+        // `tools.screen.js`: `data-sheet="personalise"` — the sheet, over
+        // Tools, not the Account page.
+        openPersonalise: () => unawaited(showLumePersonalise(context)),
       ),
     ),
   );

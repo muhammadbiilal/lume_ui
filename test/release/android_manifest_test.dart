@@ -124,11 +124,15 @@ void main() {
           'build/app/intermediates/merged_manifests/debug/'
               'processDebugManifest/AndroidManifest.xml',
           <String>[
+            // "Use my current location" (claude.md §9), approved.
+            'android.permission.ACCESS_COARSE_LOCATION',
             'android.permission.CAMERA',
             'android.permission.INTERNET',
             'android.permission.POST_NOTIFICATIONS',
             'android.permission.RECEIVE_BOOT_COMPLETED',
             'android.permission.SCHEDULE_EXACT_ALARM',
+            // flutter_local_notifications' own: a reminder may vibrate.
+            'android.permission.VIBRATE',
             'android.permission.WRITE_EXTERNAL_STORAGE',
             ownReceivers,
           ],
@@ -138,10 +142,12 @@ void main() {
           'build/app/intermediates/merged_manifests/release/'
               'processReleaseManifest/AndroidManifest.xml',
           <String>[
+            'android.permission.ACCESS_COARSE_LOCATION',
             'android.permission.CAMERA',
             'android.permission.POST_NOTIFICATIONS',
             'android.permission.RECEIVE_BOOT_COMPLETED',
             'android.permission.SCHEDULE_EXACT_ALARM',
+            'android.permission.VIBRATE',
             'android.permission.WRITE_EXTERNAL_STORAGE',
             ownReceivers,
           ],
