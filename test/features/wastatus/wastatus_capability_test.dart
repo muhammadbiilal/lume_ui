@@ -1,9 +1,5 @@
-/// What the catalogue and the capability layer already say about `wastatus`
-/// — asserted here, independently of the widget, so this suite still runs
-/// green while `wastatus_tool.dart` itself is blocked on ARB keys that are
-/// added in a later, centralised pass (see the tool's own doc comment).
-///
-/// This file deliberately does not import `wastatus_tool.dart`.
+/// What the catalogue and the capability layer say about `wastatus`,
+/// asserted independently of the widget.
 library;
 
 import 'package:flutter_test/flutter_test.dart';
@@ -40,22 +36,15 @@ void main() {
     });
   });
 
-  group('LumeDataCapability — why the tool screen has to be bare', () {
-    test('the default fixture classification calls this sample data, which is '
-        'wrong for a screen with no figures at all', () {
-      // `wastatus` is not in `inputOnly`, `computed` or `readerRecords`, so
-      // `LumeDataCapability.fixture` falls through to `isSample: true` —
-      // correct for a tool that shows invented records it does not have a
-      // real adapter for, wrong for a tool that shows no records, feed or
-      // figure of any kind. `wastatus_tool.dart` reads `LumeToolScreen`
-      // with `bare: true` for exactly this reason: nothing here derives a
-      // source-bar claim from this capability, so the wrong claim can
-      // never reach the screen.
+  group('LumeDataCapability', () {
+    test('a note and an empty list: nothing sampled, nothing to claim', () {
+      // The screen draws no figure of any kind, so it sits with the other
+      // input-only tools and the source line does not call it sample data.
       final LumeDataCapability cap = LumeDataCapability.fixture('wastatus');
-      expect(cap.isSample, isTrue);
+      expect(LumeDataCapability.inputOnly, contains('wastatus'));
+      expect(cap.isSample, isFalse);
       expect(cap.isDurable, isFalse);
       expect(cap.isLive, isFalse);
-      expect(cap.computedHere, isFalse);
     });
   });
 }

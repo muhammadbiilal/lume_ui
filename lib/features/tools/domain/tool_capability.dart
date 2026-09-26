@@ -113,20 +113,14 @@ class LumeDataCapability {
     // typed, and a real Islamic-inheritance-shares calculation over them
     // — no fixture, unlike Zakat's own nisab lookup.
     'faraid',
-    // Document Scanner, Media Saver, Passport Photos (wave 10): every
-    // figure is the bytes the reader's own camera/gallery/link action
-    // produced this session — nothing sampled. Speed Test (wave 10): the
-    // reference's own numbers were never real even once (`Math.random()`
-    // output dressed as a measurement); this build shows none of them —
-    // no figures, sample or real, at all.
+    // Document Scanner, Passport Photos (wave 10): every figure is the
+    // bytes the reader's own camera or gallery produced this session —
+    // nothing sampled.
     'docscan',
-    'mediasaver',
     'passport',
-    'speedtest',
-    // Nearby Mosques (wave 10): no places directory exists, so it shows no
-    // mosque, distance or facility — only the reader's own place and a
-    // hand-off to their maps app. Nothing sampled, like Speed Test.
-    'mosques',
+    // WhatsApp Status: a note and an empty list — no figure of any kind,
+    // sampled or otherwise, for a source line to call sample data.
+    'wastatus',
   };
 
   /// Tools that have sample data **only** where the build reproduces the

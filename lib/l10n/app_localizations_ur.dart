@@ -6273,6 +6273,177 @@ class AppLocalizationsUr extends AppLocalizations {
   String get toolRelated => 'متعلقہ ٹولز';
 
   @override
+  String get mosquesMap => 'آپ کے قریب مساجد';
+
+  @override
+  String get mosquesSearch => 'مساجد تلاش کریں';
+
+  @override
+  String get mosquesRadius => 'فاصلے کے اندر';
+
+  @override
+  String get mosquesNearby => 'قریب';
+
+  @override
+  String get mosquesDirections => 'راستہ';
+
+  @override
+  String get mosquesOpening => 'راستہ کھولا جا رہا ہے';
+
+  @override
+  String get mosquesAddYours => 'مسجد تجویز کریں';
+
+  @override
+  String get mosquesSuggest => 'شکریہ — ہم اس کا جائزہ لیں گے';
+
+  @override
+  String get mosquesCentral => 'مرکزی مسجد';
+
+  @override
+  String get mosquesJamia => 'جامع مسجد';
+
+  @override
+  String get mosquesMasjidA => 'مسجد النور';
+
+  @override
+  String get mosquesMasjidB => 'مسجد بلال';
+
+  @override
+  String mosquesAddr(String city) {
+    return 'مین روڈ کے قریب، $city';
+  }
+
+  @override
+  String get mosquesFacParking => 'پارکنگ';
+
+  @override
+  String get mosquesFacWomen => 'خواتین کا حصہ';
+
+  @override
+  String get mosquesFacWudu => 'وضو خانہ';
+
+  @override
+  String get mosquesNoneNear => 'اس فاصلے میں کچھ نہیں';
+
+  @override
+  String get mosquesNoneNearText => 'مزید دیکھنے کے لیے فاصلہ بڑھائیں۔';
+
+  @override
+  String mosquesWalk(int minutes) {
+    return '$minutes منٹ پیدل';
+  }
+
+  @override
+  String get toolSourcePlaces => 'مقامات کی ڈائریکٹری';
+
+  @override
+  String get speedStart => 'ٹیسٹ شروع کریں';
+
+  @override
+  String get speedDownload => 'ڈاؤن لوڈ';
+
+  @override
+  String get speedUpload => 'اپ لوڈ';
+
+  @override
+  String get speedPing => 'پنگ';
+
+  @override
+  String get speedConnection => 'کنکشن';
+
+  @override
+  String get speedType => 'قسم';
+
+  @override
+  String get speedServer => 'ٹیسٹ سرور';
+
+  @override
+  String get speedIsp => 'فراہم کنندہ';
+
+  @override
+  String get speedWifi => 'وائی فائی';
+
+  @override
+  String get speedMobile => 'موبائل ڈیٹا';
+
+  @override
+  String get speedYourIsp => 'آپ کا فراہم کنندہ';
+
+  @override
+  String speedDone(String n) {
+    return '$n میگابٹ/سیکنڈ ڈاؤن لوڈ';
+  }
+
+  @override
+  String get unitMbps => 'میگابٹ/سیکنڈ';
+
+  @override
+  String get unitMs => 'ملی سیکنڈ';
+
+  @override
+  String get toolSourceTestServer => 'قریب ترین ٹیسٹ سرور';
+
+  @override
+  String get mediaLink => 'لنک چسپاں کریں';
+
+  @override
+  String get mediaFetch => 'حاصل کریں';
+
+  @override
+  String get mediaFetching => 'میڈیا حاصل کیا جا رہا ہے';
+
+  @override
+  String get mediaSaved => 'محفوظ';
+
+  @override
+  String get mediaStorage => 'استعمال شدہ جگہ';
+
+  @override
+  String get mediaLastSave => 'آخری محفوظ';
+
+  @override
+  String get mediaLibrary => 'لائبریری';
+
+  @override
+  String get mediaItem1 => 'ترکیب کی ویڈیو';
+
+  @override
+  String get mediaItem2 => 'سفر کی تصویر';
+
+  @override
+  String get mediaItem3 => 'پوڈکاسٹ کلپ';
+
+  @override
+  String get mediaEmptyText =>
+      'لنک چسپاں کریں اور Lume میڈیا اس آلے پر محفوظ کر دے گا۔';
+
+  @override
+  String get unitMb => 'ایم بی';
+
+  @override
+  String get wastatusAndroidTitle => 'صرف اینڈرائیڈ';
+
+  @override
+  String get wastatusAndroidText =>
+      'کسی دوسری ایپ کا اسٹیٹس فولڈر پڑھنے کے لیے اینڈرائیڈ کی فولڈر رسائی درکار ہے، جو iOS فراہم نہیں کرتا۔';
+
+  @override
+  String get wastatusDetected => 'ملنے والے اسٹیٹس';
+
+  @override
+  String get wastatusEmptyTitle => 'کوئی اسٹیٹس نہیں ملا';
+
+  @override
+  String get wastatusEmptyText =>
+      'فولڈر تک رسائی دیں تاکہ Lume آپ کے آلے پر موجود اسٹیٹس دکھا سکے۔';
+
+  @override
+  String get wastatusGrant => 'فولڈر تک رسائی دیں';
+
+  @override
+  String get wastatusGranting => 'رسائی کی درخواست کی جا رہی ہے';
+
+  @override
   String get toolSourceOnDevice => 'آلے پر';
 
   @override
@@ -12714,50 +12885,10 @@ class AppLocalizationsUr extends AppLocalizations {
   String get hijriMonthsTitle => 'ہجری مہینے';
 
   @override
-  String get mediasaverLinkLabel => 'لنک';
-
-  @override
   String get mediasaverLinkPlaceholder => 'https://…';
 
   @override
-  String get mediasaverNoNetworkTitle => 'نیٹ ورک تک رسائی نہیں';
-
-  @override
-  String get mediasaverNoNetworkText =>
-      'Lume انٹرنیٹ سے کبھی رابطہ نہیں کرتا، اس لیے یہ لنک سے میڈیا حاصل یا ڈاؤن لوڈ نہیں کر سکتا۔';
-
-  @override
-  String get mediasaverNoNetworkToast =>
-      'Lume یہ حاصل نہیں کر سکتا — یہ انٹرنیٹ سے رابطہ نہیں کرتا۔';
-
-  @override
-  String get mediasaverSave => 'محفوظ کریں';
-
-  @override
-  String get mediasaverLibrary => 'محفوظ شدہ میڈیا';
-
-  @override
   String get mediasaverEmptyTitle => 'ابھی تک کچھ محفوظ نہیں ہوا';
-
-  @override
-  String get mediasaverEmptyText =>
-      'آپ جو میڈیا محفوظ کریں گے وہ اسی ڈیوائس پر رہے گا — Lume لنک سے کچھ ڈاؤن لوڈ نہیں کر سکتا۔';
-
-  @override
-  String get mosquesUnavailableTitle => 'ابھی کوئی لائیو مسجد سرچ دستیاب نہیں';
-
-  @override
-  String get mosquesUnavailableText =>
-      'Lume کے پاس ابھی مقامات کی لائیو ڈائریکٹری موجود نہیں، اس لیے یہاں قریبی فہرست دکھانے کا مطلب مسجدوں کے نام اور فاصلے گھڑنا ہوگا۔ اپنے قریب حقیقی تلاش کے لیے Maps کھولیں۔';
-
-  @override
-  String get mosquesOpenMaps => 'Maps میں کھولیں';
-
-  @override
-  String get mosquesMapsUnavailable => 'یہ ڈیوائس Maps نہیں کھول سکتی۔';
-
-  @override
-  String get mosquesMapsFailed => 'Maps نہیں کھل سکا۔ دوبارہ کوشش کریں۔';
 
   @override
   String get passportCountry => 'ملک';
@@ -13148,27 +13279,6 @@ class AppLocalizationsUr extends AppLocalizations {
   }
 
   @override
-  String get speedtestUnavailableTitle => 'Lume میں کوئی لائیو اسپیڈ ٹیسٹ نہیں';
-
-  @override
-  String get speedtestUnavailableText =>
-      'Lume نیٹ ورک پر کچھ نہیں بھیجتا، اس لیے یہ آپ کی ڈاؤن لوڈ یا اپ لوڈ اسپیڈ ناپ نہیں سکتا۔ اس کے بجائے ایک حقیقی ٹیسٹ کھولیں۔';
-
-  @override
-  String get speedtestOpenBrowser => 'اسپیڈ ٹیسٹ کھولیں';
-
-  @override
-  String get speedtestOpenFootnote =>
-      'fast.com کھلتا ہے — ایک مفت، بغیر اشتہار کے ٹیسٹ۔ Lume اسے نہ چلاتا ہے نہ نتیجہ دیکھتا ہے۔';
-
-  @override
-  String get speedtestOpenUnavailable =>
-      'اس ڈیوائس پر کوئی بھی ایپ یہ لنک نہیں کھول سکتی';
-
-  @override
-  String get speedtestOpenFailed => 'یہ لنک نہیں کھل سکا';
-
-  @override
   String get taraweehErrConflict =>
       'یہ کہیں اور تبدیل ہو گیا۔ اسے دوبارہ کھولیں۔';
 
@@ -13309,49 +13419,4 @@ class AppLocalizationsUr extends AppLocalizations {
 
   @override
   String get vehicleInsuranceRenewal => 'انشورنس کی تجدید';
-
-  @override
-  String get wastatusWhyTitle => 'Lume واٹس ایپ کی فائلیں نہیں پڑھ سکتا';
-
-  @override
-  String get wastatusWhyText =>
-      'کسی اور ایپ کا اسٹوریج کھولنے کے لیے وسیع فائل رسائی کی اجازت درکار ہوتی ہے۔ Lume جان بوجھ کر یہ اجازت نہیں مانگتا، اس لیے یہ اسٹیٹس تلاش یا فہرست نہیں بنا سکتا۔';
-
-  @override
-  String get wastatusSaveTitle => 'اسٹیٹس خود محفوظ کریں';
-
-  @override
-  String get wastatusSaveSubtitle =>
-      'دو مراحل، واٹس ایپ کے اندر ہی — کسی اضافی اجازت کی ضرورت نہیں';
-
-  @override
-  String get wastatusStep1Title => 'اسٹیٹس کھولیں';
-
-  @override
-  String get wastatusStep1Text =>
-      'تصویر یا ویڈیو کو معمول کے مطابق دیکھیں، اس کے غائب ہونے سے پہلے۔';
-
-  @override
-  String get wastatusStep2Title => 'محفوظ کرنے کے آئیکن پر ٹیپ کریں';
-
-  @override
-  String get wastatusStep2Text =>
-      'واٹس ایپ کا اپنا ڈاؤن لوڈ آئیکن اسے براہِ راست آپ کے فون کی گیلری میں محفوظ کر دیتا ہے۔';
-
-  @override
-  String get wastatusStep3Title => 'بعد میں اسے تلاش کریں';
-
-  @override
-  String get wastatusStep3Text =>
-      'آپ نے جو محفوظ کیا ہے اسے دیکھنے کے لیے اپنی گیلری، یا Lume کا میڈیا سیور کھولیں۔';
-
-  @override
-  String get wastatusFolderTitle => 'محفوظ کرنے کا آئیکن چھوٹ گیا؟';
-
-  @override
-  String get wastatusFolderNoteTitle => 'صرف Android';
-
-  @override
-  String get wastatusFolderNoteText =>
-      'آپ کے فون کی اپنی فائلز ایپ بعض اوقات واٹس ایپ کے میڈیا فولڈر تک رسائی حاصل کر سکتی ہے جب تک اسٹیٹس وہاں کیش میں موجود ہو — ایک پوشیدہ \".Statuses\" فولڈر تلاش کریں اور اگر نظر نہ آئے تو \"پوشیدہ فائلیں دکھائیں\" آن کریں۔ اس کا صحیح مقام آپ کے فون اور واٹس ایپ ورژن پر منحصر ہے، اور یہ آئی فون پر کام نہیں کرتا۔';
 }

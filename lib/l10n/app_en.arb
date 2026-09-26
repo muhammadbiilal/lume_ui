@@ -8506,6 +8506,237 @@
   "@toolRelated": {
     "description": "Reference key tool.related — the related-tools section head"
   },
+  "mosquesMap": "Mosques near you",
+  "@mosquesMap": {
+    "description": "tools.js mosques.map — the map's label and name."
+  },
+  "mosquesSearch": "Search mosques",
+  "@mosquesSearch": {
+    "description": "tools.js mosques.search — search placeholder."
+  },
+  "mosquesRadius": "Within",
+  "@mosquesRadius": {
+    "description": "tools.js mosques.radius — the radius chips' group, for a screen reader."
+  },
+  "mosquesNearby": "Nearby",
+  "@mosquesNearby": {
+    "description": "tools.js mosques.nearby — list section title."
+  },
+  "mosquesDirections": "Directions",
+  "@mosquesDirections": {
+    "description": "tools.js mosques.directions — button."
+  },
+  "mosquesOpening": "Opening directions",
+  "@mosquesOpening": {
+    "description": "tools.js mosques.opening — the Directions toast (Dayroz: hands off to maps)."
+  },
+  "mosquesAddYours": "Suggest a mosque",
+  "@mosquesAddYours": {
+    "description": "tools.js mosques.addyours — button."
+  },
+  "mosquesSuggest": "Thanks — we’ll review it",
+  "@mosquesSuggest": {
+    "description": "tools.js mosques.suggest — the Suggest toast (Dayroz: submits it)."
+  },
+  "mosquesCentral": "Central Mosque",
+  "@mosquesCentral": {
+    "description": "tools.js mosques.central — a sample mosque's name, before the city."
+  },
+  "mosquesJamia": "Jamia Masjid",
+  "@mosquesJamia": {
+    "description": "tools.js mosques.jamia — a sample mosque's name, before the city."
+  },
+  "mosquesMasjidA": "Masjid Al-Noor",
+  "@mosquesMasjidA": {
+    "description": "tools.js mosques.masjidA — a sample mosque's name, before the city."
+  },
+  "mosquesMasjidB": "Masjid Bilal",
+  "@mosquesMasjidB": {
+    "description": "tools.js mosques.masjidB — a sample mosque's name, before the city."
+  },
+  "mosquesAddr": "Near the main road, {city}",
+  "@mosquesAddr": {
+    "description": "tools.js mosques.addr — a sample mosque's address.",
+    "placeholders": {
+      "city": {
+        "type": "String"
+      }
+    }
+  },
+  "mosquesFacParking": "Parking",
+  "@mosquesFacParking": {
+    "description": "tools.js mosques.fac.parking"
+  },
+  "mosquesFacWomen": "Women’s area",
+  "@mosquesFacWomen": {
+    "description": "tools.js mosques.fac.women"
+  },
+  "mosquesFacWudu": "Wudu facilities",
+  "@mosquesFacWudu": {
+    "description": "tools.js mosques.fac.wudu"
+  },
+  "mosquesNoneNear": "Nothing within this distance",
+  "@mosquesNoneNear": {
+    "description": "tools.js mosques.noneNear — empty state title."
+  },
+  "mosquesNoneNearText": "Widen the search radius to see more.",
+  "@mosquesNoneNearText": {
+    "description": "tools.js mosques.noneNearText — empty state text."
+  },
+  "mosquesWalk": "{minutes} min walk",
+  "@mosquesWalk": {
+    "description": "m.walk + ' ' + unit.walk — the walking time in a row's meta.",
+    "placeholders": {
+      "minutes": {
+        "type": "int"
+      }
+    }
+  },
+  "toolSourcePlaces": "Places directory",
+  "@toolSourcePlaces": {
+    "description": "tool-specs.js src \"Places directory\" — Nearby Mosques' source line."
+  },
+  "speedStart": "Start test",
+  "@speedStart": {
+    "description": "tools.js speed.start — the gauge's button."
+  },
+  "speedDownload": "Download",
+  "@speedDownload": {
+    "description": "tools.js speed.download"
+  },
+  "speedUpload": "Upload",
+  "@speedUpload": {
+    "description": "tools.js speed.upload"
+  },
+  "speedPing": "Ping",
+  "@speedPing": {
+    "description": "tools.js speed.ping"
+  },
+  "speedConnection": "Connection",
+  "@speedConnection": {
+    "description": "tools.js speed.connection — section title."
+  },
+  "speedType": "Type",
+  "@speedType": {
+    "description": "tools.js speed.type"
+  },
+  "speedServer": "Test server",
+  "@speedServer": {
+    "description": "tools.js speed.server"
+  },
+  "speedIsp": "Provider",
+  "@speedIsp": {
+    "description": "tools.js speed.isp"
+  },
+  "speedWifi": "Wi-Fi",
+  "@speedWifi": {
+    "description": "tools.js speed.wifi"
+  },
+  "speedMobile": "Mobile data",
+  "@speedMobile": {
+    "description": "tools.js speed.mobile"
+  },
+  "speedYourIsp": "Your provider",
+  "@speedYourIsp": {
+    "description": "tools.js speed.yourIsp"
+  },
+  "speedDone": "{n} Mbps down",
+  "@speedDone": {
+    "description": "tools.js speed.done — the toast when a run ends. n is a formatted number.",
+    "placeholders": {
+      "n": {
+        "type": "String"
+      }
+    }
+  },
+  "unitMbps": "Mbps",
+  "@unitMbps": {
+    "description": "tools.js unit.mbps — megabits a second."
+  },
+  "unitMs": "ms",
+  "@unitMs": {
+    "description": "tools.js unit.ms — milliseconds."
+  },
+  "toolSourceTestServer": "Nearest test server",
+  "@toolSourceTestServer": {
+    "description": "tool-specs.js src \"Nearest test server\" — Speed Test's source line."
+  },
+  "mediaLink": "Paste a link",
+  "@mediaLink": {
+    "description": "tools.js media.link — the link field's label."
+  },
+  "mediaFetch": "Fetch",
+  "@mediaFetch": {
+    "description": "tools.js media.fetch — button."
+  },
+  "mediaFetching": "Fetching media",
+  "@mediaFetching": {
+    "description": "tools.js media.fetching — the Fetch toast (Dayroz: fetches the linked media)."
+  },
+  "mediaSaved": "Saved",
+  "@mediaSaved": {
+    "description": "tools.js media.saved — metric label."
+  },
+  "mediaStorage": "Storage used",
+  "@mediaStorage": {
+    "description": "tools.js media.storage — metric label."
+  },
+  "mediaLastSave": "Last save",
+  "@mediaLastSave": {
+    "description": "tools.js media.lastSave — metric label."
+  },
+  "mediaLibrary": "Library",
+  "@mediaLibrary": {
+    "description": "tools.js media.library — section title."
+  },
+  "mediaItem1": "Recipe video",
+  "@mediaItem1": {
+    "description": "tools.js media.item1 — a sample saved item."
+  },
+  "mediaItem2": "Travel photo",
+  "@mediaItem2": {
+    "description": "tools.js media.item2 — a sample saved item."
+  },
+  "mediaItem3": "Podcast clip",
+  "@mediaItem3": {
+    "description": "tools.js media.item3 — a sample saved item."
+  },
+  "mediaEmptyText": "Paste a link and Lume saves the media to this device.",
+  "@mediaEmptyText": {
+    "description": "tools.js media.empty.text"
+  },
+  "unitMb": "MB",
+  "@unitMb": {
+    "description": "tools.js unit.mb — megabytes."
+  },
+  "wastatusAndroidTitle": "Android only",
+  "@wastatusAndroidTitle": {
+    "description": "tools.js wastatus.android.title — the note card's title."
+  },
+  "wastatusAndroidText": "Reading another app’s status folder needs Android’s folder access, which iOS does not offer.",
+  "@wastatusAndroidText": {
+    "description": "tools.js wastatus.android.text"
+  },
+  "wastatusDetected": "Detected statuses",
+  "@wastatusDetected": {
+    "description": "tools.js wastatus.detected — section title."
+  },
+  "wastatusEmptyTitle": "No statuses found",
+  "@wastatusEmptyTitle": {
+    "description": "tools.js wastatus.empty.title"
+  },
+  "wastatusEmptyText": "Grant folder access so Lume can list the statuses currently on your device.",
+  "@wastatusEmptyText": {
+    "description": "tools.js wastatus.empty.text"
+  },
+  "wastatusGrant": "Grant folder access",
+  "@wastatusGrant": {
+    "description": "tools.js wastatus.grant — the empty state's button."
+  },
+  "wastatusGranting": "Requesting access",
+  "@wastatusGranting": {
+    "description": "tools.js wastatus.granting — the Grant toast (Dayroz: opens Android's folder picker)."
+  },
   "toolSourceOnDevice": "On device",
   "@toolSourceOnDevice": {
     "description": "tool-specs.js src \"On device\" — shared by every tool whose figures live on the device. The reference prints it in English everywhere; translated here (§11)."
@@ -15841,34 +16072,10 @@
   "@hijriHijriDate": { "description": "Field label for the Hijri side of the converter." },
   "hijriMonthsTitle": "The Hijri months",
   "@hijriMonthsTitle": { "description": "Section title over the list of Hijri month names." },
-  "mediasaverLinkLabel": "Link",
-  "@mediasaverLinkLabel": { "description": "Field label for the pasted link." },
   "mediasaverLinkPlaceholder": "https://…",
   "@mediasaverLinkPlaceholder": { "description": "Placeholder text for the link field." },
-  "mediasaverNoNetworkTitle": "No network access",
-  "@mediasaverNoNetworkTitle": { "description": "Empty/blocked state title: Lume has no network access." },
-  "mediasaverNoNetworkText": "Lume never connects to the internet, so it can't fetch or download media from a link.",
-  "@mediasaverNoNetworkText": { "description": "Body explaining Lume can't fetch media from a link." },
-  "mediasaverNoNetworkToast": "Lume can't fetch that — it doesn't connect to the internet.",
-  "@mediasaverNoNetworkToast": { "description": "Toast when a link is submitted despite no network capability." },
-  "mediasaverSave": "Save",
-  "@mediasaverSave": { "description": "Button that saves the media to the device." },
-  "mediasaverLibrary": "Saved media",
-  "@mediasaverLibrary": { "description": "Section title over the saved-media library." },
   "mediasaverEmptyTitle": "Nothing saved yet",
   "@mediasaverEmptyTitle": { "description": "Empty state title for the saved-media library." },
-  "mediasaverEmptyText": "Media you save stays on this device — Lume can't download anything from a link.",
-  "@mediasaverEmptyText": { "description": "Empty state text for the saved-media library." },
-  "mosquesUnavailableTitle": "No live mosque search yet",
-  "@mosquesUnavailableTitle": { "description": "Empty state title: no live places directory." },
-  "mosquesUnavailableText": "Lume doesn't have a live places directory yet, so a nearby list here would mean inventing mosque names and distances. Open Maps for a real search near you.",
-  "@mosquesUnavailableText": { "description": "Empty state body explaining why there's no in-app mosque list." },
-  "mosquesOpenMaps": "Open in Maps",
-  "@mosquesOpenMaps": { "description": "Button that opens the device's Maps app." },
-  "mosquesMapsUnavailable": "This device can't open Maps.",
-  "@mosquesMapsUnavailable": { "description": "Said when no Maps app is available on the device." },
-  "mosquesMapsFailed": "Couldn't open Maps. Try again.",
-  "@mosquesMapsFailed": { "description": "Toast when opening Maps fails." },
   "passportCountry": "Country",
   "@passportCountry": { "description": "Field label: destination country for the photo spec." },
   "passportSize": "Photo size",
@@ -16123,18 +16330,6 @@
     "description": "Source line on the Ramadan share card.",
     "placeholders": { "city": {"type": "String"}, "date": {"type": "String"} }
   },
-  "speedtestUnavailableTitle": "No live speed test in Lume",
-  "@speedtestUnavailableTitle": { "description": "Empty state title: no in-app speed test." },
-  "speedtestUnavailableText": "Lume never sends anything over the network, so it can't measure your download or upload speed. Open a real test instead.",
-  "@speedtestUnavailableText": { "description": "Empty state body explaining why there's no in-app speed test." },
-  "speedtestOpenBrowser": "Open a speed test",
-  "@speedtestOpenBrowser": { "description": "Button that opens a real, external speed test — C49: never names \"browser\", a claim a Flutter build can't make even though the link happens to open one." },
-  "speedtestOpenFootnote": "Opens fast.com — a free, ad-free test. Lume doesn't run it or see your result.",
-  "@speedtestOpenFootnote": { "description": "Footnote clarifying Lume's role (none) in the external speed test." },
-  "speedtestOpenUnavailable": "Nothing on this device can open that link",
-  "@speedtestOpenUnavailable": { "description": "Said when no app can open the speed-test link." },
-  "speedtestOpenFailed": "Couldn't open that link",
-  "@speedtestOpenFailed": { "description": "Toast when opening the speed-test link fails." },
   "taraweehErrConflict": "This changed somewhere else. Open it again.",
   "@taraweehErrConflict": { "description": "Toast for a conflicting record on write (mirrors praytrackErrConflict)." },
   "taraweehErrFailed": "That didn't save. Try again.",
@@ -16238,31 +16433,5 @@
   "vehicleTokenTax": "Token tax due",
   "@vehicleTokenTax": { "description": "Reminder type: token tax due." },
   "vehicleInsuranceRenewal": "Insurance renewal",
-  "@vehicleInsuranceRenewal": { "description": "Reminder type: insurance renewal due." },
-  "wastatusWhyTitle": "Lume can't read WhatsApp's files",
-  "@wastatusWhyTitle": { "description": "Title explaining why Lume can't list statuses automatically." },
-  "wastatusWhyText": "Opening another app's storage needs a broad file-access permission. Lume deliberately doesn't ask for it, so it can't scan for statuses or list them for you.",
-  "@wastatusWhyText": { "description": "Body explaining the privacy trade-off behind not scanning WhatsApp's storage." },
-  "wastatusSaveTitle": "Save a status yourself",
-  "@wastatusSaveTitle": { "description": "Section title over the manual save instructions." },
-  "wastatusSaveSubtitle": "Two steps, right inside WhatsApp — no extra permission needed",
-  "@wastatusSaveSubtitle": { "description": "Subtitle under the manual save instructions." },
-  "wastatusStep1Title": "Open the status",
-  "@wastatusStep1Title": { "description": "Step 1 title." },
-  "wastatusStep1Text": "View the photo or video the way you normally would, before it disappears.",
-  "@wastatusStep1Text": { "description": "Step 1 body." },
-  "wastatusStep2Title": "Tap the save icon",
-  "@wastatusStep2Title": { "description": "Step 2 title." },
-  "wastatusStep2Text": "WhatsApp's own download icon saves it straight to your phone's gallery.",
-  "@wastatusStep2Text": { "description": "Step 2 body." },
-  "wastatusStep3Title": "Find it afterwards",
-  "@wastatusStep3Title": { "description": "Step 3 title." },
-  "wastatusStep3Text": "Open your gallery, or Lume's Media Saver, to see what you've saved.",
-  "@wastatusStep3Text": { "description": "Step 3 body." },
-  "wastatusFolderTitle": "Missed the save icon?",
-  "@wastatusFolderTitle": { "description": "Section title over the fallback folder-browsing tip." },
-  "wastatusFolderNoteTitle": "Android only",
-  "@wastatusFolderNoteTitle": { "description": "Note title flagging the fallback tip as Android-only." },
-  "wastatusFolderNoteText": "Your phone's own Files app can sometimes browse to WhatsApp's media folder while a status is still cached there — look for a hidden \".Statuses\" folder and turn on \"show hidden files\" if you don't see it. Exactly where it is depends on your phone and WhatsApp version, and this doesn't work on iPhone.",
-  "@wastatusFolderNoteText": { "description": "Body of the Android-only fallback tip for browsing WhatsApp's media folder directly." }
+  "@vehicleInsuranceRenewal": { "description": "Reminder type: insurance renewal due." }
 }

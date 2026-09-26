@@ -139,6 +139,8 @@ abstract final class LumeToolStrings {
         'On device + provider' => l.toolSourceOnDeviceProvider,
         'Operator live feed' => l.toolSourceOperatorFeed,
         'Operator tariffs' => l.toolSourceOperatorTariffs,
+        'Places directory' => l.toolSourcePlaces,
+        'Nearest test server' => l.toolSourceTestServer,
         'Publisher feeds' => l.toolSourcePublishers,
         'Qur’an text' => l.toolSourceQuranText,
         'Recipe library' => l.toolSourceRecipes,

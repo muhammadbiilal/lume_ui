@@ -11020,6 +11020,330 @@ abstract class AppLocalizations {
   /// **'Related tools'**
   String get toolRelated;
 
+  /// tools.js mosques.map — the map's label and name.
+  ///
+  /// In en, this message translates to:
+  /// **'Mosques near you'**
+  String get mosquesMap;
+
+  /// tools.js mosques.search — search placeholder.
+  ///
+  /// In en, this message translates to:
+  /// **'Search mosques'**
+  String get mosquesSearch;
+
+  /// tools.js mosques.radius — the radius chips' group, for a screen reader.
+  ///
+  /// In en, this message translates to:
+  /// **'Within'**
+  String get mosquesRadius;
+
+  /// tools.js mosques.nearby — list section title.
+  ///
+  /// In en, this message translates to:
+  /// **'Nearby'**
+  String get mosquesNearby;
+
+  /// tools.js mosques.directions — button.
+  ///
+  /// In en, this message translates to:
+  /// **'Directions'**
+  String get mosquesDirections;
+
+  /// tools.js mosques.opening — the Directions toast (Dayroz: hands off to maps).
+  ///
+  /// In en, this message translates to:
+  /// **'Opening directions'**
+  String get mosquesOpening;
+
+  /// tools.js mosques.addyours — button.
+  ///
+  /// In en, this message translates to:
+  /// **'Suggest a mosque'**
+  String get mosquesAddYours;
+
+  /// tools.js mosques.suggest — the Suggest toast (Dayroz: submits it).
+  ///
+  /// In en, this message translates to:
+  /// **'Thanks — we’ll review it'**
+  String get mosquesSuggest;
+
+  /// tools.js mosques.central — a sample mosque's name, before the city.
+  ///
+  /// In en, this message translates to:
+  /// **'Central Mosque'**
+  String get mosquesCentral;
+
+  /// tools.js mosques.jamia — a sample mosque's name, before the city.
+  ///
+  /// In en, this message translates to:
+  /// **'Jamia Masjid'**
+  String get mosquesJamia;
+
+  /// tools.js mosques.masjidA — a sample mosque's name, before the city.
+  ///
+  /// In en, this message translates to:
+  /// **'Masjid Al-Noor'**
+  String get mosquesMasjidA;
+
+  /// tools.js mosques.masjidB — a sample mosque's name, before the city.
+  ///
+  /// In en, this message translates to:
+  /// **'Masjid Bilal'**
+  String get mosquesMasjidB;
+
+  /// tools.js mosques.addr — a sample mosque's address.
+  ///
+  /// In en, this message translates to:
+  /// **'Near the main road, {city}'**
+  String mosquesAddr(String city);
+
+  /// tools.js mosques.fac.parking
+  ///
+  /// In en, this message translates to:
+  /// **'Parking'**
+  String get mosquesFacParking;
+
+  /// tools.js mosques.fac.women
+  ///
+  /// In en, this message translates to:
+  /// **'Women’s area'**
+  String get mosquesFacWomen;
+
+  /// tools.js mosques.fac.wudu
+  ///
+  /// In en, this message translates to:
+  /// **'Wudu facilities'**
+  String get mosquesFacWudu;
+
+  /// tools.js mosques.noneNear — empty state title.
+  ///
+  /// In en, this message translates to:
+  /// **'Nothing within this distance'**
+  String get mosquesNoneNear;
+
+  /// tools.js mosques.noneNearText — empty state text.
+  ///
+  /// In en, this message translates to:
+  /// **'Widen the search radius to see more.'**
+  String get mosquesNoneNearText;
+
+  /// m.walk + ' ' + unit.walk — the walking time in a row's meta.
+  ///
+  /// In en, this message translates to:
+  /// **'{minutes} min walk'**
+  String mosquesWalk(int minutes);
+
+  /// tool-specs.js src "Places directory" — Nearby Mosques' source line.
+  ///
+  /// In en, this message translates to:
+  /// **'Places directory'**
+  String get toolSourcePlaces;
+
+  /// tools.js speed.start — the gauge's button.
+  ///
+  /// In en, this message translates to:
+  /// **'Start test'**
+  String get speedStart;
+
+  /// tools.js speed.download
+  ///
+  /// In en, this message translates to:
+  /// **'Download'**
+  String get speedDownload;
+
+  /// tools.js speed.upload
+  ///
+  /// In en, this message translates to:
+  /// **'Upload'**
+  String get speedUpload;
+
+  /// tools.js speed.ping
+  ///
+  /// In en, this message translates to:
+  /// **'Ping'**
+  String get speedPing;
+
+  /// tools.js speed.connection — section title.
+  ///
+  /// In en, this message translates to:
+  /// **'Connection'**
+  String get speedConnection;
+
+  /// tools.js speed.type
+  ///
+  /// In en, this message translates to:
+  /// **'Type'**
+  String get speedType;
+
+  /// tools.js speed.server
+  ///
+  /// In en, this message translates to:
+  /// **'Test server'**
+  String get speedServer;
+
+  /// tools.js speed.isp
+  ///
+  /// In en, this message translates to:
+  /// **'Provider'**
+  String get speedIsp;
+
+  /// tools.js speed.wifi
+  ///
+  /// In en, this message translates to:
+  /// **'Wi-Fi'**
+  String get speedWifi;
+
+  /// tools.js speed.mobile
+  ///
+  /// In en, this message translates to:
+  /// **'Mobile data'**
+  String get speedMobile;
+
+  /// tools.js speed.yourIsp
+  ///
+  /// In en, this message translates to:
+  /// **'Your provider'**
+  String get speedYourIsp;
+
+  /// tools.js speed.done — the toast when a run ends. n is a formatted number.
+  ///
+  /// In en, this message translates to:
+  /// **'{n} Mbps down'**
+  String speedDone(String n);
+
+  /// tools.js unit.mbps — megabits a second.
+  ///
+  /// In en, this message translates to:
+  /// **'Mbps'**
+  String get unitMbps;
+
+  /// tools.js unit.ms — milliseconds.
+  ///
+  /// In en, this message translates to:
+  /// **'ms'**
+  String get unitMs;
+
+  /// tool-specs.js src "Nearest test server" — Speed Test's source line.
+  ///
+  /// In en, this message translates to:
+  /// **'Nearest test server'**
+  String get toolSourceTestServer;
+
+  /// tools.js media.link — the link field's label.
+  ///
+  /// In en, this message translates to:
+  /// **'Paste a link'**
+  String get mediaLink;
+
+  /// tools.js media.fetch — button.
+  ///
+  /// In en, this message translates to:
+  /// **'Fetch'**
+  String get mediaFetch;
+
+  /// tools.js media.fetching — the Fetch toast (Dayroz: fetches the linked media).
+  ///
+  /// In en, this message translates to:
+  /// **'Fetching media'**
+  String get mediaFetching;
+
+  /// tools.js media.saved — metric label.
+  ///
+  /// In en, this message translates to:
+  /// **'Saved'**
+  String get mediaSaved;
+
+  /// tools.js media.storage — metric label.
+  ///
+  /// In en, this message translates to:
+  /// **'Storage used'**
+  String get mediaStorage;
+
+  /// tools.js media.lastSave — metric label.
+  ///
+  /// In en, this message translates to:
+  /// **'Last save'**
+  String get mediaLastSave;
+
+  /// tools.js media.library — section title.
+  ///
+  /// In en, this message translates to:
+  /// **'Library'**
+  String get mediaLibrary;
+
+  /// tools.js media.item1 — a sample saved item.
+  ///
+  /// In en, this message translates to:
+  /// **'Recipe video'**
+  String get mediaItem1;
+
+  /// tools.js media.item2 — a sample saved item.
+  ///
+  /// In en, this message translates to:
+  /// **'Travel photo'**
+  String get mediaItem2;
+
+  /// tools.js media.item3 — a sample saved item.
+  ///
+  /// In en, this message translates to:
+  /// **'Podcast clip'**
+  String get mediaItem3;
+
+  /// tools.js media.empty.text
+  ///
+  /// In en, this message translates to:
+  /// **'Paste a link and Lume saves the media to this device.'**
+  String get mediaEmptyText;
+
+  /// tools.js unit.mb — megabytes.
+  ///
+  /// In en, this message translates to:
+  /// **'MB'**
+  String get unitMb;
+
+  /// tools.js wastatus.android.title — the note card's title.
+  ///
+  /// In en, this message translates to:
+  /// **'Android only'**
+  String get wastatusAndroidTitle;
+
+  /// tools.js wastatus.android.text
+  ///
+  /// In en, this message translates to:
+  /// **'Reading another app’s status folder needs Android’s folder access, which iOS does not offer.'**
+  String get wastatusAndroidText;
+
+  /// tools.js wastatus.detected — section title.
+  ///
+  /// In en, this message translates to:
+  /// **'Detected statuses'**
+  String get wastatusDetected;
+
+  /// tools.js wastatus.empty.title
+  ///
+  /// In en, this message translates to:
+  /// **'No statuses found'**
+  String get wastatusEmptyTitle;
+
+  /// tools.js wastatus.empty.text
+  ///
+  /// In en, this message translates to:
+  /// **'Grant folder access so Lume can list the statuses currently on your device.'**
+  String get wastatusEmptyText;
+
+  /// tools.js wastatus.grant — the empty state's button.
+  ///
+  /// In en, this message translates to:
+  /// **'Grant folder access'**
+  String get wastatusGrant;
+
+  /// tools.js wastatus.granting — the Grant toast (Dayroz: opens Android's folder picker).
+  ///
+  /// In en, this message translates to:
+  /// **'Requesting access'**
+  String get wastatusGranting;
+
   /// tool-specs.js src "On device" — shared by every tool whose figures live on the device. The reference prints it in English everywhere; translated here (§11).
   ///
   /// In en, this message translates to:
@@ -22009,89 +22333,17 @@ abstract class AppLocalizations {
   /// **'The Hijri months'**
   String get hijriMonthsTitle;
 
-  /// Field label for the pasted link.
-  ///
-  /// In en, this message translates to:
-  /// **'Link'**
-  String get mediasaverLinkLabel;
-
   /// Placeholder text for the link field.
   ///
   /// In en, this message translates to:
   /// **'https://…'**
   String get mediasaverLinkPlaceholder;
 
-  /// Empty/blocked state title: Lume has no network access.
-  ///
-  /// In en, this message translates to:
-  /// **'No network access'**
-  String get mediasaverNoNetworkTitle;
-
-  /// Body explaining Lume can't fetch media from a link.
-  ///
-  /// In en, this message translates to:
-  /// **'Lume never connects to the internet, so it can\'t fetch or download media from a link.'**
-  String get mediasaverNoNetworkText;
-
-  /// Toast when a link is submitted despite no network capability.
-  ///
-  /// In en, this message translates to:
-  /// **'Lume can\'t fetch that — it doesn\'t connect to the internet.'**
-  String get mediasaverNoNetworkToast;
-
-  /// Button that saves the media to the device.
-  ///
-  /// In en, this message translates to:
-  /// **'Save'**
-  String get mediasaverSave;
-
-  /// Section title over the saved-media library.
-  ///
-  /// In en, this message translates to:
-  /// **'Saved media'**
-  String get mediasaverLibrary;
-
   /// Empty state title for the saved-media library.
   ///
   /// In en, this message translates to:
   /// **'Nothing saved yet'**
   String get mediasaverEmptyTitle;
-
-  /// Empty state text for the saved-media library.
-  ///
-  /// In en, this message translates to:
-  /// **'Media you save stays on this device — Lume can\'t download anything from a link.'**
-  String get mediasaverEmptyText;
-
-  /// Empty state title: no live places directory.
-  ///
-  /// In en, this message translates to:
-  /// **'No live mosque search yet'**
-  String get mosquesUnavailableTitle;
-
-  /// Empty state body explaining why there's no in-app mosque list.
-  ///
-  /// In en, this message translates to:
-  /// **'Lume doesn\'t have a live places directory yet, so a nearby list here would mean inventing mosque names and distances. Open Maps for a real search near you.'**
-  String get mosquesUnavailableText;
-
-  /// Button that opens the device's Maps app.
-  ///
-  /// In en, this message translates to:
-  /// **'Open in Maps'**
-  String get mosquesOpenMaps;
-
-  /// Said when no Maps app is available on the device.
-  ///
-  /// In en, this message translates to:
-  /// **'This device can\'t open Maps.'**
-  String get mosquesMapsUnavailable;
-
-  /// Toast when opening Maps fails.
-  ///
-  /// In en, this message translates to:
-  /// **'Couldn\'t open Maps. Try again.'**
-  String get mosquesMapsFailed;
 
   /// Field label: destination country for the photo spec.
   ///
@@ -22747,42 +22999,6 @@ abstract class AppLocalizations {
   /// **'{city} · {date}'**
   String ramadanShareSource(String city, String date);
 
-  /// Empty state title: no in-app speed test.
-  ///
-  /// In en, this message translates to:
-  /// **'No live speed test in Lume'**
-  String get speedtestUnavailableTitle;
-
-  /// Empty state body explaining why there's no in-app speed test.
-  ///
-  /// In en, this message translates to:
-  /// **'Lume never sends anything over the network, so it can\'t measure your download or upload speed. Open a real test instead.'**
-  String get speedtestUnavailableText;
-
-  /// Button that opens a real, external speed test — C49: never names "browser", a claim a Flutter build can't make even though the link happens to open one.
-  ///
-  /// In en, this message translates to:
-  /// **'Open a speed test'**
-  String get speedtestOpenBrowser;
-
-  /// Footnote clarifying Lume's role (none) in the external speed test.
-  ///
-  /// In en, this message translates to:
-  /// **'Opens fast.com — a free, ad-free test. Lume doesn\'t run it or see your result.'**
-  String get speedtestOpenFootnote;
-
-  /// Said when no app can open the speed-test link.
-  ///
-  /// In en, this message translates to:
-  /// **'Nothing on this device can open that link'**
-  String get speedtestOpenUnavailable;
-
-  /// Toast when opening the speed-test link fails.
-  ///
-  /// In en, this message translates to:
-  /// **'Couldn\'t open that link'**
-  String get speedtestOpenFailed;
-
   /// Toast for a conflicting record on write (mirrors praytrackErrConflict).
   ///
   /// In en, this message translates to:
@@ -23040,84 +23256,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Insurance renewal'**
   String get vehicleInsuranceRenewal;
-
-  /// Title explaining why Lume can't list statuses automatically.
-  ///
-  /// In en, this message translates to:
-  /// **'Lume can\'t read WhatsApp\'s files'**
-  String get wastatusWhyTitle;
-
-  /// Body explaining the privacy trade-off behind not scanning WhatsApp's storage.
-  ///
-  /// In en, this message translates to:
-  /// **'Opening another app\'s storage needs a broad file-access permission. Lume deliberately doesn\'t ask for it, so it can\'t scan for statuses or list them for you.'**
-  String get wastatusWhyText;
-
-  /// Section title over the manual save instructions.
-  ///
-  /// In en, this message translates to:
-  /// **'Save a status yourself'**
-  String get wastatusSaveTitle;
-
-  /// Subtitle under the manual save instructions.
-  ///
-  /// In en, this message translates to:
-  /// **'Two steps, right inside WhatsApp — no extra permission needed'**
-  String get wastatusSaveSubtitle;
-
-  /// Step 1 title.
-  ///
-  /// In en, this message translates to:
-  /// **'Open the status'**
-  String get wastatusStep1Title;
-
-  /// Step 1 body.
-  ///
-  /// In en, this message translates to:
-  /// **'View the photo or video the way you normally would, before it disappears.'**
-  String get wastatusStep1Text;
-
-  /// Step 2 title.
-  ///
-  /// In en, this message translates to:
-  /// **'Tap the save icon'**
-  String get wastatusStep2Title;
-
-  /// Step 2 body.
-  ///
-  /// In en, this message translates to:
-  /// **'WhatsApp\'s own download icon saves it straight to your phone\'s gallery.'**
-  String get wastatusStep2Text;
-
-  /// Step 3 title.
-  ///
-  /// In en, this message translates to:
-  /// **'Find it afterwards'**
-  String get wastatusStep3Title;
-
-  /// Step 3 body.
-  ///
-  /// In en, this message translates to:
-  /// **'Open your gallery, or Lume\'s Media Saver, to see what you\'ve saved.'**
-  String get wastatusStep3Text;
-
-  /// Section title over the fallback folder-browsing tip.
-  ///
-  /// In en, this message translates to:
-  /// **'Missed the save icon?'**
-  String get wastatusFolderTitle;
-
-  /// Note title flagging the fallback tip as Android-only.
-  ///
-  /// In en, this message translates to:
-  /// **'Android only'**
-  String get wastatusFolderNoteTitle;
-
-  /// Body of the Android-only fallback tip for browsing WhatsApp's media folder directly.
-  ///
-  /// In en, this message translates to:
-  /// **'Your phone\'s own Files app can sometimes browse to WhatsApp\'s media folder while a status is still cached there — look for a hidden \".Statuses\" folder and turn on \"show hidden files\" if you don\'t see it. Exactly where it is depends on your phone and WhatsApp version, and this doesn\'t work on iPhone.'**
-  String get wastatusFolderNoteText;
 }
 
 class _AppLocalizationsDelegate

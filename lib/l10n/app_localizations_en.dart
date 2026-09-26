@@ -6277,6 +6277,177 @@ class AppLocalizationsEn extends AppLocalizations {
   String get toolRelated => 'Related tools';
 
   @override
+  String get mosquesMap => 'Mosques near you';
+
+  @override
+  String get mosquesSearch => 'Search mosques';
+
+  @override
+  String get mosquesRadius => 'Within';
+
+  @override
+  String get mosquesNearby => 'Nearby';
+
+  @override
+  String get mosquesDirections => 'Directions';
+
+  @override
+  String get mosquesOpening => 'Opening directions';
+
+  @override
+  String get mosquesAddYours => 'Suggest a mosque';
+
+  @override
+  String get mosquesSuggest => 'Thanks — we’ll review it';
+
+  @override
+  String get mosquesCentral => 'Central Mosque';
+
+  @override
+  String get mosquesJamia => 'Jamia Masjid';
+
+  @override
+  String get mosquesMasjidA => 'Masjid Al-Noor';
+
+  @override
+  String get mosquesMasjidB => 'Masjid Bilal';
+
+  @override
+  String mosquesAddr(String city) {
+    return 'Near the main road, $city';
+  }
+
+  @override
+  String get mosquesFacParking => 'Parking';
+
+  @override
+  String get mosquesFacWomen => 'Women’s area';
+
+  @override
+  String get mosquesFacWudu => 'Wudu facilities';
+
+  @override
+  String get mosquesNoneNear => 'Nothing within this distance';
+
+  @override
+  String get mosquesNoneNearText => 'Widen the search radius to see more.';
+
+  @override
+  String mosquesWalk(int minutes) {
+    return '$minutes min walk';
+  }
+
+  @override
+  String get toolSourcePlaces => 'Places directory';
+
+  @override
+  String get speedStart => 'Start test';
+
+  @override
+  String get speedDownload => 'Download';
+
+  @override
+  String get speedUpload => 'Upload';
+
+  @override
+  String get speedPing => 'Ping';
+
+  @override
+  String get speedConnection => 'Connection';
+
+  @override
+  String get speedType => 'Type';
+
+  @override
+  String get speedServer => 'Test server';
+
+  @override
+  String get speedIsp => 'Provider';
+
+  @override
+  String get speedWifi => 'Wi-Fi';
+
+  @override
+  String get speedMobile => 'Mobile data';
+
+  @override
+  String get speedYourIsp => 'Your provider';
+
+  @override
+  String speedDone(String n) {
+    return '$n Mbps down';
+  }
+
+  @override
+  String get unitMbps => 'Mbps';
+
+  @override
+  String get unitMs => 'ms';
+
+  @override
+  String get toolSourceTestServer => 'Nearest test server';
+
+  @override
+  String get mediaLink => 'Paste a link';
+
+  @override
+  String get mediaFetch => 'Fetch';
+
+  @override
+  String get mediaFetching => 'Fetching media';
+
+  @override
+  String get mediaSaved => 'Saved';
+
+  @override
+  String get mediaStorage => 'Storage used';
+
+  @override
+  String get mediaLastSave => 'Last save';
+
+  @override
+  String get mediaLibrary => 'Library';
+
+  @override
+  String get mediaItem1 => 'Recipe video';
+
+  @override
+  String get mediaItem2 => 'Travel photo';
+
+  @override
+  String get mediaItem3 => 'Podcast clip';
+
+  @override
+  String get mediaEmptyText =>
+      'Paste a link and Lume saves the media to this device.';
+
+  @override
+  String get unitMb => 'MB';
+
+  @override
+  String get wastatusAndroidTitle => 'Android only';
+
+  @override
+  String get wastatusAndroidText =>
+      'Reading another app’s status folder needs Android’s folder access, which iOS does not offer.';
+
+  @override
+  String get wastatusDetected => 'Detected statuses';
+
+  @override
+  String get wastatusEmptyTitle => 'No statuses found';
+
+  @override
+  String get wastatusEmptyText =>
+      'Grant folder access so Lume can list the statuses currently on your device.';
+
+  @override
+  String get wastatusGrant => 'Grant folder access';
+
+  @override
+  String get wastatusGranting => 'Requesting access';
+
+  @override
   String get toolSourceOnDevice => 'On device';
 
   @override
@@ -12722,50 +12893,10 @@ class AppLocalizationsEn extends AppLocalizations {
   String get hijriMonthsTitle => 'The Hijri months';
 
   @override
-  String get mediasaverLinkLabel => 'Link';
-
-  @override
   String get mediasaverLinkPlaceholder => 'https://…';
 
   @override
-  String get mediasaverNoNetworkTitle => 'No network access';
-
-  @override
-  String get mediasaverNoNetworkText =>
-      'Lume never connects to the internet, so it can\'t fetch or download media from a link.';
-
-  @override
-  String get mediasaverNoNetworkToast =>
-      'Lume can\'t fetch that — it doesn\'t connect to the internet.';
-
-  @override
-  String get mediasaverSave => 'Save';
-
-  @override
-  String get mediasaverLibrary => 'Saved media';
-
-  @override
   String get mediasaverEmptyTitle => 'Nothing saved yet';
-
-  @override
-  String get mediasaverEmptyText =>
-      'Media you save stays on this device — Lume can\'t download anything from a link.';
-
-  @override
-  String get mosquesUnavailableTitle => 'No live mosque search yet';
-
-  @override
-  String get mosquesUnavailableText =>
-      'Lume doesn\'t have a live places directory yet, so a nearby list here would mean inventing mosque names and distances. Open Maps for a real search near you.';
-
-  @override
-  String get mosquesOpenMaps => 'Open in Maps';
-
-  @override
-  String get mosquesMapsUnavailable => 'This device can\'t open Maps.';
-
-  @override
-  String get mosquesMapsFailed => 'Couldn\'t open Maps. Try again.';
 
   @override
   String get passportCountry => 'Country';
@@ -13157,27 +13288,6 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
-  String get speedtestUnavailableTitle => 'No live speed test in Lume';
-
-  @override
-  String get speedtestUnavailableText =>
-      'Lume never sends anything over the network, so it can\'t measure your download or upload speed. Open a real test instead.';
-
-  @override
-  String get speedtestOpenBrowser => 'Open a speed test';
-
-  @override
-  String get speedtestOpenFootnote =>
-      'Opens fast.com — a free, ad-free test. Lume doesn\'t run it or see your result.';
-
-  @override
-  String get speedtestOpenUnavailable =>
-      'Nothing on this device can open that link';
-
-  @override
-  String get speedtestOpenFailed => 'Couldn\'t open that link';
-
-  @override
   String get taraweehErrConflict =>
       'This changed somewhere else. Open it again.';
 
@@ -13319,49 +13429,4 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get vehicleInsuranceRenewal => 'Insurance renewal';
-
-  @override
-  String get wastatusWhyTitle => 'Lume can\'t read WhatsApp\'s files';
-
-  @override
-  String get wastatusWhyText =>
-      'Opening another app\'s storage needs a broad file-access permission. Lume deliberately doesn\'t ask for it, so it can\'t scan for statuses or list them for you.';
-
-  @override
-  String get wastatusSaveTitle => 'Save a status yourself';
-
-  @override
-  String get wastatusSaveSubtitle =>
-      'Two steps, right inside WhatsApp — no extra permission needed';
-
-  @override
-  String get wastatusStep1Title => 'Open the status';
-
-  @override
-  String get wastatusStep1Text =>
-      'View the photo or video the way you normally would, before it disappears.';
-
-  @override
-  String get wastatusStep2Title => 'Tap the save icon';
-
-  @override
-  String get wastatusStep2Text =>
-      'WhatsApp\'s own download icon saves it straight to your phone\'s gallery.';
-
-  @override
-  String get wastatusStep3Title => 'Find it afterwards';
-
-  @override
-  String get wastatusStep3Text =>
-      'Open your gallery, or Lume\'s Media Saver, to see what you\'ve saved.';
-
-  @override
-  String get wastatusFolderTitle => 'Missed the save icon?';
-
-  @override
-  String get wastatusFolderNoteTitle => 'Android only';
-
-  @override
-  String get wastatusFolderNoteText =>
-      'Your phone\'s own Files app can sometimes browse to WhatsApp\'s media folder while a status is still cached there — look for a hidden \".Statuses\" folder and turn on \"show hidden files\" if you don\'t see it. Exactly where it is depends on your phone and WhatsApp version, and this doesn\'t work on iPhone.';
 }

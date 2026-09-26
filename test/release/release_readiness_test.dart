@@ -346,10 +346,11 @@ void main() {
         'compound',
         'converter',
         'cycle',
-        // Wave 10: Document Scanner, Faraid, Mobile Speed Test's own
-        // honest-hand-off, Media Saver and Passport Photos are `inputOnly`
-        // (nothing sampled — real capture bytes, real reader-typed heir
-        // figures, or, for Speed Test, no figures at all); Prayer Times,
+        // Wave 10: Document Scanner, Faraid and Passport Photos are
+        // `inputOnly` (real capture bytes, real reader-typed heir figures),
+        // and so is WhatsApp Status (a note and an empty list, no figures
+        // at all); Mosques, Speed Test and Media Saver show the reference's
+        // own sample data again and so are not here; Prayer Times,
         // Islamic Calendar and Ramadan are `computed` (real solar/Hijri
         // math, no fixture); Prayer Tracker, Fasting Tracker and Taraweeh
         // are `readerRecords` (a real per-day/per-night log, every derived
@@ -366,11 +367,7 @@ void main() {
         'ledger',
         'loan',
         'mealplan',
-        'mediasaver',
         'meds',
-        // Nearby Mosques: no directory, no figures — the only data it
-        // ever showed was a false "Sample data · Places directory".
-        'mosques',
         'passport',
         'prayer',
         'praytrack',
@@ -378,7 +375,6 @@ void main() {
         'qibla',
         'ramadan',
         'reminders',
-        'speedtest',
         'stopwatch',
         'streak',
         'subs',
@@ -387,6 +383,7 @@ void main() {
         'tasbih',
         'tipsplit',
         'vaccines',
+        'wastatus',
         'water',
         'worldclock',
       ],
@@ -570,14 +567,12 @@ void main() {
     }
   });
 
-  // Tools with `bare: true` unconditionally — no figure, feed or record of
-  // any kind on screen, so no source bar could claim anything honest
-  // (`wastatus_capability_test.dart`'s own "why the tool screen has to be
-  // bare"). `documents`/`expenses`/`record_tool` also pass `bare: true`, but
-  // only for a sub-state `pumpTool`'s default route never lands on; their
-  // own list screen still draws a bar and is covered below like any other
-  // tool.
-  const Set<String> kUnconditionallyBareTools = <String>{'wastatus'};
+  // Tools with `bare: true` unconditionally — none now: WhatsApp Status
+  // draws the reference's own frame and source bar again, as an input-only
+  // tool. `documents`/`expenses`/`record_tool` pass `bare: true` only for a
+  // sub-state `pumpTool`'s default route never lands on; their own list
+  // screen still draws a bar and is covered below like any other tool.
+  const Set<String> kUnconditionallyBareTools = <String>{};
 
   // What a reader actually sees: every converted tool, opened through its
   // route, with only its own source bar looked at.

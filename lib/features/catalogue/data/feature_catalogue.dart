@@ -367,14 +367,17 @@ const List<LumeFeature> kLumeFeatures = <LumeFeature>[
     related: <String>{'prayer', 'qibla', 'taraweeh'},
     archetype: LumeToolArchetype.tracking,
     density: LumeToolDensity.high,
-    // No places directory exists: the screen names the reader's own place
-    // and hands a real search to their maps app (ROLLOUT_WAVE_10.md). With
-    // `Places directory` / `cached` the source bar claimed "Sample data ·
-    // Places directory" over a screen that shows no data at all; and it has
-    // no list for search, filters or sorting to act on.
-    fallbackSource: 'On device',
-    freshness: LumeFreshnessKind.local,
-    aware: <String>{'city', 'country'},
+    // The reference's own four sample mosques, searched, filtered by radius
+    // and listed (`mosques_fixtures.dart`); its source line says "Sample
+    // data" over them.
+    fallbackSource: 'Places directory',
+    freshness: LumeFreshnessKind.cached,
+    supports: <LumeToolSupport>{
+      LumeToolSupport.filters,
+      LumeToolSupport.search,
+      LumeToolSupport.sorting,
+    },
+    aware: <String>{'city', 'country', 'units'},
   ),
   LumeFeature(
     id: 'praytrack',
@@ -1493,18 +1496,14 @@ const List<LumeFeature> kLumeFeatures = <LumeFeature>[
     related: <String>{'packages', 'bills'},
     archetype: LumeToolArchetype.instrument,
     density: LumeToolDensity.medium,
-    // Wave 10: confirmed the reference's own "speed test" never touches a
-    // network either — its numbers are `Math.random()` output, never real
-    // even once. This build shows no figures, sample or real, at all
-    // (`ROLLOUT_WAVE_10.md`); `live`/'Nearest test server' were the stale
-    // claim inherited from the fake reference. `On device`/`local` is the
-    // closest honest fit this build's freshness kinds have — a residual
-    // imperfection ("Kept until you close Lume" still overclaims slightly
-    // for a screen with no data at all) flagged for a future kind that
-    // can say "not available" outright.
-    fallbackSource: 'On device',
-    freshness: LumeFreshnessKind.local,
-    supports: <LumeToolSupport>{LumeToolSupport.offline},
+    // The reference's instrument, with its own sample figures
+    // (`speedtest_fixtures.dart`); the source line says "Sample data".
+    fallbackSource: 'Nearest test server',
+    freshness: LumeFreshnessKind.live,
+    supports: <LumeToolSupport>{
+      LumeToolSupport.history,
+      LumeToolSupport.offline,
+    },
     aware: <String>{'country', 'locale'},
   ),
   LumeFeature(

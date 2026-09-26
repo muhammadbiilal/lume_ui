@@ -1,109 +1,118 @@
-/// Speed Test — the reference's own instrument is fabricated end to end, and
-/// this build has no network access to replace it with a real one.
+/// Speed Test — `tools/daily/speedtest.tool.js`, composed in the reference's
+/// own order: the gauge with Start test, download / upload / ping, the
+/// connection, and the history.
 ///
-/// `tools/daily/speedtest.tool.js` draws a gauge, three metrics and a
-/// two-row "history", all from `context.js`'s `speedTest()`: a hardcoded
-/// `48.2` Mbps default (`s.down || 48.2`), `up: down * 0.42`, a fixed `18`
-/// ms ping, and two history rows that are literal constants — nothing
-/// measured, ever. Pressing "Start" (`tool.screen.js` `runSpeedTest()`)
-/// does not touch the network either: `target = 30 + Math.random() * 70`,
-/// animated toward with an ease-out cubic over 1.8 seconds. There is no
-/// server, no request and no real throughput anywhere in the reference —
-/// its own "speed test" was always a random-number generator wearing a
-/// progress bar, on a static site that could not have run a real one
-/// either.
+/// Every figure is the reference's own sample (`speedtest_fixtures.dart`),
+/// and the source line says "Sample data" over them. Start test does what
+/// the reference's `runSpeedTest()` does: the needle eases from zero to a new
+/// reading over 1.8 seconds — at once where the reader has asked for reduced
+/// motion — then says "{n} Mbps down". The reading is kept for the session,
+/// as the reference's `st.down` is.
 ///
-/// Lume makes zero network calls anywhere in this codebase (confirmed
-/// project-wide; there is no HTTP client wired up and nothing to test
-/// against). So there is nothing real to port, and no honest way to
-/// reproduce even the reference's own fabrication: a "real" 48.2 Mbps or a
-/// fresh random 61.3 Mbps would both be a measurement no one took, shown as
-/// if Lume had taken it. That is worse than most invented figures, because
-/// a reader could act on a false "your wifi is fine" — this tool does not
-/// build that. It says plainly that it cannot measure a connection, and
-/// offers the one honest way out: handing the reader's own browser a
-/// well-known, free, ad-free test address, the same kind of hop the QR
-/// tool's own link opener already makes for any other web address (C80).
-/// Lume still sends nothing itself — the browser does, on the reader's own
-/// press.
+/// **Dayroz:** Start test measures the connection against a test server
+/// (download, upload and ping), and Connection reads the real network type,
+/// server and provider.
 library;
 
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../../../app/providers/platform_services.dart';
 import '../../../core/icons/lume_icons.dart';
-import '../../../core/platform/lume_link_opener.dart';
+import '../../../core/localization/lume_format.dart';
 import '../../../core/widgets/lume/lume_button.dart';
+import '../../../core/widgets/lume/lume_surface.dart';
 import '../../../core/widgets/lume/lume_overlay.dart';
-import '../../../core/widgets/lume/lume_state.dart';
+import '../../../core/widgets/lume/lume_row.dart';
+import '../../../core/widgets/lume/lume_spark.dart';
+import '../../../core/widgets/lume/lume_summary.dart';
 import '../../../core/widgets/lume/lume_tool.dart';
 import '../../../l10n/app_localizations.dart';
 import '../../tools/application/tool_request.dart';
+import '../../tools/application/tool_session.dart';
 import '../../tools/presentation/tool_screen.dart';
+import '../application/speedtest_providers.dart';
+import '../data/speedtest_fixtures.dart';
+import 'speedtest_gauge.dart';
 
 class LumeSpeedtestTool extends ConsumerStatefulWidget {
   const LumeSpeedtestTool({super.key, required this.request});
 
   final LumeToolRequest request;
 
-  /// The registry's builder.
   static Widget open(LumeToolRequest request) =>
       LumeSpeedtestTool(request: request);
 
   static const String id = 'speedtest';
 
-  static const Key stateKey = ValueKey<String>('speedtest.unavailable');
-  static const Key openKey = ValueKey<String>('speedtest.open');
-
-  /// A free, single-number, ad-free browser test with no account and
-  /// nothing installed — a reasonable, neutral destination for "somewhere
-  /// that can actually measure this". Lume only hands this address to the
-  /// reader's own browser ([LumeLinkOpener], C80); it never requests it
-  /// itself, and never learns the result.
-  static final Uri realTest = Uri.parse('https://fast.com');
+  static const Key gaugeKey = ValueKey<String>('speedtest.gauge');
+  static const Key startKey = ValueKey<String>('speedtest.start');
+  static const Key metricsKey = ValueKey<String>('speedtest.metrics');
+  static const Key connectionKey = ValueKey<String>('speedtest.connection');
+  static const Key historyKey = ValueKey<String>('speedtest.history');
 
   @override
   ConsumerState<LumeSpeedtestTool> createState() => _LumeSpeedtestToolState();
 }
 
-class _LumeSpeedtestToolState extends ConsumerState<LumeSpeedtestTool> {
+class _LumeSpeedtestToolState extends ConsumerState<LumeSpeedtestTool>
+    with SingleTickerProviderStateMixin {
   final GlobalKey<LumeToolScreenState> _host = GlobalKey<LumeToolScreenState>();
-  bool _busy = false;
+  late final LumeToolSession _session = ref.read(toolSessionProvider);
+  late final AnimationController _run = AnimationController(
+    vsync: this,
+    duration: LumeSpeedtestFixtures.run,
+  );
 
-  Future<void> _openRealTest() async {
-    if (_busy) return;
-    final AppLocalizations l = AppLocalizations.of(context);
-    setState(() => _busy = true);
-    try {
-      final LumeOpenOutcome outcome = await ref
-          .read(linkOpenerProvider)
-          .open(LumeSpeedtestTool.realTest);
-      if (!mounted) return;
-      switch (outcome) {
-        case LumeOpenOutcome.opened:
-          break;
-        case LumeOpenOutcome.unavailable:
-        case LumeOpenOutcome.refused:
-          _host.currentState?.say(
-            l.speedtestOpenUnavailable,
-            tone: LumeToastTone.info,
-          );
-        case LumeOpenOutcome.failed:
-          _host.currentState?.say(
-            l.speedtestOpenFailed,
-            tone: LumeToastTone.error,
-          );
-      }
-    } finally {
-      if (mounted) setState(() => _busy = false);
+  /// The reading the needle is heading for, while a run is under way.
+  double? _target;
+
+  @override
+  void dispose() {
+    _run.dispose();
+    super.dispose();
+  }
+
+  /// `s.down || 48.2` — the last reading this session, or the default.
+  double get _down =>
+      double.tryParse(_session.read(LumeSpeedtestTool.id, 'down') ?? '') ??
+      LumeSpeedtestFixtures.defaultDown;
+
+  Future<void> _start(AppLocalizations l, LumeFormatting f) async {
+    if (_run.isAnimating) return;
+    final double target = LumeSpeedtestFixtures.nextReading(
+      ref.read(speedtestRandomProvider),
+    );
+    setState(() => _target = target);
+    if (MediaQuery.disableAnimationsOf(context)) {
+      _run.value = 1;
+    } else {
+      await _run.forward(from: 0);
     }
+    if (!mounted) return;
+    setState(() {
+      _session.write(LumeSpeedtestTool.id, 'down', '$target');
+      _target = null;
+    });
+    _host.currentState?.say(
+      l.speedDone(f.number(target, decimals: 1)),
+      tone: LumeToastTone.success,
+    );
   }
 
   @override
   Widget build(BuildContext context) {
     final LumeToolRequest r = widget.request;
     final AppLocalizations l = AppLocalizations.of(context);
+    final LumeFormatting f = LumeFormatting.of(
+      context,
+      countryCode: r.user.country,
+    );
+    final double down = _down;
+    final String countryName = LumeToolScreen.countryName(
+      context,
+      ref,
+      r.user.country,
+    );
 
     return LumeToolScreen(
       key: _host,
@@ -111,21 +120,127 @@ class _LumeSpeedtestToolState extends ConsumerState<LumeSpeedtestTool> {
       user: r.user,
       onBack: r.onBack,
       onOpenRelated: r.onOpenRelated,
-      body: LumeToolSection(
-        child: LumeToolState(
-          key: LumeSpeedtestTool.stateKey,
-          icon: LumeIcons.gauge,
-          title: l.speedtestUnavailableTitle,
-          text: l.speedtestUnavailableText,
-          action: LumeButton.accent(
-            key: LumeSpeedtestTool.openKey,
-            label: l.speedtestOpenBrowser,
-            icon: LumeIcons.arrowUr,
-            busy: _busy,
-            onPressed: _openRealTest,
+      body: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: <Widget>[
+          LumeToolSection(
+            child: LumeCard(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: <Widget>[
+                  AnimatedBuilder(
+                    animation: _run,
+                    builder: (BuildContext context, Widget? _) {
+                      // `v = target * eased` with `eased = 1 − (1 − p)³`.
+                      final double? target = _target;
+                      final double shown = target == null
+                          ? down
+                          : target * Curves.easeOutCubic.transform(_run.value);
+                      return LumeSpeedGauge(
+                        key: LumeSpeedtestTool.gaugeKey,
+                        fraction: LumeSpeedtestFixtures.fraction(shown),
+                        value: shown.toStringAsFixed(1),
+                        unit: l.unitMbps,
+                        semanticLabel:
+                            '${l.speedDownload} '
+                            '${f.number(shown, decimals: 1)} ${l.unitMbps}',
+                      );
+                    },
+                  ),
+                  const SizedBox(height: 8),
+                  LumeButtonRow(
+                    children: <Widget>[
+                      LumeButton.accent(
+                        key: LumeSpeedtestTool.startKey,
+                        label: l.speedStart,
+                        icon: LumeIcons.play,
+                        block: true,
+                        onPressed: () => _start(l, f),
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+            ),
           ),
-          footnote: l.speedtestOpenFootnote,
-        ),
+          LumeToolSection(
+            child: LumeMetrics(
+              key: LumeSpeedtestTool.metricsKey,
+              columns: 3,
+              children: <Widget>[
+                LumeMetric(
+                  icon: LumeIcons.download,
+                  value: f.number(down, decimals: 1),
+                  label: l.speedDownload,
+                ),
+                LumeMetric(
+                  icon: LumeIcons.arrowUr,
+                  value: f.number(
+                    LumeSpeedtestFixtures.upFor(down),
+                    decimals: 1,
+                  ),
+                  label: l.speedUpload,
+                ),
+                LumeMetric(
+                  icon: LumeIcons.timer,
+                  value: '${f.integer(LumeSpeedtestFixtures.ping)} ${l.unitMs}',
+                  label: l.speedPing,
+                ),
+              ],
+            ),
+          ),
+          LumeToolSection(
+            title: l.speedConnection,
+            child: LumeRows(
+              key: LumeSpeedtestTool.connectionKey,
+              children: <Widget>[
+                LumeCompactRow(
+                  icon: LumeIcons.wifi,
+                  label: l.speedType,
+                  valueMaxWidth: 170,
+                  value: l.speedWifi,
+                ),
+                LumeCompactRow(
+                  icon: LumeIcons.signal,
+                  label: l.speedServer,
+                  valueMaxWidth: 170,
+                  value: countryName.isEmpty
+                      ? r.user.city
+                      : '${r.user.city} · $countryName',
+                ),
+                LumeCompactRow(
+                  icon: LumeIcons.globe,
+                  label: l.speedIsp,
+                  valueMaxWidth: 170,
+                  value: l.speedYourIsp,
+                ),
+              ],
+            ),
+          ),
+          LumeToolSection(
+            title: l.commonHistory,
+            child: LumeRows(
+              key: LumeSpeedtestTool.historyKey,
+              children: <Widget>[
+                for (final LumeSpeedHistory h in LumeSpeedtestFixtures.history)
+                  LumeRichRow(
+                    icon: LumeIcons.wifi,
+                    title: h.today ? l.commonToday : l.commonYesterday,
+                    subtitle: h.wifi ? l.speedWifi : l.speedMobile,
+                    meta: <String>[
+                      '${l.speedPing} ${f.integer(h.ping)} ${l.unitMs}',
+                    ],
+                    trailing: LumeSparkline(
+                      values: h.series,
+                      trend: LumeTrend.up,
+                    ),
+                    value: f.number(h.down, decimals: 1),
+                    valueSub: l.unitMbps,
+                  ),
+              ],
+            ),
+          ),
+        ],
       ),
     );
   }

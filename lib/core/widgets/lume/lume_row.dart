@@ -467,6 +467,7 @@ class LumeCompactRow extends StatelessWidget {
     this.icon,
     this.onTap,
     this.chevron = true,
+    this.valueMaxWidth,
   });
 
   final String label;
@@ -474,6 +475,12 @@ class LumeCompactRow extends StatelessWidget {
   final String? value;
   final String? icon;
   final VoidCallback? onTap;
+
+  /// Caps [value]'s width: a long value ("Islamabad · Pakistan") is drawn
+  /// smaller to fit at large text, and only then ellipsized, rather than
+  /// pushing the row past its card. `null` (the default) leaves every
+  /// existing row exactly as it was — [LumeRichRow.valueMaxWidth]'s shape.
+  final double? valueMaxWidth;
 
   /// Shown only when the row does something.
   final bool chevron;
@@ -535,14 +542,22 @@ class LumeCompactRow extends StatelessWidget {
             // row's remaining space between the two rather than leaving the
             // label with all of it — a real parity regression elsewhere in
             // this file's own history (wave 9).
-            LumeNumerals(
-              value!,
-              style: LumeType.numeric(
-                LumeType.tracked(
-                  LumeType.natural(context, context.lumeType.label),
-                  -0.02,
-                ),
-              ).copyWith(color: lume.text2),
+            ConstrainedBox(
+              constraints: BoxConstraints(
+                maxWidth: valueMaxWidth ?? double.infinity,
+              ),
+              child: LumeNumerals(
+                value!,
+                style: LumeType.numeric(
+                  LumeType.tracked(
+                    LumeType.natural(context, context.lumeType.label),
+                    -0.02,
+                  ),
+                ).copyWith(color: lume.text2),
+                maxLines: valueMaxWidth == null ? null : 1,
+                overflow: valueMaxWidth == null ? null : TextOverflow.ellipsis,
+                shrinkToFit: valueMaxWidth != null,
+              ),
             ),
           ],
           if (onTap != null && chevron) ...<Widget>[

@@ -6351,6 +6351,177 @@ class AppLocalizationsAr extends AppLocalizations {
   String get toolRelated => 'أدوات ذات صلة';
 
   @override
+  String get mosquesMap => 'مساجد بالقرب منك';
+
+  @override
+  String get mosquesSearch => 'ابحث عن المساجد';
+
+  @override
+  String get mosquesRadius => 'ضمن';
+
+  @override
+  String get mosquesNearby => 'القريبة';
+
+  @override
+  String get mosquesDirections => 'الاتجاهات';
+
+  @override
+  String get mosquesOpening => 'جارٍ فتح الاتجاهات';
+
+  @override
+  String get mosquesAddYours => 'اقترح مسجدًا';
+
+  @override
+  String get mosquesSuggest => 'شكرًا — سنراجعه';
+
+  @override
+  String get mosquesCentral => 'المسجد المركزي';
+
+  @override
+  String get mosquesJamia => 'المسجد الجامع';
+
+  @override
+  String get mosquesMasjidA => 'مسجد النور';
+
+  @override
+  String get mosquesMasjidB => 'مسجد بلال';
+
+  @override
+  String mosquesAddr(String city) {
+    return 'قرب الطريق الرئيسي، $city';
+  }
+
+  @override
+  String get mosquesFacParking => 'موقف سيارات';
+
+  @override
+  String get mosquesFacWomen => 'مصلى النساء';
+
+  @override
+  String get mosquesFacWudu => 'مرافق الوضوء';
+
+  @override
+  String get mosquesNoneNear => 'لا شيء ضمن هذه المسافة';
+
+  @override
+  String get mosquesNoneNearText => 'وسّع نطاق البحث لرؤية المزيد.';
+
+  @override
+  String mosquesWalk(int minutes) {
+    return '$minutes دقيقة سيرًا';
+  }
+
+  @override
+  String get toolSourcePlaces => 'دليل الأماكن';
+
+  @override
+  String get speedStart => 'ابدأ الاختبار';
+
+  @override
+  String get speedDownload => 'التنزيل';
+
+  @override
+  String get speedUpload => 'الرفع';
+
+  @override
+  String get speedPing => 'زمن الاستجابة';
+
+  @override
+  String get speedConnection => 'الاتصال';
+
+  @override
+  String get speedType => 'النوع';
+
+  @override
+  String get speedServer => 'خادم الاختبار';
+
+  @override
+  String get speedIsp => 'مزوّد الخدمة';
+
+  @override
+  String get speedWifi => 'واي فاي';
+
+  @override
+  String get speedMobile => 'بيانات الجوال';
+
+  @override
+  String get speedYourIsp => 'مزوّدك';
+
+  @override
+  String speedDone(String n) {
+    return '$n ميغابت/ث تنزيل';
+  }
+
+  @override
+  String get unitMbps => 'ميغابت/ث';
+
+  @override
+  String get unitMs => 'مللي ث';
+
+  @override
+  String get toolSourceTestServer => 'أقرب خادم اختبار';
+
+  @override
+  String get mediaLink => 'الصق رابطًا';
+
+  @override
+  String get mediaFetch => 'جلب';
+
+  @override
+  String get mediaFetching => 'جارٍ جلب الوسائط';
+
+  @override
+  String get mediaSaved => 'المحفوظة';
+
+  @override
+  String get mediaStorage => 'المساحة المستخدمة';
+
+  @override
+  String get mediaLastSave => 'آخر حفظ';
+
+  @override
+  String get mediaLibrary => 'المكتبة';
+
+  @override
+  String get mediaItem1 => 'فيديو وصفة';
+
+  @override
+  String get mediaItem2 => 'صورة سفر';
+
+  @override
+  String get mediaItem3 => 'مقطع بودكاست';
+
+  @override
+  String get mediaEmptyText =>
+      'الصق رابطًا وسيحفظ Lume الوسائط على هذا الجهاز.';
+
+  @override
+  String get unitMb => 'م.ب';
+
+  @override
+  String get wastatusAndroidTitle => 'أندرويد فقط';
+
+  @override
+  String get wastatusAndroidText =>
+      'تتطلب قراءة مجلد الحالات لتطبيق آخر إذن الوصول إلى المجلدات في أندرويد، وهو ما لا يوفّره iOS.';
+
+  @override
+  String get wastatusDetected => 'الحالات المكتشفة';
+
+  @override
+  String get wastatusEmptyTitle => 'لم يُعثر على حالات';
+
+  @override
+  String get wastatusEmptyText =>
+      'امنح إذن الوصول إلى المجلد ليتمكن Lume من عرض الحالات الموجودة على جهازك.';
+
+  @override
+  String get wastatusGrant => 'امنح الوصول إلى المجلد';
+
+  @override
+  String get wastatusGranting => 'جارٍ طلب الإذن';
+
+  @override
   String get toolSourceOnDevice => 'على الجهاز';
 
   @override
@@ -12856,50 +13027,10 @@ class AppLocalizationsAr extends AppLocalizations {
   String get hijriMonthsTitle => 'الأشهر الهجرية';
 
   @override
-  String get mediasaverLinkLabel => 'الرابط';
-
-  @override
   String get mediasaverLinkPlaceholder => 'https://…';
 
   @override
-  String get mediasaverNoNetworkTitle => 'لا يوجد اتصال بالإنترنت';
-
-  @override
-  String get mediasaverNoNetworkText =>
-      'لا يتصل لوم بالإنترنت أبدًا، لذا لا يمكنه جلب الوسائط أو تنزيلها من رابط.';
-
-  @override
-  String get mediasaverNoNetworkToast =>
-      'لا يمكن للوم جلب هذا — فهو لا يتصل بالإنترنت.';
-
-  @override
-  String get mediasaverSave => 'حفظ';
-
-  @override
-  String get mediasaverLibrary => 'الوسائط المحفوظة';
-
-  @override
   String get mediasaverEmptyTitle => 'لم يُحفظ أي شيء بعد';
-
-  @override
-  String get mediasaverEmptyText =>
-      'الوسائط التي تحفظها تبقى على هذا الجهاز — لا يمكن للوم تنزيل أي شيء من رابط.';
-
-  @override
-  String get mosquesUnavailableTitle => 'لا يوجد بحث مباشر عن المساجد بعد';
-
-  @override
-  String get mosquesUnavailableText =>
-      'لا يملك Lume دليل أماكن مباشرًا بعد، لذا فإن عرض قائمة قريبة هنا يعني اختلاق أسماء مساجد ومسافات. افتح خرائط Maps لإجراء بحث حقيقي بالقرب منك.';
-
-  @override
-  String get mosquesOpenMaps => 'افتح في خرائط';
-
-  @override
-  String get mosquesMapsUnavailable => 'لا يمكن لهذا الجهاز فتح خرائط.';
-
-  @override
-  String get mosquesMapsFailed => 'تعذّر فتح خرائط. حاول مرة أخرى.';
 
   @override
   String get passportCountry => 'الدولة';
@@ -13289,27 +13420,6 @@ class AppLocalizationsAr extends AppLocalizations {
   }
 
   @override
-  String get speedtestUnavailableTitle => 'لا يوجد اختبار سرعة مباشر في Lume';
-
-  @override
-  String get speedtestUnavailableText =>
-      'Lume لا يرسل أي شيء عبر الشبكة، لذا لا يمكنه قياس سرعة التنزيل أو الرفع لديك. افتح اختبارًا حقيقيًا بدلاً من ذلك.';
-
-  @override
-  String get speedtestOpenBrowser => 'افتح اختبار سرعة';
-
-  @override
-  String get speedtestOpenFootnote =>
-      'يفتح fast.com — اختبار مجاني وخالٍ من الإعلانات. Lume لا يشغّله ولا يرى نتيجته.';
-
-  @override
-  String get speedtestOpenUnavailable =>
-      'لا يوجد تطبيق على هذا الجهاز يمكنه فتح هذا الرابط';
-
-  @override
-  String get speedtestOpenFailed => 'تعذّر فتح هذا الرابط';
-
-  @override
   String get taraweehErrConflict => 'تغيّر هذا في مكان آخر. افتحه مرة أخرى.';
 
   @override
@@ -13450,49 +13560,4 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get vehicleInsuranceRenewal => 'تجديد التأمين';
-
-  @override
-  String get wastatusWhyTitle => 'لا يستطيع Lume قراءة ملفات واتساب';
-
-  @override
-  String get wastatusWhyText =>
-      'يتطلب فتح تخزين تطبيق آخر إذن وصول واسع للملفات. لا يطلبه Lume عمدًا، لذا لا يمكنه البحث عن الحالات أو سردها لك.';
-
-  @override
-  String get wastatusSaveTitle => 'احفظ الحالة بنفسك';
-
-  @override
-  String get wastatusSaveSubtitle =>
-      'خطوتان، داخل واتساب مباشرة — بلا حاجة إلى إذن إضافي';
-
-  @override
-  String get wastatusStep1Title => 'افتح الحالة';
-
-  @override
-  String get wastatusStep1Text =>
-      'شاهد الصورة أو الفيديو كما تفعل عادةً، قبل أن يختفي.';
-
-  @override
-  String get wastatusStep2Title => 'اضغط على أيقونة الحفظ';
-
-  @override
-  String get wastatusStep2Text =>
-      'أيقونة التنزيل الخاصة بواتساب تحفظه مباشرة في معرض هاتفك.';
-
-  @override
-  String get wastatusStep3Title => 'اعثر عليه لاحقًا';
-
-  @override
-  String get wastatusStep3Text =>
-      'افتح معرضك، أو أداة حفظ الوسائط في Lume، لترى ما حفظته.';
-
-  @override
-  String get wastatusFolderTitle => 'فاتتك أيقونة الحفظ؟';
-
-  @override
-  String get wastatusFolderNoteTitle => 'Android فقط';
-
-  @override
-  String get wastatusFolderNoteText =>
-      'يمكن لتطبيق الملفات الخاص بهاتفك أحيانًا تصفح مجلد وسائط واتساب طالما الحالة لا تزال مخزّنة مؤقتًا هناك — ابحث عن مجلد مخفي باسم \".Statuses\" وفعّل \"إظهار الملفات المخفية\" إن لم تجده. يختلف مكانه بالضبط حسب هاتفك وإصدار واتساب، ولا يعمل هذا على آيفون.';
 }

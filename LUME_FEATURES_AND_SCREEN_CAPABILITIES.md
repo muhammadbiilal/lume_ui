@@ -186,7 +186,7 @@ Visible only when the Islamic experience is on.
 | --- | --- | --- |
 | Prayer Times | Next prayer and countdown, the five prayers, sunrise and sunset; the calculation method (Muslim World League, standard Asr) stated plainly | Computed |
 | Qibla Compass | Bearing and distance to the Kaaba from the reader's city (no live compass sensor) | Computed |
-| Nearby Mosques | Names the reader's place and opens a real mosque search in their maps app — no invented list | Your input |
+| Nearby Mosques | A map of mosques near the reader's city, search, a 1 / 3 / 5 km radius, each with distance, walking time and the city's next prayer; Directions and Suggest a mosque | Sample (the next prayer is calculated) |
 | Prayer Tracker | Check off each prayer; streak, monthly rate and missed (qada) prayers computed from the check-ins | Your records |
 | Ramadan | Before Ramadan, a countdown in real days; during it, the day, Suhoor and Iftar from the real Fajr and Maghrib, and a countdown to Iftar | Computed |
 | Fasting Tracker | Log fasts (sunnah or qada); streak, completion and a 30-day view computed from them | Your records |
@@ -241,9 +241,9 @@ Visible only when the Islamic experience is on.
 | Document Scanner | Captures pages with the camera or from photos, and shares each page as an image | Your input |
 | Passport Photos | Crops a captured or picked photo to the country's size (2×2 in for the US, 35×45 mm elsewhere) and saves it | Your input |
 | Vehicle & Fines | Pakistan vehicle records with a fleet search | Sample |
-| Media Saver | Says plainly that Lume has no network access to fetch media | Your input |
-| WhatsApp Status | Explains how to save a status with WhatsApp's own save button — Lume cannot read the folder | — (no data) |
-| Speed Test | Says it cannot measure speed here, and opens a real test in another app | Your input |
+| Media Saver | Paste a link and Fetch; saved count, storage used and last save; a library of saved items | Sample |
+| WhatsApp Status | Android only: lists the statuses on the device once folder access is granted | — (no data) |
+| Speed Test | A gauge and Start test, download / upload / ping, the connection, and past tests | Sample |
 
 ## 10. Personal — 22
 
