@@ -27,13 +27,13 @@ import 'dart:async';
 
 import 'package:flutter/widgets.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:go_router/go_router.dart';
 
 import '../../../app/providers/notification_feed.dart';
 import '../../../app/providers/personalisation.dart';
 import '../../../core/fixtures/lume_clock.dart';
 import '../../../core/routing/lume_routes.dart';
 import '../../account/domain/notification_prefs.dart';
+import 'notification_open.dart';
 import '../domain/notification_model.dart';
 import 'notification_banner.dart';
 
@@ -138,11 +138,8 @@ class _LumeNotificationPresenterState
     }
   }
 
-  Future<void> _open(LumeNotification n) async {
-    await ref.read(notificationFeedProvider).markRead(n.id);
-    if (!mounted) return;
-    context.go(LumeRoutes.tool(_branch, n.tool));
-  }
+  Future<void> _open(LumeNotification n) =>
+      openLumeNotification(ref: ref, context: context, branch: _branch, n: n);
 
   @override
   Widget build(BuildContext context) {

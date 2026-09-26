@@ -56,7 +56,11 @@ class LumeNotificationSample {
     this.actionKey,
     this.expiresMinutes,
     this.builds,
+    this.opens,
   });
+
+  /// The item the row opens on (`LumeNotification.opens`).
+  final (String, String)? opens;
 
   /// The `kNotificationSources` id this stands for.
   final String sourceId;
@@ -219,6 +223,8 @@ final List<LumeNotificationSample> kNotificationSamples =
             l.nParcelBody('TCS', 'Today, by 18:00'),
         agoMinutes: 18,
         actionKey: 'track',
+        // `toolstate:parcel:parcel:<ref>` — the Keyboard's own consignment.
+        opens: ('parcel', 'TCS-8842910'),
       ),
       LumeNotificationSample(
         sourceId: 'flights.delay',
@@ -229,6 +235,8 @@ final List<LumeNotificationSample> kNotificationSamples =
         agoMinutes: 34,
         priority: LumeNotificationPriority.high,
         actionKey: 'viewFlight',
+        // `toolstate:flights:flight:<no>`.
+        opens: ('flight', 'EK 624'),
       ),
       LumeNotificationSample(
         sourceId: 'trains.delay',
@@ -238,6 +246,8 @@ final List<LumeNotificationSample> kNotificationSamples =
             l.nTrainBody(35, 'Khanewal Junction'),
         agoMinutes: 52,
         actionKey: 'viewTrain',
+        // `toolstate:trains:train:<no>` — Tezgam Express.
+        opens: ('train', '7UP'),
       ),
       LumeNotificationSample(
         sourceId: 'weather.tomorrow',
@@ -331,6 +341,7 @@ int lumeReferenceRank(LumeNotificationPriority p) => p.rank == 0 ? 1 : p.rank;
 class LumeNotificationLedger {
   final Set<String> read = <String>{};
   final Set<String> dismissed = <String>{};
+  final Set<String> actioned = <String>{};
   final Set<String> presented = <String>{};
 }
 
@@ -446,6 +457,8 @@ class LumeFixtureNotificationRepository
           agoMinutes: s.agoMinutes,
           priority: s.priority,
           read: _read.contains(id),
+          actioned: ledger.actioned.contains(id),
+          opens: s.opens,
           expired: s.expiresMinutes != null && s.agoMinutes > s.expiresMinutes!,
           // `groupId: src.id` — a group is repetition of one source.
           groupId: s.sourceId,
@@ -480,6 +493,12 @@ class LumeFixtureNotificationRepository
 
   @override
   Future<void> markRead(String id) async => _read.add(id);
+
+  @override
+  Future<void> markActioned(String id) async {
+    ledger.actioned.add(id);
+    _read.add(id);
+  }
 
   @override
   Future<void> markAllRead() async {

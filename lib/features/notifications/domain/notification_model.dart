@@ -67,10 +67,17 @@ class LumeNotification {
     this.groupId = '',
     this.action,
     this.members = 0,
+    this.opens,
   });
 
   final String id;
   final String title;
+
+  /// The tool state the row opens on — the reference's
+  /// `deepLink: 'toolstate:TOOL:KEY:VALUE'`: the parcel, flight or
+  /// train it is about, as `(key, value)` in that tool's session. `null`
+  /// opens the tool as it is.
+  final (String, String)? opens;
 
   /// Already resolved against the preview preferences: when previews are off
   /// this is the "something happened" line, and when a sensitive tool's
@@ -233,6 +240,10 @@ abstract interface class LumeNotificationRepository {
 
   /// One row, read.
   Future<void> markRead(String id);
+
+  /// One row, acted on — its action button was pressed. It stays in history
+  /// and stops asking (`n.actioned`).
+  Future<void> markActioned(String id);
 
   /// Every row, read.
   Future<void> markAllRead();

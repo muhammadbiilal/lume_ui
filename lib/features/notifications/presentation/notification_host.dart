@@ -20,12 +20,12 @@ import '../../../app/providers/notification_feed.dart';
 import '../../../core/fixtures/lume_clock.dart';
 import '../../../core/icons/lume_icons.dart';
 import '../../../core/widgets/lume/lume_destination.dart';
-import '../../../core/routing/lume_routes.dart';
 import '../../../core/widgets/lume/lume_header.dart';
 import '../../../core/widgets/lume/lume_state.dart';
 import '../../../l10n/app_localizations.dart';
 import '../domain/notification_model.dart';
 import 'notification_centre.dart';
+import 'notification_open.dart';
 import 'notification_sheets.dart';
 
 /// The centre on a branch.
@@ -95,16 +95,24 @@ class _LumeNotificationHostState extends ConsumerState<LumeNotificationHost> {
     }
   }
 
+  // A row goes to its tool on *this* branch, so Back comes back here.
   Future<void> _open(LumeNotification n) async {
-    await ref.read(notificationFeedProvider).markRead(n.id);
-    if (!mounted) return;
-    await _read();
-    if (!mounted) return;
-    // A row goes to its tool on *this* branch, so Back comes back here.
-    context.go(LumeRoutes.tool(widget.branch, n.tool));
+    final bool left = await openLumeNotification(
+      ref: ref,
+      context: context,
+      branch: widget.branch,
+      n: n,
+    );
+    if (!left && mounted) await _read();
   }
 
-  Future<void> _act(LumeNotification n) => _open(n);
+  /// `action.act` after marking the item actioned, as the reference's
+  /// `actItem` does: the row stays in history and stops asking.
+  Future<void> _act(LumeNotification n) async {
+    await ref.read(notificationFeedProvider).markActioned(n.id);
+    if (!mounted) return;
+    await _open(n);
+  }
 
   Future<void> _dismiss(LumeNotification n) async {
     await ref.read(notificationFeedProvider).dismiss(n.id);
