@@ -3924,6 +3924,9 @@ class AppLocalizationsUr extends AppLocalizations {
   }
 
   @override
+  String get newsSavedOpen => 'محفوظ خبریں کھل رہی ہیں';
+
+  @override
   String get newsSavings => 'آپ کے پہلے بچت ہدف کی آسان رہنمائی';
 
   @override
@@ -6268,49 +6271,6 @@ class AppLocalizationsUr extends AppLocalizations {
 
   @override
   String get toolRelated => 'متعلقہ ٹولز';
-
-  @override
-  String get alarmsCantAdd =>
-      'Lume ابھی الارم نہیں لگا سکتا — اپنے فون کی کلاک ایپ استعمال کریں۔';
-
-  @override
-  String get alarmsSampleSwitch =>
-      'یہ نمونے کے الارم ہیں — Lume ابھی کوئی اصل الارم آن یا آف نہیں کر سکتا۔';
-
-  @override
-  String get parcelCantTrack =>
-      'Lume ابھی کورئیر کمپنیوں سے منسلک نہیں، اس لیے یہ پارسل تلاش نہیں کر سکتا۔';
-
-  @override
-  String get parcelCantNotify =>
-      'Lume ابھی پارسلوں پر نظر نہیں رکھ سکتا، اس لیے اس کے پاس بھیجنے کو کوئی اپ ڈیٹ نہیں۔';
-
-  @override
-  String get vehicleCantCheck =>
-      'Lume ابھی گاڑیوں کے رجسٹر سے منسلک نہیں، اس لیے یہ رجسٹریشن چیک نہیں کر سکتا۔';
-
-  @override
-  String get trainsCantSearch =>
-      'Lume ابھی براہِ راست ٹرینیں تلاش نہیں کر سکتا — نیچے دی گئی روانگیاں نمونہ ڈیٹا ہیں۔';
-
-  @override
-  String billsCantOpen(String provider) {
-    return 'Lume ابھی $provider کے بل نہیں کھول سکتا۔';
-  }
-
-  @override
-  String get newsCantSave =>
-      'Lume ابھی خبریں محفوظ نہیں کر سکتا — یہ تعداد نمونہ ڈیٹا ہے۔';
-
-  @override
-  String quranSurahNotHeld(String name) {
-    return '$name کا متن ابھی Lume میں نہیں ہے۔';
-  }
-
-  @override
-  String recipesNoMethod(String name) {
-    return '$name کی ترکیب ابھی Lume میں نہیں ہے۔';
-  }
 
   @override
   String get toolSourceOnDevice => 'آلے پر';
@@ -11890,6 +11850,9 @@ class AppLocalizationsUr extends AppLocalizations {
   String get parcelTrack => 'ٹریک کریں';
 
   @override
+  String get parcelLookingUp => 'شپمنٹ تلاش کی جا رہی ہے';
+
+  @override
   String get parcelActive => 'راستے میں';
 
   @override
@@ -11906,6 +11869,9 @@ class AppLocalizationsUr extends AppLocalizations {
 
   @override
   String get parcelNotify => 'اپڈیٹس پر مطلع کریں';
+
+  @override
+  String get parcelNotifying => 'آپ کو ہر اپڈیٹ پر مطلع کیا جائے گا';
 
   @override
   String get parcelStBooked => 'بک ہو گیا';
@@ -11929,6 +11895,9 @@ class AppLocalizationsUr extends AppLocalizations {
 
   @override
   String get trainsFind => 'ٹرینیں تلاش کریں';
+
+  @override
+  String get trainsSearching => 'سروسز تلاش کی جا رہی ہیں';
 
   @override
   String get trainsRunning => 'رواں';
@@ -12153,6 +12122,11 @@ class AppLocalizationsUr extends AppLocalizations {
 
   @override
   String get marketsVol => 'حجم';
+
+  @override
+  String billsOpening(String name) {
+    return '$name کھولا جا رہا ہے';
+  }
 
   @override
   String get billsTrend => 'چھ مہینے';
@@ -12453,6 +12427,9 @@ class AppLocalizationsUr extends AppLocalizations {
 
   @override
   String get alarmsAdd => 'الارم شامل کریں';
+
+  @override
+  String get alarmsAdding => 'نیا الارم';
 
   @override
   String get alarmsDaily => 'ہر روز';
@@ -13320,6 +13297,9 @@ class AppLocalizationsUr extends AppLocalizations {
 
   @override
   String get vehicleLookup => 'تلاش کریں';
+
+  @override
+  String get vehicleLookingUp => 'رجسٹر چیک ہو رہا ہے';
 
   @override
   String get vehicleReminders => 'آنے والے معاملات';

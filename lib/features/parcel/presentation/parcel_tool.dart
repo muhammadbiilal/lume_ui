@@ -7,10 +7,9 @@
 /// sharing it. Which parcel is chosen lives in the tool session, the same way
 /// Flights keeps its own chosen flight.
 ///
-/// **Kept as the reference has it, but truthful:** the tracking field's text
-/// is read by nothing, and "Track" answers any input — or none — the same
-/// way. The reference's answer was "Looking up the shipment", which looks
-/// nothing up; this one says Lume can't reach couriers yet. There is
+/// **Kept exactly as the reference has it, on purpose:** the tracking field's
+/// text is read by nothing in the reference, and "Track" answers any input —
+/// or none — with the same fixed line ("Looking up the shipment"). There is
 /// no reader-added parcel here, because the reference has none: selecting a
 /// row is the only real interaction, and it only chooses which of the two
 /// fixture parcels the sections below describe.
@@ -24,7 +23,6 @@ import '../../../core/platform/lume_share.dart';
 import '../../../core/theme/lume/lume_colors.dart';
 import '../../../core/theme/lume/lume_space.dart';
 import '../../../core/theme/lume/lume_theme.dart';
-import '../../../core/widgets/lume/lume_overlay.dart';
 import '../../../core/widgets/lume/lume_badge.dart';
 import '../../../core/widgets/lume/lume_button.dart';
 import '../../../core/widgets/lume/lume_field.dart';
@@ -142,13 +140,11 @@ class _LumeParcelToolState extends ConsumerState<LumeParcelTool> {
                   label: l.parcelTrack,
                   icon: LumeIcons.search,
                   block: true,
-                  // The reference said "Looking up the shipment" and looked
-                  // nothing up. There is no courier lookup behind this, so it
-                  // says that instead.
-                  onPressed: () => _host.currentState?.say(
-                    l.parcelCantTrack,
-                    tone: LumeToastTone.info,
-                  ),
+                  // The reference's own toast: fixed words that answer
+                  // whatever was typed, or nothing, the same way — there is
+                  // no lookup behind it. **Dayroz:** look the typed number up
+                  // with its carrier's tracking API and show that shipment.
+                  onPressed: () => _host.currentState?.say(l.parcelLookingUp),
                 ),
               ],
             ),
@@ -234,13 +230,11 @@ class _LumeParcelToolState extends ConsumerState<LumeParcelTool> {
                 LumeButton.accent(
                   label: l.parcelNotify,
                   icon: LumeIcons.bell,
-                  // The reference promised "You'll be notified on every
-                  // update" and subscribed nothing; nothing is followed here
-                  // either, and the reader is told so.
-                  onPressed: () => _host.currentState?.say(
-                    l.parcelCantNotify,
-                    tone: LumeToastTone.info,
-                  ),
+                  // Another toast, not a subscription — the reference keeps
+                  // no list of who asked to be notified. **Dayroz:** subscribe
+                  // this reader to the shipment's carrier events and push
+                  // each one as a notification.
+                  onPressed: () => _host.currentState?.say(l.parcelNotifying),
                 ),
                 LumeButton(
                   label: l.commonShare,

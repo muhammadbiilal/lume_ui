@@ -337,29 +337,6 @@ void main() {
       );
     });
 
-    testWidgets('the saved row says nothing is saved, not "Opening"', (
-      WidgetTester tester,
-    ) async {
-      await pumpNews(tester);
-      final Finder saved = inKey(
-        LumeNewsTool.readingKey,
-        find.textContaining('saved'),
-      );
-      await tester.ensureVisible(saved.first);
-      await tester.tap(saved.first);
-      await tester.pump();
-      expect(
-        find.descendant(
-          of: find.byType(LumeToast),
-          matching: find.text(
-            "Lume can't save stories yet — this count is sample data.",
-          ),
-        ),
-        findsOneWidget,
-      );
-      await tester.pump(const Duration(seconds: 3));
-    });
-
     testWidgets('the lead and the reading rows speak', (
       WidgetTester tester,
     ) async {

@@ -138,7 +138,7 @@ void main() {
       },
     );
 
-    testWidgets('a surah with no text in Lume says so', (
+    testWidgets('a surah with no ayah in this fixture just names itself', (
       WidgetTester tester,
     ) async {
       await pumpQuran(tester);
@@ -147,10 +147,7 @@ void main() {
       await tester.tap(find.text('Al-Fatihah'));
       await tester.pump();
       expect(find.byKey(LumeQuranTool.readerKey), findsNothing);
-      expect(
-        find.text("The text of Al-Fatihah isn't in Lume yet."),
-        findsOneWidget,
-      );
+      expect(find.text('Al-Fatihah'), findsWidgets);
     });
   });
 

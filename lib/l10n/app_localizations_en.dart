@@ -3926,6 +3926,9 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
+  String get newsSavedOpen => 'Opening saved stories';
+
+  @override
   String get newsSavings => 'A plain-English guide to your first savings goal';
 
   @override
@@ -6272,49 +6275,6 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get toolRelated => 'Related tools';
-
-  @override
-  String get alarmsCantAdd =>
-      'Lume can\'t set alarms yet — use your phone\'s Clock app.';
-
-  @override
-  String get alarmsSampleSwitch =>
-      'These are sample alarms — Lume can\'t switch a real alarm on or off yet.';
-
-  @override
-  String get parcelCantTrack =>
-      'Lume can\'t reach couriers yet, so it can\'t look up this shipment.';
-
-  @override
-  String get parcelCantNotify =>
-      'Lume can\'t follow shipments yet, so it has no updates to send.';
-
-  @override
-  String get vehicleCantCheck =>
-      'Lume can\'t reach the vehicle register yet, so it can\'t check this registration.';
-
-  @override
-  String get trainsCantSearch =>
-      'Lume can\'t search live services yet — the departures below are sample data.';
-
-  @override
-  String billsCantOpen(String provider) {
-    return 'Lume can\'t open $provider bills yet.';
-  }
-
-  @override
-  String get newsCantSave =>
-      'Lume can\'t save stories yet — this count is sample data.';
-
-  @override
-  String quranSurahNotHeld(String name) {
-    return 'The text of $name isn\'t in Lume yet.';
-  }
-
-  @override
-  String recipesNoMethod(String name) {
-    return 'The method for $name isn\'t in Lume yet.';
-  }
 
   @override
   String get toolSourceOnDevice => 'On device';
@@ -11897,6 +11857,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get parcelTrack => 'Track';
 
   @override
+  String get parcelLookingUp => 'Looking up the shipment';
+
+  @override
   String get parcelActive => 'In transit';
 
   @override
@@ -11913,6 +11876,9 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get parcelNotify => 'Notify on updates';
+
+  @override
+  String get parcelNotifying => 'You’ll be notified on every update';
 
   @override
   String get parcelStBooked => 'Booked';
@@ -11936,6 +11902,9 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get trainsFind => 'Find trains';
+
+  @override
+  String get trainsSearching => 'Searching services';
 
   @override
   String get trainsRunning => 'Running';
@@ -12161,6 +12130,11 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get marketsVol => 'Vol';
+
+  @override
+  String billsOpening(String name) {
+    return 'Opening $name';
+  }
 
   @override
   String get billsTrend => 'Six months';
@@ -12462,6 +12436,9 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get alarmsAdd => 'Add an alarm';
+
+  @override
+  String get alarmsAdding => 'New alarm';
 
   @override
   String get alarmsDaily => 'Every day';
@@ -13330,6 +13307,9 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get vehicleLookup => 'Look up';
+
+  @override
+  String get vehicleLookingUp => 'Checking the register';
 
   @override
   String get vehicleReminders => 'What\'s coming up';

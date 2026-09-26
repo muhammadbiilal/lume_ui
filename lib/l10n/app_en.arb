@@ -5334,6 +5334,10 @@
       }
     }
   },
+  "newsSavedOpen": "Opening saved stories",
+  "@newsSavedOpen": {
+    "description": "Reference key news.savedOpen — the toast the saved row speaks"
+  },
   "newsSavings": "A plain-English guide to your first savings goal",
   "@newsSavings": {
     "description": "Reference: a global headline"
@@ -8501,61 +8505,6 @@
   "toolRelated": "Related tools",
   "@toolRelated": {
     "description": "Reference key tool.related — the related-tools section head"
-  },
-  "alarmsCantAdd": "Lume can't set alarms yet — use your phone's Clock app.",
-  "@alarmsCantAdd": {
-    "description": "Alarms' +: the truth, where the reference said \"New alarm\" and added nothing."
-  },
-  "alarmsSampleSwitch": "These are sample alarms — Lume can't switch a real alarm on or off yet.",
-  "@alarmsSampleSwitch": {
-    "description": "An alarm row's switch: it arms nothing, so it says so instead of flipping."
-  },
-  "parcelCantTrack": "Lume can't reach couriers yet, so it can't look up this shipment.",
-  "@parcelCantTrack": {
-    "description": "Parcel's Track: no lookup exists behind it."
-  },
-  "parcelCantNotify": "Lume can't follow shipments yet, so it has no updates to send.",
-  "@parcelCantNotify": {
-    "description": "Parcel's Notify on updates: nothing is subscribed."
-  },
-  "vehicleCantCheck": "Lume can't reach the vehicle register yet, so it can't check this registration.",
-  "@vehicleCantCheck": {
-    "description": "Vehicle's Look up: no register behind it."
-  },
-  "trainsCantSearch": "Lume can't search live services yet — the departures below are sample data.",
-  "@trainsCantSearch": {
-    "description": "Trains' Find trains: no search behind it."
-  },
-  "billsCantOpen": "Lume can't open {provider} bills yet.",
-  "@billsCantOpen": {
-    "description": "An unpaid bill's row: nothing opens behind it.",
-    "placeholders": {
-      "provider": {
-        "type": "String"
-      }
-    }
-  },
-  "newsCantSave": "Lume can't save stories yet — this count is sample data.",
-  "@newsCantSave": {
-    "description": "News' saved-stories row: nothing is saved."
-  },
-  "quranSurahNotHeld": "The text of {name} isn't in Lume yet.",
-  "@quranSurahNotHeld": {
-    "description": "A surah Lume holds no text for, tapped.",
-    "placeholders": {
-      "name": {
-        "type": "String"
-      }
-    }
-  },
-  "recipesNoMethod": "The method for {name} isn't in Lume yet.",
-  "@recipesNoMethod": {
-    "description": "A recipe row, tapped: Lume holds its times and servings, not its method.",
-    "placeholders": {
-      "name": {
-        "type": "String"
-      }
-    }
   },
   "toolSourceOnDevice": "On device",
   "@toolSourceOnDevice": {
@@ -15358,6 +15307,8 @@
   "@parcelPlaceholder": { "description": "Field placeholder, an example tracking number" },
   "parcelTrack": "Track",
   "@parcelTrack": { "description": "Action button" },
+  "parcelLookingUp": "Looking up the shipment",
+  "@parcelLookingUp": { "description": "Fixed toast, never varies" },
   "parcelActive": "In transit",
   "@parcelActive": { "description": "Section title" },
   "parcelCarrier": "Carrier",
@@ -15370,6 +15321,8 @@
   "@parcelJourney": { "description": "Section title, the tracking timeline" },
   "parcelNotify": "Notify on updates",
   "@parcelNotify": { "description": "Row label" },
+  "parcelNotifying": "You’ll be notified on every update",
+  "@parcelNotifying": { "description": "Confirmation toast" },
   "parcelStBooked": "Booked",
   "@parcelStBooked": { "description": "Timeline status" },
   "parcelStInTransit": "In transit",
@@ -15384,6 +15337,8 @@
   "@parcelShareText": { "description": "item: String, status: String — the shared summary line", "placeholders": { "item": { "type": "String" }, "status": { "type": "String" } } },
   "trainsFind": "Find trains",
   "@trainsFind": { "description": "Search action/title" },
+  "trainsSearching": "Searching services",
+  "@trainsSearching": { "description": "Loading state" },
   "trainsRunning": "Running",
   "@trainsRunning": { "description": "Status filter chip" },
   "trainsDelayed": "Delayed",
@@ -15516,6 +15471,8 @@
   "@marketsTopEtfs": { "description": "Section title, the ETF board — see marketsTopCrypto's note" },
   "marketsVol": "Vol",
   "@marketsVol": { "description": "Reference key markets.vol — an asset row's meta line ('Vol {vol}', 'Cap {cap}')" },
+  "billsOpening": "Opening {name}",
+  "@billsOpening": { "description": "name: String — reference key bills.opening, the toast on tapping a bill row", "placeholders": { "name": { "type": "String" } } },
   "billsTrend": "Six months",
   "@billsTrend": { "description": "Reference key bills.trend — the trend chart's own label/section title" },
   "billsTrendCap": "Total billed each month: {money}",
@@ -15697,6 +15654,8 @@
   "@alarmsAll": { "description": "Screen/section title for the alarms list." },
   "alarmsAdd": "Add an alarm",
   "@alarmsAdd": { "description": "Button that opens the new-alarm form." },
+  "alarmsAdding": "New alarm",
+  "@alarmsAdding": { "description": "Form title when adding an alarm." },
   "alarmsDaily": "Every day",
   "@alarmsDaily": { "description": "Alarm repeat option: every day of the week." },
   "alarmsWeekdays": "Weekdays",
@@ -16272,6 +16231,8 @@
   "@vehicleRegistration": { "description": "Field label: vehicle registration number." },
   "vehicleLookup": "Look up",
   "@vehicleLookup": { "description": "Button that looks up a registration number." },
+  "vehicleLookingUp": "Checking the register",
+  "@vehicleLookingUp": { "description": "Status text while a lookup is in progress." },
   "vehicleReminders": "What's coming up",
   "@vehicleReminders": { "description": "Section title over upcoming vehicle reminders." },
   "vehicleTokenTax": "Token tax due",

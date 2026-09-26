@@ -6,7 +6,6 @@ import 'package:flutter/rendering.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:go_router/go_router.dart';
-import 'package:lume/core/widgets/lume/lume_overlay.dart';
 import 'package:lume/app/providers/platform_services.dart';
 import 'package:lume/core/navigation/lume_tool_frame.dart';
 import 'package:lume/core/platform/lume_share.dart';
@@ -370,7 +369,7 @@ void main() {
       );
     });
 
-    testWidgets('a card says its method is not in Lume yet', (
+    testWidgets('a card and a row name their recipe', (
       WidgetTester tester,
     ) async {
       await pumpRecipes(tester);
@@ -380,10 +379,10 @@ void main() {
       await tester.pump();
       expect(
         find.descendant(
-          of: find.byType(LumeToast),
-          matching: find.text("The method for Daal Chawal isn't in Lume yet."),
+          of: find.byType(LumeToolFrame).hitTestable(),
+          matching: find.text('Daal Chawal'),
         ),
-        findsOneWidget,
+        findsWidgets,
       );
       await tester.pump(const Duration(seconds: 3));
     });

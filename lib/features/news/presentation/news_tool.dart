@@ -270,9 +270,9 @@ class _LumeNewsToolState extends ConsumerState<LumeNewsTool> {
                 LumeCompactRow(
                   icon: LumeIcons.bookmark,
                   label: l.newsSavedCount(LumeNewsTool.savedStories),
-                  // The reference said "Opening saved stories"; nothing
-                  // is saved, and the count is sample data.
-                  onTap: () => _say(l.newsCantSave),
+                  // The reference's own toast. **Dayroz:** open the
+                  // reader's saved stories.
+                  onTap: () => _say(l.newsSavedOpen),
                 ),
                 LumeCompactRow(
                   icon: LumeIcons.sliders,

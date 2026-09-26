@@ -237,12 +237,13 @@ class _LumeBillsToolState extends ConsumerState<LumeBillsTool> {
                           ],
                           badge: _badge(l, b.state),
                           value: money(b.amountUsd),
+                          // The reference's own toast. **Dayroz:** open
+                          // the biller's bill for this reference, to view and
+                          // pay it.
                           onTap: () => _host.currentState?.say(
                             b.state == LumeBillState.paid
                                 ? l.billsRowPaid(b.name)
-                                // The reference said "Opening …" and
-                                // opened nothing.
-                                : l.billsCantOpen(b.provider),
+                                : l.billsOpening(b.provider),
                             tone: LumeToastTone.info,
                           ),
                         ),

@@ -166,13 +166,11 @@ class _LumeQuranToolState extends ConsumerState<LumeQuranTool> {
       chevron: true,
       onTap: () {
         if (ayah == null) {
-          // The reference toasts the surah's bare name, which reads like
-          // the start of something opening. Lume holds no text for it, and
-          // says that.
-          _host.currentState?.say(
-            l.quranSurahNotHeld(s.name),
-            tone: LumeToastTone.info,
-          );
+          // `act: 'toast:' + s.name` — reproduced exactly: the reference has
+          // no page for a surah it holds no ayah for, so this names it and
+          // nothing more. **Dayroz:** open the surah's text, once the full
+          // licensed mushaf is in (`quran_model.dart`).
+          _host.currentState?.say(s.name, tone: LumeToastTone.info);
           return;
         }
         setState(() => _write('surah', isSelected ? '' : '${s.number}'));

@@ -119,8 +119,9 @@ void main() {
   });
 
   group('used', () {
-    testWidgets('a switch arms nothing, so it stays put and says these are '
-        'sample alarms', (WidgetTester tester) async {
+    testWidgets('the switch flips, but only on screen — it does not move '
+        'the summary card, the same as the reference’s own DOM-only class '
+        'toggle', (WidgetTester tester) async {
       await pumpAlarms(tester);
 
       final Finder firstToggle = inKey(
@@ -132,32 +133,28 @@ void main() {
       await tester.tap(firstToggle);
       await tester.pump();
 
-      expect(tester.widget<LumeSwitch>(firstToggle).value, isTrue);
-      expect(
-        find.text(
-          "These are sample alarms — Lume can't switch a real alarm on or "
-          'off yet.',
-        ),
-        findsOneWidget,
-      );
+      expect(tester.widget<LumeSwitch>(firstToggle).value, isFalse);
+      // The reference's own summary card is worked out once, before any
+      // toggle, and never revisited — so this port pins it the same way.
       final LumeSummaryCard card = tester.widget<LumeSummaryCard>(
         find.byKey(LumeAlarmsTool.summaryKey),
       );
       expect(card.caption, 'Work · in about 8 hours');
+
+      // Flipping it back is just as inert.
+      await tester.tap(firstToggle);
+      await tester.pump();
+      expect(tester.widget<LumeSwitch>(firstToggle).value, isTrue);
     });
 
-    testWidgets('Add says Lume cannot set alarms, and adds none', (
-      WidgetTester tester,
-    ) async {
+    testWidgets('Add is a toast, not a new alarm — the reference has no '
+        'reader-added alarm to build one for', (WidgetTester tester) async {
       await pumpAlarms(tester);
 
       await tester.tap(find.byKey(LumeAlarmsTool.addKey));
       await tester.pump();
 
-      expect(
-        find.text("Lume can't set alarms yet — use your phone's Clock app."),
-        findsOneWidget,
-      );
+      expect(find.text('New alarm'), findsOneWidget);
       // No fourth row appeared.
       expect(
         inKey(LumeAlarmsTool.listKey, find.byType(LumeRichRow)),

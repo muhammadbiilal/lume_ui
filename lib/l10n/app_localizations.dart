@@ -6904,6 +6904,12 @@ abstract class AppLocalizations {
   /// **'{n, plural, =1{1 saved story} other{{n} saved stories}}'**
   String newsSavedCount(int n);
 
+  /// Reference key news.savedOpen — the toast the saved row speaks
+  ///
+  /// In en, this message translates to:
+  /// **'Opening saved stories'**
+  String get newsSavedOpen;
+
   /// Reference: a global headline
   ///
   /// In en, this message translates to:
@@ -11013,66 +11019,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Related tools'**
   String get toolRelated;
-
-  /// Alarms' +: the truth, where the reference said "New alarm" and added nothing.
-  ///
-  /// In en, this message translates to:
-  /// **'Lume can\'t set alarms yet — use your phone\'s Clock app.'**
-  String get alarmsCantAdd;
-
-  /// An alarm row's switch: it arms nothing, so it says so instead of flipping.
-  ///
-  /// In en, this message translates to:
-  /// **'These are sample alarms — Lume can\'t switch a real alarm on or off yet.'**
-  String get alarmsSampleSwitch;
-
-  /// Parcel's Track: no lookup exists behind it.
-  ///
-  /// In en, this message translates to:
-  /// **'Lume can\'t reach couriers yet, so it can\'t look up this shipment.'**
-  String get parcelCantTrack;
-
-  /// Parcel's Notify on updates: nothing is subscribed.
-  ///
-  /// In en, this message translates to:
-  /// **'Lume can\'t follow shipments yet, so it has no updates to send.'**
-  String get parcelCantNotify;
-
-  /// Vehicle's Look up: no register behind it.
-  ///
-  /// In en, this message translates to:
-  /// **'Lume can\'t reach the vehicle register yet, so it can\'t check this registration.'**
-  String get vehicleCantCheck;
-
-  /// Trains' Find trains: no search behind it.
-  ///
-  /// In en, this message translates to:
-  /// **'Lume can\'t search live services yet — the departures below are sample data.'**
-  String get trainsCantSearch;
-
-  /// An unpaid bill's row: nothing opens behind it.
-  ///
-  /// In en, this message translates to:
-  /// **'Lume can\'t open {provider} bills yet.'**
-  String billsCantOpen(String provider);
-
-  /// News' saved-stories row: nothing is saved.
-  ///
-  /// In en, this message translates to:
-  /// **'Lume can\'t save stories yet — this count is sample data.'**
-  String get newsCantSave;
-
-  /// A surah Lume holds no text for, tapped.
-  ///
-  /// In en, this message translates to:
-  /// **'The text of {name} isn\'t in Lume yet.'**
-  String quranSurahNotHeld(String name);
-
-  /// A recipe row, tapped: Lume holds its times and servings, not its method.
-  ///
-  /// In en, this message translates to:
-  /// **'The method for {name} isn\'t in Lume yet.'**
-  String recipesNoMethod(String name);
 
   /// tool-specs.js src "On device" — shared by every tool whose figures live on the device. The reference prints it in English everywhere; translated here (§11).
   ///
@@ -20509,6 +20455,12 @@ abstract class AppLocalizations {
   /// **'Track'**
   String get parcelTrack;
 
+  /// Fixed toast, never varies
+  ///
+  /// In en, this message translates to:
+  /// **'Looking up the shipment'**
+  String get parcelLookingUp;
+
   /// Section title
   ///
   /// In en, this message translates to:
@@ -20544,6 +20496,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Notify on updates'**
   String get parcelNotify;
+
+  /// Confirmation toast
+  ///
+  /// In en, this message translates to:
+  /// **'You’ll be notified on every update'**
+  String get parcelNotifying;
 
   /// Timeline status
   ///
@@ -20586,6 +20544,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Find trains'**
   String get trainsFind;
+
+  /// Loading state
+  ///
+  /// In en, this message translates to:
+  /// **'Searching services'**
+  String get trainsSearching;
 
   /// Status filter chip
   ///
@@ -20982,6 +20946,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Vol'**
   String get marketsVol;
+
+  /// name: String — reference key bills.opening, the toast on tapping a bill row
+  ///
+  /// In en, this message translates to:
+  /// **'Opening {name}'**
+  String billsOpening(String name);
 
   /// Reference key bills.trend — the trend chart's own label/section title
   ///
@@ -21522,6 +21492,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Add an alarm'**
   String get alarmsAdd;
+
+  /// Form title when adding an alarm.
+  ///
+  /// In en, this message translates to:
+  /// **'New alarm'**
+  String get alarmsAdding;
 
   /// Alarm repeat option: every day of the week.
   ///
@@ -23040,6 +23016,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Look up'**
   String get vehicleLookup;
+
+  /// Status text while a lookup is in progress.
+  ///
+  /// In en, this message translates to:
+  /// **'Checking the register'**
+  String get vehicleLookingUp;
 
   /// Section title over upcoming vehicle reminders.
   ///

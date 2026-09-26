@@ -4,10 +4,9 @@
 /// number at all: `pc_ref` is read by nothing, and the button's own action is
 /// `toast:` a fixed line ("Looking up the shipment") that never changes with
 /// what was typed and never resolves into a result. "Notify on updates" is
-/// the same shape — "You'll be notified on every update", and nothing is.
-/// Here the field and the buttons exist because the reference draws them,
-/// and each button says Lume can't reach couriers or follow a shipment yet,
-/// rather than claiming it is doing either.
+/// the same shape — a toast, not a subscription. Both are kept exactly that
+/// honest here: the field and the buttons exist because the reference draws
+/// them, but neither one pretends a lookup or a subscription happens.
 ///
 /// Selecting a row is the one real interaction (`toolstate:parcel:parcel:
 /// {ref}`) — it swaps which of these two fixture parcels the detail below the
