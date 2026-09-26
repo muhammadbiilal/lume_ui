@@ -132,6 +132,7 @@ class _LumeCricketToolState extends ConsumerState<LumeCricketTool> {
                                   ),
                               maxLines: 1,
                               overflow: TextOverflow.ellipsis,
+                              shrinkToFit: true,
                             ),
                             const SizedBox(height: 2),
                             Text(

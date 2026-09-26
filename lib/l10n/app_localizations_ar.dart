@@ -6365,6 +6365,111 @@ class AppLocalizationsAr extends AppLocalizations {
   String get toolSourceTax => 'الشرائح القانونية';
 
   @override
+  String get toolSourceAdsb => 'شبكة ADS-B';
+
+  @override
+  String get toolSourceAsmaUlHusna => 'الأسماء الحسنى';
+
+  @override
+  String get toolSourceAstronomical => 'حساب فلكي';
+
+  @override
+  String get toolSourceBullion => 'سوق السبائك + السوق المفتوحة';
+
+  @override
+  String get toolSourceCamera => 'الكاميرا';
+
+  @override
+  String get toolSourceCarrier => 'تتبّع شركة الشحن';
+
+  @override
+  String get toolSourceFaraid => 'قواعد الفرائض الكلاسيكية';
+
+  @override
+  String get toolSourcePumpPrice => 'سعر المضخة الحالي';
+
+  @override
+  String get toolSourceDistribution => 'شركة التوزيع';
+
+  @override
+  String get toolSourceDuas => 'مجموعة الأدعية';
+
+  @override
+  String get toolSourceEncrypted => 'مشفّر على الجهاز';
+
+  @override
+  String get toolSourceExchange => 'بيانات البورصة';
+
+  @override
+  String get toolSourceExcise => 'سجلات دائرة المكوس';
+
+  @override
+  String get toolSourceForecast => 'نموذج التوقعات';
+
+  @override
+  String get toolSourceGreatCircle => 'اتجاه الدائرة العظمى';
+
+  @override
+  String get toolSourceHadith => 'كتب الحديث';
+
+  @override
+  String get toolSourceHijriSolar => 'التقويم الهجري + الأوقات الشمسية';
+
+  @override
+  String get toolSourceIana => 'المناطق الزمنية IANA';
+
+  @override
+  String get toolSourceIcao => 'ICAO + المواصفات الوطنية';
+
+  @override
+  String get toolSourceInterbank => 'متوسط سوق ما بين البنوك';
+
+  @override
+  String get toolSourceMatchFeed => 'بيانات المباراة';
+
+  @override
+  String get toolSourceMonitoring => 'محطات الرصد';
+
+  @override
+  String get toolSourceNatSavings => 'جدول المدخرات الوطنية';
+
+  @override
+  String get toolSourceNationalCalendars => 'التقاويم الوطنية';
+
+  @override
+  String get toolSourceNationalDirectory => 'الدليل الوطني';
+
+  @override
+  String get toolSourceNisab => 'النصاب من أسعار المعادن الحالية';
+
+  @override
+  String get toolSourceDrawResults => 'نتائج السحب الرسمية';
+
+  @override
+  String get toolSourceOnDeviceProvider => 'على الجهاز + المزوّد';
+
+  @override
+  String get toolSourceOperatorFeed => 'بيانات المشغّل المباشرة';
+
+  @override
+  String get toolSourceOperatorTariffs => 'تعرفات المشغّل';
+
+  @override
+  String get toolSourcePublishers => 'مصادر الناشرين';
+
+  @override
+  String get toolSourceQuranText => 'نص القرآن';
+
+  @override
+  String get toolSourceRecipes => 'مكتبة الوصفات';
+
+  @override
+  String get toolSourceRegulator => 'إشعار الجهة التنظيمية';
+
+  @override
+  String get toolSourceTabularHijri => 'التقويم الإسلامي الجدولي';
+
+  @override
   String get toolStatusAge => 'بالأيام بدقة';
 
   @override

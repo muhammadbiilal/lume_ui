@@ -157,9 +157,7 @@ class LumeSummaryCard extends StatelessWidget {
                       ),
                     const SizedBox(height: 6),
                     // `display: flex; align-items: baseline; gap: 8px`.
-                    Row(
-                      crossAxisAlignment: CrossAxisAlignment.baseline,
-                      textBaseline: TextBaseline.alphabetic,
+                    _ValueLine(
                       children: <Widget>[
                         Flexible(
                           // Proportional figures: `.summary__value` sets no
@@ -176,6 +174,7 @@ class LumeSummaryCard extends StatelessWidget {
                             ).copyWith(color: ink),
                             maxLines: 1,
                             overflow: TextOverflow.ellipsis,
+                            shrinkToFit: true,
                           ),
                         ),
                         if (valueSmall != null) ...<Widget>[
@@ -291,6 +290,42 @@ class LumeSummaryCard extends StatelessWidget {
   }
 }
 
+/// The summary's value line: the figure, then its `<small>` and its unit.
+///
+/// At the design's own text size this is the reference's baseline row,
+/// exactly. Above it the row cannot hold a word like "Maghrib" beside its
+/// time without cutting the word off, so the parts wrap instead — the figure
+/// keeps the whole width and the time or unit moves to the next line. Bottom
+/// alignment, not baseline: `Wrap` has no baseline, and at 200 % the two
+/// descents differ by a point or two.
+class _ValueLine extends StatelessWidget {
+  const _ValueLine({required this.children});
+
+  final List<Widget> children;
+
+  @override
+  Widget build(BuildContext context) {
+    if (MediaQuery.textScalerOf(context).scale(1) <= 1) {
+      return Row(
+        crossAxisAlignment: CrossAxisAlignment.baseline,
+        textBaseline: TextBaseline.alphabetic,
+        children: children,
+      );
+    }
+    return Wrap(
+      spacing: LumeSpace.x2,
+      crossAxisAlignment: WrapCrossAlignment.end,
+      children: <Widget>[
+        for (final Widget w in children)
+          if (w is Flexible)
+            w.child
+          else if (!(w is SizedBox && w.child == null))
+            w,
+      ],
+    );
+  }
+}
+
 /// `.summary__stat` — a figure and what it counts.
 class _Stat extends StatelessWidget {
   const _Stat({required this.stat, required this.ink, required this.labelInk});
@@ -313,6 +348,10 @@ class _Stat extends StatelessWidget {
         ).copyWith(color: ink, fontWeight: FontWeight.w800),
         maxLines: 1,
         overflow: TextOverflow.ellipsis,
+        shrinkToFit: true,
+        // Three to a strip: a prize fund's "Rs 64,335,300" loses its last
+        // digits at the design's own size.
+        minScale: 0.8,
       ),
       const SizedBox(height: 2),
       Text(
@@ -388,6 +427,7 @@ class LumeMetric extends StatelessWidget {
             ).copyWith(color: lume.text),
             maxLines: 1,
             overflow: TextOverflow.ellipsis,
+            shrinkToFit: true,
           ),
           const SizedBox(height: 2),
           Text(

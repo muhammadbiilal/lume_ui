@@ -212,7 +212,7 @@ void main() {
             isNot(l.freshLive),
             reason: '${build.name}/$language',
           );
-          expect(c.source, 'IANA time zones');
+          expect(c.source, l.toolSourceIana);
           expect(c.sample, isNull);
           expect(c.discloses(l), isFalse);
           expect(c.updated, isNull, reason: 'nothing was ever fetched');

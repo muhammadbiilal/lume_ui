@@ -6291,6 +6291,111 @@ class AppLocalizationsEn extends AppLocalizations {
   String get toolSourceTax => 'Statutory slabs';
 
   @override
+  String get toolSourceAdsb => 'ADS-B network';
+
+  @override
+  String get toolSourceAsmaUlHusna => 'Asma ul Husna';
+
+  @override
+  String get toolSourceAstronomical => 'Astronomical calculation';
+
+  @override
+  String get toolSourceBullion => 'Bullion + open market';
+
+  @override
+  String get toolSourceCamera => 'Camera';
+
+  @override
+  String get toolSourceCarrier => 'Carrier tracking';
+
+  @override
+  String get toolSourceFaraid => 'Classical faraid rules';
+
+  @override
+  String get toolSourcePumpPrice => 'Current pump price';
+
+  @override
+  String get toolSourceDistribution => 'Distribution company';
+
+  @override
+  String get toolSourceDuas => 'Dua collection';
+
+  @override
+  String get toolSourceEncrypted => 'Encrypted on device';
+
+  @override
+  String get toolSourceExchange => 'Exchange feed';
+
+  @override
+  String get toolSourceExcise => 'Excise records';
+
+  @override
+  String get toolSourceForecast => 'Forecast model';
+
+  @override
+  String get toolSourceGreatCircle => 'Great-circle bearing';
+
+  @override
+  String get toolSourceHadith => 'Hadith collections';
+
+  @override
+  String get toolSourceHijriSolar => 'Hijri calendar + solar times';
+
+  @override
+  String get toolSourceIana => 'IANA time zones';
+
+  @override
+  String get toolSourceIcao => 'ICAO + national specs';
+
+  @override
+  String get toolSourceInterbank => 'Interbank composite';
+
+  @override
+  String get toolSourceMatchFeed => 'Match feed';
+
+  @override
+  String get toolSourceMonitoring => 'Monitoring stations';
+
+  @override
+  String get toolSourceNatSavings => 'National Savings schedule';
+
+  @override
+  String get toolSourceNationalCalendars => 'National calendars';
+
+  @override
+  String get toolSourceNationalDirectory => 'National directory';
+
+  @override
+  String get toolSourceNisab => 'Nisab from live metal rates';
+
+  @override
+  String get toolSourceDrawResults => 'Official draw results';
+
+  @override
+  String get toolSourceOnDeviceProvider => 'On device + provider';
+
+  @override
+  String get toolSourceOperatorFeed => 'Operator live feed';
+
+  @override
+  String get toolSourceOperatorTariffs => 'Operator tariffs';
+
+  @override
+  String get toolSourcePublishers => 'Publisher feeds';
+
+  @override
+  String get toolSourceQuranText => 'Qur’an text';
+
+  @override
+  String get toolSourceRecipes => 'Recipe library';
+
+  @override
+  String get toolSourceRegulator => 'Regulator notification';
+
+  @override
+  String get toolSourceTabularHijri => 'Tabular Islamic calendar';
+
+  @override
   String get toolStatusAge => 'Exact days';
 
   @override

@@ -8527,6 +8527,146 @@
   "@toolSourceTax": {
     "description": "tool-specs.js src for tax. The reference prints this English string in every language; translated here (§11)."
   },
+  "toolSourceAdsb": "ADS-B network",
+  "@toolSourceAdsb": {
+    "description": "tool-specs.js src \"ADS-B network\" — a tool source line. The reference prints it in English everywhere; translated here (§11)."
+  },
+  "toolSourceAsmaUlHusna": "Asma ul Husna",
+  "@toolSourceAsmaUlHusna": {
+    "description": "tool-specs.js src \"Asma ul Husna\" — a tool source line. The reference prints it in English everywhere; translated here (§11)."
+  },
+  "toolSourceAstronomical": "Astronomical calculation",
+  "@toolSourceAstronomical": {
+    "description": "tool-specs.js src \"Astronomical calculation\" — a tool source line. The reference prints it in English everywhere; translated here (§11)."
+  },
+  "toolSourceBullion": "Bullion + open market",
+  "@toolSourceBullion": {
+    "description": "tool-specs.js src \"Bullion + open market\" — a tool source line. The reference prints it in English everywhere; translated here (§11)."
+  },
+  "toolSourceCamera": "Camera",
+  "@toolSourceCamera": {
+    "description": "tool-specs.js src \"Camera\" — a tool source line. The reference prints it in English everywhere; translated here (§11)."
+  },
+  "toolSourceCarrier": "Carrier tracking",
+  "@toolSourceCarrier": {
+    "description": "tool-specs.js src \"Carrier tracking\" — a tool source line. The reference prints it in English everywhere; translated here (§11)."
+  },
+  "toolSourceFaraid": "Classical faraid rules",
+  "@toolSourceFaraid": {
+    "description": "tool-specs.js src \"Classical faraid rules\" — a tool source line. The reference prints it in English everywhere; translated here (§11)."
+  },
+  "toolSourcePumpPrice": "Current pump price",
+  "@toolSourcePumpPrice": {
+    "description": "tool-specs.js src \"Current pump price\" — a tool source line. The reference prints it in English everywhere; translated here (§11)."
+  },
+  "toolSourceDistribution": "Distribution company",
+  "@toolSourceDistribution": {
+    "description": "tool-specs.js src \"Distribution company\" — a tool source line. The reference prints it in English everywhere; translated here (§11)."
+  },
+  "toolSourceDuas": "Dua collection",
+  "@toolSourceDuas": {
+    "description": "tool-specs.js src \"Dua collection\" — a tool source line. The reference prints it in English everywhere; translated here (§11)."
+  },
+  "toolSourceEncrypted": "Encrypted on device",
+  "@toolSourceEncrypted": {
+    "description": "tool-specs.js src \"Encrypted on device\" — a tool source line. The reference prints it in English everywhere; translated here (§11)."
+  },
+  "toolSourceExchange": "Exchange feed",
+  "@toolSourceExchange": {
+    "description": "tool-specs.js src \"Exchange feed\" — a tool source line. The reference prints it in English everywhere; translated here (§11)."
+  },
+  "toolSourceExcise": "Excise records",
+  "@toolSourceExcise": {
+    "description": "tool-specs.js src \"Excise records\" — a tool source line. The reference prints it in English everywhere; translated here (§11)."
+  },
+  "toolSourceForecast": "Forecast model",
+  "@toolSourceForecast": {
+    "description": "tool-specs.js src \"Forecast model\" — a tool source line. The reference prints it in English everywhere; translated here (§11)."
+  },
+  "toolSourceGreatCircle": "Great-circle bearing",
+  "@toolSourceGreatCircle": {
+    "description": "tool-specs.js src \"Great-circle bearing\" — a tool source line. The reference prints it in English everywhere; translated here (§11)."
+  },
+  "toolSourceHadith": "Hadith collections",
+  "@toolSourceHadith": {
+    "description": "tool-specs.js src \"Hadith collections\" — a tool source line. The reference prints it in English everywhere; translated here (§11)."
+  },
+  "toolSourceHijriSolar": "Hijri calendar + solar times",
+  "@toolSourceHijriSolar": {
+    "description": "tool-specs.js src \"Hijri calendar + solar times\" — a tool source line. The reference prints it in English everywhere; translated here (§11)."
+  },
+  "toolSourceIana": "IANA time zones",
+  "@toolSourceIana": {
+    "description": "tool-specs.js src \"IANA time zones\" — a tool source line. The reference prints it in English everywhere; translated here (§11)."
+  },
+  "toolSourceIcao": "ICAO + national specs",
+  "@toolSourceIcao": {
+    "description": "tool-specs.js src \"ICAO + national specs\" — a tool source line. The reference prints it in English everywhere; translated here (§11)."
+  },
+  "toolSourceInterbank": "Interbank composite",
+  "@toolSourceInterbank": {
+    "description": "tool-specs.js src \"Interbank composite\" — a tool source line. The reference prints it in English everywhere; translated here (§11)."
+  },
+  "toolSourceMatchFeed": "Match feed",
+  "@toolSourceMatchFeed": {
+    "description": "tool-specs.js src \"Match feed\" — a tool source line. The reference prints it in English everywhere; translated here (§11)."
+  },
+  "toolSourceMonitoring": "Monitoring stations",
+  "@toolSourceMonitoring": {
+    "description": "tool-specs.js src \"Monitoring stations\" — a tool source line. The reference prints it in English everywhere; translated here (§11)."
+  },
+  "toolSourceNatSavings": "National Savings schedule",
+  "@toolSourceNatSavings": {
+    "description": "tool-specs.js src \"National Savings schedule\" — a tool source line. The reference prints it in English everywhere; translated here (§11)."
+  },
+  "toolSourceNationalCalendars": "National calendars",
+  "@toolSourceNationalCalendars": {
+    "description": "tool-specs.js src \"National calendars\" — a tool source line. The reference prints it in English everywhere; translated here (§11)."
+  },
+  "toolSourceNationalDirectory": "National directory",
+  "@toolSourceNationalDirectory": {
+    "description": "tool-specs.js src \"National directory\" — a tool source line. The reference prints it in English everywhere; translated here (§11)."
+  },
+  "toolSourceNisab": "Nisab from live metal rates",
+  "@toolSourceNisab": {
+    "description": "tool-specs.js src \"Nisab from live metal rates\" — a tool source line. The reference prints it in English everywhere; translated here (§11)."
+  },
+  "toolSourceDrawResults": "Official draw results",
+  "@toolSourceDrawResults": {
+    "description": "tool-specs.js src \"Official draw results\" — a tool source line. The reference prints it in English everywhere; translated here (§11)."
+  },
+  "toolSourceOnDeviceProvider": "On device + provider",
+  "@toolSourceOnDeviceProvider": {
+    "description": "tool-specs.js src \"On device + provider\" — a tool source line. The reference prints it in English everywhere; translated here (§11)."
+  },
+  "toolSourceOperatorFeed": "Operator live feed",
+  "@toolSourceOperatorFeed": {
+    "description": "tool-specs.js src \"Operator live feed\" — a tool source line. The reference prints it in English everywhere; translated here (§11)."
+  },
+  "toolSourceOperatorTariffs": "Operator tariffs",
+  "@toolSourceOperatorTariffs": {
+    "description": "tool-specs.js src \"Operator tariffs\" — a tool source line. The reference prints it in English everywhere; translated here (§11)."
+  },
+  "toolSourcePublishers": "Publisher feeds",
+  "@toolSourcePublishers": {
+    "description": "tool-specs.js src \"Publisher feeds\" — a tool source line. The reference prints it in English everywhere; translated here (§11)."
+  },
+  "toolSourceQuranText": "Qur’an text",
+  "@toolSourceQuranText": {
+    "description": "tool-specs.js src \"Qur’an text\" — a tool source line. The reference prints it in English everywhere; translated here (§11)."
+  },
+  "toolSourceRecipes": "Recipe library",
+  "@toolSourceRecipes": {
+    "description": "tool-specs.js src \"Recipe library\" — a tool source line. The reference prints it in English everywhere; translated here (§11)."
+  },
+  "toolSourceRegulator": "Regulator notification",
+  "@toolSourceRegulator": {
+    "description": "tool-specs.js src \"Regulator notification\" — a tool source line. The reference prints it in English everywhere; translated here (§11)."
+  },
+  "toolSourceTabularHijri": "Tabular Islamic calendar",
+  "@toolSourceTabularHijri": {
+    "description": "tool-specs.js src \"Tabular Islamic calendar\" — a tool source line. The reference prints it in English everywhere; translated here (§11)."
+  },
   "toolStatusAge": "Exact days",
   "@toolStatusAge": {
     "description": "The status line on the age tile. The prototype keeps it in the catalogue and renders it untranslated in every language (D22)"

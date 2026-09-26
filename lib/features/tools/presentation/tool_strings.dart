@@ -96,12 +96,54 @@ abstract final class LumeToolStrings {
     _ => null,
   };
 
-  /// `src.<id>`, or the spec's own `src`. A converted tool's source is
-  /// translated; the rest keep the reference's English until they are.
+  /// `src.<id>`, or the spec's own `src`, in the reader's language.
   static String source(AppLocalizations l, LumeFeature feature) =>
-      switch (feature.id) {
-        'tax' => l.toolSourceTax,
-        _ when feature.fallbackSource == 'On device' => l.toolSourceOnDevice,
-        _ => feature.fallbackSource,
+      feature.id == 'tax'
+      ? l.toolSourceTax
+      : sourceName(l, feature.fallbackSource) ?? feature.fallbackSource;
+
+  /// A catalogue `fallbackSource`, translated — `null` for one with no
+  /// key, which `tool_strings_test.dart` fails on. The catalogue keeps the
+  /// English, because the claim rules in `source_claims.dart` match on it.
+  static String? sourceName(AppLocalizations l, String source) =>
+      switch (source) {
+        'On device' => l.toolSourceOnDevice,
+        'Statutory slabs' => l.toolSourceTax,
+        'ADS-B network' => l.toolSourceAdsb,
+        'Asma ul Husna' => l.toolSourceAsmaUlHusna,
+        'Astronomical calculation' => l.toolSourceAstronomical,
+        'Bullion + open market' => l.toolSourceBullion,
+        'Camera' => l.toolSourceCamera,
+        'Carrier tracking' => l.toolSourceCarrier,
+        'Classical faraid rules' => l.toolSourceFaraid,
+        'Current pump price' => l.toolSourcePumpPrice,
+        'Distribution company' => l.toolSourceDistribution,
+        'Dua collection' => l.toolSourceDuas,
+        'Encrypted on device' => l.toolSourceEncrypted,
+        'Exchange feed' => l.toolSourceExchange,
+        'Excise records' => l.toolSourceExcise,
+        'Forecast model' => l.toolSourceForecast,
+        'Great-circle bearing' => l.toolSourceGreatCircle,
+        'Hadith collections' => l.toolSourceHadith,
+        'Hijri calendar + solar times' => l.toolSourceHijriSolar,
+        'IANA time zones' => l.toolSourceIana,
+        'ICAO + national specs' => l.toolSourceIcao,
+        'Interbank composite' => l.toolSourceInterbank,
+        'Match feed' => l.toolSourceMatchFeed,
+        'Monitoring stations' => l.toolSourceMonitoring,
+        'National Savings schedule' => l.toolSourceNatSavings,
+        'National calendars' => l.toolSourceNationalCalendars,
+        'National directory' => l.toolSourceNationalDirectory,
+        'Nisab from live metal rates' => l.toolSourceNisab,
+        'Official draw results' => l.toolSourceDrawResults,
+        'On device + provider' => l.toolSourceOnDeviceProvider,
+        'Operator live feed' => l.toolSourceOperatorFeed,
+        'Operator tariffs' => l.toolSourceOperatorTariffs,
+        'Publisher feeds' => l.toolSourcePublishers,
+        'Qur’an text' => l.toolSourceQuranText,
+        'Recipe library' => l.toolSourceRecipes,
+        'Regulator notification' => l.toolSourceRegulator,
+        'Tabular Islamic calendar' => l.toolSourceTabularHijri,
+        _ => null,
       };
 }

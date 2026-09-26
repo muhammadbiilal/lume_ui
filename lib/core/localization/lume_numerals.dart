@@ -52,6 +52,8 @@ class LumeNumerals extends StatelessWidget {
     this.maxLines,
     this.overflow,
     this.semanticsLabel,
+    this.shrinkToFit = false,
+    this.minScale = 1,
   }) : children = null;
 
   /// A numeric run with its own unit inside it, in a smaller face.
@@ -68,7 +70,9 @@ class LumeNumerals extends StatelessWidget {
     this.maxLines,
     this.overflow,
     this.semanticsLabel,
-  }) : text = '';
+  }) : text = '',
+       shrinkToFit = false,
+       minScale = 1;
 
   final String text;
 
@@ -82,8 +86,61 @@ class LumeNumerals extends StatelessWidget {
   /// "sixteen forty-one" is more use than "one six colon four one".
   final String? semanticsLabel;
 
+  /// A single-line figure that would not fit its width is drawn at a smaller
+  /// text scale rather than cut off — never below the design's own size
+  /// (a scale of 1), and only then ellipsized. A lead figure truncated to
+  /// "2…" at 200 % tells the reader nothing; a smaller whole one does.
+  /// Where the figure fits, nothing changes.
+  final bool shrinkToFit;
+
+  /// The smallest text scale [shrinkToFit] may draw at. 1, the default, is
+  /// the design's own size; a secondary figure in a tight strip may go a
+  /// little under it rather than lose its last digits.
+  final double minScale;
+
   @override
-  Widget build(BuildContext context) => LumeLtr(
+  Widget build(BuildContext context) {
+    if (!shrinkToFit) return _text();
+    return LayoutBuilder(
+      builder: (BuildContext context, BoxConstraints constraints) {
+        final TextScaler scaler = MediaQuery.textScalerOf(context);
+        final double size =
+            DefaultTextStyle.of(context).style.merge(style).fontSize ?? 14;
+        final double scale = scaler.scale(size) / size;
+        if (!constraints.hasBoundedWidth || scale <= minScale) return _text();
+        final double natural = _width(context, scaler);
+        if (natural <= constraints.maxWidth) return _text();
+        // Width grows with the scale; take off just enough, with a hair of
+        // slack for rounding in the glyph advances.
+        final double fitted = (scale * constraints.maxWidth / natural) * 0.995;
+        return MediaQuery(
+          data: MediaQuery.of(context).copyWith(
+            textScaler: TextScaler.linear(
+              fitted < minScale ? minScale : fitted,
+            ),
+          ),
+          child: _text(),
+        );
+      },
+    );
+  }
+
+  double _width(BuildContext context, TextScaler scaler) {
+    final TextPainter p = TextPainter(
+      text: TextSpan(
+        text: text,
+        style: DefaultTextStyle.of(context).style.merge(style),
+      ),
+      textDirection: TextDirection.ltr,
+      textScaler: scaler,
+      maxLines: 1,
+    )..layout();
+    final double w = p.width;
+    p.dispose();
+    return w;
+  }
+
+  Widget _text() => LumeLtr(
     child: children == null
         ? Text(
             text,

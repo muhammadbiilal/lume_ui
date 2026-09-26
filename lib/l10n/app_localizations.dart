@@ -11044,6 +11044,216 @@ abstract class AppLocalizations {
   /// **'Statutory slabs'**
   String get toolSourceTax;
 
+  /// tool-specs.js src "ADS-B network" — a tool source line. The reference prints it in English everywhere; translated here (§11).
+  ///
+  /// In en, this message translates to:
+  /// **'ADS-B network'**
+  String get toolSourceAdsb;
+
+  /// tool-specs.js src "Asma ul Husna" — a tool source line. The reference prints it in English everywhere; translated here (§11).
+  ///
+  /// In en, this message translates to:
+  /// **'Asma ul Husna'**
+  String get toolSourceAsmaUlHusna;
+
+  /// tool-specs.js src "Astronomical calculation" — a tool source line. The reference prints it in English everywhere; translated here (§11).
+  ///
+  /// In en, this message translates to:
+  /// **'Astronomical calculation'**
+  String get toolSourceAstronomical;
+
+  /// tool-specs.js src "Bullion + open market" — a tool source line. The reference prints it in English everywhere; translated here (§11).
+  ///
+  /// In en, this message translates to:
+  /// **'Bullion + open market'**
+  String get toolSourceBullion;
+
+  /// tool-specs.js src "Camera" — a tool source line. The reference prints it in English everywhere; translated here (§11).
+  ///
+  /// In en, this message translates to:
+  /// **'Camera'**
+  String get toolSourceCamera;
+
+  /// tool-specs.js src "Carrier tracking" — a tool source line. The reference prints it in English everywhere; translated here (§11).
+  ///
+  /// In en, this message translates to:
+  /// **'Carrier tracking'**
+  String get toolSourceCarrier;
+
+  /// tool-specs.js src "Classical faraid rules" — a tool source line. The reference prints it in English everywhere; translated here (§11).
+  ///
+  /// In en, this message translates to:
+  /// **'Classical faraid rules'**
+  String get toolSourceFaraid;
+
+  /// tool-specs.js src "Current pump price" — a tool source line. The reference prints it in English everywhere; translated here (§11).
+  ///
+  /// In en, this message translates to:
+  /// **'Current pump price'**
+  String get toolSourcePumpPrice;
+
+  /// tool-specs.js src "Distribution company" — a tool source line. The reference prints it in English everywhere; translated here (§11).
+  ///
+  /// In en, this message translates to:
+  /// **'Distribution company'**
+  String get toolSourceDistribution;
+
+  /// tool-specs.js src "Dua collection" — a tool source line. The reference prints it in English everywhere; translated here (§11).
+  ///
+  /// In en, this message translates to:
+  /// **'Dua collection'**
+  String get toolSourceDuas;
+
+  /// tool-specs.js src "Encrypted on device" — a tool source line. The reference prints it in English everywhere; translated here (§11).
+  ///
+  /// In en, this message translates to:
+  /// **'Encrypted on device'**
+  String get toolSourceEncrypted;
+
+  /// tool-specs.js src "Exchange feed" — a tool source line. The reference prints it in English everywhere; translated here (§11).
+  ///
+  /// In en, this message translates to:
+  /// **'Exchange feed'**
+  String get toolSourceExchange;
+
+  /// tool-specs.js src "Excise records" — a tool source line. The reference prints it in English everywhere; translated here (§11).
+  ///
+  /// In en, this message translates to:
+  /// **'Excise records'**
+  String get toolSourceExcise;
+
+  /// tool-specs.js src "Forecast model" — a tool source line. The reference prints it in English everywhere; translated here (§11).
+  ///
+  /// In en, this message translates to:
+  /// **'Forecast model'**
+  String get toolSourceForecast;
+
+  /// tool-specs.js src "Great-circle bearing" — a tool source line. The reference prints it in English everywhere; translated here (§11).
+  ///
+  /// In en, this message translates to:
+  /// **'Great-circle bearing'**
+  String get toolSourceGreatCircle;
+
+  /// tool-specs.js src "Hadith collections" — a tool source line. The reference prints it in English everywhere; translated here (§11).
+  ///
+  /// In en, this message translates to:
+  /// **'Hadith collections'**
+  String get toolSourceHadith;
+
+  /// tool-specs.js src "Hijri calendar + solar times" — a tool source line. The reference prints it in English everywhere; translated here (§11).
+  ///
+  /// In en, this message translates to:
+  /// **'Hijri calendar + solar times'**
+  String get toolSourceHijriSolar;
+
+  /// tool-specs.js src "IANA time zones" — a tool source line. The reference prints it in English everywhere; translated here (§11).
+  ///
+  /// In en, this message translates to:
+  /// **'IANA time zones'**
+  String get toolSourceIana;
+
+  /// tool-specs.js src "ICAO + national specs" — a tool source line. The reference prints it in English everywhere; translated here (§11).
+  ///
+  /// In en, this message translates to:
+  /// **'ICAO + national specs'**
+  String get toolSourceIcao;
+
+  /// tool-specs.js src "Interbank composite" — a tool source line. The reference prints it in English everywhere; translated here (§11).
+  ///
+  /// In en, this message translates to:
+  /// **'Interbank composite'**
+  String get toolSourceInterbank;
+
+  /// tool-specs.js src "Match feed" — a tool source line. The reference prints it in English everywhere; translated here (§11).
+  ///
+  /// In en, this message translates to:
+  /// **'Match feed'**
+  String get toolSourceMatchFeed;
+
+  /// tool-specs.js src "Monitoring stations" — a tool source line. The reference prints it in English everywhere; translated here (§11).
+  ///
+  /// In en, this message translates to:
+  /// **'Monitoring stations'**
+  String get toolSourceMonitoring;
+
+  /// tool-specs.js src "National Savings schedule" — a tool source line. The reference prints it in English everywhere; translated here (§11).
+  ///
+  /// In en, this message translates to:
+  /// **'National Savings schedule'**
+  String get toolSourceNatSavings;
+
+  /// tool-specs.js src "National calendars" — a tool source line. The reference prints it in English everywhere; translated here (§11).
+  ///
+  /// In en, this message translates to:
+  /// **'National calendars'**
+  String get toolSourceNationalCalendars;
+
+  /// tool-specs.js src "National directory" — a tool source line. The reference prints it in English everywhere; translated here (§11).
+  ///
+  /// In en, this message translates to:
+  /// **'National directory'**
+  String get toolSourceNationalDirectory;
+
+  /// tool-specs.js src "Nisab from live metal rates" — a tool source line. The reference prints it in English everywhere; translated here (§11).
+  ///
+  /// In en, this message translates to:
+  /// **'Nisab from live metal rates'**
+  String get toolSourceNisab;
+
+  /// tool-specs.js src "Official draw results" — a tool source line. The reference prints it in English everywhere; translated here (§11).
+  ///
+  /// In en, this message translates to:
+  /// **'Official draw results'**
+  String get toolSourceDrawResults;
+
+  /// tool-specs.js src "On device + provider" — a tool source line. The reference prints it in English everywhere; translated here (§11).
+  ///
+  /// In en, this message translates to:
+  /// **'On device + provider'**
+  String get toolSourceOnDeviceProvider;
+
+  /// tool-specs.js src "Operator live feed" — a tool source line. The reference prints it in English everywhere; translated here (§11).
+  ///
+  /// In en, this message translates to:
+  /// **'Operator live feed'**
+  String get toolSourceOperatorFeed;
+
+  /// tool-specs.js src "Operator tariffs" — a tool source line. The reference prints it in English everywhere; translated here (§11).
+  ///
+  /// In en, this message translates to:
+  /// **'Operator tariffs'**
+  String get toolSourceOperatorTariffs;
+
+  /// tool-specs.js src "Publisher feeds" — a tool source line. The reference prints it in English everywhere; translated here (§11).
+  ///
+  /// In en, this message translates to:
+  /// **'Publisher feeds'**
+  String get toolSourcePublishers;
+
+  /// tool-specs.js src "Qur’an text" — a tool source line. The reference prints it in English everywhere; translated here (§11).
+  ///
+  /// In en, this message translates to:
+  /// **'Qur’an text'**
+  String get toolSourceQuranText;
+
+  /// tool-specs.js src "Recipe library" — a tool source line. The reference prints it in English everywhere; translated here (§11).
+  ///
+  /// In en, this message translates to:
+  /// **'Recipe library'**
+  String get toolSourceRecipes;
+
+  /// tool-specs.js src "Regulator notification" — a tool source line. The reference prints it in English everywhere; translated here (§11).
+  ///
+  /// In en, this message translates to:
+  /// **'Regulator notification'**
+  String get toolSourceRegulator;
+
+  /// tool-specs.js src "Tabular Islamic calendar" — a tool source line. The reference prints it in English everywhere; translated here (§11).
+  ///
+  /// In en, this message translates to:
+  /// **'Tabular Islamic calendar'**
+  String get toolSourceTabularHijri;
+
   /// The status line on the age tile. The prototype keeps it in the catalogue and renders it untranslated in every language (D22)
   ///
   /// In en, this message translates to:

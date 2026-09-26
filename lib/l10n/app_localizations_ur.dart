@@ -6287,6 +6287,111 @@ class AppLocalizationsUr extends AppLocalizations {
   String get toolSourceTax => 'قانونی سلیب';
 
   @override
+  String get toolSourceAdsb => 'ADS-B نیٹ ورک';
+
+  @override
+  String get toolSourceAsmaUlHusna => 'اسمائے حسنیٰ';
+
+  @override
+  String get toolSourceAstronomical => 'فلکیاتی حساب';
+
+  @override
+  String get toolSourceBullion => 'صرافہ + اوپن مارکیٹ';
+
+  @override
+  String get toolSourceCamera => 'کیمرا';
+
+  @override
+  String get toolSourceCarrier => 'کورئیر ٹریکنگ';
+
+  @override
+  String get toolSourceFaraid => 'فرائض کے کلاسیکی اصول';
+
+  @override
+  String get toolSourcePumpPrice => 'موجودہ پمپ قیمت';
+
+  @override
+  String get toolSourceDistribution => 'تقسیم کار کمپنی';
+
+  @override
+  String get toolSourceDuas => 'دعاؤں کا مجموعہ';
+
+  @override
+  String get toolSourceEncrypted => 'آلے پر خفیہ شدہ';
+
+  @override
+  String get toolSourceExchange => 'ایکسچینج فیڈ';
+
+  @override
+  String get toolSourceExcise => 'ایکسائز ریکارڈ';
+
+  @override
+  String get toolSourceForecast => 'پیش گوئی کا ماڈل';
+
+  @override
+  String get toolSourceGreatCircle => 'عظیم دائرے کا رخ';
+
+  @override
+  String get toolSourceHadith => 'احادیث کے مجموعے';
+
+  @override
+  String get toolSourceHijriSolar => 'ہجری کیلنڈر + شمسی اوقات';
+
+  @override
+  String get toolSourceIana => 'IANA ٹائم زونز';
+
+  @override
+  String get toolSourceIcao => 'ICAO + قومی معیارات';
+
+  @override
+  String get toolSourceInterbank => 'انٹربینک اوسط';
+
+  @override
+  String get toolSourceMatchFeed => 'میچ فیڈ';
+
+  @override
+  String get toolSourceMonitoring => 'نگرانی کے اسٹیشن';
+
+  @override
+  String get toolSourceNatSavings => 'قومی بچت کا شیڈول';
+
+  @override
+  String get toolSourceNationalCalendars => 'قومی کیلنڈر';
+
+  @override
+  String get toolSourceNationalDirectory => 'قومی ڈائریکٹری';
+
+  @override
+  String get toolSourceNisab => 'دھات کی تازہ قیمتوں سے نصاب';
+
+  @override
+  String get toolSourceDrawResults => 'قرعہ اندازی کے سرکاری نتائج';
+
+  @override
+  String get toolSourceOnDeviceProvider => 'آلے پر + فراہم کنندہ';
+
+  @override
+  String get toolSourceOperatorFeed => 'آپریٹر کی براہِ راست فیڈ';
+
+  @override
+  String get toolSourceOperatorTariffs => 'آپریٹر کے نرخ';
+
+  @override
+  String get toolSourcePublishers => 'ناشرین کی فیڈز';
+
+  @override
+  String get toolSourceQuranText => 'قرآن کا متن';
+
+  @override
+  String get toolSourceRecipes => 'ترکیبوں کا ذخیرہ';
+
+  @override
+  String get toolSourceRegulator => 'ریگولیٹر کا اعلامیہ';
+
+  @override
+  String get toolSourceTabularHijri => 'جدولی اسلامی کیلنڈر';
+
+  @override
   String get toolStatusAge => 'دنوں تک درست';
 
   @override
