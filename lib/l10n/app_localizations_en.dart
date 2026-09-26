@@ -6508,6 +6508,26 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
+  String get remAddReminder => 'Add a reminder';
+
+  @override
+  String get remToday => 'Today';
+
+  @override
+  String remNext(String label, String at) {
+    return '$label at $at';
+  }
+
+  @override
+  String get remNone => 'Nothing scheduled';
+
+  @override
+  String get remUpcoming => 'Coming up';
+
+  @override
+  String get remSearch => 'Search reminders';
+
+  @override
   String get toolSourceOnDevice => 'On device';
 
   @override
@@ -10940,9 +10960,6 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get remSavedNoSchedule =>
       'Saved, but the reminder couldn\'t be scheduled';
-
-  @override
-  String get remAddReminder => 'Add reminder';
 
   @override
   String get remEditReminder => 'Edit reminder';

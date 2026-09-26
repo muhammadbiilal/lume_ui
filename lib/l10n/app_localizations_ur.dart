@@ -6504,6 +6504,26 @@ class AppLocalizationsUr extends AppLocalizations {
   }
 
   @override
+  String get remAddReminder => 'یاد دہانی شامل کریں';
+
+  @override
+  String get remToday => 'آج';
+
+  @override
+  String remNext(String label, String at) {
+    return '$at بجے $label';
+  }
+
+  @override
+  String get remNone => 'کچھ طے نہیں';
+
+  @override
+  String get remUpcoming => 'آنے والی';
+
+  @override
+  String get remSearch => 'یاد دہانیاں تلاش کریں';
+
+  @override
   String get toolSourceOnDevice => 'آلے پر';
 
   @override
@@ -10933,9 +10953,6 @@ class AppLocalizationsUr extends AppLocalizations {
   @override
   String get remSavedNoSchedule =>
       'محفوظ ہو گیا، لیکن یاد دہانی مقرر نہیں ہو سکی';
-
-  @override
-  String get remAddReminder => 'یاد دہانی شامل کریں';
 
   @override
   String get remEditReminder => 'یاد دہانی میں ترمیم کریں';

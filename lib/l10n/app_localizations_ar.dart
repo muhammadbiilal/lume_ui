@@ -6581,6 +6581,26 @@ class AppLocalizationsAr extends AppLocalizations {
   }
 
   @override
+  String get remAddReminder => 'إضافة تذكير';
+
+  @override
+  String get remToday => 'اليوم';
+
+  @override
+  String remNext(String label, String at) {
+    return '$label في $at';
+  }
+
+  @override
+  String get remNone => 'لا شيء مجدول';
+
+  @override
+  String get remUpcoming => 'القادمة';
+
+  @override
+  String get remSearch => 'ابحث في التذكيرات';
+
+  @override
   String get toolSourceOnDevice => 'على الجهاز';
 
   @override
@@ -11076,9 +11096,6 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get remSavedNoSchedule => 'تم الحفظ، لكن تعذّرت جدولة التذكير';
-
-  @override
-  String get remAddReminder => 'إضافة تذكير';
 
   @override
   String get remEditReminder => 'تعديل التذكير';

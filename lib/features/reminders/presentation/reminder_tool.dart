@@ -19,6 +19,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../app/providers/platform_services.dart';
 import '../../../app/providers/shell_provider.dart';
 import '../../../app/providers/time_zone_provider.dart';
+import '../../../core/fixtures/lume_clock.dart';
+import '../../../core/widgets/lume/lume_progress.dart';
 import '../../../core/icons/lume_icons.dart';
 import '../../../core/localization/lume_format.dart';
 import '../../../core/navigation/lume_tool_frame.dart';
@@ -54,6 +56,8 @@ abstract final class LumeReminderTool {
   static const Key listKey = ValueKey<String>('rem.list');
   static const Key emptyKey = ValueKey<String>('rem.empty');
   static const Key addKey = ValueKey<String>('rem.add');
+  static const Key searchKey = ValueKey<String>('rem.search');
+  static const Key upcomingKey = ValueKey<String>('rem.upcoming');
 
   static Key row(String id) => ValueKey<String>('rem.row.$id');
   static Key toggle(String id) => ValueKey<String>('rem.toggle.$id');
@@ -77,6 +81,9 @@ class _ReminderToolState extends ConsumerState<ReminderTool>
   late final LumeNotificationGate _gate = ref.read(notificationGateProvider);
 
   LumeNotificationState? _access;
+
+  /// The list's search — `crud-engine.js`'s own, over the label.
+  final TextEditingController _query = TextEditingController();
 
   @override
   void initState() {
@@ -105,6 +112,7 @@ class _ReminderToolState extends ConsumerState<ReminderTool>
   void dispose() {
     WidgetsBinding.instance.removeObserver(this);
     _repo.changes.removeListener(_changed);
+    _query.dispose();
     super.dispose();
   }
 
@@ -269,6 +277,16 @@ class _ReminderToolState extends ConsumerState<ReminderTool>
       onOpenRelated: widget.request.onOpenRelated,
       status: status,
       onRetry: () => setState(_repo.retry),
+      // `UI.fab({ label: 'Add a reminder' })` — the reference's floating
+      // add, here opening the real add sheet.
+      floating: book == null
+          ? null
+          : LumeFab(
+              key: LumeReminderTool.addKey,
+              label: l.remAddReminder,
+              icon: LumeIcons.plus,
+              onPressed: () => unawaited(_add(l)),
+            ),
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: book == null ? const <Widget>[] : _body(context, l, f, book),
@@ -318,14 +336,8 @@ class _ReminderToolState extends ConsumerState<ReminderTool>
             ),
           ),
         ),
-      LumeToolSection(
-        child: LumeSummaryCard(
-          key: LumeReminderTool.summaryKey,
-          kicker: l.remSummaryKicker,
-          value: f.integer(book.enabledCount),
-          caption: l.remSummaryCaption,
-        ),
-      ),
+      // The engine's own list first, as `engine.js` composes a record
+      // tool: its search, then the reader's reminders.
       if (book.isEmpty)
         LumeToolSection(
           child: LumeToolState(
@@ -335,23 +347,88 @@ class _ReminderToolState extends ConsumerState<ReminderTool>
             text: l.remEmptyText,
           ),
         )
-      else
+      else ...<Widget>[
+        LumeToolSection(
+          child: LumeSearchField(
+            key: LumeReminderTool.searchKey,
+            controller: _query,
+            placeholder: l.remSearch,
+            onChanged: (String _) => setState(() {}),
+          ),
+        ),
         LumeToolSection(
           child: LumeRows(
             key: LumeReminderTool.listKey,
             children: <Widget>[
-              for (final ReminderEntry e in book.sorted) _row(context, l, f, e),
+              for (final ReminderEntry e in book.sorted)
+                if (_query.text.trim().isEmpty ||
+                    e.label.toLowerCase().contains(
+                      _query.text.trim().toLowerCase(),
+                    ))
+                  _row(context, l, f, e),
             ],
           ),
         ),
+      ],
+      // Then the tool's own composition: today, and what is coming up.
+      ..._today(context, l, f, book),
+    ];
+  }
+
+  /// `reminders.tool.js`: "Today", how many are set, and the next one —
+  /// then the day as a timeline, what has passed marked done and the next
+  /// one marked now. Worked out from the reader's own switched-on
+  /// reminders against the injected clock.
+  List<Widget> _today(
+    BuildContext context,
+    AppLocalizations l,
+    LumeFormatting f,
+    ReminderBook book,
+  ) {
+    final DateTime now = LumeClockScope.of(context).now();
+    final int nowMinute = now.hour * 60 + now.minute;
+    final List<ReminderEntry> on = <ReminderEntry>[
+      for (final ReminderEntry e in book.sorted)
+        if (e.enabled) e,
+    ];
+    int minuteOf(ReminderEntry e) => e.atHour * 60 + e.atMinute;
+    final ReminderEntry? next = on
+        .where((ReminderEntry e) => minuteOf(e) > nowMinute)
+        .firstOrNull;
+    return <Widget>[
       LumeToolSection(
-        child: LumeButton.accent(
-          key: LumeReminderTool.addKey,
-          label: l.remAddReminder,
-          block: true,
-          onPressed: () => unawaited(_add(l)),
+        child: LumeSummaryCard(
+          key: LumeReminderTool.summaryKey,
+          kicker: l.remToday,
+          value: f.integer(on.length),
+          caption: next == null
+              ? l.remNone
+              : l.remNext(
+                  next.label,
+                  ReminderText.time(f, next.atHour, next.atMinute),
+                ),
         ),
       ),
+      if (on.isNotEmpty)
+        LumeToolSection(
+          title: l.remUpcoming,
+          child: LumeTimeline(
+            key: LumeReminderTool.upcomingKey,
+            entries: <LumeTimelineEntry>[
+              for (final ReminderEntry e in on)
+                LumeTimelineEntry(
+                  time: ReminderText.time(f, e.atHour, e.atMinute),
+                  title: e.label,
+                  subtitle: ReminderText.repeat(l, e.repeat),
+                  state: minuteOf(e) <= nowMinute
+                      ? LumeTimelineState.done
+                      : identical(e, next)
+                      ? LumeTimelineState.now
+                      : LumeTimelineState.upcoming,
+                ),
+            ],
+          ),
+        ),
     ];
   }
 

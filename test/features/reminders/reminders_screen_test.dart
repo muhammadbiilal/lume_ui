@@ -6,6 +6,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:lume/core/platform/lume_notification_gate.dart';
 import 'package:lume/features/reminders/presentation/reminder_sheets.dart';
+import 'package:lume/core/widgets/lume/lume_summary.dart';
+import 'package:lume/core/widgets/lume/lume_progress.dart';
+import 'package:lume/core/widgets/lume/lume_row.dart';
 import 'package:lume/features/reminders/presentation/reminder_tool.dart';
 
 import '../../helpers/load_fonts.dart';
@@ -33,6 +36,67 @@ void main() {
     });
   });
 
+  group('the reference’s composition', () {
+    Future<ReminderWorld> seeded(WidgetTester t) async {
+      final ReminderWorld w = ReminderWorld();
+      await pumpReminders(t, w);
+      for (final (String label, int h, int m) in <(String, int, int)>[
+        ('Morning pills', 9, 0),
+        ('Call home', 18, 30),
+        ('Read', 21, 0),
+      ]) {
+        await w.repo.add(label: label, atHour: h, atMinute: m, zoneId: null);
+        await t.pumpAndSettle();
+      }
+      return w;
+    }
+
+    testWidgets('Today names the next one after now (the clock reads 16:41)', (
+      WidgetTester t,
+    ) async {
+      final ReminderWorld w = await seeded(t);
+      final LumeSummaryCard card = t.widget<LumeSummaryCard>(
+        find.byKey(LumeReminderTool.summaryKey),
+      );
+      expect(card.kicker, 'Today');
+      expect(card.value, '3');
+      expect(card.caption, startsWith('Call home at '));
+      w.dispose();
+    });
+
+    testWidgets('Coming up marks what has passed done, and the next now', (
+      WidgetTester t,
+    ) async {
+      final ReminderWorld w = await seeded(t);
+      final List<LumeTimelineEntry> entries = t
+          .widget<LumeTimeline>(find.byKey(LumeReminderTool.upcomingKey))
+          .entries;
+      expect(
+        entries.map((LumeTimelineEntry e) => e.state).toList(),
+        <LumeTimelineState>[
+          LumeTimelineState.done,
+          LumeTimelineState.now,
+          LumeTimelineState.upcoming,
+        ],
+      );
+      w.dispose();
+    });
+
+    testWidgets('the list’s search narrows by label', (WidgetTester t) async {
+      final ReminderWorld w = await seeded(t);
+      await t.enterText(find.byKey(LumeReminderTool.searchKey), 'call');
+      await t.pumpAndSettle();
+      expect(
+        find.descendant(
+          of: find.byKey(LumeReminderTool.listKey),
+          matching: find.byType(LumeRichRow),
+        ),
+        findsOneWidget,
+      );
+      w.dispose();
+    });
+  });
+
   group('adding', () {
     testWidgets('opens the sheet, saves, appears in the list', (
       WidgetTester t,
@@ -46,7 +110,21 @@ void main() {
       await t.pumpAndSettle();
       await tapShown(t, find.byKey(ReminderSheetKeys.save));
 
-      expect(find.text('Take a walk'), findsOneWidget);
+      // In the list, and — switched on — in the day's timeline too.
+      expect(
+        find.descendant(
+          of: find.byKey(LumeReminderTool.listKey),
+          matching: find.text('Take a walk'),
+        ),
+        findsOneWidget,
+      );
+      expect(
+        find.descendant(
+          of: find.byKey(LumeReminderTool.upcomingKey),
+          matching: find.text('Take a walk'),
+        ),
+        findsOneWidget,
+      );
       expect(w.repo.view().entries.single.label, 'Take a walk');
       expect(
         w.scheduler.scheduled,

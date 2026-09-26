@@ -8814,6 +8814,38 @@
       }
     }
   },
+  "remAddReminder": "Add a reminder",
+  "@remAddReminder": {
+    "description": "tools.js reminders.add — the floating action, and the add sheet's title."
+  },
+  "remToday": "Today",
+  "@remToday": {
+    "description": "tools.js reminders.today — the summary's kicker."
+  },
+  "remNext": "{label} at {at}",
+  "@remNext": {
+    "description": "tools.js reminders.next — the next reminder today.",
+    "placeholders": {
+      "label": {
+        "type": "String"
+      },
+      "at": {
+        "type": "String"
+      }
+    }
+  },
+  "remNone": "Nothing scheduled",
+  "@remNone": {
+    "description": "tools.js reminders.none"
+  },
+  "remUpcoming": "Coming up",
+  "@remUpcoming": {
+    "description": "tools.js reminders.upcoming — the timeline's title."
+  },
+  "remSearch": "Search reminders",
+  "@remSearch": {
+    "description": "crud.js rec.search over reminders — the list's search."
+  },
   "toolSourceOnDevice": "On device",
   "@toolSourceOnDevice": {
     "description": "tool-specs.js src \"On device\" — shared by every tool whose figures live on the device. The reference prints it in English everywhere; translated here (§11)."
@@ -14847,10 +14879,6 @@
   "remSavedNoSchedule": "Saved, but the reminder couldn't be scheduled",
   "@remSavedNoSchedule": {
     "description": "Toast: the record saved, but the platform refused or failed to schedule the notification"
-  },
-  "remAddReminder": "Add reminder",
-  "@remAddReminder": {
-    "description": "Button, and the add sheet's title"
   },
   "remEditReminder": "Edit reminder",
   "@remEditReminder": {

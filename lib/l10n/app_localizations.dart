@@ -11452,6 +11452,42 @@ abstract class AppLocalizations {
   /// **'{n} rakaat'**
   String taraweehRakaatCount(int n);
 
+  /// tools.js reminders.add — the floating action, and the add sheet's title.
+  ///
+  /// In en, this message translates to:
+  /// **'Add a reminder'**
+  String get remAddReminder;
+
+  /// tools.js reminders.today — the summary's kicker.
+  ///
+  /// In en, this message translates to:
+  /// **'Today'**
+  String get remToday;
+
+  /// tools.js reminders.next — the next reminder today.
+  ///
+  /// In en, this message translates to:
+  /// **'{label} at {at}'**
+  String remNext(String label, String at);
+
+  /// tools.js reminders.none
+  ///
+  /// In en, this message translates to:
+  /// **'Nothing scheduled'**
+  String get remNone;
+
+  /// tools.js reminders.upcoming — the timeline's title.
+  ///
+  /// In en, this message translates to:
+  /// **'Coming up'**
+  String get remUpcoming;
+
+  /// crud.js rec.search over reminders — the list's search.
+  ///
+  /// In en, this message translates to:
+  /// **'Search reminders'**
+  String get remSearch;
+
   /// tool-specs.js src "On device" — shared by every tool whose figures live on the device. The reference prints it in English everywhere; translated here (§11).
   ///
   /// In en, this message translates to:
@@ -18882,12 +18918,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Saved, but the reminder couldn\'t be scheduled'**
   String get remSavedNoSchedule;
-
-  /// Button, and the add sheet's title
-  ///
-  /// In en, this message translates to:
-  /// **'Add reminder'**
-  String get remAddReminder;
 
   /// The edit sheet's title
   ///
