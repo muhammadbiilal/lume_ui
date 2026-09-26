@@ -452,22 +452,17 @@ const List<LumeFeature> kLumeFeatures = <LumeFeature>[
     interests: <String>{'ramadan', 'prayer'},
     faith: true,
     related: <String>{'mosques', 'ramadan', 'prayer'},
-    // Wave 10: the reference's own `taraweeh.tool.js` turned out to be a
-    // nearby-mosque finder, not a personal tracker — every mosque name,
-    // reciter and start time in it is fabricated (the same
-    // `nearbyMosques()` fixture `mosques.tool.js` also draws from, with
-    // nothing real to port). Kept the one honest thing worth keeping — the
-    // reader's own Taraweeh nights — and built a real reader-record
-    // tracker instead (rakaat prayed + optional Juz reached), the same
-    // shape as Habits/Streak, not a places directory
-    // (`ROLLOUT_WAVE_10.md`).
-    archetype: LumeToolArchetype.tracker,
+    // The reference's mosque finder for the Ramadan nights, over Nearby
+    // Mosques' own sample list (`mosques_fixtures.dart`); the source line
+    // says "Sample data".
+    archetype: LumeToolArchetype.tracking,
     density: LumeToolDensity.medium,
-    fallbackSource: 'On device',
-    freshness: LumeFreshnessKind.local,
+    fallbackSource: 'Places directory',
+    freshness: LumeFreshnessKind.cached,
     supports: <LumeToolSupport>{
+      LumeToolSupport.filters,
       LumeToolSupport.notifications,
-      LumeToolSupport.offline,
+      LumeToolSupport.search,
     },
     aware: <String>{'city', 'units'},
   ),

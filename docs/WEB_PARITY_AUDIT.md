@@ -32,6 +32,7 @@ Seven tools match the web fully (compound, loan, tax, tipsplit, datecalc, learni
 - **Dead controls** — Today's Bookmark toggles and says "Saved to your bookmarks" / "Removed from bookmarks"; its Share opens the share sheet over the day's ayah or thought; an agenda entry with nowhere to go says its title; Explore's Nearby rows say their line; "Today's reads" follows the news interest (`data-int="news"`).
 - **Bugs** — Currency's rate line reads "1 PKR = … USD" (it said "1 1 PKR"); Duas search matches titles again; the signed-out refusal reads "Sign in to continue" over "You're signed out. Sign in to continue.", as the web's.
 - **Sheets** — sign-up's "How Lume handles your data" opens its sheet (`#sheet-authlegal`, with the web's own Urdu and Arabic); the push ask (`#sheet-notifpush`) is opened by the Push switch on Account → Notifications and the preferences sheet, and the switch turns on only once the platform allows it (blocked or unsupported: it stays off and says why); Account's Restore dismissed restores. The `market` sheet waits on Markets.
+- **Taraweeh** — the web's mosque finder again (city and "Ramadan schedule", search, the All / 8 / 20 rakaat filter, the map, the mosques with rakaat, reciter and start, the closest one's figures, the reminder note), over Nearby Mosques' sample list; the reader-log it had been replaced with is removed.
 - **Markets price overflow at 200 %**, **untranslated source lines**, **headline figures cut off at 200 %** — fixed earlier (`bc223df`, `ded2925`).
 
 ---

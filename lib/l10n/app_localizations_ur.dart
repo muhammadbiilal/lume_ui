@@ -6464,6 +6464,46 @@ class AppLocalizationsUr extends AppLocalizations {
       'مکمل تفصیل آپ کی پروفائل میں پرائیویسی کے تحت موجود ہے، اور آپ جب چاہیں اپنا اکاؤنٹ اور اس کا سب کچھ حذف کر سکتے ہیں۔';
 
   @override
+  String get taraweehSeason => 'رمضان کا شیڈول';
+
+  @override
+  String get taraweehSearch => 'مساجد تلاش کریں';
+
+  @override
+  String get taraweehRakaat => 'رکعات';
+
+  @override
+  String get taraweehMap => 'آپ کے قریب مساجد';
+
+  @override
+  String get taraweehNearby => 'قریب';
+
+  @override
+  String get taraweehStarts => 'آغاز';
+
+  @override
+  String get taraweehNoMatch => 'کوئی مسجد نہیں ملی';
+
+  @override
+  String get taraweehNoMatchText =>
+      'رکعات کی کوئی اور تعداد آزمائیں، یا تلاش صاف کریں۔';
+
+  @override
+  String get taraweehSelected => 'سب سے قریب';
+
+  @override
+  String get taraweehRemindTitle => 'یاد دہانی حاصل کریں';
+
+  @override
+  String get taraweehRemindText =>
+      'ہم آپ کی منتخب مسجد میں تراویح شروع ہونے سے 20 منٹ پہلے آپ کو یاد دلا سکتے ہیں۔';
+
+  @override
+  String taraweehRakaatCount(int n) {
+    return '$n رکعات';
+  }
+
+  @override
   String get toolSourceOnDevice => 'آلے پر';
 
   @override
@@ -13296,87 +13336,6 @@ class AppLocalizationsUr extends AppLocalizations {
   @override
   String ramadanShareSource(String city, String date) {
     return '$city · $date';
-  }
-
-  @override
-  String get taraweehErrConflict =>
-      'یہ کہیں اور تبدیل ہو گیا۔ اسے دوبارہ کھولیں۔';
-
-  @override
-  String get taraweehErrFailed => 'یہ محفوظ نہیں ہوا۔ دوبارہ کوشش کریں۔';
-
-  @override
-  String get taraweehPrayedToast => 'آج رات کے لیے لاگ ہو گیا';
-
-  @override
-  String get taraweehClearedToast => 'آج رات کا اندراج ہٹا دیا گیا';
-
-  @override
-  String get taraweehSummaryKicker => 'تراویح کا تسلسل';
-
-  @override
-  String get taraweehNightsUnit => 'راتیں';
-
-  @override
-  String taraweehBestCaption(int n) {
-    return 'بہترین: $n راتیں';
-  }
-
-  @override
-  String get taraweehStatTotal => 'لاگ شدہ راتیں';
-
-  @override
-  String get taraweehStatJuz => 'مکمل شدہ جز';
-
-  @override
-  String get taraweehStatNextJuz => 'اگلا جز';
-
-  @override
-  String get taraweehTonight => 'آج رات';
-
-  @override
-  String get taraweehPrayedLabel => 'آج رات پڑھی';
-
-  @override
-  String get taraweehRakaatTitle => 'ادا کی گئی رکعات';
-
-  @override
-  String taraweehRakaatOption(int n) {
-    return '$n رکعات';
-  }
-
-  @override
-  String get taraweehJuzTitle => 'پہنچا گیا جز';
-
-  @override
-  String get taraweehJuzValueNone => 'درج نہیں';
-
-  @override
-  String get taraweehJuzDecrementLabel => 'کم';
-
-  @override
-  String get taraweehJuzIncrementLabel => 'زیادہ';
-
-  @override
-  String get taraweehProgressTitle => 'قرآن کی پیش رفت';
-
-  @override
-  String get taraweehProgressLabel => 'مکمل شدہ جز';
-
-  @override
-  String taraweehProgressValue(int done, int total) {
-    return '$total میں سے $done';
-  }
-
-  @override
-  String get taraweehKhatmComplete => 'اس رمضان میں پورا قرآن مکمل ہو گیا ہے';
-
-  @override
-  String get taraweehCalendarTitle => 'کیلنڈر';
-
-  @override
-  String taraweehCalendarA11y(int prayed, int total) {
-    return 'پچھلے $total راتوں میں سے $prayed میں تراویح پڑھی گئی';
   }
 
   @override

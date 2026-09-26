@@ -352,9 +352,10 @@ void main() {
         // at all); Mosques, Speed Test and Media Saver show the reference's
         // own sample data again and so are not here; Prayer Times,
         // Islamic Calendar and Ramadan are `computed` (real solar/Hijri
-        // math, no fixture); Prayer Tracker, Fasting Tracker and Taraweeh
-        // are `readerRecords` (a real per-day/per-night log, every derived
-        // figure computed from it, same as Habits/Streak).
+        // math, no fixture); Prayer Tracker and Fasting Tracker are
+        // `readerRecords` (a real per-day log, every derived figure computed
+        // from it, same as Habits/Streak). Taraweeh is the reference's
+        // mosque finder again, over sample mosques, and so is not here.
         'docscan',
         'faraid',
         'fasting',
@@ -379,7 +380,6 @@ void main() {
         'streak',
         'subs',
         'sunmoon',
-        'taraweeh',
         'tasbih',
         'tipsplit',
         'vaccines',

@@ -6468,6 +6468,46 @@ class AppLocalizationsEn extends AppLocalizations {
       'The full detail lives under Privacy in your profile, and you can delete your account and everything in it at any time.';
 
   @override
+  String get taraweehSeason => 'Ramadan schedule';
+
+  @override
+  String get taraweehSearch => 'Search mosques';
+
+  @override
+  String get taraweehRakaat => 'Rakaat';
+
+  @override
+  String get taraweehMap => 'Mosques near you';
+
+  @override
+  String get taraweehNearby => 'Nearby';
+
+  @override
+  String get taraweehStarts => 'Starts';
+
+  @override
+  String get taraweehNoMatch => 'No mosques match';
+
+  @override
+  String get taraweehNoMatchText =>
+      'Try a different rakaat count, or clear the search.';
+
+  @override
+  String get taraweehSelected => 'Closest';
+
+  @override
+  String get taraweehRemindTitle => 'Get a reminder';
+
+  @override
+  String get taraweehRemindText =>
+      'We can remind you 20 minutes before Taraweeh starts at your chosen mosque.';
+
+  @override
+  String taraweehRakaatCount(int n) {
+    return '$n rakaat';
+  }
+
+  @override
   String get toolSourceOnDevice => 'On device';
 
   @override
@@ -13305,88 +13345,6 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String ramadanShareSource(String city, String date) {
     return '$city · $date';
-  }
-
-  @override
-  String get taraweehErrConflict =>
-      'This changed somewhere else. Open it again.';
-
-  @override
-  String get taraweehErrFailed => 'That didn\'t save. Try again.';
-
-  @override
-  String get taraweehPrayedToast => 'Logged for tonight';
-
-  @override
-  String get taraweehClearedToast => 'Tonight\'s entry removed';
-
-  @override
-  String get taraweehSummaryKicker => 'Taraweeh streak';
-
-  @override
-  String get taraweehNightsUnit => 'nights';
-
-  @override
-  String taraweehBestCaption(int n) {
-    return 'Best: $n nights';
-  }
-
-  @override
-  String get taraweehStatTotal => 'Nights logged';
-
-  @override
-  String get taraweehStatJuz => 'Juz completed';
-
-  @override
-  String get taraweehStatNextJuz => 'Next Juz';
-
-  @override
-  String get taraweehTonight => 'Tonight';
-
-  @override
-  String get taraweehPrayedLabel => 'Prayed tonight';
-
-  @override
-  String get taraweehRakaatTitle => 'Rakaat prayed';
-
-  @override
-  String taraweehRakaatOption(int n) {
-    return '$n rakaat';
-  }
-
-  @override
-  String get taraweehJuzTitle => 'Juz reached';
-
-  @override
-  String get taraweehJuzValueNone => 'Not noted';
-
-  @override
-  String get taraweehJuzDecrementLabel => 'Fewer';
-
-  @override
-  String get taraweehJuzIncrementLabel => 'More';
-
-  @override
-  String get taraweehProgressTitle => 'Qur\'an progress';
-
-  @override
-  String get taraweehProgressLabel => 'Juz completed';
-
-  @override
-  String taraweehProgressValue(int done, int total) {
-    return '$done of $total';
-  }
-
-  @override
-  String get taraweehKhatmComplete =>
-      'The whole Qur\'an has been completed this Ramadan';
-
-  @override
-  String get taraweehCalendarTitle => 'Calendar';
-
-  @override
-  String taraweehCalendarA11y(int prayed, int total) {
-    return '$prayed of the last $total nights prayed';
   }
 
   @override

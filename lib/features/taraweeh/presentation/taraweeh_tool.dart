@@ -1,340 +1,269 @@
-/// Taraweeh — `tools/islamic/taraweeh.tool.js`, as a real record-backed
-/// tool.
+/// Taraweeh — `tools/islamic/taraweeh.tool.js`, the reference's mosque
+/// finder for the Ramadan nights, in its order: the city and the season, a
+/// search, the rakaat filter, the map, the mosques, the closest one's
+/// figures, and the reminder note.
 ///
-/// The reference draws a nearby-mosque finder over a fully fabricated
-/// `nearbyMosques()` fixture and has no real per-night log anywhere behind
-/// it (see `taraweeh_model.dart`'s library doc for the full accounting of
-/// what was dropped). This replaces it with the one honest thing worth
-/// keeping: a reader's own Taraweeh nights, logged one at a time, with the
-/// real rakaat count they prayed and, optionally, the Juz they reached —
-/// every streak and completion figure computed from those nights in
-/// `taraweeh_book.dart`, never a literal.
+/// The mosques are Nearby Mosques' own sample list (`mosques_fixtures.dart`,
+/// the reference's shared `nearbyMosques()`), each with its reciter, its
+/// rakaat and its Taraweeh time; the source line says "Sample data". A row
+/// says the mosque's name, as the reference's `toast:<name>` does. The city
+/// chip opens Personalisation (`sheet:personalise`).
 ///
-/// A single screen: a summary, tonight's toggle, tonight's rakaat and Juz
-/// (once logged), the reader's own Khatm progress, and their last 35 nights.
+/// **Dayroz:** a row opens that mosque's Ramadan schedule; the reminder note
+/// becomes the switch that schedules a notification twenty minutes before
+/// Taraweeh at the reader's chosen mosque.
 library;
-
-import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../../../app/providers/shell_provider.dart';
-import '../../../app/providers/time_zone_provider.dart';
-import '../../../core/fixtures/lume_clock.dart';
+import '../../../core/icons/lume_icons.dart';
 import '../../../core/localization/lume_format.dart';
-import '../../../core/navigation/lume_tool_frame.dart';
 import '../../../core/theme/lume/lume_colors.dart';
-import '../../../core/theme/lume/lume_space.dart';
 import '../../../core/theme/lume/lume_theme.dart';
-import '../../../core/time/lume_iana_zones.dart';
-import '../../../core/values/lume_date.dart';
+import '../../../core/widgets/lume/lume_button.dart';
 import '../../../core/widgets/lume/lume_chip.dart';
 import '../../../core/widgets/lume/lume_field.dart';
+import '../../../core/widgets/lume/lume_header.dart';
+import '../../../core/widgets/lume/lume_map.dart';
 import '../../../core/widgets/lume/lume_overlay.dart';
-import '../../../core/widgets/lume/lume_progress.dart';
 import '../../../core/widgets/lume/lume_row.dart';
+import '../../../core/widgets/lume/lume_state.dart';
 import '../../../core/widgets/lume/lume_summary.dart';
+import '../../../core/widgets/lume/lume_surface.dart';
 import '../../../core/widgets/lume/lume_tool.dart';
 import '../../../l10n/app_localizations.dart';
-import '../../startup/domain/startup_state.dart';
+import '../../account/presentation/personalise_sheet.dart';
+import '../../mosques/data/mosques_fixtures.dart';
+import '../../mosques/presentation/mosques_text.dart';
 import '../../tools/application/tool_request.dart';
+import '../../tools/application/tool_session.dart';
 import '../../tools/presentation/tool_screen.dart';
-import '../application/taraweeh_providers.dart';
-import '../domain/taraweeh_book.dart';
-import '../domain/taraweeh_failure.dart';
-import '../domain/taraweeh_model.dart';
-import '../domain/taraweeh_repository.dart';
 
-abstract final class LumeTaraweehTool {
-  static const String id = 'taraweeh';
-
-  static const Key summaryKey = ValueKey<String>('taraweeh.summary');
-  static const Key tonightKey = ValueKey<String>('taraweeh.tonight');
-  static const Key rakaatKey = ValueKey<String>('taraweeh.rakaat');
-  static const Key juzKey = ValueKey<String>('taraweeh.juz');
-  static const Key progressKey = ValueKey<String>('taraweeh.progress');
-  static const Key calendarKey = ValueKey<String>('taraweeh.calendar');
-
-  static Widget open(LumeToolRequest request) => TaraweehTool(request: request);
-}
-
-class TaraweehTool extends ConsumerStatefulWidget {
-  const TaraweehTool({super.key, required this.request});
+class LumeTaraweehTool extends ConsumerStatefulWidget {
+  const LumeTaraweehTool({super.key, required this.request});
 
   final LumeToolRequest request;
 
+  static Widget open(LumeToolRequest request) =>
+      LumeTaraweehTool(request: request);
+
+  static const String id = 'taraweeh';
+
+  static const Key contextKey = ValueKey<String>('taraweeh.context');
+  static const Key searchKey = ValueKey<String>('taraweeh.search');
+  static const Key rakaatKey = ValueKey<String>('taraweeh.rakaat');
+  static const Key mapKey = ValueKey<String>('taraweeh.map');
+  static const Key listKey = ValueKey<String>('taraweeh.list');
+  static const Key emptyKey = ValueKey<String>('taraweeh.empty');
+  static const Key closestKey = ValueKey<String>('taraweeh.closest');
+  static const Key remindKey = ValueKey<String>('taraweeh.remind');
+
+  /// `all`, `8` or `20`.
+  static Key rakaatChip(String value) =>
+      ValueKey<String>('taraweeh.rakaat.$value');
+  static Key row(LumeMosqueName name) =>
+      ValueKey<String>('taraweeh.row.${name.name}');
+
   @override
-  ConsumerState<TaraweehTool> createState() => _TaraweehToolState();
+  ConsumerState<LumeTaraweehTool> createState() => _LumeTaraweehToolState();
 }
 
-class _TaraweehToolState extends ConsumerState<TaraweehTool> {
+class _LumeTaraweehToolState extends ConsumerState<LumeTaraweehTool> {
   final GlobalKey<LumeToolScreenState> _host = GlobalKey<LumeToolScreenState>();
-  late final TaraweehRepository _repo = ref.read(taraweehRepositoryProvider);
-
-  @override
-  void initState() {
-    super.initState();
-    _repo.open();
-    _repo.changes.addListener(_changed);
-  }
-
-  void _changed() {
-    if (mounted) setState(() {});
-  }
+  late final LumeToolSession _session = ref.read(toolSessionProvider);
+  late final TextEditingController _query = TextEditingController(
+    text: _session.read(LumeTaraweehTool.id, 'q') ?? '',
+  );
 
   @override
   void dispose() {
-    _repo.changes.removeListener(_changed);
+    _query.dispose();
     super.dispose();
   }
 
-  void _say(
-    String message, {
-    LumeToastTone tone = LumeToastTone.success,
-    String? actionLabel,
-    VoidCallback? onAction,
-  }) => _host.currentState?.say(
-    message,
-    tone: tone,
-    actionLabel: actionLabel,
-    onAction: onAction,
-  );
+  String get _rakaat => _session.read(LumeTaraweehTool.id, 'rakaat') ?? 'all';
 
-  LumeDate? _today(BuildContext context) {
-    final LumeStartupState startup = ref.watch(startupControllerProvider).state;
-    final LumeZoneResolution zone = ref
-        .watch(timeZoneServiceProvider)
-        .readerZone(
-          startup.profile,
-          ref.watch(deviceZoneProvider),
-          country: widget.request.user.country,
-          city: widget.request.user.city,
-        );
-    final LumeZoneClock clock = ref
-        .watch(timeZoneServiceProvider)
-        .clock(LumeClockScope.of(context).now(), zone);
-    return clock.ok ? LumeDate.ofWallClock(clock.local!) : null;
-  }
+  void _setRakaat(String v) =>
+      setState(() => _session.write(LumeTaraweehTool.id, 'rakaat', v));
 
-  void _failed(AppLocalizations l, TaraweehFailure f) {
-    _say(switch (f.kind) {
-      TaraweehFailureKind.conflict ||
-      TaraweehFailureKind.notFound => l.taraweehErrConflict,
-      TaraweehFailureKind.storage ||
-      TaraweehFailureKind.validation => l.taraweehErrFailed,
-    }, tone: LumeToastTone.error);
-  }
-
-  Future<void> _setPrayed(AppLocalizations l, LumeDate date, bool value) async {
-    final TaraweehResult<TaraweehWrite> r = value
-        ? _repo.logTonight(date, rakaat: 20)
-        : _repo.clear(date);
-    if (r.failure != null) return _failed(l, r.failure!);
-    if (r.value!.receipt.revision == 0) return;
-    _say(
-      value ? l.taraweehPrayedToast : l.taraweehClearedToast,
-      actionLabel: l.recUndo,
-      onAction: () {
-        final TaraweehResult<void> u = _repo.undo(r.value!);
-        if (u.failure != null) _failed(l, u.failure!);
-      },
-    );
-  }
-
-  void _setRakaat(AppLocalizations l, LumeDate date, int rakaat) {
-    final TaraweehResult<TaraweehWrite> r = _repo.setRakaat(date, rakaat);
-    if (r.failure != null) _failed(l, r.failure!);
-  }
-
-  void _setJuz(AppLocalizations l, LumeDate date, int? juz) {
-    final TaraweehResult<TaraweehWrite> r = _repo.setJuz(date, juz);
-    if (r.failure != null) _failed(l, r.failure!);
-  }
+  /// A time of day as a `DateTime`, for the formatter.
+  static DateTime _at(int minute) =>
+      DateTime(2026, 1, 1, minute ~/ 60, minute % 60);
 
   @override
   Widget build(BuildContext context) {
+    final LumeToolRequest r = widget.request;
     final AppLocalizations l = AppLocalizations.of(context);
+    final LumeColors lume = context.lume;
     final LumeFormatting f = LumeFormatting.of(
       context,
-      countryCode: widget.request.user.country,
+      countryCode: r.user.country,
     );
-    final LumeDate? today = _today(context);
-    final TaraweehSnapshot snapshot = _repo.view();
+    final String city = r.user.city;
+    final String rakaat = _rakaat;
+    final String q = _query.text.trim().toLowerCase();
 
-    LumeToolStatus status = LumeToolStatus.ready;
-    TaraweehStats? stats;
-    if (snapshot.loading) {
-      status = LumeToolStatus.loading;
-    } else if (snapshot.failed || today == null) {
-      status = LumeToolStatus.error;
-    } else {
-      stats = snapshot.stats(today);
-    }
+    String nameOf(LumeNearbyMosque m) => LumeMosquesText.name(l, m, city);
+    final List<LumeNearbyMosque> shown = <LumeNearbyMosque>[
+      for (final LumeNearbyMosque m in LumeMosquesFixtures.all)
+        if ((rakaat == 'all' || '${m.rakaat}' == rakaat) &&
+            (q.isEmpty || nameOf(m).toLowerCase().contains(q)))
+          m,
+    ];
+    final LumeNearbyMosque? closest = shown.isEmpty ? null : shown.first;
 
     return LumeToolScreen(
       key: _host,
-      feature: widget.request.feature,
-      user: widget.request.user,
-      onBack: widget.request.onBack,
-      onOpenRelated: widget.request.onOpenRelated,
-      status: status,
-      onRetry: () => setState(_repo.retry),
+      feature: r.feature,
+      user: r.user,
+      onBack: r.onBack,
+      onOpenRelated: r.onOpenRelated,
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: (stats == null || today == null)
-            ? const <Widget>[]
-            : _body(context, l, f, today, stats),
-      ),
-    );
-  }
-
-  List<Widget> _body(
-    BuildContext context,
-    AppLocalizations l,
-    LumeFormatting f,
-    LumeDate today,
-    TaraweehStats stats,
-  ) => <Widget>[
-    LumeToolSection(
-      child: LumeSummaryCard(
-        key: LumeTaraweehTool.summaryKey,
-        kicker: l.taraweehSummaryKicker,
-        value: f.integer(stats.current),
-        valueSmall: l.taraweehNightsUnit,
-        caption: l.taraweehBestCaption(stats.best),
-        stats: <LumeStat>[
-          LumeStat(
-            value: f.integer(stats.totalNights),
-            label: l.taraweehStatTotal,
+        children: <Widget>[
+          LumeToolSection(
+            flush: true,
+            child: LumeContextBar(
+              key: LumeTaraweehTool.contextKey,
+              items: <LumeContextItem>[
+                LumeContextItem(
+                  label: city,
+                  icon: LumeIcons.pin,
+                  onTap: () => showLumePersonalise(context),
+                ),
+                LumeContextItem(label: l.taraweehSeason),
+              ],
+            ),
           ),
-          LumeStat(value: f.integer(stats.juzDone), label: l.taraweehStatJuz),
-          LumeStat(
-            value: stats.nextJuz == null ? '—' : f.integer(stats.nextJuz!),
-            label: l.taraweehStatNextJuz,
+          LumeToolSection(
+            child: LumeSearchField(
+              key: LumeTaraweehTool.searchKey,
+              controller: _query,
+              placeholder: l.taraweehSearch,
+              onChanged: (String v) =>
+                  setState(() => _session.write(LumeTaraweehTool.id, 'q', v)),
+            ),
+          ),
+          LumeToolSection(
+            spaceAbove: LumeToolSection.gap - LumeFilterBar.overhang,
+            flush: true,
+            child: Semantics(
+              container: true,
+              label: l.taraweehRakaat,
+              child: LumeFilterBar(
+                key: LumeTaraweehTool.rakaatKey,
+                children: <Widget>[
+                  for (final String v in <String>['all', '8', '20'])
+                    LumeFilterChip(
+                      key: LumeTaraweehTool.rakaatChip(v),
+                      label: v == 'all'
+                          ? l.commonAll
+                          : l.taraweehRakaatCount(int.parse(v)),
+                      selected: rakaat == v,
+                      onTap: () => _setRakaat(v),
+                    ),
+                ],
+              ),
+            ),
+          ),
+          LumeToolSection(
+            spaceAbove: LumeToolSection.gap - LumeFilterBar.overhang,
+            child: LumeMap(
+              key: LumeTaraweehTool.mapKey,
+              label: l.taraweehMap,
+              caption: city,
+              pins: <LumeMapPin>[
+                for (int i = 0; i < shown.length; i++)
+                  LumeMapPin(
+                    x: shown[i].x,
+                    y: shown[i].y,
+                    icon: LumeIcons.mosque,
+                    label: nameOf(shown[i]),
+                    active: i == 0,
+                  ),
+              ],
+            ),
+          ),
+          LumeToolSection(
+            title: l.taraweehNearby,
+            child: shown.isEmpty
+                ? LumeToolState(
+                    key: LumeTaraweehTool.emptyKey,
+                    icon: LumeIcons.mosque,
+                    title: l.taraweehNoMatch,
+                    text: l.taraweehNoMatchText,
+                    action: LumeButton(
+                      label: l.commonAll,
+                      icon: LumeIcons.refresh,
+                      onPressed: () => _setRakaat('all'),
+                    ),
+                  )
+                : LumeRows(
+                    key: LumeTaraweehTool.listKey,
+                    children: <Widget>[
+                      for (final LumeNearbyMosque m in shown)
+                        LumeRichRow(
+                          key: LumeTaraweehTool.row(m.name),
+                          icon: LumeIcons.mosque,
+                          iconTone: lume.tintAccent,
+                          iconInk: lume.accent,
+                          title: nameOf(m),
+                          subtitle: l.mosquesAddr(city),
+                          meta: <String>[
+                            LumeMosquesText.distance(l, f, m.km),
+                            l.taraweehRakaatCount(m.rakaat),
+                            m.reciter,
+                          ],
+                          value: f.time(_at(m.taraweehMinute)),
+                          valueSub: l.taraweehStarts,
+                          chevron: true,
+                          // The reference's own toast. **Dayroz:** open
+                          // this mosque's Ramadan schedule.
+                          onTap: () => _host.currentState?.say(
+                            nameOf(m),
+                            tone: LumeToastTone.info,
+                          ),
+                        ),
+                    ],
+                  ),
+          ),
+          LumeToolSection(
+            title: l.taraweehSelected,
+            child: LumeCard(
+              key: LumeTaraweehTool.closestKey,
+              child: LumeMetrics(
+                columns: 3,
+                children: <Widget>[
+                  LumeMetric(
+                    icon: LumeIcons.clock,
+                    value: f.time(_at(closest?.taraweehMinute ?? 20 * 60 + 45)),
+                    label: l.taraweehStarts,
+                  ),
+                  LumeMetric(
+                    icon: LumeIcons.route,
+                    value: LumeMosquesText.distance(l, f, closest?.km ?? 0),
+                    label: l.qiblaToKaaba,
+                  ),
+                  LumeMetric(
+                    icon: LumeIcons.beads,
+                    value: f.integer(closest?.rakaat ?? 20),
+                    label: l.taraweehRakaat,
+                  ),
+                ],
+              ),
+            ),
+          ),
+          LumeToolSection(
+            child: LumeNoteCard(
+              key: LumeTaraweehTool.remindKey,
+              tone: LumeNoteTone.info,
+              icon: LumeIcons.bell,
+              title: l.taraweehRemindTitle,
+              text: l.taraweehRemindText,
+            ),
           ),
         ],
-      ),
-    ),
-    LumeToolSection(
-      child: LumeRecordRow(
-        key: LumeTaraweehTool.tonightKey,
-        title: l.taraweehTonight,
-        subtitle: f.dateMediumYear(today.toCalendarDateTime()),
-        done: stats.prayedTonight,
-        checkLabel: l.taraweehPrayedLabel,
-        onToggle: (bool v) => unawaited(_setPrayed(l, today, v)),
-      ),
-    ),
-    if (stats.tonight != null) ...<Widget>[
-      LumeToolSection(
-        title: l.taraweehRakaatTitle,
-        child: LumeSegmented(
-          key: LumeTaraweehTool.rakaatKey,
-          semanticLabel: l.taraweehRakaatTitle,
-          value: stats.tonight!.rakaat.toString(),
-          items: <LumeChoice>[
-            for (final int r in kTaraweehRakaatOptions)
-              LumeChoice(value: r.toString(), label: l.taraweehRakaatOption(r)),
-          ],
-          onChanged: (String v) => _setRakaat(l, today, int.parse(v)),
-        ),
-      ),
-      LumeToolSection(
-        title: l.taraweehJuzTitle,
-        child: _JuzStepper(
-          key: LumeTaraweehTool.juzKey,
-          juz: stats.tonight!.juz,
-          f: f,
-          l: l,
-          onChanged: (int? v) => _setJuz(l, today, v),
-        ),
-      ),
-    ],
-    LumeToolSection(
-      title: l.taraweehProgressTitle,
-      child: LumeMeterRow(
-        key: LumeTaraweehTool.progressKey,
-        label: l.taraweehProgressLabel,
-        value: l.taraweehProgressValue(stats.juzDone, kTaraweehJuzMax),
-        progress: stats.progress,
-        footnote: stats.khatmComplete ? l.taraweehKhatmComplete : null,
-      ),
-    ),
-    LumeToolSection(
-      title: l.taraweehCalendarTitle,
-      child: _TaraweehHeatGrid(
-        key: LumeTaraweehTool.calendarKey,
-        days: stats.heat,
-        l: l,
-      ),
-    ),
-  ];
-}
-
-/// A bounded stepper over the Qur'an's 30 Juz — `null` (nothing noted) at
-/// one end, 30 at the other. Chosen over a free-typed number field so a
-/// keystroke never races the record write it would otherwise trigger.
-class _JuzStepper extends StatelessWidget {
-  const _JuzStepper({
-    super.key,
-    required this.juz,
-    required this.f,
-    required this.l,
-    required this.onChanged,
-  });
-
-  final int? juz;
-  final LumeFormatting f;
-  final AppLocalizations l;
-  final ValueChanged<int?> onChanged;
-
-  @override
-  Widget build(BuildContext context) => LumeStepper(
-    label: l.taraweehJuzTitle,
-    value: juz == null ? l.taraweehJuzValueNone : f.integer(juz!),
-    decrementLabel: l.taraweehJuzDecrementLabel,
-    incrementLabel: l.taraweehJuzIncrementLabel,
-    onDecrement: juz == null
-        ? null
-        : () => onChanged(juz == kTaraweehJuzMin ? null : juz! - 1),
-    onIncrement: (juz ?? 0) >= kTaraweehJuzMax
-        ? null
-        : () => onChanged((juz ?? 0) + 1),
-  );
-}
-
-/// The reader's own last 35 nights — a plain prayed/not-prayed grid, never a
-/// graduated heat scale: a single nightly entry carries no intensity to show
-/// one.
-class _TaraweehHeatGrid extends StatelessWidget {
-  const _TaraweehHeatGrid({super.key, required this.days, required this.l});
-
-  final List<TaraweehHeatDay> days;
-  final AppLocalizations l;
-
-  @override
-  Widget build(BuildContext context) {
-    final LumeColors lume = context.lume;
-    final int prayed = days.where((TaraweehHeatDay d) => d.prayed).length;
-    return Semantics(
-      label: l.taraweehCalendarA11y(prayed, days.length),
-      child: ExcludeSemantics(
-        child: Wrap(
-          spacing: 4,
-          runSpacing: 4,
-          children: <Widget>[
-            for (final TaraweehHeatDay d in days)
-              Container(
-                width: 16,
-                height: 16,
-                decoration: BoxDecoration(
-                  color: d.prayed ? lume.accent : lume.tintNeutral,
-                  borderRadius: BorderRadius.circular(LumeRadius.xs / 2),
-                ),
-              ),
-          ],
-        ),
       ),
     );
   }

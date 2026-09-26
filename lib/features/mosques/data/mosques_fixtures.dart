@@ -33,7 +33,17 @@ class LumeNearbyMosque {
     required this.facilities,
     required this.x,
     required this.y,
+    required this.reciter,
+    required this.rakaat,
+    required this.taraweehMinute,
   });
+
+  /// Taraweeh at this mosque (the reference: "Taraweeh belongs to the
+  /// mosque, not to the row that draws it") — who leads it, how many
+  /// rakaat, and when it starts, as minutes after midnight.
+  final String reciter;
+  final int rakaat;
+  final int taraweehMinute;
 
   final LumeMosqueName name;
 
@@ -61,6 +71,9 @@ abstract final class LumeMosquesFixtures {
       ],
       x: 22,
       y: 30,
+      reciter: 'Qari Ahmed',
+      rakaat: 20,
+      taraweehMinute: 20 * 60 + 45,
     ),
     LumeNearbyMosque(
       name: LumeMosqueName.jamia,
@@ -68,6 +81,9 @@ abstract final class LumeMosquesFixtures {
       facilities: <LumeMosqueFacility>[LumeMosqueFacility.wudu],
       x: 41,
       y: 64,
+      reciter: 'Hafiz Bilal',
+      rakaat: 8,
+      taraweehMinute: 20 * 60 + 50,
     ),
     LumeNearbyMosque(
       name: LumeMosqueName.alNoor,
@@ -75,6 +91,9 @@ abstract final class LumeMosquesFixtures {
       facilities: <LumeMosqueFacility>[LumeMosqueFacility.parking],
       x: 60,
       y: 30,
+      reciter: 'Qari Usman',
+      rakaat: 20,
+      taraweehMinute: 20 * 60 + 55,
     ),
     LumeNearbyMosque(
       name: LumeMosqueName.bilal,
@@ -85,6 +104,9 @@ abstract final class LumeMosquesFixtures {
       ],
       x: 79,
       y: 64,
+      reciter: 'Hafiz Salman',
+      rakaat: 8,
+      taraweehMinute: 20 * 60 + 40,
     ),
   ];
 

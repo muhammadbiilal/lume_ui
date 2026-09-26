@@ -218,7 +218,6 @@ class LumeDataCapability {
     // real over it.
     'praytrack',
     'fasting',
-    'taraweeh',
   };
 
   /// The one family (so far) whose store survives the app closing —

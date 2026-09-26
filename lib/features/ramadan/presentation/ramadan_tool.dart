@@ -43,10 +43,9 @@
 /// with no meaning behind its colours, and this build has no heatmap widget
 /// to draw one in regardless — dropped. The timeline's fixed
 /// "Taraweeh · 20:45" row is a hard-coded clock time with nothing behind
-/// it — the Taraweeh agent's own finding (`taraweeh_model.dart`) is that the
-/// reference has no real Taraweeh schedule anywhere, mosque or otherwise —
-/// dropped rather than guessed at ("shortly after Isha" would still be a
-/// number nobody measured).
+/// it — the reference's only Taraweeh times are Taraweeh's own sample
+/// mosques (`mosques_fixtures.dart`) — dropped rather than guessed at
+/// ("shortly after Isha" would still be a number nobody measured).
 ///
 /// **What is added.** A "Prepare" section (the reference's own composition,
 /// kept) links out to Fasting Tracker, Qur'an and Zakat Calculator — real

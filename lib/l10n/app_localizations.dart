@@ -11380,6 +11380,78 @@ abstract class AppLocalizations {
   /// **'The full detail lives under Privacy in your profile, and you can delete your account and everything in it at any time.'**
   String get authLegalWhere;
 
+  /// tools.js taraweeh.season — the context bar's second item.
+  ///
+  /// In en, this message translates to:
+  /// **'Ramadan schedule'**
+  String get taraweehSeason;
+
+  /// tools.js taraweeh.search
+  ///
+  /// In en, this message translates to:
+  /// **'Search mosques'**
+  String get taraweehSearch;
+
+  /// tools.js taraweeh.rakaat — the filter's group and a metric label.
+  ///
+  /// In en, this message translates to:
+  /// **'Rakaat'**
+  String get taraweehRakaat;
+
+  /// tools.js taraweeh.map
+  ///
+  /// In en, this message translates to:
+  /// **'Mosques near you'**
+  String get taraweehMap;
+
+  /// tools.js taraweeh.nearby
+  ///
+  /// In en, this message translates to:
+  /// **'Nearby'**
+  String get taraweehNearby;
+
+  /// tools.js taraweeh.starts
+  ///
+  /// In en, this message translates to:
+  /// **'Starts'**
+  String get taraweehStarts;
+
+  /// tools.js taraweeh.noMatch
+  ///
+  /// In en, this message translates to:
+  /// **'No mosques match'**
+  String get taraweehNoMatch;
+
+  /// tools.js taraweeh.noMatchText
+  ///
+  /// In en, this message translates to:
+  /// **'Try a different rakaat count, or clear the search.'**
+  String get taraweehNoMatchText;
+
+  /// tools.js taraweeh.selected — the closest mosque's metrics.
+  ///
+  /// In en, this message translates to:
+  /// **'Closest'**
+  String get taraweehSelected;
+
+  /// tools.js taraweeh.remind.title
+  ///
+  /// In en, this message translates to:
+  /// **'Get a reminder'**
+  String get taraweehRemindTitle;
+
+  /// tools.js taraweeh.remind.text
+  ///
+  /// In en, this message translates to:
+  /// **'We can remind you 20 minutes before Taraweeh starts at your chosen mosque.'**
+  String get taraweehRemindText;
+
+  /// n + ' ' + taraweeh.rakaatShort — a chip and a row's meta.
+  ///
+  /// In en, this message translates to:
+  /// **'{n} rakaat'**
+  String taraweehRakaatCount(int n);
+
   /// tool-specs.js src "On device" — shared by every tool whose figures live on the device. The reference prints it in English everywhere; translated here (§11).
   ///
   /// In en, this message translates to:
@@ -23034,150 +23106,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'{city} · {date}'**
   String ramadanShareSource(String city, String date);
-
-  /// Toast for a conflicting record on write (mirrors praytrackErrConflict).
-  ///
-  /// In en, this message translates to:
-  /// **'This changed somewhere else. Open it again.'**
-  String get taraweehErrConflict;
-
-  /// Generic write-failure toast (mirrors praytrackErrFailed).
-  ///
-  /// In en, this message translates to:
-  /// **'That didn\'t save. Try again.'**
-  String get taraweehErrFailed;
-
-  /// Toast after marking tonight's Taraweeh as prayed.
-  ///
-  /// In en, this message translates to:
-  /// **'Logged for tonight'**
-  String get taraweehPrayedToast;
-
-  /// Toast after clearing tonight's entry.
-  ///
-  /// In en, this message translates to:
-  /// **'Tonight\'s entry removed'**
-  String get taraweehClearedToast;
-
-  /// Kicker label on the Taraweeh summary card.
-  ///
-  /// In en, this message translates to:
-  /// **'Taraweeh streak'**
-  String get taraweehSummaryKicker;
-
-  /// Unit word for a count of nights.
-  ///
-  /// In en, this message translates to:
-  /// **'nights'**
-  String get taraweehNightsUnit;
-
-  /// Caption showing the best-ever streak.
-  ///
-  /// In en, this message translates to:
-  /// **'Best: {n} nights'**
-  String taraweehBestCaption(int n);
-
-  /// Stat label: total nights logged.
-  ///
-  /// In en, this message translates to:
-  /// **'Nights logged'**
-  String get taraweehStatTotal;
-
-  /// Stat label: Juz of the Qur'an completed.
-  ///
-  /// In en, this message translates to:
-  /// **'Juz completed'**
-  String get taraweehStatJuz;
-
-  /// Stat label: the next Juz to read.
-  ///
-  /// In en, this message translates to:
-  /// **'Next Juz'**
-  String get taraweehStatNextJuz;
-
-  /// Label for tonight's entry.
-  ///
-  /// In en, this message translates to:
-  /// **'Tonight'**
-  String get taraweehTonight;
-
-  /// Toggle/status label: Taraweeh prayed tonight.
-  ///
-  /// In en, this message translates to:
-  /// **'Prayed tonight'**
-  String get taraweehPrayedLabel;
-
-  /// Field label: number of rakaat prayed.
-  ///
-  /// In en, this message translates to:
-  /// **'Rakaat prayed'**
-  String get taraweehRakaatTitle;
-
-  /// Option label for a rakaat-count choice.
-  ///
-  /// In en, this message translates to:
-  /// **'{n} rakaat'**
-  String taraweehRakaatOption(int n);
-
-  /// Field label: the Juz reached tonight.
-  ///
-  /// In en, this message translates to:
-  /// **'Juz reached'**
-  String get taraweehJuzTitle;
-
-  /// Value shown when no Juz has been noted yet.
-  ///
-  /// In en, this message translates to:
-  /// **'Not noted'**
-  String get taraweehJuzValueNone;
-
-  /// The Juz stepper's decrease action (mirrors tipFewer).
-  ///
-  /// In en, this message translates to:
-  /// **'Fewer'**
-  String get taraweehJuzDecrementLabel;
-
-  /// The Juz stepper's increase action (mirrors tipMore).
-  ///
-  /// In en, this message translates to:
-  /// **'More'**
-  String get taraweehJuzIncrementLabel;
-
-  /// Section title over the Qur'an-completion progress.
-  ///
-  /// In en, this message translates to:
-  /// **'Qur\'an progress'**
-  String get taraweehProgressTitle;
-
-  /// Progress label: Juz completed so far.
-  ///
-  /// In en, this message translates to:
-  /// **'Juz completed'**
-  String get taraweehProgressLabel;
-
-  /// Progress value: Juz done out of total.
-  ///
-  /// In en, this message translates to:
-  /// **'{done} of {total}'**
-  String taraweehProgressValue(int done, int total);
-
-  /// Message shown once the Khatm (full Qur'an) is complete.
-  ///
-  /// In en, this message translates to:
-  /// **'The whole Qur\'an has been completed this Ramadan'**
-  String get taraweehKhatmComplete;
-
-  /// Section title over the Taraweeh calendar grid.
-  ///
-  /// In en, this message translates to:
-  /// **'Calendar'**
-  String get taraweehCalendarTitle;
-
-  /// Screen-reader summary for the Taraweeh calendar grid.
-  ///
-  /// In en, this message translates to:
-  /// **'{prayed} of the last {total} nights prayed'**
-  String taraweehCalendarA11y(int prayed, int total);
 
   /// Section title over the user's saved vehicles.
   ///

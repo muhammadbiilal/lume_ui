@@ -8761,6 +8761,59 @@
   "@authLegalWhere": {
     "description": "account.js auth.legalWhere"
   },
+  "taraweehSeason": "Ramadan schedule",
+  "@taraweehSeason": {
+    "description": "tools.js taraweeh.season — the context bar's second item."
+  },
+  "taraweehSearch": "Search mosques",
+  "@taraweehSearch": {
+    "description": "tools.js taraweeh.search"
+  },
+  "taraweehRakaat": "Rakaat",
+  "@taraweehRakaat": {
+    "description": "tools.js taraweeh.rakaat — the filter's group and a metric label."
+  },
+  "taraweehMap": "Mosques near you",
+  "@taraweehMap": {
+    "description": "tools.js taraweeh.map"
+  },
+  "taraweehNearby": "Nearby",
+  "@taraweehNearby": {
+    "description": "tools.js taraweeh.nearby"
+  },
+  "taraweehStarts": "Starts",
+  "@taraweehStarts": {
+    "description": "tools.js taraweeh.starts"
+  },
+  "taraweehNoMatch": "No mosques match",
+  "@taraweehNoMatch": {
+    "description": "tools.js taraweeh.noMatch"
+  },
+  "taraweehNoMatchText": "Try a different rakaat count, or clear the search.",
+  "@taraweehNoMatchText": {
+    "description": "tools.js taraweeh.noMatchText"
+  },
+  "taraweehSelected": "Closest",
+  "@taraweehSelected": {
+    "description": "tools.js taraweeh.selected — the closest mosque's metrics."
+  },
+  "taraweehRemindTitle": "Get a reminder",
+  "@taraweehRemindTitle": {
+    "description": "tools.js taraweeh.remind.title"
+  },
+  "taraweehRemindText": "We can remind you 20 minutes before Taraweeh starts at your chosen mosque.",
+  "@taraweehRemindText": {
+    "description": "tools.js taraweeh.remind.text"
+  },
+  "taraweehRakaatCount": "{n} rakaat",
+  "@taraweehRakaatCount": {
+    "description": "n + ' ' + taraweeh.rakaatShort — a chip and a row's meta.",
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
   "toolSourceOnDevice": "On device",
   "@toolSourceOnDevice": {
     "description": "tool-specs.js src \"On device\" — shared by every tool whose figures live on the device. The reference prints it in English everywhere; translated here (§11)."
@@ -16353,66 +16406,6 @@
   "@ramadanShareSource": {
     "description": "Source line on the Ramadan share card.",
     "placeholders": { "city": {"type": "String"}, "date": {"type": "String"} }
-  },
-  "taraweehErrConflict": "This changed somewhere else. Open it again.",
-  "@taraweehErrConflict": { "description": "Toast for a conflicting record on write (mirrors praytrackErrConflict)." },
-  "taraweehErrFailed": "That didn't save. Try again.",
-  "@taraweehErrFailed": { "description": "Generic write-failure toast (mirrors praytrackErrFailed)." },
-  "taraweehPrayedToast": "Logged for tonight",
-  "@taraweehPrayedToast": { "description": "Toast after marking tonight's Taraweeh as prayed." },
-  "taraweehClearedToast": "Tonight's entry removed",
-  "@taraweehClearedToast": { "description": "Toast after clearing tonight's entry." },
-  "taraweehSummaryKicker": "Taraweeh streak",
-  "@taraweehSummaryKicker": { "description": "Kicker label on the Taraweeh summary card." },
-  "taraweehNightsUnit": "nights",
-  "@taraweehNightsUnit": { "description": "Unit word for a count of nights." },
-  "taraweehBestCaption": "Best: {n} nights",
-  "@taraweehBestCaption": {
-    "description": "Caption showing the best-ever streak.",
-    "placeholders": { "n": {"type": "int"} }
-  },
-  "taraweehStatTotal": "Nights logged",
-  "@taraweehStatTotal": { "description": "Stat label: total nights logged." },
-  "taraweehStatJuz": "Juz completed",
-  "@taraweehStatJuz": { "description": "Stat label: Juz of the Qur'an completed." },
-  "taraweehStatNextJuz": "Next Juz",
-  "@taraweehStatNextJuz": { "description": "Stat label: the next Juz to read." },
-  "taraweehTonight": "Tonight",
-  "@taraweehTonight": { "description": "Label for tonight's entry." },
-  "taraweehPrayedLabel": "Prayed tonight",
-  "@taraweehPrayedLabel": { "description": "Toggle/status label: Taraweeh prayed tonight." },
-  "taraweehRakaatTitle": "Rakaat prayed",
-  "@taraweehRakaatTitle": { "description": "Field label: number of rakaat prayed." },
-  "taraweehRakaatOption": "{n} rakaat",
-  "@taraweehRakaatOption": {
-    "description": "Option label for a rakaat-count choice.",
-    "placeholders": { "n": {"type": "int"} }
-  },
-  "taraweehJuzTitle": "Juz reached",
-  "@taraweehJuzTitle": { "description": "Field label: the Juz reached tonight." },
-  "taraweehJuzValueNone": "Not noted",
-  "@taraweehJuzValueNone": { "description": "Value shown when no Juz has been noted yet." },
-  "taraweehJuzDecrementLabel": "Fewer",
-  "@taraweehJuzDecrementLabel": { "description": "The Juz stepper's decrease action (mirrors tipFewer)." },
-  "taraweehJuzIncrementLabel": "More",
-  "@taraweehJuzIncrementLabel": { "description": "The Juz stepper's increase action (mirrors tipMore)." },
-  "taraweehProgressTitle": "Qur'an progress",
-  "@taraweehProgressTitle": { "description": "Section title over the Qur'an-completion progress." },
-  "taraweehProgressLabel": "Juz completed",
-  "@taraweehProgressLabel": { "description": "Progress label: Juz completed so far." },
-  "taraweehProgressValue": "{done} of {total}",
-  "@taraweehProgressValue": {
-    "description": "Progress value: Juz done out of total.",
-    "placeholders": { "done": {"type": "int"}, "total": {"type": "int"} }
-  },
-  "taraweehKhatmComplete": "The whole Qur'an has been completed this Ramadan",
-  "@taraweehKhatmComplete": { "description": "Message shown once the Khatm (full Qur'an) is complete." },
-  "taraweehCalendarTitle": "Calendar",
-  "@taraweehCalendarTitle": { "description": "Section title over the Taraweeh calendar grid." },
-  "taraweehCalendarA11y": "{prayed} of the last {total} nights prayed",
-  "@taraweehCalendarA11y": {
-    "description": "Screen-reader summary for the Taraweeh calendar grid.",
-    "placeholders": { "prayed": {"type": "int"}, "total": {"type": "int"} }
   },
   "vehicleFleet": "Your vehicles",
   "@vehicleFleet": { "description": "Section title over the user's saved vehicles." },
